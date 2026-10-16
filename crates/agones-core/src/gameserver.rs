@@ -535,11 +535,22 @@ pub(crate) fn validate_object_meta(meta: &ObjectMeta, path: &str) -> Vec<Validat
                 detail,
             ));
         }
-        if value.len() > 63 {
+        let invalid_value = value.len() > 63
+            || (!value.is_empty()
+                && (!value.chars().next().unwrap().is_ascii_alphanumeric()
+                    || !value.chars().last().unwrap().is_ascii_alphanumeric()
+                    || !value
+                        .chars()
+                        .all(|c| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.'))));
+        if invalid_value {
             errors.push(ValidationError::invalid(
                 format!("{path}.labels"),
                 value.as_str(),
-                "must be no more than 63 bytes",
+                if value.len() > 63 {
+                    "must be no more than 63 bytes"
+                } else {
+                    "must be empty or consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character"
+                },
             ));
         }
     }
