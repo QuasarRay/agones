@@ -914,8 +914,8 @@ mod tests {
             serde_json::json!(["replicas", "template"])
         );
         assert_eq!(
-            generated["properties"]["spec"]["properties"]["replicas"]["minimum"],
-            0
+            generated["properties"]["spec"]["properties"]["replicas"]["minimum"].as_f64(),
+            Some(0.0)
         );
         assert!(generated["properties"]["status"]["properties"]["shutdownReplicas"].is_object());
 
