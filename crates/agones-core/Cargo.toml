@@ -8,6 +8,9 @@ rust-version.workspace = true
 
 [dependencies]
 base64.workspace = true
+chrono.workspace = true
+chrono-tz.workspace = true
+cron.workspace = true
 agones-macros.workspace = true
 rand.workspace = true
 serde.workspace = true
