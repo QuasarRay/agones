@@ -5,7 +5,8 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     CounterStatus, GameServerState, GameServerStatusPort, ListStatus, ObjectMeta, Priority,
-    SchedulingStrategy, GAME_SERVER_PRIORITY_ASCENDING,
+    SchedulingStrategy, ValidationError, ValidationErrorKind, GAME_SERVER_PRIORITY_ASCENDING,
+    GAME_SERVER_PRIORITY_COUNTER, GAME_SERVER_PRIORITY_DESCENDING, GAME_SERVER_PRIORITY_LIST,
 };
 
 #[derive(Clone, Debug, PartialEq, Eq, AgonesStringEnum)]
@@ -80,6 +81,30 @@ impl GameServerSelector {
         if self.game_server_state.is_none() {
             self.game_server_state = Some(GameServerState::Ready);
         }
+    }
+
+    pub fn validate(&self, path: &str) -> Vec<ValidationError> {
+        let mut errors = self.label_selector.validate(path);
+
+        if let Some(state) = &self.game_server_state {
+            if !matches!(state, GameServerState::Allocated | GameServerState::Ready) {
+                errors.push(invalid(
+                    format!("{path}.gameServerState"),
+                    state.as_str(),
+                    "GameServerState must be either Allocated or Ready",
+                ));
+            }
+        }
+
+        errors.extend(validate_counter_selectors(
+            &self.counters,
+            &format!("{path}.counters"),
+        ));
+        errors.extend(validate_list_selectors(
+            &self.lists,
+            &format!("{path}.lists"),
+        ));
+        errors
     }
 
     pub fn matches(&self, game_server: &crate::GameServer) -> bool {
@@ -300,6 +325,282 @@ pub struct GameServerAllocationList {
     pub items: Vec<GameServerAllocation>,
 }
 
+
+fn invalid(path: impl Into<String>, bad_value: impl Into<String>, detail: impl Into<String>) -> ValidationError {
+    ValidationError {
+        kind: ValidationErrorKind::Invalid,
+        path: path.into(),
+        bad_value: Some(bad_value.into()),
+        detail: detail.into(),
+    }
+}
+
+fn not_supported(path: impl Into<String>, bad_value: impl Into<String>, detail: impl Into<String>) -> ValidationError {
+    ValidationError {
+        kind: ValidationErrorKind::NotSupported,
+        path: path.into(),
+        bad_value: Some(bad_value.into()),
+        detail: detail.into(),
+    }
+}
+
+fn valid_label_component(value: &str) -> bool {
+    if value.is_empty() {
+        return true;
+    }
+    value.len() <= 63
+        && value.chars().next().is_some_and(|c| c.is_ascii_alphanumeric())
+        && value.chars().last().is_some_and(|c| c.is_ascii_alphanumeric())
+        && value
+            .chars()
+            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.'))
+}
+
+fn valid_qualified_name(value: &str) -> bool {
+    let name = value.rsplit('/').next().unwrap_or(value);
+    !name.is_empty() && valid_label_component(name)
+}
+
+impl LabelSelector {
+    fn validate(&self, path: &str) -> Vec<ValidationError> {
+        let mut invalid_selector = false;
+
+        for (key, value) in &self.match_labels {
+            if !valid_qualified_name(key) || !valid_label_component(value) {
+                invalid_selector = true;
+            }
+        }
+
+        for requirement in &self.match_expressions {
+            if !valid_qualified_name(&requirement.key) {
+                invalid_selector = true;
+            }
+            match requirement.operator.as_str() {
+                "In" | "NotIn" => {
+                    if requirement.values.is_empty()
+                        || requirement
+                            .values
+                            .iter()
+                            .any(|value| !valid_label_component(value))
+                    {
+                        invalid_selector = true;
+                    }
+                }
+                "Exists" | "DoesNotExist" => {
+                    if !requirement.values.is_empty() {
+                        invalid_selector = true;
+                    }
+                }
+                _ => invalid_selector = true,
+            }
+        }
+
+        if invalid_selector {
+            vec![invalid(
+                format!("{path}.labelSelector"),
+                serde_json::to_string(self).unwrap_or_default(),
+                "Error converting label selector: invalid label selector",
+            )]
+        } else {
+            Vec::new()
+        }
+    }
+}
+
+fn validate_counter_selectors(
+    counters: &BTreeMap<String, CounterSelector>,
+    path: &str,
+) -> Vec<ValidationError> {
+    let mut errors = Vec::new();
+    for (key, selector) in counters {
+        let key_path = format!("{path}[{key}]");
+        if selector.min_count < 0 {
+            errors.push(invalid(
+                format!("{key_path}.minCount"),
+                selector.min_count.to_string(),
+                "must be greater than or equal to 0",
+            ));
+        }
+        if selector.max_count < 0 {
+            errors.push(invalid(
+                format!("{key_path}.maxCount"),
+                selector.max_count.to_string(),
+                "must be greater than or equal to 0",
+            ));
+        }
+        if selector.max_count != 0 && selector.max_count < selector.min_count {
+            errors.push(invalid(
+                key_path.clone(),
+                selector.max_count.to_string(),
+                format!(
+                    "maxCount must zero or greater than minCount {}",
+                    selector.min_count
+                ),
+            ));
+        }
+        if selector.min_available < 0 {
+            errors.push(invalid(
+                format!("{key_path}.minAvailable"),
+                selector.min_available.to_string(),
+                "must be greater than or equal to 0",
+            ));
+        }
+        if selector.max_available < 0 {
+            errors.push(invalid(
+                format!("{key_path}.maxAvailable"),
+                selector.max_available.to_string(),
+                "must be greater than or equal to 0",
+            ));
+        }
+        if selector.max_available != 0 && selector.max_available < selector.min_available {
+            errors.push(invalid(
+                key_path,
+                selector.max_available.to_string(),
+                format!(
+                    "maxAvailable must zero or greater than minAvailable {}",
+                    selector.min_available
+                ),
+            ));
+        }
+    }
+    errors
+}
+
+fn validate_list_selectors(
+    lists: &BTreeMap<String, ListSelector>,
+    path: &str,
+) -> Vec<ValidationError> {
+    let mut errors = Vec::new();
+    for (key, selector) in lists {
+        let key_path = format!("{path}[{key}]");
+        if selector.min_available < 0 {
+            errors.push(invalid(
+                format!("{key_path}.minAvailable"),
+                selector.min_available.to_string(),
+                "must be greater than or equal to 0",
+            ));
+        }
+        if selector.max_available < 0 {
+            errors.push(invalid(
+                format!("{key_path}.maxAvailable"),
+                selector.max_available.to_string(),
+                "must be greater than or equal to 0",
+            ));
+        }
+        if selector.max_available != 0 && selector.max_available < selector.min_available {
+            errors.push(invalid(
+                key_path,
+                selector.max_available.to_string(),
+                format!(
+                    "maxAvailable must zero or greater than minAvailable {}",
+                    selector.min_available
+                ),
+            ));
+        }
+    }
+    errors
+}
+
+pub fn validate_priorities(priorities: &[Priority], path: &str) -> Vec<ValidationError> {
+    let mut errors = Vec::new();
+    for (index, priority) in priorities.iter().enumerate() {
+        let key_path = format!("{path}[{index}]");
+        if priority.priority_type != GAME_SERVER_PRIORITY_COUNTER
+            && priority.priority_type != GAME_SERVER_PRIORITY_LIST
+        {
+            errors.push(invalid(
+                key_path.clone(),
+                priority.priority_type.clone(),
+                r#"type must be "Counter" or "List""#,
+            ));
+        }
+        if priority.key.is_empty() {
+            errors.push(invalid(
+                key_path.clone(),
+                priority.priority_type.clone(),
+                "key must not be nil",
+            ));
+        }
+        if priority.order != GAME_SERVER_PRIORITY_ASCENDING
+            && priority.order != GAME_SERVER_PRIORITY_DESCENDING
+        {
+            errors.push(invalid(
+                key_path,
+                priority.order.clone(),
+                r#"order must be "Ascending" or "Descending""#,
+            ));
+        }
+    }
+    errors
+}
+
+pub fn validate_counter_actions(
+    counters: &BTreeMap<String, CounterAction>,
+    path: &str,
+) -> Vec<ValidationError> {
+    let mut errors = Vec::new();
+    for (key, action) in counters {
+        let key_path = format!("{path}[{key}]");
+        if action.amount.is_some_and(|amount| amount < 0) {
+            errors.push(invalid(
+                format!("{key_path}.amount"),
+                action.amount.unwrap().to_string(),
+                "must be greater than or equal to 0",
+            ));
+        }
+        if action.capacity.is_some_and(|capacity| capacity < 0) {
+            errors.push(invalid(
+                format!("{key_path}.capacity"),
+                action.capacity.unwrap().to_string(),
+                "must be greater than or equal to 0",
+            ));
+        }
+        if action.amount.is_some() && action.action.is_none() {
+            errors.push(invalid(
+                key_path.clone(),
+                "null",
+                r#"action must be "Increment" or "Decrement" if the amount is not nil"#,
+            ));
+        }
+        if action.amount.is_none() && action.action.is_some() {
+            errors.push(invalid(
+                key_path,
+                "null",
+                "amount must not be nil if action is not nil",
+            ));
+        }
+    }
+    errors
+}
+
+pub fn validate_list_actions(
+    lists: &BTreeMap<String, ListAction>,
+    path: &str,
+) -> Vec<ValidationError> {
+    let mut errors = Vec::new();
+    for (key, action) in lists {
+        if action.capacity.is_some_and(|capacity| capacity < 0) {
+            errors.push(invalid(
+                format!("{path}[{key}].capacity"),
+                action.capacity.unwrap().to_string(),
+                "must be greater than or equal to 0",
+            ));
+        }
+    }
+    errors
+}
+
+impl MetaPatch {
+    pub fn validate(&self, path: &str) -> Vec<ValidationError> {
+        let metadata = ObjectMeta {
+            labels: self.labels.clone(),
+            annotations: self.annotations.clone(),
+            ..Default::default()
+        };
+        crate::gameserver::validate_object_meta(&metadata, path)
+    }
+}
+
 impl GameServerAllocation {
     pub fn apply_defaults(&mut self) {
         if self.spec.scheduling.is_none() {
@@ -330,6 +631,38 @@ impl GameServerAllocation {
             selectors.push(self.spec.required.clone());
             self.spec.selectors = selectors;
         }
+    }
+
+    pub fn validate(&self) -> Vec<ValidationError> {
+        let mut errors = Vec::new();
+
+        match self.spec.scheduling.as_ref() {
+            Some(SchedulingStrategy::Packed | SchedulingStrategy::Distributed) => {}
+            Some(value) => errors.push(not_supported(
+                "spec.scheduling",
+                value.as_str(),
+                "supported values: Packed, Distributed",
+            )),
+            None => errors.push(not_supported(
+                "spec.scheduling",
+                "",
+                "supported values: Packed, Distributed",
+            )),
+        }
+
+        errors.extend(self.spec.required.validate("spec.required"));
+        for (index, selector) in self.spec.preferred.iter().enumerate() {
+            errors.extend(selector.validate(&format!("spec.preferred[{index}]")));
+        }
+        for (index, selector) in self.spec.selectors.iter().enumerate() {
+            errors.extend(selector.validate(&format!("spec.selectors[{index}]")));
+        }
+
+        errors.extend(validate_priorities(&self.spec.priorities, "spec.priorities"));
+        errors.extend(validate_counter_actions(&self.spec.counters, "spec.counters"));
+        errors.extend(validate_list_actions(&self.spec.lists, "spec.lists"));
+        errors.extend(self.spec.metadata.validate("spec.metadata"));
+        errors
     }
 
     pub fn sort_key(&self) -> Result<u64, serde_json::Error> {
@@ -620,6 +953,291 @@ mod tests {
             ..Default::default()
         };
         assert!(selector.matches(&labels));
+    }
+
+    #[test]
+    fn selector_validation_matches_state_counter_and_list_invariants() {
+        let valid = GameServerSelector {
+            game_server_state: Some(GameServerState::Allocated),
+            ..Default::default()
+        };
+        assert!(valid.validate("fieldName").is_empty());
+
+        let invalid_state = GameServerSelector {
+            game_server_state: Some(GameServerState::Starting),
+            ..Default::default()
+        };
+        let errors = invalid_state.validate("fieldName");
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].path, "fieldName.gameServerState");
+        assert_eq!(
+            errors[0].detail,
+            "GameServerState must be either Allocated or Ready"
+        );
+
+        let invalid_counter = GameServerSelector {
+            counters: BTreeMap::from([(
+                "counter".into(),
+                CounterSelector {
+                    min_available: -1,
+                    max_available: -1,
+                    ..Default::default()
+                },
+            )]),
+            ..Default::default()
+        };
+        let errors = invalid_counter.validate("fieldName");
+        assert_eq!(errors.len(), 2);
+        assert_eq!(
+            errors[0].path,
+            "fieldName.counters[counter].minAvailable"
+        );
+        assert_eq!(
+            errors[1].path,
+            "fieldName.counters[counter].maxAvailable"
+        );
+
+        let inverted_counter = GameServerSelector {
+            counters: BTreeMap::from([(
+                "foo".into(),
+                CounterSelector {
+                    min_count: 10,
+                    max_count: 1,
+                    ..Default::default()
+                },
+            )]),
+            ..Default::default()
+        };
+        let errors = inverted_counter.validate("fieldName");
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].path, "fieldName.counters[foo]");
+        assert_eq!(
+            errors[0].detail,
+            "maxCount must zero or greater than minCount 10"
+        );
+
+        let invalid_list = GameServerSelector {
+            lists: BTreeMap::from([(
+                "list".into(),
+                ListSelector {
+                    min_available: 11,
+                    max_available: 2,
+                    ..Default::default()
+                },
+            )]),
+            ..Default::default()
+        };
+        let errors = invalid_list.validate("fieldName");
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].path, "fieldName.lists[list]");
+        assert_eq!(
+            errors[0].detail,
+            "maxAvailable must zero or greater than minAvailable 11"
+        );
+    }
+
+    #[test]
+    fn selector_validation_rejects_invalid_label_selector() {
+        let selector = GameServerSelector {
+            label_selector: LabelSelector {
+                match_labels: BTreeMap::from([("$$".into(), "true".into())]),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let errors = selector.validate("fieldName");
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].path, "fieldName.labelSelector");
+    }
+
+    #[test]
+    fn metadata_patch_validation_matches_agones_paths() {
+        let valid = MetaPatch {
+            labels: BTreeMap::from([("foo".into(), "bar".into())]),
+            annotations: BTreeMap::from([("bar".into(), "anything $$".into())]),
+        };
+        assert!(valid.validate("spec.metadata").is_empty());
+
+        let mut invalid = valid.clone();
+        invalid.labels.insert("$$".into(), "no".into());
+        let errors = invalid.validate("spec.metadata");
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].path, "spec.metadata.labels");
+
+        invalid
+            .annotations
+            .insert("$$".into(), "no".into());
+        let errors = invalid.validate("spec.metadata");
+        assert_eq!(errors.len(), 2);
+        assert_eq!(errors[0].path, "spec.metadata.labels");
+        assert_eq!(errors[1].path, "spec.metadata.annotations");
+    }
+
+    #[test]
+    fn priority_validation_matches_original_matrix() {
+        let valid = vec![
+            Priority {
+                priority_type: GAME_SERVER_PRIORITY_LIST.into(),
+                key: "test".into(),
+                order: GAME_SERVER_PRIORITY_ASCENDING.into(),
+            },
+            Priority {
+                priority_type: GAME_SERVER_PRIORITY_COUNTER.into(),
+                key: "test".into(),
+                order: GAME_SERVER_PRIORITY_DESCENDING.into(),
+            },
+        ];
+        assert!(validate_priorities(&valid, "spec.Priorities").is_empty());
+
+        for invalid_priority in [
+            Priority {
+                key: "test".into(),
+                order: GAME_SERVER_PRIORITY_DESCENDING.into(),
+                ..Default::default()
+            },
+            Priority {
+                priority_type: "invalid".into(),
+                key: "test".into(),
+                order: GAME_SERVER_PRIORITY_DESCENDING.into(),
+            },
+            Priority {
+                priority_type: GAME_SERVER_PRIORITY_COUNTER.into(),
+                order: GAME_SERVER_PRIORITY_DESCENDING.into(),
+                ..Default::default()
+            },
+            Priority {
+                priority_type: GAME_SERVER_PRIORITY_LIST.into(),
+                key: "test".into(),
+                ..Default::default()
+            },
+            Priority {
+                priority_type: GAME_SERVER_PRIORITY_LIST.into(),
+                key: "test".into(),
+                order: "invalid".into(),
+            },
+        ] {
+            assert!(!validate_priorities(&[invalid_priority], "spec.Priorities").is_empty());
+        }
+    }
+
+    #[test]
+    fn counter_and_list_action_validation_matches_original_behavior() {
+        let valid_counters = BTreeMap::from([
+            (
+                "foo".into(),
+                CounterAction {
+                    action: Some("Increment".into()),
+                    amount: Some(10),
+                    ..Default::default()
+                },
+            ),
+            (
+                "bar".into(),
+                CounterAction {
+                    capacity: Some(100),
+                    ..Default::default()
+                },
+            ),
+            (
+                "baz".into(),
+                CounterAction {
+                    action: Some("Decrement".into()),
+                    amount: Some(1000),
+                    capacity: Some(0),
+                },
+            ),
+        ]);
+        assert!(validate_counter_actions(&valid_counters, "spec.Counters").is_empty());
+
+        for invalid_action in [
+            CounterAction {
+                action: Some("Increment".into()),
+                amount: Some(-1),
+                ..Default::default()
+            },
+            CounterAction {
+                capacity: Some(-20),
+                ..Default::default()
+            },
+            CounterAction {
+                amount: Some(10),
+                ..Default::default()
+            },
+            CounterAction {
+                action: Some("Decrement".into()),
+                ..Default::default()
+            },
+        ] {
+            assert!(!validate_counter_actions(
+                &BTreeMap::from([("foo".into(), invalid_action)]),
+                "spec.Counters",
+            )
+            .is_empty());
+        }
+
+        let arbitrary_action_is_preserved = CounterAction {
+            action: Some("NotAnAgonesAction".into()),
+            amount: Some(1),
+            ..Default::default()
+        };
+        assert!(validate_counter_actions(
+            &BTreeMap::from([("foo".into(), arbitrary_action_is_preserved)]),
+            "spec.Counters",
+        )
+        .is_empty());
+
+        assert!(validate_list_actions(
+            &BTreeMap::from([(
+                "foo".into(),
+                ListAction {
+                    add_values: vec!["hello".into(), "world".into()],
+                    capacity: Some(10),
+                    ..Default::default()
+                },
+            )]),
+            "spec.Lists",
+        )
+        .is_empty());
+        assert!(!validate_list_actions(
+            &BTreeMap::from([(
+                "foo".into(),
+                ListAction {
+                    capacity: Some(-20),
+                    ..Default::default()
+                },
+            )]),
+            "spec.Lists",
+        )
+        .is_empty());
+    }
+
+    #[test]
+    fn allocation_validation_matches_scheduling_and_metadata_behavior() {
+        let mut allocation = GameServerAllocation::default();
+        allocation.apply_defaults();
+        assert!(allocation.validate().is_empty());
+
+        allocation.spec.scheduling = Some(SchedulingStrategy::from("FLERG"));
+        let errors = allocation.validate();
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].kind, ValidationErrorKind::NotSupported);
+        assert_eq!(errors[0].path, "spec.scheduling");
+
+        allocation = GameServerAllocation {
+            spec: GameServerAllocationSpec {
+                metadata: MetaPatch {
+                    labels: BTreeMap::from([("$$".into(), "foo".into())]),
+                    ..Default::default()
+                },
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        allocation.apply_defaults();
+        let errors = allocation.validate();
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].kind, ValidationErrorKind::Invalid);
+        assert_eq!(errors[0].path, "spec.metadata.labels");
     }
 
     #[test]
