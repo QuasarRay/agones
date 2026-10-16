@@ -81,6 +81,100 @@ impl GameServerSelector {
             self.game_server_state = Some(GameServerState::Ready);
         }
     }
+
+    pub fn matches(&self, game_server: &crate::GameServer) -> bool {
+        if !self.label_selector.matches(&game_server.metadata.labels) {
+            return false;
+        }
+
+        if let Some(state) = &self.game_server_state {
+            if game_server.status.state.as_ref() != Some(state) {
+                return false;
+            }
+        }
+
+        if !self.counters.is_empty() && !self.match_counters(game_server) {
+            return false;
+        }
+        if !self.lists.is_empty() && !self.match_lists(game_server) {
+            return false;
+        }
+        true
+    }
+
+    fn match_counters(&self, game_server: &crate::GameServer) -> bool {
+        let Some(counters) = game_server.status.counters.as_ref() else {
+            return false;
+        };
+
+        self.counters.iter().all(|(name, selector)| {
+            let Some(status) = counters.get(name) else {
+                return false;
+            };
+            let available = status.capacity.wrapping_sub(status.count);
+            if available < selector.min_available
+                || (selector.max_available != 0 && available > selector.max_available)
+            {
+                return false;
+            }
+            if status.count < selector.min_count
+                || (selector.max_count != 0 && status.count > selector.max_count)
+            {
+                return false;
+            }
+            true
+        })
+    }
+
+    fn match_lists(&self, game_server: &crate::GameServer) -> bool {
+        let Some(lists) = game_server.status.lists.as_ref() else {
+            return false;
+        };
+
+        self.lists.iter().all(|(name, selector)| {
+            let Some(status) = lists.get(name) else {
+                return false;
+            };
+            let available = status
+                .capacity
+                .wrapping_sub(status.values.len() as i64);
+            if available < selector.min_available
+                || (selector.max_available != 0 && available > selector.max_available)
+            {
+                return false;
+            }
+            selector.contains_value.is_empty()
+                || status
+                    .values
+                    .iter()
+                    .any(|value| value == &selector.contains_value)
+        })
+    }
+}
+
+impl LabelSelector {
+    pub fn matches(&self, labels: &BTreeMap<String, String>) -> bool {
+        if !self
+            .match_labels
+            .iter()
+            .all(|(key, value)| labels.get(key) == Some(value))
+        {
+            return false;
+        }
+
+        self.match_expressions.iter().all(|requirement| {
+            let current = labels.get(&requirement.key);
+            match requirement.operator.as_str() {
+                "In" => current.is_some_and(|value| requirement.values.contains(value)),
+                "NotIn" => current.is_none_or(|value| !requirement.values.contains(value)),
+                "Exists" => current.is_some(),
+                "DoesNotExist" => current.is_none(),
+                invalid => panic!(
+                    "GameServerSelector validation required before matching: unsupported label selector operator {invalid}"
+                ),
+            }
+        })
+    }
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -259,6 +353,274 @@ impl GameServerAllocation {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn game_server_with_labels(labels: &[(&str, &str)]) -> crate::GameServer {
+        crate::GameServer {
+            metadata: ObjectMeta {
+                labels: labels
+                    .iter()
+                    .map(|(key, value)| ((*key).to_owned(), (*value).to_owned()))
+                    .collect(),
+                ..Default::default()
+            },
+            ..Default::default()
+        }
+    }
+
+    #[test]
+    fn selector_matching_matches_original_label_and_state_cases() {
+        let blue = GameServerSelector {
+            label_selector: LabelSelector {
+                match_labels: BTreeMap::from([("colour".into(), "blue".into())]),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+
+        assert!(GameServerSelector::default().matches(&crate::GameServer::default()));
+        assert!(!blue.matches(&crate::GameServer::default()));
+        assert!(blue.matches(&game_server_with_labels(&[("colour", "blue")])));
+        assert!(!blue.matches(&game_server_with_labels(&[("colour", "purple")])));
+
+        let two_labels = GameServerSelector {
+            label_selector: LabelSelector {
+                match_labels: BTreeMap::from([
+                    ("colour".into(), "blue".into()),
+                    ("animal".into(), "frog".into()),
+                ]),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        assert!(two_labels.matches(&game_server_with_labels(&[
+            ("colour", "blue"),
+            ("animal", "frog"),
+        ])));
+        assert!(!two_labels.matches(&game_server_with_labels(&[
+            ("colour", "blue"),
+            ("animal", "cat"),
+        ])));
+
+        let state_selector = GameServerSelector {
+            game_server_state: Some(GameServerState::Allocated),
+            ..Default::default()
+        };
+        let allocated = crate::GameServer {
+            status: crate::GameServerStatus {
+                state: Some(GameServerState::Allocated),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let ready = crate::GameServer {
+            status: crate::GameServerStatus {
+                state: Some(GameServerState::Ready),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        assert!(state_selector.matches(&allocated));
+        assert!(!state_selector.matches(&ready));
+    }
+
+    #[test]
+    fn selector_matching_preserves_counter_range_semantics() {
+        let make = |count, capacity| crate::GameServer {
+            status: crate::GameServerStatus {
+                counters: Some(BTreeMap::from([(
+                    "value".into(),
+                    CounterStatus { count, capacity },
+                )])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+
+        let available = GameServerSelector {
+            counters: BTreeMap::from([(
+                "value".into(),
+                CounterSelector {
+                    min_available: 1,
+                    max_available: 1000,
+                    ..Default::default()
+                },
+            )]),
+            ..Default::default()
+        };
+        assert!(available.matches(&make(10, 1000)));
+
+        let minimum = GameServerSelector {
+            counters: BTreeMap::from([(
+                "value".into(),
+                CounterSelector {
+                    min_available: 100,
+                    ..Default::default()
+                },
+            )]),
+            ..Default::default()
+        };
+        assert!(!minimum.matches(&make(999, 1000)));
+
+        let maximum = GameServerSelector {
+            counters: BTreeMap::from([(
+                "value".into(),
+                CounterSelector {
+                    min_available: 1,
+                    max_available: 100,
+                    ..Default::default()
+                },
+            )]),
+            ..Default::default()
+        };
+        assert!(!maximum.matches(&make(0, 1000)));
+
+        let unlimited_max_count = GameServerSelector {
+            counters: BTreeMap::from([(
+                "value".into(),
+                CounterSelector {
+                    min_count: 1,
+                    max_count: 0,
+                    ..Default::default()
+                },
+            )]),
+            ..Default::default()
+        };
+        assert!(unlimited_max_count.matches(&make(10, 1000)));
+
+        let bounded_count = GameServerSelector {
+            counters: BTreeMap::from([(
+                "value".into(),
+                CounterSelector {
+                    max_count: 10,
+                    ..Default::default()
+                },
+            )]),
+            ..Default::default()
+        };
+        assert!(!bounded_count.matches(&make(11, 100)));
+
+        let missing = GameServerSelector {
+            counters: BTreeMap::from([("missing".into(), CounterSelector::default())]),
+            ..Default::default()
+        };
+        assert!(!missing.matches(&make(1, 100)));
+        assert!(!missing.matches(&crate::GameServer::default()));
+    }
+
+    #[test]
+    fn selector_matching_preserves_list_capacity_and_contains_semantics() {
+        let make = |capacity, values: &[&str]| crate::GameServer {
+            status: crate::GameServerStatus {
+                lists: Some(BTreeMap::from([(
+                    "value".into(),
+                    ListStatus {
+                        capacity,
+                        values: values.iter().map(|value| (*value).to_owned()).collect(),
+                    },
+                )])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+
+        let capacity = GameServerSelector {
+            lists: BTreeMap::from([(
+                "value".into(),
+                ListSelector {
+                    min_available: 1,
+                    max_available: 3,
+                    ..Default::default()
+                },
+            )]),
+            ..Default::default()
+        };
+        assert!(capacity.matches(&make(3, &["one", "two"])));
+
+        let below_min = GameServerSelector {
+            lists: BTreeMap::from([(
+                "value".into(),
+                ListSelector {
+                    min_available: 1,
+                    max_available: 1000,
+                    ..Default::default()
+                },
+            )]),
+            ..Default::default()
+        };
+        assert!(!below_min.matches(&make(3, &["one", "two", "three"])));
+
+        let above_max = GameServerSelector {
+            lists: BTreeMap::from([(
+                "value".into(),
+                ListSelector {
+                    min_available: 1,
+                    max_available: 10,
+                    ..Default::default()
+                },
+            )]),
+            ..Default::default()
+        };
+        assert!(!above_max.matches(&make(1000, &["one", "two", "three"])));
+
+        let contains = GameServerSelector {
+            lists: BTreeMap::from([(
+                "value".into(),
+                ListSelector {
+                    contains_value: "baz1".into(),
+                    ..Default::default()
+                },
+            )]),
+            ..Default::default()
+        };
+        assert!(contains.matches(&make(3, &["baz1", "baz2", "baz3"])));
+
+        let case_sensitive = GameServerSelector {
+            lists: BTreeMap::from([(
+                "value".into(),
+                ListSelector {
+                    contains_value: "BAZ1".into(),
+                    ..Default::default()
+                },
+            )]),
+            ..Default::default()
+        };
+        assert!(!case_sensitive.matches(&make(3, &["baz1", "baz2", "baz3"])));
+        assert!(!case_sensitive.matches(&crate::GameServer::default()));
+    }
+
+    #[test]
+    fn label_selector_expressions_follow_kubernetes_operator_semantics() {
+        let labels = BTreeMap::from([
+            ("region".into(), "us".into()),
+            ("tier".into(), "prod".into()),
+        ]);
+        let selector = LabelSelector {
+            match_expressions: vec![
+                LabelSelectorRequirement {
+                    key: "region".into(),
+                    operator: "In".into(),
+                    values: vec!["us".into(), "eu".into()],
+                },
+                LabelSelectorRequirement {
+                    key: "tier".into(),
+                    operator: "NotIn".into(),
+                    values: vec!["dev".into()],
+                },
+                LabelSelectorRequirement {
+                    key: "region".into(),
+                    operator: "Exists".into(),
+                    values: Vec::new(),
+                },
+                LabelSelectorRequirement {
+                    key: "debug".into(),
+                    operator: "DoesNotExist".into(),
+                    values: Vec::new(),
+                },
+            ],
+            ..Default::default()
+        };
+        assert!(selector.matches(&labels));
+    }
 
     #[test]
     fn allocation_defaults_match_original_go_behavior() {
