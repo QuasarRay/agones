@@ -56,6 +56,8 @@ fn render_template(
 ) -> String {
     let mut output = String::new();
     let mut stack = Vec::<bool>::new();
+    let has_definition = source.lines().any(|line| line.trim().starts_with("{{- define "));
+    let mut inside_definition = !has_definition;
 
     for line in source.lines() {
         let trimmed = line.trim();
@@ -65,6 +67,7 @@ fn render_template(
         }
         if trimmed.starts_with("{{- define ") {
             stack.push(true);
+            inside_definition = true;
             continue;
         }
         if trimmed.starts_with("{{- if ") {
@@ -73,10 +76,13 @@ fn render_template(
         }
         if trimmed.starts_with("{{- end") {
             stack.pop().expect("unbalanced Helm end directive");
+            if has_definition && stack.is_empty() {
+                inside_definition = false;
+            }
             continue;
         }
 
-        let active = stack.iter().all(|value| *value);
+        let active = inside_definition && stack.iter().all(|value| *value);
         if !active {
             continue;
         }
