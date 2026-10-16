@@ -1612,6 +1612,7 @@ mod tests {
                     ..Default::default()
                 },
             ],
+            ..Default::default()
         };
         gs.apply_to_pod_container(&mut pod, "game", |c| c.tty = true)
             .unwrap();
