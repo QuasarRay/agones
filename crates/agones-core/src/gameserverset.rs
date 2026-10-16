@@ -301,7 +301,6 @@ mod tests {
             },
             spec: GameServerSetSpec {
                 replicas: 10,
-                scheduling: Some(SchedulingStrategy::Packed),
                 template: GameServerTemplateSpec {
                     spec: game_server_spec(),
                     ..Default::default()
