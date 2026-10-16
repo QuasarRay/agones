@@ -494,14 +494,14 @@ fn validate_object_meta(meta: &ObjectMeta, path: &str) -> Vec<ValidationError> {
         if let Some(detail) = qualified_name_error(key) {
             errors.push(ValidationError::invalid(
                 format!("{path}.labels"),
-                key,
+                key.as_str(),
                 detail,
             ));
         }
         if value.len() > 63 {
             errors.push(ValidationError::invalid(
                 format!("{path}.labels"),
-                value,
+                value.as_str(),
                 "must be no more than 63 bytes",
             ));
         }
@@ -510,7 +510,7 @@ fn validate_object_meta(meta: &ObjectMeta, path: &str) -> Vec<ValidationError> {
         if let Some(detail) = qualified_name_error(key) {
             errors.push(ValidationError::invalid(
                 format!("{path}.annotations"),
-                key,
+                key.as_str(),
                 detail,
             ));
         }
@@ -576,7 +576,7 @@ impl GameServerSpec {
         if !self.has_container(&self.container, false) {
             errors.push(ValidationError::invalid(
                 "spec.container",
-                &self.container,
+                self.container.as_str(),
                 format!("Could not find a container named {}", self.container),
             ));
         }
@@ -584,7 +584,7 @@ impl GameServerSpec {
         for (index, port) in self.ports.iter().enumerate() {
             let prefix = format!("spec.ports[{index}]");
             if matches!(
-                port.port_policy,
+                port.port_policy.as_ref(),
                 Some(PortPolicy::Dynamic | PortPolicy::Static)
             ) && port.container_port <= 0
             {
@@ -603,7 +603,7 @@ impl GameServerSpec {
 
             if port.host_port > 0
                 && matches!(
-                    port.port_policy,
+                    port.port_policy.as_ref(),
                     Some(PortPolicy::Dynamic | PortPolicy::Passthrough)
                 )
             {
@@ -740,7 +740,7 @@ impl GameServer {
         if self.metadata.name.len() > 63 {
             errors.push(ValidationError::too_long(
                 "metadata.name",
-                &self.metadata.name,
+                self.metadata.name.as_str(),
                 63,
             ));
         }
@@ -750,7 +750,7 @@ impl GameServer {
 
     pub fn is_deletable(&self) -> bool {
         if matches!(
-            self.status.state,
+            self.status.state.as_ref(),
             Some(GameServerState::Allocated | GameServerState::Reserved)
         ) {
             return self.metadata.deletion_timestamp.is_some();
@@ -765,7 +765,7 @@ impl GameServer {
 
     pub fn is_before_ready(&self) -> bool {
         matches!(
-            self.status.state,
+            self.status.state.as_ref(),
             Some(
                 GameServerState::PortAllocation
                     | GameServerState::Creating
@@ -778,7 +778,7 @@ impl GameServer {
 
     pub fn is_active(&self) -> bool {
         matches!(
-            self.status.state,
+            self.status.state.as_ref(),
             Some(
                 GameServerState::Allocated
                     | GameServerState::Ready
@@ -995,7 +995,9 @@ mod tests {
                         containers: vec![Container {
                             name: "testing".into(),
                             image: "testing/image".into(),
+                            ..Default::default()
                         }],
+                        ..Default::default()
                     },
                     ..Default::default()
                 },
@@ -1082,9 +1084,18 @@ mod tests {
                 template: PodTemplateSpec {
                     spec: PodSpec {
                         containers: vec![
-                            Container { name: "testing".into(), image: "testing/image".into() },
-                            Container { name: "testing2".into(), image: "testing/image2".into() },
+                            Container {
+                                name: "testing".into(),
+                                image: "testing/image".into(),
+                                ..Default::default()
+                            },
+                            Container {
+                                name: "testing2".into(),
+                                image: "testing/image2".into(),
+                                ..Default::default()
+                            },
                         ],
+                        ..Default::default()
                     },
                     ..Default::default()
                 },
