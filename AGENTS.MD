@@ -16,7 +16,7 @@
 
 7. This AGENTS.MD file must exist in every directory of this project
 
-8. Do not modify main branch. always work in Agones-rs-dev branch
+8. Do not modify main branch. always work in agones-rs-dev branch
 
 
 Target Project Repo: https://github.com/QuasarRay/agones.git
