@@ -3,7 +3,7 @@
 //! This crate is the only layer that depends on Rusternetes runtime/API types.
 //! `agones-core` remains runtime-independent.
 
-use std::collections::HashMap;
+use std::collections::{BTreeMap, HashMap};
 use std::error::Error;
 use std::fmt;
 
@@ -212,7 +212,7 @@ pub fn build_pod(
         .get_or_insert_with(Vec::new)
         .push(owner);
 
-    let mut passthrough: HashMap<String, Vec<usize>> = HashMap::new();
+    let mut passthrough: BTreeMap<String, Vec<usize>> = BTreeMap::new();
     for game_port in &game_server.spec.ports {
         let container_name = game_port
             .container
@@ -412,6 +412,194 @@ mod tests {
     }
 
     #[test]
+    fn hostname_rewrites_dots_but_preserves_explicit_template_hostname() {
+        let gs = fixture();
+        let pod = build_pod(
+            &gs,
+            Vec::new(),
+            PodBuildFeatures::default(),
+            &NoopApiHooks,
+        )
+        .unwrap();
+        assert_eq!(pod.spec.unwrap().hostname.as_deref(), Some("game-server"));
+
+        let mut explicit = fixture();
+        explicit.spec.template.spec.extensions.insert(
+            "hostname".into(),
+            serde_json::Value::String("ORANGE".into()),
+        );
+        let pod = build_pod(
+            &explicit,
+            Vec::new(),
+            PodBuildFeatures::default(),
+            &NoopApiHooks,
+        )
+        .unwrap();
+        assert_eq!(pod.spec.unwrap().hostname.as_deref(), Some("ORANGE"));
+    }
+
+    #[test]
+    fn missing_port_container_returns_original_error_shape() {
+        let mut gs = fixture();
+        gs.spec.ports[0].container = Some("missing".into());
+        let error = build_pod(
+            &gs,
+            Vec::new(),
+            PodBuildFeatures::default(),
+            &NoopApiHooks,
+        )
+        .unwrap_err();
+        assert_eq!(
+            error.to_string(),
+            "failed to find container named missing in pod spec"
+        );
+    }
+
+    #[test]
+    fn regular_sidecars_are_prepended_and_template_service_account_is_preserved() {
+        let mut gs = fixture();
+        gs.spec.template.spec.extensions.insert(
+            "serviceAccountName".into(),
+            serde_json::Value::String("other-agones-sdk".into()),
+        );
+        let sidecar = Container {
+            name: "sidecar".into(),
+            image: "container/sidecar".into(),
+            ..Default::default()
+        };
+
+        let pod = build_pod(
+            &gs,
+            vec![sidecar],
+            PodBuildFeatures {
+                sidecar_containers: false,
+            },
+            &NoopApiHooks,
+        )
+        .unwrap();
+        let spec = pod.spec.unwrap();
+        assert_eq!(spec.service_account_name.as_deref(), Some("other-agones-sdk"));
+        assert_eq!(spec.containers.len(), 2);
+        assert_eq!(spec.containers[0].name, "sidecar");
+        assert_eq!(spec.containers[1].name, "game");
+    }
+
+    #[test]
+    fn init_sidecars_prepend_existing_init_containers_and_force_always() {
+        let mut gs = fixture();
+        gs.spec.template.spec.init_containers = vec![
+            CoreContainer {
+                name: "existing-init-1".into(),
+                image: "existing/init1".into(),
+                ..Default::default()
+            },
+            CoreContainer {
+                name: "existing-init-2".into(),
+                image: "existing/init2".into(),
+                ..Default::default()
+            },
+        ];
+
+        let sidecars = vec![
+            Container {
+                name: "sidecar-1".into(),
+                image: "container/sidecar1".into(),
+                ..Default::default()
+            },
+            Container {
+                name: "sidecar-2".into(),
+                image: "container/sidecar2".into(),
+                ..Default::default()
+            },
+        ];
+
+        let pod = build_pod(
+            &gs,
+            sidecars,
+            PodBuildFeatures {
+                sidecar_containers: true,
+            },
+            &NoopApiHooks,
+        )
+        .unwrap();
+        let spec = pod.spec.unwrap();
+        let init = spec.init_containers.unwrap();
+        assert_eq!(
+            init.iter().map(|container| container.name.as_str()).collect::<Vec<_>>(),
+            vec!["sidecar-1", "sidecar-2", "existing-init-1", "existing-init-2"]
+        );
+        assert_eq!(init[0].restart_policy.as_deref(), Some("Always"));
+        assert_eq!(init[1].restart_policy.as_deref(), Some("Always"));
+        assert_eq!(spec.restart_policy.as_deref(), Some("Never"));
+    }
+
+    #[test]
+    fn multiple_port_allocations_target_the_declared_containers() {
+        let mut gs = fixture();
+        gs.spec.template.spec.containers.push(CoreContainer {
+            name: "authContainer".into(),
+            image: "auth:v1".into(),
+            ..Default::default()
+        });
+        gs.spec.ports.push(GameServerPort {
+            name: "auth".into(),
+            port_policy: Some(PortPolicy::Dynamic),
+            container: Some("authContainer".into()),
+            container_port: 5000,
+            host_port: 6000,
+            protocol: Some(Protocol::Udp),
+            ..Default::default()
+        });
+
+        let pod = build_pod(
+            &gs,
+            Vec::new(),
+            PodBuildFeatures::default(),
+            &NoopApiHooks,
+        )
+        .unwrap();
+        let spec = pod.spec.unwrap();
+        let game_port = &spec.containers[0].ports.as_ref().unwrap()[0];
+        let auth_port = &spec.containers[1].ports.as_ref().unwrap()[0];
+        assert_eq!(game_port.container_port, 7777);
+        assert_eq!(game_port.host_port, Some(9999));
+        assert_eq!(auth_port.container_port, 5000);
+        assert_eq!(auth_port.host_port, Some(6000));
+    }
+
+    #[test]
+    fn distributed_scheduling_does_not_add_packed_affinity() {
+        let mut gs = fixture();
+        gs.spec.scheduling = Some(SchedulingStrategy::Distributed);
+        let pod = build_pod(
+            &gs,
+            Vec::new(),
+            PodBuildFeatures::default(),
+            &NoopApiHooks,
+        )
+        .unwrap();
+        assert!(pod.spec.unwrap().affinity.is_none());
+    }
+
+    #[test]
+    fn controller_reference_matches_kubernetes_new_controller_ref() {
+        let gs = fixture();
+        let pod = build_pod(
+            &gs,
+            Vec::new(),
+            PodBuildFeatures::default(),
+            &NoopApiHooks,
+        )
+        .unwrap();
+        let owner = &pod.metadata.owner_references.as_ref().unwrap()[0];
+        assert_eq!(owner.kind, "GameServer");
+        assert_eq!(owner.name, "game.server");
+        assert_eq!(owner.uid, "1234");
+        assert_eq!(owner.controller, Some(true));
+        assert_eq!(owner.block_owner_deletion, Some(true));
+    }
+
+    #[test]
     fn sidecar_feature_uses_restartable_init_containers() {
         let gs = fixture();
         let sidecar = Container {
@@ -451,6 +639,79 @@ mod tests {
             [PASSTHROUGH_PORT_ASSIGNMENT_ANNOTATION];
         let map: HashMap<String, Vec<usize>> = serde_json::from_str(annotation).unwrap();
         assert_eq!(map["game"], vec![0]);
+    }
+
+    #[test]
+    fn passthrough_annotation_is_deterministic_for_multiple_containers() {
+        let mut gs = fixture();
+        gs.spec.template.spec.containers.extend([
+            CoreContainer {
+                name: "containerTwo".into(),
+                image: "two:v1".into(),
+                ..Default::default()
+            },
+            CoreContainer {
+                name: "containerThree".into(),
+                image: "three:v1".into(),
+                ..Default::default()
+            },
+        ]);
+        gs.spec.ports = vec![
+            GameServerPort {
+                port_policy: Some(PortPolicy::Passthrough),
+                container: Some("game".into()),
+                container_port: 7001,
+                host_port: 7001,
+                protocol: Some(Protocol::Udp),
+                ..Default::default()
+            },
+            GameServerPort {
+                port_policy: Some(PortPolicy::Static),
+                container: Some("game".into()),
+                container_port: 7002,
+                host_port: 7002,
+                protocol: Some(Protocol::Udp),
+                ..Default::default()
+            },
+            GameServerPort {
+                port_policy: Some(PortPolicy::Passthrough),
+                container: Some("containerTwo".into()),
+                container_port: 7003,
+                host_port: 7003,
+                protocol: Some(Protocol::Udp),
+                ..Default::default()
+            },
+            GameServerPort {
+                port_policy: Some(PortPolicy::Passthrough),
+                container: Some("game".into()),
+                container_port: 7004,
+                host_port: 7004,
+                protocol: Some(Protocol::Udp),
+                ..Default::default()
+            },
+            GameServerPort {
+                port_policy: Some(PortPolicy::Passthrough),
+                container: Some("containerThree".into()),
+                container_port: 7005,
+                host_port: 7005,
+                protocol: Some(Protocol::Udp),
+                ..Default::default()
+            },
+        ];
+
+        let pod = build_pod(
+            &gs,
+            Vec::new(),
+            PodBuildFeatures::default(),
+            &NoopApiHooks,
+        )
+        .unwrap();
+        let annotation = &pod.metadata.annotations.as_ref().unwrap()
+            [PASSTHROUGH_PORT_ASSIGNMENT_ANNOTATION];
+        assert_eq!(
+            annotation,
+            r#"{"containerThree":[0],"containerTwo":[0],"game":[0,2]}"#
+        );
     }
 
     #[test]
