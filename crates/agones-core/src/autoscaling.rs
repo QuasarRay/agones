@@ -4,7 +4,7 @@ use agones_macros::AgonesStringEnum;
 use base64::{engine::general_purpose::STANDARD as BASE64, Engine as _};
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
-use crate::{FleetStatus, IntOrPercent, ObjectMeta};
+use crate::{FleetStatus, IntOrPercent, ObjectMeta, ValidationError, ValidationErrorKind};
 
 pub const DEFAULT_INTERVAL_SYNC_SECONDS: i32 = 30;
 
@@ -306,6 +306,256 @@ pub struct FleetAutoscaleReview {
     pub response: Option<FleetAutoscaleResponse>,
 }
 
+
+fn validation_required(path: impl Into<String>, detail: impl Into<String>) -> ValidationError {
+    ValidationError {
+        kind: ValidationErrorKind::Required,
+        path: path.into(),
+        bad_value: None,
+        detail: detail.into(),
+    }
+}
+
+fn validation_invalid(
+    path: impl Into<String>,
+    bad_value: impl Into<String>,
+    detail: impl Into<String>,
+) -> ValidationError {
+    ValidationError {
+        kind: ValidationErrorKind::Invalid,
+        path: path.into(),
+        bad_value: Some(bad_value.into()),
+        detail: detail.into(),
+    }
+}
+
+fn percent_value(value: &IntOrPercent) -> Result<i32, ()> {
+    match value {
+        IntOrPercent::Int(value) => Ok(*value),
+        IntOrPercent::String(value) => value
+            .strip_suffix('%')
+            .ok_or(())
+            .and_then(|value| value.parse::<i32>().map_err(|_| ())),
+    }
+}
+
+fn validate_buffer_value(
+    buffer_size: &IntOrPercent,
+    min: i64,
+    max: i64,
+    path: &str,
+    min_field: &str,
+    max_field: &str,
+) -> Vec<ValidationError> {
+    let mut errors = Vec::new();
+
+    match buffer_size {
+        IntOrPercent::Int(buffer) => {
+            let buffer = i64::from(*buffer);
+            if buffer <= 0 {
+                errors.push(validation_invalid(
+                    format!("{path}.bufferSize"),
+                    buffer.to_string(),
+                    "must be greater than or equal to 0",
+                ));
+            }
+            if max < buffer {
+                errors.push(validation_invalid(
+                    format!("{path}.{max_field}"),
+                    max.to_string(),
+                    format!("{max_field} should be bigger than or equal to bufferSize"),
+                ));
+            }
+            if min != 0 && min < buffer {
+                errors.push(validation_invalid(
+                    format!("{path}.{min_field}"),
+                    min.to_string(),
+                    format!("{min_field} should be bigger than or equal to bufferSize"),
+                ));
+            }
+        }
+        IntOrPercent::String(value) => {
+            let valid = percent_value(buffer_size)
+                .is_ok_and(|percent| (1..=99).contains(&percent));
+            if !valid {
+                errors.push(validation_invalid(
+                    format!("{path}.bufferSize"),
+                    value.clone(),
+                    "bufferSize should be between 1% and 99%",
+                ));
+            }
+            if min < 1 {
+                errors.push(validation_invalid(
+                    format!("{path}.{min_field}"),
+                    min.to_string(),
+                    "must be greater than or equal to 0",
+                ));
+            }
+        }
+    }
+
+    errors
+}
+
+impl BufferPolicy {
+    pub fn validate(&self, path: &str) -> Vec<ValidationError> {
+        let mut errors = Vec::new();
+        if self.min_replicas > self.max_replicas {
+            errors.push(validation_invalid(
+                format!("{path}.minReplicas"),
+                self.min_replicas.to_string(),
+                "minReplicas should be smaller than maxReplicas",
+            ));
+        }
+        errors.extend(validate_buffer_value(
+            &self.buffer_size,
+            i64::from(self.min_replicas),
+            i64::from(self.max_replicas),
+            path,
+            "minReplicas",
+            "maxReplicas",
+        ));
+        errors
+    }
+}
+
+impl CounterPolicy {
+    pub fn validate(&self, path: &str) -> Vec<ValidationError> {
+        let mut errors = Vec::new();
+        if self.min_capacity > self.max_capacity {
+            errors.push(validation_invalid(
+                format!("{path}.minCapacity"),
+                self.min_capacity.to_string(),
+                "minCapacity should be smaller than maxCapacity",
+            ));
+        }
+        errors.extend(validate_buffer_value(
+            &self.buffer_size,
+            self.min_capacity,
+            self.max_capacity,
+            path,
+            "minCapacity",
+            "maxCapacity",
+        ));
+        if matches!(self.buffer_size, IntOrPercent::String(_)) && self.min_capacity < 1 {
+            if let Some(error) = errors
+                .iter_mut()
+                .find(|error| error.path == format!("{path}.minCapacity"))
+            {
+                if error.detail == "must be greater than or equal to 0" {
+                    error.bad_value = Some(match &self.buffer_size {
+                        IntOrPercent::String(value) => value.clone(),
+                        IntOrPercent::Int(value) => value.to_string(),
+                    });
+                    error.detail =
+                        " when bufferSize in percentage format is used, minCapacity should be more than 0"
+                            .to_owned();
+                }
+            }
+        }
+        errors
+    }
+}
+
+impl ListPolicy {
+    pub fn validate(&self, path: &str) -> Vec<ValidationError> {
+        let mut errors = Vec::new();
+        if self.min_capacity > self.max_capacity {
+            errors.push(validation_invalid(
+                format!("{path}.minCapacity"),
+                self.min_capacity.to_string(),
+                "minCapacity should be smaller than maxCapacity",
+            ));
+        }
+        errors.extend(validate_buffer_value(
+            &self.buffer_size,
+            self.min_capacity,
+            self.max_capacity,
+            path,
+            "minCapacity",
+            "maxCapacity",
+        ));
+        if matches!(self.buffer_size, IntOrPercent::String(_)) && self.min_capacity < 1 {
+            if let Some(error) = errors
+                .iter_mut()
+                .find(|error| error.path == format!("{path}.minCapacity"))
+            {
+                if error.detail == "must be greater than or equal to 0" {
+                    error.bad_value = Some(match &self.buffer_size {
+                        IntOrPercent::String(value) => value.clone(),
+                        IntOrPercent::Int(value) => value.to_string(),
+                    });
+                    error.detail =
+                        " when bufferSize in percentage format is used, minCapacity should be more than 0"
+                            .to_owned();
+                }
+            }
+        }
+        errors
+    }
+}
+
+impl FixedIntervalSync {
+    pub fn validate(&self, path: &str) -> Vec<ValidationError> {
+        if self.seconds <= 0 {
+            vec![validation_invalid(
+                format!("{path}.seconds"),
+                self.seconds.to_string(),
+                "must be greater than or equal to 0",
+            )]
+        } else {
+            Vec::new()
+        }
+    }
+}
+
+impl FleetAutoscalerPolicy {
+    /// Dependency-free subset of Agones policy validation. Webhook, Schedule,
+    /// Chain and Wasm validation is layered separately because those policies
+    /// require URL/PEM/timezone/cron parsing and runtime feature gates.
+    pub fn validate_core(&self, path: &str) -> Vec<ValidationError> {
+        match self.policy_type {
+            FleetAutoscalerPolicyType::Buffer => self
+                .buffer
+                .as_ref()
+                .map_or_else(
+                    || {
+                        vec![validation_required(
+                            format!("{path}.buffer"),
+                            "buffer policy config params are missing",
+                        )]
+                    },
+                    |buffer| buffer.validate(&format!("{path}.buffer")),
+                ),
+            FleetAutoscalerPolicyType::Counter => self
+                .counter
+                .as_ref()
+                .map_or_else(
+                    || {
+                        vec![validation_required(
+                            format!("{path}.counter"),
+                            "counter policy config params are missing",
+                        )]
+                    },
+                    |counter| counter.validate(&format!("{path}.counter")),
+                ),
+            FleetAutoscalerPolicyType::List => self
+                .list
+                .as_ref()
+                .map_or_else(
+                    || {
+                        vec![validation_required(
+                            format!("{path}.list"),
+                            "list policy config params are missing",
+                        )]
+                    },
+                    |list| list.validate(&format!("{path}.list")),
+                ),
+            _ => Vec::new(),
+        }
+    }
+}
+
 impl FleetAutoscaler {
     pub fn apply_defaults(&mut self) {
         let sync = self.spec.sync.get_or_insert_with(FleetAutoscalerSync::default);
@@ -316,11 +566,170 @@ impl FleetAutoscaler {
             sync.fixed_interval.seconds = DEFAULT_INTERVAL_SYNC_SECONDS;
         }
     }
+
+    pub fn validate_core(&self) -> Vec<ValidationError> {
+        let mut errors = self.spec.policy.validate_core("spec.policy");
+        if let Some(sync) = &self.spec.sync {
+            errors.extend(sync.fixed_interval.validate("spec.sync.fixedInterval"));
+        }
+        errors
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn buffer_policy_validation_matches_integer_and_percentage_invariants() {
+        let valid = BufferPolicy {
+            max_replicas: 10,
+            min_replicas: 5,
+            buffer_size: IntOrPercent::Int(5),
+        };
+        assert!(valid.validate("spec.policy.buffer").is_empty());
+
+        let invalid = BufferPolicy {
+            max_replicas: 10,
+            min_replicas: 11,
+            buffer_size: IntOrPercent::Int(0),
+        };
+        let errors = invalid.validate("spec.policy.buffer");
+        assert!(errors.iter().any(|error| {
+            error.path == "spec.policy.buffer.minReplicas"
+                && error.detail == "minReplicas should be smaller than maxReplicas"
+        }));
+        assert!(errors.iter().any(|error| {
+            error.path == "spec.policy.buffer.bufferSize"
+                && error.detail == "must be greater than or equal to 0"
+        }));
+
+        let invalid_percent = BufferPolicy {
+            max_replicas: 10,
+            min_replicas: 0,
+            buffer_size: IntOrPercent::String("100%".into()),
+        };
+        let errors = invalid_percent.validate("spec.policy.buffer");
+        assert!(errors.iter().any(|error| {
+            error.path == "spec.policy.buffer.bufferSize"
+                && error.detail == "bufferSize should be between 1% and 99%"
+        }));
+        assert!(errors.iter().any(|error| error.path == "spec.policy.buffer.minReplicas"));
+    }
+
+    #[test]
+    fn counter_and_list_validation_share_original_capacity_rules() {
+        let counter = CounterPolicy {
+            key: "players".into(),
+            max_capacity: 10,
+            min_capacity: 3,
+            buffer_size: IntOrPercent::Int(5),
+        };
+        assert!(!counter.validate("spec.policy.counter").is_empty());
+        assert_eq!(
+            counter.validate("spec.policy.counter")[0].path,
+            "spec.policy.counter.minCapacity"
+        );
+
+        let list = ListPolicy {
+            key: "rooms".into(),
+            max_capacity: 10,
+            min_capacity: 5,
+            buffer_size: IntOrPercent::Int(5),
+        };
+        assert!(list.validate("spec.policy.list").is_empty());
+
+        let percent = CounterPolicy {
+            key: "players".into(),
+            max_capacity: 10,
+            min_capacity: 0,
+            buffer_size: IntOrPercent::String("20%".into()),
+        };
+        let errors = percent.validate("spec.policy.counter");
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].path, "spec.policy.counter.minCapacity");
+        assert_eq!(
+            errors[0].detail,
+            " when bufferSize in percentage format is used, minCapacity should be more than 0"
+        );
+        assert_eq!(errors[0].bad_value.as_deref(), Some("20%"));
+    }
+
+    #[test]
+    fn missing_selected_policy_configuration_is_required() {
+        for (policy_type, expected_path) in [
+            (FleetAutoscalerPolicyType::Buffer, "spec.policy.buffer"),
+            (FleetAutoscalerPolicyType::Counter, "spec.policy.counter"),
+            (FleetAutoscalerPolicyType::List, "spec.policy.list"),
+        ] {
+            let policy = FleetAutoscalerPolicy {
+                policy_type,
+                ..Default::default()
+            };
+            let errors = policy.validate_core("spec.policy");
+            assert_eq!(errors.len(), 1);
+            assert_eq!(errors[0].kind, ValidationErrorKind::Required);
+            assert_eq!(errors[0].path, expected_path);
+        }
+    }
+
+    #[test]
+    fn core_dispatch_preserves_unknown_and_external_policy_noop_behavior() {
+        for policy_type in [
+            FleetAutoscalerPolicyType::Webhook,
+            FleetAutoscalerPolicyType::Schedule,
+            FleetAutoscalerPolicyType::Chain,
+            FleetAutoscalerPolicyType::Wasm,
+            FleetAutoscalerPolicyType::from("FuturePolicy"),
+        ] {
+            let policy = FleetAutoscalerPolicy {
+                policy_type,
+                ..Default::default()
+            };
+            assert!(policy.validate_core("spec.policy").is_empty());
+        }
+    }
+
+    #[test]
+    fn fixed_interval_validation_matches_original_zero_and_negative_behavior() {
+        for seconds in [0, -1] {
+            let errors =
+                FixedIntervalSync { seconds }.validate("spec.sync.fixedInterval");
+            assert_eq!(errors.len(), 1);
+            assert_eq!(errors[0].path, "spec.sync.fixedInterval.seconds");
+            assert_eq!(
+                errors[0].detail,
+                "must be greater than or equal to 0"
+            );
+        }
+        assert!(FixedIntervalSync { seconds: 1 }
+            .validate("spec.sync.fixedInterval")
+            .is_empty());
+    }
+
+    #[test]
+    fn fleet_autoscaler_core_validation_composes_policy_and_sync() {
+        let autoscaler = FleetAutoscaler {
+            spec: FleetAutoscalerSpec {
+                policy: FleetAutoscalerPolicy {
+                    policy_type: FleetAutoscalerPolicyType::Buffer,
+                    buffer: Some(BufferPolicy {
+                        max_replicas: 10,
+                        min_replicas: 5,
+                        buffer_size: IntOrPercent::Int(5),
+                    }),
+                    ..Default::default()
+                },
+                sync: Some(FleetAutoscalerSync {
+                    sync_type: FleetAutoscalerSyncType::FixedInterval,
+                    fixed_interval: FixedIntervalSync { seconds: 30 },
+                }),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        assert!(autoscaler.validate_core().is_empty());
+    }
 
     #[test]
     fn fleet_autoscaler_defaults_match_original_go_behavior() {
