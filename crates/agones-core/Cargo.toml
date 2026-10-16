@@ -12,6 +12,8 @@ agones-macros.workspace = true
 rand.workspace = true
 serde.workspace = true
 serde_json.workspace = true
+url.workspace = true
+x509-parser.workspace = true
 
 [dev-dependencies]
 bolero = "0.13"

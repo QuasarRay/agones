@@ -3,6 +3,8 @@ use std::collections::BTreeMap;
 use agones_macros::AgonesStringEnum;
 use base64::{engine::general_purpose::STANDARD as BASE64, Engine as _};
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use url::Url;
+use x509_parser::pem::Pem;
 
 use crate::{FleetStatus, IntOrPercent, ObjectMeta, ValidationError, ValidationErrorKind};
 
@@ -326,6 +328,137 @@ fn validation_invalid(
         detail: detail.into(),
     }
 }
+fn validation_duplicate(path: impl Into<String>, detail: impl Into<String>) -> ValidationError {
+    ValidationError {
+        kind: ValidationErrorKind::Duplicate,
+        path: path.into(),
+        bad_value: None,
+        detail: detail.into(),
+    }
+}
+
+fn validation_forbidden(path: impl Into<String>, detail: impl Into<String>) -> ValidationError {
+    ValidationError {
+        kind: ValidationErrorKind::Forbidden,
+        path: path.into(),
+        bad_value: None,
+        detail: detail.into(),
+    }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct AutoscalerFeatures {
+    pub scheduled_autoscaler: bool,
+    pub wasm_autoscaler: bool,
+}
+
+fn ca_bundle_has_valid_certificate(bytes: &[u8]) -> bool {
+    Pem::iter_from_buffer(bytes)
+        .filter_map(Result::ok)
+        .filter(|pem| pem.label == "CERTIFICATE")
+        .any(|pem| pem.parse_x509().is_ok())
+}
+
+fn go_url_parse_succeeds(value: &str) -> bool {
+    if Url::parse(value).is_ok() {
+        return true;
+    }
+    // net/url.Parse accepts relative references; parse them against a dummy
+    // base so the Rust validator accepts the same common relative forms.
+    Url::parse("http://agones.invalid/")
+        .ok()
+        .and_then(|base| base.join(value).ok())
+        .is_some()
+}
+
+impl UrlConfiguration {
+    pub fn validate(&self, path: &str) -> Vec<ValidationError> {
+        let mut errors = Vec::new();
+
+        if self.service.is_none() && self.url.is_none() {
+            errors.push(validation_required(path, "url should be provided"));
+        }
+        if self.service.is_some() && self.url.is_some() {
+            errors.push(validation_duplicate(
+                format!("{path}.url"),
+                "service and url cannot be used simultaneously",
+            ));
+        }
+        if !self.ca_bundle.is_empty() && !ca_bundle_has_valid_certificate(&self.ca_bundle) {
+            errors.push(validation_invalid(
+                format!("{path}.caBundle"),
+                BASE64.encode(&self.ca_bundle),
+                "CA Bundle is not valid",
+            ));
+        }
+        if let Some(url) = &self.url {
+            if !go_url_parse_succeeds(url) {
+                errors.push(validation_invalid(
+                    format!("{path}.url"),
+                    url.clone(),
+                    "url is not valid",
+                ));
+            }
+        }
+
+        errors
+    }
+}
+
+impl WasmPolicy {
+    pub fn validate(
+        &self,
+        path: &str,
+        features: AutoscalerFeatures,
+    ) -> Vec<ValidationError> {
+        if !features.wasm_autoscaler {
+            return vec![validation_forbidden(
+                path,
+                "feature WasmAutoscaler must be enabled",
+            )];
+        }
+
+        let from_path = format!("{path}.from");
+        let Some(url) = &self.from.url else {
+            return vec![validation_required(
+                from_path,
+                "wasm from configuration is missing",
+            )];
+        };
+        url.validate(&format!("{from_path}.url"))
+    }
+}
+
+impl FleetAutoscalerPolicy {
+    pub fn validate_webhook_wasm(
+        &self,
+        path: &str,
+        features: AutoscalerFeatures,
+    ) -> Vec<ValidationError> {
+        match self.policy_type {
+            FleetAutoscalerPolicyType::Webhook => self.webhook.as_ref().map_or_else(
+                || {
+                    vec![validation_required(
+                        format!("{path}.webhook"),
+                        "webhook policy config params are missing",
+                    )]
+                },
+                |webhook| webhook.validate(&format!("{path}.webhook")),
+            ),
+            FleetAutoscalerPolicyType::Wasm => self.wasm.as_ref().map_or_else(
+                || {
+                    vec![validation_required(
+                        format!("{path}.wasm"),
+                        "wasm policy config params are missing",
+                    )]
+                },
+                |wasm| wasm.validate(&format!("{path}.wasm"), features),
+            ),
+            _ => Vec::new(),
+        }
+    }
+}
+
 
 fn percent_value(value: &IntOrPercent) -> Result<i32, ()> {
     match value {
@@ -577,6 +710,130 @@ impl FleetAutoscaler {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn webhook_configuration_validation_matches_original_presence_rules() {
+        let missing = UrlConfiguration::default();
+        let errors = missing.validate("spec.policy.webhook");
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].kind, ValidationErrorKind::Required);
+        assert_eq!(errors[0].path, "spec.policy.webhook");
+
+        let both = UrlConfiguration {
+            service: Some(ServiceReference {
+                namespace: "default".into(),
+                name: "allocator".into(),
+                ..Default::default()
+            }),
+            url: Some("https://example.com/scale".into()),
+            ..Default::default()
+        };
+        let errors = both.validate("spec.policy.webhook");
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].kind, ValidationErrorKind::Duplicate);
+        assert_eq!(errors[0].path, "spec.policy.webhook.url");
+
+        let service = UrlConfiguration {
+            service: Some(ServiceReference {
+                namespace: "default".into(),
+                name: "allocator".into(),
+                path: Some("/scale".into()),
+                ..Default::default()
+            }),
+            ..Default::default()
+        };
+        assert!(service.validate("spec.policy.webhook").is_empty());
+    }
+
+    #[test]
+    fn webhook_configuration_rejects_invalid_url_and_ca_bundle() {
+        let invalid_url = UrlConfiguration {
+            url: Some("http://[::1".into()),
+            ..Default::default()
+        };
+        let errors = invalid_url.validate("spec.policy.webhook");
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].path, "spec.policy.webhook.url");
+
+        let invalid_ca = UrlConfiguration {
+            url: Some("https://example.com/scale".into()),
+            ca_bundle: b"not a certificate".to_vec(),
+            ..Default::default()
+        };
+        let errors = invalid_ca.validate("spec.policy.webhook");
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].path, "spec.policy.webhook.caBundle");
+        assert_eq!(errors[0].detail, "CA Bundle is not valid");
+    }
+
+    #[test]
+    fn webhook_url_parser_accepts_relative_references_like_go_net_url() {
+        let config = UrlConfiguration {
+            url: Some("/scale".into()),
+            ..Default::default()
+        };
+        assert!(config.validate("spec.policy.webhook").is_empty());
+    }
+
+    #[test]
+    fn wasm_validation_preserves_feature_gate_and_from_requirements() {
+        let wasm = WasmPolicy::default();
+        let errors = wasm.validate("spec.policy.wasm", AutoscalerFeatures::default());
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].kind, ValidationErrorKind::Forbidden);
+        assert_eq!(
+            errors[0].detail,
+            "feature WasmAutoscaler must be enabled"
+        );
+
+        let enabled = AutoscalerFeatures {
+            wasm_autoscaler: true,
+            ..Default::default()
+        };
+        let errors = wasm.validate("spec.policy.wasm", enabled);
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].kind, ValidationErrorKind::Required);
+        assert_eq!(errors[0].path, "spec.policy.wasm.from");
+
+        let wasm = WasmPolicy {
+            from: WasmFrom {
+                url: Some(UrlConfiguration {
+                    url: Some("http://example.com/wasm-module".into()),
+                    ..Default::default()
+                }),
+            },
+            ..Default::default()
+        };
+        assert!(wasm.validate("spec.policy.wasm", enabled).is_empty());
+    }
+
+    #[test]
+    fn policy_external_dispatch_requires_selected_configuration() {
+        let webhook = FleetAutoscalerPolicy {
+            policy_type: FleetAutoscalerPolicyType::Webhook,
+            ..Default::default()
+        };
+        let errors = webhook.validate_webhook_wasm(
+            "spec.policy",
+            AutoscalerFeatures::default(),
+        );
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].path, "spec.policy.webhook");
+
+        let wasm = FleetAutoscalerPolicy {
+            policy_type: FleetAutoscalerPolicyType::Wasm,
+            ..Default::default()
+        };
+        let errors = wasm.validate_webhook_wasm(
+            "spec.policy",
+            AutoscalerFeatures {
+                wasm_autoscaler: true,
+                ..Default::default()
+            },
+        );
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].path, "spec.policy.wasm");
+    }
 
     #[test]
     fn buffer_policy_validation_matches_integer_and_percentage_invariants() {

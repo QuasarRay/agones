@@ -465,6 +465,7 @@ pub struct FeatureFlags {
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum ValidationErrorKind {
     Required,
+    Duplicate,
     Forbidden,
     Invalid,
     NotSupported,

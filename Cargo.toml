@@ -22,4 +22,6 @@ rand = "0.8"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 syn = { version = "2.0", features = ["full"] }
+url = "2.5.2"
+x509-parser = "0.16.0"
 rusternetes-common = { git = "https://github.com/calfonso/rusternetes.git", rev = "125c0f4a2b6fb888102606493c5e3cf7a126dd58", package = "rusternetes-common" }
