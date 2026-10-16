@@ -434,59 +434,176 @@ impl WasmPolicy {
     }
 }
 
+fn go_timezone_exists(value: &str) -> bool {
+    value.is_empty()
+        || value == "UTC"
+        || value == "Local"
+        || Tz::from_str(value).is_ok()
+}
+
 fn parse_standard_cron(value: &str) -> bool {
-    match value {
+    let mut spec = value;
+
+    // robfig/cron extracts TZ= and CRON_TZ= before parsing the standard
+    // five-field expression. Agones then rejects TZ usage separately, so a
+    // syntactically valid timezone-prefixed cron must parse successfully here.
+    if spec.starts_with("TZ=") || spec.starts_with("CRON_TZ=") {
+        let Some(space) = spec.find(' ') else {
+            return false;
+        };
+        let Some(eq) = spec.find('=') else {
+            return false;
+        };
+        if !go_timezone_exists(&spec[eq + 1..space]) {
+            return false;
+        }
+        spec = spec[space..].trim();
+    }
+
+    match spec {
         "@yearly" | "@annually" | "@monthly" | "@weekly" | "@daily" | "@midnight"
         | "@hourly" => true,
-        _ if value.starts_with("@every ") => {
-            parse_go_duration(value.trim_start_matches("@every ").trim())
+        _ if spec.starts_with("@every ") => {
+            parse_go_duration(spec.trim_start_matches("@every ").trim())
         }
         _ => {
-            let fields: Vec<_> = value.split_whitespace().collect();
+            let fields: Vec<_> = spec.split_whitespace().collect();
             fields.len() == 5
-                && Schedule::from_str(&format!("0 {value}")).is_ok()
+                && Schedule::from_str(&format!("0 {spec}")).is_ok()
         }
     }
 }
 
 fn parse_go_duration(value: &str) -> bool {
-    let value = value.strip_prefix(['+', '-']).unwrap_or(value);
-    if value.is_empty() {
+    const LIMIT: u64 = 1u64 << 63;
+
+    fn unit_nanos(unit: &str) -> Option<u64> {
+        match unit {
+            "ns" => Some(1),
+            "us" | "µs" | "μs" => Some(1_000),
+            "ms" => Some(1_000_000),
+            "s" => Some(1_000_000_000),
+            "m" => Some(60 * 1_000_000_000),
+            "h" => Some(60 * 60 * 1_000_000_000),
+            _ => None,
+        }
+    }
+
+    let mut rest = value;
+    let mut negative = false;
+    if let Some(first) = rest.as_bytes().first().copied() {
+        if first == b'-' || first == b'+' {
+            negative = first == b'-';
+            rest = &rest[1..];
+        }
+    }
+
+    // Go time.ParseDuration special-cases signed and unsigned zero.
+    if rest == "0" {
+        return true;
+    }
+    if rest.is_empty() {
         return false;
     }
 
-    let bytes = value.as_bytes();
-    let mut index = 0;
-    let mut terms = 0;
-    while index < bytes.len() {
-        let number_start = index;
-        let mut digits = 0;
-        while index < bytes.len() && bytes[index].is_ascii_digit() {
-            index += 1;
-            digits += 1;
-        }
-        if index < bytes.len() && bytes[index] == b'.' {
-            index += 1;
-            while index < bytes.len() && bytes[index].is_ascii_digit() {
-                index += 1;
-                digits += 1;
-            }
-        }
-        if digits == 0 || index == number_start {
+    let mut total = 0u64;
+    while !rest.is_empty() {
+        let first = rest.as_bytes()[0];
+        if first != b'.' && !first.is_ascii_digit() {
             return false;
         }
 
-        let rest = &value[index..];
-        let unit = ["ms", "us", "µs", "μs", "ns", "h", "m", "s"]
-            .into_iter()
-            .find(|unit| rest.starts_with(unit));
-        let Some(unit) = unit else {
+        let bytes = rest.as_bytes();
+        let mut index = 0usize;
+        let mut integer = 0u64;
+        while index < bytes.len() && bytes[index].is_ascii_digit() {
+            if integer > LIMIT / 10 {
+                return false;
+            }
+            integer = integer * 10 + u64::from(bytes[index] - b'0');
+            if integer > LIMIT {
+                return false;
+            }
+            index += 1;
+        }
+        let pre = index > 0;
+        rest = &rest[index..];
+
+        let mut fraction = 0u64;
+        let mut scale = 1f64;
+        let mut post = false;
+        if rest.starts_with('.') {
+            rest = &rest[1..];
+            let bytes = rest.as_bytes();
+            let mut fraction_index = 0usize;
+            let mut overflow = false;
+            while fraction_index < bytes.len() && bytes[fraction_index].is_ascii_digit() {
+                post = true;
+                if !overflow {
+                    if fraction > (LIMIT - 1) / 10 {
+                        overflow = true;
+                    } else {
+                        let next =
+                            fraction * 10 + u64::from(bytes[fraction_index] - b'0');
+                        if next > LIMIT {
+                            overflow = true;
+                        } else {
+                            fraction = next;
+                            scale *= 10.0;
+                        }
+                    }
+                }
+                fraction_index += 1;
+            }
+            rest = &rest[fraction_index..];
+        }
+
+        if !pre && !post {
+            return false;
+        }
+
+        let bytes = rest.as_bytes();
+        let mut unit_end = 0usize;
+        while unit_end < bytes.len() {
+            let byte = bytes[unit_end];
+            if byte == b'.' || byte.is_ascii_digit() {
+                break;
+            }
+            unit_end += 1;
+        }
+        if unit_end == 0 {
+            return false;
+        }
+
+        let Some(unit) = unit_nanos(&rest[..unit_end]) else {
             return false;
         };
-        index += unit.len();
-        terms += 1;
+        rest = &rest[unit_end..];
+
+        if integer > LIMIT / unit {
+            return false;
+        }
+        let mut term = integer * unit;
+        if fraction > 0 {
+            term += ((fraction as f64) * (unit as f64 / scale)) as u64;
+            if term > LIMIT {
+                return false;
+            }
+        }
+
+        // This deliberately wraps like Go's uint64 accumulator before the
+        // post-addition LIMIT check.
+        total = total.wrapping_add(term);
+        if total > LIMIT {
+            return false;
+        }
     }
-    terms > 0
+
+    if negative {
+        true
+    } else {
+        total <= LIMIT - 1
+    }
 }
 
 impl SchedulePolicy {
@@ -1049,12 +1166,54 @@ mod tests {
             )
             .is_empty());
 
-        for duration in ["300ms", "-1.5h", "2h45m", "1µs"] {
+        for duration in [
+            "0",
+            "+0",
+            "-0",
+            "300ms",
+            "-1.5h",
+            "2h45m",
+            "1µs",
+            ".5s",
+            "1.s",
+            "9223372036854775807ns",
+            "-9223372036854775808ns",
+        ] {
             assert!(parse_go_duration(duration), "{duration}");
         }
-        for duration in ["", "5", "h", "1x"] {
+        for duration in [
+            "",
+            "5",
+            "h",
+            "1x",
+            ".s",
+            "9223372036854775808ns",
+        ] {
             assert!(!parse_go_duration(duration), "{duration}");
         }
+
+        assert!(parse_standard_cron(
+            "CRON_TZ=America/New_York * * * * *"
+        ));
+        assert!(parse_standard_cron("TZ=UTC @every 0"));
+
+        let tz_only = SchedulePolicy {
+            active_period: ActivePeriod {
+                start_cron: "CRON_TZ=America/New_York * * * * *".into(),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let errors = tz_only.validate_at(
+            "spec.policy.schedule",
+            scheduled_features(),
+            test_now(),
+        );
+        assert_eq!(errors.len(), 1);
+        assert_eq!(
+            errors[0].detail,
+            "CRON_TZ or TZ used in activePeriod is not supported, please use the .schedule.timezone field to specify a timezone"
+        );
 
         let invalid = SchedulePolicy {
             active_period: ActivePeriod {
@@ -1069,6 +1228,7 @@ mod tests {
             scheduled_features(),
             test_now(),
         );
+        assert_eq!(errors.len(), 2);
         assert!(errors.iter().any(|error| {
             error.path == "spec.policy.schedule.activePeriod.startCron"
                 && error.detail.contains("CRON_TZ or TZ")
