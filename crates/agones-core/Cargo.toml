@@ -7,7 +7,9 @@ repository.workspace = true
 rust-version.workspace = true
 
 [dependencies]
+base64.workspace = true
 agones-macros.workspace = true
+rand.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 

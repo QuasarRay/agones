@@ -7,7 +7,9 @@
 pub mod fleet;
 pub mod gameserver;
 pub mod gameserverset;
+pub mod multicluster;
 
 pub use fleet::*;
 pub use gameserver::*;
 pub use gameserverset::*;
+pub use multicluster::*;
