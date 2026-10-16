@@ -481,6 +481,8 @@ fn main() {
     let fleet_autoscaler_policy_path =
         root.join("install/helm/agones/templates/crds/_fleetautoscalerpolicy.yaml");
     let default_feature_gates_path = root.join("install/helm/agones/defaultfeaturegates.yaml");
+    let game_server_allocation_policy_path =
+        root.join("install/helm/agones/templates/crds/gameserverallocationpolicy.yaml");
 
     let values: YamlValue =
         serde_yaml::from_str(&read(&values_path)).expect("parse install/helm/agones/values.yaml");
@@ -613,16 +615,41 @@ fn main() {
     let fleet_autoscaler_schema_json =
         schema_json(fleet_autoscaler_schema, "FleetAutoscaler");
 
+    let game_server_allocation_policy_source = read(&game_server_allocation_policy_path);
+    let (game_server_allocation_policy_openapi, game_server_allocation_policy_indent) =
+        extract_indented_block(
+            &game_server_allocation_policy_source,
+            "openAPIV3Schema:",
+        );
+    let game_server_allocation_policy_yaml = render_template_with_indent_offset(
+        &game_server_allocation_policy_openapi,
+        &HashMap::new(),
+        max_items,
+        &HashMap::new(),
+        game_server_allocation_policy_indent,
+    );
+    let game_server_allocation_policy_schema: YamlValue =
+        serde_yaml::from_str(&game_server_allocation_policy_yaml)
+            .expect("rendered GameServerAllocationPolicy OpenAPI schema must be YAML");
+    let game_server_allocation_policy_schema_json = schema_json(
+        game_server_allocation_policy_schema,
+        "GameServerAllocationPolicy",
+    );
+
     let game_server_literal = quoted(game_server_schema_json.as_str());
     let game_server_set_literal = quoted(game_server_set_schema_json.as_str());
     let fleet_literal = quoted(fleet_schema_json.as_str());
     let fleet_autoscaler_literal = quoted(fleet_autoscaler_schema_json.as_str());
+    let game_server_allocation_policy_literal =
+        quoted(game_server_allocation_policy_schema_json.as_str());
     let tokens: rust::Tokens = quote! {
         // Generated from Agones Helm/Kubernetes CRD schema templates. Do not edit.
         pub const GAME_SERVER_OPENAPI_SCHEMA_JSON: &str = $game_server_literal;
         pub const GAME_SERVER_SET_OPENAPI_SCHEMA_JSON: &str = $game_server_set_literal;
         pub const FLEET_OPENAPI_SCHEMA_JSON: &str = $fleet_literal;
         pub const FLEET_AUTOSCALER_OPENAPI_SCHEMA_JSON: &str = $fleet_autoscaler_literal;
+        pub const GAME_SERVER_ALLOCATION_POLICY_OPENAPI_SCHEMA_JSON: &str =
+            $game_server_allocation_policy_literal;
     };
     let generated = tokens.to_string().expect("format generated Rust source");
 

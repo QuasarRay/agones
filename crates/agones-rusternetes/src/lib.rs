@@ -120,6 +120,17 @@ pub fn fleet_autoscaler_openapi_validation() -> CustomResourceValidation {
     }
 }
 
+pub fn game_server_allocation_policy_openapi_validation() -> CustomResourceValidation {
+    CustomResourceValidation {
+        open_apiv3_schema: serde_json::from_str(
+            generated_game_server_schema::GAME_SERVER_ALLOCATION_POLICY_OPENAPI_SCHEMA_JSON,
+        )
+        .expect(
+            "build-generated GameServerAllocationPolicy OpenAPI schema must match Rusternetes schema types",
+        ),
+    }
+}
+
 /// Builds the GameServer CRD using native Rusternetes CRD types.
 ///
 /// The OpenAPI schema is generated at build time from Agones' Helm schema
@@ -486,7 +497,7 @@ pub fn game_server_allocation_policy_crd_envelope() -> CustomResourceDefinition 
                 storage: true,
                 deprecated: None,
                 deprecation_warning: None,
-                schema: None,
+                schema: Some(game_server_allocation_policy_openapi_validation()),
                 subresources: None,
                 additional_printer_columns: None,
             }],
@@ -975,7 +986,7 @@ mod tests {
         assert_eq!(version.name, GAME_SERVER_ALLOCATION_POLICY_CRD_VERSION);
         assert!(version.served);
         assert!(version.storage);
-        assert!(version.schema.is_none());
+        assert!(version.schema.is_some());
         assert!(version.subresources.is_none());
         assert!(version.additional_printer_columns.is_none());
     }
@@ -984,10 +995,57 @@ mod tests {
     fn game_server_allocation_policy_crd_serialization_has_no_unmodeled_subresources() {
         let json = serde_json::to_value(game_server_allocation_policy_crd_envelope()).unwrap();
         let version = &json["spec"]["versions"][0];
-        assert!(version.get("schema").is_none());
+        assert!(version["schema"]["openAPIV3Schema"].is_object());
         assert!(version.get("subresources").is_none());
         assert!(version.get("additionalPrinterColumns").is_none());
         assert!(json["spec"]["names"].get("singular").is_none());
+    }
+
+    #[test]
+    fn game_server_allocation_policy_schema_is_generated_from_helm_machine_source() {
+        let crd = game_server_allocation_policy_crd_envelope();
+        let schema = crd.spec.versions[0].schema.as_ref().unwrap();
+        let mut represented = serde_json::to_value(&schema.open_apiv3_schema).unwrap();
+        let mut generated: serde_json::Value = serde_json::from_str(
+            generated_game_server_schema::GAME_SERVER_ALLOCATION_POLICY_OPENAPI_SCHEMA_JSON,
+        )
+        .unwrap();
+
+        normalize_json_numbers(&mut represented);
+        normalize_json_numbers(&mut generated);
+        assert_eq!(
+            represented, generated,
+            "Rusternetes must not silently drop fields from the generated GameServerAllocationPolicy schema"
+        );
+
+        assert_eq!(generated["type"], "object");
+        assert_eq!(
+            generated["properties"]["spec"]["required"],
+            serde_json::json!(["priority", "weight"])
+        );
+    }
+
+    #[test]
+    fn game_server_allocation_policy_schema_preserves_numeric_and_connection_constraints() {
+        let generated: serde_json::Value = serde_json::from_str(
+            generated_game_server_schema::GAME_SERVER_ALLOCATION_POLICY_OPENAPI_SCHEMA_JSON,
+        )
+        .unwrap();
+        let spec = &generated["properties"]["spec"];
+        let properties = &spec["properties"];
+
+        assert_eq!(properties["priority"]["format"], "int32");
+        assert_eq!(properties["priority"]["minimum"], 0);
+        assert_eq!(properties["weight"]["format"], "int64");
+        assert_eq!(properties["weight"]["minimum"], 0);
+
+        let connection = &properties["connectionInfo"];
+        assert_eq!(connection["required"], serde_json::json!(["namespace"]));
+        assert_eq!(
+            connection["properties"]["allocationEndpoints"]["minItems"],
+            1
+        );
+        assert_eq!(connection["properties"]["serverCa"]["format"], "byte");
     }
 
     #[test]
