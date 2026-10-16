@@ -446,11 +446,24 @@ mod tests {
         fleet.apply_defaults();
         assert!(fleet.validate().is_empty());
 
-        fleet.spec.template.spec.template.spec.containers.push(Container {
-            name: "container2".into(),
-            image: "myimage".into(),
+        fleet.spec.template.spec.template = PodTemplateSpec {
+            spec: PodSpec {
+                containers: vec![
+                    Container {
+                        name: "container".into(),
+                        image: "myimage".into(),
+                        ..Default::default()
+                    },
+                    Container {
+                        name: "container2".into(),
+                        image: "myimage".into(),
+                        ..Default::default()
+                    },
+                ],
+                ..Default::default()
+            },
             ..Default::default()
-        });
+        };
         let errors = fleet.validate();
         assert_eq!(errors.len(), 1);
         assert_eq!(errors[0].path, "spec.template.spec.container");
@@ -463,7 +476,7 @@ mod tests {
             "Could not find a container named testing"
         );
 
-        fleet.spec.template.spec.container = "container2".into();
+        fleet.spec.template.spec.container = "container".into();
         assert!(fleet.validate().is_empty());
 
         let rolling = fleet.spec.strategy.rolling_update.as_mut().unwrap();
