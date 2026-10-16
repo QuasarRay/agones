@@ -25,6 +25,10 @@ pub const ERR_CONTAINER_NAME_INVALID: &str =
     "Container must be empty or the name of a container in the pod template";
 pub const GAME_SERVER_PRIORITY_INCREMENT: &str = "Increment";
 pub const GAME_SERVER_PRIORITY_DECREMENT: &str = "Decrement";
+pub const GAME_SERVER_PRIORITY_COUNTER: &str = "Counter";
+pub const GAME_SERVER_PRIORITY_LIST: &str = "List";
+pub const GAME_SERVER_PRIORITY_ASCENDING: &str = "Ascending";
+pub const GAME_SERVER_PRIORITY_DESCENDING: &str = "Descending";
 
 #[derive(Clone, Debug, PartialEq, Eq, AgonesStringEnum)]
 pub enum GameServerState {
@@ -293,6 +297,27 @@ pub struct PlayerStatus {
     pub capacity: i64,
     #[serde(default)]
     pub ids: Vec<String>,
+}
+
+
+#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Priority {
+    #[serde(rename = "type")]
+    pub priority_type: String,
+    pub key: String,
+    pub order: String,
+}
+
+/// Mirrors Agones SafeAdd, including Go's two's-complement overflow behavior
+/// outside the intended nonnegative-addend domain.
+pub fn safe_add(x: i64, y: i64) -> i64 {
+    let threshold = i64::MAX.wrapping_sub(y);
+    if x > threshold {
+        i64::MAX
+    } else {
+        x.wrapping_add(y)
+    }
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -960,6 +985,95 @@ impl GameServer {
     }
 }
 
+
+impl GameServer {
+    pub fn compare_count_and_list_priorities(
+        &self,
+        priorities: &[Priority],
+        other: &GameServer,
+    ) -> Option<bool> {
+        for priority in priorities {
+            if let Some(result) = self.compare_count_and_list_priority(priority, other) {
+                return Some(if priority.order == GAME_SERVER_PRIORITY_DESCENDING {
+                    !result
+                } else {
+                    result
+                });
+            }
+        }
+        None
+    }
+
+    fn compare_count_and_list_priority(
+        &self,
+        priority: &Priority,
+        other: &GameServer,
+    ) -> Option<bool> {
+        let (self_present, other_present, value_comparison) =
+            match priority.priority_type.as_str() {
+                GAME_SERVER_PRIORITY_COUNTER => {
+                    let left = self
+                        .status
+                        .counters
+                        .as_ref()
+                        .and_then(|counters| counters.get(&priority.key));
+                    let right = other
+                        .status
+                        .counters
+                        .as_ref()
+                        .and_then(|counters| counters.get(&priority.key));
+                    let comparison = left.zip(right).map(|(left, right)| {
+                        let left_available = left.capacity.wrapping_sub(left.count);
+                        let right_available = right.capacity.wrapping_sub(right.count);
+                        left_available.cmp(&right_available)
+                    });
+                    (left.is_some(), right.is_some(), comparison)
+                }
+                GAME_SERVER_PRIORITY_LIST => {
+                    let left = self
+                        .status
+                        .lists
+                        .as_ref()
+                        .and_then(|lists| lists.get(&priority.key));
+                    let right = other
+                        .status
+                        .lists
+                        .as_ref()
+                        .and_then(|lists| lists.get(&priority.key));
+                    let comparison = left.zip(right).map(|(left, right)| {
+                        let left_available =
+                            left.capacity.wrapping_sub(left.values.len() as i64);
+                        let right_available =
+                            right.capacity.wrapping_sub(right.values.len() as i64);
+                        left_available.cmp(&right_available)
+                    });
+                    (left.is_some(), right.is_some(), comparison)
+                }
+                _ => (false, false, None),
+            };
+
+        if let Some(ordering) = value_comparison {
+            return match ordering {
+                std::cmp::Ordering::Less => Some(true),
+                std::cmp::Ordering::Greater => Some(false),
+                std::cmp::Ordering::Equal => None,
+            };
+        }
+
+        if (self_present && priority.order == GAME_SERVER_PRIORITY_DESCENDING)
+            || (other_present && priority.order == GAME_SERVER_PRIORITY_ASCENDING)
+        {
+            return Some(false);
+        }
+        if (self_present && priority.order == GAME_SERVER_PRIORITY_ASCENDING)
+            || (other_present && priority.order == GAME_SERVER_PRIORITY_DESCENDING)
+        {
+            return Some(true);
+        }
+        None
+    }
+}
+
 fn truncate_list(capacity: i64, values: &mut Vec<String>) {
     let capacity = capacity.max(0) as usize;
     if values.len() > capacity {
@@ -1560,6 +1674,164 @@ mod tests {
         );
     }
 
+
+    #[test]
+    fn count_and_list_priorities_match_agones_ordering() {
+        let make_counter = |count, capacity| GameServer {
+            status: GameServerStatus {
+                counters: Some(BTreeMap::from([(
+                    "rooms".into(),
+                    CounterStatus { count, capacity },
+                )])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+
+        let low_available = make_counter(9, 10);
+        let high_available = make_counter(2, 10);
+        let ascending = [Priority {
+            priority_type: GAME_SERVER_PRIORITY_COUNTER.into(),
+            key: "rooms".into(),
+            order: GAME_SERVER_PRIORITY_ASCENDING.into(),
+        }];
+        let descending = [Priority {
+            order: GAME_SERVER_PRIORITY_DESCENDING.into(),
+            ..ascending[0].clone()
+        }];
+
+        assert_eq!(
+            low_available.compare_count_and_list_priorities(&ascending, &high_available),
+            Some(true)
+        );
+        assert_eq!(
+            low_available.compare_count_and_list_priorities(&descending, &high_available),
+            Some(false)
+        );
+
+        let list_left = GameServer {
+            status: GameServerStatus {
+                lists: Some(BTreeMap::from([(
+                    "maps".into(),
+                    ListStatus {
+                        capacity: 5,
+                        values: vec!["a".into(), "b".into(), "c".into()],
+                    },
+                )])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let list_right = GameServer {
+            status: GameServerStatus {
+                lists: Some(BTreeMap::from([(
+                    "maps".into(),
+                    ListStatus {
+                        capacity: 5,
+                        values: vec!["a".into()],
+                    },
+                )])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let priority = [Priority {
+            priority_type: GAME_SERVER_PRIORITY_LIST.into(),
+            key: "maps".into(),
+            order: GAME_SERVER_PRIORITY_ASCENDING.into(),
+        }];
+        assert_eq!(
+            list_left.compare_count_and_list_priorities(&priority, &list_right),
+            Some(true)
+        );
+    }
+
+    #[test]
+    fn priority_presence_beats_missing_priority_in_both_orders() {
+        let with_counter = GameServer {
+            status: GameServerStatus {
+                counters: Some(BTreeMap::from([(
+                    "players".into(),
+                    CounterStatus {
+                        count: 0,
+                        capacity: 10,
+                    },
+                )])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let without_counter = GameServer::default();
+
+        for order in [
+            GAME_SERVER_PRIORITY_ASCENDING,
+            GAME_SERVER_PRIORITY_DESCENDING,
+        ] {
+            let priorities = [Priority {
+                priority_type: GAME_SERVER_PRIORITY_COUNTER.into(),
+                key: "players".into(),
+                order: order.into(),
+            }];
+            assert_eq!(
+                with_counter
+                    .compare_count_and_list_priorities(&priorities, &without_counter),
+                Some(true)
+            );
+            assert_eq!(
+                without_counter
+                    .compare_count_and_list_priorities(&priorities, &with_counter),
+                Some(false)
+            );
+        }
+    }
+
+    #[test]
+    fn priority_ties_fall_through_to_next_priority() {
+        let left = GameServer {
+            status: GameServerStatus {
+                counters: Some(BTreeMap::from([
+                    ("tie".into(), CounterStatus { count: 1, capacity: 2 }),
+                    ("break".into(), CounterStatus { count: 1, capacity: 2 }),
+                ])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let right = GameServer {
+            status: GameServerStatus {
+                counters: Some(BTreeMap::from([
+                    ("tie".into(), CounterStatus { count: 1, capacity: 2 }),
+                    ("break".into(), CounterStatus { count: 0, capacity: 2 }),
+                ])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let priorities = [
+            Priority {
+                priority_type: GAME_SERVER_PRIORITY_COUNTER.into(),
+                key: "tie".into(),
+                order: GAME_SERVER_PRIORITY_ASCENDING.into(),
+            },
+            Priority {
+                priority_type: GAME_SERVER_PRIORITY_COUNTER.into(),
+                key: "break".into(),
+                order: GAME_SERVER_PRIORITY_ASCENDING.into(),
+            },
+        ];
+        assert_eq!(
+            left.compare_count_and_list_priorities(&priorities, &right),
+            Some(true)
+        );
+    }
+
+    #[test]
+    fn safe_add_saturates_positive_overflow() {
+        assert_eq!(safe_add(i64::MAX - 1, 1), i64::MAX);
+        assert_eq!(safe_add(i64::MAX - 1, 2), i64::MAX);
+        assert_eq!(safe_add(40, 2), 42);
+    }
+
     #[test]
     fn bolero_counter_updates_never_leave_count_outside_capacity() {
         bolero::check!().for_each(|bytes: &[u8]| {
@@ -1609,6 +1881,22 @@ mod verification {
 #[cfg(kani)]
 mod tracking_verification {
     use super::*;
+
+    #[kani::proof]
+    fn safe_add_never_overflows_for_nonnegative_inputs() {
+        let x: i64 = kani::any();
+        let y: i64 = kani::any();
+        kani::assume(x >= 0);
+        kani::assume(y >= 0);
+        let result = safe_add(x, y);
+        assert!(result >= x);
+        assert!(result <= i64::MAX);
+        if x <= i64::MAX - y {
+            assert_eq!(result, x + y);
+        } else {
+            assert_eq!(result, i64::MAX);
+        }
+    }
 
     #[kani::proof]
     fn counter_increment_is_bounded_by_nonnegative_capacity() {
