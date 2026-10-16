@@ -13,3 +13,6 @@ serde_json.workspace = true
 
 [dev-dependencies]
 bolero = "0.13"
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(kani)'] }
