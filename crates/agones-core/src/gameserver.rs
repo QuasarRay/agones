@@ -446,6 +446,7 @@ pub enum ValidationErrorKind {
     Required,
     Forbidden,
     Invalid,
+    NotSupported,
     TooLong,
 }
 
