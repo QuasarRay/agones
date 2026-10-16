@@ -1,4 +1,5 @@
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
+use std::net::IpAddr;
 
 use agones_macros::AgonesStringEnum;
 use serde::{Deserialize, Serialize};
@@ -8,7 +9,22 @@ pub const DEFAULT_PORT_RANGE: &str = "default";
 pub const VERSION_ANNOTATION: &str = "agones.dev/sdk-version";
 pub const FINALIZER_NAME: &str = "agones.dev/controller";
 pub const POD_SAFE_TO_EVICT_ANNOTATION: &str = "cluster-autoscaler.kubernetes.io/safe-to-evict";
+pub const DEV_ADDRESS_ANNOTATION: &str = "agones.dev/dev-address";
 pub const DEFAULT_SDK_VERSION: &str = env!("CARGO_PKG_VERSION");
+
+pub const ERR_CONTAINER_REQUIRED: &str =
+    "Container is required when using multiple containers in the pod template";
+pub const ERR_HOST_PORT: &str =
+    "HostPort cannot be specified with a Dynamic or Passthrough PortPolicy";
+pub const ERR_PORT_POLICY_STATIC: &str = "PortPolicy must be Static";
+pub const ERR_CONTAINER_PORT_REQUIRED: &str =
+    "ContainerPort must be defined for Dynamic and Static PortPolicies";
+pub const ERR_CONTAINER_PORT_PASSTHROUGH: &str =
+    "ContainerPort cannot be specified with Passthrough PortPolicy";
+pub const ERR_CONTAINER_NAME_INVALID: &str =
+    "Container must be empty or the name of a container in the pod template";
+pub const GAME_SERVER_PRIORITY_INCREMENT: &str = "Increment";
+pub const GAME_SERVER_PRIORITY_DECREMENT: &str = "Decrement";
 
 #[derive(Clone, Debug, PartialEq, Eq, AgonesStringEnum)]
 pub enum GameServerState {
@@ -109,10 +125,32 @@ pub enum SchedulingStrategy {
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ObjectMeta {
+    #[serde(default, skip_serializing_if = "String::is_empty")]
+    pub name: String,
+    #[serde(default, skip_serializing_if = "String::is_empty")]
+    pub generate_name: String,
+    #[serde(default, skip_serializing_if = "String::is_empty")]
+    pub namespace: String,
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    pub labels: BTreeMap<String, String>,
     #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
     pub annotations: BTreeMap<String, String>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub finalizers: Vec<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub deletion_timestamp: Option<String>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, AgonesStringEnum)]
+pub enum ContainerRestartPolicy {
+    #[agones(value = "Always")]
+    Always,
+    #[agones(value = "Never")]
+    Never,
+    #[agones(value = "OnFailure")]
+    OnFailure,
+    #[agones(unknown)]
+    Unknown(String),
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -121,6 +159,10 @@ pub struct Container {
     pub name: String,
     #[serde(default, skip_serializing_if = "String::is_empty")]
     pub image: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub restart_policy: Option<ContainerRestartPolicy>,
+    #[serde(default)]
+    pub tty: bool,
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -128,6 +170,8 @@ pub struct Container {
 pub struct PodSpec {
     #[serde(default)]
     pub containers: Vec<Container>,
+    #[serde(default)]
+    pub init_containers: Vec<Container>,
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -360,6 +404,236 @@ pub struct FeatureFlags {
     pub player_tracking: bool,
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum ValidationErrorKind {
+    Required,
+    Forbidden,
+    Invalid,
+    TooLong,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct ValidationError {
+    pub kind: ValidationErrorKind,
+    pub path: String,
+    pub bad_value: Option<String>,
+    pub detail: String,
+}
+
+impl ValidationError {
+    fn required(path: impl Into<String>, detail: impl Into<String>) -> Self {
+        Self {
+            kind: ValidationErrorKind::Required,
+            path: path.into(),
+            bad_value: None,
+            detail: detail.into(),
+        }
+    }
+
+    fn forbidden(path: impl Into<String>, detail: impl Into<String>) -> Self {
+        Self {
+            kind: ValidationErrorKind::Forbidden,
+            path: path.into(),
+            bad_value: None,
+            detail: detail.into(),
+        }
+    }
+
+    fn invalid(
+        path: impl Into<String>,
+        bad_value: impl Into<String>,
+        detail: impl Into<String>,
+    ) -> Self {
+        Self {
+            kind: ValidationErrorKind::Invalid,
+            path: path.into(),
+            bad_value: Some(bad_value.into()),
+            detail: detail.into(),
+        }
+    }
+
+    fn too_long(path: impl Into<String>, bad_value: impl Into<String>, max: usize) -> Self {
+        Self {
+            kind: ValidationErrorKind::TooLong,
+            path: path.into(),
+            bad_value: Some(bad_value.into()),
+            detail: format!("must be no more than {max} bytes"),
+        }
+    }
+}
+
+fn qualified_name_error(value: &str) -> Option<&'static str> {
+    let name = value.rsplit('/').next().unwrap_or(value);
+    if name.len() > 63 {
+        return Some("name part must be no more than 63 bytes");
+    }
+    if name.is_empty() {
+        return Some(
+            "name part must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character",
+        );
+    }
+    let mut chars = name.chars();
+    let first = chars.next().unwrap();
+    let last = name.chars().last().unwrap();
+    if !first.is_ascii_alphanumeric()
+        || !last.is_ascii_alphanumeric()
+        || !name
+            .chars()
+            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.'))
+    {
+        return Some(
+            "name part must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character",
+        );
+    }
+    None
+}
+
+fn validate_object_meta(meta: &ObjectMeta, path: &str) -> Vec<ValidationError> {
+    let mut errors = Vec::new();
+    for (key, value) in &meta.labels {
+        if let Some(detail) = qualified_name_error(key) {
+            errors.push(ValidationError::invalid(
+                format!("{path}.labels"),
+                key,
+                detail,
+            ));
+        }
+        if value.len() > 63 {
+            errors.push(ValidationError::invalid(
+                format!("{path}.labels"),
+                value,
+                "must be no more than 63 bytes",
+            ));
+        }
+    }
+    for key in meta.annotations.keys() {
+        if let Some(detail) = qualified_name_error(key) {
+            errors.push(ValidationError::invalid(
+                format!("{path}.annotations"),
+                key,
+                detail,
+            ));
+        }
+    }
+    errors
+}
+
+impl GameServerSpec {
+    pub fn has_container(&self, name: &str, include_sidecar: bool) -> bool {
+        if self.template.spec.containers.iter().any(|c| c.name == name) {
+            return true;
+        }
+        include_sidecar
+            && self.template.spec.init_containers.iter().any(|c| {
+                c.restart_policy == Some(ContainerRestartPolicy::Always) && c.name == name
+            })
+    }
+
+    /// Domain-level validation directly corresponding to the Kubernetes-independent
+    /// checks in Agones GameServerSpec.Validate.
+    ///
+    /// Resource quantity validation and API hook validation belong to the
+    /// Rusternetes integration layer because they depend on runtime/API types.
+    pub fn validate(&self, dev_address: &str) -> Vec<ValidationError> {
+        let mut errors = Vec::new();
+
+        if !dev_address.is_empty() {
+            if dev_address.parse::<IpAddr>().is_err() {
+                errors.push(ValidationError::invalid(
+                    format!("metadata.annotations.{DEV_ADDRESS_ANNOTATION}"),
+                    dev_address,
+                    "must be a valid IP address",
+                ));
+            }
+            for (index, port) in self.ports.iter().enumerate() {
+                if port.host_port == 0 {
+                    errors.push(ValidationError::required(
+                        format!("spec.ports[{index}].hostPort"),
+                        DEV_ADDRESS_ANNOTATION,
+                    ));
+                }
+                if port.port_policy != Some(PortPolicy::Static) {
+                    errors.push(ValidationError::required(
+                        format!("spec.ports[{index}].portPolicy"),
+                        ERR_PORT_POLICY_STATIC,
+                    ));
+                }
+            }
+            errors.extend(validate_object_meta(
+                &self.template.metadata,
+                "spec.template.metadata",
+            ));
+            return errors;
+        }
+
+        if self.container.is_empty() && self.template.spec.containers.len() > 1 {
+            errors.push(ValidationError::required(
+                "spec.container",
+                ERR_CONTAINER_REQUIRED,
+            ));
+        }
+
+        if !self.has_container(&self.container, false) {
+            errors.push(ValidationError::invalid(
+                "spec.container",
+                &self.container,
+                format!("Could not find a container named {}", self.container),
+            ));
+        }
+
+        for (index, port) in self.ports.iter().enumerate() {
+            let prefix = format!("spec.ports[{index}]");
+            if matches!(
+                port.port_policy,
+                Some(PortPolicy::Dynamic | PortPolicy::Static)
+            ) && port.container_port <= 0
+            {
+                errors.push(ValidationError::required(
+                    format!("{prefix}.containerPort"),
+                    ERR_CONTAINER_PORT_REQUIRED,
+                ));
+            }
+
+            if port.port_policy == Some(PortPolicy::Passthrough) && port.container_port > 0 {
+                errors.push(ValidationError::required(
+                    format!("{prefix}.containerPort"),
+                    ERR_CONTAINER_PORT_PASSTHROUGH,
+                ));
+            }
+
+            if port.host_port > 0
+                && matches!(
+                    port.port_policy,
+                    Some(PortPolicy::Dynamic | PortPolicy::Passthrough)
+                )
+            {
+                errors.push(ValidationError::forbidden(
+                    format!("{prefix}.hostPort"),
+                    ERR_HOST_PORT,
+                ));
+            }
+
+            if let Some(container) = port.container.as_deref()
+                && !self.container.is_empty()
+                && !self.has_container(container, true)
+            {
+                errors.push(ValidationError::invalid(
+                    format!("{prefix}.container"),
+                    container,
+                    ERR_CONTAINER_NAME_INVALID,
+                ));
+            }
+        }
+
+        errors.extend(validate_object_meta(
+            &self.template.metadata,
+            "spec.template.metadata",
+        ));
+        errors
+    }
+}
+
+
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GameServer {
@@ -451,6 +725,259 @@ impl GameServer {
             .count()
     }
 }
+
+
+impl GameServer {
+    pub fn get_dev_address(&self) -> Option<&str> {
+        self.metadata
+            .annotations
+            .get(DEV_ADDRESS_ANNOTATION)
+            .map(String::as_str)
+    }
+
+    pub fn validate(&self) -> Vec<ValidationError> {
+        let mut errors = Vec::new();
+        if self.metadata.name.len() > 63 {
+            errors.push(ValidationError::too_long(
+                "metadata.name",
+                &self.metadata.name,
+                63,
+            ));
+        }
+        errors.extend(self.spec.validate(self.get_dev_address().unwrap_or("")));
+        errors
+    }
+
+    pub fn is_deletable(&self) -> bool {
+        if matches!(
+            self.status.state,
+            Some(GameServerState::Allocated | GameServerState::Reserved)
+        ) {
+            return self.metadata.deletion_timestamp.is_some();
+        }
+        true
+    }
+
+    pub fn is_being_deleted(&self) -> bool {
+        self.metadata.deletion_timestamp.is_some()
+            || self.status.state == Some(GameServerState::Shutdown)
+    }
+
+    pub fn is_before_ready(&self) -> bool {
+        matches!(
+            self.status.state,
+            Some(
+                GameServerState::PortAllocation
+                    | GameServerState::Creating
+                    | GameServerState::Starting
+                    | GameServerState::Scheduled
+                    | GameServerState::RequestReady
+            )
+        )
+    }
+
+    pub fn is_active(&self) -> bool {
+        matches!(
+            self.status.state,
+            Some(
+                GameServerState::Allocated
+                    | GameServerState::Ready
+                    | GameServerState::Reserved
+            )
+        )
+    }
+
+    pub fn apply_to_pod_container(
+        &self,
+        pod: &mut PodSpec,
+        container_name: &str,
+        mut apply: impl FnMut(&mut Container),
+    ) -> Result<(), String> {
+        if let Some(container) = pod
+            .containers
+            .iter_mut()
+            .find(|container| container.name == container_name)
+        {
+            apply(container);
+            return Ok(());
+        }
+        if let Some(container) = pod.init_containers.iter_mut().find(|container| {
+            container.restart_policy == Some(ContainerRestartPolicy::Always)
+                && container.name == container_name
+        }) {
+            apply(container);
+            return Ok(());
+        }
+        Err(format!(
+            "failed to find container named {container_name} in pod spec"
+        ))
+    }
+
+    pub fn update_count(&mut self, name: &str, action: &str, amount: i64) -> Result<(), String> {
+        if action != GAME_SERVER_PRIORITY_INCREMENT && action != GAME_SERVER_PRIORITY_DECREMENT {
+            return Err(format!(
+                "unable to UpdateCount with Name {name}, Action {action}, Amount {amount}. Allocation action must be one of {GAME_SERVER_PRIORITY_INCREMENT} or {GAME_SERVER_PRIORITY_DECREMENT}"
+            ));
+        }
+        if amount < 0 {
+            return Err(format!(
+                "unable to UpdateCount with Name {name}, Action {action}, Amount {amount}. Amount must be greater than 0"
+            ));
+        }
+        let Some(counters) = self.status.counters.as_mut() else {
+            return Err(format!(
+                "unable to UpdateCount with Name {name}, Action {action}, Amount {amount}. Counter not found in GameServer {}",
+                self.metadata.name
+            ));
+        };
+        let Some(counter) = counters.get_mut(name) else {
+            return Err(format!(
+                "unable to UpdateCount with Name {name}, Action {action}, Amount {amount}. Counter not found in GameServer {}",
+                self.metadata.name
+            ));
+        };
+
+        let mut count = if action == GAME_SERVER_PRIORITY_INCREMENT {
+            counter.count.wrapping_add(amount)
+        } else {
+            counter.count.wrapping_sub(amount)
+        };
+        if count > counter.capacity {
+            count = counter.capacity;
+        }
+        if count < 0 {
+            count = 0;
+        }
+        counter.count = count;
+        Ok(())
+    }
+
+    pub fn update_counter_capacity(&mut self, name: &str, capacity: i64) -> Result<(), String> {
+        if capacity < 0 {
+            return Err(format!(
+                "unable to UpdateCounterCapacity: Name {name}, Capacity {capacity}. Capacity must be greater than or equal to 0"
+            ));
+        }
+        let Some(counters) = self.status.counters.as_mut() else {
+            return Err(format!(
+                "unable to UpdateCounterCapacity: Name {name}, Capacity {capacity}. Counter not found in GameServer {}",
+                self.metadata.name
+            ));
+        };
+        let Some(counter) = counters.get_mut(name) else {
+            return Err(format!(
+                "unable to UpdateCounterCapacity: Name {name}, Capacity {capacity}. Counter not found in GameServer {}",
+                self.metadata.name
+            ));
+        };
+        counter.capacity = capacity;
+        if counter.count > counter.capacity {
+            counter.count = counter.capacity;
+        }
+        Ok(())
+    }
+
+    pub fn update_list_capacity(
+        &mut self,
+        name: &str,
+        capacity: i64,
+        max_capacity: i64,
+    ) -> Result<(), String> {
+        if capacity < 0 || capacity > max_capacity {
+            return Err(format!(
+                "unable to UpdateListCapacity: Name {name}, Capacity {capacity}. Capacity must be between 0 and {max_capacity}, inclusive"
+            ));
+        }
+        let Some(lists) = self.status.lists.as_mut() else {
+            return Err(format!(
+                "unable to UpdateListCapacity: Name {name}, Capacity {capacity}. List not found in GameServer {}",
+                self.metadata.name
+            ));
+        };
+        let Some(list) = lists.get_mut(name) else {
+            return Err(format!(
+                "unable to UpdateListCapacity: Name {name}, Capacity {capacity}. List not found in GameServer {}",
+                self.metadata.name
+            ));
+        };
+        list.capacity = capacity;
+        truncate_list(list.capacity, &mut list.values);
+        Ok(())
+    }
+
+    pub fn append_list_values(
+        &mut self,
+        name: &str,
+        values: Option<&[String]>,
+    ) -> Result<(), String> {
+        let Some(values) = values else {
+            return Err(format!(
+                "unable to AppendListValues: Name {name}. Values must not be nil"
+            ));
+        };
+        let Some(lists) = self.status.lists.as_mut() else {
+            return Err(format!(
+                "unable to AppendListValues: Name {name}. List not found in GameServer {}",
+                self.metadata.name
+            ));
+        };
+        let Some(list) = lists.get_mut(name) else {
+            return Err(format!(
+                "unable to AppendListValues: Name {name}. List not found in GameServer {}",
+                self.metadata.name
+            ));
+        };
+        list.values = merge_remove_duplicates(&list.values, values);
+        truncate_list(list.capacity, &mut list.values);
+        Ok(())
+    }
+
+    pub fn delete_list_values(
+        &mut self,
+        name: &str,
+        values: Option<&[String]>,
+    ) -> Result<(), String> {
+        let Some(values) = values else {
+            return Err(format!(
+                "unable to DeleteListValues: Name {name}. Values must not be nil"
+            ));
+        };
+        let Some(lists) = self.status.lists.as_mut() else {
+            return Err(format!(
+                "unable to DeleteListValues: Name {name}. List not found in GameServer {}",
+                self.metadata.name
+            ));
+        };
+        let Some(list) = lists.get_mut(name) else {
+            return Err(format!(
+                "unable to DeleteListValues: Name {name}. List not found in GameServer {}",
+                self.metadata.name
+            ));
+        };
+        let deletes: BTreeSet<&str> = values.iter().map(String::as_str).collect();
+        list.values.retain(|value| !deletes.contains(value.as_str()));
+        Ok(())
+    }
+}
+
+fn truncate_list(capacity: i64, values: &mut Vec<String>) {
+    let capacity = capacity.max(0) as usize;
+    if values.len() > capacity {
+        values.truncate(capacity);
+    }
+}
+
+pub fn merge_remove_duplicates(list1: &[String], list2: &[String]) -> Vec<String> {
+    let mut unique = Vec::with_capacity(list1.len() + list2.len());
+    let mut seen = BTreeSet::new();
+    for value in list1.iter().chain(list2) {
+        if seen.insert(value.as_str()) {
+            unique.push(value.clone());
+        }
+    }
+    unique
+}
+
 
 #[cfg(test)]
 mod tests {
@@ -669,6 +1196,383 @@ mod tests {
             assert!(health.initial_delay_seconds > 0);
         });
     }
+
+    #[test]
+    fn validation_ports_containers_and_dev_address_match_go_cases() {
+        let spec = GameServerSpec {
+            container: String::new(),
+            ports: vec![
+                GameServerPort {
+                    name: "main".into(),
+                    host_port: 5001,
+                    port_policy: Some(PortPolicy::Dynamic),
+                    ..Default::default()
+                },
+                GameServerPort {
+                    name: "sidecar".into(),
+                    host_port: 5002,
+                    container_port: 5002,
+                    port_policy: Some(PortPolicy::Static),
+                    ..Default::default()
+                },
+            ],
+            template: PodTemplateSpec {
+                spec: PodSpec {
+                    containers: vec![
+                        Container { name: "testing".into(), ..Default::default() },
+                        Container { name: "anothertest".into(), ..Default::default() },
+                    ],
+                    ..Default::default()
+                },
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+
+        let errors = spec.validate("");
+        assert_eq!(errors.len(), 4);
+        assert_eq!(errors[0].kind, ValidationErrorKind::Required);
+        assert_eq!(errors[0].path, "spec.container");
+        assert_eq!(errors[1].kind, ValidationErrorKind::Invalid);
+        assert_eq!(errors[2].path, "spec.ports[0].containerPort");
+        assert_eq!(errors[3].path, "spec.ports[0].hostPort");
+
+        let dev = GameServerSpec {
+            ports: vec![GameServerPort {
+                name: "main".into(),
+                container_port: 7777,
+                port_policy: Some(PortPolicy::Static),
+                ..Default::default()
+            }],
+            ..Default::default()
+        };
+        let errors = dev.validate("invalid-ip");
+        assert_eq!(errors.len(), 2);
+        assert_eq!(
+            errors[0].path,
+            "metadata.annotations.agones.dev/dev-address"
+        );
+        assert_eq!(errors[1].path, "spec.ports[0].hostPort");
+    }
+
+    #[test]
+    fn validation_enforces_passthrough_dynamic_and_dev_policy_rules() {
+        let mut gs = GameServer {
+            spec: GameServerSpec {
+                container: "my_image".into(),
+                ports: vec![
+                    GameServerPort {
+                        name: "one".into(),
+                        port_policy: Some(PortPolicy::Passthrough),
+                        container_port: 1294,
+                        ..Default::default()
+                    },
+                    GameServerPort {
+                        name: "two".into(),
+                        port_policy: Some(PortPolicy::Passthrough),
+                        host_port: 7890,
+                        ..Default::default()
+                    },
+                    GameServerPort {
+                        name: "three".into(),
+                        port_policy: Some(PortPolicy::Dynamic),
+                        host_port: 7890,
+                        container_port: 1294,
+                        ..Default::default()
+                    },
+                ],
+                template: PodTemplateSpec {
+                    spec: PodSpec {
+                        containers: vec![Container {
+                            name: "my_image".into(),
+                            ..Default::default()
+                        }],
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                },
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        gs.spec.apply_defaults();
+        let errors = gs.spec.validate("");
+        assert_eq!(errors.len(), 3);
+        assert_eq!(errors[0].detail, ERR_CONTAINER_PORT_PASSTHROUGH);
+        assert_eq!(errors[1].detail, ERR_HOST_PORT);
+        assert_eq!(errors[2].detail, ERR_HOST_PORT);
+
+        gs.metadata
+            .annotations
+            .insert(DEV_ADDRESS_ANNOTATION.into(), "127.1.1.1".into());
+        gs.spec.ports = vec![GameServerPort {
+            name: "main".into(),
+            port_policy: Some(PortPolicy::Passthrough),
+            host_port: 7890,
+            container_port: 7777,
+            ..Default::default()
+        }];
+        let errors = gs.validate();
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].path, "spec.ports[0].portPolicy");
+        assert_eq!(errors[0].detail, ERR_PORT_POLICY_STATIC);
+    }
+
+    #[test]
+    fn validation_checks_name_metadata_and_sidecar_container_semantics() {
+        let mut gs = simple_game_server();
+        gs.apply_defaults();
+        gs.metadata.name = "f".repeat(64);
+        let errors = gs.validate();
+        assert!(errors.iter().any(|e| {
+            e.kind == ValidationErrorKind::TooLong && e.path == "metadata.name"
+        }));
+
+        gs.metadata.name.clear();
+        gs.spec
+            .template
+            .metadata
+            .annotations
+            .insert("agones.dev/short±Name".into(), "value".into());
+        let errors = gs.validate();
+        assert!(errors
+            .iter()
+            .any(|e| e.path == "spec.template.metadata.annotations"));
+
+        gs.spec.template.metadata.annotations.clear();
+        gs.spec.template.spec.init_containers.push(Container {
+            name: "sdk".into(),
+            restart_policy: Some(ContainerRestartPolicy::Always),
+            ..Default::default()
+        });
+        assert!(gs.spec.has_container("sdk", true));
+        assert!(!gs.spec.has_container("sdk", false));
+    }
+
+    #[test]
+    fn lifecycle_helpers_match_go_state_tables() {
+        let before_ready = [
+            GameServerState::PortAllocation,
+            GameServerState::Creating,
+            GameServerState::Starting,
+            GameServerState::Scheduled,
+            GameServerState::RequestReady,
+        ];
+        for state in before_ready {
+            let gs = GameServer {
+                status: GameServerStatus {
+                    state: Some(state),
+                    ..Default::default()
+                },
+                ..Default::default()
+            };
+            assert!(gs.is_before_ready());
+        }
+
+        for state in [
+            GameServerState::Ready,
+            GameServerState::Shutdown,
+            GameServerState::Error,
+            GameServerState::Unhealthy,
+            GameServerState::Reserved,
+            GameServerState::Allocated,
+        ] {
+            let gs = GameServer {
+                status: GameServerStatus {
+                    state: Some(state),
+                    ..Default::default()
+                },
+                ..Default::default()
+            };
+            assert!(!gs.is_before_ready());
+        }
+
+        for state in [
+            GameServerState::Ready,
+            GameServerState::Reserved,
+            GameServerState::Allocated,
+        ] {
+            let gs = GameServer {
+                status: GameServerStatus {
+                    state: Some(state),
+                    ..Default::default()
+                },
+                ..Default::default()
+            };
+            assert!(gs.is_active());
+        }
+    }
+
+    #[test]
+    fn deletion_helpers_match_allocated_reserved_behavior() {
+        let mut gs = GameServer {
+            status: GameServerStatus {
+                state: Some(GameServerState::Starting),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        assert!(gs.is_deletable());
+        gs.status.state = Some(GameServerState::Allocated);
+        assert!(!gs.is_deletable());
+        gs.status.state = Some(GameServerState::Reserved);
+        assert!(!gs.is_deletable());
+
+        gs.metadata.deletion_timestamp = Some("now".into());
+        assert!(gs.is_deletable());
+        assert!(gs.is_being_deleted());
+
+        gs.metadata.deletion_timestamp = None;
+        gs.status.state = Some(GameServerState::Shutdown);
+        assert!(gs.is_being_deleted());
+    }
+
+    #[test]
+    fn apply_to_pod_container_supports_regular_and_restartable_init_containers() {
+        let gs = simple_game_server();
+        let mut pod = PodSpec {
+            containers: vec![
+                Container { name: "game".into(), ..Default::default() },
+                Container { name: "other".into(), ..Default::default() },
+            ],
+            init_containers: vec![
+                Container {
+                    name: "sdk".into(),
+                    restart_policy: Some(ContainerRestartPolicy::Always),
+                    ..Default::default()
+                },
+                Container {
+                    name: "init".into(),
+                    restart_policy: Some(ContainerRestartPolicy::Never),
+                    ..Default::default()
+                },
+            ],
+        };
+        gs.apply_to_pod_container(&mut pod, "game", |c| c.tty = true)
+            .unwrap();
+        gs.apply_to_pod_container(&mut pod, "sdk", |c| c.tty = true)
+            .unwrap();
+        assert!(pod.containers[0].tty);
+        assert!(pod.init_containers[0].tty);
+        assert!(gs
+            .apply_to_pod_container(&mut pod, "init", |c| c.tty = true)
+            .is_err());
+    }
+
+    #[test]
+    fn counter_updates_match_go_truncation_and_error_behavior() {
+        let mut gs = GameServer {
+            status: GameServerStatus {
+                counters: Some(BTreeMap::from([
+                    ("players".into(), CounterStatus { count: 0, capacity: 100 }),
+                    ("bars".into(), CounterStatus { count: 99, capacity: 100 }),
+                ])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+
+        gs.update_count("players", GAME_SERVER_PRIORITY_INCREMENT, 101)
+            .unwrap();
+        assert_eq!(gs.status.counters.as_ref().unwrap()["players"].count, 100);
+
+        gs.update_count("bars", GAME_SERVER_PRIORITY_DECREMENT, 100)
+            .unwrap();
+        assert_eq!(gs.status.counters.as_ref().unwrap()["bars"].count, 0);
+
+        assert!(gs.update_count("bars", "decrement", 1).is_err());
+        assert!(gs
+            .update_count("bars", GAME_SERVER_PRIORITY_INCREMENT, -1)
+            .is_err());
+
+        gs.update_counter_capacity("players", 50).unwrap();
+        assert_eq!(
+            gs.status.counters.as_ref().unwrap()["players"],
+            CounterStatus { count: 50, capacity: 50 }
+        );
+    }
+
+    #[test]
+    fn list_updates_match_go_order_deduplication_and_capacity_behavior() {
+        let mut gs = GameServer {
+            status: GameServerStatus {
+                lists: Some(BTreeMap::from([(
+                    "games".into(),
+                    ListStatus {
+                        capacity: 3,
+                        values: vec!["game0".into()],
+                    },
+                )])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+
+        let values = vec![
+            "game1".into(),
+            "game2".into(),
+            "game2".into(),
+            "game1".into(),
+            "game3".into(),
+        ];
+        gs.append_list_values("games", Some(&values)).unwrap();
+        assert_eq!(
+            gs.status.lists.as_ref().unwrap()["games"].values,
+            vec!["game0", "game1", "game2"]
+        );
+
+        let deletes = vec!["game1".into(), "missing".into()];
+        gs.delete_list_values("games", Some(&deletes)).unwrap();
+        assert_eq!(
+            gs.status.lists.as_ref().unwrap()["games"].values,
+            vec!["game0", "game2"]
+        );
+
+        gs.update_list_capacity("games", 1, 25).unwrap();
+        assert_eq!(gs.status.lists.as_ref().unwrap()["games"].capacity, 1);
+        assert_eq!(
+            gs.status.lists.as_ref().unwrap()["games"].values,
+            vec!["game0"]
+        );
+        assert!(gs.update_list_capacity("games", 26, 25).is_err());
+        assert!(gs.append_list_values("games", None).is_err());
+        assert!(gs.delete_list_values("games", None).is_err());
+    }
+
+    #[test]
+    fn merge_remove_duplicates_matches_original_ordering() {
+        let one = vec!["one".into(), "two".into()];
+        let two = vec!["two".into(), "one".into(), "three".into()];
+        assert_eq!(
+            merge_remove_duplicates(&one, &two),
+            vec!["one", "two", "three"]
+        );
+    }
+
+    #[test]
+    fn bolero_counter_updates_never_leave_count_outside_capacity() {
+        bolero::check!().for_each(|bytes: &[u8]| {
+            let capacity = i64::from(bytes.first().copied().unwrap_or(0));
+            let count = i64::from(bytes.get(1).copied().unwrap_or(0)).min(capacity);
+            let amount = i64::from(bytes.get(2).copied().unwrap_or(0));
+            let mut gs = GameServer {
+                status: GameServerStatus {
+                    counters: Some(BTreeMap::from([(
+                        "c".into(),
+                        CounterStatus { count, capacity },
+                    )])),
+                    ..Default::default()
+                },
+                ..Default::default()
+            };
+            gs.update_count("c", GAME_SERVER_PRIORITY_INCREMENT, amount)
+                .unwrap();
+            let result = gs.status.counters.as_ref().unwrap()["c"].count;
+            assert!(result >= 0);
+            assert!(result <= capacity);
+        });
+    }
+
 }
 
 #[cfg(kani)]
@@ -687,5 +1591,65 @@ mod verification {
         assert!(health.period_seconds > 0);
         assert!(health.failure_threshold > 0);
         assert!(health.initial_delay_seconds > 0);
+    }
+}
+
+
+#[cfg(kani)]
+mod tracking_verification {
+    use super::*;
+
+    #[kani::proof]
+    fn counter_increment_is_bounded_by_nonnegative_capacity() {
+        let capacity: i64 = kani::any();
+        kani::assume(capacity >= 0);
+        let count: i64 = kani::any();
+        kani::assume(count >= 0 && count <= capacity);
+        let amount: i64 = kani::any();
+        kani::assume(amount >= 0);
+        kani::assume(count.checked_add(amount).is_some());
+
+        let mut gs = GameServer {
+            status: GameServerStatus {
+                counters: Some(BTreeMap::from([(
+                    "c".into(),
+                    CounterStatus { count, capacity },
+                )])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        gs.update_count("c", GAME_SERVER_PRIORITY_INCREMENT, amount)
+            .unwrap();
+        let result = gs.status.counters.as_ref().unwrap()["c"].count;
+        assert!(result >= 0);
+        assert!(result <= capacity);
+    }
+
+    #[kani::proof]
+    fn counter_decrement_is_bounded_by_zero_and_capacity() {
+        let capacity: i64 = kani::any();
+        kani::assume(capacity >= 0);
+        let count: i64 = kani::any();
+        kani::assume(count >= 0 && count <= capacity);
+        let amount: i64 = kani::any();
+        kani::assume(amount >= 0);
+        kani::assume(count.checked_sub(amount).is_some());
+
+        let mut gs = GameServer {
+            status: GameServerStatus {
+                counters: Some(BTreeMap::from([(
+                    "c".into(),
+                    CounterStatus { count, capacity },
+                )])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        gs.update_count("c", GAME_SERVER_PRIORITY_DECREMENT, amount)
+            .unwrap();
+        let result = gs.status.counters.as_ref().unwrap()["c"].count;
+        assert!(result >= 0);
+        assert!(result <= capacity);
     }
 }
