@@ -238,6 +238,7 @@ fn main() {
     );
     let game_server_set_path =
         root.join("install/helm/agones/templates/crds/gameserverset.yaml");
+    let fleet_path = root.join("install/helm/agones/templates/crds/fleet.yaml");
 
     let values: YamlValue =
         serde_yaml::from_str(&read(&values_path)).expect("parse install/helm/agones/values.yaml");
@@ -313,7 +314,7 @@ fn main() {
         ("includeKubernetesPatchKeys", include_patch_keys),
     ]);
     let game_server_set_includes =
-        HashMap::from([("gameserver.schema", game_server_template_schema)]);
+        HashMap::from([("gameserver.schema", game_server_template_schema.clone())]);
     let game_server_set_yaml = render_template_with_indent_offset(
         &game_server_set_openapi,
         &game_server_set_context,
@@ -325,12 +326,34 @@ fn main() {
         .expect("rendered GameServerSet OpenAPI schema must be YAML");
     let game_server_set_schema_json = schema_json(game_server_set_schema, "GameServerSet");
 
+    let fleet_source = read(&fleet_path);
+    let (fleet_openapi, fleet_openapi_indent) =
+        extract_indented_block(&fleet_source, "openAPIV3Schema:");
+    let fleet_context = HashMap::from([
+        ("metadata", true),
+        ("podPreserveUnknownFields", preserve_unknown),
+        ("includeKubernetesPatchKeys", include_patch_keys),
+    ]);
+    let fleet_includes = HashMap::from([("gameserver.schema", game_server_template_schema)]);
+    let fleet_yaml = render_template_with_indent_offset(
+        &fleet_openapi,
+        &fleet_context,
+        max_items,
+        &fleet_includes,
+        fleet_openapi_indent,
+    );
+    let fleet_schema: YamlValue =
+        serde_yaml::from_str(&fleet_yaml).expect("rendered Fleet OpenAPI schema must be YAML");
+    let fleet_schema_json = schema_json(fleet_schema, "Fleet");
+
     let game_server_literal = quoted(game_server_schema_json.as_str());
     let game_server_set_literal = quoted(game_server_set_schema_json.as_str());
+    let fleet_literal = quoted(fleet_schema_json.as_str());
     let tokens: rust::Tokens = quote! {
         // Generated from Agones Helm/Kubernetes CRD schema templates. Do not edit.
         pub const GAME_SERVER_OPENAPI_SCHEMA_JSON: &str = $game_server_literal;
         pub const GAME_SERVER_SET_OPENAPI_SCHEMA_JSON: &str = $game_server_set_literal;
+        pub const FLEET_OPENAPI_SCHEMA_JSON: &str = $fleet_literal;
     };
     let generated = tokens.to_string().expect("format generated Rust source");
 
