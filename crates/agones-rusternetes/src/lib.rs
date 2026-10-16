@@ -15,6 +15,7 @@ use rusternetes_common::resources::{
     Affinity, Container, ContainerPort, CustomResourceColumnDefinition,
     CustomResourceDefinition, CustomResourceDefinitionNames, CustomResourceDefinitionSpec,
     CustomResourceDefinitionVersion, CustomResourceSubresourceScale, CustomResourceSubresources,
+    CustomResourceValidation,
     Pod, PodAffinity, PodAffinityTerm, PodSpec, ResourceScope, Volume, VolumeMount,
     WeightedPodAffinityTerm,
 };
@@ -47,12 +48,25 @@ pub const GAME_SERVER_CRD_SHORT_NAME: &str = "gs";
 pub const GAME_SERVER_CRD_SELECTABLE_FIELDS: &[&str] =
     &[".status.state", ".status.nodeName"];
 
-/// Builds the statically representable GameServer CRD envelope using native
-/// Rusternetes CRD types.
+mod generated_game_server_schema {
+    include!(concat!(env!("OUT_DIR"), "/game_server_schema.rs"));
+}
+
+pub fn game_server_openapi_validation() -> CustomResourceValidation {
+    CustomResourceValidation {
+        open_apiv3_schema: serde_json::from_str(
+            generated_game_server_schema::GAME_SERVER_OPENAPI_SCHEMA_JSON,
+        )
+        .expect("build-generated GameServer OpenAPI schema must match Rusternetes schema types"),
+    }
+}
+
+/// Builds the GameServer CRD using native Rusternetes CRD types.
 ///
-/// The OpenAPI schema is intentionally omitted here because Agones composes it
-/// from Helm/Kubernetes machine-readable schema templates. That schema is a
-/// separate generation milestone rather than a hand-maintained duplicate.
+/// The OpenAPI schema is generated at build time from Agones' Helm schema
+/// fragments and the vendored Kubernetes PodTemplate schema, so the Rust
+/// representation follows the machine-readable source instead of duplicating
+/// hundreds of schema fields by hand.
 pub fn game_server_crd_envelope() -> CustomResourceDefinition {
     CustomResourceDefinition {
         api_version: "apiextensions.k8s.io/v1".to_owned(),
@@ -78,7 +92,7 @@ pub fn game_server_crd_envelope() -> CustomResourceDefinition {
                 storage: true,
                 deprecated: None,
                 deprecation_warning: None,
-                schema: None,
+                schema: Some(game_server_openapi_validation()),
                 subresources: Some(CustomResourceSubresources {
                     status: None,
                     scale: Some(CustomResourceSubresourceScale {
@@ -613,7 +627,7 @@ mod tests {
         assert_eq!(version.name, GAME_SERVER_CRD_VERSION);
         assert!(version.served);
         assert!(version.storage);
-        assert!(version.schema.is_none());
+        assert!(version.schema.is_some());
 
         let scale = version
             .subresources
@@ -652,6 +666,78 @@ mod tests {
                 ("Age", "date", ".metadata.creationTimestamp"),
             ]
         );
+    }
+
+    fn normalize_json_numbers(value: &mut serde_json::Value) {
+        match value {
+            serde_json::Value::Array(values) => {
+                for value in values {
+                    normalize_json_numbers(value);
+                }
+            }
+            serde_json::Value::Object(values) => {
+                for value in values.values_mut() {
+                    normalize_json_numbers(value);
+                }
+            }
+            serde_json::Value::Number(number) => {
+                if let Some(value) = number.as_f64().and_then(serde_json::Number::from_f64) {
+                    *number = value;
+                }
+            }
+            _ => {}
+        }
+    }
+
+    #[test]
+    fn game_server_crd_schema_is_generated_from_helm_machine_sources() {
+        let crd = game_server_crd_envelope();
+        let schema = crd.spec.versions[0].schema.as_ref().unwrap();
+        let mut represented = serde_json::to_value(&schema.open_apiv3_schema).unwrap();
+        let mut generated: serde_json::Value = serde_json::from_str(
+            generated_game_server_schema::GAME_SERVER_OPENAPI_SCHEMA_JSON,
+        )
+        .unwrap();
+
+        // Rusternetes models OpenAPI minimum/maximum as f64, so YAML integer
+        // bounds round-trip as 0.0/1.0. Canonicalize only number encoding; all
+        // schema structure and nonnumeric values must remain exactly identical.
+        normalize_json_numbers(&mut represented);
+        normalize_json_numbers(&mut generated);
+        assert_eq!(
+            represented, generated,
+            "Rusternetes must not silently drop fields from the generated schema"
+        );
+        assert_eq!(generated["type"], "object");
+        assert_eq!(generated["required"], serde_json::json!(["spec"]));
+        assert!(generated["properties"]["spec"].is_object());
+        assert!(generated["properties"]["status"].is_object());
+        assert!(generated["properties"]["spec"]["properties"]["template"]["properties"]["spec"]
+            ["properties"]["containers"]
+            .is_object());
+    }
+
+    #[test]
+    fn game_server_crd_schema_uses_default_list_limits_and_kubernetes_list_semantics() {
+        let generated: serde_json::Value = serde_json::from_str(
+            generated_game_server_schema::GAME_SERVER_OPENAPI_SCHEMA_JSON,
+        )
+        .unwrap();
+
+        let spec_values =
+            &generated["properties"]["spec"]["properties"]["lists"]["additionalProperties"]
+                ["properties"]["values"];
+        let status_values =
+            &generated["properties"]["status"]["properties"]["lists"]["additionalProperties"]
+                ["properties"]["values"];
+
+        assert_eq!(spec_values["maxItems"], 1000);
+        assert_eq!(status_values["maxItems"], 1000);
+        assert_eq!(spec_values["x-kubernetes-list-type"], "set");
+        assert_eq!(status_values["x-kubernetes-list-type"], "set");
+        assert!(generated["properties"]["spec"]["properties"]["template"]
+            .get("x-kubernetes-preserve-unknown-fields")
+            .is_none());
     }
 
     #[test]
