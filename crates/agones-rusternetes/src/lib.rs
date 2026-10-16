@@ -14,8 +14,8 @@ use agones_core::{
 use rusternetes_common::resources::{
     Affinity, Container, ContainerPort, CustomResourceColumnDefinition,
     CustomResourceDefinition, CustomResourceDefinitionNames, CustomResourceDefinitionSpec,
-    CustomResourceDefinitionVersion, CustomResourceSubresourceScale, CustomResourceSubresources,
-    CustomResourceValidation,
+    CustomResourceDefinitionVersion, CustomResourceSubresourceScale,
+    CustomResourceSubresourceStatus, CustomResourceSubresources, CustomResourceValidation,
     Pod, PodAffinity, PodAffinityTerm, PodSpec, ResourceScope, Volume, VolumeMount,
     WeightedPodAffinityTerm,
 };
@@ -38,6 +38,14 @@ pub const GAME_SERVER_CRD_KIND: &str = "GameServer";
 pub const GAME_SERVER_CRD_PLURAL: &str = "gameservers";
 pub const GAME_SERVER_CRD_SINGULAR: &str = "gameserver";
 pub const GAME_SERVER_CRD_SHORT_NAME: &str = "gs";
+
+pub const GAME_SERVER_SET_CRD_NAME: &str = "gameserversets.agones.dev";
+pub const GAME_SERVER_SET_CRD_GROUP: &str = "agones.dev";
+pub const GAME_SERVER_SET_CRD_VERSION: &str = "v1";
+pub const GAME_SERVER_SET_CRD_KIND: &str = "GameServerSet";
+pub const GAME_SERVER_SET_CRD_PLURAL: &str = "gameserversets";
+pub const GAME_SERVER_SET_CRD_SINGULAR: &str = "gameserverset";
+pub const GAME_SERVER_SET_CRD_SHORT_NAMES: &[&str] = &["gss", "gsset"];
 
 /// Agones enables these selectable fields in its default Helm values.
 ///
@@ -133,6 +141,108 @@ pub fn game_server_crd_envelope() -> CustomResourceDefinition {
                         description: None,
                         priority: None,
                         json_path: ".status.nodeName".to_owned(),
+                    },
+                    CustomResourceColumnDefinition {
+                        name: "Age".to_owned(),
+                        type_: "date".to_owned(),
+                        format: None,
+                        description: None,
+                        priority: None,
+                        json_path: ".metadata.creationTimestamp".to_owned(),
+                    },
+                ]),
+            }],
+            conversion: None,
+            preserve_unknown_fields: None,
+        },
+        status: None,
+    }
+}
+
+/// Builds the statically representable GameServerSet CRD envelope.
+///
+/// The GameServerSet OpenAPI schema composes the generated GameServer schema
+/// with set-specific replica, priority, overflow, and aggregate status fields.
+/// That composition is intentionally isolated to the next generation milestone.
+pub fn game_server_set_crd_envelope() -> CustomResourceDefinition {
+    CustomResourceDefinition {
+        api_version: "apiextensions.k8s.io/v1".to_owned(),
+        kind: "CustomResourceDefinition".to_owned(),
+        metadata: RusternetesObjectMeta {
+            name: GAME_SERVER_SET_CRD_NAME.to_owned(),
+            ..Default::default()
+        },
+        spec: CustomResourceDefinitionSpec {
+            group: GAME_SERVER_SET_CRD_GROUP.to_owned(),
+            names: CustomResourceDefinitionNames {
+                plural: GAME_SERVER_SET_CRD_PLURAL.to_owned(),
+                singular: Some(GAME_SERVER_SET_CRD_SINGULAR.to_owned()),
+                kind: GAME_SERVER_SET_CRD_KIND.to_owned(),
+                short_names: Some(
+                    GAME_SERVER_SET_CRD_SHORT_NAMES
+                        .iter()
+                        .map(|name| (*name).to_owned())
+                        .collect(),
+                ),
+                categories: None,
+                list_kind: None,
+            },
+            scope: ResourceScope::Namespaced,
+            versions: vec![CustomResourceDefinitionVersion {
+                name: GAME_SERVER_SET_CRD_VERSION.to_owned(),
+                served: true,
+                storage: true,
+                deprecated: None,
+                deprecation_warning: None,
+                schema: None,
+                subresources: Some(CustomResourceSubresources {
+                    status: Some(CustomResourceSubresourceStatus {}),
+                    scale: Some(CustomResourceSubresourceScale {
+                        spec_replicas_path: ".spec.replicas".to_owned(),
+                        status_replicas_path: ".status.replicas".to_owned(),
+                        label_selector_path: Some(".status.labelSelector".to_owned()),
+                    }),
+                }),
+                additional_printer_columns: Some(vec![
+                    CustomResourceColumnDefinition {
+                        name: "Scheduling".to_owned(),
+                        type_: "string".to_owned(),
+                        format: None,
+                        description: None,
+                        priority: None,
+                        json_path: ".spec.scheduling".to_owned(),
+                    },
+                    CustomResourceColumnDefinition {
+                        name: "Desired".to_owned(),
+                        type_: "integer".to_owned(),
+                        format: None,
+                        description: None,
+                        priority: None,
+                        json_path: ".spec.replicas".to_owned(),
+                    },
+                    CustomResourceColumnDefinition {
+                        name: "Current".to_owned(),
+                        type_: "integer".to_owned(),
+                        format: None,
+                        description: None,
+                        priority: None,
+                        json_path: ".status.replicas".to_owned(),
+                    },
+                    CustomResourceColumnDefinition {
+                        name: "Allocated".to_owned(),
+                        type_: "integer".to_owned(),
+                        format: None,
+                        description: None,
+                        priority: None,
+                        json_path: ".status.allocatedReplicas".to_owned(),
+                    },
+                    CustomResourceColumnDefinition {
+                        name: "Ready".to_owned(),
+                        type_: "integer".to_owned(),
+                        format: None,
+                        description: None,
+                        priority: None,
+                        json_path: ".status.readyReplicas".to_owned(),
                     },
                     CustomResourceColumnDefinition {
                         name: "Age".to_owned(),
@@ -603,6 +713,89 @@ pub fn ensure_game_server_finalizer(game_server: &mut GameServer) {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn game_server_set_crd_envelope_matches_agones_helm_static_fields() {
+        let crd = game_server_set_crd_envelope();
+        assert_eq!(crd.api_version, "apiextensions.k8s.io/v1");
+        assert_eq!(crd.kind, "CustomResourceDefinition");
+        assert_eq!(crd.metadata.name, GAME_SERVER_SET_CRD_NAME);
+        assert_eq!(crd.spec.group, GAME_SERVER_SET_CRD_GROUP);
+        assert_eq!(crd.spec.scope, ResourceScope::Namespaced);
+        assert_eq!(crd.spec.names.kind, GAME_SERVER_SET_CRD_KIND);
+        assert_eq!(crd.spec.names.plural, GAME_SERVER_SET_CRD_PLURAL);
+        assert_eq!(
+            crd.spec.names.singular.as_deref(),
+            Some(GAME_SERVER_SET_CRD_SINGULAR)
+        );
+        assert_eq!(
+            crd.spec.names.short_names.as_deref(),
+            Some(&["gss".to_owned(), "gsset".to_owned()][..])
+        );
+
+        let version = &crd.spec.versions[0];
+        assert_eq!(version.name, GAME_SERVER_SET_CRD_VERSION);
+        assert!(version.served);
+        assert!(version.storage);
+        assert!(version.schema.is_none());
+
+        let subresources = version.subresources.as_ref().unwrap();
+        assert!(subresources.status.is_some());
+        let scale = subresources.scale.as_ref().unwrap();
+        assert_eq!(scale.spec_replicas_path, ".spec.replicas");
+        assert_eq!(scale.status_replicas_path, ".status.replicas");
+        assert_eq!(
+            scale.label_selector_path.as_deref(),
+            Some(".status.labelSelector")
+        );
+    }
+
+    #[test]
+    fn game_server_set_crd_printer_columns_match_agones_helm_order_and_types() {
+        let crd = game_server_set_crd_envelope();
+        let columns = crd.spec.versions[0]
+            .additional_printer_columns
+            .as_ref()
+            .unwrap();
+        let actual: Vec<_> = columns
+            .iter()
+            .map(|column| {
+                (
+                    column.name.as_str(),
+                    column.type_.as_str(),
+                    column.json_path.as_str(),
+                )
+            })
+            .collect();
+        assert_eq!(
+            actual,
+            vec![
+                ("Scheduling", "string", ".spec.scheduling"),
+                ("Desired", "integer", ".spec.replicas"),
+                ("Current", "integer", ".status.replicas"),
+                ("Allocated", "integer", ".status.allocatedReplicas"),
+                ("Ready", "integer", ".status.readyReplicas"),
+                ("Age", "date", ".metadata.creationTimestamp"),
+            ]
+        );
+    }
+
+    #[test]
+    fn game_server_set_crd_serializes_status_and_scale_subresources() {
+        let json = serde_json::to_value(game_server_set_crd_envelope()).unwrap();
+        let subresources = &json["spec"]["versions"][0]["subresources"];
+        assert!(subresources["status"].is_object());
+        assert_eq!(subresources["status"], serde_json::json!({}));
+        assert_eq!(subresources["scale"]["specReplicasPath"], ".spec.replicas");
+        assert_eq!(
+            subresources["scale"]["statusReplicasPath"],
+            ".status.replicas"
+        );
+        assert_eq!(
+            subresources["scale"]["labelSelectorPath"],
+            ".status.labelSelector"
+        );
+    }
+
     #[test]
     fn game_server_crd_envelope_matches_agones_helm_static_fields() {
         let crd = game_server_crd_envelope();
