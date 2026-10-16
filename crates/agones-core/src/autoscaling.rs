@@ -155,8 +155,10 @@ impl Default for ListPolicy {
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Between {
-    pub start: String,
-    pub end: String,
+    #[serde(default)]
+    pub start: Option<String>,
+    #[serde(default)]
+    pub end: Option<String>,
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -252,7 +254,7 @@ pub struct FleetAutoscalerSpec {
 pub struct FleetAutoscalerStatus {
     pub current_replicas: i32,
     pub desired_replicas: i32,
-    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
     pub last_scale_time: Option<String>,
     pub able_to_scale: bool,
     pub scaling_limited: bool,
@@ -765,6 +767,16 @@ mod tests {
             autoscaler.spec.sync.unwrap().fixed_interval.seconds,
             15
         );
+    }
+
+    #[test]
+    fn kubernetes_time_zero_values_serialize_as_null() {
+        let between = serde_json::to_value(Between::default()).unwrap();
+        assert!(between["start"].is_null());
+        assert!(between["end"].is_null());
+
+        let status = serde_json::to_value(FleetAutoscalerStatus::default()).unwrap();
+        assert!(status["lastScaleTime"].is_null());
     }
 
     #[test]
