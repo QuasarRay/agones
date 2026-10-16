@@ -189,6 +189,243 @@ fn extract_indented_block(source: &str, marker: &str) -> (String, usize) {
     (output, content_indent)
 }
 
+fn extract_helm_definition(source: &str, name: &str) -> String {
+    let marker = format!(r#"{{{{- define "{name}" }}}}"#);
+    let mut inside = false;
+    let mut depth = 0usize;
+    let mut output = String::new();
+
+    for line in source.lines() {
+        let trimmed = line.trim();
+
+        if !inside {
+            if trimmed == marker {
+                inside = true;
+                depth = 1;
+            }
+            continue;
+        }
+
+        if trimmed.starts_with("{{- if ")
+            || trimmed.starts_with("{{- range ")
+            || trimmed.starts_with("{{- with ")
+            || trimmed.starts_with("{{- define ")
+        {
+            depth += 1;
+            output.push_str(line);
+            output.push('\n');
+            continue;
+        }
+
+        if trimmed.starts_with("{{- end") {
+            depth = depth.checked_sub(1).expect("unbalanced Helm definition");
+            if depth == 0 {
+                return output;
+            }
+            output.push_str(line);
+            output.push('\n');
+            continue;
+        }
+
+        output.push_str(line);
+        output.push('\n');
+    }
+
+    panic!("missing or unterminated Helm definition {name}");
+}
+
+fn include_indent(directive: &str) -> usize {
+    directive
+        .split("| indent ")
+        .nth(1)
+        .and_then(|value| value.split_whitespace().next())
+        .and_then(|value| value.parse::<usize>().ok())
+        .unwrap_or_else(|| panic!("include must specify numeric indent: {directive}"))
+}
+
+fn push_indented(output: &mut String, rendered: &str, indent: usize) {
+    for line in rendered.lines() {
+        if !line.is_empty() {
+            output.push_str(&" ".repeat(indent));
+            output.push_str(line);
+        }
+        output.push('\n');
+    }
+}
+
+fn dict_bool(directive: &str, key: &str, scheduled_autoscaler: bool) -> bool {
+    let marker = format!(r#""{key}""#);
+    let start = directive
+        .find(&marker)
+        .unwrap_or_else(|| panic!("missing {key} in Helm dict: {directive}"));
+    let rest = directive[start + marker.len()..].trim_start();
+    let token = rest
+        .split(|character: char| character.is_whitespace() || character == ')')
+        .next()
+        .unwrap_or_default();
+
+    match token {
+        "true" => true,
+        "false" => false,
+        "$featureGates.ScheduledAutoscaler" => scheduled_autoscaler,
+        _ => panic!("unsupported Helm bool value {token:?} for {key}: {directive}"),
+    }
+}
+
+fn feature_gate_value(defaults: &YamlValue, values: &YamlValue, name: &str) -> bool {
+    let defaults = defaults
+        .as_mapping()
+        .expect("defaultfeaturegates.yaml must be a mapping");
+    let key = YamlValue::String(name.to_owned());
+    let mut value = defaults
+        .get(&key)
+        .and_then(YamlValue::as_bool)
+        .unwrap_or_else(|| panic!("missing boolean feature gate {name}"));
+
+    let overrides_value = yaml_key(values, &["agones", "featureGates"]);
+    let overrides = overrides_value
+        .as_str()
+        .expect("agones.featureGates must be a string");
+    if overrides.is_empty() {
+        return value;
+    }
+
+    for entry in overrides.split('&') {
+        let (override_name, raw_value) = entry
+            .split_once('=')
+            .unwrap_or_else(|| panic!("invalid feature gate override {entry:?}"));
+        if !defaults.contains_key(&YamlValue::String(override_name.to_owned())) {
+            panic!("unknown feature gate override {override_name}");
+        }
+        let parsed = raw_value
+            .parse::<bool>()
+            .unwrap_or_else(|_| panic!("feature gate {override_name} must be true or false"));
+        if override_name == name {
+            value = parsed;
+        }
+    }
+
+    value
+}
+
+fn render_fleet_autoscaler_policy(
+    policy_source: &str,
+    url_configuration: &str,
+    scheduled_autoscaler: bool,
+    include_policy: bool,
+    include_schedule_policy: bool,
+    include_chain_policy: bool,
+) -> String {
+    let context = HashMap::from([
+        ("includePolicy", include_policy),
+        ("includeSchedulePolicy", include_schedule_policy),
+        ("includeChainPolicy", include_chain_policy),
+    ]);
+    let mut output = String::new();
+    let mut stack = Vec::<bool>::new();
+
+    for line in policy_source.lines() {
+        let trimmed = line.trim();
+
+        if trimmed.starts_with("{{- if ") {
+            stack.push(condition_value(trimmed, &context));
+            continue;
+        }
+        if trimmed.starts_with("{{- end") {
+            stack.pop().expect("unbalanced FleetAutoscaler policy end");
+            continue;
+        }
+
+        if !stack.iter().all(|value| *value) {
+            continue;
+        }
+
+        if trimmed.starts_with("{{- include ") {
+            let indent = include_indent(trimmed);
+            if trimmed.contains(r#""url.configuration""#) {
+                if url_configuration.contains("{{") || url_configuration.contains("}}") {
+                    panic!("url.configuration contains unhandled Helm directives");
+                }
+                push_indented(&mut output, url_configuration, indent);
+                continue;
+            }
+
+            if trimmed.contains(r#""fleetautoscaler.policy""#) {
+                let child = render_fleet_autoscaler_policy(
+                    policy_source,
+                    url_configuration,
+                    scheduled_autoscaler,
+                    dict_bool(trimmed, "includePolicy", scheduled_autoscaler),
+                    dict_bool(trimmed, "includeSchedulePolicy", scheduled_autoscaler),
+                    dict_bool(trimmed, "includeChainPolicy", scheduled_autoscaler),
+                );
+                push_indented(&mut output, &child, indent);
+                continue;
+            }
+
+            panic!("unsupported FleetAutoscaler policy include: {trimmed}");
+        }
+
+        if line.contains("{{") || line.contains("}}") {
+            panic!("unhandled FleetAutoscaler policy directive: {line}");
+        }
+
+        output.push_str(line);
+        output.push('\n');
+    }
+
+    assert!(
+        stack.is_empty(),
+        "unbalanced FleetAutoscaler policy template blocks"
+    );
+    output
+}
+
+fn render_fleet_autoscaler_schema(
+    source: &str,
+    policy_source: &str,
+    url_configuration: &str,
+    scheduled_autoscaler: bool,
+) -> String {
+    let (openapi, openapi_indent) = extract_indented_block(source, "openAPIV3Schema:");
+    let mut output = String::new();
+
+    for line in openapi.lines() {
+        let trimmed = line.trim();
+
+        if trimmed
+            == r#"{{- $featureGates := include "agones.featureGates" . | fromYaml }}"#
+        {
+            continue;
+        }
+
+        if trimmed.starts_with(r#"{{- include "fleetautoscaler.policy" "#) {
+            let rendered = render_fleet_autoscaler_policy(
+                policy_source,
+                url_configuration,
+                scheduled_autoscaler,
+                dict_bool(trimmed, "includePolicy", scheduled_autoscaler),
+                dict_bool(trimmed, "includeSchedulePolicy", scheduled_autoscaler),
+                dict_bool(trimmed, "includeChainPolicy", scheduled_autoscaler),
+            );
+            let indent = include_indent(trimmed)
+                .checked_sub(openapi_indent)
+                .expect("FleetAutoscaler policy include must be inside OpenAPI subtree");
+            push_indented(&mut output, &rendered, indent);
+            continue;
+        }
+
+        if line.contains("{{") || line.contains("}}") {
+            panic!("unhandled FleetAutoscaler schema directive: {line}");
+        }
+
+        output.push_str(line);
+        output.push('\n');
+    }
+
+    output
+}
+
 fn read(path: &Path) -> String {
     println!("cargo:rerun-if-changed={}", path.display());
     fs::read_to_string(path).unwrap_or_else(|error| panic!("{}: {error}", path.display()))
@@ -239,6 +476,11 @@ fn main() {
     let game_server_set_path =
         root.join("install/helm/agones/templates/crds/gameserverset.yaml");
     let fleet_path = root.join("install/helm/agones/templates/crds/fleet.yaml");
+    let fleet_autoscaler_path =
+        root.join("install/helm/agones/templates/crds/fleetautoscaler.yaml");
+    let fleet_autoscaler_policy_path =
+        root.join("install/helm/agones/templates/crds/_fleetautoscalerpolicy.yaml");
+    let default_feature_gates_path = root.join("install/helm/agones/defaultfeaturegates.yaml");
 
     let values: YamlValue =
         serde_yaml::from_str(&read(&values_path)).expect("parse install/helm/agones/values.yaml");
@@ -251,6 +493,10 @@ fn main() {
         &["gameservers", "podPreserveUnknownFields"],
     );
     let max_items = value_i64(&values, &["gameservers", "lists", "maxItems"]);
+    let default_feature_gates: YamlValue = serde_yaml::from_str(&read(&default_feature_gates_path))
+        .expect("parse install/helm/agones/defaultfeaturegates.yaml");
+    let scheduled_autoscaler =
+        feature_gate_value(&default_feature_gates, &values, "ScheduledAutoscaler");
 
     let base_context = HashMap::from([
         ("metadata", false),
@@ -346,14 +592,37 @@ fn main() {
         serde_yaml::from_str(&fleet_yaml).expect("rendered Fleet OpenAPI schema must be YAML");
     let fleet_schema_json = schema_json(fleet_schema, "Fleet");
 
+    let fleet_autoscaler_policy_source = read(&fleet_autoscaler_policy_path);
+    let url_configuration = extract_helm_definition(
+        &fleet_autoscaler_policy_source,
+        "url.configuration",
+    );
+    let fleet_autoscaler_policy = extract_helm_definition(
+        &fleet_autoscaler_policy_source,
+        "fleetautoscaler.policy",
+    );
+    let fleet_autoscaler_source = read(&fleet_autoscaler_path);
+    let fleet_autoscaler_yaml = render_fleet_autoscaler_schema(
+        &fleet_autoscaler_source,
+        &fleet_autoscaler_policy,
+        &url_configuration,
+        scheduled_autoscaler,
+    );
+    let fleet_autoscaler_schema: YamlValue = serde_yaml::from_str(&fleet_autoscaler_yaml)
+        .expect("rendered FleetAutoscaler OpenAPI schema must be YAML");
+    let fleet_autoscaler_schema_json =
+        schema_json(fleet_autoscaler_schema, "FleetAutoscaler");
+
     let game_server_literal = quoted(game_server_schema_json.as_str());
     let game_server_set_literal = quoted(game_server_set_schema_json.as_str());
     let fleet_literal = quoted(fleet_schema_json.as_str());
+    let fleet_autoscaler_literal = quoted(fleet_autoscaler_schema_json.as_str());
     let tokens: rust::Tokens = quote! {
         // Generated from Agones Helm/Kubernetes CRD schema templates. Do not edit.
         pub const GAME_SERVER_OPENAPI_SCHEMA_JSON: &str = $game_server_literal;
         pub const GAME_SERVER_SET_OPENAPI_SCHEMA_JSON: &str = $game_server_set_literal;
         pub const FLEET_OPENAPI_SCHEMA_JSON: &str = $fleet_literal;
+        pub const FLEET_AUTOSCALER_OPENAPI_SCHEMA_JSON: &str = $fleet_autoscaler_literal;
     };
     let generated = tokens.to_string().expect("format generated Rust source");
 
