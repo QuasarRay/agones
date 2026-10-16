@@ -1,6 +1,6 @@
 use proc_macro::TokenStream;
-use quote::quote;
-use syn::{Data, DeriveInput, Fields, LitStr, parse_macro_input};
+use quote::{format_ident, quote};
+use syn::{Data, DeriveInput, Fields, FnArg, ItemFn, LitStr, ReturnType, Type, parse_macro_input};
 
 /// Generates string-preserving Agones enum plumbing.
 ///
@@ -137,6 +137,109 @@ fn expand(input: DeriveInput) -> syn::Result<proc_macro2::TokenStream> {
                 let value = <String as ::serde::Deserialize>::deserialize(deserializer)?;
                 Ok(Self::from(value))
             }
+        }
+    })
+}
+
+
+/// Generates paired Bolero and Kani checks from one pure typed invariant.
+///
+/// The annotated function must:
+/// - be a non-async, non-generic free function,
+/// - accept exactly one owned input argument,
+/// - return `bool`.
+///
+/// Bolero explores the structured input using `TypeGenerator`; Kani uses a
+/// symbolic value of the same type. Keeping the invariant body single-source
+/// prevents the fuzz/property test and proof harness from drifting apart.
+#[proc_macro_attribute]
+pub fn agones_invariant(attr: TokenStream, item: TokenStream) -> TokenStream {
+    if !attr.is_empty() {
+        return syn::Error::new(
+            proc_macro2::Span::call_site(),
+            "agones_invariant does not accept arguments",
+        )
+        .into_compile_error()
+        .into();
+    }
+
+    let function = parse_macro_input!(item as ItemFn);
+    match expand_invariant(function) {
+        Ok(tokens) => tokens.into(),
+        Err(error) => error.into_compile_error().into(),
+    }
+}
+
+fn expand_invariant(function: ItemFn) -> syn::Result<proc_macro2::TokenStream> {
+    if function.sig.asyncness.is_some() {
+        return Err(syn::Error::new_spanned(
+            &function.sig,
+            "agones_invariant requires a synchronous function",
+        ));
+    }
+    if !function.sig.generics.params.is_empty() {
+        return Err(syn::Error::new_spanned(
+            &function.sig.generics,
+            "agones_invariant does not support generic functions",
+        ));
+    }
+    if function.sig.inputs.len() != 1 {
+        return Err(syn::Error::new_spanned(
+            &function.sig.inputs,
+            "agones_invariant requires exactly one input",
+        ));
+    }
+
+    let input_type = match function.sig.inputs.first().expect("length checked") {
+        FnArg::Typed(argument) => argument.ty.as_ref().clone(),
+        FnArg::Receiver(receiver) => {
+            return Err(syn::Error::new_spanned(
+                receiver,
+                "agones_invariant can only be used on free functions",
+            ));
+        }
+    };
+
+    let returns_bool = match &function.sig.output {
+        ReturnType::Type(_, ty) => matches!(
+            ty.as_ref(),
+            Type::Path(path)
+                if path.qself.is_none()
+                    && path.path.segments.len() == 1
+                    && path.path.segments[0].ident == "bool"
+        ),
+        ReturnType::Default => false,
+    };
+    if !returns_bool {
+        return Err(syn::Error::new_spanned(
+            &function.sig.output,
+            "agones_invariant requires a bool return type",
+        ));
+    }
+
+    let name = &function.sig.ident;
+    let bolero_name = format_ident!("{name}_bolero");
+    let kani_name = format_ident!("{name}_kani");
+
+    Ok(quote! {
+        #function
+
+        #[cfg(test)]
+        #[test]
+        fn #bolero_name() {
+            bolero::check!()
+                .with_type::<#input_type>()
+                .cloned()
+                .for_each(|input| {
+                    assert!(#name(input));
+                });
+        }
+
+        #[cfg(kani)]
+        #[kani::proof]
+        fn #kani_name() {
+            let input: #input_type = kani::any();
+            assert!(#name(input));
         }
     })
 }

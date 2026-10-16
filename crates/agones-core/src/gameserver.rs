@@ -1,7 +1,7 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::net::IpAddr;
 
-use agones_macros::AgonesStringEnum;
+use agones_macros::{AgonesStringEnum, agones_invariant};
 use serde::{Deserialize, Serialize};
 
 pub const GROUP_NAME: &str = "agones.dev";
@@ -231,6 +231,23 @@ impl Health {
             self.initial_delay_seconds = 5;
         }
     }
+}
+
+#[agones_invariant]
+fn health_defaulting_makes_enabled_thresholds_positive(
+    input: (i32, i32, i32),
+) -> bool {
+    let (period_seconds, failure_threshold, initial_delay_seconds) = input;
+    let mut health = Health {
+        disabled: false,
+        period_seconds,
+        failure_threshold,
+        initial_delay_seconds,
+    };
+    health.apply_defaults();
+    health.period_seconds > 0
+        && health.failure_threshold > 0
+        && health.initial_delay_seconds > 0
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -1434,24 +1451,6 @@ mod tests {
     }
 
     #[test]
-    fn bolero_health_defaulting_preserves_positive_invariant() {
-        bolero::check!().for_each(|bytes: &[u8]| {
-            let signed = |index: usize| i32::from(bytes.get(index).copied().unwrap_or(0)) - 128;
-            let mut health = Health {
-                disabled: false,
-                period_seconds: signed(0),
-                failure_threshold: signed(1),
-                initial_delay_seconds: signed(2),
-            };
-            health.apply_defaults();
-            assert!(health.period_seconds > 0);
-            assert!(health.failure_threshold > 0);
-            assert!(health.initial_delay_seconds > 0);
-        });
-    }
-
-
-    #[test]
     fn pod_template_preserves_unmodeled_fields() {
         let json = serde_json::json!({
             "metadata": {
@@ -2073,26 +2072,6 @@ mod tests {
     }
 
 }
-
-#[cfg(kani)]
-mod verification {
-    use super::*;
-
-    #[kani::proof]
-    fn health_defaulting_makes_enabled_thresholds_positive() {
-        let mut health = Health {
-            disabled: false,
-            period_seconds: kani::any(),
-            failure_threshold: kani::any(),
-            initial_delay_seconds: kani::any(),
-        };
-        health.apply_defaults();
-        assert!(health.period_seconds > 0);
-        assert!(health.failure_threshold > 0);
-        assert!(health.initial_delay_seconds > 0);
-    }
-}
-
 
 #[cfg(kani)]
 mod tracking_verification {
