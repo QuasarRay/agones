@@ -103,6 +103,15 @@ pub fn fleet_openapi_validation() -> CustomResourceValidation {
     }
 }
 
+pub fn fleet_autoscaler_openapi_validation() -> CustomResourceValidation {
+    CustomResourceValidation {
+        open_apiv3_schema: serde_json::from_str(
+            generated_game_server_schema::FLEET_AUTOSCALER_OPENAPI_SCHEMA_JSON,
+        )
+        .expect("build-generated FleetAutoscaler OpenAPI schema must match Rusternetes schema types"),
+    }
+}
+
 /// Builds the GameServer CRD using native Rusternetes CRD types.
 ///
 /// The OpenAPI schema is generated at build time from Agones' Helm schema
@@ -423,7 +432,7 @@ pub fn fleet_autoscaler_crd_envelope() -> CustomResourceDefinition {
                 storage: true,
                 deprecated: None,
                 deprecation_warning: None,
-                schema: None,
+                schema: Some(fleet_autoscaler_openapi_validation()),
                 subresources: Some(CustomResourceSubresources {
                     status: Some(CustomResourceSubresourceStatus {}),
                     scale: None,
@@ -912,7 +921,7 @@ mod tests {
         assert_eq!(version.name, FLEET_AUTOSCALER_CRD_VERSION);
         assert!(version.served);
         assert!(version.storage);
-        assert!(version.schema.is_none());
+        assert!(version.schema.is_some());
         assert!(version.additional_printer_columns.is_none());
 
         let subresources = version.subresources.as_ref().unwrap();
@@ -927,7 +936,108 @@ mod tests {
         assert_eq!(version["subresources"]["status"], serde_json::json!({}));
         assert!(version["subresources"].get("scale").is_none());
         assert!(version.get("additionalPrinterColumns").is_none());
-        assert!(version.get("schema").is_none());
+        assert!(version["schema"]["openAPIV3Schema"].is_object());
+    }
+
+    #[test]
+    fn fleet_autoscaler_schema_is_generated_from_helm_machine_sources() {
+        let crd = fleet_autoscaler_crd_envelope();
+        let schema = crd.spec.versions[0].schema.as_ref().unwrap();
+        let mut represented = serde_json::to_value(&schema.open_apiv3_schema).unwrap();
+        let mut generated: serde_json::Value = serde_json::from_str(
+            generated_game_server_schema::FLEET_AUTOSCALER_OPENAPI_SCHEMA_JSON,
+        )
+        .unwrap();
+
+        normalize_json_numbers(&mut represented);
+        normalize_json_numbers(&mut generated);
+        assert_eq!(
+            represented, generated,
+            "Rusternetes must not silently drop fields from the generated FleetAutoscaler schema"
+        );
+
+        assert_eq!(generated["type"], "object");
+        assert_eq!(
+            generated["properties"]["spec"]["required"],
+            serde_json::json!(["fleetName", "policy"])
+        );
+        assert_eq!(
+            generated["properties"]["spec"]["properties"]["sync"]["properties"]
+                ["fixedInterval"]["properties"]["seconds"]["exclusiveMinimum"],
+            true
+        );
+    }
+
+    #[test]
+    fn fleet_autoscaler_schema_preserves_recursive_feature_gated_policy_contexts() {
+        let generated: serde_json::Value = serde_json::from_str(
+            generated_game_server_schema::FLEET_AUTOSCALER_OPENAPI_SCHEMA_JSON,
+        )
+        .unwrap();
+        let policy = &generated["properties"]["spec"]["properties"]["policy"];
+
+        let base = serde_json::json!(["Buffer", "Webhook", "Counter", "List", "Wasm"]);
+        let top = &policy["properties"]["type"]["enum"];
+        assert_eq!(
+            top,
+            &serde_json::json!([
+                "Buffer",
+                "Webhook",
+                "Counter",
+                "List",
+                "Wasm",
+                "Schedule",
+                "Chain"
+            ])
+        );
+
+        let scheduled =
+            &policy["properties"]["schedule"]["properties"]["policy"]["properties"]["type"]["enum"];
+        assert_eq!(scheduled, &base);
+
+        let chain_entry = &policy["properties"]["chain"]["items"]["properties"]["type"]["enum"];
+        assert_eq!(
+            chain_entry,
+            &serde_json::json!([
+                "Buffer",
+                "Webhook",
+                "Counter",
+                "List",
+                "Wasm",
+                "Schedule"
+            ])
+        );
+
+        assert!(policy["properties"]["schedule"]["properties"]["policy"]["properties"]
+            .get("schedule")
+            .is_none());
+        assert!(policy["properties"]["schedule"]["properties"]["policy"]["properties"]
+            .get("chain")
+            .is_none());
+        assert!(policy["properties"]["chain"]["items"]["properties"]
+            .get("chain")
+            .is_none());
+    }
+
+    #[test]
+    fn fleet_autoscaler_schema_preserves_webhook_and_wasm_url_configuration() {
+        let generated: serde_json::Value = serde_json::from_str(
+            generated_game_server_schema::FLEET_AUTOSCALER_OPENAPI_SCHEMA_JSON,
+        )
+        .unwrap();
+        let policy = &generated["properties"]["spec"]["properties"]["policy"]["properties"];
+
+        assert_eq!(policy["webhook"]["type"], "object");
+        assert_eq!(policy["webhook"]["nullable"], true);
+        assert_eq!(policy["webhook"]["properties"]["caBundle"]["format"], "byte");
+
+        let wasm_url = &policy["wasm"]["properties"]["from"]["properties"]["url"];
+        assert_eq!(wasm_url["type"], "object");
+        assert_eq!(wasm_url["nullable"], true);
+        assert_eq!(
+            policy["wasm"]["properties"]["hash"]["pattern"],
+            "^[a-fA-F0-9]{64}$"
+        );
     }
 
     #[test]
