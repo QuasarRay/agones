@@ -1,5 +1,6 @@
 use std::collections::{BTreeMap, BTreeSet};
 
+use agones_macros::agones_invariant;
 use base64::{engine::general_purpose::STANDARD as BASE64, Engine as _};
 use rand::Rng;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
@@ -152,11 +153,11 @@ pub fn avg_weight(policies: &[GameServerAllocationPolicy]) -> i64 {
     if policies.is_empty() {
         return 0;
     }
-    policies
-        .iter()
-        .map(|policy| policy.spec.weight)
-        .sum::<i64>()
-        / policies.len() as i64
+
+    let sum = policies.iter().fold(0i64, |sum, policy| {
+        sum.wrapping_add(policy.spec.weight)
+    });
+    sum / policies.len() as i64
 }
 
 pub fn select_random_weighted(
@@ -167,24 +168,51 @@ pub fn select_random_weighted(
         return None;
     }
 
-    let sum = weights
+    // Agones sums Go int values directly. On the 64-bit targets represented
+    // by this Rust i64 model, signed overflow wraps rather than failing.
+    let total = weights
         .iter()
-        .try_fold(0i64, |sum, weight| sum.checked_add(*weight))?;
-    if sum <= 0 {
+        .fold(0i64, |sum, weight| sum.wrapping_add(*weight));
+    if total <= 0 {
         return None;
     }
 
-    let mut random = rand::thread_rng().gen_range(0..sum);
+    let random = rand::thread_rng().gen_range(0..total);
+    let mut cumulative = 0i64;
     for (connection, weight) in connections.iter().zip(weights) {
-        if *weight <= 0 {
-            continue;
-        }
-        if random < *weight {
+        cumulative = cumulative.wrapping_add(*weight);
+        if random < cumulative {
             return Some(connection.clone());
         }
-        random -= *weight;
     }
     None
+}
+
+#[agones_invariant]
+fn average_of_nonnegative_byte_weights_stays_within_input_range(
+    input: ([u8; 16], u8),
+) -> bool {
+    let (weights, requested_len) = input;
+    let len = usize::from(requested_len % 17);
+    if len == 0 {
+        return true;
+    }
+
+    let policies: Vec<_> = weights[..len]
+        .iter()
+        .map(|weight| GameServerAllocationPolicy {
+            spec: GameServerAllocationPolicySpec {
+                weight: i64::from(*weight),
+                ..Default::default()
+            },
+            ..Default::default()
+        })
+        .collect();
+
+    let average = avg_weight(&policies);
+    let min = policies.iter().map(|policy| policy.spec.weight).min().unwrap();
+    let max = policies.iter().map(|policy| policy.spec.weight).max().unwrap();
+    average >= min && average <= max
 }
 
 #[cfg(test)]
@@ -308,6 +336,39 @@ mod tests {
     }
 
     #[test]
+    fn average_weight_wraps_sum_like_go_int64() {
+        let policies = vec![
+            policy(1, i64::MAX, "cluster"),
+            policy(1, i64::MAX, "cluster"),
+        ];
+        assert_eq!(avg_weight(&policies), -1);
+    }
+
+    #[test]
+    fn weighted_selection_wraps_total_and_prefix_sums_like_go_int64() {
+        let connections = vec![
+            ClusterConnectionInfo {
+                cluster_name: "first".into(),
+                ..Default::default()
+            },
+            ClusterConnectionInfo {
+                cluster_name: "second".into(),
+                ..Default::default()
+            },
+            ClusterConnectionInfo {
+                cluster_name: "third".into(),
+                ..Default::default()
+            },
+        ];
+
+        // MAX + MAX + 3 wraps to 1, so Go's rand.Intn(1) is deterministically
+        // zero and the first wrapped prefix (MAX) selects the first entry.
+        let selected =
+            select_random_weighted(&connections, &[i64::MAX, i64::MAX, 3]).unwrap();
+        assert_eq!(selected.cluster_name, "first");
+    }
+
+    #[test]
     fn weighted_selection_rejects_nonpositive_total_weight() {
         let connections = vec![
             ClusterConnectionInfo {
@@ -323,22 +384,4 @@ mod tests {
         assert!(select_random_weighted(&connections, &[-1, 0]).is_none());
     }
 
-    #[test]
-    fn bolero_average_of_nonnegative_weights_stays_within_input_range() {
-        bolero::check!().for_each(|bytes: &[u8]| {
-            if bytes.is_empty() {
-                return;
-            }
-            let policies: Vec<_> = bytes
-                .iter()
-                .take(16)
-                .map(|weight| policy(1, i64::from(*weight), "cluster"))
-                .collect();
-            let average = avg_weight(&policies);
-            let min = policies.iter().map(|p| p.spec.weight).min().unwrap();
-            let max = policies.iter().map(|p| p.spec.weight).max().unwrap();
-            assert!(average >= min);
-            assert!(average <= max);
-        });
-    }
 }
