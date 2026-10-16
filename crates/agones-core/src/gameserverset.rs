@@ -3,8 +3,8 @@ use std::collections::BTreeMap;
 use serde::{Deserialize, Serialize};
 
 use crate::gameserver::{
-    validate_object_meta, GameServer, GameServerSpec, ObjectMeta, Priority, SchedulingStrategy,
-    ValidationError, ValidationErrorKind,
+    validate_object_meta, GameServer, GameServerSpec, GameServerState, ObjectMeta, Priority,
+    SchedulingStrategy, ValidationError, ValidationErrorKind,
 };
 
 pub const GAME_SERVER_SET_GAME_SERVER_LABEL: &str = "agones.dev/gameserverset";
@@ -17,6 +17,57 @@ pub struct AllocationOverflow {
     pub labels: BTreeMap<String, String>,
     #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
     pub annotations: BTreeMap<String, String>,
+}
+
+impl AllocationOverflow {
+    pub fn validate(&self, path: &str) -> Vec<ValidationError> {
+        validate_object_meta(
+            &ObjectMeta {
+                labels: self.labels.clone(),
+                annotations: self.annotations.clone(),
+                ..Default::default()
+            },
+            path,
+        )
+    }
+
+    pub fn count_matches<'a>(
+        &self,
+        game_servers: &'a [GameServer],
+    ) -> (i32, Vec<&'a GameServer>) {
+        fn contains_all(
+            expected: &BTreeMap<String, String>,
+            actual: &BTreeMap<String, String>,
+        ) -> bool {
+            expected
+                .iter()
+                .all(|(key, value)| actual.get(key) == Some(value))
+        }
+
+        let mut count = 0i32;
+        let mut rest = Vec::new();
+        for game_server in game_servers {
+            if game_server.status.state != Some(GameServerState::Allocated) {
+                continue;
+            }
+            if contains_all(&self.labels, &game_server.metadata.labels)
+                && contains_all(&self.annotations, &game_server.metadata.annotations)
+            {
+                count += 1;
+            } else {
+                rest.push(game_server);
+            }
+        }
+        (count, rest)
+    }
+
+    pub fn apply(&self, game_server: &mut GameServer) {
+        game_server
+            .metadata
+            .annotations
+            .extend(self.annotations.clone());
+        game_server.metadata.labels.extend(self.labels.clone());
+    }
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -142,6 +193,9 @@ impl GameServerSet {
             &self.spec.template.metadata,
             "spec.template.metadata",
         ));
+        if let Some(allocation_overflow) = &self.spec.allocation_overflow {
+            errors.extend(allocation_overflow.validate("spec.allocationOverflow"));
+        }
         errors
     }
 
@@ -339,6 +393,120 @@ mod tests {
         let errors = set.validate();
         assert_eq!(errors.len(), 2);
         assert_eq!(errors[0].path, "spec.template.spec.container");
+    }
+
+    #[test]
+    fn allocation_overflow_counts_only_allocated_matches() {
+        let allocated = |name: &str| GameServer {
+            metadata: ObjectMeta {
+                name: name.into(),
+                ..Default::default()
+            },
+            status: crate::gameserver::GameServerStatus {
+                state: Some(GameServerState::Allocated),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let mut one = allocated("g1");
+        one.metadata.labels.insert("colour".into(), "blue".into());
+        one.metadata
+            .annotations
+            .insert("region".into(), "green".into());
+        let two = allocated("g2");
+        let ready = GameServer {
+            metadata: ObjectMeta {
+                name: "g3".into(),
+                ..Default::default()
+            },
+            status: crate::gameserver::GameServerStatus {
+                state: Some(GameServerState::Ready),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let list = vec![one, two, ready];
+
+        let overflow = AllocationOverflow {
+            labels: BTreeMap::from([("colour".into(), "blue".into())]),
+            annotations: BTreeMap::from([("region".into(), "green".into())]),
+        };
+        let (count, rest) = overflow.count_matches(&list);
+        assert_eq!(count, 1);
+        assert_eq!(rest.len(), 1);
+        assert_eq!(rest[0].metadata.name, "g2");
+    }
+
+    #[test]
+    fn allocation_overflow_apply_merges_and_overwrites_metadata() {
+        let mut gs = GameServer::default();
+        let first = AllocationOverflow {
+            labels: BTreeMap::from([("colour".into(), "green".into())]),
+            annotations: BTreeMap::from([
+                ("colour".into(), "blue".into()),
+                ("map".into(), "ice cream".into()),
+            ]),
+        };
+        first.apply(&mut gs);
+
+        AllocationOverflow {
+            labels: BTreeMap::from([
+                ("colour".into(), "red".into()),
+                ("version".into(), "1.0".into()),
+            ]),
+            annotations: BTreeMap::from([
+                ("colour".into(), "green".into()),
+                ("version".into(), "1.0".into()),
+            ]),
+        }
+        .apply(&mut gs);
+
+        assert_eq!(gs.metadata.labels["colour"], "red");
+        assert_eq!(gs.metadata.labels["version"], "1.0");
+        assert_eq!(gs.metadata.annotations["colour"], "green");
+        assert_eq!(gs.metadata.annotations["map"], "ice cream");
+    }
+
+    #[test]
+    fn allocation_overflow_validation_matches_label_annotation_rules() {
+        let invalid_label_name = AllocationOverflow {
+            labels: BTreeMap::from([("$$foobar".into(), "stuff".into())]),
+            ..Default::default()
+        };
+        assert_eq!(
+            invalid_label_name.validate("spec.allocationOverflow")[0].path,
+            "spec.allocationOverflow.labels"
+        );
+
+        let invalid_label_value = AllocationOverflow {
+            labels: BTreeMap::from([("valid".into(), "$$NOPE".into())]),
+            ..Default::default()
+        };
+        assert_eq!(
+            invalid_label_value.validate("spec.allocationOverflow")[0].path,
+            "spec.allocationOverflow.labels"
+        );
+
+        let invalid_annotation = AllocationOverflow {
+            annotations: BTreeMap::from([("$$foobar".into(), "stuff".into())]),
+            ..Default::default()
+        };
+        assert_eq!(
+            invalid_annotation.validate("spec.allocationOverflow")[0].path,
+            "spec.allocationOverflow.annotations"
+        );
+
+        let valid = AllocationOverflow {
+            labels: BTreeMap::from([
+                ("valid".into(), "yes".into()),
+                ("still.valid".into(), "check-me-out".into()),
+            ]),
+            annotations: BTreeMap::from([(
+                "icando-this".into(),
+                "yes, I can do all kinds of things here $$".into(),
+            )]),
+        };
+        assert!(valid.validate("spec.allocationOverflow").is_empty());
     }
 
     #[test]
