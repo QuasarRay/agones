@@ -69,6 +69,15 @@ pub fn game_server_openapi_validation() -> CustomResourceValidation {
     }
 }
 
+pub fn game_server_set_openapi_validation() -> CustomResourceValidation {
+    CustomResourceValidation {
+        open_apiv3_schema: serde_json::from_str(
+            generated_game_server_schema::GAME_SERVER_SET_OPENAPI_SCHEMA_JSON,
+        )
+        .expect("build-generated GameServerSet OpenAPI schema must match Rusternetes schema types"),
+    }
+}
+
 /// Builds the GameServer CRD using native Rusternetes CRD types.
 ///
 /// The OpenAPI schema is generated at build time from Agones' Helm schema
@@ -159,11 +168,11 @@ pub fn game_server_crd_envelope() -> CustomResourceDefinition {
     }
 }
 
-/// Builds the statically representable GameServerSet CRD envelope.
+/// Builds the GameServerSet CRD using native Rusternetes CRD types.
 ///
-/// The GameServerSet OpenAPI schema composes the generated GameServer schema
-/// with set-specific replica, priority, overflow, and aggregate status fields.
-/// That composition is intentionally isolated to the next generation milestone.
+/// Its OpenAPI schema is generated from gameserverset.yaml while reusing the
+/// metadata-enabled GameServer schema generated from the same Helm/Kubernetes
+/// machine-readable sources.
 pub fn game_server_set_crd_envelope() -> CustomResourceDefinition {
     CustomResourceDefinition {
         api_version: "apiextensions.k8s.io/v1".to_owned(),
@@ -194,7 +203,7 @@ pub fn game_server_set_crd_envelope() -> CustomResourceDefinition {
                 storage: true,
                 deprecated: None,
                 deprecation_warning: None,
-                schema: None,
+                schema: Some(game_server_set_openapi_validation()),
                 subresources: Some(CustomResourceSubresources {
                     status: Some(CustomResourceSubresourceStatus {}),
                     scale: Some(CustomResourceSubresourceScale {
@@ -736,7 +745,7 @@ mod tests {
         assert_eq!(version.name, GAME_SERVER_SET_CRD_VERSION);
         assert!(version.served);
         assert!(version.storage);
-        assert!(version.schema.is_none());
+        assert!(version.schema.is_some());
 
         let subresources = version.subresources.as_ref().unwrap();
         assert!(subresources.status.is_some());
@@ -880,6 +889,60 @@ mod tests {
             }
             _ => {}
         }
+    }
+
+    #[test]
+    fn game_server_set_crd_schema_is_generated_from_helm_machine_sources() {
+        let crd = game_server_set_crd_envelope();
+        let schema = crd.spec.versions[0].schema.as_ref().unwrap();
+        let mut represented = serde_json::to_value(&schema.open_apiv3_schema).unwrap();
+        let mut generated: serde_json::Value = serde_json::from_str(
+            generated_game_server_schema::GAME_SERVER_SET_OPENAPI_SCHEMA_JSON,
+        )
+        .unwrap();
+
+        normalize_json_numbers(&mut represented);
+        normalize_json_numbers(&mut generated);
+        assert_eq!(
+            represented, generated,
+            "Rusternetes must not silently drop fields from the generated GameServerSet schema"
+        );
+
+        assert_eq!(generated["type"], "object");
+        assert_eq!(
+            generated["properties"]["spec"]["required"],
+            serde_json::json!(["replicas", "template"])
+        );
+        assert_eq!(
+            generated["properties"]["spec"]["properties"]["replicas"]["minimum"].as_f64(),
+            Some(0.0)
+        );
+        assert!(generated["properties"]["status"]["properties"]["shutdownReplicas"].is_object());
+
+        let template = &generated["properties"]["spec"]["properties"]["template"];
+        assert!(template["properties"]["metadata"].is_object());
+        assert!(template["properties"]["spec"]["properties"]["template"]["properties"]["spec"]
+            ["properties"]["containers"]
+            .is_object());
+    }
+
+    #[test]
+    fn game_server_set_schema_reuses_game_server_defaults_and_metadata_schema() {
+        let generated: serde_json::Value = serde_json::from_str(
+            generated_game_server_schema::GAME_SERVER_SET_OPENAPI_SCHEMA_JSON,
+        )
+        .unwrap();
+        let template = &generated["properties"]["spec"]["properties"]["template"];
+        let list_values = &template["properties"]["spec"]["properties"]["lists"]
+            ["additionalProperties"]["properties"]["values"];
+
+        assert_eq!(list_values["maxItems"], 1000);
+        assert_eq!(list_values["x-kubernetes-list-type"], "set");
+        assert!(template["properties"]["metadata"]["properties"]["name"].is_object());
+        assert!(template["properties"]["metadata"]["properties"]["labels"].is_object());
+        assert!(template["properties"]["spec"]["properties"]["template"]
+            .get("x-kubernetes-preserve-unknown-fields")
+            .is_none());
     }
 
     #[test]
