@@ -1,6 +1,6 @@
 use std::{collections::{BTreeMap, BTreeSet}, str::FromStr};
 
-use agones_macros::AgonesStringEnum;
+use agones_macros::{agones_invariant, AgonesStringEnum};
 use base64::{engine::general_purpose::STANDARD as BASE64, Engine as _};
 use chrono::{DateTime, Utc};
 use chrono_tz::Tz;
@@ -1063,6 +1063,67 @@ impl FleetAutoscaler {
     pub fn validate(&self, features: AutoscalerFeatures) -> Vec<ValidationError> {
         self.validate_at(features, Utc::now())
     }
+}
+
+#[agones_invariant]
+fn buffer_integer_valid_region_is_accepted(input: (i32, i32, i32)) -> bool {
+    let (min_replicas, max_replicas, buffer_size) = input;
+    if buffer_size <= 0
+        || min_replicas > max_replicas
+        || max_replicas < buffer_size
+        || (min_replicas != 0 && min_replicas < buffer_size)
+    {
+        return true;
+    }
+
+    BufferPolicy {
+        max_replicas,
+        min_replicas,
+        buffer_size: IntOrPercent::Int(buffer_size),
+    }
+    .validate("spec.policy.buffer")
+    .is_empty()
+}
+
+#[agones_invariant]
+fn capacity_integer_valid_region_is_accepted(input: (i64, i64, i32, bool)) -> bool {
+    let (min_capacity, max_capacity, buffer_size, list_policy) = input;
+    let buffer_size_i64 = i64::from(buffer_size);
+    if buffer_size <= 0
+        || min_capacity > max_capacity
+        || max_capacity < buffer_size_i64
+        || (min_capacity != 0 && min_capacity < buffer_size_i64)
+    {
+        return true;
+    }
+
+    if list_policy {
+        ListPolicy {
+            key: String::new(),
+            max_capacity,
+            min_capacity,
+            buffer_size: IntOrPercent::Int(buffer_size),
+        }
+        .validate("spec.policy.list")
+        .is_empty()
+    } else {
+        CounterPolicy {
+            key: String::new(),
+            max_capacity,
+            min_capacity,
+            buffer_size: IntOrPercent::Int(buffer_size),
+        }
+        .validate("spec.policy.counter")
+        .is_empty()
+    }
+}
+
+#[agones_invariant]
+fn fixed_interval_positive_seconds_are_accepted(seconds: i32) -> bool {
+    seconds <= 0
+        || FixedIntervalSync { seconds }
+            .validate("spec.sync.fixedInterval")
+            .is_empty()
 }
 
 #[cfg(test)]
