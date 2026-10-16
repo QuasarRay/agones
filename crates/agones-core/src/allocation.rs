@@ -601,6 +601,85 @@ impl MetaPatch {
     }
 }
 
+
+fn push_action_error(errors: &mut Vec<String>, result: Result<(), String>) {
+    if let Err(error) = result {
+        errors.push(error);
+    }
+}
+
+fn finish_action_errors(errors: Vec<String>) -> Result<(), String> {
+    if errors.is_empty() {
+        Ok(())
+    } else {
+        Err(errors.join("\n"))
+    }
+}
+
+impl CounterAction {
+    /// Applies allocation-time Counter mutations in the same order as Agones:
+    /// capacity first, then count. A failure does not suppress later actions.
+    pub fn counter_actions(
+        &self,
+        counter: &str,
+        game_server: &mut crate::GameServer,
+    ) -> Result<(), String> {
+        let mut errors = Vec::new();
+
+        if let Some(capacity) = self.capacity {
+            push_action_error(
+                &mut errors,
+                game_server.update_counter_capacity(counter, capacity),
+            );
+        }
+
+        if let (Some(action), Some(amount)) = (self.action.as_deref(), self.amount) {
+            push_action_error(
+                &mut errors,
+                game_server.update_count(counter, action, amount),
+            );
+        }
+
+        finish_action_errors(errors)
+    }
+}
+
+impl ListAction {
+    /// Applies allocation-time List mutations in Agones order:
+    /// capacity, append, delete. All requested actions are attempted.
+    pub fn list_actions(
+        &self,
+        list: &str,
+        game_server: &mut crate::GameServer,
+        max_capacity: i64,
+    ) -> Result<(), String> {
+        let mut errors = Vec::new();
+
+        if let Some(capacity) = self.capacity {
+            push_action_error(
+                &mut errors,
+                game_server.update_list_capacity(list, capacity, max_capacity),
+            );
+        }
+
+        if !self.add_values.is_empty() {
+            push_action_error(
+                &mut errors,
+                game_server.append_list_values(list, Some(&self.add_values)),
+            );
+        }
+
+        if !self.delete_values.is_empty() {
+            push_action_error(
+                &mut errors,
+                game_server.delete_list_values(list, Some(&self.delete_values)),
+            );
+        }
+
+        finish_action_errors(errors)
+    }
+}
+
 impl GameServerAllocation {
     pub fn apply_defaults(&mut self) {
         if self.spec.scheduling.is_none() {
@@ -1238,6 +1317,289 @@ mod tests {
         assert_eq!(errors.len(), 1);
         assert_eq!(errors[0].kind, ValidationErrorKind::Invalid);
         assert_eq!(errors[0].path, "spec.metadata.labels");
+    }
+
+    #[test]
+    fn counter_actions_apply_capacity_before_count() {
+        let mut game_server = crate::GameServer {
+            status: crate::GameServerStatus {
+                counters: Some(BTreeMap::from([(
+                    "heroes".into(),
+                    CounterStatus {
+                        count: 11,
+                        capacity: 100,
+                    },
+                )])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let action = CounterAction {
+            action: Some("Decrement".into()),
+            amount: Some(10),
+            capacity: Some(10),
+        };
+
+        action
+            .counter_actions("heroes", &mut game_server)
+            .unwrap();
+
+        assert_eq!(
+            game_server.status.counters.as_ref().unwrap()["heroes"],
+            CounterStatus {
+                count: 0,
+                capacity: 10,
+            }
+        );
+    }
+
+    #[test]
+    fn counter_actions_continue_after_capacity_error() {
+        let mut game_server = crate::GameServer {
+            status: crate::GameServerStatus {
+                counters: Some(BTreeMap::from([(
+                    "sages".into(),
+                    CounterStatus {
+                        count: 99,
+                        capacity: 100,
+                    },
+                )])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let action = CounterAction {
+            action: Some("Increment".into()),
+            amount: Some(10),
+            capacity: Some(-1),
+        };
+
+        assert!(action
+            .counter_actions("sages", &mut game_server)
+            .is_err());
+        assert_eq!(
+            game_server.status.counters.as_ref().unwrap()["sages"],
+            CounterStatus {
+                count: 100,
+                capacity: 100,
+            }
+        );
+    }
+
+    #[test]
+    fn counter_capacity_action_truncates_existing_count() {
+        let mut game_server = crate::GameServer {
+            status: crate::GameServerStatus {
+                counters: Some(BTreeMap::from([(
+                    "mages".into(),
+                    CounterStatus {
+                        count: 1,
+                        capacity: 100,
+                    },
+                )])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        CounterAction {
+            capacity: Some(0),
+            ..Default::default()
+        }
+        .counter_actions("mages", &mut game_server)
+        .unwrap();
+
+        assert_eq!(
+            game_server.status.counters.as_ref().unwrap()["mages"],
+            CounterStatus {
+                count: 0,
+                capacity: 0,
+            }
+        );
+    }
+
+    #[test]
+    fn counter_count_action_updates_count() {
+        let mut game_server = crate::GameServer {
+            status: crate::GameServerStatus {
+                counters: Some(BTreeMap::from([(
+                    "baddies".into(),
+                    CounterStatus {
+                        count: 1,
+                        capacity: 100,
+                    },
+                )])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        CounterAction {
+            action: Some("Increment".into()),
+            amount: Some(10),
+            ..Default::default()
+        }
+        .counter_actions("baddies", &mut game_server)
+        .unwrap();
+
+        assert_eq!(game_server.status.counters.as_ref().unwrap()["baddies"].count, 11);
+    }
+
+    #[test]
+    fn list_capacity_action_truncates_values() {
+        let mut game_server = crate::GameServer {
+            status: crate::GameServerStatus {
+                lists: Some(BTreeMap::from([(
+                    "pages".into(),
+                    ListStatus {
+                        values: vec!["page1".into(), "page2".into()],
+                        capacity: 100,
+                    },
+                )])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        ListAction {
+            capacity: Some(0),
+            ..Default::default()
+        }
+        .list_actions("pages", &mut game_server, 1000)
+        .unwrap();
+
+        assert_eq!(
+            game_server.status.lists.as_ref().unwrap()["pages"],
+            ListStatus {
+                values: Vec::new(),
+                capacity: 0,
+            }
+        );
+    }
+
+    #[test]
+    fn list_actions_preserve_dedup_order_and_delete_after_append() {
+        let mut game_server = crate::GameServer {
+            status: crate::GameServerStatus {
+                lists: Some(BTreeMap::from([(
+                    "magicians".into(),
+                    ListStatus {
+                        values: vec![
+                            "magician1".into(),
+                            "magician2".into(),
+                            "magician4".into(),
+                            "magician5".into(),
+                        ],
+                        capacity: 100,
+                    },
+                )])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let action = ListAction {
+            add_values: vec!["magician1".into(), "magician3".into()],
+            delete_values: vec![
+                "magician2".into(),
+                "magician5".into(),
+                "magician6".into(),
+            ],
+            capacity: Some(42),
+        };
+
+        action
+            .list_actions("magicians", &mut game_server, 1000)
+            .unwrap();
+
+        assert_eq!(
+            game_server.status.lists.as_ref().unwrap()["magicians"],
+            ListStatus {
+                values: vec![
+                    "magician1".into(),
+                    "magician4".into(),
+                    "magician3".into(),
+                ],
+                capacity: 42,
+            }
+        );
+    }
+
+    #[test]
+    fn list_append_silently_truncates_to_new_capacity() {
+        let mut game_server = crate::GameServer {
+            status: crate::GameServerStatus {
+                lists: Some(BTreeMap::from([(
+                    "fairies".into(),
+                    ListStatus {
+                        values: vec!["fairy1".into(), "fairy2".into()],
+                        capacity: 100,
+                    },
+                )])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        ListAction {
+            add_values: vec!["fairy1".into(), "fairy3".into()],
+            capacity: Some(2),
+            ..Default::default()
+        }
+        .list_actions("fairies", &mut game_server, 1000)
+        .unwrap();
+
+        assert_eq!(
+            game_server.status.lists.as_ref().unwrap()["fairies"],
+            ListStatus {
+                values: vec!["fairy1".into(), "fairy2".into()],
+                capacity: 2,
+            }
+        );
+    }
+
+    #[test]
+    fn list_capacity_above_configured_max_errors_without_capacity_change() {
+        let mut game_server = crate::GameServer {
+            status: crate::GameServerStatus {
+                lists: Some(BTreeMap::from([(
+                    "pages".into(),
+                    ListStatus {
+                        values: vec!["page1".into()],
+                        capacity: 5,
+                    },
+                )])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+
+        assert!(ListAction {
+            capacity: Some(26),
+            ..Default::default()
+        }
+        .list_actions("pages", &mut game_server, 25)
+        .is_err());
+
+        assert_eq!(
+            game_server.status.lists.as_ref().unwrap()["pages"],
+            ListStatus {
+                values: vec!["page1".into()],
+                capacity: 5,
+            }
+        );
+    }
+
+    #[test]
+    fn action_errors_are_joined_and_later_actions_still_run() {
+        let mut game_server = crate::GameServer::default();
+        let error = CounterAction {
+            action: Some("Increment".into()),
+            amount: Some(1),
+            capacity: Some(1),
+        }
+        .counter_actions("missing", &mut game_server)
+        .unwrap_err();
+
+        let messages: Vec<_> = error.lines().collect();
+        assert_eq!(messages.len(), 2);
+        assert!(messages[0].contains("Counter not found"));
+        assert!(messages[1].contains("Counter not found"));
     }
 
     #[test]
