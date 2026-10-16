@@ -86,6 +86,15 @@ pub fn game_server_set_openapi_validation() -> CustomResourceValidation {
     }
 }
 
+pub fn fleet_openapi_validation() -> CustomResourceValidation {
+    CustomResourceValidation {
+        open_apiv3_schema: serde_json::from_str(
+            generated_game_server_schema::FLEET_OPENAPI_SCHEMA_JSON,
+        )
+        .expect("build-generated Fleet OpenAPI schema must match Rusternetes schema types"),
+    }
+}
+
 /// Builds the GameServer CRD using native Rusternetes CRD types.
 ///
 /// The OpenAPI schema is generated at build time from Agones' Helm schema
@@ -278,11 +287,11 @@ pub fn game_server_set_crd_envelope() -> CustomResourceDefinition {
     }
 }
 
-/// Builds the statically representable Fleet CRD envelope.
+/// Builds the Fleet CRD using native Rusternetes CRD types.
 ///
-/// Fleet reuses the metadata-enabled GameServer schema inside spec.template and
-/// adds Fleet-specific strategy/status fields. That schema composition remains
-/// isolated to the following generation milestone.
+/// The OpenAPI schema is generated from fleet.yaml while reusing the
+/// metadata-enabled GameServer schema generated from the same Helm/Kubernetes
+/// machine-readable sources.
 pub fn fleet_crd_envelope() -> CustomResourceDefinition {
     CustomResourceDefinition {
         api_version: "apiextensions.k8s.io/v1".to_owned(),
@@ -308,7 +317,7 @@ pub fn fleet_crd_envelope() -> CustomResourceDefinition {
                 storage: true,
                 deprecated: None,
                 deprecation_warning: None,
-                schema: None,
+                schema: Some(fleet_openapi_validation()),
                 subresources: Some(CustomResourceSubresources {
                     status: Some(CustomResourceSubresourceStatus {}),
                     scale: Some(CustomResourceSubresourceScale {
@@ -847,7 +856,7 @@ mod tests {
         assert_eq!(version.name, FLEET_CRD_VERSION);
         assert!(version.served);
         assert!(version.storage);
-        assert!(version.schema.is_none());
+        assert!(version.schema.is_some());
 
         let subresources = version.subresources.as_ref().unwrap();
         assert!(subresources.status.is_some());
@@ -901,6 +910,51 @@ mod tests {
             subresources["scale"]["labelSelectorPath"],
             ".status.labelSelector"
         );
+    }
+
+    #[test]
+    fn fleet_crd_schema_is_generated_from_helm_machine_sources() {
+        let crd = fleet_crd_envelope();
+        let schema = crd.spec.versions[0].schema.as_ref().unwrap();
+        let mut represented = serde_json::to_value(&schema.open_apiv3_schema).unwrap();
+        let mut generated: serde_json::Value =
+            serde_json::from_str(generated_game_server_schema::FLEET_OPENAPI_SCHEMA_JSON).unwrap();
+
+        normalize_json_numbers(&mut represented);
+        normalize_json_numbers(&mut generated);
+        assert_eq!(
+            represented, generated,
+            "Rusternetes must not silently drop fields from the generated Fleet schema"
+        );
+
+        assert_eq!(generated["type"], "object");
+        assert!(generated["properties"]["spec"].is_object());
+        assert!(generated["properties"]["status"].is_object());
+        assert_eq!(
+            generated["properties"]["spec"]["properties"]["strategy"]["properties"]["rollingUpdate"]
+                ["properties"]["maxSurge"]["x-kubernetes-int-or-string"],
+            true
+        );
+    }
+
+    #[test]
+    fn fleet_schema_reuses_metadata_enabled_game_server_template() {
+        let generated: serde_json::Value =
+            serde_json::from_str(generated_game_server_schema::FLEET_OPENAPI_SCHEMA_JSON).unwrap();
+        let template = &generated["properties"]["spec"]["properties"]["template"];
+
+        assert!(template["properties"]["metadata"]["properties"]["name"].is_object());
+        assert!(template["properties"]["metadata"]["properties"]["labels"].is_object());
+
+        let list_values = &template["properties"]["spec"]["properties"]["lists"]
+            ["additionalProperties"]["properties"]["values"];
+        assert_eq!(list_values["maxItems"], 1000);
+        assert_eq!(list_values["x-kubernetes-list-type"], "set");
+
+        let counters = &generated["properties"]["status"]["properties"]["counters"];
+        let lists = &generated["properties"]["status"]["properties"]["lists"];
+        assert_eq!(counters["maxProperties"], 1000);
+        assert_eq!(lists["maxProperties"], 1000);
     }
 
     #[test]
