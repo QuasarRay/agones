@@ -525,7 +525,7 @@ fn qualified_name_error(value: &str) -> Option<&'static str> {
     None
 }
 
-fn validate_object_meta(meta: &ObjectMeta, path: &str) -> Vec<ValidationError> {
+pub(crate) fn validate_object_meta(meta: &ObjectMeta, path: &str) -> Vec<ValidationError> {
     let mut errors = Vec::new();
     for (key, value) in &meta.labels {
         if let Some(detail) = qualified_name_error(key) {

@@ -5,5 +5,7 @@
 //! compatibility the architectural center of the Rust reimplementation.
 
 pub mod gameserver;
+pub mod gameserverset;
 
 pub use gameserver::*;
+pub use gameserverset::*;
