@@ -1,6 +1,6 @@
 use std::collections::BTreeMap;
 
-use agones_macros::AgonesStringEnum;
+use agones_macros::{agones_invariant, AgonesStringEnum};
 use serde::{Deserialize, Serialize};
 
 use crate::gameserver::{
@@ -311,6 +311,26 @@ pub fn sum_game_server_sets<'a>(
     sets.into_iter().flatten().map(value).sum()
 }
 
+#[agones_invariant]
+fn fleet_replica_bounds_are_bounded(input: (i32, i32)) -> bool {
+    let (replicas, value) = input;
+    if replicas < 0 {
+        return true;
+    }
+
+    let fleet = Fleet {
+        spec: FleetSpec {
+            replicas,
+            ..Default::default()
+        },
+        ..Default::default()
+    };
+
+    fleet.upper_bound_replicas(value) <= replicas
+        && fleet.lower_bound_replicas(value) >= 0
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -582,41 +602,4 @@ mod tests {
         );
     }
 
-    #[test]
-    fn bolero_replica_bounds_preserve_bounds() {
-        bolero::check!().for_each(|bytes: &[u8]| {
-            let replicas = i32::from(bytes.first().copied().unwrap_or(0));
-            let value = i32::from(bytes.get(1).copied().unwrap_or(0)) - 128;
-            let fleet = Fleet {
-                spec: FleetSpec {
-                    replicas,
-                    ..Default::default()
-                },
-                ..Default::default()
-            };
-            assert!(fleet.upper_bound_replicas(value) <= replicas);
-            assert!(fleet.lower_bound_replicas(value) >= 0);
-        });
-    }
-}
-
-#[cfg(kani)]
-mod verification {
-    use super::*;
-
-    #[kani::proof]
-    fn replica_bounds_are_bounded() {
-        let replicas: i32 = kani::any();
-        let value: i32 = kani::any();
-        kani::assume(replicas >= 0);
-        let fleet = Fleet {
-            spec: FleetSpec {
-                replicas,
-                ..Default::default()
-            },
-            ..Default::default()
-        };
-        assert!(fleet.upper_bound_replicas(value) <= replicas);
-        assert!(fleet.lower_bound_replicas(value) >= 0);
-    }
 }
