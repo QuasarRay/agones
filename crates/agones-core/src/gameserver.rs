@@ -779,12 +779,113 @@ impl GameServer {
 }
 
 
+#[derive(Clone, Debug, PartialEq, Serialize)]
+struct JsonPatchOperation {
+    op: &'static str,
+    path: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    value: Option<serde_json::Value>,
+}
+
+impl JsonPatchOperation {
+    fn test(path: impl Into<String>, value: serde_json::Value) -> Self {
+        Self {
+            op: "test",
+            path: path.into(),
+            value: Some(value),
+        }
+    }
+
+    fn add(path: impl Into<String>, value: serde_json::Value) -> Self {
+        Self {
+            op: "add",
+            path: path.into(),
+            value: Some(value),
+        }
+    }
+
+    fn remove(path: impl Into<String>) -> Self {
+        Self {
+            op: "remove",
+            path: path.into(),
+            value: None,
+        }
+    }
+
+    fn replace(path: impl Into<String>, value: serde_json::Value) -> Self {
+        Self {
+            op: "replace",
+            path: path.into(),
+            value: Some(value),
+        }
+    }
+}
+
+fn json_pointer_segment(segment: &str) -> String {
+    segment.replace('~', "~0").replace('/', "~1")
+}
+
+fn child_pointer(path: &str, key: &str) -> String {
+    let escaped = json_pointer_segment(key);
+    if path.is_empty() {
+        format!("/{escaped}")
+    } else {
+        format!("{path}/{escaped}")
+    }
+}
+
+fn diff_json(
+    path: &str,
+    old: &serde_json::Value,
+    new: &serde_json::Value,
+    operations: &mut Vec<JsonPatchOperation>,
+) {
+    if old == new {
+        return;
+    }
+
+    match (old, new) {
+        (serde_json::Value::Object(old), serde_json::Value::Object(new)) => {
+            for key in old.keys() {
+                if !new.contains_key(key) {
+                    operations.push(JsonPatchOperation::remove(child_pointer(path, key)));
+                }
+            }
+            for (key, new_value) in new {
+                let child = child_pointer(path, key);
+                match old.get(key) {
+                    Some(old_value) => diff_json(&child, old_value, new_value, operations),
+                    None => operations.push(JsonPatchOperation::add(child, new_value.clone())),
+                }
+            }
+        }
+        _ => operations.push(JsonPatchOperation::replace(path, new.clone())),
+    }
+}
+
 impl GameServer {
     pub fn get_dev_address(&self) -> Option<&str> {
         self.metadata
             .annotations
             .get(DEV_ADDRESS_ANNOTATION)
             .map(String::as_str)
+    }
+
+
+    pub fn patch(&self, delta: &GameServer) -> Result<Vec<u8>, serde_json::Error> {
+        let old = serde_json::to_value(self)?;
+        let new = serde_json::to_value(delta)?;
+        let mut operations = vec![JsonPatchOperation::test(
+            "/metadata/resourceVersion",
+            self.metadata
+                .resource_version
+                .as_ref()
+                .map_or(serde_json::Value::Null, |value| {
+                    serde_json::Value::String(value.clone())
+                }),
+        )];
+        diff_json("", &old, &new, &mut operations);
+        serde_json::to_vec(&operations)
     }
 
     pub fn validate(&self) -> Vec<ValidationError> {
@@ -1376,6 +1477,64 @@ mod tests {
         let template: PodTemplateSpec = serde_json::from_value(json.clone()).unwrap();
         let encoded = serde_json::to_value(template).unwrap();
         assert_eq!(encoded, json);
+    }
+
+    #[test]
+    fn patch_matches_original_resource_version_and_replace_invariants() {
+        let fixture = GameServer {
+            metadata: ObjectMeta {
+                name: "lucy".into(),
+                resource_version: Some("1234".into()),
+                ..Default::default()
+            },
+            spec: GameServerSpec {
+                container: "goat".into(),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+
+        let mut delta = fixture.clone();
+        delta.spec.container = "bear".into();
+
+        let patch = fixture.patch(&delta).unwrap();
+        let patch = String::from_utf8(patch).unwrap();
+        assert!(patch.contains(
+            r#"{"op":"test","path":"/metadata/resourceVersion","value":"1234"}"#
+        ));
+        assert!(patch.contains(
+            r#"{"op":"replace","path":"/spec/container","value":"bear"}"#
+        ));
+        assert!(patch.find(r#""op":"test""#).unwrap() < patch.find(r#""op":"replace""#).unwrap());
+    }
+
+    #[test]
+    fn patch_escapes_json_pointer_segments_and_handles_add_remove() {
+        let mut fixture = GameServer::default();
+        fixture
+            .metadata
+            .annotations
+            .insert("a/b~c".into(), "old".into());
+
+        let mut delta = fixture.clone();
+        delta.metadata.annotations.remove("a/b~c");
+        delta
+            .metadata
+            .annotations
+            .insert("new/key".into(), "value".into());
+
+        let patch: serde_json::Value =
+            serde_json::from_slice(&fixture.patch(&delta).unwrap()).unwrap();
+        let operations = patch.as_array().unwrap();
+        assert!(operations.iter().any(|operation| {
+            operation["op"] == "remove"
+                && operation["path"] == "/metadata/annotations/a~1b~0c"
+        }));
+        assert!(operations.iter().any(|operation| {
+            operation["op"] == "add"
+                && operation["path"] == "/metadata/annotations/new~1key"
+                && operation["value"] == "value"
+        }));
     }
 
     #[test]
