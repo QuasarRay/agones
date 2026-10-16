@@ -141,8 +141,14 @@ pub struct ObjectMeta {
     pub annotations: BTreeMap<String, String>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub finalizers: Vec<String>,
+    #[serde(default, skip_serializing_if = "String::is_empty")]
+    pub uid: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub resource_version: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub deletion_timestamp: Option<String>,
+    #[serde(flatten)]
+    pub extensions: BTreeMap<String, serde_json::Value>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, AgonesStringEnum)]
@@ -167,6 +173,8 @@ pub struct Container {
     pub restart_policy: Option<ContainerRestartPolicy>,
     #[serde(default)]
     pub tty: bool,
+    #[serde(flatten)]
+    pub extensions: BTreeMap<String, serde_json::Value>,
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -176,6 +184,8 @@ pub struct PodSpec {
     pub containers: Vec<Container>,
     #[serde(default)]
     pub init_containers: Vec<Container>,
+    #[serde(flatten)]
+    pub extensions: BTreeMap<String, serde_json::Value>,
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -185,6 +195,8 @@ pub struct PodTemplateSpec {
     pub metadata: ObjectMeta,
     #[serde(default)]
     pub spec: PodSpec,
+    #[serde(flatten)]
+    pub extensions: BTreeMap<String, serde_json::Value>,
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -1320,6 +1332,35 @@ mod tests {
             assert!(health.failure_threshold > 0);
             assert!(health.initial_delay_seconds > 0);
         });
+    }
+
+
+    #[test]
+    fn pod_template_preserves_unmodeled_fields() {
+        let json = serde_json::json!({
+            "metadata": {
+                "annotations": {"example.dev/a": "b"},
+                "ownerReferences": [{
+                    "apiVersion": "v1",
+                    "kind": "ConfigMap",
+                    "name": "owner",
+                    "uid": "123"
+                }]
+            },
+            "spec": {
+                "containers": [{
+                    "name": "game",
+                    "image": "game:v1",
+                    "command": ["/game"],
+                    "env": [{"name": "MODE", "value": "prod"}]
+                }],
+                "nodeSelector": {"accelerator": "gpu"},
+                "terminationGracePeriodSeconds": 30
+            }
+        });
+        let template: PodTemplateSpec = serde_json::from_value(json.clone()).unwrap();
+        let encoded = serde_json::to_value(template).unwrap();
+        assert_eq!(encoded, json);
     }
 
     #[test]
