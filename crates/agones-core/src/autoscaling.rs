@@ -266,7 +266,22 @@ pub struct FleetAutoscalerStatus {
     pub last_applied_policy: FleetAutoscalerPolicyType,
 }
 
-#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(
+    Clone,
+    Debug,
+    Default,
+    PartialEq,
+    Eq,
+    Serialize,
+    Deserialize,
+    agones_macros::AgonesApiResource,
+)]
+#[agones_resource(
+    group = "autoscaling.agones.dev",
+    version = "v1",
+    kind = "FleetAutoscaler",
+    plural = "fleetautoscalers"
+)]
 #[serde(rename_all = "camelCase")]
 pub struct FleetAutoscaler {
     #[serde(default)]

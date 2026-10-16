@@ -721,7 +721,22 @@ impl GameServerSpec {
 }
 
 
-#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(
+    Clone,
+    Debug,
+    Default,
+    PartialEq,
+    Eq,
+    Serialize,
+    Deserialize,
+    agones_macros::AgonesApiResource,
+)]
+#[agones_resource(
+    group = "agones.dev",
+    version = "v1",
+    kind = "GameServer",
+    plural = "gameservers"
+)]
 #[serde(rename_all = "camelCase")]
 pub struct GameServer {
     #[serde(default)]

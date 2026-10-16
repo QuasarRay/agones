@@ -92,7 +92,22 @@ pub struct FleetStatus {
     pub lists: BTreeMap<String, AggregatedListStatus>,
 }
 
-#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(
+    Clone,
+    Debug,
+    Default,
+    PartialEq,
+    Eq,
+    Serialize,
+    Deserialize,
+    agones_macros::AgonesApiResource,
+)]
+#[agones_resource(
+    group = "agones.dev",
+    version = "v1",
+    kind = "Fleet",
+    plural = "fleets"
+)]
 #[serde(rename_all = "camelCase")]
 pub struct Fleet {
     #[serde(default)]
