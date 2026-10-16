@@ -12,11 +12,15 @@ use agones_core::{
     ValidationErrorKind, FINALIZER_NAME, VERSION_ANNOTATION,
 };
 use rusternetes_common::resources::{
-    Affinity, Container, ContainerPort, Pod, PodAffinity, PodAffinityTerm, PodSpec, Volume,
-    VolumeMount, WeightedPodAffinityTerm,
+    Affinity, Container, ContainerPort, CustomResourceColumnDefinition,
+    CustomResourceDefinition, CustomResourceDefinitionNames, CustomResourceDefinitionSpec,
+    CustomResourceDefinitionVersion, CustomResourceSubresourceScale, CustomResourceSubresources,
+    Pod, PodAffinity, PodAffinityTerm, PodSpec, ResourceScope, Volume, VolumeMount,
+    WeightedPodAffinityTerm,
 };
 use rusternetes_common::types::{
-    LabelSelector, OwnerReference, ResourceRequirements, TypeMeta,
+    LabelSelector, ObjectMeta as RusternetesObjectMeta, OwnerReference, ResourceRequirements,
+    TypeMeta,
 };
 
 pub const ROLE_LABEL: &str = "agones.dev/role";
@@ -25,6 +29,113 @@ pub const GAME_SERVER_POD_LABEL: &str = "agones.dev/gameserver";
 pub const GAME_SERVER_CONTAINER_ANNOTATION: &str = "agones.dev/container";
 pub const PASSTHROUGH_PORT_ASSIGNMENT_ANNOTATION: &str =
     "agones.dev/container-passthrough-port-assignment";
+
+pub const GAME_SERVER_CRD_NAME: &str = "gameservers.agones.dev";
+pub const GAME_SERVER_CRD_GROUP: &str = "agones.dev";
+pub const GAME_SERVER_CRD_VERSION: &str = "v1";
+pub const GAME_SERVER_CRD_KIND: &str = "GameServer";
+pub const GAME_SERVER_CRD_PLURAL: &str = "gameservers";
+pub const GAME_SERVER_CRD_SINGULAR: &str = "gameserver";
+pub const GAME_SERVER_CRD_SHORT_NAME: &str = "gs";
+
+/// Agones enables these selectable fields in its default Helm values.
+///
+/// The pinned Rusternetes CustomResourceDefinitionVersion model does not yet
+/// expose Kubernetes' selectableFields field, so milestone 21 records the
+/// source-of-truth values but does not silently drop them from a claimed
+/// full-fidelity CRD representation.
+pub const GAME_SERVER_CRD_SELECTABLE_FIELDS: &[&str] =
+    &[".status.state", ".status.nodeName"];
+
+/// Builds the statically representable GameServer CRD envelope using native
+/// Rusternetes CRD types.
+///
+/// The OpenAPI schema is intentionally omitted here because Agones composes it
+/// from Helm/Kubernetes machine-readable schema templates. That schema is a
+/// separate generation milestone rather than a hand-maintained duplicate.
+pub fn game_server_crd_envelope() -> CustomResourceDefinition {
+    CustomResourceDefinition {
+        api_version: "apiextensions.k8s.io/v1".to_owned(),
+        kind: "CustomResourceDefinition".to_owned(),
+        metadata: RusternetesObjectMeta {
+            name: GAME_SERVER_CRD_NAME.to_owned(),
+            ..Default::default()
+        },
+        spec: CustomResourceDefinitionSpec {
+            group: GAME_SERVER_CRD_GROUP.to_owned(),
+            names: CustomResourceDefinitionNames {
+                plural: GAME_SERVER_CRD_PLURAL.to_owned(),
+                singular: Some(GAME_SERVER_CRD_SINGULAR.to_owned()),
+                kind: GAME_SERVER_CRD_KIND.to_owned(),
+                short_names: Some(vec![GAME_SERVER_CRD_SHORT_NAME.to_owned()]),
+                categories: None,
+                list_kind: None,
+            },
+            scope: ResourceScope::Namespaced,
+            versions: vec![CustomResourceDefinitionVersion {
+                name: GAME_SERVER_CRD_VERSION.to_owned(),
+                served: true,
+                storage: true,
+                deprecated: None,
+                deprecation_warning: None,
+                schema: None,
+                subresources: Some(CustomResourceSubresources {
+                    status: None,
+                    scale: Some(CustomResourceSubresourceScale {
+                        spec_replicas_path: ".spec.immutableReplicas".to_owned(),
+                        status_replicas_path: ".status.immutableReplicas".to_owned(),
+                        label_selector_path: None,
+                    }),
+                }),
+                additional_printer_columns: Some(vec![
+                    CustomResourceColumnDefinition {
+                        name: "State".to_owned(),
+                        type_: "string".to_owned(),
+                        format: None,
+                        description: None,
+                        priority: None,
+                        json_path: ".status.state".to_owned(),
+                    },
+                    CustomResourceColumnDefinition {
+                        name: "Address".to_owned(),
+                        type_: "string".to_owned(),
+                        format: None,
+                        description: None,
+                        priority: None,
+                        json_path: ".status.address".to_owned(),
+                    },
+                    CustomResourceColumnDefinition {
+                        name: "Port".to_owned(),
+                        type_: "string".to_owned(),
+                        format: None,
+                        description: None,
+                        priority: None,
+                        json_path: ".status.ports[0].port".to_owned(),
+                    },
+                    CustomResourceColumnDefinition {
+                        name: "Node".to_owned(),
+                        type_: "string".to_owned(),
+                        format: None,
+                        description: None,
+                        priority: None,
+                        json_path: ".status.nodeName".to_owned(),
+                    },
+                    CustomResourceColumnDefinition {
+                        name: "Age".to_owned(),
+                        type_: "date".to_owned(),
+                        format: None,
+                        description: None,
+                        priority: None,
+                        json_path: ".metadata.creationTimestamp".to_owned(),
+                    },
+                ]),
+            }],
+            conversion: None,
+            preserve_unknown_fields: None,
+        },
+        status: None,
+    }
+}
 
 #[derive(Debug)]
 pub enum AdapterError {
@@ -478,6 +589,85 @@ pub fn ensure_game_server_finalizer(game_server: &mut GameServer) {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn game_server_crd_envelope_matches_agones_helm_static_fields() {
+        let crd = game_server_crd_envelope();
+        assert_eq!(crd.api_version, "apiextensions.k8s.io/v1");
+        assert_eq!(crd.kind, "CustomResourceDefinition");
+        assert_eq!(crd.metadata.name, GAME_SERVER_CRD_NAME);
+        assert_eq!(crd.spec.group, GAME_SERVER_CRD_GROUP);
+        assert_eq!(crd.spec.scope, ResourceScope::Namespaced);
+        assert_eq!(crd.spec.names.kind, GAME_SERVER_CRD_KIND);
+        assert_eq!(crd.spec.names.plural, GAME_SERVER_CRD_PLURAL);
+        assert_eq!(
+            crd.spec.names.singular.as_deref(),
+            Some(GAME_SERVER_CRD_SINGULAR)
+        );
+        assert_eq!(
+            crd.spec.names.short_names.as_deref(),
+            Some(&[GAME_SERVER_CRD_SHORT_NAME.to_owned()][..])
+        );
+        assert!(crd.spec.names.list_kind.is_none());
+
+        let version = &crd.spec.versions[0];
+        assert_eq!(version.name, GAME_SERVER_CRD_VERSION);
+        assert!(version.served);
+        assert!(version.storage);
+        assert!(version.schema.is_none());
+
+        let scale = version
+            .subresources
+            .as_ref()
+            .and_then(|subresources| subresources.scale.as_ref())
+            .unwrap();
+        assert_eq!(scale.spec_replicas_path, ".spec.immutableReplicas");
+        assert_eq!(scale.status_replicas_path, ".status.immutableReplicas");
+    }
+
+    #[test]
+    fn game_server_crd_printer_columns_match_agones_helm_order_and_types() {
+        let crd = game_server_crd_envelope();
+        let columns = crd.spec.versions[0]
+            .additional_printer_columns
+            .as_ref()
+            .unwrap();
+
+        let actual: Vec<_> = columns
+            .iter()
+            .map(|column| {
+                (
+                    column.name.as_str(),
+                    column.type_.as_str(),
+                    column.json_path.as_str(),
+                )
+            })
+            .collect();
+        assert_eq!(
+            actual,
+            vec![
+                ("State", "string", ".status.state"),
+                ("Address", "string", ".status.address"),
+                ("Port", "string", ".status.ports[0].port"),
+                ("Node", "string", ".status.nodeName"),
+                ("Age", "date", ".metadata.creationTimestamp"),
+            ]
+        );
+    }
+
+    #[test]
+    fn game_server_crd_records_unrepresentable_rusternetes_selectable_fields() {
+        assert_eq!(
+            GAME_SERVER_CRD_SELECTABLE_FIELDS,
+            &[".status.state", ".status.nodeName"]
+        );
+
+        let json = serde_json::to_value(game_server_crd_envelope()).unwrap();
+        assert!(
+            json["spec"]["versions"][0].get("selectableFields").is_none(),
+            "pinned Rusternetes CRD version type has no selectableFields member"
+        );
+    }
+
     use agones_core::{
         Container as CoreContainer, GameServerPort, GameServerState, PodSpec as CorePodSpec,
         PodTemplateSpec, Protocol,
