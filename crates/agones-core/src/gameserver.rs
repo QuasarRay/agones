@@ -650,15 +650,14 @@ impl GameServerSpec {
                 ));
             }
 
-            if let Some(container) = port.container.as_deref()
-                && !self.container.is_empty()
-                && !self.has_container(container, true)
-            {
-                errors.push(ValidationError::invalid(
-                    format!("{prefix}.container"),
-                    container,
-                    ERR_CONTAINER_NAME_INVALID,
-                ));
+            if let Some(container) = port.container.as_deref() {
+                if !self.container.is_empty() && !self.has_container(container, true) {
+                    errors.push(ValidationError::invalid(
+                        format!("{prefix}.container"),
+                        container,
+                        ERR_CONTAINER_NAME_INVALID,
+                    ));
+                }
             }
         }
 
