@@ -55,6 +55,14 @@ pub const FLEET_CRD_PLURAL: &str = "fleets";
 pub const FLEET_CRD_SINGULAR: &str = "fleet";
 pub const FLEET_CRD_SHORT_NAME: &str = "flt";
 
+pub const FLEET_AUTOSCALER_CRD_NAME: &str = "fleetautoscalers.autoscaling.agones.dev";
+pub const FLEET_AUTOSCALER_CRD_GROUP: &str = "autoscaling.agones.dev";
+pub const FLEET_AUTOSCALER_CRD_VERSION: &str = "v1";
+pub const FLEET_AUTOSCALER_CRD_KIND: &str = "FleetAutoscaler";
+pub const FLEET_AUTOSCALER_CRD_PLURAL: &str = "fleetautoscalers";
+pub const FLEET_AUTOSCALER_CRD_SINGULAR: &str = "fleetautoscaler";
+pub const FLEET_AUTOSCALER_CRD_SHORT_NAME: &str = "fas";
+
 /// Agones enables these selectable fields in its default Helm values.
 ///
 /// The pinned Rusternetes CustomResourceDefinitionVersion model does not yet
@@ -376,6 +384,51 @@ pub fn fleet_crd_envelope() -> CustomResourceDefinition {
                         json_path: ".metadata.creationTimestamp".to_owned(),
                     },
                 ]),
+            }],
+            conversion: None,
+            preserve_unknown_fields: None,
+        },
+        status: None,
+    }
+}
+
+/// Builds the statically representable FleetAutoscaler CRD envelope.
+///
+/// The OpenAPI policy schema is deliberately generated in a following
+/// milestone because it is assembled from feature-gated recursive Helm
+/// templates. This envelope preserves the independent CRD identity and status
+/// subresource without duplicating that schema by hand.
+pub fn fleet_autoscaler_crd_envelope() -> CustomResourceDefinition {
+    CustomResourceDefinition {
+        api_version: "apiextensions.k8s.io/v1".to_owned(),
+        kind: "CustomResourceDefinition".to_owned(),
+        metadata: RusternetesObjectMeta {
+            name: FLEET_AUTOSCALER_CRD_NAME.to_owned(),
+            ..Default::default()
+        },
+        spec: CustomResourceDefinitionSpec {
+            group: FLEET_AUTOSCALER_CRD_GROUP.to_owned(),
+            names: CustomResourceDefinitionNames {
+                plural: FLEET_AUTOSCALER_CRD_PLURAL.to_owned(),
+                singular: Some(FLEET_AUTOSCALER_CRD_SINGULAR.to_owned()),
+                kind: FLEET_AUTOSCALER_CRD_KIND.to_owned(),
+                short_names: Some(vec![FLEET_AUTOSCALER_CRD_SHORT_NAME.to_owned()]),
+                categories: None,
+                list_kind: None,
+            },
+            scope: ResourceScope::Namespaced,
+            versions: vec![CustomResourceDefinitionVersion {
+                name: FLEET_AUTOSCALER_CRD_VERSION.to_owned(),
+                served: true,
+                storage: true,
+                deprecated: None,
+                deprecation_warning: None,
+                schema: None,
+                subresources: Some(CustomResourceSubresources {
+                    status: Some(CustomResourceSubresourceStatus {}),
+                    scale: None,
+                }),
+                additional_printer_columns: None,
             }],
             conversion: None,
             preserve_unknown_fields: None,
@@ -836,6 +889,47 @@ pub fn ensure_game_server_finalizer(game_server: &mut GameServer) {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn fleet_autoscaler_crd_envelope_matches_agones_helm_static_fields() {
+        let crd = fleet_autoscaler_crd_envelope();
+        assert_eq!(crd.api_version, "apiextensions.k8s.io/v1");
+        assert_eq!(crd.kind, "CustomResourceDefinition");
+        assert_eq!(crd.metadata.name, FLEET_AUTOSCALER_CRD_NAME);
+        assert_eq!(crd.spec.group, FLEET_AUTOSCALER_CRD_GROUP);
+        assert_eq!(crd.spec.scope, ResourceScope::Namespaced);
+        assert_eq!(crd.spec.names.kind, FLEET_AUTOSCALER_CRD_KIND);
+        assert_eq!(crd.spec.names.plural, FLEET_AUTOSCALER_CRD_PLURAL);
+        assert_eq!(
+            crd.spec.names.singular.as_deref(),
+            Some(FLEET_AUTOSCALER_CRD_SINGULAR)
+        );
+        assert_eq!(
+            crd.spec.names.short_names.as_deref(),
+            Some(&[FLEET_AUTOSCALER_CRD_SHORT_NAME.to_owned()][..])
+        );
+
+        let version = &crd.spec.versions[0];
+        assert_eq!(version.name, FLEET_AUTOSCALER_CRD_VERSION);
+        assert!(version.served);
+        assert!(version.storage);
+        assert!(version.schema.is_none());
+        assert!(version.additional_printer_columns.is_none());
+
+        let subresources = version.subresources.as_ref().unwrap();
+        assert!(subresources.status.is_some());
+        assert!(subresources.scale.is_none());
+    }
+
+    #[test]
+    fn fleet_autoscaler_crd_serializes_status_subresource_exactly() {
+        let json = serde_json::to_value(fleet_autoscaler_crd_envelope()).unwrap();
+        let version = &json["spec"]["versions"][0];
+        assert_eq!(version["subresources"]["status"], serde_json::json!({}));
+        assert!(version["subresources"].get("scale").is_none());
+        assert!(version.get("additionalPrinterColumns").is_none());
+        assert!(version.get("schema").is_none());
+    }
+
     #[test]
     fn fleet_crd_envelope_matches_agones_helm_static_fields() {
         let crd = fleet_crd_envelope();
