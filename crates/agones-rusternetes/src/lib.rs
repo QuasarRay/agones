@@ -8,14 +8,16 @@ use std::error::Error;
 use std::fmt;
 
 use agones_core::{
-    Eviction, GameServer, GameServerSpec, PortPolicy, SchedulingStrategy, FINALIZER_NAME,
-    VERSION_ANNOTATION,
+    Eviction, GameServer, GameServerSpec, PortPolicy, SchedulingStrategy, ValidationError,
+    ValidationErrorKind, FINALIZER_NAME, VERSION_ANNOTATION,
 };
 use rusternetes_common::resources::{
     Affinity, Container, ContainerPort, Pod, PodAffinity, PodAffinityTerm, PodSpec, Volume,
     VolumeMount, WeightedPodAffinityTerm,
 };
-use rusternetes_common::types::{LabelSelector, OwnerReference, TypeMeta};
+use rusternetes_common::types::{
+    LabelSelector, OwnerReference, ResourceRequirements, TypeMeta,
+};
 
 pub const ROLE_LABEL: &str = "agones.dev/role";
 pub const GAME_SERVER_LABEL_ROLE: &str = "gameserver";
@@ -91,6 +93,155 @@ fn to_native<T: serde::de::DeserializeOwned>(
 
 fn port(value: i32, field: &'static str) -> Result<u16, AdapterError> {
     u16::try_from(value).map_err(|_| AdapterError::InvalidPort { field, value })
+}
+
+const QUANTITY_SUFFIXES: &[(&str, f64)] = &[
+    ("Ki", 1024.0),
+    ("Mi", 1_048_576.0),
+    ("Gi", 1_073_741_824.0),
+    ("Ti", 1_099_511_627_776.0),
+    ("Pi", 1_125_899_906_842_624.0),
+    ("Ei", 1_152_921_504_606_846_976.0),
+    ("m", 0.001),
+    ("k", 1_000.0),
+    ("M", 1_000_000.0),
+    ("G", 1_000_000_000.0),
+    ("T", 1_000_000_000_000.0),
+    ("P", 1_000_000_000_000_000.0),
+    ("E", 1_000_000_000_000_000_000.0),
+];
+
+fn parse_quantity_value(quantity: &str) -> Option<f64> {
+    let quantity = quantity.trim();
+    if quantity.is_empty() {
+        return None;
+    }
+
+    let value = match quantity.parse::<f64>() {
+        Ok(value) => value,
+        Err(_) => {
+            let (digits, multiplier) = QUANTITY_SUFFIXES
+                .iter()
+                .find_map(|(suffix, multiplier)| {
+                    quantity
+                        .strip_suffix(suffix)
+                        .map(|digits| (digits, multiplier))
+                })?;
+            digits.trim().parse::<f64>().ok()? * multiplier
+        }
+    };
+
+    value.is_finite().then_some(value)
+}
+
+fn invalid_resource_quantity(path: String, value: &str, detail: String) -> ValidationError {
+    ValidationError {
+        kind: ValidationErrorKind::Invalid,
+        path,
+        bad_value: Some(value.to_owned()),
+        detail,
+    }
+}
+
+pub fn validate_resource_requirements(
+    requirements: &ResourceRequirements,
+    path: &str,
+) -> Vec<ValidationError> {
+    let mut errors = Vec::new();
+    let limits = requirements.limits.as_ref();
+    let requests = requirements.requests.as_ref();
+
+    if let Some(limits) = limits {
+        let mut names: Vec<_> = limits.keys().collect();
+        names.sort();
+        for name in names {
+            let quantity = &limits[name];
+            if let Some(value) = parse_quantity_value(quantity) {
+                if value < 0.0 {
+                    errors.push(invalid_resource_quantity(
+                        format!("{path}.limits[{name}]"),
+                        quantity,
+                        "must be greater than or equal to 0".to_owned(),
+                    ));
+                }
+            }
+        }
+    }
+
+    if let Some(requests) = requests {
+        let mut names: Vec<_> = requests.keys().collect();
+        names.sort();
+        for name in names {
+            let quantity = &requests[name];
+            let request = parse_quantity_value(quantity);
+
+            if request.is_some_and(|value| value < 0.0) {
+                errors.push(invalid_resource_quantity(
+                    format!("{path}.requests[{name}]"),
+                    quantity,
+                    "must be greater than or equal to 0".to_owned(),
+                ));
+            }
+
+            let Some(limit_quantity) = limits.and_then(|limits| limits.get(name)) else {
+                continue;
+            };
+            let Some(request) = request else {
+                continue;
+            };
+            let Some(limit) = parse_quantity_value(limit_quantity) else {
+                continue;
+            };
+            if request > limit {
+                errors.push(invalid_resource_quantity(
+                    format!("{path}.requests"),
+                    quantity,
+                    format!(
+                        "must be less than or equal to {name} limit of {limit_quantity}"
+                    ),
+                ));
+            }
+        }
+    }
+
+    errors
+}
+
+pub fn validate_game_server_resources(
+    spec: &GameServerSpec,
+) -> Result<Vec<ValidationError>, AdapterError> {
+    let pod_spec: PodSpec = to_native(&spec.template.spec)?;
+    let mut errors = Vec::new();
+
+    if let Some(init_containers) = &pod_spec.init_containers {
+        for (index, container) in init_containers.iter().enumerate() {
+            if let Some(resources) = &container.resources {
+                errors.extend(validate_resource_requirements(
+                    resources,
+                    &format!("spec.template.spec.initContainers[{index}].resources"),
+                ));
+            }
+        }
+    }
+
+    for (index, container) in pod_spec.containers.iter().enumerate() {
+        if let Some(resources) = &container.resources {
+            errors.extend(validate_resource_requirements(
+                resources,
+                &format!("spec.template.spec.containers[{index}].resources"),
+            ));
+        }
+    }
+
+    Ok(errors)
+}
+
+pub fn validate_game_server(
+    game_server: &GameServer,
+) -> Result<Vec<ValidationError>, AdapterError> {
+    let mut errors = game_server.validate();
+    errors.extend(validate_game_server_resources(&game_server.spec)?);
+    Ok(errors)
 }
 
 fn apply_to_container(
@@ -374,6 +525,154 @@ mod tests {
             .annotations
             .insert(VERSION_ANNOTATION.into(), "test-version".into());
         gs
+    }
+
+    fn core_container_with_resources(
+        name: &str,
+        requests: serde_json::Value,
+        limits: serde_json::Value,
+    ) -> CoreContainer {
+        let mut container = CoreContainer {
+            name: name.into(),
+            image: "testing/image".into(),
+            ..Default::default()
+        };
+        container.extensions.insert(
+            "resources".into(),
+            serde_json::json!({
+                "requests": requests,
+                "limits": limits
+            }),
+        );
+        container
+    }
+
+    #[test]
+    fn resource_validation_matches_cpu_request_limit_invariants() {
+        let mut gs = fixture();
+        gs.spec.template.spec.containers = vec![core_container_with_resources(
+            "game",
+            serde_json::json!({"cpu": "50m", "memory": "32Mi"}),
+            serde_json::json!({"cpu": "30m", "memory": "32Mi"}),
+        )];
+        let errors = validate_game_server_resources(&gs.spec).unwrap();
+        assert_eq!(errors.len(), 1);
+        assert_eq!(
+            errors[0].path,
+            "spec.template.spec.containers[0].resources.requests"
+        );
+        assert_eq!(errors[0].bad_value.as_deref(), Some("50m"));
+        assert_eq!(
+            errors[0].detail,
+            "must be less than or equal to cpu limit of 30m"
+        );
+
+        gs.spec.template.spec.containers = vec![core_container_with_resources(
+            "game",
+            serde_json::json!({"cpu": "-30m", "memory": "32Mi"}),
+            serde_json::json!({"cpu": "30m", "memory": "32Mi"}),
+        )];
+        let errors = validate_game_server_resources(&gs.spec).unwrap();
+        assert_eq!(errors.len(), 1);
+        assert_eq!(
+            errors[0].path,
+            "spec.template.spec.containers[0].resources.requests[cpu]"
+        );
+        assert_eq!(errors[0].bad_value.as_deref(), Some("-30m"));
+        assert_eq!(errors[0].detail, "must be greater than or equal to 0");
+    }
+
+    #[test]
+    fn resource_validation_reports_negative_limit_before_request_comparison() {
+        let mut gs = fixture();
+        gs.spec.template.spec.containers = vec![core_container_with_resources(
+            "game",
+            serde_json::json!({"cpu": "30m", "memory": "32Mi"}),
+            serde_json::json!({"cpu": "-30m", "memory": "32Mi"}),
+        )];
+        let errors = validate_game_server_resources(&gs.spec).unwrap();
+        assert_eq!(errors.len(), 2);
+        assert_eq!(
+            errors[0].path,
+            "spec.template.spec.containers[0].resources.limits[cpu]"
+        );
+        assert_eq!(errors[0].bad_value.as_deref(), Some("-30m"));
+        assert_eq!(errors[0].detail, "must be greater than or equal to 0");
+        assert_eq!(
+            errors[1].path,
+            "spec.template.spec.containers[0].resources.requests"
+        );
+        assert_eq!(errors[1].bad_value.as_deref(), Some("30m"));
+        assert_eq!(
+            errors[1].detail,
+            "must be less than or equal to cpu limit of -30m"
+        );
+    }
+
+    #[test]
+    fn resource_validation_matches_memory_invariants() {
+        let mut gs = fixture();
+        gs.spec.template.spec.containers = vec![core_container_with_resources(
+            "game",
+            serde_json::json!({"cpu": "30m", "memory": "55Mi"}),
+            serde_json::json!({"cpu": "30m", "memory": "32Mi"}),
+        )];
+        let errors = validate_game_server_resources(&gs.spec).unwrap();
+        assert_eq!(errors.len(), 1);
+        assert_eq!(
+            errors[0].path,
+            "spec.template.spec.containers[0].resources.requests"
+        );
+        assert_eq!(errors[0].bad_value.as_deref(), Some("55Mi"));
+        assert_eq!(
+            errors[0].detail,
+            "must be less than or equal to memory limit of 32Mi"
+        );
+
+        gs.spec.template.spec.containers = vec![core_container_with_resources(
+            "game",
+            serde_json::json!({"cpu": "30m", "memory": "-32Mi"}),
+            serde_json::json!({"cpu": "30m", "memory": "32Mi"}),
+        )];
+        let errors = validate_game_server_resources(&gs.spec).unwrap();
+        assert_eq!(errors.len(), 1);
+        assert_eq!(
+            errors[0].path,
+            "spec.template.spec.containers[0].resources.requests[memory]"
+        );
+        assert_eq!(errors[0].bad_value.as_deref(), Some("-32Mi"));
+        assert_eq!(errors[0].detail, "must be greater than or equal to 0");
+    }
+
+    #[test]
+    fn resource_validation_covers_restartable_and_regular_init_containers() {
+        let mut gs = fixture();
+        gs.spec.template.spec.init_containers = vec![core_container_with_resources(
+            "sidecar",
+            serde_json::json!({"cpu": "50m", "memory": "32Mi"}),
+            serde_json::json!({"cpu": "30m", "memory": "32Mi"}),
+        )];
+        let errors = validate_game_server_resources(&gs.spec).unwrap();
+        assert_eq!(errors.len(), 1);
+        assert_eq!(
+            errors[0].path,
+            "spec.template.spec.initContainers[0].resources.requests"
+        );
+        assert_eq!(errors[0].bad_value.as_deref(), Some("50m"));
+        assert_eq!(
+            errors[0].detail,
+            "must be less than or equal to cpu limit of 30m"
+        );
+    }
+
+    #[test]
+    fn quantity_parser_covers_kubernetes_binary_decimal_and_exponent_forms() {
+        assert_eq!(parse_quantity_value("100m"), Some(0.1));
+        assert_eq!(parse_quantity_value("1Ki"), Some(1024.0));
+        assert_eq!(parse_quantity_value("0.5Gi"), Some(536_870_912.0));
+        assert_eq!(parse_quantity_value("1e3"), Some(1000.0));
+        assert_eq!(parse_quantity_value("-32Mi"), Some(-33_554_432.0));
+        assert_eq!(parse_quantity_value("NaN"), None);
     }
 
     #[test]
