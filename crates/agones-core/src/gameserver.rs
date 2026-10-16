@@ -30,6 +30,10 @@ pub const GAME_SERVER_PRIORITY_LIST: &str = "List";
 pub const GAME_SERVER_PRIORITY_ASCENDING: &str = "Ascending";
 pub const GAME_SERVER_PRIORITY_DESCENDING: &str = "Descending";
 
+fn is_false(value: &bool) -> bool {
+    !*value
+}
+
 #[derive(Clone, Debug, PartialEq, Eq, AgonesStringEnum)]
 pub enum GameServerState {
     #[agones(value = "PortAllocation")]
@@ -171,7 +175,7 @@ pub struct Container {
     pub image: String,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub restart_policy: Option<ContainerRestartPolicy>,
-    #[serde(default)]
+    #[serde(default, skip_serializing_if = "is_false")]
     pub tty: bool,
     #[serde(flatten)]
     pub extensions: BTreeMap<String, serde_json::Value>,
@@ -182,7 +186,7 @@ pub struct Container {
 pub struct PodSpec {
     #[serde(default)]
     pub containers: Vec<Container>,
-    #[serde(default)]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub init_containers: Vec<Container>,
     #[serde(flatten)]
     pub extensions: BTreeMap<String, serde_json::Value>,
