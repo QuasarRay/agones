@@ -353,6 +353,23 @@ pub fn safe_add(x: i64, y: i64) -> i64 {
     }
 }
 
+#[agones_invariant]
+fn safe_add_nonnegative_inputs_are_saturating(input: (i64, i64)) -> bool {
+    let (x, y) = input;
+    if x < 0 || y < 0 {
+        return true;
+    }
+
+    let result = safe_add(x, y);
+    result >= x
+        && result <= i64::MAX
+        && if x <= i64::MAX - y {
+            result == x + y
+        } else {
+            result == i64::MAX
+        }
+}
+
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CounterStatus {
@@ -465,6 +482,7 @@ pub struct FeatureFlags {
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum ValidationErrorKind {
     Required,
+    Duplicate,
     Forbidden,
     Invalid,
     NotSupported,
@@ -2076,22 +2094,6 @@ mod tests {
 #[cfg(kani)]
 mod tracking_verification {
     use super::*;
-
-    #[kani::proof]
-    fn safe_add_never_overflows_for_nonnegative_inputs() {
-        let x: i64 = kani::any();
-        let y: i64 = kani::any();
-        kani::assume(x >= 0);
-        kani::assume(y >= 0);
-        let result = safe_add(x, y);
-        assert!(result >= x);
-        assert!(result <= i64::MAX);
-        if x <= i64::MAX - y {
-            assert_eq!(result, x + y);
-        } else {
-            assert_eq!(result, i64::MAX);
-        }
-    }
 
     #[kani::proof]
     fn counter_increment_is_bounded_by_nonnegative_capacity() {

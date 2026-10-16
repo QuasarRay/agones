@@ -1,8 +1,13 @@
-use std::collections::BTreeMap;
+use std::{collections::{BTreeMap, BTreeSet}, str::FromStr};
 
 use agones_macros::AgonesStringEnum;
 use base64::{engine::general_purpose::STANDARD as BASE64, Engine as _};
+use chrono::{DateTime, Utc};
+use chrono_tz::Tz;
+use cron::Schedule;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use url::Url;
+use x509_parser::pem::Pem;
 
 use crate::{FleetStatus, IntOrPercent, ObjectMeta, ValidationError, ValidationErrorKind};
 
@@ -328,6 +333,357 @@ fn validation_invalid(
         detail: detail.into(),
     }
 }
+fn validation_duplicate(path: impl Into<String>, detail: impl Into<String>) -> ValidationError {
+    ValidationError {
+        kind: ValidationErrorKind::Duplicate,
+        path: path.into(),
+        bad_value: None,
+        detail: detail.into(),
+    }
+}
+
+fn validation_forbidden(path: impl Into<String>, detail: impl Into<String>) -> ValidationError {
+    ValidationError {
+        kind: ValidationErrorKind::Forbidden,
+        path: path.into(),
+        bad_value: None,
+        detail: detail.into(),
+    }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct AutoscalerFeatures {
+    pub scheduled_autoscaler: bool,
+    pub wasm_autoscaler: bool,
+}
+
+fn ca_bundle_has_valid_certificate(bytes: &[u8]) -> bool {
+    Pem::iter_from_buffer(bytes)
+        .filter_map(Result::ok)
+        .filter(|pem| pem.label == "CERTIFICATE")
+        .any(|pem| pem.parse_x509().is_ok())
+}
+
+fn go_url_parse_succeeds(value: &str) -> bool {
+    if Url::parse(value).is_ok() {
+        return true;
+    }
+    // net/url.Parse accepts relative references; parse them against a dummy
+    // base so the Rust validator accepts the same common relative forms.
+    Url::parse("http://agones.invalid/")
+        .ok()
+        .and_then(|base| base.join(value).ok())
+        .is_some()
+}
+
+impl UrlConfiguration {
+    pub fn validate(&self, path: &str) -> Vec<ValidationError> {
+        let mut errors = Vec::new();
+
+        if self.service.is_none() && self.url.is_none() {
+            errors.push(validation_required(path, "url should be provided"));
+        }
+        if self.service.is_some() && self.url.is_some() {
+            errors.push(validation_duplicate(
+                format!("{path}.url"),
+                "service and url cannot be used simultaneously",
+            ));
+        }
+        if !self.ca_bundle.is_empty() && !ca_bundle_has_valid_certificate(&self.ca_bundle) {
+            errors.push(validation_invalid(
+                format!("{path}.caBundle"),
+                BASE64.encode(&self.ca_bundle),
+                "CA Bundle is not valid",
+            ));
+        }
+        if let Some(url) = &self.url {
+            if !go_url_parse_succeeds(url) {
+                errors.push(validation_invalid(
+                    format!("{path}.url"),
+                    url.clone(),
+                    "url is not valid",
+                ));
+            }
+        }
+
+        errors
+    }
+}
+
+impl WasmPolicy {
+    pub fn validate(
+        &self,
+        path: &str,
+        features: AutoscalerFeatures,
+    ) -> Vec<ValidationError> {
+        if !features.wasm_autoscaler {
+            return vec![validation_forbidden(
+                path,
+                "feature WasmAutoscaler must be enabled",
+            )];
+        }
+
+        let from_path = format!("{path}.from");
+        let Some(url) = &self.from.url else {
+            return vec![validation_required(
+                from_path,
+                "wasm from configuration is missing",
+            )];
+        };
+        url.validate(&format!("{from_path}.url"))
+    }
+}
+
+fn parse_standard_cron(value: &str) -> bool {
+    match value {
+        "@yearly" | "@annually" | "@monthly" | "@weekly" | "@daily" | "@midnight"
+        | "@hourly" => true,
+        _ if value.starts_with("@every ") => {
+            parse_go_duration(value.trim_start_matches("@every ").trim())
+        }
+        _ => {
+            let fields: Vec<_> = value.split_whitespace().collect();
+            fields.len() == 5
+                && Schedule::from_str(&format!("0 {value}")).is_ok()
+        }
+    }
+}
+
+fn parse_go_duration(value: &str) -> bool {
+    let value = value.strip_prefix(['+', '-']).unwrap_or(value);
+    if value.is_empty() {
+        return false;
+    }
+
+    let bytes = value.as_bytes();
+    let mut index = 0;
+    let mut terms = 0;
+    while index < bytes.len() {
+        let number_start = index;
+        let mut digits = 0;
+        while index < bytes.len() && bytes[index].is_ascii_digit() {
+            index += 1;
+            digits += 1;
+        }
+        if index < bytes.len() && bytes[index] == b'.' {
+            index += 1;
+            while index < bytes.len() && bytes[index].is_ascii_digit() {
+                index += 1;
+                digits += 1;
+            }
+        }
+        if digits == 0 || index == number_start {
+            return false;
+        }
+
+        let rest = &value[index..];
+        let unit = ["ms", "us", "µs", "μs", "ns", "h", "m", "s"]
+            .into_iter()
+            .find(|unit| rest.starts_with(unit));
+        let Some(unit) = unit else {
+            return false;
+        };
+        index += unit.len();
+        terms += 1;
+    }
+    terms > 0
+}
+
+impl SchedulePolicy {
+    pub fn validate_at(
+        &self,
+        path: &str,
+        features: AutoscalerFeatures,
+        now: DateTime<Utc>,
+    ) -> Vec<ValidationError> {
+        if !features.scheduled_autoscaler {
+            return vec![validation_forbidden(
+                path,
+                "feature ScheduledAutoscaler must be enabled",
+            )];
+        }
+
+        let mut errors = Vec::new();
+
+        if !self.active_period.timezone.is_empty()
+            && Tz::from_str(&self.active_period.timezone).is_err()
+        {
+            errors.push(validation_invalid(
+                format!("{path}.activePeriod.timezone"),
+                self.active_period.timezone.clone(),
+                format!(
+                    "Error parsing timezone: unknown time zone {}\n",
+                    self.active_period.timezone
+                ),
+            ));
+        }
+
+        if let Some(end) = &self.between.end {
+            if let Ok(end_time) = DateTime::parse_from_rfc3339(end) {
+                let end_time = end_time.with_timezone(&Utc);
+                let mut end_before_now = false;
+                if end_time < now {
+                    errors.push(validation_invalid(
+                        format!("{path}.between.end"),
+                        end.clone(),
+                        "end time must be after the current time",
+                    ));
+                    end_before_now = true;
+                }
+
+                if !end_before_now {
+                    if let Some(start) = &self.between.start {
+                        if let Ok(start_time) = DateTime::parse_from_rfc3339(start) {
+                            if end_time < start_time.with_timezone(&Utc) {
+                                errors.push(validation_invalid(
+                                    format!("{path}.between"),
+                                    format!("start={start},end={end}"),
+                                    "start time must be before end time",
+                                ));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if !self.active_period.start_cron.is_empty() {
+            if !parse_standard_cron(&self.active_period.start_cron) {
+                errors.push(validation_invalid(
+                    format!("{path}.activePeriod.startCron"),
+                    self.active_period.start_cron.clone(),
+                    "invalid startCron",
+                ));
+            }
+            if self.active_period.start_cron.contains("TZ") {
+                errors.push(validation_invalid(
+                    format!("{path}.activePeriod.startCron"),
+                    self.active_period.start_cron.clone(),
+                    "CRON_TZ or TZ used in activePeriod is not supported, please use the .schedule.timezone field to specify a timezone",
+                ));
+            }
+        }
+
+        if !self.active_period.duration.is_empty()
+            && !parse_go_duration(&self.active_period.duration)
+        {
+            // The Go implementation accidentally records StartCron as the bad
+            // value for a duration parse error; preserve that observable shape.
+            errors.push(validation_invalid(
+                format!("{path}.activePeriod.duration"),
+                self.active_period.start_cron.clone(),
+                "invalid duration",
+            ));
+        }
+
+        errors
+    }
+}
+
+impl FleetAutoscalerPolicy {
+    fn has_chain_entry_policy(&self) -> bool {
+        self.buffer.is_some()
+            || self.webhook.is_some()
+            || self.counter.is_some()
+            || self.list.is_some()
+            || self.schedule.is_some()
+            || self.wasm.is_some()
+    }
+
+    pub fn validate_at(
+        &self,
+        path: &str,
+        features: AutoscalerFeatures,
+        now: DateTime<Utc>,
+    ) -> Vec<ValidationError> {
+        match self.policy_type {
+            FleetAutoscalerPolicyType::Buffer
+            | FleetAutoscalerPolicyType::Counter
+            | FleetAutoscalerPolicyType::List => self.validate_core(path),
+            FleetAutoscalerPolicyType::Webhook | FleetAutoscalerPolicyType::Wasm => {
+                self.validate_webhook_wasm(path, features)
+            }
+            FleetAutoscalerPolicyType::Schedule => self.schedule.as_ref().map_or_else(
+                || {
+                    vec![validation_required(
+                        format!("{path}.schedule"),
+                        "schedule policy config params are missing",
+                    )]
+                },
+                |schedule| schedule.validate_at(&format!("{path}.schedule"), features, now),
+            ),
+            FleetAutoscalerPolicyType::Chain => {
+                if !features.scheduled_autoscaler {
+                    return vec![validation_forbidden(
+                        format!("{path}.chain"),
+                        "feature ScheduledAutoscaler must be enabled",
+                    )];
+                }
+
+                let chain_path = format!("{path}.chain");
+                let mut errors = Vec::new();
+                let mut seen = BTreeSet::new();
+                for (index, entry) in self.chain.iter().enumerate() {
+                    if !seen.insert(entry.id.clone()) {
+                        errors.push(validation_invalid(
+                            chain_path.clone(),
+                            entry.id.clone(),
+                            "id of chain entry must be unique",
+                        ));
+                    }
+
+                    if entry.policy.policy_type.as_str().is_empty()
+                        || !entry.policy.has_chain_entry_policy()
+                    {
+                        errors.push(validation_required(
+                            format!("{chain_path}[{index}]"),
+                            "valid policy is missing",
+                        ));
+                    }
+
+                    errors.extend(entry.policy.validate_at(
+                        &format!("{chain_path}[{index}].policy"),
+                        features,
+                        now,
+                    ));
+                }
+                errors
+            }
+            FleetAutoscalerPolicyType::Unknown(_) => Vec::new(),
+        }
+    }
+}
+
+impl FleetAutoscalerPolicy {
+    pub fn validate_webhook_wasm(
+        &self,
+        path: &str,
+        features: AutoscalerFeatures,
+    ) -> Vec<ValidationError> {
+        match self.policy_type {
+            FleetAutoscalerPolicyType::Webhook => self.webhook.as_ref().map_or_else(
+                || {
+                    vec![validation_required(
+                        format!("{path}.webhook"),
+                        "webhook policy config params are missing",
+                    )]
+                },
+                |webhook| webhook.validate(&format!("{path}.webhook")),
+            ),
+            FleetAutoscalerPolicyType::Wasm => self.wasm.as_ref().map_or_else(
+                || {
+                    vec![validation_required(
+                        format!("{path}.wasm"),
+                        "wasm policy config params are missing",
+                    )]
+                },
+                |wasm| wasm.validate(&format!("{path}.wasm"), features),
+            ),
+            _ => Vec::new(),
+        }
+    }
+}
+
 
 fn percent_value(value: &IntOrPercent) -> Result<i32, ()> {
     match value {
@@ -574,11 +930,370 @@ impl FleetAutoscaler {
         }
         errors
     }
+
+    pub fn validate_at(
+        &self,
+        features: AutoscalerFeatures,
+        now: DateTime<Utc>,
+    ) -> Vec<ValidationError> {
+        let mut errors = self.spec.policy.validate_at("spec.policy", features, now);
+        if let Some(sync) = &self.spec.sync {
+            errors.extend(sync.fixed_interval.validate("spec.sync.fixedInterval"));
+        }
+        errors
+    }
+
+    pub fn validate(&self, features: AutoscalerFeatures) -> Vec<ValidationError> {
+        self.validate_at(features, Utc::now())
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn test_now() -> DateTime<Utc> {
+        DateTime::parse_from_rfc3339("2026-10-17T00:00:00Z")
+            .unwrap()
+            .with_timezone(&Utc)
+    }
+
+    fn scheduled_features() -> AutoscalerFeatures {
+        AutoscalerFeatures {
+            scheduled_autoscaler: true,
+            ..Default::default()
+        }
+    }
+
+    #[test]
+    fn schedule_feature_gate_short_circuits_other_validation() {
+        let schedule = SchedulePolicy {
+            active_period: ActivePeriod {
+                timezone: "Not/AZone".into(),
+                start_cron: "invalid cron".into(),
+                duration: "invalid".into(),
+            },
+            ..Default::default()
+        };
+        let errors = schedule.validate_at(
+            "spec.policy.schedule",
+            AutoscalerFeatures::default(),
+            test_now(),
+        );
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].kind, ValidationErrorKind::Forbidden);
+        assert_eq!(
+            errors[0].detail,
+            "feature ScheduledAutoscaler must be enabled"
+        );
+    }
+
+    #[test]
+    fn schedule_validation_covers_timezone_and_time_window_rules() {
+        let schedule = SchedulePolicy {
+            between: Between {
+                start: Some("2026-10-18T00:00:00Z".into()),
+                end: Some("2026-10-17T12:00:00Z".into()),
+            },
+            active_period: ActivePeriod {
+                timezone: "Not/AZone".into(),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let errors = schedule.validate_at(
+            "spec.policy.schedule",
+            scheduled_features(),
+            test_now(),
+        );
+        assert!(errors.iter().any(|error| {
+            error.path == "spec.policy.schedule.activePeriod.timezone"
+        }));
+        assert!(errors.iter().any(|error| {
+            error.path == "spec.policy.schedule.between"
+                && error.detail == "start time must be before end time"
+        }));
+
+        let expired = SchedulePolicy {
+            between: Between {
+                end: Some("2026-10-16T23:59:59Z".into()),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let errors = expired.validate_at(
+            "spec.policy.schedule",
+            scheduled_features(),
+            test_now(),
+        );
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].path, "spec.policy.schedule.between.end");
+        assert_eq!(errors[0].detail, "end time must be after the current time");
+    }
+
+    #[test]
+    fn schedule_validation_covers_standard_cron_tz_and_go_duration() {
+        let valid = SchedulePolicy {
+            active_period: ActivePeriod {
+                timezone: "UTC".into(),
+                start_cron: "* * * * 1-5".into(),
+                duration: "2h45m".into(),
+            },
+            ..Default::default()
+        };
+        assert!(valid
+            .validate_at(
+                "spec.policy.schedule",
+                scheduled_features(),
+                test_now(),
+            )
+            .is_empty());
+
+        for duration in ["300ms", "-1.5h", "2h45m", "1µs"] {
+            assert!(parse_go_duration(duration), "{duration}");
+        }
+        for duration in ["", "5", "h", "1x"] {
+            assert!(!parse_go_duration(duration), "{duration}");
+        }
+
+        let invalid = SchedulePolicy {
+            active_period: ActivePeriod {
+                start_cron: "CRON_TZ=UTC * * * * *".into(),
+                duration: "not-duration".into(),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let errors = invalid.validate_at(
+            "spec.policy.schedule",
+            scheduled_features(),
+            test_now(),
+        );
+        assert!(errors.iter().any(|error| {
+            error.path == "spec.policy.schedule.activePeriod.startCron"
+                && error.detail.contains("CRON_TZ or TZ")
+        }));
+        assert!(errors.iter().any(|error| {
+            error.path == "spec.policy.schedule.activePeriod.duration"
+                && error.bad_value.as_deref() == Some("CRON_TZ=UTC * * * * *")
+        }));
+    }
+
+    #[test]
+    fn chain_validation_preserves_duplicate_missing_and_recursive_policy_rules() {
+        let valid_buffer = || FleetAutoscalerPolicy {
+            policy_type: FleetAutoscalerPolicyType::Buffer,
+            buffer: Some(BufferPolicy {
+                max_replicas: 10,
+                min_replicas: 5,
+                buffer_size: IntOrPercent::Int(5),
+            }),
+            ..Default::default()
+        };
+
+        let chain = FleetAutoscalerPolicy {
+            policy_type: FleetAutoscalerPolicyType::Chain,
+            chain: vec![
+                ChainEntry {
+                    id: "duplicate".into(),
+                    policy: valid_buffer(),
+                },
+                ChainEntry {
+                    id: "duplicate".into(),
+                    policy: FleetAutoscalerPolicy::default(),
+                },
+            ],
+            ..Default::default()
+        };
+
+        let errors = chain.validate_at(
+            "spec.policy",
+            scheduled_features(),
+            test_now(),
+        );
+        assert!(errors.iter().any(|error| {
+            error.path == "spec.policy.chain"
+                && error.detail == "id of chain entry must be unique"
+        }));
+        assert!(errors.iter().any(|error| {
+            error.path == "spec.policy.chain[1]"
+                && error.detail == "valid policy is missing"
+        }));
+
+        let disabled = chain.validate_at(
+            "spec.policy",
+            AutoscalerFeatures::default(),
+            test_now(),
+        );
+        assert_eq!(disabled.len(), 1);
+        assert_eq!(disabled[0].kind, ValidationErrorKind::Forbidden);
+        assert_eq!(disabled[0].path, "spec.policy.chain");
+    }
+
+    #[test]
+    fn schedule_policy_does_not_recursively_validate_nested_policy() {
+        let schedule = FleetAutoscalerPolicy {
+            policy_type: FleetAutoscalerPolicyType::Schedule,
+            schedule: Some(Box::new(SchedulePolicy {
+                policy: FleetAutoscalerPolicy {
+                    policy_type: FleetAutoscalerPolicyType::Buffer,
+                    buffer: None,
+                    ..Default::default()
+                },
+                ..Default::default()
+            })),
+            ..Default::default()
+        };
+        assert!(schedule
+            .validate_at("spec.policy", scheduled_features(), test_now())
+            .is_empty());
+    }
+
+    #[test]
+    fn full_fleet_autoscaler_validation_uses_policy_dispatch_and_sync() {
+        let autoscaler = FleetAutoscaler {
+            spec: FleetAutoscalerSpec {
+                policy: FleetAutoscalerPolicy {
+                    policy_type: FleetAutoscalerPolicyType::Schedule,
+                    schedule: Some(Box::new(SchedulePolicy::default())),
+                    ..Default::default()
+                },
+                sync: Some(FleetAutoscalerSync {
+                    sync_type: FleetAutoscalerSyncType::FixedInterval,
+                    fixed_interval: FixedIntervalSync { seconds: 0 },
+                }),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let errors = autoscaler.validate_at(scheduled_features(), test_now());
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].path, "spec.sync.fixedInterval.seconds");
+    }
+
+    #[test]
+    fn webhook_configuration_validation_matches_original_presence_rules() {
+        let missing = UrlConfiguration::default();
+        let errors = missing.validate("spec.policy.webhook");
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].kind, ValidationErrorKind::Required);
+        assert_eq!(errors[0].path, "spec.policy.webhook");
+
+        let both = UrlConfiguration {
+            service: Some(ServiceReference {
+                namespace: "default".into(),
+                name: "allocator".into(),
+                ..Default::default()
+            }),
+            url: Some("https://example.com/scale".into()),
+            ..Default::default()
+        };
+        let errors = both.validate("spec.policy.webhook");
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].kind, ValidationErrorKind::Duplicate);
+        assert_eq!(errors[0].path, "spec.policy.webhook.url");
+
+        let service = UrlConfiguration {
+            service: Some(ServiceReference {
+                namespace: "default".into(),
+                name: "allocator".into(),
+                path: Some("/scale".into()),
+                ..Default::default()
+            }),
+            ..Default::default()
+        };
+        assert!(service.validate("spec.policy.webhook").is_empty());
+    }
+
+    #[test]
+    fn webhook_configuration_rejects_invalid_url_and_ca_bundle() {
+        let invalid_url = UrlConfiguration {
+            url: Some("http://[::1".into()),
+            ..Default::default()
+        };
+        let errors = invalid_url.validate("spec.policy.webhook");
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].path, "spec.policy.webhook.url");
+
+        let invalid_ca = UrlConfiguration {
+            url: Some("https://example.com/scale".into()),
+            ca_bundle: b"not a certificate".to_vec(),
+            ..Default::default()
+        };
+        let errors = invalid_ca.validate("spec.policy.webhook");
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].path, "spec.policy.webhook.caBundle");
+        assert_eq!(errors[0].detail, "CA Bundle is not valid");
+    }
+
+    #[test]
+    fn webhook_url_parser_accepts_relative_references_like_go_net_url() {
+        let config = UrlConfiguration {
+            url: Some("/scale".into()),
+            ..Default::default()
+        };
+        assert!(config.validate("spec.policy.webhook").is_empty());
+    }
+
+    #[test]
+    fn wasm_validation_preserves_feature_gate_and_from_requirements() {
+        let wasm = WasmPolicy::default();
+        let errors = wasm.validate("spec.policy.wasm", AutoscalerFeatures::default());
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].kind, ValidationErrorKind::Forbidden);
+        assert_eq!(
+            errors[0].detail,
+            "feature WasmAutoscaler must be enabled"
+        );
+
+        let enabled = AutoscalerFeatures {
+            wasm_autoscaler: true,
+            ..Default::default()
+        };
+        let errors = wasm.validate("spec.policy.wasm", enabled);
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].kind, ValidationErrorKind::Required);
+        assert_eq!(errors[0].path, "spec.policy.wasm.from");
+
+        let wasm = WasmPolicy {
+            from: WasmFrom {
+                url: Some(UrlConfiguration {
+                    url: Some("http://example.com/wasm-module".into()),
+                    ..Default::default()
+                }),
+            },
+            ..Default::default()
+        };
+        assert!(wasm.validate("spec.policy.wasm", enabled).is_empty());
+    }
+
+    #[test]
+    fn policy_external_dispatch_requires_selected_configuration() {
+        let webhook = FleetAutoscalerPolicy {
+            policy_type: FleetAutoscalerPolicyType::Webhook,
+            ..Default::default()
+        };
+        let errors = webhook.validate_webhook_wasm(
+            "spec.policy",
+            AutoscalerFeatures::default(),
+        );
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].path, "spec.policy.webhook");
+
+        let wasm = FleetAutoscalerPolicy {
+            policy_type: FleetAutoscalerPolicyType::Wasm,
+            ..Default::default()
+        };
+        let errors = wasm.validate_webhook_wasm(
+            "spec.policy",
+            AutoscalerFeatures {
+                wasm_autoscaler: true,
+                ..Default::default()
+            },
+        );
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].path, "spec.policy.wasm");
+    }
 
     #[test]
     fn buffer_policy_validation_matches_integer_and_percentage_invariants() {

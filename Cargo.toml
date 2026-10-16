@@ -15,6 +15,9 @@ version = "0.1.0"
 
 [workspace.dependencies]
 base64 = "0.22"
+chrono = "0.4.38"
+chrono-tz = "0.10.0"
+cron = "0.12.1"
 agones-macros = { path = "crates/agones-macros" }
 proc-macro2 = "1.0"
 quote = "1.0"
@@ -22,4 +25,6 @@ rand = "0.8"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 syn = { version = "2.0", features = ["full"] }
+url = "2.5.2"
+x509-parser = "0.16.0"
 rusternetes-common = { git = "https://github.com/calfonso/rusternetes.git", rev = "125c0f4a2b6fb888102606493c5e3cf7a126dd58", package = "rusternetes-common" }
