@@ -668,16 +668,42 @@ mod tests {
         );
     }
 
+    fn normalize_json_numbers(value: &mut serde_json::Value) {
+        match value {
+            serde_json::Value::Array(values) => {
+                for value in values {
+                    normalize_json_numbers(value);
+                }
+            }
+            serde_json::Value::Object(values) => {
+                for value in values.values_mut() {
+                    normalize_json_numbers(value);
+                }
+            }
+            serde_json::Value::Number(number) => {
+                if let Some(value) = number.as_f64().and_then(serde_json::Number::from_f64) {
+                    *number = value;
+                }
+            }
+            _ => {}
+        }
+    }
+
     #[test]
     fn game_server_crd_schema_is_generated_from_helm_machine_sources() {
         let crd = game_server_crd_envelope();
         let schema = crd.spec.versions[0].schema.as_ref().unwrap();
-        let represented = serde_json::to_value(&schema.open_apiv3_schema).unwrap();
-        let generated: serde_json::Value = serde_json::from_str(
+        let mut represented = serde_json::to_value(&schema.open_apiv3_schema).unwrap();
+        let mut generated: serde_json::Value = serde_json::from_str(
             generated_game_server_schema::GAME_SERVER_OPENAPI_SCHEMA_JSON,
         )
         .unwrap();
 
+        // Rusternetes models OpenAPI minimum/maximum as f64, so YAML integer
+        // bounds round-trip as 0.0/1.0. Canonicalize only number encoding; all
+        // schema structure and nonnumeric values must remain exactly identical.
+        normalize_json_numbers(&mut represented);
+        normalize_json_numbers(&mut generated);
         assert_eq!(
             represented, generated,
             "Rusternetes must not silently drop fields from the generated schema"
