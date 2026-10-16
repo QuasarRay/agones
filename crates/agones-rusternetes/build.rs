@@ -21,7 +21,7 @@ fn yaml_key(value: &YamlValue, path: &[&str]) -> YamlValue {
     for segment in path {
         current = current
             .as_mapping()
-            .and_then(|mapping| mapping.get(YamlValue::String((*segment).to_owned())))
+            .and_then(|mapping| mapping.get(&YamlValue::String((*segment).to_owned())))
             .unwrap_or_else(|| panic!("missing values.yaml key {}", path.join(".")));
     }
     current.clone()
@@ -162,7 +162,7 @@ fn main() {
 
     let properties = schema
         .as_mapping_mut()
-        .and_then(|mapping| mapping.get_mut(YamlValue::String("properties".to_owned())))
+        .and_then(|mapping| mapping.get_mut(&YamlValue::String("properties".to_owned())))
         .and_then(YamlValue::as_mapping_mut)
         .expect("GameServer schema must contain object properties");
     let status_mapping = status
