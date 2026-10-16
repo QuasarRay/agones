@@ -1256,6 +1256,46 @@ pub fn merge_remove_duplicates(list1: &[String], list2: &[String]) -> Vec<String
 }
 
 
+#[agones_invariant]
+fn counter_updates_preserve_bounds(input: (i64, i64, i64, bool)) -> bool {
+    let (capacity, count, amount, increment) = input;
+    if capacity < 0 || count < 0 || count > capacity || amount < 0 {
+        return true;
+    }
+
+    let arithmetic_is_defined = if increment {
+        count.checked_add(amount).is_some()
+    } else {
+        count.checked_sub(amount).is_some()
+    };
+    if !arithmetic_is_defined {
+        return true;
+    }
+
+    let mut game_server = GameServer {
+        status: GameServerStatus {
+            counters: Some(BTreeMap::from([(
+                "c".into(),
+                CounterStatus { count, capacity },
+            )])),
+            ..Default::default()
+        },
+        ..Default::default()
+    };
+
+    let action = if increment {
+        GAME_SERVER_PRIORITY_INCREMENT
+    } else {
+        GAME_SERVER_PRIORITY_DECREMENT
+    };
+    if game_server.update_count("c", action, amount).is_err() {
+        return false;
+    }
+
+    let result = game_server.status.counters.as_ref().unwrap()["c"].count;
+    result >= 0 && result <= capacity
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -2065,87 +2105,5 @@ mod tests {
         assert_eq!(safe_add(40, 2), 42);
     }
 
-    #[test]
-    fn bolero_counter_updates_never_leave_count_outside_capacity() {
-        bolero::check!().for_each(|bytes: &[u8]| {
-            let capacity = i64::from(bytes.first().copied().unwrap_or(0));
-            let count = i64::from(bytes.get(1).copied().unwrap_or(0)).min(capacity);
-            let amount = i64::from(bytes.get(2).copied().unwrap_or(0));
-            let mut gs = GameServer {
-                status: GameServerStatus {
-                    counters: Some(BTreeMap::from([(
-                        "c".into(),
-                        CounterStatus { count, capacity },
-                    )])),
-                    ..Default::default()
-                },
-                ..Default::default()
-            };
-            gs.update_count("c", GAME_SERVER_PRIORITY_INCREMENT, amount)
-                .unwrap();
-            let result = gs.status.counters.as_ref().unwrap()["c"].count;
-            assert!(result >= 0);
-            assert!(result <= capacity);
-        });
-    }
-
 }
 
-#[cfg(kani)]
-mod tracking_verification {
-    use super::*;
-
-    #[kani::proof]
-    fn counter_increment_is_bounded_by_nonnegative_capacity() {
-        let capacity: i64 = kani::any();
-        kani::assume(capacity >= 0);
-        let count: i64 = kani::any();
-        kani::assume(count >= 0 && count <= capacity);
-        let amount: i64 = kani::any();
-        kani::assume(amount >= 0);
-        kani::assume(count.checked_add(amount).is_some());
-
-        let mut gs = GameServer {
-            status: GameServerStatus {
-                counters: Some(BTreeMap::from([(
-                    "c".into(),
-                    CounterStatus { count, capacity },
-                )])),
-                ..Default::default()
-            },
-            ..Default::default()
-        };
-        gs.update_count("c", GAME_SERVER_PRIORITY_INCREMENT, amount)
-            .unwrap();
-        let result = gs.status.counters.as_ref().unwrap()["c"].count;
-        assert!(result >= 0);
-        assert!(result <= capacity);
-    }
-
-    #[kani::proof]
-    fn counter_decrement_is_bounded_by_zero_and_capacity() {
-        let capacity: i64 = kani::any();
-        kani::assume(capacity >= 0);
-        let count: i64 = kani::any();
-        kani::assume(count >= 0 && count <= capacity);
-        let amount: i64 = kani::any();
-        kani::assume(amount >= 0);
-        kani::assume(count.checked_sub(amount).is_some());
-
-        let mut gs = GameServer {
-            status: GameServerStatus {
-                counters: Some(BTreeMap::from([(
-                    "c".into(),
-                    CounterStatus { count, capacity },
-                )])),
-                ..Default::default()
-            },
-            ..Default::default()
-        };
-        gs.update_count("c", GAME_SERVER_PRIORITY_DECREMENT, amount)
-            .unwrap();
-        let result = gs.status.counters.as_ref().unwrap()["c"].count;
-        assert!(result >= 0);
-        assert!(result <= capacity);
-    }
-}
