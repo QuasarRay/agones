@@ -12,8 +12,8 @@ use agones_core::{
     VERSION_ANNOTATION,
 };
 use rusternetes_common::resources::{
-    Affinity, Container, ContainerPort, EmptyDirVolumeSource, Pod, PodAffinity, PodAffinityTerm,
-    PodSpec, Volume, VolumeMount, WeightedPodAffinityTerm,
+    Affinity, Container, ContainerPort, Pod, PodAffinity, PodAffinityTerm, PodSpec, Volume,
+    VolumeMount, WeightedPodAffinityTerm,
 };
 use rusternetes_common::types::{LabelSelector, OwnerReference, TypeMeta};
 
@@ -200,19 +200,17 @@ pub fn build_pod(
             .unwrap_or_else(|| env!("CARGO_PKG_VERSION").to_owned()),
     );
 
-    if !game_server.metadata.uid.is_empty() {
-        let owner = OwnerReference::new(
-            "agones.dev/v1",
-            "GameServer",
-            game_server.metadata.name.clone(),
-            game_server.metadata.uid.clone(),
-        )
-        .with_controller(true);
-        metadata
-            .owner_references
-            .get_or_insert_with(Vec::new)
-            .push(owner);
-    }
+    let owner = OwnerReference::new(
+        "agones.dev/v1",
+        "GameServer",
+        game_server.metadata.name.clone(),
+        game_server.metadata.uid.clone(),
+    )
+    .with_controller(true);
+    metadata
+        .owner_references
+        .get_or_insert_with(Vec::new)
+        .push(owner);
 
     let mut passthrough: HashMap<String, Vec<usize>> = HashMap::new();
     for game_port in &game_server.spec.ports {
@@ -302,39 +300,22 @@ pub fn disable_service_account(pod: &mut Pod, container_name: &str) -> Result<()
         .as_mut()
         .ok_or_else(|| AdapterError::Hook("pod spec is missing".to_owned()))?;
 
-    let volume = Volume {
-        name: "empty".to_owned(),
-        empty_dir: Some(EmptyDirVolumeSource {
-            medium: None,
-            size_limit: None,
-        }),
-        host_path: None,
-        config_map: None,
-        secret: None,
-        persistent_volume_claim: None,
-        downward_api: None,
-        csi: None,
-        ephemeral: None,
-        nfs: None,
-        iscsi: None,
-        projected: None,
-        image: None,
-    };
+    let volume: Volume = serde_json::from_value(serde_json::json!({
+        "name": "empty",
+        "emptyDir": {}
+    }))?;
     spec.volumes.get_or_insert_with(Vec::new).push(volume);
 
+    let mount: VolumeMount = serde_json::from_value(serde_json::json!({
+        "name": "empty",
+        "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+        "readOnly": true
+    }))?;
     apply_to_container(spec, container_name, |container| {
         container
             .volume_mounts
             .get_or_insert_with(Vec::new)
-            .push(VolumeMount {
-                name: "empty".to_owned(),
-                mount_path: "/var/run/secrets/kubernetes.io/serviceaccount".to_owned(),
-                read_only: Some(true),
-                sub_path: None,
-                sub_path_expr: None,
-                mount_propagation: None,
-                recursive_read_only: None,
-            });
+            .push(mount.clone());
     })
 }
 
