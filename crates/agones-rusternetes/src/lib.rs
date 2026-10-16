@@ -206,7 +206,8 @@ pub fn build_pod(
         game_server.metadata.name.clone(),
         game_server.metadata.uid.clone(),
     )
-    .with_controller(true);
+    .with_controller(true)
+    .with_block_owner_deletion(true);
     metadata
         .owner_references
         .get_or_insert_with(Vec::new)
