@@ -4,8 +4,10 @@
 //! can map their API/runtime types into this model without making Kubernetes
 //! compatibility the architectural center of the Rust reimplementation.
 
+pub mod fleet;
 pub mod gameserver;
 pub mod gameserverset;
 
+pub use fleet::*;
 pub use gameserver::*;
 pub use gameserverset::*;
