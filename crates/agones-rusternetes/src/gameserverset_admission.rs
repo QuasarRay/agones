@@ -246,6 +246,11 @@ mod tests {
     #[test]
     fn creation_validation_rebases_nested_gameserver_errors() {
         let mut set = fixture();
+        set.spec.template.spec.template.spec.containers.push(Container {
+            name: "sidecar".into(),
+            image: "sidecar:v1".into(),
+            ..Default::default()
+        });
         set.spec.template.spec.container = "missing".into();
 
         let response = validate_game_server_set_creation_object(
