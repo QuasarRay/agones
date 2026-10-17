@@ -6,6 +6,7 @@
 mod creating_gameserver_controller;
 mod development_gameserver_controller;
 mod request_ready_gameserver_controller;
+mod stable_gameserver_pod_ip_controller;
 mod starting_gameserver_controller;
 
 pub use creating_gameserver_controller::{
@@ -13,6 +14,7 @@ pub use creating_gameserver_controller::{
 };
 pub use development_gameserver_controller::DevelopmentGameServerController;
 pub use request_ready_gameserver_controller::ReconcileRequestReadyGameServer;
+pub use stable_gameserver_pod_ip_controller::ReconcileStableGameServerPodIps;
 pub use starting_gameserver_controller::{
     ReconcileStartingGameServer, apply_game_server_address_and_port,
     apply_game_server_pod_ips, node_address,
