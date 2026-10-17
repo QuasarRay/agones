@@ -13,6 +13,7 @@ mod fleet_admission;
 mod fleet_allocation_tracker;
 mod fleet_controller;
 mod fleet_controller_runtime;
+mod fleetautoscaler_admission;
 mod game_server_event;
 mod game_server_pod;
 mod gameserver_admission;
@@ -83,6 +84,12 @@ pub use fleet_controller_runtime::{
     FLEET_SLOW_RETRY_DELAY_MS, FleetControllerWatchEvent,
     FleetControllerWatchState, FleetControllerWatchStream, FleetWorkItem,
     fleet_retry_delay_ms, watch_fleet_controller_events,
+};
+pub use fleetautoscaler_admission::{
+    CanDefaultFleetAutoscaler, CanValidateFleetAutoscaler,
+    FleetAutoscalerAdmissionContext, FleetAutoscalerMutationAdmission,
+    FleetAutoscalerValidationAdmission, HasFleetAutoscalerFeatures,
+    mutate_fleet_autoscaler_object, validate_fleet_autoscaler_object,
 };
 pub use game_server_pod::game_server_pod;
 pub use gameserver_admission::{
