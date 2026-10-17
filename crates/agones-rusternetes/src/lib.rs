@@ -12,6 +12,7 @@ mod game_server_event;
 mod game_server_pod;
 mod gameserver_admission;
 mod gameserverset_admission;
+mod gameserverset_controller;
 mod gameserver_controller_pipeline;
 mod gameserver_controller_runtime;
 mod gameserver_controller_stack_runtime;
@@ -62,6 +63,14 @@ pub use gameserverset_admission::{
     validate_game_server_set_creation_object,
     validate_game_server_set_update,
     validate_game_server_set_update_objects,
+};
+pub use gameserverset_controller::{
+    CreateGameServersForSet, GameServerSetController,
+    GameServerSetControllerConfig, GameServerSetReconcileResult,
+    GameServerSetSyncOutcome, ListOwnedGameServers,
+    ReconcileGameServerSet, ShutdownGameServersForSet,
+    SyncGameServerSet, UpdateGameServerSetStatus,
+    game_server_is_controlled_by_set,
 };
 pub use gameserver_controller_pipeline::{
     GameServerSyncOutcome, ReconcileGameServerPipeline, SyncGameServer,
@@ -933,7 +942,22 @@ impl<S: Storage> AgonesRepository<S> {
     where
         T: RusternetesCustomResource + Send + Sync,
     {
-        let resource = value.to_rusternetes_custom_resource()?;
+        let mut resource = value.to_rusternetes_custom_resource()?;
+
+        // Kubernetes resolves metadata.generateName before persistence. The
+        // Rusternetes Storage trait receives an already-computed key, so do
+        // that API-server step here for controller-direct custom-resource I/O.
+        // Preserve the existing missing-name error when no generateName exists.
+        if resource.metadata.name.is_empty()
+            && resource
+                .metadata
+                .generate_name
+                .as_deref()
+                .is_some_and(|prefix| !prefix.is_empty())
+        {
+            resource.metadata.ensure_name();
+        }
+
         let key = Self::key_for::<T>(&resource)?;
         let created: CustomResource = self.storage.create(&key, &resource).await?;
         T::from_rusternetes_custom_resource(created)
