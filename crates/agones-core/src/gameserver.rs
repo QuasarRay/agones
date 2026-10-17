@@ -953,7 +953,7 @@ impl GameServer {
 
         let state = self.status.state.clone();
         if !matches!(
-            state,
+            state.as_ref(),
             Some(GameServerState::Creating | GameServerState::RequestReady)
         ) {
             return false;
