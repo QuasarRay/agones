@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use url::Url;
 use x509_parser::pem::Pem;
 
-use crate::{FleetStatus, IntOrPercent, ObjectMeta, ValidationError, ValidationErrorKind};
+use crate::{Fleet, FleetStatus, IntOrPercent, ObjectMeta, ValidationError, ValidationErrorKind};
 
 pub const DEFAULT_INTERVAL_SYNC_SECONDS: i32 = 30;
 
@@ -1080,6 +1080,102 @@ impl FleetAutoscaler {
     }
 }
 
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct FleetAutoscalerScaleDecision {
+    pub replicas: i32,
+    pub limited: bool,
+}
+
+fn invalid_int_or_percent_error(value: &str) -> String {
+    format!(
+        "invalid value for IntOrString: invalid value \"{value}\": strconv.Atoi: parsing \"{value}\": invalid syntax"
+    )
+}
+
+fn autoscaler_percent_value(value: &str) -> Result<i32, String> {
+    let Some(percent) = value.strip_suffix('%') else {
+        return Err(invalid_int_or_percent_error(value));
+    };
+    percent.parse::<i32>().map_err(|_| {
+        invalid_int_or_percent_error(percent)
+    })
+}
+
+/// Pure port of FleetAutoscaler's applyBufferPolicy.
+///
+/// Integer buffers request allocated plus buffer replicas. Percentage buffers
+/// solve the desired fleet size from the opposite side: if the ready buffer is
+/// P%, Allocated must occupy (100-P)% of the eventual fleet. The result is
+/// rounded upward exactly like Go's math.Ceil and then clamped to the policy's
+/// replica bounds.
+pub fn apply_buffer_autoscaler_policy(
+    policy: &BufferPolicy,
+    fleet: &Fleet,
+) -> Result<FleetAutoscalerScaleDecision, String> {
+    let mut replicas = match &policy.buffer_size {
+        IntOrPercent::Int(buffer) => fleet
+            .status
+            .allocated_replicas
+            .wrapping_add(*buffer),
+        IntOrPercent::String(value) => {
+            let buffer_percent = autoscaler_percent_value(value)?;
+            let denominator = 100i32.wrapping_sub(buffer_percent);
+            let desired = (f64::from(
+                fleet.status.allocated_replicas.wrapping_mul(100),
+            ) / f64::from(denominator))
+                .ceil();
+            desired as i32
+        }
+    };
+
+    let mut scaling_in_limited = false;
+    let mut scaling_out_limited = false;
+
+    if replicas < policy.min_replicas {
+        replicas = policy.min_replicas;
+        scaling_in_limited = true;
+    }
+    if replicas > policy.max_replicas {
+        replicas = policy.max_replicas;
+        scaling_out_limited = true;
+    }
+
+    Ok(FleetAutoscalerScaleDecision {
+        replicas,
+        limited: scaling_in_limited || scaling_out_limited,
+    })
+}
+
+#[agones_invariant]
+fn buffer_policy_integer_decision_stays_bounded(
+    input: (i16, i16, i16, i16),
+) -> bool {
+    let (allocated, buffer, min_replicas, max_replicas) = input;
+    if allocated < 0
+        || buffer <= 0
+        || min_replicas < 0
+        || max_replicas < min_replicas
+    {
+        return true;
+    }
+
+    let mut fleet = Fleet::default();
+    fleet.status.allocated_replicas = i32::from(allocated);
+    let policy = BufferPolicy {
+        buffer_size: IntOrPercent::Int(i32::from(buffer)),
+        min_replicas: i32::from(min_replicas),
+        max_replicas: i32::from(max_replicas),
+    };
+
+    let Ok(decision) = apply_buffer_autoscaler_policy(&policy, &fleet) else {
+        return false;
+    };
+
+    decision.replicas >= policy.min_replicas
+        && decision.replicas <= policy.max_replicas
+}
+
 #[agones_invariant]
 fn buffer_integer_valid_region_is_accepted(input: (i32, i32, i32)) -> bool {
     let (min_replicas, max_replicas, buffer_size) = input;
@@ -1529,6 +1625,125 @@ mod tests {
         );
         assert_eq!(errors.len(), 1);
         assert_eq!(errors[0].path, "spec.policy.wasm");
+    }
+
+
+    #[test]
+    fn buffer_policy_scales_up_from_integer_buffer() {
+        let mut fleet = Fleet::default();
+        fleet.spec.replicas = 50;
+        fleet.status.replicas = 50;
+        fleet.status.allocated_replicas = 40;
+        fleet.status.ready_replicas = 10;
+
+        let decision = apply_buffer_autoscaler_policy(
+            &BufferPolicy {
+                buffer_size: IntOrPercent::Int(20),
+                min_replicas: 0,
+                max_replicas: 100,
+            },
+            &fleet,
+        )
+        .unwrap();
+
+        assert_eq!(
+            decision,
+            FleetAutoscalerScaleDecision {
+                replicas: 60,
+                limited: false,
+            }
+        );
+    }
+
+    #[test]
+    fn buffer_policy_reports_min_and_max_limiting() {
+        let mut fleet = Fleet::default();
+        fleet.status.allocated_replicas = 40;
+
+        let min_limited = apply_buffer_autoscaler_policy(
+            &BufferPolicy {
+                buffer_size: IntOrPercent::Int(20),
+                min_replicas: 65,
+                max_replicas: 100,
+            },
+            &fleet,
+        )
+        .unwrap();
+        assert_eq!(
+            min_limited,
+            FleetAutoscalerScaleDecision {
+                replicas: 65,
+                limited: true,
+            }
+        );
+
+        let max_limited = apply_buffer_autoscaler_policy(
+            &BufferPolicy {
+                buffer_size: IntOrPercent::Int(20),
+                min_replicas: 0,
+                max_replicas: 55,
+            },
+            &fleet,
+        )
+        .unwrap();
+        assert_eq!(
+            max_limited,
+            FleetAutoscalerScaleDecision {
+                replicas: 55,
+                limited: true,
+            }
+        );
+    }
+
+    #[test]
+    fn buffer_percentage_solves_future_fleet_size_with_ceil() {
+        let mut fleet = Fleet::default();
+        fleet.status.allocated_replicas = 50;
+
+        let decision = apply_buffer_autoscaler_policy(
+            &BufferPolicy {
+                buffer_size: IntOrPercent::String("20%".into()),
+                min_replicas: 0,
+                max_replicas: 100,
+            },
+            &fleet,
+        )
+        .unwrap();
+        assert_eq!(decision.replicas, 63);
+        assert!(!decision.limited);
+
+        fleet.status.allocated_replicas = 1;
+        let small = apply_buffer_autoscaler_policy(
+            &BufferPolicy {
+                buffer_size: IntOrPercent::String("10%".into()),
+                min_replicas: 0,
+                max_replicas: 10,
+            },
+            &fleet,
+        )
+        .unwrap();
+        assert_eq!(small.replicas, 2);
+    }
+
+    #[test]
+    fn buffer_policy_invalid_string_preserves_upstream_error_shape() {
+        let mut fleet = Fleet::default();
+        fleet.status.allocated_replicas = 1;
+
+        let error = apply_buffer_autoscaler_policy(
+            &BufferPolicy {
+                buffer_size: IntOrPercent::String("asd".into()),
+                min_replicas: 0,
+                max_replicas: 10,
+            },
+            &fleet,
+        )
+        .unwrap_err();
+
+        assert_eq!(
+            error,
+            "invalid value for IntOrString: invalid value \"asd\": strconv.Atoi: parsing \"asd\": invalid syntax"
+        );
     }
 
     #[test]
