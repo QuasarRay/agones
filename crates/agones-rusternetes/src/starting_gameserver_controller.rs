@@ -8,7 +8,7 @@ use cgp::prelude::*;
 use rusternetes_common::resources::{Node, Pod};
 use rusternetes_storage::{build_key, Storage};
 
-use crate::{AdapterError, AgonesRepository, ApiHooks};
+use crate::{game_server_pod, AdapterError, AgonesRepository, ApiHooks};
 
 const POD_IP_ADDRESS_TYPE: &str = "PodIP";
 
@@ -177,12 +177,7 @@ where
         return Err(AdapterError::MissingField("metadata.namespace"));
     }
 
-    let pod_key = build_key(
-        "pods",
-        Some(game_server.metadata.namespace.as_str()),
-        game_server.metadata.name.as_str(),
-    );
-    let pod: Pod = storage.get(&pod_key).await?;
+    let pod = game_server_pod(storage.as_ref(), &game_server).await?;
 
     let node_name = pod
         .spec
@@ -518,17 +513,30 @@ mod tests {
             AdapterError::Rusternetes(rusternetes_common::Error::NotFound(_))
         ));
 
-        let pod = build_pod(
+        let mut pod = build_pod(
             &created,
             Vec::new(),
             PodBuildFeatures::default(),
             &NoopApiHooks,
         )
         .unwrap();
-        storage
-            .create(&build_key("pods", Some("default"), "server"), &pod)
+        pod.metadata.owner_references.as_mut().unwrap()[0].uid =
+            "different-owner".into();
+        let pod_key = build_key("pods", Some("default"), "server");
+        storage.create(&pod_key, &pod).await.unwrap();
+
+        let foreign_error = controller
+            .reconcile_starting_game_server(created.clone())
             .await
-            .unwrap();
+            .unwrap_err();
+        assert!(matches!(
+            foreign_error,
+            AdapterError::Rusternetes(rusternetes_common::Error::NotFound(_))
+        ));
+
+        pod.metadata.owner_references.as_mut().unwrap()[0].uid =
+            created.metadata.uid.clone();
+        storage.update(&pod_key, &pod).await.unwrap();
 
         let unscheduled_error = controller
             .reconcile_starting_game_server(created.clone())

@@ -6,7 +6,8 @@ use rusternetes_common::resources::{Container, Pod};
 use rusternetes_storage::{build_key, Storage};
 
 use crate::{
-    build_pod, AdapterError, AgonesRepository, ApiHooks, NoopApiHooks, PodBuildFeatures,
+    build_pod, game_server_pod, AdapterError, AgonesRepository, ApiHooks, NoopApiHooks,
+    PodBuildFeatures,
 };
 
 /// CGP context for the upstream GameServer `Creating` reconciliation slice.
@@ -91,9 +92,9 @@ where
         game_server.metadata.name.as_str(),
     );
 
-    match storage.get::<Pod>(&pod_key).await {
+    match game_server_pod(storage.as_ref(), &game_server).await {
         Ok(_) => {}
-        Err(rusternetes_common::Error::NotFound(_)) => {
+        Err(AdapterError::Rusternetes(rusternetes_common::Error::NotFound(_))) => {
             // Upstream performs this normalization only in the Pod-missing
             // branch immediately before Pod construction.
             game_server.split_static_tcp_udp_ports();
@@ -106,7 +107,7 @@ where
             )?;
             storage.create(&pod_key, &pod).await?;
         }
-        Err(error) => return Err(error.into()),
+        Err(error) => return Err(error),
     }
 
     game_server.status.state = Some(GameServerState::Starting);
@@ -247,6 +248,38 @@ mod tests {
             serde_json::to_value(persisted_pod).unwrap(),
             serde_json::to_value(existing_pod).unwrap()
         );
+    }
+
+    #[tokio::test]
+    async fn foreign_same_name_pod_does_not_advance_creating_state() {
+        let storage = MemoryStorage::new();
+        let repository = AgonesRepository::new(storage.clone());
+        let created = repository.create(&creating_game_server()).await.unwrap();
+
+        let mut foreign_pod = build_pod(
+            &created,
+            Vec::new(),
+            PodBuildFeatures::default(),
+            &NoopApiHooks,
+        )
+        .unwrap();
+        foreign_pod.metadata.owner_references.as_mut().unwrap()[0].uid =
+            "different-owner".into();
+        let pod_key = build_key("pods", Some("default"), "server");
+        storage.create(&pod_key, &foreign_pod).await.unwrap();
+
+        let controller = CreatingGameServerController::new(storage.clone());
+        let error = controller
+            .reconcile_creating_game_server(created)
+            .await
+            .unwrap_err();
+        assert!(matches!(
+            error,
+            AdapterError::Rusternetes(rusternetes_common::Error::AlreadyExists(_))
+        ));
+
+        let persisted: GameServer = repository.get("default", "server").await.unwrap();
+        assert_eq!(persisted.status.state, Some(GameServerState::Creating));
     }
 
     #[tokio::test]
