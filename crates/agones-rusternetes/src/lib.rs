@@ -3,7 +3,12 @@
 //! This crate is the only layer that depends on Rusternetes runtime/API types.
 //! `agones-core` remains runtime-independent.
 
+mod creating_gameserver_controller;
 mod development_gameserver_controller;
+
+pub use creating_gameserver_controller::{
+    CreatingGameServerController, ReconcileCreatingGameServer,
+};
 pub use development_gameserver_controller::DevelopmentGameServerController;
 
 use std::collections::{BTreeMap, HashMap};
