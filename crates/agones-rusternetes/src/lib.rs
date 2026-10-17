@@ -7,6 +7,7 @@ mod agones_resource_deletion;
 mod creating_gameserver_controller;
 mod development_gameserver_controller;
 mod deleting_gameserver_controller;
+mod game_server_event;
 mod game_server_pod;
 mod missing_pod_gameserver_controller;
 mod pod_deletion;
@@ -15,6 +16,7 @@ mod port_allocator;
 mod request_ready_gameserver_controller;
 mod stable_gameserver_pod_ip_controller;
 mod state_update_limiter;
+mod succeeded_gameserver_controller;
 mod starting_gameserver_controller;
 mod shutdown_gameserver_controller;
 
@@ -39,6 +41,10 @@ pub use stable_gameserver_pod_ip_controller::ReconcileStableGameServerPodIps;
 pub use state_update_limiter::{
     StateUpdateLimiter, StateUpdateLimiterError, STATE_UPDATE_BURST,
     STATE_UPDATE_RATE_PER_SECOND,
+};
+pub use succeeded_gameserver_controller::{
+    ReconcileSucceededGameServer, game_server_container_completed, pod_completed,
+    should_enqueue_succeeded_game_server,
 };
 pub use starting_gameserver_controller::{
     ReconcileStartingGameServer, apply_game_server_address_and_port,

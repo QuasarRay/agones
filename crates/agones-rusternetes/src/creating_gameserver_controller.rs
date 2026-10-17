@@ -23,6 +23,7 @@ pub struct CreatingGameServerController<S, H = NoopApiHooks> {
     pub hooks: H,
     pub port_allocator: Arc<PortAllocator>,
     pub unhealthy_limiter: Arc<StateUpdateLimiter>,
+    pub shutdown_limiter: Arc<StateUpdateLimiter>,
 }
 
 impl<S> CreatingGameServerController<S, NoopApiHooks> {
@@ -50,6 +51,7 @@ impl<S, H> CreatingGameServerController<S, H> {
             hooks,
             port_allocator: Arc::new(PortAllocator::empty()),
             unhealthy_limiter: Arc::new(StateUpdateLimiter::new()),
+            shutdown_limiter: Arc::new(StateUpdateLimiter::new()),
         }
     }
 
@@ -60,6 +62,11 @@ impl<S, H> CreatingGameServerController<S, H> {
 
     pub fn with_unhealthy_limiter(mut self, limiter: StateUpdateLimiter) -> Self {
         self.unhealthy_limiter = Arc::new(limiter);
+        self
+    }
+
+    pub fn with_shutdown_limiter(mut self, limiter: StateUpdateLimiter) -> Self {
+        self.shutdown_limiter = Arc::new(limiter);
         self
     }
 }
