@@ -56,6 +56,21 @@ where
         Err(error) => return Err(error.into()),
     };
 
+    let controlled_by_game_server = pod
+        .metadata
+        .owner_references
+        .as_ref()
+        .is_some_and(|owners| {
+            owners.iter().any(|owner| {
+                owner.controller == Some(true) && owner.uid == game_server.metadata.uid
+            })
+        });
+    if !controlled_by_game_server {
+        // Upstream gameServerPod() treats a same-name Pod controlled by a
+        // different owner as NotFound.
+        return Ok(None);
+    }
+
     if !apply_game_server_pod_ips(&mut game_server, &pod) {
         return Ok(None);
     }
@@ -181,6 +196,44 @@ mod tests {
         }];
         let created = repository.create(&fixture).await.unwrap();
         store_pod(&storage, &created, &["10.0.0.9"]).await;
+
+        let controller = CreatingGameServerController::new(storage);
+        assert!(
+            controller
+                .reconcile_stable_game_server_pod_ips(created)
+                .await
+                .unwrap()
+                .is_none()
+        );
+    }
+
+    #[tokio::test]
+    async fn same_name_pod_controlled_by_another_owner_is_treated_as_missing() {
+        let storage = MemoryStorage::new();
+        let repository = AgonesRepository::new(storage.clone());
+        let created = repository
+            .create(&stable_game_server(GameServerState::Ready))
+            .await
+            .unwrap();
+
+        let mut pod = build_pod(
+            &created,
+            Vec::new(),
+            PodBuildFeatures::default(),
+            &NoopApiHooks,
+        )
+        .unwrap();
+        pod.status = Some(PodStatus {
+            pod_i_ps: Some(vec![PodIP {
+                ip: "10.0.0.9".into(),
+            }]),
+            ..Default::default()
+        });
+        pod.metadata.owner_references.as_mut().unwrap()[0].uid = "different-owner".into();
+        storage
+            .create(&build_key("pods", Some("default"), "server"), &pod)
+            .await
+            .unwrap();
 
         let controller = CreatingGameServerController::new(storage);
         assert!(
