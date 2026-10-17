@@ -47,7 +47,7 @@ pub async fn request_pod_deletion<S: Storage>(
     live.metadata.generation = Some(current_generation + 1);
 
     match storage.update(&key, &live).await {
-        Ok::<Pod, _>(_) => Ok(()),
+        Ok(_) => Ok(()),
         Err(rusternetes_common::Error::Conflict(_)) => {
             let mut retry: Pod = storage.get(&key).await?;
             if retry.metadata.deletion_timestamp.is_none() {
