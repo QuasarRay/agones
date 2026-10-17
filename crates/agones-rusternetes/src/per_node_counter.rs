@@ -324,8 +324,8 @@ where
 /// CGP capability for the upstream informer Add/Update/Delete reducers plus
 /// Node deletion cleanup.
 ///
-/// Watch-stream wiring is intentionally kept separate: this capability is the
-/// deterministic state transition core shared by any Rusternetes watch source.
+/// This remains the deterministic reducer shared by direct callers and the
+/// live Rusternetes watch runner.
 #[cgp_fn]
 #[async_trait]
 pub async fn apply_per_node_counter_event(
