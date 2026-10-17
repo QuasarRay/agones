@@ -1,8 +1,8 @@
 use std::collections::HashMap;
 
-use cgp::prelude::async_trait;
+use async_trait::async_trait;
 use agones_core::{
-    GameServer, GameServerSpec, ValidationError,
+    GameServer, ValidationError,
 };
 use rusternetes_common::admission::{
     AdmissionController, AdmissionRequest, AdmissionResponse, Operation,
