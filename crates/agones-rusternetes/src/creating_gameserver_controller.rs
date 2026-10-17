@@ -1,12 +1,16 @@
 use std::sync::Arc;
 
-use agones_core::{GameServer, GameServerState};
+use agones_core::{
+    GAME_SERVER_ERRORED_AT_ANNOTATION, GameServer, GameServerState,
+};
+use chrono::{SecondsFormat, Utc};
 use cgp::prelude::*;
 use rusternetes_common::resources::Container;
 use rusternetes_storage::{build_key, Storage};
 
 use crate::{
-    augment_game_server_pod, build_pod, game_server_pod, AdapterError,
+    augment_game_server_pod, build_pod,
+    configure_game_server_service_account, game_server_pod, AdapterError,
     AgonesRepository, ApiHooks, NoopApiHooks, SdkSidecarConfig,
     GameServerControllerWatchState, PodBuildFeatures, PortAllocator,
     StateUpdateLimiter, build_sdk_sidecar,
@@ -22,6 +26,7 @@ pub struct CreatingGameServerController<S, H = NoopApiHooks> {
     pub storage: Arc<S>,
     pub sidecars: Vec<Container>,
     pub sdk_sidecar: Option<SdkSidecarConfig>,
+    pub sdk_service_account: String,
     pub pod_build_features: PodBuildFeatures,
     pub hooks: H,
     pub port_allocator: Arc<PortAllocator>,
@@ -54,6 +59,7 @@ impl<S, H> CreatingGameServerController<S, H> {
             storage: Arc::new(storage),
             sidecars,
             sdk_sidecar: None,
+            sdk_service_account: "agones-sdk".to_owned(),
             pod_build_features,
             hooks,
             port_allocator: Arc::new(PortAllocator::empty()),
@@ -99,6 +105,51 @@ impl<S, H> CreatingGameServerController<S, H> {
         self.sdk_sidecar = Some(config);
         self
     }
+
+    pub fn with_sdk_service_account(
+        mut self,
+        service_account: impl Into<String>,
+    ) -> Self {
+        self.sdk_service_account = service_account.into();
+        self
+    }
+}
+
+pub fn pod_creation_error_moves_game_server_to_error(
+    error: &rusternetes_common::Error,
+) -> bool {
+    matches!(
+        error,
+        rusternetes_common::Error::InvalidResource(_)
+            | rusternetes_common::Error::Forbidden(_)
+            | rusternetes_common::Error::Authorization(_)
+    )
+}
+
+/// CGP equivalent of upstream moveToErrorState.
+///
+/// The timestamp is stored at second precision in RFC3339 form, matching Go's
+/// time.Now().Format(time.RFC3339), before persisting the terminal Error state.
+#[cgp_fn]
+#[async_trait]
+pub async fn move_game_server_to_error<S>(
+    &self,
+    #[implicit] storage: Arc<S>,
+    mut game_server: GameServer,
+    _message: &str,
+) -> Result<GameServer, AdapterError>
+where
+    S: Storage + 'static,
+{
+    game_server.metadata.annotations.insert(
+        GAME_SERVER_ERRORED_AT_ANNOTATION.to_owned(),
+        Utc::now().to_rfc3339_opts(SecondsFormat::Secs, true),
+    );
+    game_server.status.state = Some(GameServerState::Error);
+
+    AgonesRepository::new(storage)
+        .update(&game_server)
+        .await
 }
 
 /// Mirrors the isolated behavior of upstream `syncGameServerCreatingState`.
@@ -114,6 +165,7 @@ pub async fn reconcile_creating_game_server<S, H>(
     #[implicit] storage: Arc<S>,
     #[implicit] sidecars: Vec<Container>,
     #[implicit] sdk_sidecar: Option<SdkSidecarConfig>,
+    #[implicit] sdk_service_account: String,
     #[implicit] pod_build_features: PodBuildFeatures,
     #[implicit] hooks: H,
     game_server: GameServer,
@@ -121,6 +173,7 @@ pub async fn reconcile_creating_game_server<S, H>(
 where
     S: Storage + 'static,
     H: ApiHooks + Clone + Send + Sync + 'static,
+    Self: MoveGameServerToError<S> + Sync,
 {
     let mut game_server = game_server;
 
@@ -156,14 +209,50 @@ where
                 sidecars.push(build_sdk_sidecar(&game_server, config)?);
             }
 
-            let mut pod = build_pod(
+            let mut pod = match build_pod(
                 &game_server,
                 sidecars,
                 pod_build_features,
                 &hooks,
+            ) {
+                Ok(pod) => pod,
+                Err(error) => {
+                    return self
+                        .move_game_server_to_error(
+                            game_server,
+                            error.to_string().as_str(),
+                        )
+                        .await
+                        .map(Some);
+                }
+            };
+
+            configure_game_server_service_account(
+                &game_server,
+                &mut pod,
+                sdk_service_account.as_str(),
             )?;
             augment_game_server_pod(&game_server, &mut pod)?;
-            storage.create(&pod_key, &pod).await?;
+
+            match storage.create(&pod_key, &pod).await {
+                Ok(_created_pod) => {}
+                Err(rusternetes_common::Error::AlreadyExists(_)) => {
+                    // Upstream treats Pod AlreadyExists as a successful
+                    // recovery and continues the Creating -> Starting step.
+                }
+                Err(error)
+                    if pod_creation_error_moves_game_server_to_error(&error) =>
+                {
+                    return self
+                        .move_game_server_to_error(
+                            game_server,
+                            error.to_string().as_str(),
+                        )
+                        .await
+                        .map(Some);
+                }
+                Err(error) => return Err(error.into()),
+            }
         }
         Err(error) => return Err(error),
     }
@@ -310,7 +399,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn foreign_same_name_pod_does_not_advance_creating_state() {
+    async fn foreign_same_name_pod_already_exists_recovers_to_starting() {
         let storage = MemoryStorage::new();
         let repository = AgonesRepository::new(storage.clone());
         let created = repository.create(&creating_game_server()).await.unwrap();
@@ -328,17 +417,161 @@ mod tests {
         storage.create(&pod_key, &foreign_pod).await.unwrap();
 
         let controller = CreatingGameServerController::new(storage.clone());
-        let error = controller
+        let reconciled = controller
             .reconcile_creating_game_server(created)
             .await
-            .unwrap_err();
-        assert!(matches!(
-            error,
-            AdapterError::Rusternetes(rusternetes_common::Error::AlreadyExists(_))
-        ));
+            .unwrap()
+            .expect("AlreadyExists recovery should advance Creating state");
+        assert_eq!(reconciled.status.state, Some(GameServerState::Starting));
 
         let persisted: GameServer = repository.get("default", "server").await.unwrap();
+        assert_eq!(persisted.status.state, Some(GameServerState::Starting));
+
+        let unchanged: Pod = storage.get(&pod_key).await.unwrap();
+        assert_eq!(
+            serde_json::to_value(unchanged).unwrap(),
+            serde_json::to_value(foreign_pod).unwrap()
+        );
+    }
+
+    #[test]
+    fn invalid_and_forbidden_pod_create_errors_are_terminal() {
+        assert!(pod_creation_error_moves_game_server_to_error(
+            &rusternetes_common::Error::InvalidResource("invalid".into())
+        ));
+        assert!(pod_creation_error_moves_game_server_to_error(
+            &rusternetes_common::Error::Forbidden("forbidden".into())
+        ));
+        assert!(pod_creation_error_moves_game_server_to_error(
+            &rusternetes_common::Error::Authorization("denied".into())
+        ));
+        assert!(!pod_creation_error_moves_game_server_to_error(
+            &rusternetes_common::Error::Storage("temporary".into())
+        ));
+        assert!(!pod_creation_error_moves_game_server_to_error(
+            &rusternetes_common::Error::Conflict("retry".into())
+        ));
+    }
+
+    #[tokio::test]
+    async fn move_to_error_sets_rfc3339_annotation_and_persists_state() {
+        let storage = MemoryStorage::new();
+        let repository = AgonesRepository::new(storage.clone());
+        let created = repository.create(&creating_game_server()).await.unwrap();
+        let controller = CreatingGameServerController::new(storage.clone());
+
+        let errored = controller
+            .move_game_server_to_error(created, "some-data")
+            .await
+            .unwrap();
+
+        assert_eq!(errored.status.state, Some(GameServerState::Error));
+        let timestamp = errored
+            .metadata
+            .annotations
+            .get(GAME_SERVER_ERRORED_AT_ANNOTATION)
+            .expect("errored-at annotation should exist");
+        chrono::DateTime::parse_from_rfc3339(timestamp)
+            .expect("errored-at must be RFC3339");
+
+        let persisted: GameServer =
+            repository.get("default", "server").await.unwrap();
+        assert_eq!(persisted, errored);
+    }
+
+    #[tokio::test]
+    async fn move_to_error_propagates_update_failure_without_mutating_storage() {
+        let storage = MemoryStorage::new();
+        let repository = AgonesRepository::new(storage.clone());
+        let created = repository.create(&creating_game_server()).await.unwrap();
+        let controller = CreatingGameServerController::new(storage.clone());
+
+        storage.inject_conflicts(1);
+        assert!(
+            controller
+                .move_game_server_to_error(created, "some-data")
+                .await
+                .is_err()
+        );
+
+        let persisted: GameServer =
+            repository.get("default", "server").await.unwrap();
         assert_eq!(persisted.status.state, Some(GameServerState::Creating));
+        assert!(
+            !persisted
+                .metadata
+                .annotations
+                .contains_key(GAME_SERVER_ERRORED_AT_ANNOTATION)
+        );
+    }
+
+    #[tokio::test]
+    async fn creating_pod_uses_default_sdk_service_account_and_masks_game_token() {
+        let storage = MemoryStorage::new();
+        let repository = AgonesRepository::new(storage.clone());
+        let created = repository.create(&creating_game_server()).await.unwrap();
+        let controller = CreatingGameServerController::new(storage.clone())
+            .with_sdk_service_account("sdk-service-account");
+
+        controller
+            .reconcile_creating_game_server(created)
+            .await
+            .unwrap();
+
+        let pod: Pod = storage
+            .get(&build_key("pods", Some("default"), "server"))
+            .await
+            .unwrap();
+        let spec = pod.spec.as_ref().unwrap();
+        assert_eq!(
+            spec.service_account_name.as_deref(),
+            Some("sdk-service-account")
+        );
+        let game = spec
+            .containers
+            .iter()
+            .find(|container| container.name == "game")
+            .unwrap();
+        assert!(game.volume_mounts.as_ref().unwrap().iter().any(|mount| {
+            mount.mount_path
+                == crate::SERVICE_ACCOUNT_MOUNT_PATH
+        }));
+    }
+
+    #[tokio::test]
+    async fn explicit_service_account_preserves_game_container_access() {
+        let storage = MemoryStorage::new();
+        let repository = AgonesRepository::new(storage.clone());
+        let mut source = creating_game_server();
+        source.spec.template.spec.extensions.insert(
+            "serviceAccountName".into(),
+            serde_json::Value::String("foobar".into()),
+        );
+        let created = repository.create(&source).await.unwrap();
+        let controller = CreatingGameServerController::new(storage.clone())
+            .with_sdk_service_account("sdk-service-account");
+
+        controller
+            .reconcile_creating_game_server(created)
+            .await
+            .unwrap();
+
+        let pod: Pod = storage
+            .get(&build_key("pods", Some("default"), "server"))
+            .await
+            .unwrap();
+        let spec = pod.spec.as_ref().unwrap();
+        assert_eq!(spec.service_account_name.as_deref(), Some("foobar"));
+        let game = spec
+            .containers
+            .iter()
+            .find(|container| container.name == "game")
+            .unwrap();
+        assert!(
+            game.volume_mounts
+                .as_ref()
+                .is_none_or(Vec::is_empty)
+        );
     }
 
     #[tokio::test]
