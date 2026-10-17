@@ -14,6 +14,7 @@ mod fleet_allocation_tracker;
 mod fleet_controller;
 mod fleet_controller_runtime;
 mod fleetautoscaler_admission;
+mod fleetautoscaler_controller;
 mod game_server_event;
 mod game_server_pod;
 mod gameserver_admission;
@@ -90,6 +91,12 @@ pub use fleetautoscaler_admission::{
     FleetAutoscalerAdmissionContext, FleetAutoscalerMutationAdmission,
     FleetAutoscalerValidationAdmission, HasFleetAutoscalerFeatures,
     mutate_fleet_autoscaler_object, validate_fleet_autoscaler_object,
+};
+pub use fleetautoscaler_controller::{
+    CanApplyBufferFleetAutoscalerPolicy,
+    CanComputeFleetAutoscalerDesiredSize, FleetAutoscalerController,
+    FleetAutoscalerPolicyDecision, HasFleetAutoscalerStorage,
+    HasFleetAutoscalerStorageType,
 };
 pub use game_server_pod::game_server_pod;
 pub use gameserver_admission::{
