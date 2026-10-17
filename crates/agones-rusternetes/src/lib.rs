@@ -12,8 +12,8 @@ mod deleting_gameserver_controller;
 mod game_server_event;
 mod game_server_pod;
 mod gameserver_admission;
+mod allocation_overflow_controller;
 mod gameserverset_admission;
-mod gameserverset_allocation_overflow_runtime;
 mod gameserverset_controller;
 mod gameserverset_controller_runtime;
 mod gameserver_controller_pipeline;
@@ -74,7 +74,7 @@ pub use gameserverset_admission::{
     validate_game_server_set_update,
     validate_game_server_set_update_objects,
 };
-pub use gameserverset_allocation_overflow_runtime::{
+pub use allocation_overflow_controller::{
     AllocationOverflowSyncOutcome,
     RunAllocationOverflowController,
     SyncAllocationOverflowGameServerSet,
