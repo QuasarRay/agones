@@ -374,27 +374,25 @@ mod tests {
             FleetAutoscalerPolicy {
                 policy_type:
                     FleetAutoscalerPolicyType::Schedule,
-                schedule: Some(SchedulePolicy {
+                schedule: Some(Box::new(SchedulePolicy {
                     active_period: ActivePeriod {
                         start_cron: "0 * * * *".into(),
                         duration: "30m".into(),
                         ..Default::default()
                     },
-                    policy: Box::new(
-                        FleetAutoscalerPolicy {
-                            policy_type:
-                                FleetAutoscalerPolicyType::Buffer,
-                            buffer: Some(BufferPolicy {
-                                buffer_size:
-                                    IntOrPercent::Int(2),
-                                min_replicas: 2,
-                                max_replicas: 20,
-                            }),
-                            ..Default::default()
-                        },
-                    ),
+                    policy: FleetAutoscalerPolicy {
+                        policy_type:
+                            FleetAutoscalerPolicyType::Buffer,
+                        buffer: Some(BufferPolicy {
+                            buffer_size:
+                                IntOrPercent::Int(2),
+                            min_replicas: 2,
+                            max_replicas: 20,
+                        }),
+                        ..Default::default()
+                    },
                     ..Default::default()
-                }),
+                })),
                 ..Default::default()
             };
 
