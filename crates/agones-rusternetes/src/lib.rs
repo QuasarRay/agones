@@ -8,6 +8,7 @@ mod creating_gameserver_controller;
 mod development_gameserver_controller;
 mod deleting_gameserver_controller;
 mod game_server_pod;
+mod missing_pod_gameserver_controller;
 mod pod_deletion;
 mod port_allocation_gameserver_controller;
 mod port_allocator;
@@ -25,6 +26,10 @@ pub use creating_gameserver_controller::{
 pub use development_gameserver_controller::DevelopmentGameServerController;
 pub use deleting_gameserver_controller::ReconcileDeletingGameServer;
 pub use game_server_pod::game_server_pod;
+pub use missing_pod_gameserver_controller::{
+    ReconcileMissingPodGameServer, is_before_pod_created, is_game_server_pod,
+    should_enqueue_missing_pod_game_server,
+};
 pub use pod_deletion::request_pod_deletion;
 pub use port_allocation_gameserver_controller::ReconcilePortAllocationGameServer;
 pub use port_allocator::{PortAllocator, PortRange};
