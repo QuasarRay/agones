@@ -63,12 +63,14 @@ pub async fn reconcile_creating_game_server<S, H>(
     #[implicit] sidecars: Vec<Container>,
     #[implicit] pod_build_features: PodBuildFeatures,
     #[implicit] hooks: H,
-    mut game_server: GameServer,
+    game_server: GameServer,
 ) -> Result<Option<GameServer>, AdapterError>
 where
     S: Storage + 'static,
     H: ApiHooks + Clone + Send + Sync + 'static,
 {
+    let mut game_server = game_server;
+
     if game_server.status.state != Some(GameServerState::Creating)
         || game_server.metadata.deletion_timestamp.is_some()
         || game_server.get_dev_address().is_some()
@@ -226,7 +228,7 @@ mod tests {
         )
         .unwrap();
         let pod_key = build_key("pods", Some("default"), "server");
-        storage.create(&pod_key, &existing_pod).await.unwrap();
+        let existing_pod: Pod = storage.create(&pod_key, &existing_pod).await.unwrap();
 
         let controller = CreatingGameServerController::new(storage.clone());
         let reconciled = controller
@@ -241,7 +243,10 @@ mod tests {
         assert_eq!(reconciled.spec.ports[0].protocol, Some(Protocol::TcpUdp));
 
         let persisted_pod: Pod = storage.get(&pod_key).await.unwrap();
-        assert_eq!(persisted_pod, existing_pod);
+        assert_eq!(
+            serde_json::to_value(persisted_pod).unwrap(),
+            serde_json::to_value(existing_pod).unwrap()
+        );
     }
 
     #[tokio::test]
