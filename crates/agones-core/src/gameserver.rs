@@ -10,6 +10,7 @@ pub const VERSION_ANNOTATION: &str = "agones.dev/sdk-version";
 pub const FINALIZER_NAME: &str = "agones.dev/controller";
 pub const POD_SAFE_TO_EVICT_ANNOTATION: &str = "cluster-autoscaler.kubernetes.io/safe-to-evict";
 pub const DEV_ADDRESS_ANNOTATION: &str = "agones.dev/dev-address";
+pub const GAME_SERVER_READY_CONTAINER_ID_ANNOTATION: &str = "agones.dev/ready-container-id";
 pub const DEFAULT_SDK_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 pub const ERR_CONTAINER_REQUIRED: &str =
