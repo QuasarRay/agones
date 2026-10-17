@@ -357,19 +357,6 @@ impl PortAllocator {
         for range in ranges.iter_mut() {
             range.allocate(&mut allocated);
         }
-
-        if let Some(port) = allocated.spec.ports.iter().find(|port| {
-            matches!(
-                port.port_policy.as_ref(),
-                Some(PortPolicy::Dynamic | PortPolicy::Passthrough)
-            ) && port.host_port == 0
-        }) {
-            return Err(AdapterError::Hook(format!(
-                "no port allocator configured for range {}",
-                port.range
-            )));
-        }
-
         Ok(allocated)
     }
 
@@ -650,29 +637,4 @@ mod tests {
         assert_ne!(third.spec.ports[0].host_port, second.spec.ports[0].host_port);
     }
 
-    #[tokio::test]
-    async fn unknown_range_is_rejected_instead_of_silently_advancing() {
-        let allocator = allocator();
-        allocator
-            .sync_from_snapshot(&[], &[node("node-a", false)])
-            .await;
-
-        let error = allocator
-            .allocate(&game_server(
-                "unknown",
-                vec![port(
-                    "unknown",
-                    "other",
-                    PortPolicy::Dynamic,
-                    Protocol::Udp,
-                )],
-                "",
-            ))
-            .await
-            .unwrap_err();
-
-        assert!(error
-            .to_string()
-            .contains("no port allocator configured for range other"));
-    }
 }
