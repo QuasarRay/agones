@@ -7,7 +7,8 @@ use rusternetes_storage::{build_key, Storage};
 
 use crate::{
     build_pod, game_server_pod, AdapterError, AgonesRepository, ApiHooks, NoopApiHooks,
-    PodBuildFeatures, PortAllocator, StateUpdateLimiter,
+    GameServerControllerWatchState, PodBuildFeatures, PortAllocator,
+    StateUpdateLimiter,
 };
 
 /// CGP context for the upstream GameServer `Creating` reconciliation slice.
@@ -26,6 +27,7 @@ pub struct CreatingGameServerController<S, H = NoopApiHooks> {
     pub shutdown_limiter: Arc<StateUpdateLimiter>,
     pub health_unhealthy_limiter: Arc<StateUpdateLimiter>,
     pub wait_on_free_ports: bool,
+    pub game_server_watch_state: Arc<std::sync::RwLock<GameServerControllerWatchState>>,
 }
 
 impl<S> CreatingGameServerController<S, NoopApiHooks> {
@@ -56,6 +58,9 @@ impl<S, H> CreatingGameServerController<S, H> {
             shutdown_limiter: Arc::new(StateUpdateLimiter::new()),
             health_unhealthy_limiter: Arc::new(StateUpdateLimiter::new()),
             wait_on_free_ports: false,
+            game_server_watch_state: Arc::new(std::sync::RwLock::new(
+                GameServerControllerWatchState::default(),
+            )),
         }
     }
 
