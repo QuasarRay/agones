@@ -12,6 +12,7 @@ mod deleting_gameserver_controller;
 mod fleet_admission;
 mod fleet_allocation_tracker;
 mod fleet_controller;
+mod fleet_controller_runtime;
 mod game_server_event;
 mod game_server_pod;
 mod gameserver_admission;
@@ -74,6 +75,14 @@ pub use fleet_controller::{
     FleetControllerConfig, FleetReconcileResult, FleetSyncOutcome,
     HasFleetAllocationTracker, HasFleetControllerConfig, HasFleetStorage,
     HasFleetStorageType, game_server_set_is_controlled_by_fleet,
+};
+pub use fleet_controller_runtime::{
+    CanFlushFleetAllocations, CanRebuildFleetControllerWatchState,
+    CanRouteFleetControllerEvent, CanRunFleetController,
+    FLEET_FAST_RETRIES, FLEET_FAST_RETRY_DELAY_MS,
+    FLEET_SLOW_RETRY_DELAY_MS, FleetControllerWatchEvent,
+    FleetControllerWatchState, FleetControllerWatchStream, FleetWorkItem,
+    fleet_retry_delay_ms, watch_fleet_controller_events,
 };
 pub use game_server_pod::game_server_pod;
 pub use gameserver_admission::{
