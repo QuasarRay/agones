@@ -10,6 +10,7 @@ mod deleting_gameserver_controller;
 mod game_server_event;
 mod game_server_pod;
 mod gameserver_controller_pipeline;
+mod gameserver_controller_watch;
 mod health_gameserver_controller;
 mod missing_pod_gameserver_controller;
 mod per_node_counter;
@@ -37,6 +38,12 @@ pub use deleting_gameserver_controller::ReconcileDeletingGameServer;
 pub use game_server_pod::game_server_pod;
 pub use gameserver_controller_pipeline::{
     GameServerSyncOutcome, ReconcileGameServerPipeline, SyncGameServer,
+};
+pub use gameserver_controller_watch::{
+    GameServerControllerWatchEvent, GameServerControllerWatchState,
+    GameServerControllerWatchStream, GameServerQueueLane, GameServerWorkItem,
+    RebuildGameServerControllerWatchState, RouteGameServerControllerEvent,
+    queue_lane, watch_game_server_controller_events,
 };
 pub use health_gameserver_controller::{
     ReconcileHealthGameServer, failed_container, failed_pod, is_unhealthy_pod,
