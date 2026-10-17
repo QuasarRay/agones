@@ -43,8 +43,9 @@ pub use missing_pod_gameserver_controller::{
 };
 pub use per_node_counter::{
     ApplyPerNodeCounterEvent, NodeCount, PerNodeCounterController,
-    PerNodeCounterEvent, PerNodeCounterState, RebuildPerNodeCounter,
-    calculate_state_transition,
+    PerNodeCounterEvent, PerNodeCounterState, PerNodeCounterWatchStream,
+    RebuildPerNodeCounter, RunPerNodeCounter, calculate_state_transition,
+    watch_per_node_counter_events,
 };
 pub use migration_gameserver_controller::{
     ReconcileMigrationGameServer, any_address_match, migrating_game_server_for_pod,
