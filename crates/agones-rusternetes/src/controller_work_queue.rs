@@ -271,24 +271,6 @@ where
     }
 }
 
-#[derive(Clone, Debug, PartialEq, Eq)]
-pub(crate) struct NamespacedWorkItem {
-    pub namespace: String,
-    pub name: String,
-}
-
-impl NamespacedWorkItem {
-    pub(crate) fn key(&self) -> String {
-        format!("{}/{}", self.namespace, self.name)
-    }
-}
-
-impl ControllerWorkItem for NamespacedWorkItem {
-    fn work_key(&self) -> String {
-        self.key()
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -308,6 +290,15 @@ mod tests {
         );
     }
 
+    #[derive(Clone, Debug, PartialEq, Eq)]
+    struct TestWorkItem(&'static str);
+
+    impl ControllerWorkItem for TestWorkItem {
+        fn work_key(&self) -> String {
+            self.0.to_owned()
+        }
+    }
+
     #[tokio::test]
     async fn generic_queue_deduplicates_and_requeues_dirty_work_once() {
         let queue = ControllerWorkQueue::new(FastSlowRetryPolicy {
@@ -315,10 +306,7 @@ mod tests {
             fast_delay: Duration::from_millis(1),
             slow_delay: Duration::from_millis(2),
         });
-        let item = NamespacedWorkItem {
-            namespace: "default".into(),
-            name: "server".into(),
-        };
+        let item = TestWorkItem("default/server");
 
         queue.enqueue(item.clone());
         queue.enqueue(item.clone());
