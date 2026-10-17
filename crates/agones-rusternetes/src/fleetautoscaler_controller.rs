@@ -1,9 +1,12 @@
-use std::sync::Arc;
+use std::{collections::HashMap, sync::Arc};
 
 use agones_core::{
-    BufferPolicy, Fleet, FleetAutoscaler, FleetAutoscalerPolicy,
-    FleetAutoscalerPolicyType,
-    FleetAutoscalerScaleDecision, apply_buffer_autoscaler_policy,
+    BufferPolicy, CounterPolicy, Fleet, FleetAutoscaler,
+    FleetAutoscalerPolicy, FleetAutoscalerPolicyType,
+    FleetAutoscalerScaleDecision, GameServer, GameServerState,
+    ListPolicy, NodeCount, FLEET_NAME_LABEL,
+    apply_buffer_autoscaler_policy, apply_counter_autoscaler_policy,
+    apply_list_autoscaler_policy,
 };
 use cgp::prelude::*;
 use chrono::Utc;
@@ -64,6 +67,136 @@ impl<Context> BufferFleetAutoscalerPolicyEvaluator<Context>
     }
 }
 
+
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
+pub struct FleetAutoscalerInventory {
+    pub game_servers: Vec<GameServer>,
+    pub node_counts: HashMap<String, NodeCount>,
+}
+
+#[async_trait]
+#[cgp_component(FleetAutoscalerInventoryLoader)]
+pub trait CanLoadFleetAutoscalerInventory {
+    async fn load_fleet_autoscaler_inventory(
+        &self,
+        fleet: &Fleet,
+    ) -> Result<FleetAutoscalerInventory, AdapterError>;
+}
+
+#[cgp_new_provider]
+#[async_trait]
+impl<Context> FleetAutoscalerInventoryLoader<Context>
+    for LoadFleetAutoscalerInventoryWithStorage
+where
+    Context: HasFleetAutoscalerStorage + Sync,
+{
+    async fn load_fleet_autoscaler_inventory(
+        context: &Context,
+        fleet: &Fleet,
+    ) -> Result<FleetAutoscalerInventory, AdapterError> {
+        let repository = AgonesRepository::new(Arc::clone(
+            context.fleet_autoscaler_storage(),
+        ));
+        let game_servers = repository
+            .list::<GameServer>(&fleet.metadata.namespace)
+            .await?
+            .into_iter()
+            .filter(|game_server| {
+                game_server
+                    .metadata
+                    .labels
+                    .get(FLEET_NAME_LABEL)
+                    .is_some_and(|fleet_name| {
+                        fleet_name == &fleet.metadata.name
+                    })
+            })
+            .collect::<Vec<_>>();
+
+        let mut node_counts = HashMap::new();
+        for game_server in &game_servers {
+            let count = node_counts
+                .entry(game_server.status.node_name.clone())
+                .or_insert_with(NodeCount::default);
+            match game_server.status.state.as_ref() {
+                Some(GameServerState::Ready) => {
+                    count.ready = count.ready.wrapping_add(1);
+                }
+                Some(GameServerState::Allocated) => {
+                    count.allocated =
+                        count.allocated.wrapping_add(1);
+                }
+                _ => {}
+            }
+        }
+
+        Ok(FleetAutoscalerInventory {
+            game_servers,
+            node_counts,
+        })
+    }
+}
+
+#[cgp_component(CounterFleetAutoscalerPolicyEvaluator)]
+pub trait CanApplyCounterFleetAutoscalerPolicy {
+    fn apply_counter_fleet_autoscaler_policy(
+        &self,
+        policy: &CounterPolicy,
+        fleet: &Fleet,
+        inventory: &FleetAutoscalerInventory,
+    ) -> Result<FleetAutoscalerScaleDecision, AdapterError>;
+}
+
+#[cgp_new_provider]
+impl<Context> CounterFleetAutoscalerPolicyEvaluator<Context>
+    for UseAgonesCounterFleetAutoscalerPolicy
+{
+    fn apply_counter_fleet_autoscaler_policy(
+        _context: &Context,
+        policy: &CounterPolicy,
+        fleet: &Fleet,
+        inventory: &FleetAutoscalerInventory,
+    ) -> Result<FleetAutoscalerScaleDecision, AdapterError> {
+        apply_counter_autoscaler_policy(
+            policy,
+            fleet,
+            &inventory.game_servers,
+            &inventory.node_counts,
+        )
+        .map_err(AdapterError::Hook)
+    }
+}
+
+#[cgp_component(ListFleetAutoscalerPolicyEvaluator)]
+pub trait CanApplyListFleetAutoscalerPolicy {
+    fn apply_list_fleet_autoscaler_policy(
+        &self,
+        policy: &ListPolicy,
+        fleet: &Fleet,
+        inventory: &FleetAutoscalerInventory,
+    ) -> Result<FleetAutoscalerScaleDecision, AdapterError>;
+}
+
+#[cgp_new_provider]
+impl<Context> ListFleetAutoscalerPolicyEvaluator<Context>
+    for UseAgonesListFleetAutoscalerPolicy
+{
+    fn apply_list_fleet_autoscaler_policy(
+        _context: &Context,
+        policy: &ListPolicy,
+        fleet: &Fleet,
+        inventory: &FleetAutoscalerInventory,
+    ) -> Result<FleetAutoscalerScaleDecision, AdapterError> {
+        apply_list_autoscaler_policy(
+            policy,
+            fleet,
+            &inventory.game_servers,
+            &inventory.node_counts,
+        )
+        .map_err(AdapterError::Hook)
+    }
+}
+
+
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct FleetAutoscalerPolicyDecision {
     pub replicas: i32,
@@ -77,6 +210,7 @@ pub trait CanComputeFleetAutoscalerDesiredSize {
         &self,
         policy: &FleetAutoscalerPolicy,
         fleet: &Fleet,
+        inventory: &FleetAutoscalerInventory,
     ) -> Result<FleetAutoscalerPolicyDecision, AdapterError>;
 }
 
@@ -89,12 +223,15 @@ pub trait CanComputeFleetAutoscalerDesiredSize {
 impl<Context> FleetAutoscalerPolicyEvaluator<Context>
     for ComputeFleetAutoscalerDesiredSizeWithComponents
 where
-    Context: CanApplyBufferFleetAutoscalerPolicy,
+    Context: CanApplyBufferFleetAutoscalerPolicy
+        + CanApplyCounterFleetAutoscalerPolicy
+        + CanApplyListFleetAutoscalerPolicy,
 {
     fn compute_fleet_autoscaler_desired_size(
         context: &Context,
         policy: &FleetAutoscalerPolicy,
         fleet: &Fleet,
+        inventory: &FleetAutoscalerInventory,
     ) -> Result<FleetAutoscalerPolicyDecision, AdapterError> {
         match &policy.policy_type {
             FleetAutoscalerPolicyType::Buffer => {
@@ -113,6 +250,44 @@ where
                     limited: decision.limited,
                     applied_policy:
                         FleetAutoscalerPolicyType::Buffer,
+                })
+            }
+            FleetAutoscalerPolicyType::Counter => {
+                let counter = policy.counter.as_ref().ok_or_else(|| {
+                    AdapterError::Hook(
+                        "counter policy config params are missing".into(),
+                    )
+                })?;
+                let decision = context
+                    .apply_counter_fleet_autoscaler_policy(
+                        counter,
+                        fleet,
+                        inventory,
+                    )?;
+                Ok(FleetAutoscalerPolicyDecision {
+                    replicas: decision.replicas,
+                    limited: decision.limited,
+                    applied_policy:
+                        FleetAutoscalerPolicyType::Counter,
+                })
+            }
+            FleetAutoscalerPolicyType::List => {
+                let list = policy.list.as_ref().ok_or_else(|| {
+                    AdapterError::Hook(
+                        "list policy config params are missing".into(),
+                    )
+                })?;
+                let decision = context
+                    .apply_list_fleet_autoscaler_policy(
+                        list,
+                        fleet,
+                        inventory,
+                    )?;
+                Ok(FleetAutoscalerPolicyDecision {
+                    replicas: decision.replicas,
+                    limited: decision.limited,
+                    applied_policy:
+                        FleetAutoscalerPolicyType::List,
                 })
             }
             _ => Err(AdapterError::Hook(
@@ -307,6 +482,7 @@ impl<Context> FleetAutoscalerReconciler<Context>
 where
     Context: HasFleetAutoscalerStorage
         + CanComputeFleetAutoscalerDesiredSize
+        + CanLoadFleetAutoscalerInventory
         + CanScaleFleetForAutoscaler
         + CanUpdateFleetAutoscalerStatus
         + CanMarkFleetAutoscalerUnableToScale
@@ -366,10 +542,23 @@ where
             );
         }
 
+        let inventory = if matches!(
+            fleet_autoscaler.spec.policy.policy_type,
+            FleetAutoscalerPolicyType::Counter
+                | FleetAutoscalerPolicyType::List
+        ) {
+            context
+                .load_fleet_autoscaler_inventory(&fleet)
+                .await?
+        } else {
+            FleetAutoscalerInventory::default()
+        };
+
         let decision = match context
             .compute_fleet_autoscaler_desired_size(
                 &fleet_autoscaler.spec.policy,
                 &fleet,
+                &inventory,
             )
         {
             Ok(decision) => decision,
@@ -425,6 +614,12 @@ delegate_and_check_components! {
             UseField<Symbol!("storage")>,
         BufferFleetAutoscalerPolicyEvaluatorComponent:
             UseAgonesBufferFleetAutoscalerPolicy,
+        CounterFleetAutoscalerPolicyEvaluatorComponent:
+            UseAgonesCounterFleetAutoscalerPolicy,
+        ListFleetAutoscalerPolicyEvaluatorComponent:
+            UseAgonesListFleetAutoscalerPolicy,
+        FleetAutoscalerInventoryLoaderComponent:
+            LoadFleetAutoscalerInventoryWithStorage,
         FleetAutoscalerPolicyEvaluatorComponent:
             ComputeFleetAutoscalerDesiredSizeWithComponents,
         FleetAutoscalerFleetScalerComponent:
@@ -490,6 +685,7 @@ mod tests {
             .compute_fleet_autoscaler_desired_size(
                 &policy,
                 &fleet(50),
+                &FleetAutoscalerInventory::default(),
             )
             .unwrap();
 
@@ -513,6 +709,7 @@ mod tests {
                     ..Default::default()
                 },
                 &fleet(1),
+                &FleetAutoscalerInventory::default(),
             )
             .unwrap_err();
 
