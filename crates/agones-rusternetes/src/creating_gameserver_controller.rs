@@ -2,7 +2,7 @@ use std::sync::Arc;
 
 use agones_core::{GameServer, GameServerState};
 use cgp::prelude::*;
-use rusternetes_common::resources::{Container, Pod};
+use rusternetes_common::resources::Container;
 use rusternetes_storage::{build_key, Storage};
 
 use crate::{
