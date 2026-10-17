@@ -7,15 +7,13 @@ use cgp::prelude::*;
 use futures::channel::mpsc::{
     UnboundedReceiver, UnboundedSender, unbounded,
 };
-use futures::future::BoxFuture;
 use futures::lock::Mutex as AsyncMutex;
 use futures::stream::FuturesUnordered;
-use futures::{FutureExt, StreamExt};
+use futures::StreamExt;
 use rusternetes_storage::Storage;
 
 use crate::{
-    AdapterError, ApiHooks, GameServerControllerWatchState,
-    GameServerQueueLane, GameServerWorkItem,
+    AdapterError, ApiHooks, GameServerQueueLane, GameServerWorkItem,
     RebuildGameServerControllerWatchState, RouteGameServerControllerEvent,
     SyncGameServer, watch_game_server_controller_events,
 };
@@ -242,24 +240,6 @@ where
     Ok(())
 }
 
-fn push_lane_workers<'a, C, S, H>(
-    futures: &mut FuturesUnordered<BoxFuture<'a, Result<(), AdapterError>>>,
-    controller: &'a C,
-    queue: GameServerWorkQueue,
-    workers: usize,
-) where
-    S: Storage + 'static,
-    H: ApiHooks + Clone + Send + Sync + 'static,
-    C: SyncGameServer<S, H> + Sync,
-{
-    for _ in 0..workers {
-        futures.push(
-            run_game_server_worker::<C, S, H>(controller, queue.clone())
-                .boxed(),
-        );
-    }
-}
-
 /// Long-running Rusternetes equivalent of the main upstream GameServer
 /// controller's informer + three WorkerQueue runtime.
 ///
@@ -300,27 +280,21 @@ where
         queues.enqueue(item);
     }
 
-    let mut worker_futures: FuturesUnordered<
-        BoxFuture<'_, Result<(), AdapterError>>,
-    > = FuturesUnordered::new();
-    push_lane_workers::<Self, S, H>(
-        &mut worker_futures,
-        self,
-        queues.main.clone(),
-        workers,
-    );
-    push_lane_workers::<Self, S, H>(
-        &mut worker_futures,
-        self,
-        queues.creation.clone(),
-        workers,
-    );
-    push_lane_workers::<Self, S, H>(
-        &mut worker_futures,
-        self,
-        queues.deletion.clone(),
-        workers,
-    );
+    let mut worker_futures = FuturesUnordered::new();
+    for _ in 0..workers {
+        worker_futures.push(run_game_server_worker::<Self, S, H>(
+            self,
+            queues.main.clone(),
+        ));
+        worker_futures.push(run_game_server_worker::<Self, S, H>(
+            self,
+            queues.creation.clone(),
+        ));
+        worker_futures.push(run_game_server_worker::<Self, S, H>(
+            self,
+            queues.deletion.clone(),
+        ));
+    }
 
     loop {
         tokio::select! {
