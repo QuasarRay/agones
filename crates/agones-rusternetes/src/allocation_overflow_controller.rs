@@ -9,14 +9,12 @@ use futures::StreamExt;
 use rusternetes_storage::Storage;
 
 use crate::controller_work_queue::{
-    ControllerWorkItem, ControllerWorkQueue, FastSlowRetryPolicy,
+    ControllerWorkQueue, FastSlowRetryPolicy,
 };
+use crate::gameserverset_controller_runtime::game_server_set_retry_policy;
 use crate::{
     AdapterError, AgonesRepository, AgonesWatchEvent,
     GameServerSetWorkItem, ListOwnedGameServers, PerNodeCounterState,
-    GAME_SERVER_SET_FAST_RETRIES,
-    GAME_SERVER_SET_FAST_RETRY_DELAY_MS,
-    GAME_SERVER_SET_SLOW_RETRY_DELAY_MS,
 };
 
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -152,18 +150,6 @@ where
 type AllocationOverflowWorkQueue =
     ControllerWorkQueue<GameServerSetWorkItem, FastSlowRetryPolicy>;
 
-fn allocation_overflow_retry_policy() -> FastSlowRetryPolicy {
-    FastSlowRetryPolicy {
-        fast_retries: GAME_SERVER_SET_FAST_RETRIES,
-        fast_delay: std::time::Duration::from_millis(
-            GAME_SERVER_SET_FAST_RETRY_DELAY_MS,
-        ),
-        slow_delay: std::time::Duration::from_millis(
-            GAME_SERVER_SET_SLOW_RETRY_DELAY_MS,
-        ),
-    }
-}
-
 async fn run_allocation_overflow_worker<C, S>(
     controller: &C,
     queue: AllocationOverflowWorkQueue,
@@ -212,7 +198,7 @@ where
         .watch_all::<GameServerSet>()
         .await?;
     let queue =
-        AllocationOverflowWorkQueue::new(allocation_overflow_retry_policy());
+        AllocationOverflowWorkQueue::new(game_server_set_retry_policy());
     let worker = run_allocation_overflow_worker::<Self, S>(
         self,
         queue.clone(),
@@ -433,8 +419,8 @@ mod tests {
             game_servers
                 .iter()
                 .filter(|game_server| {
-                    game_server.metadata.labels.get("colour")
-                        == Some(&"green".to_owned())
+                    game_server.metadata.labels.get("colour").map(String::as_str)
+                        == Some("green")
                 })
                 .count(),
             2
@@ -469,8 +455,8 @@ mod tests {
                 .unwrap()
                 .iter()
                 .filter(|game_server| {
-                    game_server.metadata.labels.get("colour")
-                        == Some(&"green".to_owned())
+                    game_server.metadata.labels.get("colour").map(String::as_str)
+                        == Some("green")
                 })
                 .count(),
             2
@@ -486,6 +472,37 @@ mod tests {
                 .unwrap(),
             AllocationOverflowSyncOutcome::Unchanged
         );
+    }
+
+    #[tokio::test]
+    async fn runtime_does_not_replay_existing_overflow_before_an_update() {
+        let (storage, repository, _) = setup(0).await;
+        let controller = GameServerSetController::new(
+            storage.clone(),
+            config(),
+        );
+
+        let task = tokio::spawn(async move {
+            controller.run_allocation_overflow_controller().await
+        });
+
+        // SharedInformer invokes only registered handlers during initial
+        // population. AllocationOverflow registers UpdateFunc only, so an
+        // already-overflowing object must not be processed at startup.
+        tokio::time::sleep(Duration::from_millis(25)).await;
+        let matches = repository
+            .list::<GameServer>("default")
+            .await
+            .unwrap()
+            .iter()
+            .filter(|game_server| {
+                game_server.metadata.labels.get("colour").map(String::as_str)
+                    == Some("green")
+            })
+            .count();
+        assert_eq!(matches, 0);
+
+        task.abort();
     }
 
     #[tokio::test]
