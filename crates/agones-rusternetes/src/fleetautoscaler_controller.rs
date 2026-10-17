@@ -217,8 +217,9 @@ pub trait CanComputeFleetAutoscalerDesiredSize {
 /// Runtime policy dispatch remains an enum match because policy type is data,
 /// while each policy implementation is a separately replaceable CGP provider.
 ///
-/// This milestone wires Buffer. Additional policy providers can be added to the
-/// context without coupling their implementation to persistence/runtime code.
+/// Buffer, Counter, and List are independent providers. Runtime dispatch selects
+/// among them from policy data while provider implementations remain replaceable
+/// and independent of persistence/runtime code.
 #[cgp_new_provider]
 impl<Context> FleetAutoscalerPolicyEvaluator<Context>
     for ComputeFleetAutoscalerDesiredSizeWithComponents
@@ -636,8 +637,11 @@ delegate_and_check_components! {
 #[cfg(test)]
 mod tests {
     use agones_core::{
-        BufferPolicy, FleetAutoscalerPolicy, IntOrPercent,
+        AggregatedCounterStatus, AggregatedListStatus, BufferPolicy,
+        CounterPolicy, CounterStatus, FleetAutoscalerPolicy, GameServerStatus,
+        IntOrPercent, ListPolicy, ListStatus, ObjectMeta,
     };
+    use std::collections::BTreeMap;
     use rusternetes_storage::MemoryStorage;
 
     use super::*;
@@ -697,6 +701,170 @@ mod tests {
         );
     }
 
+
+    #[test]
+    fn cgp_dispatch_uses_counter_and_list_providers() {
+        let controller =
+            FleetAutoscalerController::new(MemoryStorage::new());
+
+        let mut counter_fleet = Fleet::default();
+        counter_fleet.status.replicas = 10;
+        counter_fleet.spec.template.spec.counters =
+            Some(BTreeMap::from([(
+                "rooms".into(),
+                CounterStatus {
+                    count: 0,
+                    capacity: 7,
+                },
+            )]));
+        counter_fleet.status.counters.insert(
+            "rooms".into(),
+            AggregatedCounterStatus {
+                count: 68,
+                capacity: 70,
+                ..Default::default()
+            },
+        );
+        let counter = controller
+            .compute_fleet_autoscaler_desired_size(
+                &FleetAutoscalerPolicy {
+                    policy_type:
+                        FleetAutoscalerPolicyType::Counter,
+                    counter: Some(CounterPolicy {
+                        key: "rooms".into(),
+                        min_capacity: 10,
+                        max_capacity: 100,
+                        buffer_size: IntOrPercent::Int(10),
+                    }),
+                    ..Default::default()
+                },
+                &counter_fleet,
+                &FleetAutoscalerInventory::default(),
+            )
+            .unwrap();
+        assert_eq!(counter.replicas, 12);
+        assert_eq!(
+            counter.applied_policy,
+            FleetAutoscalerPolicyType::Counter
+        );
+
+        let mut list_fleet = Fleet::default();
+        list_fleet.status.replicas = 10;
+        list_fleet.spec.template.spec.lists =
+            Some(BTreeMap::from([(
+                "gamers".into(),
+                ListStatus {
+                    capacity: 3,
+                    values: vec!["a".into(), "b".into()],
+                },
+            )]));
+        list_fleet.status.lists.insert(
+            "gamers".into(),
+            AggregatedListStatus {
+                count: 29,
+                capacity: 30,
+                ..Default::default()
+            },
+        );
+        let list = controller
+            .compute_fleet_autoscaler_desired_size(
+                &FleetAutoscalerPolicy {
+                    policy_type:
+                        FleetAutoscalerPolicyType::List,
+                    list: Some(ListPolicy {
+                        key: "gamers".into(),
+                        min_capacity: 10,
+                        max_capacity: 100,
+                        buffer_size: IntOrPercent::Int(5),
+                    }),
+                    ..Default::default()
+                },
+                &list_fleet,
+                &FleetAutoscalerInventory::default(),
+            )
+            .unwrap();
+        assert_eq!(list.replicas, 14);
+        assert_eq!(
+            list.applied_policy,
+            FleetAutoscalerPolicyType::List
+        );
+    }
+
+    #[tokio::test]
+    async fn inventory_loader_filters_fleet_and_rebuilds_node_counts() {
+        let storage = MemoryStorage::new();
+        let repository = AgonesRepository::new(storage.clone());
+        let fleet = Fleet {
+            metadata: ObjectMeta {
+                name: "fleet".into(),
+                namespace: "default".into(),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+
+        let game_server = |name: &str,
+                           fleet_name: &str,
+                           state: GameServerState| GameServer {
+            metadata: ObjectMeta {
+                name: name.into(),
+                namespace: "default".into(),
+                uid: format!("{name}-uid"),
+                labels: BTreeMap::from([(
+                    FLEET_NAME_LABEL.into(),
+                    fleet_name.into(),
+                )]),
+                ..Default::default()
+            },
+            status: GameServerStatus {
+                state: Some(state),
+                node_name: "n1".into(),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+
+        repository
+            .create(&game_server(
+                "ready",
+                "fleet",
+                GameServerState::Ready,
+            ))
+            .await
+            .unwrap();
+        repository
+            .create(&game_server(
+                "allocated",
+                "fleet",
+                GameServerState::Allocated,
+            ))
+            .await
+            .unwrap();
+        repository
+            .create(&game_server(
+                "other",
+                "other-fleet",
+                GameServerState::Ready,
+            ))
+            .await
+            .unwrap();
+
+        let inventory =
+            FleetAutoscalerController::new(storage)
+                .load_fleet_autoscaler_inventory(&fleet)
+                .await
+                .unwrap();
+
+        assert_eq!(inventory.game_servers.len(), 2);
+        assert_eq!(
+            inventory.node_counts["n1"],
+            NodeCount {
+                ready: 1,
+                allocated: 1,
+            }
+        );
+    }
+
     #[test]
     fn missing_buffer_configuration_is_reported_without_panic() {
         let controller =
@@ -732,6 +900,7 @@ mod tests {
                     ..Default::default()
                 },
                 &fleet(1),
+                &FleetAutoscalerInventory::default(),
             )
             .unwrap_err();
 
@@ -745,9 +914,11 @@ mod tests {
 #[cfg(test)]
 mod reconciliation_tests {
     use agones_core::{
-        BufferPolicy, FleetAutoscalerSpec, FleetSpec, IntOrPercent,
+        AggregatedCounterStatus, BufferPolicy, CounterPolicy,
+        CounterStatus, FleetAutoscalerSpec, FleetSpec, IntOrPercent,
         ObjectMeta,
     };
+    use std::collections::BTreeMap;
     use rusternetes_storage::MemoryStorage;
 
     use super::*;
@@ -864,6 +1035,66 @@ mod reconciliation_tests {
         let repository = AgonesRepository::new(storage);
         let stored: Fleet =
             repository.get("default", "fleet").await.unwrap();
+        assert_eq!(stored.spec.replicas, 12);
+    }
+
+
+    #[tokio::test]
+    async fn reconcile_scales_up_with_counter_policy() {
+        let storage = MemoryStorage::new();
+        let mut fleet_autoscaler = autoscaler(1);
+        fleet_autoscaler.spec.policy = FleetAutoscalerPolicy {
+            policy_type: FleetAutoscalerPolicyType::Counter,
+            counter: Some(CounterPolicy {
+                key: "rooms".into(),
+                min_capacity: 10,
+                max_capacity: 100,
+                buffer_size: IntOrPercent::Int(10),
+            }),
+            ..Default::default()
+        };
+        let mut target = fleet(10, 10, 10);
+        target.spec.template.spec.counters =
+            Some(BTreeMap::from([(
+                "rooms".into(),
+                CounterStatus {
+                    count: 0,
+                    capacity: 7,
+                },
+            )]));
+        target.status.counters.insert(
+            "rooms".into(),
+            AggregatedCounterStatus {
+                count: 68,
+                capacity: 70,
+                ..Default::default()
+            },
+        );
+        store_pair(&storage, &fleet_autoscaler, &target).await;
+
+        let outcome =
+            FleetAutoscalerController::new(storage.clone())
+                .reconcile_fleet_autoscaler("default", "fas")
+                .await
+                .unwrap();
+        let FleetAutoscalerSyncOutcome::Reconciled(result) =
+            outcome
+        else {
+            panic!("counter autoscaler should reconcile");
+        };
+
+        assert_eq!(result.decision.replicas, 12);
+        assert_eq!(
+            result.decision.applied_policy,
+            FleetAutoscalerPolicyType::Counter
+        );
+        assert_eq!(result.fleet.spec.replicas, 12);
+
+        let stored: Fleet =
+            AgonesRepository::new(storage)
+                .get("default", "fleet")
+                .await
+                .unwrap();
         assert_eq!(stored.spec.replicas, 12);
     }
 
