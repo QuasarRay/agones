@@ -6,7 +6,8 @@ use rusternetes_common::resources::Container;
 use rusternetes_storage::{build_key, Storage};
 
 use crate::{
-    build_pod, game_server_pod, AdapterError, AgonesRepository, ApiHooks, NoopApiHooks,
+    augment_game_server_pod, build_pod, game_server_pod, AdapterError,
+    AgonesRepository, ApiHooks, NoopApiHooks,
     GameServerControllerWatchState, PodBuildFeatures, PortAllocator,
     StateUpdateLimiter,
 };
@@ -142,12 +143,13 @@ where
             // branch immediately before Pod construction.
             game_server.split_static_tcp_udp_ports();
 
-            let pod = build_pod(
+            let mut pod = build_pod(
                 &game_server,
                 sidecars,
                 pod_build_features,
                 &hooks,
             )?;
+            augment_game_server_pod(&game_server, &mut pod)?;
             storage.create(&pod_key, &pod).await?;
         }
         Err(error) => return Err(error),
