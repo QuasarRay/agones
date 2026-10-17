@@ -62,13 +62,16 @@ fn sdk_environment_variable_shape_matches_ports(input: (i16, i16)) -> bool {
         .filter(|item| item.name == HTTP_PORT_ENV_VAR)
         .collect();
 
+    let grpc_value = grpc_port.to_string();
+    let http_value = http_port.to_string();
+
     grpc.len() == usize::from(grpc_port != 0)
         && http.len() == usize::from(http_port != 0)
         && grpc.first().is_none_or(|item| {
-            item.value.as_deref() == Some(&grpc_port.to_string())
+            item.value.as_deref() == Some(grpc_value.as_str())
         })
         && http.first().is_none_or(|item| {
-            item.value.as_deref() == Some(&http_port.to_string())
+            item.value.as_deref() == Some(http_value.as_str())
         })
 }
 
