@@ -4,7 +4,7 @@ use agones_macros::{agones_invariant, AgonesStringEnum};
 use serde::{Deserialize, Serialize};
 
 use crate::gameserver::{
-    validate_object_meta, GameServerSpec, ObjectMeta, Priority, SchedulingStrategy,
+    safe_add, validate_object_meta, GameServerSpec, ObjectMeta, Priority, SchedulingStrategy,
     ValidationError, ValidationErrorKind, DEFAULT_SDK_VERSION, VERSION_ANNOTATION,
 };
 use crate::gameserverset::{
@@ -326,6 +326,101 @@ pub fn sum_game_server_sets<'a>(
     sets.into_iter().flatten().map(value).sum()
 }
 
+/// Adds one GameServerSet counter aggregate into a Fleet aggregate.
+///
+/// Counter fields use Agones SafeAdd semantics, saturating positive overflow at
+/// i64::MAX exactly like the upstream Fleet controller.
+pub fn merge_fleet_counters(
+    into: &mut BTreeMap<String, AggregatedCounterStatus>,
+    from: &BTreeMap<String, AggregatedCounterStatus>,
+) {
+    for (name, value) in from {
+        let entry = into.entry(name.clone()).or_default();
+        entry.allocated_capacity =
+            safe_add(entry.allocated_capacity, value.allocated_capacity);
+        entry.allocated_count =
+            safe_add(entry.allocated_count, value.allocated_count);
+        entry.capacity = safe_add(entry.capacity, value.capacity);
+        entry.count = safe_add(entry.count, value.count);
+    }
+}
+
+/// Adds one GameServerSet list aggregate into a Fleet aggregate.
+///
+/// Upstream uses ordinary signed integer addition. Runtime overflow therefore
+/// follows two's-complement wrapping; use wrapping_add for release/debug parity.
+pub fn merge_fleet_lists(
+    into: &mut BTreeMap<String, AggregatedListStatus>,
+    from: &BTreeMap<String, AggregatedListStatus>,
+) {
+    for (name, value) in from {
+        let entry = into.entry(name.clone()).or_default();
+        entry.allocated_capacity =
+            entry.allocated_capacity.wrapping_add(value.allocated_capacity);
+        entry.allocated_count =
+            entry.allocated_count.wrapping_add(value.allocated_count);
+        entry.capacity = entry.capacity.wrapping_add(value.capacity);
+        entry.count = entry.count.wrapping_add(value.count);
+    }
+}
+
+/// Pure port of upstream Fleet controller updateFleetStatus aggregation.
+///
+/// Every reconciliation recomputes replica/counter/list totals from the owned
+/// GameServerSets. Allocation events are accumulated onto the already-persisted
+/// Fleet allocation total. With PlayerTracking enabled the players aggregate is
+/// reset and recomputed; with it disabled upstream leaves any pre-existing
+/// Players status untouched, which is intentionally preserved here.
+pub fn compute_fleet_status(
+    fleet: &Fleet,
+    game_server_sets: &[GameServerSet],
+    allocation_delta: i64,
+    player_tracking: bool,
+) -> FleetStatus {
+    let mut status = FleetStatus {
+        allocations: fleet.status.allocations.wrapping_add(allocation_delta),
+        players: fleet.status.players.clone(),
+        ..Default::default()
+    };
+
+    for game_server_set in game_server_sets {
+        status.replicas = status
+            .replicas
+            .wrapping_add(game_server_set.status.replicas);
+        status.ready_replicas = status
+            .ready_replicas
+            .wrapping_add(game_server_set.status.ready_replicas);
+        status.reserved_replicas = status
+            .reserved_replicas
+            .wrapping_add(game_server_set.status.reserved_replicas);
+        status.allocated_replicas = status
+            .allocated_replicas
+            .wrapping_add(game_server_set.status.allocated_replicas);
+        merge_fleet_counters(
+            &mut status.counters,
+            &game_server_set.status.counters,
+        );
+        merge_fleet_lists(
+            &mut status.lists,
+            &game_server_set.status.lists,
+        );
+    }
+
+    if player_tracking {
+        let mut players = AggregatedPlayerStatus::default();
+        for game_server_set in game_server_sets {
+            if let Some(value) = game_server_set.status.players.as_ref() {
+                players.count = players.count.wrapping_add(value.count);
+                players.capacity =
+                    players.capacity.wrapping_add(value.capacity);
+            }
+        }
+        status.players = Some(players);
+    }
+
+    status
+}
+
 #[agones_invariant]
 fn fleet_replica_bounds_are_bounded(input: (i32, i32)) -> bool {
     let (replicas, value) = input;
@@ -584,6 +679,189 @@ mod tests {
         assert_eq!(fleet.lower_bound_replicas(0), 0);
         assert_eq!(fleet.lower_bound_replicas(-5), 0);
     }
+
+    #[test]
+    fn fleet_status_aggregates_gameserverset_counts_and_allocations() {
+        let fleet = Fleet {
+            status: FleetStatus {
+                allocations: 40,
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+
+        let one = GameServerSet {
+            status: crate::gameserverset::GameServerSetStatus {
+                replicas: 4,
+                ready_replicas: 2,
+                reserved_replicas: 1,
+                allocated_replicas: 1,
+                counters: BTreeMap::from([(
+                    "rooms".into(),
+                    AggregatedCounterStatus {
+                        allocated_count: 1,
+                        allocated_capacity: 2,
+                        count: 3,
+                        capacity: 4,
+                    },
+                )]),
+                lists: BTreeMap::from([(
+                    "players".into(),
+                    AggregatedListStatus {
+                        allocated_count: 2,
+                        allocated_capacity: 3,
+                        count: 4,
+                        capacity: 5,
+                    },
+                )]),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let two = GameServerSet {
+            status: crate::gameserverset::GameServerSetStatus {
+                replicas: 6,
+                ready_replicas: 3,
+                reserved_replicas: 1,
+                allocated_replicas: 2,
+                counters: BTreeMap::from([(
+                    "rooms".into(),
+                    AggregatedCounterStatus {
+                        allocated_count: 10,
+                        allocated_capacity: 20,
+                        count: 30,
+                        capacity: 40,
+                    },
+                )]),
+                lists: BTreeMap::from([(
+                    "players".into(),
+                    AggregatedListStatus {
+                        allocated_count: 20,
+                        allocated_capacity: 30,
+                        count: 40,
+                        capacity: 50,
+                    },
+                )]),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+
+        let status = compute_fleet_status(&fleet, &[one, two], 2, false);
+        assert_eq!(status.replicas, 10);
+        assert_eq!(status.ready_replicas, 5);
+        assert_eq!(status.reserved_replicas, 2);
+        assert_eq!(status.allocated_replicas, 3);
+        assert_eq!(status.allocations, 42);
+        assert_eq!(
+            status.counters["rooms"],
+            AggregatedCounterStatus {
+                allocated_count: 11,
+                allocated_capacity: 22,
+                count: 33,
+                capacity: 44,
+            }
+        );
+        assert_eq!(
+            status.lists["players"],
+            AggregatedListStatus {
+                allocated_count: 22,
+                allocated_capacity: 33,
+                count: 44,
+                capacity: 55,
+            }
+        );
+    }
+
+    #[test]
+    fn fleet_counter_merge_saturates_while_list_merge_wraps() {
+        let mut counters = BTreeMap::from([(
+            "key".into(),
+            AggregatedCounterStatus {
+                count: i64::MAX,
+                ..Default::default()
+            },
+        )]);
+        merge_fleet_counters(
+            &mut counters,
+            &BTreeMap::from([(
+                "key".into(),
+                AggregatedCounterStatus {
+                    count: 1,
+                    ..Default::default()
+                },
+            )]),
+        );
+        assert_eq!(counters["key"].count, i64::MAX);
+
+        let mut lists = BTreeMap::from([(
+            "key".into(),
+            AggregatedListStatus {
+                count: i64::MAX,
+                ..Default::default()
+            },
+        )]);
+        merge_fleet_lists(
+            &mut lists,
+            &BTreeMap::from([(
+                "key".into(),
+                AggregatedListStatus {
+                    count: 1,
+                    ..Default::default()
+                },
+            )]),
+        );
+        assert_eq!(lists["key"].count, i64::MIN);
+    }
+
+    #[test]
+    fn player_tracking_recomputes_when_enabled_and_preserves_when_disabled() {
+        let fleet = Fleet {
+            status: FleetStatus {
+                players: Some(AggregatedPlayerStatus {
+                    count: 99,
+                    capacity: 100,
+                }),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let sets = vec![
+            GameServerSet {
+                status: crate::gameserverset::GameServerSetStatus {
+                    players: Some(AggregatedPlayerStatus {
+                        count: 3,
+                        capacity: 10,
+                    }),
+                    ..Default::default()
+                },
+                ..Default::default()
+            },
+            GameServerSet {
+                status: crate::gameserverset::GameServerSetStatus {
+                    players: Some(AggregatedPlayerStatus {
+                        count: 4,
+                        capacity: 20,
+                    }),
+                    ..Default::default()
+                },
+                ..Default::default()
+            },
+        ];
+
+        assert_eq!(
+            compute_fleet_status(&fleet, &sets, 0, true).players,
+            Some(AggregatedPlayerStatus {
+                count: 7,
+                capacity: 30,
+            })
+        );
+        assert_eq!(
+            compute_fleet_status(&fleet, &sets, 0, false).players,
+            fleet.status.players
+        );
+    }
+
 
     #[test]
     fn sums_gameserverset_values_while_skipping_absent_entries() {
