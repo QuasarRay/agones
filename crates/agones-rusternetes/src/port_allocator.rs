@@ -167,7 +167,8 @@ impl PortRangeAllocator {
             if allocations.len() == amount {
                 break allocations;
             }
-            self.port_allocations.push(self.new_port_allocation());
+            let allocation = self.new_port_allocation();
+            self.port_allocations.push(allocation);
         };
 
         self.game_server_registry
