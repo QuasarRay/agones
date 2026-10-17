@@ -67,9 +67,13 @@ pub use fleet_admission::{
 };
 pub use fleet_allocation_tracker::FleetAllocationTracker;
 pub use fleet_controller::{
-    CanExecuteFleetDeployment, CanPlanFleetDeployment,
-    CanScaleFleetGameServerSet, FleetController, HasFleetStorage,
-    HasFleetStorageType,
+    CanDeleteEmptyFleetGameServerSets, CanExecuteFleetDeployment,
+    CanListFleetGameServerSets, CanPlanFleetDeployment, CanReconcileFleet,
+    CanScaleFleetGameServerSet, CanUpdateFleetStatus,
+    CanUpsertFleetActiveGameServerSet, FleetController,
+    FleetControllerConfig, FleetReconcileResult, FleetSyncOutcome,
+    HasFleetAllocationTracker, HasFleetControllerConfig, HasFleetStorage,
+    HasFleetStorageType, game_server_set_is_controlled_by_fleet,
 };
 pub use game_server_pod::game_server_pod;
 pub use gameserver_admission::{
