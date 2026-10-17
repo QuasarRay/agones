@@ -1,7 +1,8 @@
 use agones_core::{GameServer, GameServerSpec, SdkServer};
 use agones_macros::agones_invariant;
 use rusternetes_common::resources::{
-    Container, EnvVar, HTTPGetAction, Pod, Probe,
+    Container, EmptyDirVolumeSource, EnvVar, HTTPGetAction, Pod, Probe,
+    Volume, VolumeMount,
 };
 use rusternetes_common::resources::policy::IntOrString;
 
@@ -10,6 +11,9 @@ use crate::{AdapterError, apply_to_container};
 pub const SDK_SERVER_SIDECAR_NAME: &str = "agones-gameserver-sidecar";
 pub const GRPC_PORT_ENV_VAR: &str = "AGONES_SDK_GRPC_PORT";
 pub const HTTP_PORT_ENV_VAR: &str = "AGONES_SDK_HTTP_PORT";
+pub const SERVICE_ACCOUNT_VOLUME_NAME: &str = "empty";
+pub const SERVICE_ACCOUNT_MOUNT_PATH: &str =
+    "/var/run/secrets/kubernetes.io/serviceaccount";
 
 pub fn reserved_environment_variable_name(name: &str) -> bool {
     matches!(name, GRPC_PORT_ENV_VAR | HTTP_PORT_ENV_VAR)
@@ -168,6 +172,99 @@ pub fn add_game_server_health_check(
     )
 }
 
+/// Mirrors GameServer.DisableServiceAccount on Rusternetes-native Pod types.
+///
+/// Agones gives its SDK sidecar a service account while masking that token from
+/// the game-server container itself with a read-only EmptyDir mount.
+pub fn disable_game_server_service_account(
+    game_server: &GameServer,
+    pod: &mut Pod,
+) -> Result<(), AdapterError> {
+    let spec = pod
+        .spec
+        .as_mut()
+        .ok_or(AdapterError::MissingField("pod.spec"))?;
+
+    let empty_volume = Volume {
+        name: SERVICE_ACCOUNT_VOLUME_NAME.to_owned(),
+        empty_dir: Some(EmptyDirVolumeSource {
+            medium: None,
+            size_limit: None,
+        }),
+        host_path: None,
+        config_map: None,
+        secret: None,
+        persistent_volume_claim: None,
+        downward_api: None,
+        csi: None,
+        ephemeral: None,
+        nfs: None,
+        iscsi: None,
+        projected: None,
+        image: None,
+    };
+    spec.volumes
+        .get_or_insert_with(Vec::new)
+        .push(empty_volume);
+
+    let mount = VolumeMount {
+        name: SERVICE_ACCOUNT_VOLUME_NAME.to_owned(),
+        mount_path: SERVICE_ACCOUNT_MOUNT_PATH.to_owned(),
+        read_only: Some(true),
+        sub_path: None,
+        sub_path_expr: None,
+        mount_propagation: None,
+        recursive_read_only: None,
+    };
+
+    apply_to_container(
+        spec,
+        game_server.spec.container.as_str(),
+        |container| {
+            container
+                .volume_mounts
+                .get_or_insert_with(Vec::new)
+                .push(mount.clone());
+        },
+    )
+}
+
+/// Applies upstream createGameServerPod service-account policy.
+///
+/// If the user supplied serviceAccountName, Agones assumes the user owns the
+/// access policy and leaves the game-server container unchanged. Otherwise the
+/// controller assigns its SDK service account and masks the token from only the
+/// game-server container.
+pub fn configure_game_server_service_account(
+    game_server: &GameServer,
+    pod: &mut Pod,
+    sdk_service_account: &str,
+) -> Result<(), AdapterError> {
+    let has_user_service_account = pod
+        .spec
+        .as_ref()
+        .and_then(|spec| spec.service_account_name.as_deref())
+        .is_some_and(|name| !name.is_empty());
+    if has_user_service_account {
+        return Ok(());
+    }
+
+    let spec = pod
+        .spec
+        .as_mut()
+        .ok_or(AdapterError::MissingField("pod.spec"))?;
+    spec.service_account_name = Some(sdk_service_account.to_owned());
+
+    disable_game_server_service_account(game_server, pod)
+}
+
+#[agones_invariant]
+fn reserved_service_account_mount_is_constant(_: u8) -> bool {
+    SERVICE_ACCOUNT_VOLUME_NAME == "empty"
+        && SERVICE_ACCOUNT_MOUNT_PATH
+            == "/var/run/secrets/kubernetes.io/serviceaccount"
+}
+
 /// Applies the controller-owned Pod mutations performed immediately before the
 /// Pod CREATE in upstream createGameServerPod.
 pub fn augment_game_server_pod(
@@ -231,6 +328,73 @@ mod tests {
             .find(|item| item.name == name)?
             .value
             .as_deref()
+    }
+
+    #[test]
+    fn default_service_account_is_assigned_and_masked_from_game_container() {
+        let game_server = fixture();
+        let mut pod = build_pod(
+            &game_server,
+            Vec::new(),
+            PodBuildFeatures::default(),
+            &NoopApiHooks,
+        )
+        .unwrap();
+
+        configure_game_server_service_account(
+            &game_server,
+            &mut pod,
+            "agones-sdk",
+        )
+        .unwrap();
+
+        let spec = pod.spec.as_ref().unwrap();
+        assert_eq!(
+            spec.service_account_name.as_deref(),
+            Some("agones-sdk")
+        );
+        assert!(spec.volumes.as_ref().unwrap().iter().any(|volume| {
+            volume.name == SERVICE_ACCOUNT_VOLUME_NAME
+                && volume.empty_dir.is_some()
+        }));
+        let game = spec
+            .containers
+            .iter()
+            .find(|container| container.name == game_server.spec.container)
+            .unwrap();
+        let mount = game
+            .volume_mounts
+            .as_ref()
+            .unwrap()
+            .iter()
+            .find(|mount| mount.name == SERVICE_ACCOUNT_VOLUME_NAME)
+            .unwrap();
+        assert_eq!(mount.mount_path, SERVICE_ACCOUNT_MOUNT_PATH);
+        assert_eq!(mount.read_only, Some(true));
+    }
+
+    #[test]
+    fn user_service_account_disables_opinionated_token_masking() {
+        let game_server = fixture();
+        let mut pod = build_pod(
+            &game_server,
+            Vec::new(),
+            PodBuildFeatures::default(),
+            &NoopApiHooks,
+        )
+        .unwrap();
+        pod.spec.as_mut().unwrap().service_account_name =
+            Some("foobar".into());
+        let before = serde_json::to_value(&pod).unwrap();
+
+        configure_game_server_service_account(
+            &game_server,
+            &mut pod,
+            "agones-sdk",
+        )
+        .unwrap();
+
+        assert_eq!(serde_json::to_value(&pod).unwrap(), before);
     }
 
     #[test]
