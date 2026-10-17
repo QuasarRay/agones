@@ -1,4 +1,4 @@
-use std::{collections::{BTreeMap, BTreeSet}, str::FromStr};
+use std::{collections::{BTreeMap, BTreeSet, HashMap}, str::FromStr};
 
 use agones_macros::{agones_invariant, AgonesStringEnum};
 use base64::{engine::general_purpose::STANDARD as BASE64, Engine as _};
@@ -10,6 +10,8 @@ use url::Url;
 use x509_parser::pem::Pem;
 
 use crate::{Fleet, FleetStatus, IntOrPercent, ObjectMeta, ValidationError, ValidationErrorKind};
+use crate::gameserver::{GameServer, SchedulingStrategy};
+use crate::gameserverset::{NodeCount, sort_game_servers_by_strategy};
 
 pub const DEFAULT_INTERVAL_SYNC_SECONDS: i32 = 30;
 
@@ -1147,6 +1149,548 @@ pub fn apply_buffer_autoscaler_policy(
     })
 }
 
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum CapacityPolicyKind {
+    Counter,
+    List,
+}
+
+impl CapacityPolicyKind {
+    fn label(self) -> &'static str {
+        match self {
+            Self::Counter => "Counter",
+            Self::List => "List",
+        }
+    }
+}
+
+#[derive(Clone, Debug)]
+struct CapacityPolicyInput<'a> {
+    kind: CapacityPolicyKind,
+    key: &'a str,
+    count: i64,
+    capacity: i64,
+    aggregate_count: i64,
+    aggregate_capacity: i64,
+    aggregate_allocated_count: i64,
+    min_capacity: i64,
+    max_capacity: i64,
+    buffer_size: &'a IntOrPercent,
+}
+
+fn is_capacity_limited(
+    aggregate_capacity: i64,
+    min_capacity: i64,
+    max_capacity: i64,
+) -> (bool, i8) {
+    if aggregate_capacity < min_capacity {
+        return (true, 1);
+    }
+    if aggregate_capacity > max_capacity {
+        return (true, -1);
+    }
+    (false, 0)
+}
+
+fn sorted_deletable_game_servers(
+    fleet: &Fleet,
+    game_servers: &[GameServer],
+    node_counts: &HashMap<String, NodeCount>,
+) -> Vec<GameServer> {
+    let mut deletable: Vec<_> = game_servers
+        .iter()
+        .filter(|game_server| game_server.is_deletable())
+        .cloned()
+        .collect();
+    let strategy = fleet
+        .spec
+        .scheduling
+        .clone()
+        .unwrap_or(SchedulingStrategy::Packed);
+    sort_game_servers_by_strategy(
+        &strategy,
+        &mut deletable,
+        node_counts,
+        &fleet.spec.priorities,
+    );
+    deletable
+}
+
+fn game_server_capacity(
+    game_server: &GameServer,
+    kind: CapacityPolicyKind,
+    key: &str,
+) -> Option<(i64, i64)> {
+    match kind {
+        CapacityPolicyKind::Counter => game_server
+            .status
+            .counters
+            .as_ref()
+            .and_then(|counters| counters.get(key))
+            .map(|counter| (counter.count, counter.capacity)),
+        CapacityPolicyKind::List => game_server
+            .status
+            .lists
+            .as_ref()
+            .and_then(|lists| lists.get(key))
+            .map(|list| (list.values.len() as i64, list.capacity)),
+    }
+}
+
+fn scale_up_limited(
+    mut replicas: i32,
+    capacity: i64,
+    mut aggregate_capacity: i64,
+    min_capacity: i64,
+) -> Result<FleetAutoscalerScaleDecision, String> {
+    if capacity == 0 {
+        return Err("cannot scale up as Capacity is equal to 0".into());
+    }
+    if capacity < 0 {
+        return Err("cannot scale up as Capacity is less than 0".into());
+    }
+
+    while aggregate_capacity < min_capacity {
+        aggregate_capacity = aggregate_capacity.wrapping_add(capacity);
+        replicas = replicas.wrapping_add(1);
+    }
+
+    Ok(FleetAutoscalerScaleDecision {
+        replicas,
+        limited: true,
+    })
+}
+
+fn scale_down_limited(
+    fleet: &Fleet,
+    game_servers: &[GameServer],
+    node_counts: &HashMap<String, NodeCount>,
+    kind: CapacityPolicyKind,
+    key: &str,
+    mut replicas: i32,
+    mut aggregate_capacity: i64,
+    max_capacity: i64,
+) -> FleetAutoscalerScaleDecision {
+    for game_server in sorted_deletable_game_servers(
+        fleet,
+        game_servers,
+        node_counts,
+    ) {
+        if aggregate_capacity <= max_capacity {
+            break;
+        }
+
+        if let Some((_, capacity)) =
+            game_server_capacity(&game_server, kind, key)
+        {
+            aggregate_capacity =
+                aggregate_capacity.wrapping_sub(capacity);
+        }
+        replicas = replicas.wrapping_sub(1);
+    }
+
+    if replicas < 1 {
+        replicas = 1;
+    }
+
+    FleetAutoscalerScaleDecision {
+        replicas,
+        limited: true,
+    }
+}
+
+fn scale_limited(
+    scale: i8,
+    fleet: &Fleet,
+    game_servers: &[GameServer],
+    node_counts: &HashMap<String, NodeCount>,
+    input: &CapacityPolicyInput<'_>,
+    replicas: i32,
+) -> Result<FleetAutoscalerScaleDecision, String> {
+    match scale {
+        1 => scale_up_limited(
+            replicas,
+            input.capacity,
+            input.aggregate_capacity,
+            input.min_capacity,
+        ),
+        -1 => Ok(scale_down_limited(
+            fleet,
+            game_servers,
+            node_counts,
+            input.kind,
+            input.key,
+            replicas,
+            input.aggregate_capacity,
+            input.max_capacity,
+        )),
+        0 => Ok(FleetAutoscalerScaleDecision {
+            replicas,
+            limited: false,
+        }),
+        _ => Err(
+            "cannot scale due to error in scaleLimited function".into(),
+        ),
+    }
+}
+
+fn scale_capacity_up(
+    replicas: i32,
+    input: &CapacityPolicyInput<'_>,
+    available_capacity: i64,
+    buffer: i64,
+) -> Result<FleetAutoscalerScaleDecision, String> {
+    let replica_capacity =
+        input.capacity.wrapping_sub(input.count);
+    if replica_capacity <= 0 {
+        return Err(
+            "cannot scale up as adding additional replicas does not increase available Capacity"
+                .into(),
+        );
+    }
+
+    let mut additional_replicas =
+        ((buffer.wrapping_sub(available_capacity)) as f64
+            / replica_capacity as f64)
+            .ceil() as i32;
+
+    let prospective_capacity = input
+        .aggregate_capacity
+        .wrapping_add(
+            i64::from(additional_replicas)
+                .wrapping_mul(input.capacity),
+        );
+    let (limited, _) = is_capacity_limited(
+        prospective_capacity,
+        input.min_capacity,
+        input.max_capacity,
+    );
+
+    if limited {
+        if input.capacity == 0 {
+            return Err(
+                "cannot scale up as Capacity is equal to 0".into(),
+            );
+        }
+        additional_replicas = (input
+            .max_capacity
+            .wrapping_sub(input.aggregate_capacity)
+            / input.capacity) as i32;
+    }
+
+    Ok(FleetAutoscalerScaleDecision {
+        replicas: replicas.wrapping_add(additional_replicas),
+        limited,
+    })
+}
+
+fn scale_capacity_down(
+    fleet: &Fleet,
+    game_servers: &[GameServer],
+    node_counts: &HashMap<String, NodeCount>,
+    input: &CapacityPolicyInput<'_>,
+    mut replicas: i32,
+    mut aggregate_count: i64,
+    mut aggregate_capacity: i64,
+    buffer: i64,
+) -> FleetAutoscalerScaleDecision {
+    if aggregate_capacity == input.min_capacity {
+        return FleetAutoscalerScaleDecision {
+            replicas,
+            limited: true,
+        };
+    }
+
+    for game_server in sorted_deletable_game_servers(
+        fleet,
+        game_servers,
+        node_counts,
+    ) {
+        replicas = replicas.wrapping_sub(1);
+        let Some((count, capacity)) =
+            game_server_capacity(&game_server, input.kind, input.key)
+        else {
+            continue;
+        };
+
+        aggregate_count = aggregate_count.wrapping_sub(count);
+        aggregate_capacity =
+            aggregate_capacity.wrapping_sub(capacity);
+
+        let available_capacity =
+            aggregate_capacity.wrapping_sub(aggregate_count);
+        if available_capacity < buffer {
+            return FleetAutoscalerScaleDecision {
+                replicas: replicas.wrapping_add(1),
+                limited: false,
+            };
+        }
+        if aggregate_capacity < input.min_capacity {
+            return FleetAutoscalerScaleDecision {
+                replicas: replicas.wrapping_add(1),
+                limited: true,
+            };
+        }
+        if available_capacity == buffer {
+            return FleetAutoscalerScaleDecision {
+                replicas,
+                limited: false,
+            };
+        }
+        if aggregate_capacity == input.min_capacity {
+            return FleetAutoscalerScaleDecision {
+                replicas,
+                limited: true,
+            };
+        }
+    }
+
+    if replicas < 1 {
+        replicas = 1;
+    }
+    FleetAutoscalerScaleDecision {
+        replicas,
+        limited: false,
+    }
+}
+
+fn apply_capacity_autoscaler_policy(
+    input: CapacityPolicyInput<'_>,
+    fleet: &Fleet,
+    game_servers: &[GameServer],
+    node_counts: &HashMap<String, NodeCount>,
+) -> Result<FleetAutoscalerScaleDecision, String> {
+    let (limited, scale) = is_capacity_limited(
+        input.aggregate_capacity,
+        input.min_capacity,
+        input.max_capacity,
+    );
+    let replicas = fleet.status.replicas;
+
+    let buffer = match input.buffer_size {
+        IntOrPercent::Int(buffer) => i64::from(*buffer),
+        IntOrPercent::String(value) => {
+            let buffer_percent =
+                i64::from(autoscaler_percent_value(value)?);
+            if input.aggregate_allocated_count <= 0
+                && input.capacity >= input.min_capacity
+            {
+                return Ok(FleetAutoscalerScaleDecision {
+                    replicas: 1,
+                    limited: true,
+                });
+            }
+
+            let desired_capacity = ((input
+                .aggregate_allocated_count
+                .wrapping_mul(100)) as f64
+                / (100i64.wrapping_sub(buffer_percent)) as f64)
+                .ceil() as i64;
+            desired_capacity
+                .wrapping_sub(input.aggregate_allocated_count)
+        }
+    };
+
+    let available_capacity = input
+        .aggregate_capacity
+        .wrapping_sub(input.aggregate_count);
+
+    if available_capacity == buffer {
+        if limited {
+            return scale_limited(
+                scale,
+                fleet,
+                game_servers,
+                node_counts,
+                &input,
+                replicas,
+            );
+        }
+        return Ok(FleetAutoscalerScaleDecision {
+            replicas,
+            limited: false,
+        });
+    }
+
+    if available_capacity < buffer {
+        if limited {
+            return scale_limited(
+                scale,
+                fleet,
+                game_servers,
+                node_counts,
+                &input,
+                replicas,
+            );
+        }
+        return scale_capacity_up(
+            replicas,
+            &input,
+            available_capacity,
+            buffer,
+        );
+    }
+
+    if limited && scale == 1 {
+        return scale_limited(
+            scale,
+            fleet,
+            game_servers,
+            node_counts,
+            &input,
+            replicas,
+        );
+    }
+
+    Ok(scale_capacity_down(
+        fleet,
+        game_servers,
+        node_counts,
+        &input,
+        replicas,
+        input.aggregate_count,
+        input.aggregate_capacity,
+        buffer,
+    ))
+}
+
+/// Pure port of FleetAutoscaler's CounterPolicy calculation.
+pub fn apply_counter_autoscaler_policy(
+    policy: &CounterPolicy,
+    fleet: &Fleet,
+    game_servers: &[GameServer],
+    node_counts: &HashMap<String, NodeCount>,
+) -> Result<FleetAutoscalerScaleDecision, String> {
+    let counter = fleet
+        .spec
+        .template
+        .spec
+        .counters
+        .as_ref()
+        .and_then(|counters| counters.get(&policy.key))
+        .ok_or_else(|| {
+            format!(
+                "cannot apply CounterPolicy as Counter key {} does not exist in the Fleet Spec",
+                policy.key
+            )
+        })?;
+    let aggregate = fleet
+        .status
+        .counters
+        .get(&policy.key)
+        .ok_or_else(|| {
+            format!(
+                "cannot apply CounterPolicy as Counter key {} does not exist in the Fleet Status",
+                policy.key
+            )
+        })?;
+
+    apply_capacity_autoscaler_policy(
+        CapacityPolicyInput {
+            kind: CapacityPolicyKind::Counter,
+            key: &policy.key,
+            count: counter.count,
+            capacity: counter.capacity,
+            aggregate_count: aggregate.count,
+            aggregate_capacity: aggregate.capacity,
+            aggregate_allocated_count: aggregate.allocated_count,
+            min_capacity: policy.min_capacity,
+            max_capacity: policy.max_capacity,
+            buffer_size: &policy.buffer_size,
+        },
+        fleet,
+        game_servers,
+        node_counts,
+    )
+}
+
+/// Pure port of FleetAutoscaler's ListPolicy calculation.
+pub fn apply_list_autoscaler_policy(
+    policy: &ListPolicy,
+    fleet: &Fleet,
+    game_servers: &[GameServer],
+    node_counts: &HashMap<String, NodeCount>,
+) -> Result<FleetAutoscalerScaleDecision, String> {
+    let list = fleet
+        .spec
+        .template
+        .spec
+        .lists
+        .as_ref()
+        .and_then(|lists| lists.get(&policy.key))
+        .ok_or_else(|| {
+            format!(
+                "cannot apply ListPolicy as List key {} does not exist in the Fleet Spec",
+                policy.key
+            )
+        })?;
+    let aggregate = fleet
+        .status
+        .lists
+        .get(&policy.key)
+        .ok_or_else(|| {
+            format!(
+                "cannot apply ListPolicy as List key {} does not exist in the Fleet Status",
+                policy.key
+            )
+        })?;
+
+    apply_capacity_autoscaler_policy(
+        CapacityPolicyInput {
+            kind: CapacityPolicyKind::List,
+            key: &policy.key,
+            count: list.values.len() as i64,
+            capacity: list.capacity,
+            aggregate_count: aggregate.count,
+            aggregate_capacity: aggregate.capacity,
+            aggregate_allocated_count: aggregate.allocated_count,
+            min_capacity: policy.min_capacity,
+            max_capacity: policy.max_capacity,
+            buffer_size: &policy.buffer_size,
+        },
+        fleet,
+        game_servers,
+        node_counts,
+    )
+}
+
+#[agones_invariant]
+fn capacity_scale_up_never_decreases_replicas(
+    input: (i16, i16, i16, i16, i16),
+) -> bool {
+    let (replicas, capacity, count, available, buffer) = input;
+    if replicas < 0
+        || capacity <= count
+        || count < 0
+        || available < 0
+        || buffer <= available
+    {
+        return true;
+    }
+
+    let policy = CapacityPolicyInput {
+        kind: CapacityPolicyKind::Counter,
+        key: "c",
+        count: i64::from(count),
+        capacity: i64::from(capacity),
+        aggregate_count: 0,
+        aggregate_capacity: i64::from(available),
+        aggregate_allocated_count: 0,
+        min_capacity: 0,
+        max_capacity: i64::MAX,
+        buffer_size: &IntOrPercent::Int(i32::from(buffer)),
+    };
+
+    scale_capacity_up(
+        i32::from(replicas),
+        &policy,
+        i64::from(available),
+        i64::from(buffer),
+    )
+    .is_ok_and(|decision| decision.replicas >= i32::from(replicas))
+}
+
 #[agones_invariant]
 fn buffer_policy_integer_decision_stays_bounded(
     input: (i16, i16, i16, i16),
@@ -1627,6 +2171,339 @@ mod tests {
         assert_eq!(errors[0].path, "spec.policy.wasm");
     }
 
+
+
+    fn counter_policy_fixture(
+        replicas: i32,
+        count: i64,
+        capacity: i64,
+        aggregate_count: i64,
+        aggregate_capacity: i64,
+    ) -> Fleet {
+        use crate::gameserver::CounterStatus;
+        use crate::gameserverset::AggregatedCounterStatus;
+
+        let mut fleet = Fleet::default();
+        fleet.status.replicas = replicas;
+        fleet.spec.template.spec.counters = Some(BTreeMap::from([(
+            "rooms".into(),
+            CounterStatus { count, capacity },
+        )]));
+        fleet.status.counters.insert(
+            "rooms".into(),
+            AggregatedCounterStatus {
+                count: aggregate_count,
+                capacity: aggregate_capacity,
+                ..Default::default()
+            },
+        );
+        fleet
+    }
+
+    #[test]
+    fn counter_policy_ports_zero_scale_up_same_and_limit_cases() {
+        let policy = CounterPolicy {
+            key: "rooms".into(),
+            min_capacity: 10,
+            max_capacity: 100,
+            buffer_size: IntOrPercent::Int(10),
+        };
+        let empty_nodes = HashMap::new();
+
+        let zero = apply_counter_autoscaler_policy(
+            &policy,
+            &counter_policy_fixture(0, 0, 7, 0, 0),
+            &[],
+            &empty_nodes,
+        )
+        .unwrap();
+        assert_eq!(
+            zero,
+            FleetAutoscalerScaleDecision {
+                replicas: 2,
+                limited: true,
+            }
+        );
+
+        let up = apply_counter_autoscaler_policy(
+            &policy,
+            &counter_policy_fixture(10, 0, 7, 68, 70),
+            &[],
+            &empty_nodes,
+        )
+        .unwrap();
+        assert_eq!(
+            up,
+            FleetAutoscalerScaleDecision {
+                replicas: 12,
+                limited: false,
+            }
+        );
+
+        let same = apply_counter_autoscaler_policy(
+            &policy,
+            &counter_policy_fixture(10, 0, 7, 60, 70),
+            &[],
+            &empty_nodes,
+        )
+        .unwrap();
+        assert_eq!(
+            same,
+            FleetAutoscalerScaleDecision {
+                replicas: 10,
+                limited: false,
+            }
+        );
+
+        let limited = apply_counter_autoscaler_policy(
+            &CounterPolicy {
+                max_capacity: 100,
+                ..policy.clone()
+            },
+            &counter_policy_fixture(14, 0, 7, 98, 98),
+            &[],
+            &empty_nodes,
+        )
+        .unwrap();
+        assert_eq!(
+            limited,
+            FleetAutoscalerScaleDecision {
+                replicas: 14,
+                limited: true,
+            }
+        );
+    }
+
+    #[test]
+    fn counter_policy_uses_per_replica_available_capacity() {
+        let decision = apply_counter_autoscaler_policy(
+            &CounterPolicy {
+                key: "rooms".into(),
+                min_capacity: 10,
+                max_capacity: 100,
+                buffer_size: IntOrPercent::Int(25),
+            },
+            &counter_policy_fixture(3, 7, 10, 21, 30),
+            &[],
+            &HashMap::new(),
+        )
+        .unwrap();
+
+        assert_eq!(
+            decision,
+            FleetAutoscalerScaleDecision {
+                replicas: 9,
+                limited: false,
+            }
+        );
+    }
+
+    #[test]
+    fn counter_policy_requires_matching_spec_and_status_keys() {
+        let policy = CounterPolicy {
+            key: "rooms".into(),
+            min_capacity: 10,
+            max_capacity: 100,
+            buffer_size: IntOrPercent::Int(10),
+        };
+        let mut missing_spec =
+            counter_policy_fixture(10, 0, 7, 31, 70);
+        missing_spec.spec.template.spec.counters =
+            Some(BTreeMap::new());
+        assert!(
+            apply_counter_autoscaler_policy(
+                &policy,
+                &missing_spec,
+                &[],
+                &HashMap::new(),
+            )
+            .unwrap_err()
+            .contains("does not exist in the Fleet Spec")
+        );
+
+        let mut missing_status =
+            counter_policy_fixture(10, 0, 7, 31, 70);
+        missing_status.status.counters.clear();
+        assert!(
+            apply_counter_autoscaler_policy(
+                &policy,
+                &missing_status,
+                &[],
+                &HashMap::new(),
+            )
+            .unwrap_err()
+            .contains("does not exist in the Fleet Status")
+        );
+    }
+
+    fn list_policy_fixture(
+        replicas: i32,
+        template_values: usize,
+        template_capacity: i64,
+        aggregate_count: i64,
+        aggregate_capacity: i64,
+        allocated_count: i64,
+    ) -> Fleet {
+        use crate::gameserver::ListStatus;
+        use crate::gameserverset::AggregatedListStatus;
+
+        let mut fleet = Fleet::default();
+        fleet.status.replicas = replicas;
+        fleet.spec.template.spec.lists = Some(BTreeMap::from([(
+            "gamers".into(),
+            ListStatus {
+                capacity: template_capacity,
+                values: (0..template_values)
+                    .map(|index| format!("v{index}"))
+                    .collect(),
+            },
+        )]));
+        fleet.status.lists.insert(
+            "gamers".into(),
+            AggregatedListStatus {
+                count: aggregate_count,
+                capacity: aggregate_capacity,
+                allocated_count,
+                ..Default::default()
+            },
+        );
+        fleet
+    }
+
+    #[test]
+    fn list_policy_ports_integer_and_percentage_scale_up() {
+        let integer = apply_list_autoscaler_policy(
+            &ListPolicy {
+                key: "gamers".into(),
+                min_capacity: 10,
+                max_capacity: 100,
+                buffer_size: IntOrPercent::Int(5),
+            },
+            &list_policy_fixture(10, 2, 3, 29, 30, 0),
+            &[],
+            &HashMap::new(),
+        )
+        .unwrap();
+        assert_eq!(
+            integer,
+            FleetAutoscalerScaleDecision {
+                replicas: 14,
+                limited: false,
+            }
+        );
+
+        let percentage = apply_list_autoscaler_policy(
+            &ListPolicy {
+                key: "gamers".into(),
+                min_capacity: 10,
+                max_capacity: 50,
+                buffer_size: IntOrPercent::String("10%".into()),
+            },
+            &list_policy_fixture(11, 1, 3, 30, 30, 29),
+            &[],
+            &HashMap::new(),
+        )
+        .unwrap();
+        assert_eq!(
+            percentage,
+            FleetAutoscalerScaleDecision {
+                replicas: 13,
+                limited: false,
+            }
+        );
+    }
+
+    #[test]
+    fn list_policy_scale_down_ignores_allocated_game_servers() {
+        use crate::gameserver::{
+            GameServerState, GameServerStatus, ListStatus,
+            SchedulingStrategy,
+        };
+
+        let mut fleet =
+            list_policy_fixture(3, 0, 60, 55, 180, 55);
+        fleet.spec.scheduling = Some(SchedulingStrategy::Packed);
+
+        let allocated = GameServer {
+            metadata: ObjectMeta {
+                name: "allocated".into(),
+                ..Default::default()
+            },
+            status: GameServerStatus {
+                state: Some(GameServerState::Allocated),
+                node_name: "n2".into(),
+                lists: Some(BTreeMap::from([(
+                    "gamers".into(),
+                    ListStatus {
+                        capacity: 60,
+                        values: (0..55)
+                            .map(|index| format!("p{index}"))
+                            .collect(),
+                    },
+                )])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let ready = |name: &str| GameServer {
+            metadata: ObjectMeta {
+                name: name.into(),
+                ..Default::default()
+            },
+            status: GameServerStatus {
+                state: Some(GameServerState::Ready),
+                node_name: "n1".into(),
+                lists: Some(BTreeMap::from([(
+                    "gamers".into(),
+                    ListStatus {
+                        capacity: 60,
+                        values: Vec::new(),
+                    },
+                )])),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let game_servers =
+            vec![allocated, ready("ready-1"), ready("ready-2")];
+        let node_counts = HashMap::from([
+            (
+                "n1".into(),
+                NodeCount {
+                    ready: 2,
+                    allocated: 0,
+                },
+            ),
+            (
+                "n2".into(),
+                NodeCount {
+                    ready: 0,
+                    allocated: 1,
+                },
+            ),
+        ]);
+
+        let decision = apply_list_autoscaler_policy(
+            &ListPolicy {
+                key: "gamers".into(),
+                min_capacity: 120,
+                max_capacity: 300,
+                buffer_size: IntOrPercent::Int(120),
+            },
+            &fleet,
+            &game_servers,
+            &node_counts,
+        )
+        .unwrap();
+
+        assert_eq!(
+            decision,
+            FleetAutoscalerScaleDecision {
+                replicas: 3,
+                limited: false,
+            }
+        );
+    }
 
     #[test]
     fn buffer_policy_scales_up_from_integer_buffer() {
