@@ -391,6 +391,50 @@ where
                 current_time,
             )
         }
+        FleetAutoscalerPolicyType::Chain => {
+            if !context
+                .fleet_autoscaler_runtime_features()
+                .scheduled_autoscaler
+            {
+                return Err(AdapterError::Hook(
+                    "cannot apply ChainPolicy unless feature flag ScheduledAutoscaler is enabled"
+                        .into(),
+                ));
+            }
+
+            let mut last_error = None;
+            for entry in &policy.chain {
+                match compute_fleet_autoscaler_desired_size_at(
+                    context,
+                    &entry.policy,
+                    fleet,
+                    inventory,
+                    current_time,
+                ) {
+                    Ok(mut decision) => {
+                        decision.applied_policy =
+                            FleetAutoscalerPolicyType::Unknown(
+                                format!(
+                                    "Chain:{}:{}",
+                                    entry.id,
+                                    entry.policy.policy_type.as_str(),
+                                ),
+                            );
+                        return Ok(decision);
+                    }
+                    Err(error) => {
+                        last_error = Some(error);
+                    }
+                }
+            }
+
+            Err(last_error.unwrap_or_else(|| {
+                AdapterError::Hook(
+                    "Failed to apply ChainPolicy: no valid policy applied"
+                        .into(),
+                )
+            }))
+        }
         _ => Err(AdapterError::Hook(
             "wrong policy type, should be one of: Buffer, Webhook, Counter, List, Schedule, Chain"
                 .into(),
@@ -819,8 +863,9 @@ delegate_and_check_components! {
 mod tests {
     use agones_core::{
         AggregatedCounterStatus, AggregatedListStatus, BufferPolicy,
-        ActivePeriod, AutoscalerFeatures, Between, CounterPolicy,
-        CounterStatus, FleetAutoscalerPolicy, GameServerStatus,
+        ActivePeriod, AutoscalerFeatures, Between, ChainEntry,
+        CounterPolicy, CounterStatus, FleetAutoscalerPolicy,
+        GameServerStatus,
         IntOrPercent, ListPolicy, ListStatus, ObjectMeta,
         SchedulePolicy,
     };
@@ -1154,6 +1199,198 @@ mod tests {
         ));
     }
 
+
+    fn chain_controller() -> FleetAutoscalerController<MemoryStorage> {
+        FleetAutoscalerController::new(MemoryStorage::new())
+            .with_autoscaler_features(AutoscalerFeatures {
+                scheduled_autoscaler: true,
+                wasm_autoscaler: false,
+            })
+    }
+
+    fn buffer_chain_entry(id: &str, min_replicas: i32) -> ChainEntry {
+        ChainEntry {
+            id: id.into(),
+            policy: FleetAutoscalerPolicy {
+                policy_type: FleetAutoscalerPolicyType::Buffer,
+                buffer: Some(BufferPolicy {
+                    buffer_size: IntOrPercent::Int(1),
+                    min_replicas,
+                    max_replicas: 10,
+                }),
+                ..Default::default()
+            },
+        }
+    }
+
+    #[test]
+    fn cgp_chain_applies_first_success_and_records_entry_identity() {
+        let now = DateTime::parse_from_rfc3339(
+            "2021-11-05T05:30:00Z",
+        )
+        .unwrap()
+        .with_timezone(&Utc);
+        let inactive_schedule = ChainEntry {
+            id: "schedule-1".into(),
+            policy: scheduled_buffer_policy(
+                Some("2024-08-01T16:07:36Z"),
+                None,
+            ),
+        };
+        let unsupported_webhook = ChainEntry {
+            id: "webhook".into(),
+            policy: FleetAutoscalerPolicy {
+                policy_type:
+                    FleetAutoscalerPolicyType::Webhook,
+                ..Default::default()
+            },
+        };
+        let policy = FleetAutoscalerPolicy {
+            policy_type: FleetAutoscalerPolicyType::Chain,
+            chain: vec![
+                inactive_schedule,
+                unsupported_webhook,
+                buffer_chain_entry("default", 6),
+            ],
+            ..Default::default()
+        };
+
+        let decision = chain_controller()
+            .compute_fleet_autoscaler_desired_size_at(
+                &policy,
+                &fleet(2),
+                &FleetAutoscalerInventory::default(),
+                now,
+            )
+            .unwrap();
+
+        assert_eq!(decision.replicas, 6);
+        assert!(decision.limited);
+        assert_eq!(
+            decision.applied_policy.as_str(),
+            "Chain:default:Buffer"
+        );
+    }
+
+    #[test]
+    fn cgp_chain_uses_first_overlapping_active_schedule() {
+        let now = DateTime::parse_from_rfc3339(
+            "2024-08-01T16:07:36Z",
+        )
+        .unwrap()
+        .with_timezone(&Utc);
+        let first = ChainEntry {
+            id: "schedule-1".into(),
+            policy: FleetAutoscalerPolicy {
+                policy_type: FleetAutoscalerPolicyType::Schedule,
+                schedule: Some(Box::new(SchedulePolicy {
+                    between: Between {
+                        start: Some(
+                            "2024-08-01T16:07:36Z".into(),
+                        ),
+                        end: None,
+                    },
+                    active_period: ActivePeriod {
+                        timezone: "America/Chicago".into(),
+                        start_cron: "* * * * *".into(),
+                        duration: String::new(),
+                    },
+                    policy: FleetAutoscalerPolicy {
+                        policy_type:
+                            FleetAutoscalerPolicyType::Buffer,
+                        buffer: Some(BufferPolicy {
+                            buffer_size: IntOrPercent::Int(1),
+                            min_replicas: 10,
+                            max_replicas: 10,
+                        }),
+                        ..Default::default()
+                    },
+                })),
+                ..Default::default()
+            },
+        };
+        let second = buffer_chain_entry("default", 6);
+        let policy = FleetAutoscalerPolicy {
+            policy_type: FleetAutoscalerPolicyType::Chain,
+            chain: vec![first, second],
+            ..Default::default()
+        };
+
+        let decision = chain_controller()
+            .compute_fleet_autoscaler_desired_size_at(
+                &policy,
+                &fleet(2),
+                &FleetAutoscalerInventory::default(),
+                now,
+            )
+            .unwrap();
+
+        assert_eq!(decision.replicas, 10);
+        assert!(decision.limited);
+        assert_eq!(
+            decision.applied_policy.as_str(),
+            "Chain:schedule-1:Schedule"
+        );
+    }
+
+    #[test]
+    fn cgp_chain_all_inactive_schedules_fall_off_with_inactive_error() {
+        let now = DateTime::parse_from_rfc3339(
+            "2021-01-01T00:30:00Z",
+        )
+        .unwrap()
+        .with_timezone(&Utc);
+        let inactive = || ChainEntry {
+            id: "schedule".into(),
+            policy: scheduled_buffer_policy(
+                Some("2024-08-01T16:07:36Z"),
+                None,
+            ),
+        };
+        let policy = FleetAutoscalerPolicy {
+            policy_type: FleetAutoscalerPolicyType::Chain,
+            chain: vec![inactive(), inactive()],
+            ..Default::default()
+        };
+
+        let error = chain_controller()
+            .compute_fleet_autoscaler_desired_size_at(
+                &policy,
+                &fleet(2),
+                &FleetAutoscalerInventory::default(),
+                now,
+            )
+            .unwrap_err();
+        assert!(matches!(
+            error,
+            AdapterError::InactiveFleetAutoscalerSchedule
+        ));
+    }
+
+    #[test]
+    fn cgp_chain_enforces_scheduled_autoscaler_feature_gate() {
+        let error =
+            FleetAutoscalerController::new(MemoryStorage::new())
+                .compute_fleet_autoscaler_desired_size_at(
+                    &FleetAutoscalerPolicy {
+                        policy_type:
+                            FleetAutoscalerPolicyType::Chain,
+                        chain: vec![
+                            buffer_chain_entry("default", 6),
+                        ],
+                        ..Default::default()
+                    },
+                    &fleet(2),
+                    &FleetAutoscalerInventory::default(),
+                    Utc::now(),
+                )
+                .unwrap_err();
+
+        assert!(error.to_string().contains(
+            "cannot apply ChainPolicy unless feature flag ScheduledAutoscaler is enabled"
+        ));
+    }
+
     #[test]
     fn missing_buffer_configuration_is_reported_without_panic() {
         let controller =
@@ -1204,7 +1441,7 @@ mod tests {
 mod reconciliation_tests {
     use agones_core::{
         ActivePeriod, AggregatedCounterStatus, AutoscalerFeatures,
-        Between, BufferPolicy, CounterPolicy, CounterStatus,
+        Between, BufferPolicy, ChainEntry, CounterPolicy, CounterStatus,
         FleetAutoscalerSpec, FleetSpec, IntOrPercent, ObjectMeta,
         SchedulePolicy,
     };
@@ -1501,6 +1738,60 @@ mod reconciliation_tests {
         assert_eq!(
             stored.status.last_applied_policy,
             FleetAutoscalerPolicyType::Buffer
+        );
+    }
+
+
+    #[tokio::test]
+    async fn reconcile_chain_persists_selected_policy_identity() {
+        let storage = MemoryStorage::new();
+        let mut fleet_autoscaler = autoscaler(1);
+        fleet_autoscaler.spec.policy = FleetAutoscalerPolicy {
+            policy_type: FleetAutoscalerPolicyType::Chain,
+            chain: vec![ChainEntry {
+                id: "default".into(),
+                policy: FleetAutoscalerPolicy {
+                    policy_type:
+                        FleetAutoscalerPolicyType::Buffer,
+                    buffer: Some(BufferPolicy {
+                        buffer_size: IntOrPercent::Int(7),
+                        min_replicas: 0,
+                        max_replicas: 100,
+                    }),
+                    ..Default::default()
+                },
+            }],
+            ..Default::default()
+        };
+        store_pair(
+            &storage,
+            &fleet_autoscaler,
+            &fleet(5, 5, 5),
+        )
+        .await;
+
+        let outcome = FleetAutoscalerController::new(storage)
+            .with_autoscaler_features(AutoscalerFeatures {
+                scheduled_autoscaler: true,
+                wasm_autoscaler: false,
+            })
+            .reconcile_fleet_autoscaler("default", "fas")
+            .await
+            .unwrap();
+        let FleetAutoscalerSyncOutcome::Reconciled(result) =
+            outcome
+        else {
+            panic!("chain should reconcile");
+        };
+
+        assert_eq!(result.fleet.spec.replicas, 12);
+        assert_eq!(
+            result
+                .fleet_autoscaler
+                .status
+                .last_applied_policy
+                .as_str(),
+            "Chain:default:Buffer"
         );
     }
 
