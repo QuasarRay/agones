@@ -69,9 +69,10 @@ where
 #[cfg(test)]
 mod tests {
     use agones_core::{
-        Container as CoreContainer, GameServerSpec, GameServerStatus, NodeAddress, ObjectMeta,
+        Container as CoreContainer, GameServerSpec, GameServerStatus, ObjectMeta,
         PodSpec as CorePodSpec, PodTemplateSpec, DEV_ADDRESS_ANNOTATION,
     };
+    use agones_core::gameserver::NodeAddress as GameServerNodeAddress;
     use rusternetes_common::resources::{PodIP, PodStatus};
     use rusternetes_storage::MemoryStorage;
 
@@ -158,7 +159,7 @@ mod tests {
             assert_eq!(reconciled.status.state, Some(state));
             assert_eq!(
                 reconciled.status.addresses,
-                vec![NodeAddress {
+                vec![GameServerNodeAddress {
                     address: "10.0.0.9".into(),
                     address_type: "PodIP".into(),
                 }]
@@ -174,7 +175,7 @@ mod tests {
         let storage = MemoryStorage::new();
         let repository = AgonesRepository::new(storage.clone());
         let mut fixture = stable_game_server(GameServerState::Ready);
-        fixture.status.addresses = vec![NodeAddress {
+        fixture.status.addresses = vec![GameServerNodeAddress {
             address: "10.0.0.9".into(),
             address_type: "PodIP".into(),
         }];
