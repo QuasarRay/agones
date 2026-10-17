@@ -1,4 +1,4 @@
-use std::{collections::HashMap, sync::Arc};
+use std::{collections::HashMap, sync::Arc, time::Duration};
 
 use agones_core::{
     AutoscalerFeatures, BufferPolicy, CounterPolicy, Fleet,
@@ -232,6 +232,206 @@ impl<Context> ListFleetAutoscalerPolicyEvaluator<Context>
             &inventory.node_counts,
         )
         .map_err(AdapterError::Hook)
+    }
+}
+
+
+/// Resolves the URLConfiguration exactly at the FleetAutoscaler transport
+/// boundary. Service references use Agones' default port 8000 and select HTTPS
+/// when a CA bundle is present.
+pub fn fleet_autoscaler_webhook_url(
+    configuration: &UrlConfiguration,
+) -> Result<String, AdapterError> {
+    if configuration.url.is_some() && configuration.service.is_some() {
+        return Err(AdapterError::Hook(
+            "service and URL cannot be used simultaneously".into(),
+        ));
+    }
+
+    if let Some(url) = configuration.url.as_deref() {
+        if url.is_empty() {
+            return Err(AdapterError::Hook(
+                "URL was not provided".into(),
+            ));
+        }
+        return reqwest::Url::parse(url)
+            .map(|url| url.to_string())
+            .map_err(|error| AdapterError::Hook(error.to_string()));
+    }
+
+    let service = configuration.service.as_ref().ok_or_else(|| {
+        AdapterError::Hook(
+            "service was not provided, either URL or Service must be provided"
+                .into(),
+        )
+    })?;
+    if service.name.is_empty() {
+        return Err(AdapterError::Hook(
+            "service name was not provided".into(),
+        ));
+    }
+
+    let namespace = if service.namespace.is_empty() {
+        "default"
+    } else {
+        service.namespace.as_str()
+    };
+    let port = service.port.unwrap_or(8000);
+    let scheme = if configuration.ca_bundle.is_empty() {
+        "http"
+    } else {
+        "https"
+    };
+    let path = service.path.as_deref().unwrap_or("");
+    let path = if path.is_empty() || path.starts_with('/') {
+        path.to_owned()
+    } else {
+        format!("/{path}")
+    };
+
+    Ok(format!(
+        "{scheme}://{}.{namespace}.svc:{port}{path}",
+        service.name
+    ))
+}
+
+#[async_trait]
+#[cgp_component(FleetAutoscalerWebhookCaller)]
+pub trait CanCallFleetAutoscalerWebhook {
+    async fn call_fleet_autoscaler_webhook(
+        &self,
+        configuration: &UrlConfiguration,
+        review: &FleetAutoscaleReview,
+    ) -> Result<FleetAutoscaleReview, AdapterError>;
+}
+
+#[cgp_new_provider]
+#[async_trait]
+impl<Context> FleetAutoscalerWebhookCaller<Context>
+    for CallFleetAutoscalerWebhookWithReqwest
+where
+    Context: Sync,
+{
+    async fn call_fleet_autoscaler_webhook(
+        _context: &Context,
+        configuration: &UrlConfiguration,
+        review: &FleetAutoscaleReview,
+    ) -> Result<FleetAutoscaleReview, AdapterError> {
+        let url = fleet_autoscaler_webhook_url(configuration)?;
+        let mut client = reqwest::Client::builder()
+            .timeout(Duration::from_secs(15));
+
+        if !configuration.ca_bundle.is_empty() {
+            let certificates =
+                reqwest::Certificate::from_pem_bundle(
+                    &configuration.ca_bundle,
+                )
+                .map_err(|_| {
+                    AdapterError::Hook(
+                        "no certs were appended from caBundle".into(),
+                    )
+                })?;
+            if certificates.is_empty() {
+                return Err(AdapterError::Hook(
+                    "no certs were appended from caBundle".into(),
+                ));
+            }
+            for certificate in certificates {
+                client = client.add_root_certificate(certificate);
+            }
+        }
+
+        let client = client
+            .build()
+            .map_err(|error| AdapterError::Hook(error.to_string()))?;
+        let response = client
+            .post(url.as_str())
+            .json(review)
+            .send()
+            .await
+            .map_err(|error| AdapterError::Hook(error.to_string()))?;
+
+        if response.status() != reqwest::StatusCode::OK {
+            return Err(AdapterError::Hook(format!(
+                "bad status code {} from the server: {url}",
+                response.status().as_u16(),
+            )));
+        }
+
+        response
+            .json::<FleetAutoscaleReview>()
+            .await
+            .map_err(|error| AdapterError::Hook(error.to_string()))
+    }
+}
+
+#[async_trait]
+#[cgp_component(WebhookFleetAutoscalerPolicyEvaluator)]
+pub trait CanApplyWebhookFleetAutoscalerPolicy {
+    async fn apply_webhook_fleet_autoscaler_policy(
+        &self,
+        configuration: &UrlConfiguration,
+        fleet: &Fleet,
+    ) -> Result<FleetAutoscalerScaleDecision, AdapterError>;
+}
+
+#[cgp_new_provider]
+#[async_trait]
+impl<Context> WebhookFleetAutoscalerPolicyEvaluator<Context>
+    for ApplyWebhookFleetAutoscalerPolicyWithCaller
+where
+    Context: CanCallFleetAutoscalerWebhook
+        + HasFleetAutoscaleRequestMetadata
+        + Sync,
+{
+    async fn apply_webhook_fleet_autoscaler_policy(
+        context: &Context,
+        configuration: &UrlConfiguration,
+        fleet: &Fleet,
+    ) -> Result<FleetAutoscalerScaleDecision, AdapterError> {
+        let include_metadata =
+            *context.fleet_autoscale_request_metadata();
+        let request = FleetAutoscaleRequest {
+            uid: uuid::Uuid::new_v4().to_string(),
+            name: fleet.metadata.name.clone(),
+            namespace: fleet.metadata.namespace.clone(),
+            status: fleet.status.clone(),
+            labels: if include_metadata {
+                fleet.metadata.labels.clone()
+            } else {
+                Default::default()
+            },
+            annotations: if include_metadata {
+                fleet.metadata.annotations.clone()
+            } else {
+                Default::default()
+            },
+        };
+        let review = FleetAutoscaleReview {
+            request: Some(request),
+            response: None,
+        };
+        let response = context
+            .call_fleet_autoscaler_webhook(
+                configuration,
+                &review,
+            )
+            .await?;
+        let response = response.response.ok_or_else(|| {
+            AdapterError::Hook(
+                "webhook response missing required 'response' field"
+                    .into(),
+            )
+        })?;
+
+        Ok(FleetAutoscalerScaleDecision {
+            replicas: if response.scale {
+                response.replicas
+            } else {
+                fleet.status.replicas
+            },
+            limited: false,
+        })
     }
 }
 
