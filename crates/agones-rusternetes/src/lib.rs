@@ -4,6 +4,7 @@
 //! `agones-core` remains runtime-independent.
 
 mod agones_resource_deletion;
+mod allocation_overflow_controller;
 mod controller_work_queue;
 mod creating_gameserver_controller;
 mod development_gameserver_controller;
@@ -41,6 +42,13 @@ mod sdk_sidecar;
 
 pub use agones_resource_deletion::{
     request_agones_resource_deletion, DeletionRequestOutcome,
+};
+pub use allocation_overflow_controller::{
+    AllocationOverflowSyncOutcome,
+    RunAllocationOverflowController,
+    SyncAllocationOverflowGameServerSet,
+    route_allocation_overflow_event,
+    should_enqueue_allocation_overflow,
 };
 pub use creating_gameserver_controller::{
     CreatingGameServerController, ReconcileCreatingGameServer,
