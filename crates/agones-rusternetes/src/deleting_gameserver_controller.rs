@@ -8,7 +8,7 @@ use rusternetes_storage::Storage;
 
 use crate::{
     game_server_pod, request_agones_resource_deletion, request_pod_deletion,
-    AdapterError, AgonesRepository, DeletionRequestOutcome,
+    AdapterError, AgonesRepository, DeletionRequestOutcome, PortAllocator,
 };
 
 /// CGP capability for upstream syncGameServerDeletionTimestamp.
@@ -21,6 +21,7 @@ use crate::{
 pub async fn reconcile_deleting_game_server<S>(
     &self,
     #[implicit] storage: Arc<S>,
+    #[implicit] port_allocator: Arc<PortAllocator>,
     game_server: GameServer,
 ) -> Result<Option<GameServer>, AdapterError>
 where
@@ -66,6 +67,9 @@ where
         let outcome =
             request_agones_resource_deletion(storage.as_ref(), &updated).await?;
         debug_assert_eq!(outcome, DeletionRequestOutcome::Deleted);
+        if outcome == DeletionRequestOutcome::Deleted {
+            port_allocator.deallocate(&updated).await;
+        }
     }
 
     Ok(Some(updated))

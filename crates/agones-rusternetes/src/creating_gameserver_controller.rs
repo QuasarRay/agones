@@ -7,7 +7,7 @@ use rusternetes_storage::{build_key, Storage};
 
 use crate::{
     build_pod, game_server_pod, AdapterError, AgonesRepository, ApiHooks, NoopApiHooks,
-    PodBuildFeatures,
+    PodBuildFeatures, PortAllocator,
 };
 
 /// CGP context for the upstream GameServer `Creating` reconciliation slice.
@@ -21,6 +21,7 @@ pub struct CreatingGameServerController<S, H = NoopApiHooks> {
     pub sidecars: Vec<Container>,
     pub pod_build_features: PodBuildFeatures,
     pub hooks: H,
+    pub port_allocator: Arc<PortAllocator>,
 }
 
 impl<S> CreatingGameServerController<S, NoopApiHooks> {
@@ -46,7 +47,13 @@ impl<S, H> CreatingGameServerController<S, H> {
             sidecars,
             pod_build_features,
             hooks,
+            port_allocator: Arc::new(PortAllocator::empty()),
         }
+    }
+
+    pub fn with_port_allocator(mut self, port_allocator: PortAllocator) -> Self {
+        self.port_allocator = Arc::new(port_allocator);
+        self
     }
 }
 

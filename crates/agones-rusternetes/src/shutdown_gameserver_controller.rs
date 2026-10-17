@@ -6,6 +6,7 @@ use rusternetes_storage::Storage;
 
 use crate::{
     request_agones_resource_deletion, AdapterError, DeletionRequestOutcome,
+    PortAllocator,
 };
 
 /// CGP capability for upstream syncGameServerShutdownState.
@@ -19,6 +20,7 @@ use crate::{
 pub async fn reconcile_shutdown_game_server<S>(
     &self,
     #[implicit] storage: Arc<S>,
+    #[implicit] port_allocator: Arc<PortAllocator>,
     game_server: GameServer,
 ) -> Result<bool, AdapterError>
 where
@@ -37,6 +39,9 @@ where
         DeletionRequestOutcome::Deleted
             | DeletionRequestOutcome::MarkedForDeletion
     ));
+    if outcome == DeletionRequestOutcome::Deleted {
+        port_allocator.deallocate(&game_server).await;
+    }
     Ok(true)
 }
 
