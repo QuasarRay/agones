@@ -1,17 +1,15 @@
-use std::collections::HashMap;
-use std::sync::{Arc, Mutex};
+use std::sync::Arc;
 use std::time::Duration;
 
 use agones_macros::agones_invariant;
 use cgp::prelude::*;
-use futures::channel::mpsc::{
-    UnboundedReceiver, UnboundedSender, unbounded,
-};
-use futures::lock::Mutex as AsyncMutex;
 use futures::stream::FuturesUnordered;
 use futures::StreamExt;
 use rusternetes_storage::Storage;
 
+use crate::controller_work_queue::{
+    ControllerWorkItem, ControllerWorkQueue, FastSlowRetryPolicy,
+};
 use crate::{
     AdapterError, ApiHooks, GameServerQueueLane, GameServerWorkItem,
     RebuildGameServerControllerWatchState, RouteGameServerControllerEvent,
@@ -45,134 +43,20 @@ fn game_server_retry_policy_matches_upstream(retries: u8) -> bool {
         }
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-enum QueueEntryState {
-    Waiting,
-    Processing { dirty: bool },
+impl ControllerWorkItem for GameServerWorkItem {
+    fn work_key(&self) -> String {
+        self.key()
+    }
 }
 
-#[derive(Clone)]
-struct GameServerWorkQueue {
-    lane: GameServerQueueLane,
-    sender: UnboundedSender<GameServerWorkItem>,
-    receiver: Arc<AsyncMutex<UnboundedReceiver<GameServerWorkItem>>>,
-    states: Arc<Mutex<HashMap<String, QueueEntryState>>>,
-    retries: Arc<Mutex<HashMap<String, u32>>>,
-}
+type GameServerWorkQueue =
+    ControllerWorkQueue<GameServerWorkItem, FastSlowRetryPolicy>;
 
-impl GameServerWorkQueue {
-    fn new(lane: GameServerQueueLane) -> Self {
-        let (sender, receiver) = unbounded();
-        Self {
-            lane,
-            sender,
-            receiver: Arc::new(AsyncMutex::new(receiver)),
-            states: Arc::new(Mutex::new(HashMap::new())),
-            retries: Arc::new(Mutex::new(HashMap::new())),
-        }
-    }
-
-    fn enqueue(&self, item: GameServerWorkItem) {
-        debug_assert_eq!(item.lane, self.lane);
-        let key = item.key();
-        let mut states = self
-            .states
-            .lock()
-            .unwrap_or_else(std::sync::PoisonError::into_inner);
-
-        match states.get_mut(&key) {
-            Some(QueueEntryState::Waiting) => {}
-            Some(QueueEntryState::Processing { dirty }) => {
-                *dirty = true;
-            }
-            None => {
-                states.insert(key, QueueEntryState::Waiting);
-                // The receiver is owned for the lifetime of this queue, so a
-                // send failure can only happen during teardown.
-                let _ = self.sender.unbounded_send(item);
-            }
-        }
-    }
-
-    async fn next(&self) -> Option<GameServerWorkItem> {
-        let item = {
-            let mut receiver = self.receiver.lock().await;
-            receiver.next().await?
-        };
-
-        let key = item.key();
-        let mut states = self
-            .states
-            .lock()
-            .unwrap_or_else(std::sync::PoisonError::into_inner);
-        states.insert(
-            key,
-            QueueEntryState::Processing { dirty: false },
-        );
-        Some(item)
-    }
-
-    fn complete_success(&self, item: &GameServerWorkItem) {
-        let key = item.key();
-        self.retries
-            .lock()
-            .unwrap_or_else(std::sync::PoisonError::into_inner)
-            .remove(&key);
-
-        let mut states = self
-            .states
-            .lock()
-            .unwrap_or_else(std::sync::PoisonError::into_inner);
-        let dirty = matches!(
-            states.get(&key),
-            Some(QueueEntryState::Processing { dirty: true })
-        );
-
-        if dirty {
-            states.insert(key, QueueEntryState::Waiting);
-            let _ = self.sender.unbounded_send(item.clone());
-        } else {
-            states.remove(&key);
-        }
-    }
-
-    fn record_failure(&self, item: &GameServerWorkItem) -> Duration {
-        let key = item.key();
-        let mut retries = self
-            .retries
-            .lock()
-            .unwrap_or_else(std::sync::PoisonError::into_inner);
-        let retries_before_this_retry = retries.get(&key).copied().unwrap_or(0);
-        retries.insert(key, retries_before_this_retry.saturating_add(1));
-        Duration::from_millis(game_server_retry_delay_ms(
-            retries_before_this_retry,
-        ))
-    }
-
-    fn complete_retry(&self, item: &GameServerWorkItem) {
-        let key = item.key();
-        let mut states = self
-            .states
-            .lock()
-            .unwrap_or_else(std::sync::PoisonError::into_inner);
-
-        if matches!(
-            states.get(&key),
-            Some(QueueEntryState::Processing { .. })
-        ) {
-            states.insert(key, QueueEntryState::Waiting);
-            let _ = self.sender.unbounded_send(item.clone());
-        }
-    }
-
-    #[cfg(test)]
-    fn retry_count(&self, item: &GameServerWorkItem) -> u32 {
-        self.retries
-            .lock()
-            .unwrap_or_else(std::sync::PoisonError::into_inner)
-            .get(&item.key())
-            .copied()
-            .unwrap_or(0)
+fn game_server_retry_policy() -> FastSlowRetryPolicy {
+    FastSlowRetryPolicy {
+        fast_retries: GAME_SERVER_FAST_RETRIES,
+        fast_delay: Duration::from_millis(GAME_SERVER_FAST_RETRY_DELAY_MS),
+        slow_delay: Duration::from_millis(GAME_SERVER_SLOW_RETRY_DELAY_MS),
     }
 }
 
@@ -191,9 +75,9 @@ pub struct GameServerWorkQueues {
 impl Default for GameServerWorkQueues {
     fn default() -> Self {
         Self {
-            main: GameServerWorkQueue::new(GameServerQueueLane::Main),
-            creation: GameServerWorkQueue::new(GameServerQueueLane::Creation),
-            deletion: GameServerWorkQueue::new(GameServerQueueLane::Deletion),
+            main: GameServerWorkQueue::new(game_server_retry_policy()),
+            creation: GameServerWorkQueue::new(game_server_retry_policy()),
+            deletion: GameServerWorkQueue::new(game_server_retry_policy()),
         }
     }
 }
@@ -354,7 +238,7 @@ mod tests {
 
     #[tokio::test]
     async fn queue_deduplicates_waiting_work_and_requeues_dirty_processing_once() {
-        let queue = GameServerWorkQueue::new(GameServerQueueLane::Main);
+        let queue = GameServerWorkQueue::new(game_server_retry_policy());
         let item = work_item(GameServerQueueLane::Main);
 
         queue.enqueue(item.clone());
@@ -378,7 +262,7 @@ mod tests {
 
     #[tokio::test]
     async fn retry_counter_uses_fast_then_slow_policy_and_resets_on_success() {
-        let queue = GameServerWorkQueue::new(GameServerQueueLane::Main);
+        let queue = GameServerWorkQueue::new(game_server_retry_policy());
         let item = work_item(GameServerQueueLane::Main);
         queue.enqueue(item.clone());
         assert_eq!(queue.next().await, Some(item.clone()));

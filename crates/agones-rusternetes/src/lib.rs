@@ -4,6 +4,7 @@
 //! `agones-core` remains runtime-independent.
 
 mod agones_resource_deletion;
+mod controller_work_queue;
 mod creating_gameserver_controller;
 mod development_gameserver_controller;
 mod deleting_gameserver_controller;
@@ -12,6 +13,7 @@ mod game_server_pod;
 mod gameserver_controller_pipeline;
 mod gameserver_controller_runtime;
 mod gameserver_controller_watch;
+mod health_controller_runtime;
 mod health_gameserver_controller;
 mod missing_pod_gameserver_controller;
 mod per_node_counter;
@@ -50,6 +52,11 @@ pub use gameserver_controller_watch::{
     GameServerControllerWatchStream, GameServerQueueLane, GameServerWorkItem,
     RebuildGameServerControllerWatchState, RouteGameServerControllerEvent,
     queue_lane, watch_game_server_controller_events,
+};
+pub use health_controller_runtime::{
+    HealthControllerWatchStream, HealthControllerWorkItem,
+    RunHealthGameServerController, SyncHealthGameServer,
+    route_health_controller_event, watch_health_controller_events,
 };
 pub use health_gameserver_controller::{
     ReconcileHealthGameServer, failed_container, failed_pod, is_unhealthy_pod,
