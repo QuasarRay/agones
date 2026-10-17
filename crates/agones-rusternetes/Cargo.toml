@@ -15,11 +15,10 @@ rusternetes-common.workspace = true
 rusternetes-storage.workspace = true
 serde.workspace = true
 serde_json.workspace = true
+tokio.workspace = true
 
 [build-dependencies]
 genco.workspace = true
 serde_json.workspace = true
 serde_yaml.workspace = true
 
-[dev-dependencies]
-tokio.workspace = true
