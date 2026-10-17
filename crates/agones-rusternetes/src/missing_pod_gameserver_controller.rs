@@ -449,7 +449,7 @@ mod tests {
         let mut deleting = queued.clone();
         deleting.metadata.deletion_timestamp =
             Some("2026-10-17T00:00:00Z".into());
-        repository.update(&deleting).await.unwrap();
+        let deleting = repository.update(&deleting).await.unwrap();
 
         let controller = CreatingGameServerController::new(storage.clone());
         assert!(
