@@ -39,7 +39,8 @@ pub use agones_resource_deletion::{
     request_agones_resource_deletion, DeletionRequestOutcome,
 };
 pub use creating_gameserver_controller::{
-    CreatingGameServerController, ReconcileCreatingGameServer,
+    CreatingGameServerController, MoveGameServerToError,
+    ReconcileCreatingGameServer, pod_creation_error_moves_game_server_to_error,
 };
 pub use development_gameserver_controller::{
     DevelopmentGameServerController, ReconcileDevelopmentGameServer,
