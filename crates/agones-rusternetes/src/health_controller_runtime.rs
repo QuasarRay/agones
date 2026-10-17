@@ -1,5 +1,6 @@
 use std::sync::Arc;
 
+use agones_core::GameServer;
 use cgp::prelude::*;
 use futures::stream::FuturesUnordered;
 use futures::StreamExt;
@@ -7,16 +8,34 @@ use rusternetes_common::resources::Pod;
 use rusternetes_storage::{Storage, WatchEvent, build_prefix};
 
 use crate::controller_work_queue::{
-    ControllerWorkQueue, DefaultControllerRetryPolicy, NamespacedWorkItem,
+    ControllerWorkItem, ControllerWorkQueue, DefaultControllerRetryPolicy,
 };
 use crate::{
-    AdapterError, AgonesRepository, GameServer, PodBuildFeatures,
+    AdapterError, AgonesRepository, PodBuildFeatures,
     ReconcileHealthGameServer, is_game_server_pod,
     should_enqueue_unhealthy_pod,
 };
 
 pub type HealthControllerWatchStream =
     futures::stream::BoxStream<'static, Result<WatchEvent, AdapterError>>;
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct HealthControllerWorkItem {
+    pub namespace: String,
+    pub name: String,
+}
+
+impl HealthControllerWorkItem {
+    pub fn key(&self) -> String {
+        format!("{}/{}", self.namespace, self.name)
+    }
+}
+
+impl ControllerWorkItem for HealthControllerWorkItem {
+    fn work_key(&self) -> String {
+        self.key()
+    }
+}
 
 /// Cluster-wide Pod stream used by upstream HealthController.
 ///
@@ -32,7 +51,7 @@ where
     Ok(Box::pin(stream.map(|event| event.map_err(AdapterError::from))))
 }
 
-fn work_item_from_pod(pod: &Pod) -> Option<NamespacedWorkItem> {
+fn work_item_from_pod(pod: &Pod) -> Option<HealthControllerWorkItem> {
     let namespace = pod
         .metadata
         .namespace
@@ -42,7 +61,7 @@ fn work_item_from_pod(pod: &Pod) -> Option<NamespacedWorkItem> {
         return None;
     }
 
-    Some(NamespacedWorkItem {
+    Some(HealthControllerWorkItem {
         namespace: namespace.to_owned(),
         name: pod.metadata.name.clone(),
     })
@@ -58,7 +77,7 @@ pub fn route_health_controller_event(
     event: WatchEvent,
     features: PodBuildFeatures,
     wait_on_free_ports: bool,
-) -> Result<Option<NamespacedWorkItem>, AdapterError> {
+) -> Result<Option<HealthControllerWorkItem>, AdapterError> {
     match event {
         WatchEvent::Added(_, _) => Ok(None),
         WatchEvent::Modified(_, raw) => {
@@ -113,7 +132,7 @@ where
 async fn run_health_worker<C, S>(
     controller: &C,
     queue: ControllerWorkQueue<
-        NamespacedWorkItem,
+        HealthControllerWorkItem,
         DefaultControllerRetryPolicy,
     >,
 ) -> Result<(), AdapterError>
