@@ -1238,7 +1238,11 @@ mod tests {
         game_server.metadata.namespace = "arena".to_owned();
 
         let created = repository.create(&game_server).await.unwrap();
-        assert_eq!(created, game_server);
+        assert_eq!(created.metadata.name, game_server.metadata.name);
+        assert_eq!(created.metadata.namespace, game_server.metadata.namespace);
+        assert!(!created.metadata.uid.is_empty());
+        assert!(created.metadata.extensions["creationTimestamp"].is_string());
+        game_server = created;
 
         let key = rusternetes_custom_resource_key::<GameServer>("arena", "server-1");
         let stored: CustomResource = storage.get(&key).await.unwrap();
@@ -1257,6 +1261,7 @@ mod tests {
             updated.metadata.annotations.get("updated").map(String::as_str),
             Some("true")
         );
+        game_server = updated;
 
         let listed: Vec<GameServer> = repository.list("arena").await.unwrap();
         assert_eq!(listed, vec![game_server.clone()]);
