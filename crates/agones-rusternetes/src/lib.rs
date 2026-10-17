@@ -9,6 +9,7 @@ mod development_gameserver_controller;
 mod deleting_gameserver_controller;
 mod game_server_event;
 mod game_server_pod;
+mod health_gameserver_controller;
 mod missing_pod_gameserver_controller;
 mod pod_deletion;
 mod port_allocation_gameserver_controller;
@@ -29,6 +30,11 @@ pub use creating_gameserver_controller::{
 pub use development_gameserver_controller::DevelopmentGameServerController;
 pub use deleting_gameserver_controller::ReconcileDeletingGameServer;
 pub use game_server_pod::game_server_pod;
+pub use health_gameserver_controller::{
+    ReconcileHealthGameServer, failed_container, failed_pod, is_unhealthy_pod,
+    pod_evicted, should_enqueue_unhealthy_pod, skip_unhealthy_game_container,
+    unschedulable_with_no_free_ports,
+};
 pub use missing_pod_gameserver_controller::{
     ReconcileMissingPodGameServer, is_before_pod_created, is_game_server_pod,
     should_enqueue_missing_pod_game_server,
@@ -578,6 +584,7 @@ pub enum AdapterError {
     ContainerNotFound(String),
     Hook(String),
     StateUpdateLimiter(StateUpdateLimiterError),
+    PodGameServerOutOfSync(String),
 }
 
 impl fmt::Display for AdapterError {
@@ -613,6 +620,10 @@ impl fmt::Display for AdapterError {
             }
             Self::Hook(error) => f.write_str(error),
             Self::StateUpdateLimiter(error) => write!(f, "state update limiter failed: {error}"),
+            Self::PodGameServerOutOfSync(name) => write!(
+                f,
+                "Pod and GameServer {name} ready-container data are out of sync"
+            ),
         }
     }
 }

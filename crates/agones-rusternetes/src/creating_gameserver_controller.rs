@@ -24,6 +24,8 @@ pub struct CreatingGameServerController<S, H = NoopApiHooks> {
     pub port_allocator: Arc<PortAllocator>,
     pub unhealthy_limiter: Arc<StateUpdateLimiter>,
     pub shutdown_limiter: Arc<StateUpdateLimiter>,
+    pub health_unhealthy_limiter: Arc<StateUpdateLimiter>,
+    pub wait_on_free_ports: bool,
 }
 
 impl<S> CreatingGameServerController<S, NoopApiHooks> {
@@ -52,6 +54,8 @@ impl<S, H> CreatingGameServerController<S, H> {
             port_allocator: Arc::new(PortAllocator::empty()),
             unhealthy_limiter: Arc::new(StateUpdateLimiter::new()),
             shutdown_limiter: Arc::new(StateUpdateLimiter::new()),
+            health_unhealthy_limiter: Arc::new(StateUpdateLimiter::new()),
+            wait_on_free_ports: false,
         }
     }
 
@@ -67,6 +71,19 @@ impl<S, H> CreatingGameServerController<S, H> {
 
     pub fn with_shutdown_limiter(mut self, limiter: StateUpdateLimiter) -> Self {
         self.shutdown_limiter = Arc::new(limiter);
+        self
+    }
+
+    pub fn with_health_unhealthy_limiter(
+        mut self,
+        limiter: StateUpdateLimiter,
+    ) -> Self {
+        self.health_unhealthy_limiter = Arc::new(limiter);
+        self
+    }
+
+    pub fn with_wait_on_free_ports(mut self, wait_on_free_ports: bool) -> Self {
+        self.wait_on_free_ports = wait_on_free_ports;
         self
     }
 }
