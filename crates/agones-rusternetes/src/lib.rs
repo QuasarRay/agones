@@ -16,6 +16,7 @@ mod gameserver_controller_runtime;
 mod gameserver_controller_stack_runtime;
 mod gameserver_controller_watch;
 mod gameserver_pod_augmentation;
+mod gameserverset_state_cache;
 mod health_controller_runtime;
 mod health_gameserver_controller;
 mod missing_pod_controller_runtime;
@@ -67,6 +68,9 @@ pub use gameserver_controller_watch::{
     GameServerControllerWatchStream, GameServerQueueLane, GameServerWorkItem,
     RebuildGameServerControllerWatchState, RouteGameServerControllerEvent,
     queue_lane, watch_game_server_controller_events,
+};
+pub use gameserverset_state_cache::{
+    GameServerSetCacheEntry, GameServerStateCache,
 };
 pub use gameserver_pod_augmentation::{
     GRPC_PORT_ENV_VAR, HTTP_PORT_ENV_VAR, SDK_SERVER_SIDECAR_NAME,
