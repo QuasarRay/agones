@@ -15,6 +15,7 @@ mod gameserver_admission;
 mod gameserverset_admission;
 mod gameserverset_controller;
 mod gameserverset_controller_runtime;
+mod gameserverset_controller_stack_runtime;
 mod gameserver_controller_pipeline;
 mod gameserver_controller_runtime;
 mod gameserver_controller_stack_runtime;
@@ -95,6 +96,7 @@ pub use gameserverset_controller_runtime::{
     game_server_set_retry_delay_ms,
     watch_game_server_set_controller_events,
 };
+pub use gameserverset_controller_stack_runtime::RunGameServerSetControllerStack;
 pub use gameserver_controller_pipeline::{
     GameServerSyncOutcome, ReconcileGameServerPipeline, SyncGameServer,
 };
