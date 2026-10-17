@@ -88,7 +88,7 @@ impl PortRangeAllocator {
         for game_server in game_servers {
             for port in &game_server.spec.ports {
                 if !matches!(
-                    port.port_policy,
+                    port.port_policy.as_ref(),
                     Some(PortPolicy::Dynamic | PortPolicy::Passthrough)
                 ) {
                     continue;
@@ -178,7 +178,7 @@ impl PortRangeAllocator {
 
         for port in &mut game_server.spec.ports {
             if !matches!(
-                port.port_policy,
+                port.port_policy.as_ref(),
                 Some(PortPolicy::Dynamic | PortPolicy::Passthrough)
             ) || port.range != self.name
             {
@@ -192,14 +192,14 @@ impl PortRangeAllocator {
 
             let original = port.clone();
             port.host_port = allocated_port;
-            if port.port_policy == Some(PortPolicy::Passthrough) {
+            if port.port_policy.as_ref() == Some(&PortPolicy::Passthrough) {
                 port.container_port = allocated_port;
             }
 
-            if original.protocol == Some(Protocol::TcpUdp) {
+            if original.protocol.as_ref() == Some(&Protocol::TcpUdp) {
                 let mut duplicate = original;
                 duplicate.host_port = allocated_port;
-                if duplicate.port_policy == Some(PortPolicy::Passthrough) {
+                if duplicate.port_policy.as_ref() == Some(&PortPolicy::Passthrough) {
                     duplicate.container_port = allocated_port;
                 }
 
@@ -360,7 +360,7 @@ impl PortAllocator {
 
         if let Some(port) = allocated.spec.ports.iter().find(|port| {
             matches!(
-                port.port_policy,
+                port.port_policy.as_ref(),
                 Some(PortPolicy::Dynamic | PortPolicy::Passthrough)
             ) && port.host_port == 0
         }) {
