@@ -32,6 +32,7 @@ mod succeeded_controller_runtime;
 mod succeeded_gameserver_controller;
 mod starting_gameserver_controller;
 mod shutdown_gameserver_controller;
+mod sdk_sidecar;
 
 pub use agones_resource_deletion::{
     request_agones_resource_deletion, DeletionRequestOutcome,
@@ -129,6 +130,9 @@ pub use starting_gameserver_controller::{
     apply_game_server_pod_ips, node_address,
 };
 pub use shutdown_gameserver_controller::ReconcileShutdownGameServer;
+pub use sdk_sidecar::{
+    SdkSidecarConfig, build_sdk_sidecar, default_sidecar_security_context,
+};
 
 use std::collections::{BTreeMap, HashMap};
 use std::error::Error;

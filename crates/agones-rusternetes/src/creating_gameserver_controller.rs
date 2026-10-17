@@ -7,9 +7,9 @@ use rusternetes_storage::{build_key, Storage};
 
 use crate::{
     augment_game_server_pod, build_pod, game_server_pod, AdapterError,
-    AgonesRepository, ApiHooks, NoopApiHooks,
+    AgonesRepository, ApiHooks, NoopApiHooks, SdkSidecarConfig,
     GameServerControllerWatchState, PodBuildFeatures, PortAllocator,
-    StateUpdateLimiter,
+    StateUpdateLimiter, build_sdk_sidecar,
 };
 
 /// CGP context for the upstream GameServer `Creating` reconciliation slice.
@@ -21,6 +21,7 @@ use crate::{
 pub struct CreatingGameServerController<S, H = NoopApiHooks> {
     pub storage: Arc<S>,
     pub sidecars: Vec<Container>,
+    pub sdk_sidecar: Option<SdkSidecarConfig>,
     pub pod_build_features: PodBuildFeatures,
     pub hooks: H,
     pub port_allocator: Arc<PortAllocator>,
@@ -52,6 +53,7 @@ impl<S, H> CreatingGameServerController<S, H> {
         Self {
             storage: Arc::new(storage),
             sidecars,
+            sdk_sidecar: None,
             pod_build_features,
             hooks,
             port_allocator: Arc::new(PortAllocator::empty()),
@@ -92,6 +94,11 @@ impl<S, H> CreatingGameServerController<S, H> {
         self.wait_on_free_ports = wait_on_free_ports;
         self
     }
+
+    pub fn with_sdk_sidecar_config(mut self, config: SdkSidecarConfig) -> Self {
+        self.sdk_sidecar = Some(config);
+        self
+    }
 }
 
 /// Mirrors the isolated behavior of upstream `syncGameServerCreatingState`.
@@ -106,6 +113,7 @@ pub async fn reconcile_creating_game_server<S, H>(
     &self,
     #[implicit] storage: Arc<S>,
     #[implicit] sidecars: Vec<Container>,
+    #[implicit] sdk_sidecar: Option<SdkSidecarConfig>,
     #[implicit] pod_build_features: PodBuildFeatures,
     #[implicit] hooks: H,
     game_server: GameServer,
@@ -142,6 +150,11 @@ where
             // Upstream performs this normalization only in the Pod-missing
             // branch immediately before Pod construction.
             game_server.split_static_tcp_udp_ports();
+
+            let mut sidecars = sidecars;
+            if let Some(config) = sdk_sidecar.as_ref() {
+                sidecars.push(build_sdk_sidecar(&game_server, config)?);
+            }
 
             let mut pod = build_pod(
                 &game_server,
