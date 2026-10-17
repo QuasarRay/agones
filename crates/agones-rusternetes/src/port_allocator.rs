@@ -638,4 +638,27 @@ mod tests {
         assert_ne!(third.spec.ports[0].host_port, second.spec.ports[0].host_port);
     }
 
+    #[tokio::test]
+    async fn unmatched_named_range_is_left_untouched() {
+        let allocator = allocator();
+        allocator
+            .sync_from_snapshot(&[], &[node("node-a", false)])
+            .await;
+
+        let source = game_server(
+            "unmatched",
+            vec![port(
+                "unmatched",
+                "other",
+                PortPolicy::Dynamic,
+                Protocol::Udp,
+            )],
+            "",
+        );
+        let allocated = allocator.allocate(&source).await.unwrap();
+
+        assert_eq!(allocated.spec.ports[0].host_port, 0);
+        assert_eq!(allocated.spec.ports[0].range, "other");
+    }
+
 }
