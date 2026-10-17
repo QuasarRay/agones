@@ -2,7 +2,8 @@ use std::collections::HashSet;
 use std::net::IpAddr;
 use std::sync::Arc;
 
-use agones_core::{GameServer, GameServerState, NodeAddress as CoreNodeAddress};
+use agones_core::{GameServer, GameServerState};
+use agones_core::gameserver::NodeAddress as CoreNodeAddress;
 use cgp::prelude::*;
 use rusternetes_common::resources::{Node, Pod};
 use rusternetes_storage::{build_key, Storage};
