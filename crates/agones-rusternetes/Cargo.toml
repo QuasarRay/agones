@@ -9,6 +9,7 @@ rust-version.workspace = true
 [dependencies]
 agones-core = { path = "../agones-core" }
 rusternetes-common.workspace = true
+rusternetes-storage.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 
@@ -16,3 +17,6 @@ serde_json.workspace = true
 genco.workspace = true
 serde_json.workspace = true
 serde_yaml.workspace = true
+
+[dev-dependencies]
+tokio.workspace = true
