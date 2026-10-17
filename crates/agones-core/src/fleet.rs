@@ -1606,7 +1606,9 @@ mod tests {
         )
         .unwrap();
 
-        assert_eq!(plan.active_replicas, 9);
+        // Recreate reserves room for Allocated GameServers in every inactive
+        // set, including sets whose desired replicas are already zero.
+        assert_eq!(plan.active_replicas, 8);
         assert_eq!(
             plan.inactive_scales,
             vec![FleetGameServerSetScale {
