@@ -1,4 +1,7 @@
-use std::collections::BTreeMap;
+use std::{cmp::Ordering, collections::{BTreeMap, HashMap}};
+
+use chrono::{DateTime, Utc};
+use agones_macros::agones_invariant;
 
 use serde::{Deserialize, Serialize};
 
@@ -9,6 +12,21 @@ use crate::gameserver::{
 
 pub const GAME_SERVER_SET_GAME_SERVER_LABEL: &str = "agones.dev/gameserverset";
 pub const FLEET_NAME_LABEL: &str = "agones.dev/fleet";
+pub const GAME_SERVER_ERRORED_AT_ANNOTATION: &str = "agones.dev/errored-at";
+pub const GAME_SERVER_ERROR_DELETION_DELAY_SECONDS: i64 = 30;
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct NodeCount {
+    pub ready: i64,
+    pub allocated: i64,
+}
+
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
+pub struct GameServerSetReconciliationAction {
+    pub num_servers_to_add: i32,
+    pub to_delete: Vec<GameServer>,
+    pub is_partial: bool,
+}
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -271,6 +289,305 @@ impl GameServerSet {
         );
 
         game_server
+    }
+}
+
+
+fn priority_order(
+    left: &GameServer,
+    right: &GameServer,
+    priorities: &[Priority],
+) -> Option<Ordering> {
+    left.compare_count_and_list_priorities(priorities, right)
+        .map(|left_before_right| {
+            if left_before_right {
+                Ordering::Less
+            } else {
+                Ordering::Greater
+            }
+        })
+}
+
+fn game_server_creation_timestamp(game_server: &GameServer) -> Option<DateTime<Utc>> {
+    game_server
+        .metadata
+        .extensions
+        .get("creationTimestamp")
+        .and_then(serde_json::Value::as_str)
+        .and_then(|value| DateTime::parse_from_rfc3339(value).ok())
+        .map(|value| value.with_timezone(&Utc))
+}
+
+/// Sorts scale-down candidates with the same strategy boundary as upstream
+/// `gameserversets.SortGameServersByStrategy`.
+///
+/// Packed scheduling empties the least-full node first. Distributed scheduling
+/// uses counter/list priorities first and then creation timestamp. Kubernetes
+/// metadata fields that are not explicitly modeled by `ObjectMeta`, including
+/// `creationTimestamp`, remain available through its flattened extension map.
+pub fn sort_game_servers_by_strategy(
+    strategy: &SchedulingStrategy,
+    game_servers: &mut [GameServer],
+    counts: &HashMap<String, NodeCount>,
+    priorities: &[Priority],
+) {
+    if matches!(strategy, SchedulingStrategy::Packed) {
+        game_servers.sort_by(|left, right| {
+            let left_count = counts.get(left.status.node_name.as_str());
+            let right_count = counts.get(right.status.node_name.as_str());
+
+            match (left_count, right_count) {
+                (None, Some(_)) => return Ordering::Less,
+                (Some(_), None) => return Ordering::Greater,
+                (None, None) => {
+                    return left.metadata.name.cmp(&right.metadata.name);
+                }
+                (Some(left_count), Some(right_count)) => {
+                    if left.status.node_name == right.status.node_name {
+                        if left.is_before_ready()
+                            && right.status.state == Some(GameServerState::Ready)
+                        {
+                            return Ordering::Less;
+                        }
+                        if right.is_before_ready()
+                            && left.status.state == Some(GameServerState::Ready)
+                        {
+                            return Ordering::Greater;
+                        }
+                    }
+
+                    let left_total = left_count.allocated + left_count.ready;
+                    let right_total = right_count.allocated + right_count.ready;
+                    match left_total.cmp(&right_total) {
+                        Ordering::Less => return Ordering::Less,
+                        Ordering::Greater => return Ordering::Greater,
+                        Ordering::Equal => {}
+                    }
+
+                    if left.status.node_name == right.status.node_name {
+                        if let Some(ordering) = priority_order(left, right, priorities) {
+                            return ordering;
+                        }
+                        return left.metadata.name.cmp(&right.metadata.name);
+                    }
+
+                    left.status.node_name.cmp(&right.status.node_name)
+                }
+            }
+        });
+        return;
+    }
+
+    game_servers.sort_by(|left, right| {
+        if let Some(ordering) = priority_order(left, right, priorities) {
+            return ordering;
+        }
+
+        match (
+            game_server_creation_timestamp(left),
+            game_server_creation_timestamp(right),
+        ) {
+            (Some(left), Some(right)) => left
+                .cmp(&right)
+                .then_with(|| left.to_rfc3339().cmp(&right.to_rfc3339())),
+            // Kubernetes' zero-value creation timestamp sorts before real
+            // timestamps in the upstream comparator.
+            (None, Some(_)) => Ordering::Less,
+            (Some(_), None) => Ordering::Greater,
+            (None, None) => left.metadata.name.cmp(&right.metadata.name),
+        }
+    });
+}
+
+/// Deterministic form of upstream `shouldDeleteErroredGameServer`.
+///
+/// The Go controller uses `time.Now()` implicitly. Passing `now` explicitly
+/// makes the same rule directly testable and suitable for Kani/Bolero-style
+/// pure-domain verification.
+pub fn should_delete_errored_game_server_at(
+    game_server: &GameServer,
+    now: DateTime<Utc>,
+) -> bool {
+    let Some(errored_at) = game_server
+        .metadata
+        .annotations
+        .get(GAME_SERVER_ERRORED_AT_ANNOTATION)
+    else {
+        return true;
+    };
+
+    let Ok(errored_at) = DateTime::parse_from_rfc3339(errored_at) else {
+        return true;
+    };
+    let errored_at = errored_at.with_timezone(&Utc);
+
+    now.signed_duration_since(errored_at).num_seconds()
+        >= GAME_SERVER_ERROR_DELETION_DELAY_SECONDS
+}
+
+
+fn bounded_creation_count(
+    up_count: i32,
+    target_replica_count: i32,
+    max_creations: i32,
+    pod_pending_count: i32,
+    max_pending: i32,
+) -> (i32, bool) {
+    if up_count >= target_replica_count {
+        return (0, false);
+    }
+
+    let original = target_replica_count - up_count;
+    let mut count = original.min(max_creations.max(0));
+
+    if count + pod_pending_count > max_pending {
+        count = (max_pending - pod_pending_count).max(0);
+    }
+
+    (count, count != original)
+}
+
+#[agones_invariant]
+fn gameserverset_creation_batch_respects_caps(
+    input: (u16, u16, u16, u16, u16),
+) -> bool {
+    let (up_count, target, max_creations, pending, max_pending) = input;
+    let up_count = i32::from(up_count);
+    let target = i32::from(target);
+    let max_creations = i32::from(max_creations);
+    let pending = i32::from(pending);
+    let max_pending = i32::from(max_pending);
+
+    let (count, _) = bounded_creation_count(
+        up_count,
+        target,
+        max_creations,
+        pending,
+        max_pending,
+    );
+
+    count >= 0
+        && count <= max_creations
+        && count <= (target - up_count).max(0)
+        && count + pending <= max_pending.max(pending)
+}
+
+/// Pure port of upstream `gameserversets.computeReconciliationAction`.
+///
+/// It computes only intent: how many GameServers to create, which existing
+/// GameServers should transition to Shutdown, and whether another immediate
+/// reconciliation is required. API writes remain a Rusternetes responsibility.
+pub fn compute_game_server_set_reconciliation_action(
+    strategy: &SchedulingStrategy,
+    game_servers: &[GameServer],
+    counts: &HashMap<String, NodeCount>,
+    target_replica_count: i32,
+    max_creations: i32,
+    max_deletions: i32,
+    max_pending: i32,
+    priorities: &[Priority],
+    now: DateTime<Utc>,
+) -> GameServerSetReconciliationAction {
+    let mut up_count = 0i32;
+    let mut delete_count = 0i32;
+    let mut pod_pending_count = 0i32;
+    let mut potential_deletions = Vec::new();
+    let mut to_delete = Vec::new();
+
+    // Pass 1: allocated/reserved servers are not normally deletable and always
+    // count toward the target.
+    for game_server in game_servers {
+        if !game_server.is_deletable() {
+            up_count += 1;
+        }
+    }
+
+    // Pass 2: classify all remaining states.
+    for game_server in game_servers {
+        if !game_server.is_deletable() || game_server.is_being_deleted() {
+            continue;
+        }
+
+        let mut handle_up = false;
+        match game_server.status.state.as_ref() {
+            Some(
+                GameServerState::PortAllocation
+                | GameServerState::Creating
+                | GameServerState::Starting
+                | GameServerState::Scheduled,
+            ) => {
+                pod_pending_count += 1;
+                handle_up = true;
+            }
+            Some(
+                GameServerState::RequestReady
+                | GameServerState::Ready
+                | GameServerState::Reserved,
+            ) => {
+                handle_up = true;
+            }
+            Some(GameServerState::Error) => {
+                if should_delete_errored_game_server_at(game_server, now) {
+                    to_delete.push(game_server.clone());
+                    delete_count -= 1;
+                } else {
+                    pod_pending_count += 1;
+                    handle_up = true;
+                }
+            }
+            Some(GameServerState::Unhealthy) => {
+                to_delete.push(game_server.clone());
+                delete_count -= 1;
+            }
+            _ => {
+                // Unknown/unrecognized states are conservatively considered up,
+                // matching the Go controller.
+                handle_up = true;
+            }
+        }
+
+        if handle_up {
+            if up_count >= target_replica_count {
+                delete_count += 1;
+            } else {
+                up_count += 1;
+            }
+            potential_deletions.push(game_server.clone());
+        }
+    }
+
+    let (num_servers_to_add, mut is_partial) = bounded_creation_count(
+        up_count,
+        target_replica_count,
+        max_creations,
+        pod_pending_count,
+        max_pending,
+    );
+
+    if delete_count > 0 {
+        sort_game_servers_by_strategy(
+            strategy,
+            &mut potential_deletions,
+            counts,
+            priorities,
+        );
+        to_delete.extend(
+            potential_deletions
+                .into_iter()
+                .take(delete_count as usize),
+        );
+    }
+
+    let max_deletions = max_deletions.max(0) as usize;
+    if to_delete.len() > max_deletions {
+        to_delete.truncate(max_deletions);
+        is_partial = true;
+    }
+
+    GameServerSetReconciliationAction {
+        num_servers_to_add,
+        to_delete,
+        is_partial,
     }
 }
 
@@ -1059,6 +1376,351 @@ mod tests {
             false,
         );
         assert!(disabled.players.is_none());
+    }
+
+
+    fn named_game_server_with_state(name: &str, state: GameServerState) -> GameServer {
+        let mut game_server = game_server_with_state(state);
+        game_server.metadata.name = name.into();
+        game_server
+    }
+
+    #[test]
+    fn reconciliation_action_matches_upstream_batch_and_state_rules() {
+        let now = Utc::now();
+        let distributed = SchedulingStrategy::Distributed;
+        let counts = HashMap::new();
+
+        let cases = vec![
+            (
+                "empty",
+                Vec::<GameServer>::new(),
+                0,
+                0,
+                0,
+                false,
+            ),
+            (
+                "add",
+                vec![game_server_with_state(GameServerState::Ready)],
+                3,
+                2,
+                0,
+                false,
+            ),
+            (
+                "creation batch limit",
+                vec![game_server_with_state(GameServerState::Ready)],
+                30,
+                3,
+                0,
+                true,
+            ),
+            (
+                "pending limit",
+                vec![
+                    game_server_with_state(GameServerState::Creating),
+                    game_server_with_state(GameServerState::PortAllocation),
+                ],
+                30,
+                1,
+                0,
+                true,
+            ),
+            (
+                "delete",
+                vec![
+                    game_server_with_state(GameServerState::Ready),
+                    game_server_with_state(GameServerState::Reserved),
+                    game_server_with_state(GameServerState::Ready),
+                ],
+                1,
+                0,
+                2,
+                false,
+            ),
+            (
+                "ignore allocated scale down",
+                vec![
+                    game_server_with_state(GameServerState::Ready),
+                    game_server_with_state(GameServerState::Allocated),
+                    game_server_with_state(GameServerState::Allocated),
+                ],
+                0,
+                0,
+                1,
+                false,
+            ),
+            (
+                "replace unhealthy",
+                vec![
+                    game_server_with_state(GameServerState::Ready),
+                    game_server_with_state(GameServerState::Unhealthy),
+                    game_server_with_state(GameServerState::Unhealthy),
+                ],
+                3,
+                2,
+                2,
+                false,
+            ),
+            (
+                "replace errors without timestamp",
+                vec![
+                    game_server_with_state(GameServerState::Ready),
+                    game_server_with_state(GameServerState::Error),
+                    game_server_with_state(GameServerState::Error),
+                ],
+                3,
+                2,
+                2,
+                false,
+            ),
+        ];
+
+        for (description, servers, target, want_add, want_delete, want_partial) in cases {
+            let action = compute_game_server_set_reconciliation_action(
+                &distributed,
+                &servers,
+                &counts,
+                target,
+                3,
+                3,
+                3,
+                &[],
+                now,
+            );
+            assert_eq!(
+                action.num_servers_to_add, want_add,
+                "{description}: additions"
+            );
+            assert_eq!(
+                action.to_delete.len(), want_delete,
+                "{description}: deletions"
+            );
+            assert_eq!(
+                action.is_partial, want_partial,
+                "{description}: partial"
+            );
+        }
+    }
+
+    #[test]
+    fn reconciliation_action_caps_deletion_batches() {
+        let servers = (0..6)
+            .map(|index| {
+                named_game_server_with_state(
+                    format!("gs{index}").as_str(),
+                    GameServerState::Ready,
+                )
+            })
+            .collect::<Vec<_>>();
+
+        let action = compute_game_server_set_reconciliation_action(
+            &SchedulingStrategy::Distributed,
+            &servers,
+            &HashMap::new(),
+            1,
+            1000,
+            3,
+            1000,
+            &[],
+            Utc::now(),
+        );
+
+        assert_eq!(action.to_delete.len(), 3);
+        assert!(action.is_partial);
+    }
+
+    #[test]
+    fn reconciliation_action_ignores_already_deleting_servers_when_replacing() {
+        let mut deleting_one = game_server_with_state(GameServerState::Unhealthy);
+        deleting_one.metadata.deletion_timestamp =
+            Some("2026-10-18T00:00:00Z".into());
+        let mut deleting_two = deleting_one.clone();
+        deleting_two.metadata.name = "second".into();
+
+        let servers = vec![
+            deleting_one,
+            deleting_two,
+            game_server_with_state(GameServerState::Ready),
+        ];
+
+        let action = compute_game_server_set_reconciliation_action(
+            &SchedulingStrategy::Distributed,
+            &servers,
+            &HashMap::new(),
+            4,
+            3,
+            3,
+            3,
+            &[],
+            Utc::now(),
+        );
+
+        assert_eq!(action.num_servers_to_add, 3);
+        assert!(action.to_delete.is_empty());
+        assert!(!action.is_partial);
+    }
+
+    #[test]
+    fn packed_scale_down_empties_least_full_nodes_first() {
+        let mut gs1 = named_game_server_with_state("gs1", GameServerState::Ready);
+        gs1.status.node_name = "node3".into();
+        let mut gs2 = named_game_server_with_state("gs2", GameServerState::Ready);
+        gs2.status.node_name = "node1".into();
+        let mut gs3 = named_game_server_with_state("gs3", GameServerState::Ready);
+        gs3.status.node_name = "node3".into();
+        let gs4 = named_game_server_with_state("gs4", GameServerState::Ready);
+
+        let counts = HashMap::from([
+            (
+                "node1".into(),
+                NodeCount {
+                    ready: 1,
+                    allocated: 0,
+                },
+            ),
+            (
+                "node3".into(),
+                NodeCount {
+                    ready: 2,
+                    allocated: 0,
+                },
+            ),
+        ]);
+
+        let action = compute_game_server_set_reconciliation_action(
+            &SchedulingStrategy::Packed,
+            &[gs1, gs2, gs3, gs4],
+            &counts,
+            2,
+            1000,
+            1000,
+            1000,
+            &[],
+            Utc::now(),
+        );
+
+        let names = action
+            .to_delete
+            .iter()
+            .map(|game_server| game_server.metadata.name.as_str())
+            .collect::<Vec<_>>();
+        assert_eq!(names, vec!["gs4", "gs2"]);
+    }
+
+    #[test]
+    fn distributed_scale_down_uses_oldest_creation_timestamp_first() {
+        fn with_created(name: &str, created: &str) -> GameServer {
+            let mut game_server =
+                named_game_server_with_state(name, GameServerState::Ready);
+            game_server.metadata.extensions.insert(
+                "creationTimestamp".into(),
+                serde_json::Value::String(created.into()),
+            );
+            game_server
+        }
+
+        let servers = vec![
+            with_created("gs1", "2026-10-18T00:00:10Z"),
+            with_created("gs2", "2026-10-18T00:00:00Z"),
+            with_created("gs3", "2026-10-18T00:00:40Z"),
+            with_created("gs4", "2026-10-18T00:00:30Z"),
+        ];
+
+        let action = compute_game_server_set_reconciliation_action(
+            &SchedulingStrategy::Distributed,
+            &servers,
+            &HashMap::new(),
+            2,
+            1000,
+            1000,
+            1000,
+            &[],
+            Utc::now(),
+        );
+
+        let names = action
+            .to_delete
+            .iter()
+            .map(|game_server| game_server.metadata.name.as_str())
+            .collect::<Vec<_>>();
+        assert_eq!(names, vec!["gs2", "gs1"]);
+    }
+
+    #[test]
+    fn distributed_sort_applies_counter_priority_before_timestamp() {
+        let mut low_capacity =
+            named_game_server_with_state("low", GameServerState::Ready);
+        low_capacity.status.counters = Some(BTreeMap::from([(
+            "bar".into(),
+            CounterStatus {
+                count: 0,
+                capacity: 100,
+            },
+        )]));
+        low_capacity.metadata.extensions.insert(
+            "creationTimestamp".into(),
+            serde_json::Value::String("2026-10-18T00:00:30Z".into()),
+        );
+
+        let mut high_capacity =
+            named_game_server_with_state("high", GameServerState::Ready);
+        high_capacity.status.counters = Some(BTreeMap::from([(
+            "bar".into(),
+            CounterStatus {
+                count: 0,
+                capacity: 1000,
+            },
+        )]));
+        high_capacity.metadata.extensions.insert(
+            "creationTimestamp".into(),
+            serde_json::Value::String("2026-10-18T00:00:00Z".into()),
+        );
+
+        let priorities = [Priority {
+            priority_type: crate::gameserver::GAME_SERVER_PRIORITY_COUNTER.into(),
+            key: "bar".into(),
+            order: crate::gameserver::GAME_SERVER_PRIORITY_DESCENDING.into(),
+        }];
+        let mut servers = vec![low_capacity, high_capacity];
+        sort_game_servers_by_strategy(
+            &SchedulingStrategy::Distributed,
+            &mut servers,
+            &HashMap::new(),
+            &priorities,
+        );
+
+        assert_eq!(servers[0].metadata.name, "high");
+        assert_eq!(servers[1].metadata.name, "low");
+    }
+
+    #[test]
+    fn errored_gameserver_deletion_delay_matches_upstream() {
+        let now = DateTime::parse_from_rfc3339("2026-10-18T00:01:00Z")
+            .unwrap()
+            .with_timezone(&Utc);
+        let mut game_server = game_server_with_state(GameServerState::Error);
+
+        assert!(should_delete_errored_game_server_at(&game_server, now));
+
+        game_server.metadata.annotations.insert(
+            GAME_SERVER_ERRORED_AT_ANNOTATION.into(),
+            "not-a-timestamp".into(),
+        );
+        assert!(should_delete_errored_game_server_at(&game_server, now));
+
+        game_server.metadata.annotations.insert(
+            GAME_SERVER_ERRORED_AT_ANNOTATION.into(),
+            "2026-10-18T00:00:31Z".into(),
+        );
+        assert!(!should_delete_errored_game_server_at(&game_server, now));
+
+        game_server.metadata.annotations.insert(
+            GAME_SERVER_ERRORED_AT_ANNOTATION.into(),
+            "2026-10-18T00:00:30Z".into(),
+        );
+        assert!(should_delete_errored_game_server_at(&game_server, now));
     }
 
 }
