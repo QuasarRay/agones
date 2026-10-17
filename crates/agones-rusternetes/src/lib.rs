@@ -70,8 +70,10 @@ pub use gameserver_controller_watch::{
 };
 pub use gameserver_pod_augmentation::{
     GRPC_PORT_ENV_VAR, HTTP_PORT_ENV_VAR, SDK_SERVER_SIDECAR_NAME,
+    SERVICE_ACCOUNT_MOUNT_PATH, SERVICE_ACCOUNT_VOLUME_NAME,
     add_game_server_health_check, add_sdk_server_env_vars,
-    augment_game_server_pod, reserved_environment_variable_name,
+    augment_game_server_pod, configure_game_server_service_account,
+    disable_game_server_service_account, reserved_environment_variable_name,
     sdk_environment_variables,
 };
 pub use health_controller_runtime::{
