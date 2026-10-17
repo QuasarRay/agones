@@ -1,5 +1,7 @@
 use std::collections::BTreeMap;
 
+use chrono::{DateTime, Utc};
+
 use agones_macros::{agones_invariant, AgonesStringEnum};
 use serde::{Deserialize, Serialize};
 
@@ -324,6 +326,264 @@ pub fn sum_game_server_sets<'a>(
     value: impl Fn(&GameServerSet) -> i32,
 ) -> i32 {
     sets.into_iter().flatten().map(value).sum()
+}
+
+fn checked_pow_i128(base: i128, exponent: u32) -> Option<i128> {
+    let mut value = 1i128;
+    for _ in 0..exponent {
+        value = value.checked_mul(base)?;
+    }
+    Some(value)
+}
+
+fn gcd_i128(mut left: i128, mut right: i128) -> i128 {
+    left = left.abs();
+    right = right.abs();
+    while right != 0 {
+        let remainder = left % right;
+        left = right;
+        right = remainder;
+    }
+    left.max(1)
+}
+
+/// Parses the practical Kubernetes Quantity forms used in Pod resource maps
+/// into an exact reduced rational. This is for semantic equality, not resource
+/// admission; unparseable/overflowing values remain structurally compared.
+fn quantity_rational(value: &str) -> Option<(i128, i128)> {
+    let value = value.trim();
+    if value.is_empty() {
+        return None;
+    }
+
+    let binary_suffixes = [
+        ("Ki", 10u32),
+        ("Mi", 20),
+        ("Gi", 30),
+        ("Ti", 40),
+        ("Pi", 50),
+        ("Ei", 60),
+    ];
+    let decimal_suffixes = [
+        ("m", -3i32),
+        ("k", 3),
+        ("M", 6),
+        ("G", 9),
+        ("T", 12),
+        ("P", 15),
+        ("E", 18),
+    ];
+
+    let mut mantissa = value;
+    let mut decimal_exponent = 0i32;
+    let mut binary_exponent = None;
+
+    if let Some((suffix, exponent)) = binary_suffixes
+        .iter()
+        .find(|(suffix, _)| value.ends_with(*suffix))
+    {
+        mantissa = value.strip_suffix(*suffix)?;
+        binary_exponent = Some(*exponent);
+    } else if let Some((suffix, exponent)) = decimal_suffixes
+        .iter()
+        .find(|(suffix, _)| value.ends_with(*suffix))
+    {
+        mantissa = value.strip_suffix(*suffix)?;
+        decimal_exponent = *exponent;
+    } else if let Some(index) = value
+        .char_indices()
+        .rev()
+        .find_map(|(index, character)| {
+            matches!(character, 'e' | 'E').then_some(index)
+        })
+    {
+        let exponent = value[index + 1..].parse::<i32>().ok()?;
+        mantissa = &value[..index];
+        decimal_exponent = exponent;
+    }
+
+    let (negative, unsigned) = match mantissa.as_bytes().first() {
+        Some(b'-') => (true, &mantissa[1..]),
+        Some(b'+') => (false, &mantissa[1..]),
+        _ => (false, mantissa),
+    };
+    if unsigned.is_empty() {
+        return None;
+    }
+
+    let mut digits = String::new();
+    let mut fractional_digits = 0u32;
+    let mut seen_dot = false;
+    for character in unsigned.chars() {
+        match character {
+            '0'..='9' => {
+                digits.push(character);
+                if seen_dot {
+                    fractional_digits = fractional_digits.checked_add(1)?;
+                }
+            }
+            '.' if !seen_dot => seen_dot = true,
+            _ => return None,
+        }
+    }
+    if digits.is_empty() {
+        return None;
+    }
+
+    let mut numerator = digits.parse::<i128>().ok()?;
+    if negative {
+        numerator = numerator.checked_neg()?;
+    }
+    let mut denominator = checked_pow_i128(10, fractional_digits)?;
+
+    if decimal_exponent > 0 {
+        numerator = numerator.checked_mul(checked_pow_i128(
+            10,
+            decimal_exponent as u32,
+        )?)?;
+    } else if decimal_exponent < 0 {
+        denominator = denominator.checked_mul(checked_pow_i128(
+            10,
+            decimal_exponent.unsigned_abs(),
+        )?)?;
+    }
+
+    if let Some(binary_exponent) = binary_exponent {
+        numerator = numerator.checked_mul(checked_pow_i128(
+            2,
+            binary_exponent,
+        )?)?;
+    }
+
+    let divisor = gcd_i128(numerator, denominator);
+    Some((numerator / divisor, denominator / divisor))
+}
+
+fn normalize_quantity_map(value: &mut serde_json::Value) {
+    let Some(map) = value.as_object_mut() else {
+        return;
+    };
+    for quantity in map.values_mut() {
+        let Some(raw) = quantity.as_str() else {
+            continue;
+        };
+        let Some((numerator, denominator)) = quantity_rational(raw) else {
+            continue;
+        };
+        *quantity = serde_json::json!({
+            "$agonesQuantityNumerator": numerator.to_string(),
+            "$agonesQuantityDenominator": denominator.to_string(),
+        });
+    }
+}
+
+fn normalize_template_quantities(value: &mut serde_json::Value) {
+    match value {
+        serde_json::Value::Object(map) => {
+            for (key, child) in map.iter_mut() {
+                if matches!(key.as_str(), "limits" | "requests" | "overhead") {
+                    normalize_quantity_map(child);
+                } else {
+                    normalize_template_quantities(child);
+                }
+            }
+        }
+        serde_json::Value::Array(values) => {
+            for child in values {
+                normalize_template_quantities(child);
+            }
+        }
+        _ => {}
+    }
+}
+
+/// Kubernetes apiequality.Semantic treats resource.Quantity values by numeric
+/// value rather than textual representation. The Rust domain model stores
+/// unmodeled Pod fields as JSON extensions, so normalize resource-quantity maps
+/// before comparing templates to preserve cases such as CPU `1 == 1000m`.
+pub fn game_server_templates_semantically_equal(
+    left: &GameServerTemplateSpec,
+    right: &GameServerTemplateSpec,
+) -> bool {
+    if left == right {
+        return true;
+    }
+
+    let Ok(mut left) = serde_json::to_value(left) else {
+        return false;
+    };
+    let Ok(mut right) = serde_json::to_value(right) else {
+        return false;
+    };
+    normalize_template_quantities(&mut left);
+    normalize_template_quantities(&mut right);
+    left == right
+}
+
+fn fleet_game_server_set_creation_timestamp(
+    game_server_set: &GameServerSet,
+) -> Option<DateTime<Utc>> {
+    game_server_set
+        .metadata
+        .extensions
+        .get("creationTimestamp")
+        .and_then(serde_json::Value::as_str)
+        .and_then(|value| DateTime::parse_from_rfc3339(value).ok())
+        .map(|value| value.with_timezone(&Utc))
+}
+
+fn game_server_set_is_older(
+    candidate: &GameServerSet,
+    current: &GameServerSet,
+) -> bool {
+    match (
+        fleet_game_server_set_creation_timestamp(candidate),
+        fleet_game_server_set_creation_timestamp(current),
+    ) {
+        (None, Some(_)) => true,
+        (Some(_), None) => false,
+        (Some(candidate), Some(current)) => candidate < current,
+        (None, None) => false,
+    }
+}
+
+/// Pure port of upstream Fleet filterGameServerSetByActive.
+///
+/// The caller supplies the GameServerSets already known to be controlled by the
+/// Fleet. Template equality determines the active set. If informer lag exposes
+/// multiple sets with the active template, the oldest creation timestamp wins
+/// and the duplicate matching sets are returned in `rest` so normal rollout
+/// logic can scale them down and remove them.
+pub fn filter_game_server_sets_by_active(
+    fleet: &Fleet,
+    game_server_sets: &[GameServerSet],
+) -> (Option<GameServerSet>, Vec<GameServerSet>) {
+    let mut active: Option<GameServerSet> = None;
+    let mut rest = Vec::new();
+
+    for game_server_set in game_server_sets {
+        if game_server_templates_semantically_equal(
+            &game_server_set.spec.template,
+            &fleet.spec.template,
+        ) {
+            match active.take() {
+                None => active = Some(game_server_set.clone()),
+                Some(current) => {
+                    if game_server_set_is_older(game_server_set, &current) {
+                        rest.push(current);
+                        active = Some(game_server_set.clone());
+                    } else {
+                        rest.push(game_server_set.clone());
+                        active = Some(current);
+                    }
+                }
+            }
+        } else {
+            rest.push(game_server_set.clone());
+        }
+    }
+
+    (active, rest)
 }
 
 /// Adds one GameServerSet counter aggregate into a Fleet aggregate.
@@ -678,6 +938,227 @@ mod tests {
         assert_eq!(fleet.lower_bound_replicas(5), 5);
         assert_eq!(fleet.lower_bound_replicas(0), 0);
         assert_eq!(fleet.lower_bound_replicas(-5), 0);
+    }
+
+    fn set_with_template_name(
+        name: &str,
+        template_name: &str,
+        creation_timestamp: Option<&str>,
+    ) -> GameServerSet {
+        let mut set = GameServerSet {
+            metadata: ObjectMeta {
+                name: name.into(),
+                ..Default::default()
+            },
+            spec: GameServerSetSpec {
+                template: GameServerTemplateSpec {
+                    metadata: ObjectMeta {
+                        name: template_name.into(),
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                },
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        if let Some(timestamp) = creation_timestamp {
+            set.metadata.extensions.insert(
+                "creationTimestamp".into(),
+                serde_json::json!(timestamp),
+            );
+        }
+        set
+    }
+
+    #[test]
+    fn active_template_uses_kubernetes_resource_quantity_semantics() {
+        let mut fleet = Fleet {
+            spec: FleetSpec {
+                template: GameServerTemplateSpec {
+                    spec: GameServerSpec {
+                        template: PodTemplateSpec {
+                            spec: PodSpec {
+                                containers: vec![Container {
+                                    name: "game".into(),
+                                    image: "game:v1".into(),
+                                    extensions: BTreeMap::from([(
+                                        "resources".into(),
+                                        serde_json::json!({
+                                            "limits": {
+                                                "cpu": "1000m",
+                                                "memory": "1Gi"
+                                            }
+                                        }),
+                                    )]),
+                                    ..Default::default()
+                                }],
+                                ..Default::default()
+                            },
+                            ..Default::default()
+                        },
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                },
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        fleet.apply_defaults();
+
+        let mut equivalent = fleet.game_server_set();
+        equivalent.metadata.name = "equivalent".into();
+        equivalent.spec.template.spec.template.spec.containers[0]
+            .extensions
+            .insert(
+                "resources".into(),
+                serde_json::json!({
+                    "limits": {
+                        "cpu": "1",
+                        "memory": "1024Mi"
+                    }
+                }),
+            );
+
+        assert!(game_server_templates_semantically_equal(
+            &fleet.spec.template,
+            &equivalent.spec.template,
+        ));
+
+        let (active, rest) =
+            filter_game_server_sets_by_active(&fleet, &[equivalent.clone()]);
+        assert_eq!(active, Some(equivalent));
+        assert!(rest.is_empty());
+    }
+
+    #[test]
+    fn active_gameserverset_is_the_template_match() {
+        let fleet = Fleet {
+            spec: FleetSpec {
+                template: GameServerTemplateSpec {
+                    metadata: ObjectMeta {
+                        name: "current-template".into(),
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                },
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let old = set_with_template_name(
+            "old",
+            "old-template",
+            Some("2026-01-01T00:00:00Z"),
+        );
+        let active = set_with_template_name(
+            "active",
+            "current-template",
+            Some("2026-02-01T00:00:00Z"),
+        );
+
+        let (selected, rest) =
+            filter_game_server_sets_by_active(&fleet, &[old.clone(), active.clone()]);
+        assert_eq!(selected, Some(active));
+        assert_eq!(rest, vec![old]);
+    }
+
+    #[test]
+    fn duplicate_active_templates_keep_oldest_and_return_newer_as_rest() {
+        let fleet = Fleet {
+            spec: FleetSpec {
+                template: GameServerTemplateSpec {
+                    metadata: ObjectMeta {
+                        name: "current-template".into(),
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                },
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let newer = set_with_template_name(
+            "newer",
+            "current-template",
+            Some("2026-03-01T00:00:00Z"),
+        );
+        let oldest = set_with_template_name(
+            "oldest",
+            "current-template",
+            Some("2026-01-01T00:00:00Z"),
+        );
+        let middle = set_with_template_name(
+            "middle",
+            "current-template",
+            Some("2026-02-01T00:00:00Z"),
+        );
+
+        let (selected, rest) = filter_game_server_sets_by_active(
+            &fleet,
+            &[newer.clone(), oldest.clone(), middle.clone()],
+        );
+        assert_eq!(selected, Some(oldest));
+        assert_eq!(rest, vec![newer, middle]);
+    }
+
+    #[test]
+    fn missing_creation_timestamp_behaves_like_kubernetes_zero_time() {
+        let fleet = Fleet {
+            spec: FleetSpec {
+                template: GameServerTemplateSpec {
+                    metadata: ObjectMeta {
+                        name: "current-template".into(),
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                },
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let real_time = set_with_template_name(
+            "real-time",
+            "current-template",
+            Some("2026-01-01T00:00:00Z"),
+        );
+        let zero_time = set_with_template_name(
+            "zero-time",
+            "current-template",
+            None,
+        );
+
+        let (selected, rest) = filter_game_server_sets_by_active(
+            &fleet,
+            &[real_time.clone(), zero_time.clone()],
+        );
+        assert_eq!(selected, Some(zero_time));
+        assert_eq!(rest, vec![real_time]);
+    }
+
+    #[test]
+    fn no_template_match_returns_no_active_and_all_sets_as_rest() {
+        let fleet = Fleet {
+            spec: FleetSpec {
+                template: GameServerTemplateSpec {
+                    metadata: ObjectMeta {
+                        name: "current-template".into(),
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                },
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let one = set_with_template_name("one", "old-a", None);
+        let two = set_with_template_name("two", "old-b", None);
+
+        let (selected, rest) =
+            filter_game_server_sets_by_active(&fleet, &[one.clone(), two.clone()]);
+        assert!(selected.is_none());
+        assert_eq!(rest, vec![one, two]);
     }
 
     #[test]
