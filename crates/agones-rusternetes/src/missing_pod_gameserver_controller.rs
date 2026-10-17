@@ -1,13 +1,14 @@
 use std::sync::Arc;
 
-use agones_core::{GameServer, GameServerState};
+use agones_core::{AgonesApiResource, GameServer, GameServerState};
 use cgp::prelude::*;
-use rusternetes_common::resources::Pod;
+use rusternetes_common::resources::{Event, EventSource, EventType, ObjectReference, Pod};
 use rusternetes_common::types::Phase;
 use rusternetes_storage::{build_key, Storage};
 
 use crate::{
-    AdapterError, AgonesRepository, GAME_SERVER_LABEL_ROLE, ROLE_LABEL,
+    AdapterError, AgonesRepository, StateUpdateLimiter, GAME_SERVER_LABEL_ROLE,
+    ROLE_LABEL,
 };
 
 /// Mirrors upstream gameservers.isBeforePodCreated.
@@ -99,11 +100,65 @@ pub async fn should_enqueue_missing_pod_game_server<S: Storage>(
 /// Unhealthy. A valid non-Failed GameServer Pod is a no-op. The GameServer is
 /// re-read after the Pod check so deletion/unhealthy transitions that happened
 /// after enqueue are respected.
+async fn record_missing_pod_event<S: Storage>(
+    storage: &S,
+    game_server: &GameServer,
+    failed: bool,
+) {
+    let involved_object = ObjectReference {
+        api_version: Some(GameServer::API_VERSION.to_owned()),
+        kind: Some(GameServer::KIND.to_owned()),
+        namespace: Some(game_server.metadata.namespace.clone()),
+        name: Some(game_server.metadata.name.clone()),
+        uid: (!game_server.metadata.uid.is_empty())
+            .then(|| game_server.metadata.uid.clone()),
+        resource_version: game_server.metadata.resource_version.clone(),
+        field_path: None,
+    };
+
+    let name = Event::generate_name(&involved_object, "Unhealthy");
+    let mut event = Event::new(
+        name,
+        game_server.metadata.namespace.clone(),
+        involved_object,
+        "Unhealthy".into(),
+        if failed {
+            "Pod has failed".into()
+        } else {
+            "Pod is missing".into()
+        },
+        EventType::Warning,
+    );
+    event.source = EventSource {
+        component: "missing-pod-controller".into(),
+        host: None,
+    };
+
+    let key = build_key(
+        "events",
+        Some(game_server.metadata.namespace.as_str()),
+        event.metadata.name.as_str(),
+    );
+
+    // client-go EventRecorder is asynchronous and does not make a controller
+    // sync fail if event persistence fails. Keep the same best-effort contract.
+    let _ = storage.create(&key, &event).await;
+}
+
+/// CGP capability for the core upstream MissingPodController sync pass.
+///
+/// A missing, non-GameServer, or Failed Pod moves the current GameServer to
+/// Unhealthy. A valid non-Failed GameServer Pod is a no-op. The GameServer is
+/// re-read after the Pod check so deletion/unhealthy transitions that happened
+/// after enqueue are respected. The terminal-state write is throttled by the
+/// same 10/s, burst-100 policy as upstream, and a Warning event is recorded
+/// after a successful transition.
 #[cgp_fn]
 #[async_trait]
 pub async fn reconcile_missing_pod_game_server<S>(
     &self,
     #[implicit] storage: Arc<S>,
+    #[implicit] unhealthy_limiter: Arc<StateUpdateLimiter>,
     game_server: GameServer,
 ) -> Result<Option<GameServer>, AdapterError>
 where
@@ -122,13 +177,14 @@ where
         game_server.metadata.name.as_str(),
     );
 
-    match storage.get::<Pod>(&pod_key).await {
+    let failed = match storage.get::<Pod>(&pod_key).await {
         Ok(pod) if is_game_server_pod(&pod) && !pod_failed(&pod) => {
             return Ok(None);
         }
-        Ok(_) | Err(rusternetes_common::Error::NotFound(_)) => {}
+        Ok(pod) => is_game_server_pod(&pod) && pod_failed(&pod),
+        Err(rusternetes_common::Error::NotFound(_)) => false,
         Err(error) => return Err(error.into()),
-    }
+    };
 
     let repository = AgonesRepository::new(storage.clone());
     let mut current = match repository
@@ -151,8 +207,12 @@ where
         return Ok(None);
     }
 
+    unhealthy_limiter.wait().await?;
+
     current.status.state = Some(GameServerState::Unhealthy);
-    repository.update(&current).await.map(Some)
+    let updated = repository.update(&current).await?;
+    record_missing_pod_event(storage.as_ref(), &updated, failed).await;
+    Ok(Some(updated))
 }
 
 #[cfg(test)]
@@ -163,7 +223,7 @@ mod tests {
         DEV_ADDRESS_ANNOTATION,
     };
     use rusternetes_common::resources::PodStatus;
-    use rusternetes_storage::{MemoryStorage, Storage};
+    use rusternetes_storage::{build_prefix, MemoryStorage, Storage};
 
     use crate::{
         build_pod, CreatingGameServerController, NoopApiHooks,
@@ -473,4 +533,103 @@ mod tests {
                 .is_none()
         );
     }
+    #[tokio::test]
+    async fn unhealthy_transition_records_warning_event() {
+        let storage = MemoryStorage::new();
+        let repository = AgonesRepository::new(storage.clone());
+        let created = repository
+            .create(&game_server(GameServerState::Ready))
+            .await
+            .unwrap();
+
+        let controller = CreatingGameServerController::new(storage.clone());
+        controller
+            .reconcile_missing_pod_game_server(created)
+            .await
+            .unwrap()
+            .expect("missing Pod should transition");
+
+        let events: Vec<Event> = storage
+            .list(&build_prefix("events", Some("default")))
+            .await
+            .unwrap();
+        assert_eq!(events.len(), 1);
+        let event = &events[0];
+        assert_eq!(event.event_type, EventType::Warning);
+        assert_eq!(event.reason, "Unhealthy");
+        assert_eq!(event.message, "Pod is missing");
+        assert_eq!(event.source.component, "missing-pod-controller");
+        assert_eq!(event.involved_object.kind.as_deref(), Some("GameServer"));
+        assert_eq!(
+            event.involved_object.api_version.as_deref(),
+            Some("agones.dev/v1")
+        );
+        assert_eq!(event.involved_object.name.as_deref(), Some("server"));
+    }
+
+    #[tokio::test]
+    async fn failed_pod_event_uses_failed_message() {
+        let storage = MemoryStorage::new();
+        let repository = AgonesRepository::new(storage.clone());
+        let created = repository
+            .create(&game_server(GameServerState::Ready))
+            .await
+            .unwrap();
+        store_pod(&storage, &created, Some(Phase::Failed)).await;
+
+        let controller = CreatingGameServerController::new(storage.clone());
+        controller
+            .reconcile_missing_pod_game_server(created)
+            .await
+            .unwrap()
+            .expect("Failed Pod should transition");
+
+        let events: Vec<Event> = storage
+            .list(&build_prefix("events", Some("default")))
+            .await
+            .unwrap();
+        assert_eq!(events.len(), 1);
+        assert_eq!(events[0].message, "Pod has failed");
+    }
+
+    #[tokio::test]
+    async fn unhealthy_write_waits_on_limiter_but_noop_does_not() {
+        let storage = MemoryStorage::new();
+        let repository = AgonesRepository::new(storage.clone());
+        let ready = repository
+            .create(&game_server(GameServerState::Ready))
+            .await
+            .unwrap();
+
+        let controller = CreatingGameServerController::new(storage.clone())
+            .with_unhealthy_limiter(StateUpdateLimiter::with_limits(0.0, 0));
+
+        let error = controller
+            .reconcile_missing_pod_game_server(ready.clone())
+            .await
+            .unwrap_err();
+        assert!(matches!(error, AdapterError::StateUpdateLimiter(_)));
+
+        let persisted: GameServer =
+            repository.get("default", "server").await.unwrap();
+        assert_eq!(persisted.status.state, Some(GameServerState::Ready));
+        let events: Vec<Event> = storage
+            .list(&build_prefix("events", Some("default")))
+            .await
+            .unwrap();
+        assert!(events.is_empty());
+
+        let mut unhealthy = persisted;
+        unhealthy.status.state = Some(GameServerState::Unhealthy);
+        repository.update(&unhealthy).await.unwrap();
+
+        assert!(
+            controller
+                .reconcile_missing_pod_game_server(ready)
+                .await
+                .unwrap()
+                .is_none()
+        );
+    }
+
 }

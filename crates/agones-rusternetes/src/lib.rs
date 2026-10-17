@@ -14,6 +14,7 @@ mod port_allocation_gameserver_controller;
 mod port_allocator;
 mod request_ready_gameserver_controller;
 mod stable_gameserver_pod_ip_controller;
+mod state_update_limiter;
 mod starting_gameserver_controller;
 mod shutdown_gameserver_controller;
 
@@ -35,6 +36,10 @@ pub use port_allocation_gameserver_controller::ReconcilePortAllocationGameServer
 pub use port_allocator::{PortAllocator, PortRange};
 pub use request_ready_gameserver_controller::ReconcileRequestReadyGameServer;
 pub use stable_gameserver_pod_ip_controller::ReconcileStableGameServerPodIps;
+pub use state_update_limiter::{
+    StateUpdateLimiter, StateUpdateLimiterError, STATE_UPDATE_BURST,
+    STATE_UPDATE_RATE_PER_SECOND,
+};
 pub use starting_gameserver_controller::{
     ReconcileStartingGameServer, apply_game_server_address_and_port,
     apply_game_server_pod_ips, node_address,
@@ -566,6 +571,7 @@ pub enum AdapterError {
     InvalidPort { field: &'static str, value: i32 },
     ContainerNotFound(String),
     Hook(String),
+    StateUpdateLimiter(StateUpdateLimiterError),
 }
 
 impl fmt::Display for AdapterError {
@@ -600,6 +606,7 @@ impl fmt::Display for AdapterError {
                 write!(f, "failed to find container named {name} in pod spec")
             }
             Self::Hook(error) => f.write_str(error),
+            Self::StateUpdateLimiter(error) => write!(f, "state update limiter failed: {error}"),
         }
     }
 }
@@ -615,6 +622,12 @@ impl From<serde_json::Error> for AdapterError {
 impl From<rusternetes_common::Error> for AdapterError {
     fn from(value: rusternetes_common::Error) -> Self {
         Self::Rusternetes(value)
+    }
+}
+
+impl From<StateUpdateLimiterError> for AdapterError {
+    fn from(value: StateUpdateLimiterError) -> Self {
+        Self::StateUpdateLimiter(value)
     }
 }
 
