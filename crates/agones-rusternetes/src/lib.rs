@@ -18,6 +18,7 @@ mod health_gameserver_controller;
 mod missing_pod_controller_runtime;
 mod missing_pod_gameserver_controller;
 mod per_node_counter;
+mod migration_controller_runtime;
 mod migration_gameserver_controller;
 mod pod_deletion;
 mod port_allocation_gameserver_controller;
@@ -79,6 +80,12 @@ pub use per_node_counter::{
     PerNodeCounterEvent, PerNodeCounterState, PerNodeCounterWatchStream,
     RebuildPerNodeCounter, RunPerNodeCounter, calculate_state_transition,
     watch_per_node_counter_events,
+};
+pub use migration_controller_runtime::{
+    MigrationControllerWatchEvent, MigrationControllerWatchStream,
+    MigrationControllerWorkItem, RunMigrationGameServerController,
+    SyncMigrationGameServer, route_migration_controller_event,
+    watch_migration_controller_events,
 };
 pub use migration_gameserver_controller::{
     ReconcileMigrationGameServer, any_address_match, migrating_game_server_for_pod,
