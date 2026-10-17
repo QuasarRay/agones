@@ -5,11 +5,16 @@
 
 mod creating_gameserver_controller;
 mod development_gameserver_controller;
+mod starting_gameserver_controller;
 
 pub use creating_gameserver_controller::{
     CreatingGameServerController, ReconcileCreatingGameServer,
 };
 pub use development_gameserver_controller::DevelopmentGameServerController;
+pub use starting_gameserver_controller::{
+    ReconcileStartingGameServer, apply_game_server_address_and_port,
+    apply_game_server_pod_ips, node_address,
+};
 
 use std::collections::{BTreeMap, HashMap};
 use std::error::Error;
@@ -876,6 +881,14 @@ pub trait ApiHooks {
         &self,
         _eviction: Option<&Eviction>,
         _pod: &mut Pod,
+    ) -> Result<(), AdapterError> {
+        Ok(())
+    }
+
+    fn sync_pod_ports_to_game_server(
+        &self,
+        _game_server: &mut GameServer,
+        _pod: &Pod,
     ) -> Result<(), AdapterError> {
         Ok(())
     }
