@@ -55,7 +55,22 @@ pub struct GameServerAllocationPolicySpec {
     pub connection_info: ClusterConnectionInfo,
 }
 
-#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(
+    Clone,
+    Debug,
+    Default,
+    PartialEq,
+    Eq,
+    Serialize,
+    Deserialize,
+    agones_macros::AgonesApiResource,
+)]
+#[agones_resource(
+    group = "multicluster.agones.dev",
+    version = "v1",
+    kind = "GameServerAllocationPolicy",
+    plural = "gameserverallocationpolicies"
+)]
 #[serde(rename_all = "camelCase")]
 pub struct GameServerAllocationPolicy {
     #[serde(default)]

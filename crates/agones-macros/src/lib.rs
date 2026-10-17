@@ -243,3 +243,104 @@ fn expand_invariant(function: ItemFn) -> syn::Result<proc_macro2::TokenStream> {
         }
     })
 }
+
+
+/// Generates static API identity metadata for a stored Agones resource.
+///
+/// Usage:
+/// ```ignore
+/// #[derive(agones_macros::AgonesApiResource)]
+/// #[agones_resource(
+///     group = "agones.dev",
+///     version = "v1",
+///     kind = "GameServer",
+///     plural = "gameservers"
+/// )]
+/// struct GameServer { /* ... */ }
+/// ```
+#[proc_macro_derive(AgonesApiResource, attributes(agones_resource))]
+pub fn derive_agones_api_resource(input: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(input as DeriveInput);
+    match expand_api_resource(input) {
+        Ok(tokens) => tokens.into(),
+        Err(error) => error.into_compile_error().into(),
+    }
+}
+
+fn expand_api_resource(input: DeriveInput) -> syn::Result<proc_macro2::TokenStream> {
+    let name = input.ident;
+    let mut group = None::<String>;
+    let mut version = None::<String>;
+    let mut kind = None::<String>;
+    let mut plural = None::<String>;
+    let mut attributes = 0usize;
+
+    for attr in input
+        .attrs
+        .iter()
+        .filter(|attr| attr.path().is_ident("agones_resource"))
+    {
+        attributes += 1;
+        if attributes > 1 {
+            return Err(syn::Error::new_spanned(
+                attr,
+                "AgonesApiResource accepts exactly one #[agones_resource(...)] attribute",
+            ));
+        }
+
+        attr.parse_nested_meta(|meta| {
+            let value: LitStr = meta.value()?.parse()?;
+            let value = value.value();
+
+            if meta.path.is_ident("group") {
+                if group.replace(value).is_some() {
+                    return Err(meta.error("duplicate group"));
+                }
+            } else if meta.path.is_ident("version") {
+                if version.replace(value).is_some() {
+                    return Err(meta.error("duplicate version"));
+                }
+            } else if meta.path.is_ident("kind") {
+                if kind.replace(value).is_some() {
+                    return Err(meta.error("duplicate kind"));
+                }
+            } else if meta.path.is_ident("plural") {
+                if plural.replace(value).is_some() {
+                    return Err(meta.error("duplicate plural"));
+                }
+            } else {
+                return Err(meta.error("expected group, version, kind, or plural"));
+            }
+            Ok(())
+        })?;
+    }
+
+    if attributes == 0 {
+        return Err(syn::Error::new_spanned(
+            &name,
+            "AgonesApiResource requires #[agones_resource(...)]",
+        ));
+    }
+
+    let group = group.ok_or_else(|| syn::Error::new_spanned(&name, "missing group"))?;
+    let version = version.ok_or_else(|| syn::Error::new_spanned(&name, "missing version"))?;
+    let kind = kind.ok_or_else(|| syn::Error::new_spanned(&name, "missing kind"))?;
+    let plural = plural.ok_or_else(|| syn::Error::new_spanned(&name, "missing plural"))?;
+    let api_version = format!("{group}/{version}");
+
+    let group = LitStr::new(&group, proc_macro2::Span::call_site());
+    let version = LitStr::new(&version, proc_macro2::Span::call_site());
+    let api_version = LitStr::new(&api_version, proc_macro2::Span::call_site());
+    let kind = LitStr::new(&kind, proc_macro2::Span::call_site());
+    let plural = LitStr::new(&plural, proc_macro2::Span::call_site());
+
+    Ok(quote! {
+        impl crate::AgonesApiResource for #name {
+            const GROUP: &'static str = #group;
+            const VERSION: &'static str = #version;
+            const API_VERSION: &'static str = #api_version;
+            const KIND: &'static str = #kind;
+            const PLURAL: &'static str = #plural;
+        }
+    })
+}
