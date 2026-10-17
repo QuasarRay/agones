@@ -94,8 +94,12 @@ pub use fleetautoscaler_admission::{
 };
 pub use fleetautoscaler_controller::{
     CanApplyBufferFleetAutoscalerPolicy,
-    CanComputeFleetAutoscalerDesiredSize, FleetAutoscalerController,
-    FleetAutoscalerPolicyDecision, HasFleetAutoscalerStorage,
+    CanComputeFleetAutoscalerDesiredSize,
+    CanMarkFleetAutoscalerUnableToScale,
+    CanReconcileFleetAutoscaler, CanScaleFleetForAutoscaler,
+    CanUpdateFleetAutoscalerStatus, FleetAutoscalerController,
+    FleetAutoscalerPolicyDecision, FleetAutoscalerReconcileResult,
+    FleetAutoscalerSyncOutcome, HasFleetAutoscalerStorage,
     HasFleetAutoscalerStorageType,
 };
 pub use game_server_pod::game_server_pod;
