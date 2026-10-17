@@ -24,6 +24,7 @@ mod port_allocator;
 mod request_ready_gameserver_controller;
 mod stable_gameserver_pod_ip_controller;
 mod state_update_limiter;
+mod succeeded_controller_runtime;
 mod succeeded_gameserver_controller;
 mod starting_gameserver_controller;
 mod shutdown_gameserver_controller;
@@ -84,6 +85,12 @@ pub use stable_gameserver_pod_ip_controller::ReconcileStableGameServerPodIps;
 pub use state_update_limiter::{
     StateUpdateLimiter, StateUpdateLimiterError, STATE_UPDATE_BURST,
     STATE_UPDATE_RATE_PER_SECOND,
+};
+pub use succeeded_controller_runtime::{
+    RunSucceededGameServerController, SucceededControllerWatchEvent,
+    SucceededControllerWatchStream, SucceededControllerWorkItem,
+    SyncSucceededGameServer, route_succeeded_controller_event,
+    watch_succeeded_controller_events,
 };
 pub use succeeded_gameserver_controller::{
     ReconcileSucceededGameServer, game_server_container_completed, pod_completed,
