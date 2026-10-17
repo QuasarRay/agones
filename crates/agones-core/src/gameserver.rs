@@ -938,6 +938,42 @@ impl GameServer {
             .map(String::as_str)
     }
 
+    /// Applies the pure state transition performed by the upstream
+    /// GameServer controller's syncDevelopmentGameServer path.
+    ///
+    /// Returns true only when the resource should be persisted.
+    pub fn reconcile_development_status(&mut self) -> bool {
+        if self.metadata.deletion_timestamp.is_some() {
+            return false;
+        }
+
+        let Some(dev_address) = self.get_dev_address().map(str::to_owned) else {
+            return false;
+        };
+
+        let state = self.status.state.clone();
+        if !matches!(
+            state,
+            Some(GameServerState::Creating | GameServerState::RequestReady)
+        ) {
+            return false;
+        }
+
+        self.status.state = Some(GameServerState::Ready);
+
+        if state == Some(GameServerState::Creating) {
+            self.status.ports = self.spec.ports.iter().map(GameServerPort::status).collect();
+            self.status.address = dev_address.clone();
+            self.status.addresses = vec![NodeAddress {
+                address: dev_address.clone(),
+                address_type: "InternalIP".to_owned(),
+            }];
+            self.status.node_name = dev_address;
+        }
+
+        true
+    }
+
 
     pub fn patch(&self, delta: &GameServer) -> Result<Vec<u8>, serde_json::Error> {
         let old = serde_json::to_value(self)?;
@@ -1330,6 +1366,112 @@ fn counter_updates_preserve_bounds(input: (i64, i64, i64, bool)) -> bool {
 
 #[cfg(test)]
 mod tests {
+
+    fn development_game_server(state: GameServerState) -> GameServer {
+        let mut game_server = GameServer {
+            metadata: ObjectMeta {
+                annotations: BTreeMap::from([(
+                    DEV_ADDRESS_ANNOTATION.to_owned(),
+                    "203.0.113.7".to_owned(),
+                )]),
+                ..Default::default()
+            },
+            spec: GameServerSpec {
+                ports: vec![GameServerPort {
+                    name: "game".into(),
+                    port_policy: Some(PortPolicy::Static),
+                    container_port: 7777,
+                    host_port: 7777,
+                    protocol: Some(Protocol::Udp),
+                    ..Default::default()
+                }],
+                ..Default::default()
+            },
+            status: GameServerStatus {
+                state: Some(state),
+                ..Default::default()
+            },
+        };
+        game_server.spec.apply_defaults();
+        game_server
+    }
+
+    #[test]
+    fn development_gameserver_creating_matches_controller_transition() {
+        let mut game_server = development_game_server(GameServerState::Creating);
+
+        assert!(game_server.reconcile_development_status());
+        assert_eq!(game_server.status.state, Some(GameServerState::Ready));
+        assert_eq!(
+            game_server.status.ports,
+            vec![GameServerStatusPort {
+                name: "game".into(),
+                port: 7777,
+            }]
+        );
+        assert_eq!(game_server.status.address, "203.0.113.7");
+        assert_eq!(
+            game_server.status.addresses,
+            vec![NodeAddress {
+                address: "203.0.113.7".into(),
+                address_type: "InternalIP".into(),
+            }]
+        );
+        assert_eq!(game_server.status.node_name, "203.0.113.7");
+    }
+
+    #[test]
+    fn development_gameserver_request_ready_only_advances_state() {
+        let mut game_server = development_game_server(GameServerState::RequestReady);
+        game_server.status.address = "preserve-address".into();
+        game_server.status.node_name = "preserve-node".into();
+        game_server.status.ports = vec![GameServerStatusPort {
+            name: "preserve".into(),
+            port: 9999,
+        }];
+
+        assert!(game_server.reconcile_development_status());
+        assert_eq!(game_server.status.state, Some(GameServerState::Ready));
+        assert_eq!(game_server.status.address, "preserve-address");
+        assert_eq!(game_server.status.node_name, "preserve-node");
+        assert_eq!(
+            game_server.status.ports,
+            vec![GameServerStatusPort {
+                name: "preserve".into(),
+                port: 9999,
+            }]
+        );
+    }
+
+    #[test]
+    fn development_gameserver_allocated_is_noop() {
+        let mut game_server = development_game_server(GameServerState::Allocated);
+        let before = game_server.clone();
+
+        assert!(!game_server.reconcile_development_status());
+        assert_eq!(game_server, before);
+    }
+
+    #[test]
+    fn deleting_development_gameserver_is_noop() {
+        let mut game_server = development_game_server(GameServerState::Creating);
+        game_server.metadata.deletion_timestamp = Some("2026-10-17T03:40:00Z".into());
+        let before = game_server.clone();
+
+        assert!(!game_server.reconcile_development_status());
+        assert_eq!(game_server, before);
+    }
+
+    #[test]
+    fn non_development_gameserver_is_noop() {
+        let mut game_server = development_game_server(GameServerState::Creating);
+        game_server.metadata.annotations.remove(DEV_ADDRESS_ANNOTATION);
+        let before = game_server.clone();
+
+        assert!(!game_server.reconcile_development_status());
+        assert_eq!(game_server, before);
+    }
+
 
     #[test]
     fn gameserver_status_network_fields_match_original_json_shape() {
