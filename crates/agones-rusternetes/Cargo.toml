@@ -9,6 +9,7 @@ rust-version.workspace = true
 [dependencies]
 agones-core = { path = "../agones-core" }
 cgp.workspace = true
+chrono.workspace = true
 futures.workspace = true
 rusternetes-common.workspace = true
 rusternetes-storage.workspace = true
