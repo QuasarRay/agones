@@ -1,14 +1,14 @@
 use std::sync::Arc;
 
-use agones_core::{AgonesApiResource, GameServer, GameServerState};
+use agones_core::{GameServer, GameServerState};
 use cgp::prelude::*;
-use rusternetes_common::resources::{Event, EventSource, EventType, ObjectReference, Pod};
+use rusternetes_common::resources::Pod;
 use rusternetes_common::types::Phase;
 use rusternetes_storage::{build_key, Storage};
 
 use crate::{
-    AdapterError, AgonesRepository, StateUpdateLimiter, GAME_SERVER_LABEL_ROLE,
-    ROLE_LABEL,
+    game_server_event::record_game_server_event, AdapterError, AgonesRepository,
+    StateUpdateLimiter, GAME_SERVER_LABEL_ROLE, ROLE_LABEL,
 };
 
 /// Mirrors upstream gameservers.isBeforePodCreated.
@@ -100,51 +100,6 @@ pub async fn should_enqueue_missing_pod_game_server<S: Storage>(
 /// Unhealthy. A valid non-Failed GameServer Pod is a no-op. The GameServer is
 /// re-read after the Pod check so deletion/unhealthy transitions that happened
 /// after enqueue are respected.
-async fn record_missing_pod_event<S: Storage>(
-    storage: &S,
-    game_server: &GameServer,
-    failed: bool,
-) {
-    let involved_object = ObjectReference {
-        api_version: Some(GameServer::API_VERSION.to_owned()),
-        kind: Some(GameServer::KIND.to_owned()),
-        namespace: Some(game_server.metadata.namespace.clone()),
-        name: Some(game_server.metadata.name.clone()),
-        uid: (!game_server.metadata.uid.is_empty())
-            .then(|| game_server.metadata.uid.clone()),
-        resource_version: game_server.metadata.resource_version.clone(),
-        field_path: None,
-    };
-
-    let name = Event::generate_name(&involved_object, "Unhealthy");
-    let mut event = Event::new(
-        name,
-        game_server.metadata.namespace.clone(),
-        involved_object,
-        "Unhealthy".into(),
-        if failed {
-            "Pod has failed".into()
-        } else {
-            "Pod is missing".into()
-        },
-        EventType::Warning,
-    );
-    event.source = EventSource {
-        component: "missing-pod-controller".into(),
-        host: None,
-    };
-
-    let key = build_key(
-        "events",
-        Some(game_server.metadata.namespace.as_str()),
-        event.metadata.name.as_str(),
-    );
-
-    // client-go EventRecorder is asynchronous and does not make a controller
-    // sync fail if event persistence fails. Keep the same best-effort contract.
-    let _ = storage.create(&key, &event).await;
-}
-
 /// CGP capability for the core upstream MissingPodController sync pass.
 ///
 /// A missing, non-GameServer, or Failed Pod moves the current GameServer to
@@ -211,7 +166,15 @@ where
 
     current.status.state = Some(GameServerState::Unhealthy);
     let updated = repository.update(&current).await?;
-    record_missing_pod_event(storage.as_ref(), &updated, failed).await;
+    record_game_server_event(
+        storage.as_ref(),
+        &updated,
+        "missing-pod-controller",
+        rusternetes_common::resources::EventType::Warning,
+        "Unhealthy",
+        if failed { "Pod has failed" } else { "Pod is missing" },
+    )
+    .await;
     Ok(Some(updated))
 }
 
@@ -222,7 +185,7 @@ mod tests {
         ObjectMeta, PodSpec as CorePodSpec, PodTemplateSpec,
         DEV_ADDRESS_ANNOTATION,
     };
-    use rusternetes_common::resources::PodStatus;
+    use rusternetes_common::resources::{Event, EventType, PodStatus};
     use rusternetes_storage::{build_prefix, MemoryStorage, Storage};
 
     use crate::{
