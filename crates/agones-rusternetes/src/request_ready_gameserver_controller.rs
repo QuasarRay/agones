@@ -8,8 +8,8 @@ use rusternetes_common::resources::{ContainerState, Node, Pod};
 use rusternetes_storage::{build_key, Storage};
 
 use crate::{
-    apply_game_server_address_and_port, apply_game_server_pod_ips, AdapterError,
-    AgonesRepository, ApiHooks, PodBuildFeatures,
+    apply_game_server_address_and_port, apply_game_server_pod_ips, game_server_pod,
+    AdapterError, AgonesRepository, ApiHooks, PodBuildFeatures,
 };
 
 async fn apply_ready_container_annotation<S: Storage>(
@@ -128,12 +128,7 @@ where
         return Err(AdapterError::MissingField("metadata.namespace"));
     }
 
-    let pod_key = build_key(
-        "pods",
-        Some(game_server.metadata.namespace.as_str()),
-        game_server.metadata.name.as_str(),
-    );
-    let pod: Pod = storage.get(&pod_key).await?;
+    let pod = game_server_pod(storage.as_ref(), &game_server).await?;
 
     if game_server.status.node_name.is_empty() {
         let node_name = pod
@@ -545,6 +540,45 @@ mod tests {
             .await
             .unwrap();
         assert_eq!(serde_json::to_value(after).unwrap(), before);
+    }
+
+    #[tokio::test]
+    async fn foreign_same_name_pod_does_not_advance_request_ready() {
+        let storage = MemoryStorage::new();
+        let repository = AgonesRepository::new(storage.clone());
+        let created = repository
+            .create(&request_ready_game_server())
+            .await
+            .unwrap();
+        let mut pod = store_pod(
+            &storage,
+            &created,
+            Some(vec![running_status("game", "containerd://1234")]),
+            None,
+        )
+        .await;
+        pod.metadata.owner_references.as_mut().unwrap()[0].uid =
+            "different-owner".into();
+        storage
+            .update(&build_key("pods", Some("default"), "server"), &pod)
+            .await
+            .unwrap();
+
+        let controller = CreatingGameServerController::new(storage);
+        let error = controller
+            .reconcile_request_ready_game_server(created)
+            .await
+            .unwrap_err();
+        assert!(matches!(
+            error,
+            AdapterError::Rusternetes(rusternetes_common::Error::NotFound(_))
+        ));
+
+        let persisted: GameServer = repository.get("default", "server").await.unwrap();
+        assert_eq!(
+            persisted.status.state,
+            Some(GameServerState::RequestReady)
+        );
     }
 
     #[tokio::test]
