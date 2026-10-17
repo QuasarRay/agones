@@ -24,6 +24,7 @@ use rusternetes_common::types::{
     LabelSelector, ObjectMeta as RusternetesObjectMeta, OwnerReference, ResourceRequirements,
     TypeMeta,
 };
+use rusternetes_storage::{build_key, build_prefix, Storage};
 
 pub const ROLE_LABEL: &str = "agones.dev/role";
 pub const GAME_SERVER_LABEL_ROLE: &str = "gameserver";
@@ -512,6 +513,7 @@ pub fn game_server_allocation_policy_crd_envelope() -> CustomResourceDefinition 
 #[derive(Debug)]
 pub enum AdapterError {
     Serde(serde_json::Error),
+    Rusternetes(rusternetes_common::Error),
     ResourceIdentity {
         expected_api_version: &'static str,
         expected_kind: &'static str,
@@ -530,6 +532,7 @@ impl fmt::Display for AdapterError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Self::Serde(error) => write!(f, "Rusternetes conversion failed: {error}"),
+            Self::Rusternetes(error) => write!(f, "Rusternetes storage failed: {error}"),
             Self::ResourceIdentity {
                 expected_api_version,
                 expected_kind,
@@ -566,6 +569,12 @@ impl Error for AdapterError {}
 impl From<serde_json::Error> for AdapterError {
     fn from(value: serde_json::Error) -> Self {
         Self::Serde(value)
+    }
+}
+
+impl From<rusternetes_common::Error> for AdapterError {
+    fn from(value: rusternetes_common::Error) -> Self {
+        Self::Rusternetes(value)
     }
 }
 
@@ -660,6 +669,119 @@ pub trait RusternetesCustomResource:
 impl<T> RusternetesCustomResource for T where
     T: AgonesApiResource + serde::Serialize + serde::de::DeserializeOwned
 {
+}
+
+pub fn rusternetes_custom_resource_type<T: AgonesApiResource>() -> String {
+    format!("{}_{}", T::GROUP.replace('.', "_"), T::PLURAL)
+}
+
+pub fn rusternetes_custom_resource_key<T: AgonesApiResource>(
+    namespace: &str,
+    name: &str,
+) -> String {
+    build_key(
+        &rusternetes_custom_resource_type::<T>(),
+        Some(namespace),
+        name,
+    )
+}
+
+pub fn rusternetes_custom_resource_prefix<T: AgonesApiResource>(
+    namespace: &str,
+) -> String {
+    build_prefix(
+        &rusternetes_custom_resource_type::<T>(),
+        Some(namespace),
+    )
+}
+
+/// Backend-generic repository for Agones custom resources stored by Rusternetes.
+///
+/// The repository depends only on Rusternetes' Storage trait. Any Storage
+/// backend can be substituted without changing Agones domain/controller code.
+pub struct AgonesRepository<S> {
+    storage: S,
+}
+
+impl<S> AgonesRepository<S> {
+    pub const fn new(storage: S) -> Self {
+        Self { storage }
+    }
+
+    pub fn storage(&self) -> &S {
+        &self.storage
+    }
+}
+
+impl<S: Storage> AgonesRepository<S> {
+    fn key_for<T: AgonesApiResource>(
+        resource: &CustomResource,
+    ) -> Result<String, AdapterError> {
+        if resource.metadata.name.is_empty() {
+            return Err(AdapterError::MissingField("metadata.name"));
+        }
+        let namespace = resource
+            .metadata
+            .namespace
+            .as_deref()
+            .filter(|namespace| !namespace.is_empty())
+            .ok_or(AdapterError::MissingField("metadata.namespace"))?;
+
+        Ok(rusternetes_custom_resource_key::<T>(
+            namespace,
+            &resource.metadata.name,
+        ))
+    }
+
+    pub async fn create<T>(&self, value: &T) -> Result<T, AdapterError>
+    where
+        T: RusternetesCustomResource + Send + Sync,
+    {
+        let resource = value.to_rusternetes_custom_resource()?;
+        let key = Self::key_for::<T>(&resource)?;
+        let created: CustomResource = self.storage.create(&key, &resource).await?;
+        T::from_rusternetes_custom_resource(created)
+    }
+
+    pub async fn get<T>(&self, namespace: &str, name: &str) -> Result<T, AdapterError>
+    where
+        T: RusternetesCustomResource + Send + Sync,
+    {
+        let key = rusternetes_custom_resource_key::<T>(namespace, name);
+        let resource: CustomResource = self.storage.get(&key).await?;
+        T::from_rusternetes_custom_resource(resource)
+    }
+
+    pub async fn update<T>(&self, value: &T) -> Result<T, AdapterError>
+    where
+        T: RusternetesCustomResource + Send + Sync,
+    {
+        let resource = value.to_rusternetes_custom_resource()?;
+        let key = Self::key_for::<T>(&resource)?;
+        let updated: CustomResource = self.storage.update(&key, &resource).await?;
+        T::from_rusternetes_custom_resource(updated)
+    }
+
+    pub async fn delete<T>(&self, namespace: &str, name: &str) -> Result<(), AdapterError>
+    where
+        T: AgonesApiResource,
+    {
+        let key = rusternetes_custom_resource_key::<T>(namespace, name);
+        self.storage.delete(&key).await?;
+        Ok(())
+    }
+
+    pub async fn list<T>(&self, namespace: &str) -> Result<Vec<T>, AdapterError>
+    where
+        T: RusternetesCustomResource + Send + Sync,
+    {
+        let prefix = rusternetes_custom_resource_prefix::<T>(namespace);
+        let resources: Vec<CustomResource> = self.storage.list(&prefix).await?;
+        resources
+            .into_iter()
+            .map(T::from_rusternetes_custom_resource)
+            .collect()
+    }
 }
 
 pub trait ApiHooks {
@@ -1086,6 +1208,86 @@ mod tests {
     use agones_core::{
         Fleet, FleetAutoscaler, GameServerAllocationPolicy, GameServerSet,
     };
+
+    #[test]
+    fn rusternetes_registry_keys_follow_custom_resource_handler_convention() {
+        assert_eq!(
+            rusternetes_custom_resource_key::<GameServer>("arena", "server-1"),
+            "/registry/agones_dev_gameservers/arena/server-1"
+        );
+        assert_eq!(
+            rusternetes_custom_resource_prefix::<FleetAutoscaler>("default"),
+            "/registry/autoscaling_agones_dev_fleetautoscalers/default/"
+        );
+        assert_eq!(
+            rusternetes_custom_resource_key::<GameServerAllocationPolicy>(
+                "default",
+                "policy-1"
+            ),
+            "/registry/multicluster_agones_dev_gameserverallocationpolicies/default/policy-1"
+        );
+    }
+
+    #[tokio::test]
+    async fn agones_repository_crud_and_list_are_backend_generic() {
+        let storage = rusternetes_storage::MemoryStorage::new();
+        let repository = AgonesRepository::new(storage.clone());
+
+        let mut game_server = GameServer::default();
+        game_server.metadata.name = "server-1".to_owned();
+        game_server.metadata.namespace = "arena".to_owned();
+
+        let created = repository.create(&game_server).await.unwrap();
+        assert_eq!(created, game_server);
+
+        let key = rusternetes_custom_resource_key::<GameServer>("arena", "server-1");
+        let stored: CustomResource = storage.get(&key).await.unwrap();
+        assert_eq!(stored.api_version, GameServer::API_VERSION);
+        assert_eq!(stored.kind, GameServer::KIND);
+
+        let fetched: GameServer = repository.get("arena", "server-1").await.unwrap();
+        assert_eq!(fetched, game_server);
+
+        game_server
+            .metadata
+            .annotations
+            .insert("updated".to_owned(), "true".to_owned());
+        let updated = repository.update(&game_server).await.unwrap();
+        assert_eq!(
+            updated.metadata.annotations.get("updated").map(String::as_str),
+            Some("true")
+        );
+
+        let listed: Vec<GameServer> = repository.list("arena").await.unwrap();
+        assert_eq!(listed, vec![game_server.clone()]);
+
+        repository
+            .delete::<GameServer>("arena", "server-1")
+            .await
+            .unwrap();
+        assert!(matches!(
+            storage.get::<CustomResource>(&key).await,
+            Err(rusternetes_common::Error::NotFound(_))
+        ));
+    }
+
+    #[tokio::test]
+    async fn agones_repository_requires_namespaced_named_resources() {
+        let repository =
+            AgonesRepository::new(rusternetes_storage::MemoryStorage::new());
+
+        let mut game_server = GameServer::default();
+        assert!(matches!(
+            repository.create(&game_server).await,
+            Err(AdapterError::MissingField("metadata.name"))
+        ));
+
+        game_server.metadata.name = "server-1".to_owned();
+        assert!(matches!(
+            repository.create(&game_server).await,
+            Err(AdapterError::MissingField("metadata.namespace"))
+        ));
+    }
 
     fn assert_custom_resource_round_trip<T>()
     where
