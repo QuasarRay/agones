@@ -274,7 +274,6 @@ impl GameServerSet {
     }
 }
 
-
 /// Creates the zero-valued aggregate counter map that upstream GameServerSet
 /// reconciliation publishes even before any GameServers exist.
 ///
@@ -981,8 +980,18 @@ mod tests {
         let status = compute_game_server_set_status(&set, &[], false);
         assert_eq!(status.counters.len(), 2);
         assert_eq!(status.lists.len(), 2);
-        assert!(status.counters.values().all(|value| *value == AggregatedCounterStatus::default()));
-        assert!(status.lists.values().all(|value| *value == AggregatedListStatus::default()));
+        assert!(
+            status
+                .counters
+                .values()
+                .all(|value| value == &AggregatedCounterStatus::default())
+        );
+        assert!(
+            status
+                .lists
+                .values()
+                .all(|value| value == &AggregatedListStatus::default())
+        );
     }
 
     #[test]
