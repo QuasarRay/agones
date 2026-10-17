@@ -974,6 +974,42 @@ impl GameServer {
         true
     }
 
+    /// Mirrors the Static + TCPUDP normalization performed immediately before
+    /// upstream GameServer Pod creation.
+    ///
+    /// Returns true when at least one port was split. The transformation is
+    /// idempotent because transformed entries no longer use TCPUDP.
+    pub fn split_static_tcp_udp_ports(&mut self) -> bool {
+        let mut appended = Vec::new();
+
+        for port in &mut self.spec.ports {
+            if port.port_policy != Some(PortPolicy::Static)
+                || port.protocol != Some(Protocol::TcpUdp)
+            {
+                continue;
+            }
+
+            let base_name = port.name.clone();
+            let udp = GameServerPort {
+                name: format!("{base_name}-udp"),
+                port_policy: Some(PortPolicy::Static),
+                container: port.container.clone(),
+                container_port: port.container_port,
+                host_port: port.host_port,
+                protocol: Some(Protocol::Udp),
+                ..Default::default()
+            };
+
+            port.name = format!("{base_name}-tcp");
+            port.protocol = Some(Protocol::Tcp);
+            appended.push(udp);
+        }
+
+        let changed = !appended.is_empty();
+        self.spec.ports.extend(appended);
+        changed
+    }
+
 
     pub fn patch(&self, delta: &GameServer) -> Result<Vec<u8>, serde_json::Error> {
         let old = serde_json::to_value(self)?;
@@ -1366,6 +1402,101 @@ fn counter_updates_preserve_bounds(input: (i64, i64, i64, bool)) -> bool {
 
 #[cfg(test)]
 mod tests {
+
+    #[test]
+    fn creating_static_tcpudp_port_splits_like_upstream_controller() {
+        let mut game_server = GameServer {
+            spec: GameServerSpec {
+                ports: vec![GameServerPort {
+                    name: "default".into(),
+                    range: "ignored-on-udp-copy".into(),
+                    port_policy: Some(PortPolicy::Static),
+                    container: Some("game".into()),
+                    container_port: 7777,
+                    host_port: 7000,
+                    protocol: Some(Protocol::TcpUdp),
+                }],
+                ..Default::default()
+            },
+            status: GameServerStatus {
+                state: Some(GameServerState::Creating),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+
+        assert!(game_server.split_static_tcp_udp_ports());
+        assert_eq!(game_server.spec.ports.len(), 2);
+
+        let tcp = &game_server.spec.ports[0];
+        assert_eq!(tcp.name, "default-tcp");
+        assert_eq!(tcp.protocol, Some(Protocol::Tcp));
+        assert_eq!(tcp.range, "ignored-on-udp-copy");
+
+        let udp = &game_server.spec.ports[1];
+        assert_eq!(udp.name, "default-udp");
+        assert_eq!(udp.protocol, Some(Protocol::Udp));
+        assert_eq!(udp.port_policy, Some(PortPolicy::Static));
+        assert_eq!(udp.container.as_deref(), Some("game"));
+        assert_eq!(udp.container_port, 7777);
+        assert_eq!(udp.host_port, 7000);
+        assert!(
+            udp.range.is_empty(),
+            "upstream appended GameServerPort does not copy Range"
+        );
+    }
+
+    #[test]
+    fn creating_tcpudp_split_is_idempotent() {
+        let mut game_server = GameServer {
+            spec: GameServerSpec {
+                ports: vec![GameServerPort {
+                    name: "default".into(),
+                    port_policy: Some(PortPolicy::Static),
+                    container_port: 7777,
+                    host_port: 7000,
+                    protocol: Some(Protocol::TcpUdp),
+                    ..Default::default()
+                }],
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+
+        assert!(game_server.split_static_tcp_udp_ports());
+        let once = game_server.clone();
+        assert!(!game_server.split_static_tcp_udp_ports());
+        assert_eq!(game_server, once);
+    }
+
+    #[test]
+    fn creating_port_normalization_ignores_tcp_and_nonstatic_tcpudp() {
+        let mut game_server = GameServer {
+            spec: GameServerSpec {
+                ports: vec![
+                    GameServerPort {
+                        name: "tcp".into(),
+                        port_policy: Some(PortPolicy::Static),
+                        protocol: Some(Protocol::Tcp),
+                        ..Default::default()
+                    },
+                    GameServerPort {
+                        name: "dynamic".into(),
+                        port_policy: Some(PortPolicy::Dynamic),
+                        protocol: Some(Protocol::TcpUdp),
+                        ..Default::default()
+                    },
+                ],
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let before = game_server.clone();
+
+        assert!(!game_server.split_static_tcp_udp_ports());
+        assert_eq!(game_server, before);
+    }
+
 
     fn development_game_server(state: GameServerState) -> GameServer {
         let mut game_server = GameServer {
