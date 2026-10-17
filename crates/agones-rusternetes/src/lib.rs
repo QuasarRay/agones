@@ -3,13 +3,18 @@
 //! This crate is the only layer that depends on Rusternetes runtime/API types.
 //! `agones-core` remains runtime-independent.
 
+mod agones_resource_deletion;
 mod creating_gameserver_controller;
 mod development_gameserver_controller;
 mod game_server_pod;
 mod request_ready_gameserver_controller;
 mod stable_gameserver_pod_ip_controller;
 mod starting_gameserver_controller;
+mod shutdown_gameserver_controller;
 
+pub use agones_resource_deletion::{
+    request_agones_resource_deletion, DeletionRequestOutcome,
+};
 pub use creating_gameserver_controller::{
     CreatingGameServerController, ReconcileCreatingGameServer,
 };
@@ -21,6 +26,7 @@ pub use starting_gameserver_controller::{
     ReconcileStartingGameServer, apply_game_server_address_and_port,
     apply_game_server_pod_ips, node_address,
 };
+pub use shutdown_gameserver_controller::ReconcileShutdownGameServer;
 
 use std::collections::{BTreeMap, HashMap};
 use std::error::Error;
