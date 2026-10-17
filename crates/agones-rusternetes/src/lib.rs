@@ -9,6 +9,7 @@ mod controller_work_queue;
 mod creating_gameserver_controller;
 mod development_gameserver_controller;
 mod deleting_gameserver_controller;
+mod fleet_admission;
 mod game_server_event;
 mod game_server_pod;
 mod gameserver_admission;
@@ -58,6 +59,10 @@ pub use development_gameserver_controller::{
     DevelopmentGameServerController, ReconcileDevelopmentGameServer,
 };
 pub use deleting_gameserver_controller::ReconcileDeletingGameServer;
+pub use fleet_admission::{
+    FleetCreationMutationAdmission, FleetValidationAdmission,
+    mutate_fleet_creation, validate_fleet, validate_fleet_object,
+};
 pub use game_server_pod::game_server_pod;
 pub use gameserver_admission::{
     GameServerCreationMutationAdmission,
