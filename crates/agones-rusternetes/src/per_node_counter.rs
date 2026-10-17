@@ -437,7 +437,8 @@ where
 #[cfg(test)]
 mod tests {
     use agones_core::{GameServerStatus, ObjectMeta};
-    use rusternetes_storage::MemoryStorage;
+    use rusternetes_common::resources::Node;
+    use rusternetes_storage::{MemoryStorage, Storage, build_key};
 
     use crate::AgonesRepository;
 
@@ -729,5 +730,157 @@ mod tests {
             .await
             .unwrap();
         assert!(controller.counts().unwrap().is_empty());
+    }
+
+    async fn next_counter_event(
+        events: &mut PerNodeCounterWatchStream,
+    ) -> PerNodeCounterEvent {
+        tokio::time::timeout(std::time::Duration::from_secs(2), events.next())
+            .await
+            .expect("PerNodeCounter watch event timed out")
+            .expect("PerNodeCounter watch stream ended")
+            .expect("PerNodeCounter watch event failed")
+    }
+
+    #[tokio::test]
+    async fn watch_stream_translates_gameserver_and_node_events() {
+        let storage = Arc::new(MemoryStorage::new());
+        let repository = AgonesRepository::new(storage.clone());
+        let mut events = watch_per_node_counter_events(storage.clone())
+            .await
+            .unwrap();
+
+        let ready = game_server(
+            "server",
+            "uid-server",
+            "1",
+            GameServerState::Ready,
+            "node1",
+        );
+        let created = repository.create(&ready).await.unwrap();
+
+        match next_counter_event(&mut events).await {
+            PerNodeCounterEvent::Added(game_server) => {
+                assert_eq!(game_server.metadata.uid, created.metadata.uid);
+                assert_eq!(game_server.status.state, Some(GameServerState::Ready));
+            }
+            event => panic!("expected GameServer Added event, got {event:?}"),
+        }
+
+        let mut allocated = created.clone();
+        allocated.metadata.resource_version = Some("2".into());
+        allocated.status.state = Some(GameServerState::Allocated);
+        let updated = repository.update(&allocated).await.unwrap();
+
+        match next_counter_event(&mut events).await {
+            PerNodeCounterEvent::Modified { old, new } => {
+                assert_eq!(old, new);
+                assert_eq!(new.metadata.uid, updated.metadata.uid);
+                assert_eq!(
+                    new.status.state,
+                    Some(GameServerState::Allocated)
+                );
+            }
+            event => panic!("expected GameServer Modified event, got {event:?}"),
+        }
+
+        let node = Node::new("node1");
+        let node_key = build_key("nodes", None, "node1");
+        storage.create(&node_key, &node).await.unwrap();
+        storage.delete(&node_key).await.unwrap();
+
+        match next_counter_event(&mut events).await {
+            PerNodeCounterEvent::NodeDeleted(node_name) => {
+                assert_eq!(node_name, "node1");
+            }
+            event => panic!("expected NodeDeleted event, got {event:?}"),
+        }
+
+        repository
+            .delete::<GameServer>("default", "server")
+            .await
+            .unwrap();
+        match next_counter_event(&mut events).await {
+            PerNodeCounterEvent::Deleted(game_server) => {
+                assert_eq!(game_server.metadata.uid, updated.metadata.uid);
+            }
+            event => panic!("expected GameServer Deleted event, got {event:?}"),
+        }
+    }
+
+    async fn wait_for_node_count(
+        controller: &PerNodeCounterController<MemoryStorage>,
+        node_name: &str,
+        expected: Option<NodeCount>,
+    ) {
+        tokio::time::timeout(std::time::Duration::from_secs(2), async {
+            loop {
+                let current = controller
+                    .counts()
+                    .unwrap()
+                    .get(node_name)
+                    .copied();
+                if current == expected {
+                    break;
+                }
+                tokio::task::yield_now().await;
+            }
+        })
+        .await
+        .expect("PerNodeCounter runner did not converge");
+    }
+
+    #[tokio::test]
+    async fn cgp_runner_rebuilds_then_tracks_live_rusternetes_events() {
+        let storage = MemoryStorage::new();
+        let repository = AgonesRepository::new(storage.clone());
+
+        let ready = game_server(
+            "server",
+            "uid-server",
+            "1",
+            GameServerState::Ready,
+            "node1",
+        );
+        let created = repository.create(&ready).await.unwrap();
+
+        let controller = Arc::new(PerNodeCounterController::new(storage.clone()));
+        let runner = controller.clone();
+        let task = tokio::spawn(async move {
+            runner.run_per_node_counter().await
+        });
+
+        wait_for_node_count(
+            controller.as_ref(),
+            "node1",
+            Some(NodeCount {
+                ready: 1,
+                allocated: 0,
+            }),
+        )
+        .await;
+
+        let mut allocated = created;
+        allocated.metadata.resource_version = Some("2".into());
+        allocated.status.state = Some(GameServerState::Allocated);
+        repository.update(&allocated).await.unwrap();
+
+        wait_for_node_count(
+            controller.as_ref(),
+            "node1",
+            Some(NodeCount {
+                ready: 0,
+                allocated: 1,
+            }),
+        )
+        .await;
+
+        let node = Node::new("node1");
+        let node_key = build_key("nodes", None, "node1");
+        storage.create(&node_key, &node).await.unwrap();
+        storage.delete(&node_key).await.unwrap();
+
+        wait_for_node_count(controller.as_ref(), "node1", None).await;
+        task.abort();
     }
 }
