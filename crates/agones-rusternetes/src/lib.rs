@@ -11,6 +11,7 @@ mod game_server_event;
 mod game_server_pod;
 mod health_gameserver_controller;
 mod missing_pod_gameserver_controller;
+mod per_node_counter;
 mod migration_gameserver_controller;
 mod pod_deletion;
 mod port_allocation_gameserver_controller;
@@ -39,6 +40,11 @@ pub use health_gameserver_controller::{
 pub use missing_pod_gameserver_controller::{
     ReconcileMissingPodGameServer, is_before_pod_created, is_game_server_pod,
     should_enqueue_missing_pod_game_server,
+};
+pub use per_node_counter::{
+    ApplyPerNodeCounterEvent, NodeCount, PerNodeCounterController,
+    PerNodeCounterEvent, PerNodeCounterState, RebuildPerNodeCounter,
+    calculate_state_transition,
 };
 pub use migration_gameserver_controller::{
     ReconcileMigrationGameServer, any_address_match, migrating_game_server_for_pod,
