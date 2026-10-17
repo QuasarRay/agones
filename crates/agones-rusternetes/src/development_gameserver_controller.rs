@@ -36,11 +36,12 @@ impl<S> DevelopmentGameServerController<S> {
 pub async fn reconcile_development_game_server<S>(
     &self,
     #[implicit] storage: Arc<S>,
-    mut game_server: GameServer,
+    game_server: GameServer,
 ) -> Result<Option<GameServer>, AdapterError>
 where
     S: Storage + 'static,
 {
+    let mut game_server = game_server;
     if !game_server.reconcile_development_status() {
         return Ok(None);
     }
