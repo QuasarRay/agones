@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use std::sync::{Arc, RwLock};
 
 use agones_core::{GameServer, GameServerState};
+pub use agones_core::NodeCount;
 use agones_macros::agones_invariant;
 use cgp::prelude::*;
 use futures::{StreamExt, stream::BoxStream};
@@ -10,11 +11,6 @@ use rusternetes_storage::{Storage, WatchEvent, build_prefix};
 
 use crate::{AdapterError, AgonesRepository, AgonesWatchEvent};
 
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct NodeCount {
-    pub ready: i64,
-    pub allocated: i64,
-}
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 struct ProcessedGameServer {
