@@ -1,5 +1,7 @@
 use std::collections::BTreeMap;
 
+use chrono::{DateTime, Utc};
+
 use agones_macros::{agones_invariant, AgonesStringEnum};
 use serde::{Deserialize, Serialize};
 
@@ -324,6 +326,69 @@ pub fn sum_game_server_sets<'a>(
     value: impl Fn(&GameServerSet) -> i32,
 ) -> i32 {
     sets.into_iter().flatten().map(value).sum()
+}
+
+fn fleet_game_server_set_creation_timestamp(
+    game_server_set: &GameServerSet,
+) -> Option<DateTime<Utc>> {
+    game_server_set
+        .metadata
+        .extensions
+        .get("creationTimestamp")
+        .and_then(serde_json::Value::as_str)
+        .and_then(|value| DateTime::parse_from_rfc3339(value).ok())
+        .map(|value| value.with_timezone(&Utc))
+}
+
+fn game_server_set_is_older(
+    candidate: &GameServerSet,
+    current: &GameServerSet,
+) -> bool {
+    match (
+        fleet_game_server_set_creation_timestamp(candidate),
+        fleet_game_server_set_creation_timestamp(current),
+    ) {
+        (None, Some(_)) => true,
+        (Some(_), None) => false,
+        (Some(candidate), Some(current)) => candidate < current,
+        (None, None) => false,
+    }
+}
+
+/// Pure port of upstream Fleet filterGameServerSetByActive.
+///
+/// The caller supplies the GameServerSets already known to be controlled by the
+/// Fleet. Template equality determines the active set. If informer lag exposes
+/// multiple sets with the active template, the oldest creation timestamp wins
+/// and the duplicate matching sets are returned in `rest` so normal rollout
+/// logic can scale them down and remove them.
+pub fn filter_game_server_sets_by_active(
+    fleet: &Fleet,
+    game_server_sets: &[GameServerSet],
+) -> (Option<GameServerSet>, Vec<GameServerSet>) {
+    let mut active: Option<GameServerSet> = None;
+    let mut rest = Vec::new();
+
+    for game_server_set in game_server_sets {
+        if game_server_set.spec.template == fleet.spec.template {
+            match active.take() {
+                None => active = Some(game_server_set.clone()),
+                Some(current) => {
+                    if game_server_set_is_older(game_server_set, &current) {
+                        rest.push(current);
+                        active = Some(game_server_set.clone());
+                    } else {
+                        rest.push(game_server_set.clone());
+                        active = Some(current);
+                    }
+                }
+            }
+        } else {
+            rest.push(game_server_set.clone());
+        }
+    }
+
+    (active, rest)
 }
 
 /// Adds one GameServerSet counter aggregate into a Fleet aggregate.
@@ -678,6 +743,166 @@ mod tests {
         assert_eq!(fleet.lower_bound_replicas(5), 5);
         assert_eq!(fleet.lower_bound_replicas(0), 0);
         assert_eq!(fleet.lower_bound_replicas(-5), 0);
+    }
+
+    fn set_with_template_name(
+        name: &str,
+        template_name: &str,
+        creation_timestamp: Option<&str>,
+    ) -> GameServerSet {
+        let mut set = GameServerSet {
+            metadata: ObjectMeta {
+                name: name.into(),
+                ..Default::default()
+            },
+            spec: GameServerSetSpec {
+                template: GameServerTemplateSpec {
+                    metadata: ObjectMeta {
+                        name: template_name.into(),
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                },
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        if let Some(timestamp) = creation_timestamp {
+            set.metadata.extensions.insert(
+                "creationTimestamp".into(),
+                serde_json::json!(timestamp),
+            );
+        }
+        set
+    }
+
+    #[test]
+    fn active_gameserverset_is_the_template_match() {
+        let fleet = Fleet {
+            spec: FleetSpec {
+                template: GameServerTemplateSpec {
+                    metadata: ObjectMeta {
+                        name: "current-template".into(),
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                },
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let old = set_with_template_name(
+            "old",
+            "old-template",
+            Some("2026-01-01T00:00:00Z"),
+        );
+        let active = set_with_template_name(
+            "active",
+            "current-template",
+            Some("2026-02-01T00:00:00Z"),
+        );
+
+        let (selected, rest) =
+            filter_game_server_sets_by_active(&fleet, &[old.clone(), active.clone()]);
+        assert_eq!(selected, Some(active));
+        assert_eq!(rest, vec![old]);
+    }
+
+    #[test]
+    fn duplicate_active_templates_keep_oldest_and_return_newer_as_rest() {
+        let fleet = Fleet {
+            spec: FleetSpec {
+                template: GameServerTemplateSpec {
+                    metadata: ObjectMeta {
+                        name: "current-template".into(),
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                },
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let newer = set_with_template_name(
+            "newer",
+            "current-template",
+            Some("2026-03-01T00:00:00Z"),
+        );
+        let oldest = set_with_template_name(
+            "oldest",
+            "current-template",
+            Some("2026-01-01T00:00:00Z"),
+        );
+        let middle = set_with_template_name(
+            "middle",
+            "current-template",
+            Some("2026-02-01T00:00:00Z"),
+        );
+
+        let (selected, rest) = filter_game_server_sets_by_active(
+            &fleet,
+            &[newer.clone(), oldest.clone(), middle.clone()],
+        );
+        assert_eq!(selected, Some(oldest));
+        assert_eq!(rest, vec![newer, middle]);
+    }
+
+    #[test]
+    fn missing_creation_timestamp_behaves_like_kubernetes_zero_time() {
+        let fleet = Fleet {
+            spec: FleetSpec {
+                template: GameServerTemplateSpec {
+                    metadata: ObjectMeta {
+                        name: "current-template".into(),
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                },
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let real_time = set_with_template_name(
+            "real-time",
+            "current-template",
+            Some("2026-01-01T00:00:00Z"),
+        );
+        let zero_time = set_with_template_name(
+            "zero-time",
+            "current-template",
+            None,
+        );
+
+        let (selected, rest) = filter_game_server_sets_by_active(
+            &fleet,
+            &[real_time.clone(), zero_time.clone()],
+        );
+        assert_eq!(selected, Some(zero_time));
+        assert_eq!(rest, vec![real_time]);
+    }
+
+    #[test]
+    fn no_template_match_returns_no_active_and_all_sets_as_rest() {
+        let fleet = Fleet {
+            spec: FleetSpec {
+                template: GameServerTemplateSpec {
+                    metadata: ObjectMeta {
+                        name: "current-template".into(),
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                },
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let one = set_with_template_name("one", "old-a", None);
+        let two = set_with_template_name("two", "old-b", None);
+
+        let (selected, rest) =
+            filter_game_server_sets_by_active(&fleet, &[one.clone(), two.clone()]);
+        assert!(selected.is_none());
+        assert_eq!(rest, vec![one, two]);
     }
 
     #[test]
