@@ -121,7 +121,6 @@ pub fn fleet_autoscaler_fixed_interval_seconds(
     if !matches!(
         sync.sync_type,
         FleetAutoscalerSyncType::FixedInterval
-            | FleetAutoscalerSyncType::Unknown(_)
     ) {
         return Err(AdapterError::Hook(
             "unsupported FleetAutoscaler sync type".into(),
