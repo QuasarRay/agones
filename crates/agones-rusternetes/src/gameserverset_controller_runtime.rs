@@ -68,7 +68,7 @@ impl ControllerWorkItem for GameServerSetWorkItem {
 type GameServerSetWorkQueue =
     ControllerWorkQueue<GameServerSetWorkItem, FastSlowRetryPolicy>;
 
-fn game_server_set_retry_policy() -> FastSlowRetryPolicy {
+pub(crate) fn game_server_set_retry_policy() -> FastSlowRetryPolicy {
     FastSlowRetryPolicy {
         fast_retries: GAME_SERVER_SET_FAST_RETRIES,
         fast_delay: Duration::from_millis(
