@@ -1,4 +1,7 @@
+use std::sync::Arc;
+
 use agones_core::GameServer;
+use cgp::prelude::*;
 use rusternetes_storage::Storage;
 
 use crate::{AdapterError, AgonesRepository, AgonesWatchEvent};
@@ -22,6 +25,30 @@ impl<S> DevelopmentGameServerController<S> {
     pub fn repository(&self) -> &AgonesRepository<S> {
         &self.repository
     }
+}
+
+/// CGP capability for upstream `syncDevelopmentGameServer`.
+///
+/// The state transition remains pure in agones-core while persistence is
+/// supplied implicitly through the shared GameServer controller context.
+#[cgp_fn]
+#[async_trait]
+pub async fn reconcile_development_game_server<S>(
+    &self,
+    #[implicit] storage: Arc<S>,
+    mut game_server: GameServer,
+) -> Result<Option<GameServer>, AdapterError>
+where
+    S: Storage + 'static,
+{
+    if !game_server.reconcile_development_status() {
+        return Ok(None);
+    }
+
+    AgonesRepository::new(storage)
+        .update(&game_server)
+        .await
+        .map(Some)
 }
 
 impl<S: Storage> DevelopmentGameServerController<S> {
