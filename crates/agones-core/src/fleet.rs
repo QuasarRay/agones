@@ -382,13 +382,13 @@ fn quantity_rational(value: &str) -> Option<(i128, i128)> {
         .iter()
         .find(|(suffix, _)| value.ends_with(*suffix))
     {
-        mantissa = value.strip_suffix(suffix)?;
+        mantissa = value.strip_suffix(*suffix)?;
         binary_exponent = Some(*exponent);
     } else if let Some((suffix, exponent)) = decimal_suffixes
         .iter()
         .find(|(suffix, _)| value.ends_with(*suffix))
     {
-        mantissa = value.strip_suffix(suffix)?;
+        mantissa = value.strip_suffix(*suffix)?;
         decimal_exponent = *exponent;
     } else if let Some(index) = value
         .char_indices()
