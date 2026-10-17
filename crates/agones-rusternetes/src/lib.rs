@@ -10,6 +10,7 @@ mod development_gameserver_controller;
 mod deleting_gameserver_controller;
 mod game_server_event;
 mod game_server_pod;
+mod gameserver_admission;
 mod gameserver_controller_pipeline;
 mod gameserver_controller_runtime;
 mod gameserver_controller_watch;
@@ -42,6 +43,13 @@ pub use development_gameserver_controller::{
 };
 pub use deleting_gameserver_controller::ReconcileDeletingGameServer;
 pub use game_server_pod::game_server_pod;
+pub use gameserver_admission::{
+    GameServerCreationMutationAdmission,
+    GameServerCreationValidationAdmission,
+    GameServerPodCreationMutationAdmission, admission_json_patch,
+    mutate_game_server_creation, mutate_game_server_pod_creation,
+    validate_game_server_creation, validate_game_server_creation_object,
+};
 pub use gameserver_controller_pipeline::{
     GameServerSyncOutcome, ReconcileGameServerPipeline, SyncGameServer,
 };
@@ -1053,6 +1061,13 @@ pub trait ApiHooks {
         _pod: &Pod,
     ) -> Result<(), AdapterError> {
         Ok(())
+    }
+
+    fn validate_game_server_spec(
+        &self,
+        _spec: &GameServerSpec,
+    ) -> Vec<ValidationError> {
+        Vec::new()
     }
 }
 
