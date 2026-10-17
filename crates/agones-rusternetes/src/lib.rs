@@ -14,6 +14,7 @@ mod gameserver_admission;
 mod gameserver_controller_pipeline;
 mod gameserver_controller_runtime;
 mod gameserver_controller_watch;
+mod gameserver_pod_augmentation;
 mod health_controller_runtime;
 mod health_gameserver_controller;
 mod missing_pod_controller_runtime;
@@ -63,6 +64,12 @@ pub use gameserver_controller_watch::{
     GameServerControllerWatchStream, GameServerQueueLane, GameServerWorkItem,
     RebuildGameServerControllerWatchState, RouteGameServerControllerEvent,
     queue_lane, watch_game_server_controller_events,
+};
+pub use gameserver_pod_augmentation::{
+    GRPC_PORT_ENV_VAR, HTTP_PORT_ENV_VAR, SDK_SERVER_SIDECAR_NAME,
+    add_game_server_health_check, add_sdk_server_env_vars,
+    augment_game_server_pod, reserved_environment_variable_name,
+    sdk_environment_variables,
 };
 pub use health_controller_runtime::{
     HealthControllerWatchStream, HealthControllerWorkItem,
@@ -1240,7 +1247,7 @@ pub fn validate_game_server(
     Ok(errors)
 }
 
-fn apply_to_container(
+pub(crate) fn apply_to_container(
     spec: &mut PodSpec,
     name: &str,
     mut apply: impl FnMut(&mut Container),
