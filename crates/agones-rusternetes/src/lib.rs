@@ -11,6 +11,7 @@ mod development_gameserver_controller;
 mod deleting_gameserver_controller;
 mod fleet_admission;
 mod fleet_allocation_tracker;
+mod fleet_controller;
 mod game_server_event;
 mod game_server_pod;
 mod gameserver_admission;
@@ -65,6 +66,11 @@ pub use fleet_admission::{
     mutate_fleet_creation, validate_fleet, validate_fleet_object,
 };
 pub use fleet_allocation_tracker::FleetAllocationTracker;
+pub use fleet_controller::{
+    CanExecuteFleetDeployment, CanPlanFleetDeployment,
+    CanScaleFleetGameServerSet, FleetController, HasFleetStorage,
+    HasFleetStorageType,
+};
 pub use game_server_pod::game_server_pod;
 pub use gameserver_admission::{
     GameServerCreationMutationAdmission,
