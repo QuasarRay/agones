@@ -15,6 +15,7 @@ mod fleet_controller;
 mod fleet_controller_runtime;
 mod fleetautoscaler_admission;
 mod fleetautoscaler_controller;
+mod fleetautoscaler_controller_runtime;
 mod game_server_event;
 mod game_server_pod;
 mod gameserver_admission;
@@ -104,6 +105,18 @@ pub use fleetautoscaler_controller::{
     FleetAutoscalerInventory, FleetAutoscalerPolicyDecision,
     FleetAutoscalerReconcileResult, FleetAutoscalerSyncOutcome,
     HasFleetAutoscalerStorage, HasFleetAutoscalerStorageType,
+};
+pub use fleetautoscaler_controller_runtime::{
+    CanRebuildFleetAutoscalerSchedules, CanRouteFleetAutoscalerEvent,
+    CanRunFleetAutoscalerController, CanScheduleFleetAutoscaler,
+    FLEET_AUTOSCALER_FAST_RETRIES,
+    FLEET_AUTOSCALER_FAST_RETRY_DELAY_MS,
+    FLEET_AUTOSCALER_SLOW_RETRY_DELAY_MS,
+    FleetAutoscalerControllerWatchStream,
+    FleetAutoscalerScheduleRegistry, FleetAutoscalerWorkItem,
+    fleet_autoscaler_fixed_interval_seconds,
+    fleet_autoscaler_generation, fleet_autoscaler_retry_delay_ms,
+    watch_fleet_autoscaler_controller_events,
 };
 pub use game_server_pod::game_server_pod;
 pub use gameserver_admission::{
