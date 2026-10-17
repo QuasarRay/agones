@@ -329,7 +329,7 @@ mod tests {
         let foreign: Pod = storage.update(&pod_key, &foreign).await.unwrap();
         let before = serde_json::to_value(&foreign).unwrap();
 
-        let controller = CreatingGameServerController::new(storage);
+        let controller = CreatingGameServerController::new(storage.clone());
         let updated = controller
             .reconcile_deleting_game_server(created)
             .await
