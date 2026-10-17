@@ -9,6 +9,7 @@ mod development_gameserver_controller;
 mod deleting_gameserver_controller;
 mod game_server_event;
 mod game_server_pod;
+mod gameserver_controller_pipeline;
 mod health_gameserver_controller;
 mod missing_pod_gameserver_controller;
 mod per_node_counter;
@@ -29,9 +30,14 @@ pub use agones_resource_deletion::{
 pub use creating_gameserver_controller::{
     CreatingGameServerController, ReconcileCreatingGameServer,
 };
-pub use development_gameserver_controller::DevelopmentGameServerController;
+pub use development_gameserver_controller::{
+    DevelopmentGameServerController, ReconcileDevelopmentGameServer,
+};
 pub use deleting_gameserver_controller::ReconcileDeletingGameServer;
 pub use game_server_pod::game_server_pod;
+pub use gameserver_controller_pipeline::{
+    GameServerSyncOutcome, ReconcileGameServerPipeline, SyncGameServer,
+};
 pub use health_gameserver_controller::{
     ReconcileHealthGameServer, failed_container, failed_pod, is_unhealthy_pod,
     pod_evicted, should_enqueue_unhealthy_pod, skip_unhealthy_game_container,
