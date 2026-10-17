@@ -427,13 +427,6 @@ delegate_and_check_components! {
             UseAgonesBufferFleetAutoscalerPolicy,
         FleetAutoscalerPolicyEvaluatorComponent:
             ComputeFleetAutoscalerDesiredSizeWithComponents,
-    }
-}
-
-
-delegate_and_check_components! {
-    <S: Storage + 'static>
-    FleetAutoscalerController<S> {
         FleetAutoscalerFleetScalerComponent:
             ScaleFleetForAutoscalerWithStorage,
         FleetAutoscalerStatusUpdaterComponent:
