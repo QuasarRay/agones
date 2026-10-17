@@ -13,6 +13,7 @@ mod game_server_pod;
 mod gameserver_admission;
 mod gameserverset_admission;
 mod gameserverset_controller;
+mod gameserverset_controller_runtime;
 mod gameserver_controller_pipeline;
 mod gameserver_controller_runtime;
 mod gameserver_controller_stack_runtime;
@@ -71,6 +72,20 @@ pub use gameserverset_controller::{
     ReconcileGameServerSet, ShutdownGameServersForSet,
     SyncGameServerSet, UpdateGameServerSetStatus,
     game_server_is_controlled_by_set,
+};
+pub use gameserverset_controller_runtime::{
+    GAME_SERVER_SET_FAST_RETRIES,
+    GAME_SERVER_SET_FAST_RETRY_DELAY_MS,
+    GAME_SERVER_SET_SLOW_RETRY_DELAY_MS,
+    GameServerSetControllerWatchEvent,
+    GameServerSetControllerWatchState,
+    GameServerSetControllerWatchStream,
+    GameServerSetWorkItem,
+    RebuildGameServerSetControllerWatchState,
+    RouteGameServerSetControllerEvent,
+    RunGameServerSetController,
+    game_server_set_retry_delay_ms,
+    watch_game_server_set_controller_events,
 };
 pub use gameserver_controller_pipeline::{
     GameServerSyncOutcome, ReconcileGameServerPipeline, SyncGameServer,
