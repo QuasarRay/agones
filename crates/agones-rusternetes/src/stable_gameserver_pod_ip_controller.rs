@@ -2,10 +2,11 @@ use std::sync::Arc;
 
 use agones_core::{GameServer, GameServerState};
 use cgp::prelude::*;
-use rusternetes_common::resources::Pod;
-use rusternetes_storage::{build_key, Storage};
+use rusternetes_storage::Storage;
 
-use crate::{apply_game_server_pod_ips, AdapterError, AgonesRepository};
+use crate::{
+    apply_game_server_pod_ips, game_server_pod, AdapterError, AgonesRepository,
+};
 
 /// CGP capability for upstream `syncGameServerPodIPs`.
 ///
@@ -45,31 +46,13 @@ where
         return Err(AdapterError::MissingField("metadata.namespace"));
     }
 
-    let pod_key = build_key(
-        "pods",
-        Some(game_server.metadata.namespace.as_str()),
-        game_server.metadata.name.as_str(),
-    );
-    let pod: Pod = match storage.get(&pod_key).await {
+    let pod = match game_server_pod(storage.as_ref(), &game_server).await {
         Ok(pod) => pod,
-        Err(rusternetes_common::Error::NotFound(_)) => return Ok(None),
-        Err(error) => return Err(error.into()),
+        Err(AdapterError::Rusternetes(rusternetes_common::Error::NotFound(_))) => {
+            return Ok(None);
+        }
+        Err(error) => return Err(error),
     };
-
-    let controlled_by_game_server = pod
-        .metadata
-        .owner_references
-        .as_ref()
-        .is_some_and(|owners| {
-            owners.iter().any(|owner| {
-                owner.controller == Some(true) && owner.uid == game_server.metadata.uid
-            })
-        });
-    if !controlled_by_game_server {
-        // Upstream gameServerPod() treats a same-name Pod controlled by a
-        // different owner as NotFound.
-        return Ok(None);
-    }
 
     if !apply_game_server_pod_ips(&mut game_server, &pod) {
         return Ok(None);
@@ -89,7 +72,7 @@ mod tests {
     };
     use agones_core::gameserver::NodeAddress as GameServerNodeAddress;
     use rusternetes_common::resources::{PodIP, PodStatus};
-    use rusternetes_storage::MemoryStorage;
+    use rusternetes_storage::{build_key, MemoryStorage};
 
     use crate::{build_pod, CreatingGameServerController, NoopApiHooks, PodBuildFeatures};
 
