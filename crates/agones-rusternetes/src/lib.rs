@@ -898,6 +898,23 @@ impl<S: Storage> AgonesRepository<S> {
             .collect()
     }
 
+    /// Lists an Agones custom resource across all namespaces.
+    ///
+    /// Rusternetes stores namespaced custom resources beneath a shared resource
+    /// prefix, so this is the informer-equivalent cluster-wide snapshot used by
+    /// controllers such as PerNodeCounter.
+    pub async fn list_all<T>(&self) -> Result<Vec<T>, AdapterError>
+    where
+        T: RusternetesCustomResource + Send + Sync,
+    {
+        let prefix = build_prefix(&rusternetes_custom_resource_type::<T>(), None);
+        let resources: Vec<CustomResource> = self.storage.list(&prefix).await?;
+        resources
+            .into_iter()
+            .map(T::from_rusternetes_custom_resource)
+            .collect()
+    }
+
     pub async fn watch<T>(
         &self,
         namespace: &str,
@@ -906,6 +923,19 @@ impl<S: Storage> AgonesRepository<S> {
         T: RusternetesCustomResource + Send + Sync + 'static,
     {
         let prefix = rusternetes_custom_resource_prefix::<T>(namespace);
+        let stream = self.storage.watch(&prefix).await?;
+        Ok(Box::pin(stream.map(|event| match event {
+            Ok(event) => decode_watch_event(event),
+            Err(error) => Err(AdapterError::from(error)),
+        })))
+    }
+
+    /// Watches an Agones custom resource across all namespaces.
+    pub async fn watch_all<T>(&self) -> Result<AgonesWatchStream<T>, AdapterError>
+    where
+        T: RusternetesCustomResource + Send + Sync + 'static,
+    {
+        let prefix = build_prefix(&rusternetes_custom_resource_type::<T>(), None);
         let stream = self.storage.watch(&prefix).await?;
         Ok(Box::pin(stream.map(|event| match event {
             Ok(event) => decode_watch_event(event),
@@ -922,6 +952,26 @@ impl<S: Storage> AgonesRepository<S> {
         T: RusternetesCustomResource + Send + Sync + 'static,
     {
         let prefix = rusternetes_custom_resource_prefix::<T>(namespace);
+        let stream = self
+            .storage
+            .watch_from_revision(&prefix, revision)
+            .await?;
+        Ok(Box::pin(stream.map(|event| match event {
+            Ok(event) => decode_watch_event(event),
+            Err(error) => Err(AdapterError::from(error)),
+        })))
+    }
+
+    /// Watches an Agones custom resource across all namespaces starting from
+    /// a Rusternetes storage revision.
+    pub async fn watch_all_from_revision<T>(
+        &self,
+        revision: i64,
+    ) -> Result<AgonesWatchStream<T>, AdapterError>
+    where
+        T: RusternetesCustomResource + Send + Sync + 'static,
+    {
+        let prefix = build_prefix(&rusternetes_custom_resource_type::<T>(), None);
         let stream = self
             .storage
             .watch_from_revision(&prefix, revision)
