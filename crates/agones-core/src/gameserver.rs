@@ -451,6 +451,15 @@ impl GameServerSpec {
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
+pub struct NodeAddress {
+    #[serde(default, skip_serializing_if = "String::is_empty")]
+    pub address: String,
+    #[serde(rename = "type", default, skip_serializing_if = "String::is_empty")]
+    pub address_type: String,
+}
+
+#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct GameServerStatusPort {
     #[serde(default, skip_serializing_if = "String::is_empty")]
     pub name: String,
@@ -464,6 +473,14 @@ pub struct GameServerStatus {
     pub state: Option<GameServerState>,
     #[serde(default)]
     pub ports: Vec<GameServerStatusPort>,
+    #[serde(default, skip_serializing_if = "String::is_empty")]
+    pub address: String,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub addresses: Vec<NodeAddress>,
+    #[serde(default, skip_serializing_if = "String::is_empty")]
+    pub node_name: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub reserved_until: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub players: Option<PlayerStatus>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -1313,6 +1330,58 @@ fn counter_updates_preserve_bounds(input: (i64, i64, i64, bool)) -> bool {
 
 #[cfg(test)]
 mod tests {
+
+    #[test]
+    fn gameserver_status_network_fields_match_original_json_shape() {
+        let status = GameServerStatus {
+            state: Some(GameServerState::Ready),
+            ports: vec![GameServerStatusPort {
+                name: "game".into(),
+                port: 7777,
+            }],
+            address: "203.0.113.10".into(),
+            addresses: vec![
+                NodeAddress {
+                    address: "10.0.0.10".into(),
+                    address_type: "InternalIP".into(),
+                },
+                NodeAddress {
+                    address: "203.0.113.10".into(),
+                    address_type: "ExternalIP".into(),
+                },
+            ],
+            node_name: "node-a".into(),
+            reserved_until: Some("2026-10-17T03:30:00Z".into()),
+            ..Default::default()
+        };
+
+        let json = serde_json::to_value(&status).unwrap();
+        assert_eq!(json["address"], "203.0.113.10");
+        assert_eq!(json["addresses"][0]["address"], "10.0.0.10");
+        assert_eq!(json["addresses"][0]["type"], "InternalIP");
+        assert_eq!(json["addresses"][1]["type"], "ExternalIP");
+        assert_eq!(json["nodeName"], "node-a");
+        assert_eq!(json["reservedUntil"], "2026-10-17T03:30:00Z");
+
+        let round_tripped: GameServerStatus = serde_json::from_value(json).unwrap();
+        assert_eq!(round_tripped, status);
+    }
+
+    #[test]
+    fn gameserver_status_network_fields_default_without_affecting_existing_status_logic() {
+        let status: GameServerStatus = serde_json::from_value(serde_json::json!({
+            "state": "Creating",
+            "ports": []
+        }))
+        .unwrap();
+
+        assert_eq!(status.state, Some(GameServerState::Creating));
+        assert!(status.address.is_empty());
+        assert!(status.addresses.is_empty());
+        assert!(status.node_name.is_empty());
+        assert!(status.reserved_until.is_none());
+    }
+
     use super::*;
 
     fn simple_game_server() -> GameServer {
