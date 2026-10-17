@@ -5,7 +5,7 @@ use cgp::prelude::*;
 use rusternetes_storage::Storage;
 
 use crate::{
-    AdapterError, AgonesRepository, ReconcileCreatingGameServer,
+    AdapterError, AgonesRepository, ApiHooks, ReconcileCreatingGameServer,
     ReconcileDeletingGameServer, ReconcileDevelopmentGameServer,
     ReconcilePortAllocationGameServer, ReconcileRequestReadyGameServer,
     ReconcileShutdownGameServer, ReconcileStableGameServerPodIps,
@@ -51,19 +51,21 @@ impl GameServerSyncOutcome {
 /// stable Pod IPs, development GameServer handling, then shutdown.
 #[cgp_fn]
 #[async_trait]
-pub async fn reconcile_game_server_pipeline(
+pub async fn reconcile_game_server_pipeline<S, H>(
     &self,
     game_server: GameServer,
 ) -> Result<GameServerSyncOutcome, AdapterError>
 where
-    Self: ReconcileDeletingGameServer
-        + ReconcilePortAllocationGameServer
-        + ReconcileCreatingGameServer
-        + ReconcileStartingGameServer
-        + ReconcileRequestReadyGameServer
-        + ReconcileStableGameServerPodIps
-        + ReconcileDevelopmentGameServer
-        + ReconcileShutdownGameServer
+    S: Storage + 'static,
+    H: ApiHooks + Clone + Send + Sync + 'static,
+    Self: ReconcileDeletingGameServer<S>
+        + ReconcilePortAllocationGameServer<S>
+        + ReconcileCreatingGameServer<S, H>
+        + ReconcileStartingGameServer<S, H>
+        + ReconcileRequestReadyGameServer<S, H>
+        + ReconcileStableGameServerPodIps<S>
+        + ReconcileDevelopmentGameServer<S>
+        + ReconcileShutdownGameServer<S>
         + Sync,
 {
     let mut game_server = game_server;
@@ -146,7 +148,7 @@ where
 /// no-op, matching the upstream informer/lister behavior.
 #[cgp_fn]
 #[async_trait]
-pub async fn sync_game_server<S>(
+pub async fn sync_game_server<S, H>(
     &self,
     #[implicit] storage: Arc<S>,
     namespace: &str,
@@ -154,7 +156,8 @@ pub async fn sync_game_server<S>(
 ) -> Result<GameServerSyncOutcome, AdapterError>
 where
     S: Storage + 'static,
-    Self: ReconcileGameServerPipeline + Sync,
+    H: ApiHooks + Clone + Send + Sync + 'static,
+    Self: ReconcileGameServerPipeline<S, H> + Sync,
 {
     let repository = AgonesRepository::new(storage);
     let game_server = match repository.get::<GameServer>(namespace, name).await {
