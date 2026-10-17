@@ -1,4 +1,3 @@
-use agones_core::AgonesApiResource;
 use chrono::Utc;
 use rusternetes_common::resources::CustomResource;
 use rusternetes_storage::Storage;
@@ -32,14 +31,14 @@ pub async fn request_agones_resource_deletion<S, T>(
 ) -> Result<DeletionRequestOutcome, AdapterError>
 where
     S: Storage,
-    T: RusternetesCustomResource + AgonesApiResource + Send + Sync,
+    T: RusternetesCustomResource + Send + Sync,
 {
-    let mut resource = value.to_rusternetes_custom_resource()?;
+    let identity = value.to_rusternetes_custom_resource()?;
 
-    if resource.metadata.name.is_empty() {
+    if identity.metadata.name.is_empty() {
         return Err(AdapterError::MissingField("metadata.name"));
     }
-    let namespace = resource
+    let namespace = identity
         .metadata
         .namespace
         .as_deref()
@@ -47,8 +46,14 @@ where
         .ok_or(AdapterError::MissingField("metadata.namespace"))?;
     let key = rusternetes_custom_resource_key::<T>(
         namespace,
-        resource.metadata.name.as_str(),
+        identity.metadata.name.as_str(),
     );
+
+    // DELETE semantics are evaluated against the live server object. This
+    // prevents a stale controller snapshot from bypassing a finalizer that was
+    // added after the snapshot was observed.
+    let mut resource: CustomResource = storage.get(&key).await?;
+    let _ = T::from_rusternetes_custom_resource(resource.clone())?;
 
     let has_finalizers = resource
         .metadata
@@ -146,6 +151,33 @@ mod tests {
                 rusternetes_common::Error::NotFound(_)
             ))
         ));
+    }
+
+    #[tokio::test]
+    async fn live_storage_finalizers_override_a_stale_controller_snapshot() {
+        let storage = MemoryStorage::new();
+        let repository = AgonesRepository::new(storage.clone());
+        let stored = repository
+            .create(&game_server(vec![FINALIZER_NAME.into()]))
+            .await
+            .unwrap();
+
+        let mut stale = stored.clone();
+        stale.metadata.finalizers.clear();
+
+        assert_eq!(
+            request_agones_resource_deletion(&storage, &stale)
+                .await
+                .unwrap(),
+            DeletionRequestOutcome::MarkedForDeletion
+        );
+
+        let persisted: GameServer = repository.get("default", "server").await.unwrap();
+        assert!(persisted.metadata.deletion_timestamp.is_some());
+        assert_eq!(
+            persisted.metadata.finalizers,
+            vec![FINALIZER_NAME.to_owned()]
+        );
     }
 
     #[tokio::test]
