@@ -13,6 +13,7 @@ mod game_server_pod;
 mod gameserver_admission;
 mod gameserver_controller_pipeline;
 mod gameserver_controller_runtime;
+mod gameserver_controller_stack_runtime;
 mod gameserver_controller_watch;
 mod gameserver_pod_augmentation;
 mod health_controller_runtime;
@@ -60,6 +61,7 @@ pub use gameserver_controller_runtime::{
     GAME_SERVER_SLOW_RETRY_DELAY_MS, GameServerWorkQueues,
     RunGameServerController, game_server_retry_delay_ms,
 };
+pub use gameserver_controller_stack_runtime::RunGameServerControllerStack;
 pub use gameserver_controller_watch::{
     GameServerControllerWatchEvent, GameServerControllerWatchState,
     GameServerControllerWatchStream, GameServerQueueLane, GameServerWorkItem,
