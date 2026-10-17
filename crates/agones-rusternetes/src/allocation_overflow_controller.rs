@@ -513,7 +513,10 @@ mod tests {
         // after the UpdateFunc-equivalent watch is subscribed.
         game_server_set.status.allocated_replicas =
             game_server_set.spec.replicas;
-        repository.update(&game_server_set).await.unwrap();
+        game_server_set = repository
+            .update(&game_server_set)
+            .await
+            .unwrap();
 
         let controller = GameServerSetController::new(
             storage,
