@@ -15,6 +15,7 @@ mod gameserver_controller_runtime;
 mod gameserver_controller_watch;
 mod health_controller_runtime;
 mod health_gameserver_controller;
+mod missing_pod_controller_runtime;
 mod missing_pod_gameserver_controller;
 mod per_node_counter;
 mod migration_gameserver_controller;
@@ -63,6 +64,11 @@ pub use health_gameserver_controller::{
     ReconcileHealthGameServer, failed_container, failed_pod, is_unhealthy_pod,
     pod_evicted, should_enqueue_unhealthy_pod, skip_unhealthy_game_container,
     unschedulable_with_no_free_ports,
+};
+pub use missing_pod_controller_runtime::{
+    MissingPodControllerWatchStream, MissingPodControllerWorkItem,
+    RunMissingPodGameServerController, SyncMissingPodGameServer,
+    route_missing_pod_controller_event, watch_missing_pod_controller_events,
 };
 pub use missing_pod_gameserver_controller::{
     ReconcileMissingPodGameServer, is_before_pod_created, is_game_server_pod,
