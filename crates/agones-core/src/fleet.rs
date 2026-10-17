@@ -328,6 +328,159 @@ pub fn sum_game_server_sets<'a>(
     sets.into_iter().flatten().map(value).sum()
 }
 
+/// Resolves the Kubernetes IntOrString representation used by Fleet rollout
+/// percentages.
+///
+/// Percentage values are scaled against `total`. RollingUpdate MaxSurge uses
+/// round-up semantics; MaxUnavailable uses round-down semantics.
+pub fn resolve_int_or_percent(
+    value: &IntOrPercent,
+    total: i32,
+    round_up: bool,
+) -> Result<i32, String> {
+    match value {
+        IntOrPercent::Int(value) => Ok(*value),
+        IntOrPercent::String(value) => {
+            let percent = value
+                .strip_suffix('%')
+                .ok_or_else(|| format!("invalid percentage {value}"))?
+                .parse::<i64>()
+                .map_err(|_| format!("invalid percentage {value}"))?;
+            let total = i64::from(total);
+            let product = percent
+                .checked_mul(total)
+                .ok_or_else(|| format!("percentage overflow for {value}"))?;
+
+            let resolved = if round_up && product > 0 {
+                product
+                    .checked_add(99)
+                    .ok_or_else(|| format!("percentage overflow for {value}"))?
+                    / 100
+            } else {
+                product / 100
+            };
+
+            i32::try_from(resolved)
+                .map_err(|_| format!("resolved percentage out of range for {value}"))
+        }
+    }
+}
+
+/// Pure port of upstream rollingUpdateActive.
+///
+/// This computes only the desired replica count for the active GameServerSet.
+/// Scaling inactive sets remains a separate persistence milestone.
+pub fn rolling_update_active_replicas(
+    fleet: &Fleet,
+    active: &GameServerSet,
+    rest: &[GameServerSet],
+) -> Result<i32, String> {
+    let mut replicas = active.spec.replicas;
+    let sum_allocated = rest.iter().fold(0i32, |sum, set| {
+        sum.wrapping_add(set.status.allocated_replicas)
+    });
+
+    if active.spec.replicas != active.status.replicas {
+        return Ok(replicas);
+    }
+
+    if fleet.spec.replicas == 0 {
+        return Ok(0);
+    }
+
+    let target_after_allocated =
+        fleet.spec.replicas.wrapping_sub(sum_allocated);
+    if active.spec.replicas >= target_after_allocated {
+        return Ok(fleet.lower_bound_replicas(target_after_allocated));
+    }
+
+    let rolling = fleet
+        .spec
+        .strategy
+        .rolling_update
+        .as_ref()
+        .ok_or_else(|| "RollingUpdate strategy is missing rollingUpdate".to_owned())?;
+    let max_surge_value = rolling
+        .max_surge
+        .as_ref()
+        .ok_or_else(|| "RollingUpdate strategy is missing maxSurge".to_owned())?;
+    let surge =
+        resolve_int_or_percent(max_surge_value, fleet.spec.replicas, true)?;
+
+    let max_surge = fleet.spec.replicas.wrapping_add(surge);
+    replicas = fleet.upper_bound_replicas(
+        replicas.wrapping_add(surge),
+    );
+
+    let total = rest.iter().fold(replicas, |sum, set| {
+        sum.wrapping_add(set.status.replicas)
+    });
+    if total > max_surge {
+        replicas = fleet.lower_bound_replicas(
+            replicas.wrapping_sub(total.wrapping_sub(max_surge)),
+        );
+    }
+
+    if replicas.wrapping_add(sum_allocated) > fleet.spec.replicas {
+        replicas = fleet.lower_bound_replicas(
+            fleet.spec.replicas.wrapping_sub(sum_allocated),
+        );
+    }
+
+    Ok(replicas)
+}
+
+/// Computes the active GameServerSet replica target selected by the upstream
+/// deployment-strategy dispatcher.
+///
+/// For Recreate this returns the target that remains after inactive allocated
+/// GameServers block capacity; the actual inactive-set scale-to-zero writes are
+/// deliberately left to the persistence layer.
+pub fn fleet_active_replicas_target(
+    fleet: &Fleet,
+    active: &GameServerSet,
+    rest: &[GameServerSet],
+) -> Result<i32, String> {
+    if rest.is_empty() {
+        return Ok(fleet.spec.replicas);
+    }
+
+    let rest_spec_replicas = rest.iter().fold(0i32, |sum, set| {
+        sum.wrapping_add(set.spec.replicas)
+    });
+    if rest_spec_replicas == 0 {
+        let blocked = rest.iter().fold(0i32, |sum, set| {
+            sum.wrapping_add(
+                set.status
+                    .reserved_replicas
+                    .wrapping_add(set.status.allocated_replicas),
+            )
+        });
+        return Ok(fleet.lower_bound_replicas(
+            fleet.spec.replicas.wrapping_sub(blocked),
+        ));
+    }
+
+    match fleet.spec.strategy.strategy_type.as_ref() {
+        Some(DeploymentStrategyType::Recreate) => {
+            let allocated = rest.iter().fold(0i32, |sum, set| {
+                sum.wrapping_add(set.status.allocated_replicas)
+            });
+            Ok(fleet.lower_bound_replicas(
+                fleet.spec.replicas.wrapping_sub(allocated),
+            ))
+        }
+        Some(DeploymentStrategyType::RollingUpdate) => {
+            rolling_update_active_replicas(fleet, active, rest)
+        }
+        Some(strategy) => Err(format!(
+            "unexpected deployment strategy type: {}",
+            strategy.as_str()
+        )),
+        None => Err("unexpected deployment strategy type: ".to_owned()),
+    }
+}
+
 fn checked_pow_i128(base: i128, exponent: u32) -> Option<i128> {
     let mut value = 1i128;
     for _ in 0..exponent {
@@ -938,6 +1091,215 @@ mod tests {
         assert_eq!(fleet.lower_bound_replicas(5), 5);
         assert_eq!(fleet.lower_bound_replicas(0), 0);
         assert_eq!(fleet.lower_bound_replicas(-5), 0);
+    }
+
+    #[test]
+    fn int_or_percent_resolution_matches_kubernetes_rounding() {
+        assert_eq!(
+            resolve_int_or_percent(
+                &IntOrPercent::String("25%".into()),
+                10,
+                true,
+            )
+            .unwrap(),
+            3
+        );
+        assert_eq!(
+            resolve_int_or_percent(
+                &IntOrPercent::String("25%".into()),
+                10,
+                false,
+            )
+            .unwrap(),
+            2
+        );
+        assert_eq!(
+            resolve_int_or_percent(&IntOrPercent::Int(7), 10, true)
+                .unwrap(),
+            7
+        );
+        assert!(resolve_int_or_percent(
+            &IntOrPercent::String("wat".into()),
+            10,
+            true,
+        )
+        .is_err());
+    }
+
+    fn rollout_fleet(replicas: i32) -> Fleet {
+        Fleet {
+            spec: FleetSpec {
+                replicas,
+                strategy: DeploymentStrategy {
+                    strategy_type: Some(DeploymentStrategyType::RollingUpdate),
+                    rolling_update: Some(RollingUpdateDeployment {
+                        max_unavailable: Some(IntOrPercent::String("25%".into())),
+                        max_surge: Some(IntOrPercent::String("25%".into())),
+                    }),
+                },
+                ..Default::default()
+            },
+            ..Default::default()
+        }
+    }
+
+    #[test]
+    fn rolling_update_active_waits_for_inflight_scaling() {
+        let fleet = rollout_fleet(100);
+        let active = GameServerSet {
+            spec: GameServerSetSpec {
+                replicas: 25,
+                ..Default::default()
+            },
+            status: crate::gameserverset::GameServerSetStatus {
+                replicas: 10,
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+
+        assert_eq!(
+            rolling_update_active_replicas(&fleet, &active, &[]).unwrap(),
+            25
+        );
+    }
+
+    #[test]
+    fn rolling_update_active_adds_max_surge_and_respects_fleet_bound() {
+        let fleet = rollout_fleet(100);
+        let active = GameServerSet {
+            spec: GameServerSetSpec {
+                replicas: 0,
+                ..Default::default()
+            },
+            status: crate::gameserverset::GameServerSetStatus {
+                replicas: 0,
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+
+        assert_eq!(
+            rolling_update_active_replicas(&fleet, &active, &[]).unwrap(),
+            25
+        );
+
+        let active = GameServerSet {
+            spec: GameServerSetSpec {
+                replicas: 90,
+                ..Default::default()
+            },
+            status: crate::gameserverset::GameServerSetStatus {
+                replicas: 90,
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        assert_eq!(
+            rolling_update_active_replicas(&fleet, &active, &[]).unwrap(),
+            100
+        );
+    }
+
+    #[test]
+    fn rolling_update_active_leaves_room_for_inactive_allocated_servers() {
+        let fleet = rollout_fleet(5);
+        let active = GameServerSet {
+            spec: GameServerSetSpec {
+                replicas: 4,
+                ..Default::default()
+            },
+            status: crate::gameserverset::GameServerSetStatus {
+                replicas: 4,
+                ready_replicas: 4,
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let inactive = GameServerSet {
+            spec: GameServerSetSpec {
+                replicas: 0,
+                ..Default::default()
+            },
+            status: crate::gameserverset::GameServerSetStatus {
+                replicas: 1,
+                allocated_replicas: 1,
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+
+        assert_eq!(
+            rolling_update_active_replicas(
+                &fleet,
+                &active,
+                &[inactive.clone()],
+            )
+            .unwrap(),
+            4
+        );
+        assert_eq!(
+            fleet_active_replicas_target(&fleet, &active, &[inactive])
+                .unwrap(),
+            4
+        );
+    }
+
+    #[test]
+    fn deployment_strategy_shortcuts_match_upstream() {
+        let fleet = rollout_fleet(10);
+        let active = GameServerSet::default();
+        assert_eq!(
+            fleet_active_replicas_target(&fleet, &active, &[]).unwrap(),
+            10
+        );
+
+        let scaled_down = GameServerSet {
+            spec: GameServerSetSpec {
+                replicas: 0,
+                ..Default::default()
+            },
+            status: crate::gameserverset::GameServerSetStatus {
+                allocated_replicas: 1,
+                reserved_replicas: 2,
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        assert_eq!(
+            fleet_active_replicas_target(
+                &fleet,
+                &active,
+                &[scaled_down],
+            )
+            .unwrap(),
+            7
+        );
+    }
+
+    #[test]
+    fn recreate_target_accounts_for_allocated_inactive_servers() {
+        let mut fleet = rollout_fleet(10);
+        fleet.spec.strategy.strategy_type =
+            Some(DeploymentStrategyType::Recreate);
+        let active = GameServerSet::default();
+        let inactive = GameServerSet {
+            spec: GameServerSetSpec {
+                replicas: 10,
+                ..Default::default()
+            },
+            status: crate::gameserverset::GameServerSetStatus {
+                allocated_replicas: 1,
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+
+        assert_eq!(
+            fleet_active_replicas_target(&fleet, &active, &[inactive])
+                .unwrap(),
+            9
+        );
     }
 
     fn set_with_template_name(
