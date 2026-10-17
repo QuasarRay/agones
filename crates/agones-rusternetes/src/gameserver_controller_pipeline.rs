@@ -51,12 +51,11 @@ impl GameServerSyncOutcome {
 /// stable Pod IPs, development GameServer handling, then shutdown.
 #[cgp_fn]
 #[async_trait]
-pub async fn reconcile_game_server_pipeline<S>(
+pub async fn reconcile_game_server_pipeline(
     &self,
     game_server: GameServer,
 ) -> Result<GameServerSyncOutcome, AdapterError>
 where
-    S: Storage + 'static,
     Self: ReconcileDeletingGameServer
         + ReconcilePortAllocationGameServer
         + ReconcileCreatingGameServer
