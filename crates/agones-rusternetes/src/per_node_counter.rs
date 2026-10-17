@@ -4,10 +4,11 @@ use std::sync::{Arc, RwLock};
 use agones_core::{GameServer, GameServerState};
 use agones_macros::agones_invariant;
 use cgp::prelude::*;
-use rusternetes_common::resources::CustomResource;
-use rusternetes_storage::{build_prefix, Storage};
+use futures::{StreamExt, stream::BoxStream};
+use rusternetes_common::resources::Node;
+use rusternetes_storage::{Storage, WatchEvent, build_prefix};
 
-use crate::{AdapterError, RusternetesCustomResource};
+use crate::{AdapterError, AgonesRepository, AgonesWatchEvent};
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct NodeCount {
@@ -145,6 +146,23 @@ impl PerNodeCounterState {
         self.counts.remove(node_name);
     }
 
+    pub fn apply_event(&mut self, event: PerNodeCounterEvent) {
+        match event {
+            PerNodeCounterEvent::Added(game_server) => {
+                self.add_game_server(&game_server);
+            }
+            PerNodeCounterEvent::Modified { old, new } => {
+                self.update_game_server(&old, &new);
+            }
+            PerNodeCounterEvent::Deleted(game_server) => {
+                self.delete_game_server(&game_server);
+            }
+            PerNodeCounterEvent::NodeDeleted(node_name) => {
+                self.delete_node(&node_name);
+            }
+        }
+    }
+
     fn is_already_processed(
         &self,
         uid: &str,
@@ -279,20 +297,6 @@ impl<S> PerNodeCounterController<S> {
     }
 }
 
-async fn list_all_game_servers<S: Storage>(
-    storage: &S,
-) -> Result<Vec<GameServer>, AdapterError> {
-    let prefix = build_prefix(
-        &crate::rusternetes_custom_resource_type::<GameServer>(),
-        None,
-    );
-    let resources: Vec<CustomResource> = storage.list(&prefix).await?;
-    resources
-        .into_iter()
-        .map(GameServer::from_rusternetes_custom_resource)
-        .collect()
-}
-
 /// CGP capability for the initial PerNodeCounter informer-cache snapshot.
 ///
 /// The upstream Run method initializes counts for every observed node, including
@@ -308,7 +312,8 @@ pub async fn rebuild_per_node_counter<S>(
 where
     S: Storage + 'static,
 {
-    let game_servers = list_all_game_servers(storage.as_ref()).await?;
+    let repository = AgonesRepository::new(storage);
+    let game_servers = repository.list_all::<GameServer>().await?;
     let mut state = per_node_counter_state
         .write()
         .map_err(|_| AdapterError::Hook("PerNodeCounter state lock poisoned".into()))?;
@@ -331,20 +336,99 @@ pub async fn apply_per_node_counter_event(
     let mut state = per_node_counter_state
         .write()
         .map_err(|_| AdapterError::Hook("PerNodeCounter state lock poisoned".into()))?;
+    state.apply_event(event);
+    Ok(())
+}
 
-    match event {
-        PerNodeCounterEvent::Added(game_server) => {
-            state.add_game_server(&game_server);
+pub type PerNodeCounterWatchStream =
+    BoxStream<'static, Result<PerNodeCounterEvent, AdapterError>>;
+
+/// Builds the live Rusternetes streams corresponding to the upstream
+/// GameServer and Node informer handlers.
+///
+/// GameServer Modified events do not carry an old object at the Storage layer.
+/// The reducer intentionally reconstructs the old state from its processed map,
+/// just as upstream does to tolerate duplicate informer events.
+pub async fn watch_per_node_counter_events<S>(
+    storage: Arc<S>,
+) -> Result<PerNodeCounterWatchStream, AdapterError>
+where
+    S: Storage + 'static,
+{
+    let repository = AgonesRepository::new(storage.clone());
+    let game_server_stream = repository.watch_all::<GameServer>().await?;
+    let node_prefix = build_prefix("nodes", None);
+    let node_stream = storage.watch(&node_prefix).await?;
+
+    let game_server_events = game_server_stream.map(|event| {
+        event.map(|event| match event {
+            AgonesWatchEvent::Added { resource, .. } => {
+                PerNodeCounterEvent::Added(resource)
+            }
+            AgonesWatchEvent::Modified { resource, .. } => {
+                PerNodeCounterEvent::Modified {
+                    old: resource.clone(),
+                    new: resource,
+                }
+            }
+            AgonesWatchEvent::Deleted { resource, .. } => {
+                PerNodeCounterEvent::Deleted(resource)
+            }
+        })
+    });
+
+    let node_events = node_stream.filter_map(|event| async move {
+        match event {
+            Ok(WatchEvent::Deleted(_, raw)) => Some(
+                serde_json::from_str::<Node>(&raw)
+                    .map(|node| PerNodeCounterEvent::NodeDeleted(node.metadata.name))
+                    .map_err(AdapterError::from),
+            ),
+            Ok(WatchEvent::Added(_, _) | WatchEvent::Modified(_, _)) => None,
+            Err(error) => Some(Err(AdapterError::from(error))),
         }
-        PerNodeCounterEvent::Modified { old, new } => {
-            state.update_game_server(&old, &new);
-        }
-        PerNodeCounterEvent::Deleted(game_server) => {
-            state.delete_game_server(&game_server);
-        }
-        PerNodeCounterEvent::NodeDeleted(node_name) => {
-            state.delete_node(&node_name);
-        }
+    });
+
+    Ok(Box::pin(futures::stream::select(
+        game_server_events,
+        node_events,
+    )))
+}
+
+/// CGP informer-equivalent runner for PerNodeCounter.
+///
+/// Watches are subscribed before the cluster-wide snapshot is rebuilt. Events
+/// that race with the snapshot are therefore queued and then deduplicated by
+/// the same UID/resourceVersion state machine as upstream. The returned future
+/// stays active until the underlying Rusternetes watch streams finish or fail;
+/// callers can cancel it through their task/runtime lifecycle.
+#[cgp_fn]
+#[async_trait]
+pub async fn run_per_node_counter<S>(
+    &self,
+    #[implicit] storage: Arc<S>,
+    #[implicit] per_node_counter_state: Arc<RwLock<PerNodeCounterState>>,
+) -> Result<(), AdapterError>
+where
+    S: Storage + 'static,
+{
+    let mut events = watch_per_node_counter_events(storage.clone()).await?;
+
+    let repository = AgonesRepository::new(storage);
+    let game_servers = repository.list_all::<GameServer>().await?;
+    {
+        let mut state = per_node_counter_state
+            .write()
+            .map_err(|_| AdapterError::Hook("PerNodeCounter state lock poisoned".into()))?;
+        state.rebuild(game_servers);
+    }
+
+    while let Some(event) = events.next().await {
+        let event = event?;
+        let mut state = per_node_counter_state
+            .write()
+            .map_err(|_| AdapterError::Hook("PerNodeCounter state lock poisoned".into()))?;
+        state.apply_event(event);
     }
 
     Ok(())
