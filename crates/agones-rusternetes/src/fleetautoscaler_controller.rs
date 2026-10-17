@@ -2,14 +2,17 @@ use std::{collections::HashMap, sync::Arc};
 
 use agones_core::{
     AutoscalerFeatures, BufferPolicy, CounterPolicy, Fleet,
+    FleetAutoscaleRequest, FleetAutoscaleResponse, FleetAutoscaleReview,
     FleetAutoscaler, FleetAutoscalerPolicy, FleetAutoscalerPolicyType,
     FleetAutoscalerScaleDecision, GameServer, GameServerState,
-    ListPolicy, NodeCount, SchedulePolicy, FLEET_NAME_LABEL,
+    ListPolicy, NodeCount, SchedulePolicy, UrlConfiguration,
+    FLEET_NAME_LABEL,
     apply_buffer_autoscaler_policy, apply_counter_autoscaler_policy,
     apply_list_autoscaler_policy,
     is_fleet_autoscaler_schedule_active,
 };
 use cgp::prelude::*;
+use futures::future::BoxFuture;
 use chrono::{DateTime, Utc};
 use rusternetes_storage::Storage;
 
@@ -24,6 +27,7 @@ use crate::{AdapterError, AgonesRepository};
 pub struct FleetAutoscalerController<S> {
     pub storage: Arc<S>,
     pub autoscaler_features: AutoscalerFeatures,
+    pub fleet_autoscale_request_metadata: bool,
 }
 
 impl<S> FleetAutoscalerController<S> {
@@ -31,6 +35,7 @@ impl<S> FleetAutoscalerController<S> {
         Self {
             storage: Arc::new(storage),
             autoscaler_features: AutoscalerFeatures::default(),
+            fleet_autoscale_request_metadata: false,
         }
     }
 
@@ -39,6 +44,14 @@ impl<S> FleetAutoscalerController<S> {
         autoscaler_features: AutoscalerFeatures,
     ) -> Self {
         self.autoscaler_features = autoscaler_features;
+        self
+    }
+
+    pub fn with_fleet_autoscale_request_metadata(
+        mut self,
+        enabled: bool,
+    ) -> Self {
+        self.fleet_autoscale_request_metadata = enabled;
         self
     }
 }
@@ -62,6 +75,12 @@ pub trait HasFleetAutoscalerRuntimeFeatures {
         &self,
     ) -> &AutoscalerFeatures;
 }
+
+#[cgp_getter]
+pub trait HasFleetAutoscaleRequestMetadata {
+    fn fleet_autoscale_request_metadata(&self) -> &bool;
+}
+
 
 
 #[cgp_component(BufferFleetAutoscalerPolicyEvaluator)]
