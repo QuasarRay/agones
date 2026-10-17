@@ -10,7 +10,7 @@
 
 4. Heavily use Metaprogramming and Automation to accelerate development.
 
-6. Use Genco and Egglog, proc macro 2, derive and delegate and attribute macros, and machine readable documentations of Agones and Kubernetes to accelerate development.
+6. Use CGP AGGRESSIVELY, to accelerate development and reduce boilerplate: https://github.com/contextgeneric/cgp.git
 
 7. This AGENTS.MD file must exist in every directory of this project
 
