@@ -97,14 +97,18 @@ pub use fleetautoscaler_controller::{
     CanApplyBufferFleetAutoscalerPolicy,
     CanApplyCounterFleetAutoscalerPolicy,
     CanApplyListFleetAutoscalerPolicy,
+    CanCheckFleetAutoscalerSchedule,
     CanComputeFleetAutoscalerDesiredSize,
+    CanComputeFleetAutoscalerDesiredSizeAt,
     CanLoadFleetAutoscalerInventory,
     CanMarkFleetAutoscalerUnableToScale,
+    CanReadFleetAutoscalerTime,
     CanReconcileFleetAutoscaler, CanScaleFleetForAutoscaler,
     CanUpdateFleetAutoscalerStatus, FleetAutoscalerController,
     FleetAutoscalerInventory, FleetAutoscalerPolicyDecision,
     FleetAutoscalerReconcileResult, FleetAutoscalerSyncOutcome,
-    HasFleetAutoscalerStorage, HasFleetAutoscalerStorageType,
+    HasFleetAutoscalerRuntimeFeatures, HasFleetAutoscalerStorage,
+    HasFleetAutoscalerStorageType,
 };
 pub use fleetautoscaler_controller_runtime::{
     CanRebuildFleetAutoscalerSchedules, CanRouteFleetAutoscalerEvent,
@@ -768,6 +772,7 @@ pub enum AdapterError {
     InvalidPort { field: &'static str, value: i32 },
     ContainerNotFound(String),
     Hook(String),
+    InactiveFleetAutoscalerSchedule,
     StateUpdateLimiter(StateUpdateLimiterError),
     PodGameServerOutOfSync(String),
 }
@@ -804,6 +809,9 @@ impl fmt::Display for AdapterError {
                 write!(f, "failed to find container named {name} in pod spec")
             }
             Self::Hook(error) => f.write_str(error),
+            Self::InactiveFleetAutoscalerSchedule => {
+                f.write_str("inactive schedule, policy not applicable")
+            }
             Self::StateUpdateLimiter(error) => write!(f, "state update limiter failed: {error}"),
             Self::PodGameServerOutOfSync(name) => write!(
                 f,

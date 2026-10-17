@@ -1,15 +1,16 @@
 use std::{collections::HashMap, sync::Arc};
 
 use agones_core::{
-    BufferPolicy, CounterPolicy, Fleet, FleetAutoscaler,
-    FleetAutoscalerPolicy, FleetAutoscalerPolicyType,
+    AutoscalerFeatures, BufferPolicy, CounterPolicy, Fleet,
+    FleetAutoscaler, FleetAutoscalerPolicy, FleetAutoscalerPolicyType,
     FleetAutoscalerScaleDecision, GameServer, GameServerState,
-    ListPolicy, NodeCount, FLEET_NAME_LABEL,
+    ListPolicy, NodeCount, SchedulePolicy, FLEET_NAME_LABEL,
     apply_buffer_autoscaler_policy, apply_counter_autoscaler_policy,
     apply_list_autoscaler_policy,
+    is_fleet_autoscaler_schedule_active,
 };
 use cgp::prelude::*;
-use chrono::Utc;
+use chrono::{DateTime, Utc};
 use rusternetes_storage::Storage;
 
 use crate::{AdapterError, AgonesRepository};
@@ -22,13 +23,23 @@ use crate::{AdapterError, AgonesRepository};
 #[derive(HasField)]
 pub struct FleetAutoscalerController<S> {
     pub storage: Arc<S>,
+    pub autoscaler_features: AutoscalerFeatures,
 }
 
 impl<S> FleetAutoscalerController<S> {
     pub fn new(storage: S) -> Self {
         Self {
             storage: Arc::new(storage),
+            autoscaler_features: AutoscalerFeatures::default(),
         }
+    }
+
+    pub fn with_autoscaler_features(
+        mut self,
+        autoscaler_features: AutoscalerFeatures,
+    ) -> Self {
+        self.autoscaler_features = autoscaler_features;
+        self
     }
 }
 
@@ -43,6 +54,15 @@ pub trait HasFleetAutoscalerStorage: HasFleetAutoscalerStorageType {
         &self,
     ) -> &Arc<Self::FleetAutoscalerStorage>;
 }
+
+
+#[cgp_getter]
+pub trait HasFleetAutoscalerRuntimeFeatures {
+    fn fleet_autoscaler_runtime_features(
+        &self,
+    ) -> &AutoscalerFeatures;
+}
+
 
 #[cgp_component(BufferFleetAutoscalerPolicyEvaluator)]
 pub trait CanApplyBufferFleetAutoscalerPolicy {
@@ -204,6 +224,218 @@ pub struct FleetAutoscalerPolicyDecision {
     pub applied_policy: FleetAutoscalerPolicyType,
 }
 
+#[cgp_component(FleetAutoscalerScheduleChecker)]
+pub trait CanCheckFleetAutoscalerSchedule {
+    fn is_fleet_autoscaler_schedule_active(
+        &self,
+        schedule: &SchedulePolicy,
+        current_time: DateTime<Utc>,
+    ) -> Result<bool, AdapterError>;
+}
+
+#[cgp_new_provider]
+impl<Context> FleetAutoscalerScheduleChecker<Context>
+    for UseAgonesFleetAutoscalerScheduleChecker
+{
+    fn is_fleet_autoscaler_schedule_active(
+        _context: &Context,
+        schedule: &SchedulePolicy,
+        current_time: DateTime<Utc>,
+    ) -> Result<bool, AdapterError> {
+        is_fleet_autoscaler_schedule_active(schedule, current_time)
+            .map_err(AdapterError::Hook)
+    }
+}
+
+#[cgp_component(FleetAutoscalerClock)]
+pub trait CanReadFleetAutoscalerTime {
+    fn fleet_autoscaler_now(&self) -> DateTime<Utc>;
+}
+
+#[cgp_new_provider]
+impl<Context> FleetAutoscalerClock<Context>
+    for UseUtcFleetAutoscalerClock
+{
+    fn fleet_autoscaler_now(_context: &Context) -> DateTime<Utc> {
+        Utc::now()
+    }
+}
+
+fn fleet_autoscaler_policy_needs_inventory(
+    policy: &FleetAutoscalerPolicy,
+) -> bool {
+    match policy.policy_type {
+        FleetAutoscalerPolicyType::Counter
+        | FleetAutoscalerPolicyType::List => true,
+        FleetAutoscalerPolicyType::Schedule => policy
+            .schedule
+            .as_deref()
+            .is_some_and(|schedule| {
+                fleet_autoscaler_policy_needs_inventory(
+                    &schedule.policy,
+                )
+            }),
+        FleetAutoscalerPolicyType::Chain => policy
+            .chain
+            .iter()
+            .any(|entry| {
+                fleet_autoscaler_policy_needs_inventory(
+                    &entry.policy,
+                )
+            }),
+        _ => false,
+    }
+}
+
+fn compute_fleet_autoscaler_desired_size_at<Context>(
+    context: &Context,
+    policy: &FleetAutoscalerPolicy,
+    fleet: &Fleet,
+    inventory: &FleetAutoscalerInventory,
+    current_time: &DateTime<Utc>,
+) -> Result<FleetAutoscalerPolicyDecision, AdapterError>
+where
+    Context: CanApplyBufferFleetAutoscalerPolicy
+        + CanApplyCounterFleetAutoscalerPolicy
+        + CanApplyListFleetAutoscalerPolicy
+        + CanCheckFleetAutoscalerSchedule
+        + HasFleetAutoscalerRuntimeFeatures,
+{
+    match &policy.policy_type {
+        FleetAutoscalerPolicyType::Buffer => {
+            let buffer = policy.buffer.as_ref().ok_or_else(|| {
+                AdapterError::Hook(
+                    "buffer policy config params are missing".into(),
+                )
+            })?;
+            let decision = context
+                .apply_buffer_fleet_autoscaler_policy(
+                    buffer,
+                    fleet,
+                )?;
+            Ok(FleetAutoscalerPolicyDecision {
+                replicas: decision.replicas,
+                limited: decision.limited,
+                applied_policy: FleetAutoscalerPolicyType::Buffer,
+            })
+        }
+        FleetAutoscalerPolicyType::Counter => {
+            let counter = policy.counter.as_ref().ok_or_else(|| {
+                AdapterError::Hook(
+                    "counter policy config params are missing".into(),
+                )
+            })?;
+            let decision = context
+                .apply_counter_fleet_autoscaler_policy(
+                    counter,
+                    fleet,
+                    inventory,
+                )?;
+            Ok(FleetAutoscalerPolicyDecision {
+                replicas: decision.replicas,
+                limited: decision.limited,
+                applied_policy: FleetAutoscalerPolicyType::Counter,
+            })
+        }
+        FleetAutoscalerPolicyType::List => {
+            let list = policy.list.as_ref().ok_or_else(|| {
+                AdapterError::Hook(
+                    "list policy config params are missing".into(),
+                )
+            })?;
+            let decision = context
+                .apply_list_fleet_autoscaler_policy(
+                    list,
+                    fleet,
+                    inventory,
+                )?;
+            Ok(FleetAutoscalerPolicyDecision {
+                replicas: decision.replicas,
+                limited: decision.limited,
+                applied_policy: FleetAutoscalerPolicyType::List,
+            })
+        }
+        FleetAutoscalerPolicyType::Schedule => {
+            if !context
+                .fleet_autoscaler_runtime_features()
+                .scheduled_autoscaler
+            {
+                return Err(AdapterError::Hook(
+                    "cannot apply SchedulePolicy unless feature flag ScheduledAutoscaler is enabled"
+                        .into(),
+                ));
+            }
+
+            let schedule = policy
+                .schedule
+                .as_deref()
+                .ok_or_else(|| {
+                    AdapterError::Hook(
+                        "schedule policy config params are missing".into(),
+                    )
+                })?;
+            if !context.is_fleet_autoscaler_schedule_active(
+                schedule,
+                current_time.clone(),
+            )? {
+                return Err(
+                    AdapterError::InactiveFleetAutoscalerSchedule,
+                );
+            }
+
+            compute_fleet_autoscaler_desired_size_at(
+                context,
+                &schedule.policy,
+                fleet,
+                inventory,
+                current_time,
+            )
+        }
+        _ => Err(AdapterError::Hook(
+            "wrong policy type, should be one of: Buffer, Webhook, Counter, List, Schedule, Chain"
+                .into(),
+        )),
+    }
+}
+
+#[cgp_component(FleetAutoscalerPolicyEvaluatorAt)]
+pub trait CanComputeFleetAutoscalerDesiredSizeAt {
+    fn compute_fleet_autoscaler_desired_size_at(
+        &self,
+        policy: &FleetAutoscalerPolicy,
+        fleet: &Fleet,
+        inventory: &FleetAutoscalerInventory,
+        current_time: DateTime<Utc>,
+    ) -> Result<FleetAutoscalerPolicyDecision, AdapterError>;
+}
+
+#[cgp_new_provider]
+impl<Context> FleetAutoscalerPolicyEvaluatorAt<Context>
+    for ComputeFleetAutoscalerDesiredSizeAtWithComponents
+where
+    Context: CanApplyBufferFleetAutoscalerPolicy
+        + CanApplyCounterFleetAutoscalerPolicy
+        + CanApplyListFleetAutoscalerPolicy
+        + CanCheckFleetAutoscalerSchedule
+        + HasFleetAutoscalerRuntimeFeatures,
+{
+    fn compute_fleet_autoscaler_desired_size_at(
+        context: &Context,
+        policy: &FleetAutoscalerPolicy,
+        fleet: &Fleet,
+        inventory: &FleetAutoscalerInventory,
+        current_time: DateTime<Utc>,
+    ) -> Result<FleetAutoscalerPolicyDecision, AdapterError> {
+        compute_fleet_autoscaler_desired_size_at(
+            context,
+            policy,
+            fleet,
+            inventory,
+            &current_time,
+        )
+    }
+}
+
 #[cgp_component(FleetAutoscalerPolicyEvaluator)]
 pub trait CanComputeFleetAutoscalerDesiredSize {
     fn compute_fleet_autoscaler_desired_size(
@@ -214,19 +446,12 @@ pub trait CanComputeFleetAutoscalerDesiredSize {
     ) -> Result<FleetAutoscalerPolicyDecision, AdapterError>;
 }
 
-/// Runtime policy dispatch remains an enum match because policy type is data,
-/// while each policy implementation is a separately replaceable CGP provider.
-///
-/// Buffer, Counter, and List are independent providers. Runtime dispatch selects
-/// among them from policy data while provider implementations remain replaceable
-/// and independent of persistence/runtime code.
 #[cgp_new_provider]
 impl<Context> FleetAutoscalerPolicyEvaluator<Context>
-    for ComputeFleetAutoscalerDesiredSizeWithComponents
+    for ComputeFleetAutoscalerDesiredSizeWithClock
 where
-    Context: CanApplyBufferFleetAutoscalerPolicy
-        + CanApplyCounterFleetAutoscalerPolicy
-        + CanApplyListFleetAutoscalerPolicy,
+    Context: CanComputeFleetAutoscalerDesiredSizeAt
+        + CanReadFleetAutoscalerTime,
 {
     fn compute_fleet_autoscaler_desired_size(
         context: &Context,
@@ -234,68 +459,12 @@ where
         fleet: &Fleet,
         inventory: &FleetAutoscalerInventory,
     ) -> Result<FleetAutoscalerPolicyDecision, AdapterError> {
-        match &policy.policy_type {
-            FleetAutoscalerPolicyType::Buffer => {
-                let buffer = policy.buffer.as_ref().ok_or_else(|| {
-                    AdapterError::Hook(
-                        "buffer policy config params are missing".into(),
-                    )
-                })?;
-                let decision = context
-                    .apply_buffer_fleet_autoscaler_policy(
-                        buffer,
-                        fleet,
-                    )?;
-                Ok(FleetAutoscalerPolicyDecision {
-                    replicas: decision.replicas,
-                    limited: decision.limited,
-                    applied_policy:
-                        FleetAutoscalerPolicyType::Buffer,
-                })
-            }
-            FleetAutoscalerPolicyType::Counter => {
-                let counter = policy.counter.as_ref().ok_or_else(|| {
-                    AdapterError::Hook(
-                        "counter policy config params are missing".into(),
-                    )
-                })?;
-                let decision = context
-                    .apply_counter_fleet_autoscaler_policy(
-                        counter,
-                        fleet,
-                        inventory,
-                    )?;
-                Ok(FleetAutoscalerPolicyDecision {
-                    replicas: decision.replicas,
-                    limited: decision.limited,
-                    applied_policy:
-                        FleetAutoscalerPolicyType::Counter,
-                })
-            }
-            FleetAutoscalerPolicyType::List => {
-                let list = policy.list.as_ref().ok_or_else(|| {
-                    AdapterError::Hook(
-                        "list policy config params are missing".into(),
-                    )
-                })?;
-                let decision = context
-                    .apply_list_fleet_autoscaler_policy(
-                        list,
-                        fleet,
-                        inventory,
-                    )?;
-                Ok(FleetAutoscalerPolicyDecision {
-                    replicas: decision.replicas,
-                    limited: decision.limited,
-                    applied_policy:
-                        FleetAutoscalerPolicyType::List,
-                })
-            }
-            _ => Err(AdapterError::Hook(
-                "wrong policy type, should be one of: Buffer, Webhook, Counter, List, Schedule, Chain"
-                    .into(),
-            )),
-        }
+        context.compute_fleet_autoscaler_desired_size_at(
+            policy,
+            fleet,
+            inventory,
+            context.fleet_autoscaler_now(),
+        )
     }
 }
 
@@ -543,10 +712,8 @@ where
             );
         }
 
-        let inventory = if matches!(
-            fleet_autoscaler.spec.policy.policy_type,
-            FleetAutoscalerPolicyType::Counter
-                | FleetAutoscalerPolicyType::List
+        let inventory = if fleet_autoscaler_policy_needs_inventory(
+            &fleet_autoscaler.spec.policy,
         ) {
             context
                 .load_fleet_autoscaler_inventory(&fleet)
@@ -563,6 +730,12 @@ where
             )
         {
             Ok(decision) => decision,
+            Err(AdapterError::InactiveFleetAutoscalerSchedule) => {
+                return Err(AdapterError::Hook(format!(
+                    "error calculating autoscaling fleet: {}: inactive schedule, policy not applicable",
+                    fleet.metadata.name
+                )));
+            }
             Err(error) => {
                 context
                     .mark_fleet_autoscaler_unable_to_scale(
@@ -613,16 +786,24 @@ delegate_and_check_components! {
         FleetAutoscalerStorageTypeProviderComponent: UseType<S>,
         FleetAutoscalerStorageGetterComponent:
             UseField<Symbol!("storage")>,
+        FleetAutoscalerRuntimeFeaturesGetterComponent:
+            UseField<Symbol!("autoscaler_features")>,
         BufferFleetAutoscalerPolicyEvaluatorComponent:
             UseAgonesBufferFleetAutoscalerPolicy,
         CounterFleetAutoscalerPolicyEvaluatorComponent:
             UseAgonesCounterFleetAutoscalerPolicy,
         ListFleetAutoscalerPolicyEvaluatorComponent:
             UseAgonesListFleetAutoscalerPolicy,
+        FleetAutoscalerScheduleCheckerComponent:
+            UseAgonesFleetAutoscalerScheduleChecker,
+        FleetAutoscalerClockComponent:
+            UseUtcFleetAutoscalerClock,
         FleetAutoscalerInventoryLoaderComponent:
             LoadFleetAutoscalerInventoryWithStorage,
+        FleetAutoscalerPolicyEvaluatorAtComponent:
+            ComputeFleetAutoscalerDesiredSizeAtWithComponents,
         FleetAutoscalerPolicyEvaluatorComponent:
-            ComputeFleetAutoscalerDesiredSizeWithComponents,
+            ComputeFleetAutoscalerDesiredSizeWithClock,
         FleetAutoscalerFleetScalerComponent:
             ScaleFleetForAutoscalerWithStorage,
         FleetAutoscalerStatusUpdaterComponent:
@@ -638,8 +819,10 @@ delegate_and_check_components! {
 mod tests {
     use agones_core::{
         AggregatedCounterStatus, AggregatedListStatus, BufferPolicy,
-        CounterPolicy, CounterStatus, FleetAutoscalerPolicy, GameServerStatus,
+        ActivePeriod, AutoscalerFeatures, Between, CounterPolicy,
+        CounterStatus, FleetAutoscalerPolicy, GameServerStatus,
         IntOrPercent, ListPolicy, ListStatus, ObjectMeta,
+        SchedulePolicy,
     };
     use std::collections::BTreeMap;
     use rusternetes_storage::MemoryStorage;
@@ -865,6 +1048,112 @@ mod tests {
         );
     }
 
+
+    fn scheduled_buffer_policy(
+        start: Option<&str>,
+        end: Option<&str>,
+    ) -> FleetAutoscalerPolicy {
+        FleetAutoscalerPolicy {
+            policy_type: FleetAutoscalerPolicyType::Schedule,
+            schedule: Some(Box::new(SchedulePolicy {
+                between: Between {
+                    start: start.map(str::to_owned),
+                    end: end.map(str::to_owned),
+                },
+                active_period: ActivePeriod::default(),
+                policy: FleetAutoscalerPolicy {
+                    policy_type:
+                        FleetAutoscalerPolicyType::Buffer,
+                    buffer: Some(BufferPolicy {
+                        buffer_size: IntOrPercent::Int(1),
+                        min_replicas: 3,
+                        max_replicas: 10,
+                    }),
+                    ..Default::default()
+                },
+            })),
+            ..Default::default()
+        }
+    }
+
+    #[test]
+    fn cgp_schedule_dispatch_uses_explicit_clock_and_nested_provider() {
+        let controller =
+            FleetAutoscalerController::new(MemoryStorage::new())
+                .with_autoscaler_features(AutoscalerFeatures {
+                    scheduled_autoscaler: true,
+                    wasm_autoscaler: false,
+                });
+        let now = DateTime::parse_from_rfc3339(
+            "2021-01-01T00:30:00Z",
+        )
+        .unwrap()
+        .with_timezone(&Utc);
+
+        let decision = controller
+            .compute_fleet_autoscaler_desired_size_at(
+                &scheduled_buffer_policy(
+                    Some("2021-01-01T00:00:00Z"),
+                    Some("2021-01-01T01:00:00Z"),
+                ),
+                &fleet(2),
+                &FleetAutoscalerInventory::default(),
+                now,
+            )
+            .unwrap();
+
+        assert_eq!(decision.replicas, 3);
+        assert!(!decision.limited);
+        assert_eq!(
+            decision.applied_policy,
+            FleetAutoscalerPolicyType::Buffer
+        );
+    }
+
+    #[test]
+    fn cgp_schedule_dispatch_enforces_feature_gate_and_inactive_error() {
+        let now = DateTime::parse_from_rfc3339(
+            "2021-01-01T00:30:00Z",
+        )
+        .unwrap()
+        .with_timezone(&Utc);
+        let policy = scheduled_buffer_policy(
+            Some("2021-01-01T00:00:00Z"),
+            Some("2021-01-01T00:15:00Z"),
+        );
+
+        let disabled =
+            FleetAutoscalerController::new(MemoryStorage::new())
+                .compute_fleet_autoscaler_desired_size_at(
+                    &policy,
+                    &fleet(2),
+                    &FleetAutoscalerInventory::default(),
+                    now,
+                )
+                .unwrap_err();
+        assert!(disabled.to_string().contains(
+            "feature flag ScheduledAutoscaler is enabled"
+        ));
+
+        let enabled =
+            FleetAutoscalerController::new(MemoryStorage::new())
+                .with_autoscaler_features(AutoscalerFeatures {
+                    scheduled_autoscaler: true,
+                    wasm_autoscaler: false,
+                })
+                .compute_fleet_autoscaler_desired_size_at(
+                    &policy,
+                    &fleet(2),
+                    &FleetAutoscalerInventory::default(),
+                    now,
+                )
+                .unwrap_err();
+        assert!(matches!(
+            enabled,
+            AdapterError::InactiveFleetAutoscalerSchedule
+        ));
+    }
+
     #[test]
     fn missing_buffer_configuration_is_reported_without_panic() {
         let controller =
@@ -914,9 +1203,10 @@ mod tests {
 #[cfg(test)]
 mod reconciliation_tests {
     use agones_core::{
-        AggregatedCounterStatus, BufferPolicy, CounterPolicy,
-        CounterStatus, FleetAutoscalerSpec, FleetSpec, IntOrPercent,
-        ObjectMeta,
+        ActivePeriod, AggregatedCounterStatus, AutoscalerFeatures,
+        Between, BufferPolicy, CounterPolicy, CounterStatus,
+        FleetAutoscalerSpec, FleetSpec, IntOrPercent, ObjectMeta,
+        SchedulePolicy,
     };
     use std::collections::BTreeMap;
     use rusternetes_storage::MemoryStorage;
@@ -1096,6 +1386,122 @@ mod reconciliation_tests {
                 .await
                 .unwrap();
         assert_eq!(stored.spec.replicas, 12);
+    }
+
+
+    #[tokio::test]
+    async fn reconcile_active_schedule_delegates_to_nested_buffer() {
+        let storage = MemoryStorage::new();
+        let mut fleet_autoscaler = autoscaler(1);
+        fleet_autoscaler.spec.policy = FleetAutoscalerPolicy {
+            policy_type: FleetAutoscalerPolicyType::Schedule,
+            schedule: Some(Box::new(SchedulePolicy {
+                between: Between::default(),
+                active_period: ActivePeriod::default(),
+                policy: FleetAutoscalerPolicy {
+                    policy_type:
+                        FleetAutoscalerPolicyType::Buffer,
+                    buffer: Some(BufferPolicy {
+                        buffer_size: IntOrPercent::Int(7),
+                        min_replicas: 0,
+                        max_replicas: 100,
+                    }),
+                    ..Default::default()
+                },
+            })),
+            ..Default::default()
+        };
+        store_pair(
+            &storage,
+            &fleet_autoscaler,
+            &fleet(5, 5, 5),
+        )
+        .await;
+
+        let outcome = FleetAutoscalerController::new(storage)
+            .with_autoscaler_features(AutoscalerFeatures {
+                scheduled_autoscaler: true,
+                wasm_autoscaler: false,
+            })
+            .reconcile_fleet_autoscaler("default", "fas")
+            .await
+            .unwrap();
+        let FleetAutoscalerSyncOutcome::Reconciled(result) =
+            outcome
+        else {
+            panic!("active schedule should reconcile");
+        };
+
+        assert_eq!(result.fleet.spec.replicas, 12);
+        assert_eq!(
+            result.decision.applied_policy,
+            FleetAutoscalerPolicyType::Buffer
+        );
+    }
+
+    #[tokio::test]
+    async fn inactive_schedule_does_not_mark_autoscaler_unable() {
+        let storage = MemoryStorage::new();
+        let mut fleet_autoscaler = autoscaler(1);
+        fleet_autoscaler.status.able_to_scale = true;
+        fleet_autoscaler.status.current_replicas = 5;
+        fleet_autoscaler.status.desired_replicas = 5;
+        fleet_autoscaler.status.last_applied_policy =
+            FleetAutoscalerPolicyType::Buffer;
+        fleet_autoscaler.spec.policy = FleetAutoscalerPolicy {
+            policy_type: FleetAutoscalerPolicyType::Schedule,
+            schedule: Some(Box::new(SchedulePolicy {
+                between: Between {
+                    start: None,
+                    end: Some(
+                        "2000-01-01T00:00:00Z".into(),
+                    ),
+                },
+                active_period: ActivePeriod::default(),
+                policy: FleetAutoscalerPolicy {
+                    policy_type:
+                        FleetAutoscalerPolicyType::Buffer,
+                    buffer: Some(BufferPolicy {
+                        buffer_size: IntOrPercent::Int(7),
+                        min_replicas: 0,
+                        max_replicas: 100,
+                    }),
+                    ..Default::default()
+                },
+            })),
+            ..Default::default()
+        };
+        store_pair(
+            &storage,
+            &fleet_autoscaler,
+            &fleet(5, 5, 5),
+        )
+        .await;
+
+        let error = FleetAutoscalerController::new(storage.clone())
+            .with_autoscaler_features(AutoscalerFeatures {
+                scheduled_autoscaler: true,
+                wasm_autoscaler: false,
+            })
+            .reconcile_fleet_autoscaler("default", "fas")
+            .await
+            .unwrap_err();
+        assert!(error.to_string().contains(
+            "inactive schedule, policy not applicable"
+        ));
+
+        let stored: FleetAutoscaler =
+            AgonesRepository::new(storage)
+                .get("default", "fas")
+                .await
+                .unwrap();
+        assert!(stored.status.able_to_scale);
+        assert_eq!(stored.status.current_replicas, 5);
+        assert_eq!(stored.status.desired_replicas, 5);
+        assert_eq!(
+            stored.status.last_applied_policy,
+            FleetAutoscalerPolicyType::Buffer
+        );
     }
 
     #[tokio::test]

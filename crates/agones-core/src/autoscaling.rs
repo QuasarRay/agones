@@ -2,7 +2,7 @@ use std::{collections::{BTreeMap, BTreeSet, HashMap}, str::FromStr};
 
 use agones_macros::{agones_invariant, AgonesStringEnum};
 use base64::{engine::general_purpose::STANDARD as BASE64, Engine as _};
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, Duration as ChronoDuration, Utc};
 use chrono_tz::Tz;
 use cron::Schedule;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
@@ -621,6 +621,178 @@ fn parse_go_duration(value: &str) -> bool {
     } else {
         total <= LIMIT - 1
     }
+}
+
+
+fn go_duration_nanos(value: &str) -> Result<i64, String> {
+    if !parse_go_duration(value) {
+        return Err(format!("invalid duration {value}"));
+    }
+
+    let mut rest = value;
+    let mut negative = false;
+    if let Some(sign) = rest.as_bytes().first().copied() {
+        if sign == b'-' || sign == b'+' {
+            negative = sign == b'-';
+            rest = &rest[1..];
+        }
+    }
+    if rest == "0" {
+        return Ok(0);
+    }
+
+    fn unit_nanos(unit: &str) -> Option<i128> {
+        match unit {
+            "ns" => Some(1),
+            "us" | "µs" | "μs" => Some(1_000),
+            "ms" => Some(1_000_000),
+            "s" => Some(1_000_000_000),
+            "m" => Some(60 * 1_000_000_000),
+            "h" => Some(60 * 60 * 1_000_000_000),
+            _ => None,
+        }
+    }
+
+    let mut total = 0i128;
+    while !rest.is_empty() {
+        let bytes = rest.as_bytes();
+        let mut index = 0usize;
+        let mut integer = 0i128;
+        while index < bytes.len() && bytes[index].is_ascii_digit() {
+            integer = integer * 10 + i128::from(bytes[index] - b'0');
+            index += 1;
+        }
+        rest = &rest[index..];
+
+        let mut fraction = 0i128;
+        let mut fraction_scale = 1i128;
+        if rest.starts_with('.') {
+            rest = &rest[1..];
+            let bytes = rest.as_bytes();
+            let mut fraction_index = 0usize;
+            while fraction_index < bytes.len()
+                && bytes[fraction_index].is_ascii_digit()
+            {
+                if fraction_index < 18 {
+                    fraction = fraction * 10
+                        + i128::from(bytes[fraction_index] - b'0');
+                    fraction_scale *= 10;
+                }
+                fraction_index += 1;
+            }
+            rest = &rest[fraction_index..];
+        }
+
+        let bytes = rest.as_bytes();
+        let mut unit_end = 0usize;
+        while unit_end < bytes.len() {
+            let byte = bytes[unit_end];
+            if byte == b'.' || byte.is_ascii_digit() {
+                break;
+            }
+            unit_end += 1;
+        }
+        let unit = unit_nanos(&rest[..unit_end])
+            .ok_or_else(|| format!("invalid duration {value}"))?;
+        rest = &rest[unit_end..];
+
+        total += integer * unit;
+        if fraction_scale > 1 {
+            total += fraction * unit / fraction_scale;
+        }
+    }
+
+    if negative {
+        total = -total;
+    }
+    i64::try_from(total).map_err(|_| format!("invalid duration {value}"))
+}
+
+fn schedule_cron_expression(value: &str) -> Result<Schedule, String> {
+    let expression = match value {
+        "@yearly" | "@annually" => "0 0 0 1 1 *".to_owned(),
+        "@monthly" => "0 0 0 1 * *".to_owned(),
+        "@weekly" => "0 0 0 * * 0".to_owned(),
+        "@daily" | "@midnight" => "0 0 0 * * *".to_owned(),
+        "@hourly" => "0 0 * * * *".to_owned(),
+        value if value.starts_with("@every ") => {
+            return Err("@every is an interval schedule".into());
+        }
+        value => format!("0 {value}"),
+    };
+    Schedule::from_str(&expression).map_err(|error| error.to_string())
+}
+
+/// Deterministic port of upstream isScheduleActive.
+///
+/// Validation is expected to run before this function, but unlike the Go
+/// helper this returns malformed schedule input as an error rather than relying
+/// on ignored parser errors.
+pub fn is_fleet_autoscaler_schedule_active(
+    schedule: &SchedulePolicy,
+    current_time: DateTime<Utc>,
+) -> Result<bool, String> {
+    if let Some(start) = schedule.between.start.as_deref() {
+        let start = DateTime::parse_from_rfc3339(start)
+            .map_err(|error| error.to_string())?
+            .with_timezone(&Utc);
+        if current_time < start {
+            return Ok(false);
+        }
+    }
+
+    if let Some(end) = schedule.between.end.as_deref() {
+        let end = DateTime::parse_from_rfc3339(end)
+            .map_err(|error| error.to_string())?
+            .with_timezone(&Utc);
+        if current_time > end {
+            return Ok(false);
+        }
+    }
+
+    if schedule.active_period.start_cron.is_empty() {
+        return Ok(true);
+    }
+
+    let timezone = if schedule.active_period.timezone.is_empty() {
+        Tz::UTC
+    } else {
+        Tz::from_str(&schedule.active_period.timezone)
+            .map_err(|error| error.to_string())?
+    };
+
+    let duration = if schedule.active_period.duration.is_empty() {
+        ChronoDuration::hours(2_540_400)
+    } else {
+        ChronoDuration::nanoseconds(go_duration_nanos(
+            &schedule.active_period.duration,
+        )?)
+    };
+    let localized_now = current_time.with_timezone(&timezone);
+    let current_minus_duration = localized_now - duration;
+
+    let cron_start = if let Some(every) = schedule
+        .active_period
+        .start_cron
+        .strip_prefix("@every ")
+    {
+        let every = ChronoDuration::nanoseconds(go_duration_nanos(
+            every.trim(),
+        )?);
+        current_minus_duration + every
+    } else {
+        schedule_cron_expression(&schedule.active_period.start_cron)?
+            .after(&current_minus_duration)
+            .next()
+            .ok_or_else(|| "cron schedule has no next occurrence".to_owned())?
+    };
+    let cron_end = cron_start + duration;
+    let cron_delta = ChronoDuration::seconds(-90);
+
+    Ok(
+        localized_now > cron_start + cron_delta
+            && localized_now < cron_end,
+    )
 }
 
 impl SchedulePolicy {
@@ -1796,6 +1968,151 @@ mod tests {
             scheduled_autoscaler: true,
             ..Default::default()
         }
+    }
+
+
+    fn schedule_with(
+        start: Option<&str>,
+        end: Option<&str>,
+        cron: &str,
+        duration: &str,
+    ) -> SchedulePolicy {
+        SchedulePolicy {
+            between: Between {
+                start: start.map(str::to_owned),
+                end: end.map(str::to_owned),
+            },
+            active_period: ActivePeriod {
+                timezone: "UTC".into(),
+                start_cron: cron.into(),
+                duration: duration.into(),
+            },
+            ..Default::default()
+        }
+    }
+
+    #[test]
+    fn schedule_active_respects_between_bounds_and_empty_cron() {
+        let now = DateTime::parse_from_rfc3339(
+            "2021-01-01T00:30:00Z",
+        )
+        .unwrap()
+        .with_timezone(&Utc);
+
+        assert!(
+            is_fleet_autoscaler_schedule_active(
+                &schedule_with(
+                    Some("2021-01-01T00:00:00Z"),
+                    Some("2021-01-01T01:00:00Z"),
+                    "",
+                    "1h",
+                ),
+                now,
+            )
+            .unwrap()
+        );
+        assert!(
+            !is_fleet_autoscaler_schedule_active(
+                &schedule_with(
+                    Some("2021-01-01T00:31:00Z"),
+                    None,
+                    "",
+                    "1h",
+                ),
+                now,
+            )
+            .unwrap()
+        );
+        assert!(
+            !is_fleet_autoscaler_schedule_active(
+                &schedule_with(
+                    None,
+                    Some("2021-01-01T00:29:00Z"),
+                    "",
+                    "1h",
+                ),
+                now,
+            )
+            .unwrap()
+        );
+    }
+
+    #[test]
+    fn schedule_active_ports_standard_cron_duration_windows() {
+        let cases = [
+            (
+                "2020-12-26T08:30:00Z",
+                schedule_with(
+                    None,
+                    Some("2021-01-01T00:00:00Z"),
+                    "* * * * *",
+                    "48h",
+                ),
+                true,
+            ),
+            (
+                "2021-01-02T00:00:00Z",
+                schedule_with(
+                    Some("2021-01-01T00:00:00Z"),
+                    None,
+                    "* * * * *",
+                    "1h",
+                ),
+                true,
+            ),
+            (
+                "2021-03-14T02:00:00Z",
+                schedule_with(
+                    Some("2021-03-13T00:00:00Z"),
+                    Some("2021-03-15T00:00:00Z"),
+                    "* 2 * * *",
+                    "1h",
+                ),
+                true,
+            ),
+            (
+                "2023-12-12T03:49:00Z",
+                schedule_with(
+                    Some("2022-12-31T23:59:59Z"),
+                    Some("2023-03-02T00:00:00Z"),
+                    "* 0 * 3 *",
+                    "",
+                ),
+                false,
+            ),
+        ];
+
+        for (now, schedule, expected) in cases {
+            let now = DateTime::parse_from_rfc3339(now)
+                .unwrap()
+                .with_timezone(&Utc);
+            assert_eq!(
+                is_fleet_autoscaler_schedule_active(&schedule, now)
+                    .unwrap(),
+                expected,
+            );
+        }
+    }
+
+    #[test]
+    fn schedule_active_supports_timezone_and_cron_aliases() {
+        let schedule = SchedulePolicy {
+            active_period: ActivePeriod {
+                timezone: "America/New_York".into(),
+                start_cron: "@hourly".into(),
+                duration: "30m".into(),
+            },
+            ..Default::default()
+        };
+        let now = DateTime::parse_from_rfc3339(
+            "2021-01-01T05:15:00Z",
+        )
+        .unwrap()
+        .with_timezone(&Utc);
+        assert!(
+            is_fleet_autoscaler_schedule_active(&schedule, now)
+                .unwrap()
+        );
     }
 
     #[test]
