@@ -7,6 +7,8 @@ use std::collections::{BTreeMap, HashMap};
 use std::error::Error;
 use std::fmt;
 
+use futures::StreamExt;
+
 use agones_core::{
     AgonesApiResource, Eviction, GameServer, GameServerSpec, ObjectMeta as CoreObjectMeta,
     PortPolicy, SchedulingStrategy, ValidationError, ValidationErrorKind, FINALIZER_NAME,
@@ -24,7 +26,7 @@ use rusternetes_common::types::{
     LabelSelector, ObjectMeta as RusternetesObjectMeta, OwnerReference, ResourceRequirements,
     TypeMeta,
 };
-use rusternetes_storage::{build_key, build_prefix, Storage};
+use rusternetes_storage::{build_key, build_prefix, Storage, WatchEvent};
 
 pub const ROLE_LABEL: &str = "agones.dev/role";
 pub const GAME_SERVER_LABEL_ROLE: &str = "gameserver";
@@ -695,6 +697,41 @@ pub fn rusternetes_custom_resource_prefix<T: AgonesApiResource>(
     )
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum AgonesWatchEvent<T> {
+    Added { key: String, resource: T },
+    Modified { key: String, resource: T },
+    Deleted { key: String, resource: T },
+}
+
+pub type AgonesWatchStream<T> =
+    futures::stream::BoxStream<'static, Result<AgonesWatchEvent<T>, AdapterError>>;
+
+fn decode_watch_event<T>(event: WatchEvent) -> Result<AgonesWatchEvent<T>, AdapterError>
+where
+    T: RusternetesCustomResource,
+{
+    let decode = |raw: String| -> Result<T, AdapterError> {
+        let resource: CustomResource = serde_json::from_str(&raw)?;
+        T::from_rusternetes_custom_resource(resource)
+    };
+
+    match event {
+        WatchEvent::Added(key, raw) => Ok(AgonesWatchEvent::Added {
+            key,
+            resource: decode(raw)?,
+        }),
+        WatchEvent::Modified(key, raw) => Ok(AgonesWatchEvent::Modified {
+            key,
+            resource: decode(raw)?,
+        }),
+        WatchEvent::Deleted(key, raw) => Ok(AgonesWatchEvent::Deleted {
+            key,
+            resource: decode(raw)?,
+        }),
+    }
+}
+
 /// Backend-generic repository for Agones custom resources stored by Rusternetes.
 ///
 /// The repository depends only on Rusternetes' Storage trait. Any Storage
@@ -781,6 +818,40 @@ impl<S: Storage> AgonesRepository<S> {
             .into_iter()
             .map(T::from_rusternetes_custom_resource)
             .collect()
+    }
+
+    pub async fn watch<T>(
+        &self,
+        namespace: &str,
+    ) -> Result<AgonesWatchStream<T>, AdapterError>
+    where
+        T: RusternetesCustomResource + Send + Sync + 'static,
+    {
+        let prefix = rusternetes_custom_resource_prefix::<T>(namespace);
+        let stream = self.storage.watch(&prefix).await?;
+        Ok(Box::pin(stream.map(|event| match event {
+            Ok(event) => decode_watch_event(event),
+            Err(error) => Err(AdapterError::from(error)),
+        })))
+    }
+
+    pub async fn watch_from_revision<T>(
+        &self,
+        namespace: &str,
+        revision: i64,
+    ) -> Result<AgonesWatchStream<T>, AdapterError>
+    where
+        T: RusternetesCustomResource + Send + Sync + 'static,
+    {
+        let prefix = rusternetes_custom_resource_prefix::<T>(namespace);
+        let stream = self
+            .storage
+            .watch_from_revision(&prefix, revision)
+            .await?;
+        Ok(Box::pin(stream.map(|event| match event {
+            Ok(event) => decode_watch_event(event),
+            Err(error) => Err(AdapterError::from(error)),
+        })))
     }
 }
 
@@ -1292,6 +1363,78 @@ mod tests {
             repository.create(&game_server).await,
             Err(AdapterError::MissingField("metadata.namespace"))
         ));
+    }
+
+    async fn next_watch_event<T>(
+        stream: &mut AgonesWatchStream<T>,
+    ) -> AgonesWatchEvent<T> {
+        tokio::time::timeout(std::time::Duration::from_secs(2), stream.next())
+            .await
+            .expect("typed watch event timed out")
+            .expect("typed watch stream ended")
+            .expect("typed watch event failed")
+    }
+
+    #[tokio::test]
+    async fn agones_repository_watch_decodes_added_modified_and_deleted_resources() {
+        let storage = rusternetes_storage::MemoryStorage::new();
+        let repository = AgonesRepository::new(storage);
+        let mut stream = repository.watch::<GameServer>("arena").await.unwrap();
+        let mut revision_stream = repository
+            .watch_from_revision::<GameServer>("arena", 0)
+            .await
+            .unwrap();
+
+        let mut game_server = GameServer::default();
+        game_server.metadata.name = "server-1".to_owned();
+        game_server.metadata.namespace = "arena".to_owned();
+
+        let created = repository.create(&game_server).await.unwrap();
+        let expected_key =
+            rusternetes_custom_resource_key::<GameServer>("arena", "server-1");
+
+        match next_watch_event(&mut stream).await {
+            AgonesWatchEvent::Added { key, resource } => {
+                assert_eq!(key, expected_key);
+                assert_eq!(resource, created);
+            }
+            event => panic!("expected Added event, got {event:?}"),
+        }
+        match next_watch_event(&mut revision_stream).await {
+            AgonesWatchEvent::Added { key, resource } => {
+                assert_eq!(key, expected_key);
+                assert_eq!(resource, created);
+            }
+            event => panic!("expected revision Added event, got {event:?}"),
+        }
+
+        let mut changed = created.clone();
+        changed
+            .metadata
+            .annotations
+            .insert("revision".to_owned(), "2".to_owned());
+        let updated = repository.update(&changed).await.unwrap();
+
+        match next_watch_event(&mut stream).await {
+            AgonesWatchEvent::Modified { key, resource } => {
+                assert_eq!(key, expected_key);
+                assert_eq!(resource, updated);
+            }
+            event => panic!("expected Modified event, got {event:?}"),
+        }
+
+        repository
+            .delete::<GameServer>("arena", "server-1")
+            .await
+            .unwrap();
+
+        match next_watch_event(&mut stream).await {
+            AgonesWatchEvent::Deleted { key, resource } => {
+                assert_eq!(key, expected_key);
+                assert_eq!(resource, updated);
+            }
+            event => panic!("expected Deleted event, got {event:?}"),
+        }
     }
 
     fn assert_custom_resource_round_trip<T>()
