@@ -481,6 +481,266 @@ pub fn fleet_active_replicas_target(
     }
 }
 
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum FleetGameServerSetScaleReason {
+    Recreate,
+    UnhealthyCleanup,
+    RollingUpdate,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct FleetGameServerSetScale {
+    pub namespace: String,
+    pub name: String,
+    pub from_replicas: i32,
+    pub to_replicas: i32,
+    pub reason: FleetGameServerSetScaleReason,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct FleetDeploymentPlan {
+    pub active_replicas: i32,
+    pub inactive_scales: Vec<FleetGameServerSetScale>,
+}
+
+fn game_server_set_scale(
+    game_server_set: &GameServerSet,
+    to_replicas: i32,
+    reason: FleetGameServerSetScaleReason,
+) -> FleetGameServerSetScale {
+    FleetGameServerSetScale {
+        namespace: game_server_set.metadata.namespace.clone(),
+        name: game_server_set.metadata.name.clone(),
+        from_replicas: game_server_set.spec.replicas,
+        to_replicas,
+        reason,
+    }
+}
+
+/// Pure port of the inactive-GameServerSet side of Agones' fixed-on-ready
+/// rolling update.
+///
+/// The returned actions preserve upstream ordering. The unhealthy cleanup pass
+/// is applied to an in-memory working copy before the ordinary scale-down pass,
+/// matching the Go controller's mutation of its local GameServerSet slice.
+pub fn rolling_update_inactive_scale_plan(
+    fleet: &Fleet,
+    active: &GameServerSet,
+    rest: &[GameServerSet],
+) -> Result<Vec<FleetGameServerSetScale>, String> {
+    if rest.is_empty() {
+        return Ok(Vec::new());
+    }
+
+    let rolling = fleet
+        .spec
+        .strategy
+        .rolling_update
+        .as_ref()
+        .ok_or_else(|| "RollingUpdate strategy is missing rollingUpdate".to_owned())?;
+    let max_unavailable_value = rolling
+        .max_unavailable
+        .as_ref()
+        .ok_or_else(|| "RollingUpdate strategy is missing maxUnavailable".to_owned())?;
+
+    let mut unavailable =
+        resolve_int_or_percent(max_unavailable_value, fleet.status.ready_replicas, false)?;
+    if unavailable == 0 {
+        unavailable = 1;
+    }
+    if unavailable > fleet.spec.replicas {
+        unavailable = fleet.spec.replicas;
+    }
+
+    let ready_replicas_count = rest.iter().fold(
+        active.status.ready_replicas,
+        |sum, game_server_set| sum.wrapping_add(game_server_set.status.ready_replicas),
+    );
+    let min_available = fleet
+        .status
+        .ready_replicas
+        .wrapping_sub(unavailable)
+        .min(fleet.spec.replicas);
+
+    let new_game_server_set_unavailable = active
+        .spec
+        .replicas
+        .wrapping_sub(active.status.ready_replicas)
+        .wrapping_sub(active.status.reserved_replicas)
+        .wrapping_sub(active.status.allocated_replicas)
+        .wrapping_sub(active.status.shutdown_replicas);
+    let max_scaled_down = ready_replicas_count
+        .wrapping_sub(min_available)
+        .wrapping_sub(new_game_server_set_unavailable);
+
+    if max_scaled_down <= 0 {
+        return Ok(Vec::new());
+    }
+
+    let mut working = rest.to_vec();
+    let mut actions = Vec::new();
+    let mut total_cleanup_scaled_down = 0i32;
+
+    for game_server_set in &mut working {
+        if total_cleanup_scaled_down >= max_scaled_down {
+            break;
+        }
+        if game_server_set.spec.replicas == 0 {
+            continue;
+        }
+
+        let healthy = game_server_set
+            .status
+            .ready_replicas
+            .wrapping_add(game_server_set.status.allocated_replicas)
+            .wrapping_add(game_server_set.status.reserved_replicas);
+        if game_server_set.spec.replicas <= healthy {
+            continue;
+        }
+
+        let cleanup_room = max_scaled_down.wrapping_sub(total_cleanup_scaled_down);
+        let unhealthy = game_server_set.spec.replicas.wrapping_sub(healthy);
+        let scaled_down = cleanup_room.min(unhealthy);
+        let new_replicas = game_server_set.spec.replicas.wrapping_sub(scaled_down);
+        if new_replicas > game_server_set.spec.replicas {
+            return Err(format!(
+                "when cleaning up unhealthy replicas, got invalid request to scale down {}/{} {} -> {}",
+                game_server_set.metadata.namespace,
+                game_server_set.metadata.name,
+                game_server_set.spec.replicas,
+                new_replicas
+            ));
+        }
+
+        actions.push(game_server_set_scale(
+            game_server_set,
+            new_replicas,
+            FleetGameServerSetScaleReason::UnhealthyCleanup,
+        ));
+        game_server_set.spec.replicas = new_replicas;
+        total_cleanup_scaled_down = total_cleanup_scaled_down.wrapping_add(scaled_down);
+    }
+
+    let total_scale_down_count = ready_replicas_count.wrapping_sub(min_available);
+    if ready_replicas_count <= min_available {
+        return Ok(actions);
+    }
+
+    let mut total_already_scaled_down = 0i32;
+    for game_server_set in &working {
+        if total_already_scaled_down >= total_scale_down_count {
+            break;
+        }
+        if game_server_set.spec.replicas <= 0 {
+            continue;
+        }
+
+        // Wait for an earlier spec change to be observed in status before
+        // continuing through older inactive GameServerSets.
+        if game_server_set.spec.replicas != game_server_set.status.replicas {
+            break;
+        }
+        if game_server_set.status.shutdown_replicas != 0 {
+            continue;
+        }
+
+        let scale_down_count = game_server_set.spec.replicas.min(
+            total_scale_down_count.wrapping_sub(total_already_scaled_down),
+        );
+        let new_replicas = game_server_set
+            .spec
+            .replicas
+            .wrapping_sub(scale_down_count);
+        if new_replicas > game_server_set.spec.replicas {
+            return Err(format!(
+                "when scaling down old GameServerSet, got invalid request to scale down {}/{} {} -> {}",
+                game_server_set.metadata.namespace,
+                game_server_set.metadata.name,
+                game_server_set.spec.replicas,
+                new_replicas
+            ));
+        }
+
+        let target = if game_server_set.status.replicas
+            == game_server_set.status.allocated_replicas
+        {
+            0
+        } else if new_replicas == game_server_set.spec.replicas {
+            continue;
+        } else {
+            new_replicas
+        };
+
+        actions.push(game_server_set_scale(
+            game_server_set,
+            target,
+            FleetGameServerSetScaleReason::RollingUpdate,
+        ));
+        total_already_scaled_down =
+            total_already_scaled_down.wrapping_add(scale_down_count);
+    }
+
+    Ok(actions)
+}
+
+/// Computes all inactive GameServerSet scale writes for the selected deployment
+/// strategy, without performing persistence.
+pub fn fleet_inactive_scale_plan(
+    fleet: &Fleet,
+    active: &GameServerSet,
+    rest: &[GameServerSet],
+) -> Result<Vec<FleetGameServerSetScale>, String> {
+    if rest.is_empty() {
+        return Ok(Vec::new());
+    }
+
+    let rest_spec_replicas = rest.iter().fold(0i32, |sum, set| {
+        sum.wrapping_add(set.spec.replicas)
+    });
+    if rest_spec_replicas == 0 {
+        return Ok(Vec::new());
+    }
+
+    match fleet.spec.strategy.strategy_type.as_ref() {
+        Some(DeploymentStrategyType::Recreate) => Ok(rest
+            .iter()
+            .filter(|set| set.spec.replicas != 0)
+            .map(|set| {
+                game_server_set_scale(
+                    set,
+                    0,
+                    FleetGameServerSetScaleReason::Recreate,
+                )
+            })
+            .collect()),
+        Some(DeploymentStrategyType::RollingUpdate) => {
+            rolling_update_inactive_scale_plan(fleet, active, rest)
+        }
+        Some(strategy) => Err(format!(
+            "unexpected deployment strategy type: {}",
+            strategy.as_str()
+        )),
+        None => Err("unexpected deployment strategy type: ".to_owned()),
+    }
+}
+
+/// Produces the complete pure deployment-strategy result used by the Fleet
+/// controller: the desired active replica count plus the ordered writes for
+/// inactive GameServerSets.
+pub fn fleet_deployment_plan(
+    fleet: &Fleet,
+    active: &GameServerSet,
+    rest: &[GameServerSet],
+) -> Result<FleetDeploymentPlan, String> {
+    let active_replicas = fleet_active_replicas_target(fleet, active, rest)?;
+    let inactive_scales = fleet_inactive_scale_plan(fleet, active, rest)?;
+    Ok(FleetDeploymentPlan {
+        active_replicas,
+        inactive_scales,
+    })
+}
+
 fn checked_pow_i128(base: i128, exponent: u32) -> Option<i128> {
     let mut value = 1i128;
     for _ in 0..exponent {
@@ -1299,6 +1559,204 @@ mod tests {
             fleet_active_replicas_target(&fleet, &active, &[inactive])
                 .unwrap(),
             9
+        );
+    }
+
+
+    fn rollout_set(
+        name: &str,
+        spec_replicas: i32,
+        status_replicas: i32,
+        ready_replicas: i32,
+        allocated_replicas: i32,
+    ) -> GameServerSet {
+        GameServerSet {
+            metadata: ObjectMeta {
+                name: name.into(),
+                namespace: "default".into(),
+                ..Default::default()
+            },
+            spec: GameServerSetSpec {
+                replicas: spec_replicas,
+                ..Default::default()
+            },
+            status: crate::gameserverset::GameServerSetStatus {
+                replicas: status_replicas,
+                ready_replicas,
+                allocated_replicas,
+                ..Default::default()
+            },
+            ..Default::default()
+        }
+    }
+
+    #[test]
+    fn recreate_deployment_plan_scales_inactive_sets_to_zero() {
+        let mut fleet = rollout_fleet(10);
+        fleet.spec.strategy.strategy_type =
+            Some(DeploymentStrategyType::Recreate);
+        let active = rollout_set("active", 0, 0, 0, 0);
+        let inactive = rollout_set("inactive", 10, 10, 9, 1);
+        let already_scaled = rollout_set("scaled", 0, 1, 0, 1);
+
+        let plan = fleet_deployment_plan(
+            &fleet,
+            &active,
+            &[inactive, already_scaled],
+        )
+        .unwrap();
+
+        assert_eq!(plan.active_replicas, 9);
+        assert_eq!(
+            plan.inactive_scales,
+            vec![FleetGameServerSetScale {
+                namespace: "default".into(),
+                name: "inactive".into(),
+                from_replicas: 10,
+                to_replicas: 0,
+                reason: FleetGameServerSetScaleReason::Recreate,
+            }]
+        );
+    }
+
+    #[test]
+    fn rolling_update_plan_matches_upstream_full_inactive_case() {
+        let mut fleet = rollout_fleet(100);
+        fleet.status.ready_replicas = 100;
+        fleet
+            .spec
+            .strategy
+            .rolling_update
+            .as_mut()
+            .unwrap()
+            .max_unavailable = Some(IntOrPercent::String("30%".into()));
+
+        let active = rollout_set("active", 0, 0, 0, 0);
+        let inactive = rollout_set("inactive", 100, 100, 100, 0);
+
+        let plan =
+            fleet_deployment_plan(&fleet, &active, &[inactive]).unwrap();
+
+        assert_eq!(plan.active_replicas, 25);
+        assert_eq!(plan.inactive_scales.len(), 1);
+        assert_eq!(plan.inactive_scales[0].from_replicas, 100);
+        assert_eq!(plan.inactive_scales[0].to_replicas, 70);
+        assert_eq!(
+            plan.inactive_scales[0].reason,
+            FleetGameServerSetScaleReason::RollingUpdate
+        );
+    }
+
+    #[test]
+    fn rolling_update_plan_preserves_allocated_capacity() {
+        let mut fleet = rollout_fleet(100);
+        fleet.status.ready_replicas = 85;
+        fleet
+            .spec
+            .strategy
+            .rolling_update
+            .as_mut()
+            .unwrap()
+            .max_unavailable = Some(IntOrPercent::String("30%".into()));
+
+        let active = rollout_set("active", 75, 75, 75, 0);
+        let inactive = rollout_set("inactive", 10, 10, 10, 5);
+
+        let plan =
+            fleet_deployment_plan(&fleet, &active, &[inactive]).unwrap();
+
+        assert_eq!(plan.active_replicas, 95);
+        assert_eq!(plan.inactive_scales.len(), 1);
+        assert_eq!(plan.inactive_scales[0].to_replicas, 0);
+    }
+
+    #[test]
+    fn rolling_update_plan_uses_ready_replica_fencepost_for_small_fleets() {
+        let mut fleet = rollout_fleet(5);
+        fleet.status.ready_replicas = 5;
+        fleet
+            .spec
+            .strategy
+            .rolling_update
+            .as_mut()
+            .unwrap()
+            .max_unavailable = Some(IntOrPercent::String("30%".into()));
+
+        let active = rollout_set("active", 0, 0, 0, 0);
+        let inactive = rollout_set("inactive", 5, 5, 5, 2);
+
+        let plan =
+            fleet_deployment_plan(&fleet, &active, &[inactive]).unwrap();
+
+        assert_eq!(plan.active_replicas, 2);
+        assert_eq!(plan.inactive_scales[0].to_replicas, 4);
+    }
+
+    #[test]
+    fn rolling_update_plan_does_not_scale_down_before_active_is_ready() {
+        let mut fleet = rollout_fleet(75);
+        fleet.status.ready_replicas = 58;
+
+        let active = rollout_set("active", 75, 75, 50, 0);
+        let inactive = rollout_set("inactive", 10, 10, 8, 0);
+
+        let plan =
+            fleet_deployment_plan(&fleet, &active, &[inactive]).unwrap();
+
+        assert!(plan.inactive_scales.is_empty());
+    }
+
+    #[test]
+    fn rolling_update_cleanup_removes_unhealthy_replicas_first() {
+        let mut fleet = rollout_fleet(100);
+        fleet.status.ready_replicas = 80;
+        fleet
+            .spec
+            .strategy
+            .rolling_update
+            .as_mut()
+            .unwrap()
+            .max_unavailable = Some(IntOrPercent::String("25%".into()));
+
+        let active = rollout_set("active", 80, 80, 80, 0);
+        let mut inactive = rollout_set("inactive", 20, 20, 0, 5);
+        inactive.status.reserved_replicas = 0;
+
+        let plan = rolling_update_inactive_scale_plan(
+            &fleet,
+            &active,
+            &[inactive],
+        )
+        .unwrap();
+
+        assert_eq!(plan.len(), 1);
+        assert_eq!(
+            plan[0].reason,
+            FleetGameServerSetScaleReason::UnhealthyCleanup
+        );
+        assert_eq!(plan[0].from_replicas, 20);
+        assert_eq!(plan[0].to_replicas, 5);
+    }
+
+    #[test]
+    fn rolling_update_missing_max_unavailable_is_an_error() {
+        let mut fleet = rollout_fleet(10);
+        fleet
+            .spec
+            .strategy
+            .rolling_update
+            .as_mut()
+            .unwrap()
+            .max_unavailable = None;
+        fleet.status.ready_replicas = 10;
+
+        let active = rollout_set("active", 0, 0, 0, 0);
+        let inactive = rollout_set("inactive", 10, 10, 10, 0);
+
+        assert!(
+            fleet_deployment_plan(&fleet, &active, &[inactive])
+                .unwrap_err()
+                .contains("maxUnavailable")
         );
     }
 
