@@ -93,9 +93,9 @@ where
 /// Applies the upstream MigrationController AddFunc/UpdateFunc predicate.
 ///
 /// Both handlers call isMigratingGameServerPod and enqueue when migration is
-/// detected or when the lookup predicate itself errors. The Rust predicate
-/// returns Result<Option<...>>, so errors are propagated to the caller and can
-/// enter the queue/runtime retry path rather than being silently dropped.
+/// detected or when the lookup predicate itself errors. On predicate errors we
+/// deliberately enqueue the Pod identity and let sync_migration_game_server
+/// retry the same control-plane reads through the controller work queue.
 pub async fn route_migration_controller_event<S>(
     storage: Arc<S>,
     event: MigrationControllerWatchEvent,
@@ -111,7 +111,7 @@ where
     match migrating_game_server_for_pod(storage, &pod).await {
         Ok(Some(_)) => Ok(work_item_from_pod(&pod)),
         Ok(None) => Ok(None),
-        Err(error) => Err(error),
+        Err(_) => Ok(work_item_from_pod(&pod)),
     }
 }
 
@@ -230,22 +230,11 @@ where
                     return Ok(());
                 };
 
-                match route_migration_controller_event(
+                if let Some(item) = route_migration_controller_event(
                     storage.clone(),
                     event?,
-                ).await {
-                    Ok(Some(item)) => queue.enqueue(item),
-                    Ok(None) => {}
-                    Err(_) => {
-                        // Upstream AddFunc/UpdateFunc enqueue when the
-                        // migration predicate errors so syncGameServer can
-                        // retry against the control plane. The event already
-                        // carries the Pod identity, so re-decode the key path
-                        // by handling the error at the watch boundary would
-                        // lose that behavior. This case is handled below by
-                        // routing through sync after converting the event to
-                        // a work item before predicate evaluation.
-                    }
+                ).await? {
+                    queue.enqueue(item);
                 }
             }
             worker = worker_futures.next() => {
@@ -417,9 +406,14 @@ mod tests {
             .is_none()
         );
 
-        let mut foreign = Pod::new("foreign", Default::default());
-        foreign.metadata.namespace = Some("default".into());
-        foreign.spec.as_mut().unwrap().node_name = Some("node-b".into());
+        let mut foreign = pod_for(&created, "node-b");
+        foreign.metadata.name = "foreign".into();
+        foreign
+            .metadata
+            .labels
+            .as_mut()
+            .unwrap()
+            .remove(crate::ROLE_LABEL);
         assert!(
             route_migration_controller_event(
                 storage,
