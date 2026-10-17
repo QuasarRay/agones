@@ -819,8 +819,10 @@ delegate_and_check_components! {
 mod tests {
     use agones_core::{
         AggregatedCounterStatus, AggregatedListStatus, BufferPolicy,
-        CounterPolicy, CounterStatus, FleetAutoscalerPolicy, GameServerStatus,
+        ActivePeriod, AutoscalerFeatures, Between, CounterPolicy,
+        CounterStatus, FleetAutoscalerPolicy, GameServerStatus,
         IntOrPercent, ListPolicy, ListStatus, ObjectMeta,
+        SchedulePolicy,
     };
     use std::collections::BTreeMap;
     use rusternetes_storage::MemoryStorage;
@@ -1046,6 +1048,112 @@ mod tests {
         );
     }
 
+
+    fn scheduled_buffer_policy(
+        start: Option<&str>,
+        end: Option<&str>,
+    ) -> FleetAutoscalerPolicy {
+        FleetAutoscalerPolicy {
+            policy_type: FleetAutoscalerPolicyType::Schedule,
+            schedule: Some(Box::new(SchedulePolicy {
+                between: Between {
+                    start: start.map(str::to_owned),
+                    end: end.map(str::to_owned),
+                },
+                active_period: ActivePeriod::default(),
+                policy: FleetAutoscalerPolicy {
+                    policy_type:
+                        FleetAutoscalerPolicyType::Buffer,
+                    buffer: Some(BufferPolicy {
+                        buffer_size: IntOrPercent::Int(1),
+                        min_replicas: 3,
+                        max_replicas: 10,
+                    }),
+                    ..Default::default()
+                },
+            })),
+            ..Default::default()
+        }
+    }
+
+    #[test]
+    fn cgp_schedule_dispatch_uses_explicit_clock_and_nested_provider() {
+        let controller =
+            FleetAutoscalerController::new(MemoryStorage::new())
+                .with_autoscaler_features(AutoscalerFeatures {
+                    scheduled_autoscaler: true,
+                    wasm_autoscaler: false,
+                });
+        let now = DateTime::parse_from_rfc3339(
+            "2021-01-01T00:30:00Z",
+        )
+        .unwrap()
+        .with_timezone(&Utc);
+
+        let decision = controller
+            .compute_fleet_autoscaler_desired_size_at(
+                &scheduled_buffer_policy(
+                    Some("2021-01-01T00:00:00Z"),
+                    Some("2021-01-01T01:00:00Z"),
+                ),
+                &fleet(2),
+                &FleetAutoscalerInventory::default(),
+                now,
+            )
+            .unwrap();
+
+        assert_eq!(decision.replicas, 3);
+        assert!(!decision.limited);
+        assert_eq!(
+            decision.applied_policy,
+            FleetAutoscalerPolicyType::Buffer
+        );
+    }
+
+    #[test]
+    fn cgp_schedule_dispatch_enforces_feature_gate_and_inactive_error() {
+        let now = DateTime::parse_from_rfc3339(
+            "2021-01-01T00:30:00Z",
+        )
+        .unwrap()
+        .with_timezone(&Utc);
+        let policy = scheduled_buffer_policy(
+            Some("2021-01-01T00:00:00Z"),
+            Some("2021-01-01T00:15:00Z"),
+        );
+
+        let disabled =
+            FleetAutoscalerController::new(MemoryStorage::new())
+                .compute_fleet_autoscaler_desired_size_at(
+                    &policy,
+                    &fleet(2),
+                    &FleetAutoscalerInventory::default(),
+                    now,
+                )
+                .unwrap_err();
+        assert!(disabled.to_string().contains(
+            "feature flag ScheduledAutoscaler is enabled"
+        ));
+
+        let enabled =
+            FleetAutoscalerController::new(MemoryStorage::new())
+                .with_autoscaler_features(AutoscalerFeatures {
+                    scheduled_autoscaler: true,
+                    wasm_autoscaler: false,
+                })
+                .compute_fleet_autoscaler_desired_size_at(
+                    &policy,
+                    &fleet(2),
+                    &FleetAutoscalerInventory::default(),
+                    now,
+                )
+                .unwrap_err();
+        assert!(matches!(
+            enabled,
+            AdapterError::InactiveFleetAutoscalerSchedule
+        ));
+    }
+
     #[test]
     fn missing_buffer_configuration_is_reported_without_panic() {
         let controller =
@@ -1095,9 +1203,10 @@ mod tests {
 #[cfg(test)]
 mod reconciliation_tests {
     use agones_core::{
-        AggregatedCounterStatus, BufferPolicy, CounterPolicy,
-        CounterStatus, FleetAutoscalerSpec, FleetSpec, IntOrPercent,
-        ObjectMeta,
+        ActivePeriod, AggregatedCounterStatus, AutoscalerFeatures,
+        Between, BufferPolicy, CounterPolicy, CounterStatus,
+        FleetAutoscalerSpec, FleetSpec, IntOrPercent, ObjectMeta,
+        SchedulePolicy,
     };
     use std::collections::BTreeMap;
     use rusternetes_storage::MemoryStorage;
@@ -1277,6 +1386,122 @@ mod reconciliation_tests {
                 .await
                 .unwrap();
         assert_eq!(stored.spec.replicas, 12);
+    }
+
+
+    #[tokio::test]
+    async fn reconcile_active_schedule_delegates_to_nested_buffer() {
+        let storage = MemoryStorage::new();
+        let mut fleet_autoscaler = autoscaler(1);
+        fleet_autoscaler.spec.policy = FleetAutoscalerPolicy {
+            policy_type: FleetAutoscalerPolicyType::Schedule,
+            schedule: Some(Box::new(SchedulePolicy {
+                between: Between::default(),
+                active_period: ActivePeriod::default(),
+                policy: FleetAutoscalerPolicy {
+                    policy_type:
+                        FleetAutoscalerPolicyType::Buffer,
+                    buffer: Some(BufferPolicy {
+                        buffer_size: IntOrPercent::Int(7),
+                        min_replicas: 0,
+                        max_replicas: 100,
+                    }),
+                    ..Default::default()
+                },
+            })),
+            ..Default::default()
+        };
+        store_pair(
+            &storage,
+            &fleet_autoscaler,
+            &fleet(5, 5, 5),
+        )
+        .await;
+
+        let outcome = FleetAutoscalerController::new(storage)
+            .with_autoscaler_features(AutoscalerFeatures {
+                scheduled_autoscaler: true,
+                wasm_autoscaler: false,
+            })
+            .reconcile_fleet_autoscaler("default", "fas")
+            .await
+            .unwrap();
+        let FleetAutoscalerSyncOutcome::Reconciled(result) =
+            outcome
+        else {
+            panic!("active schedule should reconcile");
+        };
+
+        assert_eq!(result.fleet.spec.replicas, 12);
+        assert_eq!(
+            result.decision.applied_policy,
+            FleetAutoscalerPolicyType::Buffer
+        );
+    }
+
+    #[tokio::test]
+    async fn inactive_schedule_does_not_mark_autoscaler_unable() {
+        let storage = MemoryStorage::new();
+        let mut fleet_autoscaler = autoscaler(1);
+        fleet_autoscaler.status.able_to_scale = true;
+        fleet_autoscaler.status.current_replicas = 5;
+        fleet_autoscaler.status.desired_replicas = 5;
+        fleet_autoscaler.status.last_applied_policy =
+            FleetAutoscalerPolicyType::Buffer;
+        fleet_autoscaler.spec.policy = FleetAutoscalerPolicy {
+            policy_type: FleetAutoscalerPolicyType::Schedule,
+            schedule: Some(Box::new(SchedulePolicy {
+                between: Between {
+                    start: None,
+                    end: Some(
+                        "2000-01-01T00:00:00Z".into(),
+                    ),
+                },
+                active_period: ActivePeriod::default(),
+                policy: FleetAutoscalerPolicy {
+                    policy_type:
+                        FleetAutoscalerPolicyType::Buffer,
+                    buffer: Some(BufferPolicy {
+                        buffer_size: IntOrPercent::Int(7),
+                        min_replicas: 0,
+                        max_replicas: 100,
+                    }),
+                    ..Default::default()
+                },
+            })),
+            ..Default::default()
+        };
+        store_pair(
+            &storage,
+            &fleet_autoscaler,
+            &fleet(5, 5, 5),
+        )
+        .await;
+
+        let error = FleetAutoscalerController::new(storage.clone())
+            .with_autoscaler_features(AutoscalerFeatures {
+                scheduled_autoscaler: true,
+                wasm_autoscaler: false,
+            })
+            .reconcile_fleet_autoscaler("default", "fas")
+            .await
+            .unwrap_err();
+        assert!(error.to_string().contains(
+            "inactive schedule, policy not applicable"
+        ));
+
+        let stored: FleetAutoscaler =
+            AgonesRepository::new(storage)
+                .get("default", "fas")
+                .await
+                .unwrap();
+        assert!(stored.status.able_to_scale);
+        assert_eq!(stored.status.current_replicas, 5);
+        assert_eq!(stored.status.desired_replicas, 5);
+        assert_eq!(
+            stored.status.last_applied_policy,
+            FleetAutoscalerPolicyType::Buffer
+        );
     }
 
     #[tokio::test]
