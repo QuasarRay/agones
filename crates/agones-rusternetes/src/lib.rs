@@ -10,6 +10,7 @@ mod deleting_gameserver_controller;
 mod game_server_event;
 mod game_server_pod;
 mod gameserver_controller_pipeline;
+mod gameserver_controller_runtime;
 mod gameserver_controller_watch;
 mod health_gameserver_controller;
 mod missing_pod_gameserver_controller;
@@ -38,6 +39,11 @@ pub use deleting_gameserver_controller::ReconcileDeletingGameServer;
 pub use game_server_pod::game_server_pod;
 pub use gameserver_controller_pipeline::{
     GameServerSyncOutcome, ReconcileGameServerPipeline, SyncGameServer,
+};
+pub use gameserver_controller_runtime::{
+    GAME_SERVER_FAST_RETRIES, GAME_SERVER_FAST_RETRY_DELAY_MS,
+    GAME_SERVER_SLOW_RETRY_DELAY_MS, GameServerWorkQueues,
+    RunGameServerController, game_server_retry_delay_ms,
 };
 pub use gameserver_controller_watch::{
     GameServerControllerWatchEvent, GameServerControllerWatchState,
