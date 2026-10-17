@@ -16,6 +16,7 @@ use crate::{
     AdapterError, AgonesRepository, GameServerStateCache,
     PerNodeCounterState,
 };
+use crate::gameserverset_controller_runtime::GameServerSetControllerWatchState;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct GameServerSetControllerConfig {
@@ -70,6 +71,8 @@ pub struct GameServerSetController<S> {
     pub storage: Arc<S>,
     pub game_server_state_cache: Arc<GameServerStateCache>,
     pub per_node_counter_state: Arc<RwLock<PerNodeCounterState>>,
+    pub game_server_set_watch_state:
+        Arc<RwLock<GameServerSetControllerWatchState>>,
     pub game_server_set_config: GameServerSetControllerConfig,
 }
 
@@ -80,6 +83,9 @@ impl<S> GameServerSetController<S> {
             game_server_state_cache: Arc::new(GameServerStateCache::default()),
             per_node_counter_state: Arc::new(RwLock::new(
                 PerNodeCounterState::default(),
+            )),
+            game_server_set_watch_state: Arc::new(RwLock::new(
+                GameServerSetControllerWatchState::default(),
             )),
             game_server_set_config: config,
         }
