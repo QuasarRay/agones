@@ -1,6 +1,7 @@
 use std::{cmp::Ordering, collections::{BTreeMap, HashMap}};
 
 use chrono::{DateTime, Utc};
+use agones_macros::agones_invariant;
 
 use serde::{Deserialize, Serialize};
 
@@ -424,6 +425,53 @@ pub fn should_delete_errored_game_server_at(
         >= GAME_SERVER_ERROR_DELETION_DELAY_SECONDS
 }
 
+
+fn bounded_creation_count(
+    up_count: i32,
+    target_replica_count: i32,
+    max_creations: i32,
+    pod_pending_count: i32,
+    max_pending: i32,
+) -> (i32, bool) {
+    if up_count >= target_replica_count {
+        return (0, false);
+    }
+
+    let original = target_replica_count - up_count;
+    let mut count = original.min(max_creations.max(0));
+
+    if count + pod_pending_count > max_pending {
+        count = (max_pending - pod_pending_count).max(0);
+    }
+
+    (count, count != original)
+}
+
+#[agones_invariant]
+fn gameserverset_creation_batch_respects_caps(
+    input: (u16, u16, u16, u16, u16),
+) -> bool {
+    let (up_count, target, max_creations, pending, max_pending) = input;
+    let up_count = i32::from(up_count);
+    let target = i32::from(target);
+    let max_creations = i32::from(max_creations);
+    let pending = i32::from(pending);
+    let max_pending = i32::from(max_pending);
+
+    let (count, _) = bounded_creation_count(
+        up_count,
+        target,
+        max_creations,
+        pending,
+        max_pending,
+    );
+
+    count >= 0
+        && count <= max_creations
+        && count <= (target - up_count).max(0)
+        && count + pending <= max_pending.max(pending)
+}
+
 /// Pure port of upstream `gameserversets.computeReconciliationAction`.
 ///
 /// It computes only intent: how many GameServers to create, which existing
@@ -508,23 +556,13 @@ pub fn compute_game_server_set_reconciliation_action(
         }
     }
 
-    let mut is_partial = false;
-    let mut num_servers_to_add = 0i32;
-
-    if up_count < target_replica_count {
-        num_servers_to_add = target_replica_count - up_count;
-        let original = num_servers_to_add;
-
-        num_servers_to_add = num_servers_to_add.min(max_creations.max(0));
-
-        if num_servers_to_add + pod_pending_count > max_pending {
-            num_servers_to_add = (max_pending - pod_pending_count).max(0);
-        }
-
-        if original != num_servers_to_add {
-            is_partial = true;
-        }
-    }
+    let (num_servers_to_add, mut is_partial) = bounded_creation_count(
+        up_count,
+        target_replica_count,
+        max_creations,
+        pod_pending_count,
+        max_pending,
+    );
 
     if delete_count > 0 {
         sort_game_servers_by_strategy(
