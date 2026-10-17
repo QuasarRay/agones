@@ -182,7 +182,7 @@ where
     Ok(errors)
 }
 
-fn format_validation_errors(errors: &[ValidationError]) -> String {
+pub(crate) fn format_validation_errors(errors: &[ValidationError]) -> String {
     errors
         .iter()
         .map(|error| {

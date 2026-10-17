@@ -11,11 +11,13 @@ mod deleting_gameserver_controller;
 mod game_server_event;
 mod game_server_pod;
 mod gameserver_admission;
+mod gameserverset_admission;
 mod gameserver_controller_pipeline;
 mod gameserver_controller_runtime;
 mod gameserver_controller_stack_runtime;
 mod gameserver_controller_watch;
 mod gameserver_pod_augmentation;
+mod gameserverset_state_cache;
 mod health_controller_runtime;
 mod health_gameserver_controller;
 mod missing_pod_controller_runtime;
@@ -53,6 +55,14 @@ pub use gameserver_admission::{
     mutate_game_server_creation, mutate_game_server_pod_creation,
     validate_game_server_creation, validate_game_server_creation_object,
 };
+pub use gameserverset_admission::{
+    GameServerSetCreationValidationAdmission,
+    GameServerSetUpdateValidationAdmission,
+    validate_game_server_set_creation,
+    validate_game_server_set_creation_object,
+    validate_game_server_set_update,
+    validate_game_server_set_update_objects,
+};
 pub use gameserver_controller_pipeline::{
     GameServerSyncOutcome, ReconcileGameServerPipeline, SyncGameServer,
 };
@@ -67,6 +77,9 @@ pub use gameserver_controller_watch::{
     GameServerControllerWatchStream, GameServerQueueLane, GameServerWorkItem,
     RebuildGameServerControllerWatchState, RouteGameServerControllerEvent,
     queue_lane, watch_game_server_controller_events,
+};
+pub use gameserverset_state_cache::{
+    GameServerSetCacheEntry, GameServerStateCache,
 };
 pub use gameserver_pod_augmentation::{
     GRPC_PORT_ENV_VAR, HTTP_PORT_ENV_VAR, SDK_SERVER_SIDECAR_NAME,
@@ -1082,6 +1095,29 @@ pub trait ApiHooks {
     ) -> Vec<ValidationError> {
         Vec::new()
     }
+
+    /// Path-aware form of the upstream ValidateGameServerSpec hook.
+    ///
+    /// Existing hooks can keep implementing validate_game_server_spec; cloud
+    /// integrations that need exact nested field paths can override this
+    /// method directly.
+    fn validate_game_server_spec_at(
+        &self,
+        spec: &GameServerSpec,
+        _path: &str,
+    ) -> Vec<ValidationError> {
+        self.validate_game_server_spec(spec)
+    }
+
+    /// Upstream ValidateScheduling cloud-product extension point used by
+    /// Fleet and GameServerSet CREATE validation.
+    fn validate_scheduling(
+        &self,
+        _scheduling: Option<&SchedulingStrategy>,
+        _path: &str,
+    ) -> Vec<ValidationError> {
+        Vec::new()
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default)]
@@ -1216,8 +1252,9 @@ pub fn validate_resource_requirements(
     errors
 }
 
-pub fn validate_game_server_resources(
+pub(crate) fn validate_game_server_resources_at(
     spec: &GameServerSpec,
+    spec_path: &str,
 ) -> Result<Vec<ValidationError>, AdapterError> {
     let pod_spec: PodSpec = to_native(&spec.template.spec)?;
     let mut errors = Vec::new();
@@ -1227,7 +1264,9 @@ pub fn validate_game_server_resources(
             if let Some(resources) = &container.resources {
                 errors.extend(validate_resource_requirements(
                     resources,
-                    &format!("spec.template.spec.initContainers[{index}].resources"),
+                    &format!(
+                        "{spec_path}.template.spec.initContainers[{index}].resources"
+                    ),
                 ));
             }
         }
@@ -1237,12 +1276,20 @@ pub fn validate_game_server_resources(
         if let Some(resources) = &container.resources {
             errors.extend(validate_resource_requirements(
                 resources,
-                &format!("spec.template.spec.containers[{index}].resources"),
+                &format!(
+                    "{spec_path}.template.spec.containers[{index}].resources"
+                ),
             ));
         }
     }
 
     Ok(errors)
+}
+
+pub fn validate_game_server_resources(
+    spec: &GameServerSpec,
+) -> Result<Vec<ValidationError>, AdapterError> {
+    validate_game_server_resources_at(spec, "spec")
 }
 
 pub fn validate_game_server(
