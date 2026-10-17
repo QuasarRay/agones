@@ -522,7 +522,10 @@ mod tests {
         let task = tokio::spawn(async move {
             controller.run_allocation_overflow_controller().await
         });
-        tokio::task::yield_now().await;
+        // The upstream controller begins processing only after its informer is
+        // running. Give the Rusternetes watch subscription one scheduler turn
+        // plus a small deterministic margin before emitting the update.
+        tokio::time::sleep(Duration::from_millis(25)).await;
 
         game_server_set.status.allocated_replicas = 5;
         repository.update(&game_server_set).await.unwrap();
