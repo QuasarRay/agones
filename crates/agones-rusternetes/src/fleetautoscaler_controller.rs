@@ -391,6 +391,50 @@ where
                 current_time,
             )
         }
+        FleetAutoscalerPolicyType::Chain => {
+            if !context
+                .fleet_autoscaler_runtime_features()
+                .scheduled_autoscaler
+            {
+                return Err(AdapterError::Hook(
+                    "cannot apply ChainPolicy unless feature flag ScheduledAutoscaler is enabled"
+                        .into(),
+                ));
+            }
+
+            let mut last_error = None;
+            for entry in &policy.chain {
+                match compute_fleet_autoscaler_desired_size_at(
+                    context,
+                    &entry.policy,
+                    fleet,
+                    inventory,
+                    current_time,
+                ) {
+                    Ok(mut decision) => {
+                        decision.applied_policy =
+                            FleetAutoscalerPolicyType::Unknown(
+                                format!(
+                                    "Chain:{}:{}",
+                                    entry.id,
+                                    entry.policy.policy_type.as_str(),
+                                ),
+                            );
+                        return Ok(decision);
+                    }
+                    Err(error) => {
+                        last_error = Some(error);
+                    }
+                }
+            }
+
+            Err(last_error.unwrap_or_else(|| {
+                AdapterError::Hook(
+                    "Failed to apply ChainPolicy: no valid policy applied"
+                        .into(),
+                )
+            }))
+        }
         _ => Err(AdapterError::Hook(
             "wrong policy type, should be one of: Buffer, Webhook, Counter, List, Schedule, Chain"
                 .into(),
