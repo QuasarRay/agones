@@ -320,7 +320,6 @@ mod tests {
         for state in [
             GameServerState::Ready,
             GameServerState::Allocated,
-            GameServerState::Shutdown,
         ] {
             let item = route_missing_pod_controller_event(
                 &storage,
@@ -334,6 +333,7 @@ mod tests {
         for state in [
             GameServerState::Unhealthy,
             GameServerState::Error,
+            GameServerState::Shutdown,
         ] {
             assert!(
                 route_missing_pod_controller_event(
