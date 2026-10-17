@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use async_trait::async_trait;
+use cgp::prelude::async_trait;
 use agones_core::{
     GameServer, GameServerSpec, ValidationError,
 };
@@ -588,9 +588,11 @@ mod tests {
 
     #[test]
     fn pod_mutation_ignores_pods_without_passthrough_annotation() {
+        let mut game_server = game_server_fixture();
+        game_server.apply_defaults();
         let mut object = serde_json::to_value(
             build_pod(
-                &game_server_fixture(),
+                &game_server,
                 Vec::new(),
                 PodBuildFeatures::default(),
                 &NoopApiHooks,
