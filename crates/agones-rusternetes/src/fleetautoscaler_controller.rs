@@ -1233,6 +1233,7 @@ mod tests {
                 &policy,
                 &fleet(50),
                 &FleetAutoscalerInventory::default(),
+            "test@0",
             )
             .await
             .unwrap();
@@ -1284,6 +1285,7 @@ mod tests {
                 },
                 &counter_fleet,
                 &FleetAutoscalerInventory::default(),
+            "test@0",
             )
             .await
             .unwrap();
@@ -1326,6 +1328,7 @@ mod tests {
                 },
                 &list_fleet,
                 &FleetAutoscalerInventory::default(),
+            "test@0",
             )
             .await
             .unwrap();
@@ -1617,6 +1620,7 @@ mod tests {
                     },
                     &target,
                     &FleetAutoscalerInventory::default(),
+                "test@0",
                 )
                 .await
                 .unwrap();
@@ -1701,6 +1705,7 @@ mod tests {
                 ),
                 &fleet(2),
                 &FleetAutoscalerInventory::default(),
+                "test@0",
                 now,
             )
             .await
@@ -1732,6 +1737,7 @@ mod tests {
                     &policy,
                     &fleet(2),
                     &FleetAutoscalerInventory::default(),
+                    "test@0",
                     now,
                 )
                 .await
@@ -1750,6 +1756,7 @@ mod tests {
                     &policy,
                     &fleet(2),
                     &FleetAutoscalerInventory::default(),
+                    "test@0",
                     now,
                 )
                 .await
@@ -1821,6 +1828,7 @@ mod tests {
                 &policy,
                 &fleet(2),
                 &FleetAutoscalerInventory::default(),
+                "test@0",
                 now,
             )
             .await
@@ -1883,6 +1891,7 @@ mod tests {
                 &policy,
                 &fleet(2),
                 &FleetAutoscalerInventory::default(),
+                "test@0",
                 now,
             )
             .await
@@ -1921,6 +1930,7 @@ mod tests {
                 &policy,
                 &fleet(2),
                 &FleetAutoscalerInventory::default(),
+                "test@0",
                 now,
             )
             .await
@@ -1946,6 +1956,7 @@ mod tests {
                     },
                     &fleet(2),
                     &FleetAutoscalerInventory::default(),
+                    "test@0",
                     Utc::now(),
                 )
                 .await
@@ -1969,6 +1980,7 @@ mod tests {
                 },
                 &fleet(1),
                 &FleetAutoscalerInventory::default(),
+            "test@0",
             )
             .await
             .unwrap_err();
@@ -1988,11 +2000,14 @@ mod tests {
             .compute_fleet_autoscaler_desired_size(
                 &FleetAutoscalerPolicy {
                     policy_type:
-                        FleetAutoscalerPolicyType::Wasm,
+                        FleetAutoscalerPolicyType::Unknown(
+                            "Invalid".into(),
+                        ),
                     ..Default::default()
                 },
                 &fleet(1),
                 &FleetAutoscalerInventory::default(),
+            "test@0",
             )
             .await
             .unwrap_err();
