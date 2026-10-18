@@ -1681,6 +1681,7 @@ mod tests {
                     &FleetAutoscalerInventory::default(),
                     now,
                 )
+                .await
                 .unwrap_err();
         assert!(disabled.to_string().contains(
             "feature flag ScheduledAutoscaler is enabled"
@@ -1698,6 +1699,7 @@ mod tests {
                     &FleetAutoscalerInventory::default(),
                     now,
                 )
+                .await
                 .unwrap_err();
         assert!(matches!(
             enabled,
@@ -1893,6 +1895,7 @@ mod tests {
                     &FleetAutoscalerInventory::default(),
                     Utc::now(),
                 )
+                .await
                 .unwrap_err();
 
         assert!(error.to_string().contains(
