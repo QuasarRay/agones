@@ -16,6 +16,10 @@ use futures::future::BoxFuture;
 use chrono::{DateTime, Utc};
 use rusternetes_storage::Storage;
 
+use crate::fleetautoscaler_wasm::{
+    CanApplyWasmFleetAutoscalerPolicy, FleetAutoscalerWasmCache,
+    fleet_autoscaler_policy_state_key,
+};
 use crate::{AdapterError, AgonesRepository};
 
 /// FleetAutoscaler controller context.
@@ -28,6 +32,7 @@ pub struct FleetAutoscalerController<S> {
     pub storage: Arc<S>,
     pub autoscaler_features: AutoscalerFeatures,
     pub fleet_autoscale_request_metadata: bool,
+    pub wasm_cache: FleetAutoscalerWasmCache,
 }
 
 impl<S> FleetAutoscalerController<S> {
@@ -36,6 +41,7 @@ impl<S> FleetAutoscalerController<S> {
             storage: Arc::new(storage),
             autoscaler_features: AutoscalerFeatures::default(),
             fleet_autoscale_request_metadata: false,
+            wasm_cache: FleetAutoscalerWasmCache::default(),
         }
     }
 
@@ -525,6 +531,7 @@ fn compute_fleet_autoscaler_desired_size_at<'a, Context>(
     policy: &'a FleetAutoscalerPolicy,
     fleet: &'a Fleet,
     inventory: &'a FleetAutoscalerInventory,
+    state_key: &'a str,
     current_time: &'a DateTime<Utc>,
 ) -> BoxFuture<'a, Result<FleetAutoscalerPolicyDecision, AdapterError>>
 where
@@ -532,6 +539,7 @@ where
         + CanApplyCounterFleetAutoscalerPolicy
         + CanApplyListFleetAutoscalerPolicy
         + CanApplyWebhookFleetAutoscalerPolicy
+        + CanApplyWasmFleetAutoscalerPolicy
         + CanCheckFleetAutoscalerSchedule
         + HasFleetAutoscalerRuntimeFeatures
         + Sync,
@@ -609,6 +617,25 @@ where
                 applied_policy: FleetAutoscalerPolicyType::Webhook,
             })
         }
+        FleetAutoscalerPolicyType::Wasm => {
+            let wasm = policy.wasm.as_ref().ok_or_else(|| {
+                AdapterError::Hook(
+                    "wasmPolicy parameter must not be nil".into(),
+                )
+            })?;
+            let decision = context
+                .apply_wasm_fleet_autoscaler_policy(
+                    state_key,
+                    wasm,
+                    fleet,
+                )
+                .await?;
+            Ok(FleetAutoscalerPolicyDecision {
+                replicas: decision.replicas,
+                limited: decision.limited,
+                applied_policy: FleetAutoscalerPolicyType::Wasm,
+            })
+        }
         FleetAutoscalerPolicyType::Schedule => {
             if !context
                 .fleet_autoscaler_runtime_features()
@@ -642,6 +669,7 @@ where
                 &schedule.policy,
                 fleet,
                 inventory,
+                state_key,
                 current_time,
             )
             .await
@@ -664,6 +692,7 @@ where
                     &entry.policy,
                     fleet,
                     inventory,
+                    state_key,
                     current_time,
                 )
                 .await
@@ -707,6 +736,7 @@ pub trait CanComputeFleetAutoscalerDesiredSizeAt {
         policy: &'a FleetAutoscalerPolicy,
         fleet: &'a Fleet,
         inventory: &'a FleetAutoscalerInventory,
+        state_key: &'a str,
         current_time: DateTime<Utc>,
     ) -> BoxFuture<'a, Result<FleetAutoscalerPolicyDecision, AdapterError>>;
 }
@@ -736,6 +766,7 @@ where
                 policy,
                 fleet,
                 inventory,
+                state_key,
                 &current_time,
             )
             .await
@@ -750,6 +781,7 @@ pub trait CanComputeFleetAutoscalerDesiredSize {
         policy: &'a FleetAutoscalerPolicy,
         fleet: &'a Fleet,
         inventory: &'a FleetAutoscalerInventory,
+        state_key: &'a str,
     ) -> BoxFuture<'a, Result<FleetAutoscalerPolicyDecision, AdapterError>>;
 }
 
@@ -1035,11 +1067,14 @@ where
             FleetAutoscalerInventory::default()
         };
 
+        let policy_state_key =
+            fleet_autoscaler_policy_state_key(&fleet_autoscaler);
         let decision = match context
             .compute_fleet_autoscaler_desired_size(
                 &fleet_autoscaler.spec.policy,
                 &fleet,
                 &inventory,
+                policy_state_key.as_str(),
             )
             .await
         {
