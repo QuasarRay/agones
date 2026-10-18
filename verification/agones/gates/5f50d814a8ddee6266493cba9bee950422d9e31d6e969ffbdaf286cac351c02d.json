@@ -1,0 +1,99 @@
+{
+  "acceptance_criteria": [
+    "CGP owns input precedence: explicit Set override, changed flag including empty, nonempty environment, empty default.",
+    "Explicit values short-circuit the environment effect; selected input errors never fall through.",
+    "Production Linux process environment and parsed OsString flag retain raw bytes; no shared test-process environment mutation.",
+    "The same generic input/parser providers run in production and downstream captured-effect contexts.",
+    "Reach default and fallible configured GameServer, FleetAutoscaler, admission, and actual SDK environment consumers.",
+    "Focused subprocess tests require exactly one child test per execution; missing, empty, valid, invalid and raw inputs plus explicit overrides are covered."
+  ],
+  "assurance": "Ordinary implementation, downstream shared-provider composition and actual process/Rusternetes MemoryStorage configuration integration; no new source-property extraction or formal proof credited before this gate.",
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
+  "feature_id": "feature-gates-environment-cli-binding",
+  "id": "FG-INPUT-001-implementation-v7",
+  "metric_correction": "Metadata-only correction: decoder test checks 1111936 non-ASCII scalars; the original 1112064 total overstated calls by 128. The 128 ASCII values use the direct renderer branch and are separately covered by all 16513 mandatory Go observations. Production code and its successful ordinary workspace/replay checks are unchanged; provenance counts are corrected. This gate also binds the later three-test ASCII ordinary run, with zero formal credit.",
+  "ordinary_checks": [
+    "verification/agones/runs/feature-error-workspace-tests-1.json",
+    "verification/agones/runs/feature-error-workspace-check-1.json",
+    "verification/agones/runs/feature-error-original-go-witnesses-1.json",
+    "verification/agones/runs/feature-error-production-witnesses-1.json",
+    "verification/agones/runs/emit-go-print-production-table-final.json",
+    "verification/agones/runs/error-ascii-domain-runtime-3.json"
+  ],
+  "ordinary_result_counts": {
+    "additional_unique_ascii_property_tests_passed": 3,
+    "full_error_text_witnesses_per_go_and_rust": 19,
+    "ignored_child_entries_executed_by_parent_tests": 2,
+    "nonempty_isolated_child_process_cases": 11,
+    "ordinary_ascii_length_zero_to_two_observations": 16513,
+    "ordinary_ascii_single_byte_reference_witnesses": 128,
+    "ordinary_invalid_or_valid_nonascii_two_byte_inputs": 32768,
+    "ordinary_nonascii_valid_utf8_scalar_decodes": 1111936,
+    "ordinary_print_classification_codepoints": 1114112,
+    "preexisting_ignored_macro_doctest": 1,
+    "runner_entries_ignored": 3,
+    "workspace_tests_failed": 0,
+    "workspace_tests_passed": 534
+  },
+  "predecessor_ledger_revision": 55,
+  "production_files": {
+    "Cargo.lock": "3666230a1363b58d2f0041c91a10d26c6b0beff1dccd65190aa9d526acaed2bd",
+    "Cargo.toml": "f0c28c2ca73ba51fad682c9d35950d050b0839775d0eb609e7903c47743b5d00",
+    "build/scripts/agones-rs/probes/compile_go_print_table.go": "2fdf7febec851e457e8258683c8579dcf39736bd6ce6b8d82a27866b990542c4",
+    "crates/agones-core/Cargo.toml": "0702da8488295ce715aeaa7c2b0fa340a977d03e783e1f65d4e47dc6f436dd88",
+    "crates/agones-core/GO-STRCONV-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+    "crates/agones-core/src/feature_inputs.rs": "9cfaf42de485874339a58895991ad15adff787f363d9821a3ab7f0f4c36222d4",
+    "crates/agones-core/src/features.rs": "46e8f93b86b6187e3927047e5cebafa135e8a55f38089ec3c3aad31ebdaca1a3",
+    "crates/agones-core/src/generated/go_print_ranges.rs": "0b0dc1a240c33ca0e01d718f5120a0d5bd894e15740b4cf3888824a0a7e84a0b",
+    "crates/agones-core/src/go_quote.rs": "05faad51d54b84e037a100b23d558256290af24125a6ade984ef64e13ac646cf",
+    "crates/agones-core/src/lib.rs": "be80edb0945f90599fdd8b2e4550d7d37efff0b5c2483bffec7346f20c8a861e",
+    "crates/agones-rusternetes/Cargo.toml": "7e5c18a590b0d602c725abd853fd0ba7825e4028f8a46fc7fe404bb7b512db26",
+    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "cd17987afbc1a1f7fc585d55a9d0a2909f04704c1fc6049834f386036874552a",
+    "crates/agones-rusternetes/src/creating_gameserver_controller.rs": "e86d20ab7ea0b5e85644cf7bdd42361f80a6384d8c7c53ad75113edbefce59b8",
+    "crates/agones-rusternetes/src/fleetautoscaler_admission.rs": "10bd2bfcfc8c1542cd5f02e504a55667fac25f277a96b0ac667edd28175ecfe6",
+    "crates/agones-rusternetes/src/fleetautoscaler_controller.rs": "a6e187daa4f7f5cee673f95186c1979a5a8d1fe4a788deda23202e836f2ae4f3",
+    "crates/agones-rusternetes/src/lib.rs": "5075b38ab88b5febedf7ddd01b5c61e472653bd964f04a6ac036f73358328eaf",
+    "crates/agones-rusternetes/src/request_ready_gameserver_controller.rs": "a2add18119699a6ba0c17ee0c6dd8ed3ec801b26f4f5290216c8a88bb601deb5",
+    "crates/agones-rusternetes/src/sdk_sidecar.rs": "ce8b601163a8a0d6dd6fdcacfeda3f6a762d622884ba607f84ad50100740a084",
+    "pkg/util/errors/errors.go": "b9b811509cc02053ce498cf012a58ea6fabb44d6fbf69e355d39baf0504dbc29",
+    "pkg/util/runtime/features.go": "05736b26646cf219419626dfca37c4f533302b178ca3bb542330cf7884ddc679",
+    "pkg/util/runtime/runtime.go": "d1683d9c5931891d59ae46cbfdbce13b45d2836355097e7e1bd24fd30200271a",
+    "rust-toolchain.toml": "c910997cb152c6dc8ed13b1fdf9fa28a4ed30d6776123e27dd6170e5c66067a0",
+    "verification/agones/feature-input-capability-v1.json": "a307b7d5f0ec550aac46080765989fb5fc67e254eab3ae51869da8a504671064",
+    "verification/agones/go-print-codegen.json": "f4b8ebd5e77ff7204082361175e846565aed6cec8198534736b6f330e999346c",
+    "verification/agones/go-print-expected.bin": "a30b1e23aa8a5d77ecaea1b9dd5c85e2d505cb2712b1906996c82089fa5117fc",
+    "verification/agones/go-print-table.json": "710dcd074ff09faafc79c0b8e06a5c83eb8a37beb0e1ee45d42a9556c930ef9d",
+    "verification/agones/go-quote-provenance.json": "d4a5a68ff017b4d009486b5658fa698eec05576a4d6a36165e1994709c364038"
+  },
+  "production_symbols": [
+    "agones_core::select_feature_gate_input",
+    "agones_core::LoadAgonesFeatureGates",
+    "agones_core::ReadProcessFeatureGateEnvironment",
+    "agones_core::FeatureGateInputContext::from_parsed_flag",
+    "agones_rusternetes::CreatingGameServerController::from_feature_inputs",
+    "agones_rusternetes::FleetAutoscalerController::from_feature_inputs",
+    "agones_rusternetes::FleetAutoscalerAdmissionContext::from_feature_inputs",
+    "agones_rusternetes::SdkSidecarConfig::from_feature_inputs"
+  ],
+  "reachable_call_paths": [
+    "Production default constructors -> FeatureGateInputContext -> CGP configuration loader -> process environment effect if needed -> production raw query parser -> actual consumer configuration.",
+    "Parsed changed flag / explicit override context -> same CGP loader -> source-priority selection without environment read -> raw query parser -> fallible configured Rusternetes and SDK consumers."
+  ],
+  "reopened_reason": "Exact Go raw-byte/Unicode quoting and package-scoped error origin replace Rust Debug/lossy rendering; the parser, defaults, input precedence and original source relations are preserved.",
+  "residual_work": [
+    "Exact application fatal/error rendering, complete command option parsing and top-level lifecycle remain required scope.",
+    "All original exact-case formal obligations and other remaining baseline behavior remain separate from this ordinary implementation gate."
+  ],
+  "schema_version": 1,
+  "status": "IMPLEMENTED",
+  "supersedes": "verification/agones/gates/1ab571b1a92e359e1ffb4610b811ecf113e20ec5464b5be196bcbf546c043043.json",
+  "workspace_snapshot": {
+    "dirty_tracked_patch_sha256": "67737f0f66c1a55414c64cb603c8483973798198b301fada08fea5260a1981c6",
+    "original_reference_tree": "f50ac1ccf92be912e9475833b17deaebc5a6622f",
+    "production_closure_sha256": "b4efcbe7c17c2829d95a78d9055a4c367aeb1264b5318451a51d6c7891b83f21",
+    "rust_checkout_commit": "6909f07ac5cb08b1af78b251e26ac17342cef933",
+    "scope_revision": 1,
+    "snapshot_note": "This current snapshot refreshes the development-manifest binding; prior implementation snapshots and ordinary result receipts remain retained. Non-production property/generator files may change after this gate without changing its bound production closure."
+  }
+}

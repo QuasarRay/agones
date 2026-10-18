@@ -109,6 +109,8 @@ if __name__ == "__main__":
     parser.add_argument("--work-item", help="Select an existing work item as the active packet")
     parser.add_argument("--stage")
     parser.add_argument("--gate")
+    parser.add_argument("--replace-gate", action="append", default=[], metavar="OLD=NEW",
+                        help="Atomically replace shared gate references before validating the whole ledger")
     parser.add_argument("--next-action")
     parser.add_argument("--refactoring-review")
     parser.add_argument("--evidence-ref")
@@ -137,6 +139,14 @@ if __name__ == "__main__":
             item["stage"] = args.stage
         if args.gate:
             item["implementation_gate"] = args.gate
+        for replacement in args.replace_gate:
+            previous, current = replacement.split("=", 1)
+            affected = [entry for entry in state["work_items"]
+                        if entry["implementation_gate"] == previous]
+            assert affected, "gate replacement does not match an existing work item"
+            assert read(ROOT / previous)["feature_id"] == read(ROOT / current)["feature_id"], "gate feature changed"
+            for entry in affected:
+                entry["implementation_gate"] = current
         if args.next_action:
             item["next_action"] = args.next_action
         if args.refactoring_review:
@@ -172,7 +182,8 @@ if __name__ == "__main__":
                 "source_binding_sha256":hashlib.sha256(json.dumps(run["source_files"],sort_keys=True).encode()).hexdigest(),
                 "resource_usage":"unknown; run timing and exit state are retained"})
         latest = read(sorted((OUT/"runs").glob("*.json"), key=lambda p:p.stat().st_mtime)[-1])
-        state["workspace"]["last_validated_implementation"] = item["implementation_gate"]
+        if item["implementation_gate"]:
+            state["workspace"]["last_validated_implementation"] = item["implementation_gate"]
         state["workspace"]["untracked_source_binding_sha256"] = hashlib.sha256(json.dumps(latest["source_files"],sort_keys=True).encode()).hexdigest()
         state["workspace"]["source_binding_receipt"] = str(max((OUT/"runs").glob("*.json"),key=lambda p:p.stat().st_mtime).relative_to(ROOT))
         check(state)

@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "ERROR_RENDERING_DEPENDENCY_STARTED",
+  "gate_snapshot": "verification/agones/gates/404a070990057a389cf4f67966cf38e7e52d437a114d3064f08e7aa911e14214.json",
+  "predecessor_revision": 40,
+  "predecessor_sha256": "1caff27a75867b8dafbf6e9f070999f67e1e3ca328a72ec328e128b53cd16be4",
+  "reason": "Previous goal turn made production/evidence/publication progress. Error rendering changes the shared production closure; reopen query/input bindings before edits, retaining all existing source obligations and failed diagnostic receipts.",
+  "result_revision": 41,
+  "schema_version": 1,
+  "state_sha256": "176b459c3c1b30da63f300749aa7429a386353afda414f19d7651f0c8f373d34",
+  "timestamp": "2026-10-18T15:16:05.989228+00:00"
+}

@@ -1,0 +1,10 @@
+{
+  "candidate": "Pinned Go strconv quoting and printable-rune data, emitted through the existing Genco example.",
+  "decision": "REUSE_EXISTING",
+  "feature": "FG-ERROR-001",
+  "id": "FG-ERROR-001-production-table-reuse",
+  "next_review_trigger": "FG-ERROR-001 implementation gate; review the actual renderer/table code and resume the pending fixed query cases only with a changed formatter closure.",
+  "rationale": "Rust Debug/lossy decoding does not preserve Go raw-byte escapes or Go Unicode printability. Reuse the installed pinned Go strconv.IsPrint and compare it with the independent Unicode category definition while compiling production range data. Extend the existing Genco emitter with one production-table mode and share its formatting helper; no macro or general quote/codegen framework. The table is an immediate implementation dependency, not test-obligation extraction.",
+  "roi": "A small fixed data compiler avoids manually maintaining hundreds of Unicode ranges and avoids a new Unicode-version dependency. Exact data and ordinary all-scalar comparison remove repeated future quoting/Unicode reasoning. Stop at feature error rendering; the required _2 architecture cells remain open.",
+  "scope": "One production Go string-quoting helper, a deterministic print-table compiler, the existing Genco emitter, source/license provenance and ordinary implementation checks. New error-specific semantic properties wait for the completed implementation gate."
+}

@@ -8,6 +8,10 @@ use std::{error::Error, fmt};
 
 use cgp::prelude::*;
 
+#[path = "go_quote.rs"]
+mod go_quote;
+pub use go_quote::quote_feature_error_bytes;
+
 pub const FEATURE_GATE_FLAG: &str = "feature-gates";
 pub const FEATURE_GATE_ENV: &str = "FEATURE_GATES";
 
@@ -97,24 +101,28 @@ pub enum FeatureGateError {
 
 impl fmt::Display for FeatureGateError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        // The reference's package-scoped Errors wrapper prefixes every error.
+        f.write_str("agones.dev/agones/pkg/util/runtime: ")?;
         match self {
-            Self::InvalidEscape(value) => write!(
-                f,
-                "error parsing query string for feature gates: invalid URL escape {value:?}"
-            ),
+            Self::InvalidEscape(value) => {
+                f.write_str("error parsing query string for feature gates: invalid URL escape ")?;
+                f.write_str(&quote_feature_error_bytes(value))
+            }
             Self::SemicolonSeparator => f.write_str(
                 "error parsing query string for feature gates: invalid semicolon separator in query",
             ),
-            Self::UnknownFeature(value) => write!(
-                f,
-                "Feature Gate {:?} is not a valid Feature Gate",
-                String::from_utf8_lossy(value)
-            ),
-            Self::InvalidBool { feature, value } => write!(
-                f,
-                "error parsing bool value from flag {feature} : strconv.ParseBool: parsing {:?}: invalid syntax",
-                String::from_utf8_lossy(value)
-            ),
+            Self::UnknownFeature(value) => {
+                f.write_str("Feature Gate ")?;
+                f.write_str(&quote_feature_error_bytes(value))?;
+                f.write_str(" is not a valid Feature Gate")
+            }
+            Self::InvalidBool { feature, value } => {
+                f.write_str("error parsing bool value from flag ")?;
+                f.write_str(feature)?;
+                f.write_str(" : strconv.ParseBool: parsing ")?;
+                f.write_str(&quote_feature_error_bytes(value))?;
+                f.write_str(": invalid syntax")
+            }
         }
     }
 }

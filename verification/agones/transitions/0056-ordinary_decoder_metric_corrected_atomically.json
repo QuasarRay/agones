@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate::line-41"
+  ],
+  "authorization": "User execution contract",
+  "event": "ordinary_decoder_metric_corrected_atomically",
+  "gate_snapshot": "verification/agones/gates/7521004810eacf56130b4cd9e4ac989e28a8426b647e8b9bb666fdeb8d84e016.json",
+  "predecessor_revision": 55,
+  "predecessor_sha256": "d15a9379d1b14e8e0d7e21a35ec1868be71970d933afc5e6bab3e77536641e58",
+  "reason": "Correct decoder-call counts in shared immutable gates/provenance without changing production code. The existing validator now supports atomic replacements for coupled work items; wrong-feature replacement was rejected without a state write. Revalidated IR preserves all cases/assertions and generated Rust.",
+  "result_revision": 56,
+  "schema_version": 1,
+  "state_sha256": "b10bd72df742812854d1eba6667269ab47afb67b36c84dfba127354fc112f9e7",
+  "timestamp": "2026-10-18T16:22:37.420016+00:00"
+}

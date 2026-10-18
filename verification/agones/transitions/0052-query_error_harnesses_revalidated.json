@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "query_error_harnesses_revalidated",
+  "gate_snapshot": "verification/agones/gates/a017fd01f21c9d81e178ed84fa0fa37f54515d408b465b254ab0fef477165884.json",
+  "predecessor_revision": 51,
+  "predecessor_sha256": "f7564b1a521a71001a953d219c166a1a7e9a3f81c6c77a38bf34c233ab0aa724",
+  "reason": "Genco regenerated and checked all five fixed cases/17 assertions without changing source relations, required covers or unwind 64.",
+  "result_revision": 52,
+  "schema_version": 1,
+  "state_sha256": "62a6f4d8628e5f5361823bf5d2e26ff67b77a2dd7462946c16c5bf418b9c7ef7",
+  "timestamp": "2026-10-18T16:05:09.349203+00:00"
+}

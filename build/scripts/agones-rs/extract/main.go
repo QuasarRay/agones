@@ -122,7 +122,7 @@ func main() {
 			panic("query/input gate baseline mismatch")
 		}
 	}
-	sourcePaths := []string{"pkg/util/runtime/features_test.go", "pkg/util/runtime/features.go", "go.mod", "go.sum"}
+	sourcePaths := []string{"pkg/util/runtime/features_test.go", "pkg/util/runtime/features.go", "pkg/util/runtime/runtime.go", "pkg/util/errors/errors.go", "go.mod", "go.sum"}
 	if inputGatePath != "" {
 		sourcePaths = append(sourcePaths, "vendor/github.com/spf13/viper/viper.go", "vendor/github.com/spf13/pflag/flag.go", "cmd/controller/main.go", "cmd/sdk-server/main.go")
 	}

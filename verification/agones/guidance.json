@@ -1,6 +1,6 @@
 {
   "created": [],
-  "directories": 1824,
+  "directories": 1825,
   "missing": [],
   "not_versioned": [],
   "ownership": "Inherited operational guidance includes tracked vendor, generated and documentation directories; existing third-party instructions are preserved unchanged.",
@@ -72,6 +72,7 @@
     "crates/agones-core/AGENTS.MD",
     "crates/agones-core/examples/AGENTS.MD",
     "crates/agones-core/src/AGENTS.MD",
+    "crates/agones-core/src/generated/AGENTS.MD",
     "crates/agones-core/tests/AGENTS.MD",
     "crates/agones-core/tests/generated/AGENTS.MD",
     "crates/agones-macros/AGENTS.MD",

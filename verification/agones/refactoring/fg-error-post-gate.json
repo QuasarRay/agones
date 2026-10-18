@@ -1,0 +1,18 @@
+{
+  "architecture_status": "All eight C3 form/location cells remain REQUIRED_OPEN. Existing CGP, Genco and ordinary proc-macro uses provide no _2 completion credit.",
+  "candidate": "Go quote renderer, generated Unicode ranges, error boundary wiring and three independently checked property families.",
+  "decision": "REUSE_EXISTING",
+  "feature_binding": "verification/agones/gates/d32a14a31007659a00ca450455e29f2279967330b6dac1aa6615c322aadd72d6.json",
+  "id": "FG-ERROR-001-post-gate-review",
+  "next_economical_adoption": "At the next public API/resource feature, test AgonesApiResource through an aliased downstream core dependency, reuse its existing proc_macro2 expansion, and reassess a narrow derive_2 authoring bridge. Reassess function-like, attribute and delegation forms against actual repeated declarations at that milestone.",
+  "next_review_trigger": "Next public API/resource milestone or new repeated CGP/provider/property plumbing, whichever comes first; continue Agones production features while required proof debt remains visible.",
+  "rationale": "The actual production formatter now uses one byte-preserving helper and the existing Genco emitter for its pinned table. Four consumer paths use the same CGP loader/error boundary. Keep seven short variant writes and nine explicit branch covers readable. The existing strict result parser already supports exact per-property statuses; extend only its feature selection. No repeated compiler staging or new general forwarding requirement appears in these changed paths.",
+  "reviewed_paths": [
+    "crates/agones-core/src/go_quote.rs",
+    "crates/agones-core/src/features.rs",
+    "crates/agones-rusternetes/examples/feature_case_codegen.rs",
+    "crates/agones-core/tests/feature_error_ascii_domain.rs",
+    "build/scripts/agones-rs/summarize_feature_proof.py"
+  ],
+  "roi": "Extending the existing Genco mode and parser is cheaper to maintain than a second generator or proof framework. The 741 fixed data ranges are automatically emitted; handwritten range data or new Unicode dependencies would duplicate pinned Go semantics. Same-logical-crate macro staging would add build/IDE/packaging cost beyond these few declarations; retain that required architecture work for a concrete authoring adoption."
+}

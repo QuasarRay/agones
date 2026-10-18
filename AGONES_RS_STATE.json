@@ -4,56 +4,56 @@
       "evidence_refs": [],
       "form": "proc_macro_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "FG-ERROR-001 implementation gate: review any real quoting/table generation repetition. At the next public API/resource feature, compile the existing resource derive through an aliased downstream core path and reassess the narrowest proc_macro_derive_2 cross-crate authoring path. All other _2 forms/locations remain required and are reassessed at that same review.",
+      "next_review_trigger": "Next public API/resource milestone or new repeated CGP/provider/property plumbing, whichever comes first; continue Agones production features while required proof debt remains visible.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_2",
       "location": "cross-crate",
-      "next_review_trigger": "FG-ERROR-001 implementation gate: review any real quoting/table generation repetition. At the next public API/resource feature, compile the existing resource derive through an aliased downstream core path and reassess the narrowest proc_macro_derive_2 cross-crate authoring path. All other _2 forms/locations remain required and are reassessed at that same review.",
+      "next_review_trigger": "Next public API/resource milestone or new repeated CGP/provider/property plumbing, whichever comes first; continue Agones production features while required proof debt remains visible.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_attribute_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "FG-ERROR-001 implementation gate: review any real quoting/table generation repetition. At the next public API/resource feature, compile the existing resource derive through an aliased downstream core path and reassess the narrowest proc_macro_derive_2 cross-crate authoring path. All other _2 forms/locations remain required and are reassessed at that same review.",
+      "next_review_trigger": "Next public API/resource milestone or new repeated CGP/provider/property plumbing, whichever comes first; continue Agones production features while required proof debt remains visible.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_attribute_2",
       "location": "cross-crate",
-      "next_review_trigger": "FG-ERROR-001 implementation gate: review any real quoting/table generation repetition. At the next public API/resource feature, compile the existing resource derive through an aliased downstream core path and reassess the narrowest proc_macro_derive_2 cross-crate authoring path. All other _2 forms/locations remain required and are reassessed at that same review.",
+      "next_review_trigger": "Next public API/resource milestone or new repeated CGP/provider/property plumbing, whichever comes first; continue Agones production features while required proof debt remains visible.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_derive_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "FG-ERROR-001 implementation gate: review any real quoting/table generation repetition. At the next public API/resource feature, compile the existing resource derive through an aliased downstream core path and reassess the narrowest proc_macro_derive_2 cross-crate authoring path. All other _2 forms/locations remain required and are reassessed at that same review.",
+      "next_review_trigger": "Next public API/resource milestone or new repeated CGP/provider/property plumbing, whichever comes first; continue Agones production features while required proof debt remains visible.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_derive_2",
       "location": "cross-crate",
-      "next_review_trigger": "FG-ERROR-001 implementation gate: review any real quoting/table generation repetition. At the next public API/resource feature, compile the existing resource derive through an aliased downstream core path and reassess the narrowest proc_macro_derive_2 cross-crate authoring path. All other _2 forms/locations remain required and are reassessed at that same review.",
+      "next_review_trigger": "Next public API/resource milestone or new repeated CGP/provider/property plumbing, whichever comes first; continue Agones production features while required proof debt remains visible.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_delegate_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "FG-ERROR-001 implementation gate: review any real quoting/table generation repetition. At the next public API/resource feature, compile the existing resource derive through an aliased downstream core path and reassess the narrowest proc_macro_derive_2 cross-crate authoring path. All other _2 forms/locations remain required and are reassessed at that same review.",
+      "next_review_trigger": "Next public API/resource milestone or new repeated CGP/provider/property plumbing, whichever comes first; continue Agones production features while required proof debt remains visible.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_delegate_2",
       "location": "cross-crate",
-      "next_review_trigger": "FG-ERROR-001 implementation gate: review any real quoting/table generation repetition. At the next public API/resource feature, compile the existing resource derive through an aliased downstream core path and reassess the narrowest proc_macro_derive_2 cross-crate authoring path. All other _2 forms/locations remain required and are reassessed at that same review.",
+      "next_review_trigger": "Next public API/resource milestone or new repeated CGP/provider/property plumbing, whichever comes first; continue Agones production features while required proof debt remains visible.",
       "status": "REQUIRED_OPEN"
     }
   ],
@@ -90,7 +90,7 @@
   ],
   "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
   "delivery": {
-    "acceptance": "The production query and input policies are implemented with 530 unique ordinary tests validated and two bounded helper/policy proofs. All 22 original source assertions retain required formal work; query timeouts count as zero. New input changes have not yet received CI at a new published head. Full migration and all eight _2 cells remain open.",
+    "acceptance": "The new error-renderer implementation checkpoint is ready locally; its future published head still requires exact-head CI. Earlier CI results apply only to their recorded heads. All 22 original source assertions and the three-claim/nine-cover ASCII helper proof remain required formal work after retained timeouts. Full migration, all eight _2 cells and lifecycle/cluster conformance remain incomplete.",
     "access": "GitHub app authorized as QuasarRay with push/admin; gh CLI unauthenticated; local .git writable",
     "authorization": "User execution contract REQ-12/F4 and root AGENTS.MD milestone PR/merge workflow",
     "checks": [
@@ -122,10 +122,22 @@
         },
         "status": "PASSED",
         "workflow_run": 39131256675
+      },
+      {
+        "evidence": "verification/agones/ci/39137887160-success.json",
+        "head": "6909f07ac5cb08b1af78b251e26ac17342cef933",
+        "merge_result_tested": "5ccce76b2f56e8d5c83e9dcc301881e6ac239145",
+        "observed_results": {
+          "feature-bool-model-check": "PASSED",
+          "migration-state": "PASSED",
+          "rust": "PASSED"
+        },
+        "status": "PASSED",
+        "workflow_run": 39137887160
       }
     ],
     "expected_base": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
-    "expected_head": "024e6fc06dc60cfc6d839b76f6e5504aa4413dba",
+    "expected_head": "6909f07ac5cb08b1af78b251e26ac17342cef933",
     "integration_branch": "agones-rs-dev",
     "pending_publication": {
       "local_checkpoint": "8c7e12706f7c1f9586409b15014a17ad7194b7b4",
@@ -137,27 +149,27 @@
     "pull_requests": [
       {
         "draft": true,
-        "head": "024e6fc06dc60cfc6d839b76f6e5504aa4413dba",
+        "head": "6909f07ac5cb08b1af78b251e26ac17342cef933",
         "merged": false,
         "number": 92,
         "url": "https://github.com/QuasarRay/agones/pull/92"
       }
     ],
-    "remote_result": "LOCAL_INPUT_CHECKPOINT_PENDING_PUBLICATION",
+    "remote_result": "LOCAL_ERROR_CHECKPOINT_READY_FOR_PUBLICATION",
     "required_checks": [
       "migration-state",
       "rust",
       "feature-bool-model-check"
     ],
     "review_branch": "codex/agones-feature-gates-001",
-    "visible_checkout": "agones-rs-dev@8c7e12706f7c1f9586409b15014a17ad7194b7b4"
+    "visible_checkout": "agones-rs-dev@6909f07ac5cb08b1af78b251e26ac17342cef933"
   },
   "goal": {
     "objective_attachment": "/home/astral/.codex/attachments/5cf63dab-e5a8-49be-a2f1-ae51f5edd993/pasted-text-1.txt",
     "reported_usage": {
-      "observed_at": 1792334184,
-      "time_seconds": 11723,
-      "tokens": 1066791
+      "observed_at": 1792340137,
+      "time_seconds": 17675,
+      "tokens": 1547911
     },
     "status": "active",
     "token_budget": null
@@ -284,6 +296,50 @@
       "resource_usage": "unknown; run timing and exit state are retained",
       "source_binding_sha256": "108d06a015ec12f009f2c04123d461918a6071c1623cfecb963ac1bb3876c5a8",
       "started_at": "2026-10-18T11:40:40.316303+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "go",
+        "run",
+        "-mod=vendor",
+        "build/scripts/agones-rs/probes/compile_go_print_table.go",
+        "verification/agones/go-print-expected.bin"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:16:07.287165+00:00",
+      "log": "verification/agones/runs/compile-go-print-data-1.log",
+      "owner_token": "43c09cae37a6bc1484356c54558d3d23",
+      "pid": 196726,
+      "process_identity": "196726 (go) R 196676 196676 196676 0 -1 4456448 2 0 0 0 0 0 0 0 12 -8 1 0 4183576 16007168 0 18446744073709551615 0 0 140722939190743 0 0 0 0 0 0 0 0 0 17 3 0 0 0 0 0 0 0 0 140722939190743 0 0 0 0\n",
+      "receipt": "verification/agones/runs/compile-go-print-data-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "4ed20e31dccbde5ff3da4b121ab6ff73dcca23a60e8875d1743696ef766d6e36",
+      "started_at": "2026-10-18T15:16:06.788958+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "go",
+        "run",
+        "-mod=vendor",
+        "build/scripts/agones-rs/probes/compile_go_print_table.go",
+        "verification/agones/go-print-expected.bin"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:32:48.059016+00:00",
+      "log": "verification/agones/runs/compile-go-print-data-2.log",
+      "owner_token": "6ba3f5c619b0a323841c830d0f2020d6",
+      "pid": 206332,
+      "process_identity": "206332 (go) R 206308 206308 206308 0 -1 4456448 2 0 0 0 0 0 0 0 12 -8 1 0 4283656 16007168 0 18446744073709551615 0 0 140734129655255 0 0 0 0 0 0 0 0 0 17 6 0 0 0 0 0 0 0 0 140734129655255 0 0 0 0\n",
+      "receipt": "verification/agones/runs/compile-go-print-data-2.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "651c2ed0bc43a156cf8a691fde64eededfb760c670f5ca1e729ee794e7c9a8ff",
+      "started_at": "2026-10-18T15:32:47.599433+00:00",
       "status": "PASSED"
     },
     {
@@ -480,6 +536,620 @@
       "source_binding_sha256": "26c4f7a1bda6aafd5d298aa75096a573a5fe5fb6c94209613ba4d136feb930fa",
       "started_at": "2026-10-18T11:28:35.990896+00:00",
       "status": "FAILED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "--offline",
+        "-p",
+        "agones-rusternetes",
+        "--example",
+        "feature_case_codegen",
+        "--",
+        "--go-quote-table"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:17:29.534839+00:00",
+      "log": "verification/agones/runs/emit-go-print-production-table-1.log",
+      "owner_token": "b04c18c9004f81fd11ae9ae7519b207a",
+      "pid": 197084,
+      "process_identity": "197084 (cargo) R 197059 197059 197059 0 -1 4194304 5 0 0 0 0 0 0 0 12 -8 1 0 4191682 11849728 0 18446744073709551615 94649562240704 94649570869376 140722091365296 0 0 0 0 0 0 0 0 0 17 13 0 0 0 0 0 94649571374904 94649571392164 94649856237568 140722091367908 140722091368010 140722091368010 140722091372521 0\n",
+      "receipt": "verification/agones/runs/emit-go-print-production-table-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "42e597f396ae1a32cd1bc0600fd910cb230cb2e5ce5a1023453df78b1a73b91b",
+      "started_at": "2026-10-18T15:17:27.854462+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "--offline",
+        "-p",
+        "agones-rusternetes",
+        "--example",
+        "feature_case_codegen",
+        "--",
+        "--go-quote-table"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:22:19.751036+00:00",
+      "log": "verification/agones/runs/emit-go-print-production-table-2.log",
+      "owner_token": "92168bb31fd317af62cc08cde4b69e2e",
+      "pid": 199046,
+      "process_identity": "199046 (cargo) R 199022 199022 199022 0 -1 4456448 2 0 0 0 0 0 0 0 12 -8 1 0 4220431 11493376 0 18446744073709551615 0 0 140732970491364 0 0 0 0 0 0 0 0 0 17 8 0 0 0 0 0 0 0 0 140732970491364 0 0 0 0\n",
+      "receipt": "verification/agones/runs/emit-go-print-production-table-2.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "cbd62738a7e01186f59bfc85bc68b30566f9984e481b94ca04c84e7bb0809d47",
+      "started_at": "2026-10-18T15:22:15.342393+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "--offline",
+        "-p",
+        "agones-rusternetes",
+        "--example",
+        "feature_case_codegen",
+        "--",
+        "--go-quote-table"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:28:05.858965+00:00",
+      "log": "verification/agones/runs/emit-go-print-production-table-3.log",
+      "owner_token": "9bd9028ef95912c62ff609f1ad738283",
+      "pid": 201278,
+      "process_identity": "201278 (cargo) R 201254 201254 201254 0 -1 4194304 6 0 0 0 0 0 0 0 12 -8 1 0 4255069 11849728 0 18446744073709551615 93971873724096 93971882352768 140734127693440 0 0 0 0 0 0 0 0 0 17 3 0 0 0 0 0 93971882858296 93971882875556 93972344164352 140734127697380 140734127697482 140734127697482 140734127701993 0\n",
+      "receipt": "verification/agones/runs/emit-go-print-production-table-3.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "3ab9b83e70de29a0f521fa47805c2323a508d2bd6d013e81824b232973672986",
+      "started_at": "2026-10-18T15:28:01.732263+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "--offline",
+        "-p",
+        "agones-rusternetes",
+        "--example",
+        "feature_case_codegen",
+        "--",
+        "--go-quote-table"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:33:17.510123+00:00",
+      "log": "verification/agones/runs/emit-go-print-production-table-final.log",
+      "owner_token": "c4b13fadadc22b2ba874cd066759fafa",
+      "pid": 206517,
+      "process_identity": "206517 (cargo) R 206493 206493 206493 0 -1 4456448 2 0 0 0 0 0 0 0 12 -8 1 0 4286566 11493376 0 18446744073709551615 0 0 140724105121252 0 0 0 0 0 0 0 0 0 17 5 0 0 0 0 0 0 0 0 140724105121252 0 0 0 0\n",
+      "receipt": "verification/agones/runs/emit-go-print-production-table-final.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "651c2ed0bc43a156cf8a691fde64eededfb760c670f5ca1e729ee794e7c9a8ff",
+      "started_at": "2026-10-18T15:33:16.704064+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "timeout",
+        "240",
+        "env",
+        "CARGO_NET_OFFLINE=true",
+        "CARGO_BUILD_JOBS=4",
+        "/home/astral/.local/share/agones-rs/tools/cargo-bolero-0.13.4/bin/cargo-bolero",
+        "bolero",
+        "test",
+        "feature_error_ascii_common_domain",
+        "--engine",
+        "kani"
+      ],
+      "cwd": "/home/astral/Projects/agones/crates/agones-core",
+      "exit_code": 124,
+      "finished_at": "2026-10-18T15:53:52.811408+00:00",
+      "log": "verification/agones/runs/error-ascii-bolero-kani-1.log",
+      "owner_token": "2a979abb2c706fe03786bc81e78af127",
+      "pid": 209986,
+      "process_identity": "209986 (timeout) R 209956 209956 209956 0 -1 4194304 14 0 0 0 0 0 0 0 16 -4 1 0 4386134 532480 33 18446744073709551615 94498837184512 94498837222417 140726079724544 0 0 0 0 0 0 0 0 0 17 4 0 0 0 0 0 94498837240304 94498837242440 94498944552960 140726079729027 140726079729224 140726079729224 140726079733735 0\n",
+      "receipt": "verification/agones/runs/error-ascii-bolero-kani-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "d09f25d97088db5e28fd03296175e6fca4d76e91af15d4d960c6cd23c02eeab4",
+      "started_at": "2026-10-18T15:49:52.371020+00:00",
+      "status": "FAILED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "timeout",
+        "240",
+        "env",
+        "CARGO_NET_OFFLINE=true",
+        "CARGO_BUILD_JOBS=4",
+        "/home/astral/.local/share/agones-rs/tools/cargo-bolero-0.13.4/bin/cargo-bolero",
+        "bolero",
+        "test",
+        "feature_error_ascii_common_domain",
+        "--engine",
+        "kani"
+      ],
+      "cwd": "/home/astral/Projects/agones/crates/agones-core",
+      "exit_code": 124,
+      "finished_at": "2026-10-18T16:04:13.441283+00:00",
+      "log": "verification/agones/runs/error-ascii-bolero-kani-2.log",
+      "owner_token": "9877b907aedc1f050e58919e865462b0",
+      "pid": 219036,
+      "process_identity": "219036 (timeout) R 219001 219001 219001 0 -1 4194304 10 0 0 0 0 0 0 0 12 -8 1 0 4448196 532480 0 18446744073709551615 94883269427200 94883269465105 140736043562560 0 0 0 0 0 0 0 0 0 17 5 0 0 0 0 0 94883269482992 94883269485128 94883423420416 140736043568515 140736043568712 140736043568712 140736043573223 0\n",
+      "receipt": "verification/agones/runs/error-ascii-bolero-kani-2.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "99bd8001b8688417f7867a570896e75ded3ee68cdacf91498837568cb11a0721",
+      "started_at": "2026-10-18T16:00:13.002477+00:00",
+      "status": "FAILED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "timeout",
+        "240",
+        "env",
+        "CARGO_NET_OFFLINE=true",
+        "CARGO_BUILD_JOBS=4",
+        "/home/astral/.local/share/agones-rs/tools/cargo-bolero-0.13.4/bin/cargo-bolero",
+        "bolero",
+        "test",
+        "feature_error_ascii_common_domain",
+        "--engine",
+        "kani"
+      ],
+      "cwd": "/home/astral/Projects/agones/crates/agones-core",
+      "exit_code": 124,
+      "finished_at": "2026-10-18T16:13:47.702245+00:00",
+      "log": "verification/agones/runs/error-ascii-bolero-kani-3.log",
+      "owner_token": "383b769066d21d1b05f570b1e47726be",
+      "pid": 237082,
+      "process_identity": "237082 (timeout) R 237057 237057 237057 0 -1 4194304 17 0 0 0 0 0 0 0 12 -8 1 0 4505482 741376 70 18446744073709551615 94375244701696 94375244739601 140728727097456 0 0 0 0 0 0 0 0 0 17 6 0 0 0 0 0 94375244757488 94375244759624 94375947632640 140728727104899 140728727105096 140728727105096 140728727109607 0\n",
+      "receipt": "verification/agones/runs/error-ascii-bolero-kani-3.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "d8a02757e7cb57c184896f9a34b5110754140b1f72ef9dcaaed8fb226986816b",
+      "started_at": "2026-10-18T16:09:45.862463+00:00",
+      "status": "FAILED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "env",
+        "BOLERO_RANDOM_SEED=1792336066",
+        "cargo",
+        "test",
+        "--locked",
+        "--offline",
+        "-p",
+        "agones-core",
+        "--test",
+        "feature_error_ascii_domain",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:43:29.955504+00:00",
+      "log": "verification/agones/runs/error-ascii-domain-runtime-1.log",
+      "owner_token": "bd49b91ec0a352d88889ed63968c2a84",
+      "pid": 208038,
+      "process_identity": "208038 (env) R 208014 208014 208014 0 -1 4194304 12 0 0 0 0 0 0 0 12 -8 1 0 4347641 552960 33 18446744073709551615 94620929839104 94620929893649 140724328004656 0 0 0 0 0 0 0 0 0 17 1 0 0 0 0 0 94620929915120 94620929917512 94621442215936 140724328009164 140724328009292 140724328009292 140724328013803 0\n",
+      "receipt": "verification/agones/runs/error-ascii-domain-runtime-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "2d54796a656375630afd18d32f1947c1e2cf224e77a2a4aa27bff93d20de1980",
+      "started_at": "2026-10-18T15:43:27.456523+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "env",
+        "BOLERO_RANDOM_SEED=1792338844",
+        "cargo",
+        "test",
+        "--locked",
+        "--offline",
+        "-p",
+        "agones-core",
+        "--test",
+        "feature_error_ascii_domain",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:59:53.555043+00:00",
+      "log": "verification/agones/runs/error-ascii-domain-runtime-2.log",
+      "owner_token": "d049dc667e036a1e975a78763bf1717f",
+      "pid": 218696,
+      "process_identity": "218696 (env) R 218661 218661 218661 0 -1 4194304 17 0 0 0 0 0 0 0 16 -4 1 0 4446107 761856 80 18446744073709551615 94221868146688 94221868201233 140722546109344 0 0 0 0 0 0 0 0 0 17 0 0 0 0 0 0 94221868222704 94221868225096 94222752321536 140722546113996 140722546114124 140722546114124 140722546118635 0\n",
+      "receipt": "verification/agones/runs/error-ascii-domain-runtime-2.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "99bd8001b8688417f7867a570896e75ded3ee68cdacf91498837568cb11a0721",
+      "started_at": "2026-10-18T15:59:52.099599+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "env",
+        "BOLERO_RANDOM_SEED=1792339706",
+        "cargo",
+        "test",
+        "--locked",
+        "--offline",
+        "-p",
+        "agones-core",
+        "--test",
+        "feature_error_ascii_domain",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T16:06:55.894098+00:00",
+      "log": "verification/agones/runs/error-ascii-domain-runtime-3.log",
+      "owner_token": "34f7cb6fcfc38361bc98d10c3dbdafa1",
+      "pid": 231558,
+      "process_identity": "231558 (env) R 231456 231456 231456 0 -1 4194304 22 0 0 0 0 0 0 0 16 -4 1 0 4488283 770048 69 18446744073709551615 94810713649152 94810713703697 140732791387008 0 0 0 0 0 0 0 0 0 17 4 0 0 0 0 0 94810713725168 94810713727560 94811490947072 140732791389644 140732791389772 140732791389772 140732791394283 0\n",
+      "receipt": "verification/agones/runs/error-ascii-domain-runtime-3.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "d8a02757e7cb57c184896f9a34b5110754140b1f72ef9dcaaed8fb226986816b",
+      "started_at": "2026-10-18T16:06:53.849730+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "python3",
+        "build/scripts/agones-rs/inventory.py",
+        "guidance-check"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T16:09:27.944321+00:00",
+      "log": "verification/agones/runs/error-guidance-check-1.log",
+      "owner_token": "70e4bda5e7bbd94bdfe4c7793f29e3f8",
+      "pid": 236968,
+      "process_identity": "236968 (python3) R 236894 236894 236894 0 -1 4194304 40 0 1 0 0 0 0 0 16 -4 1 0 4503644 11358208 189 18446744073709551615 94690421235712 94690421236025 140726946061664 0 0 0 0 0 0 0 0 0 17 8 0 0 0 0 0 94690421247416 94690421248016 94690603638784 140726946070028 140726946070088 140726946070088 140726946074599 0\n",
+      "receipt": "verification/agones/runs/error-guidance-check-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "d8a02757e7cb57c184896f9a34b5110754140b1f72ef9dcaaed8fb226986816b",
+      "started_at": "2026-10-18T16:09:27.471104+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "/home/astral/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "build/scripts/agones-rs/checkpoint.py",
+        "check"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T16:09:27.792442+00:00",
+      "log": "verification/agones/runs/error-ledger-check-1.log",
+      "owner_token": "434805421d40d84da99f982a64f61626",
+      "pid": 236966,
+      "process_identity": "236966 (python3) R 236896 236896 236896 0 -1 4456448 2 0 0 0 0 0 0 0 16 -4 1 0 4503644 18722816 0 18446744073709551615 0 0 140726460960123 0 0 0 0 0 0 0 0 0 17 6 0 0 0 0 0 0 0 0 140726460960123 0 0 0 0\n",
+      "receipt": "verification/agones/runs/error-ledger-check-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "d8a02757e7cb57c184896f9a34b5110754140b1f72ef9dcaaed8fb226986816b",
+      "started_at": "2026-10-18T16:09:27.471104+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "--offline",
+        "-p",
+        "agones-rusternetes",
+        "--example",
+        "feature_case_codegen"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T16:20:43.489177+00:00",
+      "log": "verification/agones/runs/error-metric-query-generation-1.log",
+      "owner_token": "703e453f994c31a7c88a6ec59b39e72e",
+      "pid": 250670,
+      "process_identity": "250670 (cargo) R 250645 250645 250645 0 -1 4456448 2 0 0 0 0 0 0 0 16 -4 1 0 4571113 11493376 0 18446744073709551615 0 0 140732806102520 0 0 0 0 0 0 0 0 0 17 1 0 0 0 0 0 0 0 0 140732806102520 0 0 0 0\n",
+      "receipt": "verification/agones/runs/error-metric-query-generation-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "20536cc75da02e130848c6b3a5cb8935a88819ff7ebcdf932c3cf4902ac7e44a",
+      "started_at": "2026-10-18T16:20:42.147841+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "--offline",
+        "-p",
+        "agones-rusternetes",
+        "--example",
+        "feature_case_codegen",
+        "--",
+        "--check"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T16:21:33.790569+00:00",
+      "log": "verification/agones/runs/error-metric-query-generation-check-1.log",
+      "owner_token": "5ba14eb7aa19dac0329fdff48d452c73",
+      "pid": 250929,
+      "process_identity": "250929 (cargo) R 250885 250885 250885 0 -1 4194304 5 0 0 0 0 0 0 0 12 -8 1 0 4576240 11849728 0 18446744073709551615 93831044339392 93831052968064 140727444903264 0 0 0 0 0 0 0 0 0 17 1 0 0 0 0 0 93831053473592 93831053490852 93831114784768 140727444905453 140727444905546 140727444905546 140727444910057 0\n",
+      "receipt": "verification/agones/runs/error-metric-query-generation-check-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "802b620b30d6f8e8614a42dbf0d77fabd6f8fab1895557dab006a90fb7699c59",
+      "started_at": "2026-10-18T16:21:33.415017+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "go",
+        "-C",
+        "build/scripts/agones-rs/extract",
+        "run",
+        ".",
+        "/home/astral/Projects/agones",
+        "verification/agones/gates/413286f5eb1449efbe6d9c02f7c920651a0f93e964ada0972d9eeb6f2dab7d4f.json",
+        "verification/agones/gates/1ab571b1a92e359e1ffb4610b811ecf113e20ec5464b5be196bcbf546c043043.json"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T16:19:12.158224+00:00",
+      "log": "verification/agones/runs/error-metric-source-revalidation-1.log",
+      "owner_token": "aa4f2d0a3f307efcbeffa1c13b2fffa9",
+      "pid": 249967,
+      "process_identity": "249967 (go) R 249942 249939 249939 0 -1 4456448 2 0 0 0 0 0 0 0 12 -8 1 0 4561955 16007168 0 18446744073709551615 0 0 140721738267972 0 0 0 0 0 0 0 0 0 17 0 0 0 0 0 0 0 0 0 140721738267972 0 0 0 0\n",
+      "receipt": "verification/agones/runs/error-metric-source-revalidation-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "d8a02757e7cb57c184896f9a34b5110754140b1f72ef9dcaaed8fb226986816b",
+      "started_at": "2026-10-18T16:19:10.561359+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "go",
+        "-C",
+        "build/scripts/agones-rs/extract",
+        "run",
+        ".",
+        "/home/astral/Projects/agones",
+        "verification/agones/gates/2d4372c73bfb9b9b1e3eda11df5aa77f3b2673fb341b66c551b6a5b159506164.json",
+        "verification/agones/gates/5f50d814a8ddee6266493cba9bee950422d9e31d6e969ffbdaf286cac351c02d.json"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T16:20:22.365650+00:00",
+      "log": "verification/agones/runs/error-metric-source-revalidation-2.log",
+      "owner_token": "4df53ae8dc6e9c4df61300677eb185b8",
+      "pid": 250341,
+      "process_identity": "250341 (go) R 250317 250314 250314 0 -1 4194304 4 0 0 0 0 0 0 0 12 -8 1 0 4568993 49881088 0 18446744073709551615 4194304 12063601 140735848587632 0 0 0 0 0 0 0 0 0 17 7 0 0 0 0 0 19611648 20058714 808386560 140735848594756 140735848595021 140735848595021 140735848599532 0\n",
+      "receipt": "verification/agones/runs/error-metric-source-revalidation-2.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "d8a02757e7cb57c184896f9a34b5110754140b1f72ef9dcaaed8fb226986816b",
+      "started_at": "2026-10-18T16:20:20.945045+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "--offline",
+        "-p",
+        "agones-rusternetes",
+        "--example",
+        "feature_case_codegen",
+        "--",
+        "--go-quote-table",
+        "--check"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:50:54.629789+00:00",
+      "log": "verification/agones/runs/error-production-table-check-1.log",
+      "owner_token": "5fc0a70e381bb335f494e6e649176d6e",
+      "pid": 213154,
+      "process_identity": "213154 (cargo) R 213057 213057 213057 0 -1 4456448 2 0 0 0 0 0 0 0 16 -4 1 0 4392230 11493376 0 18446744073709551615 0 0 140730275392988 0 0 0 0 0 0 0 0 0 17 4 0 0 0 0 0 0 0 0 140730275392988 0 0 0 0\n",
+      "receipt": "verification/agones/runs/error-production-table-check-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "d09f25d97088db5e28fd03296175e6fca4d76e91af15d4d960c6cd23c02eeab4",
+      "started_at": "2026-10-18T15:50:53.327642+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "--offline",
+        "-p",
+        "agones-rusternetes",
+        "--example",
+        "feature_case_codegen"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:45:25.557163+00:00",
+      "log": "verification/agones/runs/error-query-case-regeneration-1.log",
+      "owner_token": "32b299b67ef5566b6fd8e604e2e0eef1",
+      "pid": 208674,
+      "process_identity": "208674 (cargo) R 208650 208650 208650 0 -1 4194304 16 0 0 0 0 0 0 0 12 -8 1 0 4359052 11849728 39 18446744073709551615 93845663332032 93845671960704 140731208059008 0 0 0 0 0 0 0 0 0 17 7 0 0 0 0 0 93845672466232 93845672483492 93846172364800 140731208064504 140731208064586 140731208064586 140731208069097 0\n",
+      "receipt": "verification/agones/runs/error-query-case-regeneration-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "2d54796a656375630afd18d32f1947c1e2cf224e77a2a4aa27bff93d20de1980",
+      "started_at": "2026-10-18T15:45:21.556045+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "--offline",
+        "-p",
+        "agones-rusternetes",
+        "--example",
+        "feature_case_codegen",
+        "--",
+        "--check"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:51:41.617211+00:00",
+      "log": "verification/agones/runs/error-query-generation-check-1.log",
+      "owner_token": "d28fdb18690474d5407b45b269638d4d",
+      "pid": 214852,
+      "process_identity": "214852 (cargo) R 214826 214826 214826 0 -1 4456448 2 0 0 0 0 0 0 0 16 -4 1 0 4396947 11493376 0 18446744073709551615 0 0 140721997422061 0 0 0 0 0 0 0 0 0 17 5 0 0 0 0 0 0 0 0 140721997422061 0 0 0 0\n",
+      "receipt": "verification/agones/runs/error-query-generation-check-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "d09f25d97088db5e28fd03296175e6fca4d76e91af15d4d960c6cd23c02eeab4",
+      "started_at": "2026-10-18T15:51:40.506243+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "--offline",
+        "-p",
+        "agones-core",
+        "--example",
+        "feature_query_replay"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:53:31.611797+00:00",
+      "log": "verification/agones/runs/error-raw-query-rust-replay-1.log",
+      "owner_token": "23b61f4266a3df615c74fb456ba938b2",
+      "pid": 217716,
+      "process_identity": "217716 (cargo) R 217692 217692 217692 0 -1 4456448 2 0 0 0 0 0 0 0 12 -8 1 0 4407867 11493376 0 18446744073709551615 0 0 140728525286911 0 0 0 0 0 0 0 0 0 17 6 0 0 0 0 0 0 0 0 140728525286911 0 0 0 0\n",
+      "receipt": "verification/agones/runs/error-raw-query-rust-replay-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "d09f25d97088db5e28fd03296175e6fca4d76e91af15d4d960c6cd23c02eeab4",
+      "started_at": "2026-10-18T15:53:29.707359+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "python3",
+        "build/scripts/agones-rs/test_kani_results.py"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T16:09:27.607941+00:00",
+      "log": "verification/agones/runs/error-result-parser-controls-1.log",
+      "owner_token": "3eb53cdc275641c16a274650f03189f3",
+      "pid": 236967,
+      "process_identity": "236967 (python3) R 236895 236895 236895 0 -1 4194304 7 0 0 0 0 0 0 0 16 -4 1 0 4503644 483328 0 18446744073709551615 94393039372288 94393039372601 140731683551088 0 0 0 0 0 0 1 0 0 17 3 0 0 0 0 0 94393039383992 94393039384592 94393304633344 140731683556883 140731683556936 140731683556936 140731683561447 0\n",
+      "receipt": "verification/agones/runs/error-result-parser-controls-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "d8a02757e7cb57c184896f9a34b5110754140b1f72ef9dcaaed8fb226986816b",
+      "started_at": "2026-10-18T16:09:27.471104+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "python3",
+        "build/scripts/agones-rs/summarize_feature_proof.py",
+        "input",
+        "feature-input-bolero-kani-1",
+        "--output",
+        "verification/agones/feature-input-kani-properties.json"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T16:02:30.341388+00:00",
+      "log": "verification/agones/runs/error-reused-input-results-1.log",
+      "owner_token": "b35b8cf58be1eea6841478b9575c80f2",
+      "pid": 223988,
+      "process_identity": "223988 (python3) R 223944 223944 223944 0 -1 4194304 43 0 0 0 0 0 0 0 12 -8 1 0 4461923 11358208 220 18446744073709551615 94192177442816 94192177443129 140723322465376 0 0 0 0 0 0 0 0 0 17 6 0 0 0 0 0 94192177454520 94192177455120 94193003761664 140723322473899 140723322474056 140723322474056 140723322478567 0\n",
+      "receipt": "verification/agones/runs/error-reused-input-results-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "99bd8001b8688417f7867a570896e75ded3ee68cdacf91498837568cb11a0721",
+      "started_at": "2026-10-18T16:02:30.261137+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "python3",
+        "build/scripts/agones-rs/summarize_bool_proof.py"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T16:02:30.127996+00:00",
+      "log": "verification/agones/runs/error-reused-proof-results-1.log",
+      "owner_token": "da7a66a823e77262871e72f3133d90bd",
+      "pid": 223943,
+      "process_identity": "223943 (python3) R 223919 223919 223919 0 -1 4194304 6 0 0 0 0 0 0 0 12 -8 1 0 4461899 483328 0 18446744073709551615 0 0 140727996993040 0 0 0 0 0 0 0 0 0 17 1 0 0 0 0 0 0 0 0 140727996993040 140727996993096 140727996993096 140727996993096 0\n",
+      "receipt": "verification/agones/runs/error-reused-proof-results-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "99bd8001b8688417f7867a570896e75ded3ee68cdacf91498837568cb11a0721",
+      "started_at": "2026-10-18T16:02:30.018932+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--offline",
+        "-p",
+        "agones-rusternetes",
+        "--test",
+        "feature_source_obligations",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:52:36.294469+00:00",
+      "log": "verification/agones/runs/error-source-obligations-runtime-1.log",
+      "owner_token": "6e37366c4b1abb1b676c9e708aa38a51",
+      "pid": 216344,
+      "process_identity": "216344 (cargo) R 216320 216320 216320 0 -1 4456448 2 0 0 0 0 0 0 0 12 -8 1 0 4402308 11493376 0 18446744073709551615 0 0 140729980046821 0 0 0 0 0 0 0 0 0 17 6 0 0 0 0 0 0 0 0 140729980046821 0 0 0 0\n",
+      "receipt": "verification/agones/runs/error-source-obligations-runtime-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "d09f25d97088db5e28fd03296175e6fca4d76e91af15d4d960c6cd23c02eeab4",
+      "started_at": "2026-10-18T15:52:34.105201+00:00",
+      "status": "PASSED"
     },
     {
       "attempt": 1,
@@ -932,6 +1602,174 @@
       "resource_usage": "unknown; run timing and exit state are retained",
       "source_binding_sha256": "a1fb2dc19e0ff5f2a1de9b9e16f6afb9665cc115e177f679e0a66a3e134adad1",
       "started_at": "2026-10-18T11:33:14.902911+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "go",
+        "-C",
+        "build/scripts/agones-rs/extract",
+        "test",
+        "./...",
+        "-count=1"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:38:45.232136+00:00",
+      "log": "verification/agones/runs/feature-error-extractor-controls-1.log",
+      "owner_token": "e30eab8913663eb4a64ff6e262b70dcc",
+      "pid": 207502,
+      "process_identity": "207502 (python3) R 207474 207474 207474 0 -1 4194368 2 0 0 0 0 0 0 0 12 -8 1 0 4319366 34152448 4761 18446744073709551615 94296882769920 94296882770233 140733182427328 0 0 0 0 0 0 0 0 0 17 8 0 0 0 0 0 94296882781624 94296882782224 94297504960512 140733182430652 140733182430792 140733182430792 140733182435303 0\n",
+      "receipt": "verification/agones/runs/feature-error-extractor-controls-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "1748e609cce0450998139fcf2b7b0bc430a3d248d9fda90d2d258b81a1e7c9bb",
+      "started_at": "2026-10-18T15:38:44.692467+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "go",
+        "run",
+        "-mod=vendor",
+        "build/scripts/agones-rs/probes/feature_error_replay.go",
+        "verification/agones/feature-error-witnesses.json"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:25:09.004210+00:00",
+      "log": "verification/agones/runs/feature-error-original-go-witnesses-1.log",
+      "owner_token": "93972deb676081f0cbd40b8a6b7a4d70",
+      "pid": 200249,
+      "process_identity": "200249 (go) R 200225 200225 200225 0 -1 4456448 2 0 0 0 0 0 0 0 12 -8 1 0 4237669 16007168 0 18446744073709551615 0 0 140730253839826 0 0 0 0 0 0 0 0 0 17 8 0 0 0 0 0 0 0 0 140730253839826 0 0 0 0\n",
+      "receipt": "verification/agones/runs/feature-error-original-go-witnesses-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "1454f6d3c64bef15f6099aa4b44cd942f24419932bf6d90ad3adfad55305d07f",
+      "started_at": "2026-10-18T15:25:07.730407+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "cargo",
+        "run",
+        "--quiet",
+        "--locked",
+        "--offline",
+        "-p",
+        "agones-core",
+        "--example",
+        "feature_error_replay"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:27:22.593999+00:00",
+      "log": "verification/agones/runs/feature-error-production-observation-1.log",
+      "owner_token": "ff269dfaad4a72d43a2695ca43e8c1db",
+      "pid": 201045,
+      "process_identity": "201045 (cargo) R 201021 201021 201021 0 -1 4194304 11 0 0 0 0 0 0 0 12 -8 1 0 4251095 11849728 0 18446744073709551615 94581953783488 94581962412160 140733017444752 0 0 0 0 0 0 0 0 0 17 10 0 0 0 0 0 94581962917688 94581962934948 94582214365184 140733017452023 140733017452106 140733017452106 140733017456617 0\n",
+      "receipt": "verification/agones/runs/feature-error-production-observation-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "3bb0fe0485577034e2743b6f712f89a92f208aa9d04d744fe1bf4ad5f0440de3",
+      "started_at": "2026-10-18T15:27:21.984624+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--offline",
+        "-p",
+        "agones-core",
+        "--test",
+        "feature_error_rendering"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:25:11.020065+00:00",
+      "log": "verification/agones/runs/feature-error-production-witnesses-1.log",
+      "owner_token": "66c701177411daa7030d5ac7b0f1bcf9",
+      "pid": 200426,
+      "process_identity": "200426 (cargo) R 200401 200401 200401 0 -1 4456448 2 0 0 0 0 0 0 0 16 -4 1 0 4237781 11493376 0 18446744073709551615 0 0 140729297354238 0 0 0 0 0 0 0 0 0 17 7 0 0 0 0 0 0 0 0 140729297354238 0 0 0 0\n",
+      "receipt": "verification/agones/runs/feature-error-production-witnesses-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "1454f6d3c64bef15f6099aa4b44cd942f24419932bf6d90ad3adfad55305d07f",
+      "started_at": "2026-10-18T15:25:08.856030+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "go",
+        "-C",
+        "build/scripts/agones-rs/extract",
+        "run",
+        ".",
+        "/home/astral/Projects/agones",
+        "verification/agones/gates/a017fd01f21c9d81e178ed84fa0fa37f54515d408b465b254ab0fef477165884.json",
+        "verification/agones/gates/b13f0a9e209e7b5addd86c9892919b391eb85950d478f0ef3fceb03070e0aec5.json"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:38:45.364289+00:00",
+      "log": "verification/agones/runs/feature-error-source-revalidation-1.log",
+      "owner_token": "750d29e14c0084073690845d6662c5e7",
+      "pid": 207240,
+      "process_identity": "207240 (go) R 207216 207214 207214 0 -1 4456448 2 0 0 0 0 0 0 0 12 -8 1 0 4319251 16007168 0 18446744073709551615 0 0 140723950230852 0 0 0 0 0 0 0 0 0 17 6 0 0 0 0 0 0 0 0 140723950230852 0 0 0 0\n",
+      "receipt": "verification/agones/runs/feature-error-source-revalidation-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "1748e609cce0450998139fcf2b7b0bc430a3d248d9fda90d2d258b81a1e7c9bb",
+      "started_at": "2026-10-18T15:38:43.543513+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "cargo",
+        "check",
+        "--locked",
+        "--offline",
+        "--workspace",
+        "--all-targets"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:32:22.579593+00:00",
+      "log": "verification/agones/runs/feature-error-workspace-check-1.log",
+      "owner_token": "63f2836b1fc1f818fa7c52fc85b5823e",
+      "pid": 205903,
+      "process_identity": "205903 (cargo) R 205879 205879 205879 0 -1 4456448 2 0 0 0 0 0 0 0 12 -8 1 0 4280705 11493376 0 18446744073709551615 0 0 140732740111889 0 0 0 0 0 0 0 0 0 17 1 0 0 0 0 0 0 0 0 140732740111889 0 0 0 0\n",
+      "receipt": "verification/agones/runs/feature-error-workspace-check-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "f849bd1d4837d9f13af0dbb08346365514480542a5d02acfd92bcbda306ccbf2",
+      "started_at": "2026-10-18T15:32:18.078655+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "env",
+        "BOLERO_RANDOM_SEED=1792336066",
+        "cargo",
+        "test",
+        "--locked",
+        "--offline",
+        "--workspace"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:30:19.442455+00:00",
+      "log": "verification/agones/runs/feature-error-workspace-tests-1.log",
+      "owner_token": "0fea5479d56bf03163c1a1e983f20ca3",
+      "pid": 202227,
+      "process_identity": "202227 (env) R 202203 202203 202203 0 -1 4194304 5 0 0 0 0 0 0 0 12 -8 1 0 4266017 552960 0 18446744073709551615 94520409653248 94520409707793 140724455292960 0 0 0 0 0 0 0 0 0 17 2 0 0 0 0 0 94520409729264 94520409731656 94521231626240 140724455300608 140724455300684 140724455300684 140724455305195 0\n",
+      "receipt": "verification/agones/runs/feature-error-workspace-tests-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "f849bd1d4837d9f13af0dbb08346365514480542a5d02acfd92bcbda306ccbf2",
+      "started_at": "2026-10-18T15:29:51.207582+00:00",
       "status": "PASSED"
     },
     {
@@ -1412,6 +2250,34 @@
       "resource_usage": "unknown; run timing and exit state are retained",
       "source_binding_sha256": "e63f5b3423304e7ff1dceb13443d23c5cc65c017ff7db3b9055d5baa7afd2ad4",
       "started_at": "2026-10-18T14:07:00.519899+00:00",
+      "status": "FAILED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "timeout",
+        "240",
+        "env",
+        "CARGO_NET_OFFLINE=true",
+        "CARGO_BUILD_JOBS=4",
+        "/home/astral/.local/share/agones-rs/tools/cargo-bolero-0.13.4/bin/cargo-bolero",
+        "bolero",
+        "test",
+        "source_query_case_000",
+        "--engine",
+        "kani"
+      ],
+      "cwd": "/home/astral/Projects/agones/crates/agones-core",
+      "exit_code": 124,
+      "finished_at": "2026-10-18T16:09:11.233678+00:00",
+      "log": "verification/agones/runs/feature-query-case-000-error-kani-1.log",
+      "owner_token": "4f57068074d85710fd607136f43247a1",
+      "pid": 225881,
+      "process_identity": "225881 (timeout) R 225784 225784 225784 0 -1 4194304 15 0 0 0 0 0 0 0 16 -4 1 0 4477877 532480 43 18446744073709551615 93936515121152 93936515159057 140730004590160 0 0 0 0 0 0 0 0 0 17 2 0 0 0 0 0 93936515176944 93936515179080 93936667422720 140730004594063 140730004594248 140730004594248 140730004598759 0\n",
+      "receipt": "verification/agones/runs/feature-query-case-000-error-kani-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "99bd8001b8688417f7867a570896e75ded3ee68cdacf91498837568cb11a0721",
+      "started_at": "2026-10-18T16:05:09.765532+00:00",
       "status": "FAILED"
     },
     {
@@ -2002,6 +2868,31 @@
     {
       "attempt": 1,
       "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--offline",
+        "-p",
+        "agones-core",
+        "--lib",
+        "features::"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:21:12.149136+00:00",
+      "log": "verification/agones/runs/go-quote-core-implementation-1.log",
+      "owner_token": "b8447cd07c0ecd9fc6415577804b3b81",
+      "pid": 198384,
+      "process_identity": "198384 (cargo) R 198360 198360 198360 0 -1 4194304 16 0 0 0 0 0 0 0 12 -8 1 0 4213717 11849728 32 18446744073709551615 94403409811136 94403418439808 140733936119312 0 0 0 0 0 0 0 0 0 17 3 0 0 0 0 0 94403418945336 94403418962596 94404466712576 140733936127500 140733936127562 140733936127562 140733936132073 0\n",
+      "receipt": "verification/agones/runs/go-quote-core-implementation-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "cbd62738a7e01186f59bfc85bc68b30566f9984e481b94ca04c84e7bb0809d47",
+      "started_at": "2026-10-18T15:21:08.202326+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
         "env",
         "CARGO_BUILD_JOBS=4",
         "cargo",
@@ -2040,6 +2931,27 @@
       "resource_usage": "unknown; run timing and exit state are retained",
       "source_binding_sha256": "3af6b54aa3dd8031fc1070e3499b78c31cdf2649ba1efb2df6c99aa012af09f4",
       "started_at": "2026-10-18T13:57:01.754974+00:00",
+      "status": "PASSED"
+    },
+    {
+      "attempt": 1,
+      "command": [
+        "go",
+        "run",
+        "-mod=vendor",
+        "build/scripts/agones-rs/probes/quote_ascii_reference.go"
+      ],
+      "cwd": "/home/astral/Projects/agones",
+      "exit_code": 0,
+      "finished_at": "2026-10-18T15:41:19.120771+00:00",
+      "log": "verification/agones/runs/quote-ascii-go-reference-1.log",
+      "owner_token": "f72d658afc51750534f2a86672b1bbe4",
+      "pid": 207793,
+      "process_identity": "207793 (go) R 207769 207769 207769 0 -1 4194304 5 0 0 0 0 0 0 0 12 -8 1 0 4334783 49881088 0 18446744073709551615 4194304 12063601 140731799492416 0 0 0 0 0 0 0 0 0 17 3 0 0 0 0 0 19611648 20058714 165560320 140731799494146 140731799494221 140731799494221 140731799498732 0\n",
+      "receipt": "verification/agones/runs/quote-ascii-go-reference-1.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "d1d2153aadab56ad8668d896c8f85b031b69e07cd547a50c7073b99d0d47bc4f",
+      "started_at": "2026-10-18T15:41:18.844944+00:00",
       "status": "PASSED"
     },
     {
@@ -2372,8 +3284,8 @@
     }
   ],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 38,
-  "previous_sha256": "2a37f52fa057c5c9fb0021f2e13221faa3f5fa4460b4a8ee28703910dc57b38b",
+  "previous_revision": 56,
+  "previous_sha256": "b10bd72df742812854d1eba6667269ab47afb67b36c84dfba127354fc112f9e7",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -2471,46 +3383,118 @@
       "observed_new_repetition": "Production FeatureGateInputContext, captured input tests and source-IR input context repeat getter/delegation wiring, but existing CGP macros already own it. Qualified provider paths need their component type in scope; the explicit import was sufficient here. Existing AgonesApiResource expansion remains the next concrete cross-crate hygiene candidate, using its current proc_macro2/Syn expansion core rather than a parallel generator.",
       "rationale": "The added process/captured contexts reuse the same CGP input/query providers; four short constructors remain clear direct wiring. Reuse pinned Genco for exact typed actions, IDs, witnesses and fixed-case harnesses, and one shared strict result parser for existing boolean and new input/query evidence. The concrete standard-container expansion motivated one small private sorted-entry refactor, fully checked in production. The query proof still times out in formatting/allocation; stop representation/framework expansion and return to the concrete error-rendering feature. No macro aliases, ordinary derives or passed CGP composition tests satisfy _2 authoring/ergonomic cells.",
       "roi": "Building same-logical-crate compiler staging now would add Cargo/IDE, diagnostic and maintenance work beyond the few declarations it removes. The small Genco emitter directly generated 17 existing source assertion identities and five required proof cases. Keep its scope bounded; do not fund a general compiler or proof framework from the required final architecture label."
+    },
+    {
+      "candidate": "Pinned Go strconv quoting and printable-rune data, emitted through the existing Genco example.",
+      "decision": "REUSE_EXISTING",
+      "feature": "FG-ERROR-001",
+      "id": "FG-ERROR-001-production-table-reuse",
+      "next_review_trigger": "FG-ERROR-001 implementation gate; review the actual renderer/table code and resume the pending fixed query cases only with a changed formatter closure.",
+      "rationale": "Rust Debug/lossy decoding does not preserve Go raw-byte escapes or Go Unicode printability. Reuse the installed pinned Go strconv.IsPrint and compare it with the independent Unicode category definition while compiling production range data. Extend the existing Genco emitter with one production-table mode and share its formatting helper; no macro or general quote/codegen framework. The table is an immediate implementation dependency, not test-obligation extraction.",
+      "roi": "A small fixed data compiler avoids manually maintaining hundreds of Unicode ranges and avoids a new Unicode-version dependency. Exact data and ordinary all-scalar comparison remove repeated future quoting/Unicode reasoning. Stop at feature error rendering; the required _2 architecture cells remain open.",
+      "scope": "One production Go string-quoting helper, a deterministic print-table compiler, the existing Genco emitter, source/license provenance and ordinary implementation checks. New error-specific semantic properties wait for the completed implementation gate."
+    },
+    {
+      "architecture_status": "All eight C3 form/location cells remain REQUIRED_OPEN. Existing CGP, Genco and ordinary proc-macro uses provide no _2 completion credit.",
+      "candidate": "Go quote renderer, generated Unicode ranges, error boundary wiring and three independently checked property families.",
+      "decision": "REUSE_EXISTING",
+      "feature_binding": "verification/agones/gates/d32a14a31007659a00ca450455e29f2279967330b6dac1aa6615c322aadd72d6.json",
+      "id": "FG-ERROR-001-post-gate-review",
+      "next_economical_adoption": "At the next public API/resource feature, test AgonesApiResource through an aliased downstream core dependency, reuse its existing proc_macro2 expansion, and reassess a narrow derive_2 authoring bridge. Reassess function-like, attribute and delegation forms against actual repeated declarations at that milestone.",
+      "next_review_trigger": "Next public API/resource milestone or new repeated CGP/provider/property plumbing, whichever comes first; continue Agones production features while required proof debt remains visible.",
+      "rationale": "The actual production formatter now uses one byte-preserving helper and the existing Genco emitter for its pinned table. Four consumer paths use the same CGP loader/error boundary. Keep seven short variant writes and nine explicit branch covers readable. The existing strict result parser already supports exact per-property statuses; extend only its feature selection. No repeated compiler staging or new general forwarding requirement appears in these changed paths.",
+      "reviewed_paths": [
+        "crates/agones-core/src/go_quote.rs",
+        "crates/agones-core/src/features.rs",
+        "crates/agones-rusternetes/examples/feature_case_codegen.rs",
+        "crates/agones-core/tests/feature_error_ascii_domain.rs",
+        "build/scripts/agones-rs/summarize_feature_proof.py"
+      ],
+      "roi": "Extending the existing Genco mode and parser is cheaper to maintain than a second generator or proof framework. The 741 fixed data ranges are automatically emitted; handwritten range data or new Unicode dependencies would duplicate pinned Go semantics. Same-logical-crate macro staging would add build/IDE/packaging cost beyond these few declarations; retain that required architecture work for a concrete authoring adoption."
     }
   ],
-  "revision": 39,
+  "revision": 57,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [
     {
       "dependencies": [
-        "FG-CONFIG-001 implementation gate"
+        "Existing canonical GameServer/Fleet types and Rusternetes Pod builder; independent of retained feature-gate formal debt"
+      ],
+      "disposition": "READY",
+      "evidence_refs": [],
+      "feature_ids": [
+        "source-sdk-version-annotation-policy"
+      ],
+      "id": "SDK-VERSION-001",
+      "implementation_gate": null,
+      "next_action": "Verify the renderer checkpoint on existing draft PR 92, then implement the complete source SDK version annotation policy through shared CGP configuration across GameServer, Fleet and actual Rusternetes Pod paths. Gate ordinary behavior before extracting new version properties. Retain all feature-gate formal debt and review its finite-loop diagnosis after the version gate.",
+      "owned_paths": [
+        "crates/agones-core/src/gameserver.rs",
+        "crates/agones-core/src/fleet.rs",
+        "crates/agones-rusternetes/src/lib.rs"
+      ],
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-04",
+        "REQ-05",
+        "REQ-08",
+        "REQ-09"
+      ],
+      "source_config_binding": {
+        "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+        "files": {
+          "pkg/apis/agones/v1/fleet.go": "52ff0dd6d1b3f8ac7feed3ba35356c16434a8ca77f531eff3434cb3ad25f0e28",
+          "pkg/apis/agones/v1/gameserver.go": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
+          "pkg/version.go": "18a321dd868bdf897742490dde06040a35be996dbef93f4aae7ebd855c85842d"
+        },
+        "implementation_order": "Reuse core CGP getters/providers and current domain/adapter algorithms; no new macro/compiler framework. This is metadata-only discovery, with source obligations retained in the baseline census for post-gate extraction.",
+        "next_refactoring_review": "At this public API/resource milestone, assess the existing resource derive through an aliased downstream path and the smallest justified _2 adoption, retaining all eight C3 cells.",
+        "observed_gap": "Original pkg.Version defaults to dev and is assigned to GameServer, Fleet and Pod SDK annotations. Rust uses Cargo package version 0.1.0, and its Pod builder inherits a preexisting GameServer annotation. The selected source policy must use one configured version identity and preserve source overwrite behavior.",
+        "remaining_scope": "Command logging, sidecar image command defaults, full build/package lifecycle and all other original surfaces remain separately required; this annotation policy cannot certify those consumers."
+      },
+      "stage": "DISCOVERED",
+      "test_ids": []
+    },
+    {
+      "dependencies": [
+        "FG-CONFIG-001 query policy",
+        "FG-INPUT-001 production configuration"
       ],
       "disposition": "READY",
       "evidence_refs": [
-        "verification/agones/feature-input-evidence.json"
+        "verification/agones/feature-error-evidence.json"
       ],
       "feature_ids": [
-        "feature-gates-environment-cli-binding"
+        "source-compatible-feature-gate-error-rendering"
       ],
-      "id": "FG-INPUT-001",
-      "implementation_gate": "verification/agones/gates/27be8ae70aa3bbfa59bf0bdc624ab4bbac4a75dd61ad9d36ede06e97e778411e.json",
-      "next_action": "Publish the current implementation/evidence checkpoint to existing draft PR 92 and verify its new head. Then implement FG-ERROR-001 before resuming the diagnosed exact-case campaign. Five original input assertions remain required formal work; the separate pure input-selector proof has three successful claims and ten covers.",
+      "id": "FG-ERROR-001",
+      "implementation_gate": "verification/agones/gates/7521004810eacf56130b4cd9e4ac989e28a8426b647e8b9bb666fdeb8d84e016.json",
+      "next_action": "Publish the implemented renderer, ordinary replay and full failed diagnostics to draft PR 92. Keep all error/source proofs required and start SDK-VERSION-001 production work next; revisit bounded loop/UTF-8 proof structure after its implementation gate.",
       "owned_paths": [
-        "crates/agones-core/src/features.rs",
-        "crates/agones-rusternetes/src/creating_gameserver_controller.rs",
-        "crates/agones-rusternetes/src/fleetautoscaler_controller.rs"
+        "crates/agones-core/src/features.rs"
       ],
       "requirement_ids": [
         "REQ-04",
-        "REQ-05",
         "REQ-08",
         "REQ-09",
         "REQ-10"
       ],
       "source_config_binding": {
         "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+        "economics": "Use ordinary Rust helpers and existing Genco only if a concrete production data table is necessary. No generalized quote/compiler/proof framework. The formatter is a real observable parity gap and also an identified dependency of the retained exact-case proof.",
+        "gap": "Current Display uses Rust Debug/lossy Unicode for some raw-byte errors and does not match Go invalid-escape text. Exact application fatal/logging policy remains separate lifecycle work.",
+        "implementation_order": "Inspect the pinned source helpers, implement complete source-compatible error rendering through the current CGP error result boundary, test actual Go/Rust observations and ordinary consumers, and record a gate before new error-specific semantic obligation extraction. Preserve source/licensing/tool provenance if adapting standard-library tables or algorithms.",
         "source": "pkg/util/runtime/features.go",
-        "test": "pkg/util/runtime/features_test.go"
+        "source_helpers": [
+          "Go net/url EscapeError",
+          "Go strconv ParseBool/NumError",
+          "Go fmt/strconv quoted string rendering"
+        ]
       },
       "stage": "VERIFYING",
       "test_ids": [
-        "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+        "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate::line-41"
       ]
     },
     {
@@ -2525,8 +3509,8 @@
         "feature-gates-configuration"
       ],
       "id": "FG-CONFIG-001",
-      "implementation_gate": "verification/agones/gates/404a070990057a389cf4f67966cf38e7e52d437a114d3064f08e7aa911e14214.json",
-      "next_action": "Keep all 17 exact query assertions required; resume the diagnosed formatter proof after FG-ERROR-001. The production query feature, refreshed helper proof, runtime source replay and four Go/Rust traces are current.",
+      "implementation_gate": "verification/agones/gates/2d4372c73bfb9b9b1e3eda11df5aa77f3b2673fb341b66c551b6a5b159506164.json",
+      "next_action": "Run the changed-formatter exact source case 000 once with its original assertion, unwind checks and both covers. Retain any failure and continue production features without identical retries.",
       "owned_paths": [
         "crates/agones-core/src/features.rs",
         "crates/agones-rusternetes/src/creating_gameserver_controller.rs",
@@ -2552,55 +3536,52 @@
     },
     {
       "dependencies": [
-        "FG-CONFIG-001 query policy",
-        "FG-INPUT-001 production configuration"
+        "FG-CONFIG-001 implementation gate"
       ],
       "disposition": "READY",
-      "evidence_refs": [],
-      "feature_ids": [
-        "source-compatible-feature-gate-error-rendering"
+      "evidence_refs": [
+        "verification/agones/feature-input-evidence.json"
       ],
-      "id": "FG-ERROR-001",
-      "implementation_gate": null,
-      "next_action": "Implement exact Go-compatible feature error rendering for raw keys/values, percent escapes and Unicode at the existing production error boundary; ordinarily validate and gate before extracting new obligations. Keep all 17 existing query assertions and five input assertions required.",
+      "feature_ids": [
+        "feature-gates-environment-cli-binding"
+      ],
+      "id": "FG-INPUT-001",
+      "implementation_gate": "verification/agones/gates/5f50d814a8ddee6266493cba9bee950422d9e31d6e969ffbdaf286cac351c02d.json",
+      "next_action": "Publish the current implementation/evidence checkpoint to existing draft PR 92 and verify its new head. Then implement FG-ERROR-001 before resuming the diagnosed exact-case campaign. Five original input assertions remain required formal work; the separate pure input-selector proof has three successful claims and ten covers.",
       "owned_paths": [
-        "crates/agones-core/src/features.rs"
+        "crates/agones-core/src/features.rs",
+        "crates/agones-rusternetes/src/creating_gameserver_controller.rs",
+        "crates/agones-rusternetes/src/fleetautoscaler_controller.rs"
       ],
       "requirement_ids": [
         "REQ-04",
+        "REQ-05",
         "REQ-08",
         "REQ-09",
         "REQ-10"
       ],
       "source_config_binding": {
         "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
-        "economics": "Use ordinary Rust helpers and existing Genco only if a concrete production data table is necessary. No generalized quote/compiler/proof framework. The formatter is a real observable parity gap and also an identified dependency of the retained exact-case proof.",
-        "gap": "Current Display uses Rust Debug/lossy Unicode for some raw-byte errors and does not match Go invalid-escape text. Exact application fatal/logging policy remains separate lifecycle work.",
-        "implementation_order": "Inspect the pinned source helpers, implement complete source-compatible error rendering through the current CGP error result boundary, test actual Go/Rust observations and ordinary consumers, and record a gate before new error-specific semantic obligation extraction. Preserve source/licensing/tool provenance if adapting standard-library tables or algorithms.",
         "source": "pkg/util/runtime/features.go",
-        "source_helpers": [
-          "Go net/url EscapeError",
-          "Go strconv ParseBool/NumError",
-          "Go fmt/strconv quoted string rendering"
-        ]
+        "test": "pkg/util/runtime/features_test.go"
       },
-      "stage": "DISCOVERED",
+      "stage": "IMPLEMENTED",
       "test_ids": [
-        "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate::line-41"
+        "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
       ]
     }
   ],
   "workspace": {
     "branch": "agones-rs-dev",
-    "dirty_patch_sha256": "b602165c4f3b314bb6bdf3769478edb80eb496252645775852e164762097157f",
-    "head": "8c7e12706f7c1f9586409b15014a17ad7194b7b4",
-    "last_validated_implementation": "verification/agones/gates/27be8ae70aa3bbfa59bf0bdc624ab4bbac4a75dd61ad9d36ede06e97e778411e.json",
+    "dirty_patch_sha256": "50bc6122684114a2af0ca84d79a1e057d2bebdffd2a86517cf1bae272ec95f30",
+    "head": "6909f07ac5cb08b1af78b251e26ac17342cef933",
+    "last_validated_implementation": "verification/agones/gates/7521004810eacf56130b4cd9e4ac989e28a8426b647e8b9bb666fdeb8d84e016.json",
     "path": "/home/astral/Projects/agones",
-    "source_binding_receipt": "verification/agones/runs/feature-config-input-final-runtime-1.json",
+    "source_binding_receipt": "verification/agones/runs/error-metric-query-generation-check-1.json",
     "untracked_inputs": [
       "AGONES_RS_CONTINUATION_PROMPT.md",
       "AGONES_RS_PROMPT_AUDIT_RESOLUTION.md"
     ],
-    "untracked_source_binding_sha256": "6c70c1edd90956bfb068107c132c94d9e53b69f1cea78f5a9bfa4e008d9df206"
+    "untracked_source_binding_sha256": "802b620b30d6f8e8614a42dbf0d77fabd6f8fab1895557dab006a90fb7699c59"
   }
 }

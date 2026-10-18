@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "query_renderer_gate_refreshed",
+  "gate_snapshot": "verification/agones/gates/a017fd01f21c9d81e178ed84fa0fa37f54515d408b465b254ab0fef477165884.json",
+  "predecessor_revision": 48,
+  "predecessor_sha256": "0f8a2cd67e0dc47ff8d271473bd9201d0db73a98bdff55108b1a04e4c525734b",
+  "reason": "New renderer closure passes ordinary checks; source case contents and all 17 assertions are preserved. Reused boolean proof has an unchanged exact production function/semantic closure and revalidated complete results.",
+  "result_revision": 49,
+  "schema_version": 1,
+  "state_sha256": "7b0aebc1d1fd5093131864b6c3f078fd7c54a46f1c3f059035942c15395cda97",
+  "timestamp": "2026-10-18T16:03:59.981156+00:00"
+}

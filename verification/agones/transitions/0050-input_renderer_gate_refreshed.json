@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ],
+  "authorization": "User execution contract",
+  "event": "input_renderer_gate_refreshed",
+  "gate_snapshot": "verification/agones/gates/b13f0a9e209e7b5addd86c9892919b391eb85950d478f0ef3fceb03070e0aec5.json",
+  "predecessor_revision": 49,
+  "predecessor_sha256": "7b0aebc1d1fd5093131864b6c3f078fd7c54a46f1c3f059035942c15395cda97",
+  "reason": "Production error boundary and process consumers pass ordinary checks. The pure input selector proof is reused only after unchanged code/harness/lock closure and metadata-only license change are checked.",
+  "result_revision": 50,
+  "schema_version": 1,
+  "state_sha256": "4def1a7e71564f72e3222270023b9d4b08e8381de38db2545d3042269434d34b",
+  "timestamp": "2026-10-18T16:04:00.199203+00:00"
+}

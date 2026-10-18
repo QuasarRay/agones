@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ],
+  "authorization": "User execution contract",
+  "event": "INPUT_ERROR_BINDING_REOPENED",
+  "gate_snapshot": "verification/agones/gates/27be8ae70aa3bbfa59bf0bdc624ab4bbac4a75dd61ad9d36ede06e97e778411e.json",
+  "predecessor_revision": 41,
+  "predecessor_sha256": "176b459c3c1b30da63f300749aa7429a386353afda414f19d7651f0c8f373d34",
+  "reason": "The input loader returns the shared feature errors, so its source binding will change with the renderer. Preserve the unchanged input selector proof as a separately bound pure component.",
+  "result_revision": 42,
+  "schema_version": 1,
+  "state_sha256": "fb424354a963d5cc699f14685a12ebb0c16d2b17541735ebc6f5f66a9694ddac",
+  "timestamp": "2026-10-18T15:16:06.170352+00:00"
+}

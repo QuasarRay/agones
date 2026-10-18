@@ -1,0 +1,73 @@
+{
+  "bounds": {
+    "max_input_bytes": 2,
+    "max_output_bytes": 10,
+    "u8_bits": 8,
+    "unwind": 16,
+    "usize_bits": 64
+  },
+  "classification": "SOURCE_CONTRACT_PROPERTY",
+  "concrete_reference": {
+    "count": 16513,
+    "path": "verification/agones/go-quote-ascii-reference.json",
+    "scope": "Every ASCII string of length 0..2; original Go observations are independently checked against the token relation.",
+    "sha256": "9069ce470ea4b27286f3ace25f0a23dbcd046a858ff43d5bf27f834fec02dab1"
+  },
+  "diagnostics": [
+    {
+      "changed_hypothesis": "Reference std::ascii::EscapeDefault/iterator fold expansion; replace only that reference with fixed Go observations and direct assembly. Domain, invariants, three claims, nine covers and unwind 16 are unchanged.",
+      "result": "TIMEOUT_240_SECONDS_ZERO_PROOF_CREDIT",
+      "run": "verification/agones/runs/error-ascii-bolero-kani-1.json"
+    },
+    {
+      "changed_hypothesis": "Log reaches reference_quote/String allocation paths before completing symbolic execution. Keep the same control table but use a ten-byte fixed reference output buffer, exactly the declared maximum for two ASCII bytes. Actual production String implementation, domain, three semantic claims, nine covers and unwind 16 stay unchanged.",
+      "result": "TIMEOUT_240_SECONDS_ZERO_PROOF_CREDIT",
+      "run": "verification/agones/runs/error-ascii-bolero-kani-2.json"
+    },
+    {
+      "cause_observed": "Fixed reference output removes reference allocation, but global symbolic unwinding still expands reference token loops and actual production decode_scalar/go_is_print/append_hex loops and heap paths. Complete claims/covers are unavailable.",
+      "result": "TIMEOUT_240_SECONDS_ZERO_PROOF_CREDIT",
+      "run": "verification/agones/runs/error-ascii-bolero-kani-3.json"
+    }
+  ],
+  "domain_equivalence": "Both pinned engines generate full u8 array/tag values and apply the identical total ASCII/length projection. Fixed tuple/array generation succeeds within structural depth; no user filters or early success.",
+  "external_source_identity": {
+    "Go standard library strconv/quote.go": "6602960ec8777de9926c1d02fbf5cb0828d4aefa38083865f4af17b6892c09a2"
+  },
+  "feature": "FG-ERROR-001",
+  "harness": "feature_error_ascii_common_domain",
+  "id": "GO-QUOTE-ASCII-LEN0-2-v1",
+  "implementation_gate": "verification/agones/gates/7521004810eacf56130b4cd9e4ac989e28a8426b647e8b9bb666fdeb8d84e016.json",
+  "invariant": "Independent output token scanner requires canonical spelling for each input byte and exact quote/output consumption. Applies independently to actual Go observations, reference, and production.",
+  "next_formal_trigger": "After the SDK-VERSION-001 production gate, review finite UTF-8 width/reference loop constraints and the complete current backend trace; retain the same three assertions, nine covers and full declared domain. No identical retry or source-obligation substitution.",
+  "original_source_assertions_discharged": 0,
+  "preconditions": [],
+  "production_call_sites": [
+    "FeatureGateError::fmt for invalid escape, unknown feature and invalid bool values"
+  ],
+  "production_symbol": "agones_core::quote_feature_error_bytes",
+  "projection": "bytes masked with 0x7f, prefix length tag%3",
+  "raw_type": "([u8;2],u8)",
+  "reference": "Fixed table of 32 source Go control observations and direct ASCII assembly into a ten-byte reference buffer, the declared exact maximum. The reference never calls production quote/UTF-8/Unicode logic. The independent token scanner checks model, actual Go and production separately.",
+  "required_assertions": 3,
+  "required_covers": [
+    "empty ASCII quote input",
+    "maximum modeled ASCII length",
+    "double quote escape",
+    "backslash escape",
+    "apostrophe remains literal",
+    "Go-specific named control escape",
+    "canonical lowercase hex control escape",
+    "printable ASCII remains literal",
+    "the generator should produce at least one valid value"
+  ],
+  "residual": "No generalization to arbitrary lengths, non-ASCII quoting, whole error formatting or process/lifecycle behavior; all existing original source-case proofs remain independently required.",
+  "schema_version": 1,
+  "semantic_bindings": {
+    "crates/agones-core/src/go_quote.rs": "05faad51d54b84e037a100b23d558256290af24125a6ade984ef64e13ac646cf",
+    "crates/agones-core/tests/feature_error_ascii_domain.rs": "fe2e7ef12d49b569fdf8987133c05b1d4c24a77bbd928c09b1330f0c9a2b6859",
+    "verification/agones/go-quote-ascii-reference.json": "9069ce470ea4b27286f3ace25f0a23dbcd046a858ff43d5bf27f834fec02dab1"
+  },
+  "source_contract": "Go strconv.Quote/appendEscapedRune: canonical double-quoted literal; printable ASCII is literal except double quote/backslash; seven named control escapes; other controls/DEL use lowercase two-digit hex.",
+  "status": "REQUIRED_BOUNDED_PROOF_DEFERRED_WITH_DIAGNOSIS"
+}

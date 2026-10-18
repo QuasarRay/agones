@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate::line-41"
+  ],
+  "authorization": "User execution contract",
+  "event": "ERROR_RENDERING_IMPLEMENTATION_STARTED",
+  "gate_snapshot": null,
+  "predecessor_revision": 42,
+  "predecessor_sha256": "fb424354a963d5cc699f14685a12ebb0c16d2b17541735ebc6f5f66a9694ddac",
+  "reason": "Implement complete Go-compatible feature error text through the existing CGP parser result boundary. No new error-specific source-test extraction or formal property construction occurs before the implementation gate.",
+  "result_revision": 43,
+  "schema_version": 1,
+  "state_sha256": "1f6666c8aca369e65bc2e9b445239aa4279512d795a90b0f81965ded6f34284f",
+  "timestamp": "2026-10-18T15:16:06.350196+00:00"
+}

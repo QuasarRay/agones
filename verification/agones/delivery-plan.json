@@ -1,5 +1,5 @@
 {
-  "acceptance": "The production query and input policies are implemented with 530 unique ordinary tests validated and two bounded helper/policy proofs. All 22 original source assertions retain required formal work; query timeouts count as zero. New input changes have not yet received CI at a new published head. Full migration and all eight _2 cells remain open.",
+  "acceptance": "The new error-renderer implementation checkpoint is ready locally; its future published head still requires exact-head CI. Earlier CI results apply only to their recorded heads. All 22 original source assertions and the three-claim/nine-cover ASCII helper proof remain required formal work after retained timeouts. Full migration, all eight _2 cells and lifecycle/cluster conformance remain incomplete.",
   "checks": [
     {
       "cause": "Guidance existed locally at build/local-includes/AGENTS.MD but was ignored by Git and absent from clean CI checkout.",
@@ -29,33 +29,38 @@
       },
       "status": "PASSED",
       "workflow_run": 39131256675
+    },
+    {
+      "evidence": "verification/agones/ci/39137887160-success.json",
+      "head": "6909f07ac5cb08b1af78b251e26ac17342cef933",
+      "merge_result_tested": "5ccce76b2f56e8d5c83e9dcc301881e6ac239145",
+      "observed_results": {
+        "feature-bool-model-check": "PASSED",
+        "migration-state": "PASSED",
+        "rust": "PASSED"
+      },
+      "status": "PASSED",
+      "workflow_run": 39137887160
     }
   ],
   "expected_base": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
-  "expected_head": "024e6fc06dc60cfc6d839b76f6e5504aa4413dba",
+  "expected_head": "6909f07ac5cb08b1af78b251e26ac17342cef933",
   "integration_branch": "agones-rs-dev",
-  "pending_publication": {
-    "local_checkpoint": "8c7e12706f7c1f9586409b15014a17ad7194b7b4",
-    "parent": "024e6fc06dc60cfc6d839b76f6e5504aa4413dba",
-    "recovery": "verification/agones/publication-bridge.json",
-    "scope": "CGP process input policy, source-case IR/runtime mapping, deterministic Genco harnesses, production sorted-entry storage and strict result controls.",
-    "target_branch": "codex/agones-feature-gates-001"
-  },
   "pull_requests": [
     {
       "draft": true,
-      "head": "024e6fc06dc60cfc6d839b76f6e5504aa4413dba",
+      "head": "6909f07ac5cb08b1af78b251e26ac17342cef933",
       "merged": false,
       "number": 92,
       "url": "https://github.com/QuasarRay/agones/pull/92"
     }
   ],
-  "remote_result": "LOCAL_INPUT_CHECKPOINT_PENDING_PUBLICATION",
+  "remote_result": "LOCAL_ERROR_CHECKPOINT_READY_FOR_PUBLICATION",
   "required_checks": [
     "migration-state",
     "rust",
     "feature-bool-model-check"
   ],
   "review_branch": "codex/agones-feature-gates-001",
-  "visible_checkout": "agones-rs-dev@8c7e12706f7c1f9586409b15014a17ad7194b7b4"
+  "visible_checkout": "agones-rs-dev@6909f07ac5cb08b1af78b251e26ac17342cef933"
 }

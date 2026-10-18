@@ -1,0 +1,23 @@
+{
+  "assurance": "Production data and ordinary independent category validation only; no test-obligation extraction or formal proof credit.",
+  "generator": "crates/agones-rusternetes/examples/feature_case_codegen.rs",
+  "generator_sha256": "cd17987afbc1a1f7fc585d55a9d0a2909f04704c1fc6049834f386036874552a",
+  "go_source_hashes": {
+    "VERSION": "25eb74b09036e1ad894fb63b86cb0f0ee53342df8d2e2e860da4ff5079607758",
+    "src/net/url/url.go": "44c33f88526abf3b5955d6c97297be5c9d228e741b33e52c940dcac5a496e091",
+    "src/strconv/isprint.go": "e6f4b35fbf38f9c9c8b251e5d3cf94daa880789cb89825f11f9734ba4a42e9ff",
+    "src/strconv/number.go": "dda43e8c91d95f9dea0c46b2fec6637e5520cae099e40c5965dca0e41bbaab9e",
+    "src/strconv/quote.go": "6602960ec8777de9926c1d02fbf5cb0828d4aefa38083865f4af17b6892c09a2",
+    "src/unicode/letter.go": "b35a6d259313cef88d07e9e4027b8bd72c60ae140418f5be2c41a2ecea6074fe",
+    "src/unicode/tables.go": "ac0e5d5d1b58ed4b02d7cb4a0085bdefbdb4f7aae6fadddbc9477f8463da8bd8",
+    "src/unicode/utf8/utf8.go": "3c145ee25fd7631ebbc670fd1236e8c163ca30ae8913c796489efbf3f267ad54"
+  },
+  "independent_category_bitmap_sha256": "a30b1e23aa8a5d77ecaea1b9dd5c85e2d505cb2712b1906996c82089fa5117fc",
+  "input": "verification/agones/go-print-table.json",
+  "input_sha256": "710dcd074ff09faafc79c0b8e06a5c83eb8a37beb0e1ee45d42a9556c930ef9d",
+  "output": "crates/agones-core/src/generated/go_print_ranges.rs",
+  "output_sha256": "0b0dc1a240c33ca0e01d718f5120a0d5bd894e15740b4cf3888824a0a7e84a0b",
+  "purpose": "PRODUCTION_DATA_COMPILATION",
+  "range_count": 741,
+  "schema_version": 1
+}

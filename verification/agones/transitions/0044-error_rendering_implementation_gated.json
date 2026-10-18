@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate::line-41"
+  ],
+  "authorization": "User execution contract",
+  "event": "ERROR_RENDERING_IMPLEMENTATION_GATED",
+  "gate_snapshot": "verification/agones/gates/d32a14a31007659a00ca450455e29f2279967330b6dac1aa6615c322aadd72d6.json",
+  "predecessor_revision": 43,
+  "predecessor_sha256": "1f6666c8aca369e65bc2e9b445239aa4279512d795a90b0f81965ded6f34284f",
+  "reason": "534 workspace tests and the all-target check pass. Go and production Rust independently match nineteen full error strings; all codepoint classifications and valid scalar decodes pass ordinary checks. Original prefix and BSD provenance are retained. No new semantic extraction/formal result is credited before this gate.",
+  "result_revision": 44,
+  "schema_version": 1,
+  "state_sha256": "11ee7bc3662d296025b3bd307f34727f0a0e50eee7baad874f0a2dc01819d8a0",
+  "timestamp": "2026-10-18T15:35:35.863941+00:00"
+}

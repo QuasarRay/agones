@@ -1,0 +1,45 @@
+{
+  "adaptation": "Raw-byte UTF-8 decoding and quoting in ordinary Rust; source Go printability compiled to sorted disjoint ranges through the existing pinned Genco emitter. No cfg(kani) replacement. The reference package-scoped error prefix is preserved.",
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "copyright_notices": [
+    "Copyright 2009 The Go Authors. All rights reserved.",
+    "Copyright 2013 The Go Authors. All rights reserved."
+  ],
+  "feature": "FG-ERROR-001",
+  "go_std_source_hashes": {
+    "VERSION": "25eb74b09036e1ad894fb63b86cb0f0ee53342df8d2e2e860da4ff5079607758",
+    "src/net/url/url.go": "44c33f88526abf3b5955d6c97297be5c9d228e741b33e52c940dcac5a496e091",
+    "src/strconv/isprint.go": "e6f4b35fbf38f9c9c8b251e5d3cf94daa880789cb89825f11f9734ba4a42e9ff",
+    "src/strconv/number.go": "dda43e8c91d95f9dea0c46b2fec6637e5520cae099e40c5965dca0e41bbaab9e",
+    "src/strconv/quote.go": "6602960ec8777de9926c1d02fbf5cb0828d4aefa38083865f4af17b6892c09a2",
+    "src/unicode/letter.go": "b35a6d259313cef88d07e9e4027b8bd72c60ae140418f5be2c41a2ecea6074fe",
+    "src/unicode/tables.go": "ac0e5d5d1b58ed4b02d7cb4a0085bdefbdb4f7aae6fadddbc9477f8463da8bd8",
+    "src/unicode/utf8/utf8.go": "3c145ee25fd7631ebbc670fd1236e8c163ca30ae8913c796489efbf3f267ad54"
+  },
+  "go_version": "go1.27.1-X:nodwarf5",
+  "license": "crates/agones-core/GO-STRCONV-LICENSE",
+  "license_sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+  "ordinary_codepoint_count": 1114112,
+  "ordinary_nonascii_two_byte_decode_inputs": 32768,
+  "ordinary_nonascii_valid_scalar_decode_count": 1111936,
+  "original_source_bindings": {
+    "pkg/util/errors/errors.go": "b9b811509cc02053ce498cf012a58ea6fabb44d6fbf69e355d39baf0504dbc29",
+    "pkg/util/runtime/features.go": "05736b26646cf219419626dfca37c4f533302b178ca3bb542330cf7884ddc679",
+    "pkg/util/runtime/runtime.go": "d1683d9c5931891d59ae46cbfdbce13b45d2836355097e7e1bd24fd30200271a"
+  },
+  "post_gate_ascii_domain_witnesses": 16513,
+  "post_gate_ascii_single_byte_witnesses": 128,
+  "production_compiler": "build/scripts/agones-rs/probes/compile_go_print_table.go",
+  "production_compiler_sha256": "2fdf7febec851e457e8258683c8579dcf39736bd6ce6b8d82a27866b990542c4",
+  "reuse": "ADAPT_SOURCE_ALGORITHM_AND_COMPILE_SOURCE_DATA",
+  "schema_version": 1,
+  "source_symbols": [
+    "strconv.Quote/appendQuotedWith/appendEscapedRune/IsPrint",
+    "unicode/utf8.DecodeRuneInString semantics",
+    "strconv.NumError.Error",
+    "net/url.EscapeError.Error",
+    "pkg/util/errors.Errors.prefix/Errorf/Wrapf"
+  ],
+  "unicode_version": "17.0.0",
+  "validation": "Ordinary full-codepoint category check, all 1111936 valid non-ASCII scalar UTF-8 decodes, 32768 non-ASCII-leading two-byte inputs and boundary witnesses, nineteen independently expected Go/Rust full error strings, and configured consumer error paths preceded the initial gate. The later ASCII property corpus independently checks all 16513 ASCII strings of length zero to two, including all 128 single bytes; it is ordinary evidence and not formal proof. Current metadata correction gates bind both sets without rerunning unchanged production checks."
+}

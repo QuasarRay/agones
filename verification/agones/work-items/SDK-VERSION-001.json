@@ -1,0 +1,39 @@
+{
+  "dependencies": [
+    "Existing canonical GameServer/Fleet types and Rusternetes Pod builder; independent of retained feature-gate formal debt"
+  ],
+  "disposition": "READY",
+  "evidence_refs": [],
+  "feature_ids": [
+    "source-sdk-version-annotation-policy"
+  ],
+  "id": "SDK-VERSION-001",
+  "implementation_gate": null,
+  "next_action": "Implement the complete source version annotation policy through a shared CGP version capability for GameServer/Fleet defaulting and actual Rusternetes Pod construction. Preserve configurable build identity, empty/custom values and source overwrite rules. Run ordinary checks and record a gate before extracting new version-specific semantic properties.",
+  "owned_paths": [
+    "crates/agones-core/src/gameserver.rs",
+    "crates/agones-core/src/fleet.rs",
+    "crates/agones-rusternetes/src/lib.rs"
+  ],
+  "requirement_ids": [
+    "REQ-02",
+    "REQ-04",
+    "REQ-05",
+    "REQ-08",
+    "REQ-09"
+  ],
+  "source_config_binding": {
+    "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "files": {
+      "pkg/apis/agones/v1/fleet.go": "52ff0dd6d1b3f8ac7feed3ba35356c16434a8ca77f531eff3434cb3ad25f0e28",
+      "pkg/apis/agones/v1/gameserver.go": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
+      "pkg/version.go": "18a321dd868bdf897742490dde06040a35be996dbef93f4aae7ebd855c85842d"
+    },
+    "implementation_order": "Reuse core CGP getters/providers and current domain/adapter algorithms; no new macro/compiler framework. This is metadata-only discovery, with source obligations retained in the baseline census for post-gate extraction.",
+    "next_refactoring_review": "At this public API/resource milestone, assess the existing resource derive through an aliased downstream path and the smallest justified _2 adoption, retaining all eight C3 cells.",
+    "observed_gap": "Original pkg.Version defaults to dev and is assigned to GameServer, Fleet and Pod SDK annotations. Rust uses Cargo package version 0.1.0, and its Pod builder inherits a preexisting GameServer annotation. The selected source policy must use one configured version identity and preserve source overwrite behavior.",
+    "remaining_scope": "Command logging, sidecar image command defaults, full build/package lifecycle and all other original surfaces remain separately required; this annotation policy cannot certify those consumers."
+  },
+  "stage": "DISCOVERED",
+  "test_ids": []
+}

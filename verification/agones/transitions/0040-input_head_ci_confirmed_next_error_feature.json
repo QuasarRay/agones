@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate::line-41"
+  ],
+  "authorization": "User execution contract",
+  "event": "INPUT_HEAD_CI_CONFIRMED_NEXT_ERROR_FEATURE",
+  "gate_snapshot": null,
+  "predecessor_revision": 39,
+  "predecessor_sha256": "574c2b3df2bb5a20782131d92bbba019bf15a6ad4d7f51025d8b2ce02c58944c",
+  "reason": "Published head 6909f07ac and synthetic merge 5ccce76b pass all three CI jobs: 530 tests, generation, strict controls, and the boolean/input bounded proofs. Input and query implementations remain VERIFYING with required original formal assertions open. Preserve the latest valid gate while selecting the next ungated production feature.",
+  "result_revision": 40,
+  "schema_version": 1,
+  "state_sha256": "1caff27a75867b8dafbf6e9f070999f67e1e3ca328a72ec328e128b53cd16be4",
+  "timestamp": "2026-10-18T15:03:26.707638+00:00"
+}

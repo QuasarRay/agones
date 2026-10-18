@@ -1,0 +1,160 @@
+{
+  "acceptance": "The exact source head and synthetic merge pass the declared jobs. All 17 original query assertions and five input assertions retain required formal work; timed-out diagnostics receive zero source-proof credit. The whole migration, all eight _2 cells and full lifecycle/conformance remain incomplete.",
+  "base_head": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "jobs": [
+    {
+      "conclusion": "success",
+      "id": 117706034793,
+      "name": "migration-state",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "id": 117706102339,
+      "name": "rust",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "id": 117706102397,
+      "name": "feature-bool-model-check",
+      "status": "completed"
+    }
+  ],
+  "merge_result_tested": "5ccce76b2f56e8d5c83e9dcc301881e6ac239145",
+  "model": {
+    "artifact_url": "https://github.com/QuasarRay/agones/actions/runs/39137887160/artifacts/12140381981",
+    "boolean": {
+      "claimed_assertions": 3,
+      "harness_count": 1,
+      "property_count": 1158,
+      "required_covers": 6,
+      "status_counts": {
+        "SATISFIED": 6,
+        "SUCCESS": 1141,
+        "UNREACHABLE": 11
+      }
+    },
+    "input": {
+      "claimed_assertions": 3,
+      "harness_count": 1,
+      "property_count": 978,
+      "required_covers": 10,
+      "status_counts": {
+        "SATISFIED": 10,
+        "SUCCESS": 945,
+        "UNREACHABLE": 23
+      }
+    },
+    "supplemental_retention_days": 90,
+    "unreachable_source_obligations_credited": 0
+  },
+  "pull_request": "https://github.com/QuasarRay/agones/pull/92",
+  "rust": {
+    "check": "cargo check --locked --workspace --all-targets",
+    "deterministic_generation": "PASSED; five query cases, 17 assertion identities, input case explicitly outside this formal model.",
+    "failed": 0,
+    "ignored": 3,
+    "ignored_accounting": "One pre-existing macro doctest; two child helper entries run explicitly by their parent tests in eleven nonempty isolated child processes.",
+    "passed": 530,
+    "suites": [
+      {
+        "failed": 0,
+        "filtered_out": 0,
+        "ignored": 0,
+        "measured": 0,
+        "passed": 174
+      },
+      {
+        "failed": 0,
+        "filtered_out": 0,
+        "ignored": 0,
+        "measured": 0,
+        "passed": 2
+      },
+      {
+        "failed": 0,
+        "filtered_out": 0,
+        "ignored": 0,
+        "measured": 0,
+        "passed": 1
+      },
+      {
+        "failed": 0,
+        "filtered_out": 0,
+        "ignored": 1,
+        "measured": 0,
+        "passed": 3
+      },
+      {
+        "failed": 0,
+        "filtered_out": 0,
+        "ignored": 0,
+        "measured": 0,
+        "passed": 7
+      },
+      {
+        "failed": 0,
+        "filtered_out": 0,
+        "ignored": 0,
+        "measured": 0,
+        "passed": 0
+      },
+      {
+        "failed": 0,
+        "filtered_out": 0,
+        "ignored": 0,
+        "measured": 0,
+        "passed": 335
+      },
+      {
+        "failed": 0,
+        "filtered_out": 0,
+        "ignored": 0,
+        "measured": 0,
+        "passed": 6
+      },
+      {
+        "failed": 0,
+        "filtered_out": 0,
+        "ignored": 1,
+        "measured": 0,
+        "passed": 1
+      },
+      {
+        "failed": 0,
+        "filtered_out": 0,
+        "ignored": 0,
+        "measured": 0,
+        "passed": 1
+      },
+      {
+        "failed": 0,
+        "filtered_out": 0,
+        "ignored": 0,
+        "measured": 0,
+        "passed": 0
+      },
+      {
+        "failed": 0,
+        "filtered_out": 0,
+        "ignored": 1,
+        "measured": 0,
+        "passed": 0
+      },
+      {
+        "failed": 0,
+        "filtered_out": 0,
+        "ignored": 0,
+        "measured": 0,
+        "passed": 0
+      }
+    ],
+    "test": "cargo test --locked --workspace"
+  },
+  "schema_version": 1,
+  "source_head": "6909f07ac5cb08b1af78b251e26ac17342cef933",
+  "status": "PASSED",
+  "workflow_run": 39137887160,
+  "workflow_url": "https://github.com/QuasarRay/agones/actions/runs/39137887160"
+}

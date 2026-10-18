@@ -1,0 +1,89 @@
+{
+  "classification": "ORDINARY_IMPLEMENTATION_DIFFERENTIAL_REPLAY",
+  "formal_proof_credit": 0,
+  "go_run": "verification/agones/runs/feature-error-original-go-witnesses-1.json",
+  "observation_relation": "Exact full error string equality, including original package prefix; both actual source Go and production CGP Rust first check independent literal expected results.",
+  "observations": [
+    {
+      "error": "agones.dev/agones/pkg/util/runtime: error parsing query string for feature gates: invalid URL escape \"%\"",
+      "id": "escape-percent"
+    },
+    {
+      "error": "agones.dev/agones/pkg/util/runtime: error parsing query string for feature gates: invalid URL escape \"%A\"",
+      "id": "escape-short"
+    },
+    {
+      "error": "agones.dev/agones/pkg/util/runtime: error parsing query string for feature gates: invalid URL escape \"%GG\"",
+      "id": "escape-invalid"
+    },
+    {
+      "error": "agones.dev/agones/pkg/util/runtime: error parsing query string for feature gates: invalid URL escape \"%\\xff\"",
+      "id": "escape-raw"
+    },
+    {
+      "error": "agones.dev/agones/pkg/util/runtime: error parsing query string for feature gates: invalid semicolon separator in query",
+      "id": "semicolon"
+    },
+    {
+      "error": "agones.dev/agones/pkg/util/runtime: Feature Gate \"Foo\" is not a valid Feature Gate",
+      "id": "key-ascii"
+    },
+    {
+      "error": "agones.dev/agones/pkg/util/runtime: Feature Gate \"\\xff\" is not a valid Feature Gate",
+      "id": "key-invalid-byte"
+    },
+    {
+      "error": "agones.dev/agones/pkg/util/runtime: Feature Gate \"\\x00\\a\" is not a valid Feature Gate",
+      "id": "key-control"
+    },
+    {
+      "error": "agones.dev/agones/pkg/util/runtime: Feature Gate \"\\\"\\\\\" is not a valid Feature Gate",
+      "id": "key-quote-slash"
+    },
+    {
+      "error": "agones.dev/agones/pkg/util/runtime: Feature Gate \"\\u00ad\" is not a valid Feature Gate",
+      "id": "key-soft-hyphen"
+    },
+    {
+      "error": "agones.dev/agones/pkg/util/runtime: Feature Gate \"未知😀\" is not a valid Feature Gate",
+      "id": "key-printable"
+    },
+    {
+      "error": "agones.dev/agones/pkg/util/runtime: Feature Gate \"\\U0010ffff\" is not a valid Feature Gate",
+      "id": "key-max-scalar"
+    },
+    {
+      "error": "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag Example : strconv.ParseBool: parsing \"faLsE\": invalid syntax",
+      "id": "bool-mixed-case"
+    },
+    {
+      "error": "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag Example : strconv.ParseBool: parsing \"\\x00\": invalid syntax",
+      "id": "bool-nul"
+    },
+    {
+      "error": "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag Example : strconv.ParseBool: parsing \"\\xff\": invalid syntax",
+      "id": "bool-invalid-byte"
+    },
+    {
+      "error": "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag Example : strconv.ParseBool: parsing \"\\xe2\\x82\": invalid syntax",
+      "id": "bool-truncated"
+    },
+    {
+      "error": "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag Example : strconv.ParseBool: parsing \"\\xed\\xa0\\x80\": invalid syntax",
+      "id": "bool-surrogate"
+    },
+    {
+      "error": "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag Example : strconv.ParseBool: parsing \"€😀�\": invalid syntax",
+      "id": "bool-printable"
+    },
+    {
+      "error": "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag Example : strconv.ParseBool: parsing \"\\u0085\\u00a0\\u200b\\u2028\\ue000\": invalid syntax",
+      "id": "bool-nonprintable"
+    }
+  ],
+  "original_source_obligation_credit": 0,
+  "rust_run": "verification/agones/runs/feature-error-production-observation-1.json",
+  "schema_version": 1,
+  "witnesses": "verification/agones/feature-error-witnesses.json",
+  "witnesses_sha256": "212f26e3829f4ec31ca3398160ad04706b2567634cb64e3df6e5d4de2d98033e"
+}

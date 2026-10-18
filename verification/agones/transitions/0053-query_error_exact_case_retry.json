@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "query_error_exact_case_retry",
+  "gate_snapshot": "verification/agones/gates/a017fd01f21c9d81e178ed84fa0fa37f54515d408b465b254ab0fef477165884.json",
+  "predecessor_revision": 52,
+  "predecessor_sha256": "62a6f4d8628e5f5361823bf5d2e26ff67b77a2dd7462946c16c5bf418b9c7ef7",
+  "reason": "Retry only source_query_case_000 after the actual Go-compatible production renderer changed its call closure; all prior timeouts retain zero source-proof credit.",
+  "result_revision": 53,
+  "schema_version": 1,
+  "state_sha256": "349ce9c9a66e41506618eb652342d520c9c2e88ed21e7df3a2419e2707e7c849",
+  "timestamp": "2026-10-18T16:05:09.527085+00:00"
+}

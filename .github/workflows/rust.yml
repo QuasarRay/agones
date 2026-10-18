@@ -57,6 +57,8 @@ jobs:
         run: cargo test --locked --workspace
       - name: Check deterministic exact-case generation
         run: cargo run --locked -p agones-rusternetes --example feature_case_codegen -- --check
+      - name: Check pinned Go printable-rune table generation
+        run: cargo run --locked -p agones-rusternetes --example feature_case_codegen -- --go-quote-table --check
 
   feature-bool-model-check:
     needs: migration-state

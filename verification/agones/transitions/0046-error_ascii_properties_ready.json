@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate::line-41"
+  ],
+  "authorization": "User execution contract",
+  "event": "error_ascii_properties_ready",
+  "gate_snapshot": "verification/agones/gates/d32a14a31007659a00ca450455e29f2279967330b6dac1aa6615c322aadd72d6.json",
+  "predecessor_revision": 45,
+  "predecessor_sha256": "e499458012db10ac883c3f0e119fc7e532440f5ad524cfffa75a1987f679ab3c",
+  "reason": "Post-gate source contract property and independent Go observations are declared; three runtime tests passed, with all 16513 exact ASCII strings checked and 8193 sampled inputs accepted.",
+  "result_revision": 46,
+  "schema_version": 1,
+  "state_sha256": "9bbc6d5aae0dfb36a4408ac89fcd2056689de6634cb4ca1c57302646235d1116",
+  "timestamp": "2026-10-18T15:50:07.425268+00:00"
+}

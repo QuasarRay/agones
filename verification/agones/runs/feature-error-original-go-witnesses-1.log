@@ -1,0 +1,78 @@
+[
+  {
+    "id": "escape-percent",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing query string for feature gates: invalid URL escape \"%\""
+  },
+  {
+    "id": "escape-short",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing query string for feature gates: invalid URL escape \"%A\""
+  },
+  {
+    "id": "escape-invalid",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing query string for feature gates: invalid URL escape \"%GG\""
+  },
+  {
+    "id": "escape-raw",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing query string for feature gates: invalid URL escape \"%\\xff\""
+  },
+  {
+    "id": "semicolon",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing query string for feature gates: invalid semicolon separator in query"
+  },
+  {
+    "id": "key-ascii",
+    "error": "agones.dev/agones/pkg/util/runtime: Feature Gate \"Foo\" is not a valid Feature Gate"
+  },
+  {
+    "id": "key-invalid-byte",
+    "error": "agones.dev/agones/pkg/util/runtime: Feature Gate \"\\xff\" is not a valid Feature Gate"
+  },
+  {
+    "id": "key-control",
+    "error": "agones.dev/agones/pkg/util/runtime: Feature Gate \"\\x00\\a\" is not a valid Feature Gate"
+  },
+  {
+    "id": "key-quote-slash",
+    "error": "agones.dev/agones/pkg/util/runtime: Feature Gate \"\\\"\\\\\" is not a valid Feature Gate"
+  },
+  {
+    "id": "key-soft-hyphen",
+    "error": "agones.dev/agones/pkg/util/runtime: Feature Gate \"\\u00ad\" is not a valid Feature Gate"
+  },
+  {
+    "id": "key-printable",
+    "error": "agones.dev/agones/pkg/util/runtime: Feature Gate \"未知😀\" is not a valid Feature Gate"
+  },
+  {
+    "id": "key-max-scalar",
+    "error": "agones.dev/agones/pkg/util/runtime: Feature Gate \"\\U0010ffff\" is not a valid Feature Gate"
+  },
+  {
+    "id": "bool-mixed-case",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag Example : strconv.ParseBool: parsing \"faLsE\": invalid syntax"
+  },
+  {
+    "id": "bool-nul",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag Example : strconv.ParseBool: parsing \"\\x00\": invalid syntax"
+  },
+  {
+    "id": "bool-invalid-byte",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag Example : strconv.ParseBool: parsing \"\\xff\": invalid syntax"
+  },
+  {
+    "id": "bool-truncated",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag Example : strconv.ParseBool: parsing \"\\xe2\\x82\": invalid syntax"
+  },
+  {
+    "id": "bool-surrogate",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag Example : strconv.ParseBool: parsing \"\\xed\\xa0\\x80\": invalid syntax"
+  },
+  {
+    "id": "bool-printable",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag Example : strconv.ParseBool: parsing \"€😀�\": invalid syntax"
+  },
+  {
+    "id": "bool-nonprintable",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag Example : strconv.ParseBool: parsing \"\\u0085\\u00a0\\u200b\\u2028\\ue000\": invalid syntax"
+  }
+]

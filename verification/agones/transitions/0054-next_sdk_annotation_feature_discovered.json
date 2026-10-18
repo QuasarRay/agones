@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate::line-41"
+  ],
+  "authorization": "User execution contract",
+  "event": "next_sdk_annotation_feature_discovered",
+  "gate_snapshot": "verification/agones/gates/d32a14a31007659a00ca450455e29f2279967330b6dac1aa6615c322aadd72d6.json",
+  "predecessor_revision": 53,
+  "predecessor_sha256": "349ce9c9a66e41506618eb652342d520c9c2e88ed21e7df3a2419e2707e7c849",
+  "reason": "Bounded source inspection found a concrete public metadata parity gap: dev/build identity and overwrite behavior differ in GameServer, Fleet and actual Pod paths. Keep it ready for the next production loop; no new semantic extraction precedes its gate.",
+  "result_revision": 54,
+  "schema_version": 1,
+  "state_sha256": "7c4bede39cc964087d16cb0034030e69e14a76f455b189a9c03fa692748c4518",
+  "timestamp": "2026-10-18T16:11:36.524206+00:00"
+}

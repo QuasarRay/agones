@@ -56,16 +56,30 @@ fn production_input_child() {
         context.feature_gate_input_options.flag_value = Some(b"PlayerTracking=true".to_vec());
     }
     if case == "invalid" {
-        assert!(context.load_feature_gates().is_err());
-        assert!(
+        let errors = [
+            context
+                .load_feature_gates()
+                .err()
+                .expect("invalid process input"),
             CreatingGameServerController::from_feature_inputs(MemoryStorage::new(), &context)
-                .is_err()
-        );
-        assert!(
-            FleetAutoscalerController::from_feature_inputs(MemoryStorage::new(), &context).is_err()
-        );
-        assert!(FleetAutoscalerAdmissionContext::from_feature_inputs(&context).is_err());
-        assert!(SdkSidecarConfig::from_feature_inputs("sdk:test", 1000, &context).is_err());
+                .err()
+                .expect("invalid controller input"),
+            FleetAutoscalerController::from_feature_inputs(MemoryStorage::new(), &context)
+                .err()
+                .expect("invalid autoscaler input"),
+            FleetAutoscalerAdmissionContext::from_feature_inputs(&context)
+                .err()
+                .expect("invalid admission input"),
+            SdkSidecarConfig::from_feature_inputs("sdk:test", 1000, &context)
+                .err()
+                .expect("invalid SDK input"),
+        ];
+        for error in errors {
+            assert_eq!(
+                error.to_string(),
+                "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag SidecarContainers : strconv.ParseBool: parsing \"invalid\": invalid syntax"
+            );
+        }
         return;
     }
     let environment_selected = case == "environment";

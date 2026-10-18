@@ -28,7 +28,8 @@
       "id": "invalid-escape-in-duplicate"
     }
   ],
-  "rust_run": "verification/agones/runs/sorted-features-raw-rust-replay-1.json",
+  "reuse_revalidated_against": "FG-ERROR-001 production snapshot; original Go baseline source/probe/module/helper/tool bindings and retained four observations verified unchanged.",
+  "rust_run": "verification/agones/runs/error-raw-query-rust-replay-1.json",
   "schema_version": 1,
-  "unmodeled": "Arbitrary Unicode/invalid-byte error text is retained as separate transport-formatting debt; this projection does not certify that text."
+  "unmodeled": "This four-trace projection checks state, error class and encoding. Exact error text has a separate 19-witness paired replay; full arbitrary-byte/length formal assurance remains required."
 }

@@ -2,7 +2,7 @@
 name = "agones-core"
 version.workspace = true
 edition.workspace = true
-license.workspace = true
+license = "Apache-2.0 AND BSD-3-Clause"
 repository.workspace = true
 rust-version.workspace = true
 

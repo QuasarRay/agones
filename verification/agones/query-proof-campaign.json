@@ -14,10 +14,15 @@
       "cause_observed": "The constant error-format case still expands standard-library formatting/UTF-8 and allocation paths at unwind 64. No source assertions/covers are credited.",
       "result": "TIMEOUT_240_SECONDS",
       "run": "verification/agones/runs/feature-query-case-000-kani-1.json"
+    },
+    {
+      "cause_observed": "Actual Go-compatible Display replaces the previous Rust Debug/lossy formatting and passes 19 exact paired witnesses. Constant source case still expands UTF-8 decode_scalar continuation loops up to the global unwind 64 and heap/raw-vector paths before complete results. Zero source assertion or cover credit.",
+      "result": "TIMEOUT_240_SECONDS",
+      "run": "verification/agones/runs/feature-query-case-000-error-kani-1.json"
     }
   ],
   "family": "feature-query exact source cases",
-  "next_decomposition": "Keep all five generated fixed-case harnesses and all 17 assertions required. Resume the error-format case after the source-compatible raw-byte error-rendering feature and inspect the affected loop/callee closure; no identical retry without a changed hypothesis.",
+  "next_decomposition": "Stop this fixed-case diagnostic campaign after the changed renderer still times out. Keep all five exact query harnesses/17 assertions required. A later bounded diagnosis may expose finite UTF-8 width constraints or allocation-path decomposition; it must preserve the actual production call and adequate bounds. Continue the next production feature now.",
   "remaining_required": "All five query case proofs/17 assertions, separate source input effect/formal assertions, and all other migration requirements remain open until actual results establish them.",
   "required_case_ids": [
     "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate",

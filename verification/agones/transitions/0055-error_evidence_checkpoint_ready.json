@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate::line-41"
+  ],
+  "authorization": "User execution contract",
+  "event": "error_evidence_checkpoint_ready",
+  "gate_snapshot": "verification/agones/gates/d32a14a31007659a00ca450455e29f2279967330b6dac1aa6615c322aadd72d6.json",
+  "predecessor_revision": 54,
+  "predecessor_sha256": "7c4bede39cc964087d16cb0034030e69e14a76f455b189a9c03fa692748c4518",
+  "reason": "Production errors and ordinary evidence are current. Three changed ASCII diagnostics and one changed source case timed out with zero formal credit; stop this campaign and preserve next verification trigger while production feature work continues.",
+  "result_revision": 55,
+  "schema_version": 1,
+  "state_sha256": "d15a9379d1b14e8e0d7e21a35ec1868be71970d933afc5e6bab3e77536641e58",
+  "timestamp": "2026-10-18T16:17:13.762284+00:00"
+}

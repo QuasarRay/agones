@@ -5,7 +5,11 @@
     "Cargo.lock",
     "rust-toolchain.toml",
     "crates/**",
-    "install/helm/agones/**"
+    "install/helm/agones/**",
+    "verification/agones/go-print-*",
+    "verification/agones/go-quote-ascii-reference.json",
+    "verification/agones/feature-gates.ir.json",
+    "verification/agones/feature-error-witnesses.json"
   ],
   "model": [
     "Cargo.toml",
@@ -20,7 +24,11 @@
     "build/scripts/agones-rs/run.py",
     ".github/workflows/rust.yml",
     "AGONES_RS_CONTINUATION_PROMPT.md",
-    "verification/agones/check-dependencies.json"
+    "verification/agones/check-dependencies.json",
+    "verification/agones/go-print-*",
+    "verification/agones/feature-error-properties.json",
+    "verification/agones/feature-query-codegen.json",
+    "verification/agones/feature-gates.ir.json"
   ],
   "metadata_only": [
     "**/AGENTS.MD",

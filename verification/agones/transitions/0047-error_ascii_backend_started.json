@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate::line-41"
+  ],
+  "authorization": "User execution contract",
+  "event": "error_ascii_backend_started",
+  "gate_snapshot": "verification/agones/gates/d32a14a31007659a00ca450455e29f2279967330b6dac1aa6615c322aadd72d6.json",
+  "predecessor_revision": 46,
+  "predecessor_sha256": "9bbc6d5aae0dfb36a4408ac89fcd2056689de6634cb4ca1c57302646235d1116",
+  "reason": "One bounded real Bolero-to-Kani invocation has a durable run intent; no formal credit before strict complete results.",
+  "result_revision": 47,
+  "schema_version": 1,
+  "state_sha256": "e680fc2e137a824b9bc8f07367509cfe068a670f9bf09a7b05ea6b577150310b",
+  "timestamp": "2026-10-18T15:50:07.620991+00:00"
+}

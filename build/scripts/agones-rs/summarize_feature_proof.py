@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Require exact feature input/query assertions and all declared covers."""
+"""Require exact feature input/query/error assertions and all declared covers."""
 import argparse
 import json
 
 from kani_results import ROOT, read_results, require_claims_and_covers
 
 parser = argparse.ArgumentParser()
-parser.add_argument("family", choices=["input", "query"])
+parser.add_argument("family", choices=["input", "query", "error-ascii"])
 parser.add_argument("run_id")
 parser.add_argument("--output", required=True)
 parser.add_argument("--case-index", type=int)
@@ -22,6 +22,16 @@ if args.family == "input":
                 "explicit empty changed flag", "maximum modeled input length", "raw non-UTF-8 byte selected",
                 "the generator should produce at least one valid value"]
     scope = "Production select_feature_gate_input and independent reference/invariant. Each optional raw byte string has length 0..2; no filtering, unwind 8. No OS/command/lifecycle proof or original exact-case assertion credit."
+elif args.family == "error-ascii":
+    harness = "feature_error_ascii_common_domain"
+    claims = [r for r in rows if r["symbol"].startswith(harness+"::{closure#0}.assertion.")]
+    assert len(claims) == 3
+    assert all(r["location"].startswith("crates/agones-core/tests/feature_error_ascii_domain.rs:") for r in claims)
+    required = ["empty ASCII quote input", "maximum modeled ASCII length", "double quote escape",
+                "backslash escape", "apostrophe remains literal", "Go-specific named control escape",
+                "canonical lowercase hex control escape", "printable ASCII remains literal",
+                "the generator should produce at least one valid value"]
+    scope = "Production quote_feature_error_bytes and independent ASCII reference/token invariant. ASCII strings length 0..2; no filtering, unwind 16. No non-ASCII, whole-error, lifecycle or original exact-case assertion credit."
 else:
     metadata = json.loads((ROOT / "verification/agones/feature-query-codegen.json").read_text())
     assert args.case_index is not None and 0 <= args.case_index < 5, "select the exact source case"
