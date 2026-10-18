@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_VERSION_001_CURRENT_EXTRACTING",
+  "gate_snapshot": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json",
+  "predecessor_revision": 110,
+  "predecessor_sha256": "7deca7db0e7a2e9c1b998afe0c8dee0a858b2ec9b6edda0c7f015a1b36706ea8",
+  "reason": "Reuse unchanged exact source semantics after current-gate validation and refreshed loader/emitter/evidence bindings. Preserve all outstanding required proofs and timeout history.",
+  "result_revision": 111,
+  "schema_version": 1,
+  "state_sha256": "4db497b1439448446669cad9c1ccc6875330814863b0e638dc519daba083fb64",
+  "timestamp": "2026-10-18T20:50:01.505055+00:00"
+}

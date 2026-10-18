@@ -1,0 +1,31 @@
+{
+  "case_names": [
+    "explicit-empty-enums",
+    "unknown-nonempty-and-nonzero",
+    "nil-spec-maps-preserve-status",
+    "allocated-empty-spec-maps-replace-status",
+    "copied-maps-and-slices",
+    "players-enabled-nil-ids",
+    "players-disabled-preserve-status",
+    "disabled-health-zero-fields",
+    "eviction-status-copy-and-override",
+    "required-zero-fields-null-slices",
+    "repeated-defaulting-keeps-source-append",
+    "int64-boundaries-are-exact",
+    "null-value-structs-use-source-zero",
+    "null-nonpointer-fields-use-source-zero"
+  ],
+  "classification": "ORDINARY_MANUAL_IMPLEMENTATION_REPLAY",
+  "exact_int64_min_max_preserved": true,
+  "fixture": "verification/agones/gameserver-defaulting-witnesses.json",
+  "fixture_sha256": "3d104433f28c6d85ac9b05afcd5e4169e0e9645969485e4c2d1f2383995a8aa8",
+  "formal_proof_credit": 0,
+  "go_run": "verification/agones/runs/gs-defaults-go-null-witnesses-1.json",
+  "independent_literal_observations_per_witness": 16,
+  "literal_expectations_checked_independently_by_both": true,
+  "rust_run": "verification/agones/runs/gs-defaults-final-wire-observation-1.json",
+  "schema_version": 1,
+  "source_test_assertions_credited": 0,
+  "whole_objects_equal": true,
+  "witnesses": 14
+}

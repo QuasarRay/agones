@@ -16,6 +16,26 @@ impl<T> Default for GoSlice<T> {
 }
 
 impl<T> GoSlice<T> {
+    pub fn is_empty(&self) -> bool {
+        self.0.as_ref().is_none_or(Vec::is_empty)
+    }
+
+    pub fn truncate(&mut self, len: usize) {
+        if let Some(values) = &mut self.0 {
+            values.truncate(len);
+        }
+    }
+
+    pub fn retain(&mut self, keep: impl FnMut(&T) -> bool) {
+        if let Some(values) = &mut self.0 {
+            values.retain(keep);
+        }
+    }
+
+    pub fn as_slice(&self) -> &[T] {
+        self
+    }
+
     pub fn is_nil(&self) -> bool {
         self.0.is_none()
     }
@@ -82,8 +102,8 @@ impl<'a, T> IntoIterator for &'a mut GoSlice<T> {
     }
 }
 
-impl<T: PartialEq> PartialEq<Vec<T>> for GoSlice<T> {
-    fn eq(&self, other: &Vec<T>) -> bool {
-        self.0.as_ref() == Some(other)
+impl<T: PartialEq<U>, U> PartialEq<Vec<U>> for GoSlice<T> {
+    fn eq(&self, other: &Vec<U>) -> bool {
+        self.0.as_ref().is_some_and(|values| values == other)
     }
 }

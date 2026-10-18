@@ -35,11 +35,44 @@ fn nil_and_allocated_slices_keep_distinct_value_and_append_semantics() {
     assert!(!nil.is_nil());
     assert_eq!(serde_json::to_value(&nil).unwrap(), json!([7]));
     assert_eq!(nil.iter().copied().sum::<u8>(), 7);
+    nil.truncate(0);
+    assert!(!nil.is_nil());
+    assert_eq!(serde_json::to_value(&nil).unwrap(), json!([]));
+    let mut untouched = GoSlice::<u8>::default();
+    untouched.retain(|_| false);
+    untouched.truncate(0);
+    assert!(untouched.is_nil());
+}
+
+#[test]
+fn required_status_keys_and_nullable_player_list_values_follow_source_json() {
+    use agones_core::{GameServerState, ListStatus, PlayerStatus};
+    assert_eq!(
+        serde_json::to_value(GameServerStatus::default()).unwrap(),
+        json!({
+            "state":"","ports":null,"address":"","addresses":null,"nodeName":"",
+            "reservedUntil":null,"players":null
+        })
+    );
+    for slice in [Value::Null, json!([]), json!(["id"])] {
+        let player: PlayerStatus = serde_json::from_value(json!({"ids":slice.clone()})).unwrap();
+        let list: ListStatus = serde_json::from_value(json!({"values":slice.clone()})).unwrap();
+        assert_eq!(serde_json::to_value(player).unwrap()["ids"], slice);
+        assert_eq!(serde_json::to_value(list).unwrap()["values"], slice);
+    }
+    for input in [json!({}), json!({"state":null}), json!({"state":""})] {
+        let status: GameServerStatus = serde_json::from_value(input).unwrap();
+        assert_eq!(status.state, None);
+        assert_eq!(serde_json::from_value::<GameServerStatus>(serde_json::to_value(&status).unwrap()).unwrap(), status);
+    }
+    let future: GameServerStatus = serde_json::from_value(json!({"state":"FutureState"})).unwrap();
+    assert_eq!(future.state, Some(GameServerState::Unknown("FutureState".into())));
 }
 
 #[test]
 fn source_required_pod_containers_keep_nil_allocated_and_populated_wire_values() {
-    for containers in [Value::Null, json!([]), json!([{"name":"game"}])] {
+    // Go's canonical container JSON includes the zero resources value.
+    for containers in [Value::Null, json!([]), json!([{"name":"game","resources":{}}])] {
         let spec: PodSpec =
             serde_json::from_value(json!({"containers":containers.clone()})).unwrap();
         let observed = serde_json::to_value(spec).unwrap();

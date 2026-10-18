@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "GAMESERVER_POST_GATE_EVIDENCE_CURRENT",
+  "gate_snapshot": "verification/agones/gates/90ecffab80af35e8b2ec88ba1367b66fc73e5b87a7b53f8d4b0dfff2e883cb00.json",
+  "predecessor_revision": 113,
+  "predecessor_sha256": "9846abcbf285807e8d83577b3527ae30a3c2ef5203af2628c4e5c681a2caef9f",
+  "reason": "All current feature gates and retained evidence validate. Complete Genco exact-case proof emission remains the next active extraction task; one health leaf is verified and whole-source proof remains open.",
+  "result_revision": 114,
+  "schema_version": 1,
+  "state_sha256": "49dabad555a2a3a8f50dc0813112f1a9e1f8f94d4bfd005ee171261d9df86cbe",
+  "timestamp": "2026-10-18T20:50:02.190910+00:00"
+}

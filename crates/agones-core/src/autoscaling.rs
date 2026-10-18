@@ -2774,7 +2774,7 @@ mod tests {
                     "gamers".into(),
                     ListStatus {
                         capacity: 60,
-                        values: Vec::new(),
+                        values: Vec::new().into(),
                     },
                 )])),
                 ..Default::default()

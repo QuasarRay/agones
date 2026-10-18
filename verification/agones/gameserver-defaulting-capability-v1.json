@@ -1,0 +1,49 @@
+{
+  "cancellation": "Synchronous mutation; startup/service cancellation remains separate lifecycle work.",
+  "composition": "ApplyAgonesGameServerDefaults is selected through the CGP defaulter component in the default context, minimal captured context and actual generic Rusternetes admission. Existing explicit-version API stays compatible with the same domain algorithm.",
+  "conformance_cases": "14 manual cases with 16 independent literals each; complete objects equal original Go. Actual admission/player/version, five configured consumer constructors and the retained 11 isolated core/adapter process scenarios are exercised.",
+  "consistency": "Synchronous owned-value mutation; no storage/CAS/version/retry protocol is claimed.",
+  "errors": "Typed defaulting has no error return. Malformed admission object shapes retain source allow-without-mutation fallthrough; the actual configured constructor returns FeatureGateError before serving requests. Full fatal/logging lifecycle remains required.",
+  "feature": "GS-DEFAULTS-001",
+  "id": "gameserver-defaulting-v1",
+  "idempotency": "Field defaults settle, but source finalizer append remains non-idempotent.",
+  "input_types": [
+    "Canonical GameServer / GameServerSpec / GameServerStatus values",
+    "Context-owned FeatureFlags and raw AgonesBuildVersion"
+  ],
+  "ordering": "Version annotation -> append source finalizer -> spec defaults -> status defaults. Actual admission invokes the composed CGP defaulter, then serializes and emits the existing RFC6902 diff.",
+  "output_observation": "Mutated canonical resource and real Rusternetes creation-admission patches. Ordinary witnesses compare full JSON objects and independent literal projections.",
+  "ownership": "Context owns its immutable build/feature snapshot. Mutation owns the GameServer; status eviction, counters and lists receive independent copies. GoSlice preserves required nil/allocated distinctions. Known container resources have one declared field owner.",
+  "postconditions": [
+    "Explicit empty non-pointer source enums receive the same defaults as absent/zero values; nonempty known/future values are preserved.",
+    "Disabled health values are preserved; enabled nonpositive thresholds receive source constants. Nonzero SDK ports, including negative values, are preserved.",
+    "Absent spec counters/lists preserve existing status maps; allocated-empty maps replace them, while source omitempty serialization omits empty maps.",
+    "Enabled player tracking allocates status when needed and applies initial capacity without initializing nil IDs. Disabled tracking preserves supplied values.",
+    "Source required status keys and nil slices remain explicit null/empty values; declared non-pointer values decode fresh null inputs to source zero values.",
+    "Repeated defaulting appends finalizers exactly as source; it is not relabeled globally idempotent."
+  ],
+  "residual_required": [
+    "Original source-test assertion extraction and all bounded Bolero/Kani/model/source proofs are still required after the implementation gate.",
+    "Complete Kubernetes schema/quantity/raw JSON duplicate-key decoding, full validation/admission protocol, lifecycle, storage and live cluster conformance remain separate required baseline work.",
+    "All eight _2 architecture cells and every other baseline obligation remain required."
+  ],
+  "schema_version": 1,
+  "source_methods": [
+    "GameServer.ApplyDefaults",
+    "GameServerSpec.ApplyDefaults",
+    "applyContainerDefaults",
+    "applyPortDefaults",
+    "applyHealthDefaults",
+    "applyEvictionDefaults",
+    "applySchedulingDefaults",
+    "applySdkServerDefaults",
+    "applyStatusDefaults",
+    "applyEvictionStatus",
+    "applyCountsListsStatus"
+  ],
+  "trusted_boundaries": [
+    "Declared canonical JSON fields and current serde/Rusternetes value conversion",
+    "Original Go JSON/runtime feature provider and pinned dependencies",
+    "Normal Cargo build identity / process startup configuration"
+  ]
+}

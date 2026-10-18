@@ -1332,7 +1332,7 @@ mod tests {
                 "gamers".into(),
                 ListStatus {
                     capacity: 3,
-                    values: vec!["a".into(), "b".into()],
+                    values: vec!["a".into(), "b".into()].into(),
                 },
             )]));
         list_fleet.status.lists.insert(

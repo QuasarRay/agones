@@ -1,0 +1,41 @@
+{
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "concrete_gaps_from_production_reading": [
+    {
+      "issue": "Source enum/string zero values include explicit empty strings. Rust Option checks leave Some(Unknown(\"\")) unchanged for state and several spec enums.",
+      "rust": "crates/agones-core/src/gameserver.rs:793",
+      "source": "pkg/apis/agones/v1/gameserver.go:425"
+    },
+    {
+      "issue": "Source counts/lists update status only for non-nil spec maps; Rust unconditional assignment clears pre-existing status when the spec maps are absent.",
+      "rust": "crates/agones-core/src/gameserver.rs:825",
+      "source": "pkg/apis/agones/v1/gameserver.go:496"
+    },
+    {
+      "issue": "Audit required player IDs, list values, and status wire fields for Go nil/empty/required-key behavior; reuse GoSlice where source semantics require it.",
+      "rust": "crates/agones-core/src/gameserver.rs",
+      "source": "pkg/apis/agones/v1/gameserver.go"
+    }
+  ],
+  "feature_id": "GS-DEFAULTS-001",
+  "implementation_order": [
+    "Reopen affected source-bound gates before changing shared production code; preserve published 5f6f3c4 and current CI receipts.",
+    "Use the original production defaulting methods and reachable admission consumers as authority. Complete real CGP policy/dependency composition and ordinary manual regressions, including explicit empty enums, feature-selected player defaults, status map preservation, deep-copy behavior, and wire/null distinctions.",
+    "Record a content-addressed implementation gate only after ordinary production/consumer/workspace checks pass.",
+    "Then extend the existing package loader/typed IR/Genco paths for all original defaulting observations. Reuse current SDK fixtures/IDs where valid; preserve unhandled assertion identities and unresolved counts.",
+    "Run independent invariants, adequate exact-source/common-domain Bolero/Kani and Rusternetes conformance; record timeouts without reducing required scope."
+  ],
+  "refactoring_trigger": "Review the current resource-derive expansion-core hygiene and all eight open _2 cells within the next meaningful production milestone, as required by the existing review.",
+  "reuse": "Current CGP getters/providers, generated string enum as_str methods, GoSlice, package-aware source capture, existing Genco modes and strict proof/result tools. No new generic schema compiler or _2 staging framework is a prerequisite.",
+  "schema_version": 1,
+  "scope": "Complete GameServer/GameServerSpec/status defaulting behavior and its actual creation consumers through existing CGP capabilities; preserve every original case and required assertion. This packet performs no new semantic extraction.",
+  "source_bindings": {
+    "crates/agones-core/src/gameserver.rs": "70287a298bb79f8217720eb3dfe63a7bdbcb315c7f80f2b4c6afc694bd7b8e2f",
+    "crates/agones-rusternetes/src/gameserver_admission.rs": "1d7a771b387157c9267cb6264f4d0d8d663258dde15eddb230d3cbd23838f1ef",
+    "pkg/apis/agones/v1/gameserver.go": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
+    "pkg/apis/agones/v1/gameserver_test.go": "468502ff9cbedb3a37f7ff2b5ef1207f09b770aa3fc36b5e87432b6a62068cfa"
+  },
+  "source_case_metadata": "17 map keys are already preserved by SDK fixture capture; full defaulting assertion/dynamic counts remain unresolved until this production feature is implemented and gated.",
+  "source_test_identity": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults",
+  "status": "DISCOVERED_NOT_IMPLEMENTED"
+}

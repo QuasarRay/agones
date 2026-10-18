@@ -143,6 +143,7 @@ pub use gameserver_admission::{
     GameServerPodCreationMutationAdmission, admission_json_patch,
     mutate_game_server_creation, mutate_game_server_pod_creation,
     mutate_game_server_creation_with_version_context,
+    mutate_game_server_creation_with_context,
     validate_game_server_creation, validate_game_server_creation_object,
 };
 pub use gameserverset_admission::{
@@ -2597,7 +2598,7 @@ mod tests {
                     host_port: 9999,
                     protocol: Some(Protocol::Udp),
                     ..Default::default()
-                }],
+                }].into(),
                 scheduling: Some(SchedulingStrategy::Packed),
                 template: PodTemplateSpec {
                     spec: CorePodSpec {
@@ -2633,13 +2634,10 @@ mod tests {
             image: "testing/image".into(),
             ..Default::default()
         };
-        container.extensions.insert(
-            "resources".into(),
-            serde_json::json!({
+        container.resources = serde_json::from_value(serde_json::json!({
                 "requests": requests,
                 "limits": limits
-            }),
-        );
+            })).unwrap();
         container
     }
 
@@ -3093,7 +3091,7 @@ mod tests {
                 protocol: Some(Protocol::Udp),
                 ..Default::default()
             },
-        ];
+        ].into();
 
         let pod = build_pod(
             &gs,

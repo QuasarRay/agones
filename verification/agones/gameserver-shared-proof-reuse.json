@@ -1,0 +1,21 @@
+{
+  "argument": "The exact pure bool/selector owners and their complete harnesses are unchanged. The exact query-error case, all 17 generated source relation bodies, parser source, raw error/quote decoder and relevant query domain are unchanged. New defaulting/null/slice behavior and resource derive path resolution are unreachable from these selected calls; the resource path macro is executed during compilation, not substituted in the verified production algorithms.",
+  "classification": "REUSED_REACHABLE_PROOFS_NOT_NEW_PROOF",
+  "dependency_change": "Only agones-macros adds the already locked proc-macro-crate 3.5.0 edge. All package versions, sources and checksums are unchanged.",
+  "new_credit": 0,
+  "next_validation": "New-head CI reruns the three retained selections plus the newly verified health property; all other source/helper obligations remain required.",
+  "reparses": [
+    "gs-bool-proof-reparse-1",
+    "gs-input-proof-reparse-1",
+    "gs-query-proof-reparse-1"
+  ],
+  "schema_version": 1,
+  "snapshot": "5f6f3c44bcb2a36125b7b0e7038efe294f2d8c93",
+  "unchanged_sources": {
+    "crates/agones-core/src/feature_inputs.rs": "9cfaf42de485874339a58895991ad15adff787f363d9821a3ab7f0f4c36222d4",
+    "crates/agones-core/src/features.rs": "46e8f93b86b6187e3927047e5cebafa135e8a55f38089ec3c3aad31ebdaca1a3",
+    "crates/agones-core/tests/feature_bool_domain.rs": "f36542866193c88f464139f86d9d12fb6159276be8102e294754b00054a36f0a",
+    "crates/agones-core/tests/feature_input_domain.rs": "a041cfd5c7f4b54220abf5ed6964214a150c95df59e5de601ffb89f21478f124",
+    "crates/agones-core/tests/generated/feature_gate_cases.rs": "46f05e90380d2c292b4e888294e1dae11239b66e9a9e6c42f2bbfdd2c69a2b00"
+  }
+}

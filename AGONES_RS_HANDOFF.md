@@ -1,14 +1,14 @@
 # Agones-rs handoff
 
-Generated from AGONES_RS_STATE.json revision 84.
+Generated from AGONES_RS_STATE.json revision 115.
 Contract SHA-256: `45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1`.
 Original reference: `6eb4a02588d8e7b581de187f3bc849733a78dcb2`, scope `agones-original-v1`.
-Workspace: `agones-rs-dev` at `cf2fcb7139739c5f26e6155e3fa9c3b431887863`.
+Workspace: `agones-rs-dev` at `5f6f3c44bcb2a36125b7b0e7038efe294f2d8c93`.
 Native Goal remains active; full migration is **INCOMPLETE**.
 
-Active work: **SDK-VERSION-001**, stage `EXTRACTING`, disposition `READY`.
-Next action: Publish the source build identity, nil slice repair and current proof/evidence checkpoint in draft PR 92; verify exact-head CI before returning to the next CGP production defaulting/API parity packet.
-Implementation gate: `verification/agones/gates/67c860de02f9ead2c2105c6322811a0a41a90c91170118bd9d536ab041955e92.json`.
+Active work: **GS-DEFAULTS-001**, stage `EXTRACTING`, disposition `READY`.
+Next action: Finish typed Genco fixtures/harnesses for all 17 original cases and 304 occurrences; then perform adequate non-vacuous source/provider proofs. Preserve current gates, the successful health leaf and the bounded resource-derive repair.
+Implementation gate: `verification/agones/gates/90ecffab80af35e8b2ec88ba1367b66fc73e5b87a7b53f8d4b0dfff2e883cb00.json`.
 
 Read the active source and affected contract appendices only. Baseline metadata is in
 `verification/agones/baseline.json`, `scope-v1.json`, `baseline-tree.tsv`, and `baseline-tests.json`.
@@ -19,10 +19,10 @@ not product implementation evidence; its old revised-prompt hash is historical.
 
 All 8 unverified `_2` form/location cells remain required architecture work.
 Last refactoring decision: REUSE_EXISTING.
-Next review: At the next resource-derived production consumer, before expanding its API plumbing; otherwise no later than the next production feature milestone..
+Next review: After the first generated adequate original GameServer case proof, or the next canonical API milestone if proof decomposition is deferred; evaluate shared typed property declarations and all eight _2 cells then..
 No new macros or general frameworks are prerequisites for the next ordinary feature.
 
-Delivery: `SDK_CHECKPOINT_PREPARED_NOT_PUBLISHED` to `agones-rs-dev`; never modify main.
+Delivery: `GAMESERVER_DEFAULTING_CHECKPOINT_PREPARED_NOT_PUBLISHED` to `agones-rs-dev`; never modify main.
 Connected GitHub app has write access; local gh CLI is logged out.
 Recover live jobs from the ledger and `verification/agones/runs/*.json` by comparing
 the stored process identity with /proc before waiting, attaching or stopping anything.

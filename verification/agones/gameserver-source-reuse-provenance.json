@@ -1,0 +1,7 @@
+{
+  "input": "verification/agones/sdk-version.ir.json",
+  "input_sha256": "fd8d90991cffce9bd2737e102fba09b5d36266b03231fa627612e8396d60835c",
+  "reuse": "Only source fixture setup is reused. Every setup AST statement and original-source binding was revalidated against the type-resolved original source; the old SDK production gate is not reused. Current complete capture_program and its hash preserve the entire source program for independent replay.",
+  "schema_version": 1,
+  "snapshot": "5f6f3c44bcb2a36125b7b0e7038efe294f2d8c93"
+}

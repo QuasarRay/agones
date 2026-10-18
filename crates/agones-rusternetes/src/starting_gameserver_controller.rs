@@ -242,7 +242,7 @@ mod tests {
                     host_port: 9999,
                     protocol: Some(Protocol::Udp),
                     ..Default::default()
-                }],
+                }].into(),
                 template: PodTemplateSpec {
                     spec: CorePodSpec {
                         containers: vec![CoreContainer {

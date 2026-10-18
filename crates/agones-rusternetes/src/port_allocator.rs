@@ -405,7 +405,7 @@ mod tests {
             },
             spec: GameServerSpec {
                 container: "game".into(),
-                ports,
+                ports: ports.into(),
                 template: PodTemplateSpec {
                     spec: PodSpec {
                         containers: vec![Container {

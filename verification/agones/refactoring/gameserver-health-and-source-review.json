@@ -1,0 +1,11 @@
+{
+  "architecture_status": "All eight _2 form/location cells remain REQUIRED_OPEN. Ordinary derive hygiene and CGP/Genco reuse provide no _2 authoring-cell credit.",
+  "candidate": "Typed exact-case fixtures, observation/harness generation, shared property declarations and the required four-form _2 family.",
+  "decision": "REUSE_EXISTING",
+  "feature_binding": "verification/agones/gates/90ecffab80af35e8b2ec88ba1367b66fc73e5b87a7b53f8d4b0dfff2e883cb00.json",
+  "id": "GS-DEFAULTS-001-health-and-source-review",
+  "next_review_trigger": "After the first generated adequate original GameServer case proof, or the next canonical API milestone if proof decomposition is deferred; evaluate shared typed property declarations and all eight _2 cells then.",
+  "observations": "The actual CGP defaulting provider runs in the default, captured and Rusternetes admission contexts. Existing resource expansion now handles Cargo aliases/facades/generics with five targeted Cargo cases and same-package integration. The typed source loader captures all 304 executed original assertions, including exact conditional selection; three zero-occurrence site declarations are retained. The new health proof has three semantic claims/eight covers with a required twelve-byte array comparison, so unwind sixteen is adequate while eight failed. Global CBMC pointer rows without locations are retained separately and cannot masquerade as located semantic claims.",
+  "rationale": "Extend the current Genco source emitter for the active 17-case family instead of hand-copying 304 assertions or adding a parallel generator. Reuse the existing proc_macro2 expansion core and repaired crate-path handling. Five common-domain families now expose recurring wrapper/metadata plumbing, but their references/invariants remain distinct and must not be collapsed into opaque predicates.",
+  "roi": "Current concrete repetition is 17 typed fixtures and 304 source assertion occurrences. Existing Genco/typed IR removes that repetition with reviewable ownership at lower current build/staging/diagnostic cost than a new general compiler system. Reassess a small typed property-declaration core after this source emitter provides a real consumer."
+}

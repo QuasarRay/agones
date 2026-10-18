@@ -203,7 +203,7 @@ mod tests {
                     host_port: 9999,
                     port_policy: Some(PortPolicy::Static),
                     ..Default::default()
-                }],
+                }].into(),
                 template: PodTemplateSpec {
                     spec: CorePodSpec {
                         containers: vec![CoreContainer {

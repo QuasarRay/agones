@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "GAMESERVER_SOURCE_AND_HEALTH_EVIDENCE_RETAINED",
+  "gate_snapshot": "verification/agones/gates/90ecffab80af35e8b2ec88ba1367b66fc73e5b87a7b53f8d4b0dfff2e883cb00.json",
+  "predecessor_revision": 96,
+  "predecessor_sha256": "3e0cdd64d0a8d04d445a520e380cf62375e842c2b49bf36c5187cd94c4192975",
+  "reason": "All 304 exact original occurrences and 17 post-default objects replay through real CGP production. Health reference/production invariants and eight covers are strictly verified over the declared full scalar domain. Three zero-occurrence sites and all whole-source proof debt remain explicit.",
+  "result_revision": 97,
+  "schema_version": 1,
+  "state_sha256": "32557bede22dc738a77ef54aef840cac897864415cc2364645a4d397dcad9b87",
+  "timestamp": "2026-10-18T20:48:30.764743+00:00"
+}

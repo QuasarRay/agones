@@ -4,6 +4,7 @@ use agones_core::{CanLoadFeatureGates, FEATURE_GATE_ENV, FeatureGateInputContext
 use agones_rusternetes::{
     CreatingGameServerController, FleetAutoscalerAdmissionContext, FleetAutoscalerController,
     SdkSidecarConfig, build_sdk_sidecar,
+    GameServerCreationMutationAdmission,
 };
 use rusternetes_storage::MemoryStorage;
 
@@ -73,6 +74,9 @@ fn production_input_child() {
             SdkSidecarConfig::from_feature_inputs("sdk:test", 1000, &context)
                 .err()
                 .expect("invalid SDK input"),
+            GameServerCreationMutationAdmission::from_feature_inputs(&context)
+                .err()
+                .expect("invalid GameServer mutation input"),
         ];
         for error in errors {
             assert_eq!(
@@ -91,6 +95,8 @@ fn production_input_child() {
     let autoscaler =
         FleetAutoscalerController::from_feature_inputs(MemoryStorage::new(), &context).unwrap();
     let admission = FleetAutoscalerAdmissionContext::from_feature_inputs(&context).unwrap();
+    let mutation = GameServerCreationMutationAdmission::from_feature_inputs(&context).unwrap();
+    assert_eq!(mutation.defaulting_context.game_server_feature_flags.player_tracking, environment_selected);
     assert_eq!(
         server.pod_build_features.sidecar_containers,
         !environment_selected
@@ -128,6 +134,7 @@ fn production_input_child() {
     // The ordinary constructors are real entry paths too; they must read the
     // process configuration rather than silently initialize an empty query.
     let default_server = CreatingGameServerController::new(MemoryStorage::new());
+    assert!(GameServerCreationMutationAdmission::default().defaulting_context.game_server_feature_flags.player_tracking);
     assert!(!default_server.pod_build_features.sidecar_containers);
     assert!(
         !FleetAutoscalerController::new(MemoryStorage::new())

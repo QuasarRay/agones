@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "FG_CONFIG_001_DEFAULTING_REVALIDATED",
+  "gate_snapshot": "verification/agones/gates/2644b2c4fbf11bc0f1a71dcbeebe15be832b30a68e9a0577a8bc300670900297.json",
+  "predecessor_revision": 97,
+  "predecessor_sha256": "32557bede22dc738a77ef54aef840cac897864415cc2364645a4d397dcad9b87",
+  "reason": "Current compile/runtime closure, source IR and generation bindings validate after GameServer defaulting and resource derive repair. Retained proof evidence has explicit reachable-code reuse; open source obligations receive no new credit.",
+  "result_revision": 98,
+  "schema_version": 1,
+  "state_sha256": "1fd040608b219077bfd65cee07d900b86887fb9c6940dacb6cbc80208c9424fd",
+  "timestamp": "2026-10-18T20:49:58.771611+00:00"
+}

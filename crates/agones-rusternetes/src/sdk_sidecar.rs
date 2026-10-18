@@ -257,7 +257,7 @@ mod tests {
                 ports: vec![GameServerPort {
                     container_port: 7777,
                     ..Default::default()
-                }],
+                }].into(),
                 template: PodTemplateSpec {
                     spec: CorePodSpec {
                         containers: vec![CoreContainer {

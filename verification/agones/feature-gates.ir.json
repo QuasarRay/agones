@@ -283,15 +283,17 @@
     "GOVERSION": "go1.27.1-X:nodwarf5"
   },
   "feature_id": "FG-CONFIG-001",
-  "implementation_gate": "verification/agones/gates/06c4803629119e61572723619b217d60b8408e93a20fe33eaff3d035dabbac0c.json",
-  "implementation_gate_sha256": "06c4803629119e61572723619b217d60b8408e93a20fe33eaff3d035dabbac0c",
-  "input_implementation_gate": "verification/agones/gates/bef2c3d9f4047150ee765544b828b55716bad3d9a9f5d3de82fdab3ec4ee434e.json",
-  "input_implementation_gate_sha256": "bef2c3d9f4047150ee765544b828b55716bad3d9a9f5d3de82fdab3ec4ee434e",
+  "implementation_gate": "verification/agones/gates/2644b2c4fbf11bc0f1a71dcbeebe15be832b30a68e9a0577a8bc300670900297.json",
+  "implementation_gate_sha256": "2644b2c4fbf11bc0f1a71dcbeebe15be832b30a68e9a0577a8bc300670900297",
+  "input_implementation_gate": "verification/agones/gates/a615ff5f2579283705afe3e748487f503633b34834739277fa94657e4a4758ad.json",
+  "input_implementation_gate_sha256": "a615ff5f2579283705afe3e748487f503633b34834739277fa94657e4a4758ad",
   "loader": "golang.org/x/tools/go/packages v0.48.0",
   "loader_source_files": {
+    "build/scripts/agones-rs/extract/gameserver_defaulting.go": "3530dbf1e91a96f2264c5e8eb21c4f69c16b50818feee975af4d5fd46d907664",
+    "build/scripts/agones-rs/extract/gameserver_defaulting_test.go": "03af33d9d79bf73ad701528c07f5cdfa75758b5040465fbb52f7b95474eeb2bd",
     "build/scripts/agones-rs/extract/go.mod": "d23234a15e7dbd4b4a9a5114b603c7b4af96faf0b28597887612f797198621db",
     "build/scripts/agones-rs/extract/go.sum": "db117b1938e16538e8fe3fc238d5185565e1a5150ed8989573f95899b23d0101",
-    "build/scripts/agones-rs/extract/main.go": "2e9bff648b38cc4f46b3dc94de3cc18678c94d55c5e178b1149b0c1cdb43f019",
+    "build/scripts/agones-rs/extract/main.go": "92387cb6b616e2fa55eaa224545d9f083937186b1a4e1a9998ea3c3d30c0d493",
     "build/scripts/agones-rs/extract/main_test.go": "b66449f6662bd598185fb671688d9bf566e36176c2e36ffca378d78464370213",
     "build/scripts/agones-rs/extract/sdk_version.go": "79e0e06e220484f808686dbb936cee00fe3e52b572f4c93769736dd47f5acecd",
     "build/scripts/agones-rs/extract/sdk_version_test.go": "8e7ca0a3cac25144f4289bdcdee416502b7aa63e45d3f9e215e12c7cc4fca097"

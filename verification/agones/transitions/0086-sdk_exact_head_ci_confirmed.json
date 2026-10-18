@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_EXACT_HEAD_CI_CONFIRMED",
+  "gate_snapshot": "verification/agones/gates/67c860de02f9ead2c2105c6322811a0a41a90c91170118bd9d536ab041955e92.json",
+  "predecessor_revision": 85,
+  "predecessor_sha256": "200d6ab03a616651e0df69ff4441ed5f2d1af5af3419962f3a567f5d277f69a0",
+  "reason": "CI 39157296121 passed all three jobs for source 5f6f3c4 and actual merge f259ff1 with the same tree: 549 tests, three generation checks, three strict proof selections. All remaining formal and architecture work stays open.",
+  "result_revision": 86,
+  "schema_version": 1,
+  "state_sha256": "800b51c1dcbc16dbeaebcd6ded6aa4e3b91fa5045c0da00f1cfa5fac1b3f4cec",
+  "timestamp": "2026-10-18T19:16:11.282223+00:00"
+}

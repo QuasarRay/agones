@@ -136,10 +136,21 @@ pub fn admission_json_patch(
 pub fn mutate_game_server_creation(
     object: &serde_json::Value,
 ) -> Result<AdmissionResponse, AdapterError> {
-    mutate_game_server_creation_with_version_context(
-        &agones_core::AgonesBuildVersionContext::default(),
+    mutate_game_server_creation_with_context(
+        &agones_core::GameServerDefaultingContext::default(),
         object,
     )
+}
+
+pub fn mutate_game_server_creation_with_context<C: agones_core::CanApplyGameServerDefaults>(
+    context: &C,
+    object: &serde_json::Value,
+) -> Result<AdmissionResponse, AdapterError> {
+    let Ok(mut game_server) = serde_json::from_value::<GameServer>(object.clone()) else {
+        return Ok(AdmissionResponse::Allow);
+    };
+    context.apply_game_server_defaults(&mut game_server);
+    game_server_mutation_response(object, game_server)
 }
 
 pub fn mutate_game_server_creation_with_version_context<C: agones_core::CanGetAgonesVersionAnnotation>(
@@ -153,6 +164,13 @@ pub fn mutate_game_server_creation_with_version_context<C: agones_core::CanGetAg
     };
 
     game_server.apply_defaults_with_version_context(context, agones_core::FeatureFlags::default());
+    game_server_mutation_response(object, game_server)
+}
+
+fn game_server_mutation_response(
+    object: &serde_json::Value,
+    game_server: GameServer,
+) -> Result<AdmissionResponse, AdapterError> {
     let mutated = serde_json::to_value(game_server)?;
     let patches = admission_json_patch(object, &mutated);
 
@@ -337,11 +355,38 @@ pub fn mutate_game_server_pod_creation(
     }
 }
 
-#[derive(Clone, Copy, Debug, Default)]
-pub struct GameServerCreationMutationAdmission;
+#[derive(Clone, Debug)]
+pub struct GameServerCreationMutationAdmission<C = agones_core::GameServerDefaultingContext> {
+    pub defaulting_context: C,
+}
+
+impl<C> GameServerCreationMutationAdmission<C> {
+    pub fn from_context(defaulting_context: C) -> Self {
+        Self { defaulting_context }
+    }
+}
+
+impl GameServerCreationMutationAdmission {
+    pub fn from_feature_inputs<C: agones_core::CanLoadFeatureGates>(
+        input: &C,
+    ) -> Result<Self, agones_core::FeatureGateError> {
+        let gates = input.load_feature_gates()?;
+        Ok(Self::from_context(agones_core::GameServerDefaultingContext::from_feature_gates(&gates)))
+    }
+}
+
+impl Default for GameServerCreationMutationAdmission {
+    fn default() -> Self {
+        Self::from_feature_inputs(&agones_core::FeatureGateInputContext::default())
+            .expect("invalid Agones feature gate configuration")
+    }
+}
 
 #[async_trait]
-impl AdmissionController for GameServerCreationMutationAdmission {
+impl<C> AdmissionController for GameServerCreationMutationAdmission<C>
+where
+    C: agones_core::CanApplyGameServerDefaults + Send + Sync,
+{
     fn name(&self) -> &str {
         "AgonesGameServerCreationMutation"
     }
@@ -354,7 +399,7 @@ impl AdmissionController for GameServerCreationMutationAdmission {
         if request.kind != "GameServer" {
             return AdmissionResponse::Allow;
         }
-        mutate_game_server_creation(&request.object).unwrap_or_else(
+        mutate_game_server_creation_with_context(&self.defaulting_context, &request.object).unwrap_or_else(
             |error| AdmissionResponse::Deny(error.to_string()),
         )
     }
@@ -446,7 +491,7 @@ mod tests {
                 ports: vec![GameServerPort {
                     container_port: 7777,
                     ..Default::default()
-                }],
+                }].into(),
                 template: PodTemplateSpec {
                     spec: CorePodSpec {
                         containers: vec![CoreContainer {
@@ -571,7 +616,7 @@ mod tests {
                 port_policy: Some(agones_core::PortPolicy::Passthrough),
                 ..Default::default()
             },
-        ];
+        ].into();
 
         let pod = build_pod(
             &game_server,

@@ -11,6 +11,15 @@ def row(number=1, status="SUCCESS"):
 
 
 class ResultControls(unittest.TestCase):
+    def test_backend_global_pointer_location_is_optional_but_claim_location_is_not(self):
+        pointer = '\nCheck 1: pointer_dereference.1\n - Status: SUCCESS\n - Description: "pointer NULL"\n'
+        self.assertIsNone(parse_complete_log(pointer+COMPLETE)[0]["location"])
+        for altered in [pointer.replace("pointer_dereference.1", "claim.assertion.1"),
+                        pointer.replace("SUCCESS", "FAILURE"),
+                        pointer.replace(' - Description: "pointer NULL"\n', '')]:
+            with self.assertRaises(AssertionError):
+                parse_complete_log(altered+COMPLETE)
+
     def test_empty_missing_duplicate_truncated_and_failing_results_reject(self):
         self.assertEqual(len(parse_complete_log(row()+COMPLETE)), 1)
         for log in [COMPLETE, row(), row(2)+COMPLETE, row()+row()+COMPLETE,

@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate::line-41"
+  ],
+  "authorization": "User execution contract",
+  "event": "FG_ERROR_001_CURRENT_VERIFYING",
+  "gate_snapshot": "verification/agones/gates/f2b9b3f7f1ff126d26208a22efb1256e8616fe8ba8160ed01300a375a610c8bb.json",
+  "predecessor_revision": 108,
+  "predecessor_sha256": "ce67dc7e854dcc2db90380dd5113aa0901b7971050cf1ef32dc1bd041f278b7d",
+  "reason": "Reuse unchanged exact source semantics after current-gate validation and refreshed loader/emitter/evidence bindings. Preserve all outstanding required proofs and timeout history.",
+  "result_revision": 109,
+  "schema_version": 1,
+  "state_sha256": "ae27132be931bfbf1898a136d670804263476e5882ca480c94371b77657648dd",
+  "timestamp": "2026-10-18T20:50:01.075052+00:00"
+}

@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_VERSION_001_GS_DEFAULTS_REOPENED",
+  "gate_snapshot": "verification/agones/gates/67c860de02f9ead2c2105c6322811a0a41a90c91170118bd9d536ab041955e92.json",
+  "predecessor_revision": 90,
+  "predecessor_sha256": "2bb8e5415b3d7ed004b45468af85671503c547eefa72f422798bfd530d3176de",
+  "reason": "GameServer defaulting and canonical API repair will change shared production/consumer bindings. Retain published gates and proof history; refresh affected gates/evidence before credit.",
+  "result_revision": 91,
+  "schema_version": 1,
+  "state_sha256": "dbda28a8fd4260a981af1ad78cf8c8f7e5055d49ec3ac78093de6cab579ea888",
+  "timestamp": "2026-10-18T19:18:20.775042+00:00"
+}

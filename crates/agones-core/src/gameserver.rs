@@ -35,6 +35,39 @@ fn is_false(value: &bool) -> bool {
     !*value
 }
 
+fn is_zero_i32(value: &i32) -> bool {
+    *value == 0
+}
+
+fn is_zero_i64(value: &i64) -> bool {
+    *value == 0
+}
+
+fn go_string_is_empty<T: AsRef<str>>(value: &Option<T>) -> bool {
+    value.as_ref().is_none_or(|value| value.as_ref().is_empty())
+}
+
+fn optional_map_is_empty<K, V>(value: &Option<BTreeMap<K, V>>) -> bool {
+    value.as_ref().is_none_or(BTreeMap::is_empty)
+}
+
+fn serialize_game_server_state<S: serde::Serializer>(
+    value: &Option<GameServerState>,
+    serializer: S,
+) -> Result<S::Ok, S::Error> {
+    serializer.serialize_str(value.as_ref().map_or("", GameServerState::as_str))
+}
+
+fn deserialize_game_server_state<'de, D: serde::Deserializer<'de>>(
+    deserializer: D,
+) -> Result<Option<GameServerState>, D::Error> {
+    // State is a non-pointer Go string: missing, null and "" are one zero
+    // value. Keep one canonical Rust representation while preserving every
+    // nonempty known or future state.
+    Ok(Option::<GameServerState>::deserialize(deserializer)?
+        .filter(|state| !state.as_str().is_empty()))
+}
+
 #[derive(Clone, Debug, PartialEq, Eq, AgonesStringEnum)]
 pub enum GameServerState {
     #[agones(value = "PortAllocation")]
@@ -134,19 +167,19 @@ pub enum SchedulingStrategy {
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ObjectMeta {
-    #[serde(default, skip_serializing_if = "String::is_empty")]
+    #[serde(default, skip_serializing_if = "String::is_empty", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub name: String,
-    #[serde(default, skip_serializing_if = "String::is_empty")]
+    #[serde(default, skip_serializing_if = "String::is_empty", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub generate_name: String,
-    #[serde(default, skip_serializing_if = "String::is_empty")]
+    #[serde(default, skip_serializing_if = "String::is_empty", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub namespace: String,
-    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub labels: BTreeMap<String, String>,
-    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub annotations: BTreeMap<String, String>,
-    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub finalizers: Vec<String>,
-    #[serde(default, skip_serializing_if = "String::is_empty")]
+    #[serde(default, skip_serializing_if = "String::is_empty", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub uid: String,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub resource_version: Option<String>,
@@ -171,13 +204,16 @@ pub enum ContainerRestartPolicy {
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Container {
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub name: String,
-    #[serde(default, skip_serializing_if = "String::is_empty")]
+    #[serde(default, skip_serializing_if = "String::is_empty", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub image: String,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub restart_policy: Option<ContainerRestartPolicy>,
-    #[serde(default, skip_serializing_if = "is_false")]
+    #[serde(default, skip_serializing_if = "is_false", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub tty: bool,
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
+    pub resources: BTreeMap<String, serde_json::Value>,
     #[serde(flatten)]
     pub extensions: BTreeMap<String, serde_json::Value>,
 }
@@ -185,9 +221,9 @@ pub struct Container {
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PodSpec {
-    #[serde(default)]
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub containers: crate::GoSlice<Container>,
-    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub init_containers: Vec<Container>,
     #[serde(flatten)]
     pub extensions: BTreeMap<String, serde_json::Value>,
@@ -196,9 +232,9 @@ pub struct PodSpec {
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PodTemplateSpec {
-    #[serde(default)]
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub metadata: ObjectMeta,
-    #[serde(default)]
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub spec: PodSpec,
     #[serde(flatten)]
     pub extensions: BTreeMap<String, serde_json::Value>,
@@ -207,13 +243,13 @@ pub struct PodTemplateSpec {
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Health {
-    #[serde(default)]
+    #[serde(default, skip_serializing_if = "is_false", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub disabled: bool,
-    #[serde(default)]
+    #[serde(default, skip_serializing_if = "is_zero_i32", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub period_seconds: i32,
-    #[serde(default)]
+    #[serde(default, skip_serializing_if = "is_zero_i32", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub failure_threshold: i32,
-    #[serde(default)]
+    #[serde(default, skip_serializing_if = "is_zero_i32", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub initial_delay_seconds: i32,
 }
 
@@ -254,19 +290,19 @@ fn health_defaulting_makes_enabled_thresholds_positive(
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GameServerPort {
-    #[serde(default, skip_serializing_if = "String::is_empty")]
+    #[serde(default, skip_serializing_if = "String::is_empty", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub name: String,
-    #[serde(default, skip_serializing_if = "String::is_empty")]
+    #[serde(default, skip_serializing_if = "String::is_empty", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub range: String,
-    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "go_string_is_empty")]
     pub port_policy: Option<PortPolicy>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub container: Option<String>,
-    #[serde(default)]
+    #[serde(default, skip_serializing_if = "is_zero_i32", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub container_port: i32,
-    #[serde(default)]
+    #[serde(default, skip_serializing_if = "is_zero_i32", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub host_port: i32,
-    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "go_string_is_empty")]
     pub protocol: Option<Protocol>,
 }
 
@@ -286,17 +322,17 @@ impl GameServerPort {
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SdkServer {
-    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "go_string_is_empty")]
     pub log_level: Option<SdkServerLogLevel>,
-    #[serde(default)]
+    #[serde(default, skip_serializing_if = "is_zero_i32", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub grpc_port: i32,
-    #[serde(default)]
+    #[serde(default, skip_serializing_if = "is_zero_i32", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub http_port: i32,
 }
 
 impl SdkServer {
     fn apply_defaults(&mut self) {
-        if self.log_level.is_none() {
+        if go_string_is_empty(&self.log_level) {
             self.log_level = Some(SdkServerLogLevel::Info);
         }
         if self.grpc_port == 0 {
@@ -311,26 +347,26 @@ impl SdkServer {
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Eviction {
-    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "go_string_is_empty")]
     pub safe: Option<EvictionSafe>,
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PlayersSpec {
-    #[serde(default)]
+    #[serde(default, skip_serializing_if = "is_zero_i64", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub initial_capacity: i64,
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PlayerStatus {
-    #[serde(default)]
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub count: i64,
-    #[serde(default)]
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub capacity: i64,
-    #[serde(default)]
-    pub ids: Vec<String>,
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
+    pub ids: crate::GoSlice<String>,
 }
 
 
@@ -374,41 +410,41 @@ fn safe_add_nonnegative_inputs_are_saturating(input: (i64, i64)) -> bool {
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CounterStatus {
-    #[serde(default)]
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub count: i64,
-    #[serde(default)]
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub capacity: i64,
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ListStatus {
-    #[serde(default)]
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub capacity: i64,
-    #[serde(default)]
-    pub values: Vec<String>,
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
+    pub values: crate::GoSlice<String>,
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GameServerSpec {
-    #[serde(default, skip_serializing_if = "String::is_empty")]
+    #[serde(default, skip_serializing_if = "String::is_empty", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub container: String,
-    #[serde(default)]
-    pub ports: Vec<GameServerPort>,
-    #[serde(default)]
+    #[serde(default, skip_serializing_if = "crate::GoSlice::is_empty", deserialize_with = "crate::go_value::deserialize_go_value")]
+    pub ports: crate::GoSlice<GameServerPort>,
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub health: Health,
-    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "go_string_is_empty")]
     pub scheduling: Option<SchedulingStrategy>,
-    #[serde(default)]
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub sdk_server: SdkServer,
-    #[serde(default)]
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub template: PodTemplateSpec,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub players: Option<PlayersSpec>,
-    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "optional_map_is_empty")]
     pub counters: Option<BTreeMap<String, CounterStatus>>,
-    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "optional_map_is_empty")]
     pub lists: Option<BTreeMap<String, ListStatus>>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub eviction: Option<Eviction>,
@@ -422,13 +458,13 @@ impl GameServerSpec {
 
         let default_container = self.container.clone();
         for port in &mut self.ports {
-            if port.port_policy.is_none() {
+            if go_string_is_empty(&port.port_policy) {
                 port.port_policy = Some(PortPolicy::Dynamic);
             }
             if port.range.is_empty() {
                 port.range = DEFAULT_PORT_RANGE.to_owned();
             }
-            if port.protocol.is_none() {
+            if go_string_is_empty(&port.protocol) {
                 port.protocol = Some(Protocol::Udp);
             }
             if port.container.as_deref().is_none_or(str::is_empty) {
@@ -439,11 +475,11 @@ impl GameServerSpec {
         self.health.apply_defaults();
 
         let eviction = self.eviction.get_or_insert_with(Eviction::default);
-        if eviction.safe.is_none() {
+        if go_string_is_empty(&eviction.safe) {
             eviction.safe = Some(EvictionSafe::Never);
         }
 
-        if self.scheduling.is_none() {
+        if go_string_is_empty(&self.scheduling) {
             self.scheduling = Some(SchedulingStrategy::Packed);
         }
         self.sdk_server.apply_defaults();
@@ -453,16 +489,16 @@ impl GameServerSpec {
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeAddress {
-    #[serde(default, skip_serializing_if = "String::is_empty")]
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub address: String,
-    #[serde(rename = "type", default, skip_serializing_if = "String::is_empty")]
+    #[serde(rename = "type", default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub address_type: String,
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GameServerStatusPort {
-    #[serde(default, skip_serializing_if = "String::is_empty")]
+    #[serde(default, skip_serializing_if = "String::is_empty", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub name: String,
     pub port: i32,
 }
@@ -470,23 +506,23 @@ pub struct GameServerStatusPort {
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GameServerStatus {
-    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(default, deserialize_with = "deserialize_game_server_state", serialize_with = "serialize_game_server_state")]
     pub state: Option<GameServerState>,
-    #[serde(default)]
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub ports: crate::GoSlice<GameServerStatusPort>,
-    #[serde(default, skip_serializing_if = "String::is_empty")]
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub address: String,
-    #[serde(default)]
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub addresses: crate::GoSlice<NodeAddress>,
-    #[serde(default, skip_serializing_if = "String::is_empty")]
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub node_name: String,
-    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
     pub reserved_until: Option<String>,
-    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
     pub players: Option<PlayerStatus>,
-    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "optional_map_is_empty")]
     pub counters: Option<BTreeMap<String, CounterStatus>>,
-    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "optional_map_is_empty")]
     pub lists: Option<BTreeMap<String, ListStatus>>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub eviction: Option<Eviction>,
@@ -757,19 +793,24 @@ impl GameServerSpec {
 )]
 #[serde(rename_all = "camelCase")]
 pub struct GameServer {
-    #[serde(default)]
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub metadata: ObjectMeta,
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub spec: GameServerSpec,
-    #[serde(default)]
+    #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub status: GameServerStatus,
 }
 
 impl GameServer {
     pub fn apply_defaults(&mut self) {
-        self.apply_defaults_with_version_context(
-            &crate::AgonesBuildVersionContext::default(),
-            FeatureFlags::default(),
-        );
+        self.apply_defaults_with_context(&crate::GameServerDefaultingContext::default());
+    }
+
+    pub fn apply_defaults_with_context<C: crate::CanApplyGameServerDefaults>(
+        &mut self,
+        context: &C,
+    ) {
+        context.apply_game_server_defaults(self);
     }
 
     pub fn apply_defaults_with_version_context<C: crate::CanGetAgonesVersionAnnotation>(
@@ -791,7 +832,7 @@ impl GameServer {
     }
 
     fn apply_status_defaults(&mut self, features: FeatureFlags) {
-        if self.status.state.is_none() {
+        if go_string_is_empty(&self.status.state) {
             self.status.state = Some(GameServerState::Creating);
             if self.has_port_policy(&PortPolicy::Dynamic)
                 || self.has_port_policy(&PortPolicy::Passthrough)
@@ -822,8 +863,12 @@ impl GameServer {
                 .safe = Some(EvictionSafe::Always);
         }
 
-        self.status.counters = self.spec.counters.clone();
-        self.status.lists = self.spec.lists.clone();
+        if let Some(counters) = &self.spec.counters {
+            self.status.counters = Some(counters.clone());
+        }
+        if let Some(lists) = &self.spec.lists {
+            self.status.lists = Some(lists.clone());
+        }
     }
 
     pub fn has_port_policy(&self, policy: &PortPolicy) -> bool {
@@ -1231,7 +1276,7 @@ impl GameServer {
                 self.metadata.name
             ));
         };
-        list.values = merge_remove_duplicates(&list.values, values);
+        list.values = merge_remove_duplicates(&list.values, values).into();
         truncate_list(list.capacity, &mut list.values);
         Ok(())
     }
@@ -1353,7 +1398,7 @@ impl GameServer {
     }
 }
 
-fn truncate_list(capacity: i64, values: &mut Vec<String>) {
+fn truncate_list(capacity: i64, values: &mut crate::GoSlice<String>) {
     let capacity = capacity.max(0) as usize;
     if values.len() > capacity {
         values.truncate(capacity);
@@ -1427,7 +1472,7 @@ mod tests {
                     container_port: 7777,
                     host_port: 7000,
                     protocol: Some(Protocol::TcpUdp),
-                }],
+                }].into(),
                 ..Default::default()
             },
             status: GameServerStatus {
@@ -1469,7 +1514,7 @@ mod tests {
                     host_port: 7000,
                     protocol: Some(Protocol::TcpUdp),
                     ..Default::default()
-                }],
+                }].into(),
                 ..Default::default()
             },
             ..Default::default()
@@ -1498,7 +1543,7 @@ mod tests {
                         protocol: Some(Protocol::TcpUdp),
                         ..Default::default()
                     },
-                ],
+                ].into(),
                 ..Default::default()
             },
             ..Default::default()
@@ -1527,7 +1572,7 @@ mod tests {
                     host_port: 7777,
                     protocol: Some(Protocol::Udp),
                     ..Default::default()
-                }],
+                }].into(),
                 ..Default::default()
             },
             status: GameServerStatus {
@@ -1675,7 +1720,7 @@ mod tests {
                 ports: vec![GameServerPort {
                     container_port: 999,
                     ..Default::default()
-                }],
+                }].into(),
                 template: PodTemplateSpec {
                     spec: PodSpec {
                         containers: vec![Container {
@@ -1760,7 +1805,7 @@ mod tests {
                     port_policy: Some(PortPolicy::Static),
                     protocol: Some(Protocol::Tcp),
                     ..Default::default()
-                }],
+                }].into(),
                 health: Health {
                     disabled: false,
                     period_seconds: 12,
@@ -1838,7 +1883,7 @@ mod tests {
         )]));
         gs.spec.lists = Some(BTreeMap::from([(
             "players".into(),
-            ListStatus { capacity: 100, values: vec!["foo".into(), "bar".into()] },
+            ListStatus { capacity: 100, values: vec!["foo".into(), "bar".into()].into() },
         )]));
         gs.apply_defaults();
         assert_eq!(gs.status.counters, gs.spec.counters);
@@ -1902,7 +1947,11 @@ mod tests {
         });
         let template: PodTemplateSpec = serde_json::from_value(json.clone()).unwrap();
         let encoded = serde_json::to_value(template).unwrap();
-        assert_eq!(encoded, json);
+        // Source Go Container JSON materializes zero resources while retaining
+        // the unrelated Pod/metadata fields exercised by this fixture.
+        let mut expected = json;
+        expected["spec"]["containers"][0]["resources"] = serde_json::json!({});
+        assert_eq!(encoded, expected);
     }
 
     #[test]
@@ -1981,7 +2030,7 @@ mod tests {
                     port_policy: Some(PortPolicy::Static),
                     ..Default::default()
                 },
-            ],
+            ].into(),
             template: PodTemplateSpec {
                 spec: PodSpec {
                     containers: vec![
@@ -2009,7 +2058,7 @@ mod tests {
                 container_port: 7777,
                 port_policy: Some(PortPolicy::Static),
                 ..Default::default()
-            }],
+            }].into(),
             ..Default::default()
         };
         let errors = dev.validate("invalid-ip");
@@ -2046,7 +2095,7 @@ mod tests {
                         container_port: 1294,
                         ..Default::default()
                     },
-                ],
+                ].into(),
                 template: PodTemplateSpec {
                     spec: PodSpec {
                         containers: vec![Container {
@@ -2077,7 +2126,7 @@ mod tests {
             host_port: 7890,
             container_port: 7777,
             ..Default::default()
-        }];
+        }].into();
         let errors = gs.validate();
         assert_eq!(errors.len(), 1);
         assert_eq!(errors[0].path, "spec.ports[0].portPolicy");
@@ -2267,7 +2316,7 @@ mod tests {
                     "games".into(),
                     ListStatus {
                         capacity: 3,
-                        values: vec!["game0".into()],
+                        values: vec!["game0".into()].into(),
                     },
                 )])),
                 ..Default::default()
@@ -2357,7 +2406,7 @@ mod tests {
                     "maps".into(),
                     ListStatus {
                         capacity: 5,
-                        values: vec!["a".into(), "b".into(), "c".into()],
+                        values: vec!["a".into(), "b".into(), "c".into()].into(),
                     },
                 )])),
                 ..Default::default()
@@ -2370,7 +2419,7 @@ mod tests {
                     "maps".into(),
                     ListStatus {
                         capacity: 5,
-                        values: vec!["a".into()],
+                        values: vec!["a".into()].into(),
                     },
                 )])),
                 ..Default::default()

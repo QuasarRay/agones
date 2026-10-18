@@ -1,0 +1,13 @@
+{
+  "architecture_status": "All eight _2 cells remain required open. Reassess existing resource-derive expansion hygiene and all forms during the bounded post-gate review.",
+  "candidate": "GameServer defaulting CGP policy, source empty-string/omitempty checks and nullable collections.",
+  "decision": "REUSE_EXISTING",
+  "evidence": "Six option-enum defaults currently test only None, four spec/status map fields share Go omitempty length semantics, and three additional concrete slice fields require nil preservation. The actual mutation admission currently discards configured PlayerTracking.",
+  "fresh_null_value_decode": "The ordinary source witnesses exposed omitted spec and null non-pointer values. Reuse one serde Option<T>/Default adapter for fresh decoding of declared canonical value fields, preserving field types and explicit GoSlice nil values. It does not prove raw duplicate-key decoding or all Kubernetes schema/quantity conversions.",
+  "id": "GS-DEFAULTS-001-implementation-reuse",
+  "next_review_trigger": "GS-DEFAULTS-001 ordinary implementation gate, before property extraction.",
+  "rationale": "Reuse AgonesStringEnum AsRef<str>/as_str, existing CGP getters/providers and build identity, GoSlice and the current admission diff. One narrow source-string-empty predicate and map-empty serde predicate eliminate repeated inconsistent checks; ordinary Rust retains the domain algorithm while a CGP capability selects it and its dependencies.",
+  "resources_owner": "A declared Container.resources value replaces opaque extension ownership; existing resource constructions were moved to that field. Nil player status and required status keys now serialize with source null/empty values.",
+  "roi": "The repetitions and bugs exist in the selected feature now. Small predicates, three type substitutions and compiler-guided constructor conversions cost less than duplicate nullable adapters or schema machinery. A single defaulter capability avoids another algorithm copy in admission and minimal contexts. No new macro/substrate or alternate orchestrator is needed.",
+  "scope_limit": "Complete the source GameServer/Spec/status defaulting and reachable creation consumers, run ordinary source witnesses and gate before new semantic extraction. Audit the required wire fields rather than certifying only the existing SDK projection."
+}

@@ -191,7 +191,7 @@ mod tests {
                             port_policy: Some(PortPolicy::Static),
                             protocol: Some(Protocol::Udp),
                             ..Default::default()
-                        }],
+                        }].into(),
                         template: PodTemplateSpec {
                             spec: PodSpec {
                                 containers: vec![Container {
@@ -296,13 +296,11 @@ mod tests {
             });
         fleet.spec.template.spec.container = "missing".into();
         fleet.spec.template.spec.template.spec.containers[0]
-            .extensions
+            .resources
             .insert(
-                "resources".into(),
+                "requests".into(),
                 serde_json::json!({
-                    "requests": {
-                        "cpu": "-1"
-                    }
+                    "cpu": "-1"
                 }),
             );
 

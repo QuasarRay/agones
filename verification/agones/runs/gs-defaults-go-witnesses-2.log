@@ -1,0 +1,1070 @@
+[
+  {
+    "name": "explicit-empty-enums",
+    "object": {
+      "metadata": {
+        "annotations": {
+          "agones.dev/sdk-version": "dev"
+        },
+        "finalizers": [
+          "agones.dev/controller"
+        ]
+      },
+      "spec": {
+        "container": "game",
+        "ports": [
+          {
+            "range": "default",
+            "portPolicy": "Dynamic",
+            "container": "game",
+            "containerPort": 999,
+            "protocol": "UDP"
+          }
+        ],
+        "health": {
+          "periodSeconds": 5,
+          "failureThreshold": 3,
+          "initialDelaySeconds": 5
+        },
+        "scheduling": "Packed",
+        "sdkServer": {
+          "logLevel": "Info",
+          "grpcPort": 9357,
+          "httpPort": 9358
+        },
+        "template": {
+          "metadata": {},
+          "spec": {
+            "containers": [
+              {
+                "name": "game",
+                "resources": {}
+              }
+            ]
+          }
+        },
+        "eviction": {
+          "safe": "Never"
+        }
+      },
+      "status": {
+        "state": "PortAllocation",
+        "ports": null,
+        "address": "",
+        "addresses": null,
+        "nodeName": "",
+        "reservedUntil": null,
+        "players": null,
+        "eviction": {
+          "safe": "Never"
+        }
+      }
+    },
+    "observed": {
+      "container": "game",
+      "counters": null,
+      "counters_nil": true,
+      "eviction_spec": "Never",
+      "eviction_status": "Never",
+      "finalizers": [
+        "agones.dev/controller"
+      ],
+      "health": {
+        "failureThreshold": 3,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 5
+      },
+      "lists": null,
+      "lists_nil": true,
+      "players": null,
+      "port_policy": "Dynamic",
+      "protocol": "UDP",
+      "scheduling": "Packed",
+      "sdk": {
+        "grpcPort": 9357,
+        "httpPort": 9358,
+        "logLevel": "Info"
+      },
+      "state": "PortAllocation",
+      "version": "dev"
+    }
+  },
+  {
+    "name": "unknown-nonempty-and-nonzero",
+    "object": {
+      "metadata": {
+        "annotations": {
+          "agones.dev/sdk-version": "dev"
+        },
+        "finalizers": [
+          "agones.dev/controller"
+        ]
+      },
+      "spec": {
+        "ports": [
+          {
+            "range": "default",
+            "portPolicy": "custom",
+            "container": "",
+            "hostPort": 999,
+            "protocol": "SCTP"
+          }
+        ],
+        "health": {
+          "periodSeconds": 5,
+          "failureThreshold": 3,
+          "initialDelaySeconds": 5
+        },
+        "scheduling": "custom",
+        "sdkServer": {
+          "logLevel": "verbose",
+          "grpcPort": -7,
+          "httpPort": 9359
+        },
+        "template": {
+          "metadata": {},
+          "spec": {
+            "containers": null
+          }
+        },
+        "eviction": {
+          "safe": "custom"
+        }
+      },
+      "status": {
+        "state": "custom",
+        "ports": null,
+        "address": "",
+        "addresses": null,
+        "nodeName": "",
+        "reservedUntil": null,
+        "players": null,
+        "eviction": {
+          "safe": "custom"
+        }
+      }
+    },
+    "observed": {
+      "container": "",
+      "counters": null,
+      "counters_nil": true,
+      "eviction_spec": "custom",
+      "eviction_status": "custom",
+      "finalizers": [
+        "agones.dev/controller"
+      ],
+      "health": {
+        "failureThreshold": 3,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 5
+      },
+      "lists": null,
+      "lists_nil": true,
+      "players": null,
+      "port_policy": "custom",
+      "protocol": "SCTP",
+      "scheduling": "custom",
+      "sdk": {
+        "grpcPort": -7,
+        "httpPort": 9359,
+        "logLevel": "verbose"
+      },
+      "state": "custom",
+      "version": "dev"
+    }
+  },
+  {
+    "name": "nil-spec-maps-preserve-status",
+    "object": {
+      "metadata": {
+        "annotations": {
+          "agones.dev/sdk-version": "dev"
+        },
+        "finalizers": [
+          "agones.dev/controller"
+        ]
+      },
+      "spec": {
+        "health": {
+          "periodSeconds": 5,
+          "failureThreshold": 3,
+          "initialDelaySeconds": 5
+        },
+        "scheduling": "Packed",
+        "sdkServer": {
+          "logLevel": "Info",
+          "grpcPort": 9357,
+          "httpPort": 9358
+        },
+        "template": {
+          "metadata": {},
+          "spec": {
+            "containers": null
+          }
+        },
+        "eviction": {
+          "safe": "Never"
+        }
+      },
+      "status": {
+        "state": "Creating",
+        "ports": null,
+        "address": "",
+        "addresses": null,
+        "nodeName": "",
+        "reservedUntil": null,
+        "players": null,
+        "counters": {
+          "keep": {
+            "count": -1,
+            "capacity": 7
+          }
+        },
+        "lists": {
+          "keep": {
+            "capacity": 5,
+            "values": [
+              "one"
+            ]
+          }
+        },
+        "eviction": {
+          "safe": "Never"
+        }
+      }
+    },
+    "observed": {
+      "container": "",
+      "counters": {
+        "keep": {
+          "capacity": 7,
+          "count": -1
+        }
+      },
+      "counters_nil": false,
+      "eviction_spec": "Never",
+      "eviction_status": "Never",
+      "finalizers": [
+        "agones.dev/controller"
+      ],
+      "health": {
+        "failureThreshold": 3,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 5
+      },
+      "lists": {
+        "keep": {
+          "capacity": 5,
+          "values": [
+            "one"
+          ]
+        }
+      },
+      "lists_nil": false,
+      "players": null,
+      "port_policy": "",
+      "protocol": "",
+      "scheduling": "Packed",
+      "sdk": {
+        "grpcPort": 9357,
+        "httpPort": 9358,
+        "logLevel": "Info"
+      },
+      "state": "Creating",
+      "version": "dev"
+    }
+  },
+  {
+    "name": "allocated-empty-spec-maps-replace-status",
+    "object": {
+      "metadata": {
+        "annotations": {
+          "agones.dev/sdk-version": "dev"
+        },
+        "finalizers": [
+          "agones.dev/controller"
+        ]
+      },
+      "spec": {
+        "health": {
+          "periodSeconds": 5,
+          "failureThreshold": 3,
+          "initialDelaySeconds": 5
+        },
+        "scheduling": "Packed",
+        "sdkServer": {
+          "logLevel": "Info",
+          "grpcPort": 9357,
+          "httpPort": 9358
+        },
+        "template": {
+          "metadata": {},
+          "spec": {
+            "containers": null
+          }
+        },
+        "eviction": {
+          "safe": "Never"
+        }
+      },
+      "status": {
+        "state": "Creating",
+        "ports": null,
+        "address": "",
+        "addresses": null,
+        "nodeName": "",
+        "reservedUntil": null,
+        "players": null,
+        "eviction": {
+          "safe": "Never"
+        }
+      }
+    },
+    "observed": {
+      "container": "",
+      "counters": {},
+      "counters_nil": false,
+      "eviction_spec": "Never",
+      "eviction_status": "Never",
+      "finalizers": [
+        "agones.dev/controller"
+      ],
+      "health": {
+        "failureThreshold": 3,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 5
+      },
+      "lists": {},
+      "lists_nil": false,
+      "players": null,
+      "port_policy": "",
+      "protocol": "",
+      "scheduling": "Packed",
+      "sdk": {
+        "grpcPort": 9357,
+        "httpPort": 9358,
+        "logLevel": "Info"
+      },
+      "state": "Creating",
+      "version": "dev"
+    }
+  },
+  {
+    "name": "copied-maps-and-slices",
+    "object": {
+      "metadata": {
+        "annotations": {
+          "agones.dev/sdk-version": "dev"
+        },
+        "finalizers": [
+          "agones.dev/controller"
+        ]
+      },
+      "spec": {
+        "health": {
+          "periodSeconds": 5,
+          "failureThreshold": 3,
+          "initialDelaySeconds": 5
+        },
+        "scheduling": "Packed",
+        "sdkServer": {
+          "logLevel": "Info",
+          "grpcPort": 9357,
+          "httpPort": 9358
+        },
+        "template": {
+          "metadata": {},
+          "spec": {
+            "containers": null
+          }
+        },
+        "counters": {
+          "n": {
+            "count": 99,
+            "capacity": 9
+          }
+        },
+        "lists": {
+          "l": {
+            "capacity": 5,
+            "values": [
+              "changed"
+            ]
+          }
+        },
+        "eviction": {
+          "safe": "Never"
+        }
+      },
+      "status": {
+        "state": "Creating",
+        "ports": null,
+        "address": "",
+        "addresses": null,
+        "nodeName": "",
+        "reservedUntil": null,
+        "players": null,
+        "counters": {
+          "n": {
+            "count": 1,
+            "capacity": 9
+          }
+        },
+        "lists": {
+          "l": {
+            "capacity": 5,
+            "values": [
+              "one"
+            ]
+          }
+        },
+        "eviction": {
+          "safe": "Never"
+        }
+      }
+    },
+    "observed": {
+      "container": "",
+      "counters": {
+        "n": {
+          "capacity": 9,
+          "count": 1
+        }
+      },
+      "counters_nil": false,
+      "eviction_spec": "Never",
+      "eviction_status": "Never",
+      "finalizers": [
+        "agones.dev/controller"
+      ],
+      "health": {
+        "failureThreshold": 3,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 5
+      },
+      "lists": {
+        "l": {
+          "capacity": 5,
+          "values": [
+            "one"
+          ]
+        }
+      },
+      "lists_nil": false,
+      "players": null,
+      "port_policy": "",
+      "protocol": "",
+      "scheduling": "Packed",
+      "sdk": {
+        "grpcPort": 9357,
+        "httpPort": 9358,
+        "logLevel": "Info"
+      },
+      "state": "Creating",
+      "version": "dev"
+    }
+  },
+  {
+    "name": "players-enabled-nil-ids",
+    "object": {
+      "metadata": {
+        "annotations": {
+          "agones.dev/sdk-version": "dev"
+        },
+        "finalizers": [
+          "agones.dev/controller"
+        ]
+      },
+      "spec": {
+        "health": {
+          "periodSeconds": 5,
+          "failureThreshold": 3,
+          "initialDelaySeconds": 5
+        },
+        "scheduling": "Packed",
+        "sdkServer": {
+          "logLevel": "Info",
+          "grpcPort": 9357,
+          "httpPort": 9358
+        },
+        "template": {
+          "metadata": {},
+          "spec": {
+            "containers": null
+          }
+        },
+        "players": {
+          "initialCapacity": 7
+        },
+        "eviction": {
+          "safe": "Never"
+        }
+      },
+      "status": {
+        "state": "Creating",
+        "ports": null,
+        "address": "",
+        "addresses": null,
+        "nodeName": "",
+        "reservedUntil": null,
+        "players": {
+          "count": 0,
+          "capacity": 7,
+          "ids": null
+        },
+        "eviction": {
+          "safe": "Never"
+        }
+      }
+    },
+    "observed": {
+      "container": "",
+      "counters": null,
+      "counters_nil": true,
+      "eviction_spec": "Never",
+      "eviction_status": "Never",
+      "finalizers": [
+        "agones.dev/controller"
+      ],
+      "health": {
+        "failureThreshold": 3,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 5
+      },
+      "lists": null,
+      "lists_nil": true,
+      "players": {
+        "capacity": 7,
+        "count": 0,
+        "ids": null
+      },
+      "port_policy": "",
+      "protocol": "",
+      "scheduling": "Packed",
+      "sdk": {
+        "grpcPort": 9357,
+        "httpPort": 9358,
+        "logLevel": "Info"
+      },
+      "state": "Creating",
+      "version": "dev"
+    }
+  },
+  {
+    "name": "players-disabled-preserve-status",
+    "object": {
+      "metadata": {
+        "annotations": {
+          "agones.dev/sdk-version": "dev"
+        },
+        "finalizers": [
+          "agones.dev/controller"
+        ]
+      },
+      "spec": {
+        "health": {
+          "periodSeconds": 5,
+          "failureThreshold": 3,
+          "initialDelaySeconds": 5
+        },
+        "scheduling": "Packed",
+        "sdkServer": {
+          "logLevel": "Info",
+          "grpcPort": 9357,
+          "httpPort": 9358
+        },
+        "template": {
+          "metadata": {},
+          "spec": {
+            "containers": null
+          }
+        },
+        "players": {
+          "initialCapacity": 8
+        },
+        "eviction": {
+          "safe": "Never"
+        }
+      },
+      "status": {
+        "state": "Creating",
+        "ports": null,
+        "address": "",
+        "addresses": null,
+        "nodeName": "",
+        "reservedUntil": null,
+        "players": {
+          "count": 2,
+          "capacity": 4,
+          "ids": [
+            "id"
+          ]
+        },
+        "eviction": {
+          "safe": "Never"
+        }
+      }
+    },
+    "observed": {
+      "container": "",
+      "counters": null,
+      "counters_nil": true,
+      "eviction_spec": "Never",
+      "eviction_status": "Never",
+      "finalizers": [
+        "agones.dev/controller"
+      ],
+      "health": {
+        "failureThreshold": 3,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 5
+      },
+      "lists": null,
+      "lists_nil": true,
+      "players": {
+        "capacity": 4,
+        "count": 2,
+        "ids": [
+          "id"
+        ]
+      },
+      "port_policy": "",
+      "protocol": "",
+      "scheduling": "Packed",
+      "sdk": {
+        "grpcPort": 9357,
+        "httpPort": 9358,
+        "logLevel": "Info"
+      },
+      "state": "Creating",
+      "version": "dev"
+    }
+  },
+  {
+    "name": "disabled-health-zero-fields",
+    "object": {
+      "metadata": {
+        "annotations": {
+          "agones.dev/sdk-version": "dev"
+        },
+        "finalizers": [
+          "agones.dev/controller"
+        ]
+      },
+      "spec": {
+        "health": {
+          "disabled": true
+        },
+        "scheduling": "Packed",
+        "sdkServer": {
+          "logLevel": "Info",
+          "grpcPort": 9357,
+          "httpPort": 9358
+        },
+        "template": {
+          "metadata": {},
+          "spec": {
+            "containers": null
+          }
+        },
+        "eviction": {
+          "safe": "Never"
+        }
+      },
+      "status": {
+        "state": "Creating",
+        "ports": null,
+        "address": "",
+        "addresses": null,
+        "nodeName": "",
+        "reservedUntil": null,
+        "players": null,
+        "eviction": {
+          "safe": "Never"
+        }
+      }
+    },
+    "observed": {
+      "container": "",
+      "counters": null,
+      "counters_nil": true,
+      "eviction_spec": "Never",
+      "eviction_status": "Never",
+      "finalizers": [
+        "agones.dev/controller"
+      ],
+      "health": {
+        "disabled": true
+      },
+      "lists": null,
+      "lists_nil": true,
+      "players": null,
+      "port_policy": "",
+      "protocol": "",
+      "scheduling": "Packed",
+      "sdk": {
+        "grpcPort": 9357,
+        "httpPort": 9358,
+        "logLevel": "Info"
+      },
+      "state": "Creating",
+      "version": "dev"
+    }
+  },
+  {
+    "name": "eviction-status-copy-and-override",
+    "object": {
+      "metadata": {
+        "annotations": {
+          "agones.dev/sdk-version": "dev"
+        },
+        "finalizers": [
+          "agones.dev/controller"
+        ]
+      },
+      "spec": {
+        "health": {
+          "periodSeconds": 5,
+          "failureThreshold": 3,
+          "initialDelaySeconds": 5
+        },
+        "scheduling": "Packed",
+        "sdkServer": {
+          "logLevel": "Info",
+          "grpcPort": 9357,
+          "httpPort": 9358
+        },
+        "template": {
+          "metadata": {
+            "annotations": {
+              "cluster-autoscaler.kubernetes.io/safe-to-evict": "true"
+            }
+          },
+          "spec": {
+            "containers": null
+          }
+        },
+        "eviction": {
+          "safe": "Never"
+        }
+      },
+      "status": {
+        "state": "Creating",
+        "ports": null,
+        "address": "",
+        "addresses": null,
+        "nodeName": "",
+        "reservedUntil": null,
+        "players": null,
+        "eviction": {
+          "safe": "Always"
+        }
+      }
+    },
+    "observed": {
+      "container": "",
+      "counters": null,
+      "counters_nil": true,
+      "eviction_spec": "Never",
+      "eviction_status": "Always",
+      "finalizers": [
+        "agones.dev/controller"
+      ],
+      "health": {
+        "failureThreshold": 3,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 5
+      },
+      "lists": null,
+      "lists_nil": true,
+      "players": null,
+      "port_policy": "",
+      "protocol": "",
+      "scheduling": "Packed",
+      "sdk": {
+        "grpcPort": 9357,
+        "httpPort": 9358,
+        "logLevel": "Info"
+      },
+      "state": "Creating",
+      "version": "dev"
+    }
+  },
+  {
+    "name": "required-zero-fields-null-slices",
+    "object": {
+      "metadata": {
+        "annotations": {
+          "agones.dev/sdk-version": "dev"
+        },
+        "finalizers": [
+          "agones.dev/controller"
+        ]
+      },
+      "spec": {
+        "health": {
+          "periodSeconds": 5,
+          "failureThreshold": 3,
+          "initialDelaySeconds": 5
+        },
+        "scheduling": "Packed",
+        "sdkServer": {
+          "logLevel": "Info",
+          "grpcPort": 9357,
+          "httpPort": 9358
+        },
+        "template": {
+          "metadata": {},
+          "spec": {
+            "containers": null
+          }
+        },
+        "eviction": {
+          "safe": "Never"
+        }
+      },
+      "status": {
+        "state": "Creating",
+        "ports": null,
+        "address": "",
+        "addresses": null,
+        "nodeName": "",
+        "reservedUntil": null,
+        "players": {
+          "count": 0,
+          "capacity": 0,
+          "ids": null
+        },
+        "lists": {
+          "l": {
+            "capacity": 0,
+            "values": null
+          }
+        },
+        "eviction": {
+          "safe": "Never"
+        }
+      }
+    },
+    "observed": {
+      "container": "",
+      "counters": null,
+      "counters_nil": true,
+      "eviction_spec": "Never",
+      "eviction_status": "Never",
+      "finalizers": [
+        "agones.dev/controller"
+      ],
+      "health": {
+        "failureThreshold": 3,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 5
+      },
+      "lists": {
+        "l": {
+          "capacity": 0,
+          "values": null
+        }
+      },
+      "lists_nil": false,
+      "players": {
+        "capacity": 0,
+        "count": 0,
+        "ids": null
+      },
+      "port_policy": "",
+      "protocol": "",
+      "scheduling": "Packed",
+      "sdk": {
+        "grpcPort": 9357,
+        "httpPort": 9358,
+        "logLevel": "Info"
+      },
+      "state": "Creating",
+      "version": "dev"
+    }
+  },
+  {
+    "name": "repeated-defaulting-keeps-source-append",
+    "object": {
+      "metadata": {
+        "annotations": {
+          "agones.dev/sdk-version": "dev",
+          "keep": "value"
+        },
+        "finalizers": [
+          "existing",
+          "agones.dev/controller",
+          "agones.dev/controller"
+        ]
+      },
+      "spec": {
+        "health": {
+          "periodSeconds": 5,
+          "failureThreshold": 3,
+          "initialDelaySeconds": 5
+        },
+        "scheduling": "Packed",
+        "sdkServer": {
+          "logLevel": "Info",
+          "grpcPort": 9357,
+          "httpPort": 9358
+        },
+        "template": {
+          "metadata": {},
+          "spec": {
+            "containers": null
+          }
+        },
+        "eviction": {
+          "safe": "Never"
+        }
+      },
+      "status": {
+        "state": "Creating",
+        "ports": null,
+        "address": "",
+        "addresses": null,
+        "nodeName": "",
+        "reservedUntil": null,
+        "players": null,
+        "eviction": {
+          "safe": "Never"
+        }
+      }
+    },
+    "observed": {
+      "container": "",
+      "counters": null,
+      "counters_nil": true,
+      "eviction_spec": "Never",
+      "eviction_status": "Never",
+      "finalizers": [
+        "existing",
+        "agones.dev/controller",
+        "agones.dev/controller"
+      ],
+      "health": {
+        "failureThreshold": 3,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 5
+      },
+      "lists": null,
+      "lists_nil": true,
+      "players": null,
+      "port_policy": "",
+      "protocol": "",
+      "scheduling": "Packed",
+      "sdk": {
+        "grpcPort": 9357,
+        "httpPort": 9358,
+        "logLevel": "Info"
+      },
+      "state": "Creating",
+      "version": "dev"
+    }
+  },
+  {
+    "name": "int64-boundaries-are-exact",
+    "object": {
+      "metadata": {
+        "annotations": {
+          "agones.dev/sdk-version": "dev"
+        },
+        "finalizers": [
+          "agones.dev/controller"
+        ]
+      },
+      "spec": {
+        "health": {
+          "periodSeconds": 5,
+          "failureThreshold": 3,
+          "initialDelaySeconds": 5
+        },
+        "scheduling": "Packed",
+        "sdkServer": {
+          "logLevel": "Info",
+          "grpcPort": 9357,
+          "httpPort": 9358
+        },
+        "template": {
+          "metadata": {},
+          "spec": {
+            "containers": null
+          }
+        },
+        "players": {
+          "initialCapacity": -9223372036854775808
+        },
+        "counters": {
+          "n": {
+            "count": 9223372036854775807,
+            "capacity": -9223372036854775808
+          }
+        },
+        "eviction": {
+          "safe": "Never"
+        }
+      },
+      "status": {
+        "state": "Creating",
+        "ports": null,
+        "address": "",
+        "addresses": null,
+        "nodeName": "",
+        "reservedUntil": null,
+        "players": {
+          "count": 0,
+          "capacity": -9223372036854775808,
+          "ids": null
+        },
+        "counters": {
+          "n": {
+            "count": 9223372036854775807,
+            "capacity": -9223372036854775808
+          }
+        },
+        "eviction": {
+          "safe": "Never"
+        }
+      }
+    },
+    "observed": {
+      "container": "",
+      "counters": {
+        "n": {
+          "capacity": -9223372036854775808,
+          "count": 9223372036854775807
+        }
+      },
+      "counters_nil": false,
+      "eviction_spec": "Never",
+      "eviction_status": "Never",
+      "finalizers": [
+        "agones.dev/controller"
+      ],
+      "health": {
+        "failureThreshold": 3,
+        "initialDelaySeconds": 5,
+        "periodSeconds": 5
+      },
+      "lists": null,
+      "lists_nil": true,
+      "players": {
+        "capacity": -9223372036854775808,
+        "count": 0,
+        "ids": null
+      },
+      "port_policy": "",
+      "protocol": "",
+      "scheduling": "Packed",
+      "sdk": {
+        "grpcPort": 9357,
+        "httpPort": 9358,
+        "logLevel": "Info"
+      },
+      "state": "Creating",
+      "version": "dev"
+    }
+  }
+]

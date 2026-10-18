@@ -1,0 +1,40 @@
+=== RUN   TestGameServerApplyDefaults
+=== PAUSE TestGameServerApplyDefaults
+=== CONT  TestGameServerApplyDefaults
+=== RUN   TestGameServerApplyDefaults/defaults_are_already_set
+=== RUN   TestGameServerApplyDefaults/set_basic_defaults_on_static_gameserver
+=== RUN   TestGameServerApplyDefaults/defaults_are_eviction.safe:_Never
+=== RUN   TestGameServerApplyDefaults/eviction.safe:_Always
+=== RUN   TestGameServerApplyDefaults/eviction.safe:_OnUpgrade
+=== RUN   TestGameServerApplyDefaults/eviction.safe:_Never
+=== RUN   TestGameServerApplyDefaults/set_Debug_logging_level
+=== RUN   TestGameServerApplyDefaults/set_gRPC_and_HTTP_ports_on_SDK_Server
+=== RUN   TestGameServerApplyDefaults/eviction.safe:_Always_inferred_from_safe-to-evict=true
+=== RUN   TestGameServerApplyDefaults/Nothing_inferred_from_safe-to-evict=false
+=== RUN   TestGameServerApplyDefaults/set_basic_defaults_on_a_very_simple_gameserver
+=== RUN   TestGameServerApplyDefaults/defaults_on_passthrough
+=== RUN   TestGameServerApplyDefaults/health_is_disabled
+=== RUN   TestGameServerApplyDefaults/convert_from_legacy_single_port_to_multiple
+=== RUN   TestGameServerApplyDefaults/safe-to-evict=false_AND_eviction.safe:_Always_=>_eviction.safe:_Always
+=== RUN   TestGameServerApplyDefaults/CountsAndLists=true,_Counters
+=== RUN   TestGameServerApplyDefaults/CountsAndLists=true,_Lists
+--- PASS: TestGameServerApplyDefaults (0.00s)
+    --- PASS: TestGameServerApplyDefaults/defaults_are_already_set (0.00s)
+    --- PASS: TestGameServerApplyDefaults/set_basic_defaults_on_static_gameserver (0.00s)
+    --- PASS: TestGameServerApplyDefaults/defaults_are_eviction.safe:_Never (0.00s)
+    --- PASS: TestGameServerApplyDefaults/eviction.safe:_Always (0.00s)
+    --- PASS: TestGameServerApplyDefaults/eviction.safe:_OnUpgrade (0.00s)
+    --- PASS: TestGameServerApplyDefaults/eviction.safe:_Never (0.00s)
+    --- PASS: TestGameServerApplyDefaults/set_Debug_logging_level (0.00s)
+    --- PASS: TestGameServerApplyDefaults/set_gRPC_and_HTTP_ports_on_SDK_Server (0.00s)
+    --- PASS: TestGameServerApplyDefaults/eviction.safe:_Always_inferred_from_safe-to-evict=true (0.00s)
+    --- PASS: TestGameServerApplyDefaults/Nothing_inferred_from_safe-to-evict=false (0.00s)
+    --- PASS: TestGameServerApplyDefaults/set_basic_defaults_on_a_very_simple_gameserver (0.00s)
+    --- PASS: TestGameServerApplyDefaults/defaults_on_passthrough (0.00s)
+    --- PASS: TestGameServerApplyDefaults/health_is_disabled (0.00s)
+    --- PASS: TestGameServerApplyDefaults/convert_from_legacy_single_port_to_multiple (0.00s)
+    --- PASS: TestGameServerApplyDefaults/safe-to-evict=false_AND_eviction.safe:_Always_=>_eviction.safe:_Always (0.00s)
+    --- PASS: TestGameServerApplyDefaults/CountsAndLists=true,_Counters (0.00s)
+    --- PASS: TestGameServerApplyDefaults/CountsAndLists=true,_Lists (0.00s)
+PASS
+ok  	agones.dev/agones/pkg/apis/agones/v1	0.008s

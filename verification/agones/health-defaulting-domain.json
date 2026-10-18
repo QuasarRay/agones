@@ -1,0 +1,50 @@
+{
+  "classification": "SOURCE_CONTRACT_PROPERTY",
+  "diagnostics": [
+    {
+      "failure": "builtin memcmp loop requires comparing three i32 values (12 bytes); unwind 8 is inadequate.",
+      "repair": "Raise the bound to 16, retaining all three claims, eight covers and the exact full bool/i32 domain. No safety/unwind checks are removed.",
+      "retained_harness": "verification/agones/health-defaulting-domain-initial.rs",
+      "run": "verification/agones/runs/health-defaulting-bolero-kani-1.json",
+      "status": "UNWIND_FAILURE_NO_CREDIT"
+    }
+  ],
+  "feature_id": "GS-DEFAULTS-001",
+  "formal_run": "verification/agones/runs/health-defaulting-bolero-kani-2.json",
+  "harness": "health_defaulting_common_domain",
+  "implementation_gate": "verification/agones/gates/90ecffab80af35e8b2ec88ba1367b66fc73e5b87a7b53f8d4b0dfff2e883cb00.json",
+  "invariant": "Disabled flag is preserved; disabled values are equal to inputs. Enabled outputs are positive, preserve every positive input, and equal the field-specific source constant exactly for nonpositive inputs. Applied separately to model and production.",
+  "original_source_assertions_credited": [],
+  "preconditions": [],
+  "production_connection": "GameServer defaulting invokes the same spec method through the actual CGP provider and configured Rusternetes mutation admission. Whole-path runtime conformance is separate from this leaf proof.",
+  "production_symbol": "GameServerSpec::apply_defaults",
+  "projection": "Other GameServerSpec fields are fixed to source zero; invoke the actual shared production GameServerSpec::apply_defaults.",
+  "proof_summary": "verification/agones/proof-summaries/health-defaulting-source-contract.json",
+  "property_count": 2180,
+  "raw_domain": "(bool,i32,i32,i32): disabled and all three signed 32-bit health thresholds",
+  "reference": "Independent tuple/array model using signed comparison with one.",
+  "required_assertions": 3,
+  "required_covers": 8,
+  "residual_required": "All 304 original source assertion occurrences and full provider/adapter/defaulting proof remain required; this property does not replace them.",
+  "result_format_note": "24 successful CBMC global pointer checks have no backend source-location metadata. The strict parser accepts only that explicit global class with complete statuses/descriptions; required semantic claims still have their exact source locations. Missing claim locations and failing/incomplete properties remain rejected.",
+  "schema_version": 1,
+  "semantic_bindings": {
+    "build/scripts/agones-rs/kani_results.py": "61137b32f8cb47ee893be991195b4739c9bd120c81ef922b771e0c50af870e1b",
+    "build/scripts/agones-rs/summarize_feature_proof.py": "029094e7fe06562e578d1e73a1934be7ad4ce9ec5908c50cc0c01ba4835e7e29",
+    "build/scripts/agones-rs/test_kani_results.py": "92903e03da6a7501a660173a90d436097f50f065acaf49515ba627d59da9d013",
+    "crates/agones-core/src/gameserver.rs": "342d6cf540fdf10f5fc5dccd99e042122afe3b7b1888ea592d5e6b1c044e7c93",
+    "crates/agones-core/src/gameserver_defaulting.rs": "abfde63391515d8d406a0feed17e58aa3fe0380c03f44ab4f7823a3cfaa00ce4",
+    "crates/agones-core/src/go_slice.rs": "1524bae25a2bf0c382c88c9afb870d43fef02b06f3edb6fdb0a846701444ada3",
+    "crates/agones-core/tests/health_defaulting_domain.rs": "196276511451a28c0e732775f16a8cec793176af2077a78479422709b205cb11",
+    "pkg/apis/agones/v1/gameserver.go": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0"
+  },
+  "source_assertion_occurrence_credit": 0,
+  "source_contract": "pkg/apis/agones/v1/gameserver.go applyHealthDefaults: disabled values are preserved; enabled nonpositive thresholds receive [5,3,5], all positive values remain unchanged.",
+  "status": "BOUNDED_PRODUCTION_SYMBOL_AND_REFERENCE_VERIFIED",
+  "status_counts": {
+    "SATISFIED": 8,
+    "SUCCESS": 2147,
+    "UNREACHABLE": 25
+  },
+  "unwind": 16
+}

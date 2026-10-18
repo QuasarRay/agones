@@ -1,0 +1,30 @@
+{
+  "cases": {
+    "caller_root_shadow_ignored": true,
+    "direct_renamed_runtime_and_macro": true,
+    "duplicate_path_rejected": true,
+    "explicit_facade_path": true,
+    "generic_const_and_where_clause": true,
+    "invalid_path_rejected": true,
+    "missing_runtime_rejected": true
+  },
+  "classification": "EXISTING_PROC_MACRO2_EXPANSION_CORE_REPAIR",
+  "id": "RESOURCE-DERIVE-PATHS-001",
+  "matrix_credit": 0,
+  "ordinary_cargo_fixtures": "verification/agones/runs/resource-derive-cargo-paths-1.json",
+  "ordinary_integration_test": "crates/agones-core/tests/resource_derive_paths.rs",
+  "production": [
+    "crates/agones-macros/src/lib.rs",
+    "crates/agones-macros/Cargo.toml",
+    "crates/agones-core/src/lib.rs"
+  ],
+  "remaining": "All eight required _2 authoring/form/location cells remain open; this ordinary derive repair does not satisfy them.",
+  "resolver_reuse": {
+    "existing_locked_package": true,
+    "name": "proc-macro-crate",
+    "new_dependency_edge": "agones-macros -> proc-macro-crate 3.5.0",
+    "package_versions_sources_checksums": "UNCHANGED",
+    "version": "3.5.0"
+  },
+  "schema_version": 1
+}

@@ -1,0 +1,18 @@
+{
+  "canonical_state_roundtrip": {
+    "failing_run": "verification/agones/runs/gs-defaults-workspace-tests-2.json",
+    "problem": "Required source state=\"\" redecoded as Some(Unknown(\"\")), splitting the canonical zero state and breaking the real generic resource adapter roundtrip.",
+    "resolution": "Missing/null/empty non-pointer source state maps to None, serializing to source empty string; nonempty known/future states are preserved. Focused roundtrip and negative nonempty controls retain the original adapter equality assertion."
+  },
+  "classification": "ORDINARY_WIRE_COUNTEREXAMPLE_FIXED",
+  "differences": [
+    "Source required status.players=null was omitted by Rust.",
+    "Source zero Container.resources={} was absent from Rust."
+  ],
+  "initial_rust_run": "verification/agones/runs/gs-defaults-rust-null-witnesses-1.json",
+  "missing_spec_input_failure": "verification/agones/runs/gs-defaults-rust-witnesses-1.json",
+  "missing_spec_resolution": "Fresh non-pointer Go value structs/scalars accept omitted/null zero values through one small serde adapter; this does not certify raw JSON duplicate-key or complete Kubernetes schema decoding.",
+  "original_go_run": "verification/agones/runs/gs-defaults-go-null-witnesses-1.json",
+  "resolution": "Required players status remains explicit null and Container.resources has one declared canonical value owner. Current paired replay matches all 14 complete objects.",
+  "schema_version": 1
+}

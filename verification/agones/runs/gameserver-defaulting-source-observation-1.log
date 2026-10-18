@@ -1,0 +1,1492 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+warning: ambiguous glob re-exports
+  --> crates/agones-core/src/lib.rs:40:9
+   |
+40 | pub use allocation::*;
+   |         ^^^^^^^^^^^^^ the name `NodeAddress` in the type namespace is first re-exported here
+41 | pub use autoscaling::*;
+42 | pub use gameserver::*;
+   |         ------------- but the name `NodeAddress` in the type namespace is also re-exported here
+   |
+   = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: function `fleet_replica_bounds_are_bounded` is never used
+    --> crates/agones-core/src/fleet.rs:1110:4
+     |
+1110 | fn fleet_replica_bounds_are_bounded(input: (i32, i32)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `label` is never used
+    --> crates/agones-core/src/autoscaling.rs:1332:8
+     |
+1331 | impl CapacityPolicyKind {
+     | ----------------------- method in this implementation
+1332 |     fn label(self) -> &'static str {
+     |        ^^^^^
+
+warning: function `capacity_scale_up_never_decreases_replicas` is never used
+    --> crates/agones-core/src/autoscaling.rs:1831:4
+     |
+1831 | fn capacity_scale_up_never_decreases_replicas(
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `buffer_policy_integer_decision_stays_bounded` is never used
+    --> crates/agones-core/src/autoscaling.rs:1867:4
+     |
+1867 | fn buffer_policy_integer_decision_stays_bounded(
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `buffer_integer_valid_region_is_accepted` is never used
+    --> crates/agones-core/src/autoscaling.rs:1896:4
+     |
+1896 | fn buffer_integer_valid_region_is_accepted(input: (i32, i32, i32)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `capacity_integer_valid_region_is_accepted` is never used
+    --> crates/agones-core/src/autoscaling.rs:1916:4
+     |
+1916 | fn capacity_integer_valid_region_is_accepted(input: (i64, i64, i32, bool)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `fixed_interval_positive_seconds_are_accepted` is never used
+    --> crates/agones-core/src/autoscaling.rs:1949:4
+     |
+1949 | fn fixed_interval_positive_seconds_are_accepted(seconds: i32) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `health_defaulting_makes_enabled_thresholds_positive` is never used
+   --> crates/agones-core/src/gameserver.rs:274:4
+    |
+274 | fn health_defaulting_makes_enabled_thresholds_positive(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `safe_add_nonnegative_inputs_are_saturating` is never used
+   --> crates/agones-core/src/gameserver.rs:394:4
+    |
+394 | fn safe_add_nonnegative_inputs_are_saturating(input: (i64, i64)) -> bool {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `counter_updates_preserve_bounds` is never used
+    --> crates/agones-core/src/gameserver.rs:1421:4
+     |
+1421 | fn counter_updates_preserve_bounds(input: (i64, i64, i64, bool)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `gameserverset_creation_batch_respects_caps` is never used
+   --> crates/agones-core/src/gameserverset.rs:451:4
+    |
+451 | fn gameserverset_creation_batch_respects_caps(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `average_of_nonnegative_byte_weights_stays_within_input_range` is never used
+   --> crates/agones-core/src/multicluster.rs:207:4
+    |
+207 | fn average_of_nonnegative_byte_weights_stays_within_input_range(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `agones-core` (lib) generated 13 warnings
+   Compiling agones-core v0.1.0 (/home/astral/Projects/agones/crates/agones-core)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.78s
+     Running `target/debug/examples/gameserver_source_defaulting_replay`
+[
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters::line-405",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters::line-409",
+    "observed": "dev"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters::line-412",
+    "observed": [
+      "agones.dev/controller"
+    ]
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters::line-413",
+    "observed": "testing"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters::line-414",
+    "observed": "UDP"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters::line-415",
+    "observed": "default"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters::line-416",
+    "observed": "PortAllocation"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters::line-417",
+    "observed": "Packed"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters::line-418",
+    "observed": {
+      "failureThreshold": 3,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 5
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters::line-419",
+    "observed": {
+      "grpcPort": 9357,
+      "httpPort": 9358,
+      "logLevel": "Info"
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters::line-423",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters::line-424",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters::line-427",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters::line-432",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters::line-437",
+    "observed": {
+      "games": {
+        "capacity": 100,
+        "count": 1
+      }
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters::line-445",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters::line-446",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Lists::line-405",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Lists::line-409",
+    "observed": "dev"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Lists::line-412",
+    "observed": [
+      "agones.dev/controller"
+    ]
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Lists::line-413",
+    "observed": "testing"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Lists::line-414",
+    "observed": "UDP"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Lists::line-415",
+    "observed": "default"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Lists::line-416",
+    "observed": "PortAllocation"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Lists::line-417",
+    "observed": "Packed"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Lists::line-418",
+    "observed": {
+      "failureThreshold": 3,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 5
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Lists::line-419",
+    "observed": {
+      "grpcPort": 9357,
+      "httpPort": 9358,
+      "logLevel": "Info"
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Lists::line-423",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Lists::line-424",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Lists::line-427",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Lists::line-432",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Lists::line-439",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Lists::line-440",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Lists::line-443",
+    "observed": {
+      "players": {
+        "capacity": 100,
+        "values": [
+          "foo",
+          "bar"
+        ]
+      }
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::Nothing inferred from safe-to-evict=false::line-405",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::Nothing inferred from safe-to-evict=false::line-409",
+    "observed": "dev"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::Nothing inferred from safe-to-evict=false::line-412",
+    "observed": [
+      "agones.dev/controller"
+    ]
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::Nothing inferred from safe-to-evict=false::line-413",
+    "observed": "testing"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::Nothing inferred from safe-to-evict=false::line-414",
+    "observed": "UDP"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::Nothing inferred from safe-to-evict=false::line-415",
+    "observed": "default"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::Nothing inferred from safe-to-evict=false::line-416",
+    "observed": "PortAllocation"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::Nothing inferred from safe-to-evict=false::line-417",
+    "observed": "Packed"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::Nothing inferred from safe-to-evict=false::line-418",
+    "observed": {
+      "failureThreshold": 3,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 5
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::Nothing inferred from safe-to-evict=false::line-419",
+    "observed": {
+      "grpcPort": 9357,
+      "httpPort": 9358,
+      "logLevel": "Info"
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::Nothing inferred from safe-to-evict=false::line-423",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::Nothing inferred from safe-to-evict=false::line-424",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::Nothing inferred from safe-to-evict=false::line-427",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::Nothing inferred from safe-to-evict=false::line-432",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::Nothing inferred from safe-to-evict=false::line-439",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::Nothing inferred from safe-to-evict=false::line-440",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::Nothing inferred from safe-to-evict=false::line-445",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::Nothing inferred from safe-to-evict=false::line-446",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::convert from legacy single port to multiple::line-405",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::convert from legacy single port to multiple::line-409",
+    "observed": "dev"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::convert from legacy single port to multiple::line-412",
+    "observed": [
+      "agones.dev/controller"
+    ]
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::convert from legacy single port to multiple::line-413",
+    "observed": "testing"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::convert from legacy single port to multiple::line-414",
+    "observed": "TCP"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::convert from legacy single port to multiple::line-415",
+    "observed": "default"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::convert from legacy single port to multiple::line-416",
+    "observed": "Creating"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::convert from legacy single port to multiple::line-417",
+    "observed": "Packed"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::convert from legacy single port to multiple::line-418",
+    "observed": {
+      "failureThreshold": 3,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 5
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::convert from legacy single port to multiple::line-419",
+    "observed": {
+      "grpcPort": 9357,
+      "httpPort": 9358,
+      "logLevel": "Info"
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::convert from legacy single port to multiple::line-423",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::convert from legacy single port to multiple::line-424",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::convert from legacy single port to multiple::line-427",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::convert from legacy single port to multiple::line-432",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::convert from legacy single port to multiple::line-439",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::convert from legacy single port to multiple::line-440",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::convert from legacy single port to multiple::line-445",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::convert from legacy single port to multiple::line-446",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are already set::line-405",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are already set::line-409",
+    "observed": "dev"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are already set::line-412",
+    "observed": [
+      "agones.dev/controller"
+    ]
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are already set::line-413",
+    "observed": "testing2"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are already set::line-414",
+    "observed": "TCP"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are already set::line-415",
+    "observed": "default"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are already set::line-416",
+    "observed": "TestState"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are already set::line-417",
+    "observed": "Packed"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are already set::line-418",
+    "observed": {
+      "failureThreshold": 10,
+      "initialDelaySeconds": 11,
+      "periodSeconds": 12
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are already set::line-419",
+    "observed": {
+      "grpcPort": 9357,
+      "httpPort": 9358,
+      "logLevel": "Info"
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are already set::line-423",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are already set::line-424",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are already set::line-427",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are already set::line-432",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are already set::line-439",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are already set::line-440",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are already set::line-445",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are already set::line-446",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-405",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-409",
+    "observed": "dev"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-412",
+    "observed": [
+      "agones.dev/controller"
+    ]
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-413",
+    "observed": "testing"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-414",
+    "observed": "UDP"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-415",
+    "observed": "default"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-416",
+    "observed": "PortAllocation"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-417",
+    "observed": "Packed"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-418",
+    "observed": {
+      "failureThreshold": 3,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 5
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-419",
+    "observed": {
+      "grpcPort": 9357,
+      "httpPort": 9358,
+      "logLevel": "Info"
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-423",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-424",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-427",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-432",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-439",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-440",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-445",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-446",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults on passthrough::line-405",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults on passthrough::line-409",
+    "observed": "dev"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults on passthrough::line-412",
+    "observed": [
+      "agones.dev/controller"
+    ]
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults on passthrough::line-413",
+    "observed": "testing"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults on passthrough::line-414",
+    "observed": "UDP"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults on passthrough::line-415",
+    "observed": "default"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults on passthrough::line-416",
+    "observed": "PortAllocation"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults on passthrough::line-417",
+    "observed": "Packed"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults on passthrough::line-418",
+    "observed": {
+      "failureThreshold": 3,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 5
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults on passthrough::line-419",
+    "observed": {
+      "grpcPort": 9357,
+      "httpPort": 9358,
+      "logLevel": "Info"
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults on passthrough::line-423",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults on passthrough::line-424",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults on passthrough::line-427",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults on passthrough::line-432",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults on passthrough::line-439",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults on passthrough::line-440",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults on passthrough::line-445",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults on passthrough::line-446",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always::line-405",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always::line-409",
+    "observed": "dev"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always::line-412",
+    "observed": [
+      "agones.dev/controller"
+    ]
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always::line-413",
+    "observed": "testing"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always::line-414",
+    "observed": "UDP"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always::line-415",
+    "observed": "default"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always::line-416",
+    "observed": "PortAllocation"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always::line-417",
+    "observed": "Packed"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always::line-418",
+    "observed": {
+      "failureThreshold": 3,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 5
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always::line-419",
+    "observed": {
+      "grpcPort": 9357,
+      "httpPort": 9358,
+      "logLevel": "Info"
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always::line-423",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always::line-424",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always::line-427",
+    "observed": "Always"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always::line-432",
+    "observed": "Always"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always::line-439",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always::line-440",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always::line-445",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always::line-446",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always inferred from safe-to-evict=true::line-405",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always inferred from safe-to-evict=true::line-409",
+    "observed": "dev"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always inferred from safe-to-evict=true::line-412",
+    "observed": [
+      "agones.dev/controller"
+    ]
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always inferred from safe-to-evict=true::line-413",
+    "observed": "testing"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always inferred from safe-to-evict=true::line-414",
+    "observed": "UDP"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always inferred from safe-to-evict=true::line-415",
+    "observed": "default"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always inferred from safe-to-evict=true::line-416",
+    "observed": "PortAllocation"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always inferred from safe-to-evict=true::line-417",
+    "observed": "Packed"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always inferred from safe-to-evict=true::line-418",
+    "observed": {
+      "failureThreshold": 3,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 5
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always inferred from safe-to-evict=true::line-419",
+    "observed": {
+      "grpcPort": 9357,
+      "httpPort": 9358,
+      "logLevel": "Info"
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always inferred from safe-to-evict=true::line-423",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always inferred from safe-to-evict=true::line-424",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always inferred from safe-to-evict=true::line-427",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always inferred from safe-to-evict=true::line-432",
+    "observed": "Always"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always inferred from safe-to-evict=true::line-439",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always inferred from safe-to-evict=true::line-440",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always inferred from safe-to-evict=true::line-445",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always inferred from safe-to-evict=true::line-446",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Never::line-405",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Never::line-409",
+    "observed": "dev"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Never::line-412",
+    "observed": [
+      "agones.dev/controller"
+    ]
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Never::line-413",
+    "observed": "testing"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Never::line-414",
+    "observed": "UDP"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Never::line-415",
+    "observed": "default"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Never::line-416",
+    "observed": "PortAllocation"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Never::line-417",
+    "observed": "Packed"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Never::line-418",
+    "observed": {
+      "failureThreshold": 3,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 5
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Never::line-419",
+    "observed": {
+      "grpcPort": 9357,
+      "httpPort": 9358,
+      "logLevel": "Info"
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Never::line-423",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Never::line-424",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Never::line-427",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Never::line-432",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Never::line-439",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Never::line-440",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Never::line-445",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Never::line-446",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: OnUpgrade::line-405",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: OnUpgrade::line-409",
+    "observed": "dev"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: OnUpgrade::line-412",
+    "observed": [
+      "agones.dev/controller"
+    ]
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: OnUpgrade::line-413",
+    "observed": "testing"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: OnUpgrade::line-414",
+    "observed": "UDP"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: OnUpgrade::line-415",
+    "observed": "default"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: OnUpgrade::line-416",
+    "observed": "PortAllocation"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: OnUpgrade::line-417",
+    "observed": "Packed"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: OnUpgrade::line-418",
+    "observed": {
+      "failureThreshold": 3,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 5
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: OnUpgrade::line-419",
+    "observed": {
+      "grpcPort": 9357,
+      "httpPort": 9358,
+      "logLevel": "Info"
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: OnUpgrade::line-423",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: OnUpgrade::line-424",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: OnUpgrade::line-427",
+    "observed": "OnUpgrade"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: OnUpgrade::line-432",
+    "observed": "OnUpgrade"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: OnUpgrade::line-439",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: OnUpgrade::line-440",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: OnUpgrade::line-445",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: OnUpgrade::line-446",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::health is disabled::line-405",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::health is disabled::line-409",
+    "observed": "dev"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::health is disabled::line-412",
+    "observed": [
+      "agones.dev/controller"
+    ]
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::health is disabled::line-413",
+    "observed": "testing"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::health is disabled::line-414",
+    "observed": "UDP"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::health is disabled::line-415",
+    "observed": "default"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::health is disabled::line-416",
+    "observed": "PortAllocation"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::health is disabled::line-417",
+    "observed": "Packed"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::health is disabled::line-418",
+    "observed": {
+      "disabled": true
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::health is disabled::line-419",
+    "observed": {
+      "grpcPort": 9357,
+      "httpPort": 9358,
+      "logLevel": "Info"
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::health is disabled::line-423",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::health is disabled::line-424",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::health is disabled::line-427",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::health is disabled::line-432",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::health is disabled::line-439",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::health is disabled::line-440",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::health is disabled::line-445",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::health is disabled::line-446",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-405",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-409",
+    "observed": "dev"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-412",
+    "observed": [
+      "agones.dev/controller"
+    ]
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-413",
+    "observed": "testing"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-414",
+    "observed": "UDP"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-415",
+    "observed": "default"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-416",
+    "observed": "PortAllocation"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-417",
+    "observed": "Packed"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-418",
+    "observed": {
+      "failureThreshold": 3,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 5
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-419",
+    "observed": {
+      "grpcPort": 9357,
+      "httpPort": 9358,
+      "logLevel": "Info"
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-423",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-424",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-427",
+    "observed": "Always"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-432",
+    "observed": "Always"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-439",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-440",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-445",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-446",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set Debug logging level::line-405",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set Debug logging level::line-409",
+    "observed": "dev"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set Debug logging level::line-412",
+    "observed": [
+      "agones.dev/controller"
+    ]
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set Debug logging level::line-413",
+    "observed": "testing"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set Debug logging level::line-414",
+    "observed": "UDP"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set Debug logging level::line-415",
+    "observed": "default"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set Debug logging level::line-416",
+    "observed": "PortAllocation"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set Debug logging level::line-417",
+    "observed": "Packed"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set Debug logging level::line-418",
+    "observed": {
+      "failureThreshold": 3,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 5
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set Debug logging level::line-419",
+    "observed": {
+      "grpcPort": 9357,
+      "httpPort": 9358,
+      "logLevel": "Debug"
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set Debug logging level::line-423",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set Debug logging level::line-424",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set Debug logging level::line-427",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set Debug logging level::line-432",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set Debug logging level::line-439",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set Debug logging level::line-440",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set Debug logging level::line-445",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set Debug logging level::line-446",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-405",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-409",
+    "observed": "dev"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-412",
+    "observed": [
+      "agones.dev/controller"
+    ]
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-413",
+    "observed": "testing"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-414",
+    "observed": "UDP"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-415",
+    "observed": "default"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-416",
+    "observed": "PortAllocation"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-417",
+    "observed": "Packed"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-418",
+    "observed": {
+      "failureThreshold": 3,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 5
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-419",
+    "observed": {
+      "grpcPort": 9357,
+      "httpPort": 9358,
+      "logLevel": "Info"
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-423",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-424",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-427",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-432",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-439",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-440",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-445",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-446",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on static gameserver::line-405",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on static gameserver::line-409",
+    "observed": "dev"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on static gameserver::line-412",
+    "observed": [
+      "agones.dev/controller"
+    ]
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on static gameserver::line-413",
+    "observed": "testing"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on static gameserver::line-414",
+    "observed": "UDP"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on static gameserver::line-415",
+    "observed": "default"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on static gameserver::line-416",
+    "observed": "Creating"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on static gameserver::line-417",
+    "observed": "Packed"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on static gameserver::line-418",
+    "observed": {
+      "failureThreshold": 3,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 5
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on static gameserver::line-419",
+    "observed": {
+      "grpcPort": 9357,
+      "httpPort": 9358,
+      "logLevel": "Info"
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on static gameserver::line-423",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on static gameserver::line-424",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on static gameserver::line-427",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on static gameserver::line-432",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on static gameserver::line-439",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on static gameserver::line-440",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on static gameserver::line-445",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on static gameserver::line-446",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set gRPC and HTTP ports on SDK Server::line-405",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set gRPC and HTTP ports on SDK Server::line-409",
+    "observed": "dev"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set gRPC and HTTP ports on SDK Server::line-412",
+    "observed": [
+      "agones.dev/controller"
+    ]
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set gRPC and HTTP ports on SDK Server::line-413",
+    "observed": "testing"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set gRPC and HTTP ports on SDK Server::line-414",
+    "observed": "UDP"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set gRPC and HTTP ports on SDK Server::line-415",
+    "observed": "default"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set gRPC and HTTP ports on SDK Server::line-416",
+    "observed": "PortAllocation"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set gRPC and HTTP ports on SDK Server::line-417",
+    "observed": "Packed"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set gRPC and HTTP ports on SDK Server::line-418",
+    "observed": {
+      "failureThreshold": 3,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 5
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set gRPC and HTTP ports on SDK Server::line-419",
+    "observed": {
+      "grpcPort": 19357,
+      "httpPort": 19358,
+      "logLevel": "Error"
+    }
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set gRPC and HTTP ports on SDK Server::line-423",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set gRPC and HTTP ports on SDK Server::line-424",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set gRPC and HTTP ports on SDK Server::line-427",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set gRPC and HTTP ports on SDK Server::line-432",
+    "observed": "Never"
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set gRPC and HTTP ports on SDK Server::line-439",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set gRPC and HTTP ports on SDK Server::line-440",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set gRPC and HTTP ports on SDK Server::line-445",
+    "observed": null
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set gRPC and HTTP ports on SDK Server::line-446",
+    "observed": null
+  }
+]

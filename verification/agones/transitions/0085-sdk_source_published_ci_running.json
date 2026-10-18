@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_SOURCE_PUBLISHED_CI_RUNNING",
+  "gate_snapshot": "verification/agones/gates/67c860de02f9ead2c2105c6322811a0a41a90c91170118bd9d536ab041955e92.json",
+  "predecessor_revision": 84,
+  "predecessor_sha256": "305dd9f7fdfe9c0d9278a58ad1118c812045f6f31000de1f4c585669227269ba",
+  "reason": "Published tree and commit/parent match prepared index; visible agones-rs-dev is 5f6f3c4. State and three strict proof selections passed in CI; Rust job still running. Next production packet is DISCOVERED only.",
+  "result_revision": 85,
+  "schema_version": 1,
+  "state_sha256": "200d6ab03a616651e0df69ff4441ed5f2d1af5af3419962f3a567f5d277f69a0",
+  "timestamp": "2026-10-18T19:13:47.429053+00:00"
+}

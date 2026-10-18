@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/home/astral/Projects/agones/build/scripts/agones-rs/summarize_feature_proof.py", line 14, in <module>
+    rows = read_results(args.run_id)
+  File "/home/astral/Projects/agones/build/scripts/agones-rs/kani_results.py", line 34, in read_results
+    return parse_complete_log(raw.decode())
+  File "/home/astral/Projects/agones/build/scripts/agones-rs/kani_results.py", line 20, in parse_complete_log
+    assert status and description and location, f"incomplete check {start[1]}"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: incomplete check 1773

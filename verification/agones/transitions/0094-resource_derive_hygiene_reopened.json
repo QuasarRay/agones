@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "RESOURCE_DERIVE_HYGIENE_REOPENED",
+  "gate_snapshot": "verification/agones/gates/415bc75725ed3575641cd554d56a9a8f5366dac80e6b9d7dd4b437a7859502f3.json",
+  "predecessor_revision": 93,
+  "predecessor_sha256": "e3a5d5e350e0afa5d5bf219f412d5b8d1cfe3c5fa107501e64f95558e8d54050",
+  "reason": "Bounded periodic review selected the known crate-root derive failure and generic forwarding gap, using the already locked resolver. Reopen the affected gate before the macro dependency changes; no new semantic extraction has started.",
+  "result_revision": 94,
+  "schema_version": 1,
+  "state_sha256": "4a47154ce1d22741f4a8259b3a8904c87264490f72f10006431a682cf9de51cc",
+  "timestamp": "2026-10-18T19:57:23.361756+00:00"
+}

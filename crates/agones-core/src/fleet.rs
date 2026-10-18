@@ -1199,7 +1199,7 @@ mod tests {
                         ports: vec![GameServerPort {
                             container_port: 1234,
                             ..Default::default()
-                        }],
+                        }].into(),
                         template: PodTemplateSpec {
                             spec: PodSpec {
                                 containers: vec![Container {
@@ -1835,13 +1835,11 @@ mod tests {
                                 containers: vec![Container {
                                     name: "game".into(),
                                     image: "game:v1".into(),
-                                    extensions: BTreeMap::from([(
-                                        "resources".into(),
+                                    resources: BTreeMap::from([(
+                                        "limits".into(),
                                         serde_json::json!({
-                                            "limits": {
-                                                "cpu": "1000m",
-                                                "memory": "1Gi"
-                                            }
+                                            "cpu": "1000m",
+                                            "memory": "1Gi"
                                         }),
                                     )]),
                                     ..Default::default()
@@ -1863,14 +1861,12 @@ mod tests {
         let mut equivalent = fleet.game_server_set();
         equivalent.metadata.name = "equivalent".into();
         equivalent.spec.template.spec.template.spec.containers[0]
-            .extensions
+            .resources
             .insert(
-                "resources".into(),
+                "limits".into(),
                 serde_json::json!({
-                    "limits": {
-                        "cpu": "1",
-                        "memory": "1024Mi"
-                    }
+                    "cpu": "1",
+                    "memory": "1024Mi"
                 }),
             );
 

@@ -1,0 +1,6 @@
+panic: open verification/agones/gameserver-defaulting-witnesses.json: no such file or directory
+
+goroutine 1 [running]:
+main.main()
+	/home/astral/Projects/agones/build/scripts/agones-rs/probes/gameserver_defaults_replay.go:18 +0x11a6
+exit status 2

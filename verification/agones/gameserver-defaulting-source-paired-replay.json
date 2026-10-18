@@ -1,0 +1,36 @@
+{
+  "cases": 17,
+  "classification": "EXACT_ORIGINAL_SOURCE_RUNTIME_REPLAY",
+  "executed_static_sites": 20,
+  "formal_source_assertion_credit": 0,
+  "rust_run": "verification/agones/runs/gameserver-defaulting-source-observation-1.json",
+  "schema_version": 1,
+  "scope": "Every executed original assertion and all complete post-default objects agree with current Rust CGP production. Preserve the three zero-occurrence branch declarations without treating them as passed; global baseline counts remain unresolved.",
+  "selected_dynamic_occurrences": 304,
+  "source_assertion_sites": 23,
+  "source_ir": "verification/agones/gameserver-defaulting.ir.json",
+  "source_run": "verification/agones/runs/gameserver-defaulting-source-extraction-3.json",
+  "unexecuted_static_sites": [
+    {
+      "guards": [
+        "test.expected.alphaPlayerCapacity != nil"
+      ],
+      "line": 421,
+      "status": "NO_CURRENT_FIXTURE_OCCURRENCE_NOT_CREDITED"
+    },
+    {
+      "guards": [
+        "!(len(test.expected.evictionSafeSpec) > 0)"
+      ],
+      "line": 429,
+      "status": "NO_CURRENT_FIXTURE_OCCURRENCE_NOT_CREDITED"
+    },
+    {
+      "guards": [
+        "!(len(test.expected.evictionSafeStatus) > 0)"
+      ],
+      "line": 434,
+      "status": "NO_CURRENT_FIXTURE_OCCURRENCE_NOT_CREDITED"
+    }
+  ]
+}

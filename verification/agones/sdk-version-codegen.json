@@ -16,7 +16,7 @@
   "generator_sha256": "1c30ab06ed9560f018c5ff25509c88cbabbf72061eae987e2fac17fa9ee1bcb3",
   "harness": "source_sdk_fleet_case",
   "ir": "verification/agones/sdk-version.ir.json",
-  "ir_sha256": "fd8d90991cffce9bd2737e102fba09b5d36266b03231fa627612e8396d60835c",
+  "ir_sha256": "c9afd76d8369d8d492907c1c63825a2b6f05d15293d28d42fb21b8c8420c6c50",
   "output": "crates/agones-core/tests/generated/sdk_version_cases.rs",
   "output_sha256": "d4c8ca2e0afa0a987972c8df44c4b87db573b76ae84c8fc81eb656d1efbb53a9",
   "preconditions": [],

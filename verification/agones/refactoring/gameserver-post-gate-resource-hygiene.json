@@ -1,0 +1,15 @@
+{
+  "architecture_status": "All eight _2 form/location cells remain REQUIRED_OPEN. An ordinary cross-crate derive test is not the required _2 authoring matrix.",
+  "candidate": "Repair existing resource derive crate-root hygiene and generic forwarding in its current proc_macro2 expansion core.",
+  "decision": "SMALL_LOCAL_REFACTOR",
+  "dependency_change": "Only the agones-macros -> existing proc-macro-crate 3.5.0 edge is added; all package versions/sources/checksums are unchanged.",
+  "evidence": "The contract records crate::AgonesApiResource as a known downstream failure. The new actual admission and existing resource consumers rely on the same generated resource identity; the current derive also drops declared generics/where clauses. Current new CGP declarations reuse getters/providers; 47 value fields already share a seven-line serde adapter.",
+  "feature_binding": "verification/agones/gates/415bc75725ed3575641cd554d56a9a8f5366dac80e6b9d7dd4b437a7859502f3.json",
+  "id": "GS-DEFAULTS-001-post-gate-resource-hygiene",
+  "next_review_trigger": "First adequate GameServer defaulting proof or next canonical API/resource milestone, whichever is first; review all eight cells and current repeated property/field declarations then.",
+  "ordinary_cargo_fixture_run": "verification/agones/runs/resource-derive-cargo-paths-1.json",
+  "other_candidates": "A new null-metadata attribute would remove 47 annotations but needs source-field/type policy and cross-crate runtime paths. Reuse the shared serde adapter now; reassess generation at the next canonical API family with known field coverage.",
+  "outcome": "Renamed runtime/macro dependencies and explicit facade paths compile and execute generic/const/where-clause resources without a caller-root trait. Missing runtime, invalid path and duplicate path fail with targeted diagnostics. Same-package integration shadows the old trait name and uses the real runtime identity.",
+  "rationale": "Reuse already locked/cached proc-macro-crate 3.5.0 plus existing Syn/quote expansion. Resolve actual Cargo aliases, support an explicit facade path, preserve generics, and exercise normal Cargo integration/renamed fixtures without a trait imported at the caller root. No new compiler bridge, scheduler, registry, orchestrator or parallel generator.",
+  "roi": "One small path resolver and generic forwarding remove a concrete repeated macro integration trap across all existing API identities and future resource consumers. The dependency already exists in the lockfile. Bound the repair to this derive and focused Cargo fixtures; do not turn it into a new authoring/staging system or automatic null-attribute compiler."
+}

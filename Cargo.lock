@@ -69,6 +69,7 @@ dependencies = [
 name = "agones-macros"
 version = "0.1.0"
 dependencies = [
+ "proc-macro-crate 3.5.0",
  "proc-macro2",
  "quote",
  "syn 2.0.119",

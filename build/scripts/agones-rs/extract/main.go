@@ -111,6 +111,10 @@ func supportedObservation(name string) bool {
 }
 
 func main() {
+	if len(os.Args) > 1 && os.Args[1] == "--gameserver-defaulting" {
+		gameServerDefaultingMain(os.Args[2:])
+		return
+	}
 	if len(os.Args) > 1 && os.Args[1] == "--sdk-version" {
 		sdkVersionMain(os.Args[2:])
 		return

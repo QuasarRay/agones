@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "GAMESERVER_DEFAULTING_PRODUCTION_GATED",
+  "gate_snapshot": "verification/agones/gates/415bc75725ed3575641cd554d56a9a8f5366dac80e6b9d7dd4b437a7859502f3.json",
+  "predecessor_revision": 92,
+  "predecessor_sha256": "9531a91699ff609a66354f7feb9fbd4d90bfc6e7646795f0b3a91c1e69f879eb",
+  "reason": "Source-compatible CGP defaulting, actual configured admission, canonical nil/zero/wire fixes, 14 independent/full Go-Rust witnesses and 553 workspace tests pass. No new semantic source extraction or formal credit precedes this gate.",
+  "result_revision": 93,
+  "schema_version": 1,
+  "state_sha256": "e3a5d5e350e0afa5d5bf219f412d5b8d1cfe3c5fa107501e64f95558e8d54050",
+  "timestamp": "2026-10-18T19:51:52.875674+00:00"
+}

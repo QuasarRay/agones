@@ -269,10 +269,12 @@ pub fn derive_agones_api_resource(input: TokenStream) -> TokenStream {
 
 fn expand_api_resource(input: DeriveInput) -> syn::Result<proc_macro2::TokenStream> {
     let name = input.ident;
+    let (impl_generics, ty_generics, where_clause) = input.generics.split_for_impl();
     let mut group = None::<String>;
     let mut version = None::<String>;
     let mut kind = None::<String>;
     let mut plural = None::<String>;
+    let mut core_path = None::<syn::Path>;
     let mut attributes = 0usize;
 
     for attr in input
@@ -290,6 +292,14 @@ fn expand_api_resource(input: DeriveInput) -> syn::Result<proc_macro2::TokenStre
 
         attr.parse_nested_meta(|meta| {
             let value: LitStr = meta.value()?.parse()?;
+            if meta.path.is_ident("core_path") {
+                let path = value.parse::<syn::Path>()
+                    .map_err(|_| meta.error("core_path must be a valid Rust path"))?;
+                if core_path.replace(path).is_some() {
+                    return Err(meta.error("duplicate core_path"));
+                }
+                return Ok(());
+            }
             let value = value.value();
 
             if meta.path.is_ident("group") {
@@ -309,7 +319,7 @@ fn expand_api_resource(input: DeriveInput) -> syn::Result<proc_macro2::TokenStre
                     return Err(meta.error("duplicate plural"));
                 }
             } else {
-                return Err(meta.error("expected group, version, kind, or plural"));
+                return Err(meta.error("expected group, version, kind, plural, or core_path"));
             }
             Ok(())
         })?;
@@ -326,6 +336,20 @@ fn expand_api_resource(input: DeriveInput) -> syn::Result<proc_macro2::TokenStre
     let version = version.ok_or_else(|| syn::Error::new_spanned(&name, "missing version"))?;
     let kind = kind.ok_or_else(|| syn::Error::new_spanned(&name, "missing kind"))?;
     let plural = plural.ok_or_else(|| syn::Error::new_spanned(&name, "missing plural"))?;
+    let core_path = match core_path {
+        Some(path) => quote!(#path),
+        None => match proc_macro_crate::crate_name("agones-core") {
+            Ok(proc_macro_crate::FoundCrate::Itself) => quote!(::agones_core),
+            Ok(proc_macro_crate::FoundCrate::Name(name)) => {
+                let name = syn::Ident::new_raw(&name, proc_macro2::Span::call_site());
+                quote!(::#name)
+            }
+            Err(_) => return Err(syn::Error::new_spanned(
+                &name,
+                "AgonesApiResource requires an agones-core dependency or core_path",
+            )),
+        },
+    };
     let api_version = format!("{group}/{version}");
 
     let group = LitStr::new(&group, proc_macro2::Span::call_site());
@@ -335,7 +359,7 @@ fn expand_api_resource(input: DeriveInput) -> syn::Result<proc_macro2::TokenStre
     let plural = LitStr::new(&plural, proc_macro2::Span::call_site());
 
     Ok(quote! {
-        impl crate::AgonesApiResource for #name {
+        impl #impl_generics #core_path::AgonesApiResource for #name #ty_generics #where_clause {
             const GROUP: &'static str = #group;
             const VERSION: &'static str = #version;
             const API_VERSION: &'static str = #api_version;

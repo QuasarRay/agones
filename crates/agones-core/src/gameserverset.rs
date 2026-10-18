@@ -769,7 +769,7 @@ mod tests {
                 port_policy: Some(PortPolicy::Static),
                 protocol: Some(Protocol::Udp),
                 ..Default::default()
-            }],
+            }].into(),
             template: PodTemplateSpec {
                 spec: PodSpec {
                     containers: vec![Container {
@@ -1199,14 +1199,14 @@ mod tests {
                 "firstList".into(),
                 ListStatus {
                     capacity: 10,
-                    values: vec!["a".into(), "a".into()],
+                    values: vec!["a".into(), "a".into()].into(),
                 },
             ),
             (
                 "secondList".into(),
                 ListStatus {
                     capacity: 1000,
-                    values: vec!["1".into(), "2".into()],
+                    values: vec!["1".into(), "2".into()].into(),
                 },
             ),
         ]));
@@ -1216,7 +1216,7 @@ mod tests {
             "firstList".into(),
             ListStatus {
                 capacity: 15,
-                values: vec!["c".into()],
+                values: vec!["c".into()].into(),
             },
         )]));
 
@@ -1226,14 +1226,14 @@ mod tests {
                 "firstList".into(),
                 ListStatus {
                     capacity: 30,
-                    values: vec!["d".into()],
+                    values: vec!["d".into()].into(),
                 },
             ),
             (
                 "secondList".into(),
                 ListStatus {
                     capacity: 1000,
-                    values: vec!["3".into()],
+                    values: vec!["3".into()].into(),
                 },
             ),
         ]));
@@ -1244,14 +1244,14 @@ mod tests {
                 "firstList".into(),
                 ListStatus {
                     capacity: 30,
-                    values: Vec::new(),
+                    values: Vec::new().into(),
                 },
             ),
             (
                 "secondList".into(),
                 ListStatus {
                     capacity: 100,
-                    values: vec!["4".into(), "5".into(), "6".into()],
+                    values: vec!["4".into(), "5".into(), "6".into()].into(),
                 },
             ),
         ]));

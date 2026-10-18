@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_VERSION_001_DEFAULTING_REVALIDATED",
+  "gate_snapshot": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json",
+  "predecessor_revision": 109,
+  "predecessor_sha256": "ae27132be931bfbf1898a136d670804263476e5882ca480c94371b77657648dd",
+  "reason": "Current compile/runtime closure, source IR and generation bindings validate after GameServer defaulting and resource derive repair. Retained proof evidence has explicit reachable-code reuse; open source obligations receive no new credit.",
+  "result_revision": 110,
+  "schema_version": 1,
+  "state_sha256": "7deca7db0e7a2e9c1b998afe0c8dee0a858b2ec9b6edda0c7f015a1b36706ea8",
+  "timestamp": "2026-10-18T20:50:01.292240+00:00"
+}

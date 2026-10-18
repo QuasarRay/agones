@@ -1,0 +1,26 @@
+{
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "existing_reuse": [
+    "CGP 0.8.0-alpha getters/providers",
+    "AgonesStringEnum AsRef<str> for zero-string checks",
+    "GoSlice nil/allocated representation",
+    "Original build identity provider",
+    "Actual Rusternetes AdmissionController/PatchOperation and existing diff"
+  ],
+  "feature_id": "GS-DEFAULTS-001",
+  "manual_runtime_witnesses": "gameserver-defaulting-witnesses.json; independent literal projections plus full object Go/Rust agreement. These are implementation checks, not extracted original assertion credit.",
+  "new_macro_framework": false,
+  "no_new_orchestrator": true,
+  "null_state_mapping": "Non-pointer source state has one empty-string zero value; missing/null/empty map to None and serialize as empty string. Nonempty future/known values remain distinct.",
+  "ordinary_numeric_scope": "Source int32/int64 widths are retained; explicit i64 minimum/maximum witnesses avoid floating-point JSON normalization in the Go probe.",
+  "schema_version": 1,
+  "source_production_files": {
+    "go.mod": "01df333891a331341e77aab737c24dc722fab26abc8439b9c2036c71a477215a",
+    "go.sum": "d890978bc12d9c9958b2a87f99a87d8478b007208e44c5d859e973ba89adcbf7",
+    "pkg/apis/agones/v1/apihooks.go": "3ddd2e6c35fc62c6c54ded97a97f7edc68218ed91fbfc1fd4341fc424c6a278b",
+    "pkg/apis/agones/v1/gameserver.go": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
+    "pkg/util/runtime/features.go": "05736b26646cf219419626dfca37c4f533302b178ca3bb542330cf7884ddc679",
+    "pkg/version.go": "18a321dd868bdf897742490dde06040a35be996dbef93f4aae7ebd855c85842d"
+  },
+  "source_test_semantic_extraction": "NOT_STARTED_BEFORE_IMPLEMENTATION_GATE"
+}

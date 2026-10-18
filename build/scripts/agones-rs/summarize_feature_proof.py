@@ -6,7 +6,7 @@ import json
 from kani_results import ROOT, read_results, require_claims_and_covers
 
 parser = argparse.ArgumentParser()
-parser.add_argument("family", choices=["input", "query", "error-ascii", "sdk-version", "sdk-source"])
+parser.add_argument("family", choices=["input", "query", "error-ascii", "sdk-version", "sdk-source", "health"])
 parser.add_argument("run_id")
 parser.add_argument("--output", required=True)
 parser.add_argument("--case-index", type=int)
@@ -44,6 +44,16 @@ elif args.family == "sdk-version":
                 "invalid SDK continuation byte", "SDK scalar above Unicode maximum",
                 "the generator should produce at least one valid value"]
     scope = "Actual CGP EncodeAgonesVersionAnnotation provider, independent byte-grammar reference and separate standard UTF-8 observation relation. Raw byte strings length 0..4, no filtering, unwind 16. No unbounded string, Cargo/OS, surrounding lifecycle or original exact-case assertion credit."
+elif args.family == "health":
+    harness = "health_defaulting_common_domain"
+    claims = [r for r in rows if r["symbol"].startswith(harness+"::{closure#0}.assertion.")]
+    assert len(claims) == 3
+    assert all(r["location"].startswith("crates/agones-core/tests/health_defaulting_domain.rs:") for r in claims)
+    required = ["disabled health keeps nonpositive values", "enabled health sets all three defaults",
+                "small positive health values stay unchanged", "zero health threshold receives source default",
+                "signed health extremes remain exact", "disabled minimum delay remains exact",
+                "mixed health thresholds default independently", "the generator should produce at least one valid value"]
+    scope = "Actual GameServerSpec::apply_defaults health observation with other spec fields zero, independent reference and relational invariant. One bool and three arbitrary i32 inputs, no filtering, unwind 16. No whole GameServer/admission/lifecycle proof or original exact-case assertion credit."
 elif args.family == "sdk-source":
     metadata = json.loads((ROOT / "verification/agones/sdk-version-codegen.json").read_text())
     harness = metadata["harness"]

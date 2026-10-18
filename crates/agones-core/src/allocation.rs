@@ -1450,7 +1450,7 @@ mod tests {
                 lists: Some(BTreeMap::from([(
                     "pages".into(),
                     ListStatus {
-                        values: vec!["page1".into(), "page2".into()],
+                        values: vec!["page1".into(), "page2".into()].into(),
                         capacity: 100,
                     },
                 )])),
@@ -1468,7 +1468,7 @@ mod tests {
         assert_eq!(
             game_server.status.lists.as_ref().unwrap()["pages"],
             ListStatus {
-                values: Vec::new(),
+                values: Vec::new().into(),
                 capacity: 0,
             }
         );
@@ -1486,7 +1486,7 @@ mod tests {
                             "magician2".into(),
                             "magician4".into(),
                             "magician5".into(),
-                        ],
+                        ].into(),
                         capacity: 100,
                     },
                 )])),
@@ -1515,7 +1515,7 @@ mod tests {
                     "magician1".into(),
                     "magician4".into(),
                     "magician3".into(),
-                ],
+                ].into(),
                 capacity: 42,
             }
         );
@@ -1528,7 +1528,7 @@ mod tests {
                 lists: Some(BTreeMap::from([(
                     "fairies".into(),
                     ListStatus {
-                        values: vec!["fairy1".into(), "fairy2".into()],
+                        values: vec!["fairy1".into(), "fairy2".into()].into(),
                         capacity: 100,
                     },
                 )])),
@@ -1547,7 +1547,7 @@ mod tests {
         assert_eq!(
             game_server.status.lists.as_ref().unwrap()["fairies"],
             ListStatus {
-                values: vec!["fairy1".into(), "fairy2".into()],
+                values: vec!["fairy1".into(), "fairy2".into()].into(),
                 capacity: 2,
             }
         );
@@ -1560,7 +1560,7 @@ mod tests {
                 lists: Some(BTreeMap::from([(
                     "pages".into(),
                     ListStatus {
-                        values: vec!["page1".into()],
+                        values: vec!["page1".into()].into(),
                         capacity: 5,
                     },
                 )])),
@@ -1579,7 +1579,7 @@ mod tests {
         assert_eq!(
             game_server.status.lists.as_ref().unwrap()["pages"],
             ListStatus {
-                values: vec!["page1".into()],
+                values: vec!["page1".into()].into(),
                 capacity: 5,
             }
         );

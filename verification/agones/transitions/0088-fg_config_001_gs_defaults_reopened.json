@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "FG_CONFIG_001_GS_DEFAULTS_REOPENED",
+  "gate_snapshot": "verification/agones/gates/06c4803629119e61572723619b217d60b8408e93a20fe33eaff3d035dabbac0c.json",
+  "predecessor_revision": 87,
+  "predecessor_sha256": "c14b01432373b1c980d7e1d25c8179ebe0205b718b1a60a2bc6b545c5f708b5f",
+  "reason": "GameServer defaulting and canonical API repair will change shared production/consumer bindings. Retain published gates and proof history; refresh affected gates/evidence before credit.",
+  "result_revision": 88,
+  "schema_version": 1,
+  "state_sha256": "37a8f4f4fa53733305029c88bdf71a0b094b8507c2492b612f330073a7a0eb26",
+  "timestamp": "2026-10-18T19:18:20.307078+00:00"
+}

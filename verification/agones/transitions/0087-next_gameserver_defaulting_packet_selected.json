@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "NEXT_GAMESERVER_DEFAULTING_PACKET_SELECTED",
+  "gate_snapshot": null,
+  "predecessor_revision": 86,
+  "predecessor_sha256": "800b51c1dcbc16dbeaebcd6ded6aa4e3b91fa5045c0da00f1cfa5fac1b3f4cec",
+  "reason": "Next packet is DISCOVERED only. Source reading identifies explicit-empty enum and status-map preservation gaps; preserve the published checkpoint and reopen affected gates before implementation.",
+  "result_revision": 87,
+  "schema_version": 1,
+  "state_sha256": "c14b01432373b1c980d7e1d25c8179ebe0205b718b1a60a2bc6b545c5f708b5f",
+  "timestamp": "2026-10-18T19:16:11.483446+00:00"
+}

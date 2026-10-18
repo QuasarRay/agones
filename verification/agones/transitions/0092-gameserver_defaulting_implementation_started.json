@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "GAMESERVER_DEFAULTING_IMPLEMENTATION_STARTED",
+  "gate_snapshot": null,
+  "predecessor_revision": 91,
+  "predecessor_sha256": "dbda28a8fd4260a981af1ad78cf8c8f7e5055d49ec3ac78093de6cab579ea888",
+  "reason": "Previous turn produced a published checkpoint and passing exact-head CI. Current source reading confirms concrete defaulting gaps; production implementation comes before new semantic extraction.",
+  "result_revision": 92,
+  "schema_version": 1,
+  "state_sha256": "9531a91699ff609a66354f7feb9fbd4d90bfc6e7646795f0b3a91c1e69f879eb",
+  "timestamp": "2026-10-18T19:18:20.928261+00:00"
+}
