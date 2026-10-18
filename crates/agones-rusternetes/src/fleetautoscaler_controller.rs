@@ -16,6 +16,10 @@ use futures::future::BoxFuture;
 use chrono::{DateTime, Utc};
 use rusternetes_storage::Storage;
 
+use crate::fleetautoscaler_wasm::{
+    CanApplyWasmFleetAutoscalerPolicy, FleetAutoscalerWasmCache,
+    fleet_autoscaler_policy_state_key,
+};
 use crate::{AdapterError, AgonesRepository};
 
 /// FleetAutoscaler controller context.
@@ -28,6 +32,7 @@ pub struct FleetAutoscalerController<S> {
     pub storage: Arc<S>,
     pub autoscaler_features: AutoscalerFeatures,
     pub fleet_autoscale_request_metadata: bool,
+    pub wasm_cache: FleetAutoscalerWasmCache,
 }
 
 impl<S> FleetAutoscalerController<S> {
@@ -36,6 +41,7 @@ impl<S> FleetAutoscalerController<S> {
             storage: Arc::new(storage),
             autoscaler_features: AutoscalerFeatures::default(),
             fleet_autoscale_request_metadata: false,
+            wasm_cache: FleetAutoscalerWasmCache::default(),
         }
     }
 
@@ -295,6 +301,62 @@ pub fn fleet_autoscaler_webhook_url(
     ))
 }
 
+pub(crate) fn fleet_autoscaler_http_client(
+    configuration: &UrlConfiguration,
+) -> Result<reqwest::Client, AdapterError> {
+    let mut client = reqwest::Client::builder()
+        .timeout(Duration::from_secs(15));
+
+    if !configuration.ca_bundle.is_empty() {
+        let certificates =
+            reqwest::Certificate::from_pem_bundle(
+                &configuration.ca_bundle,
+            )
+            .map_err(|_| {
+                AdapterError::Hook(
+                    "no certs were appended from caBundle".into(),
+                )
+            })?;
+        if certificates.is_empty() {
+            return Err(AdapterError::Hook(
+                "no certs were appended from caBundle".into(),
+            ));
+        }
+        for certificate in certificates {
+            client = client.add_root_certificate(certificate);
+        }
+    }
+
+    client
+        .build()
+        .map_err(|error| AdapterError::Hook(error.to_string()))
+}
+
+pub(crate) fn fleet_autoscale_review_request(
+    fleet: &Fleet,
+    include_metadata: bool,
+) -> FleetAutoscaleReview {
+    FleetAutoscaleReview {
+        request: Some(FleetAutoscaleRequest {
+            uid: uuid::Uuid::new_v4().to_string(),
+            name: fleet.metadata.name.clone(),
+            namespace: fleet.metadata.namespace.clone(),
+            status: fleet.status.clone(),
+            labels: if include_metadata {
+                fleet.metadata.labels.clone()
+            } else {
+                Default::default()
+            },
+            annotations: if include_metadata {
+                fleet.metadata.annotations.clone()
+            } else {
+                Default::default()
+            },
+        }),
+        response: None,
+    }
+}
+
 #[cgp_component(FleetAutoscalerWebhookCaller)]
 pub trait CanCallFleetAutoscalerWebhook {
     fn call_fleet_autoscaler_webhook<'a>(
@@ -317,32 +379,8 @@ where
     ) -> BoxFuture<'a, Result<FleetAutoscaleReview, AdapterError>> {
         Box::pin(async move {
             let url = fleet_autoscaler_webhook_url(configuration)?;
-            let mut client = reqwest::Client::builder()
-                .timeout(Duration::from_secs(15));
-
-            if !configuration.ca_bundle.is_empty() {
-                let certificates =
-                    reqwest::Certificate::from_pem_bundle(
-                        &configuration.ca_bundle,
-                    )
-                    .map_err(|_| {
-                        AdapterError::Hook(
-                            "no certs were appended from caBundle".into(),
-                        )
-                    })?;
-                if certificates.is_empty() {
-                    return Err(AdapterError::Hook(
-                        "no certs were appended from caBundle".into(),
-                    ));
-                }
-                for certificate in certificates {
-                    client = client.add_root_certificate(certificate);
-                }
-            }
-
-            let client = client
-                .build()
-                .map_err(|error| AdapterError::Hook(error.to_string()))?;
+            let client =
+                fleet_autoscaler_http_client(configuration)?;
             let response = client
                 .post(url.as_str())
                 .json(review)
@@ -388,28 +426,10 @@ where
         fleet: &'a Fleet,
     ) -> BoxFuture<'a, Result<FleetAutoscalerScaleDecision, AdapterError>> {
         Box::pin(async move {
-            let include_metadata =
-                *context.fleet_autoscale_request_metadata();
-            let request = FleetAutoscaleRequest {
-                uid: uuid::Uuid::new_v4().to_string(),
-                name: fleet.metadata.name.clone(),
-                namespace: fleet.metadata.namespace.clone(),
-                status: fleet.status.clone(),
-                labels: if include_metadata {
-                    fleet.metadata.labels.clone()
-                } else {
-                    Default::default()
-                },
-                annotations: if include_metadata {
-                    fleet.metadata.annotations.clone()
-                } else {
-                    Default::default()
-                },
-            };
-            let review = FleetAutoscaleReview {
-                request: Some(request),
-                response: None,
-            };
+            let review = fleet_autoscale_review_request(
+                fleet,
+                *context.fleet_autoscale_request_metadata(),
+            );
             let response = context
                 .call_fleet_autoscaler_webhook(
                     configuration,
@@ -511,6 +531,7 @@ fn compute_fleet_autoscaler_desired_size_at<'a, Context>(
     policy: &'a FleetAutoscalerPolicy,
     fleet: &'a Fleet,
     inventory: &'a FleetAutoscalerInventory,
+    state_key: &'a str,
     current_time: &'a DateTime<Utc>,
 ) -> BoxFuture<'a, Result<FleetAutoscalerPolicyDecision, AdapterError>>
 where
@@ -518,6 +539,7 @@ where
         + CanApplyCounterFleetAutoscalerPolicy
         + CanApplyListFleetAutoscalerPolicy
         + CanApplyWebhookFleetAutoscalerPolicy
+        + CanApplyWasmFleetAutoscalerPolicy
         + CanCheckFleetAutoscalerSchedule
         + HasFleetAutoscalerRuntimeFeatures
         + Sync,
@@ -595,6 +617,25 @@ where
                 applied_policy: FleetAutoscalerPolicyType::Webhook,
             })
         }
+        FleetAutoscalerPolicyType::Wasm => {
+            let wasm = policy.wasm.as_ref().ok_or_else(|| {
+                AdapterError::Hook(
+                    "wasmPolicy parameter must not be nil".into(),
+                )
+            })?;
+            let decision = context
+                .apply_wasm_fleet_autoscaler_policy(
+                    state_key,
+                    wasm,
+                    fleet,
+                )
+                .await?;
+            Ok(FleetAutoscalerPolicyDecision {
+                replicas: decision.replicas,
+                limited: decision.limited,
+                applied_policy: FleetAutoscalerPolicyType::Wasm,
+            })
+        }
         FleetAutoscalerPolicyType::Schedule => {
             if !context
                 .fleet_autoscaler_runtime_features()
@@ -628,6 +669,7 @@ where
                 &schedule.policy,
                 fleet,
                 inventory,
+                state_key,
                 current_time,
             )
             .await
@@ -650,6 +692,7 @@ where
                     &entry.policy,
                     fleet,
                     inventory,
+                    state_key,
                     current_time,
                 )
                 .await
@@ -693,6 +736,7 @@ pub trait CanComputeFleetAutoscalerDesiredSizeAt {
         policy: &'a FleetAutoscalerPolicy,
         fleet: &'a Fleet,
         inventory: &'a FleetAutoscalerInventory,
+        state_key: &'a str,
         current_time: DateTime<Utc>,
     ) -> BoxFuture<'a, Result<FleetAutoscalerPolicyDecision, AdapterError>>;
 }
@@ -705,6 +749,7 @@ where
         + CanApplyCounterFleetAutoscalerPolicy
         + CanApplyListFleetAutoscalerPolicy
         + CanApplyWebhookFleetAutoscalerPolicy
+        + CanApplyWasmFleetAutoscalerPolicy
         + CanCheckFleetAutoscalerSchedule
         + HasFleetAutoscalerRuntimeFeatures
         + Sync,
@@ -714,6 +759,7 @@ where
         policy: &'a FleetAutoscalerPolicy,
         fleet: &'a Fleet,
         inventory: &'a FleetAutoscalerInventory,
+        state_key: &'a str,
         current_time: DateTime<Utc>,
     ) -> BoxFuture<'a, Result<FleetAutoscalerPolicyDecision, AdapterError>> {
         Box::pin(async move {
@@ -722,6 +768,7 @@ where
                 policy,
                 fleet,
                 inventory,
+                state_key,
                 &current_time,
             )
             .await
@@ -736,6 +783,7 @@ pub trait CanComputeFleetAutoscalerDesiredSize {
         policy: &'a FleetAutoscalerPolicy,
         fleet: &'a Fleet,
         inventory: &'a FleetAutoscalerInventory,
+        state_key: &'a str,
     ) -> BoxFuture<'a, Result<FleetAutoscalerPolicyDecision, AdapterError>>;
 }
 
@@ -752,6 +800,7 @@ where
         policy: &'a FleetAutoscalerPolicy,
         fleet: &'a Fleet,
         inventory: &'a FleetAutoscalerInventory,
+        state_key: &'a str,
     ) -> BoxFuture<'a, Result<FleetAutoscalerPolicyDecision, AdapterError>> {
         let current_time = context.fleet_autoscaler_now();
         Box::pin(async move {
@@ -760,6 +809,7 @@ where
                     policy,
                     fleet,
                     inventory,
+                    state_key,
                     current_time,
                 )
                 .await
@@ -1021,11 +1071,14 @@ where
             FleetAutoscalerInventory::default()
         };
 
+        let policy_state_key =
+            fleet_autoscaler_policy_state_key(&fleet_autoscaler);
         let decision = match context
             .compute_fleet_autoscaler_desired_size(
                 &fleet_autoscaler.spec.policy,
                 &fleet,
                 &inventory,
+                policy_state_key.as_str(),
             )
             .await
         {
@@ -1180,6 +1233,7 @@ mod tests {
                 &policy,
                 &fleet(50),
                 &FleetAutoscalerInventory::default(),
+            "test@0",
             )
             .await
             .unwrap();
@@ -1231,6 +1285,7 @@ mod tests {
                 },
                 &counter_fleet,
                 &FleetAutoscalerInventory::default(),
+            "test@0",
             )
             .await
             .unwrap();
@@ -1273,6 +1328,7 @@ mod tests {
                 },
                 &list_fleet,
                 &FleetAutoscalerInventory::default(),
+            "test@0",
             )
             .await
             .unwrap();
@@ -1564,6 +1620,7 @@ mod tests {
                     },
                     &target,
                     &FleetAutoscalerInventory::default(),
+                "test@0",
                 )
                 .await
                 .unwrap();
@@ -1648,6 +1705,7 @@ mod tests {
                 ),
                 &fleet(2),
                 &FleetAutoscalerInventory::default(),
+                "test@0",
                 now,
             )
             .await
@@ -1679,6 +1737,7 @@ mod tests {
                     &policy,
                     &fleet(2),
                     &FleetAutoscalerInventory::default(),
+                    "test@0",
                     now,
                 )
                 .await
@@ -1697,6 +1756,7 @@ mod tests {
                     &policy,
                     &fleet(2),
                     &FleetAutoscalerInventory::default(),
+                    "test@0",
                     now,
                 )
                 .await
@@ -1768,6 +1828,7 @@ mod tests {
                 &policy,
                 &fleet(2),
                 &FleetAutoscalerInventory::default(),
+                "test@0",
                 now,
             )
             .await
@@ -1830,6 +1891,7 @@ mod tests {
                 &policy,
                 &fleet(2),
                 &FleetAutoscalerInventory::default(),
+                "test@0",
                 now,
             )
             .await
@@ -1868,6 +1930,7 @@ mod tests {
                 &policy,
                 &fleet(2),
                 &FleetAutoscalerInventory::default(),
+                "test@0",
                 now,
             )
             .await
@@ -1893,6 +1956,7 @@ mod tests {
                     },
                     &fleet(2),
                     &FleetAutoscalerInventory::default(),
+                    "test@0",
                     Utc::now(),
                 )
                 .await
@@ -1916,6 +1980,7 @@ mod tests {
                 },
                 &fleet(1),
                 &FleetAutoscalerInventory::default(),
+            "test@0",
             )
             .await
             .unwrap_err();
@@ -1935,11 +2000,14 @@ mod tests {
             .compute_fleet_autoscaler_desired_size(
                 &FleetAutoscalerPolicy {
                     policy_type:
-                        FleetAutoscalerPolicyType::Wasm,
+                        FleetAutoscalerPolicyType::Unknown(
+                            "Invalid".into(),
+                        ),
                     ..Default::default()
                 },
                 &fleet(1),
                 &FleetAutoscalerInventory::default(),
+            "test@0",
             )
             .await
             .unwrap_err();

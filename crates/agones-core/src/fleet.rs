@@ -81,10 +81,15 @@ pub struct FleetSpec {
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FleetStatus {
+    #[serde(default)]
     pub replicas: i32,
+    #[serde(default)]
     pub ready_replicas: i32,
+    #[serde(default)]
     pub reserved_replicas: i32,
+    #[serde(default)]
     pub allocated_replicas: i32,
+    #[serde(default)]
     pub allocations: i64,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub players: Option<AggregatedPlayerStatus>,
@@ -1116,6 +1121,25 @@ fn fleet_replica_bounds_are_bounded(input: (i32, i32)) -> bool {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn fleet_status_missing_scalar_fields_use_go_zero_values() {
+        let status: super::FleetStatus = serde_json::from_value(
+            serde_json::json!({
+                "replicas": 10,
+                "readyReplicas": 2,
+                "allocatedReplicas": 8
+            }),
+        )
+        .unwrap();
+
+        assert_eq!(status.replicas, 10);
+        assert_eq!(status.ready_replicas, 2);
+        assert_eq!(status.reserved_replicas, 0);
+        assert_eq!(status.allocated_replicas, 8);
+        assert_eq!(status.allocations, 0);
+    }
+
+
     use super::*;
     use crate::gameserver::{Container, GameServerPort, PodSpec, PodTemplateSpec};
 
