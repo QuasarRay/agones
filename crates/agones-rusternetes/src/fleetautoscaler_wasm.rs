@@ -256,9 +256,19 @@ where
                     .with_config(policy.config.clone().into_iter());
                 let plugin = Plugin::new(&manifest, [], true)
                     .map_err(|error| {
-                        AdapterError::Hook(format!(
-                            "failed to create Wasm plugin from {source_url}: {error}"
-                        ))
+                        let message = error.to_string();
+                        if message
+                            .to_ascii_lowercase()
+                            .contains("hash mismatch")
+                        {
+                            AdapterError::Hook(format!(
+                                "hash mismatch for module: {message}"
+                            ))
+                        } else {
+                            AdapterError::Hook(format!(
+                                "failed to create Wasm plugin from {source_url}: {message}"
+                            ))
+                        }
                     })?;
 
                 cache.insert_or_get(state_key.to_owned(), plugin)?
