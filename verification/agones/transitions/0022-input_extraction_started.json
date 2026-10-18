@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ],
+  "authorization": "User execution contract",
+  "event": "INPUT_EXTRACTION_STARTED",
+  "gate_snapshot": "verification/agones/gates/ed041966347da7f00c609be4a7fe9cee249ac758c13091192414cfe8f07eb60a.json",
+  "predecessor_revision": 21,
+  "predecessor_sha256": "9b426bf4b4a8681ccd7b32b3a22a9295e819a97b3f6ddb32ca179157ac303fef",
+  "reason": "FG-INPUT-001 implementation gate precedes extension of the existing package-aware loader. Preserve argument evaluation before assertions and require a separate fresh input gate.",
+  "result_revision": 22,
+  "schema_version": 1,
+  "state_sha256": "272afa25318fd597462a66853a4febb90f494b29e386551c073a297435bbc605",
+  "timestamp": "2026-10-18T13:43:16.575755+00:00"
+}

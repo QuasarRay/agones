@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ],
+  "authorization": "User execution contract",
+  "event": "INPUT_EVIDENCE_CHECKPOINT",
+  "gate_snapshot": "verification/agones/gates/27be8ae70aa3bbfa59bf0bdc624ab4bbac4a75dd61ad9d36ede06e97e778411e.json",
+  "predecessor_revision": 36,
+  "predecessor_sha256": "7aa644a296d99681926a8a71ac1c6e91a56717f88ef048dc5d1b98834be10485",
+  "reason": "Retain 530 unique ordinary test results, six Go source cases/22 assertions, explicit modeled input setup/binding boundaries, two bounded production helper/policy proofs, four current paired raw traces, all required architecture cells, and concrete next production work.",
+  "result_revision": 37,
+  "schema_version": 1,
+  "state_sha256": "6163019fc17309de8fa96ccb11964cce91a02d5fbd99924400ba13264d47f55b",
+  "timestamp": "2026-10-18T14:36:24.797465+00:00"
+}

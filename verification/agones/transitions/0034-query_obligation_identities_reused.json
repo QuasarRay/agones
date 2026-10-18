@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "QUERY_OBLIGATION_IDENTITIES_REUSED",
+  "gate_snapshot": "verification/agones/gates/404a070990057a389cf4f67966cf38e7e52d437a114d3064f08e7aa911e14214.json",
+  "predecessor_revision": 33,
+  "predecessor_sha256": "090826602d793369096ada711fd65e67c69e172c62f2014661590baa748fd49e",
+  "reason": "The package-aware IR preserves the same five query cases/17 assertions plus the separately gated input case. Reuse source identities and rules; no original assertion is dropped because a proof timed out.",
+  "result_revision": 34,
+  "schema_version": 1,
+  "state_sha256": "fe86b271d62271bf21626e82ac29c13068907118c7d45d262df61bc4e83e20dd",
+  "timestamp": "2026-10-18T14:36:24.237406+00:00"
+}

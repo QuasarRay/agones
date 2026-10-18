@@ -1,0 +1,160 @@
+{
+  "artifact_bindings": {
+    "verification/agones/feature-helper-bindings.json": "e527fe83f28d521ac93eedc591b97060265bbee85034df53362463938c4b43ed",
+    "verification/agones/feature-input-kani-properties.json": "15e9d07430a225483e8000dab883914cef1634fb1206d0875c5cf0c8bf1bff8f",
+    "verification/agones/feature-query-codegen.json": "6337204f0329789b1b5a0c364d9d9da6950a623a3dcc999fe71595a51ec3772f",
+    "verification/agones/query-proof-campaign.json": "2b160196964b31de2e0f872e78ad03707cb566964aa12eeadba77bc600f5c434",
+    "verification/agones/runs/all-feature-property-sampling-final-1.json": "60180c0611606ccb1ec982a1a6cc7761f3af498e2b4d0d8586e4119abe60ce01",
+    "verification/agones/runs/all-feature-property-sampling-final-1.log": "b278f8b40b7603ea0df6eb1fdbbe8da52183379dbf02f9115a270b4f633a77ae",
+    "verification/agones/runs/all-feature-source-go-replay-1.json": "eee665fae92e8e89ed91558799b1d4aa523e498127039e8ff5a34dfcbe04c8a7",
+    "verification/agones/runs/all-feature-source-go-replay-1.log": "0da56f1002bbe6e4c36b345901d468b04ff0b567a29701bd800daf8ad29f2dc9",
+    "verification/agones/runs/feature-config-input-final-runtime-1.json": "24d44d7b872a7287b22d496e330057409d589322ed00298df7b7ccdc4effd4bf",
+    "verification/agones/runs/feature-config-input-final-runtime-1.log": "ca4f3f875d1b077f76293705357ca5d02e0e5c1216b0b475705015c144606077",
+    "verification/agones/runs/feature-input-bolero-kani-1.json": "7661863d72b5ad9370622c0e244f5c39fd34c54f6498cf01750becd9854b4f12",
+    "verification/agones/runs/feature-input-bolero-kani-1.log": "c06f5e9f4ddeb0c7b6f921a080f67ecd8a1d3390dd4da58512aa69a1707303a2",
+    "verification/agones/runs/final-source-generation-check-1.json": "ff5e8297166a31ad287c78e75d962eddf3eeb927a2cbc177b2aa93a08e8e3d7d",
+    "verification/agones/runs/final-source-generation-check-1.log": "06a4cc4373c9ab941820d0daeb0ece417b7d49e93e660a643590de04fad88294",
+    "verification/agones/runs/sorted-feature-source-extraction-1.json": "b33eed268e514f97a8a0bff09d545cfe1872c9c4fcad92b74df6add7b3db4251",
+    "verification/agones/runs/sorted-feature-source-extraction-1.log": "c6c56927397d9aa0570354b07f28bd7cf29cb9807122c446f5b381d3daa011c8",
+    "verification/agones/runs/sorted-features-check-1.json": "d2a7cecf92cab9e5c373b03d368e8995c34098686b3e8f9cd26e9053e897b08f",
+    "verification/agones/runs/sorted-features-check-1.log": "b92fbf087adcee43871fa3f13f19080dd791f0fb0df1ce92d87bfaa13dca56fb",
+    "verification/agones/runs/sorted-features-workspace-2.json": "8fed2861247821f82810bd16e2321a917cfcfeb4fe57a700b65d1d9599c9fa72",
+    "verification/agones/runs/sorted-features-workspace-2.log": "4351326fc31d8a7b8f8d157e976b564344ed170b49b7fc610bcc2ab494651ca0",
+    "verification/agones/runs/source-loader-controls-final-1.json": "d68d1d2523c525d596249aa571b71f4a1482122e6ac75880fa58d54255136c44",
+    "verification/agones/runs/source-loader-controls-final-1.log": "f98dd026ca59f215c60cb3af115b4bd0e715650f50835e3ef71263eb53269b43",
+    "verification/agones/runs/source-result-controls-final-1.json": "6fad3455ae18aca9e0b8cdb00557b03215ab82edf608de081b956b1c34bc16b6",
+    "verification/agones/runs/source-result-controls-final-1.log": "fe008aab760eb03ccac7578e2b84665b1b50b0d7f855b17a0c7a8d039435b658"
+  },
+  "assurance": {
+    "actual_process_fixture": "Test=true with the original Example=true/Test=false defaults is exercised in the isolated core process test; process input and production consumers have eleven nonempty child cases.",
+    "external_cluster_conformance": [],
+    "independent_invariant": "source_relation guarded precedence/default laws, checked separately for reference and actual production output.",
+    "modeled_fixture_or_static_binding_assertion_ids": [
+      "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-73",
+      "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-78"
+    ],
+    "original_source_assertions_model_checked": [],
+    "production_runtime_assertion_ids": [
+      "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-79",
+      "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-81",
+      "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-82"
+    ],
+    "production_symbol_model_checked": [
+      "agones_core::select_feature_gate_input"
+    ],
+    "proof": "verification/agones/runs/feature-input-bolero-kani-1.json",
+    "proof_reuse": {
+      "reason": "The pure selector, harness, lock/toolchain, CGP inputs and reachable types are unchanged. No query parser, FeatureGates object or process effect is called by this proof; the sorted-query representation refactor is outside its call closure.",
+      "validated_source_bindings": {
+        "Cargo.lock": "3666230a1363b58d2f0041c91a10d26c6b0beff1dccd65190aa9d526acaed2bd",
+        "Cargo.toml": "f0c28c2ca73ba51fad682c9d35950d050b0839775d0eb609e7903c47743b5d00",
+        "crates/agones-core/Cargo.toml": "2d016e812c6ff6df0368cf160c5c782fe257e65b83cf6235683955d65ef05b0c",
+        "crates/agones-core/src/feature_inputs.rs": "9cfaf42de485874339a58895991ad15adff787f363d9821a3ab7f0f4c36222d4",
+        "crates/agones-core/src/lib.rs": "be80edb0945f90599fdd8b2e4550d7d37efff0b5c2483bffec7346f20c8a861e",
+        "crates/agones-core/tests/feature_input_domain.rs": "a041cfd5c7f4b54220abf5ed6964214a150c95df59e5de601ffb89f21478f124",
+        "crates/agones-macros/Cargo.toml": "5e3f6a9a4746a6ffd99bdb435fd524d60874270a0c67de971116040b5d694050",
+        "crates/agones-macros/src/lib.rs": "62d0f538d0b19f2f97f0750c54357d362ca0693ad0710ce6b00dc18480396955",
+        "rust-toolchain.toml": "c910997cb152c6dc8ed13b1fdf9fa28a4ed30d6776123e27dd6170e5c66067a0"
+      }
+    },
+    "proof_summary": "verification/agones/feature-input-kani-properties.json",
+    "reference_model_checked": [
+      "feature_input_common_domain/reference_input"
+    ],
+    "rusternetes_integrated": [
+      "real_process_inputs_reach_default_and_explicit_production_consumers"
+    ],
+    "sampling": {
+      "accepted_inputs": 4097,
+      "precondition_rejections": 0,
+      "requested_iterations": 4096,
+      "run": "verification/agones/runs/all-feature-property-sampling-final-1.json",
+      "seed": 1792331700
+    },
+    "source_go_replayed": [
+      "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+    ],
+    "source_rust_ir_assertions_evaluated": 5
+  },
+  "bounded_domain": {
+    "claimed_assertions": 3,
+    "classification": "SOURCE_CONTRACT_PROPERTY",
+    "domain_equivalence": "Pinned Bolero tuple/array generation uses full u8 ranges and succeeds within the same bounded structural depth; both engines apply the same total option/length projection. No user filter or semantic assumption.",
+    "preconditions": [],
+    "projection": "flags low three bits select optional values; each length tag % 3 selects length 0..2",
+    "raw_type": "([u8;2],[u8;2],[u8;2],u8,u8,u8,u8)",
+    "required_covers": 10,
+    "unreachable_internal_checks_not_credited": 23,
+    "unwind": 8
+  },
+  "feature_id": "FG-INPUT-001",
+  "implementation_gate": "verification/agones/gates/27be8ae70aa3bbfa59bf0bdc624ab4bbac4a75dd61ad9d36ede06e97e778411e.json",
+  "next_feature": "FG-ERROR-001",
+  "residual_obligations": [
+    "All five exact original input assertions still require an explicit adequate formal mapping; the current three-assertion selector proof is a separate source-contract property.",
+    "The IR interpreter models successful setup/static binding. It does not prove real OS mutation or command registration; actual process input replay and source Go execution are separate evidence.",
+    "Full command option parsing, application lifecycle/fatal reporting, error text compatibility, live cluster conformance, remaining baseline scope and all eight _2 architecture cells remain required."
+  ],
+  "schema_version": 1,
+  "semantic_bindings": {
+    "Cargo.lock": "3666230a1363b58d2f0041c91a10d26c6b0beff1dccd65190aa9d526acaed2bd",
+    "build/scripts/agones-rs/check_bool_mutations.py": "2edc7567b9f46dba12cb327edac0713f29d130734515f44fe6ab420a0f650e4f",
+    "build/scripts/agones-rs/extract/go.mod": "d23234a15e7dbd4b4a9a5114b603c7b4af96faf0b28597887612f797198621db",
+    "build/scripts/agones-rs/extract/go.sum": "db117b1938e16538e8fe3fc238d5185565e1a5150ed8989573f95899b23d0101",
+    "build/scripts/agones-rs/extract/main.go": "4c055d8a1f78e98346efcf552934246869dd872181704961cb51fcff68e32bda",
+    "build/scripts/agones-rs/extract/main_test.go": "b66449f6662bd598185fb671688d9bf566e36176c2e36ffca378d78464370213",
+    "build/scripts/agones-rs/kani_results.py": "3da492eaab20838dfbc3eedfa400a5810140cc348290032423aa0b8538f2e631",
+    "build/scripts/agones-rs/probes/raw_feature_query.go": "d50cb31d7f18cd6e3c11fca9a6a97d2200db66672cd71330e0906272d0ccabdd",
+    "build/scripts/agones-rs/summarize_bool_proof.py": "1ba6c3dc5f512d7f1456a79c8311eed4c3a189f1be6b524f24b49dfdb34a070e",
+    "build/scripts/agones-rs/summarize_feature_proof.py": "154134c0f06549c053cb9c30522cc5f57c4016efaec45e7d4b161a69d1f180bd",
+    "build/scripts/agones-rs/test_kani_results.py": "155302fbbf094342de43b9da160ee7c7f200f64d01c94e690db4ad5b27584ccd",
+    "cmd/controller/main.go": "7bfb26ebd6ca8f6c27cd93311ba89fb1860f7598805e3d7e0a602f3d4b3eab55",
+    "cmd/sdk-server/main.go": "8113b4b4c2afe299e39c4f5856540d9e121e4280ce023b4dcaa640e028d6cddd",
+    "crates/agones-core/Cargo.toml": "2d016e812c6ff6df0368cf160c5c782fe257e65b83cf6235683955d65ef05b0c",
+    "crates/agones-core/examples/feature_query_replay.rs": "10d260d187ce77aae7955ecd50649ca8e87b8c0493d7079299807760c9d57f1c",
+    "crates/agones-core/src/feature_inputs.rs": "9cfaf42de485874339a58895991ad15adff787f363d9821a3ab7f0f4c36222d4",
+    "crates/agones-core/src/features.rs": "a4b619ddadebb502563f18378428004f4e854171dcad9c45f33dd2eb92204b51",
+    "crates/agones-core/src/lib.rs": "be80edb0945f90599fdd8b2e4550d7d37efff0b5c2483bffec7346f20c8a861e",
+    "crates/agones-core/tests/feature_bool_domain.rs": "f36542866193c88f464139f86d9d12fb6159276be8102e294754b00054a36f0a",
+    "crates/agones-core/tests/feature_input_domain.rs": "a041cfd5c7f4b54220abf5ed6964214a150c95df59e5de601ffb89f21478f124",
+    "crates/agones-core/tests/feature_inputs.rs": "6e5f7300ba064abc620c960d106461726a0735e8cfe636e5a9d7ac2bbcf9d01d",
+    "crates/agones-core/tests/feature_source_query_domain.rs": "8f43613b189e10afa87e74f9832962cc0889f8652876b7c463b6b759636727db",
+    "crates/agones-core/tests/generated/feature_gate_cases.rs": "46f05e90380d2c292b4e888294e1dae11239b66e9a9e6c42f2bbfdd2c69a2b00",
+    "crates/agones-macros/Cargo.toml": "5e3f6a9a4746a6ffd99bdb435fd524d60874270a0c67de971116040b5d694050",
+    "crates/agones-macros/src/lib.rs": "62d0f538d0b19f2f97f0750c54357d362ca0693ad0710ce6b00dc18480396955",
+    "crates/agones-rusternetes/Cargo.toml": "7e5c18a590b0d602c725abd853fd0ba7825e4028f8a46fc7fe404bb7b512db26",
+    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "28bac09f1e8d9bd0356cdeb2ca02e1812aac04ee9db1de537e4939da76151711",
+    "crates/agones-rusternetes/src/creating_gameserver_controller.rs": "e86d20ab7ea0b5e85644cf7bdd42361f80a6384d8c7c53ad75113edbefce59b8",
+    "crates/agones-rusternetes/src/fleetautoscaler_admission.rs": "10bd2bfcfc8c1542cd5f02e504a55667fac25f277a96b0ac667edd28175ecfe6",
+    "crates/agones-rusternetes/src/fleetautoscaler_controller.rs": "a6e187daa4f7f5cee673f95186c1979a5a8d1fe4a788deda23202e836f2ae4f3",
+    "crates/agones-rusternetes/src/sdk_sidecar.rs": "ce8b601163a8a0d6dd6fdcacfeda3f6a762d622884ba607f84ad50100740a084",
+    "crates/agones-rusternetes/tests/feature_configuration.rs": "179117bb2d9757184c8d8a275e03b11923e7f8f90f201116ebcdeaf78ad2d39c",
+    "crates/agones-rusternetes/tests/feature_input_consumers.rs": "280fcff456c248281054cfab7c4c325827438a334122965d5a6511bede40c974",
+    "crates/agones-rusternetes/tests/feature_source_obligations.rs": "48b6cfd6192a20bd957529cc7dcfda586ca42fabe34fb02e4d544339e57c36a7",
+    "go.mod": "01df333891a331341e77aab737c24dc722fab26abc8439b9c2036c71a477215a",
+    "go.sum": "d890978bc12d9c9958b2a87f99a87d8478b007208e44c5d859e973ba89adcbf7",
+    "pkg/util/runtime/features.go": "05736b26646cf219419626dfca37c4f533302b178ca3bb542330cf7884ddc679",
+    "pkg/util/runtime/features_test.go": "6bd14c7faa40a6dd4efb434caf59063c14195993ce4cdaad87104ac4ba8d87ec",
+    "rust-toolchain.toml": "c910997cb152c6dc8ed13b1fdf9fa28a4ed30d6776123e27dd6170e5c66067a0",
+    "vendor/github.com/spf13/pflag/flag.go": "5699e18dd47610cf862dca1bb046f5d00a652fd412d9ac2c1a0f79b9c691c8cb",
+    "vendor/github.com/spf13/viper/viper.go": "bec63043cd77615b93ffce9994e157f81a90b7e1d8a9cf7df0a343b920fabb10",
+    "verification/agones/feature-gates.ir.json": "e5daa731b51cdb45abdfd9c0e2ec8be9f250a92099c2b40fecce1355a18f91bb",
+    "verification/agones/feature-input-capability-v1.json": "a307b7d5f0ec550aac46080765989fb5fc67e254eab3ae51869da8a504671064",
+    "verification/agones/toolchain-v1.json": "80f3011f885510a4bd6fc9d6d3f52ddc724f9b54bce63f99374cf0e8571ab17e"
+  },
+  "source_mapped": {
+    "assertion_count": 5,
+    "assertion_ids": [
+      "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-73",
+      "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-78",
+      "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-79",
+      "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-81",
+      "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-82"
+    ],
+    "case_count": 1,
+    "case_ids": [
+      "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+    ]
+  },
+  "status": "IMPLEMENTED_PARTIAL_ASSURANCE_REQUIRED_WORK_OPEN"
+}

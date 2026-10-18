@@ -36,6 +36,19 @@ pub struct FleetAutoscalerController<S> {
 }
 
 impl<S> FleetAutoscalerController<S> {
+    pub fn from_feature_inputs<C: agones_core::CanLoadFeatureGates>(
+        storage: S,
+        context: &C,
+    ) -> Result<Self, agones_core::FeatureGateError> {
+        let gates = context.load_feature_gates()?;
+        Ok(Self {
+            storage: Arc::new(storage),
+            autoscaler_features: AutoscalerFeatures::from(&gates),
+            fleet_autoscale_request_metadata: gates.enabled("FleetAutoscaleRequestMetaData"),
+            wasm_cache: FleetAutoscalerWasmCache::default(),
+        })
+    }
+
     /// Construct the production context using source-compatible feature gates.
     pub fn from_feature_configuration<C: agones_core::CanParseFeatureGates>(
         storage: S,
@@ -58,8 +71,8 @@ impl<S> FleetAutoscalerController<S> {
     }
 
     pub fn new(storage: S) -> Self {
-        Self::from_feature_configuration(storage, &agones_core::FeatureGateContext::default(), "")
-            .expect("the pinned empty Agones feature configuration is valid")
+        Self::from_feature_inputs(storage, &agones_core::FeatureGateInputContext::default())
+            .expect("invalid Agones process feature configuration")
     }
 
     pub fn with_autoscaler_features(

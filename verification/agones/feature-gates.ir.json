@@ -138,12 +138,18 @@
     },
     {
       "assertion_count": 5,
-      "disposition": "UNSUPPORTED",
+      "disposition": "READY",
       "id": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars",
       "name": "parse env vars",
-      "reason": "Viper/pflag/environment effects and process-global input binding remain FG-INPUT-001; retain all source assertions without credit.",
       "source": "{\n\n\tassert.NoError(t, os.Setenv(\"FEATURE_GATES\", \"Test=true\"))\n\n\tFeaturesBindFlags()\n\tpflag.Parse()\n\tviper.SetEnvKeyReplacer(strings.NewReplacer(\"-\", \"_\"))\n\tassert.NoError(t, FeaturesBindEnv())\n\tassert.NoError(t, ParseFeaturesFromEnv())\n\n\tassert.True(t, FeatureEnabled(Feature(\"Test\")))\n\tassert.True(t, FeatureEnabled(FeatureExample))\n}",
       "steps": [
+        {
+          "enabled": false,
+          "key": "FEATURE_GATES",
+          "kind": "SET_ENV",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-73",
+          "value": "Test=true"
+        },
         {
           "enabled": false,
           "kind": "ASSERT_NO_ERROR",
@@ -151,8 +157,37 @@
         },
         {
           "enabled": false,
+          "kind": "BIND_FLAGS",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-75"
+        },
+        {
+          "enabled": false,
+          "kind": "PARSE_FLAGS",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-76"
+        },
+        {
+          "enabled": false,
+          "key": "-",
+          "kind": "SET_ENV_KEY_REPLACER",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-77",
+          "value": "_"
+        },
+        {
+          "enabled": false,
+          "key": "feature-gates",
+          "kind": "BIND_ENV",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-78",
+          "value": "FEATURE_GATES"
+        },
+        {
+          "enabled": false,
           "kind": "ASSERT_NO_ERROR",
           "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-78"
+        },
+        {
+          "enabled": false,
+          "kind": "PARSE_ENV",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-79"
         },
         {
           "enabled": false,
@@ -244,15 +279,23 @@
     "GOVERSION": "go1.27.1-X:nodwarf5"
   },
   "feature_id": "FG-CONFIG-001",
-  "implementation_gate": "verification/agones/gates/9bc7d7e7fc872f42369903027b46116bdc3a2fed1d783f66476870a1aa451357.json",
-  "implementation_gate_sha256": "9bc7d7e7fc872f42369903027b46116bdc3a2fed1d783f66476870a1aa451357",
+  "implementation_gate": "verification/agones/gates/404a070990057a389cf4f67966cf38e7e52d437a114d3064f08e7aa911e14214.json",
+  "implementation_gate_sha256": "404a070990057a389cf4f67966cf38e7e52d437a114d3064f08e7aa911e14214",
+  "input_implementation_gate": "verification/agones/gates/27be8ae70aa3bbfa59bf0bdc624ab4bbac4a75dd61ad9d36ede06e97e778411e.json",
+  "input_implementation_gate_sha256": "27be8ae70aa3bbfa59bf0bdc624ab4bbac4a75dd61ad9d36ede06e97e778411e",
   "loader": "golang.org/x/tools/go/packages v0.48.0",
   "package_id": "agones.dev/agones/pkg/util/runtime [agones.dev/agones/pkg/util/runtime.test]",
   "schema_version": 1,
   "source_files": {
+    "cmd/controller/main.go": "7bfb26ebd6ca8f6c27cd93311ba89fb1860f7598805e3d7e0a602f3d4b3eab55",
+    "cmd/sdk-server/main.go": "8113b4b4c2afe299e39c4f5856540d9e121e4280ce023b4dcaa640e028d6cddd",
+    "go.mod": "01df333891a331341e77aab737c24dc722fab26abc8439b9c2036c71a477215a",
+    "go.sum": "d890978bc12d9c9958b2a87f99a87d8478b007208e44c5d859e973ba89adcbf7",
     "pkg/util/runtime/features.go": "05736b26646cf219419626dfca37c4f533302b178ca3bb542330cf7884ddc679",
-    "pkg/util/runtime/features_test.go": "6bd14c7faa40a6dd4efb434caf59063c14195993ce4cdaad87104ac4ba8d87ec"
+    "pkg/util/runtime/features_test.go": "6bd14c7faa40a6dd4efb434caf59063c14195993ce4cdaad87104ac4ba8d87ec",
+    "vendor/github.com/spf13/pflag/flag.go": "5699e18dd47610cf862dca1bb046f5d00a652fd412d9ac2c1a0f79b9c691c8cb",
+    "vendor/github.com/spf13/viper/viper.go": "bec63043cd77615b93ffce9994e157f81a90b7e1d8a9cf7df0a343b920fabb10"
   },
   "source_mapping_note": "Same root package owns both tests. Exact assertion identities use source-bound line spans. No test/helper/fixture exclusion is implied by this focused selection.",
-  "support": "Package/type-resolved ParseFeatures, EncodeFeatures, FeatureEnabled, EnableAllFeatures and testify assertions; exact Example/Test fixture; source t.Parallel/global-map isolation maps to instance-local Rust contexts. Unknown test selection, fixture or assertion shapes fail closed. Environment case remains unsupported; no dynamic table normalization."
+  "support": "The gated query family plus the gated exact input case: environment setup, flag registration/parse, key replacement, binding and input parsing in source evaluation order. The Rust graph statically binds the constant feature key; command parser and OS effects are explicit trusted/model boundaries, validated separately with real process replay. Unknown calls, input shapes and argument replacements fail closed."
 }

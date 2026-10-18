@@ -22,12 +22,19 @@ pub struct FleetAutoscalerAdmissionContext {
 
 impl Default for FleetAutoscalerAdmissionContext {
     fn default() -> Self {
-        Self::from_feature_configuration(&agones_core::FeatureGateContext::default(), "")
-            .expect("the pinned empty Agones feature configuration is valid")
+        Self::from_feature_inputs(&agones_core::FeatureGateInputContext::default())
+            .expect("invalid Agones process feature configuration")
     }
 }
 
 impl FleetAutoscalerAdmissionContext {
+    pub fn from_feature_inputs<C: agones_core::CanLoadFeatureGates>(
+        context: &C,
+    ) -> Result<Self, agones_core::FeatureGateError> {
+        let gates = context.load_feature_gates()?;
+        Ok(Self::new(AutoscalerFeatures::from(&gates)))
+    }
+
     pub fn from_feature_configuration<C: agones_core::CanParseFeatureGates>(
         context: &C,
         query: &str,

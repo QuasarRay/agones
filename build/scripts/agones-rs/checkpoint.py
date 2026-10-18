@@ -106,6 +106,7 @@ does not mean source extraction, Bolero/Kani proof, integration or delivery pass
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("action", choices=["check", "checkpoint"])
+    parser.add_argument("--work-item", help="Select an existing work item as the active packet")
     parser.add_argument("--stage")
     parser.add_argument("--gate")
     parser.add_argument("--next-action")
@@ -115,6 +116,7 @@ if __name__ == "__main__":
     parser.add_argument("--goal-receipt")
     parser.add_argument("--resolve-blocker", action="append", default=[])
     parser.add_argument("--delivery-plan")
+    parser.add_argument("--artifact-policy")
     parser.add_argument("--event", default="CHECKPOINT")
     parser.add_argument("--reason", default="Retain current source, checks and next action")
     args = parser.parse_args()
@@ -124,6 +126,10 @@ if __name__ == "__main__":
     else:
         old_hash = digest(STATE)
         write(OUT / "states" / f"{old_hash}.json", state)
+        if args.work_item:
+            selected = [i for i in state["work_items"] if i["id"] == args.work_item]
+            assert len(selected) == 1, "unknown or duplicate work item"
+            state["work_items"] = selected + [i for i in state["work_items"] if i["id"] != args.work_item]
         item = state["work_items"][0]
         if args.stage and args.stage != item["stage"]:
             transitions = read(ROOT / "AGONES_RS_STATE.schema.json")["x-legal-stage-transitions"]
@@ -153,6 +159,8 @@ if __name__ == "__main__":
                 blocker["resolution"] = args.reason
         if args.delivery_plan:
             state["delivery"].update(read(ROOT / args.delivery_plan))
+        if args.artifact_policy:
+            state["artifact_policy"] = read(ROOT / args.artifact_policy)
         state.update(revision=state["revision"]+1, previous_revision=state["revision"], previous_sha256=old_hash)
         state["workspace"]["head"] = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
         state["workspace"]["dirty_patch_sha256"] = hashlib.sha256(subprocess.check_output(["git", "diff", "--binary", "HEAD"], cwd=ROOT)).hexdigest()

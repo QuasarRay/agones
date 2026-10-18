@@ -1,0 +1,8 @@
+=== RUN   TestFeatures
+=== PAUSE TestFeatures
+=== CONT  TestFeatures
+=== RUN   TestFeatures/parse_env_vars
+--- PASS: TestFeatures (0.00s)
+    --- PASS: TestFeatures/parse_env_vars (0.00s)
+PASS
+ok  	agones.dev/agones/pkg/util/runtime	0.005s

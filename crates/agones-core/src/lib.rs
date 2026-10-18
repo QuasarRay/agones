@@ -24,6 +24,7 @@ pub mod gameserver;
 pub mod gameserverset;
 pub mod multicluster;
 pub mod features;
+pub mod feature_inputs;
 
 pub use fleet::*;
 pub use allocation::*;
@@ -32,6 +33,7 @@ pub use gameserver::*;
 pub use gameserverset::*;
 pub use multicluster::*;
 pub use features::*;
+pub use feature_inputs::*;
 
 
 #[cfg(test)]

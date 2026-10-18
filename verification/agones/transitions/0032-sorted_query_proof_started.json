@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ],
+  "authorization": "User execution contract",
+  "event": "SORTED_QUERY_PROOF_STARTED",
+  "gate_snapshot": "verification/agones/gates/27be8ae70aa3bbfa59bf0bdc624ab4bbac4a75dd61ad9d36ede06e97e778411e.json",
+  "predecessor_revision": 31,
+  "predecessor_sha256": "5fd5b8ecef8e40cac364ad5107a54f574a1795642f53daea1308cf6bc99fb311",
+  "reason": "Retry the adequately bounded generated query proof only after replacing the diagnosed B-tree cause and revalidating all production checks; preserve the failed first attempt.",
+  "result_revision": 32,
+  "schema_version": 1,
+  "state_sha256": "a1615dd5af227fce7ee05cb98fd7d27114044ce98e662433acb7921f0aaa2329",
+  "timestamp": "2026-10-18T14:07:00.357091+00:00"
+}

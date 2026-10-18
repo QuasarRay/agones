@@ -22,6 +22,7 @@ import (
 
 type Step struct {
 	Kind    string `json:"kind"`
+	Key     string `json:"key,omitempty"`
 	Value   string `json:"value,omitempty"`
 	Enabled bool   `json:"enabled"`
 	Origin  string `json:"origin"`
@@ -45,6 +46,7 @@ type Default struct {
 type Gate struct {
 	Status          string            `json:"status"`
 	Baseline        string            `json:"baseline"`
+	FeatureID       string            `json:"feature_id"`
 	ProductionFiles map[string]string `json:"production_files"`
 }
 
@@ -69,6 +71,13 @@ func validateGate(root string, gate Gate) error {
 		}
 	}
 	return nil
+}
+
+func validateInputGate(root string, gate Gate) error {
+	if gate.FeatureID != "feature-gates-environment-cli-binding" {
+		return fmt.Errorf("environment extraction requires the input feature's gate")
+	}
+	return validateGate(root, gate)
 }
 
 func sourceCaseIdentity(base string, line int, seen map[string]bool) string {
@@ -100,7 +109,24 @@ func main() {
 	var gate Gate
 	must(json.Unmarshal(gateBytes, &gate))
 	must(validateGate(root, gate))
-	for _, path := range []string{"pkg/util/runtime/features_test.go", "pkg/util/runtime/features.go", "go.mod", "go.sum"} {
+	inputGatePath := ""
+	var inputGateBytes []byte
+	if len(os.Args) > 3 {
+		inputGatePath = os.Args[3]
+		inputGateBytes, err = os.ReadFile(filepath.Join(root, inputGatePath))
+		must(err)
+		var inputGate Gate
+		must(json.Unmarshal(inputGateBytes, &inputGate))
+		must(validateInputGate(root, inputGate))
+		if inputGate.Baseline != gate.Baseline {
+			panic("query/input gate baseline mismatch")
+		}
+	}
+	sourcePaths := []string{"pkg/util/runtime/features_test.go", "pkg/util/runtime/features.go", "go.mod", "go.sum"}
+	if inputGatePath != "" {
+		sourcePaths = append(sourcePaths, "vendor/github.com/spf13/viper/viper.go", "vendor/github.com/spf13/pflag/flag.go", "cmd/controller/main.go", "cmd/sdk-server/main.go")
+	}
+	for _, path := range sourcePaths {
 		original, err := exec.Command("git", "-C", root, "show", gate.Baseline+":"+path).Output()
 		must(err)
 		current, err := os.ReadFile(filepath.Join(root, path))
@@ -166,6 +192,39 @@ func main() {
 		}
 		return obj.Pkg().Path() + "." + obj.Name()
 	}
+	inputAction := func(call *ast.CallExpr, origin string) (Step, bool) {
+		step := Step{Origin: origin}
+		switch callName(call) {
+		case "os.Setenv":
+			if len(call.Args) != 2 || value(call.Args[0]) != "FEATURE_GATES" {
+				panic("unsupported environment mutation: " + text(call))
+			}
+			step.Kind, step.Key, step.Value = "SET_ENV", value(call.Args[0]), value(call.Args[1])
+		case "agones.dev/agones/pkg/util/runtime.FeaturesBindFlags":
+			step.Kind = "BIND_FLAGS"
+		case "github.com/spf13/pflag.Parse":
+			step.Kind = "PARSE_FLAGS"
+		case "agones.dev/agones/pkg/util/runtime.FeaturesBindEnv":
+			step.Kind, step.Key, step.Value = "BIND_ENV", "feature-gates", "FEATURE_GATES"
+		case "agones.dev/agones/pkg/util/runtime.ParseFeaturesFromEnv":
+			step.Kind = "PARSE_ENV"
+		case "github.com/spf13/viper.SetEnvKeyReplacer":
+			if len(call.Args) != 1 {
+				panic("unsupported environment key binding")
+			}
+			replacer, ok := call.Args[0].(*ast.CallExpr)
+			if !ok || callName(replacer) != "strings.NewReplacer" || len(replacer.Args) != 2 || value(replacer.Args[0]) != "-" || value(replacer.Args[1]) != "_" {
+				panic("unsupported environment key replacer: " + text(call))
+			}
+			step.Kind, step.Key, step.Value = "SET_ENV_KEY_REPLACER", "-", "_"
+		default:
+			return step, false
+		}
+		if step.Kind != "SET_ENV" && step.Kind != "SET_ENV_KEY_REPLACER" && len(call.Args) != 0 {
+			panic("unsupported input action arguments: " + text(call))
+		}
+		return step, true
+	}
 	defaultRows := []Default{}
 	cases := []Case{}
 	identities := map[string]bool{}
@@ -206,7 +265,7 @@ func main() {
 		translate := func(name string, body *ast.BlockStmt) {
 			c := Case{ID: pkg.PkgPath + "::" + path + "::" + fn.Name.Name + "::" + name, Test: fn.Name.Name, Name: name, Disposition: "READY", Source: text(body), Steps: []Step{}}
 			c.ID = sourceCaseIdentity(c.ID, pkg.Fset.Position(body.Pos()).Line, identities)
-			if name == "parse env vars" {
+			if name == "parse env vars" && inputGatePath == "" {
 				c.Disposition = "UNSUPPORTED"
 				c.Reason = "Viper/pflag/environment effects and process-global input binding remain FG-INPUT-001; retain all source assertions without credit."
 			}
@@ -219,6 +278,12 @@ func main() {
 				line := pkg.Fset.Position(call.Pos()).Line
 				origin := fmt.Sprintf("%s::line-%d", c.ID, line)
 				step := Step{Origin: origin}
+				if inputGatePath != "" {
+					if action, ok := inputAction(call, origin); ok {
+						c.Steps = append(c.Steps, action)
+						return false
+					}
+				}
 				switch name {
 				case "agones.dev/agones/pkg/util/runtime.ParseFeatures":
 					if nested, ok := call.Args[0].(*ast.CallExpr); ok && callName(nested) == "agones.dev/agones/pkg/util/runtime.EncodeFeatures" {
@@ -230,6 +295,18 @@ func main() {
 				case "agones.dev/agones/pkg/util/runtime.EnableAllFeatures":
 					step.Kind = "ENABLE_ALL"
 				case "github.com/stretchr/testify/assert.NoError":
+					if inputGatePath != "" {
+						if nested, ok := call.Args[1].(*ast.CallExpr); ok {
+							action, supported := inputAction(nested, fmt.Sprintf("%s::line-%d", c.ID, pkg.Fset.Position(nested.Pos()).Line))
+							if !supported {
+								panic("unsupported effect inside NoError: " + text(nested))
+							}
+							// Go evaluates the effect argument before the assertion.
+							c.Steps = append(c.Steps, action, Step{Kind: "ASSERT_NO_ERROR", Origin: origin})
+							c.AssertionCount++
+							return false
+						}
+					}
 					step.Kind = "ASSERT_NO_ERROR"
 					c.AssertionCount++
 				case "github.com/stretchr/testify/assert.Error":
@@ -300,6 +377,17 @@ func main() {
 	helper, err := os.ReadFile(filepath.Join(root, helperPath))
 	must(err)
 	result := map[string]interface{}{"schema_version": 1, "feature_id": "FG-CONFIG-001", "implementation_gate": gatePath, "implementation_gate_sha256": hash(gateBytes), "classification": "EXACT_CASE", "loader": "golang.org/x/tools/go/packages v0.48.0", "package_id": pkg.ID, "source_files": map[string]string{path: hash(tests), helperPath: hash(helper)}, "defaults": defaultRows, "cases": cases, "environment": map[string]string{"GOFLAGS": "-mod=vendor", "GOTOOLCHAIN": "local", "GOOS": runtime.GOOS, "GOARCH": runtime.GOARCH, "GOVERSION": runtime.Version()}, "support": "Package/type-resolved ParseFeatures, EncodeFeatures, FeatureEnabled, EnableAllFeatures and testify assertions; exact Example/Test fixture; source t.Parallel/global-map isolation maps to instance-local Rust contexts. Unknown test selection, fixture or assertion shapes fail closed. Environment case remains unsupported; no dynamic table normalization.", "source_mapping_note": "Same root package owns both tests. Exact assertion identities use source-bound line spans. No test/helper/fixture exclusion is implied by this focused selection."}
+	if inputGatePath != "" {
+		result["input_implementation_gate"] = inputGatePath
+		result["input_implementation_gate_sha256"] = hash(inputGateBytes)
+		bindings := result["source_files"].(map[string]string)
+		for _, sourcePath := range sourcePaths {
+			source, err := os.ReadFile(filepath.Join(root, sourcePath))
+			must(err)
+			bindings[sourcePath] = hash(source)
+		}
+		result["support"] = "The gated query family plus the gated exact input case: environment setup, flag registration/parse, key replacement, binding and input parsing in source evaluation order. The Rust graph statically binds the constant feature key; command parser and OS effects are explicit trusted/model boundaries, validated separately with real process replay. Unknown calls, input shapes and argument replacements fail closed."
+	}
 	encoder := json.NewEncoder(os.Stdout)
 	encoder.SetIndent("", "  ")
 	must(encoder.Encode(result))

@@ -1,14 +1,14 @@
 # Agones-rs handoff
 
-Generated from AGONES_RS_STATE.json revision 17.
+Generated from AGONES_RS_STATE.json revision 39.
 Contract SHA-256: `45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1`.
 Original reference: `6eb4a02588d8e7b581de187f3bc849733a78dcb2`, scope `agones-original-v1`.
-Workspace: `agones-rs-dev` at `d88f536cbd36fb2fd9ca75ced6fe23d7f7649762`.
+Workspace: `agones-rs-dev` at `8c7e12706f7c1f9586409b15014a17ad7194b7b4`.
 Native Goal remains active; full migration is **INCOMPLETE**.
 
-Active work: **FG-CONFIG-001**, stage `VERIFYING`, disposition `READY`.
-Next action: Publish the incremental CI/guidance repair to the existing PR, verify its exact head results, and continue FG-INPUT-001.
-Implementation gate: `verification/agones/gates/9bc7d7e7fc872f42369903027b46116bdc3a2fed1d783f66476870a1aa451357.json`.
+Active work: **FG-INPUT-001**, stage `VERIFYING`, disposition `READY`.
+Next action: Publish the current implementation/evidence checkpoint to existing draft PR 92 and verify its new head. Then implement FG-ERROR-001 before resuming the diagnosed exact-case campaign. Five original input assertions remain required formal work; the separate pure input-selector proof has three successful claims and ten covers.
+Implementation gate: `verification/agones/gates/27be8ae70aa3bbfa59bf0bdc624ab4bbac4a75dd61ad9d36ede06e97e778411e.json`.
 
 Read the active source and affected contract appendices only. Baseline metadata is in
 `verification/agones/baseline.json`, `scope-v1.json`, `baseline-tree.tsv`, and `baseline-tests.json`.
@@ -19,10 +19,10 @@ not product implementation evidence; its old revised-prompt hash is historical.
 
 All 8 unverified `_2` form/location cells remain required architecture work.
 Last refactoring decision: REUSE_EXISTING.
-Next review: FG-INPUT-001 implementation gate; compare a small Genco exact-case emitter with existing invariant/macro facilities, and reassess the source-aware derive path as the next narrow cross-crate adoption opportunity..
+Next review: FG-ERROR-001 implementation gate: review any real quoting/table generation repetition. At the next public API/resource feature, compile the existing resource derive through an aliased downstream core path and reassess the narrowest proc_macro_derive_2 cross-crate authoring path. All other _2 forms/locations remain required and are reassessed at that same review..
 No new macros or general frameworks are prerequisites for the next ordinary feature.
 
-Delivery: `DRAFT_PR_OPEN_CI_REPAIR` to `agones-rs-dev`; never modify main.
+Delivery: `LOCAL_INPUT_CHECKPOINT_PENDING_PUBLICATION` to `agones-rs-dev`; never modify main.
 Connected GitHub app has write access; local gh CLI is logged out.
 Recover live jobs from the ledger and `verification/agones/runs/*.json` by comparing
 the stored process identity with /proc before waiting, attaching or stopping anything.

@@ -1,0 +1,21 @@
+{
+  "affected_architecture_cells": [
+    "proc_macro_2:same-logical-crate",
+    "proc_macro_2:cross-crate",
+    "proc_macro_attribute_2:same-logical-crate",
+    "proc_macro_attribute_2:cross-crate",
+    "proc_macro_derive_2:same-logical-crate",
+    "proc_macro_derive_2:cross-crate",
+    "proc_macro_delegate_2:same-logical-crate",
+    "proc_macro_delegate_2:cross-crate"
+  ],
+  "architecture_status": "All eight required cells remain open; ordinary Genco/CGP reuse earns no _2 cell credit. The input getters and four short constructor paths do not justify a new staging framework.",
+  "candidate": "Exact-case IR actions/assertions require a compile-time Rust representation for the production core model checker.",
+  "decision": "REUSE_EXISTING",
+  "feature_binding": "verification/agones/gates/ed041966347da7f00c609be4a7fe9cee249ac758c13091192414cfe8f07eb60a.json",
+  "id": "FG-INPUT-001-post-implementation-review",
+  "next_review_trigger": "After the exact-case proof and input milestone, assess source-aware AgonesApiResource derive cross-crate hygiene in the next public API/resource feature, using the existing proc_macro2 expansion core.",
+  "rationale": "The existing runtime interpreter repeats 17 query assertions and now five input assertions; dynamic JSON is unsuitable for constant exact-case model checking. Reuse pinned Genco 0.17.10 already used by agones-rusternetes/build.rs for literal escaping and deterministic source emission. Add one narrow example consuming the existing typed IR and emitting only its five query cases, their source IDs, assertions and covers. Existing agones_invariant emits separate direct-Kani harnesses and an opaque boolean, without this metadata or the required shared backend route; it does not fill this gap. Arcane attribute/delegation transformation cores have no new role in emitting already typed literals. No new macro/staging/IR framework or semantic normalization is needed.",
+  "roi": "Five current cases/17 assertions and the next exact-case families otherwise require repeated handwritten harness edits, source-ID reviews and drift checks. A bounded emitter of roughly one small source file should remove that repeated work now and make exact selection mechanically checkable. Reuse escaping/formatting; keep semantic interpretation in existing typed IR and ordinary Rust. Validate deterministic output, source/gate freshness, all exact assertion IDs and nonempty covers. Stop at this family if production collection modeling dominates; keep adequate proof debt explicit rather than expanding a compiler framework.",
+  "validation_plan": "One deterministic Genco emitter, five source query cases/17 assertions, actual production core parser, shared Bolero/Kani harnesses with source-specific covers, and explicit unsupported environment/OS model boundaries."
+}

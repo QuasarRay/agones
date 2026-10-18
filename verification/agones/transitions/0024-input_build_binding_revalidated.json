@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ],
+  "authorization": "User execution contract",
+  "event": "INPUT_BUILD_BINDING_REVALIDATED",
+  "gate_snapshot": "verification/agones/gates/f25e6cd35ae586d408dcd32b294478b070eb0b471712297eeb9744a53001121f.json",
+  "predecessor_revision": 23,
+  "predecessor_sha256": "7928ea87d811eb6ba139927278d159136f0bf98558f25c46df31b17bfee94135",
+  "reason": "The production query/input functions are unchanged. Refreshed build bindings, 22-assertion runtime replay, six real core environment child cases and five consumer child cases pass; the narrow Genco emitter compiles.",
+  "result_revision": 24,
+  "schema_version": 1,
+  "state_sha256": "bc653ecb8f8d2401beb5ec921e7f073a1e756365c460641fb6efc28f1d4000a8",
+  "timestamp": "2026-10-18T13:50:55.282122+00:00"
+}

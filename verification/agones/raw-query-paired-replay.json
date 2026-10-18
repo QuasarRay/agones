@@ -1,4 +1,5 @@
 {
+  "go_evidence_reuse": "Original Go probe, original production source/configuration, Go version and reference tree are unchanged; reuse the retained Go observation rather than rerun it.",
   "go_run": "verification/agones/runs/raw-query-original-go-replay.json",
   "observation_relation": "exact equality of error class, Example state and full sorted feature encoding; original Go and production Rust each assert independent expected outcomes before recording",
   "observations": [
@@ -27,7 +28,7 @@
       "id": "invalid-escape-in-duplicate"
     }
   ],
-  "rust_run": "verification/agones/runs/raw-query-production-rust-replay.json",
+  "rust_run": "verification/agones/runs/sorted-features-raw-rust-replay-1.json",
   "schema_version": 1,
   "unmodeled": "Arbitrary Unicode/invalid-byte error text is retained as separate transport-formatting debt; this projection does not certify that text."
 }

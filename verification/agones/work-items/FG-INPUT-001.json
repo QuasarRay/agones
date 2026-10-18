@@ -24,6 +24,22 @@
   ],
   "source_config_binding": {
     "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "implementation_packet": {
+      "effect_boundary": "CGP owns input selection and configuration initialization. Preserve raw OS string bytes on Linux. Use the actual process environment effect in a subprocess; deterministic local input providers exercise the same production policy without mutating shared test-process environment.",
+      "gate_order": "Implement and ordinarily check the reachable input behavior first, then record its content-addressed gate. Only then extend extraction for the preserved parse-env-vars case and its five assertions.",
+      "integration": "Connect selected inputs through the existing parser provider into configured Rusternetes GameServer, FleetAutoscaler/admission and SDK feature consumers. Full command option parsing and process lifecycle remain required scope; do not silently replace other command flag semantics with a feature-only scanner.",
+      "policy": "Production calls bind changed pflags and FEATURE_GATES with hyphen-to-underscore replacement before parsing. A changed string flag, including an explicit empty value, precedes a nonempty environment value; absent/empty environment falls back to the empty source default. Viper explicit Set overrides also precede flags if exposed by the new input context.",
+      "proof_boundary": "The source case contains os.Setenv and Viper binding effects. Preserve those assertion identities and validate real effects with integration evidence; model assumptions cannot count as actual OS/process verification.",
+      "refactoring_trigger": "After the FG-INPUT-001 implementation gate, use existing Genco in agones-rusternetes/build.rs for the exact-case IR and recheck the narrow source-aware derive opportunity. No new macro or framework is currently justified."
+    },
+    "input_closure": {
+      "cmd/controller/main.go": "7bfb26ebd6ca8f6c27cd93311ba89fb1860f7598805e3d7e0a602f3d4b3eab55",
+      "cmd/sdk-server/main.go": "8113b4b4c2afe299e39c4f5856540d9e121e4280ce023b4dcaa640e028d6cddd",
+      "pkg/util/runtime/features.go": "05736b26646cf219419626dfca37c4f533302b178ca3bb542330cf7884ddc679",
+      "pkg/util/runtime/features_test.go": "6bd14c7faa40a6dd4efb434caf59063c14195993ce4cdaad87104ac4ba8d87ec",
+      "vendor/github.com/spf13/pflag/flag.go": "5699e18dd47610cf862dca1bb046f5d00a652fd412d9ac2c1a0f79b9c691c8cb",
+      "vendor/github.com/spf13/viper/viper.go": "bec63043cd77615b93ffce9994e157f81a90b7e1d8a9cf7df0a343b920fabb10"
+    },
     "source": "pkg/util/runtime/features.go",
     "test": "pkg/util/runtime/features_test.go"
   },

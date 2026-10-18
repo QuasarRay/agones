@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ],
+  "authorization": "User execution contract",
+  "event": "SORTED_QUERY_PROPERTIES_READY",
+  "gate_snapshot": "verification/agones/gates/27be8ae70aa3bbfa59bf0bdc624ab4bbac4a75dd61ad9d36ede06e97e778411e.json",
+  "predecessor_revision": 30,
+  "predecessor_sha256": "a78e54579384ce25d5d76d9fbb2961ac3edd8d710ba1240546c7810d520bac29",
+  "reason": "The deterministic Genco emitter rebinds current gates without changing generated production-query assertions or bounds. All six original Go cases and their source assertions pass.",
+  "result_revision": 31,
+  "schema_version": 1,
+  "state_sha256": "5fd5b8ecef8e40cac364ad5107a54f574a1795642f53daea1308cf6bc99fb311",
+  "timestamp": "2026-10-18T14:07:00.179000+00:00"
+}

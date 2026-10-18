@@ -1,0 +1,39 @@
+{
+  "dependencies": [
+    "FG-CONFIG-001 query policy",
+    "FG-INPUT-001 production configuration"
+  ],
+  "disposition": "READY",
+  "evidence_refs": [],
+  "feature_ids": [
+    "source-compatible-feature-gate-error-rendering"
+  ],
+  "id": "FG-ERROR-001",
+  "implementation_gate": null,
+  "next_action": "Implement exact Go-compatible feature error rendering for raw keys/values, percent escapes and Unicode at the existing production error boundary; ordinarily validate and gate before extracting new obligations. Keep all 17 existing query assertions and five input assertions required.",
+  "owned_paths": [
+    "crates/agones-core/src/features.rs"
+  ],
+  "requirement_ids": [
+    "REQ-04",
+    "REQ-08",
+    "REQ-09",
+    "REQ-10"
+  ],
+  "source_config_binding": {
+    "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "economics": "Use ordinary Rust helpers and existing Genco only if a concrete production data table is necessary. No generalized quote/compiler/proof framework. The formatter is a real observable parity gap and also an identified dependency of the retained exact-case proof.",
+    "gap": "Current Display uses Rust Debug/lossy Unicode for some raw-byte errors and does not match Go invalid-escape text. Exact application fatal/logging policy remains separate lifecycle work.",
+    "implementation_order": "Inspect the pinned source helpers, implement complete source-compatible error rendering through the current CGP error result boundary, test actual Go/Rust observations and ordinary consumers, and record a gate before new error-specific semantic obligation extraction. Preserve source/licensing/tool provenance if adapting standard-library tables or algorithms.",
+    "source": "pkg/util/runtime/features.go",
+    "source_helpers": [
+      "Go net/url EscapeError",
+      "Go strconv ParseBool/NumError",
+      "Go fmt/strconv quoted string rendering"
+    ]
+  },
+  "stage": "DISCOVERED",
+  "test_ids": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate::line-41"
+  ]
+}

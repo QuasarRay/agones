@@ -9,6 +9,9 @@ bundled Python is
 `/home/astral/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3`.
 Run `checkpoint.py check` to check the model/schema, original census, current
 implementation gate, retained logs, and credited evidence bindings.
+Use `checkpoint.py checkpoint --work-item <existing-id>` to select the next
+active packet without changing another item's verification stage or evidence.
+The selected item still follows the same legal stage transitions and gate checks.
 
 `inventory.py census` freezes the immutable default baseline. Do not rerun it to
 adopt changed source or replace the migration scope. `guidance-check` verifies
@@ -24,9 +27,11 @@ the recorded process start identity before waiting, stopping or retrying it.
 
 The focused Go extractor has its own pinned module in `extract/`. It refuses
 missing/stale/unfinished implementation gates and changed original source.
-Use `go -C build/scripts/agones-rs/extract run . <absolute-repository-root> <gate-path>`.
-Its JSON output is typed source-test IR. The first feature has five supported
-cases/17 assertions; one environment case/five assertions remains unsupported.
+Use `go -C build/scripts/agones-rs/extract run . <absolute-repository-root> <query-gate-path> [input-gate-path]`.
+Its JSON output is typed source-test IR. The two implemented features now retain
+six cases/22 assertions. Without the separate input gate the environment case
+remains unsupported. Modeled setup/binding effects and actual subprocess input
+replay are distinct assurance categories.
 Unknown semantic calls fail closed, and repeated names keep distinct identities.
 
 The production boolean parser is tested by one shared-domain Bolero/Kani harness:
@@ -47,3 +52,25 @@ crate identities to confirm that lexical faults are rejected by source witnesses
 This bounded helper proof does not model-check the 17 original query/encoding
 assertions, environment/CLI binding, async controllers or unbounded strings.
 Keep those assurance categories and required `_2` architecture cells open.
+
+`feature_input_common_domain` proves the production input selector and an
+independent reference against the precedence relation for optional byte strings
+of length 0..2, unwind 8, with all ten covers required. The real process effect
+and production consumers are tested in isolated child processes; their parent
+tests reject empty child selections and do not mutate shared test environment.
+
+`cargo run --locked -p agones-rusternetes --example feature_case_codegen [-- --check]`
+uses the existing pinned Genco and Rust formatter to emit the five query cases
+and 17 assertion identities. Install the pinned Rust toolchain's `rustfmt`
+component. Generated source belongs to `crates/agones-core/tests/generated/`;
+edit the typed input/emitter, never the generated bodies. Each fixed-case
+`source_query_case_000` through `004` harness uses unit under both engines,
+unwind 64, and requires its source path and valid-generator covers. Run each
+through the same Bolero/Kani route; summarize with
+`summarize_feature_proof.py query <run-id> --case-index <0..4> --output <path>`.
+All five must pass before whole-family credit. The combined-selector attempts
+and any timed-out fixed case remain explicit open proof work in
+`verification/agones/query-proof-campaign.json`.
+
+Both summary commands share `kani_results.py`; controls reject incomplete,
+empty, failing and unreachable claims and unsatisfied/missing/extra covers.

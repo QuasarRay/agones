@@ -1,0 +1,11 @@
+{
+  "affected_architecture_cells": [],
+  "candidate": "Replace private BTreeMap representation of small feature/default/query dictionaries with sorted Vec entries while preserving public behavior.",
+  "decision": "SMALL_LOCAL_REFACTOR",
+  "feature_binding": "verification/agones/gates/0d2d3a29aee579674e55a0ae44b8fc54b3388dc3f55c6ca3414cab4d7e0c26b0.json",
+  "id": "FG-CONFIG-001-sorted-entry-refactor",
+  "next_review_trigger": "After the production collection refactor and its exact-case proof, return to the next Agones production feature and assess source-aware derive hygiene at the next public API/resource milestone.",
+  "rationale": "The exact production query proof at unwind 64 is expanding standard-library B-tree node parent-link and comparison loops even though its fixture has only two features. The current diagnostic run is bounded to 240 seconds and will be retained regardless of outcome. Directly modeling a different map under cfg(kani) would not establish production semantics. A sorted Vec is an ordinary production representation for this small dictionary, preserving byte-sorted encoding, first query value, last duplicate default, atomic replacement, arbitrary names/bytes and unbounded accepted input sizes. It removes B-tree node machinery from both production and its model without reducing any source case, invariant, cover or declared bound.",
+  "roi": "One local container change in features.rs replaces three private BTreeMap operations; no new public framework, macro or backend is introduced. Validate all existing query/configuration/process/source tests plus duplicate-default and map-order edge witnesses. The concrete payoff is completion of the already generated 17-assertion production proof and simpler storage plumbing for the fixed 15 production gates. If this does not address the observed B-tree expansion, stop representation work and schedule the remaining adequately bounded proof; never reduce proof obligations to obtain a pass.",
+  "source_failure_or_job": "verification/agones/runs/feature-query-bolero-kani-1.json"
+}

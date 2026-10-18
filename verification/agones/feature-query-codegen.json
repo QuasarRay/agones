@@ -1,0 +1,239 @@
+{
+  "assertions": [
+    {
+      "enabled": false,
+      "function": "source_assertion_000",
+      "kind": "AssertErrorContains",
+      "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate::line-41",
+      "value": "Feature Gate \"Foo\" is not a valid Feature Gate"
+    },
+    {
+      "enabled": false,
+      "function": "source_assertion_001",
+      "kind": "AssertNoError",
+      "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Empty query string::line-46",
+      "value": ""
+    },
+    {
+      "enabled": true,
+      "function": "source_assertion_002",
+      "kind": "AssertEnabled",
+      "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Empty query string::line-47",
+      "value": "Example"
+    },
+    {
+      "enabled": false,
+      "function": "source_assertion_003",
+      "kind": "AssertEncoding",
+      "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Empty query string::line-48",
+      "value": "Example=true&Test=false"
+    },
+    {
+      "enabled": false,
+      "function": "source_assertion_004",
+      "kind": "AssertNoError",
+      "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string::line-53",
+      "value": ""
+    },
+    {
+      "enabled": false,
+      "function": "source_assertion_005",
+      "kind": "AssertEnabled",
+      "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string::line-54",
+      "value": "Example"
+    },
+    {
+      "enabled": true,
+      "function": "source_assertion_006",
+      "kind": "AssertEnabled",
+      "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string::line-55",
+      "value": "Test"
+    },
+    {
+      "enabled": false,
+      "function": "source_assertion_007",
+      "kind": "AssertEncoding",
+      "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string::line-56",
+      "value": "Example=false&Test=true"
+    },
+    {
+      "enabled": false,
+      "function": "source_assertion_008",
+      "kind": "AssertNoError",
+      "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string::line-58",
+      "value": ""
+    },
+    {
+      "enabled": false,
+      "function": "source_assertion_009",
+      "kind": "AssertEnabled",
+      "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string::line-59",
+      "value": "Example"
+    },
+    {
+      "enabled": true,
+      "function": "source_assertion_010",
+      "kind": "AssertEnabled",
+      "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string::line-60",
+      "value": "Test"
+    },
+    {
+      "enabled": false,
+      "function": "source_assertion_011",
+      "kind": "AssertError",
+      "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Error on query parsing::line-65",
+      "value": ""
+    },
+    {
+      "enabled": false,
+      "function": "source_assertion_012",
+      "kind": "AssertNoError",
+      "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures::$root::line-102",
+      "value": ""
+    },
+    {
+      "enabled": false,
+      "function": "source_assertion_013",
+      "kind": "AssertEnabled",
+      "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures::$root::line-103",
+      "value": "Example"
+    },
+    {
+      "enabled": false,
+      "function": "source_assertion_014",
+      "kind": "AssertEnabled",
+      "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures::$root::line-104",
+      "value": "Test"
+    },
+    {
+      "enabled": true,
+      "function": "source_assertion_015",
+      "kind": "AssertEnabled",
+      "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures::$root::line-108",
+      "value": "Example"
+    },
+    {
+      "enabled": true,
+      "function": "source_assertion_016",
+      "kind": "AssertEnabled",
+      "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures::$root::line-109",
+      "value": "Test"
+    }
+  ],
+  "case_ids": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Empty query string",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Error on query parsing",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures::$root"
+  ],
+  "classification": "EXACT_CASE",
+  "generator": "crates/agones-rusternetes/examples/feature_case_codegen.rs",
+  "generator_sha256": "28bac09f1e8d9bd0356cdeb2ca02e1812aac04ee9db1de537e4939da76151711",
+  "harness_prefix": "source_query_case_",
+  "harnesses": [
+    {
+      "assertion_functions": [
+        "source_assertion_000"
+      ],
+      "case_id": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate",
+      "harness": "source_query_case_000",
+      "raw_domain": "unit",
+      "required_covers": [
+        "source query case: agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 64
+    },
+    {
+      "assertion_functions": [
+        "source_assertion_001",
+        "source_assertion_002",
+        "source_assertion_003"
+      ],
+      "case_id": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Empty query string",
+      "harness": "source_query_case_001",
+      "raw_domain": "unit",
+      "required_covers": [
+        "source query case: agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Empty query string",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 64
+    },
+    {
+      "assertion_functions": [
+        "source_assertion_004",
+        "source_assertion_005",
+        "source_assertion_006",
+        "source_assertion_007",
+        "source_assertion_008",
+        "source_assertion_009",
+        "source_assertion_010"
+      ],
+      "case_id": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string",
+      "harness": "source_query_case_002",
+      "raw_domain": "unit",
+      "required_covers": [
+        "source query case: agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 64
+    },
+    {
+      "assertion_functions": [
+        "source_assertion_011"
+      ],
+      "case_id": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Error on query parsing",
+      "harness": "source_query_case_003",
+      "raw_domain": "unit",
+      "required_covers": [
+        "source query case: agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Error on query parsing",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 64
+    },
+    {
+      "assertion_functions": [
+        "source_assertion_012",
+        "source_assertion_013",
+        "source_assertion_014",
+        "source_assertion_015",
+        "source_assertion_016"
+      ],
+      "case_id": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures::$root",
+      "harness": "source_query_case_004",
+      "raw_domain": "unit",
+      "required_covers": [
+        "source query case: agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures::$root",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 64
+    }
+  ],
+  "ir": "verification/agones/feature-gates.ir.json",
+  "ir_sha256": "e5daa731b51cdb45abdfd9c0e2ec8be9f250a92099c2b40fecce1355a18f91bb",
+  "output": "crates/agones-core/tests/generated/feature_gate_cases.rs",
+  "output_sha256": "46f05e90380d2c292b4e888294e1dae11239b66e9a9e6c42f2bbfdd2c69a2b00",
+  "preconditions": [],
+  "projection": "one generated harness per exact case",
+  "raw_domain": "disjoint union of five fixed source cases; one unit value per case under both engines",
+  "required_covers": [
+    "source query case: agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate",
+    "source query case: agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Empty query string",
+    "source query case: agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string",
+    "source query case: agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Error on query parsing",
+    "source query case: agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures::$root",
+    "the generator should produce at least one valid value"
+  ],
+  "required_unmodeled_cases": [
+    {
+      "assertions": 5,
+      "id": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars",
+      "reason": "OS/command binding effects are explicit external model boundaries. Runtime and process replay are separate; this generated proof selects only query cases.",
+      "required": true
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Actual production query parser and exact source assertions for all five selected cases. No unbounded input generalization, alternate production implementation, OS/command proof, or translated reference-model proof is credited. Original Go tests apply the same independent source relations separately.",
+  "unwind": 64
+}

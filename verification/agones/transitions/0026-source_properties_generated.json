@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ],
+  "authorization": "User execution contract",
+  "event": "SOURCE_PROPERTIES_GENERATED",
+  "gate_snapshot": "verification/agones/gates/da97d2fbae6bc41ece6a7f3afbc87ee368bff51079fe1af4e3189adfbcb370cb.json",
+  "predecessor_revision": 25,
+  "predecessor_sha256": "1f92f109679c5958a5b538b2c3073f7043ff26d02991f6d7b2c034358f99de3e",
+  "reason": "Six exact source cases/22 assertions replay, the new real process fixture passes, and deterministic Genco emits five query cases/17 assertion identities with explicit covers. Input OS/command effects remain outside the query proof.",
+  "result_revision": 26,
+  "schema_version": 1,
+  "state_sha256": "2189cf2bf31cfb97513292f5c26702ef1acd6fa84aa71ab04848e455a2d6e75f",
+  "timestamp": "2026-10-18T13:55:14.312507+00:00"
+}

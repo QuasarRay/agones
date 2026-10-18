@@ -34,6 +34,16 @@ pub struct CreatingGameServerController<S, H = NoopApiHooks> {
 }
 
 impl<S> CreatingGameServerController<S, NoopApiHooks> {
+    /// Initialize from the shared CGP input policy before constructing consumers.
+    pub fn from_feature_inputs<C: agones_core::CanLoadFeatureGates>(
+        storage: S,
+        context: &C,
+    ) -> Result<Self, agones_core::FeatureGateError> {
+        let gates = context.load_feature_gates()?;
+        Ok(Self::with_context(storage, Vec::new(), PodBuildFeatures::from(&gates), NoopApiHooks)
+            .with_feature_gates(&gates))
+    }
+
     /// Configure the existing CGP lifecycle from an Agones feature-gate query.
     pub fn from_feature_configuration<C: agones_core::CanParseFeatureGates>(
         storage: S,
@@ -46,8 +56,8 @@ impl<S> CreatingGameServerController<S, NoopApiHooks> {
     }
 
     pub fn new(storage: S) -> Self {
-        Self::from_feature_configuration(storage, &agones_core::FeatureGateContext::default(), "")
-            .expect("the pinned empty Agones feature configuration is valid")
+        Self::from_feature_inputs(storage, &agones_core::FeatureGateInputContext::default())
+            .expect("invalid Agones process feature configuration")
     }
 }
 

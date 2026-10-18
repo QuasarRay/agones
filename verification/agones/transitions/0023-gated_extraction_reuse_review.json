@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ],
+  "authorization": "User execution contract",
+  "event": "GATED_EXTRACTION_REUSE_REVIEW",
+  "gate_snapshot": "verification/agones/gates/ed041966347da7f00c609be4a7fe9cee249ac758c13091192414cfe8f07eb60a.json",
+  "predecessor_revision": 22,
+  "predecessor_sha256": "272afa25318fd597462a66853a4febb90f494b29e386551c073a297435bbc605",
+  "reason": "The newly extracted input actions and all original query cases are preserved. The bounded Genco emitter adds a development dependency declaration, so reopen build bindings before changing it and revalidate; no production behavior is removed.",
+  "result_revision": 23,
+  "schema_version": 1,
+  "state_sha256": "7928ea87d811eb6ba139927278d159136f0bf98558f25c46df31b17bfee94135",
+  "timestamp": "2026-10-18T13:47:00.353068+00:00"
+}

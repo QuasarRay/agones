@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ],
+  "authorization": "User execution contract",
+  "event": "DURABLE_LOG_STORE_CONFIGURED",
+  "gate_snapshot": "verification/agones/gates/27be8ae70aa3bbfa59bf0bdc624ab4bbac4a75dd61ad9d36ede06e97e778411e.json",
+  "predecessor_revision": 38,
+  "predecessor_sha256": "2a37f52fa057c5c9fb0021f2e13221faa3f5fa4460b4a8ee28703910dc57b38b",
+  "reason": "Configure the repository content-addressed Git object store as the durable REPO_SAFE log location with explicit retention, retrieval and integrity rules. Preserve full timed-out logs and exact verifier bytes; supplementary 90-day CI artifacts are not the sole proof evidence.",
+  "result_revision": 39,
+  "schema_version": 1,
+  "state_sha256": "574c2b3df2bb5a20782131d92bbba019bf15a6ad4d7f51025d8b2ce02c58944c",
+  "timestamp": "2026-10-18T14:41:30.537409+00:00"
+}

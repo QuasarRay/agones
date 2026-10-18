@@ -2,21 +2,21 @@
   "assertions": [
     {
       "description": "assertion failed: satisfies_source_relation(input, model)",
-      "id": 112,
+      "id": 70,
       "location": "crates/agones-core/tests/feature_bool_domain.rs:60:13 in function feature_bool_common_domain::{closure#0}",
       "status": "SUCCESS",
       "symbol": "feature_bool_common_domain::{closure#0}.assertion.1"
     },
     {
       "description": "assertion failed: satisfies_source_relation(input, production)",
-      "id": 113,
+      "id": 71,
       "location": "crates/agones-core/tests/feature_bool_domain.rs:61:13 in function feature_bool_common_domain::{closure#0}",
       "status": "SUCCESS",
       "symbol": "feature_bool_common_domain::{closure#0}.assertion.2"
     },
     {
       "description": "assertion failed: model == production",
-      "id": 114,
+      "id": 72,
       "location": "crates/agones-core/tests/feature_bool_domain.rs:62:13 in function feature_bool_common_domain::{closure#0}",
       "status": "SUCCESS",
       "symbol": "feature_bool_common_domain::{closure#0}.assertion.3"
@@ -24,51 +24,51 @@
   ],
   "covers": [
     {
-      "description": "the generator should produce at least one valid value",
-      "id": 49,
-      "location": "../../../../.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bolero-kani-0.13.0/src/lib.rs:37:21 in function <bolero::DefaultEngine as bolero::Engine<bolero::bolero_engine::BorrowedGeneratorTest<{closure@crates/agones-core/tests/feature_bool_domain.rs:53:19: 53:33}, bolero::generator::bolero_generator::TypeValueGenerator<([u8; 5], u8)>, ([u8; 5], u8)>>>::run",
-      "status": "SATISFIED",
-      "symbol": "<bolero::DefaultEngine as bolero::Engine<bolero::bolero_engine::BorrowedGeneratorTest<{closure@crates/agones-core/tests/feature_bool_domain.rs:53:19: 53:33}, bolero::generator::bolero_generator::TypeValueGenerator<([u8; 5], u8)>, ([u8; 5], u8)>>>::run.cover.1"
-    },
-    {
       "description": "accepted true spelling",
-      "id": 115,
+      "id": 73,
       "location": "crates/agones-core/tests/feature_bool_domain.rs:65:17 in function feature_bool_common_domain::{closure#0}",
       "status": "SATISFIED",
       "symbol": "feature_bool_common_domain::{closure#0}.cover.1"
     },
     {
       "description": "accepted false spelling",
-      "id": 116,
+      "id": 74,
       "location": "crates/agones-core/tests/feature_bool_domain.rs:66:17 in function feature_bool_common_domain::{closure#0}",
       "status": "SATISFIED",
       "symbol": "feature_bool_common_domain::{closure#0}.cover.2"
     },
     {
       "description": "rejected spelling",
-      "id": 117,
+      "id": 75,
       "location": "crates/agones-core/tests/feature_bool_domain.rs:67:17 in function feature_bool_common_domain::{closure#0}",
       "status": "SATISFIED",
       "symbol": "feature_bool_common_domain::{closure#0}.cover.3"
     },
     {
       "description": "empty input",
-      "id": 118,
+      "id": 76,
       "location": "crates/agones-core/tests/feature_bool_domain.rs:68:17 in function feature_bool_common_domain::{closure#0}",
       "status": "SATISFIED",
       "symbol": "feature_bool_common_domain::{closure#0}.cover.4"
     },
     {
       "description": "maximum modeled length",
-      "id": 119,
+      "id": 77,
       "location": "crates/agones-core/tests/feature_bool_domain.rs:69:17 in function feature_bool_common_domain::{closure#0}",
       "status": "SATISFIED",
       "symbol": "feature_bool_common_domain::{closure#0}.cover.5"
+    },
+    {
+      "description": "the generator should produce at least one valid value",
+      "id": 111,
+      "location": "../../../../.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bolero-kani-0.13.0/src/lib.rs:37:21 in function <bolero::DefaultEngine as bolero::Engine<bolero::bolero_engine::BorrowedGeneratorTest<{closure@crates/agones-core/tests/feature_bool_domain.rs:53:19: 53:33}, bolero::generator::bolero_generator::TypeValueGenerator<([u8; 5], u8)>, ([u8; 5], u8)>>>::run",
+      "status": "SATISFIED",
+      "symbol": "<bolero::DefaultEngine as bolero::Engine<bolero::bolero_engine::BorrowedGeneratorTest<{closure@crates/agones-core/tests/feature_bool_domain.rs:53:19: 53:33}, bolero::generator::bolero_generator::TypeValueGenerator<([u8; 5], u8)>, ([u8; 5], u8)>>>::run.cover.1"
     }
   ],
   "harness_count": 1,
   "property_count": 1158,
-  "run": "verification/agones/runs/feature-bool-bolero-kani-final.json",
+  "run": "verification/agones/runs/feature-bool-bolero-kani-input-final.json",
   "schema_version": 1,
   "scope": "Only the actual production parse_feature_bool and independent reference/invariant over byte strings of length 0..5, unwind 8; no unbounded query, environment or controller proof.",
   "selected_harnesses": [
@@ -81,78 +81,78 @@
   },
   "unreachable_not_credited": [
     {
+      "description": "attempt to add with overflow",
+      "id": 2,
+      "location": "../../../../../runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/alloc/layout.rs:97:32 in function std::alloc::Layout::max_size_for_alignment",
+      "status": "UNREACHABLE",
+      "symbol": "std::alloc::Layout::max_size_for_alignment.assertion.1"
+    },
+    {
       "description": "attempt to shift left with overflow",
-      "id": 17,
+      "id": 99,
       "location": "../../../../../runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:820:38 in function std::fmt::Arguments::<'_>::from_str",
       "status": "UNREACHABLE",
       "symbol": "std::fmt::Arguments::<'_>::from_str.assertion.1"
     },
     {
       "description": "Cannot compute offset of a ZST",
-      "id": 22,
+      "id": 116,
       "location": "library/kani/src/lib.rs:57:1 in function kani::rustc_intrinsics::ptr_offset_from::<()>",
       "status": "UNREACHABLE",
       "symbol": "kani::rustc_intrinsics::ptr_offset_from::<()>.assertion.1"
     },
     {
       "description": "attempt to calculate the remainder with a divisor of zero",
-      "id": 24,
+      "id": 118,
       "location": "library/kani_core/src/models.rs:93:25 in function kani::rustc_intrinsics::ptr_offset_from::<()>",
       "status": "UNREACHABLE",
       "symbol": "kani::rustc_intrinsics::ptr_offset_from::<()>.assertion.2"
     },
     {
       "description": "attempt to calculate the remainder with overflow",
-      "id": 25,
+      "id": 119,
       "location": "library/kani_core/src/models.rs:93:25 in function kani::rustc_intrinsics::ptr_offset_from::<()>",
       "status": "UNREACHABLE",
       "symbol": "kani::rustc_intrinsics::ptr_offset_from::<()>.assertion.3"
     },
     {
       "description": "attempt to divide by zero",
-      "id": 29,
+      "id": 123,
       "location": "library/kani_core/src/models.rs:97:21 in function kani::rustc_intrinsics::ptr_offset_from::<()>",
       "status": "UNREACHABLE",
       "symbol": "kani::rustc_intrinsics::ptr_offset_from::<()>.assertion.4"
     },
     {
       "description": "attempt to divide with overflow",
-      "id": 30,
+      "id": 124,
       "location": "library/kani_core/src/models.rs:97:21 in function kani::rustc_intrinsics::ptr_offset_from::<()>",
       "status": "UNREACHABLE",
       "symbol": "kani::rustc_intrinsics::ptr_offset_from::<()>.assertion.5"
     },
     {
-      "description": "attempt to add with overflow",
-      "id": 33,
-      "location": "../../../../../runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/alloc/layout.rs:97:32 in function std::alloc::Layout::max_size_for_alignment",
-      "status": "UNREACHABLE",
-      "symbol": "std::alloc::Layout::max_size_for_alignment.assertion.1"
-    },
-    {
       "description": "attempt to calculate the remainder with a divisor of zero",
-      "id": 144,
+      "id": 140,
       "location": "library/kani_core/src/models.rs:93:25 in function kani::rustc_intrinsics::ptr_offset_from::<std::option::Option<u8>>",
       "status": "UNREACHABLE",
       "symbol": "kani::rustc_intrinsics::ptr_offset_from::<std::option::Option<u8>>.assertion.2"
     },
     {
       "description": "attempt to calculate the remainder with overflow",
-      "id": 145,
+      "id": 141,
       "location": "library/kani_core/src/models.rs:93:25 in function kani::rustc_intrinsics::ptr_offset_from::<std::option::Option<u8>>",
       "status": "UNREACHABLE",
       "symbol": "kani::rustc_intrinsics::ptr_offset_from::<std::option::Option<u8>>.assertion.3"
     },
     {
       "description": "attempt to divide by zero",
-      "id": 149,
+      "id": 145,
       "location": "library/kani_core/src/models.rs:97:21 in function kani::rustc_intrinsics::ptr_offset_from::<std::option::Option<u8>>",
       "status": "UNREACHABLE",
       "symbol": "kani::rustc_intrinsics::ptr_offset_from::<std::option::Option<u8>>.assertion.4"
     },
     {
       "description": "attempt to divide with overflow",
-      "id": 150,
+      "id": 146,
       "location": "library/kani_core/src/models.rs:97:21 in function kani::rustc_intrinsics::ptr_offset_from::<std::option::Option<u8>>",
       "status": "UNREACHABLE",
       "symbol": "kani::rustc_intrinsics::ptr_offset_from::<std::option::Option<u8>>.assertion.5"

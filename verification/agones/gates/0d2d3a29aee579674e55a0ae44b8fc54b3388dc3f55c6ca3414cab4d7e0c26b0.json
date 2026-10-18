@@ -1,0 +1,84 @@
+{
+  "acceptance_criteria": [
+    "All 15 pinned gate names and defaults, explicit false for stable gates per executable source",
+    "First duplicate value wins; plus/percent decoding, strict query errors, exact ParseBool byte spellings",
+    "Failed replacement preserves active map; successful replacement resets unspecified gates to defaults",
+    "Deterministic sorted Go-compatible query encoding and EnableAllFeatures",
+    "Runtime-independent CGP policy and configured existing Rusternetes controller contexts with SDK propagation",
+    "Default production constructors initialize source defaults through CGP; disabled-feature source fixtures explicitly request SidecarContainers=false or ScheduledAutoscaler=false instead of changing their assertions.",
+    "Raw query bytes preserve Go string semantics, including invalid UTF-8 in an ignored duplicate; typed errors retain raw invalid key/value bytes.",
+    "The same production parser provider compiles and runs unchanged in a minimal downstream CGP context with independent source assertions.",
+    "Explicit input constructors honor source input precedence; default constructors route actual process input through the CGP configuration loader. Missing/empty environment retains source defaults."
+  ],
+  "assurance": "Ordinary implementation and real Rusternetes MemoryStorage/provider integration only; no source-property extraction or formal proof credited.",
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
+  "feature_id": "feature-gate-query-policy-and-controller-configuration",
+  "id": "FG-CONFIG-001-implementation-v6",
+  "ordinary_checks": [
+    "verification/agones/runs/feature-input-workspace-1.json",
+    "verification/agones/runs/feature-input-workspace-check-1.json",
+    "verification/agones/runs/feature-input-source-runtime-2.json",
+    "verification/agones/runs/feature-input-process-fixture-1.json",
+    "verification/agones/runs/feature-query-codegen-compile-3.json"
+  ],
+  "ordinary_result_counts": {
+    "ignored_child_entries_executed_by_parent_tests": 2,
+    "nonempty_isolated_child_process_cases": 11,
+    "preexisting_ignored_macro_doctest": 1,
+    "runner_entries_ignored": 3,
+    "workspace_tests_failed": 0,
+    "workspace_tests_passed": 521
+  },
+  "predecessor_ledger_revision": 24,
+  "production_files": {
+    "Cargo.lock": "3666230a1363b58d2f0041c91a10d26c6b0beff1dccd65190aa9d526acaed2bd",
+    "Cargo.toml": "f0c28c2ca73ba51fad682c9d35950d050b0839775d0eb609e7903c47743b5d00",
+    "crates/agones-core/Cargo.toml": "2d016e812c6ff6df0368cf160c5c782fe257e65b83cf6235683955d65ef05b0c",
+    "crates/agones-core/src/feature_inputs.rs": "9cfaf42de485874339a58895991ad15adff787f363d9821a3ab7f0f4c36222d4",
+    "crates/agones-core/src/features.rs": "7f6e6f57f7a0e0dd067adb42c2b42c113974e7f9425eef7e45d3372fd00c8302",
+    "crates/agones-core/src/lib.rs": "be80edb0945f90599fdd8b2e4550d7d37efff0b5c2483bffec7346f20c8a861e",
+    "crates/agones-rusternetes/Cargo.toml": "7e5c18a590b0d602c725abd853fd0ba7825e4028f8a46fc7fe404bb7b512db26",
+    "crates/agones-rusternetes/src/creating_gameserver_controller.rs": "e86d20ab7ea0b5e85644cf7bdd42361f80a6384d8c7c53ad75113edbefce59b8",
+    "crates/agones-rusternetes/src/fleetautoscaler_admission.rs": "10bd2bfcfc8c1542cd5f02e504a55667fac25f277a96b0ac667edd28175ecfe6",
+    "crates/agones-rusternetes/src/fleetautoscaler_controller.rs": "a6e187daa4f7f5cee673f95186c1979a5a8d1fe4a788deda23202e836f2ae4f3",
+    "crates/agones-rusternetes/src/lib.rs": "5075b38ab88b5febedf7ddd01b5c61e472653bd964f04a6ac036f73358328eaf",
+    "crates/agones-rusternetes/src/request_ready_gameserver_controller.rs": "a2add18119699a6ba0c17ee0c6dd8ed3ec801b26f4f5290216c8a88bb601deb5",
+    "crates/agones-rusternetes/src/sdk_sidecar.rs": "ce8b601163a8a0d6dd6fdcacfeda3f6a762d622884ba607f84ad50100740a084",
+    "rust-toolchain.toml": "c910997cb152c6dc8ed13b1fdf9fa28a4ed30d6776123e27dd6170e5c66067a0",
+    "verification/agones/feature-input-capability-v1.json": "a307b7d5f0ec550aac46080765989fb5fc67e254eab3ae51869da8a504671064"
+  },
+  "production_symbols": [
+    "agones_core::FeatureGateParser::parse_feature_gates",
+    "agones_core::FeatureGates::{enabled,replace,encode}",
+    "agones_core::CanParseFeatureGates::all_features_enabled",
+    "agones_core::parse_feature_bool",
+    "agones_rusternetes::CreatingGameServerController::from_feature_configuration",
+    "agones_rusternetes::FleetAutoscalerController::from_feature_configuration",
+    "agones_rusternetes::FleetAutoscalerAdmissionContext::from_feature_configuration",
+    "agones_core::CanParseFeatureGates::parse_feature_gates_bytes",
+    "agones_core::FeatureGates::replace_bytes"
+  ],
+  "reachable_call_paths": [
+    "CreatingGameServerController::new, FleetAutoscalerController::new, FleetAutoscalerAdmissionContext::default and SdkSidecarConfig::new -> CGP feature parser provider -> initialized source defaults; existing production controller/provider call sites use these constructors.",
+    "Configured CreatingGameServerController -> feature parser provider -> PodBuildFeatures -> existing CGP GameServer stack / Pod construction",
+    "Configured CreatingGameServerController -> sdk sidecar builder -> FEATURE_GATES environment",
+    "Configured FleetAutoscalerController -> parse provider -> scheduled/wasm CGP policy dispatch and webhook request metadata"
+  ],
+  "reopened_reason": "Refresh the development build binding for reuse of the existing pinned Genco dependency; production input/query functions are unchanged. New runtime source interpretation preserves all 22 source assertions; the real process fixture matches Example/Test defaults.",
+  "residual_work": [
+    "Exact application fatal/error rendering, complete command option parsing and top-level lifecycle remain required scope.",
+    "All original exact-case formal obligations and other remaining baseline behavior remain separate from this ordinary implementation gate."
+  ],
+  "schema_version": 1,
+  "status": "IMPLEMENTED",
+  "supersedes": "verification/agones/gates/76d5d5c9046f0720a784c7bc2c3723710cf69406f5ac58fb16cef9f71eb40539.json",
+  "workspace_snapshot": {
+    "dirty_tracked_patch_sha256": "bbde19526b7ba5891f1e3c93c8b13205ffb7d46252284574d743e476debd433a",
+    "original_reference_tree": "f50ac1ccf92be912e9475833b17deaebc5a6622f",
+    "production_closure_sha256": "4bfec4f398e7edbb6bc230c3302b0111828256f36fcc03391fb975f91795c70c",
+    "rust_checkout_commit": "8c7e12706f7c1f9586409b15014a17ad7194b7b4",
+    "scope_revision": 1,
+    "snapshot_note": "This current snapshot refreshes the development-manifest binding; prior implementation snapshots and ordinary result receipts remain retained. Non-production property/generator files may change after this gate without changing its bound production closure."
+  }
+}

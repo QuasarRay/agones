@@ -1,0 +1,23 @@
+{
+  "bundle_verified": true,
+  "classification": "Recovery tooling, CI observation and next-work metadata only; no Agones production source/build input changed in this local commit.",
+  "local_only_changed_paths": [
+    "AGONES_RS_HANDOFF.md",
+    "AGONES_RS_STATE.json",
+    "build/scripts/agones-rs/README.md",
+    "build/scripts/agones-rs/checkpoint.py",
+    "verification/agones/ci/39131256675-success.json",
+    "verification/agones/delivery-plan.json",
+    "verification/agones/goal-observation.json",
+    "verification/agones/states/569b43e66df9d0bb58abc34bb10c5c77f0514674a29c505c0579c3062eab4655.json",
+    "verification/agones/transitions/0018-next_input_packet_selected.json",
+    "verification/agones/work-items/FG-INPUT-001.json"
+  ],
+  "local_recovery_commit": "8c7e12706f7c1f9586409b15014a17ad7194b7b4",
+  "local_tree": "42104c7f6b229d538d577ac7b08237a40449acf0",
+  "publication_rule": "The next review commit includes the local checkpoint contents and current production changes. Preserve the exact original local commit in this thin bundle before adopting the exact server-created commit; its required parent is already published. No reset/stash or user audit-file publication.",
+  "published_parent": "024e6fc06dc60cfc6d839b76f6e5504aa4413dba",
+  "recovery_bundle": "verification/agones/local-checkpoint-8c7e127.bundle",
+  "recovery_bundle_sha256": "bad5533444063f6758e34e6b1d304c6e0ef96a4d5e73cce89456da84055242ae",
+  "schema_version": 1
+}

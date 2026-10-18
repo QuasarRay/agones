@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "source_head": "024e6fc06dc60cfc6d839b76f6e5504aa4413dba",
+  "base_head": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "merge_result_tested": "456c7b2b6a8b10bea0dc72b9239f7740df15f983",
+  "pull_request": "https://github.com/QuasarRay/agones/pull/92",
+  "workflow_run": 39131256675,
+  "workflow_url": "https://github.com/QuasarRay/agones/actions/runs/39131256675",
+  "status": "PASSED",
+  "jobs": [
+    {
+      "id": 117686734810,
+      "name": "migration-state",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 117686809099,
+      "name": "feature-bool-model-check",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 117686809152,
+      "name": "rust",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "rust": {
+    "check": "cargo check --locked --workspace --all-targets",
+    "test": "cargo test --locked --workspace",
+    "passed": 517,
+    "failed": 0,
+    "ignored": 1,
+    "suite_results": [
+      {
+        "passed": 173,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered_out": 0
+      },
+      {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered_out": 0
+      },
+      {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered_out": 0
+      },
+      {
+        "passed": 335,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered_out": 0
+      },
+      {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered_out": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered_out": 0
+      },
+      {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered_out": 0
+      },
+      {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 1,
+        "measured": 0,
+        "filtered_out": 0
+      },
+      {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered_out": 0
+      }
+    ]
+  },
+  "model": {
+    "harness_count": 1,
+    "property_count": 1158,
+    "status_counts": {
+      "SUCCESS": 1141,
+      "SATISFIED": 6,
+      "UNREACHABLE": 11
+    },
+    "assertions_claimed": 3,
+    "assertions_claimed_success": 3,
+    "required_covers_satisfied": 6,
+    "unreachable_source_obligations_credited": 0,
+    "harness": "feature_bool_common_domain",
+    "domain": "All byte strings of length 0..5, shared ([u8;5],u8) domain, len=tag%6, unwind 8; actual production parse_feature_bool.",
+    "artifact_url": "https://github.com/QuasarRay/agones/actions/runs/39131256675/artifacts/12137993045",
+    "retention_days": 90
+  },
+  "acceptance": "Exact PR head and synthetic merge pass the declared jobs. FG-CONFIG-001 remains VERIFYING because 17 exact original query assertions lack model-checking; no environment/CLI, lifecycle, full architecture, live-cluster conformance or full-migration completion is implied."
+}

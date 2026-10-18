@@ -30,6 +30,8 @@ jobs:
         run: python build/scripts/agones-rs/checkpoint.py check
       - name: Check guidance inheritance
         run: python build/scripts/agones-rs/inventory.py guidance-check
+      - name: Reject incomplete or vacuous proof results
+        run: python build/scripts/agones-rs/test_kani_results.py
       - name: Select affected checks conservatively
         id: affected
         env:
@@ -46,12 +48,15 @@ jobs:
       - name: Install pinned evidence Rust
         run: |
           rustup toolchain install 1.98.1 --profile minimal
+          rustup component add rustfmt --toolchain 1.98.1
       - name: Install native build dependencies
         run: sudo apt-get update && sudo apt-get install -y protobuf-compiler
       - name: Check workspace
         run: cargo check --locked --workspace --all-targets
       - name: Test workspace
         run: cargo test --locked --workspace
+      - name: Check deterministic exact-case generation
+        run: cargo run --locked -p agones-rusternetes --example feature_case_codegen -- --check
 
   feature-bool-model-check:
     needs: migration-state
@@ -59,6 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       AGONES_KANI_CI_RUN: feature-bool-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}
+      AGONES_INPUT_CI_RUN: feature-input-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - uses: actions/checkout@v4
       - name: Install pinned verification tools
@@ -73,6 +79,12 @@ jobs:
         run: python3 build/scripts/agones-rs/run.py "$AGONES_KANI_CI_RUN" --quiet --cwd crates/agones-core cargo bolero test feature_bool_common_domain --engine kani
       - name: Require all assertions and non-vacuity covers
         run: python3 build/scripts/agones-rs/summarize_bool_proof.py "$AGONES_KANI_CI_RUN" --output "verification/agones/proof-summaries/$AGONES_KANI_CI_RUN.json"
+      - name: Verify production input precedence through Bolero and Kani
+        env:
+          CARGO_BUILD_JOBS: "2"
+        run: python3 build/scripts/agones-rs/run.py "$AGONES_INPUT_CI_RUN" --quiet --cwd crates/agones-core cargo bolero test feature_input_common_domain --engine kani
+      - name: Require input assertions and all ten covers
+        run: python3 build/scripts/agones-rs/summarize_feature_proof.py input "$AGONES_INPUT_CI_RUN" --output "verification/agones/proof-summaries/$AGONES_INPUT_CI_RUN.json"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -80,4 +92,6 @@ jobs:
           path: |
             verification/agones/runs/${{ env.AGONES_KANI_CI_RUN }}.*
             verification/agones/proof-summaries/${{ env.AGONES_KANI_CI_RUN }}.json
+            verification/agones/runs/${{ env.AGONES_INPUT_CI_RUN }}.*
+            verification/agones/proof-summaries/${{ env.AGONES_INPUT_CI_RUN }}.json
           retention-days: 90

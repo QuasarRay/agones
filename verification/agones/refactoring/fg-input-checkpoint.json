@@ -1,0 +1,21 @@
+{
+  "affected_architecture_cells": [
+    "proc_macro_2:same-logical-crate",
+    "proc_macro_2:cross-crate",
+    "proc_macro_attribute_2:same-logical-crate",
+    "proc_macro_attribute_2:cross-crate",
+    "proc_macro_derive_2:same-logical-crate",
+    "proc_macro_derive_2:cross-crate",
+    "proc_macro_delegate_2:same-logical-crate",
+    "proc_macro_delegate_2:cross-crate"
+  ],
+  "architecture_status": "All eight REQUIRED_OPEN, with no credited cell.",
+  "candidate": "Input capability/getter composition, four constructor paths, qualified CGP component imports, deterministic source-case emission and source-aware public resource derive hygiene.",
+  "decision": "REUSE_EXISTING",
+  "feature_binding": "verification/agones/gates/27be8ae70aa3bbfa59bf0bdc624ab4bbac4a75dd61ad9d36ede06e97e778411e.json",
+  "id": "FG-INPUT-001-checkpoint-review",
+  "next_review_trigger": "FG-ERROR-001 implementation gate: review any real quoting/table generation repetition. At the next public API/resource feature, compile the existing resource derive through an aliased downstream core path and reassess the narrowest proc_macro_derive_2 cross-crate authoring path. All other _2 forms/locations remain required and are reassessed at that same review.",
+  "observed_new_repetition": "Production FeatureGateInputContext, captured input tests and source-IR input context repeat getter/delegation wiring, but existing CGP macros already own it. Qualified provider paths need their component type in scope; the explicit import was sufficient here. Existing AgonesApiResource expansion remains the next concrete cross-crate hygiene candidate, using its current proc_macro2/Syn expansion core rather than a parallel generator.",
+  "rationale": "The added process/captured contexts reuse the same CGP input/query providers; four short constructors remain clear direct wiring. Reuse pinned Genco for exact typed actions, IDs, witnesses and fixed-case harnesses, and one shared strict result parser for existing boolean and new input/query evidence. The concrete standard-container expansion motivated one small private sorted-entry refactor, fully checked in production. The query proof still times out in formatting/allocation; stop representation/framework expansion and return to the concrete error-rendering feature. No macro aliases, ordinary derives or passed CGP composition tests satisfy _2 authoring/ergonomic cells.",
+  "roi": "Building same-logical-crate compiler staging now would add Cargo/IDE, diagnostic and maintenance work beyond the few declarations it removes. The small Genco emitter directly generated 17 existing source assertion identities and five required proof cases. Keep its scope bounded; do not fund a general compiler or proof framework from the required final architecture label."
+}

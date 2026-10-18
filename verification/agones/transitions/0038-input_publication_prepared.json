@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ],
+  "authorization": "User execution contract",
+  "event": "INPUT_PUBLICATION_PREPARED",
+  "gate_snapshot": "verification/agones/gates/27be8ae70aa3bbfa59bf0bdc624ab4bbac4a75dd61ad9d36ede06e97e778411e.json",
+  "predecessor_revision": 37,
+  "predecessor_sha256": "6163019fc17309de8fa96ccb11964cce91a02d5fbd99924400ba13264d47f55b",
+  "reason": "Native Goal is active and the current turn made production and evidence progress. Preserve the exact local recovery commit in a verified thin bundle, distinguish old green PR-head CI from pending new source changes, and publish the reviewable checkpoint without merging incomplete formal work.",
+  "result_revision": 38,
+  "schema_version": 1,
+  "state_sha256": "2a37f52fa057c5c9fb0021f2e13221faa3f5fa4460b4a8ee28703910dc57b38b",
+  "timestamp": "2026-10-18T14:37:54.160071+00:00"
+}

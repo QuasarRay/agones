@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "classification": "REPO_SAFE",
+  "provider": "Content-addressed Git object store in QuasarRay/agones",
+  "location": "verification/agones/runs under the verified PR/delivery commit; immutable manifests bind every full log with SHA-256.",
+  "large_logs": "Retain complete REPO_SAFE diagnostic and proof log blobs in the repository Git object store. Git stores these repeated textual outputs compressed internally; no verifier output is trimmed or normalized.",
+  "retention": "Keep referenced evidence commits reachable through the review branch and eventual agones-rs-dev history until their claims are explicitly superseded. Never prune the only retained artifact behind a live claim.",
+  "retrieval": "Fetch the delivery commit recorded in the ledger/PR receipt, then git show <verified-commit>:<run-receipt.log> to recover exact bytes. Check the receipt log_sha256 before accepting evidence.",
+  "small_evidence": "Commit manifests, semantic IR, generation metadata, immutable states/transitions, gate records, replay instructions and the small local recovery bundle.",
+  "supplemental_ci": "GitHub Actions uploads are retained for 90 days as additional observations. They are never the sole retained artifact certifying a production proof.",
+  "availability_gate": "Missing, expired, corrupt or unbound artifacts cannot certify delivery; restore from the pinned Git object or rerun the affected check before crediting it.",
+  "excluded_output_classes": [
+    "SENSITIVE_LOCAL",
+    "SECRET_NEVER_PERSIST"
+  ]
+}

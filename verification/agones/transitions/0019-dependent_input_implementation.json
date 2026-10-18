@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "DEPENDENT_INPUT_IMPLEMENTATION",
+  "gate_snapshot": "verification/agones/gates/9bc7d7e7fc872f42369903027b46116bdc3a2fed1d783f66476870a1aa451357.json",
+  "predecessor_revision": 18,
+  "predecessor_sha256": "5ddeb01c37add71b2771012b86dab3e223bf471faa9168918e3edcbbe65adaf0",
+  "reason": "FG-INPUT-001 production wiring will change the query feature source closure; reopen its implementation binding before edits rather than credit a stale gate.",
+  "result_revision": 19,
+  "schema_version": 1,
+  "state_sha256": "9f318e3a423e519721f98e5138483408ec2ad935ec865404ce63fc27c692c15c",
+  "timestamp": "2026-10-18T13:32:30.977653+00:00"
+}

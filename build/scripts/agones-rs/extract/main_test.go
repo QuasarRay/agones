@@ -31,6 +31,30 @@ func TestRepeatedNamesPreserveBothSourceIdentities(t *testing.T) {
 	}
 }
 
+func TestInputExtractionRequiresItsOwnFreshFeatureGate(t *testing.T) {
+	root := t.TempDir()
+	if err := os.WriteFile(filepath.Join(root, "input.rs"), []byte("production input"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	valid := Gate{Status: "IMPLEMENTED", FeatureID: "feature-gates-environment-cli-binding", ProductionFiles: map[string]string{"input.rs": hash([]byte("production input"))}}
+	if err := validateInputGate(root, valid); err != nil {
+		t.Fatal(err)
+	}
+	for _, feature := range []string{"", "feature-gate-query-policy-and-controller-configuration"} {
+		invalid := valid
+		invalid.FeatureID = feature
+		if validateInputGate(root, invalid) == nil {
+			t.Fatal("query-only gate admitted environment extraction")
+		}
+	}
+	if err := os.WriteFile(filepath.Join(root, "input.rs"), []byte("mutated"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if validateInputGate(root, valid) == nil {
+		t.Fatal("stale input feature gate admitted environment extraction")
+	}
+}
+
 func TestUnknownSemanticCallsRemainUnsupported(t *testing.T) {
 	for _, name := range []string{"github.com/stretchr/testify/assert.Greater", "os.Setenv", "unknown.example/helper.Compute", "testing.Helper"} {
 		if supportedObservation(name) {

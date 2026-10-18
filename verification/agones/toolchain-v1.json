@@ -1,5 +1,6 @@
 {
   "bolero": {
+    "binary_sha256": "f5e4ea0e0d46c66d07e0711fa8d41f2a5e6c172915b855ad1bf4d4968b431485",
     "cargo_bolero": "0.13.4",
     "cli_features": [
       "kani"
@@ -10,6 +11,7 @@
   },
   "cgp": "0.8.0-alpha",
   "genco": "0.17.10",
+  "genco_formatter": "Rust 1.98.1 rustfmt component, version 1.9.0-stable (48a229ceae 2026-09-01)",
   "go": {
     "CGO_ENABLED": "1",
     "GOARCH": "amd64",
@@ -27,16 +29,21 @@
     },
     "cbmc": "6.11.0",
     "compiler": "rustc 1.100.0-nightly (8925ea358 2026-08-20)",
+    "proved_harnesses": [
+      "feature_bool_common_domain",
+      "feature_input_common_domain"
+    ],
     "solver": "CaDiCaL (Kani 0.68.0 default, confirmed by live help)",
-    "status": "ONE_BOUNDED_BOLERO_BACKEND_HARNESS_PROVED",
+    "status": "TWO_BOUNDED_BOLERO_BACKEND_HARNESSES_PROVED_QUERY_EXACT_CASES_OPEN",
     "toolchain": "nightly-2026-08-21-x86_64-unknown-linux-gnu",
     "version": "0.68.0"
   },
-  "remaining_pins": "Source loader, Egglog, solver and native environment remain open until their first active use.",
+  "remaining_pins": "Egglog remains unused. Complete OS/native environment pinning and unsupported external boundaries remain required; active loader/backend versions are recorded above.",
   "rust": {
     "locked_resolution_sha256": "3666230a1363b58d2f0041c91a10d26c6b0beff1dccd65190aa9d526acaed2bd",
     "minimum": "1.89",
     "rustc": "1.98.1 (48a229cea 2026-09-01)",
+    "rustfmt": "1.9.0-stable (48a229ceae 2026-09-01)",
     "toolchain": "1.98.1"
   },
   "rusternetes": "125c0f4a2b6fb888102606493c5e3cf7a126dd58",

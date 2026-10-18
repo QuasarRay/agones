@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "QUERY_IMPLEMENTATION_AND_EVIDENCE_REVALIDATED",
+  "gate_snapshot": "verification/agones/gates/404a070990057a389cf4f67966cf38e7e52d437a114d3064f08e7aa911e14214.json",
+  "predecessor_revision": 32,
+  "predecessor_sha256": "a1615dd5af227fce7ee05cb98fd7d27114044ce98e662433acb7921f0aaa2329",
+  "reason": "Refresh source-bound query evidence after the input and sorted-entry production changes. Three exact-case diagnostics timed out and receive zero source-proof credit; the current production boolean helper proof passes all three claims and six covers.",
+  "result_revision": 33,
+  "schema_version": 1,
+  "state_sha256": "090826602d793369096ada711fd65e67c69e172c62f2014661590baa748fd49e",
+  "timestamp": "2026-10-18T14:33:57.863060+00:00"
+}

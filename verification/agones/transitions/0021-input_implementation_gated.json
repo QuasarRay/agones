@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ],
+  "authorization": "User execution contract",
+  "event": "INPUT_IMPLEMENTATION_GATED",
+  "gate_snapshot": "verification/agones/gates/ed041966347da7f00c609be4a7fe9cee249ac758c13091192414cfe8f07eb60a.json",
+  "predecessor_revision": 20,
+  "predecessor_sha256": "a98c69bddd3e89b7c1c6279cbe5a8b79d0a3d7aa757a40ee433dfd5cea8e3e35",
+  "reason": "The reachable CGP input feature passes 521 workspace tests and a locked all-target workspace check. Ten isolated child process cases exercise actual process effects and production consumers; no source obligation has yet been newly extracted.",
+  "result_revision": 21,
+  "schema_version": 1,
+  "state_sha256": "9b426bf4b4a8681ccd7b32b3a22a9295e819a97b3f6ddb32ca179157ac303fef",
+  "timestamp": "2026-10-18T13:40:15.644445+00:00"
+}

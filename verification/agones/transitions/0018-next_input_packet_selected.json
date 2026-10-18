@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ],
+  "authorization": "User execution contract",
+  "event": "NEXT_INPUT_PACKET_SELECTED",
+  "gate_snapshot": null,
+  "predecessor_revision": 17,
+  "predecessor_sha256": "569b43e66df9d0bb58abc34bb10c5c77f0514674a29c505c0579c3062eab4655",
+  "reason": "Published review head 024e6fc passes all three CI jobs, including 517 workspace tests and the bounded Bolero/Kani helper proof. Retain incomplete exact-case assurance and select the next ready production feature without changing its predecessor verification stage.",
+  "result_revision": 18,
+  "schema_version": 1,
+  "state_sha256": "5ddeb01c37add71b2771012b86dab3e223bf471faa9168918e3edcbbe65adaf0",
+  "timestamp": "2026-10-18T13:30:16.565193+00:00"
+}

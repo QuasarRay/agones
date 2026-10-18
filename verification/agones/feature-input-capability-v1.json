@@ -1,0 +1,36 @@
+{
+  "id": "agones-feature-input-v1",
+  "feature": "FG-INPUT-001",
+  "provider": "agones_core::LoadAgonesFeatureGates",
+  "minimal_capabilities": [
+    "HasFeatureGateInputOptions",
+    "CanReadFeatureGateEnvironment",
+    "CanParseFeatureGates"
+  ],
+  "input": "Optional raw-byte Viper Set override, optional explicitly changed feature-gates flag, and the FEATURE_GATES environment effect.",
+  "output": "Result<FeatureGates, FeatureGateError>, through the production raw query parser.",
+  "preconditions": [
+    "The command option parser supplies Some only for an explicitly changed flag, including an empty value. Full parsing of unrelated command options remains a required command-layer surface.",
+    "The source-bound OS/string semantics are Linux/amd64. Other platforms' OsString encodings are not credited as original Go byte-string equivalence."
+  ],
+  "postconditions": [
+    "Set override precedes a changed flag; both preserve explicit empty values.",
+    "With no explicit override, read FEATURE_GATES once. A missing or empty environment value selects the empty source default.",
+    "Pass the selected raw bytes to the existing CGP parser. A rejected selected input returns its typed error without retry or lower-priority fallback.",
+    "Fallible configured constructors initialize consumers only after successful configuration. Default infallible constructors reject invalid process configuration by panic, corresponding to the source startup Must boundary; the exact application fatal/logging boundary remains lifecycle work."
+  ],
+  "ordering": "No environment read occurs when an explicit override or changed flag is present. This preserves Viper find's effect order.",
+  "consistency": "An owned copy is read per initialization. There is no claim of a multi-service snapshot across separate loads while the external process environment changes.",
+  "duplicates": "The command parser resolves repeated flag assignments before supplying the changed value; URL duplicate-key semantics remain the query parser's responsibility.",
+  "retry_and_error_classes": "Synchronous query errors propagate unchanged. No retry, fallback, scheduling, or asynchronous effect is introduced.",
+  "cancellation_and_resource_ownership": "The operation creates no tasks or long-lived resource. The process environment reader performs one synchronous read and never mutates shared process environment. The application lifecycle still owns startup and cleanup policy.",
+  "validation": [
+    "One unchanged shared configuration provider runs in the process context and a downstream deterministic captured-input context.",
+    "The captured input effect counts reads and checks precedence, empty values, typed invalid raw-byte errors, and no fallback.",
+    "Isolated subprocesses exercise actual missing, empty, valid, invalid and raw-byte environment values without mutating the parallel test runner's environment.",
+    "Production subprocess integration reaches default and configured GameServer, FleetAutoscaler, admission, and actual SDK sidecar environment construction."
+  ],
+  "uncredited_boundaries": [
+    "OS environment implementation, full command option parsing, complete process lifecycle, exact fatal/error rendering, live-cluster transport/conformance, and all remaining baseline behavior."
+  ]
+}

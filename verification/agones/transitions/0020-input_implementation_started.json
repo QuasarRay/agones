@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ],
+  "authorization": "User execution contract",
+  "event": "INPUT_IMPLEMENTATION_STARTED",
+  "gate_snapshot": null,
+  "predecessor_revision": 19,
+  "predecessor_sha256": "9f318e3a423e519721f98e5138483408ec2ad935ec865404ce63fc27c692c15c",
+  "reason": "Previous goal turn made progress by repairing CI and preserving exact-head results. The next production work packet is ready; no live build or proof job needs restarting.",
+  "result_revision": 20,
+  "schema_version": 1,
+  "state_sha256": "a98c69bddd3e89b7c1c6279cbe5a8b79d0a3d7aa757a40ee433dfd5cea8e3e35",
+  "timestamp": "2026-10-18T13:32:31.140116+00:00"
+}

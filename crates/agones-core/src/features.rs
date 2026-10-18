@@ -4,7 +4,7 @@
 //! the pinned reference. Configuration is owned by CGP contexts, avoiding the
 //! reference's process-global mutable map while preserving atomic replacement.
 
-use std::{collections::BTreeMap, error::Error, fmt};
+use std::{error::Error, fmt};
 
 use cgp::prelude::*;
 
@@ -32,11 +32,28 @@ pub const AGONES_FEATURE_DEFAULTS: &[(&str, bool)] = &[
 /// Mirrors an initialized or not-yet-initialized reference feature map.
 /// `Default` is empty, as Go's map is nil before ParseFeatures/EnableAllFeatures.
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
-pub struct FeatureGates(BTreeMap<String, bool>);
+pub struct FeatureGates(Vec<(String, bool)>);
 
 impl FeatureGates {
     pub fn enabled(&self, feature: &str) -> bool {
-        self.0.get(feature).copied().unwrap_or(false)
+        self.0
+            .binary_search_by(|(name, _)| name.as_str().cmp(feature))
+            .map(|index| self.0[index].1)
+            .unwrap_or(false)
+    }
+
+    fn from_defaults(defaults: &[(&str, bool)]) -> Self {
+        // The production dictionary has fifteen entries. Sorted owned entries
+        // preserve map lookup/encoding behavior without general tree machinery.
+        // Repeated default names keep their last value, as map collection did.
+        let mut values: Vec<(String, bool)> = Vec::with_capacity(defaults.len());
+        for (name, enabled) in defaults {
+            match values.binary_search_by(|(key, _)| key.as_str().cmp(name)) {
+                Ok(index) => values[index].1 = *enabled,
+                Err(index) => values.insert(index, ((*name).to_owned(), *enabled)),
+            }
+        }
+        Self(values)
     }
 
     pub fn encode(&self) -> String {
@@ -143,36 +160,31 @@ impl<Context: HasFeatureGateDefaults> FeatureGateParser<Context> for ParseAgones
         query: &[u8],
     ) -> Result<FeatureGates, FeatureGateError> {
         let values = parse_query(query)?;
-        let mut features: BTreeMap<String, bool> = context
-            .feature_gate_defaults()
-            .iter()
-            .map(|(key, value)| ((*key).to_owned(), *value))
-            .collect();
+        let mut features = FeatureGates::from_defaults(context.feature_gate_defaults());
 
         // Go map iteration may choose any failing key. Sorted iteration chooses
         // one member of that permitted error set deterministically.
         for (key, value) in values {
-            let Some(name) = features.keys().find(|name| name.as_bytes() == key).cloned() else {
-                return Err(FeatureGateError::UnknownFeature(key));
-            };
+            let index = features
+                .0
+                .binary_search_by(|(name, _)| name.as_bytes().cmp(&key))
+                .map_err(|_| FeatureGateError::UnknownFeature(key))?;
             let enabled =
                 parse_feature_bool(&value).ok_or_else(|| FeatureGateError::InvalidBool {
-                    feature: name.clone(),
+                    feature: features.0[index].0.clone(),
                     value,
                 })?;
-            features.insert(name, enabled);
+            features.0[index].1 = enabled;
         }
-        Ok(FeatureGates(features))
+        Ok(features)
     }
 
     fn all_features_enabled(context: &Context) -> FeatureGates {
-        FeatureGates(
-            context
-                .feature_gate_defaults()
-                .iter()
-                .map(|(key, _)| ((*key).to_owned(), true))
-                .collect(),
-        )
+        let mut features = FeatureGates::from_defaults(context.feature_gate_defaults());
+        for (_, enabled) in &mut features.0 {
+            *enabled = true;
+        }
+        features
     }
 }
 
@@ -192,8 +204,8 @@ pub fn parse_feature_bool(value: &[u8]) -> Option<bool> {
     }
 }
 
-fn parse_query(query: &[u8]) -> Result<BTreeMap<Vec<u8>, Vec<u8>>, FeatureGateError> {
-    let mut values = BTreeMap::new();
+fn parse_query(query: &[u8]) -> Result<Vec<(Vec<u8>, Vec<u8>)>, FeatureGateError> {
+    let mut values: Vec<(Vec<u8>, Vec<u8>)> = Vec::new();
     let mut error = None;
     for field in query
         .split(|byte| *byte == b'&')
@@ -210,7 +222,10 @@ fn parse_query(query: &[u8]) -> Result<BTreeMap<Vec<u8>, Vec<u8>>, FeatureGateEr
         let decoded = unescape(key).and_then(|key| unescape(value).map(|value| (key, value)));
         match decoded {
             Ok((key, value)) => {
-                values.entry(key).or_insert(value);
+                // Keep byte order and the first value of every decoded key.
+                if let Err(index) = values.binary_search_by(|(name, _)| name.cmp(&key)) {
+                    values.insert(index, (key, value));
+                }
             }
             Err(err) if error.is_none() => error = Some(err),
             Err(_) => {}
@@ -289,6 +304,25 @@ mod tests {
     use super::*;
 
     #[test]
+    fn custom_default_duplicates_and_query_byte_order_preserve_map_semantics() {
+        let context = FeatureGateContext {
+            feature_gate_defaults: &[("Z", false), ("a~* ", false), ("A", true), ("Z", true)],
+        };
+        let defaults = context.parse_feature_gates("").unwrap();
+        assert!(defaults.enabled("Z"));
+        assert_eq!(defaults.encode(), "A=true&Z=true&a~%2A+=false");
+        let gates = context
+            .parse_feature_gates("a~%2A+=true&Z=0&A=false&Z=1")
+            .unwrap();
+        assert_eq!(gates.encode(), "A=false&Z=false&a~%2A+=true");
+        assert!(!gates.enabled("missing"));
+        assert_eq!(
+            context.all_features_enabled().encode(),
+            "A=true&Z=true&a~%2A+=true"
+        );
+    }
+
+    #[test]
     fn configuration_is_atomic_and_uses_first_duplicate_value() {
         let context = FeatureGateContext::default();
         let mut gates = context
@@ -322,7 +356,13 @@ mod tests {
         assert!(!gates.enabled("not-a-gate"));
         assert_eq!(FeatureGates::default().encode(), "");
         assert!(!FeatureGates::default().enabled("SidecarContainers"));
-        assert!(context.all_features_enabled().0.values().all(|v| *v));
+        assert!(
+            context
+                .all_features_enabled()
+                .0
+                .iter()
+                .all(|(_, value)| *value)
+        );
         // The actual source allows false for stable gates despite its comment.
         assert!(
             !context

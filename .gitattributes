@@ -15,6 +15,9 @@
 # See https://github.com/golang/go/issues/9281
 * -text
 
+# Retain hash-bound verifier/test output byte-for-byte, including its whitespace.
+verification/agones/runs/*.log -whitespace
+
 # Keep generated migration evidence available while collapsing bulk output in review.
 /verification/agones/baseline-tree.tsv linguist-generated=true
 /verification/agones/baseline-tests.json linguist-generated=true

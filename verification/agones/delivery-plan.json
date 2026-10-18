@@ -1,5 +1,5 @@
 {
-  "acceptance": "Published implementation/evidence checkpoint; feature verification remains open for 17 exact-case model-checking assertions and the environment/CLI input feature. Full migration and all eight _2 architecture cells remain open.",
+  "acceptance": "The production query and input policies are implemented with 530 unique ordinary tests validated and two bounded helper/policy proofs. All 22 original source assertions retain required formal work; query timeouts count as zero. New input changes have not yet received CI at a new published head. Full migration and all eight _2 cells remain open.",
   "checks": [
     {
       "cause": "Guidance existed locally at build/local-includes/AGENTS.MD but was ignored by Git and absent from clean CI checkout.",
@@ -17,26 +17,45 @@
       "schema_version": 1,
       "status": "FAILED",
       "workflow_run": 39130365636
+    },
+    {
+      "evidence": "verification/agones/ci/39131256675-success.json",
+      "head": "024e6fc06dc60cfc6d839b76f6e5504aa4413dba",
+      "merge_result_tested": "456c7b2b6a8b10bea0dc72b9239f7740df15f983",
+      "observed_results": {
+        "feature-bool-model-check": "PASSED",
+        "migration-state": "PASSED",
+        "rust": "PASSED"
+      },
+      "status": "PASSED",
+      "workflow_run": 39131256675
     }
   ],
   "expected_base": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
-  "expected_head": "d88f536cbd36fb2fd9ca75ced6fe23d7f7649762",
+  "expected_head": "024e6fc06dc60cfc6d839b76f6e5504aa4413dba",
   "integration_branch": "agones-rs-dev",
+  "pending_publication": {
+    "local_checkpoint": "8c7e12706f7c1f9586409b15014a17ad7194b7b4",
+    "parent": "024e6fc06dc60cfc6d839b76f6e5504aa4413dba",
+    "recovery": "verification/agones/publication-bridge.json",
+    "scope": "CGP process input policy, source-case IR/runtime mapping, deterministic Genco harnesses, production sorted-entry storage and strict result controls.",
+    "target_branch": "codex/agones-feature-gates-001"
+  },
   "pull_requests": [
     {
       "draft": true,
-      "head": "d88f536cbd36fb2fd9ca75ced6fe23d7f7649762",
+      "head": "024e6fc06dc60cfc6d839b76f6e5504aa4413dba",
       "merged": false,
       "number": 92,
       "url": "https://github.com/QuasarRay/agones/pull/92"
     }
   ],
-  "remote_result": "DRAFT_PR_OPEN_CI_REPAIR",
+  "remote_result": "LOCAL_INPUT_CHECKPOINT_PENDING_PUBLICATION",
   "required_checks": [
     "migration-state",
     "rust",
     "feature-bool-model-check"
   ],
   "review_branch": "codex/agones-feature-gates-001",
-  "visible_checkout": "agones-rs-dev@d88f536cbd36fb2fd9ca75ced6fe23d7f7649762"
+  "visible_checkout": "agones-rs-dev@8c7e12706f7c1f9586409b15014a17ad7194b7b4"
 }

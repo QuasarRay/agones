@@ -1,0 +1,33 @@
+{
+  "attempts": [
+    {
+      "cause_observed": "B-tree node parent-link/comparison expansion under the combined case-selector model; no assertions/covers credited.",
+      "result": "TIMEOUT_240_SECONDS",
+      "run": "verification/agones/runs/feature-query-bolero-kani-1.json"
+    },
+    {
+      "cause_observed": "After the ordinary sorted-entry refactor, combined symbolic case selection still expands vector allocation/drop and comparison paths at unwind 64; no assertions/covers credited.",
+      "result": "TIMEOUT_240_SECONDS",
+      "run": "verification/agones/runs/feature-query-bolero-kani-2.json"
+    },
+    {
+      "cause_observed": "The constant error-format case still expands standard-library formatting/UTF-8 and allocation paths at unwind 64. No source assertions/covers are credited.",
+      "result": "TIMEOUT_240_SECONDS",
+      "run": "verification/agones/runs/feature-query-case-000-kani-1.json"
+    }
+  ],
+  "family": "feature-query exact source cases",
+  "next_decomposition": "Keep all five generated fixed-case harnesses and all 17 assertions required. Resume the error-format case after the source-compatible raw-byte error-rendering feature and inspect the affected loop/callee closure; no identical retry without a changed hypothesis.",
+  "remaining_required": "All five query case proofs/17 assertions, separate source input effect/formal assertions, and all other migration requirements remain open until actual results establish them.",
+  "required_case_ids": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Empty query string",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Error on query parsing",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures::$root"
+  ],
+  "required_original_assertions": 17,
+  "schema_version": 1,
+  "status": "REQUIRED_PROOF_DEFERRED_WITH_DIAGNOSIS",
+  "stop_condition": "If the constant error-format case still exceeds the diagnostic window, retain the failure and schedule deeper dependency/loop decomposition. Do not keep changing representation, repeat an identical timed-out job, or reduce source obligations."
+}

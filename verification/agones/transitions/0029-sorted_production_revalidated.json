@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ],
+  "authorization": "User execution contract",
+  "event": "SORTED_PRODUCTION_REVALIDATED",
+  "gate_snapshot": "verification/agones/gates/27be8ae70aa3bbfa59bf0bdc624ab4bbac4a75dd61ad9d36ede06e97e778411e.json",
+  "predecessor_revision": 28,
+  "predecessor_sha256": "29e18a8e24648d3e1db17a46f40f9bc8bd201e24f402fbab0930b04dd5840360",
+  "reason": "The small production storage refactor passes 525 workspace tests, three explicitly accounted ignored runner entries including two subprocess helpers, eleven nonempty child cases and the all-target locked check. Preserve unchanged typed source properties and all proof requirements.",
+  "result_revision": 29,
+  "schema_version": 1,
+  "state_sha256": "798ea52a3d8993c71568fdace82f7cc9e84a8c30ccc0d1a58d96f97b7dad2d22",
+  "timestamp": "2026-10-18T14:05:22.927232+00:00"
+}

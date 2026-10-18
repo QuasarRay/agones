@@ -11,6 +11,48 @@
       "gate": "verification/agones/gates/33e206b3137c3fcc984d5334c5ac2a8ef8d09c9fdc9274015334c3cc9c8a726f.json",
       "reason": "Go raw string bytes require the additional canonical byte consumer; no UTF-8 scope narrowing.",
       "replacement": "verification/agones/gates/9bc7d7e7fc872f42369903027b46116bdc3a2fed1d783f66476870a1aa451357.json"
+    },
+    {
+      "disposition": "SUPERSEDED",
+      "gate": "verification/agones/gates/9bc7d7e7fc872f42369903027b46116bdc3a2fed1d783f66476870a1aa451357.json",
+      "reason": "Dependent input initialization now calls the unchanged query provider; default production constructors consume process input through CGP while explicit query constructors retain their existing semantics.",
+      "replacement": "verification/agones/gates/40fd361a168286a21f4664d218fd2722ee8ab535de416c869e0cc177c2ba9844.json"
+    },
+    {
+      "disposition": "SUPERSEDED",
+      "gate": "verification/agones/gates/40fd361a168286a21f4664d218fd2722ee8ab535de416c869e0cc177c2ba9844.json",
+      "reason": "Refresh the development build binding for reuse of the existing pinned Genco dependency; production input/query functions are unchanged. New runtime source interpretation preserves all 22 source assertions; the real process fixture matches Example/Test defaults.",
+      "replacement": "verification/agones/gates/76d5d5c9046f0720a784c7bc2c3723710cf69406f5ac58fb16cef9f71eb40539.json"
+    },
+    {
+      "disposition": "SUPERSEDED",
+      "gate": "verification/agones/gates/ed041966347da7f00c609be4a7fe9cee249ac758c13091192414cfe8f07eb60a.json",
+      "reason": "Refresh the development build binding for reuse of the existing pinned Genco dependency; production input/query functions are unchanged. New runtime source interpretation preserves all 22 source assertions; the real process fixture matches Example/Test defaults.",
+      "replacement": "verification/agones/gates/f25e6cd35ae586d408dcd32b294478b070eb0b471712297eeb9744a53001121f.json"
+    },
+    {
+      "disposition": "SUPERSEDED",
+      "gate": "verification/agones/gates/76d5d5c9046f0720a784c7bc2c3723710cf69406f5ac58fb16cef9f71eb40539.json",
+      "reason": "Refresh the development build binding for reuse of the existing pinned Genco dependency; production input/query functions are unchanged. New runtime source interpretation preserves all 22 source assertions; the real process fixture matches Example/Test defaults.",
+      "replacement": "verification/agones/gates/0d2d3a29aee579674e55a0ae44b8fc54b3388dc3f55c6ca3414cab4d7e0c26b0.json"
+    },
+    {
+      "disposition": "SUPERSEDED",
+      "gate": "verification/agones/gates/f25e6cd35ae586d408dcd32b294478b070eb0b471712297eeb9744a53001121f.json",
+      "reason": "Refresh the development build binding for reuse of the existing pinned Genco dependency; production input/query functions are unchanged. New runtime source interpretation preserves all 22 source assertions; the real process fixture matches Example/Test defaults.",
+      "replacement": "verification/agones/gates/da97d2fbae6bc41ece6a7f3afbc87ee368bff51079fe1af4e3189adfbcb370cb.json"
+    },
+    {
+      "disposition": "SUPERSEDED",
+      "gate": "verification/agones/gates/0d2d3a29aee579674e55a0ae44b8fc54b3388dc3f55c6ca3414cab4d7e0c26b0.json",
+      "reason": "Private production dictionaries use sorted entries to remove observed B-tree model expansion. No source case, invariant, cover, input size acceptance or proof bound is weakened.",
+      "replacement": "verification/agones/gates/404a070990057a389cf4f67966cf38e7e52d437a114d3064f08e7aa911e14214.json"
+    },
+    {
+      "disposition": "SUPERSEDED",
+      "gate": "verification/agones/gates/da97d2fbae6bc41ece6a7f3afbc87ee368bff51079fe1af4e3189adfbcb370cb.json",
+      "reason": "Private production dictionaries use sorted entries to remove observed B-tree model expansion. No source case, invariant, cover, input size acceptance or proof bound is weakened.",
+      "replacement": "verification/agones/gates/27be8ae70aa3bbfa59bf0bdc624ab4bbac4a75dd61ad9d36ede06e97e778411e.json"
     }
   ],
   "schema_version": 1

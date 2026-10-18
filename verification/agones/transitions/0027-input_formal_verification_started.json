@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ],
+  "authorization": "User execution contract",
+  "event": "INPUT_FORMAL_VERIFICATION_STARTED",
+  "gate_snapshot": "verification/agones/gates/da97d2fbae6bc41ece6a7f3afbc87ee368bff51079fe1af4e3189adfbcb370cb.json",
+  "predecessor_revision": 26,
+  "predecessor_sha256": "2189cf2bf31cfb97513292f5c26702ef1acd6fa84aa71ab04848e455a2d6e75f",
+  "reason": "Ordinary implementation gates and generated properties precede these bounded proof jobs. Use the existing real Bolero/Kani route; do not credit compilation, sampling or effect models as a production proof.",
+  "result_revision": 27,
+  "schema_version": 1,
+  "state_sha256": "0c7e0063f6341bda75ea88b29164ea62cb83525f5347c23d56d144b848197d3c",
+  "timestamp": "2026-10-18T13:55:14.470152+00:00"
+}

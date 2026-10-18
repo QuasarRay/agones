@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use agones_core::{CanParseFeatureGates, FeatureGateContext, GameServer};
+use agones_core::{FeatureGates, GameServer};
 use agones_macros::agones_invariant;
 use rusternetes_common::resources::{
     Capabilities, Container, EnvVar, EnvVarSource, HTTPGetAction,
@@ -26,11 +26,24 @@ pub struct SdkSidecarConfig {
 }
 
 impl SdkSidecarConfig {
+    pub fn from_feature_inputs<C: agones_core::CanLoadFeatureGates>(
+        image: impl Into<String>,
+        run_as_user: i64,
+        context: &C,
+    ) -> Result<Self, agones_core::FeatureGateError> {
+        let gates = context.load_feature_gates()?;
+        Ok(Self::with_feature_gates(image, run_as_user, &gates))
+    }
+
     pub fn new(image: impl Into<String>, run_as_user: i64) -> Self {
+        Self::from_feature_inputs(image, run_as_user, &agones_core::FeatureGateInputContext::default())
+            .expect("invalid Agones process feature configuration")
+    }
+
+    fn with_feature_gates(image: impl Into<String>, run_as_user: i64, gates: &FeatureGates) -> Self {
         Self {
             image: image.into(),
-            feature_gates: FeatureGateContext::default().parse_feature_gates("")
-                .expect("the pinned empty Agones feature configuration is valid").encode(),
+            feature_gates: gates.encode(),
             requests_rate_limit: "500ms".to_owned(),
             list_max_capacity: 1000,
             cpu_request: None,
