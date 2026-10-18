@@ -16,6 +16,7 @@ mod fleet_controller_runtime;
 mod fleetautoscaler_admission;
 mod fleetautoscaler_controller;
 mod fleetautoscaler_controller_runtime;
+mod fleetautoscaler_wasm;
 mod game_server_event;
 mod game_server_pod;
 mod gameserver_admission;
@@ -124,6 +125,15 @@ pub use fleetautoscaler_controller_runtime::{
     fleet_autoscaler_fixed_interval_seconds,
     fleet_autoscaler_generation, fleet_autoscaler_retry_delay_ms,
     watch_fleet_autoscaler_controller_events,
+};
+pub use fleetautoscaler_wasm::{
+    CanApplyWasmFleetAutoscalerPolicy,
+    CanEvictFleetAutoscalerWasmState,
+    CanExecuteFleetAutoscalerWasm,
+    CanFetchFleetAutoscalerWasmModule,
+    FleetAutoscalerWasmCache, HasFleetAutoscalerWasmCache,
+    fleet_autoscaler_policy_state_key,
+    fleet_autoscaler_state_owner_key,
 };
 pub use game_server_pod::game_server_pod;
 pub use gameserver_admission::{
