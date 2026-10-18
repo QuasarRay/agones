@@ -37,6 +37,8 @@ build/allocation
 !build/local-includes/README.md
 /release
 debug.test
+/target/
+__pycache__/
 obj
 test/sdk/cpp/sdk/
 build/scripts/k8s-export-openapi/main

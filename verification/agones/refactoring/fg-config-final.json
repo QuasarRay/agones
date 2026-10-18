@@ -1,0 +1,19 @@
+{
+  "affected_architecture_cells": [
+    "proc_macro_2:same-logical-crate",
+    "proc_macro_2:cross-crate",
+    "proc_macro_attribute_2:same-logical-crate",
+    "proc_macro_attribute_2:cross-crate",
+    "proc_macro_derive_2:same-logical-crate",
+    "proc_macro_derive_2:cross-crate",
+    "proc_macro_delegate_2:same-logical-crate",
+    "proc_macro_delegate_2:cross-crate"
+  ],
+  "candidate": "Production defaults, raw-byte Go string domain, downstream provider composition and typed property generation",
+  "decision": "REUSE_EXISTING",
+  "evidence_invalidation": "Old constructor and UTF-8-only gates are superseded. Gate v3 and the new source-bound Kani run are current. Original source assertions compare unchanged after gate rebinding.",
+  "feature_binding": "verification/agones/gates/9bc7d7e7fc872f42369903027b46116bdc3a2fed1d783f66476870a1aa451357.json",
+  "id": "FG-CONFIG-001-final-call-path-review",
+  "next_review_trigger": "FG-INPUT-001 implementation gate; compare a small Genco exact-case emitter with existing invariant/macro facilities, and reassess the source-aware derive path as the next narrow cross-crate adoption opportunity.",
+  "rationale": "Default constructors and SDK environment propagation now call the existing CGP parser; the raw-byte consumer is the minimum needed to preserve Go string semantics. Existing CGP handles downstream composition without a new macro. New _2 staging would add compiler/IDE and maintenance work without paying for four short constructors. The concrete next automation candidate is the repeated typed source-case actions/assertions in the exact-case IR; use existing Genco after the next production input feature gate rather than building a generalized macro/compiler framework now. All four _2 forms and both locations remain mandatory, with no cell credited from ordinary CGP macros."
+}

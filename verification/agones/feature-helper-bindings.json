@@ -1,0 +1,10 @@
+{
+  "files": {
+    "/usr/lib/go/src/internal/strconv/atob.go": "6938f9a33a3daf57d7bada9b6c38b4cc26487c3e613c42c3512a055bed10d6f9",
+    "/usr/lib/go/src/net/url/url.go": "44c33f88526abf3b5955d6c97297be5c9d228e741b33e52c940dcac5a496e091",
+    "/usr/lib/go/src/strconv/number.go": "dda43e8c91d95f9dea0c46b2fec6637e5520cae099e40c5965dca0e41bbaab9e",
+    "vendor/github.com/stretchr/testify/assert/assertions.go": "10087e4b00ecc9504a1b1b4758dcf909e3ab36a6e9585515335ac58c6ea56642"
+  },
+  "go": "go1.27.1-X:nodwarf5",
+  "residual": "This focused closure is augmented by the pinned full reference tree/vendor inventory and the exact Go build environment; Viper/environment effects remain open."
+}

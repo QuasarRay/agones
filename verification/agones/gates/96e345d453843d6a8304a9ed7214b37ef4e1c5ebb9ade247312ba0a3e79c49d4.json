@@ -1,0 +1,63 @@
+{
+  "acceptance_criteria": [
+    "All 15 pinned gate names and defaults, explicit false for stable gates per executable source",
+    "First duplicate value wins; plus/percent decoding, strict query errors, exact ParseBool byte spellings",
+    "Failed replacement preserves active map; successful replacement resets unspecified gates to defaults",
+    "Deterministic sorted Go-compatible query encoding and EnableAllFeatures",
+    "Runtime-independent CGP policy and configured existing Rusternetes controller contexts with SDK propagation"
+  ],
+  "assurance": "Ordinary implementation and real Rusternetes MemoryStorage/provider integration only; no source-property extraction or formal proof credited.",
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "check_scope": {
+    "feature-config-core-2": "Core dependency closure only; adapter configuration changed subsequently and is validated by the two later runs."
+  },
+  "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
+  "feature_id": "feature-gate-query-policy-and-controller-configuration",
+  "id": "FG-CONFIG-001-implementation-v1",
+  "ordinary_checks": [
+    "verification/agones/runs/feature-config-core-2.json",
+    "verification/agones/runs/feature-config-integration-formatted-1.json",
+    "verification/agones/runs/implementation-workspace-tests-1.json"
+  ],
+  "ordinary_result_counts": {
+    "core": 172,
+    "new_integration": 4,
+    "preexisting_ignored_macro_doctest": 1,
+    "rusternetes": 335,
+    "total": 511
+  },
+  "predecessor_ledger_revision": 1,
+  "production_files": {
+    "Cargo.lock": "3666230a1363b58d2f0041c91a10d26c6b0beff1dccd65190aa9d526acaed2bd",
+    "Cargo.toml": "f0c28c2ca73ba51fad682c9d35950d050b0839775d0eb609e7903c47743b5d00",
+    "crates/agones-core/Cargo.toml": "2d016e812c6ff6df0368cf160c5c782fe257e65b83cf6235683955d65ef05b0c",
+    "crates/agones-core/src/features.rs": "0fdb1106718a1289b9a6b6fb66558c7d75860424845b4f7fa030030d1099a179",
+    "crates/agones-core/src/lib.rs": "8393b0b8f050696ccb44a176cd5daf3cf0a96901f25e93b2a795c35c8d9d0fd8",
+    "crates/agones-rusternetes/src/creating_gameserver_controller.rs": "5360a9fad1973304c59b91e8093fa751863d868959959fe95e637770b2fe9d1e",
+    "crates/agones-rusternetes/src/fleetautoscaler_admission.rs": "a8965898d4f7034b5b2a5140b3b1b0b696746e109306d36d0b424b970f2b0bd9",
+    "crates/agones-rusternetes/src/fleetautoscaler_controller.rs": "95795d8e7f342c7f1eb1e6d99345c6c2fefd28b784b896c9dea81a23bb4085be",
+    "crates/agones-rusternetes/src/lib.rs": "5075b38ab88b5febedf7ddd01b5c61e472653bd964f04a6ac036f73358328eaf",
+    "rust-toolchain.toml": "c910997cb152c6dc8ed13b1fdf9fa28a4ed30d6776123e27dd6170e5c66067a0"
+  },
+  "production_symbols": [
+    "agones_core::FeatureGateParser::parse_feature_gates",
+    "agones_core::FeatureGates::{enabled,replace,encode}",
+    "agones_core::CanParseFeatureGates::all_features_enabled",
+    "agones_core::parse_feature_bool",
+    "agones_rusternetes::CreatingGameServerController::from_feature_configuration",
+    "agones_rusternetes::FleetAutoscalerController::from_feature_configuration",
+    "agones_rusternetes::FleetAutoscalerAdmissionContext::from_feature_configuration"
+  ],
+  "reachable_call_paths": [
+    "Configured CreatingGameServerController -> feature parser provider -> PodBuildFeatures -> existing CGP GameServer stack / Pod construction",
+    "Configured CreatingGameServerController -> sdk sidecar builder -> FEATURE_GATES environment",
+    "Configured FleetAutoscalerController -> parse provider -> scheduled/wasm CGP policy dispatch and webhook request metadata"
+  ],
+  "residual_work": [
+    "Process CLI/environment input precedence is a separate configuration-input surface; Viper binding source subcase remains open.",
+    "Transport-specific textual formatting of arbitrary invalid Unicode errors remains to be matched at the application error boundary; typed errors preserve original decoded bytes.",
+    "Additional feature effects, top-level process lifecycle and every remaining source feature remain open."
+  ],
+  "schema_version": 1,
+  "status": "IMPLEMENTED"
+}

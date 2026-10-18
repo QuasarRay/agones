@@ -1,0 +1,51 @@
+{
+  "bolero": {
+    "cargo_bolero": "0.13.4",
+    "cli_features": [
+      "kani"
+    ],
+    "executable": "/home/astral/.local/share/agones-rs/tools/cargo-bolero-0.13.4/bin/cargo-bolero",
+    "library": "0.13.4",
+    "required_backend": "Kani"
+  },
+  "cgp": "0.8.0-alpha",
+  "genco": "0.17.10",
+  "go": {
+    "CGO_ENABLED": "1",
+    "GOARCH": "amd64",
+    "GOFLAGS": "",
+    "GOOS": "linux",
+    "package_loader": "golang.org/x/tools v0.48.0 (separate pinned tool module)",
+    "version": "go1.27.1-X:nodwarf5"
+  },
+  "kani": {
+    "binary_sha256": {
+      "/home/astral/.kani/kani-0.68.0/bin/cbmc": "01ae2ae74a9dc5673631e42256f780393081650f4a22d6f4220566c0deb1643a",
+      "/home/astral/.kani/kani-0.68.0/bin/kani-compiler": "d627c15f3e46f2ffd95a08a2e16e0c1d7dbbe1cb7ee9c05d69a8bd14a4336b71",
+      "/home/astral/.kani/kani-0.68.0/bin/kani-driver": "a0f84272664e45a6b9f1ad7671c2e20aa4523676fb57f5310c18b0a359278a6d",
+      "/home/astral/.kani/kani-0.68.0/bin/kissat": "53e430eed32027184b787e1450672e6ac40b3b806c13e1c3ea272232098fecab"
+    },
+    "cbmc": "6.11.0",
+    "compiler": "rustc 1.100.0-nightly (8925ea358 2026-08-20)",
+    "solver": "CaDiCaL (Kani 0.68.0 default, confirmed by live help)",
+    "status": "ONE_BOUNDED_BOLERO_BACKEND_HARNESS_PROVED",
+    "toolchain": "nightly-2026-08-21-x86_64-unknown-linux-gnu",
+    "version": "0.68.0"
+  },
+  "remaining_pins": "Source loader, Egglog, solver and native environment remain open until their first active use.",
+  "rust": {
+    "locked_resolution_sha256": "3666230a1363b58d2f0041c91a10d26c6b0beff1dccd65190aa9d526acaed2bd",
+    "minimum": "1.89",
+    "rustc": "1.98.1 (48a229cea 2026-09-01)",
+    "toolchain": "1.98.1"
+  },
+  "rusternetes": "125c0f4a2b6fb888102606493c5e3cf7a126dd58",
+  "schema_validation": {
+    "implementation": "Pydantic 2.14.0",
+    "model": "build/scripts/agones-rs/state_schema.py",
+    "python": "3.12",
+    "runtime_bundle": "26.1015.12040",
+    "schema": "AGONES_RS_STATE.schema.json"
+  },
+  "schema_version": 1
+}

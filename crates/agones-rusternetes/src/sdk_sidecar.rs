@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use agones_core::GameServer;
+use agones_core::{CanParseFeatureGates, FeatureGateContext, GameServer};
 use agones_macros::agones_invariant;
 use rusternetes_common::resources::{
     Capabilities, Container, EnvVar, EnvVarSource, HTTPGetAction,
@@ -29,7 +29,8 @@ impl SdkSidecarConfig {
     pub fn new(image: impl Into<String>, run_as_user: i64) -> Self {
         Self {
             image: image.into(),
-            feature_gates: String::new(),
+            feature_gates: FeatureGateContext::default().parse_feature_gates("")
+                .expect("the pinned empty Agones feature configuration is valid").encode(),
             requests_rate_limit: "500ms".to_owned(),
             list_max_capacity: 1000,
             cpu_request: None,

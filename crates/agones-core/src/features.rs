@@ -1,0 +1,397 @@
+//! Agones feature-gate configuration, independent of the environment or runtime.
+//!
+//! The defaults and query semantics follow `pkg/util/runtime/features.go` in
+//! the pinned reference. Configuration is owned by CGP contexts, avoiding the
+//! reference's process-global mutable map while preserving atomic replacement.
+
+use std::{collections::BTreeMap, error::Error, fmt};
+
+use cgp::prelude::*;
+
+pub const FEATURE_GATE_FLAG: &str = "feature-gates";
+pub const FEATURE_GATE_ENV: &str = "FEATURE_GATES";
+
+pub const AGONES_FEATURE_DEFAULTS: &[(&str, bool)] = &[
+    ("AutopilotPassthroughPort", true),
+    ("CountsAndLists", true),
+    ("DisableResyncOnSDKServer", true),
+    ("Example", false),
+    ("FleetAutoscaleRequestMetaData", true),
+    ("GKEAutopilotExtendedDurationPods", true),
+    ("PlayerAllocationFilter", false),
+    ("PlayerTracking", false),
+    ("PortPolicyNone", true),
+    ("PortRanges", true),
+    ("ProcessorAllocator", false),
+    ("RollingUpdateFix", true),
+    ("ScheduledAutoscaler", true),
+    ("SidecarContainers", true),
+    ("WasmAutoscaler", false),
+];
+
+/// Mirrors an initialized or not-yet-initialized reference feature map.
+/// `Default` is empty, as Go's map is nil before ParseFeatures/EnableAllFeatures.
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
+pub struct FeatureGates(BTreeMap<String, bool>);
+
+impl FeatureGates {
+    pub fn enabled(&self, feature: &str) -> bool {
+        self.0.get(feature).copied().unwrap_or(false)
+    }
+
+    pub fn encode(&self) -> String {
+        // url::form_urlencoded uses '*' unescaped and escapes '~', whereas
+        // Go's QueryEscape does the reverse. Keep the source encoding here.
+        self.0
+            .iter()
+            .map(|(key, value)| format!("{}={value}", query_escape(key)))
+            .collect::<Vec<_>>()
+            .join("&")
+    }
+
+    /// Parse into a temporary value; a rejected configuration leaves the
+    /// currently active feature map intact, including previously enabled gates.
+    pub fn replace<C: CanParseFeatureGates>(
+        &mut self,
+        context: &C,
+        query: &str,
+    ) -> Result<(), FeatureGateError> {
+        *self = context.parse_feature_gates(query)?;
+        Ok(())
+    }
+
+    pub fn replace_bytes<C: CanParseFeatureGates>(
+        &mut self,
+        context: &C,
+        query: &[u8],
+    ) -> Result<(), FeatureGateError> {
+        *self = context.parse_feature_gates_bytes(query)?;
+        Ok(())
+    }
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub enum FeatureGateError {
+    InvalidEscape(Vec<u8>),
+    SemicolonSeparator,
+    UnknownFeature(Vec<u8>),
+    InvalidBool { feature: String, value: Vec<u8> },
+}
+
+impl fmt::Display for FeatureGateError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::InvalidEscape(value) => write!(
+                f,
+                "error parsing query string for feature gates: invalid URL escape {value:?}"
+            ),
+            Self::SemicolonSeparator => f.write_str(
+                "error parsing query string for feature gates: invalid semicolon separator in query",
+            ),
+            Self::UnknownFeature(value) => write!(
+                f,
+                "Feature Gate {:?} is not a valid Feature Gate",
+                String::from_utf8_lossy(value)
+            ),
+            Self::InvalidBool { feature, value } => write!(
+                f,
+                "error parsing bool value from flag {feature} : strconv.ParseBool: parsing {:?}: invalid syntax",
+                String::from_utf8_lossy(value)
+            ),
+        }
+    }
+}
+
+impl Error for FeatureGateError {}
+
+#[cgp_getter]
+pub trait HasFeatureGateDefaults {
+    fn feature_gate_defaults(&self) -> &[(&'static str, bool)];
+}
+
+#[cgp_component(FeatureGateParser)]
+pub trait CanParseFeatureGates {
+    fn parse_feature_gates(&self, query: &str) -> Result<FeatureGates, FeatureGateError>;
+    fn parse_feature_gates_bytes(&self, query: &[u8]) -> Result<FeatureGates, FeatureGateError>;
+    fn all_features_enabled(&self) -> FeatureGates;
+}
+
+#[derive(Clone, Copy, Debug, HasField)]
+pub struct FeatureGateContext {
+    pub feature_gate_defaults: &'static [(&'static str, bool)],
+}
+
+impl Default for FeatureGateContext {
+    fn default() -> Self {
+        Self {
+            feature_gate_defaults: AGONES_FEATURE_DEFAULTS,
+        }
+    }
+}
+
+#[cgp_new_provider]
+impl<Context: HasFeatureGateDefaults> FeatureGateParser<Context> for ParseAgonesFeatureGates {
+    fn parse_feature_gates(
+        context: &Context,
+        query: &str,
+    ) -> Result<FeatureGates, FeatureGateError> {
+        Self::parse_feature_gates_bytes(context, query.as_bytes())
+    }
+
+    fn parse_feature_gates_bytes(
+        context: &Context,
+        query: &[u8],
+    ) -> Result<FeatureGates, FeatureGateError> {
+        let values = parse_query(query)?;
+        let mut features: BTreeMap<String, bool> = context
+            .feature_gate_defaults()
+            .iter()
+            .map(|(key, value)| ((*key).to_owned(), *value))
+            .collect();
+
+        // Go map iteration may choose any failing key. Sorted iteration chooses
+        // one member of that permitted error set deterministically.
+        for (key, value) in values {
+            let Some(name) = features.keys().find(|name| name.as_bytes() == key).cloned() else {
+                return Err(FeatureGateError::UnknownFeature(key));
+            };
+            let enabled =
+                parse_feature_bool(&value).ok_or_else(|| FeatureGateError::InvalidBool {
+                    feature: name.clone(),
+                    value,
+                })?;
+            features.insert(name, enabled);
+        }
+        Ok(FeatureGates(features))
+    }
+
+    fn all_features_enabled(context: &Context) -> FeatureGates {
+        FeatureGates(
+            context
+                .feature_gate_defaults()
+                .iter()
+                .map(|(key, _)| ((*key).to_owned(), true))
+                .collect(),
+        )
+    }
+}
+
+delegate_and_check_components! {
+    FeatureGateContext {
+        FeatureGateDefaultsGetterComponent: UseField<Symbol!("feature_gate_defaults")>,
+        FeatureGateParserComponent: ParseAgonesFeatureGates,
+    }
+}
+
+/// The exact accepted byte strings of Go strconv.ParseBool, with no trimming.
+pub fn parse_feature_bool(value: &[u8]) -> Option<bool> {
+    match value {
+        b"1" | b"t" | b"T" | b"TRUE" | b"true" | b"True" => Some(true),
+        b"0" | b"f" | b"F" | b"FALSE" | b"false" | b"False" => Some(false),
+        _ => None,
+    }
+}
+
+fn parse_query(query: &[u8]) -> Result<BTreeMap<Vec<u8>, Vec<u8>>, FeatureGateError> {
+    let mut values = BTreeMap::new();
+    let mut error = None;
+    for field in query
+        .split(|byte| *byte == b'&')
+        .filter(|field| !field.is_empty())
+    {
+        if field.contains(&b';') {
+            error = Some(FeatureGateError::SemicolonSeparator);
+            continue;
+        }
+        let (key, value) = match field.iter().position(|byte| *byte == b'=') {
+            Some(index) => (&field[..index], &field[index + 1..]),
+            None => (field, &[][..]),
+        };
+        let decoded = unescape(key).and_then(|key| unescape(value).map(|value| (key, value)));
+        match decoded {
+            Ok((key, value)) => {
+                values.entry(key).or_insert(value);
+            }
+            Err(err) if error.is_none() => error = Some(err),
+            Err(_) => {}
+        }
+    }
+    if let Some(error) = error {
+        Err(error)
+    } else {
+        Ok(values)
+    }
+}
+
+fn unescape(bytes: &[u8]) -> Result<Vec<u8>, FeatureGateError> {
+    let mut decoded = Vec::with_capacity(bytes.len());
+    let mut i = 0;
+    while i < bytes.len() {
+        match bytes[i] {
+            b'+' => decoded.push(b' '),
+            b'%' => {
+                let digit = |byte| match byte {
+                    b'0'..=b'9' => Some(byte - b'0'),
+                    b'a'..=b'f' => Some(byte - b'a' + 10),
+                    b'A'..=b'F' => Some(byte - b'A' + 10),
+                    _ => None,
+                };
+                let number = bytes
+                    .get(i + 1)
+                    .copied()
+                    .and_then(digit)
+                    .zip(bytes.get(i + 2).copied().and_then(digit));
+                let Some((high, low)) = number else {
+                    return Err(FeatureGateError::InvalidEscape(
+                        bytes[i..bytes.len().min(i + 3)].to_vec(),
+                    ));
+                };
+                decoded.push(high * 16 + low);
+                i += 2;
+            }
+            byte => decoded.push(byte),
+        }
+        i += 1;
+    }
+    Ok(decoded)
+}
+
+fn query_escape(value: &str) -> String {
+    let mut encoded = String::new();
+    for byte in value.bytes() {
+        match byte {
+            b'A'..=b'Z' | b'a'..=b'z' | b'0'..=b'9' | b'-' | b'_' | b'.' | b'~' => {
+                encoded.push(char::from(byte))
+            }
+            b' ' => encoded.push('+'),
+            _ => {
+                const HEX: &[u8; 16] = b"0123456789ABCDEF";
+                encoded.push('%');
+                encoded.push(char::from(HEX[usize::from(byte >> 4)]));
+                encoded.push(char::from(HEX[usize::from(byte & 15)]));
+            }
+        }
+    }
+    encoded
+}
+
+impl From<&FeatureGates> for crate::AutoscalerFeatures {
+    fn from(gates: &FeatureGates) -> Self {
+        Self {
+            scheduled_autoscaler: gates.enabled("ScheduledAutoscaler"),
+            wasm_autoscaler: gates.enabled("WasmAutoscaler"),
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn configuration_is_atomic_and_uses_first_duplicate_value() {
+        let context = FeatureGateContext::default();
+        let mut gates = context
+            .parse_feature_gates("WasmAutoscaler=1&WasmAutoscaler=0")
+            .unwrap();
+        assert!(gates.enabled("WasmAutoscaler"));
+        let before = gates.clone();
+        assert!(
+            gates
+                .replace(&context, "WasmAutoscaler=0&Example=%GG")
+                .is_err()
+        );
+        assert_eq!(gates, before);
+        assert!(gates.replace(&context, "Example=invalid").is_err());
+        assert_eq!(gates, before);
+        assert!(gates.replace(&context, "Foo=true").is_err());
+        assert_eq!(gates, before);
+        gates.replace(&context, "").unwrap();
+        assert!(!gates.enabled("WasmAutoscaler"));
+    }
+
+    #[test]
+    fn defaults_and_overrides_round_trip_without_global_state() {
+        let context = FeatureGateContext::default();
+        let gates = context.parse_feature_gates("").unwrap();
+        assert_eq!(gates.0.len(), 15);
+        assert_eq!(context.parse_feature_gates(&gates.encode()).unwrap(), gates);
+        assert!(gates.enabled("SidecarContainers"));
+        assert!(gates.enabled("ScheduledAutoscaler"));
+        assert!(!gates.enabled("PlayerTracking"));
+        assert!(!gates.enabled("not-a-gate"));
+        assert_eq!(FeatureGates::default().encode(), "");
+        assert!(!FeatureGates::default().enabled("SidecarContainers"));
+        assert!(context.all_features_enabled().0.values().all(|v| *v));
+        // The actual source allows false for stable gates despite its comment.
+        assert!(
+            !context
+                .parse_feature_gates("PortRanges=false")
+                .unwrap()
+                .enabled("PortRanges")
+        );
+    }
+
+    #[test]
+    fn query_encoding_and_failure_precedence_follow_go() {
+        let context = FeatureGateContext::default();
+        assert!(
+            context
+                .parse_feature_gates("%45xample=%54rue&&")
+                .unwrap()
+                .enabled("Example")
+        );
+        assert!(matches!(
+            context.parse_feature_gates("Example=TRUE;Foo=1"),
+            Err(FeatureGateError::SemicolonSeparator)
+        ));
+        assert!(matches!(
+            context.parse_feature_gates("Example=1&Example=%GG"),
+            Err(FeatureGateError::InvalidEscape(_))
+        ));
+        assert!(matches!(
+            context.parse_feature_gates("Example=%XX&bad;key=1"),
+            Err(FeatureGateError::SemicolonSeparator)
+        ));
+        assert!(matches!(
+            context.parse_feature_gates("Example=+true"),
+            Err(FeatureGateError::InvalidBool { .. })
+        ));
+        assert_eq!(
+            context.parse_feature_gates("%ff=1"),
+            Err(FeatureGateError::UnknownFeature(vec![255]))
+        );
+        let names = FeatureGateContext {
+            feature_gate_defaults: &[("a b+~*", true)],
+        };
+        let gates = names.parse_feature_gates("").unwrap();
+        assert_eq!(gates.encode(), "a+b%2B~%2A=true");
+        assert_eq!(names.parse_feature_gates(&gates.encode()).unwrap(), gates);
+    }
+
+    #[test]
+    fn raw_go_strings_preserve_ignored_duplicate_bytes_and_error_values() {
+        let context = FeatureGateContext::default();
+        let mut gates = context
+            .parse_feature_gates_bytes(b"Example=true&Example=\xff")
+            .unwrap();
+        assert!(gates.enabled("Example"));
+        let previous = gates.clone();
+        assert_eq!(
+            gates.replace_bytes(&context, b"Example=\xff"),
+            Err(FeatureGateError::InvalidBool {
+                feature: "Example".into(),
+                value: vec![255],
+            })
+        );
+        assert_eq!(gates, previous);
+        assert_eq!(
+            context.parse_feature_gates_bytes(b"\xff=true"),
+            Err(FeatureGateError::UnknownFeature(vec![255]))
+        );
+        assert_eq!(
+            context.parse_feature_gates_bytes(b"Example=true&Example=\xff%QQ"),
+            Err(FeatureGateError::InvalidEscape(b"%QQ".to_vec()))
+        );
+    }
+}

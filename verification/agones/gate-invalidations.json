@@ -1,0 +1,17 @@
+{
+  "entries": [
+    {
+      "disposition": "SUPERSEDED",
+      "gate": "verification/agones/gates/96e345d453843d6a8304a9ed7214b37ef4e1c5ebb9ade247312ba0a3e79c49d4.json",
+      "reason": "Default production initialization bypassed the new parser; not a complete initialization gate.",
+      "replacement": "verification/agones/gates/9bc7d7e7fc872f42369903027b46116bdc3a2fed1d783f66476870a1aa451357.json"
+    },
+    {
+      "disposition": "SUPERSEDED",
+      "gate": "verification/agones/gates/33e206b3137c3fcc984d5334c5ac2a8ef8d09c9fdc9274015334c3cc9c8a726f.json",
+      "reason": "Go raw string bytes require the additional canonical byte consumer; no UTF-8 scope narrowing.",
+      "replacement": "verification/agones/gates/9bc7d7e7fc872f42369903027b46116bdc3a2fed1d783f66476870a1aa451357.json"
+    }
+  ],
+  "schema_version": 1
+}

@@ -1,0 +1,14 @@
+=== RUN   TestFeatures
+=== PAUSE TestFeatures
+=== CONT  TestFeatures
+=== RUN   TestFeatures/invalid_Feature_gate
+=== RUN   TestFeatures/Empty_query_string
+=== RUN   TestFeatures/query_string
+=== RUN   TestFeatures/Error_on_query_parsing
+--- PASS: TestFeatures (0.00s)
+    --- PASS: TestFeatures/invalid_Feature_gate (0.00s)
+    --- PASS: TestFeatures/Empty_query_string (0.00s)
+    --- PASS: TestFeatures/query_string (0.00s)
+    --- PASS: TestFeatures/Error_on_query_parsing (0.00s)
+PASS
+ok  	agones.dev/agones/pkg/util/runtime	0.005s

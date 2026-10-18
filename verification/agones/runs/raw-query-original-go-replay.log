@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ignored-raw-duplicate",
+    "error_class": "NONE",
+    "example": true,
+    "encoded": "AutopilotPassthroughPort=true\u0026CountsAndLists=true\u0026DisableResyncOnSDKServer=true\u0026Example=true\u0026FleetAutoscaleRequestMetaData=true\u0026GKEAutopilotExtendedDurationPods=true\u0026PlayerAllocationFilter=false\u0026PlayerTracking=false\u0026PortPolicyNone=true\u0026PortRanges=true\u0026ProcessorAllocator=false\u0026RollingUpdateFix=true\u0026ScheduledAutoscaler=true\u0026SidecarContainers=true\u0026WasmAutoscaler=false"
+  },
+  {
+    "id": "invalid-raw-bool",
+    "error_class": "INVALID_BOOL",
+    "example": true,
+    "encoded": "AutopilotPassthroughPort=true\u0026CountsAndLists=true\u0026DisableResyncOnSDKServer=true\u0026Example=true\u0026FleetAutoscaleRequestMetaData=true\u0026GKEAutopilotExtendedDurationPods=true\u0026PlayerAllocationFilter=false\u0026PlayerTracking=false\u0026PortPolicyNone=true\u0026PortRanges=true\u0026ProcessorAllocator=false\u0026RollingUpdateFix=true\u0026ScheduledAutoscaler=true\u0026SidecarContainers=true\u0026WasmAutoscaler=false"
+  },
+  {
+    "id": "unknown-raw-key",
+    "error_class": "UNKNOWN_FEATURE",
+    "example": true,
+    "encoded": "AutopilotPassthroughPort=true\u0026CountsAndLists=true\u0026DisableResyncOnSDKServer=true\u0026Example=true\u0026FleetAutoscaleRequestMetaData=true\u0026GKEAutopilotExtendedDurationPods=true\u0026PlayerAllocationFilter=false\u0026PlayerTracking=false\u0026PortPolicyNone=true\u0026PortRanges=true\u0026ProcessorAllocator=false\u0026RollingUpdateFix=true\u0026ScheduledAutoscaler=true\u0026SidecarContainers=true\u0026WasmAutoscaler=false"
+  },
+  {
+    "id": "invalid-escape-in-duplicate",
+    "error_class": "INVALID_QUERY",
+    "example": true,
+    "encoded": "AutopilotPassthroughPort=true\u0026CountsAndLists=true\u0026DisableResyncOnSDKServer=true\u0026Example=true\u0026FleetAutoscaleRequestMetaData=true\u0026GKEAutopilotExtendedDurationPods=true\u0026PlayerAllocationFilter=false\u0026PlayerTracking=false\u0026PortPolicyNone=true\u0026PortRanges=true\u0026ProcessorAllocator=false\u0026RollingUpdateFix=true\u0026ScheduledAutoscaler=true\u0026SidecarContainers=true\u0026WasmAutoscaler=false"
+  }
+]

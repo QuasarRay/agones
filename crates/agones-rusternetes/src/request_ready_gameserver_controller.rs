@@ -188,6 +188,13 @@ mod tests {
 
     use super::*;
 
+    fn regular_sidecar_controller(storage: MemoryStorage) -> CreatingGameServerController<MemoryStorage> {
+        // These fixtures exercise the source's SidecarContainers=false branch.
+        CreatingGameServerController::from_feature_configuration(
+            storage, &agones_core::FeatureGateContext::default(), "SidecarContainers=false",
+        ).unwrap()
+    }
+
     fn request_ready_game_server() -> GameServer {
         GameServer {
             metadata: ObjectMeta {
@@ -278,7 +285,7 @@ mod tests {
         )
         .await;
 
-        let controller = CreatingGameServerController::new(storage.clone());
+        let controller = regular_sidecar_controller(storage.clone());
         let reconciled = controller
             .reconcile_request_ready_game_server(created)
             .await
@@ -400,7 +407,7 @@ mod tests {
         let created = repository.create(&fixture).await.unwrap();
         store_pod(&storage, &created, None, None).await;
 
-        let controller = CreatingGameServerController::new(storage.clone());
+        let controller = regular_sidecar_controller(storage.clone());
         let reconciled = controller
             .reconcile_request_ready_game_server(created)
             .await
@@ -450,7 +457,7 @@ mod tests {
             .unwrap();
         let before = serde_json::to_value(&pod).unwrap();
 
-        let controller = CreatingGameServerController::new(storage.clone());
+        let controller = regular_sidecar_controller(storage.clone());
         controller
             .reconcile_request_ready_game_server(created)
             .await
@@ -477,7 +484,7 @@ mod tests {
         not_running.state = None;
         store_pod(&storage, &created, Some(vec![not_running]), None).await;
 
-        let controller = CreatingGameServerController::new(storage.clone());
+        let controller = regular_sidecar_controller(storage.clone());
         let error = controller
             .reconcile_request_ready_game_server(created.clone())
             .await

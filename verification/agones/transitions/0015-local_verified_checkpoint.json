@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "LOCAL_VERIFIED_CHECKPOINT",
+  "gate_snapshot": "verification/agones/gates/9bc7d7e7fc872f42369903027b46116bdc3a2fed1d783f66476870a1aa451357.json",
+  "predecessor_revision": 14,
+  "predecessor_sha256": "b1fc771562c41c3e755ea253e36cbe8d215b532115656c17ccb89cd3f77905d2",
+  "reason": "Production query configuration, default initialization, 17 runtime source assertions, four paired traces and one source-bound Bolero/Kani helper proof are retained; complete feature formal assurance and whole migration remain open.",
+  "result_revision": 15,
+  "schema_version": 1,
+  "state_sha256": "5d9fa69347122f733b18f15fa1beac08ad90bcd22fa0508f73c26f0f3b56b76e",
+  "timestamp": "2026-10-18T12:53:51.756819+00:00"
+}

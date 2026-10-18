@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "REOPEN_DEFAULT_CONSTRUCTORS",
+  "gate_snapshot": "verification/agones/gates/96e345d453843d6a8304a9ed7214b37ef4e1c5ebb9ade247312ba0a3e79c49d4.json",
+  "predecessor_revision": 5,
+  "predecessor_sha256": "dd90c291fe5d33dce0487337cd7a2cbb716149295cf01bcf2b0bf45f05868136",
+  "reason": "Review found legacy default constructors bypassing the CGP feature parser. Reopen the call-path implementation; retain immutable earlier receipts without crediting complete initialization.",
+  "result_revision": 6,
+  "schema_version": 1,
+  "state_sha256": "e1cb35ff428214af76a2561109d5b9b41a8c819ff02761a6f8e9a7d613083b85",
+  "timestamp": "2026-10-18T12:14:59.792802+00:00"
+}

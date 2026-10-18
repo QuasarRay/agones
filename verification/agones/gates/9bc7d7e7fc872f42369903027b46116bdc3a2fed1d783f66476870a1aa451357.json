@@ -1,0 +1,77 @@
+{
+  "acceptance_criteria": [
+    "All 15 pinned gate names and defaults, explicit false for stable gates per executable source",
+    "First duplicate value wins; plus/percent decoding, strict query errors, exact ParseBool byte spellings",
+    "Failed replacement preserves active map; successful replacement resets unspecified gates to defaults",
+    "Deterministic sorted Go-compatible query encoding and EnableAllFeatures",
+    "Runtime-independent CGP policy and configured existing Rusternetes controller contexts with SDK propagation",
+    "Default production constructors initialize source defaults through CGP; disabled-feature source fixtures explicitly request SidecarContainers=false or ScheduledAutoscaler=false instead of changing their assertions.",
+    "Raw query bytes preserve Go string semantics, including invalid UTF-8 in an ignored duplicate; typed errors retain raw invalid key/value bytes.",
+    "The same production parser provider compiles and runs unchanged in a minimal downstream CGP context with independent source assertions."
+  ],
+  "assurance": "Ordinary implementation and real Rusternetes MemoryStorage/provider integration only; no source-property extraction or formal proof credited.",
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
+  "feature_id": "feature-gate-query-policy-and-controller-configuration",
+  "id": "FG-CONFIG-001-implementation-v3",
+  "ordinary_checks": [
+    "verification/agones/runs/raw-query-domain-workspace-tests-3.json",
+    "verification/agones/runs/final-context-integration-3.json",
+    "verification/agones/runs/final-workspace-check-3.json"
+  ],
+  "ordinary_result_counts": {
+    "additional_unique_downstream_context_test": 1,
+    "last_full_workspace_tests": 516,
+    "preexisting_ignored_macro_doctest": 1,
+    "subsequent_configuration_integration_suite": 6,
+    "unique_tests_validated": 517
+  },
+  "predecessor_ledger_revision": 11,
+  "production_files": {
+    "Cargo.lock": "3666230a1363b58d2f0041c91a10d26c6b0beff1dccd65190aa9d526acaed2bd",
+    "Cargo.toml": "f0c28c2ca73ba51fad682c9d35950d050b0839775d0eb609e7903c47743b5d00",
+    "crates/agones-core/Cargo.toml": "2d016e812c6ff6df0368cf160c5c782fe257e65b83cf6235683955d65ef05b0c",
+    "crates/agones-core/src/features.rs": "7f6e6f57f7a0e0dd067adb42c2b42c113974e7f9425eef7e45d3372fd00c8302",
+    "crates/agones-core/src/lib.rs": "8393b0b8f050696ccb44a176cd5daf3cf0a96901f25e93b2a795c35c8d9d0fd8",
+    "crates/agones-rusternetes/src/creating_gameserver_controller.rs": "20d8e92d49901153a8795166c3e5d486b98c57ad3e3a83a115e6d16da12ce34d",
+    "crates/agones-rusternetes/src/fleetautoscaler_admission.rs": "55351d13a58b1d52718c0ffbb7a8d1cc072758e7a7b05461fe28998a559a4dcf",
+    "crates/agones-rusternetes/src/fleetautoscaler_controller.rs": "0b9e462705d6ce398afa5979287fcf3e12781747bf5f68d3b47673f29422d884",
+    "crates/agones-rusternetes/src/lib.rs": "5075b38ab88b5febedf7ddd01b5c61e472653bd964f04a6ac036f73358328eaf",
+    "crates/agones-rusternetes/src/request_ready_gameserver_controller.rs": "a2add18119699a6ba0c17ee0c6dd8ed3ec801b26f4f5290216c8a88bb601deb5",
+    "crates/agones-rusternetes/src/sdk_sidecar.rs": "651beb0ad75ea1f455c3787e1c1fb150d0918ceae62eab5d4519e437d7f34ad3",
+    "rust-toolchain.toml": "c910997cb152c6dc8ed13b1fdf9fa28a4ed30d6776123e27dd6170e5c66067a0"
+  },
+  "production_symbols": [
+    "agones_core::FeatureGateParser::parse_feature_gates",
+    "agones_core::FeatureGates::{enabled,replace,encode}",
+    "agones_core::CanParseFeatureGates::all_features_enabled",
+    "agones_core::parse_feature_bool",
+    "agones_rusternetes::CreatingGameServerController::from_feature_configuration",
+    "agones_rusternetes::FleetAutoscalerController::from_feature_configuration",
+    "agones_rusternetes::FleetAutoscalerAdmissionContext::from_feature_configuration",
+    "agones_core::CanParseFeatureGates::parse_feature_gates_bytes",
+    "agones_core::FeatureGates::replace_bytes"
+  ],
+  "reachable_call_paths": [
+    "CreatingGameServerController::new, FleetAutoscalerController::new, FleetAutoscalerAdmissionContext::default and SdkSidecarConfig::new -> CGP feature parser provider -> initialized source defaults; existing production controller/provider call sites use these constructors.",
+    "Configured CreatingGameServerController -> feature parser provider -> PodBuildFeatures -> existing CGP GameServer stack / Pod construction",
+    "Configured CreatingGameServerController -> sdk sidecar builder -> FEATURE_GATES environment",
+    "Configured FleetAutoscalerController -> parse provider -> scheduled/wasm CGP policy dispatch and webhook request metadata"
+  ],
+  "reopened_reason": "Extend the canonical CGP query domain to raw Go string bytes, retaining first-duplicate semantics even for an ignored non-UTF-8 value.",
+  "residual_work": [
+    "Process CLI/environment input precedence is a separate configuration-input surface; Viper binding source subcase remains open.",
+    "Transport-specific textual formatting of arbitrary invalid Unicode errors remains to be matched at the application error boundary; typed errors preserve original decoded bytes.",
+    "Additional feature effects, top-level process lifecycle and every remaining source feature remain open."
+  ],
+  "schema_version": 1,
+  "status": "IMPLEMENTED",
+  "supersedes": "verification/agones/gates/33e206b3137c3fcc984d5334c5ac2a8ef8d09c9fdc9274015334c3cc9c8a726f.json",
+  "workspace_snapshot": {
+    "dirty_tracked_patch_sha256": "600bf3c141deae68c9c8cb414004c58d6872ae5046b38c6b1441215ca602b030",
+    "original_reference_tree": "f50ac1ccf92be912e9475833b17deaebc5a6622f",
+    "production_closure_sha256": "4d5ea636570a778be8db9d322eec48c7ea62f0b870092537471f8297e5309646",
+    "rust_checkout_commit": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "scope_revision": 1
+  }
+}

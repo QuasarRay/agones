@@ -15,12 +15,27 @@ use crate::gameserver_admission::format_validation_errors;
 /// Feature-gate state is a context field rather than a constructor argument
 /// threaded through every helper. CGP lets mutation and validation providers
 /// select their dependencies from the context at compile time.
-#[derive(Clone, Copy, Debug, Default, HasField)]
+#[derive(Clone, Copy, Debug, HasField)]
 pub struct FleetAutoscalerAdmissionContext {
     pub autoscaler_features: AutoscalerFeatures,
 }
 
+impl Default for FleetAutoscalerAdmissionContext {
+    fn default() -> Self {
+        Self::from_feature_configuration(&agones_core::FeatureGateContext::default(), "")
+            .expect("the pinned empty Agones feature configuration is valid")
+    }
+}
+
 impl FleetAutoscalerAdmissionContext {
+    pub fn from_feature_configuration<C: agones_core::CanParseFeatureGates>(
+        context: &C,
+        query: &str,
+    ) -> Result<Self, agones_core::FeatureGateError> {
+        let gates = context.parse_feature_gates(query)?;
+        Ok(Self::new(AutoscalerFeatures::from(&gates)))
+    }
+
     pub const fn new(autoscaler_features: AutoscalerFeatures) -> Self {
         Self {
             autoscaler_features,
@@ -402,7 +417,10 @@ mod tests {
 
         let disabled =
             validate_fleet_autoscaler_object(
-                &context(),
+                &FleetAutoscalerAdmissionContext::from_feature_configuration(
+                    &agones_core::FeatureGateContext::default(),
+                    "ScheduledAutoscaler=false",
+                ).unwrap(),
                 &object,
             )
             .unwrap();

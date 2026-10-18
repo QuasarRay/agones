@@ -4,33 +4,80 @@ on:
   push:
     branches:
       - agones-rs-dev
-    paths:
-      - "Cargo.toml"
-      - "Cargo.lock"
-      - "crates/**"
-      - ".github/workflows/rust.yml"
   pull_request:
-    paths:
-      - "Cargo.toml"
-      - "Cargo.lock"
-      - "crates/**"
-      - ".github/workflows/rust.yml"
+    branches:
+      - agones-rs-dev
 
 permissions:
   contents: read
 
 jobs:
+  migration-state:
+    runs-on: ubuntu-latest
+    outputs:
+      rust: ${{ steps.affected.outputs.rust }}
+      model: ${{ steps.affected.outputs.model }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned state validator
+        run: python -m pip install -r build/scripts/agones-rs/state-requirements.txt
+      - name: Validate source-bound implementation gate and ledger
+        run: python build/scripts/agones-rs/checkpoint.py check
+      - name: Check guidance inheritance
+        run: python build/scripts/agones-rs/inventory.py guidance-check
+      - name: Select affected checks conservatively
+        id: affected
+        env:
+          AGONES_CHECK_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+          AGONES_CHECK_HEAD: ${{ github.sha }}
+        run: python build/scripts/agones-rs/select_checks.py
+
   rust:
+    needs: migration-state
+    if: needs.migration-state.outputs.rust == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install stable Rust
+      - name: Install pinned evidence Rust
         run: |
-          rustup toolchain install stable --profile minimal
-          rustup default stable
+          rustup toolchain install 1.98.1 --profile minimal
       - name: Install native build dependencies
         run: sudo apt-get update && sudo apt-get install -y protobuf-compiler
       - name: Check workspace
-        run: cargo check --workspace --all-targets
+        run: cargo check --locked --workspace --all-targets
       - name: Test workspace
-        run: cargo test --workspace
+        run: cargo test --locked --workspace
+
+  feature-bool-model-check:
+    needs: migration-state
+    if: needs.migration-state.outputs.model == 'true'
+    runs-on: ubuntu-latest
+    env:
+      AGONES_KANI_CI_RUN: feature-bool-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned verification tools
+        run: |
+          rustup toolchain install 1.98.1 --profile minimal
+          cargo install kani-verifier --version 0.68.0 --locked
+          cargo kani setup
+          cargo install cargo-bolero --version 0.13.4 --locked --no-default-features --features kani
+      - name: Verify the exact Bolero harness through Kani
+        env:
+          CARGO_BUILD_JOBS: "2"
+        run: python3 build/scripts/agones-rs/run.py "$AGONES_KANI_CI_RUN" --quiet --cwd crates/agones-core cargo bolero test feature_bool_common_domain --engine kani
+      - name: Require all assertions and non-vacuity covers
+        run: python3 build/scripts/agones-rs/summarize_bool_proof.py "$AGONES_KANI_CI_RUN" --output "verification/agones/proof-summaries/$AGONES_KANI_CI_RUN.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: feature-bool-kani-evidence
+          path: |
+            verification/agones/runs/${{ env.AGONES_KANI_CI_RUN }}.*
+            verification/agones/proof-summaries/${{ env.AGONES_KANI_CI_RUN }}.json
+          retention-days: 90

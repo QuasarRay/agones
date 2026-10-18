@@ -1,0 +1,15 @@
+{
+  "affected_architecture_cells": [
+    "proc_macro_2:both",
+    "proc_macro_attribute_2:both",
+    "proc_macro_derive_2:both",
+    "proc_macro_delegate_2:both"
+  ],
+  "candidate": "Three configured-context constructors and the existing invariant declarations",
+  "decision": "LEAVE_HANDWRITTEN",
+  "evidence_invalidation": "No production change; existing implementation gate remains current.",
+  "feature_binding": "verification/agones/gates/96e345d453843d6a8304a9ed7214b37ef4e1c5ebb9ade247312ba0a3e79c49d4.json",
+  "id": "FG-CONFIG-001-post-implementation",
+  "next_review_trigger": "After FG-CONFIG-001 property delivery or the next source family, reassess typed domain/harness repetition; derive consumer-path repair is a concrete future cross-crate adoption opportunity.",
+  "rationale": "The three short parse-and-map constructors share the existing CGP parser provider and domain types. A new authoring/staging layer would cost more construction, diagnosis and verification than those few lines save. Keep direct wiring. Existing Agones proc_macro2/Syn cores, CGP components and Genco remain the reuse path. Audit Arcane pin notes are already available; no new capability is needed for this feature."
+}

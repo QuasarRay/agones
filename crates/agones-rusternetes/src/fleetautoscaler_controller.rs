@@ -36,13 +36,30 @@ pub struct FleetAutoscalerController<S> {
 }
 
 impl<S> FleetAutoscalerController<S> {
-    pub fn new(storage: S) -> Self {
-        Self {
+    /// Construct the production context using source-compatible feature gates.
+    pub fn from_feature_configuration<C: agones_core::CanParseFeatureGates>(
+        storage: S,
+        context: &C,
+        query: &str,
+    ) -> Result<Self, agones_core::FeatureGateError> {
+        let gates = context.parse_feature_gates(query)?;
+        Ok(Self {
             storage: Arc::new(storage),
-            autoscaler_features: AutoscalerFeatures::default(),
-            fleet_autoscale_request_metadata: false,
+            autoscaler_features: AutoscalerFeatures::from(&gates),
+            fleet_autoscale_request_metadata: gates.enabled("FleetAutoscaleRequestMetaData"),
             wasm_cache: FleetAutoscalerWasmCache::default(),
-        }
+        })
+    }
+
+    pub fn with_feature_gates(mut self, gates: &agones_core::FeatureGates) -> Self {
+        self.autoscaler_features = AutoscalerFeatures::from(gates);
+        self.fleet_autoscale_request_metadata = gates.enabled("FleetAutoscaleRequestMetaData");
+        self
+    }
+
+    pub fn new(storage: S) -> Self {
+        Self::from_feature_configuration(storage, &agones_core::FeatureGateContext::default(), "")
+            .expect("the pinned empty Agones feature configuration is valid")
     }
 
     pub fn with_autoscaler_features(
@@ -1732,7 +1749,11 @@ mod tests {
         );
 
         let disabled =
-            FleetAutoscalerController::new(MemoryStorage::new())
+            FleetAutoscalerController::from_feature_configuration(
+                MemoryStorage::new(),
+                &agones_core::FeatureGateContext::default(),
+                "ScheduledAutoscaler=false",
+            ).unwrap()
                 .compute_fleet_autoscaler_desired_size_at(
                     &policy,
                     &fleet(2),
@@ -1944,7 +1965,11 @@ mod tests {
     #[tokio::test]
     async fn cgp_chain_enforces_scheduled_autoscaler_feature_gate() {
         let error =
-            FleetAutoscalerController::new(MemoryStorage::new())
+            FleetAutoscalerController::from_feature_configuration(
+                MemoryStorage::new(),
+                &agones_core::FeatureGateContext::default(),
+                "ScheduledAutoscaler=false",
+            ).unwrap()
                 .compute_fleet_autoscaler_desired_size_at(
                     &FleetAutoscalerPolicy {
                         policy_type:

@@ -1,0 +1,289 @@
+{
+  "$defs": {
+    "WorkItem": {
+      "additionalProperties": false,
+      "properties": {
+        "dependencies": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Dependencies",
+          "type": "array"
+        },
+        "disposition": {
+          "enum": [
+            "READY",
+            "BLOCKED",
+            "UNSUPPORTED",
+            "STALE",
+            "SUPERSEDED",
+            "EXCLUDED_BY_USER"
+          ],
+          "title": "Disposition",
+          "type": "string"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "feature_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Feature Ids",
+          "type": "array"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "implementation_gate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Implementation Gate"
+        },
+        "next_action": {
+          "title": "Next Action",
+          "type": "string"
+        },
+        "owned_paths": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Owned Paths",
+          "type": "array"
+        },
+        "requirement_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Requirement Ids",
+          "type": "array"
+        },
+        "source_config_binding": {
+          "additionalProperties": true,
+          "title": "Source Config Binding",
+          "type": "object"
+        },
+        "stage": {
+          "enum": [
+            "DISCOVERED",
+            "IMPLEMENTING",
+            "IMPLEMENTED",
+            "EXTRACTING",
+            "PROPERTIES_READY",
+            "VERIFYING",
+            "VERIFIED",
+            "DELIVERED"
+          ],
+          "title": "Stage",
+          "type": "string"
+        },
+        "test_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Test Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "requirement_ids",
+        "feature_ids",
+        "test_ids",
+        "dependencies",
+        "owned_paths",
+        "stage",
+        "disposition",
+        "implementation_gate",
+        "source_config_binding",
+        "evidence_refs",
+        "next_action"
+      ],
+      "title": "WorkItem",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "architecture_matrix": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "maxItems": 8,
+      "minItems": 8,
+      "title": "Architecture Matrix",
+      "type": "array"
+    },
+    "artifact_policy": {
+      "additionalProperties": true,
+      "title": "Artifact Policy",
+      "type": "object"
+    },
+    "baseline_id": {
+      "pattern": "^[a-f0-9]{40}$",
+      "title": "Baseline Id",
+      "type": "string"
+    },
+    "blockers": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Blockers",
+      "type": "array"
+    },
+    "contract_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Contract Sha256",
+      "type": "string"
+    },
+    "delivery": {
+      "additionalProperties": true,
+      "title": "Delivery",
+      "type": "object"
+    },
+    "goal": {
+      "additionalProperties": true,
+      "title": "Goal",
+      "type": "object"
+    },
+    "jobs": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Jobs",
+      "type": "array"
+    },
+    "migration_status": {
+      "enum": [
+        "INCOMPLETE",
+        "COMPLETE"
+      ],
+      "title": "Migration Status",
+      "type": "string"
+    },
+    "previous_revision": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Previous Revision"
+    },
+    "previous_sha256": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Previous Sha256"
+    },
+    "refactoring_reviews": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Refactoring Reviews",
+      "type": "array"
+    },
+    "revision": {
+      "minimum": 1,
+      "title": "Revision",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "scope_id": {
+      "title": "Scope Id",
+      "type": "string"
+    },
+    "work_items": {
+      "items": {
+        "$ref": "#/$defs/WorkItem"
+      },
+      "title": "Work Items",
+      "type": "array"
+    },
+    "workspace": {
+      "additionalProperties": true,
+      "title": "Workspace",
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "revision",
+    "previous_revision",
+    "previous_sha256",
+    "contract_sha256",
+    "baseline_id",
+    "scope_id",
+    "workspace",
+    "goal",
+    "migration_status",
+    "work_items",
+    "jobs",
+    "refactoring_reviews",
+    "architecture_matrix",
+    "delivery",
+    "blockers",
+    "artifact_policy"
+  ],
+  "title": "State",
+  "type": "object",
+  "x-legal-stage-transitions": {
+    "DELIVERED": [
+      "IMPLEMENTING"
+    ],
+    "DISCOVERED": [
+      "IMPLEMENTING"
+    ],
+    "EXTRACTING": [
+      "PROPERTIES_READY",
+      "IMPLEMENTING"
+    ],
+    "IMPLEMENTED": [
+      "EXTRACTING",
+      "IMPLEMENTING"
+    ],
+    "IMPLEMENTING": [
+      "IMPLEMENTED"
+    ],
+    "PROPERTIES_READY": [
+      "VERIFYING",
+      "IMPLEMENTING"
+    ],
+    "VERIFIED": [
+      "DELIVERED",
+      "IMPLEMENTING"
+    ],
+    "VERIFYING": [
+      "VERIFIED",
+      "IMPLEMENTING"
+    ]
+  },
+  "x-revision-rule": "Increment by one; preserve predecessor revision/hash and immutable transition receipt. IMPLEMENTED needs a current gate; EXTRACTING requires that gate first.",
+  "x-schema-migration-rule": "Explicit versioned migrations preserve prior schemas, state identities, authorization and affected-evidence invalidation. No implicit migration."
+}

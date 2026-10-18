@@ -1,0 +1,14 @@
+{
+  "affected_obligations": [
+    "ALL_BASELINE_UNASSESSED"
+  ],
+  "authorization": "User execution contract",
+  "event": "BOOTSTRAP",
+  "gate_snapshot": null,
+  "predecessor_revision": null,
+  "reason": "Recover matching native active Goal and freeze default pinned source without discarding existing work.",
+  "result_revision": 1,
+  "schema_version": 1,
+  "state_sha256": "90fd39f51a38f85add4a245add228658967fe473dda7d7f3f282cc15d3eb945d",
+  "timestamp": "2026-10-18T11:30:05.450740+00:00"
+}

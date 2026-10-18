@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "IMPLEMENTATION_GATE_V2",
+  "gate_snapshot": "verification/agones/gates/33e206b3137c3fcc984d5334c5ac2a8ef8d09c9fdc9274015334c3cc9c8a726f.json",
+  "predecessor_revision": 6,
+  "predecessor_sha256": "e1cb35ff428214af76a2561109d5b9b41a8c819ff02761a6f8e9a7d613083b85",
+  "reason": "515 workspace tests and all-target workspace check pass after routing production defaults through CGP and making disabled-feature source fixtures explicit.",
+  "result_revision": 7,
+  "schema_version": 1,
+  "state_sha256": "1202baab0c37bb319091a505d1170252b6deb33f4de9bf264c5d7bc6a664cb77",
+  "timestamp": "2026-10-18T12:19:52.865584+00:00"
+}

@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "rust": [
+    "Cargo.toml",
+    "Cargo.lock",
+    "rust-toolchain.toml",
+    "crates/**",
+    "install/helm/agones/**"
+  ],
+  "model": [
+    "Cargo.toml",
+    "Cargo.lock",
+    "rust-toolchain.toml",
+    "crates/agones-core/**",
+    "crates/agones-macros/**",
+    "build/scripts/agones-rs/summarize_bool_proof.py",
+    "build/scripts/agones-rs/run.py",
+    ".github/workflows/rust.yml",
+    "AGONES_RS_CONTINUATION_PROMPT.md",
+    "verification/agones/check-dependencies.json"
+  ],
+  "metadata_only": [
+    "**/AGENTS.MD",
+    "AGENTS.MD",
+    "AGONES_RS_STATE.json",
+    "AGONES_RS_STATE.schema.json",
+    "AGONES_RS_HANDOFF.md",
+    "verification/agones/**",
+    "build/scripts/agones-rs/**"
+  ],
+  "unknown_change_policy": "RUN_BOTH",
+  "reuse_policy": "The always-run state job validates retained gate, source and evidence hashes. A skipped unaffected proof job is reuse of that retained artifact, never a new proof or a substitute Cargo-test result."
+}

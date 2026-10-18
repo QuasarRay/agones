@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "REFRESH_AFFECTED_EVIDENCE",
+  "gate_snapshot": "verification/agones/gates/33e206b3137c3fcc984d5334c5ac2a8ef8d09c9fdc9274015334c3cc9c8a726f.json",
+  "predecessor_revision": 9,
+  "predecessor_sha256": "906f8babe0fc32140fd0ecf8b671a83ee7799d1216704202c415b9cb66d0d689",
+  "reason": "The production-only initialization fix changes the gate binding; comparison confirms source actions/assertions/helpers are unchanged. Preserve the existing extracted obligations and bounded boolean proof.",
+  "result_revision": 10,
+  "schema_version": 1,
+  "state_sha256": "131268a42ee001b7c02a16e1a1b3dd7dfd6765ccb40cc4c45132b7ffbc150ad2",
+  "timestamp": "2026-10-18T12:20:46.613841+00:00"
+}

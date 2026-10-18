@@ -1,0 +1,109 @@
+{
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "default_classification": "REQUIRED",
+  "discovered_roots": [
+    ".github",
+    "build",
+    "ci",
+    "cmd",
+    "crates",
+    "docs",
+    "examples",
+    "install",
+    "pkg",
+    "proto",
+    "sdks",
+    "site",
+    "test",
+    "vendor"
+  ],
+  "exclusions": [],
+  "inventory_sha256": "5f29e017d49eeed8c25c68882f07fee230bdb94c3b033564fe6a56fa426e7948",
+  "notes": [
+    "All 8240 pinned files are retained, including vendor and discovered roots; no convenience exclusions.",
+    "Mixed orchestrator-specific and portable surfaces remain REQUIRED until split with provenance.",
+    "Compatibility for non-Rust language SDKs is required; rewriting each SDK in Rust is not implied.",
+    "Existing Rust files in the reference commit are recovery inputs, not evidence of original behavior parity.",
+    "Dynamic subtests, table rows and assertion counts remain unresolved. Unknown counts prevent completion."
+  ],
+  "revision": 1,
+  "schema_version": 1,
+  "scope_id": "agones-original-v1",
+  "surfaces": [
+    {
+      "classification": "REQUIRED",
+      "id": "GameServer",
+      "semantic_obligations": "UNRESOLVED"
+    },
+    {
+      "classification": "REQUIRED",
+      "id": "GameServerSet",
+      "semantic_obligations": "UNRESOLVED"
+    },
+    {
+      "classification": "REQUIRED",
+      "id": "Fleet",
+      "semantic_obligations": "UNRESOLVED"
+    },
+    {
+      "classification": "REQUIRED",
+      "id": "FleetAutoscaler",
+      "semantic_obligations": "UNRESOLVED"
+    },
+    {
+      "classification": "REQUIRED",
+      "id": "GameServerAllocation",
+      "semantic_obligations": "UNRESOLVED"
+    },
+    {
+      "classification": "REQUIRED",
+      "id": "GameServerAllocationPolicy/multicluster",
+      "semantic_obligations": "UNRESOLVED"
+    },
+    {
+      "classification": "REQUIRED",
+      "id": "allocator-grpc-rest-mtls-auth",
+      "semantic_obligations": "UNRESOLVED"
+    },
+    {
+      "classification": "REQUIRED",
+      "id": "SDK-streaming-health-counters-lists",
+      "semantic_obligations": "UNRESOLVED"
+    },
+    {
+      "classification": "REQUIRED",
+      "id": "SDK-rust",
+      "semantic_obligations": "UNRESOLVED"
+    },
+    {
+      "classification": "REQUIRED",
+      "id": "SDK-other-language-compatibility",
+      "semantic_obligations": "UNRESOLVED"
+    },
+    {
+      "classification": "REQUIRED",
+      "id": "schema-protobuf-openapi-defaulting-admission-validation",
+      "semantic_obligations": "UNRESOLVED"
+    },
+    {
+      "classification": "REQUIRED",
+      "id": "selectors-metadata-resource-version-deletion",
+      "semantic_obligations": "UNRESOLVED"
+    },
+    {
+      "classification": "REQUIRED",
+      "id": "feature-gates-deprecated-fields",
+      "semantic_obligations": "UNRESOLVED"
+    },
+    {
+      "classification": "REQUIRED",
+      "id": "configuration-telemetry-lifecycle",
+      "semantic_obligations": "UNRESOLVED"
+    },
+    {
+      "classification": "REQUIRED",
+      "id": "deployment-and-generated-artifacts",
+      "semantic_obligations": "UNRESOLVED"
+    }
+  ]
+}

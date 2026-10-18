@@ -1,0 +1,21 @@
+{
+  "commit": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
+  "dynamic_run_sites": 213,
+  "files": 8240,
+  "go_environment": "{\n\t\"CGO_ENABLED\": \"1\",\n\t\"GOARCH\": \"amd64\",\n\t\"GOFLAGS\": \"\",\n\t\"GOOS\": \"linux\",\n\t\"GOVERSION\": \"go1.27.1-X:nodwarf5\"\n}\n",
+  "metadata_limits": "Standard go/parser identifies top-level test-like declarations and literal Run labels, not package/type-resolved semantics or dynamic expansions. Vendor test semantics are dependency inputs, not first-party tests.",
+  "nested_case_assertion_count": "UNRESOLVED",
+  "preserved_untracked_inputs": [
+    "AGONES_RS_CONTINUATION_PROMPT.md",
+    "AGONES_RS_PROMPT_AUDIT_RESOLUTION.md"
+  ],
+  "repository": "https://github.com/QuasarRay/agones",
+  "schema_version": 1,
+  "selection": "A1(3): default inspected fork commit; no earlier migration baseline found",
+  "test_inventory_sha256": "c4e4743b65442333563f8d74bfdcb5cf183ebe50ced794691f2b7677b89c8765",
+  "top_level_test_like_declarations": 490,
+  "tree": "f50ac1ccf92be912e9475833b17deaebc5a6622f",
+  "tree_inventory_sha256": "5f29e017d49eeed8c25c68882f07fee230bdb94c3b033564fe6a56fa426e7948",
+  "upstream_lineage": "UNRESOLVED"
+}

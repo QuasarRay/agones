@@ -1,0 +1,13 @@
+{
+  "acceptance": "Published implementation/evidence checkpoint; feature verification remains open for 17 exact-case model-checking assertions and the environment/CLI input feature. Full migration and all eight _2 architecture cells remain open.",
+  "expected_base": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "expected_head": null,
+  "integration_branch": "agones-rs-dev",
+  "remote_result": "PREPARING_DRAFT_CHECKPOINT",
+  "required_checks": [
+    "migration-state",
+    "rust",
+    "feature-bool-model-check"
+  ],
+  "review_branch": "codex/agones-feature-gates-001"
+}

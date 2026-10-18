@@ -1,0 +1,166 @@
+{
+  "architecture_matrix": [
+    {
+      "evidence_refs": [],
+      "form": "proc_macro_2",
+      "location": "same-logical-crate",
+      "next_review_trigger": "FG-CONFIG-001 implementation gate",
+      "status": "REQUIRED_OPEN"
+    },
+    {
+      "evidence_refs": [],
+      "form": "proc_macro_2",
+      "location": "cross-crate",
+      "next_review_trigger": "FG-CONFIG-001 implementation gate",
+      "status": "REQUIRED_OPEN"
+    },
+    {
+      "evidence_refs": [],
+      "form": "proc_macro_attribute_2",
+      "location": "same-logical-crate",
+      "next_review_trigger": "FG-CONFIG-001 implementation gate",
+      "status": "REQUIRED_OPEN"
+    },
+    {
+      "evidence_refs": [],
+      "form": "proc_macro_attribute_2",
+      "location": "cross-crate",
+      "next_review_trigger": "FG-CONFIG-001 implementation gate",
+      "status": "REQUIRED_OPEN"
+    },
+    {
+      "evidence_refs": [],
+      "form": "proc_macro_derive_2",
+      "location": "same-logical-crate",
+      "next_review_trigger": "FG-CONFIG-001 implementation gate",
+      "status": "REQUIRED_OPEN"
+    },
+    {
+      "evidence_refs": [],
+      "form": "proc_macro_derive_2",
+      "location": "cross-crate",
+      "next_review_trigger": "FG-CONFIG-001 implementation gate",
+      "status": "REQUIRED_OPEN"
+    },
+    {
+      "evidence_refs": [],
+      "form": "proc_macro_delegate_2",
+      "location": "same-logical-crate",
+      "next_review_trigger": "FG-CONFIG-001 implementation gate",
+      "status": "REQUIRED_OPEN"
+    },
+    {
+      "evidence_refs": [],
+      "form": "proc_macro_delegate_2",
+      "location": "cross-crate",
+      "next_review_trigger": "FG-CONFIG-001 implementation gate",
+      "status": "REQUIRED_OPEN"
+    }
+  ],
+  "artifact_policy": {
+    "classification": "REPO_SAFE",
+    "large_logs": "Unconfigured; no large artifact is credited until a durable location is configured.",
+    "small_evidence": "Commit run manifests and small logs; retain gate snapshots and transition hashes across squash."
+  },
+  "baseline_id": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "blockers": [
+    {
+      "detail": "Cargo initially failed direct registry connections, curl succeeds; testing disabled HTTP multiplexing. Offline cache lacks cgp.",
+      "id": "deps-network",
+      "status": "DIAGNOSING"
+    },
+    {
+      "detail": "Kani 0.68.0/CBMC 6.11.0 installed; cargo-bolero not yet installed. No proof is credited.",
+      "id": "bolero-cli",
+      "status": "OPEN"
+    }
+  ],
+  "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
+  "delivery": {
+    "access": "GitHub app authorized as QuasarRay with push/admin; gh CLI unauthenticated; local .git writable",
+    "authorization": "User execution contract REQ-12/F4 and root AGENTS.MD milestone PR/merge workflow",
+    "expected_base": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "expected_head": null,
+    "integration_branch": "agones-rs-dev",
+    "pull_requests": [],
+    "remote_result": "NOT_PUBLISHED",
+    "required_checks": [],
+    "visible_checkout": "agones-rs-dev"
+  },
+  "goal": {
+    "objective_attachment": "/home/astral/.codex/attachments/5cf63dab-e5a8-49be-a2f1-ae51f5edd993/pasted-text-1.txt",
+    "reported_usage": {
+      "observed_at": "bootstrap",
+      "tokens": 0
+    },
+    "status": "active",
+    "token_budget": null
+  },
+  "jobs": [],
+  "migration_status": "INCOMPLETE",
+  "previous_revision": null,
+  "previous_sha256": null,
+  "refactoring_reviews": [
+    {
+      "affected_architecture_cells": [],
+      "candidate": "Existing cgp_getter/cgp_component/provider delegation; no new macro",
+      "decision": "REUSE_EXISTING",
+      "evidence_invalidation": "Any production refactor refreshes affected implementation/proof/integration bindings.",
+      "feature_binding": "FG-CONFIG-001",
+      "id": "bootstrap-ROI",
+      "next_review_trigger": "FG-CONFIG-001 implementation gate, before delivery",
+      "rationale": "Feature-gate configuration can use the same pinned CGP provider patterns as FleetAutoscaler admission. A new _2 framework has uncertain immediate ROI and is not a dependency. Retain all eight required cells."
+    }
+  ],
+  "revision": 1,
+  "schema_version": 1,
+  "scope_id": "agones-original-v1",
+  "work_items": [
+    {
+      "dependencies": [
+        "baseline-census-v1"
+      ],
+      "disposition": "READY",
+      "evidence_refs": [],
+      "feature_ids": [
+        "feature-gates-configuration"
+      ],
+      "id": "FG-CONFIG-001",
+      "implementation_gate": null,
+      "next_action": "Compile CGP feature-gate providers, integrate production contexts, pass ordinary tests, then gate before semantic extraction.",
+      "owned_paths": [
+        "crates/agones-core/src/features.rs",
+        "crates/agones-rusternetes/src/creating_gameserver_controller.rs",
+        "crates/agones-rusternetes/src/fleetautoscaler_controller.rs"
+      ],
+      "requirement_ids": [
+        "REQ-04",
+        "REQ-05",
+        "REQ-08",
+        "REQ-09",
+        "REQ-10",
+        "REQ-11"
+      ],
+      "source_config_binding": {
+        "commit": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+        "source_path": "pkg/util/runtime/features.go"
+      },
+      "stage": "IMPLEMENTING",
+      "test_ids": [
+        "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+        "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+      ]
+    }
+  ],
+  "workspace": {
+    "branch": "agones-rs-dev",
+    "dirty_patch_sha256": "50bac71ae2dbd1bc65be245aff55ef96a7bc969999375eb6e11a03bba91c84f3",
+    "head": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "last_validated_implementation": null,
+    "path": "/home/astral/Projects/agones",
+    "untracked_inputs": [
+      "AGONES_RS_CONTINUATION_PROMPT.md",
+      "AGONES_RS_PROMPT_AUDIT_RESOLUTION.md"
+    ]
+  }
+}

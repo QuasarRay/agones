@@ -1,0 +1,38 @@
+{
+  "function_span_sha256": "2f4cd3a474f0587f2089f6bccfff8d4be6b2f7a5852ec1fe83d355a696886c5a",
+  "production_unchanged_sha256": "7f6e6f57f7a0e0dd067adb42c2b42c113974e7f9425eef7e45d3372fd00c8302",
+  "results": [
+    {
+      "actual_exit": 0,
+      "crate_identity": "agones_feature_bool_control",
+      "expected_exit": 0,
+      "failure_output": null,
+      "name": "control",
+      "result": "CONTROL_PASSED",
+      "source_sha256": "3b72145d3648f0a75b4cbbe8ffc77414cb81100f6a3cd77cea485ebe8f2e389c",
+      "witness_count": 17
+    },
+    {
+      "actual_exit": 101,
+      "crate_identity": "agones_feature_bool_flip_false",
+      "expected_exit": 101,
+      "failure_output": "\nrunning 1 test\ntest source_witnesses_detect_faults ... FAILED\n\nfailures:\n\n---- source_witnesses_detect_faults stdout ----\n\nthread 'source_witnesses_detect_faults' (118199) panicked at /tmp/agones-bool-negative-controls-67htgefl/flip_false.rs:22:1:\nassertion `left == right` failed\n  left: Some(true)\n right: Some(false)\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n\nfailures:\n    source_witnesses_detect_faults\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n",
+      "name": "flip_false",
+      "result": "FAULT_DETECTED",
+      "source_sha256": "ac5e6f8551c10621c5749e08a9dba058867f695d6123c48f0d8dbce622c016a2",
+      "witness_count": 17
+    },
+    {
+      "actual_exit": 101,
+      "crate_identity": "agones_feature_bool_accept_mixed_case",
+      "expected_exit": 101,
+      "failure_output": "\nrunning 1 test\ntest source_witnesses_detect_faults ... FAILED\n\nfailures:\n\n---- source_witnesses_detect_faults stdout ----\n\nthread 'source_witnesses_detect_faults' (118252) panicked at /tmp/agones-bool-negative-controls-67htgefl/accept_mixed_case.rs:24:1:\nassertion `left == right` failed\n  left: Some(true)\n right: None\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n\nfailures:\n    source_witnesses_detect_faults\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n",
+      "name": "accept_mixed_case",
+      "result": "FAULT_DETECTED",
+      "source_sha256": "91e5448af59cf6995bcc690e94f5a5511fdaac596f1568522f70fd155c6d2a28",
+      "witness_count": 17
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Concrete negative controls only; these isolated targets are not production artifacts or formal proofs."
+}

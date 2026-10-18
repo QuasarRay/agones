@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "IMPLEMENTATION_GATE_V3",
+  "gate_snapshot": "verification/agones/gates/9bc7d7e7fc872f42369903027b46116bdc3a2fed1d783f66476870a1aa451357.json",
+  "predecessor_revision": 11,
+  "predecessor_sha256": "e5042e04f65beeafe23e3b538c3db144f28faae46676a21bb2cbd947df069ed5",
+  "reason": "Source byte-domain and production default wiring are implemented; 517 unique tests are validated across the full workspace and focused downstream suite.",
+  "result_revision": 12,
+  "schema_version": 1,
+  "state_sha256": "efebdf1d77d2614fca9b3992c95ed80892f81b1c327f9db5fa55c2e2c990bbf6",
+  "timestamp": "2026-10-18T12:28:50.817854+00:00"
+}

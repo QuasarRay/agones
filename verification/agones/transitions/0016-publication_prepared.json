@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "PUBLICATION_PREPARED",
+  "gate_snapshot": "verification/agones/gates/9bc7d7e7fc872f42369903027b46116bdc3a2fed1d783f66476870a1aa451357.json",
+  "predecessor_revision": 15,
+  "predecessor_sha256": "5d9fa69347122f733b18f15fa1beac08ad90bcd22fa0508f73c26f0f3b56b76e",
+  "reason": "Preserve the current source/evidence binding and active native Goal before publishing the reviewable draft checkpoint.",
+  "result_revision": 16,
+  "schema_version": 1,
+  "state_sha256": "e116fab4f1d9155d1433e16a20f5c13bf271d9a03953777c9acac0f3ac52ccb7",
+  "timestamp": "2026-10-18T12:58:44.019996+00:00"
+}

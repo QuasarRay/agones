@@ -1,0 +1,4710 @@
+[
+  {
+    "id": "agones.dev/agones/build/report::build/report/report_test.go::TestTemplateRendering",
+    "path": "build/report/report_test.go",
+    "package": "main",
+    "name": "TestTemplateRendering",
+    "line": 24,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/build/scripts/example-version-checker::build/scripts/example-version-checker/version_test.go::TestFilenameIsIrrelevant",
+    "path": "build/scripts/example-version-checker/version_test.go",
+    "package": "main",
+    "name": "TestFilenameIsIrrelevant",
+    "line": 8,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/build/scripts/k8s-export-openapi::build/scripts/k8s-export-openapi/main_test.go::TestRemoveFieldsKeepsPatchKeys",
+    "path": "build/scripts/k8s-export-openapi/main_test.go",
+    "package": "main",
+    "name": "TestRemoveFieldsKeepsPatchKeys",
+    "line": 24,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/build/scripts/k8s-export-openapi::build/scripts/k8s-export-openapi/main_test.go::TestWrapPatchKeys",
+    "path": "build/scripts/k8s-export-openapi/main_test.go",
+    "package": "main",
+    "name": "TestWrapPatchKeys",
+    "line": 96,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/build/scripts/previousversion::build/scripts/previousversion/main_test.go::TestGetPreviousVersion",
+    "path": "build/scripts/previousversion/main_test.go",
+    "package": "main",
+    "name": "TestGetPreviousVersion",
+    "line": 34,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/build/scripts/previousversion::build/scripts/previousversion/main_test.go::TestGetLatestVersionFromGsutil",
+    "path": "build/scripts/previousversion/main_test.go",
+    "package": "main",
+    "name": "TestGetLatestVersionFromGsutil",
+    "line": 97,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/build/scripts/sdk-update-version::build/scripts/sdk-update-version/main_test.go::TestIncrementVersionAfterRelease",
+    "path": "build/scripts/sdk-update-version/main_test.go",
+    "package": "main",
+    "name": "TestIncrementVersionAfterRelease",
+    "line": 23,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/build/scripts/sdk-update-version::build/scripts/sdk-update-version/main_test.go::TestIncrementPatchVersion",
+    "path": "build/scripts/sdk-update-version/main_test.go",
+    "package": "main",
+    "name": "TestIncrementPatchVersion",
+    "line": 44,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/build/scripts/sdk-update-version::build/scripts/sdk-update-version/main_test.go::TestUpdateFile",
+    "path": "build/scripts/sdk-update-version/main_test.go",
+    "package": "main",
+    "name": "TestUpdateFile",
+    "line": 65,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/build/scripts/site-config-update-version::build/scripts/site-config-update-version/main_test.go::TestIncrementMinorVersion",
+    "path": "build/scripts/site-config-update-version/main_test.go",
+    "package": "main",
+    "name": "TestIncrementMinorVersion",
+    "line": 24,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/build/scripts/site-config-update-version::build/scripts/site-config-update-version/main_test.go::TestIncrementPatchVersion",
+    "path": "build/scripts/site-config-update-version/main_test.go",
+    "package": "main",
+    "name": "TestIncrementPatchVersion",
+    "line": 45,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/build/scripts/site-config-update-version::build/scripts/site-config-update-version/main_test.go::TestUpdateReleaseValues",
+    "path": "build/scripts/site-config-update-version/main_test.go",
+    "package": "main",
+    "name": "TestUpdateReleaseValues",
+    "line": 65,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/build/scripts/site-config-update-version::build/scripts/site-config-update-version/main_test.go::TestTomlArray",
+    "path": "build/scripts/site-config-update-version/main_test.go",
+    "package": "main",
+    "name": "TestTomlArray",
+    "line": 101,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/build/scripts/site-config-update-version::build/scripts/site-config-update-version/main_test.go::TestUpdateSiteConfig",
+    "path": "build/scripts/site-config-update-version/main_test.go",
+    "package": "main",
+    "name": "TestUpdateSiteConfig",
+    "line": 110,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/cmd/allocator::cmd/allocator/main_test.go::TestAllocateHandler",
+    "path": "cmd/allocator/main_test.go",
+    "package": "main",
+    "name": "TestAllocateHandler",
+    "line": 37,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/cmd/allocator::cmd/allocator/main_test.go::TestAllocateHandlerReturnsError",
+    "path": "cmd/allocator/main_test.go",
+    "package": "main",
+    "name": "TestAllocateHandlerReturnsError",
+    "line": 71,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/cmd/allocator::cmd/allocator/main_test.go::TestGetTlsCert",
+    "path": "cmd/allocator/main_test.go",
+    "package": "main",
+    "name": "TestGetTlsCert",
+    "line": 87,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/cmd/allocator::cmd/allocator/main_test.go::TestHandlingStatus",
+    "path": "cmd/allocator/main_test.go",
+    "package": "main",
+    "name": "TestHandlingStatus",
+    "line": 109,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/cmd/allocator::cmd/allocator/main_test.go::TestBadReturnType",
+    "path": "cmd/allocator/main_test.go",
+    "package": "main",
+    "name": "TestBadReturnType",
+    "line": 142,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/cmd/allocator::cmd/allocator/main_test.go::TestVerifyClientCertificateSucceeds",
+    "path": "cmd/allocator/main_test.go",
+    "package": "main",
+    "name": "TestVerifyClientCertificateSucceeds",
+    "line": 165,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/cmd/allocator::cmd/allocator/main_test.go::TestVerifyClientCertificateFails",
+    "path": "cmd/allocator/main_test.go",
+    "package": "main",
+    "name": "TestVerifyClientCertificateFails",
+    "line": 182,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/cmd/allocator::cmd/allocator/main_test.go::TestGettingCaCert",
+    "path": "cmd/allocator/main_test.go",
+    "package": "main",
+    "name": "TestGettingCaCert",
+    "line": 198,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/cmd/controller::cmd/controller/main_test.go::TestParseSidecarSecurityContext",
+    "path": "cmd/controller/main_test.go",
+    "package": "main",
+    "name": "TestParseSidecarSecurityContext",
+    "line": 31,
+    "literal_run_labels": [
+      "empty or null falls back to the default",
+      "json is used as is",
+      "invalid json"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/cmd/controller::cmd/controller/main_test.go::TestControllerConfigValidation",
+    "path": "cmd/controller/main_test.go",
+    "package": "main",
+    "name": "TestControllerConfigValidation",
+    "line": 66,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/cmd/controller::cmd/controller/main_test.go::TestControllerConfigValidation_PortRangeOverlap",
+    "path": "cmd/controller/main_test.go",
+    "package": "main",
+    "name": "TestControllerConfigValidation_PortRangeOverlap",
+    "line": 105,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/cmd/controller::cmd/controller/main_test.go::TestControllerConfigValidationMaxListItems",
+    "path": "cmd/controller/main_test.go",
+    "package": "main",
+    "name": "TestControllerConfigValidationMaxListItems",
+    "line": 124,
+    "literal_run_labels": [
+      "set"
+    ],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/cmd/ping::cmd/ping/udp_test.go::TestUDPServerVisit",
+    "path": "cmd/ping/udp_test.go",
+    "package": "main",
+    "name": "TestUDPServerVisit",
+    "line": 41,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/cmd/ping::cmd/ping/udp_test.go::TestUDPServerCleanup",
+    "path": "cmd/ping/udp_test.go",
+    "package": "main",
+    "name": "TestUDPServerCleanup",
+    "line": 73,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/cmd/ping::cmd/ping/udp_test.go::TestUDPServerHealth",
+    "path": "cmd/ping/udp_test.go",
+    "package": "main",
+    "name": "TestUDPServerHealth",
+    "line": 100,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/cmd/sdk-server::cmd/sdk-server/main_test.go::TestRegisterTestSdkServer",
+    "path": "cmd/sdk-server/main_test.go",
+    "package": "main",
+    "name": "TestRegisterTestSdkServer",
+    "line": 29,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/cmd/sdk-server::cmd/sdk-server/main_test.go::TestHealthCheckWrapper",
+    "path": "cmd/sdk-server/main_test.go",
+    "package": "main",
+    "name": "TestHealthCheckWrapper",
+    "line": 42,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/examples/supertuxkart::examples/supertuxkart/main_test.go::Test_handleLogLine",
+    "path": "examples/supertuxkart/main_test.go",
+    "package": "main",
+    "name": "Test_handleLogLine",
+    "line": 23,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/allocation/converters::pkg/allocation/converters/converter_test.go::TestConvertAllocationRequestToGameServerAllocation",
+    "path": "pkg/allocation/converters/converter_test.go",
+    "package": "converters",
+    "name": "TestConvertAllocationRequestToGameServerAllocation",
+    "line": 35,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/allocation/converters::pkg/allocation/converters/converter_test.go::TestConvertGSAToAllocationRequest",
+    "path": "pkg/allocation/converters/converter_test.go",
+    "package": "converters",
+    "name": "TestConvertGSAToAllocationRequest",
+    "line": 660,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/allocation/converters::pkg/allocation/converters/converter_test.go::TestConvertGSAToAllocationResponse",
+    "path": "pkg/allocation/converters/converter_test.go",
+    "package": "converters",
+    "name": "TestConvertGSAToAllocationResponse",
+    "line": 914,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/allocation/converters::pkg/allocation/converters/converter_test.go::TestConvertAllocationResponseToGSA",
+    "path": "pkg/allocation/converters/converter_test.go",
+    "package": "converters",
+    "name": "TestConvertAllocationResponseToGSA",
+    "line": 1468,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate",
+    "path": "pkg/apis/agones/v1/common_test.go",
+    "package": "v1",
+    "name": "TestAllocationOverflowValidate",
+    "line": 26,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowCountMatches",
+    "path": "pkg/apis/agones/v1/common_test.go",
+    "package": "v1",
+    "name": "TestAllocationOverflowCountMatches",
+    "line": 91,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowApply",
+    "path": "pkg/apis/agones/v1/common_test.go",
+    "package": "v1",
+    "name": "TestAllocationOverflowApply",
+    "line": 174,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetGameServerSetGameServer",
+    "path": "pkg/apis/agones/v1/fleet_test.go",
+    "package": "v1",
+    "name": "TestFleetGameServerSetGameServer",
+    "line": 36,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetApplyDefaults",
+    "path": "pkg/apis/agones/v1/fleet_test.go",
+    "package": "v1",
+    "name": "TestFleetApplyDefaults",
+    "line": 98,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetUpperBoundReplicas",
+    "path": "pkg/apis/agones/v1/fleet_test.go",
+    "package": "v1",
+    "name": "TestFleetUpperBoundReplicas",
+    "line": 124,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetLowerBoundReplicas",
+    "path": "pkg/apis/agones/v1/fleet_test.go",
+    "package": "v1",
+    "name": "TestFleetLowerBoundReplicas",
+    "line": 132,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestSumStatusAllocatedReplicas",
+    "path": "pkg/apis/agones/v1/fleet_test.go",
+    "package": "v1",
+    "name": "TestSumStatusAllocatedReplicas",
+    "line": 140,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetGameserverSpec",
+    "path": "pkg/apis/agones/v1/fleet_test.go",
+    "package": "v1",
+    "name": "TestFleetGameserverSpec",
+    "line": 153,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetAllocationOverflow",
+    "path": "pkg/apis/agones/v1/fleet_test.go",
+    "package": "v1",
+    "name": "TestFleetAllocationOverflow",
+    "line": 229,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetName",
+    "path": "pkg/apis/agones/v1/fleet_test.go",
+    "package": "v1",
+    "name": "TestFleetName",
+    "line": 249,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestSumStatusReplicas",
+    "path": "pkg/apis/agones/v1/fleet_test.go",
+    "package": "v1",
+    "name": "TestSumStatusReplicas",
+    "line": 265,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestSumSpecReplicas",
+    "path": "pkg/apis/agones/v1/fleet_test.go",
+    "package": "v1",
+    "name": "TestSumSpecReplicas",
+    "line": 277,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestGetReadyReplicaCountForGameServerSets",
+    "path": "pkg/apis/agones/v1/fleet_test.go",
+    "package": "v1",
+    "name": "TestGetReadyReplicaCountForGameServerSets",
+    "line": 290,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestSumGameServerSets",
+    "path": "pkg/apis/agones/v1/fleet_test.go",
+    "package": "v1",
+    "name": "TestSumGameServerSets",
+    "line": 303,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1/fuzz_test::pkg/apis/agones/v1/fuzz_test/roundtrip_test.go::TestRoundTripTypes",
+    "path": "pkg/apis/agones/v1/fuzz_test/roundtrip_test.go",
+    "package": "install",
+    "name": "TestRoundTripTypes",
+    "line": 20,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestStatus",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestStatus",
+    "line": 40,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestIsBeingDeleted",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestIsBeingDeleted",
+    "line": 83,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerApplyDefaults",
+    "line": 140,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerValidate",
+    "line": 453,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerValidateFeatures",
+    "line": 1360,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerPodNoErrors",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerPodNoErrors",
+    "line": 1487,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerPodHostName",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerPodHostName",
+    "line": 1507,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerPodContainerNotFoundErrReturned",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerPodContainerNotFoundErrReturned",
+    "line": 1526,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerPodWithSidecarNoErrors",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerPodWithSidecarNoErrors",
+    "line": 1556,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerPodWithInitSidecarNoErrors",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerPodWithInitSidecarNoErrors",
+    "line": 1577,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerPodWithInitSidecarPrependsToExistingInitContainers",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerPodWithInitSidecarPrependsToExistingInitContainers",
+    "line": 1600,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerPodWithMultiplePortAllocations",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerPodWithMultiplePortAllocations",
+    "line": 1630,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerPodObjectMeta",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerPodObjectMeta",
+    "line": 1663,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerPodScheduling",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerPodScheduling",
+    "line": 1699,
+    "literal_run_labels": [
+      "packed",
+      "distributed"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerDisableServiceAccount",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerDisableServiceAccount",
+    "line": 1722,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerPassthroughPortAnnotation",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerPassthroughPortAnnotation",
+    "line": 1746,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerCountPorts",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerCountPorts",
+    "line": 1795,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerCountPortsForRange",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerCountPortsForRange",
+    "line": 1811,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerPatch",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerPatch",
+    "line": 1827,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerGetDevAddress",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerGetDevAddress",
+    "line": 1843,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerIsDeletable",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerIsDeletable",
+    "line": 1871,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerIsBeforeReady",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerIsBeforeReady",
+    "line": 1892,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyToPodContainer",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerApplyToPodContainer",
+    "line": 1918,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerUpdateCount",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerUpdateCount",
+    "line": 2010,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerUpdateCounterCapacity",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerUpdateCounterCapacity",
+    "line": 2160,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerUpdateListCapacity",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerUpdateListCapacity",
+    "line": 2233,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerAppendListValues",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerAppendListValues",
+    "line": 2365,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerDeleteListValues",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestGameServerDeleteListValues",
+    "line": 2492,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestMergeRemoveDuplicates",
+    "path": "pkg/apis/agones/v1/gameserver_test.go",
+    "package": "v1",
+    "name": "TestMergeRemoveDuplicates",
+    "line": 2549,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserverset_test.go::TestGameServerSetGameServer",
+    "path": "pkg/apis/agones/v1/gameserverset_test.go",
+    "package": "v1",
+    "name": "TestGameServerSetGameServer",
+    "line": 27,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserverset_test.go::TestGameServerSetValidateUpdate",
+    "path": "pkg/apis/agones/v1/gameserverset_test.go",
+    "package": "v1",
+    "name": "TestGameServerSetValidateUpdate",
+    "line": 64,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestGameServerAllocationApplyDefaults",
+    "path": "pkg/apis/allocation/v1/gameserverallocation_test.go",
+    "package": "v1",
+    "name": "TestGameServerAllocationApplyDefaults",
+    "line": 30,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestGameServerAllocationSpecPreferredSelectors",
+    "path": "pkg/apis/allocation/v1/gameserverallocation_test.go",
+    "package": "v1",
+    "name": "TestGameServerAllocationSpecPreferredSelectors",
+    "line": 65,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestGameServerAllocationSpecSelectors",
+    "path": "pkg/apis/allocation/v1/gameserverallocation_test.go",
+    "package": "v1",
+    "name": "TestGameServerAllocationSpecSelectors",
+    "line": 93,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestGameServerSelectorApplyDefaults",
+    "path": "pkg/apis/allocation/v1/gameserverallocation_test.go",
+    "package": "v1",
+    "name": "TestGameServerSelectorApplyDefaults",
+    "line": 120,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestGameServerSelectorValidate",
+    "path": "pkg/apis/allocation/v1/gameserverallocation_test.go",
+    "package": "v1",
+    "name": "TestGameServerSelectorValidate",
+    "line": 170,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestMetaPatchValidate",
+    "path": "pkg/apis/allocation/v1/gameserverallocation_test.go",
+    "package": "v1",
+    "name": "TestMetaPatchValidate",
+    "line": 305,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestGameServerSelectorMatches",
+    "path": "pkg/apis/allocation/v1/gameserverallocation_test.go",
+    "package": "v1",
+    "name": "TestGameServerSelectorMatches",
+    "line": 350,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestGameServerCounterActions",
+    "path": "pkg/apis/allocation/v1/gameserverallocation_test.go",
+    "package": "v1",
+    "name": "TestGameServerCounterActions",
+    "line": 723,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestGameServerListActions",
+    "path": "pkg/apis/allocation/v1/gameserverallocation_test.go",
+    "package": "v1",
+    "name": "TestGameServerListActions",
+    "line": 841,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestValidatePriorities",
+    "path": "pkg/apis/allocation/v1/gameserverallocation_test.go",
+    "package": "v1",
+    "name": "TestValidatePriorities",
+    "line": 976,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestValidateCounterActions",
+    "path": "pkg/apis/allocation/v1/gameserverallocation_test.go",
+    "package": "v1",
+    "name": "TestValidateCounterActions",
+    "line": 1065,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestValidateListActions",
+    "path": "pkg/apis/allocation/v1/gameserverallocation_test.go",
+    "package": "v1",
+    "name": "TestValidateListActions",
+    "line": 1144,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestGameServerAllocationValidate",
+    "path": "pkg/apis/allocation/v1/gameserverallocation_test.go",
+    "package": "v1",
+    "name": "TestGameServerAllocationValidate",
+    "line": 1195,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestSortKey",
+    "path": "pkg/apis/allocation/v1/gameserverallocation_test.go",
+    "package": "v1",
+    "name": "TestSortKey",
+    "line": 1232,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/autoscaling/v1::pkg/apis/autoscaling/v1/fleetautoscaler_test.go::TestFleetAutoscalerValidateUpdate",
+    "path": "pkg/apis/autoscaling/v1/fleetautoscaler_test.go",
+    "package": "v1",
+    "name": "TestFleetAutoscalerValidateUpdate",
+    "line": 28,
+    "literal_run_labels": [
+      "bad buffer size",
+      "bad min replicas",
+      "bad max replicas",
+      "minReplicas \u003e maxReplicas",
+      "bufferSize good percent",
+      "bufferSize bad percent",
+      "bad min replicas with percentage value of bufferSize",
+      "bad sync interval seconds"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/autoscaling/v1::pkg/apis/autoscaling/v1/fleetautoscaler_test.go::TestFleetAutoscalerWebhookValidateUpdate",
+    "path": "pkg/apis/autoscaling/v1/fleetautoscaler_test.go",
+    "package": "v1",
+    "name": "TestFleetAutoscalerWebhookValidateUpdate",
+    "line": 128,
+    "literal_run_labels": [
+      "good service value",
+      "good url value",
+      "bad URL and service value",
+      "both URL and service value are used - fail",
+      "good url and CABundle value",
+      "https url and invalid CABundle value",
+      "https url and missing CABundle value",
+      "bad url value"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/autoscaling/v1::pkg/apis/autoscaling/v1/fleetautoscaler_test.go::TestFleetAutoscalerCounterValidateUpdate",
+    "path": "pkg/apis/autoscaling/v1/fleetautoscaler_test.go",
+    "package": "v1",
+    "name": "TestFleetAutoscalerCounterValidateUpdate",
+    "line": 220,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/autoscaling/v1::pkg/apis/autoscaling/v1/fleetautoscaler_test.go::TestFleetAutoscalerListValidateUpdate",
+    "path": "pkg/apis/autoscaling/v1/fleetautoscaler_test.go",
+    "package": "v1",
+    "name": "TestFleetAutoscalerListValidateUpdate",
+    "line": 337,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/autoscaling/v1::pkg/apis/autoscaling/v1/fleetautoscaler_test.go::TestFleetAutoscalerScheduleValidateUpdate",
+    "path": "pkg/apis/autoscaling/v1/fleetautoscaler_test.go",
+    "package": "v1",
+    "name": "TestFleetAutoscalerScheduleValidateUpdate",
+    "line": 453,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/autoscaling/v1::pkg/apis/autoscaling/v1/fleetautoscaler_test.go::TestFleetAutoscalerChainValidateUpdate",
+    "path": "pkg/apis/autoscaling/v1/fleetautoscaler_test.go",
+    "package": "v1",
+    "name": "TestFleetAutoscalerChainValidateUpdate",
+    "line": 527,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/autoscaling/v1::pkg/apis/autoscaling/v1/fleetautoscaler_test.go::TestFleetAutoscalerWasmValidateUpdate",
+    "path": "pkg/apis/autoscaling/v1/fleetautoscaler_test.go",
+    "package": "v1",
+    "name": "TestFleetAutoscalerWasmValidateUpdate",
+    "line": 613,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/autoscaling/v1::pkg/apis/autoscaling/v1/fleetautoscaler_test.go::TestFleetAutoscalerApplyDefaults",
+    "path": "pkg/apis/autoscaling/v1/fleetautoscaler_test.go",
+    "package": "v1",
+    "name": "TestFleetAutoscalerApplyDefaults",
+    "line": 684,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/multicluster/v1::pkg/apis/multicluster/v1/gameserverallocationpolicy_test.go::TestConnectionInfoIterator",
+    "path": "pkg/apis/multicluster/v1/gameserverallocationpolicy_test.go",
+    "package": "v1",
+    "name": "TestConnectionInfoIterator",
+    "line": 23,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/apis/multicluster/v1::pkg/apis/multicluster/v1/gameserverallocationpolicy_test.go::TestConnectionInfoIterator_SameClustersAndPriorities",
+    "path": "pkg/apis/multicluster/v1/gameserverallocationpolicy_test.go",
+    "package": "v1",
+    "name": "TestConnectionInfoIterator_SameClustersAndPriorities",
+    "line": 313,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/cloudproduct/eviction::pkg/cloudproduct/eviction/eviction_test.go::TestSetEviction",
+    "path": "pkg/cloudproduct/eviction/eviction_test.go",
+    "package": "eviction",
+    "name": "TestSetEviction",
+    "line": 26,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/cloudproduct/generic::pkg/cloudproduct/generic/generic_test.go::TestGameServerPodAutoscalerAnnotations",
+    "path": "pkg/cloudproduct/generic/generic_test.go",
+    "package": "generic",
+    "name": "TestGameServerPodAutoscalerAnnotations",
+    "line": 28,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/cloudproduct/gke::pkg/cloudproduct/gke/gke_test.go::TestSyncPodPortsToGameServer",
+    "path": "pkg/cloudproduct/gke/gke_test.go",
+    "package": "gke",
+    "name": "TestSyncPodPortsToGameServer",
+    "line": 29,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/cloudproduct/gke::pkg/cloudproduct/gke/gke_test.go::TestValidateGameServer",
+    "path": "pkg/cloudproduct/gke/gke_test.go",
+    "package": "gke",
+    "name": "TestValidateGameServer",
+    "line": 79,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/cloudproduct/gke::pkg/cloudproduct/gke/gke_test.go::TestPodSeccompUnconfined",
+    "path": "pkg/cloudproduct/gke/gke_test.go",
+    "package": "gke",
+    "name": "TestPodSeccompUnconfined",
+    "line": 267,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/cloudproduct/gke::pkg/cloudproduct/gke/gke_test.go::TestSetPassthroughLabel",
+    "path": "pkg/cloudproduct/gke/gke_test.go",
+    "package": "gke",
+    "name": "TestSetPassthroughLabel",
+    "line": 309,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/cloudproduct/gke::pkg/cloudproduct/gke/gke_test.go::TestSetEvictionNoExtended",
+    "path": "pkg/cloudproduct/gke/gke_test.go",
+    "package": "gke",
+    "name": "TestSetEvictionNoExtended",
+    "line": 379,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/cloudproduct/gke::pkg/cloudproduct/gke/gke_test.go::TestAutopilotPortAllocator",
+    "path": "pkg/cloudproduct/gke/gke_test.go",
+    "package": "gke",
+    "name": "TestAutopilotPortAllocator",
+    "line": 459,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/controller_test.go::TestControllerCreationMutationHandler",
+    "path": "pkg/fleetautoscalers/controller_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestControllerCreationMutationHandler",
+    "line": 54,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/controller_test.go::TestControllerCreationValidationHandler",
+    "path": "pkg/fleetautoscalers/controller_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestControllerCreationValidationHandler",
+    "line": 187,
+    "literal_run_labels": [
+      "valid fleet autoscaler",
+      "invalid fleet autoscaler",
+      "unable to unmarshal AdmissionRequest"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/controller_test.go::TestWebhookControllerCreationValidationHandler",
+    "path": "pkg/fleetautoscalers/controller_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestWebhookControllerCreationValidationHandler",
+    "line": 240,
+    "literal_run_labels": [
+      "valid fleet autoscaler",
+      "invalid fleet autoscaler"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/controller_test.go::TestControllerSyncFleetAutoscaler",
+    "path": "pkg/fleetautoscalers/controller_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestControllerSyncFleetAutoscaler",
+    "line": 281,
+    "literal_run_labels": [
+      "no scaling up because fleet is marked for deletion, buffer policy",
+      "scaling up, buffer policy",
+      "scaling up, webhook policy",
+      "no scaling up because fleet is marked for deletion, webhook policy",
+      "scaling down, buffer policy",
+      "no scaling down because fleet is marked for deletion, buffer policy",
+      "no scaling no update",
+      "fleet not available",
+      "fleet not available, error on status update",
+      "wrong policy",
+      "wrong policy, error on status update",
+      "error on scale fleet step",
+      "Missing fleet autoscaler, doesn't fail/panic"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/controller_test.go::TestControllerScaleFleet",
+    "path": "pkg/fleetautoscalers/controller_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestControllerScaleFleet",
+    "line": 800,
+    "literal_run_labels": [
+      "fleet that must be scaled",
+      "error on updating fleet",
+      "equal replicas, no update"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/controller_test.go::TestControllerUpdateStatus",
+    "path": "pkg/fleetautoscalers/controller_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestControllerUpdateStatus",
+    "line": 858,
+    "literal_run_labels": [
+      "must update",
+      "must not update",
+      "update with error",
+      "update with a scaling limit",
+      "update with a scaling limit with minimum",
+      "update with a scaling limit with maximum"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/controller_test.go::TestControllerUpdateStatusUnableToScale",
+    "path": "pkg/fleetautoscalers/controller_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestControllerUpdateStatusUnableToScale",
+    "line": 959,
+    "literal_run_labels": [
+      "must update",
+      "update with error",
+      "must not update"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/controller_test.go::TestControllerEvents",
+    "path": "pkg/fleetautoscalers/controller_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestControllerEvents",
+    "line": 1035,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/controller_test.go::TestControllerAddUpdateDeleteFasThread",
+    "path": "pkg/fleetautoscalers/controller_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestControllerAddUpdateDeleteFasThread",
+    "line": 1077,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/controller_test.go::TestControllerCleanFasThreads",
+    "path": "pkg/fleetautoscalers/controller_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestControllerCleanFasThreads",
+    "line": 1168,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/fleetautoscalers_test.go::TestComputeDesiredFleetSize",
+    "path": "pkg/fleetautoscalers/fleetautoscalers_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestComputeDesiredFleetSize",
+    "line": 137,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/fleetautoscalers_test.go::TestApplyBufferPolicy",
+    "path": "pkg/fleetautoscalers/fleetautoscalers_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestApplyBufferPolicy",
+    "line": 237,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/fleetautoscalers_test.go::TestApplyWebhookPolicy",
+    "path": "pkg/fleetautoscalers/fleetautoscalers_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestApplyWebhookPolicy",
+    "line": 387,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/fleetautoscalers_test.go::TestApplyWebhookPolicyWithMetadata",
+    "path": "pkg/fleetautoscalers/fleetautoscalers_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestApplyWebhookPolicyWithMetadata",
+    "line": 646,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/fleetautoscalers_test.go::TestApplyWebhookPolicyNilFleet",
+    "path": "pkg/fleetautoscalers/fleetautoscalers_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestApplyWebhookPolicyNilFleet",
+    "line": 683,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/fleetautoscalers_test.go::TestCreateURL",
+    "path": "pkg/fleetautoscalers/fleetautoscalers_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestCreateURL",
+    "line": 713,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/fleetautoscalers_test.go::TestBuildURLFromConfiguration",
+    "path": "pkg/fleetautoscalers/fleetautoscalers_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestBuildURLFromConfiguration",
+    "line": 772,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/fleetautoscalers_test.go::TestApplyCounterPolicy",
+    "path": "pkg/fleetautoscalers/fleetautoscalers_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestApplyCounterPolicy",
+    "line": 962,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/fleetautoscalers_test.go::TestApplyListPolicy",
+    "path": "pkg/fleetautoscalers/fleetautoscalers_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestApplyListPolicy",
+    "line": 1699,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/fleetautoscalers_test.go::TestApplyListPolicyFlapping",
+    "path": "pkg/fleetautoscalers/fleetautoscalers_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestApplyListPolicyFlapping",
+    "line": 2383,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/fleetautoscalers_test.go::TestApplySchedulePolicy",
+    "path": "pkg/fleetautoscalers/fleetautoscalers_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestApplySchedulePolicy",
+    "line": 2527,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/fleetautoscalers_test.go::TestApplyChainPolicy",
+    "path": "pkg/fleetautoscalers/fleetautoscalers_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestApplyChainPolicy",
+    "line": 2747,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleetautoscalers::pkg/fleetautoscalers/fleetautoscalerwasm_test.go::TestApplyWasmPolicy",
+    "path": "pkg/fleetautoscalers/fleetautoscalerwasm_test.go",
+    "package": "fleetautoscalers",
+    "name": "TestApplyWasmPolicy",
+    "line": 59,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/controller_test.go::TestControllerSyncFleet",
+    "path": "pkg/fleets/controller_test.go",
+    "package": "fleets",
+    "name": "TestControllerSyncFleet",
+    "line": 55,
+    "literal_run_labels": [
+      "no gameserverset, create it",
+      "gameserverset with the same number of replicas",
+      "gameserverset with different scheduling",
+      "fleet marked for deletion shouldn't take any action on gameserver sets",
+      "fleets update allocation counter",
+      "error on getting fleet",
+      "error on getting list of GS",
+      "fleet not found",
+      "fleet invalid strategy type",
+      "error on deleteEmptyGameServerSets",
+      "error on upsertGameServerSet"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/controller_test.go::TestControllerCreationValidationHandler",
+    "path": "pkg/fleets/controller_test.go",
+    "package": "fleets",
+    "name": "TestControllerCreationValidationHandler",
+    "line": 347,
+    "literal_run_labels": [
+      "invalid JSON",
+      "invalid fleet",
+      "valid fleet"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/controller_test.go::TestControllerCreationMutationHandler",
+    "path": "pkg/fleets/controller_test.go",
+    "package": "fleets",
+    "name": "TestControllerCreationMutationHandler",
+    "line": 389,
+    "literal_run_labels": [
+      "ok scenario",
+      "invalid JSON"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/controller_test.go::TestControllerRun",
+    "path": "pkg/fleets/controller_test.go",
+    "package": "fleets",
+    "name": "TestControllerRun",
+    "line": 435,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/controller_test.go::TestControllerUpdateFleetStatus",
+    "path": "pkg/fleets/controller_test.go",
+    "package": "fleets",
+    "name": "TestControllerUpdateFleetStatus",
+    "line": 501,
+    "literal_run_labels": [
+      "update, no errors",
+      "list gameservers returns an error",
+      "fleets getter returns an error"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/controller_test.go::TestControllerUpdateFleetCounterStatus",
+    "path": "pkg/fleets/controller_test.go",
+    "package": "fleets",
+    "name": "TestControllerUpdateFleetCounterStatus",
+    "line": 572,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/controller_test.go::TestControllerUpdateFleetListStatus",
+    "path": "pkg/fleets/controller_test.go",
+    "package": "fleets",
+    "name": "TestControllerUpdateFleetListStatus",
+    "line": 657,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/controller_test.go::TestControllerFilterGameServerSetByActive",
+    "path": "pkg/fleets/controller_test.go",
+    "package": "fleets",
+    "name": "TestControllerFilterGameServerSetByActive",
+    "line": 741,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/controller_test.go::TestControllerFilterGameServerSetByActiveDuplicates",
+    "path": "pkg/fleets/controller_test.go",
+    "package": "fleets",
+    "name": "TestControllerFilterGameServerSetByActiveDuplicates",
+    "line": 766,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/controller_test.go::TestControllerRecreateDeployment",
+    "path": "pkg/fleets/controller_test.go",
+    "package": "fleets",
+    "name": "TestControllerRecreateDeployment",
+    "line": 821,
+    "literal_run_labels": [
+      "ok scenario",
+      "error on update"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/controller_test.go::TestControllerApplyDeploymentStrategy",
+    "path": "pkg/fleets/controller_test.go",
+    "package": "fleets",
+    "name": "TestControllerApplyDeploymentStrategy",
+    "line": 868,
+    "literal_run_labels": [
+      "a single gameserverset",
+      "rest gameservers that are already scaled down"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/controller_test.go::TestControllerUpsertGameServerSet",
+    "path": "pkg/fleets/controller_test.go",
+    "package": "fleets",
+    "name": "TestControllerUpsertGameServerSet",
+    "line": 902,
+    "literal_run_labels": [
+      "insert",
+      "update",
+      "error updating gss replicas",
+      "error on gs status update",
+      "nothing happens, nil is returned",
+      "update Priorities"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/controller_test.go::TestResourcesRequestsAndLimits",
+    "path": "pkg/fleets/controller_test.go",
+    "package": "fleets",
+    "name": "TestResourcesRequestsAndLimits",
+    "line": 1031,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/controller_test.go::TestControllerDeleteEmptyGameServerSets",
+    "path": "pkg/fleets/controller_test.go",
+    "package": "fleets",
+    "name": "TestControllerDeleteEmptyGameServerSets",
+    "line": 1061,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/controller_test.go::TestControllerRollingUpdateDeploymentNoInactiveGSSNoErrors",
+    "path": "pkg/fleets/controller_test.go",
+    "package": "fleets",
+    "name": "TestControllerRollingUpdateDeploymentNoInactiveGSSNoErrors",
+    "line": 1089,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/controller_test.go::TestControllerRollingUpdateDeploymentNegativeReplica",
+    "path": "pkg/fleets/controller_test.go",
+    "package": "fleets",
+    "name": "TestControllerRollingUpdateDeploymentNegativeReplica",
+    "line": 1107,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/controller_test.go::TestControllerRollingUpdateDeploymentAllocatedExceedsFleetReplicas",
+    "path": "pkg/fleets/controller_test.go",
+    "package": "fleets",
+    "name": "TestControllerRollingUpdateDeploymentAllocatedExceedsFleetReplicas",
+    "line": 1171,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/controller_test.go::TestControllerRollingUpdateDeploymentGSSUpdateFailedErrExpected",
+    "path": "pkg/fleets/controller_test.go",
+    "package": "fleets",
+    "name": "TestControllerRollingUpdateDeploymentGSSUpdateFailedErrExpected",
+    "line": 1222,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/controller_test.go::TestRollingUpdateOnReady",
+    "path": "pkg/fleets/controller_test.go",
+    "package": "fleets",
+    "name": "TestRollingUpdateOnReady",
+    "line": 1253,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/controller_test.go::TestControllerRollingUpdateDeployment",
+    "path": "pkg/fleets/controller_test.go",
+    "package": "fleets",
+    "name": "TestControllerRollingUpdateDeployment",
+    "line": 1357,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/fleets_test.go::TestListGameServerSetsByFleetOwner",
+    "path": "pkg/fleets/fleets_test.go",
+    "package": "fleets",
+    "name": "TestListGameServerSetsByFleetOwner",
+    "line": 33,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/fleets::pkg/fleets/fleets_test.go::TestListGameServersByFleetOwner",
+    "path": "pkg/fleets/fleets_test.go",
+    "package": "fleets",
+    "name": "TestListGameServersByFleetOwner",
+    "line": 78,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/allocation_cache_test.go::TestAllocationCacheListSortedGameServers",
+    "path": "pkg/gameserverallocations/allocation_cache_test.go",
+    "package": "gameserverallocations",
+    "name": "TestAllocationCacheListSortedGameServers",
+    "line": 38,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 2
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/allocation_cache_test.go::TestListSortedGameServersPriorities",
+    "path": "pkg/gameserverallocations/allocation_cache_test.go",
+    "package": "gameserverallocations",
+    "name": "TestListSortedGameServersPriorities",
+    "line": 189,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 2
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/allocation_cache_test.go::TestAllocatorRunCacheSync",
+    "path": "pkg/gameserverallocations/allocation_cache_test.go",
+    "package": "gameserverallocations",
+    "name": "TestAllocatorRunCacheSync",
+    "line": 480,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/allocator_test.go::TestAllocatorAllocate",
+    "path": "pkg/gameserverallocations/allocator_test.go",
+    "package": "gameserverallocations",
+    "name": "TestAllocatorAllocate",
+    "line": 46,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/allocator_test.go::TestAllocatorAllocatePriority",
+    "path": "pkg/gameserverallocations/allocator_test.go",
+    "package": "gameserverallocations",
+    "name": "TestAllocatorAllocatePriority",
+    "line": 129,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 2
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/allocator_test.go::TestAllocatorApplyAllocationToGameServer",
+    "path": "pkg/gameserverallocations/allocator_test.go",
+    "package": "gameserverallocations",
+    "name": "TestAllocatorApplyAllocationToGameServer",
+    "line": 234,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/allocator_test.go::TestAllocatorApplyAllocationToGameServerCountsListsActions",
+    "path": "pkg/gameserverallocations/allocator_test.go",
+    "package": "gameserverallocations",
+    "name": "TestAllocatorApplyAllocationToGameServerCountsListsActions",
+    "line": 276,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/allocator_test.go::TestAllocationApplyAllocationError",
+    "path": "pkg/gameserverallocations/allocator_test.go",
+    "package": "gameserverallocations",
+    "name": "TestAllocationApplyAllocationError",
+    "line": 417,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/allocator_test.go::TestAllocatorAllocateOnGameServerUpdateError",
+    "path": "pkg/gameserverallocations/allocator_test.go",
+    "package": "gameserverallocations",
+    "name": "TestAllocatorAllocateOnGameServerUpdateError",
+    "line": 439,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/allocator_test.go::TestAllocatorRunLocalAllocations",
+    "path": "pkg/gameserverallocations/allocator_test.go",
+    "package": "gameserverallocations",
+    "name": "TestAllocatorRunLocalAllocations",
+    "line": 500,
+    "literal_run_labels": [
+      "no problems",
+      "no gameservers",
+      "do not propagate allocation if request context cancelled"
+    ],
+    "dynamic_run_sites": 3
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/allocator_test.go::TestAllocatorRunLocalAllocationsCountsAndLists",
+    "path": "pkg/gameserverallocations/allocator_test.go",
+    "package": "gameserverallocations",
+    "name": "TestAllocatorRunLocalAllocationsCountsAndLists",
+    "line": 647,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/allocator_test.go::TestControllerAllocationUpdateWorkers",
+    "path": "pkg/gameserverallocations/allocator_test.go",
+    "package": "gameserverallocations",
+    "name": "TestControllerAllocationUpdateWorkers",
+    "line": 863,
+    "literal_run_labels": [
+      "no error",
+      "error on update"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/allocator_test.go::TestAllocatorCreateRestClientError",
+    "path": "pkg/gameserverallocations/allocator_test.go",
+    "package": "gameserverallocations",
+    "name": "TestAllocatorCreateRestClientError",
+    "line": 994,
+    "literal_run_labels": [
+      "Missing secret",
+      "Missing cert",
+      "Bad client cert",
+      "Bad CA cert",
+      "Bad client CA cert"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/cache_test.go::TestGameServerCacheEntry",
+    "path": "pkg/gameserverallocations/cache_test.go",
+    "package": "gameserverallocations",
+    "name": "TestGameServerCacheEntry",
+    "line": 25,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/cache_test.go::TestGameServerCacheEntryGeneration",
+    "path": "pkg/gameserverallocations/cache_test.go",
+    "package": "gameserverallocations",
+    "name": "TestGameServerCacheEntryGeneration",
+    "line": 59,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/controller_test.go::TestControllerAllocator",
+    "path": "pkg/gameserverallocations/controller_test.go",
+    "package": "gameserverallocations",
+    "name": "TestControllerAllocator",
+    "line": 60,
+    "literal_run_labels": [
+      "successful allocation",
+      "method not allowed",
+      "invalid gameserverallocation"
+    ],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/controller_test.go::TestAllocationApiResource",
+    "path": "pkg/gameserverallocations/controller_test.go",
+    "package": "gameserverallocations",
+    "name": "TestAllocationApiResource",
+    "line": 181,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/controller_test.go::TestMultiClusterAllocationFromLocal",
+    "path": "pkg/gameserverallocations/controller_test.go",
+    "package": "gameserverallocations",
+    "name": "TestMultiClusterAllocationFromLocal",
+    "line": 207,
+    "literal_run_labels": [
+      "Handle allocation request locally",
+      "Missing multicluster policy",
+      "Could not find a Ready GameServer"
+    ],
+    "dynamic_run_sites": 3
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/controller_test.go::TestMultiClusterAllocationFromRemote",
+    "path": "pkg/gameserverallocations/controller_test.go",
+    "package": "gameserverallocations",
+    "name": "TestMultiClusterAllocationFromRemote",
+    "line": 387,
+    "literal_run_labels": [
+      "Handle allocation request remotely",
+      "Remote server returns conflict and then random error",
+      "First server fails and second server succeeds",
+      "No allocations called after total timeout",
+      "First allocation fails and second succeeds on the same server"
+    ],
+    "dynamic_run_sites": 5
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/find_test.go::TestFindGameServerForAllocationPacked",
+    "path": "pkg/gameserverallocations/find_test.go",
+    "package": "gameserverallocations",
+    "name": "TestFindGameServerForAllocationPacked",
+    "line": 32,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 2
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/find_test.go::TestFindGameServerForAllocationDistributed",
+    "path": "pkg/gameserverallocations/find_test.go",
+    "package": "gameserverallocations",
+    "name": "TestFindGameServerForAllocationDistributed",
+    "line": 238,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/metrics_test.go::TestSetResponse",
+    "path": "pkg/gameserverallocations/metrics_test.go",
+    "package": "gameserverallocations",
+    "name": "TestSetResponse",
+    "line": 78,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/metrics_test.go::TestAllocationMetrics",
+    "path": "pkg/gameserverallocations/metrics_test.go",
+    "package": "gameserverallocations",
+    "name": "TestAllocationMetrics",
+    "line": 142,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations::pkg/gameserverallocations/metrics_test.go::TestStartMetricsServer",
+    "path": "pkg/gameserverallocations/metrics_test.go",
+    "package": "gameserverallocations",
+    "name": "TestStartMetricsServer",
+    "line": 228,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations/processor::pkg/gameserverallocations/processor/client_test.go::TestProcessorClient_Allocate",
+    "path": "pkg/gameserverallocations/processor/client_test.go",
+    "package": "processor",
+    "name": "TestProcessorClient_Allocate",
+    "line": 54,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations/processor::pkg/gameserverallocations/processor/handler_test.go::TestAddClient",
+    "path": "pkg/gameserverallocations/processor/handler_test.go",
+    "package": "processor",
+    "name": "TestAddClient",
+    "line": 52,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations/processor::pkg/gameserverallocations/processor/handler_test.go::TestRemoveClient",
+    "path": "pkg/gameserverallocations/processor/handler_test.go",
+    "package": "processor",
+    "name": "TestRemoveClient",
+    "line": 96,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations/processor::pkg/gameserverallocations/processor/handler_test.go::TestProcessAllocation",
+    "path": "pkg/gameserverallocations/processor/handler_test.go",
+    "package": "processor",
+    "name": "TestProcessAllocation",
+    "line": 146,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations/processor::pkg/gameserverallocations/processor/handler_test.go::TestProcessAllocationsConcurrently",
+    "path": "pkg/gameserverallocations/processor/handler_test.go",
+    "package": "processor",
+    "name": "TestProcessAllocationsConcurrently",
+    "line": 259,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations/processor::pkg/gameserverallocations/processor/handler_test.go::TestSubmitBatch",
+    "path": "pkg/gameserverallocations/processor/handler_test.go",
+    "package": "processor",
+    "name": "TestSubmitBatch",
+    "line": 373,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations/processor::pkg/gameserverallocations/processor/handler_test.go::TestStreamBatches",
+    "path": "pkg/gameserverallocations/processor/handler_test.go",
+    "package": "processor",
+    "name": "TestStreamBatches",
+    "line": 494,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations/processor::pkg/gameserverallocations/processor/handler_test.go::TestStartPullRequestTicker",
+    "path": "pkg/gameserverallocations/processor/handler_test.go",
+    "package": "processor",
+    "name": "TestStartPullRequestTicker",
+    "line": 636,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserverallocations/processor::pkg/gameserverallocations/processor/handler_test.go::TestStartPullRequestTickerRemovesFailingClient",
+    "path": "pkg/gameserverallocations/processor/handler_test.go",
+    "package": "processor",
+    "name": "TestStartPullRequestTickerRemovesFailingClient",
+    "line": 695,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/controller_test.go::TestControllerSyncGameServer",
+    "path": "pkg/gameservers/controller_test.go",
+    "package": "gameservers",
+    "name": "TestControllerSyncGameServer",
+    "line": 66,
+    "literal_run_labels": [
+      "Creating a new GameServer",
+      "When a GameServer has been deleted, the sync operation should be a noop"
+    ],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/controller_test.go::TestControllerSyncGameServerWithInitSidecar",
+    "path": "pkg/gameservers/controller_test.go",
+    "package": "gameservers",
+    "name": "TestControllerSyncGameServerWithInitSidecar",
+    "line": 160,
+    "literal_run_labels": [
+      "Creating a new GameServer",
+      "When a GameServer has been deleted, the sync operation should be a noop"
+    ],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/controller_test.go::TestControllerSyncGameServerWithDevIP",
+    "path": "pkg/gameservers/controller_test.go",
+    "package": "gameservers",
+    "name": "TestControllerSyncGameServerWithDevIP",
+    "line": 283,
+    "literal_run_labels": [
+      "Creating a new GameServer",
+      "GameServer with ReadyRequest State",
+      "Allocated GameServer",
+      "When a GameServer has been deleted, the sync operation should be a noop"
+    ],
+    "dynamic_run_sites": 3
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/controller_test.go::TestControllerWatchGameServers",
+    "path": "pkg/gameservers/controller_test.go",
+    "package": "gameservers",
+    "name": "TestControllerWatchGameServers",
+    "line": 419,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/controller_test.go::TestControllerCreationMutationHandler",
+    "path": "pkg/gameservers/controller_test.go",
+    "package": "gameservers",
+    "name": "TestControllerCreationMutationHandler",
+    "line": 522,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/controller_test.go::TestControllerCreationValidationHandler",
+    "path": "pkg/gameservers/controller_test.go",
+    "package": "gameservers",
+    "name": "TestControllerCreationValidationHandler",
+    "line": 600,
+    "literal_run_labels": [
+      "valid gameserver",
+      "invalid gameserver",
+      "valid request object, error expected"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/controller_test.go::TestControllerCreationMutationHandlerPod",
+    "path": "pkg/gameservers/controller_test.go",
+    "package": "gameservers",
+    "name": "TestControllerCreationMutationHandlerPod",
+    "line": 686,
+    "literal_run_labels": [
+      "valid pod mutation for Passthrough portPolicy, containerPort should be the same as hostPort"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/controller_test.go::TestControllerSyncGameServerDeletionTimestamp",
+    "path": "pkg/gameservers/controller_test.go",
+    "package": "gameservers",
+    "name": "TestControllerSyncGameServerDeletionTimestamp",
+    "line": 738,
+    "literal_run_labels": [
+      "GameServer has a Pod",
+      "Error on deleting pod",
+      "GameServer's Pods have been deleted",
+      "Local development GameServer"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/controller_test.go::TestControllerSyncGameServerPortAllocationState",
+    "path": "pkg/gameservers/controller_test.go",
+    "package": "gameservers",
+    "name": "TestControllerSyncGameServerPortAllocationState",
+    "line": 855,
+    "literal_run_labels": [
+      "Gameserver with port allocation state",
+      "Error on update",
+      "Gameserver with unknown state",
+      "GameServer with non zero deletion datetime"
+    ],
+    "dynamic_run_sites": 2
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/controller_test.go::TestControllerSyncGameServerCreatingState",
+    "path": "pkg/gameservers/controller_test.go",
+    "package": "gameservers",
+    "name": "TestControllerSyncGameServerCreatingState",
+    "line": 953,
+    "literal_run_labels": [
+      "Testing TCPUDP protocol of static portpolicy",
+      "Testing TCP protocol of static portpolicy",
+      "Testing default protocol of static portpolicy",
+      "Syncing from Created State, with no issues",
+      "Error on updating gs",
+      "Previously started sync, created Pod, but didn't move to Starting",
+      "creates an invalid podspec",
+      "GameServer with unknown state",
+      "GameServer with non zero deletion datetime"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/controller_test.go::TestControllerSyncGameServerStartingState",
+    "path": "pkg/gameservers/controller_test.go",
+    "package": "gameservers",
+    "name": "TestControllerSyncGameServerStartingState",
+    "line": 1232,
+    "literal_run_labels": [
+      "sync from Stating state, with no issues",
+      "Successful transition to Scheduled without PodIPs",
+      "Error on update",
+      "GameServer with unknown state",
+      "GameServer with non zero deletion datetime"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/controller_test.go::TestControllerSyncGameServerPodIPs",
+    "path": "pkg/gameservers/controller_test.go",
+    "package": "gameservers",
+    "name": "TestControllerSyncGameServerPodIPs",
+    "line": 1364,
+    "literal_run_labels": [
+      "Update error is returned"
+    ],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/controller_test.go::TestControllerCreateGameServerPod",
+    "path": "pkg/gameservers/controller_test.go",
+    "package": "gameservers",
+    "name": "TestControllerCreateGameServerPod",
+    "line": 1558,
+    "literal_run_labels": [
+      "create pod, with no issues",
+      "service account",
+      "invalid podspec",
+      "forbidden pods creation"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/controller_test.go::TestControllerSyncGameServerRequestReadyState",
+    "path": "pkg/gameservers/controller_test.go",
+    "package": "gameservers",
+    "name": "TestControllerSyncGameServerRequestReadyState",
+    "line": 1743,
+    "literal_run_labels": [
+      "GameServer with non zero deletion datetime"
+    ],
+    "dynamic_run_sites": 2
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/controller_test.go::TestMoveToErrorState",
+    "path": "pkg/gameservers/controller_test.go",
+    "package": "gameservers",
+    "name": "TestMoveToErrorState",
+    "line": 2059,
+    "literal_run_labels": [
+      "Set GameServer to error state",
+      "Error on update"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/controller_test.go::TestControllerSyncGameServerShutdownState",
+    "path": "pkg/gameservers/controller_test.go",
+    "package": "gameservers",
+    "name": "TestControllerSyncGameServerShutdownState",
+    "line": 2111,
+    "literal_run_labels": [
+      "GameServer with a Shutdown state",
+      "Error on delete",
+      "GameServer with unknown state",
+      "GameServer with non zero deletion datetime"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/controller_test.go::TestControllerGameServerPod",
+    "path": "pkg/gameservers/controller_test.go",
+    "package": "gameservers",
+    "name": "TestControllerGameServerPod",
+    "line": 2173,
+    "literal_run_labels": [
+      "no pod exists",
+      "a pod exists",
+      "a pod exists, but isn't owned by the gameserver",
+      "dev gameserver pod"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/controller_test.go::TestControllerAddGameServerHealthCheck",
+    "path": "pkg/gameservers/controller_test.go",
+    "package": "gameservers",
+    "name": "TestControllerAddGameServerHealthCheck",
+    "line": 2270,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/controller_test.go::TestControllerAddSDKServerEnvVars",
+    "path": "pkg/gameservers/controller_test.go",
+    "package": "gameservers",
+    "name": "TestControllerAddSDKServerEnvVars",
+    "line": 2292,
+    "literal_run_labels": [
+      "legacy game server without ports set",
+      "game server without any environment",
+      "game server without any conflicting env vars",
+      "game server with conflicting env vars",
+      "game server with multiple containers",
+      "environment variables not applied to the sdkserver container",
+      "game server with init containers"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/controller_test.go::TestControllerSidecarSecurityContext",
+    "path": "pkg/gameservers/controller_test.go",
+    "package": "gameservers",
+    "name": "TestControllerSidecarSecurityContext",
+    "line": 2560,
+    "literal_run_labels": [
+      "default security context",
+      "custom security context",
+      "each sidecar gets its own copy"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/gameservers_test.go::TestIsGameServerPod",
+    "path": "pkg/gameservers/gameservers_test.go",
+    "package": "gameservers",
+    "name": "TestIsGameServerPod",
+    "line": 29,
+    "literal_run_labels": [
+      "it is a game server pod",
+      "it is not a game server pod"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/gameservers_test.go::TestAddress",
+    "path": "pkg/gameservers/gameservers_test.go",
+    "package": "gameservers",
+    "name": "TestAddress",
+    "line": 46,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/gameservers_test.go::TestApplyGameServerAddressAndPort",
+    "path": "pkg/gameservers/gameservers_test.go",
+    "package": "gameservers",
+    "name": "TestApplyGameServerAddressAndPort",
+    "line": 114,
+    "literal_run_labels": [
+      "No IP specified, err expected"
+    ],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/gameservers_test.go::TestApplyGameServerPodIPs",
+    "path": "pkg/gameservers/gameservers_test.go",
+    "package": "gameservers",
+    "name": "TestApplyGameServerPodIPs",
+    "line": 200,
+    "literal_run_labels": [
+      "adds new PodIPs not in status",
+      "no-op when all PodIPs already present",
+      "no-op when pod has no PodIPs",
+      "adds only missing PodIPs from multiple pod IPs"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/gameservers_test.go::TestIsBeforePodCreated",
+    "path": "pkg/gameservers/gameservers_test.go",
+    "package": "gameservers",
+    "name": "TestIsBeforePodCreated",
+    "line": 254,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/health_test.go::TestHealthControllerFailedContainer",
+    "path": "pkg/gameservers/health_test.go",
+    "package": "gameservers",
+    "name": "TestHealthControllerFailedContainer",
+    "line": 38,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/health_test.go::TestHealthControllerFailedContainerSidecarContainers",
+    "path": "pkg/gameservers/health_test.go",
+    "package": "gameservers",
+    "name": "TestHealthControllerFailedContainerSidecarContainers",
+    "line": 69,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/health_test.go::TestHealthControllerFailedPod",
+    "path": "pkg/gameservers/health_test.go",
+    "package": "gameservers",
+    "name": "TestHealthControllerFailedPod",
+    "line": 125,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/health_test.go::TestHealthUnschedulableWithNoFreePorts",
+    "path": "pkg/gameservers/health_test.go",
+    "package": "gameservers",
+    "name": "TestHealthUnschedulableWithNoFreePorts",
+    "line": 149,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/health_test.go::TestHealthControllerSkipUnhealthyGameContainer",
+    "path": "pkg/gameservers/health_test.go",
+    "package": "gameservers",
+    "name": "TestHealthControllerSkipUnhealthyGameContainer",
+    "line": 193,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/health_test.go::TestHealthControllerSyncGameServer",
+    "path": "pkg/gameservers/health_test.go",
+    "package": "gameservers",
+    "name": "TestHealthControllerSyncGameServer",
+    "line": 319,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/health_test.go::TestHealthControllerSyncGameServerUpdateFailed",
+    "path": "pkg/gameservers/health_test.go",
+    "package": "gameservers",
+    "name": "TestHealthControllerSyncGameServerUpdateFailed",
+    "line": 466,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/health_test.go::TestHealthControllerSyncGameServerUnhealthyLimiter",
+    "path": "pkg/gameservers/health_test.go",
+    "package": "gameservers",
+    "name": "TestHealthControllerSyncGameServerUnhealthyLimiter",
+    "line": 499,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/health_test.go::TestHealthControllerRunNoSideCar",
+    "path": "pkg/gameservers/health_test.go",
+    "package": "gameservers",
+    "name": "TestHealthControllerRunNoSideCar",
+    "line": 572,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/health_test.go::TestHealthControllerRunWithSideCar",
+    "path": "pkg/gameservers/health_test.go",
+    "package": "gameservers",
+    "name": "TestHealthControllerRunWithSideCar",
+    "line": 663,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/migration_test.go::TestMigrationControllerSyncGameServer",
+    "path": "pkg/gameservers/migration_test.go",
+    "package": "gameservers",
+    "name": "TestMigrationControllerSyncGameServer",
+    "line": 36,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/migration_test.go::TestMigrationControllerRun",
+    "path": "pkg/gameservers/migration_test.go",
+    "package": "gameservers",
+    "name": "TestMigrationControllerRun",
+    "line": 195,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/migration_test.go::TestMigrationControllerAnyAddressMatch",
+    "path": "pkg/gameservers/migration_test.go",
+    "package": "gameservers",
+    "name": "TestMigrationControllerAnyAddressMatch",
+    "line": 335,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/missing_test.go::TestMissingPodControllerSyncGameServer",
+    "path": "pkg/gameservers/missing_test.go",
+    "package": "gameservers",
+    "name": "TestMissingPodControllerSyncGameServer",
+    "line": 37,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/missing_test.go::TestMissingPodControllerSyncGameServerUnhealthyLimiter",
+    "path": "pkg/gameservers/missing_test.go",
+    "package": "gameservers",
+    "name": "TestMissingPodControllerSyncGameServerUnhealthyLimiter",
+    "line": 181,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/missing_test.go::TestMissingPodControllerRun",
+    "path": "pkg/gameservers/missing_test.go",
+    "package": "gameservers",
+    "name": "TestMissingPodControllerRun",
+    "line": 235,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/pernodecounter_test.go::TestPerNodeCounterMapLeak",
+    "path": "pkg/gameservers/pernodecounter_test.go",
+    "package": "gameservers",
+    "name": "TestPerNodeCounterMapLeak",
+    "line": 40,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/pernodecounter_test.go::TestPerNodeCounterGameServerEvents",
+    "path": "pkg/gameservers/pernodecounter_test.go",
+    "package": "gameservers",
+    "name": "TestPerNodeCounterGameServerEvents",
+    "line": 92,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/pernodecounter_test.go::TestPerNodeCounterNodeEvents",
+    "path": "pkg/gameservers/pernodecounter_test.go",
+    "package": "gameservers",
+    "name": "TestPerNodeCounterNodeEvents",
+    "line": 181,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/pernodecounter_test.go::TestPerNodeCounterRun",
+    "path": "pkg/gameservers/pernodecounter_test.go",
+    "package": "gameservers",
+    "name": "TestPerNodeCounterRun",
+    "line": 214,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/pernodecounter_test.go::TestPerNodeCounterDuplicateEvents",
+    "path": "pkg/gameservers/pernodecounter_test.go",
+    "package": "gameservers",
+    "name": "TestPerNodeCounterDuplicateEvents",
+    "line": 260,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/succeeded_test.go::TestSucceededControllerSyncGameServer",
+    "path": "pkg/gameservers/succeeded_test.go",
+    "package": "gameservers",
+    "name": "TestSucceededControllerSyncGameServer",
+    "line": 37,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/succeeded_test.go::TestSucceededControllerGameServerContainerCompleted",
+    "path": "pkg/gameservers/succeeded_test.go",
+    "package": "gameservers",
+    "name": "TestSucceededControllerGameServerContainerCompleted",
+    "line": 226,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/succeeded_test.go::TestSucceededControllerSyncGameServerContainerCompleted",
+    "path": "pkg/gameservers/succeeded_test.go",
+    "package": "gameservers",
+    "name": "TestSucceededControllerSyncGameServerContainerCompleted",
+    "line": 316,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/succeeded_test.go::TestSucceededControllerSyncGameServerShutdownLimiter",
+    "path": "pkg/gameservers/succeeded_test.go",
+    "package": "gameservers",
+    "name": "TestSucceededControllerSyncGameServerShutdownLimiter",
+    "line": 366,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/succeeded_test.go::TestSucceededControllerRun",
+    "path": "pkg/gameservers/succeeded_test.go",
+    "package": "gameservers",
+    "name": "TestSucceededControllerRun",
+    "line": 424,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameservers::pkg/gameservers/succeeded_test.go::TestSucceededControllerRunGameServerResync",
+    "path": "pkg/gameservers/succeeded_test.go",
+    "package": "gameservers",
+    "name": "TestSucceededControllerRunGameServerResync",
+    "line": 469,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserversets::pkg/gameserversets/allocation_overflow_test.go::TestAllocationOverflowControllerWatchGameServers",
+    "path": "pkg/gameserversets/allocation_overflow_test.go",
+    "package": "gameserversets",
+    "name": "TestAllocationOverflowControllerWatchGameServers",
+    "line": 34,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserversets::pkg/gameserversets/allocation_overflow_test.go::TestAllocationOverflowSyncGameServerSet",
+    "path": "pkg/gameserversets/allocation_overflow_test.go",
+    "package": "gameserversets",
+    "name": "TestAllocationOverflowSyncGameServerSet",
+    "line": 110,
+    "literal_run_labels": [
+      "labels are applied",
+      "Labels are already set",
+      "one label is set"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserversets::pkg/gameserversets/controller_test.go::TestComputeReconciliationAction",
+    "path": "pkg/gameserversets/controller_test.go",
+    "package": "gameserversets",
+    "name": "TestComputeReconciliationAction",
+    "line": 67,
+    "literal_run_labels": [
+      "test packed scale down",
+      "test distributed scale down"
+    ],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserversets::pkg/gameserversets/controller_test.go::TestComputeStatus",
+    "path": "pkg/gameserversets/controller_test.go",
+    "package": "gameserversets",
+    "name": "TestComputeStatus",
+    "line": 278,
+    "literal_run_labels": [
+      "compute status",
+      "counters",
+      "counters with no gameservers",
+      "lists",
+      "lists with no gameservers"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserversets::pkg/gameserversets/controller_test.go::TestControllerWatchGameServers",
+    "path": "pkg/gameserversets/controller_test.go",
+    "package": "gameserversets",
+    "name": "TestControllerWatchGameServers",
+    "line": 503,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserversets::pkg/gameserversets/controller_test.go::TestSyncGameServerSet",
+    "path": "pkg/gameserversets/controller_test.go",
+    "package": "gameserversets",
+    "name": "TestSyncGameServerSet",
+    "line": 591,
+    "literal_run_labels": [
+      "gameservers are not recreated when set is marked for deletion",
+      "adding and deleting unhealthy gameservers",
+      "adding and deleting errored gameservers",
+      "adding and delay deleting errored gameservers",
+      "removing gamservers",
+      "Starting GameServers get deleted first"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserversets::pkg/gameserversets/controller_test.go::TestControllerSyncUnhealthyGameServers",
+    "path": "pkg/gameserversets/controller_test.go",
+    "package": "gameserversets",
+    "name": "TestControllerSyncUnhealthyGameServers",
+    "line": 828,
+    "literal_run_labels": [
+      "valid case",
+      "error on update step"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserversets::pkg/gameserversets/controller_test.go::TestSyncMoreGameServers",
+    "path": "pkg/gameserversets/controller_test.go",
+    "package": "gameserversets",
+    "name": "TestSyncMoreGameServers",
+    "line": 889,
+    "literal_run_labels": [
+      "valid case",
+      "error on create step"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserversets::pkg/gameserversets/controller_test.go::TestControllerSyncGameServerSetStatus",
+    "path": "pkg/gameserversets/controller_test.go",
+    "package": "gameserversets",
+    "name": "TestControllerSyncGameServerSetStatus",
+    "line": 940,
+    "literal_run_labels": [
+      "all ready list",
+      "only some ready list"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserversets::pkg/gameserversets/controller_test.go::TestControllerUpdateValidationHandler",
+    "path": "pkg/gameserversets/controller_test.go",
+    "package": "gameserversets",
+    "name": "TestControllerUpdateValidationHandler",
+    "line": 999,
+    "literal_run_labels": [
+      "valid gameserverset update",
+      "new object is nil, err excpected",
+      "old object is nil, err excpected",
+      "invalid gameserverset update"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserversets::pkg/gameserversets/controller_test.go::TestCreationValidationHandler",
+    "path": "pkg/gameserversets/controller_test.go",
+    "package": "gameserversets",
+    "name": "TestCreationValidationHandler",
+    "line": 1124,
+    "literal_run_labels": [
+      "valid gameserverset create",
+      "object is nil, err excpected",
+      "invalid gameserverset create"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserversets::pkg/gameserversets/gameserver_state_cache_test.go::TestGameServerStateCache",
+    "path": "pkg/gameserversets/gameserver_state_cache_test.go",
+    "package": "gameserversets",
+    "name": "TestGameServerStateCache",
+    "line": 28,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserversets::pkg/gameserversets/gameserver_state_cache_test.go::TestGameServerSetCacheEntry",
+    "path": "pkg/gameserversets/gameserver_state_cache_test.go",
+    "package": "gameserversets",
+    "name": "TestGameServerSetCacheEntry",
+    "line": 68,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserversets::pkg/gameserversets/gameserversets_test.go::TestSortGameServersByPackedStrategy",
+    "path": "pkg/gameserversets/gameserversets_test.go",
+    "package": "gameserversets",
+    "name": "TestSortGameServersByPackedStrategy",
+    "line": 32,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserversets::pkg/gameserversets/gameserversets_test.go::TestSortGameServersByDistributedStrategy",
+    "path": "pkg/gameserversets/gameserversets_test.go",
+    "package": "gameserversets",
+    "name": "TestSortGameServersByDistributedStrategy",
+    "line": 130,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserversets::pkg/gameserversets/gameserversets_test.go::TestListGameServersByGameServerSetOwner",
+    "path": "pkg/gameserversets/gameserversets_test.go",
+    "package": "gameserversets",
+    "name": "TestListGameServersByGameServerSetOwner",
+    "line": 199,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/gameserversets::pkg/gameserversets/metrics_test.go::TestGSSMetrics",
+    "path": "pkg/gameserversets/metrics_test.go",
+    "package": "gameserversets",
+    "name": "TestGSSMetrics",
+    "line": 43,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/metrics::pkg/metrics/controller_test.go::TestControllerFleetReplicasCount_ResetMetricsOnDelete",
+    "path": "pkg/metrics/controller_test.go",
+    "package": "metrics",
+    "name": "TestControllerFleetReplicasCount_ResetMetricsOnDelete",
+    "line": 149,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/metrics::pkg/metrics/controller_test.go::TestControllerFleetAutoScalerState_ResetMetricsOnDelete",
+    "path": "pkg/metrics/controller_test.go",
+    "package": "metrics",
+    "name": "TestControllerFleetAutoScalerState_ResetMetricsOnDelete",
+    "line": 182,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/metrics::pkg/metrics/controller_test.go::TestControllerGameServerCount",
+    "path": "pkg/metrics/controller_test.go",
+    "package": "metrics",
+    "name": "TestControllerGameServerCount",
+    "line": 237,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/metrics::pkg/metrics/controller_test.go::TestControllerGameServerPlayerConnectedCount",
+    "path": "pkg/metrics/controller_test.go",
+    "package": "metrics",
+    "name": "TestControllerGameServerPlayerConnectedCount",
+    "line": 292,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/metrics::pkg/metrics/controller_test.go::TestControllerGameServerPlayerCapacityCount",
+    "path": "pkg/metrics/controller_test.go",
+    "package": "metrics",
+    "name": "TestControllerGameServerPlayerCapacityCount",
+    "line": 345,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/metrics::pkg/metrics/controller_test.go::TestControllerGameServersTotal",
+    "path": "pkg/metrics/controller_test.go",
+    "package": "metrics",
+    "name": "TestControllerGameServersTotal",
+    "line": 381,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/metrics::pkg/metrics/controller_test.go::TestControllerGameServerAllocationsTotal",
+    "path": "pkg/metrics/controller_test.go",
+    "package": "metrics",
+    "name": "TestControllerGameServerAllocationsTotal",
+    "line": 431,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/metrics::pkg/metrics/controller_test.go::TestControllerFleetOnDeleting",
+    "path": "pkg/metrics/controller_test.go",
+    "package": "metrics",
+    "name": "TestControllerFleetOnDeleting",
+    "line": 466,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/metrics::pkg/metrics/controller_test.go::TestControllerFleetAutoScalerOnDeleting",
+    "path": "pkg/metrics/controller_test.go",
+    "package": "metrics",
+    "name": "TestControllerFleetAutoScalerOnDeleting",
+    "line": 505,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/metrics::pkg/metrics/controller_test.go::TestControllerGameServersNodeState",
+    "path": "pkg/metrics/controller_test.go",
+    "package": "metrics",
+    "name": "TestControllerGameServersNodeState",
+    "line": 539,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/metrics::pkg/metrics/controller_test.go::TestFleetCountersAndListsMetrics",
+    "path": "pkg/metrics/controller_test.go",
+    "package": "metrics",
+    "name": "TestFleetCountersAndListsMetrics",
+    "line": 577,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/metrics::pkg/metrics/controller_test.go::TestCalcDuration",
+    "path": "pkg/metrics/controller_test.go",
+    "package": "metrics",
+    "name": "TestCalcDuration",
+    "line": 646,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/metrics::pkg/metrics/controller_test.go::TestIsSystemNode",
+    "path": "pkg/metrics/controller_test.go",
+    "package": "metrics",
+    "name": "TestIsSystemNode",
+    "line": 756,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/metrics::pkg/metrics/exporter_test.go::TestRegisterPrometheusExporter",
+    "path": "pkg/metrics/exporter_test.go",
+    "package": "metrics",
+    "name": "TestRegisterPrometheusExporter",
+    "line": 43,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/metrics::pkg/metrics/exporter_test.go::TestMetrics_Endpoint_ExposesAllMetrics",
+    "path": "pkg/metrics/exporter_test.go",
+    "package": "metrics",
+    "name": "TestMetrics_Endpoint_ExposesAllMetrics",
+    "line": 72,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/metrics::pkg/metrics/exporter_test.go::TestSetupMetrics_StackdriverOnly_NoPanic",
+    "path": "pkg/metrics/exporter_test.go",
+    "package": "metrics",
+    "name": "TestSetupMetrics_StackdriverOnly_NoPanic",
+    "line": 142,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/metrics::pkg/metrics/util_test.go::TestParseLabels",
+    "path": "pkg/metrics/util_test.go",
+    "package": "metrics",
+    "name": "TestParseLabels",
+    "line": 215,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/portallocator::pkg/portallocator/portallocator_test.go::TestPortAllocatorAllocate",
+    "path": "pkg/portallocator/portallocator_test.go",
+    "package": "portallocator",
+    "name": "TestPortAllocatorAllocate",
+    "line": 45,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/portallocator::pkg/portallocator/portallocator_test.go::TestPortRangeAllocatorAllocate",
+    "path": "pkg/portallocator/portallocator_test.go",
+    "package": "portallocator",
+    "name": "TestPortRangeAllocatorAllocate",
+    "line": 90,
+    "literal_run_labels": [
+      "test allocated port counts",
+      "ports are all allocated",
+      "ports are all allocated with multiple ports per GameServers",
+      "ports are unique in a node",
+      "portPolicy as an empty string"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/portallocator::pkg/portallocator/portallocator_test.go::TestPortRangeAllocatorAllocate_NamedRange",
+    "path": "pkg/portallocator/portallocator_test.go",
+    "package": "portallocator",
+    "name": "TestPortRangeAllocatorAllocate_NamedRange",
+    "line": 337,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/portallocator::pkg/portallocator/portallocator_test.go::TestPortRangeAllocatorMultithreadAllocate",
+    "path": "pkg/portallocator/portallocator_test.go",
+    "package": "portallocator",
+    "name": "TestPortRangeAllocatorMultithreadAllocate",
+    "line": 374,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/portallocator::pkg/portallocator/portallocator_test.go::TestPortRangeAllocatorDeAllocate",
+    "path": "pkg/portallocator/portallocator_test.go",
+    "package": "portallocator",
+    "name": "TestPortRangeAllocatorDeAllocate",
+    "line": 413,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/portallocator::pkg/portallocator/portallocator_test.go::TestPortRangeAllocatorSyncPortAllocations",
+    "path": "pkg/portallocator/portallocator_test.go",
+    "package": "portallocator",
+    "name": "TestPortRangeAllocatorSyncPortAllocations",
+    "line": 455,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/portallocator::pkg/portallocator/portallocator_test.go::TestPortRangeAllocatorSyncDeleteGameServer",
+    "path": "pkg/portallocator/portallocator_test.go",
+    "package": "portallocator",
+    "name": "TestPortRangeAllocatorSyncDeleteGameServer",
+    "line": 527,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/portallocator::pkg/portallocator/portallocator_test.go::TestNodePortAllocation",
+    "path": "pkg/portallocator/portallocator_test.go",
+    "package": "portallocator",
+    "name": "TestNodePortAllocation",
+    "line": 625,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/portallocator::pkg/portallocator/portallocator_test.go::TestTakePortAllocation",
+    "path": "pkg/portallocator/portallocator_test.go",
+    "package": "portallocator",
+    "name": "TestTakePortAllocation",
+    "line": 647,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/portallocator::pkg/portallocator/portallocator_test.go::TestPortRangeAllocatorRegisterExistingGameServerPorts",
+    "path": "pkg/portallocator/portallocator_test.go",
+    "package": "portallocator",
+    "name": "TestPortRangeAllocatorRegisterExistingGameServerPorts",
+    "line": 663,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/localsdk_test.go::TestLocal",
+    "path": "pkg/sdkserver/localsdk_test.go",
+    "package": "sdkserver",
+    "name": "TestLocal",
+    "line": 42,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/localsdk_test.go::TestLocalSDKWithTestMode",
+    "path": "pkg/sdkserver/localsdk_test.go",
+    "package": "sdkserver",
+    "name": "TestLocalSDKWithTestMode",
+    "line": 84,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/localsdk_test.go::TestLocalSDKWithGameServer",
+    "path": "pkg/sdkserver/localsdk_test.go",
+    "package": "sdkserver",
+    "name": "TestLocalSDKWithGameServer",
+    "line": 102,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/localsdk_test.go::TestLocalSDKWithLogLevel",
+    "path": "pkg/sdkserver/localsdk_test.go",
+    "package": "sdkserver",
+    "name": "TestLocalSDKWithLogLevel",
+    "line": 119,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/localsdk_test.go::TestLocalSDKServerSetLabel",
+    "path": "pkg/sdkserver/localsdk_test.go",
+    "package": "sdkserver",
+    "name": "TestLocalSDKServerSetLabel",
+    "line": 143,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/localsdk_test.go::TestLocalSDKServerSetAnnotation",
+    "path": "pkg/sdkserver/localsdk_test.go",
+    "package": "sdkserver",
+    "name": "TestLocalSDKServerSetAnnotation",
+    "line": 209,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/localsdk_test.go::TestLocalSDKServerWatchGameServer",
+    "path": "pkg/sdkserver/localsdk_test.go",
+    "package": "sdkserver",
+    "name": "TestLocalSDKServerWatchGameServer",
+    "line": 275,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/localsdk_test.go::TestLocalSDKServerGetCounter",
+    "path": "pkg/sdkserver/localsdk_test.go",
+    "package": "sdkserver",
+    "name": "TestLocalSDKServerGetCounter",
+    "line": 317,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/localsdk_test.go::TestLocalSDKServerUpdateCounter",
+    "path": "pkg/sdkserver/localsdk_test.go",
+    "package": "sdkserver",
+    "name": "TestLocalSDKServerUpdateCounter",
+    "line": 385,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/localsdk_test.go::TestLocalSDKServerGetList",
+    "path": "pkg/sdkserver/localsdk_test.go",
+    "package": "sdkserver",
+    "name": "TestLocalSDKServerGetList",
+    "line": 533,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/localsdk_test.go::TestLocalSDKServerUpdateList",
+    "path": "pkg/sdkserver/localsdk_test.go",
+    "package": "sdkserver",
+    "name": "TestLocalSDKServerUpdateList",
+    "line": 601,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/localsdk_test.go::TestLocalSDKServerAddListValue",
+    "path": "pkg/sdkserver/localsdk_test.go",
+    "package": "sdkserver",
+    "name": "TestLocalSDKServerAddListValue",
+    "line": 797,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/localsdk_test.go::TestLocalSDKServerRemoveListValue",
+    "path": "pkg/sdkserver/localsdk_test.go",
+    "package": "sdkserver",
+    "name": "TestLocalSDKServerRemoveListValue",
+    "line": 885,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/localsdk_test.go::TestLocalSDKServerStateUpdates",
+    "path": "pkg/sdkserver/localsdk_test.go",
+    "package": "sdkserver",
+    "name": "TestLocalSDKServerStateUpdates",
+    "line": 968,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/localsdk_test.go::TestSDKConformanceFunctionality",
+    "path": "pkg/sdkserver/localsdk_test.go",
+    "package": "sdkserver",
+    "name": "TestSDKConformanceFunctionality",
+    "line": 1006,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/localsdk_test.go::TestLocalSDKServerUpdateListMaxCapacity",
+    "path": "pkg/sdkserver/localsdk_test.go",
+    "package": "sdkserver",
+    "name": "TestLocalSDKServerUpdateListMaxCapacity",
+    "line": 1085,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdk_test.go::TestConvert",
+    "path": "pkg/sdkserver/sdk_test.go",
+    "package": "sdkserver",
+    "name": "TestConvert",
+    "line": 27,
+    "literal_run_labels": [
+      "no Counters or Lists",
+      "Counters and Lists",
+      "DeletionTimestamp"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSidecarRun",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSidecarRun",
+    "line": 75,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 2
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSDKServerSyncGameServer",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSDKServerSyncGameServer",
+    "line": 256,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSidecarUpdateState",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSidecarUpdateState",
+    "line": 354,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSidecarHealthLastUpdated",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSidecarHealthLastUpdated",
+    "line": 415,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSidecarUnhealthyMessage",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSidecarUnhealthyMessage",
+    "line": 462,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSidecarHealthy",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSidecarHealthy",
+    "line": 516,
+    "literal_run_labels": [
+      "initial delay",
+      "health failure threshold"
+    ],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSidecarHTTPHealthCheck",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSidecarHTTPHealthCheck",
+    "line": 612,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSDKServerGetGameServer",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSDKServerGetGameServer",
+    "line": 661,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSDKServerWatchGameServer",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSDKServerWatchGameServer",
+    "line": 696,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSDKServerSendGameServerUpdate",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSDKServerSendGameServerUpdate",
+    "line": 770,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSDKServer_SendGameServerUpdateRemovesDisconnectedStream",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSDKServer_SendGameServerUpdateRemovesDisconnectedStream",
+    "line": 819,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSDKServerUpdateEventHandler",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSDKServerUpdateEventHandler",
+    "line": 878,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSDKServerReserveTimeoutOnRun",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSDKServerReserveTimeoutOnRun",
+    "line": 929,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSDKServerReserveTimeout",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSDKServerReserveTimeout",
+    "line": 988,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSDKServerUpdateCounter",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSDKServerUpdateCounter",
+    "line": 1104,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 2
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSDKServerAddListValue",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSDKServerAddListValue",
+    "line": 1362,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 2
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSDKServerRemoveListValue",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSDKServerRemoveListValue",
+    "line": 1512,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 2
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSDKServerUpdateList",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSDKServerUpdateList",
+    "line": 1655,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 2
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestDeleteValues",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestDeleteValues",
+    "line": 1854,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSDKServerGracefulTerminationInterrupt",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSDKServerGracefulTerminationInterrupt",
+    "line": 1881,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSDKServerGracefulTerminationShutdown",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSDKServerGracefulTerminationShutdown",
+    "line": 1944,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSDKServerGracefulTerminationGameServerStateChannel",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSDKServerGracefulTerminationGameServerStateChannel",
+    "line": 2007,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSetLabel_InvalidLabelRejected",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSetLabel_InvalidLabelRejected",
+    "line": 2082,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSetAnnotation_NilAndOverlimit",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSetAnnotation_NilAndOverlimit",
+    "line": 2103,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/sdkserver::pkg/sdkserver/sdkserver_test.go::TestSDKServerUpdateListMaxCapacity",
+    "path": "pkg/sdkserver/sdkserver_test.go",
+    "package": "sdkserver",
+    "name": "TestSDKServerUpdateListMaxCapacity",
+    "line": 2138,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/apiserver::pkg/util/apiserver/apiserver_test.go::TestApiServerStubs",
+    "path": "pkg/util/apiserver/apiserver_test.go",
+    "package": "apiserver",
+    "name": "TestApiServerStubs",
+    "line": 46,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/apiserver::pkg/util/apiserver/apiserver_test.go::TestAPIServerAddAPIResourceCRDHandler",
+    "path": "pkg/util/apiserver/apiserver_test.go",
+    "package": "apiserver",
+    "name": "TestAPIServerAddAPIResourceCRDHandler",
+    "line": 77,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/apiserver::pkg/util/apiserver/apiserver_test.go::TestAPIServerAddAPIResourceDiscovery",
+    "path": "pkg/util/apiserver/apiserver_test.go",
+    "package": "apiserver",
+    "name": "TestAPIServerAddAPIResourceDiscovery",
+    "line": 112,
+    "literal_run_labels": [
+      "No Accept Header",
+      "Accept */*",
+      "Accept Protobuf, */*"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/apiserver::pkg/util/apiserver/apiserver_test.go::TestAPIServerAddAPIResourceDiscoveryParallel",
+    "path": "pkg/util/apiserver/apiserver_test.go",
+    "package": "apiserver",
+    "name": "TestAPIServerAddAPIResourceDiscoveryParallel",
+    "line": 202,
+    "literal_run_labels": [
+      "Parallel Tests",
+      "Accept */*"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/apiserver::pkg/util/apiserver/apiserver_test.go::TestSplitNameSpaceResource",
+    "path": "pkg/util/apiserver/apiserver_test.go",
+    "package": "apiserver",
+    "name": "TestSplitNameSpaceResource",
+    "line": 246,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/crd::pkg/util/crd/crd_test.go::TestWaitForEstablishedCRD",
+    "path": "pkg/util/crd/crd_test.go",
+    "package": "crd",
+    "name": "TestWaitForEstablishedCRD",
+    "line": 31,
+    "literal_run_labels": [
+      "CRD already established",
+      "CRD takes a second to become established"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/errors::pkg/util/errors/errors_test.go::TestFromPackage",
+    "path": "pkg/util/errors/errors_test.go",
+    "package": "errors",
+    "name": "TestFromPackage",
+    "line": 32,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/errors::pkg/util/errors/errors_test.go::TestFromPackageAtVarInit",
+    "path": "pkg/util/errors/errors_test.go",
+    "package": "errors",
+    "name": "TestFromPackageAtVarInit",
+    "line": 39,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/errors::pkg/util/errors/errors_test.go::TestFromStruct",
+    "path": "pkg/util/errors/errors_test.go",
+    "package": "errors",
+    "name": "TestFromStruct",
+    "line": 44,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/errors::pkg/util/errors/errors_test.go::TestFromStructDegradation",
+    "path": "pkg/util/errors/errors_test.go",
+    "package": "errors",
+    "name": "TestFromStructDegradation",
+    "line": 63,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/errors::pkg/util/errors/errors_test.go::TestPackageFromFunc",
+    "path": "pkg/util/errors/errors_test.go",
+    "package": "errors",
+    "name": "TestPackageFromFunc",
+    "line": 81,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/errors::pkg/util/errors/errors_test.go::TestNew",
+    "path": "pkg/util/errors/errors_test.go",
+    "package": "errors",
+    "name": "TestNew",
+    "line": 98,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/errors::pkg/util/errors/errors_test.go::TestErrorf",
+    "path": "pkg/util/errors/errors_test.go",
+    "package": "errors",
+    "name": "TestErrorf",
+    "line": 113,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/errors::pkg/util/errors/errors_test.go::TestWrap",
+    "path": "pkg/util/errors/errors_test.go",
+    "package": "errors",
+    "name": "TestWrap",
+    "line": 127,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/errors::pkg/util/errors/errors_test.go::TestWrapf",
+    "path": "pkg/util/errors/errors_test.go",
+    "package": "errors",
+    "name": "TestWrapf",
+    "line": 144,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/fswatch::pkg/util/fswatch/fswatch_test.go::TestBatchWatch",
+    "path": "pkg/util/fswatch/fswatch_test.go",
+    "package": "fswatch",
+    "name": "TestBatchWatch",
+    "line": 26,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/https::pkg/util/https/https_test.go::TestLogRequestRedactsSensitiveHeaders",
+    "path": "pkg/util/https/https_test.go",
+    "package": "https",
+    "name": "TestLogRequestRedactsSensitiveHeaders",
+    "line": 27,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/https::pkg/util/https/https_test.go::TestFourZeroFour",
+    "path": "pkg/util/https/https_test.go",
+    "package": "https",
+    "name": "TestFourZeroFour",
+    "line": 43,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/https::pkg/util/https/server_test.go::TestServerRun",
+    "path": "pkg/util/https/server_test.go",
+    "package": "https",
+    "name": "TestServerRun",
+    "line": 41,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "path": "pkg/util/runtime/features_test.go",
+    "package": "runtime",
+    "name": "TestFeatures",
+    "line": 27,
+    "literal_run_labels": [
+      "invalid Feature gate",
+      "Empty query string",
+      "query string",
+      "Error on query parsing",
+      "parse env vars"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures",
+    "path": "pkg/util/runtime/features_test.go",
+    "package": "runtime",
+    "name": "TestEnableAllFeatures",
+    "line": 89,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/runtime_test.go::TestHandleError",
+    "path": "pkg/util/runtime/runtime_test.go",
+    "package": "runtime",
+    "name": "TestHandleError",
+    "line": 28,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/webhooks::pkg/util/webhooks/webhooks_test.go::TestWebHookAddHandler",
+    "path": "pkg/util/webhooks/webhooks_test.go",
+    "package": "webhooks",
+    "name": "TestWebHookAddHandler",
+    "line": 35,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/webhooks::pkg/util/webhooks/webhooks_test.go::TestWebHookFleetValidationHandler",
+    "path": "pkg/util/webhooks/webhooks_test.go",
+    "package": "webhooks",
+    "name": "TestWebHookFleetValidationHandler",
+    "line": 131,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/workerqueue::pkg/util/workerqueue/workerqueue_test.go::TestWorkerQueueRun",
+    "path": "pkg/util/workerqueue/workerqueue_test.go",
+    "package": "workerqueue",
+    "name": "TestWorkerQueueRun",
+    "line": 33,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/workerqueue::pkg/util/workerqueue/workerqueue_test.go::TestWorkerQueueHealthy",
+    "path": "pkg/util/workerqueue/workerqueue_test.go",
+    "package": "workerqueue",
+    "name": "TestWorkerQueueHealthy",
+    "line": 67,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/workerqueue::pkg/util/workerqueue/workerqueue_test.go::TestWorkQueueHealthCheck",
+    "path": "pkg/util/workerqueue/workerqueue_test.go",
+    "package": "workerqueue",
+    "name": "TestWorkQueueHealthCheck",
+    "line": 106,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/workerqueue::pkg/util/workerqueue/workerqueue_test.go::TestWorkerQueueEnqueueAfter",
+    "path": "pkg/util/workerqueue/workerqueue_test.go",
+    "package": "workerqueue",
+    "name": "TestWorkerQueueEnqueueAfter",
+    "line": 170,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/pkg/util/workerqueue::pkg/util/workerqueue/workerqueue_test.go::TestDebugError",
+    "path": "pkg/util/workerqueue/workerqueue_test.go",
+    "package": "workerqueue",
+    "name": "TestDebugError",
+    "line": 199,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/sdks/go::sdks/go/alpha_test.go::TestAlphaGetAndSetPlayerCapacity",
+    "path": "sdks/go/alpha_test.go",
+    "package": "sdk",
+    "name": "TestAlphaGetAndSetPlayerCapacity",
+    "line": 27,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/sdks/go::sdks/go/beta_test.go::TestBetaGetAndUpdateCounter",
+    "path": "sdks/go/beta_test.go",
+    "package": "sdk",
+    "name": "TestBetaGetAndUpdateCounter",
+    "line": 31,
+    "literal_run_labels": [
+      "Set Counter and Set Capacity",
+      "Get and Set Non-Defined Counter",
+      "Decrement Counter Fails then Success",
+      "Increment Counter Fails then Success"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/sdks/go::sdks/go/beta_test.go::TestBetaGetAndUpdateList",
+    "path": "sdks/go/beta_test.go",
+    "package": "sdk",
+    "name": "TestBetaGetAndUpdateList",
+    "line": 173,
+    "literal_run_labels": [
+      "Get and Set List Capacity",
+      "Get List Length, Get List Values, ListContains, and Append List Value",
+      "Get List Length, Get List Values, ListContains, and Delete List Value"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/sdks/go::sdks/go/sdk_test.go::TestSDK",
+    "path": "sdks/go/sdk_test.go",
+    "package": "sdk",
+    "name": "TestSDK",
+    "line": 30,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/sdks/go::sdks/go/sdk_test.go::TestSDKWatchGameServer",
+    "path": "sdks/go/sdk_test.go",
+    "package": "sdk",
+    "name": "TestSDKWatchGameServer",
+    "line": 71,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/sdks/go::sdks/go/sdk_test.go::TestSDKSetLabel",
+    "path": "sdks/go/sdk_test.go",
+    "package": "sdk",
+    "name": "TestSDKSetLabel",
+    "line": 99,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/sdks/go::sdks/go/sdk_test.go::TestSDKSetAnnotation",
+    "path": "sdks/go/sdk_test.go",
+    "package": "sdk",
+    "name": "TestSDKSetAnnotation",
+    "line": 115,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/site::site/handler_test.go::TestHandler",
+    "path": "site/handler_test.go",
+    "package": "main",
+    "name": "TestHandler",
+    "line": 26,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/site::site/handler_test.go::TestBadConfigs",
+    "path": "site/handler_test.go",
+    "package": "main",
+    "name": "TestBadConfigs",
+    "line": 137,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/site::site/handler_test.go::TestPathConfigSetFind",
+    "path": "site/handler_test.go",
+    "package": "main",
+    "name": "TestPathConfigSetFind",
+    "line": 176,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/site::site/handler_test.go::TestCacheHeader",
+    "path": "site/handler_test.go",
+    "package": "main",
+    "name": "TestCacheHeader",
+    "line": 239,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e/allocator::test/e2e/allocator/main_test.go::TestMain",
+    "path": "test/e2e/allocator/main_test.go",
+    "package": "allocator",
+    "name": "TestMain",
+    "line": 31,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e/allocator::test/e2e/allocator/pod_termination_test.go::TestAllocatorAfterDeleteReplica",
+    "path": "test/e2e/allocator/pod_termination_test.go",
+    "package": "allocator",
+    "name": "TestAllocatorAfterDeleteReplica",
+    "line": 40,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/allocator_test.go::TestAllocatorWithDeprecatedRequired",
+    "path": "test/e2e/allocator_test.go",
+    "package": "e2e",
+    "name": "TestAllocatorWithDeprecatedRequired",
+    "line": 57,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/allocator_test.go::TestAllocatorWithSelectors",
+    "path": "test/e2e/allocator_test.go",
+    "package": "e2e",
+    "name": "TestAllocatorWithSelectors",
+    "line": 108,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/allocator_test.go::TestAllocatorWithMatchExpressions",
+    "path": "test/e2e/allocator_test.go",
+    "package": "e2e",
+    "name": "TestAllocatorWithMatchExpressions",
+    "line": 159,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/allocator_test.go::TestRestAllocatorWithDeprecatedRequired",
+    "path": "test/e2e/allocator_test.go",
+    "package": "e2e",
+    "name": "TestRestAllocatorWithDeprecatedRequired",
+    "line": 224,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/allocator_test.go::TestAllocatorWithCountersAndLists",
+    "path": "test/e2e/allocator_test.go",
+    "package": "e2e",
+    "name": "TestAllocatorWithCountersAndLists",
+    "line": 290,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/allocator_test.go::TestRestAllocatorWithCountersAndLists",
+    "path": "test/e2e/allocator_test.go",
+    "package": "e2e",
+    "name": "TestRestAllocatorWithCountersAndLists",
+    "line": 369,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/allocator_test.go::TestRestAllocatorWithSelectors",
+    "path": "test/e2e/allocator_test.go",
+    "package": "e2e",
+    "name": "TestRestAllocatorWithSelectors",
+    "line": 475,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/allocator_test.go::TestAllocatorCrossNamespace",
+    "path": "test/e2e/allocator_test.go",
+    "package": "e2e",
+    "name": "TestAllocatorCrossNamespace",
+    "line": 546,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e/controller::test/e2e/controller/crash_test.go::TestGameServerUnhealthyAfterDeletingPodWhileControllerDown",
+    "path": "test/e2e/controller/crash_test.go",
+    "package": "controller",
+    "name": "TestGameServerUnhealthyAfterDeletingPodWhileControllerDown",
+    "line": 32,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e/controller::test/e2e/controller/crash_test.go::TestLeaderElectionAfterDeletingLeader",
+    "path": "test/e2e/controller/crash_test.go",
+    "package": "controller",
+    "name": "TestLeaderElectionAfterDeletingLeader",
+    "line": 62,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e/controller::test/e2e/controller/main_test.go::TestMain",
+    "path": "test/e2e/controller/main_test.go",
+    "package": "controller",
+    "name": "TestMain",
+    "line": 29,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/examples_test.go::TestSuperTuxKartGameServerReady",
+    "path": "test/e2e/examples_test.go",
+    "package": "e2e",
+    "name": "TestSuperTuxKartGameServerReady",
+    "line": 31,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/examples_test.go::TestRustGameServerReady",
+    "path": "test/e2e/examples_test.go",
+    "package": "e2e",
+    "name": "TestRustGameServerReady",
+    "line": 102,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/examples_test.go::TestCppSimpleGameServerReady",
+    "path": "test/e2e/examples_test.go",
+    "package": "e2e",
+    "name": "TestCppSimpleGameServerReady",
+    "line": 136,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/examples_test.go::TestNodeJSGameServerReady",
+    "path": "test/e2e/examples_test.go",
+    "package": "e2e",
+    "name": "TestNodeJSGameServerReady",
+    "line": 170,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/examples_test.go::TestXonoticGameServerReady",
+    "path": "test/e2e/examples_test.go",
+    "package": "e2e",
+    "name": "TestXonoticGameServerReady",
+    "line": 214,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e/extensions::test/e2e/extensions/high_availability_test.go::TestGameServerCreationAfterDeletingOneExtensionsPod",
+    "path": "test/e2e/extensions/high_availability_test.go",
+    "package": "extensions",
+    "name": "TestGameServerCreationAfterDeletingOneExtensionsPod",
+    "line": 32,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e/extensions::test/e2e/extensions/high_availability_test.go::TestGameServerCreationRightAfterDeletingOneExtensionsPod",
+    "path": "test/e2e/extensions/high_availability_test.go",
+    "package": "extensions",
+    "name": "TestGameServerCreationRightAfterDeletingOneExtensionsPod",
+    "line": 71,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e/extensions::test/e2e/extensions/main_test.go::TestMain",
+    "path": "test/e2e/extensions/main_test.go",
+    "package": "extensions",
+    "name": "TestMain",
+    "line": 29,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestFleetRequestsLimits",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestFleetRequestsLimits",
+    "line": 62,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestFleetStrategyValidation",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestFleetStrategyValidation",
+    "line": 90,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestFleetScaleWithDualAllocations",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestFleetScaleWithDualAllocations",
+    "line": 129,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestFleetScaleUpAllocateEditAndScaleDownToZero",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestFleetScaleUpAllocateEditAndScaleDownToZero",
+    "line": 210,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestFleetScaleUpEditAndScaleDown",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestFleetScaleUpEditAndScaleDown",
+    "line": 299,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestFleetRollingUpdate",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestFleetRollingUpdate",
+    "line": 393,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestUpdateFleetReplicaAndSpec",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestUpdateFleetReplicaAndSpec",
+    "line": 582,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestScaleFleetUpAndDownWithGameServerAllocation",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestScaleFleetUpAndDownWithGameServerAllocation",
+    "line": 629,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestFleetUpdates",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestFleetUpdates",
+    "line": 697,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestFleetCountsAllocations",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestFleetCountsAllocations",
+    "line": 765,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestUpdateGameServerConfigurationInFleet",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestUpdateGameServerConfigurationInFleet",
+    "line": 785,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestReservedGameServerInFleet",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestReservedGameServerInFleet",
+    "line": 841,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestFleetGSSpecValidation",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestFleetGSSpecValidation",
+    "line": 902,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestFleetNameValidation",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestFleetNameValidation",
+    "line": 967,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestGameServerAllocationDuringGameServerDeletion",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestGameServerAllocationDuringGameServerDeletion",
+    "line": 1000,
+    "literal_run_labels": [
+      "scale down",
+      "recreate update",
+      "rolling update"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestCreateFleetAndUpdateScaleSubresource",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestCreateFleetAndUpdateScaleSubresource",
+    "line": 1119,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestScaleUpAndDownInParallelStressTest",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestScaleUpAndDownInParallelStressTest",
+    "line": 1147,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestUpdateFleetScheduling",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestUpdateFleetScheduling",
+    "line": 1264,
+    "literal_run_labels": [
+      "Updating Spec.Scheduling on fleet should be updated in GameServer"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestFleetWithZeroReplicas",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestFleetWithZeroReplicas",
+    "line": 1304,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestFleetWithLongLabelsAnnotations",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestFleetWithLongLabelsAnnotations",
+    "line": 1324,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestFleetRecreateGameServers",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestFleetRecreateGameServers",
+    "line": 1392,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestFleetResourceValidation",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestFleetResourceValidation",
+    "line": 1491,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestFleetAggregatedCounterStatus",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestFleetAggregatedCounterStatus",
+    "line": 1562,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestFleetAggregatedListStatus",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestFleetAggregatedListStatus",
+    "line": 1645,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleet_test.go::TestFleetAllocationOverflow",
+    "path": "test/e2e/fleet_test.go",
+    "package": "e2e",
+    "name": "TestFleetAllocationOverflow",
+    "line": 1733,
+    "literal_run_labels": [
+      "scale down",
+      "rolling update"
+    ],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleetautoscaler_test.go::TestAutoscalerBasicFunctions",
+    "path": "test/e2e/fleetautoscaler_test.go",
+    "package": "e2e",
+    "name": "TestAutoscalerBasicFunctions",
+    "line": 67,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleetautoscaler_test.go::TestFleetAutoscalerDefaultSyncInterval",
+    "path": "test/e2e/fleetautoscaler_test.go",
+    "package": "e2e",
+    "name": "TestFleetAutoscalerDefaultSyncInterval",
+    "line": 149,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleetautoscaler_test.go::TestFleetAutoScalerRollingUpdate",
+    "path": "test/e2e/fleetautoscaler_test.go",
+    "package": "e2e",
+    "name": "TestFleetAutoScalerRollingUpdate",
+    "line": 197,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleetautoscaler_test.go::TestAutoscalerStressCreate",
+    "path": "test/e2e/fleetautoscaler_test.go",
+    "package": "e2e",
+    "name": "TestAutoscalerStressCreate",
+    "line": 282,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleetautoscaler_test.go::TestAutoscalerWebhook",
+    "path": "test/e2e/fleetautoscaler_test.go",
+    "package": "e2e",
+    "name": "TestAutoscalerWebhook",
+    "line": 391,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleetautoscaler_test.go::TestFleetAutoscalerTLSWebhook",
+    "path": "test/e2e/fleetautoscaler_test.go",
+    "package": "e2e",
+    "name": "TestFleetAutoscalerTLSWebhook",
+    "line": 497,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleetautoscaler_test.go::TestAutoscalerWebhookWithMetadata",
+    "path": "test/e2e/fleetautoscaler_test.go",
+    "package": "e2e",
+    "name": "TestAutoscalerWebhookWithMetadata",
+    "line": 619,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleetautoscaler_test.go::TestCounterAutoscaler",
+    "path": "test/e2e/fleetautoscaler_test.go",
+    "package": "e2e",
+    "name": "TestCounterAutoscaler",
+    "line": 856,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleetautoscaler_test.go::TestCounterAutoscalerWithNoReplicas",
+    "path": "test/e2e/fleetautoscaler_test.go",
+    "package": "e2e",
+    "name": "TestCounterAutoscalerWithNoReplicas",
+    "line": 1015,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleetautoscaler_test.go::TestCounterAutoscalerAllocated",
+    "path": "test/e2e/fleetautoscaler_test.go",
+    "package": "e2e",
+    "name": "TestCounterAutoscalerAllocated",
+    "line": 1096,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleetautoscaler_test.go::TestCounterAutoscalerAllocatedMultipleNamespaces",
+    "path": "test/e2e/fleetautoscaler_test.go",
+    "package": "e2e",
+    "name": "TestCounterAutoscalerAllocatedMultipleNamespaces",
+    "line": 1195,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleetautoscaler_test.go::TestListAutoscaler",
+    "path": "test/e2e/fleetautoscaler_test.go",
+    "package": "e2e",
+    "name": "TestListAutoscaler",
+    "line": 1392,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleetautoscaler_test.go::TestListAutoscalerWithNoReplicas",
+    "path": "test/e2e/fleetautoscaler_test.go",
+    "package": "e2e",
+    "name": "TestListAutoscalerWithNoReplicas",
+    "line": 1559,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleetautoscaler_test.go::TestListAutoscalerAllocated",
+    "path": "test/e2e/fleetautoscaler_test.go",
+    "package": "e2e",
+    "name": "TestListAutoscalerAllocated",
+    "line": 1640,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleetautoscaler_test.go::TestListAutoscalerWithSDKMethods",
+    "path": "test/e2e/fleetautoscaler_test.go",
+    "package": "e2e",
+    "name": "TestListAutoscalerWithSDKMethods",
+    "line": 1756,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleetautoscaler_test.go::TestScheduleAutoscaler",
+    "path": "test/e2e/fleetautoscaler_test.go",
+    "package": "e2e",
+    "name": "TestScheduleAutoscaler",
+    "line": 1875,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleetautoscaler_test.go::TestChainAutoscaler",
+    "path": "test/e2e/fleetautoscaler_test.go",
+    "package": "e2e",
+    "name": "TestChainAutoscaler",
+    "line": 1916,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/fleetautoscaler_test.go::TestWasmAutoScaler",
+    "path": "test/e2e/fleetautoscaler_test.go",
+    "package": "e2e",
+    "name": "TestWasmAutoScaler",
+    "line": 1988,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestCreateConnect",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestCreateConnect",
+    "line": 58,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestHostName",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestHostName",
+    "line": 91,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestSDKSetLabel",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestSDKSetLabel",
+    "line": 142,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestHealthCheckDisable",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestHealthCheckDisable",
+    "line": 173,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestSDKSetAnnotation",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestSDKSetAnnotation",
+    "line": 204,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestUnhealthyGameServerAfterHealthCheckFail",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestUnhealthyGameServerAfterHealthCheckFail",
+    "line": 243,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestUnhealthyGameServersWithoutFreePorts",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestUnhealthyGameServersWithoutFreePorts",
+    "line": 263,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerUnhealthyAfterDeletingPod",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerUnhealthyAfterDeletingPod",
+    "line": 302,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerRestartBeforeReadyCrash",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerRestartBeforeReadyCrash",
+    "line": 329,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerUnhealthyBeforeReadyCrash",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerUnhealthyBeforeReadyCrash",
+    "line": 444,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerUnhealthyAfterReadyCrash",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerUnhealthyAfterReadyCrash",
+    "line": 490,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerUnhealthyAfterReadyCrashWithGenericContainer",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerUnhealthyAfterReadyCrashWithGenericContainer",
+    "line": 545,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerRestrictedPodSecurity",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerRestrictedPodSecurity",
+    "line": 583,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerPodCompletedAfterCleanExit",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerPodCompletedAfterCleanExit",
+    "line": 634,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerShutdownAfterCleanExitWithLongLivedContainer",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerShutdownAfterCleanExitWithLongLivedContainer",
+    "line": 706,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestDevelopmentGameServerLifecycle",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestDevelopmentGameServerLifecycle",
+    "line": 762,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerSelfAllocate",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerSelfAllocate",
+    "line": 860,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerReadyAllocateReady",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerReadyAllocateReady",
+    "line": 883,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerWithPortsMappedToMultipleContainers",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerWithPortsMappedToMultipleContainers",
+    "line": 917,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerWithPortsMappedToInitSidecarContainers",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerWithPortsMappedToInitSidecarContainers",
+    "line": 995,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerReserve",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerReserve",
+    "line": 1069,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerShutdown",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerShutdown",
+    "line": 1125,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerEvicted",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerEvicted",
+    "line": 1157,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerPassthroughPort",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerPassthroughPort",
+    "line": 1189,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerPortPolicyNone",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerPortPolicyNone",
+    "line": 1217,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerTcpProtocol",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerTcpProtocol",
+    "line": 1239,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerTcpUdpProtocol",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerTcpUdpProtocol",
+    "line": 1269,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerStaticTcpUdpProtocol",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerStaticTcpUdpProtocol",
+    "line": 1318,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerStaticTcpProtocol",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerStaticTcpProtocol",
+    "line": 1367,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerStaticUdpProtocol",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerStaticUdpProtocol",
+    "line": 1393,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerWithoutPort",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerWithoutPort",
+    "line": 1416,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerResourceValidation",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerResourceValidation",
+    "line": 1432,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerPodTemplateSpecFailSchemaValidation",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerPodTemplateSpecFailSchemaValidation",
+    "line": 1485,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestCounters",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestCounters",
+    "line": 1526,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestLists",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestLists",
+    "line": 1670,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestSideCarCommunicatesWhileTerminating",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestSideCarCommunicatesWhileTerminating",
+    "line": 1792,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGracefulShutdown",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGracefulShutdown",
+    "line": 1825,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerSlowStart",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerSlowStart",
+    "line": 1874,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserver_test.go::TestGameServerPatch",
+    "path": "test/e2e/gameserver_test.go",
+    "package": "e2e",
+    "name": "TestGameServerPatch",
+    "line": 1915,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserverallocation_test.go::TestCreateFleetAndGameServerAllocate",
+    "path": "test/e2e/gameserverallocation_test.go",
+    "package": "e2e",
+    "name": "TestCreateFleetAndGameServerAllocate",
+    "line": 41,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserverallocation_test.go::TestCreateFleetAndGameServerStateFilterAllocation",
+    "path": "test/e2e/gameserverallocation_test.go",
+    "package": "e2e",
+    "name": "TestCreateFleetAndGameServerStateFilterAllocation",
+    "line": 87,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserverallocation_test.go::TestHighDensityGameServerFlow",
+    "path": "test/e2e/gameserverallocation_test.go",
+    "package": "e2e",
+    "name": "TestHighDensityGameServerFlow",
+    "line": 135,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserverallocation_test.go::TestCounterAndListGameServerAllocation",
+    "path": "test/e2e/gameserverallocation_test.go",
+    "package": "e2e",
+    "name": "TestCounterAndListGameServerAllocation",
+    "line": 205,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserverallocation_test.go::TestCounterGameServerAllocationActions",
+    "path": "test/e2e/gameserverallocation_test.go",
+    "package": "e2e",
+    "name": "TestCounterGameServerAllocationActions",
+    "line": 585,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserverallocation_test.go::TestListGameServerAllocationActions",
+    "path": "test/e2e/gameserverallocation_test.go",
+    "package": "e2e",
+    "name": "TestListGameServerAllocationActions",
+    "line": 807,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserverallocation_test.go::TestMultiClusterAllocationOnLocalCluster",
+    "path": "test/e2e/gameserverallocation_test.go",
+    "package": "e2e",
+    "name": "TestMultiClusterAllocationOnLocalCluster",
+    "line": 937,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserverallocation_test.go::TestCreateFullFleetAndCantGameServerAllocate",
+    "path": "test/e2e/gameserverallocation_test.go",
+    "package": "e2e",
+    "name": "TestCreateFullFleetAndCantGameServerAllocate",
+    "line": 1074,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 1
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserverallocation_test.go::TestGameServerAllocationMetaDataPatch",
+    "path": "test/e2e/gameserverallocation_test.go",
+    "package": "e2e",
+    "name": "TestGameServerAllocationMetaDataPatch",
+    "line": 1123,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserverallocation_test.go::TestGameServerAllocationPreferredSelection",
+    "path": "test/e2e/gameserverallocation_test.go",
+    "package": "e2e",
+    "name": "TestGameServerAllocationPreferredSelection",
+    "line": 1184,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserverallocation_test.go::TestGameServerAllocationReturnLabels",
+    "path": "test/e2e/gameserverallocation_test.go",
+    "package": "e2e",
+    "name": "TestGameServerAllocationReturnLabels",
+    "line": 1276,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserverallocation_test.go::TestGameServerAllocationDeletionOnUnAllocate",
+    "path": "test/e2e/gameserverallocation_test.go",
+    "package": "e2e",
+    "name": "TestGameServerAllocationDeletionOnUnAllocate",
+    "line": 1330,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/gameserverallocation_test.go::TestGameServerAllocationDuringMultipleAllocationClients",
+    "path": "test/e2e/gameserverallocation_test.go",
+    "package": "e2e",
+    "name": "TestGameServerAllocationDuringMultipleAllocationClients",
+    "line": 1347,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/main_test.go::TestMain",
+    "path": "test/e2e/main_test.go",
+    "package": "e2e",
+    "name": "TestMain",
+    "line": 33,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/ping_test.go::TestPingHTTP",
+    "path": "test/e2e/ping_test.go",
+    "package": "e2e",
+    "name": "TestPingHTTP",
+    "line": 35,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  },
+  {
+    "id": "agones.dev/agones/test/e2e::test/e2e/ping_test.go::TestPingUDP",
+    "path": "test/e2e/ping_test.go",
+    "package": "e2e",
+    "name": "TestPingUDP",
+    "line": 75,
+    "literal_run_labels": [],
+    "dynamic_run_sites": 0
+  }
+]

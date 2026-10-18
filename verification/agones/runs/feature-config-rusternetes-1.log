@@ -1,0 +1,655 @@
+ Downloading crates ...
+  Downloaded cap-time-ext v3.4.6
+  Downloaded embedded-io v0.4.0
+  Downloaded ambient-authority v0.0.2
+  Downloaded toml_write v0.1.2
+  Downloaded dirs-sys-next v0.1.2
+  Downloaded memfd v0.6.6
+  Downloaded wasmtime-internal-jit-debug v37.0.3
+  Downloaded extism-manifest v1.41.0
+  Downloaded wiggle-macro v37.0.3
+  Downloaded cranelift-codegen-shared v0.124.3
+  Downloaded manyhow-macros v0.11.4
+  Downloaded pulley-macros v37.0.3
+  Downloaded genco-macros v0.17.10
+  Downloaded embedded-io v0.6.1
+  Downloaded cranelift-bitset v0.124.3
+  Downloaded lru-slab v0.1.3
+  Downloaded rand_pcg v0.10.2
+  Downloaded wasmtime-internal-asm-macros v37.0.3
+  Downloaded wasmtime-internal-versioned-export-macros v37.0.3
+  Downloaded wasmtime-internal-jit-icache-coherence v37.0.3
+  Downloaded wasmtime-internal-slab v37.0.3
+  Downloaded wat v1.262.0
+  Downloaded extism-convert v1.41.0
+  Downloaded cranelift-control v0.124.3
+  Downloaded wasmtime-internal-math v37.0.3
+  Downloaded wasmtime-internal-winch v37.0.3
+  Downloaded wiggle v37.0.3
+  Downloaded wasmtime-internal-component-util v37.0.3
+  Downloaded cranelift-native v0.124.3
+  Downloaded extism-convert-macros v1.41.0
+  Downloaded fs-set-times v0.20.3
+  Downloaded inout v0.2.4
+  Downloaded maybe-owned v0.3.4
+  Downloaded cap-rand v3.4.6
+  Downloaded cranelift-srcgen v0.124.3
+  Downloaded hyper-rustls v0.27.10
+  Downloaded glob v0.3.4
+  Downloaded zstd-safe v7.3.0
+  Downloaded serde_spanned v0.6.9
+  Downloaded thiserror v2.0.21
+  Downloaded cap-fs-ext v3.4.6
+  Downloaded rustc-demangle v0.1.28
+  Downloaded system-interface v0.27.3
+  Downloaded target-lexicon v0.13.5
+  Downloaded wasmtime-internal-fiber v37.0.3
+  Downloaded wiggle-generate v37.0.3
+  Downloaded proc-macro-utils v0.10.0
+  Downloaded cranelift-assembler-x64 v0.124.3
+  Downloaded find-msvc-tools v0.1.14
+  Downloaded ctutils v0.4.3
+  Downloaded directories-next v2.0.0
+  Downloaded wasmtime-internal-unwinder v37.0.3
+  Downloaded tokio-rustls v0.26.6
+  Downloaded zstd v0.13.3
+  Downloaded cranelift-entity v0.124.3
+  Downloaded wasmtime-internal-wit-bindgen v37.0.3
+  Downloaded rustix-linux-procfs v0.1.1
+  Downloaded serde_spanned v1.1.2
+  Downloaded manyhow v0.11.4
+  Downloaded zeroize v1.9.1
+  Downloaded witx v0.9.1
+  Downloaded wasmtime-internal-cache v37.0.3
+  Downloaded io-lifetimes v2.0.4
+  Downloaded prost-derive v0.14.4
+  Downloaded cmov v0.5.4
+  Downloaded want v0.3.2
+  Downloaded wasmprinter v0.239.0
+  Downloaded cap-std v3.4.6
+  Downloaded cranelift-bforest v0.124.3
+  Downloaded toml_writer v1.1.3+spec-1.1.0
+  Downloaded polyval v0.7.3
+  Downloaded sha2 v0.11.1
+  Downloaded thiserror-impl v2.0.21
+  Downloaded rmp-serde v1.3.1
+  Downloaded prost v0.14.4
+  Downloaded rustls-pki-types v1.15.1
+  Downloaded io-extras v0.18.4
+  Downloaded rmp v0.8.15
+  Downloaded cranelift-assembler-x64-meta v0.124.3
+  Downloaded arbitrary v1.5.0
+  Downloaded wast v35.0.2
+  Downloaded genco v0.17.10
+  Downloaded ipnet v2.12.2
+  Downloaded addr2line v0.25.1
+  Downloaded tinyvec v1.13.3
+  Downloaded cranelift-frontend v0.124.3
+  Downloaded quinn-udp v0.5.16
+  Downloaded toml v0.8.23
+  Downloaded pulley-interpreter v37.0.3
+  Downloaded winch-codegen v37.0.3
+  Downloaded cranelift-isle v0.124.3
+  Downloaded cpp_demangle v0.4.5
+  Downloaded toml_edit v0.22.27
+  Downloaded wit-parser v0.239.0
+  Downloaded wast v262.0.0
+  Downloaded webpki-roots v1.0.9
+  Downloaded cranelift-codegen-meta v0.124.3
+  Downloaded wasm-encoder v0.239.0
+  Downloaded uuid v1.28.0
+  Downloaded wasi-common v37.0.3
+  Downloaded cap-primitives v3.4.6
+  Downloaded wasmtime-internal-cranelift v37.0.3
+  Downloaded wasmtime-environ v37.0.3
+  Downloaded extism v1.13.0
+  Downloaded quinn v0.11.12
+  Downloaded rustls-webpki v0.103.15
+  Downloaded wasm-encoder v0.262.0
+  Downloaded rand v0.10.3
+  Downloaded mio v1.2.4
+  Downloaded aes v0.9.3
+  Downloaded hyper-util v0.1.21
+  Downloaded cc v1.8.0
+  Downloaded regalloc2 v0.13.5
+  Downloaded aes-gcm v0.11.1
+  Downloaded tokio-util v0.7.20
+  Downloaded zstd-sys v2.1.2+zstd.1.5.7
+  Downloaded hyper v1.12.0
+  Downloaded cel v0.14.5
+  Downloaded h2 v0.4.20
+  Downloaded aws-lc-rs v1.18.2
+  Downloaded cbindgen v0.29.4
+  Downloaded wasmparser v0.239.0
+  Downloaded wasmtime-internal-component-macro v37.0.3
+  Downloaded wasmparser v0.262.0
+  Downloaded quinn-proto v0.11.19
+  Downloaded object v0.37.3
+  Downloaded rustls v0.23.46
+  Downloaded wasmtime v37.0.3
+  Downloaded tokio v1.53.3
+  Downloaded cranelift-codegen v0.124.3
+  Downloaded aws-lc-sys v0.46.0
+   Compiling proc-macro2 v1.0.107
+   Compiling libc v0.2.191
+   Compiling serde_core v1.0.229
+   Compiling serde v1.0.229
+   Compiling hashbrown v0.17.1
+   Compiling quote v1.0.47
+   Compiling syn v2.0.119
+   Compiling syn v3.0.9
+   Compiling equivalent v1.0.3
+   Compiling memchr v2.8.3
+   Compiling itertools v0.14.0
+   Compiling jobserver v0.1.35
+   Compiling shlex v2.0.1
+   Compiling find-msvc-tools v0.1.14
+   Compiling cc v1.8.0
+   Compiling bitflags v2.13.2
+   Compiling log v0.4.34
+   Compiling pin-project-lite v0.2.17
+   Compiling bytes v1.12.1
+   Compiling indexmap v2.14.2
+   Compiling typenum v1.20.1
+   Compiling parking_lot_core v0.9.12
+   Compiling futures-core v0.3.34
+   Compiling pkg-config v0.3.34
+   Compiling heck v0.5.0
+   Compiling serde_derive v1.0.229
+   Compiling scopeguard v1.2.0
+   Compiling lock_api v0.4.14
+   Compiling synstructure v0.14.0
+   Compiling displaydoc v0.2.7
+   Compiling cgp-macro-core v0.8.0-alpha
+   Compiling zerofrom-derive v0.1.8
+   Compiling getrandom v0.2.17
+   Compiling futures-sink v0.3.34
+   Compiling yoke-derive v0.8.4
+   Compiling zerofrom v0.1.8
+   Compiling errno v0.3.14
+   Compiling getrandom v0.4.3
+   Compiling signal-hook-registry v1.4.8
+   Compiling yoke v0.8.3
+   Compiling tokio-macros v2.7.2
+   Compiling thiserror-impl v1.0.69
+   Compiling socket2 v0.6.5
+   Compiling mio v1.2.4
+   Compiling slab v0.4.12
+   Compiling smallvec v1.16.3
+   Compiling rand_core v0.10.1
+   Compiling thiserror v1.0.69
+   Compiling cgp-macro-lib v0.8.0-alpha
+   Compiling parking_lot v0.12.5
+   Compiling futures-channel v0.3.34
+   Compiling zerovec-derive v0.11.6
+   Compiling tokio v1.53.3
+   Compiling tracing-core v0.1.36
+   Compiling thiserror v2.0.21
+   Compiling cgp-macro v0.8.0-alpha
+   Compiling futures-macro v0.3.34
+   Compiling thiserror-impl v2.0.21
+   Compiling zerovec v0.11.8
+   Compiling tracing-attributes v0.1.31
+   Compiling rustix v1.1.5
+   Compiling futures-io v0.3.34
+   Compiling cranelift-srcgen v0.124.3
+   Compiling futures-task v0.3.34
+   Compiling futures-util v0.3.34
+   Compiling cgp-base v0.8.0-alpha
+   Compiling cranelift-assembler-x64-meta v0.124.3
+   Compiling tracing v0.1.44
+   Compiling hybrid-array v0.4.15
+   Compiling http v1.5.0
+   Compiling ipnet v2.12.2
+   Compiling linux-raw-sys v0.12.1
+   Compiling percent-encoding v2.3.2
+   Compiling cgp-type v0.8.0-alpha
+   Compiling pulley-macros v37.0.3
+   Compiling http-body v1.1.0
+   Compiling tinystr v0.8.4
+   Compiling cranelift-bitset v0.124.3
+   Compiling cmake v0.1.58
+   Compiling dunce v1.0.5
+   Compiling tower-service v0.3.3
+   Compiling fs_extra v1.3.0
+   Compiling foldhash v0.1.5
+   Compiling allocator-api2 v0.2.21
+   Compiling cranelift-isle v0.124.3
+   Compiling libm v0.2.16
+   Compiling bumpalo v3.20.3
+   Compiling aws-lc-sys v0.46.0
+   Compiling hashbrown v0.15.5
+   Compiling icu_locale_core v2.3.0
+   Compiling pulley-interpreter v37.0.3
+   Compiling cgp-field v0.8.0-alpha
+   Compiling crypto-common v0.2.2
+   Compiling potential_utf v0.1.6
+   Compiling zerotrie v0.2.5
+   Compiling prost-derive v0.13.5
+   Compiling ring v0.17.14
+   Compiling version_check v0.9.5
+   Compiling zeroize v1.9.1
+   Compiling fastrand v2.5.0
+   Compiling target-lexicon v0.13.5
+   Compiling cranelift-codegen-shared v0.124.3
+   Compiling cranelift-codegen-meta v0.124.3
+   Compiling tempfile v3.27.0
+   Compiling icu_collections v2.3.0
+   Compiling generic-array v0.14.7
+   Compiling icu_provider v2.3.1
+   Compiling cranelift-entity v0.124.3
+   Compiling cgp-base-extra v0.8.0-alpha
+   Compiling tokio-util v0.7.20
+   Compiling cranelift-assembler-x64 v0.124.3
+   Compiling rand_core v0.6.4
+   Compiling httparse v1.10.1
+   Compiling fnv v1.0.7
+   Compiling io-lifetimes v2.0.4
+   Compiling nom v7.1.3
+   Compiling wasmtime-internal-math v37.0.3
+   Compiling rand_chacha v0.3.1
+   Compiling cgp-error v0.8.0-alpha
+   Compiling cranelift-codegen v0.124.3
+   Compiling rustls-pki-types v1.15.1
+   Compiling zstd-sys v2.1.2+zstd.1.5.7
+   Compiling async-trait v0.1.92
+   Compiling wasmtime-internal-versioned-export-macros v37.0.3
+   Compiling cgp-async-macro v0.8.0-alpha
+   Compiling gimli v0.32.3
+   Compiling aws-lc-rs v1.18.2
+   Compiling leb128fmt v0.1.0
+   Compiling winnow v1.0.4
+   Compiling atomic-waker v1.1.2
+   Compiling crossbeam-utils v0.8.23
+   Compiling arbitrary v1.5.0
+   Compiling untrusted v0.9.0
+   Compiling rustc-hash v2.1.3
+   Compiling try-lock v0.2.5
+   Compiling crc32fast v1.5.2
+   Compiling tower-layer v0.3.3
+   Compiling want v0.3.2
+   Compiling regalloc2 v0.13.5
+   Compiling toml_parser v1.1.5+spec-1.1.0
+   Compiling cranelift-control v0.124.3
+   Compiling h2 v0.4.20
+   Compiling cgp-core v0.8.0-alpha
+   Compiling icu_properties v2.3.0
+   Compiling icu_normalizer v2.3.0
+   Compiling rand v0.8.8
+   Compiling cranelift-bforest v0.124.3
+   Compiling sync_wrapper v1.0.2
+   Compiling wasmparser v0.239.0
+   Compiling regex-syntax v0.8.11
+   Compiling io-extras v0.18.4
+   Compiling crossbeam-epoch v0.9.21
+   Compiling prettyplease v0.2.37
+   Compiling object v0.37.3
+   Compiling httpdate v1.0.3
+   Compiling hyper v1.12.0
+   Compiling prost v0.13.5
+   Compiling regex-automata v0.4.18
+   Compiling idna_adapter v1.2.2
+   Compiling form_urlencoded v1.2.2
+   Compiling block-buffer v0.12.1
+   Compiling serde_json v1.0.154
+   Compiling cobs v0.3.0
+   Compiling aho-corasick v1.1.5
+   Compiling zstd-safe v7.3.0
+   Compiling base64 v0.23.1
+   Compiling leb128 v0.2.7
+   Compiling winnow v0.7.15
+   Compiling wasm-encoder v0.239.0
+   Compiling cap-primitives v3.4.6
+   Compiling fixedbitset v0.5.7
+   Compiling cpp_demangle v0.4.5
+   Compiling crossbeam-deque v0.8.8
+   Compiling ryu v1.0.23
+   Compiling rustversion v1.0.23
+   Compiling ambient-authority v0.0.2
+   Compiling semver v1.0.28
+   Compiling petgraph v0.7.1
+   Compiling wast v35.0.2
+   Compiling hyper-util v0.1.21
+   Compiling postcard v1.1.3
+   Compiling regex v1.13.1
+   Compiling idna v1.1.0
+   Compiling prost-types v0.13.5
+   Compiling tower v0.5.3
+   Compiling fs-set-times v0.20.3
+   Compiling block-buffer v0.10.4
+   Compiling crypto-common v0.1.7
+   Compiling rustix-linux-procfs v0.1.1
+   Compiling http-body-util v0.1.5
+   Compiling inout v0.2.4
+   Compiling toml_datetime v0.6.11
+   Compiling serde_spanned v0.6.9
+   Compiling indexmap v1.9.3
+   Compiling cpufeatures v0.3.1
+   Compiling rayon-core v1.13.0
+   Compiling cmov v0.5.4
+   Compiling maybe-owned v0.3.4
+   Compiling wasmtime-internal-unwinder v37.0.3
+   Compiling toml_write v0.1.2
+   Compiling termcolor v1.4.1
+   Compiling rustls v0.23.46
+   Compiling multimap v0.10.1
+   Compiling prost-build v0.13.5
+   Compiling wasmprinter v0.239.0
+   Compiling toml_edit v0.22.27
+   Compiling ctutils v0.4.3
+   Compiling digest v0.10.7
+   Compiling url v2.5.8
+   Compiling getrandom v0.3.4
+   Compiling rustls-webpki v0.103.15
+   Compiling chrono v0.4.45
+   Compiling wasm-encoder v0.262.0
+   Compiling wasmtime-internal-fiber v37.0.3
+   Compiling pin-project-internal v1.1.13
+   Compiling synstructure v0.13.2
+   Compiling serde_spanned v1.1.2
+   Compiling toml_datetime v0.7.5+spec-1.1.0
+   Compiling dirs-sys-next v0.1.2
+   Compiling hashbrown v0.12.3
+   Compiling unicode-width v0.2.2
+   Compiling unsafe-libyaml v0.2.11
+   Compiling cpufeatures v0.2.17
+   Compiling cap-std v3.4.6
+   Compiling cpubits v0.1.1
+   Compiling rustc-demangle v0.1.28
+   Compiling mime v0.3.17
+   Compiling wasmtime-internal-cache v37.0.3
+   Compiling subtle v2.6.1
+   Compiling wasmtime-environ v37.0.3
+   Compiling axum-core v0.4.5
+   Compiling sha2 v0.10.9
+   Compiling wast v262.0.0
+   Compiling pin-project v1.1.13
+   Compiling asn1-rs-derive v0.5.1
+   Compiling directories-next v2.0.0
+   Compiling rand_core v0.9.5
+   Compiling toml v0.8.23
+   Compiling zstd v0.13.3
+   Compiling universal-hash v0.6.1
+   Compiling tonic-build v0.12.3
+   Compiling cranelift-native v0.124.3
+   Compiling cranelift-frontend v0.124.3
+   Compiling cipher v0.5.2
+   Compiling witx v0.9.1
+   Compiling proc-macro-utils v0.10.0
+   Compiling cgp-handler v0.8.0-alpha
+   Compiling wasmtime v37.0.3
+   Compiling rusticata-macros v4.1.0
+   Compiling uuid v1.28.0
+   Compiling asn1-rs-impl v0.2.0
+   Compiling async-stream-impl v0.3.6
+   Compiling wasmtime-internal-asm-macros v37.0.3
+   Compiling cbindgen v0.29.4
+   Compiling byteorder v1.5.0
+   Compiling toml_datetime v1.1.2+spec-1.1.0
+   Compiling matchit v0.7.3
+   Compiling bit-vec v0.8.0
+   Compiling rustix v0.38.44
+   Compiling protobuf v3.7.2
+   Compiling wiggle-macro v37.0.3
+   Compiling genco-macros v0.17.10
+   Compiling toml_edit v0.20.7
+   Compiling axum v0.7.9
+   Compiling toml v0.9.12+spec-1.1.0
+   Compiling bit-set v0.8.0
+   Compiling murmur3 v0.4.1
+   Compiling toml_edit v0.25.17+spec-1.1.0
+   Compiling async-stream v0.3.6
+   Compiling asn1-rs v0.6.2
+   Compiling cgp-monad v0.8.0-alpha
+   Compiling manyhow-macros v0.11.4
+   Compiling wiggle-generate v37.0.3
+   Compiling wasmtime-internal-cranelift v37.0.3
+   Compiling wat v1.262.0
+   Compiling etcd-client v0.14.1
+   Compiling polyval v0.7.3
+   Compiling rayon v1.12.0
+   Compiling tokio-rustls v0.26.6
+   Compiling tower v0.4.13
+   Compiling hyper-timeout v0.5.2
+   Compiling matchers v0.2.0
+   Compiling webpki-roots v1.0.9
+   Compiling sharded-slab v0.1.7
+   Compiling memfd v0.6.6
+   Compiling tokio-stream v0.1.19
+   Compiling pem v3.0.6
+   Compiling tracing-log v0.2.0
+   Compiling protobuf-support v3.7.2
+   Compiling cgp-extra-macro-lib v0.8.0-alpha
+   Compiling wasmtime-internal-jit-icache-coherence v37.0.3
+   Compiling socket2 v0.5.10
+   Compiling thread_local v1.1.10
+   Compiling typed-arena v2.0.2
+   Compiling wasmtime-internal-slab v37.0.3
+   Compiling better_any v0.2.1
+   Compiling nu-ansi-term v0.50.3
+   Compiling cap-fs-ext v3.4.6
+   Compiling linux-raw-sys v0.4.15
+   Compiling const-oid v0.10.2
+   Compiling prometheus v0.14.0
+   Compiling system-interface v0.27.3
+   Compiling digest v0.11.3
+   Compiling tracing-subscriber v0.3.23
+   Compiling antlr4rust v0.5.2
+   Compiling tonic v0.12.3
+   Compiling cgp-extra-macro v0.8.0-alpha
+   Compiling hyper-rustls v0.27.10
+   Compiling ghash v0.6.0
+   Compiling manyhow v0.11.4
+   Compiling cgp-dispatch v0.8.0-alpha
+   Compiling proc-macro-crate v3.5.0
+   Compiling proc-macro-crate v2.0.0
+   Compiling aes v0.9.3
+   Compiling ctr v0.10.1
+   Compiling tower-http v0.6.11
+   Compiling aead v0.6.1
+   Compiling simple_asn1 v0.6.4
+   Compiling serde_urlencoded v0.7.1
+   Compiling cgp-error-extra v0.8.0-alpha
+   Compiling cgp-runtime v0.8.0-alpha
+   Compiling cgp-run v0.8.0-alpha
+   Compiling yasna v0.5.2
+   Compiling cgp-field-extra v0.8.0-alpha
+   Compiling rmp v0.8.15
+   Compiling prost-derive v0.14.4
+   Compiling pastey v0.2.3
+   Compiling relative-path v1.9.3
+   Compiling genco v0.17.10
+   Compiling cel v0.14.5
+   Compiling prost v0.14.4
+   Compiling rcgen v0.13.2
+   Compiling rmp-serde v1.3.1
+   Compiling cgp-extra v0.8.0-alpha
+   Compiling wiggle v37.0.3
+   Compiling reqwest v0.12.28
+   Compiling extism v1.13.0
+   Compiling jsonwebtoken v9.3.1
+   Compiling aes-gcm v0.11.1
+   Compiling bolero-generator-derive v0.13.4
+   Compiling extism-convert-macros v1.41.0
+   Compiling sha2 v0.11.1
+   Compiling oid-registry v0.7.1
+   Compiling der-parser v9.0.0
+   Compiling rand_xoshiro v0.7.0
+   Compiling rand_chacha v0.9.0
+   Compiling serde_yaml v0.9.34+deprecated
+   Compiling cap-time-ext v3.4.6
+   Compiling cap-rand v3.4.6
+   Compiling rustls-pemfile v2.2.0
+   Compiling futures-executor v0.3.34
+   Compiling bytemuck v1.25.2
+   Compiling toml_writer v1.1.3+spec-1.1.0
+   Compiling x509-parser v0.16.0
+   Compiling rusternetes-common v0.1.0 (https://github.com/calfonso/rusternetes.git?rev=125c0f4a2b6fb888102606493c5e3cf7a126dd58#125c0f4a)
+   Compiling agones-rusternetes v0.1.0 (/home/astral/Projects/agones/crates/agones-rusternetes)
+   Compiling extism-convert v1.41.0
+   Compiling futures v0.3.34
+   Compiling wasi-common v37.0.3
+   Compiling rand v0.9.5
+   Compiling bolero-generator v0.13.5
+   Compiling chrono-tz v0.10.4
+   Compiling cgp v0.8.0-alpha
+   Compiling cron v0.12.1
+   Compiling extism-manifest v1.41.0
+   Compiling agones-macros v0.1.0 (/home/astral/Projects/agones/crates/agones-macros)
+   Compiling glob v0.3.4
+   Compiling bolero-engine v0.13.4
+   Compiling agones-core v0.1.0 (/home/astral/Projects/agones/crates/agones-core)
+warning: ambiguous glob re-exports
+  --> crates/agones-core/src/lib.rs:29:9
+   |
+29 | pub use allocation::*;
+   |         ^^^^^^^^^^^^^ the name `NodeAddress` in the type namespace is first re-exported here
+30 | pub use autoscaling::*;
+31 | pub use gameserver::*;
+   |         ------------- but the name `NodeAddress` in the type namespace is also re-exported here
+   |
+   = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+   Compiling bolero v0.13.4
+warning: function `fleet_replica_bounds_are_bounded` is never used
+    --> crates/agones-core/src/fleet.rs:1103:4
+     |
+1103 | fn fleet_replica_bounds_are_bounded(input: (i32, i32)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `label` is never used
+    --> crates/agones-core/src/autoscaling.rs:1332:8
+     |
+1331 | impl CapacityPolicyKind {
+     | ----------------------- method in this implementation
+1332 |     fn label(self) -> &'static str {
+     |        ^^^^^
+
+warning: function `capacity_scale_up_never_decreases_replicas` is never used
+    --> crates/agones-core/src/autoscaling.rs:1831:4
+     |
+1831 | fn capacity_scale_up_never_decreases_replicas(
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `buffer_policy_integer_decision_stays_bounded` is never used
+    --> crates/agones-core/src/autoscaling.rs:1867:4
+     |
+1867 | fn buffer_policy_integer_decision_stays_bounded(
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `buffer_integer_valid_region_is_accepted` is never used
+    --> crates/agones-core/src/autoscaling.rs:1896:4
+     |
+1896 | fn buffer_integer_valid_region_is_accepted(input: (i32, i32, i32)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `capacity_integer_valid_region_is_accepted` is never used
+    --> crates/agones-core/src/autoscaling.rs:1916:4
+     |
+1916 | fn capacity_integer_valid_region_is_accepted(input: (i64, i64, i32, bool)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `fixed_interval_positive_seconds_are_accepted` is never used
+    --> crates/agones-core/src/autoscaling.rs:1949:4
+     |
+1949 | fn fixed_interval_positive_seconds_are_accepted(seconds: i32) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `health_defaulting_makes_enabled_thresholds_positive` is never used
+   --> crates/agones-core/src/gameserver.rs:238:4
+    |
+238 | fn health_defaulting_makes_enabled_thresholds_positive(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `safe_add_nonnegative_inputs_are_saturating` is never used
+   --> crates/agones-core/src/gameserver.rs:358:4
+    |
+358 | fn safe_add_nonnegative_inputs_are_saturating(input: (i64, i64)) -> bool {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `counter_updates_preserve_bounds` is never used
+    --> crates/agones-core/src/gameserver.rs:1365:4
+     |
+1365 | fn counter_updates_preserve_bounds(input: (i64, i64, i64, bool)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `gameserverset_creation_batch_respects_caps` is never used
+   --> crates/agones-core/src/gameserverset.rs:451:4
+    |
+451 | fn gameserverset_creation_batch_respects_caps(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `average_of_nonnegative_byte_weights_stays_within_input_range` is never used
+   --> crates/agones-core/src/multicluster.rs:207:4
+    |
+207 | fn average_of_nonnegative_byte_weights_stays_within_input_range(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `agones-core` (lib) generated 13 warnings
+   Compiling rusternetes-storage v0.1.0 (https://github.com/calfonso/rusternetes.git?rev=125c0f4a2b6fb888102606493c5e3cf7a126dd58#125c0f4a)
+warning: unused import: `GameServer`
+ --> crates/agones-rusternetes/src/allocation_overflow_controller.rs:4:5
+  |
+4 |     GameServer, GameServerSet, SchedulingStrategy,
+  |     ^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `fleet_retry_policy_matches_upstream` is never used
+  --> crates/agones-rusternetes/src/fleet_controller_runtime.rs:36:4
+   |
+36 | fn fleet_retry_policy_matches_upstream(retries: u8) -> bool {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `fleet_autoscaler_retry_policy_matches_upstream` is never used
+  --> crates/agones-rusternetes/src/fleetautoscaler_controller_runtime.rs:37:4
+   |
+37 | fn fleet_autoscaler_retry_policy_matches_upstream(retries: u8) -> bool {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `game_server_set_retry_policy_matches_upstream` is never used
+  --> crates/agones-rusternetes/src/gameserverset_controller_runtime.rs:33:4
+   |
+33 | fn game_server_set_retry_policy_matches_upstream(retries: u8) -> bool {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `game_server_retry_policy_matches_upstream` is never used
+  --> crates/agones-rusternetes/src/gameserver_controller_runtime.rs:36:4
+   |
+36 | fn game_server_retry_policy_matches_upstream(retries: u8) -> bool {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `sdk_environment_variable_shape_matches_ports` is never used
+  --> crates/agones-rusternetes/src/gameserver_pod_augmentation.rs:41:4
+   |
+41 | fn sdk_environment_variable_shape_matches_ports(input: (i16, i16)) -> bool {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `state_transition_deltas_match_membership` is never used
+   --> crates/agones-rusternetes/src/per_node_counter.rs:225:4
+    |
+225 | fn state_transition_deltas_match_membership(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `default_sidecar_security_context_is_restricted` is never used
+  --> crates/agones-rusternetes/src/sdk_sidecar.rs:69:4
+   |
+69 | fn default_sidecar_security_context_is_restricted(run_as_user: i64) -> bool {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `agones-rusternetes` (lib) generated 8 warnings (run `cargo fix --lib -p agones-rusternetes` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2m 26s
+     Running tests/feature_configuration.rs (target/debug/deps/feature_configuration-ab9693fac4dab420)
+
+running 4 tests
+test configured_autoscaler_context_preserves_independent_gate_values ... ok
+test configured_gates_reach_sdk_environment_in_either_builder_order ... ok
+test parsed_feature_gate_controls_the_actual_cgp_policy_dispatch ... ok
+test configured_game_server_context_uses_source_sidecar_default_and_override ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

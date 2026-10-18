@@ -14,3 +14,10 @@
 
 # See https://github.com/golang/go/issues/9281
 * -text
+
+# Keep generated migration evidence available while collapsing bulk output in review.
+/verification/agones/baseline-tree.tsv linguist-generated=true
+/verification/agones/baseline-tests.json linguist-generated=true
+/verification/agones/runs/** linguist-generated=true
+/verification/agones/states/** linguist-generated=true
+/verification/agones/transitions/** linguist-generated=true

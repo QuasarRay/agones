@@ -23,6 +23,7 @@ pub mod autoscaling;
 pub mod gameserver;
 pub mod gameserverset;
 pub mod multicluster;
+pub mod features;
 
 pub use fleet::*;
 pub use allocation::*;
@@ -30,6 +31,7 @@ pub use autoscaling::*;
 pub use gameserver::*;
 pub use gameserverset::*;
 pub use multicluster::*;
+pub use features::*;
 
 
 #[cfg(test)]

@@ -1,0 +1,33 @@
+{
+  "go_run": "verification/agones/runs/raw-query-original-go-replay.json",
+  "observation_relation": "exact equality of error class, Example state and full sorted feature encoding; original Go and production Rust each assert independent expected outcomes before recording",
+  "observations": [
+    {
+      "encoded": "AutopilotPassthroughPort=true&CountsAndLists=true&DisableResyncOnSDKServer=true&Example=true&FleetAutoscaleRequestMetaData=true&GKEAutopilotExtendedDurationPods=true&PlayerAllocationFilter=false&PlayerTracking=false&PortPolicyNone=true&PortRanges=true&ProcessorAllocator=false&RollingUpdateFix=true&ScheduledAutoscaler=true&SidecarContainers=true&WasmAutoscaler=false",
+      "error_class": "NONE",
+      "example": true,
+      "id": "ignored-raw-duplicate"
+    },
+    {
+      "encoded": "AutopilotPassthroughPort=true&CountsAndLists=true&DisableResyncOnSDKServer=true&Example=true&FleetAutoscaleRequestMetaData=true&GKEAutopilotExtendedDurationPods=true&PlayerAllocationFilter=false&PlayerTracking=false&PortPolicyNone=true&PortRanges=true&ProcessorAllocator=false&RollingUpdateFix=true&ScheduledAutoscaler=true&SidecarContainers=true&WasmAutoscaler=false",
+      "error_class": "INVALID_BOOL",
+      "example": true,
+      "id": "invalid-raw-bool"
+    },
+    {
+      "encoded": "AutopilotPassthroughPort=true&CountsAndLists=true&DisableResyncOnSDKServer=true&Example=true&FleetAutoscaleRequestMetaData=true&GKEAutopilotExtendedDurationPods=true&PlayerAllocationFilter=false&PlayerTracking=false&PortPolicyNone=true&PortRanges=true&ProcessorAllocator=false&RollingUpdateFix=true&ScheduledAutoscaler=true&SidecarContainers=true&WasmAutoscaler=false",
+      "error_class": "UNKNOWN_FEATURE",
+      "example": true,
+      "id": "unknown-raw-key"
+    },
+    {
+      "encoded": "AutopilotPassthroughPort=true&CountsAndLists=true&DisableResyncOnSDKServer=true&Example=true&FleetAutoscaleRequestMetaData=true&GKEAutopilotExtendedDurationPods=true&PlayerAllocationFilter=false&PlayerTracking=false&PortPolicyNone=true&PortRanges=true&ProcessorAllocator=false&RollingUpdateFix=true&ScheduledAutoscaler=true&SidecarContainers=true&WasmAutoscaler=false",
+      "error_class": "INVALID_QUERY",
+      "example": true,
+      "id": "invalid-escape-in-duplicate"
+    }
+  ],
+  "rust_run": "verification/agones/runs/raw-query-production-rust-replay.json",
+  "schema_version": 1,
+  "unmodeled": "Arbitrary Unicode/invalid-byte error text is retained as separate transport-formatting debt; this projection does not certify that text."
+}

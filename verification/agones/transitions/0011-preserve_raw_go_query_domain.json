@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "PRESERVE_RAW_GO_QUERY_DOMAIN",
+  "gate_snapshot": "verification/agones/gates/33e206b3137c3fcc984d5334c5ac2a8ef8d09c9fdc9274015334c3cc9c8a726f.json",
+  "predecessor_revision": 10,
+  "predecessor_sha256": "131268a42ee001b7c02a16e1a1b3dd7dfd6765ccb40cc4c45132b7ffbc150ad2",
+  "reason": "The source Go string domain permits non-UTF-8 bytes, including an ignored duplicate value. Add a raw-byte CGP route rather than narrowing the source domain to Rust str.",
+  "result_revision": 11,
+  "schema_version": 1,
+  "state_sha256": "e5042e04f65beeafe23e3b538c3db144f28faae46676a21bb2cbd947df069ed5",
+  "timestamp": "2026-10-18T12:24:05.447155+00:00"
+}

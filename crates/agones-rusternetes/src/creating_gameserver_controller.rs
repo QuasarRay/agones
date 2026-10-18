@@ -23,6 +23,7 @@ pub struct CreatingGameServerController<S, H = NoopApiHooks> {
     pub sidecars: Vec<Container>,
     pub sdk_sidecar: Option<SdkSidecarConfig>,
     pub pod_build_features: PodBuildFeatures,
+    pub feature_gates: Option<agones_core::FeatureGates>,
     pub hooks: H,
     pub port_allocator: Arc<PortAllocator>,
     pub unhealthy_limiter: Arc<StateUpdateLimiter>,
@@ -33,17 +34,33 @@ pub struct CreatingGameServerController<S, H = NoopApiHooks> {
 }
 
 impl<S> CreatingGameServerController<S, NoopApiHooks> {
+    /// Configure the existing CGP lifecycle from an Agones feature-gate query.
+    pub fn from_feature_configuration<C: agones_core::CanParseFeatureGates>(
+        storage: S,
+        context: &C,
+        query: &str,
+    ) -> Result<Self, agones_core::FeatureGateError> {
+        let gates = context.parse_feature_gates(query)?;
+        Ok(Self::with_context(storage, Vec::new(), PodBuildFeatures::from(&gates), NoopApiHooks)
+            .with_feature_gates(&gates))
+    }
+
     pub fn new(storage: S) -> Self {
-        Self::with_context(
-            storage,
-            Vec::new(),
-            PodBuildFeatures::default(),
-            NoopApiHooks,
-        )
+        Self::from_feature_configuration(storage, &agones_core::FeatureGateContext::default(), "")
+            .expect("the pinned empty Agones feature configuration is valid")
     }
 }
 
 impl<S, H> CreatingGameServerController<S, H> {
+    pub fn with_feature_gates(mut self, gates: &agones_core::FeatureGates) -> Self {
+        self.pod_build_features = PodBuildFeatures::from(gates);
+        if let Some(sidecar) = self.sdk_sidecar.as_mut() {
+            sidecar.feature_gates = gates.encode();
+        }
+        self.feature_gates = Some(gates.clone());
+        self
+    }
+
     pub fn with_context(
         storage: S,
         sidecars: Vec<Container>,
@@ -55,6 +72,7 @@ impl<S, H> CreatingGameServerController<S, H> {
             sidecars,
             sdk_sidecar: None,
             pod_build_features,
+            feature_gates: None,
             hooks,
             port_allocator: Arc::new(PortAllocator::empty()),
             unhealthy_limiter: Arc::new(StateUpdateLimiter::new()),
@@ -95,7 +113,10 @@ impl<S, H> CreatingGameServerController<S, H> {
         self
     }
 
-    pub fn with_sdk_sidecar_config(mut self, config: SdkSidecarConfig) -> Self {
+    pub fn with_sdk_sidecar_config(mut self, mut config: SdkSidecarConfig) -> Self {
+        if let Some(gates) = self.feature_gates.as_ref() {
+            config.feature_gates = gates.encode();
+        }
         self.sdk_sidecar = Some(config);
         self
     }

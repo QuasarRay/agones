@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "REFRESH_GATE_V3_BINDINGS",
+  "gate_snapshot": "verification/agones/gates/9bc7d7e7fc872f42369903027b46116bdc3a2fed1d783f66476870a1aa451357.json",
+  "predecessor_revision": 12,
+  "predecessor_sha256": "efebdf1d77d2614fca9b3992c95ed80892f81b1c327f9db5fa55c2e2c990bbf6",
+  "reason": "Gate v3 preserves raw Go string semantics and reaches existing production default constructors; refresh source/proof bindings while keeping original assertion identities.",
+  "result_revision": 13,
+  "schema_version": 1,
+  "state_sha256": "b2a6da73ce00fbf2d84960e179212957f61a82454f026886fd9708158ce7cda1",
+  "timestamp": "2026-10-18T12:31:06.064981+00:00"
+}

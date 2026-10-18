@@ -1260,6 +1260,14 @@ pub struct PodBuildFeatures {
     pub sidecar_containers: bool,
 }
 
+impl From<&agones_core::FeatureGates> for PodBuildFeatures {
+    fn from(gates: &agones_core::FeatureGates) -> Self {
+        Self {
+            sidecar_containers: gates.enabled("SidecarContainers"),
+        }
+    }
+}
+
 fn to_native<T: serde::de::DeserializeOwned>(
     value: &impl serde::Serialize,
 ) -> Result<T, AdapterError> {

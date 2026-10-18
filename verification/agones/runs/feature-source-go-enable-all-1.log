@@ -1,0 +1,6 @@
+=== RUN   TestEnableAllFeatures
+=== PAUSE TestEnableAllFeatures
+=== CONT  TestEnableAllFeatures
+--- PASS: TestEnableAllFeatures (0.00s)
+PASS
+ok  	agones.dev/agones/pkg/util/runtime	0.004s

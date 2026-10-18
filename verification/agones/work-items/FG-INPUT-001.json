@@ -1,0 +1,34 @@
+{
+  "dependencies": [
+    "FG-CONFIG-001 implementation gate"
+  ],
+  "disposition": "READY",
+  "evidence_refs": [],
+  "feature_ids": [
+    "feature-gates-environment-cli-binding"
+  ],
+  "id": "FG-INPUT-001",
+  "implementation_gate": null,
+  "next_action": "Implement CGP-owned configuration input/effect policy and source-compatible environment/flag precedence; exercise real configured consumers and record a gate before extracting the preserved environment case.",
+  "owned_paths": [
+    "crates/agones-core/src/features.rs",
+    "crates/agones-rusternetes/src/creating_gameserver_controller.rs",
+    "crates/agones-rusternetes/src/fleetautoscaler_controller.rs"
+  ],
+  "requirement_ids": [
+    "REQ-04",
+    "REQ-05",
+    "REQ-08",
+    "REQ-09",
+    "REQ-10"
+  ],
+  "source_config_binding": {
+    "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "source": "pkg/util/runtime/features.go",
+    "test": "pkg/util/runtime/features_test.go"
+  },
+  "stage": "DISCOVERED",
+  "test_ids": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ]
+}

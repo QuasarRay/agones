@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "CURRENT_PROPERTIES_AND_REPLAY_READY",
+  "gate_snapshot": "verification/agones/gates/9bc7d7e7fc872f42369903027b46116bdc3a2fed1d783f66476870a1aa451357.json",
+  "predecessor_revision": 13,
+  "predecessor_sha256": "b2a6da73ce00fbf2d84960e179212957f61a82454f026886fd9708158ce7cda1",
+  "reason": "Gate v3 source obligations are unchanged; the refreshed helper proof and paired Go/Rust replay are retained with precise source bounds.",
+  "result_revision": 14,
+  "schema_version": 1,
+  "state_sha256": "b1fc771562c41c3e755ea253e36cbe8d215b532115656c17ccb89cd3f77905d2",
+  "timestamp": "2026-10-18T12:53:51.610927+00:00"
+}

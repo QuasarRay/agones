@@ -1,0 +1,258 @@
+{
+  "cases": [
+    {
+      "assertion_count": 1,
+      "disposition": "READY",
+      "id": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate",
+      "name": "invalid Feature gate",
+      "source": "{\n\terr := ParseFeatures(\"Foo\")\n\tassert.ErrorContains(t, err, \"Feature Gate \\\"Foo\\\" is not a valid Feature Gate\")\n}",
+      "steps": [
+        {
+          "enabled": false,
+          "kind": "PARSE",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate::line-40",
+          "value": "Foo"
+        },
+        {
+          "enabled": false,
+          "kind": "ASSERT_ERROR_CONTAINS",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate::line-41",
+          "value": "Feature Gate \"Foo\" is not a valid Feature Gate"
+        }
+      ],
+      "test": "TestFeatures"
+    },
+    {
+      "assertion_count": 3,
+      "disposition": "READY",
+      "id": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Empty query string",
+      "name": "Empty query string",
+      "source": "{\n\terr := ParseFeatures(\"\")\n\tassert.NoError(t, err)\n\tassert.True(t, FeatureEnabled(FeatureExample))\n\tassert.Equal(t, \"Example=true&Test=false\", EncodeFeatures())\n}",
+      "steps": [
+        {
+          "enabled": false,
+          "kind": "PARSE",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Empty query string::line-45"
+        },
+        {
+          "enabled": false,
+          "kind": "ASSERT_NO_ERROR",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Empty query string::line-46"
+        },
+        {
+          "enabled": true,
+          "kind": "ASSERT_ENABLED",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Empty query string::line-47",
+          "value": "Example"
+        },
+        {
+          "enabled": false,
+          "kind": "ASSERT_ENCODING",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Empty query string::line-48",
+          "value": "Example=true&Test=false"
+        }
+      ],
+      "test": "TestFeatures"
+    },
+    {
+      "assertion_count": 7,
+      "disposition": "READY",
+      "id": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string",
+      "name": "query string",
+      "source": "{\n\terr := ParseFeatures(\"Example=0&Test=1\")\n\tassert.NoError(t, err)\n\tassert.False(t, FeatureEnabled(FeatureExample))\n\tassert.True(t, FeatureEnabled(Feature(\"Test\")))\n\tassert.Equal(t, \"Example=false&Test=true\", EncodeFeatures())\n\terr = ParseFeatures(EncodeFeatures())\n\tassert.NoError(t, err)\n\tassert.False(t, FeatureEnabled(FeatureExample))\n\tassert.True(t, FeatureEnabled(Feature(\"Test\")))\n}",
+      "steps": [
+        {
+          "enabled": false,
+          "kind": "PARSE",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string::line-52",
+          "value": "Example=0&Test=1"
+        },
+        {
+          "enabled": false,
+          "kind": "ASSERT_NO_ERROR",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string::line-53"
+        },
+        {
+          "enabled": false,
+          "kind": "ASSERT_ENABLED",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string::line-54",
+          "value": "Example"
+        },
+        {
+          "enabled": true,
+          "kind": "ASSERT_ENABLED",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string::line-55",
+          "value": "Test"
+        },
+        {
+          "enabled": false,
+          "kind": "ASSERT_ENCODING",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string::line-56",
+          "value": "Example=false&Test=true"
+        },
+        {
+          "enabled": false,
+          "kind": "PARSE_ENCODED",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string::line-57"
+        },
+        {
+          "enabled": false,
+          "kind": "ASSERT_NO_ERROR",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string::line-58"
+        },
+        {
+          "enabled": false,
+          "kind": "ASSERT_ENABLED",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string::line-59",
+          "value": "Example"
+        },
+        {
+          "enabled": true,
+          "kind": "ASSERT_ENABLED",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::query string::line-60",
+          "value": "Test"
+        }
+      ],
+      "test": "TestFeatures"
+    },
+    {
+      "assertion_count": 1,
+      "disposition": "READY",
+      "id": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Error on query parsing",
+      "name": "Error on query parsing",
+      "source": "{\n\terr := ParseFeatures(\"Example=foobar\")\n\tassert.Error(t, err)\n}",
+      "steps": [
+        {
+          "enabled": false,
+          "kind": "PARSE",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Error on query parsing::line-64",
+          "value": "Example=foobar"
+        },
+        {
+          "enabled": false,
+          "kind": "ASSERT_ERROR",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Error on query parsing::line-65"
+        }
+      ],
+      "test": "TestFeatures"
+    },
+    {
+      "assertion_count": 5,
+      "disposition": "UNSUPPORTED",
+      "id": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars",
+      "name": "parse env vars",
+      "reason": "Viper/pflag/environment effects and process-global input binding remain FG-INPUT-001; retain all source assertions without credit.",
+      "source": "{\n\n\tassert.NoError(t, os.Setenv(\"FEATURE_GATES\", \"Test=true\"))\n\n\tFeaturesBindFlags()\n\tpflag.Parse()\n\tviper.SetEnvKeyReplacer(strings.NewReplacer(\"-\", \"_\"))\n\tassert.NoError(t, FeaturesBindEnv())\n\tassert.NoError(t, ParseFeaturesFromEnv())\n\n\tassert.True(t, FeatureEnabled(Feature(\"Test\")))\n\tassert.True(t, FeatureEnabled(FeatureExample))\n}",
+      "steps": [
+        {
+          "enabled": false,
+          "kind": "ASSERT_NO_ERROR",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-73"
+        },
+        {
+          "enabled": false,
+          "kind": "ASSERT_NO_ERROR",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-78"
+        },
+        {
+          "enabled": false,
+          "kind": "ASSERT_NO_ERROR",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-79"
+        },
+        {
+          "enabled": true,
+          "kind": "ASSERT_ENABLED",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-81",
+          "value": "Test"
+        },
+        {
+          "enabled": true,
+          "kind": "ASSERT_ENABLED",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-82",
+          "value": "Example"
+        }
+      ],
+      "test": "TestFeatures"
+    },
+    {
+      "assertion_count": 5,
+      "disposition": "READY",
+      "id": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures::$root",
+      "name": "$root",
+      "source": "{\n\tt.Parallel()\n\tFeatureTestMutex.Lock()\n\tdefer FeatureTestMutex.Unlock()\n\n\torig := featureDefaults\n\n\tfeatureDefaults = map[Feature]bool{\n\t\tFeatureExample:\t\ttrue,\n\t\tFeature(\"Test\"):\tfalse,\n\t}\n\n\terr := ParseFeatures(\"Example=0&Test=0\")\n\tassert.NoError(t, err)\n\tassert.False(t, FeatureEnabled(\"Example\"))\n\tassert.False(t, FeatureEnabled(\"Test\"))\n\n\tEnableAllFeatures()\n\n\tassert.True(t, FeatureEnabled(\"Example\"))\n\tassert.True(t, FeatureEnabled(\"Test\"))\n\n\tfeatureDefaults = orig\n}",
+      "steps": [
+        {
+          "enabled": false,
+          "kind": "PARSE",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures::$root::line-101",
+          "value": "Example=0&Test=0"
+        },
+        {
+          "enabled": false,
+          "kind": "ASSERT_NO_ERROR",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures::$root::line-102"
+        },
+        {
+          "enabled": false,
+          "kind": "ASSERT_ENABLED",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures::$root::line-103",
+          "value": "Example"
+        },
+        {
+          "enabled": false,
+          "kind": "ASSERT_ENABLED",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures::$root::line-104",
+          "value": "Test"
+        },
+        {
+          "enabled": false,
+          "kind": "ENABLE_ALL",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures::$root::line-106"
+        },
+        {
+          "enabled": true,
+          "kind": "ASSERT_ENABLED",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures::$root::line-108",
+          "value": "Example"
+        },
+        {
+          "enabled": true,
+          "kind": "ASSERT_ENABLED",
+          "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures::$root::line-109",
+          "value": "Test"
+        }
+      ],
+      "test": "TestEnableAllFeatures"
+    }
+  ],
+  "classification": "EXACT_CASE",
+  "defaults": [
+    {
+      "enabled": true,
+      "name": "Example"
+    },
+    {
+      "enabled": false,
+      "name": "Test"
+    }
+  ],
+  "environment": {
+    "GOARCH": "amd64",
+    "GOFLAGS": "-mod=vendor",
+    "GOOS": "linux",
+    "GOTOOLCHAIN": "local",
+    "GOVERSION": "go1.27.1-X:nodwarf5"
+  },
+  "feature_id": "FG-CONFIG-001",
+  "implementation_gate": "verification/agones/gates/9bc7d7e7fc872f42369903027b46116bdc3a2fed1d783f66476870a1aa451357.json",
+  "implementation_gate_sha256": "9bc7d7e7fc872f42369903027b46116bdc3a2fed1d783f66476870a1aa451357",
+  "loader": "golang.org/x/tools/go/packages v0.48.0",
+  "package_id": "agones.dev/agones/pkg/util/runtime [agones.dev/agones/pkg/util/runtime.test]",
+  "schema_version": 1,
+  "source_files": {
+    "pkg/util/runtime/features.go": "05736b26646cf219419626dfca37c4f533302b178ca3bb542330cf7884ddc679",
+    "pkg/util/runtime/features_test.go": "6bd14c7faa40a6dd4efb434caf59063c14195993ce4cdaad87104ac4ba8d87ec"
+  },
+  "source_mapping_note": "Same root package owns both tests. Exact assertion identities use source-bound line spans. No test/helper/fixture exclusion is implied by this focused selection.",
+  "support": "Package/type-resolved ParseFeatures, EncodeFeatures, FeatureEnabled, EnableAllFeatures and testify assertions; exact Example/Test fixture; source t.Parallel/global-map isolation maps to instance-local Rust contexts. Unknown test selection, fixture or assertion shapes fail closed. Environment case remains unsupported; no dynamic table normalization."
+}
