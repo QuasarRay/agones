@@ -295,6 +295,62 @@ pub fn fleet_autoscaler_webhook_url(
     ))
 }
 
+pub(crate) fn fleet_autoscaler_http_client(
+    configuration: &UrlConfiguration,
+) -> Result<reqwest::Client, AdapterError> {
+    let mut client = reqwest::Client::builder()
+        .timeout(Duration::from_secs(15));
+
+    if !configuration.ca_bundle.is_empty() {
+        let certificates =
+            reqwest::Certificate::from_pem_bundle(
+                &configuration.ca_bundle,
+            )
+            .map_err(|_| {
+                AdapterError::Hook(
+                    "no certs were appended from caBundle".into(),
+                )
+            })?;
+        if certificates.is_empty() {
+            return Err(AdapterError::Hook(
+                "no certs were appended from caBundle".into(),
+            ));
+        }
+        for certificate in certificates {
+            client = client.add_root_certificate(certificate);
+        }
+    }
+
+    client
+        .build()
+        .map_err(|error| AdapterError::Hook(error.to_string()))
+}
+
+pub(crate) fn fleet_autoscale_review_request(
+    fleet: &Fleet,
+    include_metadata: bool,
+) -> FleetAutoscaleReview {
+    FleetAutoscaleReview {
+        request: Some(FleetAutoscaleRequest {
+            uid: uuid::Uuid::new_v4().to_string(),
+            name: fleet.metadata.name.clone(),
+            namespace: fleet.metadata.namespace.clone(),
+            status: fleet.status.clone(),
+            labels: if include_metadata {
+                fleet.metadata.labels.clone()
+            } else {
+                Default::default()
+            },
+            annotations: if include_metadata {
+                fleet.metadata.annotations.clone()
+            } else {
+                Default::default()
+            },
+        }),
+        response: None,
+    }
+}
+
 #[cgp_component(FleetAutoscalerWebhookCaller)]
 pub trait CanCallFleetAutoscalerWebhook {
     fn call_fleet_autoscaler_webhook<'a>(
@@ -317,32 +373,8 @@ where
     ) -> BoxFuture<'a, Result<FleetAutoscaleReview, AdapterError>> {
         Box::pin(async move {
             let url = fleet_autoscaler_webhook_url(configuration)?;
-            let mut client = reqwest::Client::builder()
-                .timeout(Duration::from_secs(15));
-
-            if !configuration.ca_bundle.is_empty() {
-                let certificates =
-                    reqwest::Certificate::from_pem_bundle(
-                        &configuration.ca_bundle,
-                    )
-                    .map_err(|_| {
-                        AdapterError::Hook(
-                            "no certs were appended from caBundle".into(),
-                        )
-                    })?;
-                if certificates.is_empty() {
-                    return Err(AdapterError::Hook(
-                        "no certs were appended from caBundle".into(),
-                    ));
-                }
-                for certificate in certificates {
-                    client = client.add_root_certificate(certificate);
-                }
-            }
-
-            let client = client
-                .build()
-                .map_err(|error| AdapterError::Hook(error.to_string()))?;
+            let client =
+                fleet_autoscaler_http_client(configuration)?;
             let response = client
                 .post(url.as_str())
                 .json(review)
@@ -388,28 +420,10 @@ where
         fleet: &'a Fleet,
     ) -> BoxFuture<'a, Result<FleetAutoscalerScaleDecision, AdapterError>> {
         Box::pin(async move {
-            let include_metadata =
-                *context.fleet_autoscale_request_metadata();
-            let request = FleetAutoscaleRequest {
-                uid: uuid::Uuid::new_v4().to_string(),
-                name: fleet.metadata.name.clone(),
-                namespace: fleet.metadata.namespace.clone(),
-                status: fleet.status.clone(),
-                labels: if include_metadata {
-                    fleet.metadata.labels.clone()
-                } else {
-                    Default::default()
-                },
-                annotations: if include_metadata {
-                    fleet.metadata.annotations.clone()
-                } else {
-                    Default::default()
-                },
-            };
-            let review = FleetAutoscaleReview {
-                request: Some(request),
-                response: None,
-            };
+            let review = fleet_autoscale_review_request(
+                fleet,
+                *context.fleet_autoscale_request_metadata(),
+            );
             let response = context
                 .call_fleet_autoscaler_webhook(
                     configuration,
