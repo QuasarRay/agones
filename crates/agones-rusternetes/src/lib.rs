@@ -97,6 +97,8 @@ pub use fleetautoscaler_controller::{
     CanApplyBufferFleetAutoscalerPolicy,
     CanApplyCounterFleetAutoscalerPolicy,
     CanApplyListFleetAutoscalerPolicy,
+    CanApplyWebhookFleetAutoscalerPolicy,
+    CanCallFleetAutoscalerWebhook,
     CanCheckFleetAutoscalerSchedule,
     CanComputeFleetAutoscalerDesiredSize,
     CanComputeFleetAutoscalerDesiredSizeAt,
@@ -107,8 +109,9 @@ pub use fleetautoscaler_controller::{
     CanUpdateFleetAutoscalerStatus, FleetAutoscalerController,
     FleetAutoscalerInventory, FleetAutoscalerPolicyDecision,
     FleetAutoscalerReconcileResult, FleetAutoscalerSyncOutcome,
+    HasFleetAutoscaleRequestMetadata,
     HasFleetAutoscalerRuntimeFeatures, HasFleetAutoscalerStorage,
-    HasFleetAutoscalerStorageType,
+    HasFleetAutoscalerStorageType, fleet_autoscaler_webhook_url,
 };
 pub use fleetautoscaler_controller_runtime::{
     CanRebuildFleetAutoscalerSchedules, CanRouteFleetAutoscalerEvent,

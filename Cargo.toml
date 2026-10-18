@@ -25,12 +25,14 @@ futures = "0.3"
 agones-macros = { path = "crates/agones-macros" }
 proc-macro2 = "1.0"
 quote = "1.0"
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
 rand = "0.8"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 serde_yaml = "0.9"
 syn = { version = "2.0", features = ["full"] }
 url = "2.5.2"
+uuid = { version = "1", features = ["v4"] }
 x509-parser = "0.16.0"
 rusternetes-common = { git = "https://github.com/calfonso/rusternetes.git", rev = "125c0f4a2b6fb888102606493c5e3cf7a126dd58", package = "rusternetes-common" }
 rusternetes-storage = { git = "https://github.com/calfonso/rusternetes.git", rev = "125c0f4a2b6fb888102606493c5e3cf7a126dd58", package = "rusternetes-storage" }
