@@ -16,7 +16,8 @@ use crate::controller_work_queue::{
 };
 use crate::{
     AdapterError, AgonesRepository, AgonesWatchEvent,
-    CanReconcileFleetAutoscaler, FleetAutoscalerController,
+    CanEvictFleetAutoscalerWasmState, CanReconcileFleetAutoscaler,
+    FleetAutoscalerController,
     FleetAutoscalerSyncOutcome, HasFleetAutoscalerStorage,
 };
 
@@ -348,7 +349,8 @@ pub trait CanRouteFleetAutoscalerEvent {
 impl<Context> FleetAutoscalerEventRouter<Context>
     for RouteFleetAutoscalerEventWithScheduler
 where
-    Context: CanScheduleFleetAutoscaler,
+    Context: CanScheduleFleetAutoscaler
+        + CanEvictFleetAutoscalerWasmState,
 {
     fn route_fleet_autoscaler_event(
         context: &Context,
@@ -368,6 +370,9 @@ where
                     registry,
                     &resource,
                 );
+                context.evict_fleet_autoscaler_wasm_state(
+                    &resource,
+                )?;
             }
         }
 
