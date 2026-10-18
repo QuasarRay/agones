@@ -1125,9 +1125,9 @@ mod tests {
         AggregatedCounterStatus, AggregatedListStatus, BufferPolicy,
         ActivePeriod, AutoscalerFeatures, Between, ChainEntry,
         CounterPolicy, CounterStatus, FleetAutoscalerPolicy,
-        GameServerStatus,
-        IntOrPercent, ListPolicy, ListStatus, ObjectMeta,
-        SchedulePolicy,
+        GameServerStatus, IntOrPercent, ListPolicy, ListStatus,
+        ObjectMeta, SchedulePolicy, ServiceReference,
+        UrlConfiguration,
     };
     use std::collections::BTreeMap;
     use rusternetes_storage::MemoryStorage;
@@ -1356,6 +1356,246 @@ mod tests {
         );
     }
 
+
+
+    #[test]
+    fn webhook_url_matches_upstream_url_and_service_resolution() {
+        assert_eq!(
+            fleet_autoscaler_webhook_url(&UrlConfiguration {
+                url: Some("http://127.0.0.1:8080/scale".into()),
+                ..Default::default()
+            })
+            .unwrap(),
+            "http://127.0.0.1:8080/scale"
+        );
+
+        assert_eq!(
+            fleet_autoscaler_webhook_url(&UrlConfiguration {
+                service: Some(ServiceReference {
+                    name: "autoscaler".into(),
+                    namespace: String::new(),
+                    path: Some("scale".into()),
+                    port: None,
+                }),
+                ..Default::default()
+            })
+            .unwrap(),
+            "http://autoscaler.default.svc:8000/scale"
+        );
+
+        assert_eq!(
+            fleet_autoscaler_webhook_url(&UrlConfiguration {
+                service: Some(ServiceReference {
+                    name: "autoscaler".into(),
+                    namespace: "games".into(),
+                    path: Some("/scale".into()),
+                    port: Some(9443),
+                }),
+                ca_bundle: b"non-empty".to_vec(),
+                ..Default::default()
+            })
+            .unwrap(),
+            "https://autoscaler.games.svc:9443/scale"
+        );
+    }
+
+    fn serve_one_webhook_response(
+        response: FleetAutoscaleReview,
+    ) -> (
+        String,
+        std::sync::mpsc::Receiver<FleetAutoscaleReview>,
+        std::thread::JoinHandle<()>,
+    ) {
+        use std::io::{Read, Write};
+        use std::net::TcpListener;
+
+        let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+        let address = listener.local_addr().unwrap();
+        let (sender, receiver) = std::sync::mpsc::channel();
+        let handle = std::thread::spawn(move || {
+            let (mut stream, _) = listener.accept().unwrap();
+            let mut bytes = Vec::new();
+            let mut scratch = [0u8; 4096];
+
+            let header_end = loop {
+                let read = stream.read(&mut scratch).unwrap();
+                if read == 0 {
+                    panic!("webhook request ended before headers");
+                }
+                bytes.extend_from_slice(&scratch[..read]);
+                if let Some(position) = bytes
+                    .windows(4)
+                    .position(|window| window == b"\r\n\r\n")
+                {
+                    break position + 4;
+                }
+            };
+
+            let headers =
+                String::from_utf8(bytes[..header_end].to_vec())
+                    .unwrap();
+            let content_length = headers
+                .lines()
+                .find_map(|line| {
+                    let (name, value) = line.split_once(':')?;
+                    name.eq_ignore_ascii_case("content-length")
+                        .then(|| value.trim().parse::<usize>().unwrap())
+                })
+                .unwrap_or(0);
+
+            while bytes.len() < header_end + content_length {
+                let read = stream.read(&mut scratch).unwrap();
+                if read == 0 {
+                    break;
+                }
+                bytes.extend_from_slice(&scratch[..read]);
+            }
+
+            let review: FleetAutoscaleReview =
+                serde_json::from_slice(
+                    &bytes[header_end..header_end + content_length],
+                )
+                .unwrap();
+            sender.send(review).unwrap();
+
+            let body = serde_json::to_vec(&response).unwrap();
+            write!(
+                stream,
+                "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
+                body.len()
+            )
+            .unwrap();
+            stream.write_all(&body).unwrap();
+            stream.flush().unwrap();
+        });
+
+        (format!("http://{address}/scale"), receiver, handle)
+    }
+
+    #[tokio::test]
+    async fn cgp_webhook_provider_posts_review_metadata_and_scales() {
+        let response = FleetAutoscaleReview {
+            request: None,
+            response: Some(FleetAutoscaleResponse {
+                uid: "response".into(),
+                scale: true,
+                replicas: 17,
+            }),
+        };
+        let (url, received, handle) =
+            serve_one_webhook_response(response);
+
+        let mut target = fleet(5);
+        target.metadata.name = "fleet".into();
+        target.metadata.namespace = "default".into();
+        target
+            .metadata
+            .labels
+            .insert("region".into(), "test".into());
+        target
+            .metadata
+            .annotations
+            .insert("owner".into(), "agones".into());
+        target.status.replicas = 5;
+
+        let controller =
+            FleetAutoscalerController::new(MemoryStorage::new())
+                .with_fleet_autoscale_request_metadata(true);
+        let decision = controller
+            .apply_webhook_fleet_autoscaler_policy(
+                &UrlConfiguration {
+                    url: Some(url),
+                    ..Default::default()
+                },
+                &target,
+            )
+            .await
+            .unwrap();
+
+        assert_eq!(
+            decision,
+            FleetAutoscalerScaleDecision {
+                replicas: 17,
+                limited: false,
+            }
+        );
+
+        let review = received
+            .recv_timeout(std::time::Duration::from_secs(2))
+            .unwrap();
+        let request = review.request.unwrap();
+        assert_eq!(request.name, "fleet");
+        assert_eq!(request.namespace, "default");
+        assert_eq!(request.status, target.status);
+        assert_eq!(request.labels["region"], "test");
+        assert_eq!(request.annotations["owner"], "agones");
+        assert!(!request.uid.is_empty());
+        handle.join().unwrap();
+    }
+
+    #[tokio::test]
+    async fn cgp_webhook_dispatch_honors_scale_false() {
+        let response = FleetAutoscaleReview {
+            request: None,
+            response: Some(FleetAutoscaleResponse {
+                uid: "response".into(),
+                scale: false,
+                replicas: 99,
+            }),
+        };
+        let (url, _received, handle) =
+            serve_one_webhook_response(response);
+
+        let mut target = fleet(4);
+        target.status.replicas = 9;
+        let decision =
+            FleetAutoscalerController::new(MemoryStorage::new())
+                .compute_fleet_autoscaler_desired_size(
+                    &FleetAutoscalerPolicy {
+                        policy_type:
+                            FleetAutoscalerPolicyType::Webhook,
+                        webhook: Some(UrlConfiguration {
+                            url: Some(url),
+                            ..Default::default()
+                        }),
+                        ..Default::default()
+                    },
+                    &target,
+                    &FleetAutoscalerInventory::default(),
+                )
+                .await
+                .unwrap();
+
+        assert_eq!(decision.replicas, 9);
+        assert!(!decision.limited);
+        assert_eq!(
+            decision.applied_policy,
+            FleetAutoscalerPolicyType::Webhook
+        );
+        handle.join().unwrap();
+    }
+
+    #[tokio::test]
+    async fn webhook_missing_response_is_rejected() {
+        let (url, _received, handle) =
+            serve_one_webhook_response(FleetAutoscaleReview::default());
+        let error =
+            FleetAutoscalerController::new(MemoryStorage::new())
+                .apply_webhook_fleet_autoscaler_policy(
+                    &UrlConfiguration {
+                        url: Some(url),
+                        ..Default::default()
+                    },
+                    &fleet(1),
+                )
+                .await
+                .unwrap_err();
+
+        assert!(error.to_string().contains(
+            "webhook response missing required 'response' field"
+        ));
+        handle.join().unwrap();
+    }
 
     fn scheduled_buffer_policy(
         start: Option<&str>,
@@ -1690,7 +1930,7 @@ mod tests {
             .compute_fleet_autoscaler_desired_size(
                 &FleetAutoscalerPolicy {
                     policy_type:
-                        FleetAutoscalerPolicyType::Webhook,
+                        FleetAutoscalerPolicyType::Wasm,
                     ..Default::default()
                 },
                 &fleet(1),
