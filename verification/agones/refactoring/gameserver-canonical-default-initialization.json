@@ -1,0 +1,11 @@
+{
+  "architecture_status": "All eight required _2 cells remain REQUIRED_OPEN. Existing CGP macro families and Genco remove declaration repetition here; new _2 authoring machinery would not remove this runtime initialization cost. Reassess typed property declarations using the now-real 17-case consumer at the next adequate source proof or API milestone.",
+  "candidate": "Avoid repeated sorting/comparison when materializing the existing sorted unique source default table; retain generic custom-table semantics.",
+  "decision": "SMALL_LOCAL_REFACTOR",
+  "feature_binding": "verification/agones/gates/90ecffab80af35e8b2ec88ba1367b66fc73e5b87a7b53f8d4b0dfff2e883cb00.json",
+  "id": "GS-DEFAULTS-001-canonical-default-initialization",
+  "next_review_trigger": "After the first adequate original GameServer case proof, or the next API validation milestone if the full proof remains inconclusive; revisit property declarations and all eight _2 cells.",
+  "observations": "The full case-014 run preserves all original observations but timed out with zero individual results. It recorded 23388 memcmp loop iterations and 360 binary-search iterations while reaching seven of fifteen source defaults. All 17 typed source fixtures/304 assertions already run; 577 workspace tests pass.",
+  "reuse": "Current CGP providers and Genco emitter remain owners of policy and typed properties; no additional framework/library is needed.",
+  "roi": "A narrow identity-bound direct collect removes repeated comparisons for all actual default contexts and every generated whole source case. It reuses standard iterators, the one canonical data table and existing fallback. Small implementation/control cost versus repeated complete-case timeouts; no domain, source assertion, cover or unwind reduction."
+}

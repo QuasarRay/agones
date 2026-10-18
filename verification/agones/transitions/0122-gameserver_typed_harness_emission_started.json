@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "GAMESERVER_TYPED_HARNESS_EMISSION_STARTED",
+  "gate_snapshot": "verification/agones/gates/90ecffab80af35e8b2ec88ba1367b66fc73e5b87a7b53f8d4b0dfff2e883cb00.json",
+  "predecessor_revision": 121,
+  "predecessor_sha256": "9dfe0a48eb7f72e371a01042f4e9601779f29b78ac4b32ce686cf0785cad5dc1",
+  "reason": "Current GameServer production gate remains valid. Extend the existing Genco emitter for all 17 exact source fixtures and 304 occurrences; no new macro framework.",
+  "result_revision": 122,
+  "schema_version": 1,
+  "state_sha256": "caa3b85991b8ce64bf30c701975c1dc95e3d2608cf79d751ef2d1d2520534a51",
+  "timestamp": "2026-10-18T21:14:13.733732+00:00"
+}

@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "COMPACT_LEDGER_TERMINAL_HISTORY_RETAINED",
+  "gate_snapshot": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+  "predecessor_revision": 148,
+  "predecessor_sha256": "a198050b603e9672f1afe95a650d242326a51466a80163da8c6382fae429fb77",
+  "reason": "The real recovery-control process completed successfully. Its immutable receipt and hashed log remain available, while the canonical live/incomplete job index is empty. Prior snapshots and all source/proof data remain retained.",
+  "result_revision": 149,
+  "schema_version": 1,
+  "state_sha256": "5607c086e9c2644a5d63b095dac3dd23bcb27a4bb16f45255ab53fa62bfcf220",
+  "timestamp": "2026-10-18T21:42:13.074336+00:00"
+}

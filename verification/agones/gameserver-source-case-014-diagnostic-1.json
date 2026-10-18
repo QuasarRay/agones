@@ -1,0 +1,30 @@
+{
+  "diagnosis": "The original empty-feature case still constructs the full production default map. Incremental binary search performs repeated string comparisons on a known sorted unique canonical table; symex reached only seven default entries before timing out.",
+  "feature_id": "GS-DEFAULTS-001",
+  "generated_harness_sha256": "0e38d5021c33137b4e2b782ee86c1d74841d8ee4ba17942afd0a65857f342117",
+  "individual_results": 0,
+  "next_hypothesis": "Use direct collection for the identity-bound canonical source default table; retain the exact sorting/last-duplicate fallback for custom tables. This is actual production code, no cfg(kani) replacement. Rerun the same full case/domain/assertions/covers/unwind.",
+  "operational_limit_seconds": 240,
+  "original_assertions_credited": 0,
+  "raw_domain": "unit exact source case 014",
+  "run": "verification/agones/runs/gameserver-source-case-014-bolero-kani-1.json",
+  "schema_version": 1,
+  "source_commit_for_unchanged_production": "e368327ebc0118acf868bf408f70effe1ada2a7a",
+  "source_features_sha256": "46e8f93b86b6187e3927047e5cebafa135e8a55f38089ec3c3aad31ebdaca1a3",
+  "status": "INCONCLUSIVE_TIMEOUT_NO_CREDIT",
+  "top_symex_loops": [
+    [
+      "Unwinding loop memcmp.0",
+      23388
+    ],
+    [
+      "Unwinding loop _RINvMNtCs8xvirJzNMvV_4core5sliceSTNtNtCs6xMQmN1AWUs_5alloc6string6StringbE16binary_search_byNCNvMNtCs48q3AxCsyuD_11agones_core8featuresNtB1x_12FeatureGates13from_defaults0ECsjT6j4fgnUUK_28source_gameserver_defaulting.0",
+      360
+    ],
+    [
+      "Unwinding loop _RNvMNtCs48q3AxCsyuD_11agones_core8featuresNtB2_12FeatureGates13from_defaults.0",
+      7
+    ]
+  ],
+  "unwind": 64
+}

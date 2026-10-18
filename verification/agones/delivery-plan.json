@@ -1,5 +1,5 @@
 {
-  "acceptance": "Local current tree has 557 passing tests, full 17-case/304-occurrence source runtime replay, a three-claim/eight-cover health leaf proof and targeted resource derive hygiene checks. Published 5f6f3c4 remains the last verified CI head until this prepared delta is published and tested. Whole original source/defaulting proof, all eight _2 cells and full migration remain incomplete; draft stays unmerged.",
+  "acceptance": "Current local source passes 578 all-target tests, four deterministic generation modes, complete 17-case/304-relation typed source replay, and generator rejection controls. Four prior proof selections have explicitly audited unchanged reachable components. Two full case-014 attempts at unchanged unwind 64 timed out with zero individual results and zero original-source credit. e368327 remains the last published/CI-verified head until this delta is delivered. All eight _2 cells and full migration remain incomplete; draft stays unmerged.",
   "checks": [
     {
       "cause": "Guidance existed locally at build/local-includes/AGENTS.MD but was ignored by Git and absent from clean CI checkout.",
@@ -82,26 +82,50 @@
       },
       "status": "PASSED",
       "workflow_run": 39157296121
+    },
+    {
+      "evidence": "verification/agones/ci/39166043228-in-progress.json",
+      "head": "e368327ebc0118acf868bf408f70effe1ada2a7a",
+      "status": "IN_PROGRESS",
+      "workflow_run": 39166043228
+    },
+    {
+      "available_exact_proof_selections": 4,
+      "evidence": "verification/agones/ci/39166043228-success.json",
+      "head": "e368327ebc0118acf868bf408f70effe1ada2a7a",
+      "merge_result_tested": "dcd16107ca810549583c6077566c12e536ade9fd",
+      "observed_results": {
+        "feature-bool-model-check": "PASSED",
+        "migration-state": "PASSED",
+        "rust": "PASSED"
+      },
+      "observed_rust_tests": {
+        "failed": 0,
+        "ignored": 3,
+        "passed": 557
+      },
+      "status": "PASSED",
+      "workflow_run": 39166043228
     }
   ],
   "expected_base": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
-  "expected_head": "5f6f3c44bcb2a36125b7b0e7038efe294f2d8c93",
+  "expected_head": "e368327ebc0118acf868bf408f70effe1ada2a7a",
   "integration_branch": "agones-rs-dev",
   "pull_requests": [
     {
       "draft": true,
-      "head": "5f6f3c44bcb2a36125b7b0e7038efe294f2d8c93",
+      "head": "e368327ebc0118acf868bf408f70effe1ada2a7a",
       "merged": false,
       "number": 92,
       "url": "https://github.com/QuasarRay/agones/pull/92"
     }
   ],
-  "remote_result": "GAMESERVER_DEFAULTING_CHECKPOINT_PREPARED_NOT_PUBLISHED",
+  "remote_result": "GAMESERVER_EXACT_HARNESSES_AND_CANONICAL_INITIALIZATION_PREPARED_NOT_PUBLISHED",
   "required_checks": [
     "migration-state",
     "rust",
     "feature-bool-model-check"
   ],
   "review_branch": "codex/agones-feature-gates-001",
-  "visible_checkout": "agones-rs-dev@5f6f3c44bcb2a36125b7b0e7038efe294f2d8c93"
+  "visible_checkout": "agones-rs-dev@e368327ebc0118acf868bf408f70effe1ada2a7a"
 }

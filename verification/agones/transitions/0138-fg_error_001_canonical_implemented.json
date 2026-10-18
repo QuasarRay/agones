@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate::line-41"
+  ],
+  "authorization": "User execution contract",
+  "event": "FG_ERROR_001_CANONICAL_IMPLEMENTED",
+  "gate_snapshot": "verification/agones/gates/f74516bd4e16e5abbacfe2694db7bfb89bf02d633da877472111a84c77a7913f.json",
+  "predecessor_revision": 137,
+  "predecessor_sha256": "0ac55c8012df0604db69de3ceee70258b2ec58c3ea5359598bca03c486be94a4",
+  "reason": "Current complete ordinary behavior passes 578 tests. Gate bindings refresh canonical initialization/shared emitter provenance, or are revalidated unchanged for SDK.",
+  "result_revision": 138,
+  "schema_version": 1,
+  "state_sha256": "a75b21047c0c24d31a14a64f58ee003e48fdbe9ee1f823063e6b4099db2e3de4",
+  "timestamp": "2026-10-18T21:36:36.482225+00:00"
+}

@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "GAMESERVER_DEFAULTING_CI_VERIFIED_CHECKPOINT",
+  "gate_snapshot": "verification/agones/gates/90ecffab80af35e8b2ec88ba1367b66fc73e5b87a7b53f8d4b0dfff2e883cb00.json",
+  "predecessor_revision": 116,
+  "predecessor_sha256": "8855b4fd19f3d9a183374827ff1023c8282f961d1599c21a147a9e120a46d313",
+  "reason": "Exact published e368327 and actual merge checkout have identical trees; CI 39166043228 passed all three jobs, 557 tests, three generation modes, five resource Cargo fixtures and all four available strict proof selections. All 304 original GameServer occurrences and remaining migration/architecture requirements remain open.",
+  "result_revision": 117,
+  "schema_version": 1,
+  "state_sha256": "07c413e9125658f0df79af385d85444a5d0f8a829e645d02086c765461c04b1c",
+  "timestamp": "2026-10-18T21:11:13.947677+00:00"
+}

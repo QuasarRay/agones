@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "GAMESERVER_CANONICAL_DEFAULTS_REGATED",
+  "gate_snapshot": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+  "predecessor_revision": 125,
+  "predecessor_sha256": "2f538a402ac91f66930c54bedbc8d80324943898869309e96a32c5f373ad467e",
+  "reason": "Actual canonical initialization avoids redundant comparisons through a stable reference while custom unsorted and duplicate inputs retain prior behavior. All 578 ordinary tests pass. Original typed source payload/fixtures/relations and full unwind-64 harnesses are unchanged; the first timeout has zero credit.",
+  "result_revision": 126,
+  "schema_version": 1,
+  "state_sha256": "e0914415b76108f9ac46efb706a9ea2a35ba03cc67c34f22a17b156e13fe8aca",
+  "timestamp": "2026-10-18T21:30:22.015927+00:00"
+}

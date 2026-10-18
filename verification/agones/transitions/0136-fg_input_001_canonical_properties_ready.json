@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ],
+  "authorization": "User execution contract",
+  "event": "FG_INPUT_001_CANONICAL_PROPERTIES_READY",
+  "gate_snapshot": "verification/agones/gates/72fea7e081d99bfed1c90858124ddb619347d5a23a0459f22d8aef37c50c1fe7.json",
+  "predecessor_revision": 135,
+  "predecessor_sha256": "ac72039e07880b9a75ed9ade678eda839f103255943aa176292f7dd4faad6a3c",
+  "reason": "Current deterministic query/print/SDK/GameServer generation checks pass, all generated source cases compile/run, and source mapping payloads remain identical.",
+  "result_revision": 136,
+  "schema_version": 1,
+  "state_sha256": "48ed2b23b32e56c83aa775ba36b7fa8860caf4d206d4f510a85c05d66fbd58e1",
+  "timestamp": "2026-10-18T21:36:36.041146+00:00"
+}

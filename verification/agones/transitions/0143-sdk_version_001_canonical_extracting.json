@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_VERSION_001_CANONICAL_EXTRACTING",
+  "gate_snapshot": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json",
+  "predecessor_revision": 142,
+  "predecessor_sha256": "0e3bd3109a21c699a7919a7b328f23c994a578b5e7df458ff0eec66bbabdeffe",
+  "reason": "Reuse original package-qualified source obligations: fixtures, actions, conditional guards and expectations are unchanged; only implementation receipt references changed.",
+  "result_revision": 143,
+  "schema_version": 1,
+  "state_sha256": "5a905b2507f19f8bd3e46c26bd6f66863fe8a18044fa152ef3fb41711ba904e9",
+  "timestamp": "2026-10-18T21:36:37.635838+00:00"
+}

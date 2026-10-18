@@ -1,0 +1,354 @@
+{
+  "schema_version": 1,
+  "status": "PASSED",
+  "head": "e368327ebc0118acf868bf408f70effe1ada2a7a",
+  "workflow_run": 39166043228,
+  "url": "https://github.com/QuasarRay/agones/actions/runs/39166043228",
+  "jobs": [
+    {
+      "id": 117789074239,
+      "name": "migration-state",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 39166043228,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install pinned state validator",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Validate source-bound implementation gate and ledger",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Check guidance inheritance",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Reject incomplete or vacuous proof results",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Select affected checks conservatively",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        }
+      ]
+    },
+    {
+      "id": 117789143664,
+      "name": "feature-bool-model-check",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 39166043228,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Install pinned verification tools",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Verify the exact Bolero harness through Kani",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Require all assertions and non-vacuity covers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Verify production input precedence through Bolero and Kani",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Require input assertions and all ten covers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Verify the exact original query-error assertion through Bolero and Kani",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Require the original query-error assertion and both covers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Verify production health defaults through Bolero and Kani",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Require model and production health invariants and all eight covers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 24
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 25
+        }
+      ]
+    },
+    {
+      "id": 117789143685,
+      "name": "rust",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 39166043228,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Install pinned evidence Rust",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install native build dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Check workspace",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Test workspace",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Check deterministic exact-case generation",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Check pinned Go printable-rune table generation",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Check exact SDK source-case generation",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Check resource derive aliases, facades, generics, and rejected paths",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21
+        }
+      ]
+    }
+  ],
+  "merge_result_tested": "dcd16107ca810549583c6077566c12e536ade9fd",
+  "verified_checkouts": {
+    "state": "dcd16107ca810549583c6077566c12e536ade9fd",
+    "rust": "dcd16107ca810549583c6077566c12e536ade9fd",
+    "model": "dcd16107ca810549583c6077566c12e536ade9fd"
+  },
+  "published_tree": "dac7d64e7c27c8e4d1e508b89797630f98e3ee07",
+  "verified_merge_tree": "dac7d64e7c27c8e4d1e508b89797630f98e3ee07",
+  "observed_rust_tests": {
+    "passed": 557,
+    "failed": 0,
+    "ignored": 3,
+    "suites": 24
+  },
+  "generation_checks": [
+    "Checked five query cases, 17 source assertions; one required input case remains outside this formal model",
+    "Checked 741 Go printable-rune ranges",
+    "Checked one exact Fleet case and two SDK assertions; 17 GameServer version assertions remain formal-required"
+  ],
+  "resource_derive_cargo_checks": {
+    "status": "PASSED",
+    "supported": [
+      "renamed runtime and macro with generics/where clause",
+      "explicit facade runtime path"
+    ],
+    "rejected": [
+      "missing runtime",
+      "malformed runtime path",
+      "duplicate runtime path"
+    ],
+    "architecture_credit": "No _2 authoring credit."
+  },
+  "available_model_selections": [
+    {
+      "harness_count": 1,
+      "property_count": 1158,
+      "status_counts": {
+        "SUCCESS": 1141,
+        "SATISFIED": 6,
+        "UNREACHABLE": 11
+      },
+      "harness": "feature_bool_common_domain",
+      "semantic_claims": 3,
+      "original_source_assertions": 0,
+      "unreachable_not_credited": 11
+    },
+    {
+      "harness_count": 1,
+      "claimed_assertions": 3,
+      "required_covers": 10,
+      "property_count": 978,
+      "status_counts": {
+        "SUCCESS": 945,
+        "SATISFIED": 10,
+        "UNREACHABLE": 23
+      },
+      "harness": "feature_input_common_domain",
+      "semantic_claims": 3,
+      "original_source_assertions": 0,
+      "unreachable_not_credited": 23
+    },
+    {
+      "harness_count": 1,
+      "claimed_assertions": 1,
+      "required_covers": 2,
+      "property_count": 1437,
+      "status_counts": {
+        "SUCCESS": 1392,
+        "SATISFIED": 2,
+        "UNREACHABLE": 43
+      },
+      "harness": "source_query_case_003",
+      "semantic_claims": 1,
+      "original_source_assertions": 1,
+      "unreachable_not_credited": 43
+    },
+    {
+      "harness_count": 1,
+      "claimed_assertions": 3,
+      "required_covers": 8,
+      "property_count": 2180,
+      "status_counts": {
+        "SUCCESS": 2147,
+        "SATISFIED": 8,
+        "UNREACHABLE": 25
+      },
+      "harness": "health_defaulting_common_domain",
+      "semantic_claims": 3,
+      "original_source_assertions": 0,
+      "unreachable_not_credited": 25
+    }
+  ],
+  "assurance": "All declared jobs passed at the verified source/merge tree. One original query assertion and the bounded health observation have their stated proof credit. All 304 original GameServer assertion occurrences remain formal-required; replay is ordinary evidence. Full migration, required source/SDK/error proofs, all eight _2 cells, live Rusternetes conformance and integration merge remain incomplete."
+}

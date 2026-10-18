@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "GAMESERVER_ALL_EXACT_HARNESSES_READY",
+  "gate_snapshot": "verification/agones/gates/90ecffab80af35e8b2ec88ba1367b66fc73e5b87a7b53f8d4b0dfff2e883cb00.json",
+  "predecessor_revision": 122,
+  "predecessor_sha256": "caa3b85991b8ce64bf30c701975c1dc95e3d2608cf79d751ef2d1d2520534a51",
+  "reason": "Existing Genco emitter now produces all 17 whole typed fixtures and 304 source-identified relations with exact source ordering/guards. Eighteen generated runtime tests, rejection controls, deterministic generation and prior health reparse pass; no new original-source formal credit.",
+  "result_revision": 123,
+  "schema_version": 1,
+  "state_sha256": "254a5922c48e2a91b4da39f5aba961ac2c06de629e8837041be0046e1e4b8f52",
+  "timestamp": "2026-10-18T21:19:51.382132+00:00"
+}

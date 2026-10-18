@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "GAMESERVER_GENERATED_SOURCE_DIAGNOSTICS_RETAINED",
+  "gate_snapshot": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+  "predecessor_revision": 145,
+  "predecessor_sha256": "3a2eb4bb6c3043f5c70f6348badae0f49913cb9cfd8dfbca0ca3d079cd0e4c72",
+  "reason": "All 17 typed source fixtures/304 relations are generated and replay current production; all 578 tests and four generation checks pass. Full case 014 timed out twice at unchanged unwind 64 with zero individual results. Preserve scoped prior proof credit and all original/cleanup obligations.",
+  "result_revision": 146,
+  "schema_version": 1,
+  "state_sha256": "dd43b5451f41a0e2c07dacddcdfd3070db606bdf1f59c81ec35ff5cb57e6e56e",
+  "timestamp": "2026-10-18T21:36:38.363798+00:00"
+}

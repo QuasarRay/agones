@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "GAMESERVER_DEFAULTING_PUBLISHED_CI_RUNNING",
+  "gate_snapshot": "verification/agones/gates/90ecffab80af35e8b2ec88ba1367b66fc73e5b87a7b53f8d4b0dfff2e883cb00.json",
+  "predecessor_revision": 115,
+  "predecessor_sha256": "a5cf21a75c728907bd158cb08dc46c118145517cf14db9cda63606036ea141dc",
+  "reason": "Published e368327ebc0118acf868bf408f70effe1ada2a7a with exact source/CI merge tree equality; state job passed while Rust and four proof selections run. Preserve required original-source proof debt.",
+  "result_revision": 116,
+  "schema_version": 1,
+  "state_sha256": "8855b4fd19f3d9a183374827ff1023c8282f961d1599c21a147a9e120a46d313",
+  "timestamp": "2026-10-18T21:05:29.565074+00:00"
+}

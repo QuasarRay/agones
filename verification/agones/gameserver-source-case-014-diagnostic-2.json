@@ -1,0 +1,41 @@
+{
+  "diagnosis": "Canonical initialization now reaches beyond the old sorting bottleneck into actual defaulting and Rust container/value destruction. The run still times out before individual results, with extensive std BTreeMap/serde_json::Value drop-path expansion. No timeout or pruned path receives credit.",
+  "feature_id": "GS-DEFAULTS-001",
+  "generated_harness_sha256": "0e38d5021c33137b4e2b782ee86c1d74841d8ee4ba17942afd0a65857f342117",
+  "individual_results": 0,
+  "operational_limit_seconds": 240,
+  "original_assertions_credited": 0,
+  "raw_domain": "same unit exact source case 014",
+  "required_next": "Keep complete unit source-case obligations and unwind checks. Diagnose a faithful proof decomposition or lifetime model matching the Go callback observation boundary; preserve production calls, all original relations/covers and separate Rust cleanup/lifecycle obligations. Do not repeat unchanged timeout attempts or stub production.",
+  "run": "verification/agones/runs/gameserver-source-case-014-bolero-kani-2.json",
+  "schema_version": 1,
+  "source_features_sha256": "5c1196131622ff08e4379aac3b55410bd7eeca1d3e363d27a908f02c42412412",
+  "status": "INCONCLUSIVE_TIMEOUT_NO_CREDIT",
+  "top_symex_loops": [
+    [
+      "Unwinding loop memcmp.0",
+      4745
+    ],
+    [
+      "Unwinding loop _RNvMsn_NtNtNtCs6xMQmN1AWUs_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker5DyingNtNtBb_6string6StringNtNtCshBcuPsg9HoN_10serde_json5value5ValueNtB1k_14LeafOrInternalE15first_leaf_edgeB22_.0",
+      252
+    ],
+    [
+      "Unwinding loop _RNvMsn_NtNtNtCs6xMQmN1AWUs_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker5DyingNtNtBb_6string6StringB1D_NtB1k_14LeafOrInternalE15first_leaf_edgeCs48q3AxCsyuD_11agones_core.0",
+      189
+    ],
+    [
+      "Unwinding loop _RINvMsj_NtNtNtCs6xMQmN1AWUs_5alloc11collections5btree8navigateINtNtB8_4node6HandleINtB11_7NodeRefNtNtB11_6marker5DyingNtNtBc_6string6StringNtNtCshBcuPsg9HoN_10serde_json5value5ValueNtB1z_4LeafENtB1z_4EdgeE16deallocating_endNtNtBc_5alloc6GlobalEB2h_.0",
+      126
+    ],
+    [
+      "Unwinding loop _RINvMs0_NtNtNtCs6xMQmN1AWUs_5alloc11collections5btree6searchINtNtB8_4node7NodeRefNtNtBZ_6marker5ImmutNtNtBc_6string6StringB1B_NtB1j_14LeafOrInternalE14find_key_indexeECs48q3AxCsyuD_11agones_core.0",
+      63
+    ],
+    [
+      "Unwinding loop _RINvMsj_NtNtNtCs6xMQmN1AWUs_5alloc11collections5btree8navigateINtNtB8_4node6HandleINtB11_7NodeRefNtNtB11_6marker5DyingNtNtBc_6string6StringB1S_NtB1z_4LeafENtB1z_4EdgeE17deallocating_nextNtNtBc_5alloc6GlobalECs48q3AxCsyuD_11agones_core.0",
+      63
+    ]
+  ],
+  "unwind": 64
+}

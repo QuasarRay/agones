@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "GS_DEFAULTS_001_CANONICAL_DEFAULTS_REOPENED",
+  "gate_snapshot": "verification/agones/gates/90ecffab80af35e8b2ec88ba1367b66fc73e5b87a7b53f8d4b0dfff2e883cb00.json",
+  "predecessor_revision": 124,
+  "predecessor_sha256": "58740386597495ee9c48cbd46b11fb321e0925f1db669919c8b7c0589ffea396",
+  "reason": "Complete source case timed out during repeated comparisons in canonical default construction. Reopen before a real production optimization; preserve every original obligation and successful unaffected leaf proof.",
+  "result_revision": 125,
+  "schema_version": 1,
+  "state_sha256": "2f538a402ac91f66930c54bedbc8d80324943898869309e96a32c5f373ad467e",
+  "timestamp": "2026-10-18T21:25:54.348000+00:00"
+}

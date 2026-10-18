@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "GAMESERVER_EXACT_HARNESSES_PUBLICATION_PREPARED",
+  "gate_snapshot": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+  "predecessor_revision": 146,
+  "predecessor_sha256": "dd43b5451f41a0e2c07dacddcdfd3070db606bdf1f59c81ec35ff5cb57e6e56e",
+  "reason": "Prepare all 17 typed source-case harnesses/304 exact assertions, bounded generator controls and the real canonical initialization optimization for review. Current ordinary checks pass; both complete-case timeouts remain uncredited and all required source/architecture/lifecycle work stays open.",
+  "result_revision": 147,
+  "schema_version": 1,
+  "state_sha256": "d34f6aaaa36f2b1fd3fc8f8791b3981697237d0316efa87034edac43cee668a7",
+  "timestamp": "2026-10-18T21:39:03.704441+00:00"
+}

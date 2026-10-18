@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_VERSION_001_CANONICAL_PROPERTIES_READY",
+  "gate_snapshot": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json",
+  "predecessor_revision": 143,
+  "predecessor_sha256": "5a905b2507f19f8bd3e46c26bd6f66863fe8a18044fa152ef3fb41711ba904e9",
+  "reason": "Current deterministic query/print/SDK/GameServer generation checks pass, all generated source cases compile/run, and source mapping payloads remain identical.",
+  "result_revision": 144,
+  "schema_version": 1,
+  "state_sha256": "c950aa566aa34a41b10a088bd8210cd2a60b7c3098e6fe4f32dcb7a9ce3e8ce8",
+  "timestamp": "2026-10-18T21:36:37.860325+00:00"
+}

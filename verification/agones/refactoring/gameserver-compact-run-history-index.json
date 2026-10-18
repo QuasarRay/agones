@@ -1,0 +1,16 @@
+{
+  "architecture_status": "All eight _2 form/location cells remain REQUIRED_OPEN. This bookkeeping filter is not macro authoring credit; the real 17-case Genco consumer remains the next opportunity to evaluate economical typed property declarations.",
+  "candidate": "Stop copying complete terminal job records into every canonical ledger checkpoint.",
+  "decision": "SMALL_LOCAL_REFACTOR",
+  "feature_binding": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+  "id": "GS-DEFAULTS-001-compact-run-history-index",
+  "next_review_trigger": "After the first adequate complete GameServer source proof or the next API validation milestone; revisit source-property plumbing and all eight _2 cells.",
+  "observations": {
+    "active_rows_before": 0,
+    "ledger_bytes_before": 377535,
+    "terminal_job_json_bytes_before": 309944,
+    "terminal_job_rows": 275
+  },
+  "roi": "Every checkpoint currently recopies roughly 310 KB of terminal job metadata already retained in immutable per-run receipts, with repeated historical snapshots multiplying storage and retrieval cost. A conservative terminal-completeness filter removes the duplication without deleting evidence or weakening source/proof checks. Active or incomplete receipts remain recoverable; no new scheduler/database/schema is introduced.",
+  "validation": "Use a real bounded run: verify its live process identity, checkpoint while running, require it in jobs, wait for its terminal receipt, checkpoint again, require its history/hashed log retained and the live index empty. Preserve previous snapshots and full history."
+}

@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_VERSION_001_CANONICAL_IMPLEMENTED",
+  "gate_snapshot": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json",
+  "predecessor_revision": 141,
+  "predecessor_sha256": "ef062c1c3013f32e464bad9d74b4aa76c0297bc40e4bb449668297f11946c582",
+  "reason": "Current complete ordinary behavior passes 578 tests. Gate bindings refresh canonical initialization/shared emitter provenance, or are revalidated unchanged for SDK.",
+  "result_revision": 142,
+  "schema_version": 1,
+  "state_sha256": "0e3bd3109a21c699a7919a7b328f23c994a578b5e7df458ff0eec66bbabdeffe",
+  "timestamp": "2026-10-18T21:36:37.409926+00:00"
+}

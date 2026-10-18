@@ -33,6 +33,10 @@ pub const AGONES_FEATURE_DEFAULTS: &[(&str, bool)] = &[
     ("WasmAutoscaler", false),
 ];
 
+// Give default contexts one stable allocation identity. References to a const
+// alone may be materialized in different allocations by the compiler.
+static CANONICAL_FEATURE_DEFAULTS: &[(&str, bool)] = AGONES_FEATURE_DEFAULTS;
+
 /// Mirrors an initialized or not-yet-initialized reference feature map.
 /// `Default` is empty, as Go's map is nil before ParseFeatures/EnableAllFeatures.
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
@@ -47,6 +51,17 @@ impl FeatureGates {
     }
 
     fn from_defaults(defaults: &[(&str, bool)]) -> Self {
+        // The canonical source table is already sorted and unique. Preserve
+        // its order directly; custom contexts retain the map-like fallback.
+        // Pointer identity is only a fast path, never a semantic precondition.
+        if std::ptr::eq(defaults, CANONICAL_FEATURE_DEFAULTS) {
+            return Self(
+                defaults
+                    .iter()
+                    .map(|(name, enabled)| ((*name).to_owned(), *enabled))
+                    .collect(),
+            );
+        }
         // The production dictionary has fifteen entries. Sorted owned entries
         // preserve map lookup/encoding behavior without general tree machinery.
         // Repeated default names keep their last value, as map collection did.
@@ -149,7 +164,7 @@ pub struct FeatureGateContext {
 impl Default for FeatureGateContext {
     fn default() -> Self {
         Self {
-            feature_gate_defaults: AGONES_FEATURE_DEFAULTS,
+            feature_gate_defaults: CANONICAL_FEATURE_DEFAULTS,
         }
     }
 }
@@ -310,6 +325,39 @@ impl From<&FeatureGates> for crate::AutoscalerFeatures {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn canonical_defaults_match_distinct_reordered_and_duplicate_tables() {
+        assert!(
+            AGONES_FEATURE_DEFAULTS
+                .windows(2)
+                .all(|pair| pair[0].0 < pair[1].0)
+        );
+        let context = FeatureGateContext::default();
+        assert!(std::ptr::eq(
+            context.feature_gate_defaults,
+            CANONICAL_FEATURE_DEFAULTS
+        ));
+        let canonical = context.parse_feature_gates("").unwrap();
+        for (name, enabled) in AGONES_FEATURE_DEFAULTS {
+            assert_eq!(canonical.enabled(name), *enabled);
+        }
+        let mut reordered = AGONES_FEATURE_DEFAULTS.to_vec();
+        reordered.reverse();
+        assert!(!std::ptr::eq(reordered.as_slice(), AGONES_FEATURE_DEFAULTS));
+        assert_eq!(FeatureGates::from_defaults(&reordered), canonical);
+        reordered.push(("PlayerTracking", true));
+        reordered.push(("PlayerTracking", false));
+        assert_eq!(FeatureGates::from_defaults(&reordered), canonical);
+        reordered.push(("PlayerTracking", true));
+        let changed = FeatureGates::from_defaults(&reordered);
+        assert!(changed.enabled("PlayerTracking"));
+        for (name, enabled) in AGONES_FEATURE_DEFAULTS {
+            if *name != "PlayerTracking" {
+                assert_eq!(changed.enabled(name), *enabled);
+            }
+        }
+    }
 
     #[test]
     fn custom_default_duplicates_and_query_byte_order_preserve_map_semantics() {

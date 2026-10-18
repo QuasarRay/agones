@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "FG_CONFIG_001_CANONICAL_EXTRACTING",
+  "gate_snapshot": "verification/agones/gates/853170740e44449a199e9af4c895c40fb2647e17e0fea749c5b98b3ab659c04b.json",
+  "predecessor_revision": 130,
+  "predecessor_sha256": "6c6f0bb4b1a2431f6a2caf3f5570503c6232b44644835b9b6c7c99e349cfcf8a",
+  "reason": "Reuse original package-qualified source obligations: fixtures, actions, conditional guards and expectations are unchanged; only implementation receipt references changed.",
+  "result_revision": 131,
+  "schema_version": 1,
+  "state_sha256": "fd903a1099861235eb6a7a33a667f8ba9560114c089772a523f9133e11f2238b",
+  "timestamp": "2026-10-18T21:36:34.936410+00:00"
+}

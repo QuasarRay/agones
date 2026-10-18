@@ -1,0 +1,19 @@
+{
+  "active_index_rows_after": 0,
+  "all_immutable_run_receipts_retained": true,
+  "checkpoint_source_sha256": "bea0bade91e48d23c433d3d45b3c17ae302ca8357ac1da9ffb4ffcd52e286a66",
+  "classification": "RECOVERY_INFRASTRUCTURE_ONLY",
+  "feature_id": "GS-DEFAULTS-001",
+  "historical_terminal_rows_before": 275,
+  "ledger_bytes_after": 55889,
+  "ledger_bytes_before": 377535,
+  "live_control_revision": 148,
+  "log_sha256": "5e214ed726f79b47516040289016a37b66ad61c8c54a39d3f8a7616e55707658",
+  "prior_historical_snapshots_retained": true,
+  "receipt_sha256": "030a8c0dca49c01a50a1d48ac874ab62a793479e7cbc39a9cf070a0e86474fa8",
+  "run": "verification/agones/runs/gs-checkpoint-live-history-control-1.json",
+  "schema_version": 1,
+  "scope": "Actual live PID/start identity was verified before its checkpoint. Complete history remains in per-run receipts. No production, source assertion or formal proof credit is inferred from this bookkeeping control.",
+  "status": "PASSED",
+  "terminal_control_revision": 149
+}

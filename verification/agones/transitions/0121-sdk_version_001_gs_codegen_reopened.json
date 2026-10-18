@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_VERSION_001_GS_CODEGEN_REOPENED",
+  "gate_snapshot": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json",
+  "predecessor_revision": 120,
+  "predecessor_sha256": "ec4933f42dc079e4e3bfe73ed487138052d7447d84233cf2b0abf61eaa9a59fb",
+  "reason": "Extending the shared Genco emitter changes its conservative verification/production bindings. Reopen affected packets before editing; preserve their source obligations and successful reachable proofs for explicit revalidation.",
+  "result_revision": 121,
+  "schema_version": 1,
+  "state_sha256": "9dfe0a48eb7f72e371a01042f4e9601779f29b78ac4b32ce686cf0785cad5dc1",
+  "timestamp": "2026-10-18T21:14:13.571522+00:00"
+}

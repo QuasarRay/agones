@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_VERSION_001_CANONICAL_VERIFYING",
+  "gate_snapshot": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json",
+  "predecessor_revision": 144,
+  "predecessor_sha256": "c950aa566aa34a41b10a088bd8210cd2a60b7c3098e6fe4f32dcb7a9ce3e8ce8",
+  "reason": "Retain only separately audited current component proof credit. Remaining original query/input/SDK/error obligations stay required; no timeout or GameServer source assertion receives credit.",
+  "result_revision": 145,
+  "schema_version": 1,
+  "state_sha256": "3a2eb4bb6c3043f5c70f6348badae0f49913cb9cfd8dfbca0ca3d079cd0e4c72",
+  "timestamp": "2026-10-18T21:36:38.123745+00:00"
+}

@@ -1,7 +1,11 @@
 {
   "artifact_bindings": {
     "verification/agones/feature-error-paired-replay.json": "b696cea4b3650772e3baaa309eea08171f7fbb1967829c5da2ec2d49b606f8f9",
+    "verification/agones/feature-query-codegen.json": "3371c454273c910fb5ad68aa6a9abf27c3b9907332a92b8bf53831bb0819c0bc",
+    "verification/agones/gameserver-canonical-proof-reuse.json": "f0b50390d8f0e1d384a6ad5723444a8f0ed30d4ac50d0be8e0bbc48c2797f77a",
+    "verification/agones/gameserver-codegen-source-reuse.json": "30f7a1792e41fb982c7f3022384e7d425a1269ce2ba11be779ee518fe42a7511",
     "verification/agones/gameserver-shared-proof-reuse.json": "be302d2de4fb1d536faa13ef268726ee3a83564d6e31fff01436351dd4c293d8",
+    "verification/agones/go-print-codegen.json": "5ac98b89833a7eab4d2472a0e814843e50d526292367a4b8d08ea386b6c5c277",
     "verification/agones/go-quote-provenance-initial.json": "0159570e794494fc2e49f0ff3bc003e7e542848d29cb80b2a7eaeef8463c2bfb",
     "verification/agones/proof-summaries/sdk-query-error-source.json": "03240cff1b1123ff88e34a541249553b1436f998ee804ae85f718b2ae0675d3f",
     "verification/agones/query-proof-campaign.json": "e6756cca08fe0b71060dba7aabc1390108543bfef7a16afa13b2adbd89bb558c",
@@ -48,6 +52,28 @@
     "verification/agones/runs/feature-error-workspace-check-1.log": "8d3fd659b2a557d1f0624bba3943f6a983bbbba6c1b78ed97be714e24ee3657c",
     "verification/agones/runs/feature-error-workspace-tests-1.json": "b3388b05786cfad4e5793786df3b745dc6b7d44a083c8cb4557212799380fc79",
     "verification/agones/runs/feature-error-workspace-tests-1.log": "b3a6ab4ece11667629b36bb1865e19cbd92d5cb5dd8245b6c4117cf1537d46ce",
+    "verification/agones/runs/gs-canonical-bool-reparse-1.json": "33a47157bfa75b8bc66d1ef40c56673da21f8ca097dc08673432832c7e3eb847",
+    "verification/agones/runs/gs-canonical-bool-reparse-1.log": "bfda7ca7009a5f8a16ed8c73162b2affc63845fc4b2840e558c7357349914cb5",
+    "verification/agones/runs/gs-canonical-gameserver-check-1.json": "7ff7ab0c7a6bd3538b1700776cd1c2fef41665fedff6a465f389722cb5a304a0",
+    "verification/agones/runs/gs-canonical-gameserver-check-1.log": "a96113155ba1e5b09d689e841ededa4474f9ad1cc5d369666623523e71546451",
+    "verification/agones/runs/gs-canonical-health-reparse-1.json": "76a7aece1af322d64c6fb8ae72df57e8aefcaf18962a5fcade37ebf7812b2d7b",
+    "verification/agones/runs/gs-canonical-health-reparse-1.log": "b58d76c109709599c48561704574c4e851f11857ed27e3a086578108f6942980",
+    "verification/agones/runs/gs-canonical-input-reparse-1.json": "4f8b152a7cd3fdf0fc1d62cd5be7e4000397ed3aa52b8b07957d8a276a498f52",
+    "verification/agones/runs/gs-canonical-input-reparse-1.log": "e7677667031b7c827c8b22c5323f2e733d7a83a6bcd783dd15d07d48fe49f16a",
+    "verification/agones/runs/gs-canonical-print-check-1.json": "41b737a67b32b35e07cf18c6e2347556d21f32a6f118ff9c90e6f8b5bc15bb80",
+    "verification/agones/runs/gs-canonical-print-check-1.log": "9afbe79fa9af5ab6644440d4d5e98f166f51dd7474cf197b95d7467890db9b2a",
+    "verification/agones/runs/gs-canonical-query-check-1.json": "c1ab0d93336cbf8a1e72fd67bfe5260d6370a3bc0114b1cf37f81be886f9bdcd",
+    "verification/agones/runs/gs-canonical-query-check-1.log": "33ff6538ac14b51743fe0bb2ea32915979529c7ed56fe9b624eaba116432981d",
+    "verification/agones/runs/gs-canonical-query-reparse-1.json": "c4811f005b7639fa60e4dc61a7aabdaad1ac080277e50babf2897fa6d3091463",
+    "verification/agones/runs/gs-canonical-query-reparse-1.log": "ce815f28306674ab768823c83cdd80986ecaea6f4cb8a170a07d1d66e17e975b",
+    "verification/agones/runs/gs-canonical-sdk-check-1.json": "d303505149c49eabf82ad89a16635eb8ca503c4e779068e47d3cb04110faf6a5",
+    "verification/agones/runs/gs-canonical-sdk-check-1.log": "d940ba378a1aa9e4529275e28b0122a83a976d0a088dbf2b6299c788f5f1d2dd",
+    "verification/agones/runs/gs-canonical-source-runtime-1.json": "b413246f81f961854459014c4ab51fd566334b8fd4f0119e8160b33517e012fa",
+    "verification/agones/runs/gs-canonical-source-runtime-1.log": "8278c5e1cd4277004f12c656eaee03cde406e81f97b7379207894ba346abccc9",
+    "verification/agones/runs/gs-canonical-workspace-check-2.json": "f7809f9cec82982c83ffe292422aac0e29b1c422a3e7301be3ac29c409f3c47d",
+    "verification/agones/runs/gs-canonical-workspace-check-2.log": "d8fd83ae42beafeb6f642ee821e7763e401a88642cdc6b8b0261ba7993ae8fad",
+    "verification/agones/runs/gs-canonical-workspace-tests-3.json": "4757d0b7ac01b1b0abd8ee5c75fe0d8e0bdfdda674c8ccea9198e9888fa0cb90",
+    "verification/agones/runs/gs-canonical-workspace-tests-3.log": "9c74dccb2a2e03ceffb0fc2b39e77939050620ec953885a9738002a8e02bb5f0",
     "verification/agones/runs/quote-ascii-go-reference-1.json": "8abf054bd1fd7c27eaa6019a654e1f54bfe6fd8a0998a48a4546597eda217b7c",
     "verification/agones/runs/quote-ascii-go-reference-1.log": "9069ce470ea4b27286f3ace25f0a23dbcd046a858ff43d5bf27f834fec02dab1",
     "verification/agones/runs/sdk-containers-slice-check-1.json": "59d7a7ad94806b85f0d30d48f1b680d4fbf9c2d29f0e38b28780ebe2e896722a",
@@ -176,7 +202,8 @@
     "verification/agones/runs/sdk-version-workspace-check-1.log": "f0f7ff4a1ffaa7c9ddacc17ceba8a5f5a254f79b6053c4159a68cf42edf0e003",
     "verification/agones/runs/sdk-version-workspace-tests-1.json": "29aab7cbf130ca22daf4fbd3cfa99d0cd1dfab2198f9710ee09a18a77f229f67",
     "verification/agones/runs/sdk-version-workspace-tests-1.log": "52c5499bf81667b4bf906b355aa3611b5d5f2d30ae7f6ab12c335298c533f911",
-    "verification/agones/sdk-shared-helper-proof-reuse.json": "75e3754a32e3c9eea99ad52674109cf7246cb840df244c63413ce2ed329c2425"
+    "verification/agones/sdk-shared-helper-proof-reuse.json": "75e3754a32e3c9eea99ad52674109cf7246cb840df244c63413ce2ed329c2425",
+    "verification/agones/sdk-version-codegen.json": "4acb36f451b04eabf78f941b4be153a6f456e9b00a2cc252b1015accf2d64ce6"
   },
   "assurance": {
     "additional_unique_focused_tests": {
@@ -197,9 +224,8 @@
     "ordinary_full_workspace": {
       "failed": 0,
       "ignored": 2,
-      "passed": 557,
-      "run": "verification/agones/runs/gs-final-workspace-tests-1.json",
-      "selection": "--workspace --all-targets"
+      "passed": 578,
+      "run": "verification/agones/runs/gs-canonical-workspace-tests-3.json"
     },
     "ordinary_go_rust_full_error_replay": {
       "expected_independently_checked_by_both": true,
@@ -225,12 +251,16 @@
     }
   },
   "evidence_refresh": {
-    "current_check": "verification/agones/runs/gs-final-workspace-check-1.json",
-    "current_workspace": "verification/agones/runs/gs-final-workspace-tests-1.json",
-    "feature_source": "verification/agones/runs/gs-refresh-feature-source-1.json",
-    "reuse": "verification/agones/gameserver-shared-proof-reuse.json",
-    "sdk_source": "verification/agones/runs/gs-refresh-sdk-source-1.json",
-    "source_semantics": "Existing feature/SDK cases, defaults, source files and fixture programs are unchanged; implementation gates and expanded loader metadata are current."
+    "kind": "CANONICAL_DEFAULT_INITIALIZATION_AND_EXACT_GS_GENERATION",
+    "ordinary_workspace": {
+      "failed": 0,
+      "ignored": 2,
+      "passed": 578,
+      "run": "verification/agones/runs/gs-canonical-workspace-tests-3.json"
+    },
+    "proof_reuse": "verification/agones/gameserver-canonical-proof-reuse.json",
+    "scope": "Original source payload/identities/fixtures/relations remain identical. Actual canonical initialization avoids redundant comparisons; custom inputs preserve prior sorting/last-duplicate semantics. Four existing proof selections retain only their individually audited reachable-component credit. Both whole GameServer-case diagnostics have zero original-source proof credit.",
+    "source_reuse": "verification/agones/gameserver-codegen-source-reuse.json"
   },
   "feature_id": "FG-ERROR-001",
   "historical_metadata_recovery": {
@@ -239,7 +269,7 @@
     "sha256": "0159570e794494fc2e49f0ff3bc003e7e542848d29cb80b2a7eaeef8463c2bfb",
     "status": "SUPERSEDED_INITIAL_COUNT_RECORD"
   },
-  "implementation_gate": "verification/agones/gates/f2b9b3f7f1ff126d26208a22efb1256e8616fe8ba8160ed01300a375a610c8bb.json",
+  "implementation_gate": "verification/agones/gates/f74516bd4e16e5abbacfe2694db7bfb89bf02d633da877472111a84c77a7913f.json",
   "metadata_count_correction": "The initial gate/provenance count 1112064 overstated decoder calls by 128. Current superseding gates record 1111936 non-ASCII decoder cases and 128 separately checked ASCII single bytes. Production code is unchanged; all 22 source assertions/defaults/helper bindings and generated Rust were revalidated unchanged, with only gate references/metadata refreshed.",
   "next_feature": "Complete source-compatible GameServer defaulting and canonical API values through the existing CGP composition; required SDK/query/error proof debt stays open.",
   "next_formal_trigger": "A measured adequate allocation/encoding decomposition of the actual production quote helper, preserving the full declared domain and every claim/cover; no identical retry.",
@@ -266,14 +296,14 @@
     "build/scripts/agones-rs/probes/compile_go_print_table.go": "2fdf7febec851e457e8258683c8579dcf39736bd6ce6b8d82a27866b990542c4",
     "build/scripts/agones-rs/probes/feature_error_replay.go": "99a34a0a9238167255ce6e75405bea568dd98740461540ebbb91fa6457e3caa7",
     "build/scripts/agones-rs/probes/quote_ascii_reference.go": "3f09f863d1d9834567ee851643ea6717e00e89f812a15911827b37ade681c850",
-    "build/scripts/agones-rs/summarize_feature_proof.py": "029094e7fe06562e578d1e73a1934be7ad4ce9ec5908c50cc0c01ba4835e7e29",
+    "build/scripts/agones-rs/summarize_feature_proof.py": "e79786d1de4f0c47c5f41a6e5b9b61afb28565e3836d165f12d11506e9d7bb06",
     "crates/agones-core/Cargo.toml": "b9ff5ca08d252c07abce0e5ebb5f6a45dcbd874cebe4ba51712b5dde331b8bd6",
     "crates/agones-core/GO-STRCONV-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
     "crates/agones-core/build.rs": "1deebfccd6024e6567573612d320770591de232f04f7b98291b0b5fa0fc78882",
     "crates/agones-core/examples/feature_error_replay.rs": "6cac3a9ce292f29f045496c0ce497392c25b8452ba0ac4f3d8f58e9dd17e6ff5",
     "crates/agones-core/src/build_version.rs": "e6560758de4332abe27a97a3f3b5794068f20e0b4092380658b1cfdc4ce7e1f7",
     "crates/agones-core/src/feature_inputs.rs": "9cfaf42de485874339a58895991ad15adff787f363d9821a3ab7f0f4c36222d4",
-    "crates/agones-core/src/features.rs": "46e8f93b86b6187e3927047e5cebafa135e8a55f38089ec3c3aad31ebdaca1a3",
+    "crates/agones-core/src/features.rs": "5c1196131622ff08e4379aac3b55410bd7eeca1d3e363d27a908f02c42412412",
     "crates/agones-core/src/gameserver_defaulting.rs": "abfde63391515d8d406a0feed17e58aa3fe0380c03f44ab4f7823a3cfaa00ce4",
     "crates/agones-core/src/generated/go_print_ranges.rs": "0b0dc1a240c33ca0e01d718f5120a0d5bd894e15740b4cf3888824a0a7e84a0b",
     "crates/agones-core/src/go_quote.rs": "c0e5d196bb6089dd5c138e8c880964cabcf333a96d124377b370c61609c128b9",
@@ -286,7 +316,7 @@
     "crates/agones-macros/Cargo.toml": "9372efc5090b3c3c5d06b54c8e5f943025c2a73aeb54c630564ad4f1170c06a7",
     "crates/agones-macros/src/lib.rs": "60909ed25990ea455cb8ed753548aadc87fb866d1839f7e4a7d1c293dd15a39f",
     "crates/agones-rusternetes/Cargo.toml": "7e5c18a590b0d602c725abd853fd0ba7825e4028f8a46fc7fe404bb7b512db26",
-    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "1c30ab06ed9560f018c5ff25509c88cbabbf72061eae987e2fac17fa9ee1bcb3",
+    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "89138eb60c446c08e4cb6e6f75a5febf2f54372fdbf89488c323302b406fbe8a",
     "crates/agones-rusternetes/src/creating_gameserver_controller.rs": "0bb3d4dbc4d062cadb221eaee06162fc459086d6fb243c172efab800a173ebef",
     "crates/agones-rusternetes/src/fleetautoscaler_admission.rs": "10bd2bfcfc8c1542cd5f02e504a55667fac25f277a96b0ac667edd28175ecfe6",
     "crates/agones-rusternetes/src/fleetautoscaler_controller.rs": "9878f9e36b0aeb9c4180e69070af9f57717a5cedfdfa16413fe1ab6086750547",
@@ -301,7 +331,7 @@
     "verification/agones/feature-error-properties.json": "1cdb083b538ed2810cc5fb14e805f0960b23dfe9c5767dd831116ff61d9609c1",
     "verification/agones/feature-error-witnesses.json": "212f26e3829f4ec31ca3398160ad04706b2567634cb64e3df6e5d4de2d98033e",
     "verification/agones/feature-input-capability-v1.json": "a307b7d5f0ec550aac46080765989fb5fc67e254eab3ae51869da8a504671064",
-    "verification/agones/go-print-codegen.json": "2323faaf340985fb53ef861a75a724a60c620bf599efa36afbbb460631260bde",
+    "verification/agones/go-print-codegen.json": "5ac98b89833a7eab4d2472a0e814843e50d526292367a4b8d08ea386b6c5c277",
     "verification/agones/go-print-expected.bin": "a30b1e23aa8a5d77ecaea1b9dd5c85e2d505cb2712b1906996c82089fa5117fc",
     "verification/agones/go-print-table.json": "710dcd074ff09faafc79c0b8e06a5c83eb8a37beb0e1ee45d42a9556c930ef9d",
     "verification/agones/go-quote-ascii-reference.json": "9069ce470ea4b27286f3ace25f0a23dbcd046a858ff43d5bf27f834fec02dab1",

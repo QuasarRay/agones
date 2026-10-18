@@ -183,6 +183,12 @@ if __name__ == "__main__":
         state["jobs"] = []
         for path in sorted((OUT/"runs").glob("*.json")):
             run = read(path)
+            # Immutable run receipts retain terminal history. The compact
+            # ledger indexes work that still needs recovery, including an
+            # apparently terminal receipt whose final fields are incomplete.
+            if (run["status"] in ("PASSED", "FAILED") and run.get("finished_at")
+                    and run.get("exit_code") is not None and run.get("log_sha256")):
+                continue
             state["jobs"].append({"receipt":str(path.relative_to(ROOT)), **{
                 key:run.get(key) for key in ("owner_token", "command", "cwd", "pid", "process_identity", "started_at", "finished_at", "status", "exit_code", "log", "attempt")},
                 "source_binding_sha256":hashlib.sha256(json.dumps(run["source_files"],sort_keys=True).encode()).hexdigest(),

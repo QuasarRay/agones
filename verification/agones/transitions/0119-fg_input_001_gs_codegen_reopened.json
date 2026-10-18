@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ],
+  "authorization": "User execution contract",
+  "event": "FG_INPUT_001_GS_CODEGEN_REOPENED",
+  "gate_snapshot": "verification/agones/gates/a615ff5f2579283705afe3e748487f503633b34834739277fa94657e4a4758ad.json",
+  "predecessor_revision": 118,
+  "predecessor_sha256": "fd074f43689fe30f48bf4a3b627bec97b86146e7dc5218466937c9bbaa5b20a0",
+  "reason": "Extending the shared Genco emitter changes its conservative verification/production bindings. Reopen affected packets before editing; preserve their source obligations and successful reachable proofs for explicit revalidation.",
+  "result_revision": 119,
+  "schema_version": 1,
+  "state_sha256": "aa736a744b19dc2083bfcde301b211ceeb9c3b0f2855ebb50c202a971cb37867",
+  "timestamp": "2026-10-18T21:14:13.233667+00:00"
+}

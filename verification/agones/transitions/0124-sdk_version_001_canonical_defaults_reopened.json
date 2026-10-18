@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_VERSION_001_CANONICAL_DEFAULTS_REOPENED",
+  "gate_snapshot": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json",
+  "predecessor_revision": 123,
+  "predecessor_sha256": "254a5922c48e2a91b4da39f5aba961ac2c06de629e8837041be0046e1e4b8f52",
+  "reason": "Complete source case timed out during repeated comparisons in canonical default construction. Reopen before a real production optimization; preserve every original obligation and successful unaffected leaf proof.",
+  "result_revision": 124,
+  "schema_version": 1,
+  "state_sha256": "58740386597495ee9c48cbd46b11fb321e0925f1db669919c8b7c0589ffea396",
+  "timestamp": "2026-10-18T21:25:54.179113+00:00"
+}

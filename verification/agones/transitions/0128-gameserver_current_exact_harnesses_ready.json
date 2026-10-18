@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "GAMESERVER_CURRENT_EXACT_HARNESSES_READY",
+  "gate_snapshot": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+  "predecessor_revision": 127,
+  "predecessor_sha256": "414036c24b5483eaa16f1ba571475da72c03094203a80b03fe4a0ae0403457ee",
+  "reason": "All 17 typed fixtures and 304 source assertions retain the same generated Rust bytes. Current metadata binds the new gate; all full fixtures and original relations pass ordinary production replay.",
+  "result_revision": 128,
+  "schema_version": 1,
+  "state_sha256": "450b217b749c0789eeaa969f6f4c99e40583d5bec0589e0725e9697789abd176",
+  "timestamp": "2026-10-18T21:31:06.681644+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "FG_CONFIG_001_CANONICAL_VERIFYING",
+  "gate_snapshot": "verification/agones/gates/853170740e44449a199e9af4c895c40fb2647e17e0fea749c5b98b3ab659c04b.json",
+  "predecessor_revision": 132,
+  "predecessor_sha256": "0672a9b73ea349e05671b3b2afbfde103b2cba9aa1f772f61a7383ba9e094ced",
+  "reason": "Retain only separately audited current component proof credit. Remaining original query/input/SDK/error obligations stay required; no timeout or GameServer source assertion receives credit.",
+  "result_revision": 133,
+  "schema_version": 1,
+  "state_sha256": "cceaa8086706393cebc0671f7e1c35e19c6bb2f0e1f80d8f2b22706ad23b8fb5",
+  "timestamp": "2026-10-18T21:36:35.331890+00:00"
+}

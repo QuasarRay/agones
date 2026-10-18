@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Require exact feature input/query/error assertions and all declared covers."""
 import argparse
+import hashlib
 import json
 
 from kani_results import ROOT, read_results, require_claims_and_covers
 
 parser = argparse.ArgumentParser()
-parser.add_argument("family", choices=["input", "query", "error-ascii", "sdk-version", "sdk-source", "health"])
+parser.add_argument("family", choices=["input", "query", "error-ascii", "sdk-version", "sdk-source", "health", "gameserver-source"])
 parser.add_argument("run_id")
 parser.add_argument("--output", required=True)
 parser.add_argument("--case-index", type=int)
@@ -54,6 +55,34 @@ elif args.family == "health":
                 "signed health extremes remain exact", "disabled minimum delay remains exact",
                 "mixed health thresholds default independently", "the generator should produce at least one valid value"]
     scope = "Actual GameServerSpec::apply_defaults health observation with other spec fields zero, independent reference and relational invariant. One bool and three arbitrary i32 inputs, no filtering, unwind 16. No whole GameServer/admission/lifecycle proof or original exact-case assertion credit."
+elif args.family == "gameserver-source":
+    metadata = json.loads((ROOT / "verification/agones/gameserver-defaulting-codegen.json").read_text())
+    assert metadata["feature_id"] == "GS-DEFAULTS-001"
+    assert metadata["case_count"] == 17 and metadata["assertion_count"] == 304
+    assert args.case_index is not None and 0 <= args.case_index < 17, "select the exact source case"
+    selected = metadata["harnesses"][args.case_index]
+    harness = selected["harness"]
+    run = json.loads((ROOT / f"verification/agones/runs/{args.run_id}.json").read_text())
+    for key, binding in [("output", "output_sha256"), ("ir", "ir_sha256"), ("generator_path", "generator_sha256")]:
+        path = metadata[key]
+        assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == metadata[binding], f"stale {key}"
+        assert run["source_files"][path] == metadata[binding], f"proof used different {key}"
+    command = run["command"]
+    assert ["bolero", "test", harness, "--engine", "kani"] == command[-5:], "require the selected real Bolero/Kani route"
+    functions = {claim["function"]: claim for claim in metadata["assertions"] if claim["function"] in selected["assertion_functions"]}
+    assert len(functions) == len(selected["assertion_functions"])
+    names = lambda row: row["symbol"].split(".assertion.")[0].split("::")[-1]
+    claims = [row for row in rows if names(row) in functions]
+    assert len(claims) == len(functions), "missing/duplicate original source assertions"
+    assert {names(row) for row in claims} == set(functions)
+    assert all(row["location"] and row["location"].startswith(metadata["output"]+":") for row in claims)
+    for row in claims:
+        row["origin"] = functions[names(row)]["origin"]
+    required = selected["required_covers"]
+    scope = ("Selected exact source GameServer case only: "+selected["case_id"]+
+             ". Unit input, no preconditions, unwind "+str(selected["unwind"])+
+             "; typed whole source fixture, actual feature parser and CGP defaulting provider, literal original relations. "
+             "Other cases, zero-occurrence sites, general domains, admission/lifecycle and executor behavior receive no credit.")
 elif args.family == "sdk-source":
     metadata = json.loads((ROOT / "verification/agones/sdk-version-codegen.json").read_text())
     harness = metadata["harness"]

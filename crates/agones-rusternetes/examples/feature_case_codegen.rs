@@ -293,12 +293,543 @@ fn emit_sdk_version_case(root: &Path, check: bool) {
     );
 }
 
+// This family emits concrete typed fixtures, not a JSON decoder in a proof.
+// The whole decoded value and its source JSON must match the supported shape.
+fn gs_enum(value: Option<&str>, kind: &str) -> rust::Tokens {
+    match value {
+        None => quote! { None },
+        Some(value) => {
+            let value = quoted(value);
+            quote! { Some(agones_core::$kind::from($value)) }
+        }
+    }
+}
+
+fn gs_health(value: &agones_core::Health) -> rust::Tokens {
+    let disabled = value.disabled.to_string();
+    let period = format!("{}i32", value.period_seconds);
+    let failure = format!("{}i32", value.failure_threshold);
+    let delay = format!("{}i32", value.initial_delay_seconds);
+    quote! { agones_core::Health { disabled: $disabled, period_seconds: $period,
+    failure_threshold: $failure, initial_delay_seconds: $delay } }
+}
+
+fn gs_sdk(value: &agones_core::SdkServer) -> rust::Tokens {
+    let log = gs_enum(
+        value.log_level.as_ref().map(|v| v.as_str()),
+        "SdkServerLogLevel",
+    );
+    let grpc = format!("{}i32", value.grpc_port);
+    let http = format!("{}i32", value.http_port);
+    quote! { agones_core::SdkServer { log_level: $log, grpc_port: $grpc, http_port: $http } }
+}
+
+fn gs_map(value: &Value, lists: bool) -> rust::Tokens {
+    if value.is_null() {
+        return quote! { None };
+    }
+    let mut entries = rust::Tokens::new();
+    for (key, item) in value.as_object().expect("source string-keyed map") {
+        let key = quoted(key.as_str());
+        let capacity = format!("{}i64", item["capacity"].as_i64().unwrap());
+        let value = if lists {
+            let values = if item["values"].is_null() {
+                quote! { agones_core::GoSlice::default() }
+            } else {
+                let mut elements = rust::Tokens::new();
+                for value in item["values"].as_array().unwrap() {
+                    let value = quoted(value.as_str().unwrap());
+                    elements.append(quote! { $value.to_owned(), });
+                }
+                quote! { vec![$elements].into() }
+            };
+            quote! { agones_core::ListStatus { capacity: $capacity, values: $values } }
+        } else {
+            let count = format!("{}i64", item["count"].as_i64().unwrap());
+            quote! { agones_core::CounterStatus { count: $count, capacity: $capacity } }
+        };
+        entries.append(quote! { ($key.to_owned(), $value), });
+    }
+    quote! { Some(std::collections::BTreeMap::from([$entries])) }
+}
+
+fn gs_fixture(input: &Value, function: &str) -> rust::Tokens {
+    use agones_core::{Container, GameServer};
+    let typed: GameServer = serde_json::from_value(input.clone()).unwrap();
+    assert_eq!(
+        serde_json::to_value(&typed).unwrap(),
+        *input,
+        "source fixture must round-trip completely before typed lowering"
+    );
+    let mut supported = GameServer::default();
+    supported.spec.container = typed.spec.container.clone();
+    supported.spec.ports = typed.spec.ports.clone();
+    supported.spec.health = typed.spec.health.clone();
+    supported.spec.sdk_server = typed.spec.sdk_server.clone();
+    supported.spec.scheduling = typed.spec.scheduling.clone();
+    supported.spec.eviction = typed.spec.eviction.clone();
+    supported.spec.counters = typed.spec.counters.clone();
+    supported.spec.lists = typed.spec.lists.clone();
+    supported.spec.template.spec.containers = typed.spec.template.spec.containers.clone();
+    supported.spec.template.metadata.annotations = typed.spec.template.metadata.annotations.clone();
+    supported.status.state = typed.status.state.clone();
+    assert_eq!(supported, typed, "unsupported whole source fixture shape");
+    let container = quoted(typed.spec.container.as_str());
+    let mut ports = rust::Tokens::new();
+    for port in &typed.spec.ports {
+        let name = quoted(port.name.as_str());
+        let range = quoted(port.range.as_str());
+        let policy = gs_enum(port.port_policy.as_ref().map(|v| v.as_str()), "PortPolicy");
+        let protocol = gs_enum(port.protocol.as_ref().map(|v| v.as_str()), "Protocol");
+        let owner = match &port.container {
+            None => quote! { None },
+            Some(value) => {
+                let value = quoted(value.as_str());
+                quote! { Some($value.to_owned()) }
+            }
+        };
+        let container_port = format!("{}i32", port.container_port);
+        let host_port = format!("{}i32", port.host_port);
+        ports.append(
+            quote! { agones_core::GameServerPort { name: $name.to_owned(),
+            range: $range.to_owned(), port_policy: $policy, protocol: $protocol,
+            container: $owner, container_port: $container_port, host_port: $host_port }, },
+        );
+    }
+    let ports = if typed.spec.ports.is_nil() {
+        quote! { agones_core::GoSlice::default() }
+    } else {
+        quote! { vec![$ports].into() }
+    };
+    let mut containers = rust::Tokens::new();
+    for value in &typed.spec.template.spec.containers {
+        assert_eq!(
+            *value,
+            Container {
+                name: value.name.clone(),
+                image: value.image.clone(),
+                ..Container::default()
+            },
+            "unsupported source Container field"
+        );
+        let name = quoted(value.name.as_str());
+        let image = quoted(value.image.as_str());
+        containers.append(quote! { agones_core::Container { name: $name.to_owned(),
+        image: $image.to_owned(), ..Default::default() }, });
+    }
+    let containers = if typed.spec.template.spec.containers.is_nil() {
+        quote! { agones_core::GoSlice::default() }
+    } else {
+        quote! { vec![$containers].into() }
+    };
+    let mut annotations = rust::Tokens::new();
+    for (key, value) in &typed.spec.template.metadata.annotations {
+        let key = quoted(key.as_str());
+        let value = quoted(value.as_str());
+        annotations.append(quote! { ($key.to_owned(), $value.to_owned()), });
+    }
+    let health = gs_health(&typed.spec.health);
+    let sdk = gs_sdk(&typed.spec.sdk_server);
+    let scheduling = gs_enum(
+        typed.spec.scheduling.as_ref().map(|v| v.as_str()),
+        "SchedulingStrategy",
+    );
+    let state = gs_enum(
+        typed.status.state.as_ref().map(|v| v.as_str()),
+        "GameServerState",
+    );
+    let eviction = match &typed.spec.eviction {
+        None => quote! { None },
+        Some(value) => {
+            let safe = gs_enum(value.safe.as_ref().map(|v| v.as_str()), "EvictionSafe");
+            quote! { Some(agones_core::Eviction { safe: $safe }) }
+        }
+    };
+    let counters = gs_map(&input["spec"]["counters"], false);
+    let lists = gs_map(&input["spec"]["lists"], true);
+    quote! {
+        fn $function() -> agones_core::GameServer {
+            let mut value = agones_core::GameServer::default();
+            value.spec.container = $container.to_owned();
+            value.spec.ports = $ports;
+            value.spec.health = $health;
+            value.spec.sdk_server = $sdk;
+            value.spec.scheduling = $scheduling;
+            value.spec.eviction = $eviction;
+            value.spec.counters = $counters;
+            value.spec.lists = $lists;
+            value.spec.template.spec.containers = $containers;
+            value.spec.template.metadata.annotations = std::collections::BTreeMap::from([$annotations]);
+            value.status.state = $state;
+            value
+        }
+    }
+}
+
+fn gs_guard(guard: &str, expected: &Value) -> bool {
+    if let Some(inner) = guard.strip_prefix("!(").and_then(|s| s.strip_suffix(')')) {
+        return !gs_guard(inner, expected);
+    }
+    let field = |name| {
+        expected
+            .get(name)
+            .expect("missing source conditional context")
+    };
+    match guard {
+        "test.expected.alphaPlayerCapacity != nil" => !field("alpha_capacity").is_null(),
+        "len(test.expected.evictionSafeSpec) > 0" => {
+            !field("eviction_spec").as_str().unwrap().is_empty()
+        }
+        "len(test.expected.evictionSafeStatus) > 0" => {
+            !field("eviction_status").as_str().unwrap().is_empty()
+        }
+        "test.expected.counterSpec != nil" => !field("counter_spec").is_null(),
+        "test.expected.listSpec != nil" => !field("list_spec").is_null(),
+        other => panic!("unsupported source assertion guard: {other}"),
+    }
+}
+
+fn gs_relation(site: &Value, assertion: &Value) -> rust::Tokens {
+    let expected = &assertion["expected"];
+    let kind = assertion["kind"].as_str().unwrap();
+    assert_eq!(assertion["kind"], site["kind"]);
+    assert_eq!(assertion["source_passed"], true);
+    match kind {
+        "Equal" => assert_eq!(assertion["observed"], *expected, "captured source relation"),
+        "Contains" => assert!(assertion["observed"].as_array().unwrap().contains(expected)),
+        "Nil" | "NoError" => assert!(expected.is_null() && assertion["observed"].is_null()),
+        other => panic!("unsupported source relation: {other}"),
+    }
+    let text = || quoted(expected.as_str().expect("source string expected"));
+    match (site["actual_expression"].as_str().unwrap(), kind) {
+        ("err", "NoError") => quote! { parsed.is_ok() },
+        ("test.gameServer.Annotations[VersionAnnotation]", "Equal") => {
+            let expected = text();
+            quote! { gs.metadata.annotations.get(agones_core::VERSION_ANNOTATION).map(String::as_str) == Some($expected) }
+        }
+        ("test.gameServer.ObjectMeta.Finalizers", "Contains") => {
+            let expected = text();
+            quote! { gs.metadata.finalizers.iter().any(|value| value == $expected) }
+        }
+        ("spec.Container", "Equal") => {
+            let expected = text();
+            quote! { gs.spec.container == $expected }
+        }
+        ("spec.Ports[0].Protocol", "Equal") => {
+            let expected = text();
+            quote! { gs.spec.ports[0].protocol.as_ref().map_or("", |v| v.as_str()) == $expected }
+        }
+        ("spec.Ports[0].Range", "Equal") => {
+            let expected = text();
+            quote! { gs.spec.ports[0].range == $expected }
+        }
+        ("test.gameServer.Status.State", "Equal") => {
+            let expected = text();
+            quote! { gs.status.state.as_ref().map_or("", |v| v.as_str()) == $expected }
+        }
+        ("test.gameServer.Spec.Scheduling", "Equal") => {
+            let expected = text();
+            quote! { gs.spec.scheduling.as_ref().map_or("", |v| v.as_str()) == $expected }
+        }
+        ("test.gameServer.Spec.Health", "Equal") => {
+            let expected = gs_health(&serde_json::from_value(expected.clone()).unwrap());
+            quote! { gs.spec.health == $expected }
+        }
+        ("test.gameServer.Spec.SdkServer", "Equal") => {
+            let expected = gs_sdk(&serde_json::from_value(expected.clone()).unwrap());
+            quote! { gs.spec.sdk_server == $expected }
+        }
+        ("test.gameServer.Status.Players.Capacity", "Equal") => {
+            let expected = format!("{}i64", expected.as_i64().unwrap());
+            quote! { gs.status.players.as_ref().map(|p| p.capacity) == Some($expected) }
+        }
+        ("spec.Eviction.Safe", "Equal") => {
+            let expected = text();
+            quote! { gs.spec.eviction.as_ref().and_then(|v| v.safe.as_ref()).map_or("", |v| v.as_str()) == $expected }
+        }
+        ("test.gameServer.Status.Eviction.Safe", "Equal") => {
+            let expected = text();
+            quote! { gs.status.eviction.as_ref().and_then(|v| v.safe.as_ref()).map_or("", |v| v.as_str()) == $expected }
+        }
+        (expression, "Nil") => {
+            let field = match expression {
+                "test.gameServer.Spec.Players" => "gs.spec.players",
+                "test.gameServer.Status.Players" => "gs.status.players",
+                "spec.Eviction" => "gs.spec.eviction",
+                "test.gameServer.Status.Eviction" => "gs.status.eviction",
+                "test.gameServer.Spec.Counters" => "gs.spec.counters",
+                "test.gameServer.Status.Counters" => "gs.status.counters",
+                "test.gameServer.Spec.Lists" => "gs.spec.lists",
+                "test.gameServer.Status.Lists" => "gs.status.lists",
+                other => panic!("unsupported nil observation: {other}"),
+            };
+            quote! { $field.is_none() }
+        }
+        ("test.gameServer.Status.Counters", "Equal") => {
+            let expected = gs_map(expected, false);
+            quote! { gs.status.counters == $expected }
+        }
+        ("test.gameServer.Status.Lists", "Equal") => {
+            let expected = gs_map(expected, true);
+            quote! { gs.status.lists == $expected }
+        }
+        (expression, relation) => {
+            panic!("unsupported source observation/relation: {expression}/{relation}")
+        }
+    }
+}
+
+fn emit_gameserver_cases(root: &Path, check: bool) {
+    use std::collections::{BTreeMap, BTreeSet};
+    let ir_path = "verification/agones/gameserver-defaulting.ir.json";
+    let raw = fs::read(root.join(ir_path)).unwrap();
+    let ir: Value = serde_json::from_slice(&raw).unwrap();
+    assert_eq!(ir["schema_version"], 1);
+    assert_eq!(ir["feature_id"], "GS-DEFAULTS-001");
+    assert_eq!(ir["classification"], "EXACT_CASE_ASSERTIONS");
+    validate_gate(
+        root,
+        ir["implementation_gate"].as_str().unwrap(),
+        ir["implementation_gate_sha256"].as_str().unwrap(),
+    );
+    for (path, expected) in ir["source_files"].as_object().unwrap() {
+        assert_eq!(
+            hash(&fs::read(root.join(path)).unwrap()),
+            expected.as_str().unwrap(),
+            "stale source: {path}"
+        );
+    }
+    assert_eq!(
+        hash(ir["capture_program"].as_str().unwrap().as_bytes()),
+        ir["capture_program_sha256"]
+    );
+    assert_eq!(
+        ir["source_actions"],
+        json!([
+            "err := runtime.ParseFeatures(test.featureFlags)",
+            "test.gameServer.ApplyDefaults()",
+            "spec := test.gameServer.Spec"
+        ])
+    );
+    let sites: BTreeMap<_, _> = ir["source_assertion_sites"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|site| (site["line"].as_u64().unwrap(), site))
+        .collect();
+    assert_eq!(sites.len(), 23);
+    let cases = ir["cases"].as_array().unwrap();
+    assert_eq!(cases.len(), 17);
+    let mut tokens = rust::Tokens::new();
+    let mut ordinary = rust::Tokens::new();
+    let mut assertions = Vec::new();
+    let mut harnesses = Vec::new();
+    let mut identities = BTreeSet::new();
+    for (index, case) in cases.iter().enumerate() {
+        let case_id = case["id"].as_str().unwrap();
+        let fixture = format!("source_gs_fixture_{index:03}");
+        tokens.append(gs_fixture(&case["before"], &fixture));
+        let selected: Vec<_> = sites
+            .values()
+            .filter(|site| {
+                site["guards"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .all(|guard| gs_guard(guard.as_str().unwrap(), &case["expected_context"]))
+            })
+            .map(|site| site["line"].as_u64().unwrap())
+            .collect();
+        let captured = case["assertions"].as_array().unwrap();
+        assert_eq!(
+            selected,
+            captured
+                .iter()
+                .map(|a| a["line"].as_u64().unwrap())
+                .collect::<Vec<_>>(),
+            "source conditional selection"
+        );
+        let mut steps = rust::Tokens::new();
+        let flags = quoted(case["feature_flags"].as_str().unwrap());
+        steps.append(quote! { let mut gs = $(&fixture)();
+        let parsed = agones_core::FeatureGateContext::default().parse_feature_gates($flags); });
+        let mut applied = false;
+        let mut functions = Vec::new();
+        for assertion in captured {
+            let line = assertion["line"].as_u64().unwrap();
+            let origin = assertion["id"].as_str().unwrap();
+            assert_eq!(origin, format!("{case_id}::line-{line}"));
+            assert!(
+                identities.insert(origin.to_owned()),
+                "duplicate source assertion identity"
+            );
+            if assertion["kind"] != "NoError" && !applied {
+                steps.append(quote! { let context = agones_core::GameServerDefaultingContext::from_feature_gates(parsed.as_ref().unwrap());
+                    gs.apply_defaults_with_context(&context); });
+                applied = true;
+            }
+            assert_eq!(applied, line != 405, "source parse/default ordering");
+            let function = format!("source_gs_assertion_{:04}", assertions.len());
+            let message = quoted(origin);
+            tokens.append(
+                quote! { fn $(&function)(relation: bool) { assert!(relation, $message); } },
+            );
+            let relation = gs_relation(sites[&line], assertion);
+            steps.append(quote! { $(&function)($relation); });
+            assertions.push(
+                json!({"function":function,"origin":origin,"case_id":case_id,"line":line,
+                "kind":assertion["kind"],"actual_expression":sites[&line]["actual_expression"],
+                "expected":assertion["expected"],"guards":sites[&line]["guards"]}),
+            );
+            functions.push(function);
+        }
+        assert!(applied);
+        let cover_text = format!("source GameServer case reached all assertions: {case_id}");
+        let cover = quoted(cover_text.as_str());
+        steps.append(quote! { #[cfg(kani)] { kani::cover!(true, $cover); } });
+        let harness = format!("source_gs_case_{index:03}");
+        tokens.append(quote! {
+            #[test]
+            #[cfg_attr(kani, kani::proof)]
+            #[cfg_attr(kani, kani::unwind(64))]
+            fn $(&harness)() {
+                bolero::check!().with_type::<()>().with_iterations(1).for_each(|_| { $steps });
+            }
+        });
+        let before = serde_json::to_string(&case["before"]).unwrap();
+        let before = quoted(before.as_str());
+        let after = serde_json::to_string(&case["after"]).unwrap();
+        let after = quoted(after.as_str());
+        let id = quoted(case_id);
+        ordinary.append(quote! {
+            {
+                let mut value = $(&fixture)();
+                let input: serde_json::Value = serde_json::from_str($before).unwrap();
+                let decoded: agones_core::GameServer = serde_json::from_value(input.clone()).unwrap();
+                assert_eq!(value, decoded, $id);
+                assert_eq!(serde_json::to_value(&value).unwrap(), input, $id);
+                let parsed = agones_core::FeatureGateContext::default().parse_feature_gates($flags).unwrap();
+                value.apply_defaults_with_context(&agones_core::GameServerDefaultingContext::from_feature_gates(&parsed));
+                let expected: serde_json::Value = serde_json::from_str($after).unwrap();
+                assert_eq!(serde_json::to_value(value).unwrap(), expected, $id);
+            }
+        });
+        harnesses.push(json!({"harness":harness,"case_id":case_id,"fixture":fixture,"assertion_functions":functions,
+            "feature_flags":case["feature_flags"],"required_covers":[cover_text,"the generator should produce at least one valid value"],
+            "raw_domain":"unit","preconditions":[],"unwind":64}));
+    }
+    assert_eq!(assertions.len(), 304);
+    tokens.append(quote! {
+        #[cfg(not(kani))]
+        #[test]
+        fn source_gs_typed_fixtures_and_complete_outputs_match_capture() { $ordinary }
+    });
+    let source = format!(
+        "// Generated from gated typed GameServer IR by feature_case_codegen --gameserver-defaulting. Do not edit.\nuse agones_core::CanParseFeatureGates;\n{}",
+        format_rust(tokens.to_string().unwrap())
+    );
+    let output = "crates/agones-core/tests/generated/gameserver_defaulting_cases.rs";
+    let metadata = json!({"schema_version":1,"feature_id":"GS-DEFAULTS-001","classification":"EXACT_CASE",
+        "generator":"Genco 0.17.10 with pinned rustfmt","generator_path":"crates/agones-rusternetes/examples/feature_case_codegen.rs",
+        "generator_sha256":hash(&fs::read(root.join("crates/agones-rusternetes/examples/feature_case_codegen.rs")).unwrap()),
+        "ir":ir_path,"ir_sha256":hash(&raw),"output":output,"output_sha256":hash(source.as_bytes()),
+        "case_count":cases.len(),"assertion_count":assertions.len(),"harnesses":harnesses,"assertions":assertions,
+        "source_assertion_sites":ir["source_assertion_sites"],
+        "zero_occurrence_sites_not_credited":sites.values().filter(|s|s["fixture_occurrences"]==0).collect::<Vec<_>>(),
+        "fixture_mapping":"Whole captured canonical GameServer equals a typed constructor and round-trips exactly at generation and ordinary replay. Proof harnesses contain no JSON decoder. Source parse/assert/default/assert order and conditional assertion selection are retained.",
+        "scope":"All 17 exact source cases and 304 executed occurrences only. Three zero-occurrence sites remain open. Sampling and generated/compiled harnesses give no formal credit. The 17 SDK version identities overlapping this family must not be double-counted; no generalized GameServer, admission, lifecycle or executor proof is claimed."});
+    save_or_check(root, output, &source, check);
+    save_or_check(
+        root,
+        "verification/agones/gameserver-defaulting-codegen.json",
+        &(serde_json::to_string_pretty(&metadata).unwrap() + "\n"),
+        check,
+    );
+    println!(
+        "{} 17 exact GameServer cases and 304 source assertion occurrences; three zero-occurrence sites remain open",
+        if check { "Checked" } else { "Generated" }
+    );
+}
+
+#[cfg(test)]
+mod gameserver_codegen_controls {
+    use super::*;
+
+    fn ir() -> Value {
+        serde_json::from_str(include_str!(
+            "../../../verification/agones/gameserver-defaulting.ir.json"
+        ))
+        .unwrap()
+    }
+
+    #[test]
+    fn whole_fixture_lowering_rejects_lost_wire_and_unmodeled_values() {
+        let original = ir()["cases"][0]["before"].clone();
+        for (name, mut input) in [
+            ("unknown root wire field", original.clone()),
+            ("nil versus allocated status slice", original.clone()),
+            ("container resources", original.clone()),
+            ("signed port width", original.clone()),
+        ] {
+            match name {
+                "unknown root wire field" => input["unknownField"] = json!(true),
+                "nil versus allocated status slice" => input["status"]["addresses"] = json!([]),
+                "container resources" => {
+                    input["spec"]["template"]["spec"]["containers"][0]["resources"] =
+                        json!({"limits":{"cpu":"1"}})
+                }
+                "signed port width" => {
+                    input["spec"]["ports"][0]["containerPort"] = json!(2147483648i64)
+                }
+                _ => unreachable!(),
+            }
+            assert!(
+                std::panic::catch_unwind(|| gs_fixture(&input, "fixture")).is_err(),
+                "accepted {name}"
+            );
+        }
+    }
+
+    #[test]
+    fn source_relations_and_conditional_context_fail_closed() {
+        let data = ir();
+        let site = &data["source_assertion_sites"][1];
+        let mut assertion = data["cases"][0]["assertions"][1].clone();
+        assertion["expected"] = json!("changed independent expectation");
+        assert!(std::panic::catch_unwind(|| gs_relation(site, &assertion)).is_err());
+        let mut unsupported = site.clone();
+        unsupported["actual_expression"] = json!("test.gameServer.Unsupported");
+        let assertion = &data["cases"][0]["assertions"][1];
+        assert!(std::panic::catch_unwind(|| gs_relation(&unsupported, assertion)).is_err());
+        assert!(std::panic::catch_unwind(|| gs_guard("unknown source guard", &json!({}))).is_err());
+        assert!(
+            std::panic::catch_unwind(|| gs_guard(
+                "test.expected.alphaPlayerCapacity != nil",
+                &json!({})
+            ))
+            .is_err()
+        );
+        let expected = &data["cases"][0]["expected_context"];
+        assert!(!gs_guard(
+            "test.expected.alphaPlayerCapacity != nil",
+            expected
+        ));
+        assert!(gs_guard(
+            "!(test.expected.alphaPlayerCapacity != nil)",
+            expected
+        ));
+        assert!(gs_guard("test.expected.counterSpec != nil", expected));
+        assert!(!gs_guard("!(test.expected.counterSpec != nil)", expected));
+    }
+}
+
 fn main() {
     let arguments = std::env::args().skip(1).collect::<Vec<_>>();
     assert!(
         arguments.iter().all(|argument| argument == "--check"
             || argument == "--go-quote-table"
-            || argument == "--sdk-version"),
+            || argument == "--sdk-version"
+            || argument == "--gameserver-defaulting"),
         "unknown generation argument"
     );
     let root = Path::new(env!("CARGO_MANIFEST_DIR"))
@@ -306,6 +837,26 @@ fn main() {
         .unwrap()
         .parent()
         .unwrap();
+    let modes = [
+        "--sdk-version",
+        "--go-quote-table",
+        "--gameserver-defaulting",
+    ];
+    assert!(
+        modes
+            .iter()
+            .filter(|mode| arguments.iter().any(|arg| arg == **mode))
+            .count()
+            <= 1,
+        "select one generation family"
+    );
+    if arguments
+        .iter()
+        .any(|argument| argument == "--gameserver-defaulting")
+    {
+        emit_gameserver_cases(root, arguments.iter().any(|argument| argument == "--check"));
+        return;
+    }
     if arguments.iter().any(|argument| argument == "--sdk-version") {
         assert!(
             !arguments
