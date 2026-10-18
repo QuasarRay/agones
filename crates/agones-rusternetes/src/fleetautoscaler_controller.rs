@@ -2,7 +2,7 @@ use std::{collections::HashMap, sync::Arc, time::Duration};
 
 use agones_core::{
     AutoscalerFeatures, BufferPolicy, CounterPolicy, Fleet,
-    FleetAutoscaleRequest, FleetAutoscaleResponse, FleetAutoscaleReview,
+    FleetAutoscaleRequest, FleetAutoscaleReview,
     FleetAutoscaler, FleetAutoscalerPolicy, FleetAutoscalerPolicyType,
     FleetAutoscalerScaleDecision, GameServer, GameServerState,
     ListPolicy, NodeCount, SchedulePolicy, UrlConfiguration,
@@ -295,88 +295,86 @@ pub fn fleet_autoscaler_webhook_url(
     ))
 }
 
-#[async_trait]
 #[cgp_component(FleetAutoscalerWebhookCaller)]
 pub trait CanCallFleetAutoscalerWebhook {
-    async fn call_fleet_autoscaler_webhook(
-        &self,
-        configuration: &UrlConfiguration,
-        review: &FleetAutoscaleReview,
-    ) -> Result<FleetAutoscaleReview, AdapterError>;
+    fn call_fleet_autoscaler_webhook<'a>(
+        &'a self,
+        configuration: &'a UrlConfiguration,
+        review: &'a FleetAutoscaleReview,
+    ) -> BoxFuture<'a, Result<FleetAutoscaleReview, AdapterError>>;
 }
 
 #[cgp_new_provider]
-#[async_trait]
 impl<Context> FleetAutoscalerWebhookCaller<Context>
     for CallFleetAutoscalerWebhookWithReqwest
 where
     Context: Sync,
 {
-    async fn call_fleet_autoscaler_webhook(
-        _context: &Context,
-        configuration: &UrlConfiguration,
-        review: &FleetAutoscaleReview,
-    ) -> Result<FleetAutoscaleReview, AdapterError> {
-        let url = fleet_autoscaler_webhook_url(configuration)?;
-        let mut client = reqwest::Client::builder()
-            .timeout(Duration::from_secs(15));
+    fn call_fleet_autoscaler_webhook<'a>(
+        _context: &'a Context,
+        configuration: &'a UrlConfiguration,
+        review: &'a FleetAutoscaleReview,
+    ) -> BoxFuture<'a, Result<FleetAutoscaleReview, AdapterError>> {
+        Box::pin(async move {
+            let url = fleet_autoscaler_webhook_url(configuration)?;
+            let mut client = reqwest::Client::builder()
+                .timeout(Duration::from_secs(15));
 
-        if !configuration.ca_bundle.is_empty() {
-            let certificates =
-                reqwest::Certificate::from_pem_bundle(
-                    &configuration.ca_bundle,
-                )
-                .map_err(|_| {
-                    AdapterError::Hook(
-                        "no certs were appended from caBundle".into(),
+            if !configuration.ca_bundle.is_empty() {
+                let certificates =
+                    reqwest::Certificate::from_pem_bundle(
+                        &configuration.ca_bundle,
                     )
-                })?;
-            if certificates.is_empty() {
-                return Err(AdapterError::Hook(
-                    "no certs were appended from caBundle".into(),
-                ));
+                    .map_err(|_| {
+                        AdapterError::Hook(
+                            "no certs were appended from caBundle".into(),
+                        )
+                    })?;
+                if certificates.is_empty() {
+                    return Err(AdapterError::Hook(
+                        "no certs were appended from caBundle".into(),
+                    ));
+                }
+                for certificate in certificates {
+                    client = client.add_root_certificate(certificate);
+                }
             }
-            for certificate in certificates {
-                client = client.add_root_certificate(certificate);
+
+            let client = client
+                .build()
+                .map_err(|error| AdapterError::Hook(error.to_string()))?;
+            let response = client
+                .post(url.as_str())
+                .json(review)
+                .send()
+                .await
+                .map_err(|error| AdapterError::Hook(error.to_string()))?;
+
+            if response.status() != reqwest::StatusCode::OK {
+                return Err(AdapterError::Hook(format!(
+                    "bad status code {} from the server: {url}",
+                    response.status().as_u16(),
+                )));
             }
-        }
 
-        let client = client
-            .build()
-            .map_err(|error| AdapterError::Hook(error.to_string()))?;
-        let response = client
-            .post(url.as_str())
-            .json(review)
-            .send()
-            .await
-            .map_err(|error| AdapterError::Hook(error.to_string()))?;
-
-        if response.status() != reqwest::StatusCode::OK {
-            return Err(AdapterError::Hook(format!(
-                "bad status code {} from the server: {url}",
-                response.status().as_u16(),
-            )));
-        }
-
-        response
-            .json::<FleetAutoscaleReview>()
-            .await
-            .map_err(|error| AdapterError::Hook(error.to_string()))
+            response
+                .json::<FleetAutoscaleReview>()
+                .await
+                .map_err(|error| AdapterError::Hook(error.to_string()))
+        })
     }
 }
 
-#[async_trait]
 #[cgp_component(WebhookFleetAutoscalerPolicyEvaluator)]
 pub trait CanApplyWebhookFleetAutoscalerPolicy {
-    async fn apply_webhook_fleet_autoscaler_policy(
-        &self,
-        configuration: &UrlConfiguration,
-        fleet: &Fleet,
-    ) -> Result<FleetAutoscalerScaleDecision, AdapterError>;
+    fn apply_webhook_fleet_autoscaler_policy<'a>(
+        &'a self,
+        configuration: &'a UrlConfiguration,
+        fleet: &'a Fleet,
+    ) -> BoxFuture<'a, Result<FleetAutoscalerScaleDecision, AdapterError>>;
 }
 
 #[cgp_new_provider]
-#[async_trait]
 impl<Context> WebhookFleetAutoscalerPolicyEvaluator<Context>
     for ApplyWebhookFleetAutoscalerPolicyWithCaller
 where
@@ -384,53 +382,55 @@ where
         + HasFleetAutoscaleRequestMetadata
         + Sync,
 {
-    async fn apply_webhook_fleet_autoscaler_policy(
-        context: &Context,
-        configuration: &UrlConfiguration,
-        fleet: &Fleet,
-    ) -> Result<FleetAutoscalerScaleDecision, AdapterError> {
-        let include_metadata =
-            *context.fleet_autoscale_request_metadata();
-        let request = FleetAutoscaleRequest {
-            uid: uuid::Uuid::new_v4().to_string(),
-            name: fleet.metadata.name.clone(),
-            namespace: fleet.metadata.namespace.clone(),
-            status: fleet.status.clone(),
-            labels: if include_metadata {
-                fleet.metadata.labels.clone()
-            } else {
-                Default::default()
-            },
-            annotations: if include_metadata {
-                fleet.metadata.annotations.clone()
-            } else {
-                Default::default()
-            },
-        };
-        let review = FleetAutoscaleReview {
-            request: Some(request),
-            response: None,
-        };
-        let response = context
-            .call_fleet_autoscaler_webhook(
-                configuration,
-                &review,
-            )
-            .await?;
-        let response = response.response.ok_or_else(|| {
-            AdapterError::Hook(
-                "webhook response missing required 'response' field"
-                    .into(),
-            )
-        })?;
+    fn apply_webhook_fleet_autoscaler_policy<'a>(
+        context: &'a Context,
+        configuration: &'a UrlConfiguration,
+        fleet: &'a Fleet,
+    ) -> BoxFuture<'a, Result<FleetAutoscalerScaleDecision, AdapterError>> {
+        Box::pin(async move {
+            let include_metadata =
+                *context.fleet_autoscale_request_metadata();
+            let request = FleetAutoscaleRequest {
+                uid: uuid::Uuid::new_v4().to_string(),
+                name: fleet.metadata.name.clone(),
+                namespace: fleet.metadata.namespace.clone(),
+                status: fleet.status.clone(),
+                labels: if include_metadata {
+                    fleet.metadata.labels.clone()
+                } else {
+                    Default::default()
+                },
+                annotations: if include_metadata {
+                    fleet.metadata.annotations.clone()
+                } else {
+                    Default::default()
+                },
+            };
+            let review = FleetAutoscaleReview {
+                request: Some(request),
+                response: None,
+            };
+            let response = context
+                .call_fleet_autoscaler_webhook(
+                    configuration,
+                    &review,
+                )
+                .await?;
+            let response = response.response.ok_or_else(|| {
+                AdapterError::Hook(
+                    "webhook response missing required 'response' field"
+                        .into(),
+                )
+            })?;
 
-        Ok(FleetAutoscalerScaleDecision {
-            replicas: if response.scale {
-                response.replicas
-            } else {
-                fleet.status.replicas
-            },
-            limited: false,
+            Ok(FleetAutoscalerScaleDecision {
+                replicas: if response.scale {
+                    response.replicas
+                } else {
+                    fleet.status.replicas
+                },
+                limited: false,
+            })
         })
     }
 }
@@ -686,20 +686,18 @@ where
     })
 }
 
-#[async_trait]
 #[cgp_component(FleetAutoscalerPolicyEvaluatorAt)]
 pub trait CanComputeFleetAutoscalerDesiredSizeAt {
-    async fn compute_fleet_autoscaler_desired_size_at(
-        &self,
-        policy: &FleetAutoscalerPolicy,
-        fleet: &Fleet,
-        inventory: &FleetAutoscalerInventory,
+    fn compute_fleet_autoscaler_desired_size_at<'a>(
+        &'a self,
+        policy: &'a FleetAutoscalerPolicy,
+        fleet: &'a Fleet,
+        inventory: &'a FleetAutoscalerInventory,
         current_time: DateTime<Utc>,
-    ) -> Result<FleetAutoscalerPolicyDecision, AdapterError>;
+    ) -> BoxFuture<'a, Result<FleetAutoscalerPolicyDecision, AdapterError>>;
 }
 
 #[cgp_new_provider]
-#[async_trait]
 impl<Context> FleetAutoscalerPolicyEvaluatorAt<Context>
     for ComputeFleetAutoscalerDesiredSizeAtWithComponents
 where
@@ -711,37 +709,37 @@ where
         + HasFleetAutoscalerRuntimeFeatures
         + Sync,
 {
-    async fn compute_fleet_autoscaler_desired_size_at(
-        context: &Context,
-        policy: &FleetAutoscalerPolicy,
-        fleet: &Fleet,
-        inventory: &FleetAutoscalerInventory,
+    fn compute_fleet_autoscaler_desired_size_at<'a>(
+        context: &'a Context,
+        policy: &'a FleetAutoscalerPolicy,
+        fleet: &'a Fleet,
+        inventory: &'a FleetAutoscalerInventory,
         current_time: DateTime<Utc>,
-    ) -> Result<FleetAutoscalerPolicyDecision, AdapterError> {
-        compute_fleet_autoscaler_desired_size_at(
-            context,
-            policy,
-            fleet,
-            inventory,
-            &current_time,
-        )
-        .await
+    ) -> BoxFuture<'a, Result<FleetAutoscalerPolicyDecision, AdapterError>> {
+        Box::pin(async move {
+            compute_fleet_autoscaler_desired_size_at(
+                context,
+                policy,
+                fleet,
+                inventory,
+                &current_time,
+            )
+            .await
+        })
     }
 }
 
-#[async_trait]
 #[cgp_component(FleetAutoscalerPolicyEvaluator)]
 pub trait CanComputeFleetAutoscalerDesiredSize {
-    async fn compute_fleet_autoscaler_desired_size(
-        &self,
-        policy: &FleetAutoscalerPolicy,
-        fleet: &Fleet,
-        inventory: &FleetAutoscalerInventory,
-    ) -> Result<FleetAutoscalerPolicyDecision, AdapterError>;
+    fn compute_fleet_autoscaler_desired_size<'a>(
+        &'a self,
+        policy: &'a FleetAutoscalerPolicy,
+        fleet: &'a Fleet,
+        inventory: &'a FleetAutoscalerInventory,
+    ) -> BoxFuture<'a, Result<FleetAutoscalerPolicyDecision, AdapterError>>;
 }
 
 #[cgp_new_provider]
-#[async_trait]
 impl<Context> FleetAutoscalerPolicyEvaluator<Context>
     for ComputeFleetAutoscalerDesiredSizeWithClock
 where
@@ -749,19 +747,23 @@ where
         + CanReadFleetAutoscalerTime
         + Sync,
 {
-    async fn compute_fleet_autoscaler_desired_size(
-        context: &Context,
-        policy: &FleetAutoscalerPolicy,
-        fleet: &Fleet,
-        inventory: &FleetAutoscalerInventory,
-    ) -> Result<FleetAutoscalerPolicyDecision, AdapterError> {
-        context.compute_fleet_autoscaler_desired_size_at(
-            policy,
-            fleet,
-            inventory,
-            context.fleet_autoscaler_now(),
-        )
-        .await
+    fn compute_fleet_autoscaler_desired_size<'a>(
+        context: &'a Context,
+        policy: &'a FleetAutoscalerPolicy,
+        fleet: &'a Fleet,
+        inventory: &'a FleetAutoscalerInventory,
+    ) -> BoxFuture<'a, Result<FleetAutoscalerPolicyDecision, AdapterError>> {
+        let current_time = context.fleet_autoscaler_now();
+        Box::pin(async move {
+            context
+                .compute_fleet_autoscaler_desired_size_at(
+                    policy,
+                    fleet,
+                    inventory,
+                    current_time,
+                )
+                .await
+        })
     }
 }
 
@@ -1125,9 +1127,9 @@ mod tests {
         AggregatedCounterStatus, AggregatedListStatus, BufferPolicy,
         ActivePeriod, AutoscalerFeatures, Between, ChainEntry,
         CounterPolicy, CounterStatus, FleetAutoscalerPolicy,
-        GameServerStatus, IntOrPercent, ListPolicy, ListStatus,
-        ObjectMeta, SchedulePolicy, ServiceReference,
-        UrlConfiguration,
+        FleetAutoscaleResponse, GameServerStatus, IntOrPercent,
+        ListPolicy, ListStatus, ObjectMeta, SchedulePolicy,
+        ServiceReference, UrlConfiguration,
     };
     use std::collections::BTreeMap;
     use rusternetes_storage::MemoryStorage;
