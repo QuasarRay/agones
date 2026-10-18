@@ -238,7 +238,7 @@ mod tests {
                 container: "game".into(),
                 template: PodTemplateSpec {
                     spec: CorePodSpec {
-                        containers,
+                        containers: containers.into(),
                         ..Default::default()
                     },
                     ..Default::default()

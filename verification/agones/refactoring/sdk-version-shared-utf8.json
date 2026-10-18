@@ -1,0 +1,12 @@
+{
+  "architecture_status": "All eight _2 cells remain required open; this pure helper and existing CGP/Genco usage satisfy none.",
+  "candidate": "One finite-width non-ASCII UTF-8 prefix decoder for quote and SDK JSON annotation boundaries.",
+  "configuration_fix": "Normal Cargo raw-byte invalidation has a retained failing regression; existing build scripts use write-if-changed output and a recheck for absent/non-UTF-8 profiles. Workspace dev configuration keeps ordinary repeated artifacts fresh. Existing gate/runner paths now bind Cargo configuration and declared environment hashes to prevent stale acceptance.",
+  "decision": "SMALL_LOCAL_REFACTOR",
+  "feature": "SDK-VERSION-001",
+  "id": "SDK-VERSION-001-shared-utf8",
+  "new_configuration_evidence": "Normal Cargo input checks now pass all eleven workspace/outside-workspace profiles, including raw-to-raw/default restoration. An unchanged workspace profile reports the core artifact fresh. The final shared-codec run rebinds the complete Cargo configuration source.",
+  "next_review_trigger": "SDK-VERSION-001 production gate and focused public resource derive hygiene/authoring review.",
+  "rationale": "The existing quote decoder is already checked against every valid non-ASCII scalar and all 32768 non-ASCII-leading two-byte inputs. Version normalization needs the same classification. Reuse that production decoder with explicit at-most-three continuation operations, preserving source overlong/surrogate/range checks, and retain each caller output policy. Make private quote hex output explicitly bounded by the source maximum eight digits. Both changes preserve the full public input domain.",
+  "roi": "Two real consumers otherwise require separate UTF-8 validity reasoning and validation. Retained Kani traces show the generic quote continuation loops unrolling to the global bound, so explicit source-defined finite widths remove an observed expansion cost without substituting a test implementation. Stop at these two consumers; no general string/runtime/proof framework."
+}

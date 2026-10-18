@@ -1,0 +1,29 @@
+{
+  "classification": "REUSED_REACHABLE_SYMBOL_PROOFS",
+  "diagnostic_correction": "Initial input reparse used a nonexistent run ID and failed closed; the retained canonical input run is feature-input-bolero-kani-1.",
+  "lock_resolution": {
+    "all_package_versions_sources_checksums_unchanged": true,
+    "only_dependency_edge_changes": [
+      {
+        "added_existing_locked_dependency": "genco 0.17.10",
+        "package": "agones-core"
+      }
+    ]
+  },
+  "new_proof_credit": 0,
+  "next_validation": "Current published-head CI must rerun both exact Bolero/Kani selections; local reuse and remote checks are recorded separately.",
+  "original_source_assertion_credit": 0,
+  "reachability_argument": "parse_feature_bool and select_feature_gate_input use only their unchanged bytes/slice/value logic. New version build data, CGP version provider, GoSlice, UTF-8 quote implementation and SDK source generator are unreachable from these two proof harnesses. No production function is replaced under cfg(kani). Rust/Kani/Bolero/solver pins and macro source remain unchanged.",
+  "recoverable_owner_snapshot": "cf2fcb7139739c5f26e6155e3fa9c3b431887863",
+  "required_reparse": [
+    "feature-bool-bolero-kani-input-final",
+    "feature-input-bolero-kani-1"
+  ],
+  "schema_version": 1,
+  "verified_unchanged_files": {
+    "crates/agones-core/src/feature_inputs.rs": "9cfaf42de485874339a58895991ad15adff787f363d9821a3ab7f0f4c36222d4",
+    "crates/agones-core/src/features.rs": "46e8f93b86b6187e3927047e5cebafa135e8a55f38089ec3c3aad31ebdaca1a3",
+    "crates/agones-core/tests/feature_bool_domain.rs": "f36542866193c88f464139f86d9d12fb6159276be8102e294754b00054a36f0a",
+    "crates/agones-core/tests/feature_input_domain.rs": "a041cfd5c7f4b54220abf5ed6964214a150c95df59e5de601ffb89f21478f124"
+  }
+}

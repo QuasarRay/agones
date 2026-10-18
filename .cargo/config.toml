@@ -1,0 +1,4 @@
+[env]
+# Match pkg.Version's source default while keeping ordinary Cargo builds fresh.
+# Explicit values, including raw non-UTF-8 OS bytes, take precedence.
+AGONES_BUILD_VERSION = { value = "dev", force = false }

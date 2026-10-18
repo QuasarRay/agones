@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_SOURCE_ASSURANCE_CHECKPOINT",
+  "gate_snapshot": "verification/agones/gates/67c860de02f9ead2c2105c6322811a0a41a90c91170118bd9d536ab041955e92.json",
+  "predecessor_revision": 69,
+  "predecessor_sha256": "4ba42b537701f2a11ffb1af901f26ea62331116bb3b0397d974a66717b4ee263",
+  "reason": "All 18 exact fixtures / 19 version observations replay; 549 workspace tests pass. Three SDK diagnostics timed out and receive zero formal credit; 17 GameServer proof assertions remain to generate. One independent original query assertion is now proved.",
+  "result_revision": 70,
+  "schema_version": 1,
+  "state_sha256": "cd0c9cc337c4b4cdbc063d9ac094a91c94546926af795bad2c12073c5fb0e288",
+  "timestamp": "2026-10-18T18:57:36.351732+00:00"
+}

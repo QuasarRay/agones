@@ -1,0 +1,11 @@
+{
+  "classification": "ORDINARY_BUILD_INPUT_COUNTEREXAMPLE",
+  "consequence": "Source default restoration incorrectly retained the prior raw build identity in the normal Cargo target cache.",
+  "expected_compiled_bytes_hex": "646576",
+  "observed_compiled_bytes_hex": "e282",
+  "previous_configured_bytes_hex": "e282",
+  "repair": "Track normal UTF-8 defaults in workspace Cargo config and force the existing build script to recheck absent/non-UTF-8 profiles. Retain write-if-changed data and test both workspace/outside-workspace transitions without cleaning.",
+  "requested_configured_state": "UNSET",
+  "run": "verification/agones/runs/sdk-version-build-invalidation-1.json",
+  "schema_version": 1
+}

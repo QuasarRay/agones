@@ -1,0 +1,14 @@
+=== RUN   TestGateRejectsMissingUnfinishedAndStaleProduction
+--- PASS: TestGateRejectsMissingUnfinishedAndStaleProduction (0.00s)
+=== RUN   TestRepeatedNamesPreserveBothSourceIdentities
+--- PASS: TestRepeatedNamesPreserveBothSourceIdentities (0.00s)
+=== RUN   TestInputExtractionRequiresItsOwnFreshFeatureGate
+--- PASS: TestInputExtractionRequiresItsOwnFreshFeatureGate (0.00s)
+=== RUN   TestUnknownSemanticCallsRemainUnsupported
+--- PASS: TestUnknownSemanticCallsRemainUnsupported (0.00s)
+=== RUN   TestSDKVersionAssertionUsesResolvedSymbolsAndExactObservation
+--- PASS: TestSDKVersionAssertionUsesResolvedSymbolsAndExactObservation (0.00s)
+=== RUN   TestSDKGateRejectsChangedBuildEnvironment
+--- PASS: TestSDKGateRejectsChangedBuildEnvironment (0.00s)
+PASS
+ok  	agones.dev/agones/verification/feature-extractor	0.002s

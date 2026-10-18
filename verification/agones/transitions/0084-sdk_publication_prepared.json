@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_PUBLICATION_PREPARED",
+  "gate_snapshot": "verification/agones/gates/67c860de02f9ead2c2105c6322811a0a41a90c91170118bd9d536ab041955e92.json",
+  "predecessor_revision": 83,
+  "predecessor_sha256": "5c90104ca60fce3ddce85bf59011485a484f86f8aa98ca9f5ddf2baa82419ff2",
+  "reason": "Native Goal is active without a numeric budget. Production gate, current semantic/artifact bindings, all local ordinary checks and completed exact query proof validate. Prepare publication while preserving all failed diagnostic evidence and user edits.",
+  "result_revision": 84,
+  "schema_version": 1,
+  "state_sha256": "305dd9f7fdfe9c0d9278a58ad1118c812045f6f31000de1f4c585669227269ba",
+  "timestamp": "2026-10-18T18:59:10.535403+00:00"
+}

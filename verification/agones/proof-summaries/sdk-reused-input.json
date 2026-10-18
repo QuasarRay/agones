@@ -1,0 +1,274 @@
+{
+  "assertions": [
+    {
+      "description": "assertion failed: source_relation(override_value, flag, environment, model)",
+      "id": 123,
+      "location": "crates/agones-core/tests/feature_input_domain.rs:54:13 in function feature_input_common_domain::{closure#0}",
+      "status": "SUCCESS",
+      "symbol": "feature_input_common_domain::{closure#0}.assertion.1"
+    },
+    {
+      "description": "assertion failed: source_relation(override_value, flag, environment, production)",
+      "id": 124,
+      "location": "crates/agones-core/tests/feature_input_domain.rs:55:13 in function feature_input_common_domain::{closure#0}",
+      "status": "SUCCESS",
+      "symbol": "feature_input_common_domain::{closure#0}.assertion.2"
+    },
+    {
+      "description": "assertion failed: model == production",
+      "id": 125,
+      "location": "crates/agones-core/tests/feature_input_domain.rs:61:13 in function feature_input_common_domain::{closure#0}",
+      "status": "SUCCESS",
+      "symbol": "feature_input_common_domain::{closure#0}.assertion.3"
+    }
+  ],
+  "covers": [
+    {
+      "description": "the generator should produce at least one valid value",
+      "id": 72,
+      "location": "../../../../.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bolero-kani-0.13.0/src/lib.rs:37:21 in function <bolero::DefaultEngine as bolero::Engine<bolero::bolero_engine::BorrowedGeneratorTest<{closure@crates/agones-core/tests/feature_input_domain.rs:46:19: 46:49}, bolero::generator::bolero_generator::TypeValueGenerator<([u8; 2], [u8; 2], [u8; 2], u8, u8, u8, u8)>, ([u8; 2], [u8; 2], [u8; 2], u8, u8, u8, u8)>>>::run",
+      "status": "SATISFIED",
+      "symbol": "<bolero::DefaultEngine as bolero::Engine<bolero::bolero_engine::BorrowedGeneratorTest<{closure@crates/agones-core/tests/feature_input_domain.rs:46:19: 46:49}, bolero::generator::bolero_generator::TypeValueGenerator<([u8; 2], [u8; 2], [u8; 2], u8, u8, u8, u8)>, ([u8; 2], [u8; 2], [u8; 2], u8, u8, u8, u8)>>>::run.cover.1"
+    },
+    {
+      "description": "Set override selected",
+      "id": 126,
+      "location": "crates/agones-core/tests/feature_input_domain.rs:64:17 in function feature_input_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "feature_input_common_domain::{closure#0}.cover.1"
+    },
+    {
+      "description": "changed flag selected",
+      "id": 127,
+      "location": "crates/agones-core/tests/feature_input_domain.rs:65:17 in function feature_input_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "feature_input_common_domain::{closure#0}.cover.2"
+    },
+    {
+      "description": "nonempty environment selected",
+      "id": 128,
+      "location": "crates/agones-core/tests/feature_input_domain.rs:69:17 in function feature_input_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "feature_input_common_domain::{closure#0}.cover.3"
+    },
+    {
+      "description": "missing environment default",
+      "id": 129,
+      "location": "crates/agones-core/tests/feature_input_domain.rs:75:17 in function feature_input_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "feature_input_common_domain::{closure#0}.cover.4"
+    },
+    {
+      "description": "empty environment default",
+      "id": 130,
+      "location": "crates/agones-core/tests/feature_input_domain.rs:79:17 in function feature_input_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "feature_input_common_domain::{closure#0}.cover.5"
+    },
+    {
+      "description": "explicit empty Set override",
+      "id": 131,
+      "location": "crates/agones-core/tests/feature_input_domain.rs:83:17 in function feature_input_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "feature_input_common_domain::{closure#0}.cover.6"
+    },
+    {
+      "description": "explicit empty changed flag",
+      "id": 132,
+      "location": "crates/agones-core/tests/feature_input_domain.rs:87:17 in function feature_input_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "feature_input_common_domain::{closure#0}.cover.7"
+    },
+    {
+      "description": "maximum modeled input length",
+      "id": 133,
+      "location": "crates/agones-core/tests/feature_input_domain.rs:91:17 in function feature_input_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "feature_input_common_domain::{closure#0}.cover.8"
+    },
+    {
+      "description": "raw non-UTF-8 byte selected",
+      "id": 134,
+      "location": "crates/agones-core/tests/feature_input_domain.rs:92:17 in function feature_input_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "feature_input_common_domain::{closure#0}.cover.9"
+    }
+  ],
+  "family": "input",
+  "harness_count": 1,
+  "property_count": 978,
+  "run": "verification/agones/runs/feature-input-bolero-kani-1.json",
+  "schema_version": 1,
+  "scope": "Production select_feature_gate_input and independent reference/invariant. Each optional raw byte string has length 0..2; no filtering, unwind 8. No OS/command/lifecycle proof or original exact-case assertion credit.",
+  "selected_harnesses": [
+    "feature_input_common_domain"
+  ],
+  "status_counts": {
+    "SATISFIED": 10,
+    "SUCCESS": 945,
+    "UNREACHABLE": 23
+  },
+  "unreachable_not_credited": [
+    {
+      "description": "Cannot compute offset of a ZST",
+      "id": 5,
+      "location": "library/kani/src/lib.rs:57:1 in function kani::rustc_intrinsics::ptr_offset_from::<()>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<()>.assertion.1"
+    },
+    {
+      "description": "attempt to calculate the remainder with a divisor of zero",
+      "id": 7,
+      "location": "library/kani_core/src/models.rs:93:25 in function kani::rustc_intrinsics::ptr_offset_from::<()>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<()>.assertion.2"
+    },
+    {
+      "description": "attempt to calculate the remainder with overflow",
+      "id": 8,
+      "location": "library/kani_core/src/models.rs:93:25 in function kani::rustc_intrinsics::ptr_offset_from::<()>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<()>.assertion.3"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 12,
+      "location": "library/kani_core/src/models.rs:97:21 in function kani::rustc_intrinsics::ptr_offset_from::<()>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<()>.assertion.4"
+    },
+    {
+      "description": "attempt to divide with overflow",
+      "id": 13,
+      "location": "library/kani_core/src/models.rs:97:21 in function kani::rustc_intrinsics::ptr_offset_from::<()>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<()>.assertion.5"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 19,
+      "location": "../../../../../runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ptr/mod.rs:2317:49 in function std::ptr::align_offset::mod_inv",
+      "status": "UNREACHABLE",
+      "symbol": "std::ptr::align_offset::mod_inv.assertion.1"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 20,
+      "location": "../../../../../runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ptr/mod.rs:2317:44 in function std::ptr::align_offset::mod_inv",
+      "status": "UNREACHABLE",
+      "symbol": "std::ptr::align_offset::mod_inv.assertion.2"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 21,
+      "location": "../../../../../runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ptr/mod.rs:2317:27 in function std::ptr::align_offset::mod_inv",
+      "status": "UNREACHABLE",
+      "symbol": "std::ptr::align_offset::mod_inv.assertion.3"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 102,
+      "location": "../../../../../runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:83:35 in function core::slice::memchr::memchr_aligned::runtime",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_aligned::runtime.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 103,
+      "location": "../../../../../runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:83:29 in function core::slice::memchr::memchr_aligned::runtime",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_aligned::runtime.assertion.2"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 104,
+      "location": "../../../../../runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:88:39 in function core::slice::memchr::memchr_aligned::runtime",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_aligned::runtime.assertion.3"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 105,
+      "location": "../../../../../runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:97:27 in function core::slice::memchr::memchr_aligned::runtime",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_aligned::runtime.assertion.4"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 106,
+      "location": "../../../../../runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:97:17 in function core::slice::memchr::memchr_aligned::runtime",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_aligned::runtime.assertion.5"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 107,
+      "location": "../../../../../runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:105:75 in function core::slice::memchr::memchr_aligned::runtime",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_aligned::runtime.assertion.6"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 109,
+      "location": "../../../../../runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:106:60 in function core::slice::memchr::memchr_aligned::runtime",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_aligned::runtime.assertion.7"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 115,
+      "location": "../../../../../runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/alloc/layout.rs:97:32 in function std::alloc::Layout::max_size_for_alignment",
+      "status": "UNREACHABLE",
+      "symbol": "std::alloc::Layout::max_size_for_alignment.assertion.1"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 156,
+      "location": "../../../../../runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ub_checks.rs:148:54 in function core::ub_checks::is_valid_allocation_size",
+      "status": "UNREACHABLE",
+      "symbol": "core::ub_checks::is_valid_allocation_size.assertion.1"
+    },
+    {
+      "description": "attempt to calculate the remainder with a divisor of zero",
+      "id": 160,
+      "location": "library/kani_core/src/models.rs:93:25 in function kani::rustc_intrinsics::ptr_offset_from::<std::option::Option<u8>>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<std::option::Option<u8>>.assertion.2"
+    },
+    {
+      "description": "attempt to calculate the remainder with overflow",
+      "id": 161,
+      "location": "library/kani_core/src/models.rs:93:25 in function kani::rustc_intrinsics::ptr_offset_from::<std::option::Option<u8>>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<std::option::Option<u8>>.assertion.3"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 165,
+      "location": "library/kani_core/src/models.rs:97:21 in function kani::rustc_intrinsics::ptr_offset_from::<std::option::Option<u8>>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<std::option::Option<u8>>.assertion.4"
+    },
+    {
+      "description": "attempt to divide with overflow",
+      "id": 166,
+      "location": "library/kani_core/src/models.rs:97:21 in function kani::rustc_intrinsics::ptr_offset_from::<std::option::Option<u8>>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<std::option::Option<u8>>.assertion.5"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 175,
+      "location": "../../../../../runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:820:38 in function std::fmt::Arguments::<'_>::from_str",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Arguments::<'_>::from_str.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 177,
+      "location": "../../../../../runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ptr/const_ptr.rs:1360:23 in function std::ptr::const_ptr::<impl *const ()>::is_aligned_to",
+      "status": "UNREACHABLE",
+      "symbol": "std::ptr::const_ptr::<impl *const ()>::is_aligned_to.assertion.1"
+    }
+  ]
+}

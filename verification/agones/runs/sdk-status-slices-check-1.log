@@ -1,0 +1,93 @@
+    Checking agones-core v0.1.0 (/home/astral/Projects/agones/crates/agones-core)
+warning: ambiguous glob re-exports
+  --> crates/agones-core/src/lib.rs:34:9
+   |
+34 | pub use allocation::*;
+   |         ^^^^^^^^^^^^^ the name `NodeAddress` in the type namespace is first re-exported here
+35 | pub use autoscaling::*;
+36 | pub use gameserver::*;
+   |         ------------- but the name `NodeAddress` in the type namespace is also re-exported here
+   |
+   = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+error[E0308]: mismatched types
+   --> crates/agones-core/src/gameserver.rs:979:37
+    |
+979 |               self.status.addresses = vec![NodeAddress {
+    |  _____________---------------------___^
+    | |             |
+    | |             expected due to the type of this binding
+980 | |                 address: dev_address.clone(),
+981 | |                 address_type: "InternalIP".to_owned(),
+982 | |             }];
+    | |______________^ expected `GoSlice<NodeAddress>`, found `Vec<NodeAddress>`
+    |
+    = note: expected struct `GoSlice<gameserver::NodeAddress>`
+               found struct `Vec<gameserver::NodeAddress>`
+help: call `Into::into` on this expression to convert `Vec<gameserver::NodeAddress>` into `GoSlice<gameserver::NodeAddress>`
+    |
+982 |             }].into();
+    |               +++++++
+
+error[E0308]: mismatched types
+    --> crates/agones-core/src/gameserver.rs:1571:36
+     |
+1571 |           game_server.status.ports = vec![GameServerStatusPort {
+     |  _________------------------------___^
+     | |         |
+     | |         expected due to the type of this binding
+1572 | |             name: "preserve".into(),
+1573 | |             port: 9999,
+1574 | |         }];
+     | |__________^ expected `GoSlice<GameServerStatusPort>`, found `Vec<GameServerStatusPort>`
+     |
+     = note: expected struct `GoSlice<gameserver::GameServerStatusPort>`
+                found struct `Vec<gameserver::GameServerStatusPort>`
+help: call `Into::into` on this expression to convert `Vec<gameserver::GameServerStatusPort>` into `GoSlice<gameserver::GameServerStatusPort>`
+     |
+1574 |         }].into();
+     |           +++++++
+
+error[E0308]: mismatched types
+    --> crates/agones-core/src/gameserver.rs:1623:20
+     |
+1623 |               ports: vec![GameServerStatusPort {
+     |  ____________________^
+1624 | |                 name: "game".into(),
+1625 | |                 port: 7777,
+1626 | |             }],
+     | |______________^ expected `GoSlice<GameServerStatusPort>`, found `Vec<GameServerStatusPort>`
+     |
+     = note: expected struct `GoSlice<gameserver::GameServerStatusPort>`
+                found struct `Vec<gameserver::GameServerStatusPort>`
+help: call `Into::into` on this expression to convert `Vec<gameserver::GameServerStatusPort>` into `GoSlice<gameserver::GameServerStatusPort>`
+     |
+1626 |             }].into(),
+     |               +++++++
+
+error[E0308]: mismatched types
+    --> crates/agones-core/src/gameserver.rs:1628:24
+     |
+1628 |               addresses: vec![
+     |  ________________________^
+1629 | |                 NodeAddress {
+1630 | |                     address: "10.0.0.10".into(),
+1631 | |                     address_type: "InternalIP".into(),
+...    |
+1636 | |                 },
+1637 | |             ],
+     | |_____________^ expected `GoSlice<NodeAddress>`, found `Vec<NodeAddress>`
+     |
+     = note: expected struct `GoSlice<gameserver::NodeAddress>`
+                found struct `Vec<gameserver::NodeAddress>`
+help: call `Into::into` on this expression to convert `Vec<gameserver::NodeAddress>` into `GoSlice<gameserver::NodeAddress>`
+     |
+1637 |             ].into(),
+     |              +++++++
+
+For more information about this error, try `rustc --explain E0308`.
+warning: `agones-core` (lib) generated 1 warning
+error: could not compile `agones-core` (lib) due to 1 previous error; 1 warning emitted
+warning: build failed, waiting for other jobs to finish...
+warning: `agones-core` (lib test) generated 1 warning (1 duplicate)
+error: could not compile `agones-core` (lib test) due to 4 previous errors; 1 warning emitted

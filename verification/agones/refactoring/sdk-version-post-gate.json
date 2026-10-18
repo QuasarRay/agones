@@ -1,0 +1,12 @@
+{
+  "architecture_status": "All eight _2 form/location cells remain REQUIRED_OPEN; existing stock macro imports, token helper calls and CGP/Genco use provide no cell credit.",
+  "candidate": "Shared byte observation, version CGP declarations, source-case/metadata generation and common-domain harness repetition.",
+  "decision": "REUSE_EXISTING",
+  "feature_binding": "verification/agones/gates/5b802db996e5b26adf009be64d6d5ac8db2429f9416bd5d26050ff7252ac0488.json",
+  "id": "SDK-VERSION-001-post-gate-review",
+  "next_economical_adoption": "After the SDK typed properties and first adequate backend result, evaluate one common-domain declaration/metadata expansion using current agones-macros/Genco cores; exercise resource derive through a Cargo-renamed dependency at the next resource-derived consumer. Local definition/native invocation, acyclic automatic staging and packaging gaps must remain explicit.",
+  "next_review_trigger": "First adequate SDK property result or next resource-derived consumer, whichever comes first; reassess all eight C3 cells then.",
+  "observations": "Two real UTF-8 consumers now share the existing source-compatible decoder with finite width operations. Five actual domain/adapter paths consume one CGP version capability. Existing agones_invariant still rejects metadata arguments and emits distinct Bolero/direct-Kani harnesses, so unchanged use cannot certify the required common frontend/backend/domain contract. The existing resource derive crate-root hygiene limitation remains a separate required repair; this version context introduces no new resource derive.",
+  "rationale": "Reuse current CGP getters/providers, pinned Genco and the package-aware loader. Extend only the active SDK source family after its gate. Keep typed source fixture construction and independent invariants explicit. Avoid an unproved new compiler-staging layer merely to remove a few wrapper declarations.",
+  "roi": "The new width refactor removes actual duplicated UTF-8 reasoning and a logged symbolic loop hotspot. Existing Genco/typed IR can remove repeated case/harness bookkeeping at lower current build, diagnostic and packaging cost than a new four-form compiler bridge. Reassess the observed four common-domain families at the first adequate SDK property proof, using the existing proc_macro2 expansion cores as the smallest adoption point."
+}

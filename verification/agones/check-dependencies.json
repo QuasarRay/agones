@@ -9,7 +9,11 @@
     "verification/agones/go-print-*",
     "verification/agones/go-quote-ascii-reference.json",
     "verification/agones/feature-gates.ir.json",
-    "verification/agones/feature-error-witnesses.json"
+    "verification/agones/feature-error-witnesses.json",
+    "verification/agones/sdk-version.ir.json",
+    "verification/agones/sdk-version-codegen.json",
+    "verification/agones/sdk-version-witnesses.json",
+    ".cargo/**"
   ],
   "model": [
     "Cargo.toml",
@@ -28,7 +32,11 @@
     "verification/agones/go-print-*",
     "verification/agones/feature-error-properties.json",
     "verification/agones/feature-query-codegen.json",
-    "verification/agones/feature-gates.ir.json"
+    "verification/agones/feature-gates.ir.json",
+    "verification/agones/sdk-version.ir.json",
+    "verification/agones/sdk-version-codegen.json",
+    "verification/agones/sdk-version-domain.json",
+    ".cargo/**"
   ],
   "metadata_only": [
     "**/AGENTS.MD",

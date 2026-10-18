@@ -109,7 +109,7 @@ mod tests {
                                     name: "game".into(),
                                     image: "game:v1".into(),
                                     ..Default::default()
-                                }],
+                                }].into(),
                                 ..Default::default()
                             },
                             ..Default::default()

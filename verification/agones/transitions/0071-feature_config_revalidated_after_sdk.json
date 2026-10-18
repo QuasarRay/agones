@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "FEATURE_CONFIG_REVALIDATED_AFTER_SDK",
+  "gate_snapshot": "verification/agones/gates/06c4803629119e61572723619b217d60b8408e93a20fe33eaff3d035dabbac0c.json",
+  "predecessor_revision": 70,
+  "predecessor_sha256": "cd0c9cc337c4b4cdbc063d9ac094a91c94546926af795bad2c12073c5fb0e288",
+  "reason": "Repaired production closure and source-loader/codegen metadata are current; exact query-error assertion and both covers succeeded, while 16 query assertions remain formal-required.",
+  "result_revision": 71,
+  "schema_version": 1,
+  "state_sha256": "ea25fa70e1e209824fa5782b749c97e36cc9a55c23ac43ff19590dcd08a60856",
+  "timestamp": "2026-10-18T18:57:36.573712+00:00"
+}

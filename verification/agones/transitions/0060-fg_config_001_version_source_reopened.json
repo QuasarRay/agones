@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "fg_config_001_version_source_reopened",
+  "gate_snapshot": "verification/agones/gates/2d4372c73bfb9b9b1e3eda11df5aa77f3b2673fb341b66c551b6a5b159506164.json",
+  "predecessor_revision": 59,
+  "predecessor_sha256": "7a7cb75b3e47fd30b02fc47af314db2188f152f9466656c4c7d6dd0fc4d2c95e",
+  "reason": "SDK-VERSION-001 changes shared core and Rusternetes source owners. Reopen affected gates before edits; retain previous published evidence as historical until current closure is ordinarily checked and regated.",
+  "result_revision": 60,
+  "schema_version": 1,
+  "state_sha256": "6a5e4929c671b0977f4436367dc71b68f35934643f2eddc9ae35b6de49cb5944",
+  "timestamp": "2026-10-18T16:46:28.967053+00:00"
+}

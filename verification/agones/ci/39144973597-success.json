@@ -1,0 +1,200 @@
+{
+  "expected_base": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "formal_debt": "All 22 original source assertions and ASCII quote property three claims/nine covers remain required after retained timeouts.",
+  "head": "cf2fcb7139739c5f26e6155e3fa9c3b431887863",
+  "jobs": [
+    {
+      "conclusion": "success",
+      "id": 117726862240,
+      "name": "migration-state",
+      "status": "completed",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-python@v5"
+        },
+        {
+          "conclusion": "success",
+          "name": "Install pinned state validator"
+        },
+        {
+          "conclusion": "success",
+          "name": "Validate source-bound implementation gate and ledger"
+        },
+        {
+          "conclusion": "success",
+          "name": "Check guidance inheritance"
+        },
+        {
+          "conclusion": "success",
+          "name": "Reject incomplete or vacuous proof results"
+        },
+        {
+          "conclusion": "success",
+          "name": "Select affected checks conservatively"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-python@v5"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job"
+        }
+      ]
+    },
+    {
+      "conclusion": "success",
+      "id": 117726941398,
+      "name": "feature-bool-model-check",
+      "status": "completed",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4"
+        },
+        {
+          "conclusion": "success",
+          "name": "Install pinned verification tools"
+        },
+        {
+          "conclusion": "success",
+          "name": "Verify the exact Bolero harness through Kani"
+        },
+        {
+          "conclusion": "success",
+          "name": "Require all assertions and non-vacuity covers"
+        },
+        {
+          "conclusion": "success",
+          "name": "Verify production input precedence through Bolero and Kani"
+        },
+        {
+          "conclusion": "success",
+          "name": "Require input assertions and all ten covers"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@v4"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job"
+        }
+      ]
+    },
+    {
+      "conclusion": "success",
+      "id": 117726941514,
+      "name": "rust",
+      "status": "completed",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4"
+        },
+        {
+          "conclusion": "success",
+          "name": "Install pinned evidence Rust"
+        },
+        {
+          "conclusion": "success",
+          "name": "Install native build dependencies"
+        },
+        {
+          "conclusion": "success",
+          "name": "Check workspace"
+        },
+        {
+          "conclusion": "success",
+          "name": "Test workspace"
+        },
+        {
+          "conclusion": "success",
+          "name": "Check deterministic exact-case generation"
+        },
+        {
+          "conclusion": "success",
+          "name": "Check pinned Go printable-rune table generation"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job"
+        }
+      ]
+    }
+  ],
+  "merge_result_tested": "e3032088d9c7c0b6f511386ce248290074dc7622",
+  "model_proofs": {
+    "boolean": {
+      "claims": 3,
+      "covers": 6,
+      "properties": 1158,
+      "status_counts": {
+        "SATISFIED": 6,
+        "SUCCESS": 1141,
+        "UNREACHABLE": 11
+      }
+    },
+    "input": {
+      "claims": 3,
+      "covers": 10,
+      "properties": 978,
+      "status_counts": {
+        "SATISFIED": 10,
+        "SUCCESS": 945,
+        "UNREACHABLE": 23
+      }
+    },
+    "original_source_assertion_credit": 0,
+    "unreachable_source_credit": 0
+  },
+  "observed_rust_tests": {
+    "failed": 0,
+    "ignored": 3,
+    "passed": 537,
+    "suites": 15
+  },
+  "ordinary_generation": {
+    "go_printable_ranges": 741,
+    "source_query_assertions": 17,
+    "source_query_cases": 5,
+    "status": "PASSED"
+  },
+  "pull_request": "https://github.com/QuasarRay/agones/pull/92",
+  "remote_integration_head": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "retention": "CI is supplemental to the source-bound local proof artifacts retained in the published Git history. Actions artifacts use the configured 90-day retention.",
+  "schema_version": 1,
+  "status": "PASSED",
+  "url": "https://github.com/QuasarRay/agones/actions/runs/39144973597",
+  "visible_checkout": "agones-rs-dev@cf2fcb7139739c5f26e6155e3fa9c3b431887863",
+  "workflow_run": 39144973597
+}

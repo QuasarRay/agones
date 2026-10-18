@@ -1,0 +1,2183 @@
+{
+  "assertion_sites": [
+    {
+      "expression": "assert.Equal(t, pkg.Version, test.gameServer.Annotations[VersionAnnotation])",
+      "line": 409,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "expression": "assert.Equal(t, pkg.Version, f.ObjectMeta.Annotations[VersionAnnotation])",
+      "line": 112,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/fleet_test.go",
+      "test": "TestFleetApplyDefaults"
+    },
+    {
+      "expression": "assert.Equal(t, pkg.Version, f.ObjectMeta.Annotations[VersionAnnotation])",
+      "line": 121,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/fleet_test.go",
+      "test": "TestFleetApplyDefaults"
+    }
+  ],
+  "cases": [
+    {
+      "assertion_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters::line-409"
+      ],
+      "disposition": "RUNTIME_MAPPED_FORMAL_REQUIRED",
+      "expected_version": "dev",
+      "feature_flags": "CountsAndLists=true",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters",
+      "input_json": {
+        "metadata": {},
+        "spec": {
+          "counters": {
+            "games": {
+              "capacity": 100,
+              "count": 1
+            }
+          },
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 999
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "kind": "GAME_SERVER_VERSION",
+      "name": "CountsAndLists=true, Counters",
+      "steps": [
+        "CONSTRUCT_EXACT_SOURCE_FIXTURE",
+        "PARSE_SOURCE_FEATURE_FLAGS",
+        "ASSERT_PARSE_NO_ERROR",
+        "APPLY_DEFAULTS",
+        "ASSERT_SDK_VERSION"
+      ]
+    },
+    {
+      "assertion_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Lists::line-409"
+      ],
+      "disposition": "RUNTIME_MAPPED_FORMAL_REQUIRED",
+      "expected_version": "dev",
+      "feature_flags": "CountsAndLists=true",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Lists",
+      "input_json": {
+        "metadata": {},
+        "spec": {
+          "health": {},
+          "lists": {
+            "players": {
+              "capacity": 100,
+              "values": [
+                "foo",
+                "bar"
+              ]
+            }
+          },
+          "ports": [
+            {
+              "containerPort": 999
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "kind": "GAME_SERVER_VERSION",
+      "name": "CountsAndLists=true, Lists",
+      "steps": [
+        "CONSTRUCT_EXACT_SOURCE_FIXTURE",
+        "PARSE_SOURCE_FEATURE_FLAGS",
+        "ASSERT_PARSE_NO_ERROR",
+        "APPLY_DEFAULTS",
+        "ASSERT_SDK_VERSION"
+      ]
+    },
+    {
+      "assertion_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::Nothing inferred from safe-to-evict=false::line-409"
+      ],
+      "disposition": "RUNTIME_MAPPED_FORMAL_REQUIRED",
+      "expected_version": "dev",
+      "feature_flags": "",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::Nothing inferred from safe-to-evict=false",
+      "input_json": {
+        "metadata": {},
+        "spec": {
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 999
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {
+              "annotations": {
+                "cluster-autoscaler.kubernetes.io/safe-to-evict": "false"
+              }
+            },
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "kind": "GAME_SERVER_VERSION",
+      "name": "Nothing inferred from safe-to-evict=false",
+      "steps": [
+        "CONSTRUCT_EXACT_SOURCE_FIXTURE",
+        "PARSE_SOURCE_FEATURE_FLAGS",
+        "ASSERT_PARSE_NO_ERROR",
+        "APPLY_DEFAULTS",
+        "ASSERT_SDK_VERSION"
+      ]
+    },
+    {
+      "assertion_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::convert from legacy single port to multiple::line-409"
+      ],
+      "disposition": "RUNTIME_MAPPED_FORMAL_REQUIRED",
+      "expected_version": "dev",
+      "feature_flags": "",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::convert from legacy single port to multiple",
+      "input_json": {
+        "metadata": {},
+        "spec": {
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 777,
+              "hostPort": 777,
+              "portPolicy": "Static",
+              "protocol": "TCP"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "kind": "GAME_SERVER_VERSION",
+      "name": "convert from legacy single port to multiple",
+      "steps": [
+        "CONSTRUCT_EXACT_SOURCE_FIXTURE",
+        "PARSE_SOURCE_FEATURE_FLAGS",
+        "ASSERT_PARSE_NO_ERROR",
+        "APPLY_DEFAULTS",
+        "ASSERT_SDK_VERSION"
+      ]
+    },
+    {
+      "assertion_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are already set::line-409"
+      ],
+      "disposition": "RUNTIME_MAPPED_FORMAL_REQUIRED",
+      "expected_version": "dev",
+      "feature_flags": "",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are already set",
+      "input_json": {
+        "metadata": {},
+        "spec": {
+          "container": "testing2",
+          "health": {
+            "failureThreshold": 10,
+            "initialDelaySeconds": 11,
+            "periodSeconds": 12
+          },
+          "ports": [
+            {
+              "portPolicy": "Static",
+              "protocol": "TCP",
+              "range": "default"
+            }
+          ],
+          "sdkServer": {
+            "grpcPort": 9357,
+            "httpPort": 9358,
+            "logLevel": "Info"
+          },
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                },
+                {
+                  "image": "testing/image2",
+                  "name": "testing2",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": "TestState"
+        }
+      },
+      "kind": "GAME_SERVER_VERSION",
+      "name": "defaults are already set",
+      "steps": [
+        "CONSTRUCT_EXACT_SOURCE_FIXTURE",
+        "PARSE_SOURCE_FEATURE_FLAGS",
+        "ASSERT_PARSE_NO_ERROR",
+        "APPLY_DEFAULTS",
+        "ASSERT_SDK_VERSION"
+      ]
+    },
+    {
+      "assertion_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-409"
+      ],
+      "disposition": "RUNTIME_MAPPED_FORMAL_REQUIRED",
+      "expected_version": "dev",
+      "feature_flags": "",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never",
+      "input_json": {
+        "metadata": {},
+        "spec": {
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 999
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "kind": "GAME_SERVER_VERSION",
+      "name": "defaults are eviction.safe: Never",
+      "steps": [
+        "CONSTRUCT_EXACT_SOURCE_FIXTURE",
+        "PARSE_SOURCE_FEATURE_FLAGS",
+        "ASSERT_PARSE_NO_ERROR",
+        "APPLY_DEFAULTS",
+        "ASSERT_SDK_VERSION"
+      ]
+    },
+    {
+      "assertion_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults on passthrough::line-409"
+      ],
+      "disposition": "RUNTIME_MAPPED_FORMAL_REQUIRED",
+      "expected_version": "dev",
+      "feature_flags": "",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults on passthrough",
+      "input_json": {
+        "metadata": {},
+        "spec": {
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 999,
+              "portPolicy": "Passthrough"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "kind": "GAME_SERVER_VERSION",
+      "name": "defaults on passthrough",
+      "steps": [
+        "CONSTRUCT_EXACT_SOURCE_FIXTURE",
+        "PARSE_SOURCE_FEATURE_FLAGS",
+        "ASSERT_PARSE_NO_ERROR",
+        "APPLY_DEFAULTS",
+        "ASSERT_SDK_VERSION"
+      ]
+    },
+    {
+      "assertion_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always::line-409"
+      ],
+      "disposition": "RUNTIME_MAPPED_FORMAL_REQUIRED",
+      "expected_version": "dev",
+      "feature_flags": "",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always",
+      "input_json": {
+        "metadata": {},
+        "spec": {
+          "eviction": {
+            "safe": "Always"
+          },
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 999
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "kind": "GAME_SERVER_VERSION",
+      "name": "eviction.safe: Always",
+      "steps": [
+        "CONSTRUCT_EXACT_SOURCE_FIXTURE",
+        "PARSE_SOURCE_FEATURE_FLAGS",
+        "ASSERT_PARSE_NO_ERROR",
+        "APPLY_DEFAULTS",
+        "ASSERT_SDK_VERSION"
+      ]
+    },
+    {
+      "assertion_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always inferred from safe-to-evict=true::line-409"
+      ],
+      "disposition": "RUNTIME_MAPPED_FORMAL_REQUIRED",
+      "expected_version": "dev",
+      "feature_flags": "",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always inferred from safe-to-evict=true",
+      "input_json": {
+        "metadata": {},
+        "spec": {
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 999
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {
+              "annotations": {
+                "cluster-autoscaler.kubernetes.io/safe-to-evict": "true"
+              }
+            },
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "kind": "GAME_SERVER_VERSION",
+      "name": "eviction.safe: Always inferred from safe-to-evict=true",
+      "steps": [
+        "CONSTRUCT_EXACT_SOURCE_FIXTURE",
+        "PARSE_SOURCE_FEATURE_FLAGS",
+        "ASSERT_PARSE_NO_ERROR",
+        "APPLY_DEFAULTS",
+        "ASSERT_SDK_VERSION"
+      ]
+    },
+    {
+      "assertion_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Never::line-409"
+      ],
+      "disposition": "RUNTIME_MAPPED_FORMAL_REQUIRED",
+      "expected_version": "dev",
+      "feature_flags": "",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Never",
+      "input_json": {
+        "metadata": {},
+        "spec": {
+          "eviction": {
+            "safe": "Never"
+          },
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 999
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "kind": "GAME_SERVER_VERSION",
+      "name": "eviction.safe: Never",
+      "steps": [
+        "CONSTRUCT_EXACT_SOURCE_FIXTURE",
+        "PARSE_SOURCE_FEATURE_FLAGS",
+        "ASSERT_PARSE_NO_ERROR",
+        "APPLY_DEFAULTS",
+        "ASSERT_SDK_VERSION"
+      ]
+    },
+    {
+      "assertion_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: OnUpgrade::line-409"
+      ],
+      "disposition": "RUNTIME_MAPPED_FORMAL_REQUIRED",
+      "expected_version": "dev",
+      "feature_flags": "",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: OnUpgrade",
+      "input_json": {
+        "metadata": {},
+        "spec": {
+          "eviction": {
+            "safe": "OnUpgrade"
+          },
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 999
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "kind": "GAME_SERVER_VERSION",
+      "name": "eviction.safe: OnUpgrade",
+      "steps": [
+        "CONSTRUCT_EXACT_SOURCE_FIXTURE",
+        "PARSE_SOURCE_FEATURE_FLAGS",
+        "ASSERT_PARSE_NO_ERROR",
+        "APPLY_DEFAULTS",
+        "ASSERT_SDK_VERSION"
+      ]
+    },
+    {
+      "assertion_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::health is disabled::line-409"
+      ],
+      "disposition": "RUNTIME_MAPPED_FORMAL_REQUIRED",
+      "expected_version": "dev",
+      "feature_flags": "",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::health is disabled",
+      "input_json": {
+        "metadata": {},
+        "spec": {
+          "health": {
+            "disabled": true
+          },
+          "ports": [
+            {
+              "containerPort": 999
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "kind": "GAME_SERVER_VERSION",
+      "name": "health is disabled",
+      "steps": [
+        "CONSTRUCT_EXACT_SOURCE_FIXTURE",
+        "PARSE_SOURCE_FEATURE_FLAGS",
+        "ASSERT_PARSE_NO_ERROR",
+        "APPLY_DEFAULTS",
+        "ASSERT_SDK_VERSION"
+      ]
+    },
+    {
+      "assertion_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always::line-409"
+      ],
+      "disposition": "RUNTIME_MAPPED_FORMAL_REQUIRED",
+      "expected_version": "dev",
+      "feature_flags": "",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always",
+      "input_json": {
+        "metadata": {},
+        "spec": {
+          "eviction": {
+            "safe": "Always"
+          },
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 999
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {
+              "annotations": {
+                "cluster-autoscaler.kubernetes.io/safe-to-evict": "false"
+              }
+            },
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "kind": "GAME_SERVER_VERSION",
+      "name": "safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always",
+      "steps": [
+        "CONSTRUCT_EXACT_SOURCE_FIXTURE",
+        "PARSE_SOURCE_FEATURE_FLAGS",
+        "ASSERT_PARSE_NO_ERROR",
+        "APPLY_DEFAULTS",
+        "ASSERT_SDK_VERSION"
+      ]
+    },
+    {
+      "assertion_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set Debug logging level::line-409"
+      ],
+      "disposition": "RUNTIME_MAPPED_FORMAL_REQUIRED",
+      "expected_version": "dev",
+      "feature_flags": "",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set Debug logging level",
+      "input_json": {
+        "metadata": {},
+        "spec": {
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 999
+            }
+          ],
+          "sdkServer": {
+            "logLevel": "Debug"
+          },
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "kind": "GAME_SERVER_VERSION",
+      "name": "set Debug logging level",
+      "steps": [
+        "CONSTRUCT_EXACT_SOURCE_FIXTURE",
+        "PARSE_SOURCE_FEATURE_FLAGS",
+        "ASSERT_PARSE_NO_ERROR",
+        "APPLY_DEFAULTS",
+        "ASSERT_SDK_VERSION"
+      ]
+    },
+    {
+      "assertion_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-409"
+      ],
+      "disposition": "RUNTIME_MAPPED_FORMAL_REQUIRED",
+      "expected_version": "dev",
+      "feature_flags": "",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver",
+      "input_json": {
+        "metadata": {},
+        "spec": {
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 999
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "kind": "GAME_SERVER_VERSION",
+      "name": "set basic defaults on a very simple gameserver",
+      "steps": [
+        "CONSTRUCT_EXACT_SOURCE_FIXTURE",
+        "PARSE_SOURCE_FEATURE_FLAGS",
+        "ASSERT_PARSE_NO_ERROR",
+        "APPLY_DEFAULTS",
+        "ASSERT_SDK_VERSION"
+      ]
+    },
+    {
+      "assertion_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on static gameserver::line-409"
+      ],
+      "disposition": "RUNTIME_MAPPED_FORMAL_REQUIRED",
+      "expected_version": "dev",
+      "feature_flags": "",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on static gameserver",
+      "input_json": {
+        "metadata": {},
+        "spec": {
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 999,
+              "portPolicy": "Static"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "kind": "GAME_SERVER_VERSION",
+      "name": "set basic defaults on static gameserver",
+      "steps": [
+        "CONSTRUCT_EXACT_SOURCE_FIXTURE",
+        "PARSE_SOURCE_FEATURE_FLAGS",
+        "ASSERT_PARSE_NO_ERROR",
+        "APPLY_DEFAULTS",
+        "ASSERT_SDK_VERSION"
+      ]
+    },
+    {
+      "assertion_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set gRPC and HTTP ports on SDK Server::line-409"
+      ],
+      "disposition": "RUNTIME_MAPPED_FORMAL_REQUIRED",
+      "expected_version": "dev",
+      "feature_flags": "",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set gRPC and HTTP ports on SDK Server",
+      "input_json": {
+        "metadata": {},
+        "spec": {
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 999
+            }
+          ],
+          "sdkServer": {
+            "grpcPort": 19357,
+            "httpPort": 19358,
+            "logLevel": "Error"
+          },
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "kind": "GAME_SERVER_VERSION",
+      "name": "set gRPC and HTTP ports on SDK Server",
+      "steps": [
+        "CONSTRUCT_EXACT_SOURCE_FIXTURE",
+        "PARSE_SOURCE_FEATURE_FLAGS",
+        "ASSERT_PARSE_NO_ERROR",
+        "APPLY_DEFAULTS",
+        "ASSERT_SDK_VERSION"
+      ]
+    },
+    {
+      "assertion_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetApplyDefaults::$root::line-112",
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetApplyDefaults::$root::line-121"
+      ],
+      "disposition": "RUNTIME_MAPPED_FORMAL_REQUIRED",
+      "expected_version": "dev",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetApplyDefaults::$root",
+      "input_json": {
+        "metadata": {},
+        "spec": {
+          "replicas": 0,
+          "scheduling": "",
+          "strategy": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "health": {},
+              "sdkServer": {},
+              "template": {
+                "metadata": {},
+                "spec": {
+                  "containers": null
+                }
+              }
+            }
+          }
+        },
+        "status": {
+          "allocatedReplicas": 0,
+          "allocations": 0,
+          "readyReplicas": 0,
+          "replicas": 0,
+          "reservedReplicas": 0
+        }
+      },
+      "kind": "FLEET_VERSION",
+      "name": "$root",
+      "steps": [
+        "CONSTRUCT_EXACT_SOURCE_FIXTURE",
+        "APPLY_DEFAULTS",
+        "ASSERT_SDK_VERSION",
+        "APPLY_DEFAULTS",
+        "ASSERT_SDK_VERSION"
+      ]
+    }
+  ],
+  "classification": "EXACT_CASE_ASSERTION_PROJECTIONS",
+  "environment": {
+    "CGO_ENABLED": "1",
+    "GOARCH": "amd64",
+    "GOENV": "/home/astral/.config/go/env",
+    "GOEXPERIMENT": "nodwarf5",
+    "GOFLAGS": "-mod=vendor",
+    "GOMOD": "/home/astral/Projects/agones/go.mod",
+    "GOOS": "linux",
+    "GOTOOLCHAIN": "local",
+    "GOVERSION": "go1.27.1-X:nodwarf5"
+  },
+  "feature_id": "SDK-VERSION-001",
+  "fixture_program": "package main\nimport (\n. \"agones.dev/agones/pkg/apis/agones/v1\"\napis \"agones.dev/agones/pkg/apis\"\ncaptureFMT \"fmt\"\ncaptureJSON \"encoding/json\"\ncapturePkg \"agones.dev/agones/pkg\"\ncaptureSORT \"sort\"\ncorev1 \"k8s.io/api/core/v1\"\nruntime \"agones.dev/agones/pkg/util/runtime\"\n)\nfunc main(){\ndefaultGameServerAnd := func(f func(gss *GameServerSpec)) GameServer {\n\tgs := GameServer{\n\t\tSpec: GameServerSpec{\n\t\t\tPorts:\t[]GameServerPort{{ContainerPort: 999}},\n\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{\n\t\t\t\t\t{Name: \"testing\", Image: \"testing/image\"},\n\t\t\t\t}},\n\t\t\t},\n\t\t},\n\t}\n\tf(\u0026gs.Spec)\n\treturn gs\n}\ntype expected struct {\n\tcontainer\t\tstring\n\tprotocol\t\tcorev1.Protocol\n\tstate\t\t\tGameServerState\n\tpolicy\t\t\tPortPolicy\n\tportRange\t\tstring\n\thealth\t\t\tHealth\n\tscheduling\t\tapis.SchedulingStrategy\n\tsdkServer\t\tSdkServer\n\talphaPlayerCapacity\t*int64\n\tcounterSpec\t\tmap[string]CounterStatus\n\tlistSpec\t\tmap[string]ListStatus\n\tevictionSafeSpec\tEvictionSafe\n\tevictionSafeStatus\tEvictionSafe\n}\nwantDefaultAnd := func(f func(e *expected)) expected {\n\te := expected{\n\t\tcontainer:\t\"testing\",\n\t\tprotocol:\t\"UDP\",\n\t\tportRange:\tDefaultPortRange,\n\t\tstate:\t\tGameServerStatePortAllocation,\n\t\tpolicy:\t\tDynamic,\n\t\tscheduling:\tapis.Packed,\n\t\thealth: Health{\n\t\t\tDisabled:\t\tfalse,\n\t\t\tFailureThreshold:\t3,\n\t\t\tInitialDelaySeconds:\t5,\n\t\t\tPeriodSeconds:\t\t5,\n\t\t},\n\t\tsdkServer: SdkServer{\n\t\t\tLogLevel:\tSdkServerLogLevelInfo,\n\t\t\tGRPCPort:\t9357,\n\t\t\tHTTPPort:\t9358,\n\t\t},\n\t\tevictionSafeSpec:\tEvictionSafeNever,\n\t\tevictionSafeStatus:\tEvictionSafeNever,\n\t}\n\tf(\u0026e)\n\treturn e\n}\ndata := map[string]struct {\n\tgameServer\tGameServer\n\tcontainer\tstring\n\tfeatureFlags\tstring\n\texpected\texpected\n}{\n\t\"set basic defaults on a very simple gameserver\": {\n\t\tgameServer:\tdefaultGameServerAnd(func(_ *GameServerSpec) {}),\n\t\texpected:\twantDefaultAnd(func(_ *expected) {}),\n\t},\n\t\"CountsAndLists=true, Counters\": {\n\t\tfeatureFlags:\tstring(runtime.FeatureCountsAndLists) + \"=true\",\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Counters = make(map[string]CounterStatus)\n\t\t\tgss.Counters[\"games\"] = CounterStatus{Count: 1, Capacity: 100}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.counterSpec = make(map[string]CounterStatus)\n\t\t\te.counterSpec[\"games\"] = CounterStatus{Count: 1, Capacity: 100}\n\t\t}),\n\t},\n\t\"CountsAndLists=true, Lists\": {\n\t\tfeatureFlags:\tstring(runtime.FeatureCountsAndLists) + \"=true\",\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Lists = make(map[string]ListStatus)\n\t\t\tgss.Lists[\"players\"] = ListStatus{Capacity: 100, Values: []string{\"foo\", \"bar\"}}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.listSpec = make(map[string]ListStatus)\n\t\t\te.listSpec[\"players\"] = ListStatus{Capacity: 100, Values: []string{\"foo\", \"bar\"}}\n\t\t}),\n\t},\n\t\"defaults on passthrough\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Ports[0].PortPolicy = Passthrough\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.policy = Passthrough\n\t\t}),\n\t},\n\t\"defaults are already set\": {\n\t\tgameServer: GameServer{\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tContainer:\t\"testing2\",\n\t\t\t\tPorts: []GameServerPort{{\n\t\t\t\t\tProtocol:\t\"TCP\",\n\t\t\t\t\tRange:\t\tDefaultPortRange,\n\t\t\t\t\tPortPolicy:\tStatic,\n\t\t\t\t}},\n\t\t\t\tHealth: Health{\n\t\t\t\t\tDisabled:\t\tfalse,\n\t\t\t\t\tPeriodSeconds:\t\t12,\n\t\t\t\t\tInitialDelaySeconds:\t11,\n\t\t\t\t\tFailureThreshold:\t10,\n\t\t\t\t},\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{\n\t\t\t\t\t\tContainers: []corev1.Container{\n\t\t\t\t\t\t\t{Name: \"testing\", Image: \"testing/image\"},\n\t\t\t\t\t\t\t{Name: \"testing2\", Image: \"testing/image2\"},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\tSdkServer: SdkServer{\n\t\t\t\t\tLogLevel:\tSdkServerLogLevelInfo,\n\t\t\t\t\tGRPCPort:\t9357,\n\t\t\t\t\tHTTPPort:\t9358,\n\t\t\t\t},\n\t\t\t},\n\t\t\tStatus:\tGameServerStatus{State: \"TestState\"},\n\t\t},\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.container = \"testing2\"\n\t\t\te.protocol = \"TCP\"\n\t\t\te.state = \"TestState\"\n\t\t\te.health = Health{\n\t\t\t\tDisabled:\t\tfalse,\n\t\t\t\tFailureThreshold:\t10,\n\t\t\t\tInitialDelaySeconds:\t11,\n\t\t\t\tPeriodSeconds:\t\t12,\n\t\t\t}\n\t\t}),\n\t},\n\t\"set basic defaults on static gameserver\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Ports[0].PortPolicy = Static\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.state = GameServerStateCreating\n\t\t\te.policy = Static\n\t\t}),\n\t},\n\t\"health is disabled\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Health = Health{Disabled: true}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.health = Health{Disabled: true}\n\t\t}),\n\t},\n\t\"convert from legacy single port to multiple\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Ports[0] = GameServerPort{\n\t\t\t\tContainerPort:\t777,\n\t\t\t\tHostPort:\t777,\n\t\t\t\tPortPolicy:\tStatic,\n\t\t\t\tProtocol:\tcorev1.ProtocolTCP,\n\t\t\t}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.protocol = \"TCP\"\n\t\t\te.state = GameServerStateCreating\n\t\t}),\n\t},\n\t\"set Debug logging level\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.SdkServer = SdkServer{LogLevel: SdkServerLogLevelDebug}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.sdkServer.LogLevel = SdkServerLogLevelDebug\n\t\t}),\n\t},\n\t\"set gRPC and HTTP ports on SDK Server\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.SdkServer = SdkServer{\n\t\t\t\tLogLevel:\tSdkServerLogLevelError,\n\t\t\t\tGRPCPort:\t19357,\n\t\t\t\tHTTPPort:\t19358,\n\t\t\t}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.sdkServer = SdkServer{\n\t\t\t\tLogLevel:\tSdkServerLogLevelError,\n\t\t\t\tGRPCPort:\t19357,\n\t\t\t\tHTTPPort:\t19358,\n\t\t\t}\n\t\t}),\n\t},\n\t\"defaults are eviction.safe: Never\": {\n\t\tgameServer:\tdefaultGameServerAnd(func(_ *GameServerSpec) {}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.evictionSafeSpec = EvictionSafeNever\n\t\t\te.evictionSafeStatus = EvictionSafeNever\n\t\t}),\n\t},\n\t\"eviction.safe: Always\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Eviction = \u0026Eviction{Safe: EvictionSafeAlways}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.evictionSafeSpec = EvictionSafeAlways\n\t\t\te.evictionSafeStatus = EvictionSafeAlways\n\t\t}),\n\t},\n\t\"eviction.safe: OnUpgrade\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Eviction = \u0026Eviction{Safe: EvictionSafeOnUpgrade}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.evictionSafeSpec = EvictionSafeOnUpgrade\n\t\t\te.evictionSafeStatus = EvictionSafeOnUpgrade\n\t\t}),\n\t},\n\t\"eviction.safe: Never\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Eviction = \u0026Eviction{Safe: EvictionSafeNever}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.evictionSafeSpec = EvictionSafeNever\n\t\t\te.evictionSafeStatus = EvictionSafeNever\n\t\t}),\n\t},\n\t\"eviction.safe: Always inferred from safe-to-evict=true\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Template.ObjectMeta.Annotations = map[string]string{PodSafeToEvictAnnotation: \"true\"}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.evictionSafeSpec = EvictionSafeNever\n\t\t\te.evictionSafeStatus = EvictionSafeAlways\n\t\t}),\n\t},\n\t\"Nothing inferred from safe-to-evict=false\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Template.ObjectMeta.Annotations = map[string]string{PodSafeToEvictAnnotation: \"false\"}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.evictionSafeSpec = EvictionSafeNever\n\t\t\te.evictionSafeStatus = EvictionSafeNever\n\t\t}),\n\t},\n\t\"safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Eviction = \u0026Eviction{Safe: EvictionSafeAlways}\n\t\t\tgss.Template.ObjectMeta.Annotations = map[string]string{PodSafeToEvictAnnotation: \"false\"}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.evictionSafeSpec = EvictionSafeAlways\n\t\t\te.evictionSafeStatus = EvictionSafeAlways\n\t\t}),\n\t},\n}\n\n    keys:=make([]string,0,len(data));for name:=range data {keys=append(keys,name)};captureSORT.Strings(keys)\n    rows:=[]map[string]interface{}{}\n    runtime.FeatureTestMutex.Lock();defer runtime.FeatureTestMutex.Unlock()\n    for _,name:=range keys {\n        test:=data[name];before,err:=captureJSON.Marshal(test.gameServer);if err!=nil {panic(err)}\n        if err:=runtime.ParseFeatures(test.featureFlags);err!=nil {panic(err)}\n        gs:=test.gameServer.DeepCopy();gs.ApplyDefaults();observed,present:=gs.Annotations[VersionAnnotation]\n        if !present || observed!=capturePkg.Version {panic(\"source SDK fixture version assertion failed\")}\n        rows=append(rows,map[string]interface{}{\"name\":name,\"feature_flags\":test.featureFlags,\"before\":captureJSON.RawMessage(before),\"observed\":observed})\n    }\n    f:=\u0026Fleet{};before,err:=captureJSON.Marshal(f);if err!=nil {panic(err)};fleetVersions:=[]string{}\n    for i:=0;i\u003c2;i++ {f.ApplyDefaults();version,present:=f.Annotations[VersionAnnotation];if !present || version!=capturePkg.Version {panic(\"source Fleet version assertion failed\")};fleetVersions=append(fleetVersions,version)}\n    result:=map[string]interface{}{\"game_server_cases\":rows,\"fleet_before\":captureJSON.RawMessage(before),\"fleet_versions\":fleetVersions,\"expected_version\":capturePkg.Version}\n    encoded,err:=captureJSON.Marshal(result);if err!=nil {panic(err)};captureFMT.Println(string(encoded))\n}\n",
+  "fixture_program_sha256": "9ac1516b24a6cafaf8e48a48b82708cdba4750133472ab211f5d8aa211f7a677",
+  "fixtures": {
+    "expected_version": "dev",
+    "fleet_before": {
+      "metadata": {},
+      "spec": {
+        "replicas": 0,
+        "scheduling": "",
+        "strategy": {},
+        "template": {
+          "metadata": {},
+          "spec": {
+            "health": {},
+            "sdkServer": {},
+            "template": {
+              "metadata": {},
+              "spec": {
+                "containers": null
+              }
+            }
+          }
+        }
+      },
+      "status": {
+        "allocatedReplicas": 0,
+        "allocations": 0,
+        "readyReplicas": 0,
+        "replicas": 0,
+        "reservedReplicas": 0
+      }
+    },
+    "fleet_versions": [
+      "dev",
+      "dev"
+    ],
+    "game_server_cases": [
+      {
+        "before": {
+          "metadata": {},
+          "spec": {
+            "counters": {
+              "games": {
+                "capacity": 100,
+                "count": 1
+              }
+            },
+            "health": {},
+            "ports": [
+              {
+                "containerPort": 999
+              }
+            ],
+            "sdkServer": {},
+            "template": {
+              "metadata": {},
+              "spec": {
+                "containers": [
+                  {
+                    "image": "testing/image",
+                    "name": "testing",
+                    "resources": {}
+                  }
+                ]
+              }
+            }
+          },
+          "status": {
+            "address": "",
+            "addresses": null,
+            "nodeName": "",
+            "players": null,
+            "ports": null,
+            "reservedUntil": null,
+            "state": ""
+          }
+        },
+        "feature_flags": "CountsAndLists=true",
+        "name": "CountsAndLists=true, Counters",
+        "observed": "dev"
+      },
+      {
+        "before": {
+          "metadata": {},
+          "spec": {
+            "health": {},
+            "lists": {
+              "players": {
+                "capacity": 100,
+                "values": [
+                  "foo",
+                  "bar"
+                ]
+              }
+            },
+            "ports": [
+              {
+                "containerPort": 999
+              }
+            ],
+            "sdkServer": {},
+            "template": {
+              "metadata": {},
+              "spec": {
+                "containers": [
+                  {
+                    "image": "testing/image",
+                    "name": "testing",
+                    "resources": {}
+                  }
+                ]
+              }
+            }
+          },
+          "status": {
+            "address": "",
+            "addresses": null,
+            "nodeName": "",
+            "players": null,
+            "ports": null,
+            "reservedUntil": null,
+            "state": ""
+          }
+        },
+        "feature_flags": "CountsAndLists=true",
+        "name": "CountsAndLists=true, Lists",
+        "observed": "dev"
+      },
+      {
+        "before": {
+          "metadata": {},
+          "spec": {
+            "health": {},
+            "ports": [
+              {
+                "containerPort": 999
+              }
+            ],
+            "sdkServer": {},
+            "template": {
+              "metadata": {
+                "annotations": {
+                  "cluster-autoscaler.kubernetes.io/safe-to-evict": "false"
+                }
+              },
+              "spec": {
+                "containers": [
+                  {
+                    "image": "testing/image",
+                    "name": "testing",
+                    "resources": {}
+                  }
+                ]
+              }
+            }
+          },
+          "status": {
+            "address": "",
+            "addresses": null,
+            "nodeName": "",
+            "players": null,
+            "ports": null,
+            "reservedUntil": null,
+            "state": ""
+          }
+        },
+        "feature_flags": "",
+        "name": "Nothing inferred from safe-to-evict=false",
+        "observed": "dev"
+      },
+      {
+        "before": {
+          "metadata": {},
+          "spec": {
+            "health": {},
+            "ports": [
+              {
+                "containerPort": 777,
+                "hostPort": 777,
+                "portPolicy": "Static",
+                "protocol": "TCP"
+              }
+            ],
+            "sdkServer": {},
+            "template": {
+              "metadata": {},
+              "spec": {
+                "containers": [
+                  {
+                    "image": "testing/image",
+                    "name": "testing",
+                    "resources": {}
+                  }
+                ]
+              }
+            }
+          },
+          "status": {
+            "address": "",
+            "addresses": null,
+            "nodeName": "",
+            "players": null,
+            "ports": null,
+            "reservedUntil": null,
+            "state": ""
+          }
+        },
+        "feature_flags": "",
+        "name": "convert from legacy single port to multiple",
+        "observed": "dev"
+      },
+      {
+        "before": {
+          "metadata": {},
+          "spec": {
+            "container": "testing2",
+            "health": {
+              "failureThreshold": 10,
+              "initialDelaySeconds": 11,
+              "periodSeconds": 12
+            },
+            "ports": [
+              {
+                "portPolicy": "Static",
+                "protocol": "TCP",
+                "range": "default"
+              }
+            ],
+            "sdkServer": {
+              "grpcPort": 9357,
+              "httpPort": 9358,
+              "logLevel": "Info"
+            },
+            "template": {
+              "metadata": {},
+              "spec": {
+                "containers": [
+                  {
+                    "image": "testing/image",
+                    "name": "testing",
+                    "resources": {}
+                  },
+                  {
+                    "image": "testing/image2",
+                    "name": "testing2",
+                    "resources": {}
+                  }
+                ]
+              }
+            }
+          },
+          "status": {
+            "address": "",
+            "addresses": null,
+            "nodeName": "",
+            "players": null,
+            "ports": null,
+            "reservedUntil": null,
+            "state": "TestState"
+          }
+        },
+        "feature_flags": "",
+        "name": "defaults are already set",
+        "observed": "dev"
+      },
+      {
+        "before": {
+          "metadata": {},
+          "spec": {
+            "health": {},
+            "ports": [
+              {
+                "containerPort": 999
+              }
+            ],
+            "sdkServer": {},
+            "template": {
+              "metadata": {},
+              "spec": {
+                "containers": [
+                  {
+                    "image": "testing/image",
+                    "name": "testing",
+                    "resources": {}
+                  }
+                ]
+              }
+            }
+          },
+          "status": {
+            "address": "",
+            "addresses": null,
+            "nodeName": "",
+            "players": null,
+            "ports": null,
+            "reservedUntil": null,
+            "state": ""
+          }
+        },
+        "feature_flags": "",
+        "name": "defaults are eviction.safe: Never",
+        "observed": "dev"
+      },
+      {
+        "before": {
+          "metadata": {},
+          "spec": {
+            "health": {},
+            "ports": [
+              {
+                "containerPort": 999,
+                "portPolicy": "Passthrough"
+              }
+            ],
+            "sdkServer": {},
+            "template": {
+              "metadata": {},
+              "spec": {
+                "containers": [
+                  {
+                    "image": "testing/image",
+                    "name": "testing",
+                    "resources": {}
+                  }
+                ]
+              }
+            }
+          },
+          "status": {
+            "address": "",
+            "addresses": null,
+            "nodeName": "",
+            "players": null,
+            "ports": null,
+            "reservedUntil": null,
+            "state": ""
+          }
+        },
+        "feature_flags": "",
+        "name": "defaults on passthrough",
+        "observed": "dev"
+      },
+      {
+        "before": {
+          "metadata": {},
+          "spec": {
+            "eviction": {
+              "safe": "Always"
+            },
+            "health": {},
+            "ports": [
+              {
+                "containerPort": 999
+              }
+            ],
+            "sdkServer": {},
+            "template": {
+              "metadata": {},
+              "spec": {
+                "containers": [
+                  {
+                    "image": "testing/image",
+                    "name": "testing",
+                    "resources": {}
+                  }
+                ]
+              }
+            }
+          },
+          "status": {
+            "address": "",
+            "addresses": null,
+            "nodeName": "",
+            "players": null,
+            "ports": null,
+            "reservedUntil": null,
+            "state": ""
+          }
+        },
+        "feature_flags": "",
+        "name": "eviction.safe: Always",
+        "observed": "dev"
+      },
+      {
+        "before": {
+          "metadata": {},
+          "spec": {
+            "health": {},
+            "ports": [
+              {
+                "containerPort": 999
+              }
+            ],
+            "sdkServer": {},
+            "template": {
+              "metadata": {
+                "annotations": {
+                  "cluster-autoscaler.kubernetes.io/safe-to-evict": "true"
+                }
+              },
+              "spec": {
+                "containers": [
+                  {
+                    "image": "testing/image",
+                    "name": "testing",
+                    "resources": {}
+                  }
+                ]
+              }
+            }
+          },
+          "status": {
+            "address": "",
+            "addresses": null,
+            "nodeName": "",
+            "players": null,
+            "ports": null,
+            "reservedUntil": null,
+            "state": ""
+          }
+        },
+        "feature_flags": "",
+        "name": "eviction.safe: Always inferred from safe-to-evict=true",
+        "observed": "dev"
+      },
+      {
+        "before": {
+          "metadata": {},
+          "spec": {
+            "eviction": {
+              "safe": "Never"
+            },
+            "health": {},
+            "ports": [
+              {
+                "containerPort": 999
+              }
+            ],
+            "sdkServer": {},
+            "template": {
+              "metadata": {},
+              "spec": {
+                "containers": [
+                  {
+                    "image": "testing/image",
+                    "name": "testing",
+                    "resources": {}
+                  }
+                ]
+              }
+            }
+          },
+          "status": {
+            "address": "",
+            "addresses": null,
+            "nodeName": "",
+            "players": null,
+            "ports": null,
+            "reservedUntil": null,
+            "state": ""
+          }
+        },
+        "feature_flags": "",
+        "name": "eviction.safe: Never",
+        "observed": "dev"
+      },
+      {
+        "before": {
+          "metadata": {},
+          "spec": {
+            "eviction": {
+              "safe": "OnUpgrade"
+            },
+            "health": {},
+            "ports": [
+              {
+                "containerPort": 999
+              }
+            ],
+            "sdkServer": {},
+            "template": {
+              "metadata": {},
+              "spec": {
+                "containers": [
+                  {
+                    "image": "testing/image",
+                    "name": "testing",
+                    "resources": {}
+                  }
+                ]
+              }
+            }
+          },
+          "status": {
+            "address": "",
+            "addresses": null,
+            "nodeName": "",
+            "players": null,
+            "ports": null,
+            "reservedUntil": null,
+            "state": ""
+          }
+        },
+        "feature_flags": "",
+        "name": "eviction.safe: OnUpgrade",
+        "observed": "dev"
+      },
+      {
+        "before": {
+          "metadata": {},
+          "spec": {
+            "health": {
+              "disabled": true
+            },
+            "ports": [
+              {
+                "containerPort": 999
+              }
+            ],
+            "sdkServer": {},
+            "template": {
+              "metadata": {},
+              "spec": {
+                "containers": [
+                  {
+                    "image": "testing/image",
+                    "name": "testing",
+                    "resources": {}
+                  }
+                ]
+              }
+            }
+          },
+          "status": {
+            "address": "",
+            "addresses": null,
+            "nodeName": "",
+            "players": null,
+            "ports": null,
+            "reservedUntil": null,
+            "state": ""
+          }
+        },
+        "feature_flags": "",
+        "name": "health is disabled",
+        "observed": "dev"
+      },
+      {
+        "before": {
+          "metadata": {},
+          "spec": {
+            "eviction": {
+              "safe": "Always"
+            },
+            "health": {},
+            "ports": [
+              {
+                "containerPort": 999
+              }
+            ],
+            "sdkServer": {},
+            "template": {
+              "metadata": {
+                "annotations": {
+                  "cluster-autoscaler.kubernetes.io/safe-to-evict": "false"
+                }
+              },
+              "spec": {
+                "containers": [
+                  {
+                    "image": "testing/image",
+                    "name": "testing",
+                    "resources": {}
+                  }
+                ]
+              }
+            }
+          },
+          "status": {
+            "address": "",
+            "addresses": null,
+            "nodeName": "",
+            "players": null,
+            "ports": null,
+            "reservedUntil": null,
+            "state": ""
+          }
+        },
+        "feature_flags": "",
+        "name": "safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always",
+        "observed": "dev"
+      },
+      {
+        "before": {
+          "metadata": {},
+          "spec": {
+            "health": {},
+            "ports": [
+              {
+                "containerPort": 999
+              }
+            ],
+            "sdkServer": {
+              "logLevel": "Debug"
+            },
+            "template": {
+              "metadata": {},
+              "spec": {
+                "containers": [
+                  {
+                    "image": "testing/image",
+                    "name": "testing",
+                    "resources": {}
+                  }
+                ]
+              }
+            }
+          },
+          "status": {
+            "address": "",
+            "addresses": null,
+            "nodeName": "",
+            "players": null,
+            "ports": null,
+            "reservedUntil": null,
+            "state": ""
+          }
+        },
+        "feature_flags": "",
+        "name": "set Debug logging level",
+        "observed": "dev"
+      },
+      {
+        "before": {
+          "metadata": {},
+          "spec": {
+            "health": {},
+            "ports": [
+              {
+                "containerPort": 999
+              }
+            ],
+            "sdkServer": {},
+            "template": {
+              "metadata": {},
+              "spec": {
+                "containers": [
+                  {
+                    "image": "testing/image",
+                    "name": "testing",
+                    "resources": {}
+                  }
+                ]
+              }
+            }
+          },
+          "status": {
+            "address": "",
+            "addresses": null,
+            "nodeName": "",
+            "players": null,
+            "ports": null,
+            "reservedUntil": null,
+            "state": ""
+          }
+        },
+        "feature_flags": "",
+        "name": "set basic defaults on a very simple gameserver",
+        "observed": "dev"
+      },
+      {
+        "before": {
+          "metadata": {},
+          "spec": {
+            "health": {},
+            "ports": [
+              {
+                "containerPort": 999,
+                "portPolicy": "Static"
+              }
+            ],
+            "sdkServer": {},
+            "template": {
+              "metadata": {},
+              "spec": {
+                "containers": [
+                  {
+                    "image": "testing/image",
+                    "name": "testing",
+                    "resources": {}
+                  }
+                ]
+              }
+            }
+          },
+          "status": {
+            "address": "",
+            "addresses": null,
+            "nodeName": "",
+            "players": null,
+            "ports": null,
+            "reservedUntil": null,
+            "state": ""
+          }
+        },
+        "feature_flags": "",
+        "name": "set basic defaults on static gameserver",
+        "observed": "dev"
+      },
+      {
+        "before": {
+          "metadata": {},
+          "spec": {
+            "health": {},
+            "ports": [
+              {
+                "containerPort": 999
+              }
+            ],
+            "sdkServer": {
+              "grpcPort": 19357,
+              "httpPort": 19358,
+              "logLevel": "Error"
+            },
+            "template": {
+              "metadata": {},
+              "spec": {
+                "containers": [
+                  {
+                    "image": "testing/image",
+                    "name": "testing",
+                    "resources": {}
+                  }
+                ]
+              }
+            }
+          },
+          "status": {
+            "address": "",
+            "addresses": null,
+            "nodeName": "",
+            "players": null,
+            "ports": null,
+            "reservedUntil": null,
+            "state": ""
+          }
+        },
+        "feature_flags": "",
+        "name": "set gRPC and HTTP ports on SDK Server",
+        "observed": "dev"
+      }
+    ]
+  },
+  "game_server_case_names": [
+    "CountsAndLists=true, Counters",
+    "CountsAndLists=true, Lists",
+    "Nothing inferred from safe-to-evict=false",
+    "convert from legacy single port to multiple",
+    "defaults are already set",
+    "defaults are eviction.safe: Never",
+    "defaults on passthrough",
+    "eviction.safe: Always",
+    "eviction.safe: Always inferred from safe-to-evict=true",
+    "eviction.safe: Never",
+    "eviction.safe: OnUpgrade",
+    "health is disabled",
+    "safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always",
+    "set Debug logging level",
+    "set basic defaults on a very simple gameserver",
+    "set basic defaults on static gameserver",
+    "set gRPC and HTTP ports on SDK Server"
+  ],
+  "implementation_gate": "verification/agones/gates/67c860de02f9ead2c2105c6322811a0a41a90c91170118bd9d536ab041955e92.json",
+  "implementation_gate_sha256": "67c860de02f9ead2c2105c6322811a0a41a90c91170118bd9d536ab041955e92",
+  "loader_source_files": {
+    "build/scripts/agones-rs/extract/go.mod": "d23234a15e7dbd4b4a9a5114b603c7b4af96faf0b28597887612f797198621db",
+    "build/scripts/agones-rs/extract/go.sum": "db117b1938e16538e8fe3fc238d5185565e1a5150ed8989573f95899b23d0101",
+    "build/scripts/agones-rs/extract/main.go": "2e9bff648b38cc4f46b3dc94de3cc18678c94d55c5e178b1149b0c1cdb43f019",
+    "build/scripts/agones-rs/extract/main_test.go": "b66449f6662bd598185fb671688d9bf566e36176c2e36ffca378d78464370213",
+    "build/scripts/agones-rs/extract/sdk_version.go": "79e0e06e220484f808686dbb936cee00fe3e52b572f4c93769736dd47f5acecd",
+    "build/scripts/agones-rs/extract/sdk_version_test.go": "8e7ca0a3cac25144f4289bdcdee416502b7aa63e45d3f9e215e12c7cc4fca097"
+  },
+  "package_id": "agones.dev/agones/pkg/apis/agones/v1 [agones.dev/agones/pkg/apis/agones/v1.test]",
+  "required_unselected_assertion_sites": [
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.NoError(t, err)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-405",
+      "line": 405,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Contains(t, test.gameServer.ObjectMeta.Finalizers, FinalizerName)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-412",
+      "line": 412,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, test.expected.container, spec.Container)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-413",
+      "line": 413,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, test.expected.protocol, spec.Ports[0].Protocol)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-414",
+      "line": 414,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, test.expected.portRange, spec.Ports[0].Range)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-415",
+      "line": 415,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, test.expected.state, test.gameServer.Status.State)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-416",
+      "line": 416,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, test.expected.scheduling, test.gameServer.Spec.Scheduling)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-417",
+      "line": 417,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, test.expected.health, test.gameServer.Spec.Health)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-418",
+      "line": 418,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, test.expected.sdkServer, test.gameServer.Spec.SdkServer)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-419",
+      "line": 419,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, *test.expected.alphaPlayerCapacity, test.gameServer.Status.Players.Capacity)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-421",
+      "line": 421,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Nil(t, test.gameServer.Spec.Players)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-423",
+      "line": 423,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Nil(t, test.gameServer.Status.Players)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-424",
+      "line": 424,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, test.expected.evictionSafeSpec, spec.Eviction.Safe)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-427",
+      "line": 427,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Nil(t, spec.Eviction)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-429",
+      "line": 429,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, test.expected.evictionSafeStatus, test.gameServer.Status.Eviction.Safe)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-432",
+      "line": 432,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Nil(t, test.gameServer.Status.Eviction)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-434",
+      "line": 434,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, test.expected.counterSpec, test.gameServer.Status.Counters)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-437",
+      "line": 437,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Nil(t, test.gameServer.Spec.Counters)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-439",
+      "line": 439,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Nil(t, test.gameServer.Status.Counters)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-440",
+      "line": 440,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, test.expected.listSpec, test.gameServer.Status.Lists)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-443",
+      "line": 443,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Nil(t, test.gameServer.Spec.Lists)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-445",
+      "line": 445,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Nil(t, test.gameServer.Status.Lists)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::assertion-site-line-446",
+      "line": 446,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestGameServerApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Empty(t, f.Spec.Strategy.Type)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetApplyDefaults::assertion-site-line-102",
+      "line": 102,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/fleet_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestFleetApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Empty(t, f.Spec.Scheduling)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetApplyDefaults::assertion-site-line-103",
+      "line": 103,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/fleet_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestFleetApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.EqualValues(t, 0, f.Spec.Replicas)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetApplyDefaults::assertion-site-line-104",
+      "line": 104,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/fleet_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestFleetApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, appsv1.RollingUpdateDeploymentStrategyType, f.Spec.Strategy.Type)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetApplyDefaults::assertion-site-line-107",
+      "line": 107,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/fleet_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestFleetApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, \"25%\", f.Spec.Strategy.RollingUpdate.MaxUnavailable.String())",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetApplyDefaults::assertion-site-line-108",
+      "line": 108,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/fleet_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestFleetApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, \"25%\", f.Spec.Strategy.RollingUpdate.MaxSurge.String())",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetApplyDefaults::assertion-site-line-109",
+      "line": 109,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/fleet_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestFleetApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, apis.Packed, f.Spec.Scheduling)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetApplyDefaults::assertion-site-line-110",
+      "line": 110,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/fleet_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestFleetApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, int32(0), f.Spec.Replicas)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetApplyDefaults::assertion-site-line-111",
+      "line": 111,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/fleet_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestFleetApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, appsv1.RollingUpdateDeploymentStrategyType, f.Spec.Strategy.Type)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetApplyDefaults::assertion-site-line-116",
+      "line": 116,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/fleet_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestFleetApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, \"25%\", f.Spec.Strategy.RollingUpdate.MaxUnavailable.String())",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetApplyDefaults::assertion-site-line-117",
+      "line": 117,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/fleet_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestFleetApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, \"25%\", f.Spec.Strategy.RollingUpdate.MaxSurge.String())",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetApplyDefaults::assertion-site-line-118",
+      "line": 118,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/fleet_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestFleetApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, apis.Packed, f.Spec.Scheduling)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetApplyDefaults::assertion-site-line-119",
+      "line": 119,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/fleet_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestFleetApplyDefaults"
+    },
+    {
+      "dynamic_occurrence_count": "UNRESOLVED",
+      "expression": "assert.Equal(t, int32(0), f.Spec.Replicas)",
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetApplyDefaults::assertion-site-line-120",
+      "line": 120,
+      "package": "github.com/stretchr/testify/assert",
+      "source": "pkg/apis/agones/v1/fleet_test.go",
+      "status": "REQUIRED_UNSELECTED_ASSERTION_SITE",
+      "test": "TestFleetApplyDefaults"
+    }
+  ],
+  "scheduling_mapping": "Original t.Parallel and FeatureTestMutex remain in the original source replay. Fixture capture runs exact source setup/helpers and source methods serially under the same feature mutex; it certifies no executor/concurrency behavior.",
+  "schema_version": 1,
+  "scope": "Only three source version equality assertion sites, expanded over every exact GameServer table case and both Fleet observations. All other source assertions remain required; their dynamic totals are unresolved.",
+  "source_files": {
+    "go.mod": "01df333891a331341e77aab737c24dc722fab26abc8439b9c2036c71a477215a",
+    "go.sum": "d890978bc12d9c9958b2a87f99a87d8478b007208e44c5d859e973ba89adcbf7",
+    "pkg/apis/agones/v1/apihooks.go": "3ddd2e6c35fc62c6c54ded97a97f7edc68218ed91fbfc1fd4341fc424c6a278b",
+    "pkg/apis/agones/v1/apihooksfake.go": "be5b9878ef112cedbe3165ec69d87e35acaa08d5850f26d15274b11b7e2317cb",
+    "pkg/apis/agones/v1/common.go": "b0657e44bfcff65bceb01062a6051e1b3afad0065ea797db3b08b4b4de2fb9f2",
+    "pkg/apis/agones/v1/common_test.go": "fb35dcbcea5cba021159ca9e84bb282eb80568390442f3da51d3cf933e73de04",
+    "pkg/apis/agones/v1/doc.go": "cea07da3169f9c776298009e0bd27c606bcd804f23c8f91c0d7c01de6d0ae50d",
+    "pkg/apis/agones/v1/fleet.go": "52ff0dd6d1b3f8ac7feed3ba35356c16434a8ca77f531eff3434cb3ad25f0e28",
+    "pkg/apis/agones/v1/fleet_test.go": "7fed497a874406e224cc29359568418d90200739bb2e9b5887ed4712994bb600",
+    "pkg/apis/agones/v1/gameserver.go": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
+    "pkg/apis/agones/v1/gameserver_test.go": "468502ff9cbedb3a37f7ff2b5ef1207f09b770aa3fc36b5e87432b6a62068cfa",
+    "pkg/apis/agones/v1/gameserverset.go": "aa62bbb516f092cfd52e44c2090f2031d925d2d0a19bdf4fff8ba464e2982ece",
+    "pkg/apis/agones/v1/gameserverset_test.go": "09f5554bedfe73bc83b705d0c8e54738df62197022a26cbf2bab64cc35eb568f",
+    "pkg/apis/agones/v1/register.go": "145c109e956724a124fa92418ea99ddc43e2f03c59ab17522f0f74200645471b",
+    "pkg/apis/agones/v1/v1.go": "c7328ed0c771c037a14bc8472ff10bbbf22e751d638429ddb2cf69a8aa94bd0d",
+    "pkg/apis/agones/v1/zz_generated.deepcopy.go": "bde683256de58cd8236ef1bb7e25a435caa719500823c5ff63c0da317105afdd",
+    "pkg/util/errors/errors.go": "b9b811509cc02053ce498cf012a58ea6fabb44d6fbf69e355d39baf0504dbc29",
+    "pkg/util/runtime/features.go": "05736b26646cf219419626dfca37c4f533302b178ca3bb542330cf7884ddc679",
+    "pkg/util/runtime/runtime.go": "d1683d9c5931891d59ae46cbfdbce13b45d2836355097e7e1bd24fd30200271a",
+    "pkg/version.go": "18a321dd868bdf897742490dde06040a35be996dbef93f4aae7ebd855c85842d",
+    "vendor/github.com/stretchr/testify/assert/assertions.go": "10087e4b00ecc9504a1b1b4758dcf909e3ab36a6e9585515335ac58c6ea56642"
+  },
+  "source_mapped_version_assertions": 19
+}

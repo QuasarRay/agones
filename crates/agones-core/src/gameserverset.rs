@@ -776,7 +776,7 @@ mod tests {
                         name: "container".into(),
                         image: "myimage".into(),
                         ..Default::default()
-                    }],
+                    }].into(),
                     ..Default::default()
                 },
                 ..Default::default()

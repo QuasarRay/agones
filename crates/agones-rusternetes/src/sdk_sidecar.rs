@@ -264,7 +264,7 @@ mod tests {
                             name: "container".into(),
                             image: "container/image".into(),
                             ..Default::default()
-                        }],
+                        }].into(),
                         ..Default::default()
                     },
                     ..Default::default()

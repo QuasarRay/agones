@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ],
+  "authorization": "User execution contract",
+  "event": "FG_INPUT_001_SDK_REVALIDATED",
+  "gate_snapshot": "verification/agones/gates/bef2c3d9f4047150ee765544b828b55716bad3d9a9f5d3de82fdab3ec4ee434e.json",
+  "predecessor_revision": 71,
+  "predecessor_sha256": "ea25fa70e1e209824fa5782b749c97e36cc9a55c23ac43ff19590dcd08a60856",
+  "reason": "The refreshed reachable production closure, ordinary checks and content-bound evidence validate. Required formal debt remains explicit.",
+  "result_revision": 72,
+  "schema_version": 1,
+  "state_sha256": "2fdbdafb8998a1100bb0329b99a11d59572f123d1866b409c5001edc53bc60c5",
+  "timestamp": "2026-10-18T18:58:05.356595+00:00"
+}

@@ -183,12 +183,122 @@ fn validate_gate(root: &Path, path: &str, expected: &str) {
     }
 }
 
+fn emit_sdk_version_case(root: &Path, check: bool) {
+    let ir_path = "verification/agones/sdk-version.ir.json";
+    let raw = fs::read(root.join(ir_path)).unwrap();
+    let ir: Value = serde_json::from_slice(&raw).unwrap();
+    assert_eq!(ir["feature_id"], "SDK-VERSION-001");
+    assert_eq!(ir["classification"], "EXACT_CASE_ASSERTION_PROJECTIONS");
+    validate_gate(
+        root,
+        ir["implementation_gate"].as_str().unwrap(),
+        ir["implementation_gate_sha256"].as_str().unwrap(),
+    );
+    for (path, expected) in ir["source_files"].as_object().unwrap() {
+        assert_eq!(
+            hash(&fs::read(root.join(path)).unwrap()),
+            expected.as_str().unwrap(),
+            "stale SDK source: {path}"
+        );
+    }
+    let cases = ir["cases"].as_array().unwrap();
+    assert_eq!(cases.len(), 18);
+    let selected = cases
+        .iter()
+        .filter(|case| case["kind"] == "FLEET_VERSION")
+        .collect::<Vec<_>>();
+    assert_eq!(selected.len(), 1);
+    let case = selected[0];
+    let assertions = case["assertion_ids"].as_array().unwrap();
+    assert_eq!(assertions.len(), 2);
+    assert_eq!(
+        case["steps"],
+        json!([
+            "CONSTRUCT_EXACT_SOURCE_FIXTURE",
+            "APPLY_DEFAULTS",
+            "ASSERT_SDK_VERSION",
+            "APPLY_DEFAULTS",
+            "ASSERT_SDK_VERSION"
+        ])
+    );
+    // The narrow typed constructor must equal the entire captured fixture.
+    // Reject new fixture shapes rather than dropping fields or normalizing JSON.
+    let typed: agones_core::Fleet = serde_json::from_value(case["input_json"].clone()).unwrap();
+    let mut zero = agones_core::Fleet::default();
+    zero.spec.scheduling = Some(agones_core::SchedulingStrategy::Unknown(String::new()));
+    assert_eq!(typed, zero, "unsupported changed source Fleet zero fixture");
+    let expected = quoted(case["expected_version"].as_str().unwrap());
+    let fixture = serde_json::to_string(&case["input_json"]).unwrap();
+    let fixture = quoted(fixture.as_str());
+    let first = quoted(assertions[0].as_str().unwrap());
+    let second = quoted(assertions[1].as_str().unwrap());
+    let cover_text = format!("source SDK case: {}", case["id"].as_str().unwrap());
+    let cover = quoted(cover_text.as_str());
+    let tokens: rust::Tokens = quote! {
+        fn source_sdk_fleet_fixture() -> agones_core::Fleet {
+            let mut fleet = agones_core::Fleet::default();
+            fleet.spec.scheduling = Some(agones_core::SchedulingStrategy::Unknown(String::new()));
+            fleet
+        }
+        fn source_sdk_assertion_000(relation: bool) { assert!(relation, $first); }
+        fn source_sdk_assertion_001(relation: bool) { assert!(relation, $second); }
+        #[test]
+        #[cfg_attr(kani, kani::proof)]
+        #[cfg_attr(kani, kani::unwind(32))]
+        fn source_sdk_fleet_case() {
+            bolero::check!().with_type::<()>().with_iterations(1).for_each(|_| {
+                let context = agones_core::AgonesBuildVersionContext::from_bytes($expected.as_bytes());
+                let mut fleet = source_sdk_fleet_fixture();
+                fleet.apply_defaults_with_version_context(&context);
+                source_sdk_assertion_000(fleet.metadata.annotations.get(agones_core::VERSION_ANNOTATION).map(String::as_str) == Some($expected));
+                fleet.apply_defaults_with_version_context(&context);
+                source_sdk_assertion_001(fleet.metadata.annotations.get(agones_core::VERSION_ANNOTATION).map(String::as_str) == Some($expected));
+                #[cfg(kani)] { kani::cover!(true, $cover); }
+            });
+        }
+        #[cfg(not(kani))]
+        #[test]
+        fn source_sdk_typed_fleet_fixture_matches_exact_capture() {
+            let captured: agones_core::Fleet = serde_json::from_str($fixture).unwrap();
+            assert_eq!(source_sdk_fleet_fixture(), captured);
+        }
+    };
+    let source = format!(
+        "// Generated from gated typed SDK IR by feature_case_codegen --sdk-version. Do not edit.\n{}",
+        format_rust(tokens.to_string().unwrap())
+    );
+    let output = "crates/agones-core/tests/generated/sdk_version_cases.rs";
+    let metadata = json!({
+        "schema_version":1,"feature_id":"SDK-VERSION-001","generator":"Genco 0.17.10 with pinned rustfmt",
+        "generator_sha256":hash(&fs::read(root.join("crates/agones-rusternetes/examples/feature_case_codegen.rs")).unwrap()),
+        "ir":ir_path,"ir_sha256":hash(&raw),"output":output,"output_sha256":hash(source.as_bytes()),
+        "harness":"source_sdk_fleet_case","case_id":case["id"],"assertions":[{"function":"source_sdk_assertion_000","origin":assertions[0]},{"function":"source_sdk_assertion_001","origin":assertions[1]}],
+        "required_covers":[cover_text,"the generator should produce at least one valid value"],
+        "raw_domain":"unit","unwind":32,"preconditions":[],
+        "fixture_mapping":"Whole captured Fleet fixture equals the emitted typed constructor at generation and ordinary replay; no JSON decoder is substituted into production or claimed formally verified.",
+        "required_unmodeled_cases":cases.iter().filter(|case| case["kind"] != "FLEET_VERSION").collect::<Vec<_>>(),
+        "required_unselected_assertion_sites":ir["required_unselected_assertion_sites"],
+        "scope":"Two exact source Fleet version observations only. All 17 GameServer version assertions and every other baseline obligation remain required. No generalized Fleet defaulting or lifecycle claim."
+    });
+    save_or_check(root, output, &source, check);
+    save_or_check(
+        root,
+        "verification/agones/sdk-version-codegen.json",
+        &(serde_json::to_string_pretty(&metadata).unwrap() + "\n"),
+        check,
+    );
+    println!(
+        "{} one exact Fleet case and two SDK assertions; 17 GameServer version assertions remain formal-required",
+        if check { "Checked" } else { "Generated" }
+    );
+}
+
 fn main() {
     let arguments = std::env::args().skip(1).collect::<Vec<_>>();
     assert!(
-        arguments
-            .iter()
-            .all(|argument| argument == "--check" || argument == "--go-quote-table"),
+        arguments.iter().all(|argument| argument == "--check"
+            || argument == "--go-quote-table"
+            || argument == "--sdk-version"),
         "unknown generation argument"
     );
     let root = Path::new(env!("CARGO_MANIFEST_DIR"))
@@ -196,6 +306,15 @@ fn main() {
         .unwrap()
         .parent()
         .unwrap();
+    if arguments.iter().any(|argument| argument == "--sdk-version") {
+        assert!(
+            !arguments
+                .iter()
+                .any(|argument| argument == "--go-quote-table")
+        );
+        emit_sdk_version_case(root, arguments.iter().any(|argument| argument == "--check"));
+        return;
+    }
     if std::env::args().any(|argument| argument == "--go-quote-table") {
         emit_go_quote_table(root, std::env::args().any(|argument| argument == "--check"));
         return;

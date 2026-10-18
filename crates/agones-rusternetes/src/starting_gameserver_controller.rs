@@ -111,7 +111,7 @@ pub fn apply_game_server_address_and_port(
     let (address, addresses) = node_address(node)?;
 
     game_server.status.address = address;
-    game_server.status.addresses = addresses;
+    game_server.status.addresses = addresses.into();
     game_server.status.node_name = pod
         .spec
         .as_ref()
@@ -249,7 +249,7 @@ mod tests {
                             name: "game".into(),
                             image: "game:v1".into(),
                             ..Default::default()
-                        }],
+                        }].into(),
                         ..Default::default()
                     },
                     ..Default::default()
@@ -374,7 +374,7 @@ mod tests {
         game_server.status.addresses = vec![CoreNodeAddress {
             address: "10.0.0.1".into(),
             address_type: POD_IP_ADDRESS_TYPE.into(),
-        }];
+        }].into();
         let pod = pod_with_ips(&["10.0.0.1", "10.0.0.2"]);
 
         assert!(apply_game_server_pod_ips(&mut game_server, &pod));
@@ -398,7 +398,7 @@ mod tests {
         game_server.status.addresses = vec![CoreNodeAddress {
             address: "10.0.0.1".into(),
             address_type: POD_IP_ADDRESS_TYPE.into(),
-        }];
+        }].into();
         assert!(!apply_game_server_pod_ips(
             &mut game_server,
             &pod_with_ips(&["10.0.0.1"])

@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_REPAIRED_GATE_EXTRACTION",
+  "gate_snapshot": "verification/agones/gates/67c860de02f9ead2c2105c6322811a0a41a90c91170118bd9d536ab041955e92.json",
+  "predecessor_revision": 68,
+  "predecessor_sha256": "3f4305660e2e651e8b299d6293b423fb0f14a6f565d28ccf0436abd78782fad3",
+  "reason": "Replacement implementation gate validates; reuse exact source fixture semantics and extract only against the repaired production closure.",
+  "result_revision": 69,
+  "schema_version": 1,
+  "state_sha256": "4ba42b537701f2a11ffb1af901f26ea62331116bb3b0397d974a66717b4ee263",
+  "timestamp": "2026-10-18T18:41:13.279010+00:00"
+}

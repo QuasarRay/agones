@@ -17,11 +17,21 @@ use crate::gameserver_admission::format_validation_errors;
 pub fn mutate_fleet_creation(
     object: &serde_json::Value,
 ) -> Result<AdmissionResponse, AdapterError> {
+    mutate_fleet_creation_with_version_context(
+        &agones_core::AgonesBuildVersionContext::default(),
+        object,
+    )
+}
+
+pub fn mutate_fleet_creation_with_version_context<C: agones_core::CanGetAgonesVersionAnnotation>(
+    context: &C,
+    object: &serde_json::Value,
+) -> Result<AdmissionResponse, AdapterError> {
     let Ok(mut fleet) = serde_json::from_value::<Fleet>(object.clone()) else {
         return Ok(AdmissionResponse::Allow);
     };
 
-    fleet.apply_defaults();
+    fleet.apply_defaults_with_version_context(context);
     let mutated = serde_json::to_value(fleet)?;
     let patches = admission_json_patch(object, &mutated);
 
@@ -188,7 +198,7 @@ mod tests {
                                     name: "game".into(),
                                     image: "game:v1".into(),
                                     ..Default::default()
-                                }],
+                                }].into(),
                                 ..Default::default()
                             },
                             ..Default::default()

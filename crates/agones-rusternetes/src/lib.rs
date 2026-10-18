@@ -69,6 +69,7 @@ pub use deleting_gameserver_controller::ReconcileDeletingGameServer;
 pub use fleet_admission::{
     FleetCreationMutationAdmission, FleetValidationAdmission,
     mutate_fleet_creation, validate_fleet, validate_fleet_object,
+    mutate_fleet_creation_with_version_context,
 };
 pub use fleet_allocation_tracker::FleetAllocationTracker;
 pub use fleet_controller::{
@@ -141,6 +142,7 @@ pub use gameserver_admission::{
     GameServerCreationValidationAdmission,
     GameServerPodCreationMutationAdmission, admission_json_patch,
     mutate_game_server_creation, mutate_game_server_pod_creation,
+    mutate_game_server_creation_with_version_context,
     validate_game_server_creation, validate_game_server_creation_object,
 };
 pub use gameserverset_admission::{
@@ -1505,6 +1507,24 @@ pub fn build_pod(
     features: PodBuildFeatures,
     hooks: &impl ApiHooks,
 ) -> Result<Pod, AdapterError> {
+    build_pod_with_version_context(
+        &agones_core::AgonesBuildVersionContext::default(),
+        game_server,
+        sidecars,
+        features,
+        hooks,
+    )
+}
+
+/// Build the actual Rusternetes Pod with the application's CGP build identity.
+/// The source stamps pkg.Version even when parent/template annotations differ.
+pub fn build_pod_with_version_context<C: agones_core::CanGetAgonesVersionAnnotation>(
+    context: &C,
+    game_server: &GameServer,
+    sidecars: Vec<Container>,
+    features: PodBuildFeatures,
+    hooks: &impl ApiHooks,
+) -> Result<Pod, AdapterError> {
     let mut spec: PodSpec = to_native(&game_server.spec.template.spec)?;
     let mut metadata: rusternetes_common::types::ObjectMeta =
         to_native(&game_server.spec.template.metadata)?;
@@ -1537,12 +1557,7 @@ pub fn build_pod(
     );
     annotations.insert(
         VERSION_ANNOTATION.to_owned(),
-        game_server
-            .metadata
-            .annotations
-            .get(VERSION_ANNOTATION)
-            .cloned()
-            .unwrap_or_else(|| env!("CARGO_PKG_VERSION").to_owned()),
+        context.agones_version_annotation(),
     );
 
     let owner = OwnerReference::new(
@@ -2590,7 +2605,7 @@ mod tests {
                             name: "game".into(),
                             image: "game:v1".into(),
                             ..Default::default()
-                        }],
+                        }].into(),
                         ..Default::default()
                     },
                     ..Default::default()
@@ -2635,7 +2650,7 @@ mod tests {
             "game",
             serde_json::json!({"cpu": "50m", "memory": "32Mi"}),
             serde_json::json!({"cpu": "30m", "memory": "32Mi"}),
-        )];
+        )].into();
         let errors = validate_game_server_resources(&gs.spec).unwrap();
         assert_eq!(errors.len(), 1);
         assert_eq!(
@@ -2652,7 +2667,7 @@ mod tests {
             "game",
             serde_json::json!({"cpu": "-30m", "memory": "32Mi"}),
             serde_json::json!({"cpu": "30m", "memory": "32Mi"}),
-        )];
+        )].into();
         let errors = validate_game_server_resources(&gs.spec).unwrap();
         assert_eq!(errors.len(), 1);
         assert_eq!(
@@ -2670,7 +2685,7 @@ mod tests {
             "game",
             serde_json::json!({"cpu": "30m", "memory": "32Mi"}),
             serde_json::json!({"cpu": "-30m", "memory": "32Mi"}),
-        )];
+        )].into();
         let errors = validate_game_server_resources(&gs.spec).unwrap();
         assert_eq!(errors.len(), 2);
         assert_eq!(
@@ -2697,7 +2712,7 @@ mod tests {
             "game",
             serde_json::json!({"cpu": "30m", "memory": "55Mi"}),
             serde_json::json!({"cpu": "30m", "memory": "32Mi"}),
-        )];
+        )].into();
         let errors = validate_game_server_resources(&gs.spec).unwrap();
         assert_eq!(errors.len(), 1);
         assert_eq!(
@@ -2714,7 +2729,7 @@ mod tests {
             "game",
             serde_json::json!({"cpu": "30m", "memory": "-32Mi"}),
             serde_json::json!({"cpu": "30m", "memory": "32Mi"}),
-        )];
+        )].into();
         let errors = validate_game_server_resources(&gs.spec).unwrap();
         assert_eq!(errors.len(), 1);
         assert_eq!(

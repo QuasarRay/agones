@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "sdk_version_production_checks_running",
+  "gate_snapshot": null,
+  "predecessor_revision": 63,
+  "predecessor_sha256": "1a066183a40405f5ac2526eec7905f7a197a51778a539545da7bca04070b6498",
+  "reason": "Shared CGP version policy reaches GameServer/Fleet defaulting, admission and actual Pod construction. The retained build-cache counterexample is repaired and eleven incremental profiles pass, including outside-workspace raw/default transitions and a fresh unchanged workspace artifact. Final ordinary checks and complete source bindings are in progress; no new semantic extraction or formal success is claimed.",
+  "result_revision": 64,
+  "schema_version": 1,
+  "state_sha256": "197c2909d4087a9af153932283f804758c2cfb1af22e760c42351a282804b006",
+  "timestamp": "2026-10-18T17:35:50.536736+00:00"
+}

@@ -1,0 +1,23 @@
+{
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "external_go_source_identity": {
+    "/usr/lib/go/src/encoding/json/encode.go": "8ff45e82c60c6e29d11fe57ce0c59d79f40ef0d53be28ac36617482a7463b217",
+    "/usr/lib/go/src/unicode/utf8/utf8.go": "3c145ee25fd7631ebbc670fd1236e8c163ca30ae8913c796489efbf3f267ad54"
+  },
+  "genco": "0.17.10, existing locked package; one new agones-core build-dependency edge",
+  "generation": "Normal Cargo build script; pinned Genco emits the derived Rust annotation constant in OUT_DIR, with binary raw-byte data and write-if-changed output.",
+  "go": "go version go1.27.1-X:nodwarf5 linux/amd64",
+  "invalidation": "Track Cargo config and build source; declared environment hashes guard gate reuse. For absent/non-UTF-8 Cargo env profiles the build script rechecks on every invocation. Root config supplies a cacheable default dev.",
+  "licenses": "Apache-2.0 project code; shared Go-compatible UTF-8 helper retains Go BSD notice and GO-STRCONV-LICENSE.",
+  "original_source_sha256": {
+    "build/Makefile": "c2f2914aa177347650170f98d761fe77a6a4ada356bb2634b56b1f840fdf3907",
+    "pkg/apis/agones/v1/apihooks.go": "3ddd2e6c35fc62c6c54ded97a97f7edc68218ed91fbfc1fd4341fc424c6a278b",
+    "pkg/apis/agones/v1/fleet.go": "52ff0dd6d1b3f8ac7feed3ba35356c16434a8ca77f531eff3434cb3ad25f0e28",
+    "pkg/apis/agones/v1/gameserver.go": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
+    "pkg/version.go": "18a321dd868bdf897742490dde06040a35be996dbef93f4aae7ebd855c85842d"
+  },
+  "representation": "Retain raw Go build string bytes in AgonesBuildVersion and compiled byte data; encode the decoded JSON SDK annotation through the shared CGP provider.",
+  "rust": "rustc 1.98.1 (48a229cea 2026-09-01)",
+  "schema_version": 1,
+  "scope": "SDK annotation/build-identity policy only. Logging, command image defaults, full lifecycle, full API-hook conformance, other original scope, formal obligations and all _2 cells remain required."
+}

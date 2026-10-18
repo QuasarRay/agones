@@ -1,0 +1,10 @@
+{
+  "architecture_status": "All eight _2 form/location cells remain required open. CGP getters and this Genco use satisfy no _2 authoring cell.",
+  "candidate": "One source build identity shared by GameServer, Fleet and Pod SDK annotation paths.",
+  "decision": "REUSE_EXISTING",
+  "feature": "SDK-VERSION-001",
+  "id": "SDK-VERSION-001-implementation-reuse",
+  "next_review_trigger": "SDK-VERSION-001 implementation gate: review actual provider/consumer repetition and resource-derive cross-crate hygiene using the retained focused capability notes.",
+  "rationale": "Reuse current CGP getters/provider composition, existing domain defaulting and actual Rusternetes builders/admission. Reuse the already resolved Genco 0.17.10 for the small build-version constant instead of a second token generator. One std-only annotation conversion source is shared by host build data and target provider, preserving raw bytes and Go JSON invalid-byte observations.",
+  "roi": "Three incorrect version choices and two real creation mutation paths need the same policy now. A small typed owner/getter/provider and normal Cargo OUT_DIR data avoid repeated per-consumer configuration and version conversion. No new macro substrate, helper service or framework. Build scripts must be tracked/pinned and ordinary build override/invalidation checks must pass before the gate."
+}

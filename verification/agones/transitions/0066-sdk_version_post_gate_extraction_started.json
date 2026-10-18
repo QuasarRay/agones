@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "sdk_version_post_gate_extraction_started",
+  "gate_snapshot": "verification/agones/gates/5b802db996e5b26adf009be64d6d5ac8db2429f9416bd5d26050ff7252ac0488.json",
+  "predecessor_revision": 65,
+  "predecessor_sha256": "b8747131ed2528b50728b029b9bb740d8a98b1325cedd5f631aa14ff87f448c9",
+  "reason": "The content-addressed SDK implementation gate precedes this new semantic extraction. Bounded periodic review reuses CGP/Genco/typed loading and finite UTF-8 ownership; all eight _2 cells and existing formal debt remain required.",
+  "result_revision": 66,
+  "schema_version": 1,
+  "state_sha256": "fa88240d00a0a12ab5d6d3bd9bb29f4c8520a223ca676a0fc69acf34943eb834",
+  "timestamp": "2026-10-18T18:00:54.410915+00:00"
+}

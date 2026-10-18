@@ -28,42 +28,17 @@ fn go_is_print(value: u32) -> bool {
     false
 }
 
-fn decode_scalar(bytes: &[u8]) -> Option<(char, usize)> {
-    let first = bytes[0];
-    let (width, mask) = match first {
-        0xc2..=0xdf => (2, 0x1f),
-        0xe0..=0xef => (3, 0x0f),
-        0xf0..=0xf4 => (4, 0x07),
-        _ => return None,
-    };
-    if bytes.len() < width {
-        return None;
-    }
-    for byte in &bytes[1..width] {
-        if byte & 0xc0 != 0x80 {
-            return None;
-        }
-    }
-    let second = bytes[1];
-    if (first == 0xe0 && second < 0xa0)
-        || (first == 0xed && second >= 0xa0)
-        || (first == 0xf0 && second < 0x90)
-        || (first == 0xf4 && second >= 0x90)
-    {
-        return None;
-    }
-    let mut value = u32::from(first & mask);
-    for byte in &bytes[1..width] {
-        value = (value << 6) | u32::from(byte & 0x3f);
-    }
-    char::from_u32(value).map(|value| (value, width))
-}
+use crate::go_utf8::decode_nonascii_scalar as decode_scalar;
 
 fn append_hex(output: &mut String, marker: char, value: u32, digits: usize) {
     const HEX: &[u8; 16] = b"0123456789abcdef";
     output.push('\\');
     output.push(marker);
-    for digit in (0..digits).rev() {
+    for offset in 0..8 {
+        if offset >= digits {
+            break;
+        }
+        let digit = digits - offset - 1;
         output.push(char::from(HEX[((value >> (digit * 4)) & 15) as usize]));
     }
 }

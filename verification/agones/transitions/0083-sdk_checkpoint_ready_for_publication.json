@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_CHECKPOINT_READY_FOR_PUBLICATION",
+  "gate_snapshot": "verification/agones/gates/67c860de02f9ead2c2105c6322811a0a41a90c91170118bd9d536ab041955e92.json",
+  "predecessor_revision": 82,
+  "predecessor_sha256": "7f334ee5e0e7f403cd83ac50a8ba06040febef71094b91b998062759d8116085",
+  "reason": "Current feature manifests, legal stages and source gates validate; full migration and required source/architecture proof debt remain incomplete.",
+  "result_revision": 83,
+  "schema_version": 1,
+  "state_sha256": "5c90104ca60fce3ddce85bf59011485a484f86f8aa98ca9f5ddf2baa82419ff2",
+  "timestamp": "2026-10-18T18:58:07.614289+00:00"
+}

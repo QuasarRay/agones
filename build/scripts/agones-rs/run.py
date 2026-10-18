@@ -24,7 +24,7 @@ path = OUT / (name + ".json")
 if path.exists():
     raise SystemExit("A run ID is immutable; select a new ID after diagnosing the previous result")
 files = subprocess.check_output(["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"], cwd=ROOT).decode().strip("\0").split("\0")
-bindings = {p: hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in files if (ROOT/p).is_file() and (p.startswith(("crates/", "build/scripts/agones-rs/")) or p in ("Cargo.toml", "Cargo.lock", "rust-toolchain.toml", "go.mod", "go.sum", "AGONES_RS_CONTINUATION_PROMPT.md", "verification/agones/feature-gates.ir.json"))}
+bindings = {p: hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in files if (ROOT/p).is_file() and (p.startswith(("crates/", "build/scripts/agones-rs/")) or p in ("Cargo.toml", "Cargo.lock", "rust-toolchain.toml", ".cargo/config.toml", ".cargo/config", "go.mod", "go.sum", "AGONES_RS_CONTINUATION_PROMPT.md", "verification/agones/feature-gates.ir.json"))}
 record = {"schema_version": 1, "owner_token": os.urandom(16).hex(), "command": command, "cwd": str(run_cwd),
           "started_at": datetime.now(timezone.utc).isoformat(), "source_files": bindings,
           "head": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),

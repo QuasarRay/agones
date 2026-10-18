@@ -1,0 +1,62 @@
+[
+  {
+    "fleet": "dev",
+    "game_server": "dev",
+    "id": "dev",
+    "pod": "dev"
+  },
+  {
+    "fleet": "",
+    "game_server": "",
+    "id": "empty",
+    "pod": ""
+  },
+  {
+    "fleet": "1.54.0-dev+abc",
+    "game_server": "1.54.0-dev+abc",
+    "id": "release",
+    "pod": "1.54.0-dev+abc"
+  },
+  {
+    "fleet": "release-λ😀",
+    "game_server": "release-λ😀",
+    "id": "unicode",
+    "pod": "release-λ😀"
+  },
+  {
+    "fleet": "a\u0000\"\\\n",
+    "game_server": "a\u0000\"\\\n",
+    "id": "controls",
+    "pod": "a\u0000\"\\\n"
+  },
+  {
+    "fleet": "��",
+    "game_server": "��",
+    "id": "invalid-bytes",
+    "pod": "��"
+  },
+  {
+    "fleet": "��",
+    "game_server": "��",
+    "id": "truncated",
+    "pod": "��"
+  },
+  {
+    "fleet": "���",
+    "game_server": "���",
+    "id": "surrogate",
+    "pod": "���"
+  },
+  {
+    "fleet": "�",
+    "game_server": "�",
+    "id": "replacement-rune",
+    "pod": "�"
+  },
+  {
+    "fleet": "A��B",
+    "game_server": "A��B",
+    "id": "mixed",
+    "pod": "A��B"
+  }
+]

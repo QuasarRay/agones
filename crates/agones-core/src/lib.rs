@@ -25,6 +25,10 @@ pub mod gameserverset;
 pub mod multicluster;
 pub mod features;
 pub mod feature_inputs;
+pub mod build_version;
+mod go_utf8;
+mod go_slice;
+pub use go_slice::GoSlice;
 
 pub use fleet::*;
 pub use allocation::*;
@@ -34,6 +38,7 @@ pub use gameserverset::*;
 pub use multicluster::*;
 pub use features::*;
 pub use feature_inputs::*;
+pub use build_version::*;
 
 
 #[cfg(test)]

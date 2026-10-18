@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "sdk_version_source_fixture_reopened_implementation",
+  "gate_snapshot": "verification/agones/gates/5b802db996e5b26adf009be64d6d5ac8db2429f9416bd5d26050ff7252ac0488.json",
+  "predecessor_revision": 66,
+  "predecessor_sha256": "fa88240d00a0a12ab5d6d3bd9bb29f4c8520a223ca676a0fc69acf34943eb834",
+  "reason": "The gated ordinary hand witnesses passed, but post-gate exact source fixture replay exposed a real input compatibility defect: a source nil list values slice serializes as null and current Rust Vec deserialization rejects it. This can bypass actual admission mutation. Reopen before repair; do not normalize or shrink original fixtures.",
+  "result_revision": 67,
+  "schema_version": 1,
+  "state_sha256": "4d8ac2f1d421d4ca602c045823e2d8b3e2a68d5fb4843f22d09e3cbd77ae3844",
+  "timestamp": "2026-10-18T18:19:52.401054+00:00"
+}

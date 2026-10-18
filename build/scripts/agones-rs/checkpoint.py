@@ -7,6 +7,7 @@ import argparse
 from datetime import datetime, timezone
 import hashlib
 import json
+import os
 from pathlib import Path
 import subprocess
 
@@ -47,6 +48,11 @@ def check(state):
         gate = read(ROOT / item["implementation_gate"])
         assert gate["status"] == "IMPLEMENTED"
         assert gate["contract_sha256"] == state["contract_sha256"], "stale gate contract"
+        for name, expected in gate.get("environment_bindings", {}).items():
+            value = os.environb.get(os.fsencode(name))
+            observed = {"present": value is not None,
+                        "sha256": hashlib.sha256(value).hexdigest() if value is not None else None}
+            assert observed == expected, f"stale build environment: {name}"
         for path, expected in gate["production_files"].items():
             assert digest(ROOT / path) == expected, f"stale gate: {path}"
         for ref in gate["ordinary_checks"]:

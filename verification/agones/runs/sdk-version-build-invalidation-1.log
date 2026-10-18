@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/astral/Projects/agones/build/scripts/agones-rs/probes/check_sdk_version_build.py", line 24, in <module>
+    assert observed["raw_bytes"] == list(expected_bytes), (name, observed)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('unconfigured-after-overrides', {'constant': '��', 'fleet': '��', 'game_server': '��', 'provider': '��', 'raw_bytes': [226, 130]})

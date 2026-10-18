@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "renderer_checkpoint_published_ci_running",
+  "gate_snapshot": null,
+  "predecessor_revision": 57,
+  "predecessor_sha256": "673074adc9a1ed4f80c3a17c2710fe352bd473ceabc704218e58d96261c0fdce",
+  "reason": "Remote review head, server/local Git tree, parent and visible development branch are verified. The exact-head ledger and two helper proof gates pass; ordinary Rust tests and both generation checks are still running. Preserve incomplete formal/architecture requirements and the next production packet.",
+  "result_revision": 58,
+  "schema_version": 1,
+  "state_sha256": "5c971e49544260d5af2d6dfdd7ffff45bd3e069f8dd3238e133f14c99b1d5f57",
+  "timestamp": "2026-10-18T16:31:53.406068+00:00"
+}

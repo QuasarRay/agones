@@ -1,11 +1,12 @@
 {
   "created": [],
-  "directories": 1825,
+  "directories": 1826,
   "missing": [],
   "not_versioned": [],
   "ownership": "Inherited operational guidance includes tracked vendor, generated and documentation directories; existing third-party instructions are preserved unchanged.",
   "preserved_existing": [
     "AGENTS.MD",
+    ".cargo/AGENTS.MD",
     ".github/AGENTS.MD",
     ".github/ISSUE_TEMPLATE/AGENTS.MD",
     ".github/workflows/AGENTS.MD",

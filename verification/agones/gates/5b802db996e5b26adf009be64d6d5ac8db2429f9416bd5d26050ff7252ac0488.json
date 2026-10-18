@@ -1,0 +1,105 @@
+{
+  "acceptance_criteria": [
+    "Source unconfigured dev identity and all explicit empty/custom/raw byte values are preserved separately from Cargo package version.",
+    "Go JSON decoded string normalization uses one replacement per invalid byte and retains valid UTF-8.",
+    "SDK annotations overwrite old parent/template values; unrelated annotations and borrowed parents are preserved.",
+    "Stamping precedes product hooks and hook replacement is retained.",
+    "Normal Cargo config changes invalidate derived data, including raw-to-raw/default restoration inside/outside the workspace; unchanged ordinary workspace artifacts stay fresh.",
+    "Actual CGP/core/Rusternetes consumers and full workspace checks pass before semantic extraction."
+  ],
+  "assurance": {
+    "live_cluster_conformance": "NOT_CLAIMED",
+    "new_formal_proof_credit": 0,
+    "new_source_test_semantic_extraction": "NOT_STARTED_BEFORE_THIS_GATE",
+    "ordinary_implementation_checks": "PASSED"
+  },
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
+  "environment_bindings": {
+    "AGONES_BUILD_VERSION": {
+      "present": false,
+      "sha256": null
+    }
+  },
+  "feature_id": "SDK-VERSION-001",
+  "id": "SDK-VERSION-001-implementation-v1",
+  "ordinary_checks": [
+    "verification/agones/runs/sdk-version-workspace-check-1.json",
+    "verification/agones/runs/sdk-version-workspace-tests-1.json",
+    "verification/agones/runs/sdk-version-go-complete-witnesses-1.json",
+    "verification/agones/runs/sdk-version-rust-complete-observation-1.json",
+    "verification/agones/runs/sdk-version-build-complete-binding-1.json",
+    "verification/agones/runs/sdk-version-shared-codec-check-1.json",
+    "verification/agones/runs/sdk-shared-error-observation-1.json"
+  ],
+  "ordinary_result_counts": {
+    "normal_cargo_incremental_profiles": 11,
+    "ordinary_nonascii_leading_two_byte_inputs": 32768,
+    "ordinary_nonascii_valid_utf8_scalar_decodes": 1111936,
+    "ordinary_print_classification_codepoints": 1114112,
+    "ordinary_version_scenarios_per_go_and_rust": 10,
+    "original_go_compiled_identity_profiles": 3,
+    "real_rusternetes_admission_patch_checks": 20,
+    "runner_entries_ignored": 3,
+    "version_observations_per_scenario": 4,
+    "workspace_tests_failed": 0,
+    "workspace_tests_passed": 541
+  },
+  "predecessor_ledger_revision": 64,
+  "production_files": {
+    ".cargo/config.toml": "d787ef1ca58591bcf5036c8a2386a4d31ecc54febdd5f6630fd8497a4a0d3fb2",
+    "Cargo.lock": "7a4970804d6f704f7398bfd4569626f55eaf86870f18776962b7b86eb1f40a4c",
+    "Cargo.toml": "f0c28c2ca73ba51fad682c9d35950d050b0839775d0eb609e7903c47743b5d00",
+    "build/Makefile": "c2f2914aa177347650170f98d761fe77a6a4ada356bb2634b56b1f840fdf3907",
+    "crates/agones-core/Cargo.toml": "b9ff5ca08d252c07abce0e5ebb5f6a45dcbd874cebe4ba51712b5dde331b8bd6",
+    "crates/agones-core/build.rs": "1deebfccd6024e6567573612d320770591de232f04f7b98291b0b5fa0fc78882",
+    "crates/agones-core/src/build_version.rs": "e6560758de4332abe27a97a3f3b5794068f20e0b4092380658b1cfdc4ce7e1f7",
+    "crates/agones-core/src/fleet.rs": "6b16322054961846e2553cf26498c6414b12613f7b450e609e3a39dd50261d61",
+    "crates/agones-core/src/gameserver.rs": "acc0961837383973509640eb8b358a58dcd5e86641ed46471f757324985e9661",
+    "crates/agones-core/src/go_utf8.rs": "1178cb0dcc44e1369fa7576701d39e2b7a339343262197d2f6d891bc984158ba",
+    "crates/agones-core/src/lib.rs": "3b850f5ed95cb525bcd65664e886388953dff29ad490ff6da64d5f3730dabb96",
+    "crates/agones-core/src/version_annotation.rs": "9c7d5b402f759b0731d4957fe9732135f589054ed3b38a16839224b0c4b45493",
+    "crates/agones-rusternetes/Cargo.toml": "7e5c18a590b0d602c725abd853fd0ba7825e4028f8a46fc7fe404bb7b512db26",
+    "crates/agones-rusternetes/src/creating_gameserver_controller.rs": "e86d20ab7ea0b5e85644cf7bdd42361f80a6384d8c7c53ad75113edbefce59b8",
+    "crates/agones-rusternetes/src/fleet_admission.rs": "8e60cff122c268a1ba524909e126664df73e277490f81b88d60db3831b5f0f71",
+    "crates/agones-rusternetes/src/gameserver_admission.rs": "be350885838ab566a16476cc9a879b48655033bb1767a053b5bda8a4c574c270",
+    "crates/agones-rusternetes/src/lib.rs": "2f97ca8ef24c145ec6a7665aefbb3a98b8662209d67cbfb10170cba6b4e8ab9d",
+    "pkg/apis/agones/v1/apihooks.go": "3ddd2e6c35fc62c6c54ded97a97f7edc68218ed91fbfc1fd4341fc424c6a278b",
+    "pkg/apis/agones/v1/fleet.go": "52ff0dd6d1b3f8ac7feed3ba35356c16434a8ca77f531eff3434cb3ad25f0e28",
+    "pkg/apis/agones/v1/gameserver.go": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
+    "pkg/version.go": "18a321dd868bdf897742490dde06040a35be996dbef93f4aae7ebd855c85842d",
+    "rust-toolchain.toml": "c910997cb152c6dc8ed13b1fdf9fa28a4ed30d6776123e27dd6170e5c66067a0",
+    "verification/agones/sdk-version-capability-v1.json": "0b95fd641b8da89d71f800ff1d9774bc6c880e87b348629f238c1c689cd3d2f5",
+    "verification/agones/sdk-version-provenance.json": "255d5be98beee4f23a3daafdce1304047e4052af872b7f568537e329bdb7d6af"
+  },
+  "production_symbols": [
+    "AgonesBuildVersionContext",
+    "EncodeAgonesVersionAnnotation::agones_version_annotation",
+    "GameServer::apply_defaults_with_version_context",
+    "Fleet::apply_defaults_with_version_context",
+    "build_pod_with_version_context",
+    "mutate_game_server_creation_with_version_context",
+    "mutate_fleet_creation_with_version_context"
+  ],
+  "reachable_call_paths": [
+    "Normal Cargo build input -> Genco/binary build data -> default CGP build context -> provider -> GameServer/Fleet defaulting.",
+    "Actual Rusternetes creation admission -> shared domain defaulting -> version patch.",
+    "Creating controller -> build_pod -> shared CGP annotation provider -> actual native Pod -> product hooks.",
+    "Explicit composed context -> the same domain/admission/Pod consumers, without a duplicated policy algorithm."
+  ],
+  "residual_work": [
+    "Source-version original assertion extraction and bounded Bolero/Kani/source replay remain required next.",
+    "All 22 existing feature-gate source assertions and error ASCII proof remain required; prior timeouts receive zero credit.",
+    "Full hook/parent-spec conformance, command logging/image defaults, full lifecycle, remaining baseline scope and all eight _2 cells remain required."
+  ],
+  "schema_version": 1,
+  "status": "IMPLEMENTED",
+  "supersedes": null,
+  "workspace_snapshot": {
+    "branch": "agones-rs-dev",
+    "head": "cf2fcb7139739c5f26e6155e3fa9c3b431887863",
+    "note": "Root AGENTS.MD and the untracked audit are user changes and are excluded from the implementation ownership/publication set.",
+    "production_closure_sha256": "84c24fb83a13d5f8dd829e5ffade9f6709ff674b3a21af4ab35d7f4698c98911",
+    "tracked_patch_sha256": "ba989338b79d33b3217dd47a8262737c20a4674ed14458105a54c19d1e9f9ce8"
+  }
+}

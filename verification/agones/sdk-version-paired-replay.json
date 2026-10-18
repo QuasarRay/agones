@@ -1,0 +1,83 @@
+{
+  "classification": "ORDINARY_IMPLEMENTATION_DIFFERENTIAL_REPLAY",
+  "formal_proof_credit": 0,
+  "go_run": "verification/agones/runs/sdk-version-go-complete-witnesses-1.json",
+  "observation_relation": "Exact equality of decoded SDK annotation strings for GameServer/Fleet/Pod and product-hook result; both sides independently check literal expected values, key presence, unrelated keys and parent metadata. The product hook observes stamping before replacing the version.",
+  "observations": [
+    {
+      "fleet": "dev",
+      "game_server": "dev",
+      "hooked_pod": "product-hook-version",
+      "id": "dev",
+      "pod": "dev"
+    },
+    {
+      "fleet": "",
+      "game_server": "",
+      "hooked_pod": "product-hook-version",
+      "id": "empty",
+      "pod": ""
+    },
+    {
+      "fleet": "1.54.0-dev+abc",
+      "game_server": "1.54.0-dev+abc",
+      "hooked_pod": "product-hook-version",
+      "id": "release",
+      "pod": "1.54.0-dev+abc"
+    },
+    {
+      "fleet": "release-\u03bb\ud83d\ude00",
+      "game_server": "release-\u03bb\ud83d\ude00",
+      "hooked_pod": "product-hook-version",
+      "id": "unicode",
+      "pod": "release-\u03bb\ud83d\ude00"
+    },
+    {
+      "fleet": "a\u0000\"\\\n",
+      "game_server": "a\u0000\"\\\n",
+      "hooked_pod": "product-hook-version",
+      "id": "controls",
+      "pod": "a\u0000\"\\\n"
+    },
+    {
+      "fleet": "\ufffd\ufffd",
+      "game_server": "\ufffd\ufffd",
+      "hooked_pod": "product-hook-version",
+      "id": "invalid-bytes",
+      "pod": "\ufffd\ufffd"
+    },
+    {
+      "fleet": "\ufffd\ufffd",
+      "game_server": "\ufffd\ufffd",
+      "hooked_pod": "product-hook-version",
+      "id": "truncated",
+      "pod": "\ufffd\ufffd"
+    },
+    {
+      "fleet": "\ufffd\ufffd\ufffd",
+      "game_server": "\ufffd\ufffd\ufffd",
+      "hooked_pod": "product-hook-version",
+      "id": "surrogate",
+      "pod": "\ufffd\ufffd\ufffd"
+    },
+    {
+      "fleet": "\ufffd",
+      "game_server": "\ufffd",
+      "hooked_pod": "product-hook-version",
+      "id": "replacement-rune",
+      "pod": "\ufffd"
+    },
+    {
+      "fleet": "A\ufffd\ufffdB",
+      "game_server": "A\ufffd\ufffdB",
+      "hooked_pod": "product-hook-version",
+      "id": "mixed",
+      "pod": "A\ufffd\ufffdB"
+    }
+  ],
+  "rust_run": "verification/agones/runs/sdk-version-rust-complete-observation-1.json",
+  "schema_version": 1,
+  "source_obligation_credit": 0,
+  "witnesses": "verification/agones/sdk-version-witnesses.json",
+  "witnesses_sha256": "48d66c4092f93672b39caf1f087b8dc5f00db85f70eceb6462275e5bf5d82398"
+}

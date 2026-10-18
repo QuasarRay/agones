@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "sdk_version_production_implemented",
+  "gate_snapshot": "verification/agones/gates/5b802db996e5b26adf009be64d6d5ac8db2429f9416bd5d26050ff7252ac0488.json",
+  "predecessor_revision": 64,
+  "predecessor_sha256": "197c2909d4087a9af153932283f804758c2cfb1af22e760c42351a282804b006",
+  "reason": "Complete selected source annotation/build-identity policy passes 541 workspace tests, exact ten-scenario Go/Rust replay, twenty admission patch checks, hook ordering and eleven incremental build profiles. Source-version semantic extraction has not started before this content-addressed gate. Existing formal and architecture obligations remain required.",
+  "result_revision": 65,
+  "schema_version": 1,
+  "state_sha256": "b8747131ed2528b50728b029b9bb740d8a98b1325cedd5f631aa14ff87f448c9",
+  "timestamp": "2026-10-18T17:44:56.949174+00:00"
+}

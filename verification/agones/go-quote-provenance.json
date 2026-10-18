@@ -33,6 +33,8 @@
   "production_compiler_sha256": "2fdf7febec851e457e8258683c8579dcf39736bd6ce6b8d82a27866b990542c4",
   "reuse": "ADAPT_SOURCE_ALGORITHM_AND_COMPILE_SOURCE_DATA",
   "schema_version": 1,
+  "shared_utf8_adaptation": "Move the existing decoder to one shared owner and spell its source-defined maximum three continuation operations explicitly. Quote hex output is bounded by its maximum eight digits; all source caller widths 2/4/8 and public byte domains remain unchanged. SDK JSON normalization reuses classification with its own replacement policy.",
+  "shared_utf8_source": "crates/agones-core/src/go_utf8.rs",
   "source_symbols": [
     "strconv.Quote/appendQuotedWith/appendEscapedRune/IsPrint",
     "unicode/utf8.DecodeRuneInString semantics",

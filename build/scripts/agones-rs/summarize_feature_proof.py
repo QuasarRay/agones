@@ -6,7 +6,7 @@ import json
 from kani_results import ROOT, read_results, require_claims_and_covers
 
 parser = argparse.ArgumentParser()
-parser.add_argument("family", choices=["input", "query", "error-ascii"])
+parser.add_argument("family", choices=["input", "query", "error-ascii", "sdk-version", "sdk-source"])
 parser.add_argument("run_id")
 parser.add_argument("--output", required=True)
 parser.add_argument("--case-index", type=int)
@@ -32,6 +32,30 @@ elif args.family == "error-ascii":
                 "canonical lowercase hex control escape", "printable ASCII remains literal",
                 "the generator should produce at least one valid value"]
     scope = "Production quote_feature_error_bytes and independent ASCII reference/token invariant. ASCII strings length 0..2; no filtering, unwind 16. No non-ASCII, whole-error, lifecycle or original exact-case assertion credit."
+elif args.family == "sdk-version":
+    harness = "sdk_version_common_domain"
+    claims = [r for r in rows if r["symbol"].startswith(harness+"::{closure#0}.assertion.")]
+    assert len(claims) == 3
+    assert all(r["location"].startswith("crates/agones-core/tests/sdk_version_domain.rs:") for r in claims)
+    required = ["empty SDK version", "maximum modeled SDK byte length", "SDK version NUL preserved",
+                "valid two-byte SDK scalar", "valid three-byte SDK scalar", "valid four-byte SDK scalar",
+                "invalid leading SDK byte", "overlong SDK byte sequence", "surrogate SDK byte sequence",
+                "truncated SDK byte prefix", "literal replacement SDK scalar",
+                "invalid SDK continuation byte", "SDK scalar above Unicode maximum",
+                "the generator should produce at least one valid value"]
+    scope = "Actual CGP EncodeAgonesVersionAnnotation provider, independent byte-grammar reference and separate standard UTF-8 observation relation. Raw byte strings length 0..4, no filtering, unwind 16. No unbounded string, Cargo/OS, surrounding lifecycle or original exact-case assertion credit."
+elif args.family == "sdk-source":
+    metadata = json.loads((ROOT / "verification/agones/sdk-version-codegen.json").read_text())
+    harness = metadata["harness"]
+    functions = {claim["function"]: claim for claim in metadata["assertions"]}
+    claims = [r for r in rows if r["symbol"].split(".assertion.")[0].split("::")[-1] in functions]
+    assert len(claims) == len(functions) == 2
+    assert {r["symbol"].split(".assertion.")[0].split("::")[-1] for r in claims} == set(functions)
+    assert all(r["location"].startswith("crates/agones-core/tests/generated/sdk_version_cases.rs:") for r in claims)
+    for row in claims:
+        row["origin"] = functions[row["symbol"].split(".assertion.")[0].split("::")[-1]]["origin"]
+    required = metadata["required_covers"]
+    scope = metadata["scope"]
 else:
     metadata = json.loads((ROOT / "verification/agones/feature-query-codegen.json").read_text())
     assert args.case_index is not None and 0 <= args.case_index < 5, "select the exact source case"

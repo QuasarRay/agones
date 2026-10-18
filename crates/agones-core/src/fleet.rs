@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::gameserver::{
     safe_add, validate_object_meta, GameServerSpec, ObjectMeta, Priority, SchedulingStrategy,
-    ValidationError, ValidationErrorKind, DEFAULT_SDK_VERSION, VERSION_ANNOTATION,
+    ValidationError, ValidationErrorKind, VERSION_ANNOTATION,
 };
 use crate::gameserverset::{
     AggregatedCounterStatus, AggregatedListStatus, AggregatedPlayerStatus, AllocationOverflow,
@@ -225,6 +225,13 @@ impl Fleet {
     }
 
     pub fn apply_defaults(&mut self) {
+        self.apply_defaults_with_version_context(&crate::AgonesBuildVersionContext::default());
+    }
+
+    pub fn apply_defaults_with_version_context<C: crate::CanGetAgonesVersionAnnotation>(
+        &mut self,
+        context: &C,
+    ) {
         if self.spec.strategy.strategy_type.is_none() {
             self.spec.strategy.strategy_type = Some(DeploymentStrategyType::RollingUpdate);
         }
@@ -248,7 +255,7 @@ impl Fleet {
 
         self.metadata.annotations.insert(
             VERSION_ANNOTATION.to_owned(),
-            DEFAULT_SDK_VERSION.to_owned(),
+            context.agones_version_annotation(),
         );
     }
 
@@ -1160,7 +1167,7 @@ mod tests {
                                     name: "testing".into(),
                                     image: "testing/image".into(),
                                     ..Default::default()
-                                }],
+                                }].into(),
                                 ..Default::default()
                             },
                             ..Default::default()
@@ -1199,7 +1206,7 @@ mod tests {
                                     name: "container".into(),
                                     image: "myimage".into(),
                                     ..Default::default()
-                                }],
+                                }].into(),
                                 ..Default::default()
                             },
                             ..Default::default()
@@ -1260,7 +1267,7 @@ mod tests {
         assert_eq!(fleet.spec.scheduling, Some(SchedulingStrategy::Packed));
         assert_eq!(
             fleet.metadata.annotations[VERSION_ANNOTATION],
-            DEFAULT_SDK_VERSION
+            crate::DEFAULT_SDK_VERSION
         );
 
         fleet.apply_defaults();
@@ -1286,7 +1293,7 @@ mod tests {
                         image: "myimage".into(),
                         ..Default::default()
                     },
-                ],
+                ].into(),
                 ..Default::default()
             },
             ..Default::default()
@@ -1838,7 +1845,7 @@ mod tests {
                                         }),
                                     )]),
                                     ..Default::default()
-                                }],
+                                }].into(),
                                 ..Default::default()
                             },
                             ..Default::default()

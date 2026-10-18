@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "sdk_version_001_version_source_reopened",
+  "gate_snapshot": null,
+  "predecessor_revision": 62,
+  "predecessor_sha256": "06dd0fb911c418a62069894edac445fec88a8e623ead25b8cbe17651d3064fe6",
+  "reason": "SDK-VERSION-001 changes shared core and Rusternetes source owners. Reopen affected gates before edits; retain previous published evidence as historical until current closure is ordinarily checked and regated.",
+  "result_revision": 63,
+  "schema_version": 1,
+  "state_sha256": "1a066183a40405f5ac2526eec7905f7a197a51778a539545da7bca04070b6498",
+  "timestamp": "2026-10-18T16:46:29.400109+00:00"
+}

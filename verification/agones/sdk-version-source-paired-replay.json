@@ -1,0 +1,88 @@
+{
+  "classification": "ORDINARY_EXACT_SOURCE_ASSERTION_REPLAY",
+  "exact_assertions": 19,
+  "exact_cases": 18,
+  "formal_source_assertions_credited": 0,
+  "observations": [
+    {
+      "assertion": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters::line-409",
+      "observed": "dev"
+    },
+    {
+      "assertion": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Lists::line-409",
+      "observed": "dev"
+    },
+    {
+      "assertion": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::Nothing inferred from safe-to-evict=false::line-409",
+      "observed": "dev"
+    },
+    {
+      "assertion": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::convert from legacy single port to multiple::line-409",
+      "observed": "dev"
+    },
+    {
+      "assertion": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are already set::line-409",
+      "observed": "dev"
+    },
+    {
+      "assertion": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-409",
+      "observed": "dev"
+    },
+    {
+      "assertion": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults on passthrough::line-409",
+      "observed": "dev"
+    },
+    {
+      "assertion": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always::line-409",
+      "observed": "dev"
+    },
+    {
+      "assertion": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Always inferred from safe-to-evict=true::line-409",
+      "observed": "dev"
+    },
+    {
+      "assertion": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: Never::line-409",
+      "observed": "dev"
+    },
+    {
+      "assertion": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::eviction.safe: OnUpgrade::line-409",
+      "observed": "dev"
+    },
+    {
+      "assertion": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::health is disabled::line-409",
+      "observed": "dev"
+    },
+    {
+      "assertion": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-409",
+      "observed": "dev"
+    },
+    {
+      "assertion": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set Debug logging level::line-409",
+      "observed": "dev"
+    },
+    {
+      "assertion": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-409",
+      "observed": "dev"
+    },
+    {
+      "assertion": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on static gameserver::line-409",
+      "observed": "dev"
+    },
+    {
+      "assertion": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set gRPC and HTTP ports on SDK Server::line-409",
+      "observed": "dev"
+    },
+    {
+      "assertion": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetApplyDefaults::$root::line-112",
+      "observed": "dev"
+    },
+    {
+      "assertion": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetApplyDefaults::$root::line-121",
+      "observed": "dev"
+    }
+  ],
+  "rust_run": "verification/agones/runs/sdk-source-version-observation-1.json",
+  "schema_version": 1,
+  "source_ir": "verification/agones/sdk-version.ir.json",
+  "source_run": "verification/agones/runs/sdk-repaired-source-extraction-1.json"
+}

@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "FG_CONFIG_001_REVALIDATED_VERIFYING",
+  "gate_snapshot": "verification/agones/gates/06c4803629119e61572723619b217d60b8408e93a20fe33eaff3d035dabbac0c.json",
+  "predecessor_revision": 75,
+  "predecessor_sha256": "54d551bf32392c3cb4fde6631f001df78b0ffcf84be53ca2bde07a8035defabf",
+  "reason": "Reuse source semantics and typed properties after validating current gates, unchanged exact case identities, refreshed generator bindings and retained proof/timeout results. No unproved assertion is credited.",
+  "result_revision": 76,
+  "schema_version": 1,
+  "state_sha256": "5c20723c285f57aa4365ce9786452c2bd14db1f1ccfddd5ee71f990fadae5a73",
+  "timestamp": "2026-10-18T18:58:06.158535+00:00"
+}

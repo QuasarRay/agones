@@ -1,0 +1,58 @@
+{
+  "cases": [
+    {
+      "expected_annotation": "dev",
+      "id": "dev",
+      "version_hex": "646576"
+    },
+    {
+      "expected_annotation": "",
+      "id": "empty",
+      "version_hex": ""
+    },
+    {
+      "expected_annotation": "1.54.0-dev+abc",
+      "id": "release",
+      "version_hex": "312e35342e302d6465762b616263"
+    },
+    {
+      "expected_annotation": "release-λ😀",
+      "id": "unicode",
+      "version_hex": "72656c656173652dcebbf09f9880"
+    },
+    {
+      "expected_annotation": "a\u0000\"\\\n",
+      "id": "controls",
+      "version_hex": "6100225c0a"
+    },
+    {
+      "expected_annotation": "��",
+      "id": "invalid-bytes",
+      "version_hex": "fffe"
+    },
+    {
+      "expected_annotation": "��",
+      "id": "truncated",
+      "version_hex": "e282"
+    },
+    {
+      "expected_annotation": "���",
+      "id": "surrogate",
+      "version_hex": "eda080"
+    },
+    {
+      "expected_annotation": "�",
+      "id": "replacement-rune",
+      "version_hex": "efbfbd"
+    },
+    {
+      "expected_annotation": "A��B",
+      "id": "mixed",
+      "version_hex": "41f09f42"
+    }
+  ],
+  "classification": "MANUAL_ORDINARY_IMPLEMENTATION_WITNESSES",
+  "observation": "Decoded JSON SDK annotation value in source GameServer/Fleet/Pod objects; source Go and Rust each check expected literal values independently. Raw build identity is retained separately.",
+  "schema_version": 1,
+  "source_obligation_credit": 0
+}

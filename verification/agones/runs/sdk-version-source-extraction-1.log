@@ -1,0 +1,2 @@
+# agones.dev/agones/verification/feature-extractor
+./main.go:20:2: "golang.org/x/tools/go/packages" imported and not used

@@ -19,11 +19,24 @@
       "cause_observed": "Actual Go-compatible Display replaces the previous Rust Debug/lossy formatting and passes 19 exact paired witnesses. Constant source case still expands UTF-8 decode_scalar continuation loops up to the global unwind 64 and heap/raw-vector paths before complete results. Zero source assertion or cover credit.",
       "result": "TIMEOUT_240_SECONDS",
       "run": "verification/agones/runs/feature-query-case-000-error-kani-1.json"
+    },
+    {
+      "property_count": 1437,
+      "required_covers_satisfied": 2,
+      "required_source_assertions_succeeded": 1,
+      "result": "VERIFIED_EXACT_SOURCE_CASE",
+      "run": "verification/agones/runs/sdk-query-error-source-kani-1.json",
+      "scope": "Original Error on query parsing case only; actual CGP production parser and unchanged source relation.",
+      "summary": "verification/agones/proof-summaries/sdk-query-error-source.json",
+      "unwind": 64
     }
   ],
   "family": "feature-query exact source cases",
-  "next_decomposition": "Stop this fixed-case diagnostic campaign after the changed renderer still times out. Keep all five exact query harnesses/17 assertions required. A later bounded diagnosis may expose finite UTF-8 width constraints or allocation-path decomposition; it must preserve the actual production call and adequate bounds. Continue the next production feature now.",
-  "remaining_required": "All five query case proofs/17 assertions, separate source input effect/formal assertions, and all other migration requirements remain open until actual results establish them.",
+  "next_decomposition": "Reuse the successful exact case and two covers; CI must reproduce it. Retain the concrete renderer/heap diagnoses for remaining four cases. Do not repeat timed-out cases without a distinct adequate decomposition; continue feature implementation.",
+  "proved_original_assertions": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Error on query parsing::line-65"
+  ],
+  "remaining_required": "Four other query case proofs / 16 original query assertions, all 5 source input assertions and all other migration requirements remain open.",
   "required_case_ids": [
     "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate",
     "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Empty query string",
@@ -33,6 +46,6 @@
   ],
   "required_original_assertions": 17,
   "schema_version": 1,
-  "status": "REQUIRED_PROOF_DEFERRED_WITH_DIAGNOSIS",
+  "status": "PARTIAL_ORIGINAL_SOURCE_PROOF",
   "stop_condition": "If the constant error-format case still exceeds the diagnostic window, retain the failure and schedule deeper dependency/loop decomposition. Do not keep changing representation, repeat an identical timed-out job, or reduce source obligations."
 }

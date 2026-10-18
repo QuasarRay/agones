@@ -1,0 +1,17 @@
+{
+  "architecture_status": "All eight form/location cells remain REQUIRED_OPEN; no cell credit is granted by this review, Genco mode or stock macro import.",
+  "candidate": "Common-domain attributes and metadata; resource derive crate-path hygiene; all four required _2 forms in both locations.",
+  "decision": "REUSE_EXISTING",
+  "feature_binding": "verification/agones/gates/67c860de02f9ead2c2105c6322811a0a41a90c91170118bd9d536ab041955e92.json",
+  "id": "SDK-VERSION-001-source-and-proof-review",
+  "next_economical_adoption": "Resource-derive crate-path hygiene using its current shared expansion core and an actual renamed-dependency consumer; retain automatic local-definition/staging and full packaging work explicitly.",
+  "next_review_trigger": "At the next resource-derived production consumer, before expanding its API plumbing; otherwise no later than the next production feature milestone.",
+  "observations": "Current version policy uses one CGP getter/provider at five real consumers. Exact source capture reuses the package loader; the existing Genco example now emits the exact Fleet fixture and two original assertion identities. Four hand-written common-domain families have distinct reference/invariant semantics, with short shared wrappers; a new compiler staging framework would not remove their substantive work. Three concrete canonical nil-slice fields now share one GoSlice owner. The refactored shared UTF-8 decoder serves quote and version observation. One original query-error assertion completed its adequate existing harness.",
+  "rationale": "Continue CGP and narrow Genco reuse. Keep independent models/invariants explicit. Existing agones_invariant is not a common Bolero/Kani/domain declaration and unchanged import is not local _2 authoring. The actual source fixture transport repair justifies GoSlice without a generalized schema compiler.",
+  "reused_generation_modes": [
+    "feature queries: five cases/17 assertion identities",
+    "Go printable-rune production table: 741 ranges",
+    "SDK version: exact source Fleet fixture/two assertions; 17 GameServer cases remain formal-required"
+  ],
+  "roi": "Four short domain wrappers do not justify a new automatic staging system now, particularly while actual std allocation/BTreeMap paths dominate proof cost. A concrete resource-derive crate-path bug is the next narrow reuse opportunity; repair its current proc_macro2 expansion core with an ordinary Cargo-renamed consumer when the next resource consumer is implemented. Reassess rather than equating hygiene repair with a completed _2 cell."
+}

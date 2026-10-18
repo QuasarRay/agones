@@ -136,13 +136,23 @@ pub fn admission_json_patch(
 pub fn mutate_game_server_creation(
     object: &serde_json::Value,
 ) -> Result<AdmissionResponse, AdapterError> {
+    mutate_game_server_creation_with_version_context(
+        &agones_core::AgonesBuildVersionContext::default(),
+        object,
+    )
+}
+
+pub fn mutate_game_server_creation_with_version_context<C: agones_core::CanGetAgonesVersionAnnotation>(
+    context: &C,
+    object: &serde_json::Value,
+) -> Result<AdmissionResponse, AdapterError> {
     let Ok(mut game_server) =
         serde_json::from_value::<GameServer>(object.clone())
     else {
         return Ok(AdmissionResponse::Allow);
     };
 
-    game_server.apply_defaults();
+    game_server.apply_defaults_with_version_context(context, agones_core::FeatureFlags::default());
     let mutated = serde_json::to_value(game_server)?;
     let patches = admission_json_patch(object, &mutated);
 
@@ -443,7 +453,7 @@ mod tests {
                             name: "container".into(),
                             image: "container/image".into(),
                             ..Default::default()
-                        }],
+                        }].into(),
                         ..Default::default()
                     },
                     ..Default::default()

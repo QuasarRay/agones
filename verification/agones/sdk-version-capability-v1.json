@@ -1,0 +1,40 @@
+{
+  "cancellation": "Synchronous value/policy operations; controller scheduling/cancellation remains separate required lifecycle work.",
+  "conformance_cases": "verification/agones/sdk-version-witnesses.json plus normal-Cargo invalidation/compiled Go overrides and configured/default admission/Pod consumers.",
+  "consistency": "Local deterministic field assignment. No resource version/conditional-write/retry protocol is introduced by this feature.",
+  "errors": "Build I/O/configuration failures fail the Cargo build. Admission malformed-input fallthrough and actual builder hook errors retain existing production paths.",
+  "feature": "SDK-VERSION-001",
+  "id": "source-sdk-version-annotation-v1",
+  "idempotency": "Repeated SDK assignment of the same identity is idempotent. Other source defaulting effects, including repeated finalizer append, retain their existing semantics and are not relabeled idempotent.",
+  "input_types": [
+    "AgonesBuildVersion: original Go byte string",
+    "HasAgonesBuildVersion CGP getter",
+    "CanGetAgonesVersionAnnotation CGP provider",
+    "Canonical GameServer/Fleet metadata and Rusternetes Pod construction inputs"
+  ],
+  "ordering": "Build input is frozen by Cargo; mutations invoke the shared CGP annotation provider without reading process environment. Pod stamping occurs before mutate_game_server_pod/set_eviction.",
+  "output_observation": "Decoded JSON SDK annotation value, with original raw bytes retained in the CGP build identity.",
+  "ownership": "One raw AgonesBuildVersion owner per composed context; compiled annotation constants are derived observations. Owned metadata is mutated; Pod builder borrows the parent.",
+  "postconditions": [
+    "Unconfigured identity is source dev; explicit empty/custom/raw values are preserved.",
+    "Exactly one U+FFFD replaces each invalid UTF-8 byte in the decoded JSON annotation; valid UTF-8 is unchanged.",
+    "GameServer/Fleet/default Pod paths overwrite prior SDK annotations with the selected version.",
+    "Other annotation keys are preserved; Pod construction does not mutate parent/template metadata.",
+    "Version stamping precedes product hooks. A product hook may replace the Pod SDK annotation, and that result is retained."
+  ],
+  "preconditions": [
+    "Current evidence host is Linux x86_64 with the pinned Rust/Go tools.",
+    "A composed getter supplies one immutable build identity during each operation."
+  ],
+  "residual_required": [
+    "Full cloud-product hook conformance, including any source parent-spec mutation, remains required boundary work.",
+    "Command logging, command sidecar image defaults, full packaging/build lifecycle, live cluster conformance and all other baseline behavior remain required.",
+    "No ordinary check or this profile is a formal source-assertion/refinement proof."
+  ],
+  "schema_version": 1,
+  "trusted_boundaries": [
+    "Cargo/Rust code generation and configured environment handling",
+    "Go encoding/json/UTF-8 observations",
+    "Current Rusternetes API-hook/native type boundary"
+  ]
+}

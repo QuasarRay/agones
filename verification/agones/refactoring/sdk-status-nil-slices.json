@@ -1,0 +1,13 @@
+{
+  "candidate": "Preserve Go nil versus allocated slices for GameServerStatus ports/addresses and PodSpec containers, without rewriting exact source fixture JSON.",
+  "decision": "SMALL_LOCAL_REFACTOR",
+  "evidence": "Exact source GameServer fixtures contain status.ports=null and status.addresses=null; exact zero Fleet fixture contains spec.template.spec.template.spec.containers=null. Rust Vec rejects these before production defaulting. These three source JSON fields have no omitempty.",
+  "followup_required": [
+    "Audit ListStatus.Values and PlayerStatus IDs nullable slice semantics under their own source-bound obligations; this patch does not certify every collection field."
+  ],
+  "id": "SDK-VERSION-001-status-nil-slices",
+  "next_review_trigger": "After exact source fixture replay and affected controller/wire checks pass; refresh the SDK implementation gate.",
+  "rationale": "Reuse one Option<Vec<T>>-backed GoSlice for the three concrete fields. Transparent serde preserves null versus [] and elements; slice reads/indexing retain their meaning, push creates a populated slice, and explicit Vec construction creates an allocated slice.",
+  "required_by": "SDK-VERSION-001 exact source fixture replay",
+  "roi": "The existing representation fixes a third directly blocking source field with one type substitution and compiler-guided Vec conversions. This avoids a second null-normalizing serde adapter or fixture rewriting. Constructor adaptations and controller/wire checks bound the cost; other collection compatibility remains required."
+}

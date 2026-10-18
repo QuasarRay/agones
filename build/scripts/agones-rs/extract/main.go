@@ -16,8 +16,6 @@ import (
 	"runtime"
 	"sort"
 	"strings"
-
-	"golang.org/x/tools/go/packages"
 )
 
 type Step struct {
@@ -44,10 +42,16 @@ type Default struct {
 	Enabled bool   `json:"enabled"`
 }
 type Gate struct {
-	Status          string            `json:"status"`
-	Baseline        string            `json:"baseline"`
-	FeatureID       string            `json:"feature_id"`
-	ProductionFiles map[string]string `json:"production_files"`
+	Status              string                        `json:"status"`
+	Baseline            string                        `json:"baseline"`
+	FeatureID           string                        `json:"feature_id"`
+	ProductionFiles     map[string]string             `json:"production_files"`
+	EnvironmentBindings map[string]EnvironmentBinding `json:"environment_bindings"`
+}
+
+type EnvironmentBinding struct {
+	Present bool    `json:"present"`
+	SHA256  *string `json:"sha256"`
 }
 
 func hash(source []byte) string { sum := sha256.Sum256(source); return hex.EncodeToString(sum[:]) }
@@ -60,6 +64,12 @@ func must(err error) {
 func validateGate(root string, gate Gate) error {
 	if gate.Status != "IMPLEMENTED" || len(gate.ProductionFiles) == 0 {
 		return fmt.Errorf("extraction requires a nonempty implementation gate")
+	}
+	for name, binding := range gate.EnvironmentBindings {
+		value, present := os.LookupEnv(name)
+		if present != binding.Present || (present && (binding.SHA256 == nil || hash([]byte(value)) != *binding.SHA256)) || (!present && binding.SHA256 != nil) {
+			return fmt.Errorf("stale gate environment: %s", name)
+		}
 	}
 	for path, expected := range gate.ProductionFiles {
 		source, err := os.ReadFile(filepath.Join(root, path))
@@ -101,6 +111,10 @@ func supportedObservation(name string) bool {
 }
 
 func main() {
+	if len(os.Args) > 1 && os.Args[1] == "--sdk-version" {
+		sdkVersionMain(os.Args[2:])
+		return
+	}
 	root, err := filepath.Abs(os.Args[1])
 	must(err)
 	gatePath := os.Args[2]
@@ -137,22 +151,7 @@ func main() {
 	}
 	// Loading is against the original root module, including its exact vendor,
 	// replacements, external test package variants, imports and assertion types.
-	config := &packages.Config{Dir: root, Tests: true, Mode: packages.NeedName | packages.NeedFiles | packages.NeedCompiledGoFiles | packages.NeedImports | packages.NeedDeps | packages.NeedSyntax | packages.NeedTypes | packages.NeedTypesInfo | packages.NeedModule, Env: append(os.Environ(), "GOFLAGS=-mod=vendor", "GOTOOLCHAIN=local")}
-	loaded, err := packages.Load(config, "./pkg/util/runtime")
-	must(err)
-	if packages.PrintErrors(loaded) != 0 {
-		panic("package/type loading failed")
-	}
-	var pkg *packages.Package
-	for _, candidate := range loaded {
-		if strings.Contains(candidate.ID, "pkg/util/runtime [") {
-			pkg = candidate
-			break
-		}
-	}
-	if pkg == nil {
-		panic("missing typed test variant")
-	}
+	pkg := loadTypedTests(root, "./pkg/util/runtime", "pkg/util/runtime [")
 	path := "pkg/util/runtime/features_test.go"
 	var file *ast.File
 	for _, candidate := range pkg.Syntax {
@@ -377,6 +376,8 @@ func main() {
 	helper, err := os.ReadFile(filepath.Join(root, helperPath))
 	must(err)
 	result := map[string]interface{}{"schema_version": 1, "feature_id": "FG-CONFIG-001", "implementation_gate": gatePath, "implementation_gate_sha256": hash(gateBytes), "classification": "EXACT_CASE", "loader": "golang.org/x/tools/go/packages v0.48.0", "package_id": pkg.ID, "source_files": map[string]string{path: hash(tests), helperPath: hash(helper)}, "defaults": defaultRows, "cases": cases, "environment": map[string]string{"GOFLAGS": "-mod=vendor", "GOTOOLCHAIN": "local", "GOOS": runtime.GOOS, "GOARCH": runtime.GOARCH, "GOVERSION": runtime.Version()}, "support": "Package/type-resolved ParseFeatures, EncodeFeatures, FeatureEnabled, EnableAllFeatures and testify assertions; exact Example/Test fixture; source t.Parallel/global-map isolation maps to instance-local Rust contexts. Unknown test selection, fixture or assertion shapes fail closed. Environment case remains unsupported; no dynamic table normalization.", "source_mapping_note": "Same root package owns both tests. Exact assertion identities use source-bound line spans. No test/helper/fixture exclusion is implied by this focused selection."}
+	result["loader_source_files"] = loaderSourceBindings(root)
+	result["environment"] = loaderEnvironment(root)
 	if inputGatePath != "" {
 		result["input_implementation_gate"] = inputGatePath
 		result["input_implementation_gate_sha256"] = hash(inputGateBytes)

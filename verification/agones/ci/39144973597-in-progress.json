@@ -1,0 +1,30 @@
+{
+  "expected_base": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "head": "cf2fcb7139739c5f26e6155e3fa9c3b431887863",
+  "jobs": [
+    {
+      "conclusion": "success",
+      "id": 117726862240,
+      "name": "migration-state",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "id": 117726941398,
+      "name": "feature-bool-model-check",
+      "status": "completed"
+    },
+    {
+      "conclusion": null,
+      "id": 117726941514,
+      "name": "rust",
+      "status": "in_progress"
+    }
+  ],
+  "merge_result_tested": "e3032088d9c7c0b6f511386ce248290074dc7622",
+  "proof_scope": "CI runs available boolean and input helper proofs only. Original 22 assertions and ASCII quote claims/covers remain required open.",
+  "schema_version": 1,
+  "status": "IN_PROGRESS",
+  "url": "https://github.com/QuasarRay/agones/actions/runs/39144973597",
+  "workflow_run": 39144973597
+}

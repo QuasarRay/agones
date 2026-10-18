@@ -1,0 +1,67 @@
+{
+  "diagnostics": [
+    {
+      "diagnosis": "The first invariant repeatedly validates each possible scalar width and iterates chars; nested validators multiply symbolic paths. Replace only that independent relation with std UTF-8 valid-prefix/error observations, reducing at most sixteen validators to four without changing the raw domain, three claims, fourteen covers or adequate unwind.",
+      "result": "TIMEOUT_EXIT_124_NO_CREDIT",
+      "retained_harness": "verification/agones/sdk-version-domain-initial.rs",
+      "retained_harness_sha256": "4dba42233573adccc1e4566afce31fe6919bf0679062393751e5d7f90fb5f750",
+      "run": "verification/agones/runs/sdk-version-domain-kani-1.json"
+    },
+    {
+      "diagnosis": "Fewer independent UTF-8 validation paths did not complete within 240 seconds. Remaining trace includes production allocation/character encoding and slice bounds. Preserve all three claims and fourteen covers; no identical retry. Next investigation requires a measured adequate decomposition, not a smaller credited domain.",
+      "result": "TIMEOUT_EXIT_124_NO_CREDIT",
+      "run": "verification/agones/runs/sdk-version-domain-kani-2.json"
+    }
+  ],
+  "domain": {
+    "bolero_type": "([u8; 4], u8)",
+    "byte_lengths": [
+      0,
+      4
+    ],
+    "maximum_reference_output_bytes": 12,
+    "projection": "first tag % 5 bytes",
+    "rejected_inputs": 0,
+    "unwind": 16
+  },
+  "feature_id": "SDK-VERSION-001",
+  "formal_run": "verification/agones/runs/sdk-version-domain-kani-2.json",
+  "formal_status": "TWO_TIMEOUTS_NO_CREDIT",
+  "harness": "sdk_version_common_domain",
+  "implementation_gate": "verification/agones/gates/67c860de02f9ead2c2105c6322811a0a41a90c91170118bd9d536ab041955e92.json",
+  "independent_checks": [
+    "Independent shortest-form byte grammar reference",
+    "Separate standard UTF-8 validator/token observation relation applied to model and actual CGP provider",
+    "Exact byte equality of model and production decoded annotation"
+  ],
+  "negative_controls": [
+    "grouped truncated replacements",
+    "overlong decoding",
+    "changed valid replacement scalar",
+    "removed NUL",
+    "trailing output",
+    "changed four-byte scalar"
+  ],
+  "next_formal_trigger": "A bounded decomposition of the shared decoder/encoding and independent relation with unchanged length 0..4 provider obligations; continue unrelated feature implementation meanwhile.",
+  "production_symbols": [
+    "EncodeAgonesVersionAnnotation::agones_version_annotation",
+    "version_annotation_text",
+    "decode_nonascii_scalar"
+  ],
+  "required_claims": 3,
+  "required_covers": 14,
+  "runtime_sampling": {
+    "accepted_inputs": 8192,
+    "precondition_rejections": 0,
+    "run": "verification/agones/runs/sdk-version-domain-sampling-2.json"
+  },
+  "schema_version": 1,
+  "scope": "All raw byte strings length 0..4; longer byte strings, build environment, source version assertions and surrounding lifecycle remain separate required work.",
+  "semantic_bindings": {
+    "build/scripts/agones-rs/summarize_feature_proof.py": "a006032aa1b32da2b37ac992b3dab4bf2314fe18b4770fc6e712ae3438e5c965",
+    "crates/agones-core/src/build_version.rs": "e6560758de4332abe27a97a3f3b5794068f20e0b4092380658b1cfdc4ce7e1f7",
+    "crates/agones-core/src/go_utf8.rs": "1178cb0dcc44e1369fa7576701d39e2b7a339343262197d2f6d891bc984158ba",
+    "crates/agones-core/src/version_annotation.rs": "9c7d5b402f759b0731d4957fe9732135f589054ed3b38a16839224b0c4b45493",
+    "crates/agones-core/tests/sdk_version_domain.rs": "6d238f2d6588ce4d328ca25c83ba0a010781edabac80f7400b6a2e658b4bc084"
+  }
+}

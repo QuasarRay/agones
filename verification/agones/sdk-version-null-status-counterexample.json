@@ -1,0 +1,23 @@
+{
+  "additional_exact_source_dependency": {
+    "failing_input_path": "/spec/template/spec/template/spec/containers",
+    "fixture_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetApplyDefaults::$root",
+    "resolution": "Use the same GoSlice<Container> representation for the required PodSpec containers field.",
+    "run": "verification/agones/runs/sdk-version-source-runtime-2.json",
+    "source_json_value": null
+  },
+  "classification": "ORDINARY_SOURCE_FIXTURE_INPUT_COUNTEREXAMPLE",
+  "correction": "The initial ListStatus.Values field attribution was premature. Actual source payload status slices are the blocking fields. Preserve exact fixtures and source nil/empty distinction.",
+  "error": "invalid type: null, expected a sequence",
+  "failing_input_paths": [
+    "/status/ports",
+    "/status/addresses"
+  ],
+  "fixture_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters",
+  "run": "verification/agones/runs/sdk-version-source-runtime-1.json",
+  "schema_version": 1,
+  "source_json_values": [
+    null,
+    null
+  ]
+}

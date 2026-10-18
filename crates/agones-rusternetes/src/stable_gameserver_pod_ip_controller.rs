@@ -93,7 +93,7 @@ mod tests {
                             name: "game".into(),
                             image: "game:v1".into(),
                             ..Default::default()
-                        }],
+                        }].into(),
                         ..Default::default()
                     },
                     ..Default::default()
@@ -176,7 +176,7 @@ mod tests {
         fixture.status.addresses = vec![GameServerNodeAddress {
             address: "10.0.0.9".into(),
             address_type: "PodIP".into(),
-        }];
+        }].into();
         let created = repository.create(&fixture).await.unwrap();
         store_pod(&storage, &created, &["10.0.0.9"]).await;
 

@@ -1,5 +1,5 @@
 {
-  "acceptance": "The new error-renderer implementation checkpoint is ready locally; its future published head still requires exact-head CI. Earlier CI results apply only to their recorded heads. All 22 original source assertions and the three-claim/nine-cover ASCII helper proof remain required formal work after retained timeouts. Full migration, all eight _2 cells and lifecycle/cluster conformance remain incomplete.",
+  "acceptance": "The source SDK version policy, Go nil/allocated slice repair, 549 local workspace tests, exact 19 SDK observations and one original query assertion are ready for publication. Current published cf2 remains the last verified CI head. New-head CI must reproduce all three available proof selections and three generation modes. Draft PR 92 stays unmerged while required formal, full parity, lifecycle/conformance and all eight _2 cells remain open.",
   "checks": [
     {
       "cause": "Guidance existed locally at build/local-includes/AGENTS.MD but was ignored by Git and absent from clean CI checkout.",
@@ -41,26 +41,43 @@
       },
       "status": "PASSED",
       "workflow_run": 39137887160
+    },
+    {
+      "evidence": "verification/agones/ci/39144973597-success.json",
+      "head": "cf2fcb7139739c5f26e6155e3fa9c3b431887863",
+      "merge_result_tested": "e3032088d9c7c0b6f511386ce248290074dc7622",
+      "observed_results": {
+        "feature-bool-model-check": "PASSED",
+        "migration-state": "PASSED",
+        "rust": "PASSED"
+      },
+      "observed_rust_tests": {
+        "failed": 0,
+        "ignored": 3,
+        "passed": 537
+      },
+      "status": "PASSED",
+      "workflow_run": 39144973597
     }
   ],
   "expected_base": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
-  "expected_head": "6909f07ac5cb08b1af78b251e26ac17342cef933",
+  "expected_head": "cf2fcb7139739c5f26e6155e3fa9c3b431887863",
   "integration_branch": "agones-rs-dev",
   "pull_requests": [
     {
       "draft": true,
-      "head": "6909f07ac5cb08b1af78b251e26ac17342cef933",
+      "head": "cf2fcb7139739c5f26e6155e3fa9c3b431887863",
       "merged": false,
       "number": 92,
       "url": "https://github.com/QuasarRay/agones/pull/92"
     }
   ],
-  "remote_result": "LOCAL_ERROR_CHECKPOINT_READY_FOR_PUBLICATION",
+  "remote_result": "SDK_CHECKPOINT_PREPARED_NOT_PUBLISHED",
   "required_checks": [
     "migration-state",
     "rust",
     "feature-bool-model-check"
   ],
   "review_branch": "codex/agones-feature-gates-001",
-  "visible_checkout": "agones-rs-dev@6909f07ac5cb08b1af78b251e26ac17342cef933"
+  "visible_checkout": "agones-rs-dev@cf2fcb7139739c5f26e6155e3fa9c3b431887863"
 }

@@ -11,7 +11,7 @@ pub const FINALIZER_NAME: &str = "agones.dev/controller";
 pub const POD_SAFE_TO_EVICT_ANNOTATION: &str = "cluster-autoscaler.kubernetes.io/safe-to-evict";
 pub const DEV_ADDRESS_ANNOTATION: &str = "agones.dev/dev-address";
 pub const GAME_SERVER_READY_CONTAINER_ID_ANNOTATION: &str = "agones.dev/ready-container-id";
-pub const DEFAULT_SDK_VERSION: &str = env!("CARGO_PKG_VERSION");
+pub const DEFAULT_SDK_VERSION: &str = crate::AGONES_BUILD_VERSION;
 
 pub const ERR_CONTAINER_REQUIRED: &str =
     "Container is required when using multiple containers in the pod template";
@@ -186,7 +186,7 @@ pub struct Container {
 #[serde(rename_all = "camelCase")]
 pub struct PodSpec {
     #[serde(default)]
-    pub containers: Vec<Container>,
+    pub containers: crate::GoSlice<Container>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub init_containers: Vec<Container>,
     #[serde(flatten)]
@@ -473,11 +473,11 @@ pub struct GameServerStatus {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub state: Option<GameServerState>,
     #[serde(default)]
-    pub ports: Vec<GameServerStatusPort>,
+    pub ports: crate::GoSlice<GameServerStatusPort>,
     #[serde(default, skip_serializing_if = "String::is_empty")]
     pub address: String,
-    #[serde(default, skip_serializing_if = "Vec::is_empty")]
-    pub addresses: Vec<NodeAddress>,
+    #[serde(default)]
+    pub addresses: crate::GoSlice<NodeAddress>,
     #[serde(default, skip_serializing_if = "String::is_empty")]
     pub node_name: String,
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -766,7 +766,18 @@ pub struct GameServer {
 
 impl GameServer {
     pub fn apply_defaults(&mut self) {
-        self.apply_defaults_with(DEFAULT_SDK_VERSION, FeatureFlags::default());
+        self.apply_defaults_with_version_context(
+            &crate::AgonesBuildVersionContext::default(),
+            FeatureFlags::default(),
+        );
+    }
+
+    pub fn apply_defaults_with_version_context<C: crate::CanGetAgonesVersionAnnotation>(
+        &mut self,
+        context: &C,
+        features: FeatureFlags,
+    ) {
+        self.apply_defaults_with(&context.agones_version_annotation(), features);
     }
 
     pub fn apply_defaults_with(&mut self, sdk_version: &str, features: FeatureFlags) {
@@ -968,7 +979,7 @@ impl GameServer {
             self.status.addresses = vec![NodeAddress {
                 address: dev_address.clone(),
                 address_type: "InternalIP".to_owned(),
-            }];
+            }].into();
             self.status.node_name = dev_address;
         }
 
@@ -1560,7 +1571,7 @@ mod tests {
         game_server.status.ports = vec![GameServerStatusPort {
             name: "preserve".into(),
             port: 9999,
-        }];
+        }].into();
 
         assert!(game_server.reconcile_development_status());
         assert_eq!(game_server.status.state, Some(GameServerState::Ready));
@@ -1612,7 +1623,7 @@ mod tests {
             ports: vec![GameServerStatusPort {
                 name: "game".into(),
                 port: 7777,
-            }],
+            }].into(),
             address: "203.0.113.10".into(),
             addresses: vec![
                 NodeAddress {
@@ -1623,7 +1634,7 @@ mod tests {
                     address: "203.0.113.10".into(),
                     address_type: "ExternalIP".into(),
                 },
-            ],
+            ].into(),
             node_name: "node-a".into(),
             reserved_until: Some("2026-10-17T03:30:00Z".into()),
             ..Default::default()
@@ -1671,7 +1682,7 @@ mod tests {
                             name: "testing".into(),
                             image: "testing/image".into(),
                             ..Default::default()
-                        }],
+                        }].into(),
                         ..Default::default()
                     },
                     ..Default::default()
@@ -1769,7 +1780,7 @@ mod tests {
                                 image: "testing/image2".into(),
                                 ..Default::default()
                             },
-                        ],
+                        ].into(),
                         ..Default::default()
                     },
                     ..Default::default()
@@ -1976,7 +1987,7 @@ mod tests {
                     containers: vec![
                         Container { name: "testing".into(), ..Default::default() },
                         Container { name: "anothertest".into(), ..Default::default() },
-                    ],
+                    ].into(),
                     ..Default::default()
                 },
                 ..Default::default()
@@ -2041,7 +2052,7 @@ mod tests {
                         containers: vec![Container {
                             name: "my_image".into(),
                             ..Default::default()
-                        }],
+                        }].into(),
                         ..Default::default()
                     },
                     ..Default::default()
@@ -2189,7 +2200,7 @@ mod tests {
             containers: vec![
                 Container { name: "game".into(), ..Default::default() },
                 Container { name: "other".into(), ..Default::default() },
-            ],
+            ].into(),
             init_containers: vec![
                 Container {
                     name: "sdk".into(),
