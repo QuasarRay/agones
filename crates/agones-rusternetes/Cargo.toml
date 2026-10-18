@@ -13,6 +13,7 @@ async-trait.workspace = true
 cgp.workspace = true
 chrono.workspace = true
 futures.workspace = true
+extism.workspace = true
 reqwest.workspace = true
 rusternetes-common.workspace = true
 rusternetes-storage.workspace = true
