@@ -506,20 +506,23 @@ fn fleet_autoscaler_policy_needs_inventory(
     }
 }
 
-fn compute_fleet_autoscaler_desired_size_at<Context>(
-    context: &Context,
-    policy: &FleetAutoscalerPolicy,
-    fleet: &Fleet,
-    inventory: &FleetAutoscalerInventory,
-    current_time: &DateTime<Utc>,
-) -> Result<FleetAutoscalerPolicyDecision, AdapterError>
+fn compute_fleet_autoscaler_desired_size_at<'a, Context>(
+    context: &'a Context,
+    policy: &'a FleetAutoscalerPolicy,
+    fleet: &'a Fleet,
+    inventory: &'a FleetAutoscalerInventory,
+    current_time: &'a DateTime<Utc>,
+) -> BoxFuture<'a, Result<FleetAutoscalerPolicyDecision, AdapterError>>
 where
     Context: CanApplyBufferFleetAutoscalerPolicy
         + CanApplyCounterFleetAutoscalerPolicy
         + CanApplyListFleetAutoscalerPolicy
+        + CanApplyWebhookFleetAutoscalerPolicy
         + CanCheckFleetAutoscalerSchedule
-        + HasFleetAutoscalerRuntimeFeatures,
+        + HasFleetAutoscalerRuntimeFeatures
+        + Sync,
 {
+    Box::pin(async move {
     match &policy.policy_type {
         FleetAutoscalerPolicyType::Buffer => {
             let buffer = policy.buffer.as_ref().ok_or_else(|| {
@@ -574,6 +577,24 @@ where
                 applied_policy: FleetAutoscalerPolicyType::List,
             })
         }
+        FleetAutoscalerPolicyType::Webhook => {
+            let webhook = policy.webhook.as_ref().ok_or_else(|| {
+                AdapterError::Hook(
+                    "webhookPolicy parameter must not be nil".into(),
+                )
+            })?;
+            let decision = context
+                .apply_webhook_fleet_autoscaler_policy(
+                    webhook,
+                    fleet,
+                )
+                .await?;
+            Ok(FleetAutoscalerPolicyDecision {
+                replicas: decision.replicas,
+                limited: decision.limited,
+                applied_policy: FleetAutoscalerPolicyType::Webhook,
+            })
+        }
         FleetAutoscalerPolicyType::Schedule => {
             if !context
                 .fleet_autoscaler_runtime_features()
@@ -609,6 +630,7 @@ where
                 inventory,
                 current_time,
             )
+            .await
         }
         FleetAutoscalerPolicyType::Chain => {
             if !context
@@ -629,7 +651,9 @@ where
                     fleet,
                     inventory,
                     current_time,
-                ) {
+                )
+                .await
+                {
                     Ok(mut decision) => {
                         decision.applied_policy =
                             FleetAutoscalerPolicyType::Unknown(
@@ -659,11 +683,13 @@ where
                 .into(),
         )),
     }
+    })
 }
 
+#[async_trait]
 #[cgp_component(FleetAutoscalerPolicyEvaluatorAt)]
 pub trait CanComputeFleetAutoscalerDesiredSizeAt {
-    fn compute_fleet_autoscaler_desired_size_at(
+    async fn compute_fleet_autoscaler_desired_size_at(
         &self,
         policy: &FleetAutoscalerPolicy,
         fleet: &Fleet,
@@ -673,16 +699,19 @@ pub trait CanComputeFleetAutoscalerDesiredSizeAt {
 }
 
 #[cgp_new_provider]
+#[async_trait]
 impl<Context> FleetAutoscalerPolicyEvaluatorAt<Context>
     for ComputeFleetAutoscalerDesiredSizeAtWithComponents
 where
     Context: CanApplyBufferFleetAutoscalerPolicy
         + CanApplyCounterFleetAutoscalerPolicy
         + CanApplyListFleetAutoscalerPolicy
+        + CanApplyWebhookFleetAutoscalerPolicy
         + CanCheckFleetAutoscalerSchedule
-        + HasFleetAutoscalerRuntimeFeatures,
+        + HasFleetAutoscalerRuntimeFeatures
+        + Sync,
 {
-    fn compute_fleet_autoscaler_desired_size_at(
+    async fn compute_fleet_autoscaler_desired_size_at(
         context: &Context,
         policy: &FleetAutoscalerPolicy,
         fleet: &Fleet,
@@ -696,12 +725,14 @@ where
             inventory,
             &current_time,
         )
+        .await
     }
 }
 
+#[async_trait]
 #[cgp_component(FleetAutoscalerPolicyEvaluator)]
 pub trait CanComputeFleetAutoscalerDesiredSize {
-    fn compute_fleet_autoscaler_desired_size(
+    async fn compute_fleet_autoscaler_desired_size(
         &self,
         policy: &FleetAutoscalerPolicy,
         fleet: &Fleet,
@@ -710,13 +741,15 @@ pub trait CanComputeFleetAutoscalerDesiredSize {
 }
 
 #[cgp_new_provider]
+#[async_trait]
 impl<Context> FleetAutoscalerPolicyEvaluator<Context>
     for ComputeFleetAutoscalerDesiredSizeWithClock
 where
     Context: CanComputeFleetAutoscalerDesiredSizeAt
-        + CanReadFleetAutoscalerTime,
+        + CanReadFleetAutoscalerTime
+        + Sync,
 {
-    fn compute_fleet_autoscaler_desired_size(
+    async fn compute_fleet_autoscaler_desired_size(
         context: &Context,
         policy: &FleetAutoscalerPolicy,
         fleet: &Fleet,
@@ -728,6 +761,7 @@ where
             inventory,
             context.fleet_autoscaler_now(),
         )
+        .await
     }
 }
 
@@ -991,6 +1025,7 @@ where
                 &fleet,
                 &inventory,
             )
+            .await
         {
             Ok(decision) => decision,
             Err(AdapterError::InactiveFleetAutoscalerSchedule) => {
@@ -1051,6 +1086,12 @@ delegate_and_check_components! {
             UseField<Symbol!("storage")>,
         FleetAutoscalerRuntimeFeaturesGetterComponent:
             UseField<Symbol!("autoscaler_features")>,
+        FleetAutoscaleRequestMetadataGetterComponent:
+            UseField<Symbol!("fleet_autoscale_request_metadata")>,
+        FleetAutoscalerWebhookCallerComponent:
+            CallFleetAutoscalerWebhookWithReqwest,
+        WebhookFleetAutoscalerPolicyEvaluatorComponent:
+            ApplyWebhookFleetAutoscalerPolicyWithCaller,
         BufferFleetAutoscalerPolicyEvaluatorComponent:
             UseAgonesBufferFleetAutoscalerPolicy,
         CounterFleetAutoscalerPolicyEvaluatorComponent:
@@ -1118,8 +1159,8 @@ mod tests {
         assert!(!decision.limited);
     }
 
-    #[test]
-    fn cgp_dispatch_uses_buffer_provider_and_preserves_policy_tag() {
+    #[tokio::test]
+    async fn cgp_dispatch_uses_buffer_provider_and_preserves_policy_tag() {
         let controller =
             FleetAutoscalerController::new(MemoryStorage::new());
         let policy = FleetAutoscalerPolicy {
@@ -1138,6 +1179,7 @@ mod tests {
                 &fleet(50),
                 &FleetAutoscalerInventory::default(),
             )
+            .await
             .unwrap();
 
         assert_eq!(decision.replicas, 63);
@@ -1149,8 +1191,8 @@ mod tests {
     }
 
 
-    #[test]
-    fn cgp_dispatch_uses_counter_and_list_providers() {
+    #[tokio::test]
+    async fn cgp_dispatch_uses_counter_and_list_providers() {
         let controller =
             FleetAutoscalerController::new(MemoryStorage::new());
 
@@ -1188,6 +1230,7 @@ mod tests {
                 &counter_fleet,
                 &FleetAutoscalerInventory::default(),
             )
+            .await
             .unwrap();
         assert_eq!(counter.replicas, 12);
         assert_eq!(
@@ -1229,6 +1272,7 @@ mod tests {
                 &list_fleet,
                 &FleetAutoscalerInventory::default(),
             )
+            .await
             .unwrap();
         assert_eq!(list.replicas, 14);
         assert_eq!(
@@ -1340,8 +1384,8 @@ mod tests {
         }
     }
 
-    #[test]
-    fn cgp_schedule_dispatch_uses_explicit_clock_and_nested_provider() {
+    #[tokio::test]
+    async fn cgp_schedule_dispatch_uses_explicit_clock_and_nested_provider() {
         let controller =
             FleetAutoscalerController::new(MemoryStorage::new())
                 .with_autoscaler_features(AutoscalerFeatures {
@@ -1364,6 +1408,7 @@ mod tests {
                 &FleetAutoscalerInventory::default(),
                 now,
             )
+            .await
             .unwrap();
 
         assert_eq!(decision.replicas, 3);
@@ -1374,8 +1419,8 @@ mod tests {
         );
     }
 
-    #[test]
-    fn cgp_schedule_dispatch_enforces_feature_gate_and_inactive_error() {
+    #[tokio::test]
+    async fn cgp_schedule_dispatch_enforces_feature_gate_and_inactive_error() {
         let now = DateTime::parse_from_rfc3339(
             "2021-01-01T00:30:00Z",
         )
@@ -1442,8 +1487,8 @@ mod tests {
         }
     }
 
-    #[test]
-    fn cgp_chain_applies_first_success_and_records_entry_identity() {
+    #[tokio::test]
+    async fn cgp_chain_applies_first_success_and_records_entry_identity() {
         let now = DateTime::parse_from_rfc3339(
             "2021-11-05T05:30:00Z",
         )
@@ -1481,6 +1526,7 @@ mod tests {
                 &FleetAutoscalerInventory::default(),
                 now,
             )
+            .await
             .unwrap();
 
         assert_eq!(decision.replicas, 6);
@@ -1491,8 +1537,8 @@ mod tests {
         );
     }
 
-    #[test]
-    fn cgp_chain_uses_first_overlapping_active_schedule() {
+    #[tokio::test]
+    async fn cgp_chain_uses_first_overlapping_active_schedule() {
         let now = DateTime::parse_from_rfc3339(
             "2024-08-01T16:07:36Z",
         )
@@ -1542,6 +1588,7 @@ mod tests {
                 &FleetAutoscalerInventory::default(),
                 now,
             )
+            .await
             .unwrap();
 
         assert_eq!(decision.replicas, 10);
@@ -1552,8 +1599,8 @@ mod tests {
         );
     }
 
-    #[test]
-    fn cgp_chain_all_inactive_schedules_fall_off_with_inactive_error() {
+    #[tokio::test]
+    async fn cgp_chain_all_inactive_schedules_fall_off_with_inactive_error() {
         let now = DateTime::parse_from_rfc3339(
             "2021-01-01T00:30:00Z",
         )
@@ -1579,6 +1626,7 @@ mod tests {
                 &FleetAutoscalerInventory::default(),
                 now,
             )
+            .await
             .unwrap_err();
         assert!(matches!(
             error,
@@ -1586,8 +1634,8 @@ mod tests {
         ));
     }
 
-    #[test]
-    fn cgp_chain_enforces_scheduled_autoscaler_feature_gate() {
+    #[tokio::test]
+    async fn cgp_chain_enforces_scheduled_autoscaler_feature_gate() {
         let error =
             FleetAutoscalerController::new(MemoryStorage::new())
                 .compute_fleet_autoscaler_desired_size_at(
@@ -1610,8 +1658,8 @@ mod tests {
         ));
     }
 
-    #[test]
-    fn missing_buffer_configuration_is_reported_without_panic() {
+    #[tokio::test]
+    async fn missing_buffer_configuration_is_reported_without_panic() {
         let controller =
             FleetAutoscalerController::new(MemoryStorage::new());
         let error = controller
@@ -1624,6 +1672,7 @@ mod tests {
                 &fleet(1),
                 &FleetAutoscalerInventory::default(),
             )
+            .await
             .unwrap_err();
 
         assert!(
@@ -1633,8 +1682,8 @@ mod tests {
         );
     }
 
-    #[test]
-    fn unsupported_policy_preserves_upstream_dispatch_error() {
+    #[tokio::test]
+    async fn unsupported_policy_preserves_upstream_dispatch_error() {
         let controller =
             FleetAutoscalerController::new(MemoryStorage::new());
         let error = controller
@@ -1647,6 +1696,7 @@ mod tests {
                 &fleet(1),
                 &FleetAutoscalerInventory::default(),
             )
+            .await
             .unwrap_err();
 
         assert!(error.to_string().contains(
