@@ -533,6 +533,62 @@ mod tests {
         assert_eq!(controller.wasm_cache.len(), 1);
     }
 
+
+    #[tokio::test]
+    async fn wasm_policy_verifies_sha256_hash_like_upstream() {
+        use sha2::{Digest, Sha256};
+
+        static PLUGIN: &[u8] =
+            include_bytes!("../../../examples/autoscaler-wasm/plugin.wasm");
+        let digest = Sha256::digest(PLUGIN);
+        let good_hash: String = digest
+            .iter()
+            .map(|byte| format!("{byte:02x}"))
+            .collect();
+
+        let (good_url, good_server) = serve_wasm_once(PLUGIN);
+        let mut good = wasm_policy(good_url, "scale");
+        good.hash = good_hash.clone();
+        let controller =
+            FleetAutoscalerController::new(MemoryStorage::new())
+                .with_autoscaler_features(AutoscalerFeatures {
+                    scheduled_autoscaler: false,
+                    wasm_autoscaler: true,
+                });
+        let decision = controller
+            .apply_wasm_fleet_autoscaler_policy(
+                "good@1",
+                &good,
+                &fleet(10, 8),
+            )
+            .await
+            .unwrap();
+        assert_eq!(decision.replicas, 13);
+        good_server.join().unwrap();
+
+        let (bad_url, bad_server) = serve_wasm_once(PLUGIN);
+        let mut bad = wasm_policy(bad_url, "scale");
+        let mut bad_hash = good_hash;
+        bad_hash.replace_range(
+            0..2,
+            if &bad_hash[..2] == "00" { "ff" } else { "00" },
+        );
+        bad.hash = bad_hash;
+        let error = controller
+            .apply_wasm_fleet_autoscaler_policy(
+                "bad@1",
+                &bad,
+                &fleet(10, 8),
+            )
+            .await
+            .unwrap_err();
+        assert!(
+            error.to_string().contains("hash mismatch for module"),
+            "unexpected hash error: {error}",
+        );
+        bad_server.join().unwrap();
+    }
+
     #[tokio::test]
     async fn wasm_policy_scale_none_and_empty_response_match_upstream() {
         static PLUGIN: &[u8] =
