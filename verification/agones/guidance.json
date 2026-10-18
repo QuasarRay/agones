@@ -1,7 +1,8 @@
 {
   "created": [],
-  "directories": 1821,
+  "directories": 1822,
   "missing": [],
+  "not_versioned": [],
   "ownership": "Inherited operational guidance includes tracked vendor, generated and documentation directories; existing third-party instructions are preserved unchanged.",
   "preserved_existing": [
     "AGENTS.MD",
@@ -1818,6 +1819,7 @@
     "vendor/sigs.k8s.io/yaml/AGENTS.MD",
     "verification/AGENTS.MD",
     "verification/agones/AGENTS.MD",
+    "verification/agones/ci/AGENTS.MD",
     "verification/agones/gates/AGENTS.MD",
     "verification/agones/proof-summaries/AGENTS.MD",
     "verification/agones/refactoring/AGENTS.MD",

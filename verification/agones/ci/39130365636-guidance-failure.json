@@ -1,0 +1,17 @@
+{
+  "cause": "Guidance existed locally at build/local-includes/AGENTS.MD but was ignored by Git and absent from clean CI checkout.",
+  "head": "d88f536cbd36fb2fd9ca75ced6fe23d7f7649762",
+  "job": 117684112233,
+  "merge_result_tested": "2cd2c0e239ba286a88923f8714881c2dffa92390",
+  "observed_results": {
+    "feature-bool-model-check": "SKIPPED",
+    "guidance": "FAILED",
+    "rust": "SKIPPED",
+    "state_gate": "PASSED"
+  },
+  "pull_request": "https://github.com/QuasarRay/agones/pull/92",
+  "repair": "Version the required ignored pointer explicitly, and make guidance-check reject unversioned instruction files. Do not rerun unchanged local proofs; the always-run evidence gate validates their source bindings.",
+  "schema_version": 1,
+  "status": "FAILED",
+  "workflow_run": 39130365636
+}

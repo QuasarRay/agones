@@ -29,6 +29,7 @@ def write_json(path, value):
 
 def guidance(apply):
     paths = set(git("ls-files", "--cached", "--others", "--exclude-standard", "-z").decode().strip("\0").split("\0"))
+    tracked = set(git("ls-files", "--cached", "-z").decode().strip("\0").split("\0"))
     directories = {ROOT}
     for path in paths:
         parent = (ROOT / path).parent
@@ -36,21 +37,23 @@ def guidance(apply):
             directories.add(parent)
             parent = parent.parent
     inherited = "# AGENTS.MD\n\nProject guidance is inherited from [the repository root]({relative}).\nRead that file once; preserve any additional ancestor or local guidance.\nThis pointer adds no scope, permissions, or exceptions.\n"
-    missing, existing, created = [], [], []
+    missing, existing, created, not_versioned = [], [], [], []
     import os
     for directory in sorted(directories):
         files = [p for p in directory.iterdir() if p.name.upper() == "AGENTS.MD"]
         if files:
             existing.extend(str(p.relative_to(ROOT)) for p in files)
+            not_versioned.extend(str(p.relative_to(ROOT)) for p in files if str(p.relative_to(ROOT)) not in tracked)
             continue
         path = directory / "AGENTS.MD"
         if apply:
             relative = os.path.relpath(ROOT / "AGENTS.MD", directory)
             path.write_text(inherited.format(relative=relative))
             created.append(str(path.relative_to(ROOT)))
+            not_versioned.append(str(path.relative_to(ROOT)))
         else:
             missing.append(str(path.relative_to(ROOT)))
-    return {"directories": len(directories), "missing": missing, "preserved_existing": existing, "created": created,
+    return {"directories": len(directories), "missing": missing, "preserved_existing": existing, "created": created, "not_versioned": not_versioned,
             "ownership": "Inherited operational guidance includes tracked vendor, generated and documentation directories; existing third-party instructions are preserved unchanged."}
 
 
@@ -105,5 +108,5 @@ if __name__ == "__main__":
         OUT.mkdir(parents=True, exist_ok=True)
         write_json(OUT / "guidance.json", report)
         print(json.dumps({k: v if not isinstance(v, list) else len(v) for k, v in report.items()}))
-        if report["missing"]:
+        if report["missing"] or (args.action == "guidance-check" and report["not_versioned"]):
             raise SystemExit(1)

@@ -82,18 +82,45 @@
     "acceptance": "Published implementation/evidence checkpoint; feature verification remains open for 17 exact-case model-checking assertions and the environment/CLI input feature. Full migration and all eight _2 architecture cells remain open.",
     "access": "GitHub app authorized as QuasarRay with push/admin; gh CLI unauthenticated; local .git writable",
     "authorization": "User execution contract REQ-12/F4 and root AGENTS.MD milestone PR/merge workflow",
+    "checks": [
+      {
+        "cause": "Guidance existed locally at build/local-includes/AGENTS.MD but was ignored by Git and absent from clean CI checkout.",
+        "head": "d88f536cbd36fb2fd9ca75ced6fe23d7f7649762",
+        "job": 117684112233,
+        "merge_result_tested": "2cd2c0e239ba286a88923f8714881c2dffa92390",
+        "observed_results": {
+          "feature-bool-model-check": "SKIPPED",
+          "guidance": "FAILED",
+          "rust": "SKIPPED",
+          "state_gate": "PASSED"
+        },
+        "pull_request": "https://github.com/QuasarRay/agones/pull/92",
+        "repair": "Version the required ignored pointer explicitly, and make guidance-check reject unversioned instruction files. Do not rerun unchanged local proofs; the always-run evidence gate validates their source bindings.",
+        "schema_version": 1,
+        "status": "FAILED",
+        "workflow_run": 39130365636
+      }
+    ],
     "expected_base": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
-    "expected_head": null,
+    "expected_head": "d88f536cbd36fb2fd9ca75ced6fe23d7f7649762",
     "integration_branch": "agones-rs-dev",
-    "pull_requests": [],
-    "remote_result": "PREPARING_DRAFT_CHECKPOINT",
+    "pull_requests": [
+      {
+        "draft": true,
+        "head": "d88f536cbd36fb2fd9ca75ced6fe23d7f7649762",
+        "merged": false,
+        "number": 92,
+        "url": "https://github.com/QuasarRay/agones/pull/92"
+      }
+    ],
+    "remote_result": "DRAFT_PR_OPEN_CI_REPAIR",
     "required_checks": [
       "migration-state",
       "rust",
       "feature-bool-model-check"
     ],
     "review_branch": "codex/agones-feature-gates-001",
-    "visible_checkout": "agones-rs-dev"
+    "visible_checkout": "agones-rs-dev@d88f536cbd36fb2fd9ca75ced6fe23d7f7649762"
   },
   "goal": {
     "objective_attachment": "/home/astral/.codex/attachments/5cf63dab-e5a8-49be-a2f1-ae51f5edd993/pasted-text-1.txt",
@@ -1161,8 +1188,8 @@
     }
   ],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 15,
-  "previous_sha256": "5d9fa69347122f733b18f15fa1beac08ad90bcd22fa0508f73c26f0f3b56b76e",
+  "previous_revision": 16,
+  "previous_sha256": "e116fab4f1d9155d1433e16a20f5c13bf271d9a03953777c9acac0f3ac52ccb7",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -1209,7 +1236,7 @@
       "rationale": "Default constructors and SDK environment propagation now call the existing CGP parser; the raw-byte consumer is the minimum needed to preserve Go string semantics. Existing CGP handles downstream composition without a new macro. New _2 staging would add compiler/IDE and maintenance work without paying for four short constructors. The concrete next automation candidate is the repeated typed source-case actions/assertions in the exact-case IR; use existing Genco after the next production input feature gate rather than building a generalized macro/compiler framework now. All four _2 forms and both locations remain mandatory, with no cell credited from ordinary CGP macros."
     }
   ],
-  "revision": 16,
+  "revision": 17,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [
@@ -1226,7 +1253,7 @@
       ],
       "id": "FG-CONFIG-001",
       "implementation_gate": "verification/agones/gates/9bc7d7e7fc872f42369903027b46116bdc3a2fed1d783f66476870a1aa451357.json",
-      "next_action": "Publish codex/agones-feature-gates-001 against agones-rs-dev, attach the PR and recover exact head checks; then continue FG-INPUT-001 without dropping existing formal and architecture debt.",
+      "next_action": "Publish the incremental CI/guidance repair to the existing PR, verify its exact head results, and continue FG-INPUT-001.",
       "owned_paths": [
         "crates/agones-core/src/features.rs",
         "crates/agones-rusternetes/src/creating_gameserver_controller.rs",
@@ -1287,8 +1314,8 @@
   ],
   "workspace": {
     "branch": "agones-rs-dev",
-    "dirty_patch_sha256": "1caacf0f6bff94b1414d12fe48f4d82ce6ef12cdc715aec8e1fb46a610c8b3ae",
-    "head": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "dirty_patch_sha256": "c7090a195608cc658ecaa6ef5476784e677c1d3619ca5bb1b58113080a5bd059",
+    "head": "d88f536cbd36fb2fd9ca75ced6fe23d7f7649762",
     "last_validated_implementation": "verification/agones/gates/9bc7d7e7fc872f42369903027b46116bdc3a2fed1d783f66476870a1aa451357.json",
     "path": "/home/astral/Projects/agones",
     "source_binding_receipt": "verification/agones/runs/final-lexical-negative-controls.json",

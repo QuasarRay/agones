@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "PUBLISHED_HEAD_AND_CI_REPAIR",
+  "gate_snapshot": "verification/agones/gates/9bc7d7e7fc872f42369903027b46116bdc3a2fed1d783f66476870a1aa451357.json",
+  "predecessor_revision": 16,
+  "predecessor_sha256": "e116fab4f1d9155d1433e16a20f5c13bf271d9a03953777c9acac0f3ac52ccb7",
+  "reason": "PR 92 and its exact published tree/head are verified. First CI state gate passed and guidance failed on an ignored local pointer; version that pointer and reject unversioned guidance. Rust and Kani jobs were skipped, not passed.",
+  "result_revision": 17,
+  "schema_version": 1,
+  "state_sha256": "569b43e66df9d0bb58abc34bb10c5c77f0514674a29c505c0579c3062eab4655",
+  "timestamp": "2026-10-18T13:16:45.500102+00:00"
+}
