@@ -749,6 +749,7 @@ where
         + CanApplyCounterFleetAutoscalerPolicy
         + CanApplyListFleetAutoscalerPolicy
         + CanApplyWebhookFleetAutoscalerPolicy
+        + CanApplyWasmFleetAutoscalerPolicy
         + CanCheckFleetAutoscalerSchedule
         + HasFleetAutoscalerRuntimeFeatures
         + Sync,
@@ -758,6 +759,7 @@ where
         policy: &'a FleetAutoscalerPolicy,
         fleet: &'a Fleet,
         inventory: &'a FleetAutoscalerInventory,
+        state_key: &'a str,
         current_time: DateTime<Utc>,
     ) -> BoxFuture<'a, Result<FleetAutoscalerPolicyDecision, AdapterError>> {
         Box::pin(async move {
@@ -798,6 +800,7 @@ where
         policy: &'a FleetAutoscalerPolicy,
         fleet: &'a Fleet,
         inventory: &'a FleetAutoscalerInventory,
+        state_key: &'a str,
     ) -> BoxFuture<'a, Result<FleetAutoscalerPolicyDecision, AdapterError>> {
         let current_time = context.fleet_autoscaler_now();
         Box::pin(async move {
@@ -806,6 +809,7 @@ where
                     policy,
                     fleet,
                     inventory,
+                    state_key,
                     current_time,
                 )
                 .await
