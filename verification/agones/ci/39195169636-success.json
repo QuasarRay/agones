@@ -1,0 +1,125 @@
+{
+  "artifact_bindings": {
+    "verification/agones/runs/ci-39195169636-migration-state.log": "86b0894d32c7568a25bf134680c6691ddadb6d8eaa99d87db27afc6a51d487bd"
+  },
+  "checkout": "3087cb759e376f7c53e060ac43013535d9ae29b8",
+  "classification": "REPO_SAFE",
+  "event": "pull_request",
+  "head": "09559da77af7fed69535368c40ee9264a9baf527",
+  "jobs": [
+    {
+      "conclusion": "success",
+      "id": 117876282898,
+      "logs_url": null,
+      "name": "migration-state",
+      "run_id": 39195169636,
+      "status": "completed",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-python@v5",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Install pinned state validator",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Validate source-bound implementation gate and ledger",
+          "number": 5,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Check guidance inheritance",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Reject incomplete or vacuous proof results",
+          "number": 7,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Select affected checks conservatively",
+          "number": 8,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-python@v5",
+          "number": 15,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4",
+          "number": 16,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 17,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "conclusion": "skipped",
+      "id": 117876377425,
+      "logs_url": null,
+      "name": "feature-bool-model-check",
+      "run_id": 39195169636,
+      "status": "completed",
+      "steps": null
+    },
+    {
+      "conclusion": "skipped",
+      "id": 117876377592,
+      "logs_url": null,
+      "name": "rust",
+      "run_id": 39195169636,
+      "status": "completed",
+      "steps": null
+    }
+  ],
+  "merge_result": {
+    "merge_commit": "7a8ea571f41f20addf9f47a30f2cc5f84c065488",
+    "merged": true,
+    "pull_request": "https://github.com/QuasarRay/agones/pull/93"
+  },
+  "native_goal_observation": "blocked; repository work continued under the direct user resume request; no native lifecycle transition claimed",
+  "reused_production_evidence": {
+    "head": "01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58",
+    "receipt": "verification/agones/ci/39190924053-success.json",
+    "scope": "All production code, generated source properties, lock, toolchain and workflow bytes unchanged; state job validated the current gates/evidence. Two skipped jobs are explicit reuse, not new test or formal proof credit."
+  },
+  "schema_version": 1,
+  "selected": {
+    "model": false,
+    "rust": false
+  },
+  "status": "PASSED",
+  "tree": "65728c1b29374ca52f2bd4b892fe7386ffc71eaf",
+  "url": "https://github.com/QuasarRay/agones/actions/runs/39195169636",
+  "workflow_run": 39195169636
+}

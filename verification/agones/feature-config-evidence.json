@@ -1,5 +1,6 @@
 {
   "artifact_bindings": {
+    "verification/agones/ci/39190924053-artifact-retention.json": "1787811c859b695066f2215e48f7a2a1931d32d1d8d4e8bdd7664bef3a59c401",
     "verification/agones/ci/39190924053-success.json": "199d9a95367536d5c62d3ca49a08c7de5398c5b2d0b30bfc387cc178c57a8d16",
     "verification/agones/feature-bool-kani-properties.json": "605e033b669a9368b4c8eb2d35fdab0b6a828368e2988fe96948c520a9685bc3",
     "verification/agones/feature-helper-bindings.json": "e527fe83f28d521ac93eedc591b97060265bbee85034df53362463938c4b43ed",

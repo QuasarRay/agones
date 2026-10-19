@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "FG_CONFIG_001_RECOVERY_MILESTONE_DELIVERED",
+  "gate_snapshot": "verification/agones/gates/9268683a31881d2317504de096972c338daebf321be9bd8d98ac7b640dceda60.json",
+  "predecessor_revision": 230,
+  "predecessor_sha256": "30b1f6f17888305410d24c53feeae6e9a923fe44807994519dd6a97247fc74ef",
+  "reason": "Recovery PR93 merged and both PR/integration CI gates passed. Production proofs remain valid through explicit unchanged-source reuse from01ab22b; source-case14 has18 successful original assertions/two covers. Full feature proof scope and migration remain required; native host status is recorded accurately.",
+  "result_revision": 231,
+  "schema_version": 1,
+  "state_sha256": "9f12b274c2afe5e675f3dbcda942e6bd0069509ece4720f3cdef51186b51553a",
+  "timestamp": "2026-10-19T03:37:01.878361+00:00"
+}

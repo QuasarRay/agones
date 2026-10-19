@@ -77,7 +77,7 @@ jobs:
       AGONES_INPUT_CI_RUN: feature-input-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}
       AGONES_QUERY_ERROR_CI_RUN: feature-query-error-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}
       AGONES_HEALTH_CI_RUN: health-defaulting-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}
-      AGONES_GS_BASIC_CI_RUN: gameserver-basic-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}
+      AGONES_GS_SOURCE_CI_RUN: gameserver-source-005-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - uses: actions/checkout@v4
       - name: Install pinned verification tools
@@ -110,12 +110,12 @@ jobs:
         run: python3 build/scripts/agones-rs/run.py "$AGONES_HEALTH_CI_RUN" --quiet --cwd crates/agones-core cargo bolero test health_defaulting_common_domain --engine kani
       - name: Require model and production health invariants and all eight covers
         run: python3 build/scripts/agones-rs/summarize_feature_proof.py health "$AGONES_HEALTH_CI_RUN" --output "verification/agones/proof-summaries/$AGONES_HEALTH_CI_RUN.json"
-      - name: Verify the complete original basic GameServer case through Bolero and Kani
+      - name: Verify the complete original default-eviction GameServer case through Bolero and Kani
         env:
           CARGO_BUILD_JOBS: "2"
-        run: python3 build/scripts/agones-rs/run.py "$AGONES_GS_BASIC_CI_RUN" --quiet --cwd crates/agones-core timeout --signal=TERM --kill-after=15s 900s /usr/bin/time -v cargo bolero test source_gs_case_014 --engine kani
+        run: python3 build/scripts/agones-rs/run.py "$AGONES_GS_SOURCE_CI_RUN" --quiet --cwd crates/agones-core timeout --signal=TERM --kill-after=15s 900s /usr/bin/time -v cargo bolero test source_gs_case_005 --engine kani
       - name: Require all 18 original GameServer assertions and both covers
-        run: python3 build/scripts/agones-rs/summarize_feature_proof.py gameserver-source "$AGONES_GS_BASIC_CI_RUN" --case-index 14 --output "verification/agones/proof-summaries/$AGONES_GS_BASIC_CI_RUN.json"
+        run: python3 build/scripts/agones-rs/summarize_feature_proof.py gameserver-source "$AGONES_GS_SOURCE_CI_RUN" --case-index 5 --output "verification/agones/proof-summaries/$AGONES_GS_SOURCE_CI_RUN.json"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -129,6 +129,6 @@ jobs:
             verification/agones/proof-summaries/${{ env.AGONES_QUERY_ERROR_CI_RUN }}.json
             verification/agones/runs/${{ env.AGONES_HEALTH_CI_RUN }}.*
             verification/agones/proof-summaries/${{ env.AGONES_HEALTH_CI_RUN }}.json
-            verification/agones/runs/${{ env.AGONES_GS_BASIC_CI_RUN }}.*
-            verification/agones/proof-summaries/${{ env.AGONES_GS_BASIC_CI_RUN }}.json
+            verification/agones/runs/${{ env.AGONES_GS_SOURCE_CI_RUN }}.*
+            verification/agones/proof-summaries/${{ env.AGONES_GS_SOURCE_CI_RUN }}.json
           retention-days: 90

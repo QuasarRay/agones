@@ -1,5 +1,5 @@
 {
-  "acceptance": "Published integration commit01ab22b contains the complete exact-case proof checkpoint. Its push CI39190924053 passed all three jobs:578 tests/0failures/3ignored, four generation modes, lowering/resource controls, and five strict proof selections including all18 original case014 assertions/both covers.286 other source occurrences, full baseline/lifecycle/conformance and all eight _2 cells remain required. The follow-up repairs observed Goal/handoff metadata without changing Agones production behavior.",
+  "acceptance": "No new case005 formal credit until its own complete selected Bolero/Kani results and both covers pass. Reuse exact source014 proof and unchanged production component proofs; retain all five full parent-CI proof logs/receipts/summaries permanently in Git after archive digest verification. A new proof-transport rule for the single005/014 pair is not introduced. Use isolated CI because source014 peak RSS9720116KiB exceeds current desktop available memory5235528KiB. All17source fixtures/304relations/unit domains/unwind64 remain intact.",
   "checks": [
     {
       "cause": "Guidance existed locally at build/local-includes/AGENTS.MD but was ignored by Git and absent from clean CI checkout.",
@@ -143,10 +143,32 @@
       },
       "status": "PASSED",
       "workflow_run": 39190924053
+    },
+    {
+      "evidence": "verification/agones/ci/39195169636-success.json",
+      "head": "09559da77af7fed69535368c40ee9264a9baf527",
+      "observed_results": {
+        "feature-bool-model-check": "REUSED_UNCHANGED_PRODUCTION_EVIDENCE",
+        "migration-state": "PASSED",
+        "rust": "REUSED_UNCHANGED_PRODUCTION_EVIDENCE"
+      },
+      "status": "PASSED",
+      "workflow_run": 39195169636
+    },
+    {
+      "evidence": "verification/agones/ci/39195278548-success.json",
+      "head": "7a8ea571f41f20addf9f47a30f2cc5f84c065488",
+      "observed_results": {
+        "feature-bool-model-check": "REUSED_UNCHANGED_PRODUCTION_EVIDENCE",
+        "migration-state": "PASSED",
+        "rust": "REUSED_UNCHANGED_PRODUCTION_EVIDENCE"
+      },
+      "status": "PASSED",
+      "workflow_run": 39195278548
     }
   ],
-  "expected_base": "01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58",
-  "expected_head": "01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58",
+  "expected_base": "7a8ea571f41f20addf9f47a30f2cc5f84c065488",
+  "expected_head": "7a8ea571f41f20addf9f47a30f2cc5f84c065488",
   "integration_branch": "agones-rs-dev",
   "pending_checkpoint": {
     "current_gates": {
@@ -156,11 +178,11 @@
       "GS-DEFAULTS-001": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
       "SDK-VERSION-001": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json"
     },
-    "expected_review_branch": "codex/agones-goal-recovery",
+    "expected_review_branch": "codex/agones-source-defaulting-005",
     "native_observation": "verification/agones/goal-observation.json",
-    "next_action": "Reconcile current source gates through VERIFYING; publish the small Goal observation/handoff recovery repair against current integration; require fresh state CI and reuse unchanged source proofs explicitly.",
-    "publication_parent": "01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58",
-    "status": "RECONCILING_ALREADY_PUBLISHED_PROOF_CHECKPOINT",
+    "next_action": "Publish current source005 CI selection and full retained parent artifacts, run the isolated existing harness, recover its exact full artifact, strictly validate18 original claims/two covers before credit, and preserve all other required obligations.",
+    "publication_parent": "7a8ea571f41f20addf9f47a30f2cc5f84c065488",
+    "status": "CASE005_CI_CAMPAIGN_READY",
     "verified_scope": "Case014:18 original assertions,2covers,6436 complete results; current selected dependencies/harness revalidated.578 ordinary tests,all four generation modes and controls pass."
   },
   "pull_requests": [
@@ -171,14 +193,22 @@
       "merged": true,
       "number": 92,
       "url": "https://github.com/QuasarRay/agones/pull/92"
+    },
+    {
+      "draft": false,
+      "head": "09559da77af7fed69535368c40ee9264a9baf527",
+      "merge_commit": "7a8ea571f41f20addf9f47a30f2cc5f84c065488",
+      "merged": true,
+      "number": 93,
+      "url": "https://github.com/QuasarRay/agones/pull/93"
     }
   ],
-  "remote_result": "PROOF_CHECKPOINT_MERGED_INTEGRATION_CI_PASSED_RECOVERY_REVIEW_PENDING",
+  "remote_result": "CASE005_CI_PROOF_CAMPAIGN_PREPARED_PARENT_PROOFS_RETAINED",
   "required_checks": [
     "migration-state",
     "rust",
     "feature-bool-model-check"
   ],
-  "review_branch": "codex/agones-goal-recovery",
-  "visible_checkout": "agones-rs-dev@01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58"
+  "review_branch": "codex/agones-source-defaulting-005",
+  "visible_checkout": "agones-rs-dev@7a8ea571f41f20addf9f47a30f2cc5f84c065488"
 }

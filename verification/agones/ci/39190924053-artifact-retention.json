@@ -1,0 +1,34 @@
+{
+  "archive_sha256": "c8d51fcc1584b33c4db693c209dd23fff2fdd7956ca0b787e65cfecc79a8417d",
+  "artifact_bindings": {
+    "verification/agones/proof-summaries/feature-bool-bolero-kani-ci-39190924053-1.json": "88db5abf6d595495de874a3df2c7f7405f66d13f6434dc2e525d074fee0c3899",
+    "verification/agones/proof-summaries/feature-input-bolero-kani-ci-39190924053-1.json": "c77ec6c59c15df6f1f4db325c9cdb84d152d1e2b243bb95bda2b99efe87ea4df",
+    "verification/agones/proof-summaries/feature-query-error-bolero-kani-ci-39190924053-1.json": "06a0f3f655e0524c3f8bccece999c1068f0645f89c1fcca461f79af63c3ba134",
+    "verification/agones/proof-summaries/gameserver-basic-bolero-kani-ci-39190924053-1.json": "0d47e7acd1f083fc22628b5b80773acadfd8213c7617b0088010badf6e7b6c9c",
+    "verification/agones/proof-summaries/health-defaulting-bolero-kani-ci-39190924053-1.json": "5575f3e06a9b5286ba2fdbf441c8921669465cce7f2211b296f193fe1bbbc4f7",
+    "verification/agones/runs/feature-bool-bolero-kani-ci-39190924053-1.json": "3eae1d4ec78da8fc093006fe8a6d6a5ee9e20e088076079eb6234d0a32e53746",
+    "verification/agones/runs/feature-bool-bolero-kani-ci-39190924053-1.log": "2993c3a5e20cadfe6ed55bb3c5648c8e52009668871dae9caeabdfd71652c36a",
+    "verification/agones/runs/feature-input-bolero-kani-ci-39190924053-1.json": "29a80e91a78e7e1d6fd3d1195d7509232b604cb0cc49b91da5af06b5742eb59a",
+    "verification/agones/runs/feature-input-bolero-kani-ci-39190924053-1.log": "9b11af61b0bb12f8f0bd4cf92450e0b582ec2c28624bcbe8d395e81a6aba4ef7",
+    "verification/agones/runs/feature-query-error-bolero-kani-ci-39190924053-1.json": "43dddccf7ce640997f27a1d1e5a8017524a373c278128837a87c8ae82bc10623",
+    "verification/agones/runs/feature-query-error-bolero-kani-ci-39190924053-1.log": "1cde701b9fcafcfa2e14b55bbd416717f080e452a04a55fcef9d6cbcd457b059",
+    "verification/agones/runs/gameserver-basic-bolero-kani-ci-39190924053-1.json": "960e3be062dc3f52c73504c68f3577f6833ca133115a57685ed4835e403e9838",
+    "verification/agones/runs/gameserver-basic-bolero-kani-ci-39190924053-1.log": "cf785d757bd18afa71a3e47a70fd8613c807937b01ded5fe8f1183deee7412e9",
+    "verification/agones/runs/health-defaulting-bolero-kani-ci-39190924053-1.json": "9a5b3484fa62f5e44dcb31522074e1922006fbad6d4c30f0adca31ca0d7194eb",
+    "verification/agones/runs/health-defaulting-bolero-kani-ci-39190924053-1.log": "8677586e87bc06314c1a8c933987346ce1ec6ed0d75c05b45c5520abfc0ff7f0"
+  },
+  "artifact_id": 12159762918,
+  "classification": "REPO_SAFE",
+  "resource_observation": {
+    "elapsed_wall_seconds": 238.12,
+    "maximum_resident_set_kbytes": 9720116,
+    "source_case": 14,
+    "verification_seconds": 220.49738
+  },
+  "retention": "Commit exact extracted full proof logs, run receipts and summaries in the existing Git-backed evidence location. Actions retention is supplemental; no signed download URL or credentials retained.",
+  "schema_version": 1,
+  "scope": "Existing five proof selections only; artifact retention produces no additional original assertion credit.",
+  "source_head": "01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58",
+  "status": "DOWNLOADED_HASH_VERIFIED_FULL_LOGS_RETAINED_FOR_GIT",
+  "workflow_run": 39190924053
+}

@@ -1,0 +1,17 @@
+{
+  "candidate": "Reuse source-case014 proof for source-case005 through an additional checked alpha-renaming rule.",
+  "chosen_action": "Use existing source_gs_case_005 and strict source summary on an isolated GitHub CI runner. Existing source-case014 full CI log peaks at9720116KiB RSS; current desktop available memory is5235528KiB. Retain existing case014 artifacts and reuse unchanged production evidence; run case005 with its own qualified identities,18 original assertions,both covers,unit domain and unwind64. No alpha-renamed proof credit.",
+  "decision": "REUSE_EXISTING",
+  "feature_binding": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+  "id": "GS-DEFAULTS-001-case005-014-equivalence-audit",
+  "metaprogramming_review": "All17 wrappers and304 relations already come from one Genco emitter using CGP production boundaries. No additional macro authoring/generalization pays for this one duplicate; all eight _2 cells remain REQUIRED_OPEN.",
+  "next_review_trigger": "Next GameServer API/validation rule or repeated qualified property-declaration milestone; revisit a shared _2 declaration/attribute/derive/forwarding capability using existing CGP/Genco/Arcane facilities and actual repetition.",
+  "observations": "Both before/after values, feature flags, expected context and all18 assertion relations/guards match. Original Go fixtures both call the same helper with a no-op spec callback; case005 only reassigns expected eviction constants already present in the common expected builder. Generated declarations differ in symbol identities and diagnostic/cover labels.",
+  "roi": "A new proof-transport rule needs its own trusted mapping, negative controls, input bindings and ongoing invalidation/CI behavior. For this single currently identified pair, that construction/maintenance cost is uncertain relative to invoking the existing complete per-case Bolero/Kani harness and strict summary once. Reuse existing Genco/IR/harness/parser infrastructure; do not build a new proof-reuse framework or credit renamed result rows.",
+  "scope": "Audit only; no case005 proof or transported-cover credit.",
+  "source_case_ids": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver"
+  ],
+  "source_ir_sha256": "e74f5781d7addd7d76c902f8da93abd454bb5fea8d4ad596821c08828a594fe8"
+}

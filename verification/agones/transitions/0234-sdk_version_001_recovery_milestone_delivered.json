@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_VERSION_001_RECOVERY_MILESTONE_DELIVERED",
+  "gate_snapshot": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json",
+  "predecessor_revision": 233,
+  "predecessor_sha256": "aba473af98f2e811e728823bf8066f1c271a72dc7235000d1d2f845db2516a66",
+  "reason": "Recovery PR93 merged and both PR/integration CI gates passed. Production proofs remain valid through explicit unchanged-source reuse from01ab22b; source-case14 has18 successful original assertions/two covers. Full feature proof scope and migration remain required; native host status is recorded accurately.",
+  "result_revision": 234,
+  "schema_version": 1,
+  "state_sha256": "659f40a30a3608681afdaed19a49a7968ef842d9e9ce90da12b3c821cfc8f73b",
+  "timestamp": "2026-10-19T03:37:02.636154+00:00"
+}
