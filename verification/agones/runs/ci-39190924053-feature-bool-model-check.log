@@ -1,0 +1,468 @@
+﻿2026-10-19T02:38:58.6034415Z Current runner version: '2.337.0'
+2026-10-19T02:38:58.6061453Z ##[group]Runner Image Provisioner
+2026-10-19T02:38:58.6062430Z Hosted Compute Agent
+2026-10-19T02:38:58.6063167Z Version: 20261012.601
+2026-10-19T02:38:58.6063825Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-19T02:38:58.6064549Z Build Date: 2026-10-12T17:48:21Z
+2026-10-19T02:38:58.6065357Z Worker ID: {16f2d579-4e3d-422b-9299-baa9c2d5c75d}
+2026-10-19T02:38:58.6066083Z Region: northcentralus
+2026-10-19T02:38:58.6066697Z Cloud: Azure
+2026-10-19T02:38:58.6067256Z ##[endgroup]
+2026-10-19T02:38:58.6069221Z ##[group]Operating System
+2026-10-19T02:38:58.6070060Z Ubuntu
+2026-10-19T02:38:58.6070606Z 24.04.5
+2026-10-19T02:38:58.6071172Z LTS
+2026-10-19T02:38:58.6071718Z ##[endgroup]
+2026-10-19T02:38:58.6072315Z ##[group]Runner Image
+2026-10-19T02:38:58.6073312Z Image: ubuntu-24.04
+2026-10-19T02:38:58.6073933Z Version: 20261012.334.1
+2026-10-19T02:38:58.6075298Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-19T02:38:58.6076904Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-19T02:38:58.6078239Z ##[endgroup]
+2026-10-19T02:38:58.6079391Z ##[group]GITHUB_TOKEN Permissions
+2026-10-19T02:38:58.6081781Z Contents: read
+2026-10-19T02:38:58.6082432Z Metadata: read
+2026-10-19T02:38:58.6083009Z ##[endgroup]
+2026-10-19T02:38:58.6085362Z Secret source: Actions
+2026-10-19T02:38:58.6086313Z Cache mode: write
+2026-10-19T02:38:58.6087933Z Prepare workflow directory
+2026-10-19T02:38:58.6854771Z Prepare all required actions
+2026-10-19T02:38:58.6932759Z Getting action download info
+2026-10-19T02:38:58.9269317Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-19T02:38:59.0188570Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-19T02:38:59.2285189Z Complete job name: feature-bool-model-check
+2026-10-19T02:38:59.3056260Z ##[group]Run actions/checkout@v4
+2026-10-19T02:38:59.3057184Z with:
+2026-10-19T02:38:59.3057847Z   repository: QuasarRay/agones
+2026-10-19T02:38:59.3061915Z   token: ***
+2026-10-19T02:38:59.3062350Z   ssh-strict: true
+2026-10-19T02:38:59.3062828Z   ssh-user: git
+2026-10-19T02:38:59.3063269Z   persist-credentials: true
+2026-10-19T02:38:59.3063746Z   clean: true
+2026-10-19T02:38:59.3064182Z   sparse-checkout-cone-mode: true
+2026-10-19T02:38:59.3064704Z   fetch-depth: 1
+2026-10-19T02:38:59.3065134Z   fetch-tags: false
+2026-10-19T02:38:59.3065566Z   show-progress: true
+2026-10-19T02:38:59.3066014Z   lfs: false
+2026-10-19T02:38:59.3066421Z   submodules: false
+2026-10-19T02:38:59.3066876Z   set-safe-directory: true
+2026-10-19T02:38:59.3067385Z   allow-unsafe-pr-checkout: false
+2026-10-19T02:38:59.3068375Z env:
+2026-10-19T02:38:59.3068936Z   AGONES_KANI_CI_RUN: feature-bool-bolero-kani-ci-39190924053-1
+2026-10-19T02:38:59.3069818Z   AGONES_INPUT_CI_RUN: feature-input-bolero-kani-ci-39190924053-1
+2026-10-19T02:38:59.3070733Z   AGONES_QUERY_ERROR_CI_RUN: feature-query-error-bolero-kani-ci-39190924053-1
+2026-10-19T02:38:59.3071656Z   AGONES_HEALTH_CI_RUN: health-defaulting-bolero-kani-ci-39190924053-1
+2026-10-19T02:38:59.3072528Z   AGONES_GS_BASIC_CI_RUN: gameserver-basic-bolero-kani-ci-39190924053-1
+2026-10-19T02:38:59.3073223Z ##[endgroup]
+2026-10-19T02:38:59.4107793Z Syncing repository: QuasarRay/agones
+2026-10-19T02:38:59.4110322Z ##[group]Getting Git version info
+2026-10-19T02:38:59.4111528Z Working directory is '/home/runner/work/agones/agones'
+2026-10-19T02:38:59.4113201Z [command]/usr/bin/git version
+2026-10-19T02:38:59.4252428Z git version 2.55.0
+2026-10-19T02:38:59.4277030Z ##[endgroup]
+2026-10-19T02:38:59.4293288Z Temporarily overriding HOME='/home/runner/work/_temp/359495b3-fe44-4667-9739-95f1dc5ba66e' before making global git config changes
+2026-10-19T02:38:59.4300851Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-19T02:38:59.4302552Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agones/agones
+2026-10-19T02:38:59.4356374Z Deleting the contents of '/home/runner/work/agones/agones'
+2026-10-19T02:38:59.4360625Z ##[group]Initializing the repository
+2026-10-19T02:38:59.4366148Z [command]/usr/bin/git init /home/runner/work/agones/agones
+2026-10-19T02:38:59.4504980Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-19T02:38:59.4507250Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-19T02:38:59.4509577Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-19T02:38:59.4511125Z hint: call:
+2026-10-19T02:38:59.4511806Z hint:
+2026-10-19T02:38:59.4512504Z hint: 	git config --global init.defaultBranch <name>
+2026-10-19T02:38:59.4513180Z hint:
+2026-10-19T02:38:59.4513800Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-19T02:38:59.4515403Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-19T02:38:59.4516370Z hint:
+2026-10-19T02:38:59.4516861Z hint: 	git branch -m <name>
+2026-10-19T02:38:59.4517412Z hint:
+2026-10-19T02:38:59.4518398Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-19T02:38:59.4519454Z Initialized empty Git repository in /home/runner/work/agones/agones/.git/
+2026-10-19T02:38:59.4522648Z [command]/usr/bin/git remote add origin https://github.com/QuasarRay/agones
+2026-10-19T02:38:59.4595924Z ##[endgroup]
+2026-10-19T02:38:59.4597694Z ##[group]Disabling automatic garbage collection
+2026-10-19T02:38:59.4599312Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-19T02:38:59.4638053Z ##[endgroup]
+2026-10-19T02:38:59.4639620Z ##[group]Setting up auth
+2026-10-19T02:38:59.4645890Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-19T02:38:59.4684276Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-19T02:38:59.5099235Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-19T02:38:59.5139008Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-19T02:38:59.5380742Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-19T02:38:59.5422615Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-19T02:38:59.5661435Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-19T02:38:59.5713874Z ##[endgroup]
+2026-10-19T02:38:59.5729503Z ##[group]Fetching the repository
+2026-10-19T02:38:59.5731293Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58:refs/remotes/origin/agones-rs-dev
+2026-10-19T02:39:04.2362935Z From https://github.com/QuasarRay/agones
+2026-10-19T02:39:04.2365097Z  * [new ref]         01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58 -> origin/agones-rs-dev
+2026-10-19T02:39:04.2371116Z ##[endgroup]
+2026-10-19T02:39:04.2372590Z ##[group]Determining the checkout info
+2026-10-19T02:39:04.2374201Z ##[endgroup]
+2026-10-19T02:39:04.2379080Z [command]/usr/bin/git sparse-checkout disable
+2026-10-19T02:39:04.2441200Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-19T02:39:04.2481345Z ##[group]Checking out the ref
+2026-10-19T02:39:04.2484639Z [command]/usr/bin/git checkout --progress --force -B agones-rs-dev refs/remotes/origin/agones-rs-dev
+2026-10-19T02:39:05.1122338Z Switched to a new branch 'agones-rs-dev'
+2026-10-19T02:39:05.1126529Z branch 'agones-rs-dev' set up to track 'origin/agones-rs-dev'.
+2026-10-19T02:39:05.1183193Z ##[endgroup]
+2026-10-19T02:39:05.1235655Z [command]/usr/bin/git log -1 --format=%H
+2026-10-19T02:39:05.1264293Z 01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58
+2026-10-19T02:39:05.1488992Z ##[group]Run rustup toolchain install 1.98.1 --profile minimal
+2026-10-19T02:39:05.1489624Z [36;1mrustup toolchain install 1.98.1 --profile minimal[0m
+2026-10-19T02:39:05.1490094Z [36;1mcargo install kani-verifier --version 0.68.0 --locked[0m
+2026-10-19T02:39:05.1490496Z [36;1mcargo kani setup[0m
+2026-10-19T02:39:05.1490988Z [36;1mcargo install cargo-bolero --version 0.13.4 --locked --no-default-features --features kani[0m
+2026-10-19T02:39:05.1742026Z shell: /usr/bin/bash -e {0}
+2026-10-19T02:39:05.1742444Z env:
+2026-10-19T02:39:05.1742871Z   AGONES_KANI_CI_RUN: feature-bool-bolero-kani-ci-39190924053-1
+2026-10-19T02:39:05.1743532Z   AGONES_INPUT_CI_RUN: feature-input-bolero-kani-ci-39190924053-1
+2026-10-19T02:39:05.1744241Z   AGONES_QUERY_ERROR_CI_RUN: feature-query-error-bolero-kani-ci-39190924053-1
+2026-10-19T02:39:05.1744980Z   AGONES_HEALTH_CI_RUN: health-defaulting-bolero-kani-ci-39190924053-1
+2026-10-19T02:39:05.1745748Z   AGONES_GS_BASIC_CI_RUN: gameserver-basic-bolero-kani-ci-39190924053-1
+2026-10-19T02:39:05.1746304Z ##[endgroup]
+2026-10-19T02:39:05.2929231Z info: syncing channel updates for 1.98.1-x86_64-unknown-linux-gnu
+2026-10-19T02:39:05.5988315Z info: latest update on 2026-09-03 for version 1.98.1 (48a229cea 2026-09-01)
+2026-10-19T02:39:05.5989192Z info: downloading 3 components
+2026-10-19T02:39:12.9109133Z 
+2026-10-19T02:39:12.9183077Z   1.98.1-x86_64-unknown-linux-gnu installed - rustc 1.98.1 (48a229cea 2026-09-01)
+2026-10-19T02:39:12.9183708Z 
+2026-10-19T02:39:12.9751008Z info: syncing channel updates for 1.98.1-x86_64-unknown-linux-gnu
+2026-10-19T02:39:13.0565683Z info: latest update on 2026-09-03 for version 1.98.1 (48a229cea 2026-09-01)
+2026-10-19T02:39:13.0698186Z info: downloading 2 components
+2026-10-19T02:39:13.7430706Z     Updating crates.io index
+2026-10-19T02:39:13.7861033Z  Downloading crates ...
+2026-10-19T02:39:13.8437055Z   Downloaded kani-verifier v0.68.0
+2026-10-19T02:39:13.8689098Z   Installing kani-verifier v0.68.0
+2026-10-19T02:39:13.8690022Z warning: default toolchain implicitly overridden with `1.98.1-x86_64-unknown-linux-gnu` by rustup toolchain file
+2026-10-19T02:39:13.8690719Z   |
+2026-10-19T02:39:13.8691212Z   = help: use `cargo +stable install` if you meant to use the stable toolchain
+2026-10-19T02:39:13.8692124Z   = note: rustup selects the toolchain based on the parent environment and not the environment of the package being installed
+2026-10-19T02:39:13.8696184Z     Updating crates.io index
+2026-10-19T02:39:13.9588079Z     Updating crates.io index
+2026-10-19T02:39:13.9836006Z  Downloading crates ...
+2026-10-19T02:39:13.9933925Z   Downloaded home v0.5.12
+2026-10-19T02:39:13.9947315Z   Downloaded anyhow v1.0.104
+2026-10-19T02:39:14.0000338Z   Downloaded cfg-if v1.0.4
+2026-10-19T02:39:14.0016117Z   Downloaded cfg_aliases v0.2.2
+2026-10-19T02:39:14.0033081Z   Downloaded bitflags v2.13.2
+2026-10-19T02:39:14.0082372Z   Downloaded log v0.4.34
+2026-10-19T02:39:14.0106774Z   Downloaded os_info v3.15.0
+2026-10-19T02:39:14.0140108Z   Downloaded nix v0.31.3
+2026-10-19T02:39:14.0256658Z   Downloaded libc v0.2.189
+2026-10-19T02:39:14.0838123Z    Compiling libc v0.2.189
+2026-10-19T02:39:14.0839487Z    Compiling cfg_aliases v0.2.2
+2026-10-19T02:39:14.0840466Z    Compiling anyhow v1.0.104
+2026-10-19T02:39:14.0842738Z    Compiling cfg-if v1.0.4
+2026-10-19T02:39:14.1206062Z    Compiling bitflags v2.13.2
+2026-10-19T02:39:14.1243496Z    Compiling nix v0.31.3
+2026-10-19T02:39:14.3485023Z    Compiling kani-verifier v0.68.0
+2026-10-19T02:39:14.3789724Z    Compiling log v0.4.34
+2026-10-19T02:39:14.4399361Z    Compiling home v0.5.12
+2026-10-19T02:39:15.5640139Z    Compiling os_info v3.15.0
+2026-10-19T02:39:16.4404616Z     Finished `release` profile [optimized] target(s) in 2.71s
+2026-10-19T02:39:16.4420338Z   Installing /home/runner/.cargo/bin/cargo-kani
+2026-10-19T02:39:16.4421038Z   Installing /home/runner/.cargo/bin/kani
+2026-10-19T02:39:16.4423327Z    Installed package `kani-verifier v0.68.0` (executables `cargo-kani`, `kani`)
+2026-10-19T02:39:16.4999138Z [0/5] Running Kani first-time setup...
+2026-10-19T02:39:16.4999871Z [1/5] Ensuring the existence of: /home/runner/.kani/kani-0.68.0
+2026-10-19T02:39:16.5000906Z [2/5] Downloading Kani release bundle: kani-0.68.0-x86_64-unknown-linux-gnu.tar.gz
+2026-10-19T02:39:20.0575908Z [3/5] Installing rust toolchain version: nightly-2026-08-21-x86_64-unknown-linux-gnu
+2026-10-19T02:39:20.0629309Z info: syncing channel updates for nightly-2026-08-21-x86_64-unknown-linux-gnu
+2026-10-19T02:39:20.1693293Z info: latest update on 2026-08-21 for version 1.100.0-nightly (8925ea358 2026-08-20)
+2026-10-19T02:39:20.1694495Z info: downloading 3 components
+2026-10-19T02:39:27.7404125Z 
+2026-10-19T02:39:27.7474559Z   nightly-2026-08-21-x86_64-unknown-linux-gnu installed - rustc 1.100.0-nightly (8925ea358 2026-08-20)
+2026-10-19T02:39:27.7475467Z 
+2026-10-19T02:39:27.7526788Z [5/5] Successfully completed Kani first-time setup.
+2026-10-19T02:39:27.7934129Z     Updating crates.io index
+2026-10-19T02:39:28.1568280Z  Downloading crates ...
+2026-10-19T02:39:28.1842803Z   Downloaded cargo-bolero v0.13.4
+2026-10-19T02:39:28.2103915Z   Installing cargo-bolero v0.13.4
+2026-10-19T02:39:28.2104676Z warning: default toolchain implicitly overridden with `1.98.1-x86_64-unknown-linux-gnu` by rustup toolchain file
+2026-10-19T02:39:28.2105192Z   |
+2026-10-19T02:39:28.2105495Z   = help: use `cargo +stable install` if you meant to use the stable toolchain
+2026-10-19T02:39:28.2106162Z   = note: rustup selects the toolchain based on the parent environment and not the environment of the package being installed
+2026-10-19T02:39:28.2121373Z     Updating crates.io index
+2026-10-19T02:39:28.4071445Z     Updating crates.io index
+2026-10-19T02:39:28.4451057Z  Downloading crates ...
+2026-10-19T02:39:28.4557104Z   Downloaded ansi_term v0.12.1
+2026-10-19T02:39:28.4589449Z   Downloaded atty v0.2.14
+2026-10-19T02:39:28.4603704Z   Downloaded bit-set v0.8.0
+2026-10-19T02:39:28.4619361Z   Downloaded bit-vec v0.8.0
+2026-10-19T02:39:28.4637731Z   Downloaded bitflags v1.3.2
+2026-10-19T02:39:28.4676758Z   Downloaded unicode-ident v1.0.18
+2026-10-19T02:39:28.4716513Z   Downloaded humantime v2.2.0
+2026-10-19T02:39:28.4732681Z   Downloaded anyhow v1.0.98
+2026-10-19T02:39:28.4783301Z   Downloaded rustix v1.0.7
+2026-10-19T02:39:28.5081565Z   Downloaded cargo_metadata v0.19.2
+2026-10-19T02:39:28.5099161Z   Downloaded errno v0.3.13
+2026-10-19T02:39:28.5114116Z   Downloaded itoa v1.0.15
+2026-10-19T02:39:28.5127623Z   Downloaded xattr v1.5.1
+2026-10-19T02:39:28.5146485Z   Downloaded lazy_static v1.5.0
+2026-10-19T02:39:28.5164306Z   Downloaded quote v1.0.40
+2026-10-19T02:39:28.5191035Z   Downloaded serde v1.0.219
+2026-10-19T02:39:28.5220964Z   Downloaded textwrap v0.11.0
+2026-10-19T02:39:28.5237767Z   Downloaded fastrand v2.3.0
+2026-10-19T02:39:28.5250272Z   Downloaded proc-macro-error-attr v1.0.4
+2026-10-19T02:39:28.5259687Z   Downloaded cfg-if v1.0.1
+2026-10-19T02:39:28.5272292Z   Downloaded heck v0.3.3
+2026-10-19T02:39:28.5283826Z   Downloaded strsim v0.8.0
+2026-10-19T02:39:28.5297864Z   Downloaded thiserror v2.0.12
+2026-10-19T02:39:28.5363667Z   Downloaded vec_map v0.8.2
+2026-10-19T02:39:28.5372951Z   Downloaded filetime v0.2.25
+2026-10-19T02:39:28.5388777Z   Downloaded version_check v0.9.5
+2026-10-19T02:39:28.5401014Z   Downloaded cargo-platform v0.1.9
+2026-10-19T02:39:28.5412622Z   Downloaded ryu v1.0.20
+2026-10-19T02:39:28.5444240Z   Downloaded once_cell v1.21.3
+2026-10-19T02:39:28.5469382Z   Downloaded semver v1.0.26
+2026-10-19T02:39:28.5493170Z   Downloaded thiserror-impl v2.0.12
+2026-10-19T02:39:28.5507410Z   Downloaded structopt-derive v0.4.18
+2026-10-19T02:39:28.5519392Z   Downloaded bitflags v2.9.1
+2026-10-19T02:39:28.5561325Z   Downloaded proc-macro-error v1.0.4
+2026-10-19T02:39:28.5596195Z   Downloaded tempfile v3.20.0
+2026-10-19T02:39:28.5639027Z   Downloaded camino v1.1.10
+2026-10-19T02:39:28.5660009Z   Downloaded getrandom v0.3.3
+2026-10-19T02:39:28.5693976Z   Downloaded proc-macro2 v1.0.95
+2026-10-19T02:39:28.5721473Z   Downloaded rustc_version v0.4.1
+2026-10-19T02:39:28.5734695Z   Downloaded structopt v0.3.26
+2026-10-19T02:39:28.5816334Z   Downloaded serde_derive v1.0.219
+2026-10-19T02:39:28.5841314Z   Downloaded tar v0.4.44
+2026-10-19T02:39:28.5866860Z   Downloaded memchr v2.7.5
+2026-10-19T02:39:28.5921254Z   Downloaded unicode-segmentation v1.12.0
+2026-10-19T02:39:28.5956506Z   Downloaded serde_json v1.0.140
+2026-10-19T02:39:28.6033149Z   Downloaded clap v2.34.0
+2026-10-19T02:39:28.6093787Z   Downloaded unicode-width v0.1.14
+2026-10-19T02:39:28.6145910Z   Downloaded syn v1.0.109
+2026-10-19T02:39:28.6243309Z   Downloaded syn v2.0.104
+2026-10-19T02:39:28.6346652Z   Downloaded libc v0.2.174
+2026-10-19T02:39:28.6613915Z   Downloaded linux-raw-sys v0.9.4
+2026-10-19T02:39:28.7321806Z    Compiling proc-macro2 v1.0.95
+2026-10-19T02:39:28.7322404Z    Compiling unicode-ident v1.0.18
+2026-10-19T02:39:28.7323729Z    Compiling libc v0.2.174
+2026-10-19T02:39:28.7324493Z    Compiling version_check v0.9.5
+2026-10-19T02:39:28.7894662Z    Compiling serde v1.0.219
+2026-10-19T02:39:28.9214823Z    Compiling rustix v1.0.7
+2026-10-19T02:39:28.9558779Z    Compiling proc-macro-error-attr v1.0.4
+2026-10-19T02:39:29.0339410Z    Compiling syn v1.0.109
+2026-10-19T02:39:29.1538391Z    Compiling proc-macro-error v1.0.4
+2026-10-19T02:39:29.1988064Z    Compiling bitflags v2.9.1
+2026-10-19T02:39:29.2379170Z    Compiling linux-raw-sys v0.9.4
+2026-10-19T02:39:29.5158938Z    Compiling quote v1.0.40
+2026-10-19T02:39:29.5752906Z    Compiling semver v1.0.26
+2026-10-19T02:39:29.5788546Z    Compiling cfg-if v1.0.1
+2026-10-19T02:39:29.6458538Z    Compiling camino v1.1.10
+2026-10-19T02:39:29.7038525Z    Compiling syn v2.0.104
+2026-10-19T02:39:29.9078407Z    Compiling getrandom v0.3.3
+2026-10-19T02:39:30.0649568Z    Compiling unicode-width v0.1.14
+2026-10-19T02:39:30.2639022Z    Compiling unicode-segmentation v1.12.0
+2026-10-19T02:39:30.5908594Z    Compiling thiserror v2.0.12
+2026-10-19T02:39:30.7468641Z    Compiling serde_json v1.0.140
+2026-10-19T02:39:30.8666602Z    Compiling heck v0.3.3
+2026-10-19T02:39:30.9570274Z    Compiling textwrap v0.11.0
+2026-10-19T02:39:31.4858555Z    Compiling atty v0.2.14
+2026-10-19T02:39:31.5288561Z    Compiling ryu v1.0.20
+2026-10-19T02:39:31.7999023Z    Compiling itoa v1.0.15
+2026-10-19T02:39:31.8928608Z    Compiling vec_map v0.8.2
+2026-10-19T02:39:32.2138979Z    Compiling strsim v0.8.0
+2026-10-19T02:39:32.2349187Z    Compiling serde_derive v1.0.219
+2026-10-19T02:39:32.6949047Z    Compiling thiserror-impl v2.0.12
+2026-10-19T02:39:32.7748802Z    Compiling memchr v2.7.5
+2026-10-19T02:39:33.5288691Z    Compiling ansi_term v0.12.1
+2026-10-19T02:39:33.7978592Z    Compiling anyhow v1.0.98
+2026-10-19T02:39:33.8438989Z    Compiling bitflags v1.3.2
+2026-10-19T02:39:33.8761935Z    Compiling clap v2.34.0
+2026-10-19T02:39:34.0478527Z    Compiling structopt-derive v0.4.18
+2026-10-19T02:39:34.2008654Z    Compiling xattr v1.5.1
+2026-10-19T02:39:34.6638680Z    Compiling filetime v0.2.25
+2026-10-19T02:39:34.8438755Z    Compiling fastrand v2.3.0
+2026-10-19T02:39:35.0373384Z    Compiling lazy_static v1.5.0
+2026-10-19T02:39:35.0704384Z    Compiling once_cell v1.21.3
+2026-10-19T02:39:35.0738303Z    Compiling cargo-bolero v0.13.4
+2026-10-19T02:39:35.1523981Z    Compiling bit-vec v0.8.0
+2026-10-19T02:39:35.2459197Z    Compiling tempfile v3.20.0
+2026-10-19T02:39:35.3798835Z    Compiling bit-set v0.8.0
+2026-10-19T02:39:35.5118655Z    Compiling tar v0.4.44
+2026-10-19T02:39:36.7868628Z    Compiling structopt v0.3.26
+2026-10-19T02:39:36.8518702Z    Compiling humantime v2.2.0
+2026-10-19T02:39:38.7529730Z    Compiling cargo-platform v0.1.9
+2026-10-19T02:39:38.8255901Z    Compiling rustc_version v0.4.1
+2026-10-19T02:39:39.4938986Z    Compiling cargo_metadata v0.19.2
+2026-10-19T02:39:46.5848876Z     Finished `release` profile [optimized] target(s) in 18.80s
+2026-10-19T02:39:46.5896495Z   Installing /home/runner/.cargo/bin/cargo-bolero
+2026-10-19T02:39:46.5899871Z    Installed package `cargo-bolero v0.13.4` (executable `cargo-bolero`)
+2026-10-19T02:39:46.6238345Z ##[group]Run python3 build/scripts/agones-rs/run.py "$AGONES_KANI_CI_RUN" --quiet --cwd crates/agones-core cargo bolero test feature_bool_common_domain --engine kani
+2026-10-19T02:39:46.6239504Z [36;1mpython3 build/scripts/agones-rs/run.py "$AGONES_KANI_CI_RUN" --quiet --cwd crates/agones-core cargo bolero test feature_bool_common_domain --engine kani[0m
+2026-10-19T02:39:46.6305783Z shell: /usr/bin/bash -e {0}
+2026-10-19T02:39:46.6306032Z env:
+2026-10-19T02:39:46.6306315Z   AGONES_KANI_CI_RUN: feature-bool-bolero-kani-ci-39190924053-1
+2026-10-19T02:39:46.6306761Z   AGONES_INPUT_CI_RUN: feature-input-bolero-kani-ci-39190924053-1
+2026-10-19T02:39:46.6307245Z   AGONES_QUERY_ERROR_CI_RUN: feature-query-error-bolero-kani-ci-39190924053-1
+2026-10-19T02:39:46.6307993Z   AGONES_HEALTH_CI_RUN: health-defaulting-bolero-kani-ci-39190924053-1
+2026-10-19T02:39:46.6308471Z   AGONES_GS_BASIC_CI_RUN: gameserver-basic-bolero-kani-ci-39190924053-1
+2026-10-19T02:39:46.6308900Z   CARGO_BUILD_JOBS: 2
+2026-10-19T02:39:46.6309112Z ##[endgroup]
+2026-10-19T02:40:54.3636859Z feature-bool-bolero-kani-ci-39190924053-1: PASSED; log verification/agones/runs/feature-bool-bolero-kani-ci-39190924053-1.log
+2026-10-19T02:40:54.3739345Z ##[group]Run python3 build/scripts/agones-rs/summarize_bool_proof.py "$AGONES_KANI_CI_RUN" --output "verification/agones/proof-summaries/$AGONES_KANI_CI_RUN.json"
+2026-10-19T02:40:54.3740498Z [36;1mpython3 build/scripts/agones-rs/summarize_bool_proof.py "$AGONES_KANI_CI_RUN" --output "verification/agones/proof-summaries/$AGONES_KANI_CI_RUN.json"[0m
+2026-10-19T02:40:54.3804343Z shell: /usr/bin/bash -e {0}
+2026-10-19T02:40:54.3804595Z env:
+2026-10-19T02:40:54.3804883Z   AGONES_KANI_CI_RUN: feature-bool-bolero-kani-ci-39190924053-1
+2026-10-19T02:40:54.3805342Z   AGONES_INPUT_CI_RUN: feature-input-bolero-kani-ci-39190924053-1
+2026-10-19T02:40:54.3805833Z   AGONES_QUERY_ERROR_CI_RUN: feature-query-error-bolero-kani-ci-39190924053-1
+2026-10-19T02:40:54.3806389Z   AGONES_HEALTH_CI_RUN: health-defaulting-bolero-kani-ci-39190924053-1
+2026-10-19T02:40:54.3806880Z   AGONES_GS_BASIC_CI_RUN: gameserver-basic-bolero-kani-ci-39190924053-1
+2026-10-19T02:40:54.3807248Z ##[endgroup]
+2026-10-19T02:40:54.4319052Z {"harness_count": 1, "property_count": 1158, "status_counts": {"SUCCESS": 1141, "SATISFIED": 6, "UNREACHABLE": 11}}
+2026-10-19T02:40:54.4416013Z ##[group]Run python3 build/scripts/agones-rs/run.py "$AGONES_INPUT_CI_RUN" --quiet --cwd crates/agones-core cargo bolero test feature_input_common_domain --engine kani
+2026-10-19T02:40:54.4417156Z [36;1mpython3 build/scripts/agones-rs/run.py "$AGONES_INPUT_CI_RUN" --quiet --cwd crates/agones-core cargo bolero test feature_input_common_domain --engine kani[0m
+2026-10-19T02:40:54.4481397Z shell: /usr/bin/bash -e {0}
+2026-10-19T02:40:54.4481675Z env:
+2026-10-19T02:40:54.4481967Z   AGONES_KANI_CI_RUN: feature-bool-bolero-kani-ci-39190924053-1
+2026-10-19T02:40:54.4482412Z   AGONES_INPUT_CI_RUN: feature-input-bolero-kani-ci-39190924053-1
+2026-10-19T02:40:54.4482905Z   AGONES_QUERY_ERROR_CI_RUN: feature-query-error-bolero-kani-ci-39190924053-1
+2026-10-19T02:40:54.4483547Z   AGONES_HEALTH_CI_RUN: health-defaulting-bolero-kani-ci-39190924053-1
+2026-10-19T02:40:54.4484318Z   AGONES_GS_BASIC_CI_RUN: gameserver-basic-bolero-kani-ci-39190924053-1
+2026-10-19T02:40:54.4484945Z   CARGO_BUILD_JOBS: 2
+2026-10-19T02:40:54.4485269Z ##[endgroup]
+2026-10-19T02:41:17.6416227Z feature-input-bolero-kani-ci-39190924053-1: PASSED; log verification/agones/runs/feature-input-bolero-kani-ci-39190924053-1.log
+2026-10-19T02:41:17.6514637Z ##[group]Run python3 build/scripts/agones-rs/summarize_feature_proof.py input "$AGONES_INPUT_CI_RUN" --output "verification/agones/proof-summaries/$AGONES_INPUT_CI_RUN.json"
+2026-10-19T02:41:17.6515908Z [36;1mpython3 build/scripts/agones-rs/summarize_feature_proof.py input "$AGONES_INPUT_CI_RUN" --output "verification/agones/proof-summaries/$AGONES_INPUT_CI_RUN.json"[0m
+2026-10-19T02:41:17.6579819Z shell: /usr/bin/bash -e {0}
+2026-10-19T02:41:17.6580360Z env:
+2026-10-19T02:41:17.6580658Z   AGONES_KANI_CI_RUN: feature-bool-bolero-kani-ci-39190924053-1
+2026-10-19T02:41:17.6581121Z   AGONES_INPUT_CI_RUN: feature-input-bolero-kani-ci-39190924053-1
+2026-10-19T02:41:17.6581610Z   AGONES_QUERY_ERROR_CI_RUN: feature-query-error-bolero-kani-ci-39190924053-1
+2026-10-19T02:41:17.6582119Z   AGONES_HEALTH_CI_RUN: health-defaulting-bolero-kani-ci-39190924053-1
+2026-10-19T02:41:17.6582592Z   AGONES_GS_BASIC_CI_RUN: gameserver-basic-bolero-kani-ci-39190924053-1
+2026-10-19T02:41:17.6583040Z ##[endgroup]
+2026-10-19T02:41:17.7098687Z {"harness_count": 1, "claimed_assertions": 3, "required_covers": 10, "property_count": 978, "status_counts": {"SUCCESS": 945, "SATISFIED": 10, "UNREACHABLE": 23}}
+2026-10-19T02:41:17.7192310Z ##[group]Run python3 build/scripts/agones-rs/run.py "$AGONES_QUERY_ERROR_CI_RUN" --quiet --cwd crates/agones-core cargo bolero test source_query_case_003 --engine kani
+2026-10-19T02:41:17.7193445Z [36;1mpython3 build/scripts/agones-rs/run.py "$AGONES_QUERY_ERROR_CI_RUN" --quiet --cwd crates/agones-core cargo bolero test source_query_case_003 --engine kani[0m
+2026-10-19T02:41:17.7256520Z shell: /usr/bin/bash -e {0}
+2026-10-19T02:41:17.7256771Z env:
+2026-10-19T02:41:17.7257061Z   AGONES_KANI_CI_RUN: feature-bool-bolero-kani-ci-39190924053-1
+2026-10-19T02:41:17.7257812Z   AGONES_INPUT_CI_RUN: feature-input-bolero-kani-ci-39190924053-1
+2026-10-19T02:41:17.7258299Z   AGONES_QUERY_ERROR_CI_RUN: feature-query-error-bolero-kani-ci-39190924053-1
+2026-10-19T02:41:17.7258802Z   AGONES_HEALTH_CI_RUN: health-defaulting-bolero-kani-ci-39190924053-1
+2026-10-19T02:41:17.7259273Z   AGONES_GS_BASIC_CI_RUN: gameserver-basic-bolero-kani-ci-39190924053-1
+2026-10-19T02:41:17.7259688Z   CARGO_BUILD_JOBS: 2
+2026-10-19T02:41:17.7278820Z ##[endgroup]
+2026-10-19T02:42:14.6149317Z feature-query-error-bolero-kani-ci-39190924053-1: PASSED; log verification/agones/runs/feature-query-error-bolero-kani-ci-39190924053-1.log
+2026-10-19T02:42:14.6259742Z ##[group]Run python3 build/scripts/agones-rs/summarize_feature_proof.py query "$AGONES_QUERY_ERROR_CI_RUN" --case-index 3 --output "verification/agones/proof-summaries/$AGONES_QUERY_ERROR_CI_RUN.json"
+2026-10-19T02:42:14.6262293Z [36;1mpython3 build/scripts/agones-rs/summarize_feature_proof.py query "$AGONES_QUERY_ERROR_CI_RUN" --case-index 3 --output "verification/agones/proof-summaries/$AGONES_QUERY_ERROR_CI_RUN.json"[0m
+2026-10-19T02:42:14.6346947Z shell: /usr/bin/bash -e {0}
+2026-10-19T02:42:14.6347206Z env:
+2026-10-19T02:42:14.6347756Z   AGONES_KANI_CI_RUN: feature-bool-bolero-kani-ci-39190924053-1
+2026-10-19T02:42:14.6348242Z   AGONES_INPUT_CI_RUN: feature-input-bolero-kani-ci-39190924053-1
+2026-10-19T02:42:14.6348733Z   AGONES_QUERY_ERROR_CI_RUN: feature-query-error-bolero-kani-ci-39190924053-1
+2026-10-19T02:42:14.6349236Z   AGONES_HEALTH_CI_RUN: health-defaulting-bolero-kani-ci-39190924053-1
+2026-10-19T02:42:14.6349744Z   AGONES_GS_BASIC_CI_RUN: gameserver-basic-bolero-kani-ci-39190924053-1
+2026-10-19T02:42:14.6350122Z ##[endgroup]
+2026-10-19T02:42:14.6861399Z {"harness_count": 1, "claimed_assertions": 1, "required_covers": 2, "property_count": 1552, "status_counts": {"SUCCESS": 1501, "SATISFIED": 2, "UNREACHABLE": 49}}
+2026-10-19T02:42:14.6949117Z ##[group]Run python3 build/scripts/agones-rs/run.py "$AGONES_HEALTH_CI_RUN" --quiet --cwd crates/agones-core cargo bolero test health_defaulting_common_domain --engine kani
+2026-10-19T02:42:14.6950424Z [36;1mpython3 build/scripts/agones-rs/run.py "$AGONES_HEALTH_CI_RUN" --quiet --cwd crates/agones-core cargo bolero test health_defaulting_common_domain --engine kani[0m
+2026-10-19T02:42:14.7013134Z shell: /usr/bin/bash -e {0}
+2026-10-19T02:42:14.7013395Z env:
+2026-10-19T02:42:14.7013684Z   AGONES_KANI_CI_RUN: feature-bool-bolero-kani-ci-39190924053-1
+2026-10-19T02:42:14.7014138Z   AGONES_INPUT_CI_RUN: feature-input-bolero-kani-ci-39190924053-1
+2026-10-19T02:42:14.7014625Z   AGONES_QUERY_ERROR_CI_RUN: feature-query-error-bolero-kani-ci-39190924053-1
+2026-10-19T02:42:14.7015335Z   AGONES_HEALTH_CI_RUN: health-defaulting-bolero-kani-ci-39190924053-1
+2026-10-19T02:42:14.7015810Z   AGONES_GS_BASIC_CI_RUN: gameserver-basic-bolero-kani-ci-39190924053-1
+2026-10-19T02:42:14.7016210Z   CARGO_BUILD_JOBS: 2
+2026-10-19T02:42:14.7016423Z ##[endgroup]
+2026-10-19T02:42:28.6463945Z health-defaulting-bolero-kani-ci-39190924053-1: PASSED; log verification/agones/runs/health-defaulting-bolero-kani-ci-39190924053-1.log
+2026-10-19T02:42:28.6553585Z ##[group]Run python3 build/scripts/agones-rs/summarize_feature_proof.py health "$AGONES_HEALTH_CI_RUN" --output "verification/agones/proof-summaries/$AGONES_HEALTH_CI_RUN.json"
+2026-10-19T02:42:28.6554796Z [36;1mpython3 build/scripts/agones-rs/summarize_feature_proof.py health "$AGONES_HEALTH_CI_RUN" --output "verification/agones/proof-summaries/$AGONES_HEALTH_CI_RUN.json"[0m
+2026-10-19T02:42:28.6617199Z shell: /usr/bin/bash -e {0}
+2026-10-19T02:42:28.6617714Z env:
+2026-10-19T02:42:28.6618005Z   AGONES_KANI_CI_RUN: feature-bool-bolero-kani-ci-39190924053-1
+2026-10-19T02:42:28.6618468Z   AGONES_INPUT_CI_RUN: feature-input-bolero-kani-ci-39190924053-1
+2026-10-19T02:42:28.6618947Z   AGONES_QUERY_ERROR_CI_RUN: feature-query-error-bolero-kani-ci-39190924053-1
+2026-10-19T02:42:28.6619445Z   AGONES_HEALTH_CI_RUN: health-defaulting-bolero-kani-ci-39190924053-1
+2026-10-19T02:42:28.6619923Z   AGONES_GS_BASIC_CI_RUN: gameserver-basic-bolero-kani-ci-39190924053-1
+2026-10-19T02:42:28.6620331Z ##[endgroup]
+2026-10-19T02:42:28.7172667Z {"harness_count": 1, "claimed_assertions": 3, "required_covers": 8, "property_count": 2180, "status_counts": {"SUCCESS": 2147, "SATISFIED": 8, "UNREACHABLE": 25}}
+2026-10-19T02:42:28.7278528Z ##[group]Run python3 build/scripts/agones-rs/run.py "$AGONES_GS_BASIC_CI_RUN" --quiet --cwd crates/agones-core timeout --signal=TERM --kill-after=15s 900s /usr/bin/time -v cargo bolero test source_gs_case_014 --engine kani
+2026-10-19T02:42:28.7281308Z [36;1mpython3 build/scripts/agones-rs/run.py "$AGONES_GS_BASIC_CI_RUN" --quiet --cwd crates/agones-core timeout --signal=TERM --kill-after=15s 900s /usr/bin/time -v cargo bolero test source_gs_case_014 --engine kani[0m
+2026-10-19T02:42:28.7355903Z shell: /usr/bin/bash -e {0}
+2026-10-19T02:42:28.7356154Z env:
+2026-10-19T02:42:28.7356440Z   AGONES_KANI_CI_RUN: feature-bool-bolero-kani-ci-39190924053-1
+2026-10-19T02:42:28.7356895Z   AGONES_INPUT_CI_RUN: feature-input-bolero-kani-ci-39190924053-1
+2026-10-19T02:42:28.7357392Z   AGONES_QUERY_ERROR_CI_RUN: feature-query-error-bolero-kani-ci-39190924053-1
+2026-10-19T02:42:28.7358306Z   AGONES_HEALTH_CI_RUN: health-defaulting-bolero-kani-ci-39190924053-1
+2026-10-19T02:42:28.7358846Z   AGONES_GS_BASIC_CI_RUN: gameserver-basic-bolero-kani-ci-39190924053-1
+2026-10-19T02:42:28.7359217Z   CARGO_BUILD_JOBS: 2
+2026-10-19T02:42:28.7359430Z ##[endgroup]
+2026-10-19T02:46:27.4514422Z gameserver-basic-bolero-kani-ci-39190924053-1: PASSED; log verification/agones/runs/gameserver-basic-bolero-kani-ci-39190924053-1.log
+2026-10-19T02:46:27.4613884Z ##[group]Run python3 build/scripts/agones-rs/summarize_feature_proof.py gameserver-source "$AGONES_GS_BASIC_CI_RUN" --case-index 14 --output "verification/agones/proof-summaries/$AGONES_GS_BASIC_CI_RUN.json"
+2026-10-19T02:46:27.4615417Z [36;1mpython3 build/scripts/agones-rs/summarize_feature_proof.py gameserver-source "$AGONES_GS_BASIC_CI_RUN" --case-index 14 --output "verification/agones/proof-summaries/$AGONES_GS_BASIC_CI_RUN.json"[0m
+2026-10-19T02:46:27.4723331Z shell: /usr/bin/bash -e {0}
+2026-10-19T02:46:27.4723647Z env:
+2026-10-19T02:46:27.4724011Z   AGONES_KANI_CI_RUN: feature-bool-bolero-kani-ci-39190924053-1
+2026-10-19T02:46:27.4724604Z   AGONES_INPUT_CI_RUN: feature-input-bolero-kani-ci-39190924053-1
+2026-10-19T02:46:27.4725260Z   AGONES_QUERY_ERROR_CI_RUN: feature-query-error-bolero-kani-ci-39190924053-1
+2026-10-19T02:46:27.4725938Z   AGONES_HEALTH_CI_RUN: health-defaulting-bolero-kani-ci-39190924053-1
+2026-10-19T02:46:27.4726579Z   AGONES_GS_BASIC_CI_RUN: gameserver-basic-bolero-kani-ci-39190924053-1
+2026-10-19T02:46:27.4727224Z ##[endgroup]
+2026-10-19T02:46:27.5948114Z {"harness_count": 1, "claimed_assertions": 18, "required_covers": 2, "property_count": 6436, "status_counts": {"SUCCESS": 6147, "SATISFIED": 2, "UNREACHABLE": 287}}
+2026-10-19T02:46:27.6091432Z ##[group]Run actions/upload-artifact@v4
+2026-10-19T02:46:27.6091727Z with:
+2026-10-19T02:46:27.6091932Z   name: feature-bool-kani-evidence
+2026-10-19T02:46:27.6095063Z   path: verification/agones/runs/feature-bool-bolero-kani-ci-39190924053-1.*
+verification/agones/proof-summaries/feature-bool-bolero-kani-ci-39190924053-1.json
+verification/agones/runs/feature-input-bolero-kani-ci-39190924053-1.*
+verification/agones/proof-summaries/feature-input-bolero-kani-ci-39190924053-1.json
+verification/agones/runs/feature-query-error-bolero-kani-ci-39190924053-1.*
+verification/agones/proof-summaries/feature-query-error-bolero-kani-ci-39190924053-1.json
+verification/agones/runs/health-defaulting-bolero-kani-ci-39190924053-1.*
+verification/agones/proof-summaries/health-defaulting-bolero-kani-ci-39190924053-1.json
+verification/agones/runs/gameserver-basic-bolero-kani-ci-39190924053-1.*
+verification/agones/proof-summaries/gameserver-basic-bolero-kani-ci-39190924053-1.json
+
+2026-10-19T02:46:27.6098603Z   retention-days: 90
+2026-10-19T02:46:27.6098830Z   if-no-files-found: warn
+2026-10-19T02:46:27.6099059Z   compression-level: 6
+2026-10-19T02:46:27.6099269Z   overwrite: false
+2026-10-19T02:46:27.6099478Z   include-hidden-files: false
+2026-10-19T02:46:27.6099704Z env:
+2026-10-19T02:46:27.6099981Z   AGONES_KANI_CI_RUN: feature-bool-bolero-kani-ci-39190924053-1
+2026-10-19T02:46:27.6100410Z   AGONES_INPUT_CI_RUN: feature-input-bolero-kani-ci-39190924053-1
+2026-10-19T02:46:27.6100881Z   AGONES_QUERY_ERROR_CI_RUN: feature-query-error-bolero-kani-ci-39190924053-1
+2026-10-19T02:46:27.6101379Z   AGONES_HEALTH_CI_RUN: health-defaulting-bolero-kani-ci-39190924053-1
+2026-10-19T02:46:27.6101849Z   AGONES_GS_BASIC_CI_RUN: gameserver-basic-bolero-kani-ci-39190924053-1
+2026-10-19T02:46:27.6102204Z ##[endgroup]
+2026-10-19T02:46:27.7942866Z (node:5935) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-19T02:46:27.7944340Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-19T02:46:27.8985439Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-10-19T02:46:27.8988295Z The least common ancestor is /home/runner/work/agones/agones/verification/agones. This will be the root directory of the artifact
+2026-10-19T02:46:27.8989410Z With the provided path, there will be 15 files uploaded
+2026-10-19T02:46:27.8990204Z Artifact name is valid!
+2026-10-19T02:46:27.8990582Z Root directory input is valid!
+2026-10-19T02:46:28.1286160Z Beginning upload of artifact content to blob storage
+2026-10-19T02:46:28.2443733Z (node:5935) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-19T02:46:28.4718435Z Uploaded bytes 313313
+2026-10-19T02:46:28.5122192Z Finished uploading artifact content to blob storage!
+2026-10-19T02:46:28.5123388Z SHA256 digest of uploaded artifact zip is c8d51fcc1584b33c4db693c209dd23fff2fdd7956ca0b787e65cfecc79a8417d
+2026-10-19T02:46:28.5124847Z Finalizing artifact upload
+2026-10-19T02:46:28.7600612Z Artifact feature-bool-kani-evidence.zip successfully finalized. Artifact ID 12159762918
+2026-10-19T02:46:28.7602560Z Artifact feature-bool-kani-evidence has been successfully uploaded! Final size is 313313 bytes. Artifact ID is 12159762918
+2026-10-19T02:46:28.7609649Z Artifact download URL: https://github.com/QuasarRay/agones/actions/runs/39190924053/artifacts/12159762918
+2026-10-19T02:46:28.7858076Z Post job cleanup.
+2026-10-19T02:46:28.8753188Z [command]/usr/bin/git version
+2026-10-19T02:46:28.8800036Z git version 2.55.0
+2026-10-19T02:46:28.8843534Z Temporarily overriding HOME='/home/runner/work/_temp/36bb0785-d343-4b2e-b308-72414f9be8b5' before making global git config changes
+2026-10-19T02:46:28.8845616Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-19T02:46:28.8850267Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agones/agones
+2026-10-19T02:46:28.8895906Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-19T02:46:28.8941260Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-19T02:46:28.9243057Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-19T02:46:28.9279526Z http.https://github.com/.extraheader
+2026-10-19T02:46:28.9292608Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-19T02:46:28.9331089Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-19T02:46:28.9613893Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-19T02:46:28.9661059Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-19T02:46:29.0131592Z Cleaning up orphan processes
+2026-10-19T02:46:29.0450622Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

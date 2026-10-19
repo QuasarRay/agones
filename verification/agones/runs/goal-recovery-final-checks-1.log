@@ -1,0 +1,7 @@
+Validated ledger revision 230; migration INCOMPLETE.
+{"directories": 1826, "missing": 0, "preserved_existing": 1826, "created": 0, "not_versioned": 0, "ownership": "Inherited operational guidance includes tracked vendor, generated and documentation directories; existing third-party instructions are preserved unchanged."}
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+OK

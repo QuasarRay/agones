@@ -1,5 +1,6 @@
 {
   "artifact_bindings": {
+    "verification/agones/ci/39190924053-success.json": "199d9a95367536d5c62d3ca49a08c7de5398c5b2d0b30bfc387cc178c57a8d16",
     "verification/agones/feature-error-paired-replay.json": "b696cea4b3650772e3baaa309eea08171f7fbb1967829c5da2ec2d49b606f8f9",
     "verification/agones/feature-query-codegen.json": "7fecdd5742e2a05660b4ba013851425ea5cfc77b8d4d5f58addb010cce2de04b",
     "verification/agones/gameserver-canonical-proof-reuse.json": "f0b50390d8f0e1d384a6ad5723444a8f0ed30d4ac50d0be8e0bbc48c2797f77a",
@@ -239,6 +240,11 @@
       "failed": 0,
       "passed": 3,
       "run": "verification/agones/runs/error-ascii-domain-runtime-3.json"
+    },
+    "current_ci": {
+      "formal_selections": 5,
+      "head": "01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58",
+      "receipt": "verification/agones/ci/39190924053-success.json"
     },
     "external_live_cluster_conformance": [],
     "formal_diagnostic_result": "All four ASCII diagnostics timed out at 240 seconds. No complete individual claim/cover results; zero helper proof credit.",

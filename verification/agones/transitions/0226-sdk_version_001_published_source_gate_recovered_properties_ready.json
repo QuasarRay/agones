@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_VERSION_001_PUBLISHED_SOURCE_GATE_RECOVERED_PROPERTIES_READY",
+  "gate_snapshot": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json",
+  "predecessor_revision": 225,
+  "predecessor_sha256": "b5a6a0386de32cc28d66c14d4fee4bc21de27b186be67298a66e87a979be00c6",
+  "reason": "Existing implementation and exact original IR payloads are unchanged. Restore recorded stages after abandoned ownership experiment; integration-head CI39190924053 passed five strict proof selections including the complete original case014. Retain all other required assurance debt.",
+  "result_revision": 226,
+  "schema_version": 1,
+  "state_sha256": "6d4882b4da23ddf06ae0fc7e08f9cd2605d6951c58fb3bf1e50a737ee15f0b76",
+  "timestamp": "2026-10-19T03:27:11.379714+00:00"
+}
