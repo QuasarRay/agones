@@ -1,5 +1,5 @@
 {
-  "acceptance": "Published 71be401 and actual CI merge b96e6499 have identical trees. All three jobs passed: 578 tests/0 failures/3 ignored, all four generation modes, lowering controls, resource Cargo fixtures and all four available strict proof selections. The fresh query-error proof has 1552 individual results and its original assertion/both covers pass. All 304 original GameServer relations remain formal-required; both complete-case timeouts are uncredited. All eight _2 cells/full migration/cleanup/lifecycle/live conformance and integration merge remain incomplete.",
+  "acceptance": "Published integration commit01ab22b contains the complete exact-case proof checkpoint. Its push CI39190924053 passed all three jobs:578 tests/0failures/3ignored, four generation modes, lowering/resource controls, and five strict proof selections including all18 original case014 assertions/both covers.286 other source occurrences, full baseline/lifecycle/conformance and all eight _2 cells remain required. The follow-up repairs observed Goal/handoff metadata without changing Agones production behavior.",
   "checks": [
     {
       "cause": "Guidance existed locally at build/local-includes/AGENTS.MD but was ignored by Git and absent from clean CI checkout.",
@@ -131,10 +131,22 @@
       },
       "status": "PASSED",
       "workflow_run": 39169460164
+    },
+    {
+      "event": "push",
+      "evidence": "verification/agones/ci/39190924053-success.json",
+      "head": "01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58",
+      "observed_results": {
+        "feature-bool-model-check": "PASSED",
+        "migration-state": "PASSED",
+        "rust": "PASSED"
+      },
+      "status": "PASSED",
+      "workflow_run": 39190924053
     }
   ],
-  "expected_base": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
-  "expected_head": "71be401007e93152d56704156767ced98c087e68",
+  "expected_base": "01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58",
+  "expected_head": "01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58",
   "integration_branch": "agones-rs-dev",
   "pending_checkpoint": {
     "current_gates": {
@@ -144,28 +156,29 @@
       "GS-DEFAULTS-001": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
       "SDK-VERSION-001": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json"
     },
-    "expected_review_branch": "codex/agones-feature-gates-001",
+    "expected_review_branch": "codex/agones-goal-recovery",
     "native_observation": "verification/agones/goal-observation.json",
-    "next_action": "Resume existing native Goal; reconcile five ledger items from IMPLEMENTING to VERIFYING against current_gates. Publish owned paths excluding user AGENTS.MD/audit; verify exact-head CI with fifth source-case proof.",
-    "publication_parent": "71be401007e93152d56704156767ced98c087e68",
-    "status": "PREPARED_LOCAL_AWAITING_NATIVE_GOAL_RESUME",
+    "next_action": "Reconcile current source gates through VERIFYING; publish the small Goal observation/handoff recovery repair against current integration; require fresh state CI and reuse unchanged source proofs explicitly.",
+    "publication_parent": "01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58",
+    "status": "RECONCILING_ALREADY_PUBLISHED_PROOF_CHECKPOINT",
     "verified_scope": "Case014:18 original assertions,2covers,6436 complete results; current selected dependencies/harness revalidated.578 ordinary tests,all four generation modes and controls pass."
   },
   "pull_requests": [
     {
-      "draft": true,
+      "draft": false,
       "head": "71be401007e93152d56704156767ced98c087e68",
-      "merged": false,
+      "merge_commit": "71be401007e93152d56704156767ced98c087e68",
+      "merged": true,
       "number": 92,
       "url": "https://github.com/QuasarRay/agones/pull/92"
     }
   ],
-  "remote_result": "GAMESERVER_ALL_EXACT_HARNESSES_PUBLISHED_CI_PASSED_DRAFT_OPEN",
+  "remote_result": "PROOF_CHECKPOINT_MERGED_INTEGRATION_CI_PASSED_RECOVERY_REVIEW_PENDING",
   "required_checks": [
     "migration-state",
     "rust",
     "feature-bool-model-check"
   ],
-  "review_branch": "codex/agones-feature-gates-001",
-  "visible_checkout": "agones-rs-dev@71be401007e93152d56704156767ced98c087e68"
+  "review_branch": "codex/agones-goal-recovery",
+  "visible_checkout": "agones-rs-dev@01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58"
 }

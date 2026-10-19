@@ -4,56 +4,56 @@
       "evidence_refs": [],
       "form": "proc_macro_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After the refreshed complete-source proof or the next API validation milestone; revisit actual shared property/rule declarations and all eight _2 cells.",
+      "next_review_trigger": "Next GameServer validation/admission milestone: reuse CGP/Genco/Arcane facilities for a concrete positive-ROI capability and revisit all eight required cells.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_2",
       "location": "cross-crate",
-      "next_review_trigger": "After the refreshed complete-source proof or the next API validation milestone; revisit actual shared property/rule declarations and all eight _2 cells.",
+      "next_review_trigger": "Next GameServer validation/admission milestone: reuse CGP/Genco/Arcane facilities for a concrete positive-ROI capability and revisit all eight required cells.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_attribute_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After the refreshed complete-source proof or the next API validation milestone; revisit actual shared property/rule declarations and all eight _2 cells.",
+      "next_review_trigger": "Next GameServer validation/admission milestone: reuse CGP/Genco/Arcane facilities for a concrete positive-ROI capability and revisit all eight required cells.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_attribute_2",
       "location": "cross-crate",
-      "next_review_trigger": "After the refreshed complete-source proof or the next API validation milestone; revisit actual shared property/rule declarations and all eight _2 cells.",
+      "next_review_trigger": "Next GameServer validation/admission milestone: reuse CGP/Genco/Arcane facilities for a concrete positive-ROI capability and revisit all eight required cells.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_derive_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After the refreshed complete-source proof or the next API validation milestone; revisit actual shared property/rule declarations and all eight _2 cells.",
+      "next_review_trigger": "Next GameServer validation/admission milestone: reuse CGP/Genco/Arcane facilities for a concrete positive-ROI capability and revisit all eight required cells.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_derive_2",
       "location": "cross-crate",
-      "next_review_trigger": "After the refreshed complete-source proof or the next API validation milestone; revisit actual shared property/rule declarations and all eight _2 cells.",
+      "next_review_trigger": "Next GameServer validation/admission milestone: reuse CGP/Genco/Arcane facilities for a concrete positive-ROI capability and revisit all eight required cells.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_delegate_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After the refreshed complete-source proof or the next API validation milestone; revisit actual shared property/rule declarations and all eight _2 cells.",
+      "next_review_trigger": "Next GameServer validation/admission milestone: reuse CGP/Genco/Arcane facilities for a concrete positive-ROI capability and revisit all eight required cells.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_delegate_2",
       "location": "cross-crate",
-      "next_review_trigger": "After the refreshed complete-source proof or the next API validation milestone; revisit actual shared property/rule declarations and all eight _2 cells.",
+      "next_review_trigger": "Next GameServer validation/admission milestone: reuse CGP/Genco/Arcane facilities for a concrete positive-ROI capability and revisit all eight required cells.",
       "status": "REQUIRED_OPEN"
     }
   ],
@@ -96,7 +96,7 @@
   ],
   "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
   "delivery": {
-    "acceptance": "Published 71be401 and actual CI merge b96e6499 have identical trees. All three jobs passed: 578 tests/0 failures/3 ignored, all four generation modes, lowering controls, resource Cargo fixtures and all four available strict proof selections. The fresh query-error proof has 1552 individual results and its original assertion/both covers pass. All 304 original GameServer relations remain formal-required; both complete-case timeouts are uncredited. All eight _2 cells/full migration/cleanup/lifecycle/live conformance and integration merge remain incomplete.",
+    "acceptance": "Published integration commit01ab22b contains the complete exact-case proof checkpoint. Its push CI39190924053 passed all three jobs:578 tests/0failures/3ignored, four generation modes, lowering/resource controls, and five strict proof selections including all18 original case014 assertions/both covers.286 other source occurrences, full baseline/lifecycle/conformance and all eight _2 cells remain required. The follow-up repairs observed Goal/handoff metadata without changing Agones production behavior.",
     "access": "GitHub app authorized as QuasarRay with push/admin; gh CLI unauthenticated; local .git writable",
     "authorization": "User execution contract REQ-12/F4 and root AGENTS.MD milestone PR/merge workflow",
     "checks": [
@@ -230,11 +230,38 @@
         },
         "status": "PASSED",
         "workflow_run": 39169460164
+      },
+      {
+        "event": "push",
+        "evidence": "verification/agones/ci/39190924053-success.json",
+        "head": "01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58",
+        "observed_results": {
+          "feature-bool-model-check": "PASSED",
+          "migration-state": "PASSED",
+          "rust": "PASSED"
+        },
+        "status": "PASSED",
+        "workflow_run": 39190924053
       }
     ],
-    "expected_base": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
-    "expected_head": "71be401007e93152d56704156767ced98c087e68",
+    "expected_base": "01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58",
+    "expected_head": "01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58",
     "integration_branch": "agones-rs-dev",
+    "pending_checkpoint": {
+      "current_gates": {
+        "FG-CONFIG-001": "verification/agones/gates/9268683a31881d2317504de096972c338daebf321be9bd8d98ac7b640dceda60.json",
+        "FG-ERROR-001": "verification/agones/gates/37a4df79b2f04b315a5b6ac58d368f23625d98e29c9c8878ba26f960eaeb53c3.json",
+        "FG-INPUT-001": "verification/agones/gates/49a63a9f021af1ea515b681f7026d63524788ea15256693d9a0ab39d93b27d23.json",
+        "GS-DEFAULTS-001": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+        "SDK-VERSION-001": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json"
+      },
+      "expected_review_branch": "codex/agones-goal-recovery",
+      "native_observation": "verification/agones/goal-observation.json",
+      "next_action": "Reconcile current source gates through VERIFYING; publish the small Goal observation/handoff recovery repair against current integration; require fresh state CI and reuse unchanged source proofs explicitly.",
+      "publication_parent": "01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58",
+      "status": "RECONCILING_ALREADY_PUBLISHED_PROOF_CHECKPOINT",
+      "verified_scope": "Case014:18 original assertions,2covers,6436 complete results; current selected dependencies/harness revalidated.578 ordinary tests,all four generation modes and controls pass."
+    },
     "pending_ci": "verification/agones/ci/39144973597-in-progress.json",
     "pending_publication": {
       "local_checkpoint": "8c7e12706f7c1f9586409b15014a17ad7194b7b4",
@@ -245,36 +272,38 @@
     },
     "pull_requests": [
       {
-        "draft": true,
+        "draft": false,
         "head": "71be401007e93152d56704156767ced98c087e68",
-        "merged": false,
+        "merge_commit": "71be401007e93152d56704156767ced98c087e68",
+        "merged": true,
         "number": 92,
         "url": "https://github.com/QuasarRay/agones/pull/92"
       }
     ],
-    "remote_result": "GAMESERVER_ALL_EXACT_HARNESSES_PUBLISHED_CI_PASSED_DRAFT_OPEN",
+    "remote_result": "PROOF_CHECKPOINT_MERGED_INTEGRATION_CI_PASSED_RECOVERY_REVIEW_PENDING",
     "required_checks": [
       "migration-state",
       "rust",
       "feature-bool-model-check"
     ],
-    "review_branch": "codex/agones-feature-gates-001",
-    "visible_checkout": "agones-rs-dev@71be401007e93152d56704156767ced98c087e68"
+    "review_branch": "codex/agones-goal-recovery",
+    "visible_checkout": "agones-rs-dev@01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58"
   },
   "goal": {
     "objective_attachment": "/home/astral/.codex/attachments/5cf63dab-e5a8-49be-a2f1-ae51f5edd993/pasted-text-1.txt",
     "reported_usage": {
-      "observed_at": 1792360679,
-      "time_seconds": 38217,
-      "tokens": 3108652
+      "observed_at": 1792366003,
+      "time_seconds": 43542,
+      "tokens": 4063005
     },
-    "status": "active",
+    "status": "blocked",
+    "thread_id": "01a14ebe-10fa-7c41-9f85-256874fb4c1f",
     "token_budget": null
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 209,
-  "previous_sha256": "2e4e92e8e4ac52b7cc051cf4aca50e23e22de6aab224c1182887792c0b367d61",
+  "previous_revision": 229,
+  "previous_sha256": "540560596cd3d057f4410bb73e25403de3626cb9de1c147e3c94ce8b10238228",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -526,9 +555,19 @@
       "observations": "The consumer capability returns &[(&static str,bool)]. All valid feature keys originate in that dictionary; parser inputs only select existing names. Current FeatureGates allocates/clones fifteen owned names on canonical construction, adding heap and per-element destruction without observable value changes.",
       "roi": "Use the existing static-lifetime guarantee and standard references, remove redundant allocations and key cloning for every actual context, and reduce verification heap/destruction costs. No new library/macro/framework, input restriction, predicate change or smaller proof bound is required.",
       "validation": "Locked complete workspace, source/Go byte observations and all original typed cases; inspect cloned/retained flags after a temporary custom-default context ends. Reopen/refresh every affected source proof and gate."
+    },
+    {
+      "architecture_status": "All eight _2 form/location cells remain REQUIRED_OPEN. No framework or _2 credit.",
+      "candidate": "verification/agones/gameserver-borrowed-feature-candidate.rs",
+      "candidate_sha256": "6bd5a96b38d74c6b975133f8d7115a9eb766bc78e02885f22178c3873f6d2bb7",
+      "decision": "REVERT_OPTIONAL_REFACTOR",
+      "feature_binding": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+      "id": "GS-DEFAULTS-001-ownership-experiment-decision",
+      "next_review_trigger": "Next GameServer validation/admission milestone: reuse CGP/Genco/Arcane facilities for a concrete positive-ROI capability and revisit all eight required cells.",
+      "roi": "Candidate removes redundant runtime string allocations but raises bounded verifier memory cost beyond tested 6/8 GiB caps, with no required source behavior gain. Preserve candidate/diagnostics and restore established production exactly."
     }
   ],
-  "revision": 210,
+  "revision": 230,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [
@@ -541,7 +580,9 @@
       "evidence_refs": [
         "verification/agones/gameserver-defaulting-evidence.json",
         "verification/agones/ci/39166043228-success.json",
-        "verification/agones/ci/39169460164-success.json"
+        "verification/agones/ci/39169460164-success.json",
+        "verification/agones/goal-resume-request.json",
+        "verification/agones/ci/39190924053-success.json"
       ],
       "feature_ids": [
         "gameserver-spec-defaults",
@@ -549,8 +590,8 @@
         "gameserver-creation-defaulting"
       ],
       "id": "GS-DEFAULTS-001",
-      "implementation_gate": "verification/agones/gates/a0d4a094cf50cc7f7f09841cf5d1c6000314857eb0b0e3c65346f7b4ddbd3ccd.json",
-      "next_action": "Restore prior production representation, validate workspace and exact source-case proof reuse at its original production bindings; publish current checkpoint with required proof debt intact.",
+      "implementation_gate": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+      "next_action": "Publish and validate the Goal/handoff recovery repair; continue remaining source proofs and next CGP GameServer API/validation packet under direct user continuation authorization.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
         "crates/agones-core/src/lib.rs",
@@ -572,7 +613,7 @@
         "prerequisite_formal_debt_remains_open": true,
         "prerequisite_implementation_gates_current": true
       },
-      "stage": "IMPLEMENTING",
+      "stage": "VERIFYING",
       "test_ids": [
         "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
       ]
@@ -583,14 +624,15 @@
       ],
       "disposition": "READY",
       "evidence_refs": [
-        "verification/agones/sdk-version-evidence.json"
+        "verification/agones/sdk-version-evidence.json",
+        "verification/agones/ci/39190924053-success.json"
       ],
       "feature_ids": [
         "source-sdk-version-annotation-policy"
       ],
       "id": "SDK-VERSION-001",
       "implementation_gate": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json",
-      "next_action": "Restore prior production representation, validate workspace and exact source-case proof reuse at its original production bindings; publish current checkpoint with required proof debt intact.",
+      "next_action": "Publish and validate the Goal/handoff recovery repair; continue remaining source proofs and next CGP GameServer API/validation packet under direct user continuation authorization.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
         "crates/agones-core/src/fleet.rs",
@@ -615,7 +657,7 @@
         "observed_gap": "Original pkg.Version defaults to dev and is assigned to GameServer, Fleet and Pod SDK annotations. Rust uses Cargo package version 0.1.0, and its Pod builder inherits a preexisting GameServer annotation. The selected source policy must use one configured version identity and preserve source overwrite behavior.",
         "remaining_scope": "Command logging, sidecar image command defaults, full build/package lifecycle and all other original surfaces remain separately required; this annotation policy cannot certify those consumers."
       },
-      "stage": "IMPLEMENTING",
+      "stage": "VERIFYING",
       "test_ids": []
     },
     {
@@ -625,14 +667,15 @@
       ],
       "disposition": "READY",
       "evidence_refs": [
-        "verification/agones/feature-error-evidence.json"
+        "verification/agones/feature-error-evidence.json",
+        "verification/agones/ci/39190924053-success.json"
       ],
       "feature_ids": [
         "source-compatible-feature-gate-error-rendering"
       ],
       "id": "FG-ERROR-001",
-      "implementation_gate": "verification/agones/gates/bbf74db72c0e2bf201f03ff0b1a26c2679f660200b7a270bb76dc57959186241.json",
-      "next_action": "Restore prior production representation, validate workspace and exact source-case proof reuse at its original production bindings; publish current checkpoint with required proof debt intact.",
+      "implementation_gate": "verification/agones/gates/37a4df79b2f04b315a5b6ac58d368f23625d98e29c9c8878ba26f960eaeb53c3.json",
+      "next_action": "Publish and validate the Goal/handoff recovery repair; continue remaining source proofs and next CGP GameServer API/validation packet under direct user continuation authorization.",
       "owned_paths": [
         "crates/agones-core/src/features.rs"
       ],
@@ -654,7 +697,7 @@
           "Go fmt/strconv quoted string rendering"
         ]
       },
-      "stage": "IMPLEMENTING",
+      "stage": "VERIFYING",
       "test_ids": [
         "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate::line-41"
       ]
@@ -665,14 +708,15 @@
       ],
       "disposition": "READY",
       "evidence_refs": [
-        "verification/agones/feature-input-evidence.json"
+        "verification/agones/feature-input-evidence.json",
+        "verification/agones/ci/39190924053-success.json"
       ],
       "feature_ids": [
         "feature-gates-environment-cli-binding"
       ],
       "id": "FG-INPUT-001",
-      "implementation_gate": "verification/agones/gates/baacf06850ad2a7ff91ddb4ced9f10825cdb70200e29c3cc7419b9ac174f08bc.json",
-      "next_action": "Restore prior production representation, validate workspace and exact source-case proof reuse at its original production bindings; publish current checkpoint with required proof debt intact.",
+      "implementation_gate": "verification/agones/gates/49a63a9f021af1ea515b681f7026d63524788ea15256693d9a0ab39d93b27d23.json",
+      "next_action": "Publish and validate the Goal/handoff recovery repair; continue remaining source proofs and next CGP GameServer API/validation packet under direct user continuation authorization.",
       "owned_paths": [
         "crates/agones-core/src/features.rs",
         "crates/agones-rusternetes/src/creating_gameserver_controller.rs",
@@ -690,7 +734,7 @@
         "source": "pkg/util/runtime/features.go",
         "test": "pkg/util/runtime/features_test.go"
       },
-      "stage": "IMPLEMENTING",
+      "stage": "VERIFYING",
       "test_ids": [
         "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
       ]
@@ -701,14 +745,15 @@
       ],
       "disposition": "READY",
       "evidence_refs": [
-        "verification/agones/feature-config-evidence.json"
+        "verification/agones/feature-config-evidence.json",
+        "verification/agones/ci/39190924053-success.json"
       ],
       "feature_ids": [
         "feature-gates-configuration"
       ],
       "id": "FG-CONFIG-001",
-      "implementation_gate": "verification/agones/gates/53102658b5397b22a8c87ab22fc86e78c34f71e781884fd478756d2349af899e.json",
-      "next_action": "Restore prior production representation, validate workspace and exact source-case proof reuse at its original production bindings; publish current checkpoint with required proof debt intact.",
+      "implementation_gate": "verification/agones/gates/9268683a31881d2317504de096972c338daebf321be9bd8d98ac7b640dceda60.json",
+      "next_action": "Publish and validate the Goal/handoff recovery repair; continue remaining source proofs and next CGP GameServer API/validation packet under direct user continuation authorization.",
       "owned_paths": [
         "crates/agones-core/src/features.rs",
         "crates/agones-rusternetes/src/creating_gameserver_controller.rs",
@@ -726,7 +771,7 @@
         "commit": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
         "source_path": "pkg/util/runtime/features.go"
       },
-      "stage": "IMPLEMENTING",
+      "stage": "VERIFYING",
       "test_ids": [
         "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
         "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
@@ -735,15 +780,15 @@
   ],
   "workspace": {
     "branch": "agones-rs-dev",
-    "dirty_patch_sha256": "213441a9f3caa130297f6326146aa17f18ceb8baf69891083db62794358794fe",
-    "head": "71be401007e93152d56704156767ced98c087e68",
-    "last_validated_implementation": "verification/agones/gates/a0d4a094cf50cc7f7f09841cf5d1c6000314857eb0b0e3c65346f7b4ddbd3ccd.json",
+    "dirty_patch_sha256": "e6b193f871b276ea16aba517b9174551cb51d94e10381c3de5b52732cd613701",
+    "head": "01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58",
+    "last_validated_implementation": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
     "path": "/home/astral/Projects/agones",
-    "source_binding_receipt": "verification/agones/runs/gameserver-source-case-014-bolero-kani-5.json",
+    "source_binding_receipt": "verification/agones/runs/goal-recovery-negative-control-1.json",
     "untracked_inputs": [
       "AGONES_RS_CONTINUATION_PROMPT.md",
       "AGONES_RS_PROMPT_AUDIT_RESOLUTION.md"
     ],
-    "untracked_source_binding_sha256": "38238652c5709996122500f2705eb47352d697de35013dc2cddcd6edd568d5e8"
+    "untracked_source_binding_sha256": "d883fcb617de8b2c03c30763ae674c558e36dfed6638895b9e4866c6fe589bbd"
   }
 }

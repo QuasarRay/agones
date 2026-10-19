@@ -12,6 +12,10 @@ implementation gate, retained logs, and credited evidence bindings.
 Use `checkpoint.py checkpoint --work-item <existing-id>` to select the next
 active packet without changing another item's verification stage or evidence.
 The selected item still follows the same legal stage transitions and gate checks.
+`--goal-receipt` records the actual host status, including an inactive status,
+without changing it or authorizing further work. Goal controls and the user's
+instructions govern continuation. The generated handoff reports that observed
+status and mentions the earlier prompt audit only when the file is present.
 
 `inventory.py census` freezes the immutable default baseline. Do not rerun it to
 adopt changed source or replace the migration scope. `guidance-check` verifies

@@ -1,0 +1,9 @@
+{
+  "classification": "REPO_SAFE",
+  "delivery_parent": "01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58",
+  "human_message": "Resume the existing Goal and continue",
+  "native_goal_status_last_observed": "blocked",
+  "recorded_at": "2026-10-19T03:24:55.228215+00:00",
+  "schema_version": 1,
+  "scope": "Direct user authorization to continue the existing Agones work. Native Goal resume is not exposed by the available tools; repository metadata records observations and cannot change the native lifecycle."
+}

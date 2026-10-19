@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "EXPLICIT_USER_RESUME_AND_INTEGRATION_DELIVERY_RECOVERED",
+  "gate_snapshot": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+  "predecessor_revision": 210,
+  "predecessor_sha256": "b7b629b415c56916fd387e15f03bf9e5fff45c25ab1dc2a0acb03d5d89471f1e",
+  "reason": "The user explicitly requested resume and continuation. The native tool still reports blocked and no native resume operation is exposed; preserve that observation truthfully. Existing proof checkpoint is already published in01ab22b with exact-head CI39190924053 passed. Restore source gates and orthogonal verification stages without duplicate publication.",
+  "result_revision": 211,
+  "schema_version": 1,
+  "state_sha256": "bbd6986b28ca30c7daeadcb8982e155ee489319a6d286446f8648f37283b7db9",
+  "timestamp": "2026-10-19T03:26:11.490096+00:00"
+}

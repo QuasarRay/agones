@@ -1,5 +1,6 @@
 {
   "artifact_bindings": {
+    "verification/agones/ci/39190924053-success.json": "199d9a95367536d5c62d3ca49a08c7de5398c5b2d0b30bfc387cc178c57a8d16",
     "verification/agones/feature-helper-bindings.json": "e527fe83f28d521ac93eedc591b97060265bbee85034df53362463938c4b43ed",
     "verification/agones/feature-input-kani-properties.json": "15e9d07430a225483e8000dab883914cef1634fb1206d0875c5cf0c8bf1bff8f",
     "verification/agones/feature-query-codegen.json": "7fecdd5742e2a05660b4ba013851425ea5cfc77b8d4d5f58addb010cce2de04b",
@@ -244,6 +245,11 @@
   "assurance": {
     "actual_process_fixture": "Test=true with the original Example=true/Test=false defaults is exercised in the isolated core process test; process input and production consumers have eleven nonempty child cases.",
     "configured_mutation_consumer": "Actual GameServerCreationMutationAdmission now consumes configured PlayerTracking through the shared CGP defaulting provider; retained process scenarios include this fifth configured consumer.",
+    "current_ci": {
+      "formal_selections": 5,
+      "head": "01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58",
+      "receipt": "verification/agones/ci/39190924053-success.json"
+    },
     "external_cluster_conformance": [],
     "independent_invariant": "source_relation guarded precedence/default laws, checked separately for reference and actual production output.",
     "modeled_fixture_or_static_binding_assertion_ids": [

@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate::line-41"
+  ],
+  "authorization": "User execution contract",
+  "event": "FG_ERROR_001_PUBLISHED_SOURCE_GATE_RECOVERED_IMPLEMENTED",
+  "gate_snapshot": "verification/agones/gates/37a4df79b2f04b315a5b6ac58d368f23625d98e29c9c8878ba26f960eaeb53c3.json",
+  "predecessor_revision": 219,
+  "predecessor_sha256": "769bc35d6c3d4738ca0a85f2373febbaf36ddccc90f2b3f950202db69a72681c",
+  "reason": "Existing implementation and exact original IR payloads are unchanged. Restore recorded stages after abandoned ownership experiment; integration-head CI39190924053 passed five strict proof selections including the complete original case014. Retain all other required assurance debt.",
+  "result_revision": 220,
+  "schema_version": 1,
+  "state_sha256": "9538d625fed456fca5f355f6af5b33b8c65368ca7488925babd490137f4950f1",
+  "timestamp": "2026-10-19T03:27:10.101145+00:00"
+}

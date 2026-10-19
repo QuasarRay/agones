@@ -71,13 +71,18 @@ def check(state):
 def handoff(state):
     active = state["work_items"][0]
     open_cells = sum(c["status"] != "VERIFIED" for c in state["architecture_matrix"])
+    audit_note = (
+        "Preserved input: `AGONES_RS_PROMPT_AUDIT_RESOLUTION.md` is an earlier prompt audit,\n"
+        "not product implementation evidence; its old revised-prompt hash is historical.\n"
+        if (ROOT / "AGONES_RS_PROMPT_AUDIT_RESOLUTION.md").is_file() else ""
+    )
     text = f"""# Agones-rs handoff
 
 Generated from AGONES_RS_STATE.json revision {state['revision']}.
 Contract SHA-256: `{state['contract_sha256']}`.
 Original reference: `{state['baseline_id']}`, scope `{state['scope_id']}`.
 Workspace: `{state['workspace']['branch']}` at `{state['workspace']['head']}`.
-Native Goal remains active; full migration is **{state['migration_status']}**.
+Native Goal last reported `{state['goal']['status']}`; full migration is **{state['migration_status']}**.
 
 Active work: **{active['id']}**, stage `{active['stage']}`, disposition `{active['disposition']}`.
 Next action: {active['next_action']}
@@ -87,8 +92,7 @@ Read the active source and affected contract appendices only. Baseline metadata 
 `verification/agones/baseline.json`, `scope-v1.json`, `baseline-tree.tsv`, and `baseline-tests.json`.
 The census has 490 first-party Go top-level test-like declarations; dynamic cases,
 assertions and non-Go test identities remain unresolved. This is no completeness claim.
-Preserved input: `AGONES_RS_PROMPT_AUDIT_RESOLUTION.md` is an earlier prompt audit,
-not product implementation evidence; its old revised-prompt hash is historical.
+{audit_note}
 
 All {open_cells} unverified `_2` form/location cells remain required architecture work.
 Last refactoring decision: {state['refactoring_reviews'][-1]['decision']}.
@@ -167,8 +171,13 @@ if __name__ == "__main__":
             state["work_items"].append(additional)
         if args.goal_receipt:
             actual = read(ROOT / args.goal_receipt)["goal"]
-            assert actual["status"] == "active", "host Goal does not authorize continuation"
-            state["goal"].update(status=actual["status"], reported_usage={"tokens":actual["tokensUsed"], "time_seconds":actual["timeUsedSeconds"], "observed_at":actual["updatedAt"]})
+            # Checkpointing records host observations; it never resumes a Goal
+            # or grants permission to continue. Recovery must also be able to
+            # preserve an inactive status without falsely reporting "active".
+            assert state["goal"]["objective_attachment"] in actual["objective"], "different host Goal objective"
+            assert actual["threadId"] == state["goal"].get("thread_id", actual["threadId"]), "different host Goal thread"
+            assert isinstance(actual["status"], str) and actual["status"], "missing host Goal status"
+            state["goal"].update(status=actual["status"], thread_id=actual["threadId"], reported_usage={"tokens":actual["tokensUsed"], "time_seconds":actual["timeUsedSeconds"], "observed_at":actual["updatedAt"]})
         for blocker in state["blockers"]:
             if blocker["id"] in args.resolve_blocker:
                 blocker["status"] = "RESOLVED"
