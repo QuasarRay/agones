@@ -1,13 +1,13 @@
 # Agones-rs handoff
 
-Generated from AGONES_RS_STATE.json revision 237.
+Generated from AGONES_RS_STATE.json revision 240.
 Contract SHA-256: `45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1`.
 Original reference: `6eb4a02588d8e7b581de187f3bc849733a78dcb2`, scope `agones-original-v1`.
-Workspace: `agones-rs-dev` at `7a8ea571f41f20addf9f47a30f2cc5f84c065488`.
+Workspace: `agones-rs-dev` at `5185e0c18f1fff799e4f640a377194ce5dce0279`.
 Native Goal last reported `active`; full migration is **INCOMPLETE**.
 
 Active work: **GS-DEFAULTS-001**, stage `VERIFYING`, disposition `READY`.
-Next action: Publish source005 isolated CI campaign, recover its full exact receipt/log/summary, and require all18 original claims/both covers at unit domain/unwind64. Source014 remains validated through retained exact artifacts; no transported proof rows.
+Next action: Publish complete source005 raw evidence and updated direct coverage/next feature packet to PR94; validate fresh metadata/binding CI and merge this proof milestone. Then implement GS-VALIDATE-FEATURES-001 through CGP before extracting its semantic properties.
 Implementation gate: `verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json`.
 
 Read the active source and affected contract appendices only. Baseline metadata is in
@@ -17,8 +17,8 @@ assertions and non-Go test identities remain unresolved. This is no completeness
 
 
 All 8 unverified `_2` form/location cells remain required architecture work.
-Last refactoring decision: REUSE_EXISTING.
-Next review: Next GameServer API/validation rule or repeated qualified property-declaration milestone; revisit a shared _2 declaration/attribute/derive/forwarding capability using existing CGP/Genco/Arcane facilities and actual repetition..
+Last refactoring decision: SMALL_LOCAL_REFACTOR.
+Next review: Return immediately to the implementation-first PlayerTracking validation packet after source005 delivery; assess concrete shared CGP capability/declaration repetitions there..
 No new macros or general frameworks are prerequisites for the next ordinary feature.
 
 Delivery: `CASE005_CI_PROOF_CAMPAIGN_PREPARED_PARENT_PROOFS_RETAINED` to `agones-rs-dev`; never modify main.

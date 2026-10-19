@@ -1,0 +1,22 @@
+{
+  "actual_checkout": "4ce07d3d67346427ce000ce0fc134c66ebbdd141",
+  "archive_sha256": "d21ef78a91e152937c2cc187372d068cc173ad63acea69de01f7d3924dc95c89",
+  "artifact_bindings": {
+    "verification/agones/proof-summaries/gameserver-source-005-bolero-kani-ci-39199314045-1.json": "8ce518813d7dd79f31a70d10eb98617ac8da377b4f468f0dec4fb84961a2ae65",
+    "verification/agones/runs/gameserver-source-005-bolero-kani-ci-39199314045-1.json": "e547faa1dc63bb2ad6364b401ce31875e3c77b018f4074655637c54bae189125",
+    "verification/agones/runs/gameserver-source-005-bolero-kani-ci-39199314045-1.log": "bb8c2ddb578d0e8a05dbead208ec8030ff1ece56c596fe76fecf95c77f6798f7"
+  },
+  "artifact_id": 12163546981,
+  "classification": "REPO_SAFE",
+  "resource_telemetry": [
+    "Verification Time: 215.16278s",
+    "\tElapsed (wall clock) time (h:mm:ss or m:ss): 3:52.55",
+    "\tMaximum resident set size (kbytes): 9712808",
+    "\tExit status: 0"
+  ],
+  "retention": "Exact source005 run receipt, full raw log and summary retained for Git. Other unchanged four component proofs use permanent parentCI39190924053 artifacts; Actions copies remain supplemental. No signed URL retained.",
+  "schema_version": 1,
+  "source_head": "5185e0c18f1fff799e4f640a377194ce5dce0279",
+  "status": "FULL_SOURCE005_ARTIFACT_HASH_VERIFIED",
+  "workflow_run": 39199314045
+}

@@ -1,0 +1,115 @@
+{
+  "actual_checkout": "4ce07d3d67346427ce000ce0fc134c66ebbdd141",
+  "artifact_bindings": {
+    "verification/agones/runs/ci-39199314045-feature-bool-model-check.log": "ac7a569ffdb69ebfa2fb4bbc35ee27c16766a9d50195c1cccfc8a12f3e8f2284",
+    "verification/agones/runs/ci-39199314045-migration-state.log": "835187294365a66dd59c0a28173cb777af71c76230b0b98a540a61816621eb66"
+  },
+  "assurance": {
+    "cumulative_direct_original_gameserver_assertions": 36,
+    "fresh_model_selections": 5,
+    "fresh_original_gameserver_assertions": 18,
+    "fresh_original_gameserver_case": 5,
+    "fresh_required_covers": 2,
+    "native_case005_selection": "verification/agones/runs/gs-case005-native-selection-1.json",
+    "ordinary_workspace_reused": {
+      "failed": 0,
+      "head": "01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58",
+      "ignored": 3,
+      "passed": 578
+    },
+    "remaining_original_cases": 15,
+    "remaining_original_gameserver_assertion_occurrences": 268,
+    "unreachable_source_credit": 0
+  },
+  "classification": "REPO_SAFE",
+  "head": "5185e0c18f1fff799e4f640a377194ce5dce0279",
+  "jobs": [
+    {
+      "conclusion": "success",
+      "id": 117888791572,
+      "name": "migration-state",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "id": 117888871198,
+      "name": "feature-bool-model-check",
+      "status": "completed"
+    },
+    {
+      "conclusion": "skipped",
+      "id": 117888872416,
+      "name": "rust",
+      "status": "completed"
+    }
+  ],
+  "proof_retention": {
+    "source005": "verification/agones/ci/39199314045-artifact-retention.json",
+    "unchanged_other_components_and_case014": "verification/agones/ci/39190924053-artifact-retention.json"
+  },
+  "proof_summaries": [
+    {
+      "harness_count": 1,
+      "property_count": 1158,
+      "status_counts": {
+        "SATISFIED": 6,
+        "SUCCESS": 1141,
+        "UNREACHABLE": 11
+      }
+    },
+    {
+      "claimed_assertions": 3,
+      "harness_count": 1,
+      "property_count": 978,
+      "required_covers": 10,
+      "status_counts": {
+        "SATISFIED": 10,
+        "SUCCESS": 945,
+        "UNREACHABLE": 23
+      }
+    },
+    {
+      "claimed_assertions": 1,
+      "harness_count": 1,
+      "property_count": 1552,
+      "required_covers": 2,
+      "status_counts": {
+        "SATISFIED": 2,
+        "SUCCESS": 1501,
+        "UNREACHABLE": 49
+      }
+    },
+    {
+      "claimed_assertions": 3,
+      "harness_count": 1,
+      "property_count": 2180,
+      "required_covers": 8,
+      "status_counts": {
+        "SATISFIED": 8,
+        "SUCCESS": 2147,
+        "UNREACHABLE": 25
+      }
+    },
+    {
+      "claimed_assertions": 18,
+      "harness_count": 1,
+      "property_count": 6436,
+      "required_covers": 2,
+      "status_counts": {
+        "SATISFIED": 2,
+        "SUCCESS": 6147,
+        "UNREACHABLE": 287
+      }
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Complete exact source005 backend proof. Source014 uses unchanged-source proof reuse; other15source cases, whole-provider/general domains, cleanup/lifecycle/conformance and eight _2 cells remain required.",
+  "selected": {
+    "model": true,
+    "rust": false
+  },
+  "status": "PASSED",
+  "tree": "7733ebb3a9cb2e3edcc35dac50d67f37a21fb1b2",
+  "url": "https://github.com/QuasarRay/agones/actions/runs/39199314045",
+  "workflow_run": 39199314045
+}

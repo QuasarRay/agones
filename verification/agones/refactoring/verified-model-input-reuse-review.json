@@ -1,0 +1,13 @@
+{
+  "architecture_status": "All eight required _2 cells remain REQUIRED_OPEN. This metadata refactor gives no macro or full-feature proof credit.",
+  "bounds": "Require successful nonempty model results and complete retained artifact bindings, a matching ancestor commit/tree, unchanged current model-input closure, and only monotonic policy extensions. Reject unknown changed dependencies. Add missing GameServer IR/codegen metadata to the same manifest. Limit work to this selector and controls.",
+  "candidate": "Extend the existing dependency selector to reuse a successful retained model CI snapshot when all declared model inputs are unchanged.",
+  "decision": "SMALL_LOCAL_REFACTOR",
+  "feature_binding": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+  "id": "CI-verified-model-input-reuse",
+  "next_review_trigger": "Return immediately to the implementation-first PlayerTracking validation packet after source005 delivery; assess concrete shared CGP capability/declaration repetitions there.",
+  "observed_repetition": "PR94 source005 execution passed with9GiB-class verifier memory use. Its mandatory artifact/accounting commit would retain the workflow delta against the PR base and repeat all five already-complete model selections; integration push repeats the same pattern. Future source batches produce the same artifact-only follow-up.",
+  "reuse": "Use existing check-dependencies.json, the current source-bound evidence/CI receipts, Git ancestry/trees, and retained hash-bound artifacts. No scheduler, service, database, compiler/proof-transport framework or new dependency.",
+  "roi": "One bounded selector extension and negative controls avoid repeated multi-minute, high-memory checks for metadata-only follow-ups across the remaining migration. This reduces repeat execution and agent polling/diagnosis without removing any source assertion or proof category. New or changed model inputs still require execution.",
+  "success_check": "Positive unchanged-input reuse plus controls rejecting changed production/workflow/IR, unavailable artifacts, failed/skipped/empty results, unrelated heads and weakened policy. CI runs the selector controls before choosing expensive jobs."
+}

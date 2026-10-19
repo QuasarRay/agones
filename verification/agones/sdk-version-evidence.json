@@ -2,6 +2,8 @@
   "artifact_bindings": {
     "verification/agones/ci/39190924053-artifact-retention.json": "1787811c859b695066f2215e48f7a2a1931d32d1d8d4e8bdd7664bef3a59c401",
     "verification/agones/ci/39190924053-success.json": "199d9a95367536d5c62d3ca49a08c7de5398c5b2d0b30bfc387cc178c57a8d16",
+    "verification/agones/ci/39199314045-artifact-retention.json": "fe2c921db81ee2ab26af161ca7d260e865e66c1b2eb9b6d7002526c428d780b4",
+    "verification/agones/ci/39199314045-success.json": "5c540a061150f57b8628a9a6518e6f96d0a8d851c125b87f8156d8c1da609e3d",
     "verification/agones/feature-query-codegen.json": "7fecdd5742e2a05660b4ba013851425ea5cfc77b8d4d5f58addb010cce2de04b",
     "verification/agones/gameserver-canonical-proof-reuse.json": "f0b50390d8f0e1d384a6ad5723444a8f0ed30d4ac50d0be8e0bbc48c2797f77a",
     "verification/agones/gameserver-case-014-proof-reuse.json": "62b70c3173a22d35d8af7e3edbceb9f0718343d3562eca8d4fa0e64fb1af9b5e",
@@ -14,6 +16,7 @@
     "verification/agones/gameserver-shared-proof-reuse.json": "be302d2de4fb1d536faa13ef268726ee3a83564d6e31fff01436351dd4c293d8",
     "verification/agones/gameserver-static-name-source-reuse.json": "45e0c7b1df93c1e3f57fd6cce91e1cfc79da556edcc02b6535615d0a5198ff20",
     "verification/agones/go-print-codegen.json": "01d6bd5c300aab124bfd94182cf0e530b7dd10f83ed02ffb30efb1bc985e8f1f",
+    "verification/agones/proof-summaries/gameserver-source-case-005.json": "8ce518813d7dd79f31a70d10eb98617ac8da377b4f468f0dec4fb84961a2ae65",
     "verification/agones/proof-summaries/gameserver-source-case-014.json": "a03af13e6b48292e5ebdec0b877358078435cbb880253cfa8d91ea829d342688",
     "verification/agones/refactoring/gameserver-ownership-experiment-decision.json": "7d9da5acd66ef684befc9bcd3e5acd5360a0b3b52e68b8915f5a7f1d1b52eefd",
     "verification/agones/refactoring/sdk-source-and-proof-review.json": "b696f54d3cc4f82bf10ca77ff57d391e8c5c900a62867b268a31b337554a4342",
@@ -200,6 +203,14 @@
     "verification/agones/sdk-version-source-paired-replay.json": "e28bf787fba36035c4a0009e56d9edd22cdac7f5cf031eca32ab138d40b919f0"
   },
   "assurance": {
+    "additional_shared_exact_case_proof": {
+      "scope": "One version observation inside complete original GameServer case005. Preserve qualified identity and count once across GS/SDK projections; no general SDK byte-domain/Fleet proof.",
+      "shared_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-409"
+      ],
+      "status": "DIRECT_SOURCE_BACKEND_PROOF_PASSED",
+      "summary": "verification/agones/proof-summaries/gameserver-source-case-005.json"
+    },
     "current_ci": {
       "formal_selections": 5,
       "head": "01ab22bb4fb4c4466fac3d9cd49a5f78ae6f2a58",
@@ -247,6 +258,7 @@
     },
     "original_go_compiled_identity_profiles": 3,
     "original_source_assertions_model_checked": [
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-409",
       "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-409"
     ],
     "prior_gate_original_source_assertions_model_checked": [
@@ -296,7 +308,7 @@
   ],
   "refactoring_review": "verification/agones/refactoring/sdk-source-and-proof-review.json",
   "residual_obligations": [
-    "One selected GameServer version identity proved within complete source case014, counted once across projections. Remaining18 selected version identities (16 GameServer,two Fleet) still need complete source proofs.",
+    "Two selected GameServer version identities are proved inside complete source cases005/014, counted once across feature projections. Remaining17 selected identities (15GameServer,twoFleet) need complete source proofs.",
     "All three shared-domain claims and fourteen covers remain required at lengths 0..4; two timeouts give zero credit. The source Fleet timeout also gives zero credit.",
     "Other original defaulting assertions, nil/empty collections, full status/API wire behavior and lifecycle/source boundaries remain required; 35 unselected assertion sites do not establish a resolved dynamic count.",
     "Full command logging/image/packaging behavior, live Rusternetes conformance, every original baseline behavior and all eight _2 architecture cells remain required."

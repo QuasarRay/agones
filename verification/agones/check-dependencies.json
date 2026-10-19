@@ -36,7 +36,9 @@
     "verification/agones/sdk-version.ir.json",
     "verification/agones/sdk-version-codegen.json",
     "verification/agones/sdk-version-domain.json",
-    ".cargo/**"
+    ".cargo/**",
+    "verification/agones/gameserver-defaulting.ir.json",
+    "verification/agones/gameserver-defaulting-codegen.json"
   ],
   "metadata_only": [
     "**/AGENTS.MD",
@@ -48,5 +50,5 @@
     "build/scripts/agones-rs/**"
   ],
   "unknown_change_policy": "RUN_BOTH",
-  "reuse_policy": "The always-run state job validates retained gate, source and evidence hashes. A skipped unaffected proof job is reuse of that retained artifact, never a new proof or a substitute Cargo-test result."
+  "reuse_policy": "Always-run state validation checks retained source/artifact bindings. A successful nonempty model CI snapshot with available hash-bound proof artifacts may be reused only when its current declared model inputs match an ancestor snapshot. Policy extensions must be monotonic and their newly declared inputs unchanged. Unknown or changed inputs, failed/skipped/empty results and unavailable artifacts require model execution."
 }

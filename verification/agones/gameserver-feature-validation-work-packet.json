@@ -1,0 +1,35 @@
+{
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "classification": "REPO_SAFE",
+  "implementation_scope": [
+    "Implement the complete source validateFeatureGates policy through an explicit CGP capability/provider, using the existing HasGameServerFeatureFlags getter and shared parsed feature configuration.",
+    "Connect the policy to actual direct GameServer/spec validation and Rusternetes GameServer/Fleet/GameServerSet validation consumers with correct nested field paths and configured/default contexts.",
+    "Preserve source policy placement before development-server validation and existing validation effects. Keep exact Forbidden kind, field path, absent bad value and source detail.",
+    "Exercise actual native admission/provider paths, default-disabled and explicitly enabled policy, absent/present players and development-server behavior before recording an implementation gate.",
+    "Only after that gate, translate the selected original helper/test obligations with the existing package-aware extraction, typed IR, Genco and strict Bolero/Kani infrastructure."
+  ],
+  "metadata_test_identity": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures",
+  "observed_gap": "Pinned Go GameServerSpec.Validate begins with validateFeatureGates, which forbids non-nil Players when PlayerTracking is disabled, including the development-address early-return path. Rust GameServerSpec::validate and actual Rusternetes creation validation have no corresponding feature-gate check; the validation admission context currently owns hooks only. Fleet/GameServerSet template validation also reaches the shared spec validation and must preserve configured behavior and nested paths.",
+  "proof_order": "Implementation and ordinary checks -> immutable gate -> source semantic extraction -> actual bounded backend/integration evidence. No new semantic IR or formal credit in this discovery packet.",
+  "remaining_required_outside_this_helper": [
+    "Full GameServer validation, resource-quantity exact numeric semantics, hook/metadata error ordering and every remaining source behavior remain required and are not certified by this helper.",
+    "All lifecycle/boundary/conformance obligations and all eight required _2 form/location cells remain open."
+  ],
+  "reuse_first": [
+    "HasGameServerFeatureFlags and FeatureFlags already exist in agones-core gameserver_defaulting.rs.",
+    "Reuse current feature parser/input loaders and CGP provider/delegation facilities; no new macro family is a prerequisite.",
+    "Reuse existing ValidationError and actual Rusternetes admission contracts; no alternate orchestrator, provider registry or plugin system."
+  ],
+  "schema_version": 1,
+  "source_files": {
+    "pkg/apis/agones/v1/gameserver.go": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
+    "pkg/apis/agones/v1/gameserver_test.go": "468502ff9cbedb3a37f7ff2b5ef1207f09b770aa3fc36b5e87432b6a62068cfa"
+  },
+  "source_symbols": [
+    "GameServerSpec.validateFeatureGates",
+    "GameServerSpec.Validate",
+    "GameServer.Validate"
+  ],
+  "status": "DISCOVERED_NOT_IMPLEMENTED_NO_SEMANTIC_EXTRACTION",
+  "work_item": "GS-VALIDATE-FEATURES-001"
+}

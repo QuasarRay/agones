@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "NEXT_CGP_PLAYER_VALIDATION_FEATURE_DISCOVERED",
+  "gate_snapshot": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+  "predecessor_revision": 237,
+  "predecessor_sha256": "c2024a8cee90a5f983e20b836666f8ea8eaa2a92a3e49b86d4ac192ee974e933",
+  "reason": "While isolated CI39199314045 runs, bounded source inspection found the missing source PlayerTracking validation policy in actual GameServer and template consumer paths. Add only the next implementation-first work packet to the existing ledger; no semantic extraction or gate before implementation.",
+  "result_revision": 238,
+  "schema_version": 1,
+  "state_sha256": "d0404abcd0d9370bee30ac807f400ee3ebbdf843f42c8aa973e3f10b6f03b2a9",
+  "timestamp": "2026-10-19T04:28:47.347204+00:00"
+}

@@ -17,6 +17,16 @@ without changing it or authorizing further work. Goal controls and the user's
 instructions govern continuation. The generated handoff reports that observed
 status and mentions the earlier prompt audit only when the file is present.
 
+`select_checks.py` uses the same dependency manifest for initial selection and
+reuse. A successful model CI receipt may supply a newer comparison snapshot
+when it is an ancestor with the recorded tree, nonempty complete results and
+available hash-bound proof artifacts. Every current model input must match;
+only monotonic model-policy extensions with unchanged newly declared inputs
+and unchanged Rust/metadata classifications are reusable. Changes since that
+snapshot to workflow, production, IR or unknown dependencies, failed/empty
+results, and unavailable artifacts force model execution. CI runs isolated negative controls
+before publishing the selected jobs. Reuse never counts as a fresh backend run.
+
 `inventory.py census` freezes the immutable default baseline. Do not rerun it to
 adopt changed source or replace the migration scope. `guidance-check` verifies
 inherited project instructions; `guidance-apply` adds only missing pointers and

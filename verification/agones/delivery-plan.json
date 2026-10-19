@@ -165,10 +165,20 @@
       },
       "status": "PASSED",
       "workflow_run": 39195278548
+    },
+    {
+      "case_harness": "source_gs_case_005",
+      "evidence": "verification/agones/ci/39199314045-success.json",
+      "head": "5185e0c18f1fff799e4f640a377194ce5dce0279",
+      "model_job": 117888871198,
+      "observed_phase": "Complete original source005 Bolero/Kani verification",
+      "status": "PASSED",
+      "url": "https://github.com/QuasarRay/agones/actions/runs/39199314045",
+      "workflow_run": 39199314045
     }
   ],
   "expected_base": "7a8ea571f41f20addf9f47a30f2cc5f84c065488",
-  "expected_head": "7a8ea571f41f20addf9f47a30f2cc5f84c065488",
+  "expected_head": "5185e0c18f1fff799e4f640a377194ce5dce0279",
   "integration_branch": "agones-rs-dev",
   "pending_checkpoint": {
     "current_gates": {
@@ -180,9 +190,9 @@
     },
     "expected_review_branch": "codex/agones-source-defaulting-005",
     "native_observation": "verification/agones/goal-observation.json",
-    "next_action": "Publish current source005 CI selection and full retained parent artifacts, run the isolated existing harness, recover its exact full artifact, strictly validate18 original claims/two covers before credit, and preserve all other required obligations.",
-    "publication_parent": "7a8ea571f41f20addf9f47a30f2cc5f84c065488",
-    "status": "CASE005_CI_CAMPAIGN_READY",
+    "next_action": "Publish exact source005 full artifact and updated36-assertion coverage accounting plus the next metadata-only CGP validation packet; require fresh state/binding CI, merge PR94, verify integration, then implement PlayerTracking validation before extracting its properties.",
+    "publication_parent": "5185e0c18f1fff799e4f640a377194ce5dce0279",
+    "status": "SOURCE005_PROOF_PASSED_FOLLOWUP_ARTIFACTS_READY",
     "verified_scope": "Case014:18 original assertions,2covers,6436 complete results; current selected dependencies/harness revalidated.578 ordinary tests,all four generation modes and controls pass."
   },
   "pull_requests": [
@@ -201,14 +211,21 @@
       "merged": true,
       "number": 93,
       "url": "https://github.com/QuasarRay/agones/pull/93"
+    },
+    {
+      "draft": false,
+      "head": "5185e0c18f1fff799e4f640a377194ce5dce0279",
+      "merged": false,
+      "number": 94,
+      "url": "https://github.com/QuasarRay/agones/pull/94"
     }
   ],
-  "remote_result": "CASE005_CI_PROOF_CAMPAIGN_PREPARED_PARENT_PROOFS_RETAINED",
+  "remote_result": "CASE005_CI_PROOF_PASSED_ARTIFACT_ACCOUNTING_READY_TO_PUBLISH",
   "required_checks": [
     "migration-state",
     "rust",
     "feature-bool-model-check"
   ],
   "review_branch": "codex/agones-source-defaulting-005",
-  "visible_checkout": "agones-rs-dev@7a8ea571f41f20addf9f47a30f2cc5f84c065488"
+  "visible_checkout": "agones-rs-dev@5185e0c18f1fff799e4f640a377194ce5dce0279"
 }

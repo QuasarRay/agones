@@ -4,56 +4,56 @@
       "evidence_refs": [],
       "form": "proc_macro_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "Next GameServer API/validation rule or repeated qualified property-declaration milestone; revisit a shared _2 declaration/attribute/derive/forwarding capability using existing CGP/Genco/Arcane facilities and actual repetition.",
+      "next_review_trigger": "Return immediately to the implementation-first PlayerTracking validation packet after source005 delivery; assess concrete shared CGP capability/declaration repetitions there.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_2",
       "location": "cross-crate",
-      "next_review_trigger": "Next GameServer API/validation rule or repeated qualified property-declaration milestone; revisit a shared _2 declaration/attribute/derive/forwarding capability using existing CGP/Genco/Arcane facilities and actual repetition.",
+      "next_review_trigger": "Return immediately to the implementation-first PlayerTracking validation packet after source005 delivery; assess concrete shared CGP capability/declaration repetitions there.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_attribute_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "Next GameServer API/validation rule or repeated qualified property-declaration milestone; revisit a shared _2 declaration/attribute/derive/forwarding capability using existing CGP/Genco/Arcane facilities and actual repetition.",
+      "next_review_trigger": "Return immediately to the implementation-first PlayerTracking validation packet after source005 delivery; assess concrete shared CGP capability/declaration repetitions there.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_attribute_2",
       "location": "cross-crate",
-      "next_review_trigger": "Next GameServer API/validation rule or repeated qualified property-declaration milestone; revisit a shared _2 declaration/attribute/derive/forwarding capability using existing CGP/Genco/Arcane facilities and actual repetition.",
+      "next_review_trigger": "Return immediately to the implementation-first PlayerTracking validation packet after source005 delivery; assess concrete shared CGP capability/declaration repetitions there.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_derive_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "Next GameServer API/validation rule or repeated qualified property-declaration milestone; revisit a shared _2 declaration/attribute/derive/forwarding capability using existing CGP/Genco/Arcane facilities and actual repetition.",
+      "next_review_trigger": "Return immediately to the implementation-first PlayerTracking validation packet after source005 delivery; assess concrete shared CGP capability/declaration repetitions there.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_derive_2",
       "location": "cross-crate",
-      "next_review_trigger": "Next GameServer API/validation rule or repeated qualified property-declaration milestone; revisit a shared _2 declaration/attribute/derive/forwarding capability using existing CGP/Genco/Arcane facilities and actual repetition.",
+      "next_review_trigger": "Return immediately to the implementation-first PlayerTracking validation packet after source005 delivery; assess concrete shared CGP capability/declaration repetitions there.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_delegate_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "Next GameServer API/validation rule or repeated qualified property-declaration milestone; revisit a shared _2 declaration/attribute/derive/forwarding capability using existing CGP/Genco/Arcane facilities and actual repetition.",
+      "next_review_trigger": "Return immediately to the implementation-first PlayerTracking validation packet after source005 delivery; assess concrete shared CGP capability/declaration repetitions there.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_delegate_2",
       "location": "cross-crate",
-      "next_review_trigger": "Next GameServer API/validation rule or repeated qualified property-declaration milestone; revisit a shared _2 declaration/attribute/derive/forwarding capability using existing CGP/Genco/Arcane facilities and actual repetition.",
+      "next_review_trigger": "Return immediately to the implementation-first PlayerTracking validation packet after source005 delivery; assess concrete shared CGP capability/declaration repetitions there.",
       "status": "REQUIRED_OPEN"
     }
   ],
@@ -332,8 +332,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 236,
-  "previous_sha256": "30d1d7655077ae9a0c88f284ad0051910c76dd471967909c1cb1f85d8e5bb30f",
+  "previous_revision": 239,
+  "previous_sha256": "38d83e7358ce442872e06cc730a3ed9b6b6d99c06db7f5c64707713373d240f9",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -612,9 +612,22 @@
         "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver"
       ],
       "source_ir_sha256": "e74f5781d7addd7d76c902f8da93abd454bb5fea8d4ad596821c08828a594fe8"
+    },
+    {
+      "architecture_status": "All eight required _2 cells remain REQUIRED_OPEN. This metadata refactor gives no macro or full-feature proof credit.",
+      "bounds": "Require successful nonempty model results and complete retained artifact bindings, a matching ancestor commit/tree, unchanged current model-input closure, and only monotonic policy extensions. Reject unknown changed dependencies. Add missing GameServer IR/codegen metadata to the same manifest. Limit work to this selector and controls.",
+      "candidate": "Extend the existing dependency selector to reuse a successful retained model CI snapshot when all declared model inputs are unchanged.",
+      "decision": "SMALL_LOCAL_REFACTOR",
+      "feature_binding": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+      "id": "CI-verified-model-input-reuse",
+      "next_review_trigger": "Return immediately to the implementation-first PlayerTracking validation packet after source005 delivery; assess concrete shared CGP capability/declaration repetitions there.",
+      "observed_repetition": "PR94 source005 execution passed with9GiB-class verifier memory use. Its mandatory artifact/accounting commit would retain the workflow delta against the PR base and repeat all five already-complete model selections; integration push repeats the same pattern. Future source batches produce the same artifact-only follow-up.",
+      "reuse": "Use existing check-dependencies.json, the current source-bound evidence/CI receipts, Git ancestry/trees, and retained hash-bound artifacts. No scheduler, service, database, compiler/proof-transport framework or new dependency.",
+      "roi": "One bounded selector extension and negative controls avoid repeated multi-minute, high-memory checks for metadata-only follow-ups across the remaining migration. This reduces repeat execution and agent polling/diagnosis without removing any source assertion or proof category. New or changed model inputs still require execution.",
+      "success_check": "Positive unchanged-input reuse plus controls rejecting changed production/workflow/IR, unavailable artifacts, failed/skipped/empty results, unrelated heads and weakened policy. CI runs the selector controls before choosing expensive jobs."
     }
   ],
-  "revision": 237,
+  "revision": 240,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [
@@ -631,7 +644,8 @@
         "verification/agones/goal-resume-request.json",
         "verification/agones/ci/39190924053-success.json",
         "verification/agones/ci/39195278548-success.json",
-        "verification/agones/ci/39190924053-artifact-retention.json"
+        "verification/agones/ci/39190924053-artifact-retention.json",
+        "verification/agones/ci/39199314045-success.json"
       ],
       "feature_ids": [
         "gameserver-spec-defaults",
@@ -640,7 +654,7 @@
       ],
       "id": "GS-DEFAULTS-001",
       "implementation_gate": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
-      "next_action": "Publish source005 isolated CI campaign, recover its full exact receipt/log/summary, and require all18 original claims/both covers at unit domain/unwind64. Source014 remains validated through retained exact artifacts; no transported proof rows.",
+      "next_action": "Publish complete source005 raw evidence and updated direct coverage/next feature packet to PR94; validate fresh metadata/binding CI and merge this proof milestone. Then implement GS-VALIDATE-FEATURES-001 through CGP before extracting its semantic properties.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
         "crates/agones-core/src/lib.rs",
@@ -825,19 +839,60 @@
         "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
         "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
       ]
+    },
+    {
+      "dependencies": [
+        "FG-CONFIG-001 implementation gate; formal prerequisite debt remains explicit"
+      ],
+      "disposition": "READY",
+      "evidence_refs": [],
+      "feature_ids": [
+        "gameserver-player-tracking-validation"
+      ],
+      "id": "GS-VALIDATE-FEATURES-001",
+      "implementation_gate": null,
+      "next_action": "After the current source005 proof checkpoint, implement the source PlayerTracking validation helper and all actual validation consumer paths through CGP using existing flag getters/loaders. Run ordinary checks and record its gate before semantic property extraction.",
+      "owned_paths": [
+        "crates/agones-core/src/gameserver.rs",
+        "crates/agones-core/src/gameserver_defaulting.rs",
+        "crates/agones-core/src/lib.rs",
+        "crates/agones-core/src/fleet.rs",
+        "crates/agones-core/src/gameserverset.rs",
+        "crates/agones-rusternetes/src/gameserver_admission.rs",
+        "crates/agones-rusternetes/src/fleet_admission.rs",
+        "crates/agones-rusternetes/src/gameserverset_admission.rs"
+      ],
+      "requirement_ids": [
+        "REQ-04",
+        "REQ-05",
+        "REQ-08",
+        "REQ-09",
+        "REQ-10",
+        "REQ-13"
+      ],
+      "source_config_binding": {
+        "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+        "no_semantic_extraction_before_gate": true,
+        "packet": "verification/agones/gameserver-feature-validation-work-packet.json",
+        "packet_sha256": "a09a89f8bd0a6e2b0280bd1b2d03c97da699b0735f11c46b2c1a53269aade89a"
+      },
+      "stage": "DISCOVERED",
+      "test_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+      ]
     }
   ],
   "workspace": {
     "branch": "agones-rs-dev",
-    "dirty_patch_sha256": "c44054d5ed3d39462b0d9f9018f0f8c4edf3fcaa7bdabd0eeb98168b268907cb",
-    "head": "7a8ea571f41f20addf9f47a30f2cc5f84c065488",
+    "dirty_patch_sha256": "c3a8c8df248cd8e7ce2824c76d9c6a7fa2cf1d649bbb2d57dc0b736a74e4e8d1",
+    "head": "5185e0c18f1fff799e4f640a377194ce5dce0279",
     "last_validated_implementation": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
     "path": "/home/astral/Projects/agones",
-    "source_binding_receipt": "verification/agones/runs/gs-case005-native-selection-1.json",
+    "source_binding_receipt": "verification/agones/runs/gs-case005-selector-reuse-controls-3.json",
     "untracked_inputs": [
       "AGONES_RS_CONTINUATION_PROMPT.md",
       "AGONES_RS_PROMPT_AUDIT_RESOLUTION.md"
     ],
-    "untracked_source_binding_sha256": "d883fcb617de8b2c03c30763ae674c558e36dfed6638895b9e4866c6fe589bbd"
+    "untracked_source_binding_sha256": "1ee7e7f32e9fbf452a78797541ed625e96a5816526d35b73087e73dfd7f87bdf"
   }
 }

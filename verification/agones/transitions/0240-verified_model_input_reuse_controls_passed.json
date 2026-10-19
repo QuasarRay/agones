@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "VERIFIED_MODEL_INPUT_REUSE_CONTROLS_PASSED",
+  "gate_snapshot": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+  "predecessor_revision": 239,
+  "predecessor_sha256": "38d83e7358ce442872e06cc730a3ed9b6b6d99c06db7f5c64707713373d240f9",
+  "reason": "The existing PR-base selector would repeat completed high-memory model checks for artifact-only follow-ups. Reuse a successful nonempty retained CI snapshot only at an ancestor/matching tree with unchanged current model inputs and a monotonic dependency extension. Fourteen control tests cover changed source/workflow/IR/codegen, missing/corrupt artifacts, failed/skipped/empty/vacuous results, unrelated/wrong snapshots, unbound receipts, and weakened classifications. No source property or model bound changed.",
+  "result_revision": 240,
+  "schema_version": 1,
+  "state_sha256": "3dafb8cd3f907a6e4228af7b961b315ac808a9355a839d0df514415e47f43a70",
+  "timestamp": "2026-10-19T04:57:22.309322+00:00"
+}
