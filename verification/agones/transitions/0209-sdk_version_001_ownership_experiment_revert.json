@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_VERSION_001_OWNERSHIP_EXPERIMENT_REVERT",
+  "gate_snapshot": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json",
+  "predecessor_revision": 208,
+  "predecessor_sha256": "6225080e2bd66460ee1615890fb0ea9f84b515f6e0a69cccb98b74fa014ec1f2",
+  "reason": "Optional static-name/read-only iteration candidate exhausted solver memory at 6 and 8 GiB. Preserve candidate and all diagnostics, restore the previously verified production implementation, rerun ordinary checks, then revalidate exact component proof reuse.",
+  "result_revision": 209,
+  "schema_version": 1,
+  "state_sha256": "2e4e92e8e4ac52b7cc051cf4aca50e23e22de6aab224c1182887792c0b367d61",
+  "timestamp": "2026-10-18T23:22:47.386210+00:00"
+}

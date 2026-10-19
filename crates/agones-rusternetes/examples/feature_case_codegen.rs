@@ -348,9 +348,12 @@ fn gs_map(value: &Value, lists: bool) -> rust::Tokens {
             let count = format!("{}i64", item["count"].as_i64().unwrap());
             quote! { agones_core::CounterStatus { count: $count, capacity: $capacity } }
         };
-        entries.append(quote! { ($key.to_owned(), $value), });
+        entries.append(quote! { values.insert($key.to_owned(), $value); });
     }
-    quote! { Some(std::collections::BTreeMap::from([$entries])) }
+    // Match source make/map assignment without invoking the unrelated bulk
+    // sorted-tree builder for a fixed literal. The complete value is checked
+    // against source JSON by the ordinary fixture/output test.
+    quote! { Some({ let mut values = std::collections::BTreeMap::new(); $entries values }) }
 }
 
 fn gs_fixture(input: &Value, function: &str) -> rust::Tokens {
@@ -567,11 +570,11 @@ fn gs_relation(site: &Value, assertion: &Value) -> rust::Tokens {
         }
         ("test.gameServer.Status.Counters", "Equal") => {
             let expected = gs_map(expected, false);
-            quote! { gs.status.counters == $expected }
+            quote! { std::cmp::PartialEq::eq(&gs.status.counters, &*std::mem::ManuallyDrop::new($expected)) }
         }
         ("test.gameServer.Status.Lists", "Equal") => {
             let expected = gs_map(expected, true);
-            quote! { gs.status.lists == $expected }
+            quote! { std::cmp::PartialEq::eq(&gs.status.lists, &*std::mem::ManuallyDrop::new($expected)) }
         }
         (expression, relation) => {
             panic!("unsupported source observation/relation: {expression}/{relation}")
@@ -651,8 +654,17 @@ fn emit_gameserver_cases(root: &Path, check: bool) {
         );
         let mut steps = rust::Tokens::new();
         let flags = quoted(case["feature_flags"].as_str().unwrap());
-        steps.append(quote! { let mut gs = $(&fixture)();
-        let parsed = agones_core::FeatureGateContext::default().parse_feature_gates($flags); });
+        // The fixed input value is independent of parsing: neither operation
+        // reads the other's state. For nonempty queries, delay its physical
+        // allocation until first use, keeping unrelated heap out of parsing.
+        // No original observation reads GameServer before NoError.
+        let deferred_fixture = !case["feature_flags"].as_str().unwrap().is_empty();
+        if deferred_fixture {
+            steps.append(quote! { let parsed = agones_core::FeatureGateContext::default().parse_feature_gates($flags); });
+        } else {
+            steps.append(quote! { let mut gs = $(&fixture)();
+            let parsed = agones_core::FeatureGateContext::default().parse_feature_gates($flags); });
+        }
         let mut applied = false;
         let mut functions = Vec::new();
         for assertion in captured {
@@ -664,6 +676,9 @@ fn emit_gameserver_cases(root: &Path, check: bool) {
                 "duplicate source assertion identity"
             );
             if assertion["kind"] != "NoError" && !applied {
+                if deferred_fixture {
+                    steps.append(quote! { let mut gs = $(&fixture)(); });
+                }
                 steps.append(quote! { let context = agones_core::GameServerDefaultingContext::from_feature_gates(parsed.as_ref().unwrap());
                     gs.apply_defaults_with_context(&context); });
                 applied = true;
@@ -687,6 +702,15 @@ fn emit_gameserver_cases(root: &Path, check: bool) {
         let cover_text = format!("source GameServer case reached all assertions: {case_id}");
         let cover = quoted(cover_text.as_str());
         steps.append(quote! { #[cfg(kani)] { kani::cover!(true, $cover); } });
+        // The source observes state before callback return and imposes no
+        // garbage-collection schedule. Retain harness-owned values after that
+        // boundary in both engines; production calls/internal effects are real.
+        // The ordinary whole-fixture test below still uses normal destruction.
+        steps.append(quote! {
+            std::mem::forget(gs);
+            std::mem::forget(parsed);
+            std::mem::forget(context);
+        });
         let harness = format!("source_gs_case_{index:03}");
         tokens.append(quote! {
             #[test]
@@ -716,7 +740,12 @@ fn emit_gameserver_cases(root: &Path, check: bool) {
         });
         harnesses.push(json!({"harness":harness,"case_id":case_id,"fixture":fixture,"assertion_functions":functions,
             "feature_flags":case["feature_flags"],"required_covers":[cover_text,"the generator should produce at least one valid value"],
-            "raw_domain":"unit","preconditions":[],"unwind":64}));
+            "raw_domain":"unit","preconditions":[],"unwind":64,
+            "lifetime_rule":"GS-DEFAULTS-001-OBSERVATION-LIFETIME-1"}));
+        if deferred_fixture {
+            harnesses.last_mut().unwrap()["fixture_materialization"] =
+                json!("INDEPENDENT_CONSTANT_AFTER_NO_ERROR");
+        }
     }
     assert_eq!(assertions.len(), 304);
     tokens.append(quote! {
@@ -737,6 +766,13 @@ fn emit_gameserver_cases(root: &Path, check: bool) {
         "source_assertion_sites":ir["source_assertion_sites"],
         "zero_occurrence_sites_not_credited":sites.values().filter(|s|s["fixture_occurrences"]==0).collect::<Vec<_>>(),
         "fixture_mapping":"Whole captured canonical GameServer equals a typed constructor and round-trips exactly at generation and ordinary replay. Proof harnesses contain no JSON decoder. Source parse/assert/default/assert order and conditional assertion selection are retained.",
+        "lifetime_mapping":{"rule":"GS-DEFAULTS-001-OBSERVATION-LIFETIME-1",
+            "boundary":"After every original state observation and the case cover, retain the harness-owned GameServer, parsed feature result and context through std::mem::forget in both engines. The source callback specifies no GC/deallocation observation or schedule.",
+            "production":"Actual parser and CGP/defaulting bodies, including all internal allocation/destruction effects, remain unchanged.",
+            "expected_map_literals":"Construct fixed expected maps through make/insert and retain their owner through ManuallyDrop while invoking actual PartialEq. This matches the source expected fixture ownership; no expected field/relation is omitted.",
+            "constant_fixture_materialization":"For nonempty queries, the independent fixed typed fixture is physically allocated after the parser/NoError observation and before its first use. It contains no feature/global effects, and the parser has no fixture capability. The source input value and action/observation order are unchanged; allocation/GC schedules are not asserted by the source callback.",
+            "ordinary_cleanup":"The separate whole-fixture/output test exercises normal Rust destruction for every exact fixture.",
+            "residual":"No formal post-observation heap-cleanup, application cleanup/lifecycle or executor credit; those obligations remain required separately."},
         "scope":"All 17 exact source cases and 304 executed occurrences only. Three zero-occurrence sites remain open. Sampling and generated/compiled harnesses give no formal credit. The 17 SDK version identities overlapping this family must not be double-counted; no generalized GameServer, admission, lifecycle or executor proof is claimed."});
     save_or_check(root, output, &source, check);
     save_or_check(

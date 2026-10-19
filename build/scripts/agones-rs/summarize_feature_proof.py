@@ -82,6 +82,8 @@ elif args.family == "gameserver-source":
     scope = ("Selected exact source GameServer case only: "+selected["case_id"]+
              ". Unit input, no preconditions, unwind "+str(selected["unwind"])+
              "; typed whole source fixture, actual feature parser and CGP defaulting provider, literal original relations. "
+             "After all observations/case cover, the harness retains its owners under "+selected["lifetime_rule"]+". "
+             "No formal post-observation heap cleanup is claimed. "
              "Other cases, zero-occurrence sites, general domains, admission/lifecycle and executor behavior receive no credit.")
 elif args.family == "sdk-source":
     metadata = json.loads((ROOT / "verification/agones/sdk-version-codegen.json").read_text())
@@ -115,6 +117,8 @@ summary = {"schema_version":1, "family":args.family, "run":f"verification/agones
            "assertions":claims, "covers":covers,
            "status_counts":{status:sum(row["status"]==status for row in rows) for status in ("SUCCESS","SATISFIED","UNREACHABLE")},
            "unreachable_not_credited":[r for r in rows if r["status"]=="UNREACHABLE"], "scope":scope}
+if args.family == "gameserver-source":
+    summary["lifetime_mapping"] = metadata["lifetime_mapping"]
 destination = ROOT / args.output
 destination.parent.mkdir(parents=True, exist_ok=True)
 destination.write_text(json.dumps(summary,indent=2,sort_keys=True)+"\n")

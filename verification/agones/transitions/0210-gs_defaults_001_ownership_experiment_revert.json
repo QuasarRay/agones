@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "GS_DEFAULTS_001_OWNERSHIP_EXPERIMENT_REVERT",
+  "gate_snapshot": "verification/agones/gates/a0d4a094cf50cc7f7f09841cf5d1c6000314857eb0b0e3c65346f7b4ddbd3ccd.json",
+  "predecessor_revision": 209,
+  "predecessor_sha256": "2e4e92e8e4ac52b7cc051cf4aca50e23e22de6aab224c1182887792c0b367d61",
+  "reason": "Optional static-name/read-only iteration candidate exhausted solver memory at 6 and 8 GiB. Preserve candidate and all diagnostics, restore the previously verified production implementation, rerun ordinary checks, then revalidate exact component proof reuse.",
+  "result_revision": 210,
+  "schema_version": 1,
+  "state_sha256": "b7b629b415c56916fd387e15f03bf9e5fff45c25ab1dc2a0acb03d5d89471f1e",
+  "timestamp": "2026-10-18T23:22:47.521969+00:00"
+}

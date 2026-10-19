@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "FG_CONFIG_001_STATIC_NAMES_PROPERTIES_READY",
+  "gate_snapshot": "verification/agones/gates/0a28dbb0839337d1a4a88c53cb38062fb1ca2feec8e181d31aeccf908249b412.json",
+  "predecessor_revision": 163,
+  "predecessor_sha256": "89adda4ec4b4f0ab567925bf1620f323b538ba6719ef218527a530267ba8d1c5",
+  "reason": "579 locked all-target tests pass. Reuse unchanged original source payloads after static-name ownership/shared emitter refresh. Preserve every source identity, byte/numeric semantics and required proof; stale source cases are not current evidence.",
+  "result_revision": 164,
+  "schema_version": 1,
+  "state_sha256": "e718ccb6951f71c7683d73103ce4b3a946e9605df60b7afa66e86810dee64692",
+  "timestamp": "2026-10-18T23:11:04.178146+00:00"
+}

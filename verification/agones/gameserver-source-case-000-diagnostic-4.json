@@ -1,0 +1,17 @@
+{
+  "classification": "REPO_SAFE",
+  "error_excerpt": [
+    "aborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs line 643 column 13 function std::alloc::handle_alloc_error::rt_error thread 0",
+    "Out of memory",
+    "error: getting status result from command \"cargo\" \"kani\" \"--tests\" \"--harness\" \"source_gs_case_000\": process exited with status 1"
+  ],
+  "individual_results": 0,
+  "log": "verification/agones/runs/gameserver-source-case-000-bolero-kani-4.log",
+  "log_sha256": "1fbed01c1037c8d28df59c662ea7bc57f9ee798eed824aa7024e76afbfc24802",
+  "run": "verification/agones/runs/gameserver-source-case-000-bolero-kani-4.json",
+  "run_sha256": "9b0a011bcc2c5589e6b52fddce97c975b010efd43ebba4ab98a23c3229d6d490",
+  "schema_version": 1,
+  "scope": "Required complete original counter case, no smaller bound or omitted relation. Retained resource/backend failure cannot certify behavior. Runtime/SAT diagnostics are not source counterexamples without a completed failing claim.",
+  "source_assertion_credit": 0,
+  "status": "INCONCLUSIVE_NO_PROOF_CREDIT"
+}

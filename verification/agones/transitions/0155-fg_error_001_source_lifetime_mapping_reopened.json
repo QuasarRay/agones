@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate::line-41"
+  ],
+  "authorization": "User execution contract",
+  "event": "FG_ERROR_001_SOURCE_LIFETIME_MAPPING_REOPENED",
+  "gate_snapshot": "verification/agones/gates/f74516bd4e16e5abbacfe2694db7bfb89bf02d633da877472111a84c77a7913f.json",
+  "predecessor_revision": 154,
+  "predecessor_sha256": "298b5b4667785df8625cdd0e001ad182e3156fa7118f6f610fc85984c2e53bd4",
+  "reason": "The shared emitter gains an explicit original-callback observation/lifetime boundary. Reopen conservative generator/evidence bindings; runtime algorithms and all original source relations remain unchanged.",
+  "result_revision": 155,
+  "schema_version": 1,
+  "state_sha256": "b6184e72ab5b8c1718a5775430a5a8478cb563055caafdba8c8fbf485244fc5c",
+  "timestamp": "2026-10-18T22:00:16.138262+00:00"
+}

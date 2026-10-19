@@ -1,0 +1,20 @@
+{
+  "complete_case_proof_revalidation": "verification/agones/gameserver-restored-production-review.json",
+  "component_proof_reuse": "verification/agones/gameserver-canonical-proof-reuse.json",
+  "implementation_gates": {
+    "FG-CONFIG-001": "verification/agones/gates/9268683a31881d2317504de096972c338daebf321be9bd8d98ac7b640dceda60.json",
+    "FG-ERROR-001": "verification/agones/gates/37a4df79b2f04b315a5b6ac58d368f23625d98e29c9c8878ba26f960eaeb53c3.json",
+    "FG-INPUT-001": "verification/agones/gates/49a63a9f021af1ea515b681f7026d63524788ea15256693d9a0ab39d93b27d23.json",
+    "GS-DEFAULTS-001": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+    "SDK-VERSION-001": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json"
+  },
+  "ir_bindings": {
+    "verification/agones/feature-gates.ir.json": "849b15a011d737dd715b925b7fbab839b1b0020b9663f575fedb416d6d1f3e02",
+    "verification/agones/gameserver-defaulting.ir.json": "e74f5781d7addd7d76c902f8da93abd454bb5fea8d4ad596821c08828a594fe8"
+  },
+  "original_payloads_identical_to_71be401": true,
+  "production_features_byte_identical_to_71be401": true,
+  "schema_version": 1,
+  "scope": "Only gate references changed. Every original fixture/action/guard/assertion/identity retained; all 17 source harnesses retain unwind64. Optional static-name/query iteration candidate is abandoned and retained separately.",
+  "status": "VALIDATED_CURRENT_SOURCE_PAYLOAD"
+}

@@ -1,0 +1,26 @@
+{
+  "constraints": [
+    "No production replacement or cfg(kani) production stub.",
+    "No early ownership handoff before any source observation. No narrowed domain or removed relation/cover.",
+    "Post-observation Rust heap cleanup and application draining/lifecycle are separate required obligations; a state-observation proof cannot claim them.",
+    "Keep ordinary whole-fixture/output tests using normal Rust destruction.",
+    "Neither timeout, this review, nor an unexecuted lifetime design receives formal credit."
+  ],
+  "facts": [
+    "The source table stores GameServer values (gameserver_test.go:197-202), and the range/callback works on a value copy. Nested maps and slices may retain shared backing; newly created post-default data is not necessarily retained by the table.",
+    "All 23 source assertions occur before t.Run callback return. This callback has no explicit GC, finalizer, deallocation or cleanup assertion. The surrounding test only defers the feature-test mutex unlock.",
+    "ParseFeatures assigns its completed map to package-global featureGates; it remains available after the callback until replacement.",
+    "The current Rust harness additionally destroys owned GameServer/JSON/map values after the last source observation. The second timeout log expands these std destruction paths. The inspected GameServer/defaulting modules declare no custom Drop implementation."
+  ],
+  "feature_id": "GS-DEFAULTS-001",
+  "next_hypothesis": "Give the exact-case harness an explicit ownership/observation boundary after every original relation and required cover, matching the Go callback. A retained-owner handoff must preserve all actual production calls and internal effects, all 17 fixtures/304 relations, unit domains, source order/guards, adequate unwind checks and non-vacuity covers. Validate a candidate on the same full case 014 before expanding a campaign.",
+  "schema_version": 1,
+  "source_bindings": {
+    "crates/agones-core/src/gameserver.rs": "342d6cf540fdf10f5fc5dccd99e042122afe3b7b1888ea592d5e6b1c044e7c93",
+    "crates/agones-core/src/gameserver_defaulting.rs": "abfde63391515d8d406a0feed17e58aa3fe0380c03f44ab4f7823a3cfaa00ce4",
+    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "89138eb60c446c08e4cb6e6f75a5febf2f54372fdbf89488c323302b406fbe8a",
+    "pkg/apis/agones/v1/gameserver_test.go": "468502ff9cbedb3a37f7ff2b5ef1207f09b770aa3fc36b5e87432b6a62068cfa",
+    "pkg/util/runtime/features.go": "05736b26646cf219419626dfca37c4f533302b178ca3bb542330cf7884ddc679"
+  },
+  "status": "REVIEWED_NEXT_HYPOTHESIS_NOT_IMPLEMENTED_OR_PROVED"
+}

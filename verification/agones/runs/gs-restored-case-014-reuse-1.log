@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/agones-restored-proof.py", line 6, in <module>
+    for p,h in gate['production_files'].items():assert sha(p)==h==run['source_files'][p],p
+                                                                  ~~~~~~~~~~~~~~~~~~~^^^
+KeyError: 'pkg/apis/agones/v1/apihooks.go'

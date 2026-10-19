@@ -1,0 +1,10 @@
+{
+  "architecture_status": "All eight _2 form/location cells remain REQUIRED_OPEN. No framework or _2 credit.",
+  "candidate": "verification/agones/gameserver-borrowed-feature-candidate.rs",
+  "candidate_sha256": "6bd5a96b38d74c6b975133f8d7115a9eb766bc78e02885f22178c3873f6d2bb7",
+  "decision": "REVERT_OPTIONAL_REFACTOR",
+  "feature_binding": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+  "id": "GS-DEFAULTS-001-ownership-experiment-decision",
+  "next_review_trigger": "Next GameServer validation/admission milestone: reuse CGP/Genco/Arcane facilities for a concrete positive-ROI capability and revisit all eight required cells.",
+  "roi": "Candidate removes redundant runtime string allocations but raises bounded verifier memory cost beyond tested 6/8 GiB caps, with no required source behavior gain. Preserve candidate/diagnostics and restore established production exactly."
+}

@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ],
+  "authorization": "User execution contract",
+  "event": "FG_INPUT_001_FINAL_BINDINGS_VERIFYING",
+  "gate_snapshot": "verification/agones/gates/baacf06850ad2a7ff91ddb4ced9f10825cdb70200e29c3cc7419b9ac174f08bc.json",
+  "predecessor_revision": 193,
+  "predecessor_sha256": "75a6979375c35692e567c8aa40fb5cb793d4afb37b0dee6f3c1cd3ff7950c433",
+  "reason": "Current production static-name ownership and read-only query iteration passed 579 ordinary tests. Reused exact original IR payloads and all four deterministic generation checks; previous source-case proof remains historical until current-source backend results complete.",
+  "result_revision": 194,
+  "schema_version": 1,
+  "state_sha256": "7811082801ffe920f092d680c41adcda14eeb7ba1f38337433fb0876c353fd5b",
+  "timestamp": "2026-10-18T23:21:55.325436+00:00"
+}

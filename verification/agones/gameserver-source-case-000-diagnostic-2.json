@@ -1,0 +1,35 @@
+{
+  "changed_campaign_hypothesis": "Keep exact current source/domain/relations/covers/unwind 64, give the adequate whole counter-case run a measured 600-second operational ceiling, and record wall time/peak RSS. No identical short timeout retry or smaller model is used.",
+  "diagnosis": "The make/insert mapping removed the earlier bulk-tree-builder bottleneck; the unchanged nonempty-feature parser/actual production path still exceeded four minutes during symex. The simple full case already required 182 seconds verification, leaving too little margin for the longer query/map path.",
+  "feature_id": "GS-DEFAULTS-001",
+  "individual_results": 0,
+  "log_bytes": 1141304,
+  "operational_limit_seconds": 240,
+  "run": "verification/agones/runs/gameserver-source-case-000-bolero-kani-2.json",
+  "schema_version": 1,
+  "source_assertions_credited": 0,
+  "status": "INCONCLUSIVE_TIMEOUT_NO_CREDIT",
+  "top_symex_loops": [
+    [
+      "Unwinding loop memcmp.0",
+      2835
+    ],
+    [
+      "Unwinding loop _RINvNtCs8xvirJzNMvV_4core3ptr9drop_glueSTINtNtCs6xMQmN1AWUs_5alloc3vec3VechEBD_EECs48q3AxCsyuD_11agones_core.0",
+      567
+    ],
+    [
+      "Unwinding loop _RNvNtNtCs8xvirJzNMvV_4core5slice6memchr12memchr_naiveCsjT6j4fgnUUK_28source_gameserver_defaulting.0",
+      126
+    ],
+    [
+      "Unwinding loop _RINvNtCs8xvirJzNMvV_4core3ptr9drop_glueSTNtNtCs6xMQmN1AWUs_5alloc6string6StringbEECsjT6j4fgnUUK_28source_gameserver_defaulting.0",
+      120
+    ],
+    [
+      "Unwinding loop _RNvNvNtNtCs8xvirJzNMvV_4core5slice6memchr14memchr_aligned7runtimeCsjT6j4fgnUUK_28source_gameserver_defaulting.0",
+      63
+    ]
+  ],
+  "unwind": 64
+}

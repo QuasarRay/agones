@@ -1,0 +1,783 @@
+{
+  "architecture_matrix": [
+    {
+      "evidence_refs": [],
+      "form": "proc_macro_2",
+      "location": "same-logical-crate",
+      "next_review_trigger": "After the refreshed complete-source proof or the next API validation milestone; revisit actual shared property/rule declarations and all eight _2 cells.",
+      "status": "REQUIRED_OPEN"
+    },
+    {
+      "evidence_refs": [],
+      "form": "proc_macro_2",
+      "location": "cross-crate",
+      "next_review_trigger": "After the refreshed complete-source proof or the next API validation milestone; revisit actual shared property/rule declarations and all eight _2 cells.",
+      "status": "REQUIRED_OPEN"
+    },
+    {
+      "evidence_refs": [],
+      "form": "proc_macro_attribute_2",
+      "location": "same-logical-crate",
+      "next_review_trigger": "After the refreshed complete-source proof or the next API validation milestone; revisit actual shared property/rule declarations and all eight _2 cells.",
+      "status": "REQUIRED_OPEN"
+    },
+    {
+      "evidence_refs": [],
+      "form": "proc_macro_attribute_2",
+      "location": "cross-crate",
+      "next_review_trigger": "After the refreshed complete-source proof or the next API validation milestone; revisit actual shared property/rule declarations and all eight _2 cells.",
+      "status": "REQUIRED_OPEN"
+    },
+    {
+      "evidence_refs": [],
+      "form": "proc_macro_derive_2",
+      "location": "same-logical-crate",
+      "next_review_trigger": "After the refreshed complete-source proof or the next API validation milestone; revisit actual shared property/rule declarations and all eight _2 cells.",
+      "status": "REQUIRED_OPEN"
+    },
+    {
+      "evidence_refs": [],
+      "form": "proc_macro_derive_2",
+      "location": "cross-crate",
+      "next_review_trigger": "After the refreshed complete-source proof or the next API validation milestone; revisit actual shared property/rule declarations and all eight _2 cells.",
+      "status": "REQUIRED_OPEN"
+    },
+    {
+      "evidence_refs": [],
+      "form": "proc_macro_delegate_2",
+      "location": "same-logical-crate",
+      "next_review_trigger": "After the refreshed complete-source proof or the next API validation milestone; revisit actual shared property/rule declarations and all eight _2 cells.",
+      "status": "REQUIRED_OPEN"
+    },
+    {
+      "evidence_refs": [],
+      "form": "proc_macro_delegate_2",
+      "location": "cross-crate",
+      "next_review_trigger": "After the refreshed complete-source proof or the next API validation milestone; revisit actual shared property/rule declarations and all eight _2 cells.",
+      "status": "REQUIRED_OPEN"
+    }
+  ],
+  "artifact_policy": {
+    "availability_gate": "Missing, expired, corrupt or unbound artifacts cannot certify delivery; restore from the pinned Git object or rerun the affected check before crediting it.",
+    "classification": "REPO_SAFE",
+    "excluded_output_classes": [
+      "SENSITIVE_LOCAL",
+      "SECRET_NEVER_PERSIST"
+    ],
+    "large_logs": "Retain complete REPO_SAFE diagnostic and proof log blobs in the repository Git object store. Git stores these repeated textual outputs compressed internally; no verifier output is trimmed or normalized.",
+    "location": "verification/agones/runs under the verified PR/delivery commit; immutable manifests bind every full log with SHA-256.",
+    "provider": "Content-addressed Git object store in QuasarRay/agones",
+    "retention": "Keep referenced evidence commits reachable through the review branch and eventual agones-rs-dev history until their claims are explicitly superseded. Never prune the only retained artifact behind a live claim.",
+    "retrieval": "Fetch the delivery commit recorded in the ledger/PR receipt, then git show <verified-commit>:<run-receipt.log> to recover exact bytes. Check the receipt log_sha256 before accepting evidence.",
+    "run_history": {
+      "canonical_jobs": "Only nonterminal or incompletely finalized receipts are indexed in ledger jobs. Complete PASSED/FAILED receipts retain full intent/identity/source/command/results in the immutable run history.",
+      "immutable_receipts": "verification/agones/runs/*.json",
+      "logs": "The per-run receipt binds its exact log path and SHA-256. Existing artifact classification/retention policy remains in force.",
+      "recovery": "Inspect the indexed receipt and verify its current process identity before attaching, stopping or relaunching. A missing observation is not terminal."
+    },
+    "schema_version": 1,
+    "small_evidence": "Commit manifests, semantic IR, generation metadata, immutable states/transitions, gate records, replay instructions and the small local recovery bundle.",
+    "supplemental_ci": "GitHub Actions uploads are retained for 90 days as additional observations. They are never the sole retained artifact certifying a production proof."
+  },
+  "baseline_id": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "blockers": [
+    {
+      "detail": "Cargo initially failed direct registry connections, curl succeeds; testing disabled HTTP multiplexing. Offline cache lacks cgp.",
+      "id": "deps-network",
+      "resolution": "Production query configuration, default initialization, 17 runtime source assertions, four paired traces and one source-bound Bolero/Kani helper proof are retained; complete feature formal assurance and whole migration remain open.",
+      "status": "RESOLVED"
+    },
+    {
+      "detail": "Kani 0.68.0/CBMC 6.11.0 installed; cargo-bolero not yet installed. No proof is credited.",
+      "id": "bolero-cli",
+      "resolution": "Production query configuration, default initialization, 17 runtime source assertions, four paired traces and one source-bound Bolero/Kani helper proof are retained; complete feature formal assurance and whole migration remain open.",
+      "status": "RESOLVED"
+    }
+  ],
+  "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
+  "delivery": {
+    "acceptance": "Published 71be401 and actual CI merge b96e6499 have identical trees. All three jobs passed: 578 tests/0 failures/3 ignored, all four generation modes, lowering controls, resource Cargo fixtures and all four available strict proof selections. The fresh query-error proof has 1552 individual results and its original assertion/both covers pass. All 304 original GameServer relations remain formal-required; both complete-case timeouts are uncredited. All eight _2 cells/full migration/cleanup/lifecycle/live conformance and integration merge remain incomplete.",
+    "access": "GitHub app authorized as QuasarRay with push/admin; gh CLI unauthenticated; local .git writable",
+    "authorization": "User execution contract REQ-12/F4 and root AGENTS.MD milestone PR/merge workflow",
+    "checks": [
+      {
+        "cause": "Guidance existed locally at build/local-includes/AGENTS.MD but was ignored by Git and absent from clean CI checkout.",
+        "head": "d88f536cbd36fb2fd9ca75ced6fe23d7f7649762",
+        "job": 117684112233,
+        "merge_result_tested": "2cd2c0e239ba286a88923f8714881c2dffa92390",
+        "observed_results": {
+          "feature-bool-model-check": "SKIPPED",
+          "guidance": "FAILED",
+          "rust": "SKIPPED",
+          "state_gate": "PASSED"
+        },
+        "pull_request": "https://github.com/QuasarRay/agones/pull/92",
+        "repair": "Version the required ignored pointer explicitly, and make guidance-check reject unversioned instruction files. Do not rerun unchanged local proofs; the always-run evidence gate validates their source bindings.",
+        "schema_version": 1,
+        "status": "FAILED",
+        "workflow_run": 39130365636
+      },
+      {
+        "evidence": "verification/agones/ci/39131256675-success.json",
+        "head": "024e6fc06dc60cfc6d839b76f6e5504aa4413dba",
+        "merge_result_tested": "456c7b2b6a8b10bea0dc72b9239f7740df15f983",
+        "observed_results": {
+          "feature-bool-model-check": "PASSED",
+          "migration-state": "PASSED",
+          "rust": "PASSED"
+        },
+        "status": "PASSED",
+        "workflow_run": 39131256675
+      },
+      {
+        "evidence": "verification/agones/ci/39137887160-success.json",
+        "head": "6909f07ac5cb08b1af78b251e26ac17342cef933",
+        "merge_result_tested": "5ccce76b2f56e8d5c83e9dcc301881e6ac239145",
+        "observed_results": {
+          "feature-bool-model-check": "PASSED",
+          "migration-state": "PASSED",
+          "rust": "PASSED"
+        },
+        "status": "PASSED",
+        "workflow_run": 39137887160
+      },
+      {
+        "evidence": "verification/agones/ci/39144973597-success.json",
+        "head": "cf2fcb7139739c5f26e6155e3fa9c3b431887863",
+        "merge_result_tested": "e3032088d9c7c0b6f511386ce248290074dc7622",
+        "observed_results": {
+          "feature-bool-model-check": "PASSED",
+          "migration-state": "PASSED",
+          "rust": "PASSED"
+        },
+        "observed_rust_tests": {
+          "failed": 0,
+          "ignored": 3,
+          "passed": 537
+        },
+        "status": "PASSED",
+        "workflow_run": 39144973597
+      },
+      {
+        "evidence": "verification/agones/ci/39157296121-in-progress.json",
+        "head": "5f6f3c44bcb2a36125b7b0e7038efe294f2d8c93",
+        "status": "IN_PROGRESS",
+        "workflow_run": 39157296121
+      },
+      {
+        "available_exact_proof_selections": 3,
+        "evidence": "verification/agones/ci/39157296121-success.json",
+        "head": "5f6f3c44bcb2a36125b7b0e7038efe294f2d8c93",
+        "merge_result_tested": "f259ff12e4a996651ce598b7bfe1fb4a3fa374e0",
+        "observed_results": {
+          "feature-bool-model-check": "PASSED",
+          "migration-state": "PASSED",
+          "rust": "PASSED"
+        },
+        "observed_rust_tests": {
+          "failed": 0,
+          "ignored": 3,
+          "passed": 549
+        },
+        "status": "PASSED",
+        "workflow_run": 39157296121
+      },
+      {
+        "evidence": "verification/agones/ci/39166043228-in-progress.json",
+        "head": "e368327ebc0118acf868bf408f70effe1ada2a7a",
+        "status": "IN_PROGRESS",
+        "workflow_run": 39166043228
+      },
+      {
+        "available_exact_proof_selections": 4,
+        "evidence": "verification/agones/ci/39166043228-success.json",
+        "head": "e368327ebc0118acf868bf408f70effe1ada2a7a",
+        "merge_result_tested": "dcd16107ca810549583c6077566c12e536ade9fd",
+        "observed_results": {
+          "feature-bool-model-check": "PASSED",
+          "migration-state": "PASSED",
+          "rust": "PASSED"
+        },
+        "observed_rust_tests": {
+          "failed": 0,
+          "ignored": 3,
+          "passed": 557
+        },
+        "status": "PASSED",
+        "workflow_run": 39166043228
+      },
+      {
+        "evidence": "verification/agones/ci/39169460164-in-progress.json",
+        "head": "71be401007e93152d56704156767ced98c087e68",
+        "status": "IN_PROGRESS",
+        "workflow_run": 39169460164
+      },
+      {
+        "available_exact_proof_selections": 4,
+        "evidence": "verification/agones/ci/39169460164-success.json",
+        "generation_modes": 4,
+        "head": "71be401007e93152d56704156767ced98c087e68",
+        "merge_result_tested": "b96e6499fa84acfc2f0b3285c8b85eeac9a88f2b",
+        "observed_results": {
+          "feature-bool-model-check": "PASSED",
+          "migration-state": "PASSED",
+          "rust": "PASSED"
+        },
+        "observed_rust_tests": {
+          "failed": 0,
+          "ignored": 3,
+          "passed": 578
+        },
+        "status": "PASSED",
+        "workflow_run": 39169460164
+      }
+    ],
+    "expected_base": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "expected_head": "71be401007e93152d56704156767ced98c087e68",
+    "integration_branch": "agones-rs-dev",
+    "pending_ci": "verification/agones/ci/39144973597-in-progress.json",
+    "pending_publication": {
+      "local_checkpoint": "8c7e12706f7c1f9586409b15014a17ad7194b7b4",
+      "parent": "024e6fc06dc60cfc6d839b76f6e5504aa4413dba",
+      "recovery": "verification/agones/publication-bridge.json",
+      "scope": "CGP process input policy, source-case IR/runtime mapping, deterministic Genco harnesses, production sorted-entry storage and strict result controls.",
+      "target_branch": "codex/agones-feature-gates-001"
+    },
+    "pull_requests": [
+      {
+        "draft": true,
+        "head": "71be401007e93152d56704156767ced98c087e68",
+        "merged": false,
+        "number": 92,
+        "url": "https://github.com/QuasarRay/agones/pull/92"
+      }
+    ],
+    "remote_result": "GAMESERVER_ALL_EXACT_HARNESSES_PUBLISHED_CI_PASSED_DRAFT_OPEN",
+    "required_checks": [
+      "migration-state",
+      "rust",
+      "feature-bool-model-check"
+    ],
+    "review_branch": "codex/agones-feature-gates-001",
+    "visible_checkout": "agones-rs-dev@71be401007e93152d56704156767ced98c087e68"
+  },
+  "goal": {
+    "objective_attachment": "/home/astral/.codex/attachments/5cf63dab-e5a8-49be-a2f1-ae51f5edd993/pasted-text-1.txt",
+    "reported_usage": {
+      "observed_at": 1792360679,
+      "time_seconds": 38217,
+      "tokens": 3108652
+    },
+    "status": "active",
+    "token_budget": null
+  },
+  "jobs": [
+    {
+      "attempt": 1,
+      "command": [
+        "prlimit",
+        "--as=8589934592",
+        "--",
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=15s",
+        "600s",
+        "env",
+        "CARGO_NET_OFFLINE=true",
+        "CARGO_BUILD_JOBS=2",
+        "/home/astral/.local/share/agones-rs/tools/cargo-bolero-0.13.4/bin/cargo-bolero",
+        "bolero",
+        "test",
+        "source_gs_case_000",
+        "--engine",
+        "kani"
+      ],
+      "cwd": "/home/astral/Projects/agones/crates/agones-core",
+      "exit_code": null,
+      "finished_at": null,
+      "log": "verification/agones/runs/gameserver-source-case-000-bolero-kani-5.log",
+      "owner_token": "b3738811b2af29d7ff5626a154b36d1c",
+      "pid": 552786,
+      "process_identity": "552786 (prlimit) D 552715 552715 552715 0 -1 4194304 24 0 0 0 0 0 0 0 16 -4 1 0 7012236 712704 114 18446744073709551615 94123052244992 94123052252177 140730285873168 0 0 0 0 0 0 1 0 0 17 0 0 0 0 0 0 94123052263536 94123052266016 94124084076544 140730285882711 140730285882952 140730285882952 140730285887463 0\n",
+      "receipt": "verification/agones/runs/gameserver-source-case-000-bolero-kani-5.json",
+      "resource_usage": "unknown; run timing and exit state are retained",
+      "source_binding_sha256": "0c187eaa9c9eb8be9583a258f6108025161abf25e92c66eed3a853a87cab58d6",
+      "started_at": "2026-10-18T23:07:33.406900+00:00",
+      "status": "RUNNING"
+    }
+  ],
+  "migration_status": "INCOMPLETE",
+  "previous_revision": 174,
+  "previous_sha256": "fb9e09a0629a17dd7011938b1da2d515d2ffb9f34bcc122a0c0034b700610352",
+  "refactoring_reviews": [
+    {
+      "affected_architecture_cells": [],
+      "candidate": "Existing cgp_getter/cgp_component/provider delegation; no new macro",
+      "decision": "REUSE_EXISTING",
+      "evidence_invalidation": "Any production refactor refreshes affected implementation/proof/integration bindings.",
+      "feature_binding": "FG-CONFIG-001",
+      "id": "bootstrap-ROI",
+      "next_review_trigger": "FG-CONFIG-001 implementation gate, before delivery",
+      "rationale": "Feature-gate configuration can use the same pinned CGP provider patterns as FleetAutoscaler admission. A new _2 framework has uncertain immediate ROI and is not a dependency. Retain all eight required cells."
+    },
+    {
+      "affected_architecture_cells": [
+        "proc_macro_2:both",
+        "proc_macro_attribute_2:both",
+        "proc_macro_derive_2:both",
+        "proc_macro_delegate_2:both"
+      ],
+      "candidate": "Three configured-context constructors and the existing invariant declarations",
+      "decision": "LEAVE_HANDWRITTEN",
+      "evidence_invalidation": "No production change; existing implementation gate remains current.",
+      "feature_binding": "verification/agones/gates/96e345d453843d6a8304a9ed7214b37ef4e1c5ebb9ade247312ba0a3e79c49d4.json",
+      "id": "FG-CONFIG-001-post-implementation",
+      "next_review_trigger": "After FG-CONFIG-001 property delivery or the next source family, reassess typed domain/harness repetition; derive consumer-path repair is a concrete future cross-crate adoption opportunity.",
+      "rationale": "The three short parse-and-map constructors share the existing CGP parser provider and domain types. A new authoring/staging layer would cost more construction, diagnosis and verification than those few lines save. Keep direct wiring. Existing Agones proc_macro2/Syn cores, CGP components and Genco remain the reuse path. Audit Arcane pin notes are already available; no new capability is needed for this feature."
+    },
+    {
+      "affected_architecture_cells": [
+        "proc_macro_2:same-logical-crate",
+        "proc_macro_2:cross-crate",
+        "proc_macro_attribute_2:same-logical-crate",
+        "proc_macro_attribute_2:cross-crate",
+        "proc_macro_derive_2:same-logical-crate",
+        "proc_macro_derive_2:cross-crate",
+        "proc_macro_delegate_2:same-logical-crate",
+        "proc_macro_delegate_2:cross-crate"
+      ],
+      "candidate": "Production defaults, raw-byte Go string domain, downstream provider composition and typed property generation",
+      "decision": "REUSE_EXISTING",
+      "evidence_invalidation": "Old constructor and UTF-8-only gates are superseded. Gate v3 and the new source-bound Kani run are current. Original source assertions compare unchanged after gate rebinding.",
+      "feature_binding": "verification/agones/gates/9bc7d7e7fc872f42369903027b46116bdc3a2fed1d783f66476870a1aa451357.json",
+      "id": "FG-CONFIG-001-final-call-path-review",
+      "next_review_trigger": "FG-INPUT-001 implementation gate; compare a small Genco exact-case emitter with existing invariant/macro facilities, and reassess the source-aware derive path as the next narrow cross-crate adoption opportunity.",
+      "rationale": "Default constructors and SDK environment propagation now call the existing CGP parser; the raw-byte consumer is the minimum needed to preserve Go string semantics. Existing CGP handles downstream composition without a new macro. New _2 staging would add compiler/IDE and maintenance work without paying for four short constructors. The concrete next automation candidate is the repeated typed source-case actions/assertions in the exact-case IR; use existing Genco after the next production input feature gate rather than building a generalized macro/compiler framework now. All four _2 forms and both locations remain mandatory, with no cell credited from ordinary CGP macros."
+    },
+    {
+      "affected_architecture_cells": [
+        "proc_macro_2:same-logical-crate",
+        "proc_macro_2:cross-crate",
+        "proc_macro_attribute_2:same-logical-crate",
+        "proc_macro_attribute_2:cross-crate",
+        "proc_macro_derive_2:same-logical-crate",
+        "proc_macro_derive_2:cross-crate",
+        "proc_macro_delegate_2:same-logical-crate",
+        "proc_macro_delegate_2:cross-crate"
+      ],
+      "architecture_status": "All eight required cells remain open; ordinary Genco/CGP reuse earns no _2 cell credit. The input getters and four short constructor paths do not justify a new staging framework.",
+      "candidate": "Exact-case IR actions/assertions require a compile-time Rust representation for the production core model checker.",
+      "decision": "REUSE_EXISTING",
+      "feature_binding": "verification/agones/gates/ed041966347da7f00c609be4a7fe9cee249ac758c13091192414cfe8f07eb60a.json",
+      "id": "FG-INPUT-001-post-implementation-review",
+      "next_review_trigger": "After the exact-case proof and input milestone, assess source-aware AgonesApiResource derive cross-crate hygiene in the next public API/resource feature, using the existing proc_macro2 expansion core.",
+      "rationale": "The existing runtime interpreter repeats 17 query assertions and now five input assertions; dynamic JSON is unsuitable for constant exact-case model checking. Reuse pinned Genco 0.17.10 already used by agones-rusternetes/build.rs for literal escaping and deterministic source emission. Add one narrow example consuming the existing typed IR and emitting only its five query cases, their source IDs, assertions and covers. Existing agones_invariant emits separate direct-Kani harnesses and an opaque boolean, without this metadata or the required shared backend route; it does not fill this gap. Arcane attribute/delegation transformation cores have no new role in emitting already typed literals. No new macro/staging/IR framework or semantic normalization is needed.",
+      "roi": "Five current cases/17 assertions and the next exact-case families otherwise require repeated handwritten harness edits, source-ID reviews and drift checks. A bounded emitter of roughly one small source file should remove that repeated work now and make exact selection mechanically checkable. Reuse escaping/formatting; keep semantic interpretation in existing typed IR and ordinary Rust. Validate deterministic output, source/gate freshness, all exact assertion IDs and nonempty covers. Stop at this family if production collection modeling dominates; keep adequate proof debt explicit rather than expanding a compiler framework.",
+      "validation_plan": "One deterministic Genco emitter, five source query cases/17 assertions, actual production core parser, shared Bolero/Kani harnesses with source-specific covers, and explicit unsupported environment/OS model boundaries."
+    },
+    {
+      "affected_architecture_cells": [],
+      "candidate": "Replace private BTreeMap representation of small feature/default/query dictionaries with sorted Vec entries while preserving public behavior.",
+      "decision": "SMALL_LOCAL_REFACTOR",
+      "feature_binding": "verification/agones/gates/0d2d3a29aee579674e55a0ae44b8fc54b3388dc3f55c6ca3414cab4d7e0c26b0.json",
+      "id": "FG-CONFIG-001-sorted-entry-refactor",
+      "next_review_trigger": "After the production collection refactor and its exact-case proof, return to the next Agones production feature and assess source-aware derive hygiene at the next public API/resource milestone.",
+      "rationale": "The exact production query proof at unwind 64 is expanding standard-library B-tree node parent-link and comparison loops even though its fixture has only two features. The current diagnostic run is bounded to 240 seconds and will be retained regardless of outcome. Directly modeling a different map under cfg(kani) would not establish production semantics. A sorted Vec is an ordinary production representation for this small dictionary, preserving byte-sorted encoding, first query value, last duplicate default, atomic replacement, arbitrary names/bytes and unbounded accepted input sizes. It removes B-tree node machinery from both production and its model without reducing any source case, invariant, cover or declared bound.",
+      "roi": "One local container change in features.rs replaces three private BTreeMap operations; no new public framework, macro or backend is introduced. Validate all existing query/configuration/process/source tests plus duplicate-default and map-order edge witnesses. The concrete payoff is completion of the already generated 17-assertion production proof and simpler storage plumbing for the fixed 15 production gates. If this does not address the observed B-tree expansion, stop representation work and schedule the remaining adequately bounded proof; never reduce proof obligations to obtain a pass.",
+      "source_failure_or_job": "verification/agones/runs/feature-query-bolero-kani-1.json"
+    },
+    {
+      "affected_architecture_cells": [
+        "proc_macro_2:same-logical-crate",
+        "proc_macro_2:cross-crate",
+        "proc_macro_attribute_2:same-logical-crate",
+        "proc_macro_attribute_2:cross-crate",
+        "proc_macro_derive_2:same-logical-crate",
+        "proc_macro_derive_2:cross-crate",
+        "proc_macro_delegate_2:same-logical-crate",
+        "proc_macro_delegate_2:cross-crate"
+      ],
+      "architecture_status": "All eight REQUIRED_OPEN, with no credited cell.",
+      "candidate": "Input capability/getter composition, four constructor paths, qualified CGP component imports, deterministic source-case emission and source-aware public resource derive hygiene.",
+      "decision": "REUSE_EXISTING",
+      "feature_binding": "verification/agones/gates/27be8ae70aa3bbfa59bf0bdc624ab4bbac4a75dd61ad9d36ede06e97e778411e.json",
+      "id": "FG-INPUT-001-checkpoint-review",
+      "next_review_trigger": "FG-ERROR-001 implementation gate: review any real quoting/table generation repetition. At the next public API/resource feature, compile the existing resource derive through an aliased downstream core path and reassess the narrowest proc_macro_derive_2 cross-crate authoring path. All other _2 forms/locations remain required and are reassessed at that same review.",
+      "observed_new_repetition": "Production FeatureGateInputContext, captured input tests and source-IR input context repeat getter/delegation wiring, but existing CGP macros already own it. Qualified provider paths need their component type in scope; the explicit import was sufficient here. Existing AgonesApiResource expansion remains the next concrete cross-crate hygiene candidate, using its current proc_macro2/Syn expansion core rather than a parallel generator.",
+      "rationale": "The added process/captured contexts reuse the same CGP input/query providers; four short constructors remain clear direct wiring. Reuse pinned Genco for exact typed actions, IDs, witnesses and fixed-case harnesses, and one shared strict result parser for existing boolean and new input/query evidence. The concrete standard-container expansion motivated one small private sorted-entry refactor, fully checked in production. The query proof still times out in formatting/allocation; stop representation/framework expansion and return to the concrete error-rendering feature. No macro aliases, ordinary derives or passed CGP composition tests satisfy _2 authoring/ergonomic cells.",
+      "roi": "Building same-logical-crate compiler staging now would add Cargo/IDE, diagnostic and maintenance work beyond the few declarations it removes. The small Genco emitter directly generated 17 existing source assertion identities and five required proof cases. Keep its scope bounded; do not fund a general compiler or proof framework from the required final architecture label."
+    },
+    {
+      "candidate": "Pinned Go strconv quoting and printable-rune data, emitted through the existing Genco example.",
+      "decision": "REUSE_EXISTING",
+      "feature": "FG-ERROR-001",
+      "id": "FG-ERROR-001-production-table-reuse",
+      "next_review_trigger": "FG-ERROR-001 implementation gate; review the actual renderer/table code and resume the pending fixed query cases only with a changed formatter closure.",
+      "rationale": "Rust Debug/lossy decoding does not preserve Go raw-byte escapes or Go Unicode printability. Reuse the installed pinned Go strconv.IsPrint and compare it with the independent Unicode category definition while compiling production range data. Extend the existing Genco emitter with one production-table mode and share its formatting helper; no macro or general quote/codegen framework. The table is an immediate implementation dependency, not test-obligation extraction.",
+      "roi": "A small fixed data compiler avoids manually maintaining hundreds of Unicode ranges and avoids a new Unicode-version dependency. Exact data and ordinary all-scalar comparison remove repeated future quoting/Unicode reasoning. Stop at feature error rendering; the required _2 architecture cells remain open.",
+      "scope": "One production Go string-quoting helper, a deterministic print-table compiler, the existing Genco emitter, source/license provenance and ordinary implementation checks. New error-specific semantic properties wait for the completed implementation gate."
+    },
+    {
+      "architecture_status": "All eight C3 form/location cells remain REQUIRED_OPEN. Existing CGP, Genco and ordinary proc-macro uses provide no _2 completion credit.",
+      "candidate": "Go quote renderer, generated Unicode ranges, error boundary wiring and three independently checked property families.",
+      "decision": "REUSE_EXISTING",
+      "feature_binding": "verification/agones/gates/d32a14a31007659a00ca450455e29f2279967330b6dac1aa6615c322aadd72d6.json",
+      "id": "FG-ERROR-001-post-gate-review",
+      "next_economical_adoption": "At the next public API/resource feature, test AgonesApiResource through an aliased downstream core dependency, reuse its existing proc_macro2 expansion, and reassess a narrow derive_2 authoring bridge. Reassess function-like, attribute and delegation forms against actual repeated declarations at that milestone.",
+      "next_review_trigger": "Next public API/resource milestone or new repeated CGP/provider/property plumbing, whichever comes first; continue Agones production features while required proof debt remains visible.",
+      "rationale": "The actual production formatter now uses one byte-preserving helper and the existing Genco emitter for its pinned table. Four consumer paths use the same CGP loader/error boundary. Keep seven short variant writes and nine explicit branch covers readable. The existing strict result parser already supports exact per-property statuses; extend only its feature selection. No repeated compiler staging or new general forwarding requirement appears in these changed paths.",
+      "reviewed_paths": [
+        "crates/agones-core/src/go_quote.rs",
+        "crates/agones-core/src/features.rs",
+        "crates/agones-rusternetes/examples/feature_case_codegen.rs",
+        "crates/agones-core/tests/feature_error_ascii_domain.rs",
+        "build/scripts/agones-rs/summarize_feature_proof.py"
+      ],
+      "roi": "Extending the existing Genco mode and parser is cheaper to maintain than a second generator or proof framework. The 741 fixed data ranges are automatically emitted; handwritten range data or new Unicode dependencies would duplicate pinned Go semantics. Same-logical-crate macro staging would add build/IDE/packaging cost beyond these few declarations; retain that required architecture work for a concrete authoring adoption."
+    },
+    {
+      "architecture_status": "All eight _2 cells remain required open; this pure helper and existing CGP/Genco usage satisfy none.",
+      "candidate": "One finite-width non-ASCII UTF-8 prefix decoder for quote and SDK JSON annotation boundaries.",
+      "configuration_fix": "Normal Cargo raw-byte invalidation has a retained failing regression; existing build scripts use write-if-changed output and a recheck for absent/non-UTF-8 profiles. Workspace dev configuration keeps ordinary repeated artifacts fresh. Existing gate/runner paths now bind Cargo configuration and declared environment hashes to prevent stale acceptance.",
+      "decision": "SMALL_LOCAL_REFACTOR",
+      "feature": "SDK-VERSION-001",
+      "id": "SDK-VERSION-001-shared-utf8",
+      "new_configuration_evidence": "Normal Cargo input checks now pass all eleven workspace/outside-workspace profiles, including raw-to-raw/default restoration. An unchanged workspace profile reports the core artifact fresh. The final shared-codec run rebinds the complete Cargo configuration source.",
+      "next_review_trigger": "SDK-VERSION-001 production gate and focused public resource derive hygiene/authoring review.",
+      "rationale": "The existing quote decoder is already checked against every valid non-ASCII scalar and all 32768 non-ASCII-leading two-byte inputs. Version normalization needs the same classification. Reuse that production decoder with explicit at-most-three continuation operations, preserving source overlong/surrogate/range checks, and retain each caller output policy. Make private quote hex output explicitly bounded by the source maximum eight digits. Both changes preserve the full public input domain.",
+      "roi": "Two real consumers otherwise require separate UTF-8 validity reasoning and validation. Retained Kani traces show the generic quote continuation loops unrolling to the global bound, so explicit source-defined finite widths remove an observed expansion cost without substituting a test implementation. Stop at these two consumers; no general string/runtime/proof framework."
+    },
+    {
+      "architecture_status": "All eight _2 form/location cells remain REQUIRED_OPEN; existing stock macro imports, token helper calls and CGP/Genco use provide no cell credit.",
+      "candidate": "Shared byte observation, version CGP declarations, source-case/metadata generation and common-domain harness repetition.",
+      "decision": "REUSE_EXISTING",
+      "feature_binding": "verification/agones/gates/5b802db996e5b26adf009be64d6d5ac8db2429f9416bd5d26050ff7252ac0488.json",
+      "id": "SDK-VERSION-001-post-gate-review",
+      "next_economical_adoption": "After the SDK typed properties and first adequate backend result, evaluate one common-domain declaration/metadata expansion using current agones-macros/Genco cores; exercise resource derive through a Cargo-renamed dependency at the next resource-derived consumer. Local definition/native invocation, acyclic automatic staging and packaging gaps must remain explicit.",
+      "next_review_trigger": "First adequate SDK property result or next resource-derived consumer, whichever comes first; reassess all eight C3 cells then.",
+      "observations": "Two real UTF-8 consumers now share the existing source-compatible decoder with finite width operations. Five actual domain/adapter paths consume one CGP version capability. Existing agones_invariant still rejects metadata arguments and emits distinct Bolero/direct-Kani harnesses, so unchanged use cannot certify the required common frontend/backend/domain contract. The existing resource derive crate-root hygiene limitation remains a separate required repair; this version context introduces no new resource derive.",
+      "rationale": "Reuse current CGP getters/providers, pinned Genco and the package-aware loader. Extend only the active SDK source family after its gate. Keep typed source fixture construction and independent invariants explicit. Avoid an unproved new compiler-staging layer merely to remove a few wrapper declarations.",
+      "roi": "The new width refactor removes actual duplicated UTF-8 reasoning and a logged symbolic loop hotspot. Existing Genco/typed IR can remove repeated case/harness bookkeeping at lower current build, diagnostic and packaging cost than a new four-form compiler bridge. Reassess the observed four common-domain families at the first adequate SDK property proof, using the existing proc_macro2 expansion cores as the smallest adoption point."
+    },
+    {
+      "architecture_status": "All eight form/location cells remain REQUIRED_OPEN; no cell credit is granted by this review, Genco mode or stock macro import.",
+      "candidate": "Common-domain attributes and metadata; resource derive crate-path hygiene; all four required _2 forms in both locations.",
+      "decision": "REUSE_EXISTING",
+      "feature_binding": "verification/agones/gates/67c860de02f9ead2c2105c6322811a0a41a90c91170118bd9d536ab041955e92.json",
+      "id": "SDK-VERSION-001-source-and-proof-review",
+      "next_economical_adoption": "Resource-derive crate-path hygiene using its current shared expansion core and an actual renamed-dependency consumer; retain automatic local-definition/staging and full packaging work explicitly.",
+      "next_review_trigger": "At the next resource-derived production consumer, before expanding its API plumbing; otherwise no later than the next production feature milestone.",
+      "observations": "Current version policy uses one CGP getter/provider at five real consumers. Exact source capture reuses the package loader; the existing Genco example now emits the exact Fleet fixture and two original assertion identities. Four hand-written common-domain families have distinct reference/invariant semantics, with short shared wrappers; a new compiler staging framework would not remove their substantive work. Three concrete canonical nil-slice fields now share one GoSlice owner. The refactored shared UTF-8 decoder serves quote and version observation. One original query-error assertion completed its adequate existing harness.",
+      "rationale": "Continue CGP and narrow Genco reuse. Keep independent models/invariants explicit. Existing agones_invariant is not a common Bolero/Kani/domain declaration and unchanged import is not local _2 authoring. The actual source fixture transport repair justifies GoSlice without a generalized schema compiler.",
+      "reused_generation_modes": [
+        "feature queries: five cases/17 assertion identities",
+        "Go printable-rune production table: 741 ranges",
+        "SDK version: exact source Fleet fixture/two assertions; 17 GameServer cases remain formal-required"
+      ],
+      "roi": "Four short domain wrappers do not justify a new automatic staging system now, particularly while actual std allocation/BTreeMap paths dominate proof cost. A concrete resource-derive crate-path bug is the next narrow reuse opportunity; repair its current proc_macro2 expansion core with an ordinary Cargo-renamed consumer when the next resource consumer is implemented. Reassess rather than equating hygiene repair with a completed _2 cell."
+    },
+    {
+      "architecture_status": "All eight _2 cells remain required open. Reassess existing resource-derive expansion hygiene and all forms during the bounded post-gate review.",
+      "candidate": "GameServer defaulting CGP policy, source empty-string/omitempty checks and nullable collections.",
+      "decision": "REUSE_EXISTING",
+      "evidence": "Six option-enum defaults currently test only None, four spec/status map fields share Go omitempty length semantics, and three additional concrete slice fields require nil preservation. The actual mutation admission currently discards configured PlayerTracking.",
+      "fresh_null_value_decode": "The ordinary source witnesses exposed omitted spec and null non-pointer values. Reuse one serde Option<T>/Default adapter for fresh decoding of declared canonical value fields, preserving field types and explicit GoSlice nil values. It does not prove raw duplicate-key decoding or all Kubernetes schema/quantity conversions.",
+      "id": "GS-DEFAULTS-001-implementation-reuse",
+      "next_review_trigger": "GS-DEFAULTS-001 ordinary implementation gate, before property extraction.",
+      "rationale": "Reuse AgonesStringEnum AsRef<str>/as_str, existing CGP getters/providers and build identity, GoSlice and the current admission diff. One narrow source-string-empty predicate and map-empty serde predicate eliminate repeated inconsistent checks; ordinary Rust retains the domain algorithm while a CGP capability selects it and its dependencies.",
+      "resources_owner": "A declared Container.resources value replaces opaque extension ownership; existing resource constructions were moved to that field. Nil player status and required status keys now serialize with source null/empty values.",
+      "roi": "The repetitions and bugs exist in the selected feature now. Small predicates, three type substitutions and compiler-guided constructor conversions cost less than duplicate nullable adapters or schema machinery. A single defaulter capability avoids another algorithm copy in admission and minimal contexts. No new macro/substrate or alternate orchestrator is needed.",
+      "scope_limit": "Complete the source GameServer/Spec/status defaulting and reachable creation consumers, run ordinary source witnesses and gate before new semantic extraction. Audit the required wire fields rather than certifying only the existing SDK projection."
+    },
+    {
+      "architecture_status": "All eight _2 form/location cells remain REQUIRED_OPEN. An ordinary cross-crate derive test is not the required _2 authoring matrix.",
+      "candidate": "Repair existing resource derive crate-root hygiene and generic forwarding in its current proc_macro2 expansion core.",
+      "decision": "SMALL_LOCAL_REFACTOR",
+      "evidence": "The contract records crate::AgonesApiResource as a known downstream failure. The new actual admission and existing resource consumers rely on the same generated resource identity; the current derive also drops declared generics/where clauses. Current new CGP declarations reuse getters/providers; 47 value fields already share a seven-line serde adapter.",
+      "feature_binding": "verification/agones/gates/415bc75725ed3575641cd554d56a9a8f5366dac80e6b9d7dd4b437a7859502f3.json",
+      "id": "GS-DEFAULTS-001-post-gate-resource-hygiene",
+      "next_review_trigger": "First adequate GameServer defaulting proof or next canonical API/resource milestone, whichever is first; review all eight cells and current repeated property/field declarations then.",
+      "other_candidates": "A new null-metadata attribute would remove 47 annotations but needs source-field/type policy and cross-crate runtime paths. Reuse the shared serde adapter now; reassess generation at the next canonical API family with known field coverage.",
+      "rationale": "Reuse already locked/cached proc-macro-crate 3.5.0 plus existing Syn/quote expansion. Resolve actual Cargo aliases, support an explicit facade path, preserve generics, and exercise normal Cargo integration/renamed fixtures without a trait imported at the caller root. No new compiler bridge, scheduler, registry, orchestrator or parallel generator.",
+      "roi": "One small path resolver and generic forwarding remove a concrete repeated macro integration trap across all existing API identities and future resource consumers. The dependency already exists in the lockfile. Bound the repair to this derive and focused Cargo fixtures; do not turn it into a new authoring/staging system or automatic null-attribute compiler."
+    },
+    {
+      "architecture_status": "All eight _2 form/location cells remain REQUIRED_OPEN. Ordinary derive hygiene and CGP/Genco reuse provide no _2 authoring-cell credit.",
+      "candidate": "Typed exact-case fixtures, observation/harness generation, shared property declarations and the required four-form _2 family.",
+      "decision": "REUSE_EXISTING",
+      "feature_binding": "verification/agones/gates/90ecffab80af35e8b2ec88ba1367b66fc73e5b87a7b53f8d4b0dfff2e883cb00.json",
+      "id": "GS-DEFAULTS-001-health-and-source-review",
+      "next_review_trigger": "After the first generated adequate original GameServer case proof, or the next canonical API milestone if proof decomposition is deferred; evaluate shared typed property declarations and all eight _2 cells then.",
+      "observations": "The actual CGP defaulting provider runs in the default, captured and Rusternetes admission contexts. Existing resource expansion now handles Cargo aliases/facades/generics with five targeted Cargo cases and same-package integration. The typed source loader captures all 304 executed original assertions, including exact conditional selection; three zero-occurrence site declarations are retained. The new health proof has three semantic claims/eight covers with a required twelve-byte array comparison, so unwind sixteen is adequate while eight failed. Global CBMC pointer rows without locations are retained separately and cannot masquerade as located semantic claims.",
+      "rationale": "Extend the current Genco source emitter for the active 17-case family instead of hand-copying 304 assertions or adding a parallel generator. Reuse the existing proc_macro2 expansion core and repaired crate-path handling. Five common-domain families now expose recurring wrapper/metadata plumbing, but their references/invariants remain distinct and must not be collapsed into opaque predicates.",
+      "roi": "Current concrete repetition is 17 typed fixtures and 304 source assertion occurrences. Existing Genco/typed IR removes that repetition with reviewable ownership at lower current build/staging/diagnostic cost than a new general compiler system. Reassess a small typed property-declaration core after this source emitter provides a real consumer."
+    },
+    {
+      "architecture_status": "All eight required _2 cells remain REQUIRED_OPEN. Existing CGP macro families and Genco remove declaration repetition here; new _2 authoring machinery would not remove this runtime initialization cost. Reassess typed property declarations using the now-real 17-case consumer at the next adequate source proof or API milestone.",
+      "candidate": "Avoid repeated sorting/comparison when materializing the existing sorted unique source default table; retain generic custom-table semantics.",
+      "decision": "SMALL_LOCAL_REFACTOR",
+      "feature_binding": "verification/agones/gates/90ecffab80af35e8b2ec88ba1367b66fc73e5b87a7b53f8d4b0dfff2e883cb00.json",
+      "id": "GS-DEFAULTS-001-canonical-default-initialization",
+      "next_review_trigger": "After the first adequate original GameServer case proof, or the next API validation milestone if the full proof remains inconclusive; revisit property declarations and all eight _2 cells.",
+      "observations": "The full case-014 run preserves all original observations but timed out with zero individual results. It recorded 23388 memcmp loop iterations and 360 binary-search iterations while reaching seven of fifteen source defaults. All 17 typed source fixtures/304 assertions already run; 577 workspace tests pass.",
+      "reuse": "Current CGP providers and Genco emitter remain owners of policy and typed properties; no additional framework/library is needed.",
+      "roi": "A narrow identity-bound direct collect removes repeated comparisons for all actual default contexts and every generated whole source case. It reuses standard iterators, the one canonical data table and existing fallback. Small implementation/control cost versus repeated complete-case timeouts; no domain, source assertion, cover or unwind reduction."
+    },
+    {
+      "architecture_status": "All eight _2 form/location cells remain REQUIRED_OPEN. This bookkeeping filter is not macro authoring credit; the real 17-case Genco consumer remains the next opportunity to evaluate economical typed property declarations.",
+      "candidate": "Stop copying complete terminal job records into every canonical ledger checkpoint.",
+      "decision": "SMALL_LOCAL_REFACTOR",
+      "feature_binding": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+      "id": "GS-DEFAULTS-001-compact-run-history-index",
+      "next_review_trigger": "After the first adequate complete GameServer source proof or the next API validation milestone; revisit source-property plumbing and all eight _2 cells.",
+      "observations": {
+        "active_rows_before": 0,
+        "ledger_bytes_before": 377535,
+        "terminal_job_json_bytes_before": 309944,
+        "terminal_job_rows": 275
+      },
+      "roi": "Every checkpoint currently recopies roughly 310 KB of terminal job metadata already retained in immutable per-run receipts, with repeated historical snapshots multiplying storage and retrieval cost. A conservative terminal-completeness filter removes the duplication without deleting evidence or weakening source/proof checks. Active or incomplete receipts remain recoverable; no new scheduler/database/schema is introduced.",
+      "validation": "Use a real bounded run: verify its live process identity, checkpoint while running, require it in jobs, wait for its terminal receipt, checkpoint again, require its history/hashed log retained and the live index empty. Preserve previous snapshots and full history."
+    },
+    {
+      "architecture_status": "All eight _2 form/location cells remain REQUIRED_OPEN. Ordinary native macro hygiene, Genco output and this source proof give no authoring-cell credit.",
+      "candidate": "Shared typed exact-case/property declarations and coherent _2 authoring support.",
+      "decision": "REUSE_EXISTING",
+      "feature_binding": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+      "id": "GS-DEFAULTS-001-first-exact-proof-review",
+      "next_economical_adoption_opportunity": "At GameServer validation/admission parity, inspect repeated rule/derive/attribute/provider forwarding in crates/agones-core/src/gameserver.rs and crates/agones-rusternetes/src/gameserver_admission.rs against the existing proc_macro2/CGP expansion facilities and recorded Arcane core/shim/facade reuse. Choose only a concrete minimal _2 consumer passing G1.",
+      "next_review_trigger": "After the remaining exact GameServer campaign or the next API validation milestone, whichever occurs first; re-evaluate real property/validation declaration repetition and all eight _2 cells.",
+      "observations": "The first complete source case now has 18 successful original assertions/two satisfied covers. All 17 wrappers are already emitted from one Genco site; the earlier source lifetime cut and new fixed-literal construction address concrete std-model costs without changing production. Five existing common-domain/property families remain distinct.",
+      "roi": "Another declaration macro for these 17 wrappers would replace a small single emission site while adding host/shim/manifest/diagnostic and eight-cell validation work. That particular approach has no positive current ROI. Reuse Genco/std ownership tools for this packet; do not dilute the required final _2 family."
+    },
+    {
+      "architecture_status": "All eight required _2 cells remain REQUIRED_OPEN; existing CGP/Genco own these boundaries. Static-name ownership supplies no _2 authoring credit.",
+      "candidate": "Borrow the immutable static feature names already guaranteed by HasFeatureGateDefaults; retain owned per-context boolean state.",
+      "decision": "SMALL_LOCAL_REFACTOR",
+      "feature_binding": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+      "id": "GS-DEFAULTS-001-static-feature-name-ownership",
+      "next_review_trigger": "After the refreshed complete-source proof or the next API validation milestone; revisit actual shared property/rule declarations and all eight _2 cells.",
+      "observations": "The consumer capability returns &[(&static str,bool)]. All valid feature keys originate in that dictionary; parser inputs only select existing names. Current FeatureGates allocates/clones fifteen owned names on canonical construction, adding heap and per-element destruction without observable value changes.",
+      "roi": "Use the existing static-lifetime guarantee and standard references, remove redundant allocations and key cloning for every actual context, and reduce verification heap/destruction costs. No new library/macro/framework, input restriction, predicate change or smaller proof bound is required.",
+      "validation": "Locked complete workspace, source/Go byte observations and all original typed cases; inspect cloned/retained flags after a temporary custom-default context ends. Reopen/refresh every affected source proof and gate."
+    }
+  ],
+  "revision": 175,
+  "schema_version": 1,
+  "scope_id": "agones-original-v1",
+  "work_items": [
+    {
+      "dependencies": [
+        "Existing canonical GameServer/Fleet types and Rusternetes Pod builder; independent of retained feature-gate formal debt"
+      ],
+      "disposition": "READY",
+      "evidence_refs": [
+        "verification/agones/sdk-version-evidence.json"
+      ],
+      "feature_ids": [
+        "source-sdk-version-annotation-policy"
+      ],
+      "id": "SDK-VERSION-001",
+      "implementation_gate": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json",
+      "next_action": "Complete the GS-DEFAULTS-001 production repair, rerun affected ordinary checks, then revalidate this feature and unchanged source obligations.",
+      "owned_paths": [
+        "crates/agones-core/src/gameserver.rs",
+        "crates/agones-core/src/fleet.rs",
+        "crates/agones-rusternetes/src/lib.rs"
+      ],
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-04",
+        "REQ-05",
+        "REQ-08",
+        "REQ-09"
+      ],
+      "source_config_binding": {
+        "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+        "files": {
+          "pkg/apis/agones/v1/fleet.go": "52ff0dd6d1b3f8ac7feed3ba35356c16434a8ca77f531eff3434cb3ad25f0e28",
+          "pkg/apis/agones/v1/gameserver.go": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
+          "pkg/version.go": "18a321dd868bdf897742490dde06040a35be996dbef93f4aae7ebd855c85842d"
+        },
+        "implementation_order": "Reuse core CGP getters/providers and current domain/adapter algorithms; no new macro/compiler framework. This is metadata-only discovery, with source obligations retained in the baseline census for post-gate extraction.",
+        "next_refactoring_review": "At this public API/resource milestone, assess the existing resource derive through an aliased downstream path and the smallest justified _2 adoption, retaining all eight C3 cells.",
+        "observed_gap": "Original pkg.Version defaults to dev and is assigned to GameServer, Fleet and Pod SDK annotations. Rust uses Cargo package version 0.1.0, and its Pod builder inherits a preexisting GameServer annotation. The selected source policy must use one configured version identity and preserve source overwrite behavior.",
+        "remaining_scope": "Command logging, sidecar image command defaults, full build/package lifecycle and all other original surfaces remain separately required; this annotation policy cannot certify those consumers."
+      },
+      "stage": "EXTRACTING",
+      "test_ids": []
+    },
+    {
+      "dependencies": [
+        "FG-CONFIG-001 query policy",
+        "FG-INPUT-001 production configuration"
+      ],
+      "disposition": "READY",
+      "evidence_refs": [
+        "verification/agones/feature-error-evidence.json"
+      ],
+      "feature_ids": [
+        "source-compatible-feature-gate-error-rendering"
+      ],
+      "id": "FG-ERROR-001",
+      "implementation_gate": "verification/agones/gates/dc202bfc413c6cb1dc126a24a5e59b2d7208fc86246d16fb1dea703361f7fee1.json",
+      "next_action": "Complete the GS-DEFAULTS-001 production repair, rerun affected ordinary checks, then revalidate this feature and unchanged source obligations.",
+      "owned_paths": [
+        "crates/agones-core/src/features.rs"
+      ],
+      "requirement_ids": [
+        "REQ-04",
+        "REQ-08",
+        "REQ-09",
+        "REQ-10"
+      ],
+      "source_config_binding": {
+        "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+        "economics": "Use ordinary Rust helpers and existing Genco only if a concrete production data table is necessary. No generalized quote/compiler/proof framework. The formatter is a real observable parity gap and also an identified dependency of the retained exact-case proof.",
+        "gap": "Current Display uses Rust Debug/lossy Unicode for some raw-byte errors and does not match Go invalid-escape text. Exact application fatal/logging policy remains separate lifecycle work.",
+        "implementation_order": "Inspect the pinned source helpers, implement complete source-compatible error rendering through the current CGP error result boundary, test actual Go/Rust observations and ordinary consumers, and record a gate before new error-specific semantic obligation extraction. Preserve source/licensing/tool provenance if adapting standard-library tables or algorithms.",
+        "source": "pkg/util/runtime/features.go",
+        "source_helpers": [
+          "Go net/url EscapeError",
+          "Go strconv ParseBool/NumError",
+          "Go fmt/strconv quoted string rendering"
+        ]
+      },
+      "stage": "VERIFYING",
+      "test_ids": [
+        "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate::line-41"
+      ]
+    },
+    {
+      "dependencies": [
+        "FG-CONFIG-001 implementation gate"
+      ],
+      "disposition": "READY",
+      "evidence_refs": [
+        "verification/agones/feature-input-evidence.json"
+      ],
+      "feature_ids": [
+        "feature-gates-environment-cli-binding"
+      ],
+      "id": "FG-INPUT-001",
+      "implementation_gate": "verification/agones/gates/e8c0add29400293f53f42c235c595a8a5b1eb71084ab96d2fe82b7d733befe17.json",
+      "next_action": "Complete the GS-DEFAULTS-001 production repair, rerun affected ordinary checks, then revalidate this feature and unchanged source obligations.",
+      "owned_paths": [
+        "crates/agones-core/src/features.rs",
+        "crates/agones-rusternetes/src/creating_gameserver_controller.rs",
+        "crates/agones-rusternetes/src/fleetautoscaler_controller.rs"
+      ],
+      "requirement_ids": [
+        "REQ-04",
+        "REQ-05",
+        "REQ-08",
+        "REQ-09",
+        "REQ-10"
+      ],
+      "source_config_binding": {
+        "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+        "source": "pkg/util/runtime/features.go",
+        "test": "pkg/util/runtime/features_test.go"
+      },
+      "stage": "VERIFYING",
+      "test_ids": [
+        "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+      ]
+    },
+    {
+      "dependencies": [
+        "baseline-census-v1"
+      ],
+      "disposition": "READY",
+      "evidence_refs": [
+        "verification/agones/feature-config-evidence.json"
+      ],
+      "feature_ids": [
+        "feature-gates-configuration"
+      ],
+      "id": "FG-CONFIG-001",
+      "implementation_gate": "verification/agones/gates/0a28dbb0839337d1a4a88c53cb38062fb1ca2feec8e181d31aeccf908249b412.json",
+      "next_action": "Complete the GS-DEFAULTS-001 production repair, rerun affected ordinary checks, then revalidate this feature and unchanged source obligations.",
+      "owned_paths": [
+        "crates/agones-core/src/features.rs",
+        "crates/agones-rusternetes/src/creating_gameserver_controller.rs",
+        "crates/agones-rusternetes/src/fleetautoscaler_controller.rs"
+      ],
+      "requirement_ids": [
+        "REQ-04",
+        "REQ-05",
+        "REQ-08",
+        "REQ-09",
+        "REQ-10",
+        "REQ-11"
+      ],
+      "source_config_binding": {
+        "commit": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+        "source_path": "pkg/util/runtime/features.go"
+      },
+      "stage": "VERIFYING",
+      "test_ids": [
+        "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+        "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+      ]
+    },
+    {
+      "dependencies": [
+        "SDK-VERSION-001",
+        "FG-CONFIG-001"
+      ],
+      "disposition": "READY",
+      "evidence_refs": [
+        "verification/agones/gameserver-defaulting-evidence.json",
+        "verification/agones/ci/39166043228-success.json",
+        "verification/agones/ci/39169460164-success.json"
+      ],
+      "feature_ids": [
+        "gameserver-spec-defaults",
+        "gameserver-status-defaults",
+        "gameserver-creation-defaulting"
+      ],
+      "id": "GS-DEFAULTS-001",
+      "implementation_gate": "verification/agones/gates/eee113e923b9a6d9e74cd466290d822c0048e54ddf13dae773dcc712346269e1.json",
+      "next_action": "Validate the explicit post-observation ownership/lifetime mapping described in verification/agones/gameserver-source-lifetime-review.json, then rerun the complete generated case 014. Preserve all 17 source fixtures/304 relations, actual production calls, exact domains, guards, bounds and covers; keep normal-destruction replay and separate required cleanup/lifecycle obligations.",
+      "owned_paths": [
+        "crates/agones-core/src/gameserver.rs",
+        "crates/agones-core/src/lib.rs",
+        "crates/agones-core/src/go_slice.rs",
+        "crates/agones-rusternetes/src/gameserver_admission.rs",
+        "verification/agones/gameserver-defaults-work-packet.json"
+      ],
+      "requirement_ids": [
+        "REQ-04",
+        "REQ-05",
+        "REQ-08",
+        "REQ-09",
+        "REQ-10",
+        "REQ-13"
+      ],
+      "source_config_binding": {
+        "packet": "verification/agones/gameserver-defaults-work-packet.json",
+        "packet_sha256": "d0e78542be16233cf43dd182624d9c0e53db4463356dde58e5282c55bf57b4fd",
+        "prerequisite_formal_debt_remains_open": true,
+        "prerequisite_implementation_gates_current": true
+      },
+      "stage": "IMPLEMENTED",
+      "test_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+      ]
+    }
+  ],
+  "workspace": {
+    "branch": "agones-rs-dev",
+    "dirty_patch_sha256": "7ee57276cad014e6a5c607338a00827c88cd6cb6f8c464892d122cd89a391366",
+    "head": "71be401007e93152d56704156767ced98c087e68",
+    "last_validated_implementation": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json",
+    "path": "/home/astral/Projects/agones",
+    "source_binding_receipt": "verification/agones/runs/gameserver-source-case-000-bolero-kani-5.json",
+    "untracked_inputs": [
+      "AGONES_RS_CONTINUATION_PROMPT.md",
+      "AGONES_RS_PROMPT_AUDIT_RESOLUTION.md"
+    ],
+    "untracked_source_binding_sha256": "0c187eaa9c9eb8be9583a258f6108025161abf25e92c66eed3a853a87cab58d6"
+  }
+}

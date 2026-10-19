@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "GAMESERVER_ALL_EXACT_HARNESSES_CI_VERIFIED",
+  "gate_snapshot": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+  "predecessor_revision": 151,
+  "predecessor_sha256": "829a64f56227f52e1f31f9a3b426229dfd154d2de8a723630c1436a93943d027",
+  "reason": "Published 71be401 passes all three CI jobs at the verified identical source/merge tree: 578 tests, four generation modes, lowering/resource controls and all four available strict proofs. Whole GameServer cases remain unproved; the source-bound ownership review is a next hypothesis only. Native Goal remains active and full migration incomplete.",
+  "result_revision": 152,
+  "schema_version": 1,
+  "state_sha256": "9842c85456c180540e4d768b284badf6d639ca2a2d4c286aa76fcafc3a44ee36",
+  "timestamp": "2026-10-18T21:58:45.533310+00:00"
+}

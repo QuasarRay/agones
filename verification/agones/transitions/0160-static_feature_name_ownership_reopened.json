@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "STATIC_FEATURE_NAME_OWNERSHIP_REOPENED",
+  "gate_snapshot": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+  "predecessor_revision": 159,
+  "predecessor_sha256": "6933838638a008bc2684061eb840c91c172f9a8561cd769518f7101d64a070f3",
+  "reason": "The defaults capability already guarantees static names; remove redundant owned-key allocation in actual FeatureGates while preserving independent bool state, ordering/duplicate/query behavior. Reopen current source proofs before changing the production representation; restore all original harness budgets to 64.",
+  "result_revision": 160,
+  "schema_version": 1,
+  "state_sha256": "822e876f7a71f85b7e645f100cbdfc6a712b3566e426d6929e81d0c49f3b6d45",
+  "timestamp": "2026-10-18T23:03:25.609042+00:00"
+}

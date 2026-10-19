@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "READONLY_QUERY_PAIRS_IMPLEMENTATION_GATED",
+  "gate_snapshot": "verification/agones/gates/a0d4a094cf50cc7f7f09841cf5d1c6000314857eb0b0e3c65346f7b4ddbd3ccd.json",
+  "predecessor_revision": 185,
+  "predecessor_sha256": "c8dc70a589ba2a215bfcac7cf9e128dde6788b14aacc692be58786b38900b54a",
+  "reason": "Current 579-test implementation reads immutable decoded pairs by reference, owns exact error bytes on failure and independent bool state, and borrows only static names promised by the capability. Original source payloads and every final unwind-64 harness remain. Refresh the exact basic source proof at this gate.",
+  "result_revision": 186,
+  "schema_version": 1,
+  "state_sha256": "4e96c7064a5ff181942aba8fd229e2f7997f89eb6e81610b99d56e9d6a3d75f1",
+  "timestamp": "2026-10-18T23:17:09.789052+00:00"
+}

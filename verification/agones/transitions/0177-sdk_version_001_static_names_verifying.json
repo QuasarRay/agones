@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_VERSION_001_STATIC_NAMES_VERIFYING",
+  "gate_snapshot": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json",
+  "predecessor_revision": 176,
+  "predecessor_sha256": "4a46fc01875613f9ffdccbfee9da4dfe82f12a89d9df34942e088cca54ed7f7d",
+  "reason": "579 locked all-target tests pass. Reuse unchanged original source payloads after static-name ownership/shared emitter refresh. Preserve every source identity, byte/numeric semantics and required proof; stale source cases are not current evidence.",
+  "result_revision": 177,
+  "schema_version": 1,
+  "state_sha256": "fc993184fa2f1dde324256e99b80159fffce56b52c7d419f62d41c7b98c54eb5",
+  "timestamp": "2026-10-18T23:11:07.178469+00:00"
+}

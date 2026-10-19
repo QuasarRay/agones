@@ -1,0 +1,21 @@
+{
+  "assurance": "No source relation, valid-domain value, cover, production effect or unwind check removed. This is an exact pre-return state-observation proof boundary; formal post-observation cleanup/lifecycle remains separate and required. No new proof credit before complete backend results.",
+  "base_commit": "71be401007e93152d56704156767ced98c087e68",
+  "checks": {
+    "all_17_domains_bounds_covers_function_selections_identical": true,
+    "all_17_harness_prefixes_through_final_observation_and_cover_identical": true,
+    "all_23_site_declarations_identical": true,
+    "all_304_original_assertion_declarations_identical": true,
+    "only_body_change": "Three explicit ownership handoffs after the final original assertion and required case cover, in both engines.",
+    "ordinary_full_fixture_output_test_uses_normal_destruction": true,
+    "source_ir_and_actual_production_files_unchanged": true
+  },
+  "feature_id": "GS-DEFAULTS-001",
+  "metadata_sha256": "b192667295493f608d91c36d5675655e2de7e025461a77a247d2f931e0463210",
+  "output_sha256": "8258650ffeb4d29b43d0e81e92532cae5332c05543069b8e607404d3629391bf",
+  "rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1",
+  "schema_version": 1,
+  "source_ir_sha256": "e74f5781d7addd7d76c902f8da93abd454bb5fea8d4ad596821c08828a594fe8",
+  "source_review": "verification/agones/gameserver-source-lifetime-review.json",
+  "status": "GENERATED_AND_ORDINARY_VALIDATED_NOT_FORMALLY_PROVED"
+}

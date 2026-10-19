@@ -1,0 +1,13 @@
+{
+  "expected_relation": "Actual Rust PartialEq over the complete Option/BTreeMap with every original typed literal field unchanged. Expected map owners are retained through ManuallyDrop, matching the observation boundary of the source expected fixture; no production map effect is replaced.",
+  "feature_id": "GS-DEFAULTS-001",
+  "generator_sha256": "723e28df1fd5ec935e2ba5c880f07d1a0de512843ad35c2706a2f79cf76ae793",
+  "prior_exact_case_reuse": "verification/agones/gameserver-case-014-proof-reuse.json",
+  "residual": "Counter/list complete-case proof results remain required; source map construction and owner policy supply no credit by themselves. Cleanup/lifecycle remains separate and required.",
+  "rule": "GS-DEFAULTS-001-MAP-LITERAL-1",
+  "runtime": "verification/agones/runs/gs-map-literal-runtime-1.json",
+  "schema_version": 1,
+  "source_ir_sha256": "e74f5781d7addd7d76c902f8da93abd454bb5fea8d4ad596821c08828a594fe8",
+  "source_map_fixture": "The original Counters fixture uses make(map) followed by games assignment. All emitted typed input objects and complete resulting objects are checked against exact captured Go JSON.",
+  "status": "GENERATED_AND_NATIVE_VALIDATED_FORMAL_COUNTER_CASE_PENDING"
+}

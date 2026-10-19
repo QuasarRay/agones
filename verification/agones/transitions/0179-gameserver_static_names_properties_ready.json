@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "GAMESERVER_STATIC_NAMES_PROPERTIES_READY",
+  "gate_snapshot": "verification/agones/gates/eee113e923b9a6d9e74cd466290d822c0048e54ddf13dae773dcc712346269e1.json",
+  "predecessor_revision": 178,
+  "predecessor_sha256": "ad18cf7b48b9fdc88ffc9cc643e9ff2faba68283e2a9befd7eb8d24f0679b113",
+  "reason": "Reuse complete exact source payloads and current typed harnesses. All source values/actions/relations/covers and unwind 64 remain; refresh complete source proofs under operational resource limits.",
+  "result_revision": 179,
+  "schema_version": 1,
+  "state_sha256": "87b1a8b9f9eaacd1fc293d588bfead9d06ccb532bff009b5e9b6dcda3cb4ba6f",
+  "timestamp": "2026-10-18T23:11:07.661541+00:00"
+}

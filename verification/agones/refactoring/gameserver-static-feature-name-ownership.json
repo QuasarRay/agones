@@ -1,0 +1,11 @@
+{
+  "architecture_status": "All eight required _2 cells remain REQUIRED_OPEN; existing CGP/Genco own these boundaries. Static-name ownership supplies no _2 authoring credit.",
+  "candidate": "Borrow the immutable static feature names already guaranteed by HasFeatureGateDefaults; retain owned per-context boolean state.",
+  "decision": "SMALL_LOCAL_REFACTOR",
+  "feature_binding": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+  "id": "GS-DEFAULTS-001-static-feature-name-ownership",
+  "next_review_trigger": "After the refreshed complete-source proof or the next API validation milestone; revisit actual shared property/rule declarations and all eight _2 cells.",
+  "observations": "The consumer capability returns &[(&static str,bool)]. All valid feature keys originate in that dictionary; parser inputs only select existing names. Current FeatureGates allocates/clones fifteen owned names on canonical construction, adding heap and per-element destruction without observable value changes.",
+  "roi": "Use the existing static-lifetime guarantee and standard references, remove redundant allocations and key cloning for every actual context, and reduce verification heap/destruction costs. No new library/macro/framework, input restriction, predicate change or smaller proof bound is required.",
+  "validation": "Locked complete workspace, source/Go byte observations and all original typed cases; inspect cloned/retained flags after a temporary custom-default context ends. Reopen/refresh every affected source proof and gate."
+}

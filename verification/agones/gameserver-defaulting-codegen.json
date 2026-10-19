@@ -3463,7 +3463,7 @@
   "fixture_mapping": "Whole captured canonical GameServer equals a typed constructor and round-trips exactly at generation and ordinary replay. Proof harnesses contain no JSON decoder. Source parse/assert/default/assert order and conditional assertion selection are retained.",
   "generator": "Genco 0.17.10 with pinned rustfmt",
   "generator_path": "crates/agones-rusternetes/examples/feature_case_codegen.rs",
-  "generator_sha256": "89138eb60c446c08e4cb6e6f75a5febf2f54372fdbf89488c323302b406fbe8a",
+  "generator_sha256": "44a262b50f09b00bdf3debc4b1243dbba0cbe0b8f22464dc678c6a32f0334581",
   "harnesses": [
     {
       "assertion_functions": [
@@ -3488,7 +3488,9 @@
       "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Counters",
       "feature_flags": "CountsAndLists=true",
       "fixture": "source_gs_fixture_000",
+      "fixture_materialization": "INDEPENDENT_CONSTANT_AFTER_NO_ERROR",
       "harness": "source_gs_case_000",
+      "lifetime_rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1",
       "preconditions": [],
       "raw_domain": "unit",
       "required_covers": [
@@ -3520,7 +3522,9 @@
       "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::CountsAndLists=true, Lists",
       "feature_flags": "CountsAndLists=true",
       "fixture": "source_gs_fixture_001",
+      "fixture_materialization": "INDEPENDENT_CONSTANT_AFTER_NO_ERROR",
       "harness": "source_gs_case_001",
+      "lifetime_rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1",
       "preconditions": [],
       "raw_domain": "unit",
       "required_covers": [
@@ -3554,6 +3558,7 @@
       "feature_flags": "",
       "fixture": "source_gs_fixture_002",
       "harness": "source_gs_case_002",
+      "lifetime_rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1",
       "preconditions": [],
       "raw_domain": "unit",
       "required_covers": [
@@ -3587,6 +3592,7 @@
       "feature_flags": "",
       "fixture": "source_gs_fixture_003",
       "harness": "source_gs_case_003",
+      "lifetime_rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1",
       "preconditions": [],
       "raw_domain": "unit",
       "required_covers": [
@@ -3620,6 +3626,7 @@
       "feature_flags": "",
       "fixture": "source_gs_fixture_004",
       "harness": "source_gs_case_004",
+      "lifetime_rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1",
       "preconditions": [],
       "raw_domain": "unit",
       "required_covers": [
@@ -3653,6 +3660,7 @@
       "feature_flags": "",
       "fixture": "source_gs_fixture_005",
       "harness": "source_gs_case_005",
+      "lifetime_rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1",
       "preconditions": [],
       "raw_domain": "unit",
       "required_covers": [
@@ -3686,6 +3694,7 @@
       "feature_flags": "",
       "fixture": "source_gs_fixture_006",
       "harness": "source_gs_case_006",
+      "lifetime_rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1",
       "preconditions": [],
       "raw_domain": "unit",
       "required_covers": [
@@ -3719,6 +3728,7 @@
       "feature_flags": "",
       "fixture": "source_gs_fixture_007",
       "harness": "source_gs_case_007",
+      "lifetime_rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1",
       "preconditions": [],
       "raw_domain": "unit",
       "required_covers": [
@@ -3752,6 +3762,7 @@
       "feature_flags": "",
       "fixture": "source_gs_fixture_008",
       "harness": "source_gs_case_008",
+      "lifetime_rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1",
       "preconditions": [],
       "raw_domain": "unit",
       "required_covers": [
@@ -3785,6 +3796,7 @@
       "feature_flags": "",
       "fixture": "source_gs_fixture_009",
       "harness": "source_gs_case_009",
+      "lifetime_rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1",
       "preconditions": [],
       "raw_domain": "unit",
       "required_covers": [
@@ -3818,6 +3830,7 @@
       "feature_flags": "",
       "fixture": "source_gs_fixture_010",
       "harness": "source_gs_case_010",
+      "lifetime_rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1",
       "preconditions": [],
       "raw_domain": "unit",
       "required_covers": [
@@ -3851,6 +3864,7 @@
       "feature_flags": "",
       "fixture": "source_gs_fixture_011",
       "harness": "source_gs_case_011",
+      "lifetime_rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1",
       "preconditions": [],
       "raw_domain": "unit",
       "required_covers": [
@@ -3884,6 +3898,7 @@
       "feature_flags": "",
       "fixture": "source_gs_fixture_012",
       "harness": "source_gs_case_012",
+      "lifetime_rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1",
       "preconditions": [],
       "raw_domain": "unit",
       "required_covers": [
@@ -3917,6 +3932,7 @@
       "feature_flags": "",
       "fixture": "source_gs_fixture_013",
       "harness": "source_gs_case_013",
+      "lifetime_rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1",
       "preconditions": [],
       "raw_domain": "unit",
       "required_covers": [
@@ -3950,6 +3966,7 @@
       "feature_flags": "",
       "fixture": "source_gs_fixture_014",
       "harness": "source_gs_case_014",
+      "lifetime_rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1",
       "preconditions": [],
       "raw_domain": "unit",
       "required_covers": [
@@ -3983,6 +4000,7 @@
       "feature_flags": "",
       "fixture": "source_gs_fixture_015",
       "harness": "source_gs_case_015",
+      "lifetime_rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1",
       "preconditions": [],
       "raw_domain": "unit",
       "required_covers": [
@@ -4016,6 +4034,7 @@
       "feature_flags": "",
       "fixture": "source_gs_fixture_016",
       "harness": "source_gs_case_016",
+      "lifetime_rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1",
       "preconditions": [],
       "raw_domain": "unit",
       "required_covers": [
@@ -4027,8 +4046,17 @@
   ],
   "ir": "verification/agones/gameserver-defaulting.ir.json",
   "ir_sha256": "e74f5781d7addd7d76c902f8da93abd454bb5fea8d4ad596821c08828a594fe8",
+  "lifetime_mapping": {
+    "boundary": "After every original state observation and the case cover, retain the harness-owned GameServer, parsed feature result and context through std::mem::forget in both engines. The source callback specifies no GC/deallocation observation or schedule.",
+    "constant_fixture_materialization": "For nonempty queries, the independent fixed typed fixture is physically allocated after the parser/NoError observation and before its first use. It contains no feature/global effects, and the parser has no fixture capability. The source input value and action/observation order are unchanged; allocation/GC schedules are not asserted by the source callback.",
+    "expected_map_literals": "Construct fixed expected maps through make/insert and retain their owner through ManuallyDrop while invoking actual PartialEq. This matches the source expected fixture ownership; no expected field/relation is omitted.",
+    "ordinary_cleanup": "The separate whole-fixture/output test exercises normal Rust destruction for every exact fixture.",
+    "production": "Actual parser and CGP/defaulting bodies, including all internal allocation/destruction effects, remain unchanged.",
+    "residual": "No formal post-observation heap-cleanup, application cleanup/lifecycle or executor credit; those obligations remain required separately.",
+    "rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1"
+  },
   "output": "crates/agones-core/tests/generated/gameserver_defaulting_cases.rs",
-  "output_sha256": "0e38d5021c33137b4e2b782ee86c1d74841d8ee4ba17942afd0a65857f342117",
+  "output_sha256": "c144e47059f49880099411cfedb9e7d2a2ad89665e28defd150cc4d72267277a",
   "schema_version": 1,
   "scope": "All 17 exact source cases and 304 executed occurrences only. Three zero-occurrence sites remain open. Sampling and generated/compiled harnesses give no formal credit. The 17 SDK version identities overlapping this family must not be double-counted; no generalized GameServer, admission, lifecycle or executor proof is claimed.",
   "source_assertion_sites": [

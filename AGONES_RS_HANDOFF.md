@@ -1,14 +1,14 @@
 # Agones-rs handoff
 
-Generated from AGONES_RS_STATE.json revision 150.
+Generated from AGONES_RS_STATE.json revision 210.
 Contract SHA-256: `45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1`.
 Original reference: `6eb4a02588d8e7b581de187f3bc849733a78dcb2`, scope `agones-original-v1`.
-Workspace: `agones-rs-dev` at `e368327ebc0118acf868bf408f70effe1ada2a7a`.
+Workspace: `agones-rs-dev` at `71be401007e93152d56704156767ced98c087e68`.
 Native Goal remains active; full migration is **INCOMPLETE**.
 
-Active work: **GS-DEFAULTS-001**, stage `VERIFYING`, disposition `READY`.
-Next action: Resolve a faithful Go-callback observation/lifetime mapping or proved decomposition for the complete generated GameServer case before another changed proof attempt. Preserve all 17 cases/304 original relations, adequate bounds/covers, real production calls, and separate cleanup/lifecycle obligations; do not repeat unchanged timeouts.
-Implementation gate: `verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json`.
+Active work: **GS-DEFAULTS-001**, stage `IMPLEMENTING`, disposition `READY`.
+Next action: Restore prior production representation, validate workspace and exact source-case proof reuse at its original production bindings; publish current checkpoint with required proof debt intact.
+Implementation gate: `verification/agones/gates/a0d4a094cf50cc7f7f09841cf5d1c6000314857eb0b0e3c65346f7b4ddbd3ccd.json`.
 
 Read the active source and affected contract appendices only. Baseline metadata is in
 `verification/agones/baseline.json`, `scope-v1.json`, `baseline-tree.tsv`, and `baseline-tests.json`.
@@ -19,10 +19,10 @@ not product implementation evidence; its old revised-prompt hash is historical.
 
 All 8 unverified `_2` form/location cells remain required architecture work.
 Last refactoring decision: SMALL_LOCAL_REFACTOR.
-Next review: After the first adequate complete GameServer source proof or the next API validation milestone; revisit source-property plumbing and all eight _2 cells..
+Next review: After the refreshed complete-source proof or the next API validation milestone; revisit actual shared property/rule declarations and all eight _2 cells..
 No new macros or general frameworks are prerequisites for the next ordinary feature.
 
-Delivery: `GAMESERVER_EXACT_HARNESSES_AND_CANONICAL_INITIALIZATION_PREPARED_NOT_PUBLISHED` to `agones-rs-dev`; never modify main.
+Delivery: `GAMESERVER_ALL_EXACT_HARNESSES_PUBLISHED_CI_PASSED_DRAFT_OPEN` to `agones-rs-dev`; never modify main.
 Connected GitHub app has write access; local gh CLI is logged out.
 Recover live jobs from the ledger and `verification/agones/runs/*.json` by comparing
 the stored process identity with /proc before waiting, attaching or stopping anything.

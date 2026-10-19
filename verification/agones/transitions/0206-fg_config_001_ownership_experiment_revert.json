@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "FG_CONFIG_001_OWNERSHIP_EXPERIMENT_REVERT",
+  "gate_snapshot": "verification/agones/gates/53102658b5397b22a8c87ab22fc86e78c34f71e781884fd478756d2349af899e.json",
+  "predecessor_revision": 205,
+  "predecessor_sha256": "53b9ab125a4fdfdc47943a99011b5b3b900fb8405a311a5f41022a45a6094597",
+  "reason": "Optional static-name/read-only iteration candidate exhausted solver memory at 6 and 8 GiB. Preserve candidate and all diagnostics, restore the previously verified production implementation, rerun ordinary checks, then revalidate exact component proof reuse.",
+  "result_revision": 206,
+  "schema_version": 1,
+  "state_sha256": "1703d87f85b2e9a2de8376f067cd757058b0177060d563014ff75090bf54c53e",
+  "timestamp": "2026-10-18T23:22:46.860907+00:00"
+}

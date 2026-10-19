@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "classification": "REPO_SAFE",
+  "status": "INCONCLUSIVE_SOLVER_MEMORY_NO_CREDIT",
+  "run": "verification/agones/runs/gameserver-source-case-014-bolero-kani-4.json",
+  "run_sha256": "7488fdf89eb837ff2f8d8df088a1807780e254c0a2a9d0c600464ea523a26309",
+  "log": "verification/agones/runs/gameserver-source-case-014-bolero-kani-4.log",
+  "log_sha256": "5e9a5901d1ac8f274c0cac7e3d159ac97291a34a24808a5475679bcaa673c6aa",
+  "implementation_gate": "verification/agones/gates/a0d4a094cf50cc7f7f09841cf5d1c6000314857eb0b0e3c65346f7b4ddbd3ccd.json",
+  "results": {
+    "SUCCESS": 5596,
+    "ERROR": 343,
+    "UNREACHABLE": 281,
+    "SATISFIABLE": 0,
+    "FAILURE": 0
+  },
+  "source_assertion_credit": 0,
+  "cover_credit": 0,
+  "diagnosis": "Solver ran out of memory during propositional reduction under an explicit 6 GiB per-process virtual-address-space limit. ERROR results are unresolved, not successful; zero reported failed checks does not certify the harness.",
+  "next_hypothesis": "One fresh run with 8 GiB virtual-address-space limit and /usr/bin/time -v measurement; same exact unit fixture, all 18 original relations, both covers, real production and unwind 64."
+}

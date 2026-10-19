@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_VERSION_001_FINAL_BINDINGS_IMPLEMENTED",
+  "gate_snapshot": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json",
+  "predecessor_revision": 198,
+  "predecessor_sha256": "1a65331d15fa38d03b9ff8efa0c9773a8a14b8ebbeb690cebd3ead55d5b18ab4",
+  "reason": "Current production static-name ownership and read-only query iteration passed 579 ordinary tests. Reused exact original IR payloads and all four deterministic generation checks; previous source-case proof remains historical until current-source backend results complete.",
+  "result_revision": 199,
+  "schema_version": 1,
+  "state_sha256": "32ec8f7cd9d29d2484a8057164f53f303505cece9017175875221fce39b69e0b",
+  "timestamp": "2026-10-18T23:21:56.415602+00:00"
+}

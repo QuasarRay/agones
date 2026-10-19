@@ -1,0 +1,23 @@
+{
+  "classification": "REPO_SAFE",
+  "cover_credit": 0,
+  "decision": "Revert optional private static-name ownership/read-only query iteration experiment. Preserve its exact candidate and patch; retain original complete-case production representation, fixed fixture/assertion semantics, global unwind 64, and observation-lifetime mapping.",
+  "diagnosis": "Same 343 ERROR checks remain after solver exhausted memory under 8 GiB virtual-address-space cap. No failed source assertion or completed cover witness; no credit.",
+  "elapsed_wall_seconds": 94.49,
+  "log": "verification/agones/runs/gameserver-source-case-014-bolero-kani-5.log",
+  "log_sha256": "1cb631ed546978de88abad43a6ca3209ceb423d6cae7a790754e46874be438aa",
+  "maximum_resident_set_kbytes": 7777956,
+  "resource_measurement_scope": "GNU time wraps the actual cargo-bolero command and its descendants, inside timeout; maximum resident set is a process-tree maximum rather than summed simultaneous RSS.",
+  "results": {
+    "ERROR": 343,
+    "FAILURE": 0,
+    "SATISFIED": 0,
+    "SUCCESS": 5596,
+    "UNREACHABLE": 281
+  },
+  "run": "verification/agones/runs/gameserver-source-case-014-bolero-kani-5.json",
+  "run_sha256": "8ae8065acb6adb5cbd1e861ce9dc12788be3d0742fb765c675ed96565a405299",
+  "schema_version": 1,
+  "source_assertion_credit": 0,
+  "status": "INCONCLUSIVE_SOLVER_MEMORY_NO_CREDIT"
+}

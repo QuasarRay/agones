@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_VERSION_001_QUERY_BORROWING_REOPENED",
+  "gate_snapshot": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json",
+  "predecessor_revision": 184,
+  "predecessor_sha256": "b862c644988342de0463210e7f097d83faad1a6938d18760c327c2924176eb79",
+  "reason": "Inspecting the remaining nonempty-query cost identifies owned IntoIter destruction for read-only decoded pairs. Borrow those pairs during parsing, preserving exact key/value errors and independent feature state; refresh affected bindings before source proof credit.",
+  "result_revision": 185,
+  "schema_version": 1,
+  "state_sha256": "c8dc70a589ba2a215bfcac7cf9e128dde6788b14aacc692be58786b38900b54a",
+  "timestamp": "2026-10-18T23:15:05.761086+00:00"
+}

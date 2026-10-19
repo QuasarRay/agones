@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
+  ],
+  "authorization": "User execution contract",
+  "event": "FG_INPUT_001_QUERY_BORROWING_REOPENED",
+  "gate_snapshot": "verification/agones/gates/e8c0add29400293f53f42c235c595a8a5b1eb71084ab96d2fe82b7d733befe17.json",
+  "predecessor_revision": 182,
+  "predecessor_sha256": "6c8660445d5a40403433a2fc6630583bcb971fab10a9e87302a034369ede990c",
+  "reason": "Inspecting the remaining nonempty-query cost identifies owned IntoIter destruction for read-only decoded pairs. Borrow those pairs during parsing, preserving exact key/value errors and independent feature state; refresh affected bindings before source proof credit.",
+  "result_revision": 183,
+  "schema_version": 1,
+  "state_sha256": "a46fbd716277f63ddc44e4eee0e7420d069d8e43d84019ffaafd8492e81fe43b",
+  "timestamp": "2026-10-18T23:15:05.474890+00:00"
+}

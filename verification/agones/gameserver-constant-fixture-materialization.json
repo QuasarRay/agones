@@ -1,0 +1,22 @@
+{
+  "deferred_harnesses": [
+    "source_gs_case_000",
+    "source_gs_case_001"
+  ],
+  "feature_id": "GS-DEFAULTS-001",
+  "mapping": "The source fixture is a fixed input value. Its typed representation is materialized after the independent parser/NoError observation and before ApplyDefaults for nonempty feature queries. No source observation reads GameServer before that point. Both operations are still executed in both engines.",
+  "metadata_sha256": "fd7ca68717e313a54dc5edb357f5c125c7b94c9d9065bb4a8975b6efdcdb3629",
+  "noninterference": [
+    "Actual FeatureGateContext parser consumes only context defaults and query bytes; it has no GameServer capability or reference.",
+    "Emitted fixtures contain only fixed public data/default constructors, standard containers and fixed string-enum conversions; no feature/global/context effects.",
+    "All original actions and relations, expected literal fields, exact domains, bounds and required covers are unchanged.",
+    "Whole typed before/after objects and every original relation still pass normal native replay; it also exercises normal Rust destruction."
+  ],
+  "original_case_014_reuse": "verification/agones/gameserver-case-014-proof-reuse.json",
+  "rule": "GS-DEFAULTS-001-CONSTANT-FIXTURE-MATERIALIZATION-1",
+  "runtime": "verification/agones/runs/gs-deferred-fixture-runtime-1.json",
+  "schema_version": 1,
+  "source_ir_sha256": "e74f5781d7addd7d76c902f8da93abd454bb5fea8d4ad596821c08828a594fe8",
+  "status": "NATIVE_VALIDATED_FORMAL_COUNTER_CASE_PENDING",
+  "trusted_boundary": "Allocator/OOM/GC schedules and post-observation cleanup are not source observations or claimed formally verified; their required external/lifecycle obligations remain separate."
+}

@@ -1,0 +1,24 @@
+{
+  "feature_id": "GS-DEFAULTS-001",
+  "implementation_gates": {
+    "FG-CONFIG-001": "verification/agones/gates/53102658b5397b22a8c87ab22fc86e78c34f71e781884fd478756d2349af899e.json",
+    "FG-ERROR-001": "verification/agones/gates/bbf74db72c0e2bf201f03ff0b1a26c2679f660200b7a270bb76dc57959186241.json",
+    "FG-INPUT-001": "verification/agones/gates/baacf06850ad2a7ff91ddb4ced9f10825cdb70200e29c3cc7419b9ac174f08bc.json",
+    "GS-DEFAULTS-001": "verification/agones/gates/a0d4a094cf50cc7f7f09841cf5d1c6000314857eb0b0e3c65346f7b4ddbd3ccd.json",
+    "SDK-VERSION-001": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json"
+  },
+  "ir_bindings": [
+    {
+      "original_payload_identical_to_71be401": true,
+      "path": "verification/agones/feature-gates.ir.json",
+      "sha256": "665304fa9ae7711d3f4b97844092eae23af33e667f67afc444b3f4b34efc3b7c"
+    },
+    {
+      "original_payload_identical_to_71be401": true,
+      "path": "verification/agones/gameserver-defaulting.ir.json",
+      "sha256": "a2bf62a783557f6186d3d7c77dc9d4c1058c889bf77191320fd465e6a4d68573"
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Only implementation receipt references changed. All original source inputs/actions/guards/expected relations and identities remain unchanged. Every final harness has unwind 64; the generated/native-only bound-32 candidate was superseded before model checking."
+}

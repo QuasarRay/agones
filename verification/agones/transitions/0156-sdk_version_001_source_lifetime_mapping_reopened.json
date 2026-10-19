@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "SDK_VERSION_001_SOURCE_LIFETIME_MAPPING_REOPENED",
+  "gate_snapshot": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json",
+  "predecessor_revision": 155,
+  "predecessor_sha256": "b6184e72ab5b8c1718a5775430a5a8478cb563055caafdba8c8fbf485244fc5c",
+  "reason": "The shared emitter gains an explicit original-callback observation/lifetime boundary. Reopen conservative generator/evidence bindings; runtime algorithms and all original source relations remain unchanged.",
+  "result_revision": 156,
+  "schema_version": 1,
+  "state_sha256": "e5515c18a7c5cfe1b66afd38385b6a595d0961bffd22e55b0454041d295f1137",
+  "timestamp": "2026-10-18T22:00:16.284319+00:00"
+}

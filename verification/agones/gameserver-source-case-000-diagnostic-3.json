@@ -1,0 +1,19 @@
+{
+  "credited_assertions": 0,
+  "diagnosis": "The complete counter case remains in symex with the nonempty query and pre-materialized independent GameServer fixture. Increasing the operational ceiling did not yield individual results.",
+  "feature_id": "GS-DEFAULTS-001",
+  "individual_results": 0,
+  "next_hypothesis": "Materialize the independent constant input fixture after the actual parser/NoError observation for nonempty queries. The parser accepts only context/query and cannot access the fixture. Fixture construction contains only fixed typed data/standard containers and no feature/global effects. Preserve every original source action, input value, relation, cover, bound and actual production call. Allocation/OOM/cleanup schedules are outside these state observations and remain separate required boundaries.",
+  "operational_limit_seconds": 600,
+  "resource_profile": [
+    "User time (seconds): 0.00",
+    "System time (seconds): 0.00",
+    "Elapsed (wall clock) time (h:mm:ss or m:ss): 10:00.00",
+    "Maximum resident set size (kbytes): 3424"
+  ],
+  "resource_profile_scope": "The time wrapper reports its timeout child, not escaped verifier descendants; descendant peak RSS/CPU is unknown. These numbers are not attributed to CBMC.",
+  "run": "verification/agones/runs/gameserver-source-case-000-bolero-kani-3.json",
+  "schema_version": 1,
+  "status": "INCONCLUSIVE_TIMEOUT_NO_CREDIT",
+  "unwind": 64
+}

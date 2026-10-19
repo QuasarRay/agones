@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "GS_DEFAULTS_001_FINAL_BINDINGS_PROPERTIES_READY",
+  "gate_snapshot": "verification/agones/gates/a0d4a094cf50cc7f7f09841cf5d1c6000314857eb0b0e3c65346f7b4ddbd3ccd.json",
+  "predecessor_revision": 203,
+  "predecessor_sha256": "59f9f46513a6e1263fe810ed24e8be310c77f6304f240de6a4a09186d3c8f54f",
+  "reason": "Current production static-name ownership and read-only query iteration passed 579 ordinary tests. Reused exact original IR payloads and all four deterministic generation checks; previous source-case proof remains historical until current-source backend results complete.",
+  "result_revision": 204,
+  "schema_version": 1,
+  "state_sha256": "4a49d3f0f91f3024634257f9f5e917dea7d14bdb0d5c54b41d8a9d7926686cf5",
+  "timestamp": "2026-10-18T23:21:57.519643+00:00"
+}

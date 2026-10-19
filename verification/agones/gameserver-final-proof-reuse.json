@@ -1,0 +1,51 @@
+{
+  "base_commit": "71be401007e93152d56704156767ced98c087e68",
+  "changed_paths_scope": "Feature map owns static borrowed names and per-context boolean state; decoded query pairs are borrowed while read and copied only into owned errors. The invalid-query exact case returns at unchanged parse_query(query)? before these changed regions. No GameServer exact-case or additional original assertion credit arises from this reuse. Current-source CI reruns all four selections.",
+  "checks": {
+    "provider_prefix_before_default_materialization_byte_identical": "c941a52dd04a104494970686c7f89cf587e8f2e306e72600ed3d7e8131c24b23",
+    "pure_bool_and_query_helpers_region_byte_identical": "c9e4075f65fe74f4591f446ed70356db32f3b15e7a1dc400fa39341b66242472",
+    "unchanged_files": {
+      "Cargo.lock": "6f853997b27aed6de6e6be6ad0b61af663bcfd29195d7ab3dbcbf1a18c7d2f0f",
+      "Cargo.toml": "f0c28c2ca73ba51fad682c9d35950d050b0839775d0eb609e7903c47743b5d00",
+      "crates/agones-core/Cargo.toml": "b9ff5ca08d252c07abce0e5ebb5f6a45dcbd874cebe4ba51712b5dde331b8bd6",
+      "crates/agones-core/src/build_version.rs": "e6560758de4332abe27a97a3f3b5794068f20e0b4092380658b1cfdc4ce7e1f7",
+      "crates/agones-core/src/feature_inputs.rs": "9cfaf42de485874339a58895991ad15adff787f363d9821a3ab7f0f4c36222d4",
+      "crates/agones-core/src/gameserver.rs": "342d6cf540fdf10f5fc5dccd99e042122afe3b7b1888ea592d5e6b1c044e7c93",
+      "crates/agones-core/src/generated/go_print_ranges.rs": "0b0dc1a240c33ca0e01d718f5120a0d5bd894e15740b4cf3888824a0a7e84a0b",
+      "crates/agones-core/src/go_quote.rs": "c0e5d196bb6089dd5c138e8c880964cabcf333a96d124377b370c61609c128b9",
+      "crates/agones-core/src/go_utf8.rs": "1178cb0dcc44e1369fa7576701d39e2b7a339343262197d2f6d891bc984158ba",
+      "crates/agones-core/src/version_annotation.rs": "9c7d5b402f759b0731d4957fe9732135f589054ed3b38a16839224b0c4b45493",
+      "crates/agones-core/tests/feature_bool_domain.rs": "f36542866193c88f464139f86d9d12fb6159276be8102e294754b00054a36f0a",
+      "crates/agones-core/tests/feature_input_domain.rs": "a041cfd5c7f4b54220abf5ed6964214a150c95df59e5de601ffb89f21478f124",
+      "crates/agones-core/tests/generated/feature_gate_cases.rs": "46f05e90380d2c292b4e888294e1dae11239b66e9a9e6c42f2bbfdd2c69a2b00",
+      "crates/agones-core/tests/health_defaulting_domain.rs": "196276511451a28c0e732775f16a8cec793176af2077a78479422709b205cb11"
+    }
+  },
+  "components": [
+    {
+      "harness": "feature_bool_common_domain",
+      "scope": "Pure parse_feature_bool body and byte helpers are byte-identical; harness never calls default materialization.",
+      "summary": "verification/agones/proof-summaries/gs-reused-bool.json"
+    },
+    {
+      "harness": "feature_input_common_domain",
+      "scope": "Pure optional-byte selector and its complete harness/width/domain are unchanged; no feature-map construction.",
+      "summary": "verification/agones/proof-summaries/gs-reused-input.json"
+    },
+    {
+      "harness": "source_query_case_003",
+      "scope": "The exact query-error fixture and all query decoding/error rendering/provider statements remain identical. The first fallible statement is parse_query(query)?; this invalid-query case returns there before calling from_defaults or reading the context default table. The stable alias contains the identical original constant.",
+      "summary": "verification/agones/proof-summaries/gs-reused-query.json"
+    },
+    {
+      "harness": "health_defaulting_common_domain",
+      "scope": "GameServerSpec::apply_defaults, health model/invariant and harness are unchanged. This pure spec observation does not parse features or construct a feature context.",
+      "summary": "verification/agones/proof-summaries/health-defaulting-source-contract.json"
+    }
+  ],
+  "current_features_sha256": "6bd5a96b38d74c6b975133f8d7115a9eb766bc78e02885f22178c3873f6d2bb7",
+  "feature_id": "GS-DEFAULTS-001",
+  "kind": "COMPONENT_LEVEL_PROOF_REUSE",
+  "schema_version": 1,
+  "workspace_validation": "verification/agones/runs/gs-borrowed-query-workspace-tests-1.json"
+}

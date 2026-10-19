@@ -1,0 +1,21 @@
+{
+  "base_commit": "71be401007e93152d56704156767ced98c087e68",
+  "current_sha256": "659242df5607b96964829ed3fb81ac5354f2c858ef812ccf708abda466ee04fe",
+  "feature_id": "GS-DEFAULTS-001",
+  "gate_replacements": {
+    "verification/agones/gates/72fea7e081d99bfed1c90858124ddb619347d5a23a0459f22d8aef37c50c1fe7.json": "verification/agones/gates/fa348e4c2adf3336290b237296e51b2e54692454cf88f43dc786ca85aea4822a.json",
+    "verification/agones/gates/853170740e44449a199e9af4c895c40fb2647e17e0fea749c5b98b3ab659c04b.json": "verification/agones/gates/9b727737def639904fa4ed80b9f160e6d715a1f816104faf9ecfd4aa55acc943.json",
+    "verification/agones/gates/f74516bd4e16e5abbacfe2694db7bfb89bf02d633da877472111a84c77a7913f.json": "verification/agones/gates/c566d4a228439184782c29036c301a731ec09f0594cbc7ad72c4cdb425779f7b.json"
+  },
+  "only_changed_fields": [
+    "implementation_gate",
+    "implementation_gate_sha256",
+    "input_implementation_gate",
+    "input_implementation_gate_sha256"
+  ],
+  "original_source_payload_unchanged": true,
+  "path": "verification/agones/feature-gates.ir.json",
+  "previous_sha256": "dd10c55ca7cdbeae657a080ec1b6cc77c977128b58f7e3f5293806c415f4c321",
+  "schema_version": 1,
+  "scope": "Reuse exact source query/input fixtures/actions/relations after conservative shared-generator receipt refresh; no semantic source extraction or proof credit is invented."
+}

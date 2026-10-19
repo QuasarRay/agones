@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "FG_CONFIG_001_SOURCE_LIFETIME_MAPPING_REOPENED",
+  "gate_snapshot": "verification/agones/gates/853170740e44449a199e9af4c895c40fb2647e17e0fea749c5b98b3ab659c04b.json",
+  "predecessor_revision": 152,
+  "predecessor_sha256": "9842c85456c180540e4d768b284badf6d639ca2a2d4c286aa76fcafc3a44ee36",
+  "reason": "The shared emitter gains an explicit original-callback observation/lifetime boundary. Reopen conservative generator/evidence bindings; runtime algorithms and all original source relations remain unchanged.",
+  "result_revision": 153,
+  "schema_version": 1,
+  "state_sha256": "d17192aee7c97f345e30f6563d4a89e3bdde9cce0510ed8f55c8fc494b7a7f7c",
+  "timestamp": "2026-10-18T22:00:15.805829+00:00"
+}

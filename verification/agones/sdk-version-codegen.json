@@ -13,7 +13,7 @@
   "feature_id": "SDK-VERSION-001",
   "fixture_mapping": "Whole captured Fleet fixture equals the emitted typed constructor at generation and ordinary replay; no JSON decoder is substituted into production or claimed formally verified.",
   "generator": "Genco 0.17.10 with pinned rustfmt",
-  "generator_sha256": "89138eb60c446c08e4cb6e6f75a5febf2f54372fdbf89488c323302b406fbe8a",
+  "generator_sha256": "44a262b50f09b00bdf3debc4b1243dbba0cbe0b8f22464dc678c6a32f0334581",
   "harness": "source_sdk_fleet_case",
   "ir": "verification/agones/sdk-version.ir.json",
   "ir_sha256": "c9afd76d8369d8d492907c1c63825a2b6f05d15293d28d42fb21b8c8420c6c50",

@@ -1,0 +1,265 @@
+{
+  "schema_version": 1,
+  "status": "IN_PROGRESS",
+  "head": "71be401007e93152d56704156767ced98c087e68",
+  "workflow_run": 39169460164,
+  "url": "https://github.com/QuasarRay/agones/actions/runs/39169460164",
+  "jobs": [
+    {
+      "id": 117799295874,
+      "name": "migration-state",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 39169460164,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install pinned state validator",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Validate source-bound implementation gate and ledger",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Check guidance inheritance",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Reject incomplete or vacuous proof results",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Select affected checks conservatively",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        }
+      ]
+    },
+    {
+      "id": 117799361002,
+      "name": "rust",
+      "status": "in_progress",
+      "conclusion": null,
+      "run_id": 39169460164,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Install pinned evidence Rust",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install native build dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Check workspace",
+          "status": "in_progress",
+          "conclusion": null,
+          "number": 5
+        },
+        {
+          "name": "Test workspace",
+          "status": "pending",
+          "conclusion": null,
+          "number": 6
+        },
+        {
+          "name": "Check deterministic exact-case generation",
+          "status": "pending",
+          "conclusion": null,
+          "number": 7
+        },
+        {
+          "name": "Check pinned Go printable-rune table generation",
+          "status": "pending",
+          "conclusion": null,
+          "number": 8
+        },
+        {
+          "name": "Check exact SDK source-case generation",
+          "status": "pending",
+          "conclusion": null,
+          "number": 9
+        },
+        {
+          "name": "Check all exact GameServer source-case generation",
+          "status": "pending",
+          "conclusion": null,
+          "number": 10
+        },
+        {
+          "name": "Reject unsupported GameServer source lowering",
+          "status": "pending",
+          "conclusion": null,
+          "number": 11
+        },
+        {
+          "name": "Check resource derive aliases, facades, generics, and rejected paths",
+          "status": "pending",
+          "conclusion": null,
+          "number": 12
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "pending",
+          "conclusion": null,
+          "number": 24
+        }
+      ]
+    },
+    {
+      "id": 117799361030,
+      "name": "feature-bool-model-check",
+      "status": "in_progress",
+      "conclusion": null,
+      "run_id": 39169460164,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Install pinned verification tools",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Verify the exact Bolero harness through Kani",
+          "status": "in_progress",
+          "conclusion": null,
+          "number": 4
+        },
+        {
+          "name": "Require all assertions and non-vacuity covers",
+          "status": "pending",
+          "conclusion": null,
+          "number": 5
+        },
+        {
+          "name": "Verify production input precedence through Bolero and Kani",
+          "status": "pending",
+          "conclusion": null,
+          "number": 6
+        },
+        {
+          "name": "Require input assertions and all ten covers",
+          "status": "pending",
+          "conclusion": null,
+          "number": 7
+        },
+        {
+          "name": "Verify the exact original query-error assertion through Bolero and Kani",
+          "status": "pending",
+          "conclusion": null,
+          "number": 8
+        },
+        {
+          "name": "Require the original query-error assertion and both covers",
+          "status": "pending",
+          "conclusion": null,
+          "number": 9
+        },
+        {
+          "name": "Verify production health defaults through Bolero and Kani",
+          "status": "pending",
+          "conclusion": null,
+          "number": 10
+        },
+        {
+          "name": "Require model and production health invariants and all eight covers",
+          "status": "pending",
+          "conclusion": null,
+          "number": 11
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "pending",
+          "conclusion": null,
+          "number": 12
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "pending",
+          "conclusion": null,
+          "number": 24
+        }
+      ]
+    }
+  ],
+  "merge_result_verified_from_state_checkout": "b96e6499fa84acfc2f0b3285c8b85eeac9a88f2b",
+  "published_tree": "09080fdce594880c5b65ffbcd4a5bab3f21ff22b",
+  "verified_merge_tree": "09080fdce594880c5b65ffbcd4a5bab3f21ff22b",
+  "assurance": "Migration-state/guidance passed. Actual state-job checkout matches the published source tree. Rust and all four available strict proof selections are still running. New GameServer source-case proofs remain uncredited."
+}

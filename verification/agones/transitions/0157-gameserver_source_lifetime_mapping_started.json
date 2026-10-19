@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
+  ],
+  "authorization": "User execution contract",
+  "event": "GAMESERVER_SOURCE_LIFETIME_MAPPING_STARTED",
+  "gate_snapshot": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
+  "predecessor_revision": 156,
+  "predecessor_sha256": "e5515c18a7c5cfe1b66afd38385b6a595d0961bffd22e55b0454041d295f1137",
+  "reason": "The current complete GameServer production gate remains valid. Implement the reviewed harness ownership boundary after all original observations/covers, retain native normal-destruction replay and separate required cleanup obligations.",
+  "result_revision": 157,
+  "schema_version": 1,
+  "state_sha256": "0e393909e09ad3086fca5e4fa13b73acd114db6f1bfeb0675c6002d93649cb89",
+  "timestamp": "2026-10-18T22:00:16.435646+00:00"
+}

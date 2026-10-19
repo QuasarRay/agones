@@ -1,0 +1,99 @@
+diff --git a/crates/agones-core/src/features.rs b/crates/agones-core/src/features.rs
+index bd1c1904c..5ee22490c 100644
+--- a/crates/agones-core/src/features.rs
++++ b/crates/agones-core/src/features.rs
+@@ -40,36 +40,31 @@ static CANONICAL_FEATURE_DEFAULTS: &[(&str, bool)] = AGONES_FEATURE_DEFAULTS;
+ /// Mirrors an initialized or not-yet-initialized reference feature map.
+ /// `Default` is empty, as Go's map is nil before ParseFeatures/EnableAllFeatures.
+ #[derive(Clone, Debug, Default, PartialEq, Eq)]
+-pub struct FeatureGates(Vec<(String, bool)>);
++pub struct FeatureGates(Vec<(&'static str, bool)>);
+ 
+ impl FeatureGates {
+     pub fn enabled(&self, feature: &str) -> bool {
+         self.0
+-            .binary_search_by(|(name, _)| name.as_str().cmp(feature))
++            .binary_search_by(|(name, _)| (*name).cmp(feature))
+             .map(|index| self.0[index].1)
+             .unwrap_or(false)
+     }
+ 
+-    fn from_defaults(defaults: &[(&str, bool)]) -> Self {
++    fn from_defaults(defaults: &[(&'static str, bool)]) -> Self {
+         // The canonical source table is already sorted and unique. Preserve
+         // its order directly; custom contexts retain the map-like fallback.
+         // Pointer identity is only a fast path, never a semantic precondition.
+         if std::ptr::eq(defaults, CANONICAL_FEATURE_DEFAULTS) {
+-            return Self(
+-                defaults
+-                    .iter()
+-                    .map(|(name, enabled)| ((*name).to_owned(), *enabled))
+-                    .collect(),
+-            );
++            return Self(defaults.to_vec());
+         }
+-        // The production dictionary has fifteen entries. Sorted owned entries
+-        // preserve map lookup/encoding behavior without general tree machinery.
++        // The capability supplies immutable static names. Own only the vector
++        // and boolean state; borrowing names preserves source map semantics.
+         // Repeated default names keep their last value, as map collection did.
+-        let mut values: Vec<(String, bool)> = Vec::with_capacity(defaults.len());
+-        for (name, enabled) in defaults {
+-            match values.binary_search_by(|(key, _)| key.as_str().cmp(name)) {
+-                Ok(index) => values[index].1 = *enabled,
+-                Err(index) => values.insert(index, ((*name).to_owned(), *enabled)),
++        let mut values: Vec<(&'static str, bool)> = Vec::with_capacity(defaults.len());
++        for &(name, enabled) in defaults {
++            match values.binary_search_by(|(key, _)| (*key).cmp(name)) {
++                Ok(index) => values[index].1 = enabled,
++                Err(index) => values.insert(index, (name, enabled)),
+             }
+         }
+         Self(values)
+@@ -187,15 +182,15 @@ impl<Context: HasFeatureGateDefaults> FeatureGateParser<Context> for ParseAgones
+ 
+         // Go map iteration may choose any failing key. Sorted iteration chooses
+         // one member of that permitted error set deterministically.
+-        for (key, value) in values {
++        for (key, value) in &values {
+             let index = features
+                 .0
+-                .binary_search_by(|(name, _)| name.as_bytes().cmp(&key))
+-                .map_err(|_| FeatureGateError::UnknownFeature(key))?;
++                .binary_search_by(|(name, _)| name.as_bytes().cmp(key))
++                .map_err(|_| FeatureGateError::UnknownFeature(key.clone()))?;
+             let enabled =
+-                parse_feature_bool(&value).ok_or_else(|| FeatureGateError::InvalidBool {
+-                    feature: features.0[index].0.clone(),
+-                    value,
++                parse_feature_bool(value).ok_or_else(|| FeatureGateError::InvalidBool {
++                    feature: features.0[index].0.to_owned(),
++                    value: value.clone(),
+                 })?;
+             features.0[index].1 = enabled;
+         }
+@@ -326,6 +321,24 @@ impl From<&FeatureGates> for crate::AutoscalerFeatures {
+ mod tests {
+     use super::*;
+ 
++    #[test]
++    fn borrowed_default_names_outlive_the_table_and_keep_flag_state_independent() {
++        let original = {
++            let defaults = vec![("Z", false), ("PlayerTracking", false), ("Z", true)];
++            FeatureGates::from_defaults(&defaults)
++        };
++        assert_eq!(original.encode(), "PlayerTracking=false&Z=true");
++        let mut changed = original.clone();
++        changed
++            .replace(&FeatureGateContext::default(), "PlayerTracking=true")
++            .unwrap();
++        assert!(changed.enabled("PlayerTracking"));
++        assert!(!changed.enabled("Z"));
++        assert!(!original.enabled("PlayerTracking"));
++        assert!(original.enabled("Z"));
++        assert_eq!(original.encode(), "PlayerTracking=false&Z=true");
++    }
++
+     #[test]
+     fn canonical_defaults_match_distinct_reordered_and_duplicate_tables() {
+         assert!(

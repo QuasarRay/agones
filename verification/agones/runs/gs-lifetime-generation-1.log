@@ -1,0 +1,145 @@
+warning: ambiguous glob re-exports
+  --> crates/agones-core/src/lib.rs:40:9
+   |
+40 | pub use allocation::*;
+   |         ^^^^^^^^^^^^^ the name `NodeAddress` in the type namespace is first re-exported here
+41 | pub use autoscaling::*;
+42 | pub use gameserver::*;
+   |         ------------- but the name `NodeAddress` in the type namespace is also re-exported here
+   |
+   = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: function `fleet_replica_bounds_are_bounded` is never used
+    --> crates/agones-core/src/fleet.rs:1110:4
+     |
+1110 | fn fleet_replica_bounds_are_bounded(input: (i32, i32)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `label` is never used
+    --> crates/agones-core/src/autoscaling.rs:1332:8
+     |
+1331 | impl CapacityPolicyKind {
+     | ----------------------- method in this implementation
+1332 |     fn label(self) -> &'static str {
+     |        ^^^^^
+
+warning: function `capacity_scale_up_never_decreases_replicas` is never used
+    --> crates/agones-core/src/autoscaling.rs:1831:4
+     |
+1831 | fn capacity_scale_up_never_decreases_replicas(
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `buffer_policy_integer_decision_stays_bounded` is never used
+    --> crates/agones-core/src/autoscaling.rs:1867:4
+     |
+1867 | fn buffer_policy_integer_decision_stays_bounded(
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `buffer_integer_valid_region_is_accepted` is never used
+    --> crates/agones-core/src/autoscaling.rs:1896:4
+     |
+1896 | fn buffer_integer_valid_region_is_accepted(input: (i32, i32, i32)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `capacity_integer_valid_region_is_accepted` is never used
+    --> crates/agones-core/src/autoscaling.rs:1916:4
+     |
+1916 | fn capacity_integer_valid_region_is_accepted(input: (i64, i64, i32, bool)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `fixed_interval_positive_seconds_are_accepted` is never used
+    --> crates/agones-core/src/autoscaling.rs:1949:4
+     |
+1949 | fn fixed_interval_positive_seconds_are_accepted(seconds: i32) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `health_defaulting_makes_enabled_thresholds_positive` is never used
+   --> crates/agones-core/src/gameserver.rs:274:4
+    |
+274 | fn health_defaulting_makes_enabled_thresholds_positive(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `safe_add_nonnegative_inputs_are_saturating` is never used
+   --> crates/agones-core/src/gameserver.rs:394:4
+    |
+394 | fn safe_add_nonnegative_inputs_are_saturating(input: (i64, i64)) -> bool {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `counter_updates_preserve_bounds` is never used
+    --> crates/agones-core/src/gameserver.rs:1421:4
+     |
+1421 | fn counter_updates_preserve_bounds(input: (i64, i64, i64, bool)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `gameserverset_creation_batch_respects_caps` is never used
+   --> crates/agones-core/src/gameserverset.rs:451:4
+    |
+451 | fn gameserverset_creation_batch_respects_caps(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `average_of_nonnegative_byte_weights_stays_within_input_range` is never used
+   --> crates/agones-core/src/multicluster.rs:207:4
+    |
+207 | fn average_of_nonnegative_byte_weights_stays_within_input_range(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `agones-core` (lib) generated 13 warnings
+warning: unused import: `GameServer`
+ --> crates/agones-rusternetes/src/allocation_overflow_controller.rs:4:5
+  |
+4 |     GameServer, GameServerSet, SchedulingStrategy,
+  |     ^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `fleet_retry_policy_matches_upstream` is never used
+  --> crates/agones-rusternetes/src/fleet_controller_runtime.rs:36:4
+   |
+36 | fn fleet_retry_policy_matches_upstream(retries: u8) -> bool {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `fleet_autoscaler_retry_policy_matches_upstream` is never used
+  --> crates/agones-rusternetes/src/fleetautoscaler_controller_runtime.rs:37:4
+   |
+37 | fn fleet_autoscaler_retry_policy_matches_upstream(retries: u8) -> bool {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `game_server_set_retry_policy_matches_upstream` is never used
+  --> crates/agones-rusternetes/src/gameserverset_controller_runtime.rs:33:4
+   |
+33 | fn game_server_set_retry_policy_matches_upstream(retries: u8) -> bool {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `game_server_retry_policy_matches_upstream` is never used
+  --> crates/agones-rusternetes/src/gameserver_controller_runtime.rs:36:4
+   |
+36 | fn game_server_retry_policy_matches_upstream(retries: u8) -> bool {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `sdk_environment_variable_shape_matches_ports` is never used
+  --> crates/agones-rusternetes/src/gameserver_pod_augmentation.rs:41:4
+   |
+41 | fn sdk_environment_variable_shape_matches_ports(input: (i16, i16)) -> bool {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `state_transition_deltas_match_membership` is never used
+   --> crates/agones-rusternetes/src/per_node_counter.rs:225:4
+    |
+225 | fn state_transition_deltas_match_membership(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `default_sidecar_security_context_is_restricted` is never used
+  --> crates/agones-rusternetes/src/sdk_sidecar.rs:83:4
+   |
+83 | fn default_sidecar_security_context_is_restricted(run_as_user: i64) -> bool {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `agones-rusternetes` (lib) generated 8 warnings (run `cargo fix --lib -p agones-rusternetes` to apply 1 suggestion)
+   Compiling agones-rusternetes v0.1.0 (/home/astral/Projects/agones/crates/agones-rusternetes)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.03s
+     Running `target/debug/examples/feature_case_codegen --gameserver-defaulting`
+Generated 17 exact GameServer cases and 304 source assertion occurrences; three zero-occurrence sites remain open

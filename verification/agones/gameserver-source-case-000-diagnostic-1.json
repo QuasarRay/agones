@@ -1,0 +1,22 @@
+{
+  "credited_assertions": 0,
+  "feature_id": "GS-DEFAULTS-001",
+  "individual_results": 0,
+  "next_hypothesis": "Match source make/insert for fixed typed map literals and retain expected map fixture owners through actual PartialEq. Keep production copy/defaulting unchanged and all original relations/domains/bounds/covers.",
+  "operational_limit_seconds": 240,
+  "raw_domain": "complete unit source case 000",
+  "run": "verification/agones/runs/gameserver-source-case-000-bolero-kani-1.json",
+  "schema_version": 1,
+  "status": "INCONCLUSIVE_TIMEOUT_NO_CREDIT",
+  "top_symex_loops": [
+    [
+      "Unwinding loop _RINvMsp_NtNtNtCs6xMQmN1AWUs_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutNtNtBc_6string6StringNtNtCs48q3AxCsyuD_11agones_core10gameserver13CounterStatusNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCs8xvirJzNMvV_4core3ops5range14RangeInclusivejEEB1P_.0",
+      1734
+    ],
+    [
+      "Unwinding loop _RINvMNtNtNtCs6xMQmN1AWUs_5alloc11collections5btree6appendINtNtB5_4node7NodeRefNtNtBW_6marker5OwnedNtNtB9_6string6StringNtNtCs48q3AxCsyuD_11agones_core10gameserver13CounterStatusNtB1g_14LeafOrInternalE9bulk_pushINtNtB5_17dedup_sorted_iter15DedupSortedIterB1y_B1T_INtNtNtCs8xvirJzNMvV_4core5array4iter8IntoIterTB1y_B1T_EKj1_EENtNtB9_5alloc6GlobalECsjT6j4fgnUUK_28source_gameserver_defaulting.0",
+      26
+    ]
+  ],
+  "unwind": 64
+}
