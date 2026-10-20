@@ -1,13 +1,13 @@
 # Agones-rs handoff
 
-Generated from AGONES_RS_STATE.json revision 244.
+Generated from AGONES_RS_STATE.json revision 252.
 Contract SHA-256: `45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1`.
 Original reference: `6eb4a02588d8e7b581de187f3bc849733a78dcb2`, scope `agones-original-v1`.
-Workspace: `agones-rs-dev` at `3b1bd370c445afd30a71737474f5a411e6ccd75c`.
+Workspace: `agones-rs-dev` at `1edb803b6f61c4552fb6c4311f3ba97fde61e1af`.
 Native Goal last reported `active`; full migration is **INCOMPLETE**.
 
-Active work: **GS-VALIDATE-FEATURES-001**, stage `PROPERTIES_READY`, disposition `READY`.
-Next action: Publish this reviewable validation feature to codex/agones-player-tracking-validation; recover the actual12selection CI campaign before new proof credit or merge. Use the compact validation work packet; keep all5original cases, helper covers, cleanup debt and8required _2cells.
+Active work: **GS-VALIDATE-FEATURES-001**, stage `VERIFYING`, disposition `READY`.
+Next action: Publish the validated protected execution update to the existing PR96 head; recover its actual jobs and per-selection artifacts before formal credit or merge. Keep all12selected harnesses, domains, assertions, covers and unwind bounds. Independently continue the gated quantity/TypeMeta work and required validation error-data packet without repeating completed work.
 Implementation gate: `verification/agones/gates/317304e45484daa2961fdf0a6983d3e056af281f03d5597b542bc9c51a435e49.json`.
 
 Read the active source and affected contract appendices only. Baseline metadata is in
@@ -18,10 +18,10 @@ assertions and non-Go test identities remain unresolved. This is no completeness
 
 All 8 unverified `_2` form/location cells remain required architecture work.
 Last refactoring decision: SMALL_LOCAL_REFACTOR.
-Next review: After the first complete validation source-case backend result, reassess actual repeated assertion/derive/attribute/delegation declarations with the recorded Arcane core/shim/facade facilities and root preferred libraries. Select only a concrete economical _2 adoption; continue feature delivery..
+Next review: After protected CI yields complete current result rows, or exposes a concrete further blocker, return to the source error-data production packet and review only demonstrated repetitions..
 No new macros or general frameworks are prerequisites for the next ordinary feature.
 
-Delivery: `VALIDATION_SOURCE_PROPERTIES_READY_REVIEW_PUBLICATION_PENDING` to `agones-rs-dev`; never modify main.
+Delivery: `PR96_PROTECTED_CI_UPDATE_PREPARED` to `agones-rs-dev`; never modify main.
 Connected GitHub app has write access; local gh CLI is logged out.
 Recover live jobs from the ledger and `verification/agones/runs/*.json` by comparing
 the stored process identity with /proc before waiting, attaching or stopping anything.

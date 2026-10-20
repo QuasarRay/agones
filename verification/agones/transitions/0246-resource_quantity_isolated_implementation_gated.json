@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate"
+  ],
+  "authorization": "User execution contract",
+  "event": "resource_quantity_isolated_implementation_gated",
+  "gate_snapshot": null,
+  "predecessor_revision": 245,
+  "predecessor_sha256": "32f70774702ddfd9aaf75bc08d9fe1311118cc9e835cd3b052937285c6021073",
+  "reason": "Implemented exact resource quantity semantics through shared core CGP policy in clean managed-worktree commit1610f90a5; immutable isolated gate6e5be9 and608workspace passes plus10final quantity tests and1619pinned-source replay cases. Canonical source remains1ed for live PR96; no new source extraction or formal credit.",
+  "result_revision": 246,
+  "schema_version": 1,
+  "state_sha256": "683a6bca6e4aff2896d7b18ad0b2866c57113d81a827b8a23d7cdd9167aebf14",
+  "timestamp": "2026-10-20T18:11:57.592384+00:00"
+}

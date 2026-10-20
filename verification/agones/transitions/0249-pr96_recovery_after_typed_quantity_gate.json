@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "pr96_recovery_after_typed_quantity_gate",
+  "gate_snapshot": "verification/agones/gates/317304e45484daa2961fdf0a6983d3e056af281f03d5597b542bc9c51a435e49.json",
+  "predecessor_revision": 248,
+  "predecessor_sha256": "233a580949f7a4fb473ce1034a5c1fbf249f2666d846363d21bf8f80b63482df",
+  "reason": "Keep canonical active packet on live PR96 CI; quantity repair is clean, locally committed and recoverable. Artifact download/ZIP digest/path/log integrity was tested successfully on an older artifact without adding proof credit.",
+  "result_revision": 249,
+  "schema_version": 1,
+  "state_sha256": "31d344b946c0564eeea7ca55f4ffe31f52c682eeac581c3c7da0b6af68b5479c",
+  "timestamp": "2026-10-20T18:35:54.625452+00:00"
+}

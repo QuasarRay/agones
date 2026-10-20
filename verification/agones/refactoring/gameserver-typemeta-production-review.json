@@ -1,0 +1,9 @@
+{
+  "candidate": "Retain the source GameServer TypeMeta in its real DTO and Rusternetes conversion.",
+  "decision": "REUSE_EXISTING",
+  "id": "GS-TYPEMETA-001-production-review",
+  "next_review_trigger": "After the source error-data repair and complete25case native replay, reassess concrete constructor/field/projection repetition for the smallest economical _2adoption; no authoring-cell credit from using existing derives.",
+  "observations": "The source fixture guard detected dropped kind on eight original table rows. A real TypeMeta field now owns kind/apiVersion, defaulting and validation retain them, native conversion supplies canonical missing identity and rejects conflicts, and decoding restores actual wire identity. Compiler JSON spans identified25existing constructors needing an explicit empty header; no hand editing of generated output.",
+  "reuse": "Existing serde derives/flatten/null-compatible Go-value decoder, generated AgonesApiResource identity and the single generic native conversion. No facade or alternate orchestrator.",
+  "roi": "One shared data type and existing derives cover the immediate fixture gap and future CRD header consumers. A new proc-macro/default-constructor framework would add compiler/diagnostic obligations for a mechanical edit already handled by compiler spans. Reuse current serde/CGP; keep all required _2cells open."
+}

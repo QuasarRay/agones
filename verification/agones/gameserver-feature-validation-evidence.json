@@ -1,5 +1,6 @@
 {
   "artifact_bindings": {
+    "verification/agones/ci/protected-model-execution-plan.json": "ab89b8924cba9e2bf37d712807911e037a9ace1513b3ba89e2517e1b22c7ae15",
     "verification/agones/gameserver-feature-validation-domain-first.rs": "bdf808073f19646b786a88b9b0a55505c3f698c7ed77bb9893aa258551345e70",
     "verification/agones/gameserver-feature-validation-domain-second.rs": "1f7c7e648729ce28f8cfa74ed3bd8b98e49621fa890a9a4118afd2887c3a8f2d",
     "verification/agones/gameserver-feature-validation-domain.json": "efaaf39a38a43e4a7fee0ef16ab2c73b1e3b0a05d0fa3d3f76f319ff4da454be",
@@ -41,7 +42,9 @@
   "assurance": {
     "backend_campaign": {
       "contract_model_credit": 0,
+      "head": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
       "new_qualified_source_credit": 0,
+      "receipt": "verification/agones/ci/39464345048-in-progress.json",
       "required_contract_covers": 8,
       "required_source_covers_per_case": 2,
       "selected_harnesses": [
@@ -58,7 +61,8 @@
         "source_gsv_case_004",
         "gameserver_feature_validation_common_domain"
       ],
-      "status": "PREPARED_NOT_YET_RUN"
+      "status": "ACTUAL_CI_IN_PROGRESS_NO_NEW_CREDIT",
+      "workflow_run": 39464345048
     },
     "contract_domain_sampling": {
       "accepted_inputs": 8192,
@@ -73,6 +77,14 @@
       "status": "INCOMPLETE_RESOURCE_LIMIT_NO_PROOF_CREDIT"
     },
     "live_cluster_conformance": "REQUIRED_OPEN",
+    "native_ci": {
+      "head": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
+      "job_id": 118771895130,
+      "scope": "The actual current CI Rust job completed successfully, including workspace check/tests, five generation modes, lowering controls and derive-path checks. Full model results remain pending and uncredited.",
+      "status": "PASSED",
+      "tested_merge": "876ff250dae9d70f4cb76db72f826c653f941e5f",
+      "workflow_run": 39464345048
+    },
     "ordinary_admission_extensions": "Actual Fleet UPDATE repeats configured policy, and GameServerSet UPDATE accepts an unchanged existing players template through its separate immutable-template consumer.",
     "ordinary_current_observations": {
       "accepted_contract_samples": 8192,
@@ -91,6 +103,29 @@
     },
     "original_source_assertions_model_checked": [],
     "production_symbol_model_checked": [],
+    "protected_execution_revalidation": {
+      "changed_bindings": [
+        {
+          "current_sha256": "4305306b62ca417385c278217b82e2d530415cbb701060669149ee773a4b44aa",
+          "path": ".github/workflows/rust.yml",
+          "previous_sha256": "7de20605a3e37ac3afb1d4fd06e75cb9ec5c5ab5b0391696b4f055cb2b48a7d6"
+        },
+        {
+          "current_sha256": "f4f95585c9649b689324ee6efc3e6436509861d55a718c581d369e527ec9ca25",
+          "path": "build/scripts/agones-rs/summarize_feature_proof.py",
+          "previous_sha256": "067ff7e3ceb095bfc33de515f147fda697d056792cf6b8b06fbd09c7bab560f3"
+        },
+        {
+          "current_sha256": "6c9c06a3156476a50307900dd8c7bf224eaa06b76e0156a9dcb6d8f33da1c521",
+          "path": "verification/agones/check-dependencies.json",
+          "previous_sha256": "9d27de0b6913b6835479434b7441afed5c979f36f742a50a1ef4731e9a83afe5"
+        }
+      ],
+      "plan": "verification/agones/ci/protected-model-execution-plan.json",
+      "proof_credit_added": 0,
+      "scope": "Only execution/acceptance machinery changed. Native implementation gates and unchanged original/model bodies are preserved. Earlier results retain their historical source and tool identities.",
+      "status": "PREPARED_NEW_CURRENT_PROOF_REQUIRED"
+    },
     "required_original_table": {
       "assertion_sites": 2,
       "case_count": 5,
@@ -122,13 +157,17 @@
   "schema_version": 1,
   "semantic_bindings": {
     ".cargo/config.toml": "d787ef1ca58591bcf5036c8a2386a4d31ecc54febdd5f6630fd8497a4a0d3fb2",
-    ".github/workflows/rust.yml": "7de20605a3e37ac3afb1d4fd06e75cb9ec5c5ab5b0391696b4f055cb2b48a7d6",
+    ".github/workflows/rust.yml": "4305306b62ca417385c278217b82e2d530415cbb701060669149ee773a4b44aa",
     "Cargo.lock": "6f853997b27aed6de6e6be6ad0b61af663bcfd29195d7ab3dbcbf1a18c7d2f0f",
     "Cargo.toml": "f0c28c2ca73ba51fad682c9d35950d050b0839775d0eb609e7903c47743b5d00",
     "build/scripts/agones-rs/extract/gameserver_features.go": "10d4f2ab601b5586fc71cde7d3188793fb62ea398e3e47397ef5865d6b312ea1",
     "build/scripts/agones-rs/extract/gameserver_features_test.go": "5a4ff209b50d89dd5aa8768999d189de6b4addc6e0708dc3b13f778238d9ffb6",
     "build/scripts/agones-rs/extract/main.go": "2659eb1b3e4045690025fee83efc70f060219071efcf392ed52e382cc3eb07e4",
-    "build/scripts/agones-rs/summarize_feature_proof.py": "067ff7e3ceb095bfc33de515f147fda697d056792cf6b8b06fbd09c7bab560f3",
+    "build/scripts/agones-rs/kani_results.py": "0f2e6885ab25ff525ac6a77e1ed67ac02a5904e59caffc0e746258bee0cad04e",
+    "build/scripts/agones-rs/protect_model.py": "89fd094879809766a50ece3eea99fca2f9b45ac602ca5cb98fecfa1fe45d4376",
+    "build/scripts/agones-rs/run.py": "d158464261c6f591f8c2e99dca8eb2e5aed1925696c67778ccbb1fed3bbf90bd",
+    "build/scripts/agones-rs/summarize_feature_proof.py": "f4f95585c9649b689324ee6efc3e6436509861d55a718c581d369e527ec9ca25",
+    "build/scripts/agones-rs/test_ci_model_execution.py": "67eedce9e108c80c89aec1d4d93966fdf112e59588f84826c18f93f132f4272e",
     "crates/agones-core/Cargo.toml": "b9ff5ca08d252c07abce0e5ebb5f6a45dcbd874cebe4ba51712b5dde331b8bd6",
     "crates/agones-core/src/fleet.rs": "d9c3e13e4f899f04e033b8a457f5ce573d2fe319200dfec32e505c5019a12c95",
     "crates/agones-core/src/gameserver.rs": "81a633a65c0612219761d6b65a783258d846a7fd3dd1f2d4f5af1827c2482bba",
@@ -150,7 +189,7 @@
     "crates/agones-rusternetes/tests/gameserver_feature_validation.rs": "65a359768eba3b99ecace6e4e1ce33179bd16ddc8e4a4cec3ec2b114b7b7245d",
     "crates/agones-rusternetes/tests/source_gameserver_feature_validation.rs": "a60f8b1c45483736fdbaa33c436268e23c88232a8e66b30dfed8e11afc30e33f",
     "rust-toolchain.toml": "c910997cb152c6dc8ed13b1fdf9fa28a4ed30d6776123e27dd6170e5c66067a0",
-    "verification/agones/check-dependencies.json": "9d27de0b6913b6835479434b7441afed5c979f36f742a50a1ef4731e9a83afe5",
+    "verification/agones/check-dependencies.json": "6c9c06a3156476a50307900dd8c7bf224eaa06b76e0156a9dcb6d8f33da1c521",
     "verification/agones/gameserver-feature-validation-capability-v1.json": "d6e03af89a8412b331bcafbf19472ef51bbd67f566f19235516deef15c2a19bf",
     "verification/agones/gameserver-feature-validation-codegen.json": "197f7daea5952f4d43fe1c408503578dd0736a310829f5127faeb9b13d8843dc",
     "verification/agones/gameserver-feature-validation.ir.json": "c4b8270a07aec4b659b6eb6aacb2f62690e9f3f7977eebc7ca2501d11340b8e3"

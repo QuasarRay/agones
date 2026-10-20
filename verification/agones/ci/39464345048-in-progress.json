@@ -1,0 +1,355 @@
+{
+  "artifact_retrieval_note": "Completed job-log tool returned Unknown tool; anonymous job logs returned403. Full model artifact is not uploaded until the running model job finishes. The artifact-list tool is available and returned empty while running; use download_workflow_artifact after terminal upload. No step-only formal credit.",
+  "base": "1e64a054901658908d0a7a4eecd3010379df9614",
+  "checkout": "876ff250dae9d70f4cb76db72f826c653f941e5f",
+  "classification": "REPO_SAFE",
+  "event": "pull_request",
+  "formal_credit": "NONE_FROM_STEP_STATUS; require complete individual properties and satisfied covers plus retained full artifacts.",
+  "head": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
+  "jobs": [
+    {
+      "conclusion": "success",
+      "id": 118771691218,
+      "logs_url": null,
+      "name": "migration-state",
+      "run_id": 39464345048,
+      "status": "completed",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-python@v5",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Install pinned state validator",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Validate source-bound implementation gate and ledger",
+          "number": 5,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Check guidance inheritance",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Reject incomplete or vacuous proof results",
+          "number": 7,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Select affected checks conservatively",
+          "number": 8,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-python@v5",
+          "number": 15,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4",
+          "number": 16,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 17,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "conclusion": "success",
+      "id": 118771895130,
+      "logs_url": null,
+      "name": "rust",
+      "run_id": 39464345048,
+      "status": "completed",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Install pinned evidence Rust",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Install native build dependencies",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Check workspace",
+          "number": 5,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Test workspace",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Check deterministic exact-case generation",
+          "number": 7,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Check pinned Go printable-rune table generation",
+          "number": 8,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Check exact SDK source-case generation",
+          "number": 9,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Check all exact GameServer source-case generation",
+          "number": 10,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Check all exact GameServer validation source-case generation",
+          "number": 11,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Reject unsupported GameServer source lowering",
+          "number": 12,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Check resource derive aliases, facades, generics, and rejected paths",
+          "number": 13,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4",
+          "number": 26,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 27,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "conclusion": null,
+      "id": 118771895175,
+      "logs_url": null,
+      "name": "feature-bool-model-check",
+      "run_id": 39464345048,
+      "status": "in_progress",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Install pinned verification tools",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Verify the exact Bolero harness through Kani",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Require all assertions and non-vacuity covers",
+          "number": 5,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Verify production input precedence through Bolero and Kani",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Require input assertions and all ten covers",
+          "number": 7,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Verify the exact original query-error assertion through Bolero and Kani",
+          "number": 8,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Require the original query-error assertion and both covers",
+          "number": 9,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Verify production health defaults through Bolero and Kani",
+          "number": 10,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Require model and production health invariants and all eight covers",
+          "number": 11,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Verify the complete original default-eviction GameServer case through Bolero and Kani",
+          "number": 12,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Require all 18 original GameServer assertions and both covers",
+          "number": 13,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Reverify the complete original basic GameServer case through Bolero and Kani",
+          "number": 14,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Require all 18 basic-case original assertions and both covers",
+          "number": 15,
+          "status": "completed"
+        },
+        {
+          "conclusion": null,
+          "name": "Verify all five exact original GameServer validation cases",
+          "number": 16,
+          "status": "in_progress"
+        },
+        {
+          "conclusion": null,
+          "name": "Verify the separate PlayerTracking source-contract relation",
+          "number": 17,
+          "status": "pending"
+        },
+        {
+          "conclusion": null,
+          "name": "Require all three contract claims and eight non-vacuity covers",
+          "number": 18,
+          "status": "pending"
+        },
+        {
+          "conclusion": null,
+          "name": "Require both validation campaigns to succeed",
+          "number": 19,
+          "status": "pending"
+        },
+        {
+          "conclusion": null,
+          "name": "Run actions/upload-artifact@v4",
+          "number": 20,
+          "status": "pending"
+        },
+        {
+          "conclusion": null,
+          "name": "Post Run actions/checkout@v4",
+          "number": 40,
+          "status": "pending"
+        }
+      ]
+    }
+  ],
+  "latest_observed_at": "2026-10-20T18:14:32.129129+00:00",
+  "latest_summary": {
+    "feature-bool-model-check": {
+      "active_steps": [
+        "Verify all five exact original GameServer validation cases"
+      ],
+      "conclusion": null,
+      "job_id": 118771895175,
+      "status": "in_progress"
+    },
+    "migration-state": {
+      "active_steps": [],
+      "conclusion": "success",
+      "job_id": 118771691218,
+      "status": "completed"
+    },
+    "rust": {
+      "active_steps": [],
+      "conclusion": "success",
+      "job_id": 118771895130,
+      "status": "completed"
+    }
+  },
+  "observed_at": "2026-10-20T17:41:32.130319+00:00",
+  "proof_credit_from_job_status": 0,
+  "run_attempt": 1,
+  "schema_version": 1,
+  "started_at": "2026-10-20T17:14:34Z",
+  "status": "IN_PROGRESS",
+  "tree": "893d506d71f7e348d71eceeb61df2101ed1511b8",
+  "url": "https://github.com/QuasarRay/agones/actions/runs/39464345048",
+  "workflow_run": 39464345048
+}

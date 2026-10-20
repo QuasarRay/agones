@@ -1,0 +1,40 @@
+{
+  "dependencies": [
+    "RESOURCE-QUANTITY-001"
+  ],
+  "disposition": "READY",
+  "evidence_refs": [],
+  "feature_ids": [
+    "source-validation-error-data"
+  ],
+  "id": "GS-VALIDATION-ERROR-DATA-001",
+  "implementation_gate": null,
+  "next_action": "Repair source error data/mapping support from the focused packet, refresh gates and all25required source-case lowerings/native replays. TypeMeta is implemented/gated. In canonical checkout, prepare a protected CI attempt after actual runner loss; retain complete results before proof credit. Preserve user guidance and all required _2cells.",
+  "owned_paths": [
+    "crates/agones-core/src/gameserver.rs",
+    "crates/agones-core/src/gameserver_validation.rs",
+    "crates/agones-rusternetes/examples/codegen/gameserver_features.rs",
+    "crates/agones-rusternetes/tests/source_gameserver_feature_validation.rs"
+  ],
+  "requirement_ids": [
+    "REQ-02",
+    "REQ-04",
+    "REQ-05",
+    "REQ-07",
+    "REQ-08",
+    "REQ-09",
+    "REQ-10",
+    "REQ-11",
+    "REQ-12",
+    "REQ-13"
+  ],
+  "source_config_binding": {
+    "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "isolated_commit": "e8b684a00b7758eef366ee467117c771af84b8d1",
+    "work_packet": "verification/agones/validation-error-data-work-packet.json"
+  },
+  "stage": "DISCOVERED",
+  "test_ids": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate"
+  ]
+}

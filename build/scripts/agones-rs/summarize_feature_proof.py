@@ -4,7 +4,7 @@ import argparse
 import hashlib
 import json
 
-from kani_results import ROOT, read_results, require_claims_and_covers
+from kani_results import ROOT, read_results, require_claims_and_covers, require_run_command
 
 parser = argparse.ArgumentParser()
 parser.add_argument("family", choices=["input", "query", "error-ascii", "sdk-version", "sdk-source", "health", "gameserver-source", "gameserver-features", "gameserver-validation-source"])
@@ -152,6 +152,7 @@ else:
         row["origin"] = functions[row["symbol"].split(".assertion.")[0]]["origin"]
     required = selected["required_covers"]
     scope = "Selected exact source case only: "+selected["case_id"]+". "+metadata["scope"]
+require_run_command(args.run_id, harness)
 covers = require_claims_and_covers(rows, claims, required)
 summary = {"schema_version":1, "family":args.family, "run":f"verification/agones/runs/{args.run_id}.json",
            "selected_harnesses":[harness], "harness_count":1, "property_count":len(rows),

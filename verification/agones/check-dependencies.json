@@ -43,7 +43,9 @@
     "verification/agones/gameserver-feature-validation-codegen.json",
     "verification/agones/gameserver-feature-validation-domain.json",
     "crates/agones-rusternetes/examples/feature_case_codegen.rs",
-    "crates/agones-rusternetes/examples/codegen/**"
+    "crates/agones-rusternetes/examples/codegen/**",
+    "build/scripts/agones-rs/protect_model.py",
+    "build/scripts/agones-rs/test_ci_model_execution.py"
   ],
   "metadata_only": [
     "**/AGENTS.MD",

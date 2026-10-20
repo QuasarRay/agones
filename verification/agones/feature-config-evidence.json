@@ -3,6 +3,7 @@
     "verification/agones/ci/39190924053-artifact-retention.json": "1787811c859b695066f2215e48f7a2a1931d32d1d8d4e8bdd7664bef3a59c401",
     "verification/agones/ci/39190924053-success.json": "199d9a95367536d5c62d3ca49a08c7de5398c5b2d0b30bfc387cc178c57a8d16",
     "verification/agones/ci/39199314045-success.json": "5c540a061150f57b8628a9a6518e6f96d0a8d851c125b87f8156d8c1da609e3d",
+    "verification/agones/ci/protected-model-execution-plan.json": "ab89b8924cba9e2bf37d712807911e037a9ace1513b3ba89e2517e1b22c7ae15",
     "verification/agones/feature-bool-kani-properties.json": "605e033b669a9368b4c8eb2d35fdab0b6a828368e2988fe96948c520a9685bc3",
     "verification/agones/feature-helper-bindings.json": "e527fe83f28d521ac93eedc591b97060265bbee85034df53362463938c4b43ed",
     "verification/agones/feature-query-codegen.json": "b84ecb0b37783f5a8eca5b931d7ca60c6a2748a58e55a9e67312631547b7d4c3",
@@ -286,6 +287,29 @@
     "original_source_proof_summary": "verification/agones/proof-summaries/sdk-query-error-source.json",
     "production_symbol_model_checked": [],
     "proof_reuse": "verification/agones/gameserver-canonical-proof-reuse.json",
+    "protected_execution_revalidation": {
+      "changed_bindings": [
+        {
+          "current_sha256": "0f2e6885ab25ff525ac6a77e1ed67ac02a5904e59caffc0e746258bee0cad04e",
+          "path": "build/scripts/agones-rs/kani_results.py",
+          "previous_sha256": "61137b32f8cb47ee893be991195b4739c9bd120c81ef922b771e0c50af870e1b"
+        },
+        {
+          "current_sha256": "dee450e321588d735f1dee1dd49f245e43c395cecf800823f98374fc8f9fcf0c",
+          "path": "build/scripts/agones-rs/summarize_bool_proof.py",
+          "previous_sha256": "1ba6c3dc5f512d7f1456a79c8311eed4c3a189f1be6b524f24b49dfdb34a070e"
+        },
+        {
+          "current_sha256": "f4f95585c9649b689324ee6efc3e6436509861d55a718c581d369e527ec9ca25",
+          "path": "build/scripts/agones-rs/summarize_feature_proof.py",
+          "previous_sha256": "067ff7e3ceb095bfc33de515f147fda697d056792cf6b8b06fbd09c7bab560f3"
+        }
+      ],
+      "plan": "verification/agones/ci/protected-model-execution-plan.json",
+      "proof_credit_added": 0,
+      "scope": "Only execution/acceptance machinery changed. Native implementation gates and unchanged original/model bodies are preserved. Earlier results retain their historical source and tool identities.",
+      "status": "PREPARED_NEW_CURRENT_PROOF_REQUIRED"
+    },
     "reference_model_checked": [],
     "rusternetes_adapter_integrated": [
       "configured_game_server_context_uses_source_sidecar_default_and_override",
@@ -413,11 +437,11 @@
     "build/scripts/agones-rs/extract/main_test.go": "b66449f6662bd598185fb671688d9bf566e36176c2e36ffca378d78464370213",
     "build/scripts/agones-rs/extract/sdk_version.go": "79e0e06e220484f808686dbb936cee00fe3e52b572f4c93769736dd47f5acecd",
     "build/scripts/agones-rs/extract/sdk_version_test.go": "8e7ca0a3cac25144f4289bdcdee416502b7aa63e45d3f9e215e12c7cc4fca097",
-    "build/scripts/agones-rs/kani_results.py": "61137b32f8cb47ee893be991195b4739c9bd120c81ef922b771e0c50af870e1b",
+    "build/scripts/agones-rs/kani_results.py": "0f2e6885ab25ff525ac6a77e1ed67ac02a5904e59caffc0e746258bee0cad04e",
     "build/scripts/agones-rs/probes/compile_go_print_table.go": "2fdf7febec851e457e8258683c8579dcf39736bd6ce6b8d82a27866b990542c4",
     "build/scripts/agones-rs/probes/raw_feature_query.go": "d50cb31d7f18cd6e3c11fca9a6a97d2200db66672cd71330e0906272d0ccabdd",
-    "build/scripts/agones-rs/summarize_bool_proof.py": "1ba6c3dc5f512d7f1456a79c8311eed4c3a189f1be6b524f24b49dfdb34a070e",
-    "build/scripts/agones-rs/summarize_feature_proof.py": "067ff7e3ceb095bfc33de515f147fda697d056792cf6b8b06fbd09c7bab560f3",
+    "build/scripts/agones-rs/summarize_bool_proof.py": "dee450e321588d735f1dee1dd49f245e43c395cecf800823f98374fc8f9fcf0c",
+    "build/scripts/agones-rs/summarize_feature_proof.py": "f4f95585c9649b689324ee6efc3e6436509861d55a718c581d369e527ec9ca25",
     "build/scripts/agones-rs/test_kani_results.py": "92903e03da6a7501a660173a90d436097f50f065acaf49515ba627d59da9d013",
     "crates/agones-core/Cargo.toml": "b9ff5ca08d252c07abce0e5ebb5f6a45dcbd874cebe4ba51712b5dde331b8bd6",
     "crates/agones-core/GO-STRCONV-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",

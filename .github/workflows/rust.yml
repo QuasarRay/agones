@@ -32,6 +32,8 @@ jobs:
         run: python build/scripts/agones-rs/inventory.py guidance-check
       - name: Reject incomplete or vacuous proof results
         run: python build/scripts/agones-rs/test_kani_results.py
+      - name: Reject unprotected execution and corrupted recorder output
+        run: python build/scripts/agones-rs/test_ci_model_execution.py
       - name: Select affected checks conservatively
         id: affected
         env:
@@ -70,19 +72,19 @@ jobs:
       - name: Check resource derive aliases, facades, generics, and rejected paths
         run: python3 build/scripts/agones-rs/check_resource_derive.py
 
-  feature-bool-model-check:
+  feature-common-model-check:
     needs: migration-state
     if: needs.migration-state.outputs.model == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
     env:
+      CARGO_BUILD_JOBS: "2"
       AGONES_KANI_CI_RUN: feature-bool-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}
       AGONES_INPUT_CI_RUN: feature-input-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}
       AGONES_QUERY_ERROR_CI_RUN: feature-query-error-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}
       AGONES_HEALTH_CI_RUN: health-defaulting-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}
       AGONES_GS_SOURCE_CI_RUN: gameserver-source-005-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}
       AGONES_GS_BASIC_CI_RUN: gameserver-source-014-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}
-      AGONES_VALIDATION_CI_PREFIX: gameserver-validation-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}
-      AGONES_VALIDATION_CONTRACT_CI_RUN: gameserver-features-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - uses: actions/checkout@v4
       - name: Install pinned verification tools
@@ -92,89 +94,157 @@ jobs:
           cargo kani setup
           cargo install cargo-bolero --version 0.13.4 --locked --no-default-features --features kani
       - name: Verify the exact Bolero harness through Kani
-        env:
-          CARGO_BUILD_JOBS: "2"
-        run: python3 build/scripts/agones-rs/run.py "$AGONES_KANI_CI_RUN" --quiet --cwd crates/agones-core cargo bolero test feature_bool_common_domain --engine kani
+        run: python3 build/scripts/agones-rs/run.py "$AGONES_KANI_CI_RUN" --quiet --cwd crates/agones-core python3 ../../build/scripts/agones-rs/protect_model.py cargo bolero test feature_bool_common_domain --engine kani
       - name: Require all assertions and non-vacuity covers
         run: python3 build/scripts/agones-rs/summarize_bool_proof.py "$AGONES_KANI_CI_RUN" --output "verification/agones/proof-summaries/$AGONES_KANI_CI_RUN.json"
-      - name: Verify production input precedence through Bolero and Kani
-        env:
-          CARGO_BUILD_JOBS: "2"
-        run: python3 build/scripts/agones-rs/run.py "$AGONES_INPUT_CI_RUN" --quiet --cwd crates/agones-core cargo bolero test feature_input_common_domain --engine kani
-      - name: Require input assertions and all ten covers
-        run: python3 build/scripts/agones-rs/summarize_feature_proof.py input "$AGONES_INPUT_CI_RUN" --output "verification/agones/proof-summaries/$AGONES_INPUT_CI_RUN.json"
-      - name: Verify the exact original query-error assertion through Bolero and Kani
-        env:
-          CARGO_BUILD_JOBS: "2"
-        run: python3 build/scripts/agones-rs/run.py "$AGONES_QUERY_ERROR_CI_RUN" --quiet --cwd crates/agones-core cargo bolero test source_query_case_003 --engine kani
-      - name: Require the original query-error assertion and both covers
-        run: python3 build/scripts/agones-rs/summarize_feature_proof.py query "$AGONES_QUERY_ERROR_CI_RUN" --case-index 3 --output "verification/agones/proof-summaries/$AGONES_QUERY_ERROR_CI_RUN.json"
-      - name: Verify production health defaults through Bolero and Kani
-        env:
-          CARGO_BUILD_JOBS: "2"
-        run: python3 build/scripts/agones-rs/run.py "$AGONES_HEALTH_CI_RUN" --quiet --cwd crates/agones-core cargo bolero test health_defaulting_common_domain --engine kani
-      - name: Require model and production health invariants and all eight covers
-        run: python3 build/scripts/agones-rs/summarize_feature_proof.py health "$AGONES_HEALTH_CI_RUN" --output "verification/agones/proof-summaries/$AGONES_HEALTH_CI_RUN.json"
-      - name: Verify the complete original default-eviction GameServer case through Bolero and Kani
-        env:
-          CARGO_BUILD_JOBS: "2"
-        run: python3 build/scripts/agones-rs/run.py "$AGONES_GS_SOURCE_CI_RUN" --quiet --cwd crates/agones-core timeout --signal=TERM --kill-after=15s 900s /usr/bin/time -v cargo bolero test source_gs_case_005 --engine kani
-      - name: Require all 18 original GameServer assertions and both covers
-        run: python3 build/scripts/agones-rs/summarize_feature_proof.py gameserver-source "$AGONES_GS_SOURCE_CI_RUN" --case-index 5 --output "verification/agones/proof-summaries/$AGONES_GS_SOURCE_CI_RUN.json"
-      - name: Reverify the complete original basic GameServer case through Bolero and Kani
-        env:
-          CARGO_BUILD_JOBS: "2"
-        run: python3 build/scripts/agones-rs/run.py "$AGONES_GS_BASIC_CI_RUN" --quiet --cwd crates/agones-core timeout --signal=TERM --kill-after=15s 900s /usr/bin/time -v cargo bolero test source_gs_case_014 --engine kani
-      - name: Require all 18 basic-case original assertions and both covers
-        run: python3 build/scripts/agones-rs/summarize_feature_proof.py gameserver-source "$AGONES_GS_BASIC_CI_RUN" --case-index 14 --output "verification/agones/proof-summaries/$AGONES_GS_BASIC_CI_RUN.json"
-      - name: Verify all five exact original GameServer validation cases
-        id: validation_cases
-        continue-on-error: true
-        env:
-          CARGO_BUILD_JOBS: "2"
-        run: |
-          validation_failed=0
-          for index in 0 1 2 3 4; do
-            printf -v case_index '%03d' "$index"
-            validation_run="$AGONES_VALIDATION_CI_PREFIX-case-$case_index"
-            if python3 build/scripts/agones-rs/run.py "$validation_run" --quiet --cwd crates/agones-core timeout --signal=TERM --kill-after=15s 900s /usr/bin/time -v cargo bolero test "source_gsv_case_$case_index" --engine kani; then
-              if ! python3 build/scripts/agones-rs/summarize_feature_proof.py gameserver-validation-source "$validation_run" --case-index "$index" --output "verification/agones/proof-summaries/$validation_run.json"; then validation_failed=1; fi
-            else
-              validation_failed=1
-            fi
-          done
-          exit "$validation_failed"
-      - name: Verify the separate PlayerTracking source-contract relation
-        id: validation_contract
-        env:
-          CARGO_BUILD_JOBS: "2"
-        run: python3 build/scripts/agones-rs/run.py "$AGONES_VALIDATION_CONTRACT_CI_RUN" --quiet --cwd crates/agones-core timeout --signal=TERM --kill-after=15s 900s /usr/bin/time -v cargo bolero test gameserver_feature_validation_common_domain --engine kani
-      - name: Require all three contract claims and eight non-vacuity covers
-        run: python3 build/scripts/agones-rs/summarize_feature_proof.py gameserver-features "$AGONES_VALIDATION_CONTRACT_CI_RUN" --output "verification/agones/proof-summaries/$AGONES_VALIDATION_CONTRACT_CI_RUN.json"
-      - name: Require both validation campaigns to succeed
-        if: always()
-        run: |
-          test "${{ steps.validation_cases.outcome }}" = success
-          test "${{ steps.validation_contract.outcome }}" = success
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: feature-bool-kani-evidence
+          name: feature-kani-bool-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             verification/agones/runs/${{ env.AGONES_KANI_CI_RUN }}.*
             verification/agones/proof-summaries/${{ env.AGONES_KANI_CI_RUN }}.json
+          retention-days: 90
+      - name: Verify production input precedence through Bolero and Kani
+        run: python3 build/scripts/agones-rs/run.py "$AGONES_INPUT_CI_RUN" --quiet --cwd crates/agones-core python3 ../../build/scripts/agones-rs/protect_model.py cargo bolero test feature_input_common_domain --engine kani
+      - name: Require input assertions and all ten covers
+        run: python3 build/scripts/agones-rs/summarize_feature_proof.py input "$AGONES_INPUT_CI_RUN" --output "verification/agones/proof-summaries/$AGONES_INPUT_CI_RUN.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: feature-kani-input-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
             verification/agones/runs/${{ env.AGONES_INPUT_CI_RUN }}.*
             verification/agones/proof-summaries/${{ env.AGONES_INPUT_CI_RUN }}.json
+          retention-days: 90
+      - name: Verify the exact original query-error assertion through Bolero and Kani
+        run: python3 build/scripts/agones-rs/run.py "$AGONES_QUERY_ERROR_CI_RUN" --quiet --cwd crates/agones-core python3 ../../build/scripts/agones-rs/protect_model.py cargo bolero test source_query_case_003 --engine kani
+      - name: Require the original query-error assertion and both covers
+        run: python3 build/scripts/agones-rs/summarize_feature_proof.py query "$AGONES_QUERY_ERROR_CI_RUN" --case-index 3 --output "verification/agones/proof-summaries/$AGONES_QUERY_ERROR_CI_RUN.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: feature-kani-query-003-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
             verification/agones/runs/${{ env.AGONES_QUERY_ERROR_CI_RUN }}.*
             verification/agones/proof-summaries/${{ env.AGONES_QUERY_ERROR_CI_RUN }}.json
+          retention-days: 90
+      - name: Verify production health defaults through Bolero and Kani
+        run: python3 build/scripts/agones-rs/run.py "$AGONES_HEALTH_CI_RUN" --quiet --cwd crates/agones-core python3 ../../build/scripts/agones-rs/protect_model.py cargo bolero test health_defaulting_common_domain --engine kani
+      - name: Require model and production health invariants and all eight covers
+        run: python3 build/scripts/agones-rs/summarize_feature_proof.py health "$AGONES_HEALTH_CI_RUN" --output "verification/agones/proof-summaries/$AGONES_HEALTH_CI_RUN.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: feature-kani-health-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
             verification/agones/runs/${{ env.AGONES_HEALTH_CI_RUN }}.*
             verification/agones/proof-summaries/${{ env.AGONES_HEALTH_CI_RUN }}.json
+          retention-days: 90
+      - name: Verify the complete original default-eviction GameServer case through Bolero and Kani
+        run: python3 build/scripts/agones-rs/run.py "$AGONES_GS_SOURCE_CI_RUN" --quiet --cwd crates/agones-core python3 ../../build/scripts/agones-rs/protect_model.py cargo bolero test source_gs_case_005 --engine kani
+      - name: Require all 18 original GameServer assertions and both covers
+        run: python3 build/scripts/agones-rs/summarize_feature_proof.py gameserver-source "$AGONES_GS_SOURCE_CI_RUN" --case-index 5 --output "verification/agones/proof-summaries/$AGONES_GS_SOURCE_CI_RUN.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: feature-kani-gameserver-005-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
             verification/agones/runs/${{ env.AGONES_GS_SOURCE_CI_RUN }}.*
             verification/agones/proof-summaries/${{ env.AGONES_GS_SOURCE_CI_RUN }}.json
+          retention-days: 90
+      - name: Reverify the complete original basic GameServer case through Bolero and Kani
+        run: python3 build/scripts/agones-rs/run.py "$AGONES_GS_BASIC_CI_RUN" --quiet --cwd crates/agones-core python3 ../../build/scripts/agones-rs/protect_model.py cargo bolero test source_gs_case_014 --engine kani
+      - name: Require all 18 basic-case original assertions and both covers
+        run: python3 build/scripts/agones-rs/summarize_feature_proof.py gameserver-source "$AGONES_GS_BASIC_CI_RUN" --case-index 14 --output "verification/agones/proof-summaries/$AGONES_GS_BASIC_CI_RUN.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: feature-kani-gameserver-014-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
             verification/agones/runs/${{ env.AGONES_GS_BASIC_CI_RUN }}.*
             verification/agones/proof-summaries/${{ env.AGONES_GS_BASIC_CI_RUN }}.json
-            verification/agones/runs/${{ env.AGONES_VALIDATION_CI_PREFIX }}-case-*.*
-            verification/agones/proof-summaries/${{ env.AGONES_VALIDATION_CI_PREFIX }}-case-*.json
+          retention-days: 90
+
+  feature-validation-source-model-check:
+    needs: migration-state
+    if: needs.migration-state.outputs.model == 'true'
+    name: feature-validation-source-${{ matrix.case }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { index: 0, case: "000" }
+          - { index: 1, case: "001" }
+          - { index: 2, case: "002" }
+          - { index: 3, case: "003" }
+          - { index: 4, case: "004" }
+    env:
+      CARGO_BUILD_JOBS: "2"
+      AGONES_VALIDATION_CI_RUN: gameserver-validation-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}-case-${{ matrix.case }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned verification tools
+        run: |
+          rustup toolchain install 1.98.1 --profile minimal
+          cargo install kani-verifier --version 0.68.0 --locked
+          cargo kani setup
+          cargo install cargo-bolero --version 0.13.4 --locked --no-default-features --features kani
+      - name: Verify the complete selected original GameServer validation case
+        run: python3 build/scripts/agones-rs/run.py "$AGONES_VALIDATION_CI_RUN" --quiet --cwd crates/agones-core python3 ../../build/scripts/agones-rs/protect_model.py cargo bolero test "source_gsv_case_${{ matrix.case }}" --engine kani
+      - name: Require both original assertions and both non-vacuity covers
+        run: python3 build/scripts/agones-rs/summarize_feature_proof.py gameserver-validation-source "$AGONES_VALIDATION_CI_RUN" --case-index "${{ matrix.index }}" --output "verification/agones/proof-summaries/$AGONES_VALIDATION_CI_RUN.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: feature-kani-validation-${{ matrix.case }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            verification/agones/runs/${{ env.AGONES_VALIDATION_CI_RUN }}.*
+            verification/agones/proof-summaries/${{ env.AGONES_VALIDATION_CI_RUN }}.json
+          retention-days: 90
+
+  feature-validation-contract-model-check:
+    needs: migration-state
+    if: needs.migration-state.outputs.model == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      CARGO_BUILD_JOBS: "2"
+      AGONES_VALIDATION_CONTRACT_CI_RUN: gameserver-features-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned verification tools
+        run: |
+          rustup toolchain install 1.98.1 --profile minimal
+          cargo install kani-verifier --version 0.68.0 --locked
+          cargo kani setup
+          cargo install cargo-bolero --version 0.13.4 --locked --no-default-features --features kani
+      - name: Verify the separate PlayerTracking source-contract relation
+        run: python3 build/scripts/agones-rs/run.py "$AGONES_VALIDATION_CONTRACT_CI_RUN" --quiet --cwd crates/agones-core python3 ../../build/scripts/agones-rs/protect_model.py cargo bolero test gameserver_feature_validation_common_domain --engine kani
+      - name: Require all three contract claims and eight non-vacuity covers
+        run: python3 build/scripts/agones-rs/summarize_feature_proof.py gameserver-features "$AGONES_VALIDATION_CONTRACT_CI_RUN" --output "verification/agones/proof-summaries/$AGONES_VALIDATION_CONTRACT_CI_RUN.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: feature-kani-player-contract-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
             verification/agones/runs/${{ env.AGONES_VALIDATION_CONTRACT_CI_RUN }}.*
             verification/agones/proof-summaries/${{ env.AGONES_VALIDATION_CONTRACT_CI_RUN }}.json
           retention-days: 90
+
+  feature-bool-model-check:
+    needs: [migration-state, feature-common-model-check, feature-validation-source-model-check, feature-validation-contract-model-check]
+    if: always() && needs.migration-state.outputs.model == 'true'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Require every selected model job to succeed
+        env:
+          COMMON_RESULT: ${{ needs.feature-common-model-check.result }}
+          VALIDATION_RESULT: ${{ needs.feature-validation-source-model-check.result }}
+          CONTRACT_RESULT: ${{ needs.feature-validation-contract-model-check.result }}
+        run: |
+          test "$COMMON_RESULT" = success
+          test "$VALIDATION_RESULT" = success
+          test "$CONTRACT_RESULT" = success

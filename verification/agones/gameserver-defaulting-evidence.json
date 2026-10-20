@@ -1,10 +1,10 @@
 {
   "artifact_bindings": {
-    ".github/workflows/rust.yml": "7de20605a3e37ac3afb1d4fd06e75cb9ec5c5ab5b0391696b4f055cb2b48a7d6",
+    ".github/workflows/rust.yml": "4305306b62ca417385c278217b82e2d530415cbb701060669149ee773a4b44aa",
     "build/scripts/agones-rs/checkpoint.py": "2e241757b57c199cd9b6ee4aed4bdc83cffbe0d3bc187a95913287e87c7fefb7",
     "build/scripts/agones-rs/select_checks.py": "7bca8256715fbbaa6f07d634866151ae21f344df89234b9f127ad26f93f179d8",
     "build/scripts/agones-rs/test_select_checks.py": "c93ef132242475b3539d756d82042aaa83f6109ba65c329a1e69fec522e56202",
-    "verification/agones/check-dependencies.json": "9d27de0b6913b6835479434b7441afed5c979f36f742a50a1ef4731e9a83afe5",
+    "verification/agones/check-dependencies.json": "6c9c06a3156476a50307900dd8c7bf224eaa06b76e0156a9dcb6d8f33da1c521",
     "verification/agones/checkpoint-run-history-control.json": "6fa6faf46331536623bb00f8367332d370e42de19d431d93367ab8920b85e251",
     "verification/agones/checkpoint-run-history-policy.json": "95ed94533dbfed0001d28c22ec85db7f4d95a75e3f3fa7676624061d0560b4b8",
     "verification/agones/ci/39169460164-success.json": "152c5ee7b2852377ef813fe55d0b04fa1b6e5b69fa95fe2cc5ec16e7cc7e9d18",
@@ -13,6 +13,7 @@
     "verification/agones/ci/39195278548-success.json": "a4652e786e504cd8d58ba38ff0f071d26832810441350b47cdceeceb680d76c9",
     "verification/agones/ci/39199314045-artifact-retention.json": "fe2c921db81ee2ab26af161ca7d260e865e66c1b2eb9b6d7002526c428d780b4",
     "verification/agones/ci/39199314045-success.json": "5c540a061150f57b8628a9a6518e6f96d0a8d851c125b87f8156d8c1da609e3d",
+    "verification/agones/ci/protected-model-execution-plan.json": "ab89b8924cba9e2bf37d712807911e037a9ace1513b3ba89e2517e1b22c7ae15",
     "verification/agones/feature-query-codegen.json": "b84ecb0b37783f5a8eca5b931d7ca60c6a2748a58e55a9e67312631547b7d4c3",
     "verification/agones/gameserver-canonical-proof-reuse.json": "f0b50390d8f0e1d384a6ad5723444a8f0ed30d4ac50d0be8e0bbc48c2797f77a",
     "verification/agones/gameserver-case-014-proof-reuse.json": "62b70c3173a22d35d8af7e3edbceb9f0718343d3562eca8d4fa0e64fb1af9b5e",
@@ -383,6 +384,34 @@
       "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-446"
     ],
     "production_symbol_model_checked": [],
+    "protected_execution_revalidation": {
+      "changed_bindings": [
+        {
+          "current_sha256": "0f2e6885ab25ff525ac6a77e1ed67ac02a5904e59caffc0e746258bee0cad04e",
+          "path": "build/scripts/agones-rs/kani_results.py",
+          "previous_sha256": "61137b32f8cb47ee893be991195b4739c9bd120c81ef922b771e0c50af870e1b"
+        },
+        {
+          "current_sha256": "f4f95585c9649b689324ee6efc3e6436509861d55a718c581d369e527ec9ca25",
+          "path": "build/scripts/agones-rs/summarize_feature_proof.py",
+          "previous_sha256": "067ff7e3ceb095bfc33de515f147fda697d056792cf6b8b06fbd09c7bab560f3"
+        },
+        {
+          "current_sha256": "4305306b62ca417385c278217b82e2d530415cbb701060669149ee773a4b44aa",
+          "path": ".github/workflows/rust.yml",
+          "previous_sha256": "7de20605a3e37ac3afb1d4fd06e75cb9ec5c5ab5b0391696b4f055cb2b48a7d6"
+        },
+        {
+          "current_sha256": "6c9c06a3156476a50307900dd8c7bf224eaa06b76e0156a9dcb6d8f33da1c521",
+          "path": "verification/agones/check-dependencies.json",
+          "previous_sha256": "9d27de0b6913b6835479434b7441afed5c979f36f742a50a1ef4731e9a83afe5"
+        }
+      ],
+      "plan": "verification/agones/ci/protected-model-execution-plan.json",
+      "proof_credit_added": 0,
+      "scope": "Only execution/acceptance machinery changed. Native implementation gates and unchanged original/model bodies are preserved. Earlier results retain their historical source and tool identities.",
+      "status": "PREPARED_NEW_CURRENT_PROOF_REQUIRED"
+    },
     "reference_model_checked": [],
     "remaining_exact_source_cases": 17,
     "remaining_original_source_assertion_occurrences": 304,
@@ -436,8 +465,8 @@
     "build/scripts/agones-rs/extract/main_test.go": "b66449f6662bd598185fb671688d9bf566e36176c2e36ffca378d78464370213",
     "build/scripts/agones-rs/extract/sdk_version.go": "79e0e06e220484f808686dbb936cee00fe3e52b572f4c93769736dd47f5acecd",
     "build/scripts/agones-rs/extract/sdk_version_test.go": "8e7ca0a3cac25144f4289bdcdee416502b7aa63e45d3f9e215e12c7cc4fca097",
-    "build/scripts/agones-rs/kani_results.py": "61137b32f8cb47ee893be991195b4739c9bd120c81ef922b771e0c50af870e1b",
-    "build/scripts/agones-rs/summarize_feature_proof.py": "067ff7e3ceb095bfc33de515f147fda697d056792cf6b8b06fbd09c7bab560f3",
+    "build/scripts/agones-rs/kani_results.py": "0f2e6885ab25ff525ac6a77e1ed67ac02a5904e59caffc0e746258bee0cad04e",
+    "build/scripts/agones-rs/summarize_feature_proof.py": "f4f95585c9649b689324ee6efc3e6436509861d55a718c581d369e527ec9ca25",
     "build/scripts/agones-rs/test_kani_results.py": "92903e03da6a7501a660173a90d436097f50f065acaf49515ba627d59da9d013",
     "crates/agones-core/Cargo.toml": "b9ff5ca08d252c07abce0e5ebb5f6a45dcbd874cebe4ba51712b5dde331b8bd6",
     "crates/agones-core/build.rs": "1deebfccd6024e6567573612d320770591de232f04f7b98291b0b5fa0fc78882",

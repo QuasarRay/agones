@@ -1,0 +1,514 @@
+{
+  "annotations": [
+    {
+      "annotation_level": "failure",
+      "blob_href": "https://github.com/QuasarRay/agones/blob/1edb803b6f61c4552fb6c4311f3ba97fde61e1af/.github",
+      "end_column": null,
+      "end_line": 1,
+      "message": "The hosted runner lost communication with the server. Anything in your workflow that terminates the runner process, starves it for CPU/Memory, or blocks its network access can cause this error.",
+      "path": ".github",
+      "raw_details": "",
+      "start_column": null,
+      "start_line": 1,
+      "title": ""
+    },
+    {
+      "annotation_level": "notice",
+      "blob_href": "https://github.com/QuasarRay/agones/blob/1edb803b6f61c4552fb6c4311f3ba97fde61e1af/.github",
+      "end_column": null,
+      "end_line": 1,
+      "message": "\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\"",
+      "path": ".github",
+      "raw_details": "",
+      "start_column": null,
+      "start_line": 1,
+      "title": ""
+    }
+  ],
+  "artifacts": [],
+  "attempt": 1,
+  "base": "1e64a054901658908d0a7a4eecd3010379df9614",
+  "checkout": "876ff250dae9d70f4cb76db72f826c653f941e5f",
+  "classification": "REPO_SAFE",
+  "completed_at": "2026-10-20T18:56:12Z",
+  "conclusion": "FAILURE",
+  "failure_class": "HOSTED_RUNNER_LOST_COMMUNICATION_NO_RESULT_ARTIFACT",
+  "formal_credit": 0,
+  "head": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
+  "interpretation": "Do not infer assertion failure or success from runner loss or step badges. No complete current individual results/covers were retained for any selected model. Memory/CPU/network/termination are possible causes named by GitHub, not an established root cause.",
+  "job_log_retrieval": {
+    "error_code": "BlobNotFound",
+    "http_status": 404,
+    "job_id": 118771895175,
+    "result": "No retained decoded job log available."
+  },
+  "jobs": [
+    {
+      "check_run_url": "https://api.github.com/repos/QuasarRay/agones/check-runs/118771691218",
+      "completed_at": "2026-10-20T17:14:58Z",
+      "conclusion": "success",
+      "created_at": "2026-10-20T17:14:35Z",
+      "head_branch": "codex/agones-player-tracking-validation",
+      "head_sha": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
+      "html_url": "https://github.com/QuasarRay/agones/actions/runs/39464345048/job/118771691218",
+      "id": 118771691218,
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "name": "migration-state",
+      "node_id": "CR_kwDOUpfRGM8AAAAbp1gu0g",
+      "run_attempt": 1,
+      "run_id": 39464345048,
+      "run_url": "https://api.github.com/repos/QuasarRay/agones/actions/runs/39464345048",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions",
+      "runner_id": 1000015215,
+      "runner_name": "GitHub Actions 1000015215",
+      "started_at": "2026-10-20T17:14:36Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completed_at": "2026-10-20T17:14:38Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "started_at": "2026-10-20T17:14:37Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:14:52Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "started_at": "2026-10-20T17:14:38Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:14:52Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-python@v5",
+          "number": 3,
+          "started_at": "2026-10-20T17:14:52Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:14:54Z",
+          "conclusion": "success",
+          "name": "Install pinned state validator",
+          "number": 4,
+          "started_at": "2026-10-20T17:14:52Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:14:54Z",
+          "conclusion": "success",
+          "name": "Validate source-bound implementation gate and ledger",
+          "number": 5,
+          "started_at": "2026-10-20T17:14:54Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:14:55Z",
+          "conclusion": "success",
+          "name": "Check guidance inheritance",
+          "number": 6,
+          "started_at": "2026-10-20T17:14:54Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:14:55Z",
+          "conclusion": "success",
+          "name": "Reject incomplete or vacuous proof results",
+          "number": 7,
+          "started_at": "2026-10-20T17:14:55Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:14:56Z",
+          "conclusion": "success",
+          "name": "Select affected checks conservatively",
+          "number": 8,
+          "started_at": "2026-10-20T17:14:55Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:14:56Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-python@v5",
+          "number": 15,
+          "started_at": "2026-10-20T17:14:56Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:14:56Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4",
+          "number": 16,
+          "started_at": "2026-10-20T17:14:56Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:14:56Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 17,
+          "started_at": "2026-10-20T17:14:56Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/jobs/118771691218",
+      "workflow_name": "Rust reimplementation"
+    },
+    {
+      "check_run_url": "https://api.github.com/repos/QuasarRay/agones/check-runs/118771895130",
+      "completed_at": "2026-10-20T17:23:21Z",
+      "conclusion": "success",
+      "created_at": "2026-10-20T17:14:58Z",
+      "head_branch": "codex/agones-player-tracking-validation",
+      "head_sha": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
+      "html_url": "https://github.com/QuasarRay/agones/actions/runs/39464345048/job/118771895130",
+      "id": 118771895130,
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "name": "rust",
+      "node_id": "CR_kwDOUpfRGM8AAAAbp1tLWg",
+      "run_attempt": 1,
+      "run_id": 39464345048,
+      "run_url": "https://api.github.com/repos/QuasarRay/agones/actions/runs/39464345048",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions",
+      "runner_id": 1000015219,
+      "runner_name": "GitHub Actions 1000015219",
+      "started_at": "2026-10-20T17:15:01Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completed_at": "2026-10-20T17:15:03Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "started_at": "2026-10-20T17:15:02Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:15:07Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "started_at": "2026-10-20T17:15:03Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:15:16Z",
+          "conclusion": "success",
+          "name": "Install pinned evidence Rust",
+          "number": 3,
+          "started_at": "2026-10-20T17:15:07Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:15:56Z",
+          "conclusion": "success",
+          "name": "Install native build dependencies",
+          "number": 4,
+          "started_at": "2026-10-20T17:15:16Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:18:19Z",
+          "conclusion": "success",
+          "name": "Check workspace",
+          "number": 5,
+          "started_at": "2026-10-20T17:15:56Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:22:31Z",
+          "conclusion": "success",
+          "name": "Test workspace",
+          "number": 6,
+          "started_at": "2026-10-20T17:18:19Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:22:48Z",
+          "conclusion": "success",
+          "name": "Check deterministic exact-case generation",
+          "number": 7,
+          "started_at": "2026-10-20T17:22:31Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:22:49Z",
+          "conclusion": "success",
+          "name": "Check pinned Go printable-rune table generation",
+          "number": 8,
+          "started_at": "2026-10-20T17:22:48Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:22:49Z",
+          "conclusion": "success",
+          "name": "Check exact SDK source-case generation",
+          "number": 9,
+          "started_at": "2026-10-20T17:22:49Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:22:49Z",
+          "conclusion": "success",
+          "name": "Check all exact GameServer source-case generation",
+          "number": 10,
+          "started_at": "2026-10-20T17:22:49Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:22:50Z",
+          "conclusion": "success",
+          "name": "Check all exact GameServer validation source-case generation",
+          "number": 11,
+          "started_at": "2026-10-20T17:22:49Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:22:52Z",
+          "conclusion": "success",
+          "name": "Reject unsupported GameServer source lowering",
+          "number": 12,
+          "started_at": "2026-10-20T17:22:50Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:23:19Z",
+          "conclusion": "success",
+          "name": "Check resource derive aliases, facades, generics, and rejected paths",
+          "number": 13,
+          "started_at": "2026-10-20T17:22:52Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:23:19Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4",
+          "number": 26,
+          "started_at": "2026-10-20T17:23:19Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:23:19Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 27,
+          "started_at": "2026-10-20T17:23:19Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/jobs/118771895130",
+      "workflow_name": "Rust reimplementation"
+    },
+    {
+      "check_run_url": "https://api.github.com/repos/QuasarRay/agones/check-runs/118771895175",
+      "completed_at": "2026-10-20T18:56:12Z",
+      "conclusion": "failure",
+      "created_at": "2026-10-20T17:14:58Z",
+      "head_branch": "codex/agones-player-tracking-validation",
+      "head_sha": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
+      "html_url": "https://github.com/QuasarRay/agones/actions/runs/39464345048/job/118771895175",
+      "id": 118771895175,
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "name": "feature-bool-model-check",
+      "node_id": "CR_kwDOUpfRGM8AAAAbp1tLhw",
+      "run_attempt": 1,
+      "run_id": 39464345048,
+      "run_url": "https://api.github.com/repos/QuasarRay/agones/actions/runs/39464345048",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions",
+      "runner_id": 1000015218,
+      "runner_name": "GitHub Actions 1000015218",
+      "started_at": "2026-10-20T17:15:00Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completed_at": "2026-10-20T17:15:01Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "started_at": "2026-10-20T17:15:01Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:15:05Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "started_at": "2026-10-20T17:15:01Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:15:37Z",
+          "conclusion": "success",
+          "name": "Install pinned verification tools",
+          "number": 3,
+          "started_at": "2026-10-20T17:15:05Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:16:22Z",
+          "conclusion": "success",
+          "name": "Verify the exact Bolero harness through Kani",
+          "number": 4,
+          "started_at": "2026-10-20T17:15:37Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:16:23Z",
+          "conclusion": "success",
+          "name": "Require all assertions and non-vacuity covers",
+          "number": 5,
+          "started_at": "2026-10-20T17:16:22Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:16:37Z",
+          "conclusion": "success",
+          "name": "Verify production input precedence through Bolero and Kani",
+          "number": 6,
+          "started_at": "2026-10-20T17:16:23Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:16:37Z",
+          "conclusion": "success",
+          "name": "Require input assertions and all ten covers",
+          "number": 7,
+          "started_at": "2026-10-20T17:16:37Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:17:18Z",
+          "conclusion": "success",
+          "name": "Verify the exact original query-error assertion through Bolero and Kani",
+          "number": 8,
+          "started_at": "2026-10-20T17:16:37Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:17:18Z",
+          "conclusion": "success",
+          "name": "Require the original query-error assertion and both covers",
+          "number": 9,
+          "started_at": "2026-10-20T17:17:18Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:17:27Z",
+          "conclusion": "success",
+          "name": "Verify production health defaults through Bolero and Kani",
+          "number": 10,
+          "started_at": "2026-10-20T17:17:18Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:17:27Z",
+          "conclusion": "success",
+          "name": "Require model and production health invariants and all eight covers",
+          "number": 11,
+          "started_at": "2026-10-20T17:17:27Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:20:05Z",
+          "conclusion": "success",
+          "name": "Verify the complete original default-eviction GameServer case through Bolero and Kani",
+          "number": 12,
+          "started_at": "2026-10-20T17:17:27Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:20:06Z",
+          "conclusion": "success",
+          "name": "Require all 18 original GameServer assertions and both covers",
+          "number": 13,
+          "started_at": "2026-10-20T17:20:05Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:22:46Z",
+          "conclusion": "success",
+          "name": "Reverify the complete original basic GameServer case through Bolero and Kani",
+          "number": 14,
+          "started_at": "2026-10-20T17:20:06Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-20T17:22:46Z",
+          "conclusion": "success",
+          "name": "Require all 18 basic-case original assertions and both covers",
+          "number": 15,
+          "started_at": "2026-10-20T17:22:46Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": null,
+          "conclusion": null,
+          "name": "Verify all five exact original GameServer validation cases",
+          "number": 16,
+          "started_at": "2026-10-20T17:22:46Z",
+          "status": "in_progress"
+        },
+        {
+          "completed_at": null,
+          "conclusion": null,
+          "name": "Verify the separate PlayerTracking source-contract relation",
+          "number": 17,
+          "started_at": null,
+          "status": "pending"
+        },
+        {
+          "completed_at": null,
+          "conclusion": null,
+          "name": "Require all three contract claims and eight non-vacuity covers",
+          "number": 18,
+          "started_at": null,
+          "status": "pending"
+        },
+        {
+          "completed_at": null,
+          "conclusion": null,
+          "name": "Require both validation campaigns to succeed",
+          "number": 19,
+          "started_at": null,
+          "status": "pending"
+        },
+        {
+          "completed_at": null,
+          "conclusion": null,
+          "name": "Run actions/upload-artifact@v4",
+          "number": 20,
+          "started_at": null,
+          "status": "pending"
+        },
+        {
+          "completed_at": null,
+          "conclusion": null,
+          "name": "Post Run actions/checkout@v4",
+          "number": 40,
+          "started_at": null,
+          "status": "pending"
+        }
+      ],
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/jobs/118771895175",
+      "workflow_name": "Rust reimplementation"
+    }
+  ],
+  "next_action": "Prepare a changed operational attempt with explicit runner-protecting resource limits/recording and earlier per-selection artifact retention or isolated source-case jobs. Preserve every selected case/assertion/cover and unwind128. Do not retry the same unprotected campaign. Continue native source error-data work from the isolated checkpoint.",
+  "observed_at": "Tue, 20 Oct 2026 19:35:24 GMT",
+  "pull_request": 96,
+  "run_id": 39464345048,
+  "schema_version": 1,
+  "status": "COMPLETED",
+  "tree": "893d506d71f7e348d71eceeb61df2101ed1511b8"
+}

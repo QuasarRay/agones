@@ -3,13 +3,14 @@
 import json
 import argparse
 
-from kani_results import ROOT, read_results, require_claims_and_covers
+from kani_results import ROOT, read_results, require_claims_and_covers, require_run_command
 parser = argparse.ArgumentParser()
 parser.add_argument("run_id", nargs="?", default="feature-bool-bolero-kani-input-final")
 parser.add_argument("--output", default="verification/agones/feature-bool-kani-properties.json")
 args = parser.parse_args()
 run_name = args.run_id
 rows = read_results(run_name)
+require_run_command(run_name, "feature_bool_common_domain")
 claims = [row for row in rows if row["symbol"].startswith("feature_bool_common_domain::{closure#0}.assertion.")]
 assert len(claims) == 3 and all(row["status"] == "SUCCESS" for row in claims)
 assert all(row["location"].startswith("crates/agones-core/tests/feature_bool_domain.rs:") for row in claims)

@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "recover_pr96_after_quantity_checkpoint",
+  "gate_snapshot": "verification/agones/gates/317304e45484daa2961fdf0a6983d3e056af281f03d5597b542bc9c51a435e49.json",
+  "predecessor_revision": 246,
+  "predecessor_sha256": "683a6bca6e4aff2896d7b18ad0b2866c57113d81a827b8a23d7cdd9167aebf14",
+  "reason": "Return active canonical packet to the running validation campaign; quantity implementation and local gate remain recoverable from the isolated worktree, without changing source inputs of current CI.",
+  "result_revision": 247,
+  "schema_version": 1,
+  "state_sha256": "5c9a090d1eaea4bd457608c356d224633ecdea93684e47fc774123f1fa843118",
+  "timestamp": "2026-10-20T18:11:57.825380+00:00"
+}

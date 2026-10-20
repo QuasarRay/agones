@@ -1,0 +1,51 @@
+{
+  "dependencies": [],
+  "disposition": "READY",
+  "evidence_refs": [
+    "verification/agones/resource-quantity-isolated-recovery.json"
+  ],
+  "feature_ids": [
+    "exact-resource-quantity-validation"
+  ],
+  "id": "RESOURCE-QUANTITY-001",
+  "implementation_gate": null,
+  "next_action": "Recover actual PR96 CI artifacts in the unchanged canonical source checkout using the proven artifact-download route. Then adopt clean isolated typed-quantity commitdd15992d4 and gate1566022 with affected production-gate/evidence refresh; begin new semantic extraction only against a valid installed gate. Preserve both repaired boundary counterexamples and original-source quantity construction/numeric state in future lowering.",
+  "owned_paths": [
+    "crates/agones-core/src/resource_quantity.rs",
+    "crates/agones-rusternetes/src/lib.rs",
+    "crates/agones-rusternetes/src/gameserver_admission.rs",
+    "crates/agones-rusternetes/src/fleet_admission.rs",
+    "crates/agones-rusternetes/src/gameserverset_admission.rs",
+    "crates/agones-core/tests",
+    "crates/agones-rusternetes/tests"
+  ],
+  "requirement_ids": [
+    "REQ-02",
+    "REQ-04",
+    "REQ-05",
+    "REQ-07",
+    "REQ-08",
+    "REQ-09",
+    "REQ-10",
+    "REQ-11",
+    "REQ-12",
+    "REQ-13"
+  ],
+  "source_config_binding": {
+    "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "isolated_commit": "dd15992d4fc556528bfd956d9059234b3444c691",
+    "isolated_gate": "verification/agones/gates/1566022a425b37fc4b0f03d2101acbef8f833b56cf01cd088d66785e1b8eff81.json",
+    "isolated_recovery_manifest": "verification/agones/resource-quantity-isolated-recovery.json",
+    "managed_worktree": "/home/astral/.codex/worktrees/agones-resource-quantity/agones",
+    "source_files": {
+      "pkg/apis/agones/v1/gameserver.go": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
+      "vendor/k8s.io/apimachinery/pkg/api/resource/quantity.go": "9fa46ba76f6dfb0aff6fd63cd7d288531b20ab902d96450980d62c7ee8078110",
+      "vendor/k8s.io/apimachinery/pkg/api/resource/suffix.go": "bdf0d341b71f799fa80cd11d2e1e92b817f244170deb906c7e1f50ea5990b39c"
+    },
+    "work_packet": "verification/agones/resource-quantity-work-packet.json"
+  },
+  "stage": "IMPLEMENTING",
+  "test_ids": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate"
+  ]
+}

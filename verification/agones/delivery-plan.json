@@ -198,10 +198,19 @@
       },
       "status": "PASSED",
       "workflow_run": 39397341432
+    },
+    {
+      "evidence": "verification/agones/ci/39464345048-in-progress.json",
+      "head": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
+      "scope": "State job passed; actual Rust and model jobs running. Step success is not credited as complete backend evidence.",
+      "status": "IN_PROGRESS",
+      "tested_merge": "876ff250dae9d70f4cb76db72f826c653f941e5f",
+      "workflow_run": 39464345048
     }
   ],
+  "current_ci_receipt": "verification/agones/ci/39464345048-runner-lost-no-artifacts.json",
   "expected_base": "1e64a054901658908d0a7a4eecd3010379df9614",
-  "expected_head": "774abfa9a2a0129074d20453d94d999899cb012b",
+  "expected_head": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
   "integration_branch": "agones-rs-dev",
   "merge_result": {
     "commit": "774abfa9a2a0129074d20453d94d999899cb012b",
@@ -209,6 +218,7 @@
     "method_observed": "source head is ancestor of integration; PR API reports merged",
     "pr": "https://github.com/QuasarRay/agones/pull/94"
   },
+  "next_action": "Prepare a changed operational attempt with explicit runner-protecting resource limits/recording and earlier per-selection artifact retention or isolated source-case jobs. Preserve every selected case/assertion/cover and unwind128. Do not retry the same unprotected campaign. Continue native source error-data work from the isolated checkpoint.",
   "pending_checkpoint": {
     "backend_harnesses": [
       "feature_bool_common_domain",
@@ -224,16 +234,30 @@
       "source_gsv_case_004",
       "gameserver_feature_validation_common_domain"
     ],
+    "ci_receipt": "verification/agones/ci/39464345048-in-progress.json",
     "expected_review_branch": "codex/agones-player-tracking-validation",
     "feature_id": "GS-VALIDATE-FEATURES-001",
+    "head": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
     "local_source_head": "3b1bd370c445afd30a71737474f5a411e6ccd75c",
     "local_source_head_kind": "LOCAL_UNPUBLISHED_CHECKPOINT",
     "new_contract_model_credit": 0,
     "new_qualified_source_credit": 0,
-    "status": "PROPERTIES_READY_BACKEND_NOT_YET_RUN",
+    "publication_strategy": "Existing89immutableblobs plus48UTF8tree.content entries produced the exact staged tree in one batched tree operation; prior local source checkpoint preserved at refs/agones-checkpoints/player-tracking-validation-local.",
+    "review_branch": "codex/agones-player-tracking-validation",
+    "status": "DRAFT_PUBLISHED_ACTUAL_CI_RUNNING",
+    "tested_merge": "876ff250dae9d70f4cb76db72f826c653f941e5f",
+    "tree": "893d506d71f7e348d71eceeb61df2101ed1511b8",
     "user_guidance_dirty_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
-    "work_packet": "verification/agones/gameserver-feature-validation-work-packet.json"
+    "visible_checkout": {
+      "branch": "agones-rs-dev",
+      "head": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
+      "user_guidance_preserved": true
+    },
+    "work_packet": "verification/agones/gameserver-feature-validation-work-packet.json",
+    "workflow_run": 39464345048
   },
+  "protected_execution_plan": "verification/agones/ci/protected-model-execution-plan.json",
+  "pull_request": "https://github.com/QuasarRay/agones/pull/96",
   "pull_requests": [
     {
       "draft": false,
@@ -259,7 +283,7 @@
       "url": "https://github.com/QuasarRay/agones/pull/94"
     }
   ],
-  "remote_result": "VALIDATION_SOURCE_PROPERTIES_READY_REVIEW_PUBLICATION_PENDING",
+  "remote_result": "PR96_PROTECTED_CI_UPDATE_PREPARED",
   "required_checks": [
     "migration-state",
     "rust",

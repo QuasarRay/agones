@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate"
+  ],
+  "authorization": "User execution contract",
+  "event": "quantity_typed_owner_counterexamples_repaired",
+  "gate_snapshot": null,
+  "predecessor_revision": 247,
+  "predecessor_sha256": "5c9a090d1eaea4bd457608c356d224633ecdea93684e47fc774123f1fa843118",
+  "reason": "Actual source int32 scale-overflow and1000Eformatted-storage counterexamples reopened gate6e5be9. Clean isolated commitdd15992d4and successor gate1566022 preserve typed quantities, share template numeric semantics, and pass612workspace tests/1625source replay cases including5exception rows. No source extraction or formal credit; canonical source1edunchanged.",
+  "result_revision": 248,
+  "schema_version": 1,
+  "state_sha256": "233a580949f7a4fb473ce1034a5c1fbf249f2666d846363d21bf8f80b63482df",
+  "timestamp": "2026-10-20T18:35:54.391896+00:00"
+}

@@ -4,56 +4,56 @@
       "evidence_refs": [],
       "form": "proc_macro_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After the first complete validation source-case backend result, reassess actual repeated assertion/derive/attribute/delegation declarations with the recorded Arcane core/shim/facade facilities and root preferred libraries. Select only a concrete economical _2 adoption; continue feature delivery.",
+      "next_review_trigger": "After protected CI yields complete current result rows, or exposes a concrete further blocker, return to the source error-data production packet and review only demonstrated repetitions.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_2",
       "location": "cross-crate",
-      "next_review_trigger": "After the first complete validation source-case backend result, reassess actual repeated assertion/derive/attribute/delegation declarations with the recorded Arcane core/shim/facade facilities and root preferred libraries. Select only a concrete economical _2 adoption; continue feature delivery.",
+      "next_review_trigger": "After protected CI yields complete current result rows, or exposes a concrete further blocker, return to the source error-data production packet and review only demonstrated repetitions.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_attribute_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After the first complete validation source-case backend result, reassess actual repeated assertion/derive/attribute/delegation declarations with the recorded Arcane core/shim/facade facilities and root preferred libraries. Select only a concrete economical _2 adoption; continue feature delivery.",
+      "next_review_trigger": "After protected CI yields complete current result rows, or exposes a concrete further blocker, return to the source error-data production packet and review only demonstrated repetitions.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_attribute_2",
       "location": "cross-crate",
-      "next_review_trigger": "After the first complete validation source-case backend result, reassess actual repeated assertion/derive/attribute/delegation declarations with the recorded Arcane core/shim/facade facilities and root preferred libraries. Select only a concrete economical _2 adoption; continue feature delivery.",
+      "next_review_trigger": "After protected CI yields complete current result rows, or exposes a concrete further blocker, return to the source error-data production packet and review only demonstrated repetitions.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_derive_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After the first complete validation source-case backend result, reassess actual repeated assertion/derive/attribute/delegation declarations with the recorded Arcane core/shim/facade facilities and root preferred libraries. Select only a concrete economical _2 adoption; continue feature delivery.",
+      "next_review_trigger": "After protected CI yields complete current result rows, or exposes a concrete further blocker, return to the source error-data production packet and review only demonstrated repetitions.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_derive_2",
       "location": "cross-crate",
-      "next_review_trigger": "After the first complete validation source-case backend result, reassess actual repeated assertion/derive/attribute/delegation declarations with the recorded Arcane core/shim/facade facilities and root preferred libraries. Select only a concrete economical _2 adoption; continue feature delivery.",
+      "next_review_trigger": "After protected CI yields complete current result rows, or exposes a concrete further blocker, return to the source error-data production packet and review only demonstrated repetitions.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_delegate_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After the first complete validation source-case backend result, reassess actual repeated assertion/derive/attribute/delegation declarations with the recorded Arcane core/shim/facade facilities and root preferred libraries. Select only a concrete economical _2 adoption; continue feature delivery.",
+      "next_review_trigger": "After protected CI yields complete current result rows, or exposes a concrete further blocker, return to the source error-data production packet and review only demonstrated repetitions.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_delegate_2",
       "location": "cross-crate",
-      "next_review_trigger": "After the first complete validation source-case backend result, reassess actual repeated assertion/derive/attribute/delegation declarations with the recorded Arcane core/shim/facade facilities and root preferred libraries. Select only a concrete economical _2 adoption; continue feature delivery.",
+      "next_review_trigger": "After protected CI yields complete current result rows, or exposes a concrete further blocker, return to the source error-data production packet and review only demonstrated repetitions.",
       "status": "REQUIRED_OPEN"
     }
   ],
@@ -297,10 +297,19 @@
         },
         "status": "PASSED",
         "workflow_run": 39397341432
+      },
+      {
+        "evidence": "verification/agones/ci/39464345048-in-progress.json",
+        "head": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
+        "scope": "State job passed; actual Rust and model jobs running. Step success is not credited as complete backend evidence.",
+        "status": "IN_PROGRESS",
+        "tested_merge": "876ff250dae9d70f4cb76db72f826c653f941e5f",
+        "workflow_run": 39464345048
       }
     ],
+    "current_ci_receipt": "verification/agones/ci/39464345048-runner-lost-no-artifacts.json",
     "expected_base": "1e64a054901658908d0a7a4eecd3010379df9614",
-    "expected_head": "774abfa9a2a0129074d20453d94d999899cb012b",
+    "expected_head": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
     "integration_branch": "agones-rs-dev",
     "merge_result": {
       "commit": "774abfa9a2a0129074d20453d94d999899cb012b",
@@ -308,6 +317,7 @@
       "method_observed": "source head is ancestor of integration; PR API reports merged",
       "pr": "https://github.com/QuasarRay/agones/pull/94"
     },
+    "next_action": "Prepare a changed operational attempt with explicit runner-protecting resource limits/recording and earlier per-selection artifact retention or isolated source-case jobs. Preserve every selected case/assertion/cover and unwind128. Do not retry the same unprotected campaign. Continue native source error-data work from the isolated checkpoint.",
     "pending_checkpoint": {
       "backend_harnesses": [
         "feature_bool_common_domain",
@@ -323,15 +333,27 @@
         "source_gsv_case_004",
         "gameserver_feature_validation_common_domain"
       ],
+      "ci_receipt": "verification/agones/ci/39464345048-in-progress.json",
       "expected_review_branch": "codex/agones-player-tracking-validation",
       "feature_id": "GS-VALIDATE-FEATURES-001",
+      "head": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
       "local_source_head": "3b1bd370c445afd30a71737474f5a411e6ccd75c",
       "local_source_head_kind": "LOCAL_UNPUBLISHED_CHECKPOINT",
       "new_contract_model_credit": 0,
       "new_qualified_source_credit": 0,
-      "status": "PROPERTIES_READY_BACKEND_NOT_YET_RUN",
+      "publication_strategy": "Existing89immutableblobs plus48UTF8tree.content entries produced the exact staged tree in one batched tree operation; prior local source checkpoint preserved at refs/agones-checkpoints/player-tracking-validation-local.",
+      "review_branch": "codex/agones-player-tracking-validation",
+      "status": "DRAFT_PUBLISHED_ACTUAL_CI_RUNNING",
+      "tested_merge": "876ff250dae9d70f4cb76db72f826c653f941e5f",
+      "tree": "893d506d71f7e348d71eceeb61df2101ed1511b8",
       "user_guidance_dirty_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
-      "work_packet": "verification/agones/gameserver-feature-validation-work-packet.json"
+      "visible_checkout": {
+        "branch": "agones-rs-dev",
+        "head": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
+        "user_guidance_preserved": true
+      },
+      "work_packet": "verification/agones/gameserver-feature-validation-work-packet.json",
+      "workflow_run": 39464345048
     },
     "pending_ci": "verification/agones/ci/39144973597-in-progress.json",
     "pending_publication": {
@@ -341,6 +363,8 @@
       "scope": "CGP process input policy, source-case IR/runtime mapping, deterministic Genco harnesses, production sorted-entry storage and strict result controls.",
       "target_branch": "codex/agones-feature-gates-001"
     },
+    "protected_execution_plan": "verification/agones/ci/protected-model-execution-plan.json",
+    "pull_request": "https://github.com/QuasarRay/agones/pull/96",
     "pull_requests": [
       {
         "draft": false,
@@ -366,7 +390,7 @@
         "url": "https://github.com/QuasarRay/agones/pull/94"
       }
     ],
-    "remote_result": "VALIDATION_SOURCE_PROPERTIES_READY_REVIEW_PUBLICATION_PENDING",
+    "remote_result": "PR96_PROTECTED_CI_UPDATE_PREPARED",
     "required_checks": [
       "migration-state",
       "rust",
@@ -382,9 +406,9 @@
   "goal": {
     "objective_attachment": "/home/astral/.codex/attachments/5cf63dab-e5a8-49be-a2f1-ae51f5edd993/pasted-text-1.txt",
     "reported_usage": {
-      "observed_at": 1792515590,
-      "time_seconds": 50332,
-      "tokens": 4879633
+      "observed_at": 1792526499,
+      "time_seconds": 61241,
+      "tokens": 5934442
     },
     "status": "active",
     "thread_id": "01a14ebe-10fa-7c41-9f85-256874fb4c1f",
@@ -392,8 +416,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 243,
-  "previous_sha256": "ff0a97c594f395c79e04668953c52ab77f8b88fc64928de628e2aa985c36e67d",
+  "previous_revision": 251,
+  "previous_sha256": "52e0475deb488353a9d3125adc17078592ff5d691e0758f681e98e777b25b103",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -708,9 +732,67 @@
       "observations": "The new family already reuses gs_fixture and gate/format/save helpers. Editing the shared root to add this family invalidated three existing implementation-gate file bindings. The current generator refresh proved every prior emitted Rust body byte-identical.",
       "reuse": "Reuse existing Genco0.17.10, shared typed fixtures, current gate tools and Rust module visibility. No new library, macro authoring framework, compiler layer or alternate orchestrator.",
       "roi": "One small module extraction limits future validation-emitter edits and context reads to its actual consumer, rather than growing the shared generator and repeatedly refreshing unrelated root-file gate bindings. Construction is mechanical; one extra source-file hash and existing generation/native controls validate the boundary. This is a concrete maintenance/context saving over the remaining source families."
+    },
+    {
+      "architecture_status": "All eight mandatory _2 form/location cells remain REQUIRED_OPEN. No architecture completion credited.",
+      "candidate": "Replace the private f64 parser and share the actual quantity/resource policy between core validation and Rusternetes consumers.",
+      "decision": "SMALL_LOCAL_REFACTOR",
+      "feature_id": "RESOURCE-QUANTITY-001",
+      "four_form_review": {
+        "proc_macro_2": "Use the existing ordinary expansion/Genco substrate when resource source extraction needs it; parser arithmetic has no repeated token transform.",
+        "proc_macro_attribute_2": "Current serde/CGP attributes already express the two wire boundaries. No new attribute syntax justified by this feature.",
+        "proc_macro_delegate_2": "Existing CGP delegates the new policy in production and a quantity-only context. Keep required same-logical-crate and cross-crate authoring cells open; consumer use earns no authoring credit.",
+        "proc_macro_derive_2": "Three small error/format cases have source-specific behavior, not a repeated derive expansion. Recorded Arcane core/shim/facade remains the relevant future adoption structure."
+      },
+      "id": "RESOURCE-QUANTITY-001-shared-core-review",
+      "next_review_trigger": "When this quantity implementation is adopted into the canonical checkout and its source-bound gates/extraction are refreshed, inspect the concrete repeated typed resource fixtures and trait/delegation plumbing for the smallest positive-ROI _2 adoption.",
+      "observations": "One former adapter-only policy skipped core validation and duplicated traversal. The shared CGP provider now owns exact nonnegative/request-limit decisions; GameServerSpec owns the shared source-ordered resource traversal. Four core entrypoints and three real admissions reach it. Rusternetes types stay in the adapter; null quantities cannot disappear through its string-map decoder.",
+      "residual": "Hook/metadata ordering beyond resource placement, unmodeled wire fields, live-cluster conformance/lifecycle and all unproved original obligations remain required.",
+      "reuse": "REUSE_DIRECT: num-bigint0.4.8 BigUint multiplication, already resolved in Cargo.lock. REUSE_DIRECT: pinned CGP component/new-provider/delegate_and_check_components. Reuse actual pinned Go quantity.go/suffix.go/amount.go semantics, including fast cached spelling, nano rounding, BinarySI-only cap and empty unsupported DecimalSI suffix. Native replay supplements independent numeric/path/value invariants; it is no source-test extraction or formal proof.",
+      "roi": "A small local relocation removes repeated validation loops and prevents each future core/admission consumer from reconstructing numeric policy. Parsing is a concrete missing behavior: the pinned Rusternetes scheduler helper returns f64 and its common DTO stores strings. No new general parser framework or proc-macro substrate is needed. Exact numeric comparison and source formatting are ordinary algorithms, not repeated token templates.",
+      "root_guidance_preferences": "CGP directly removes component/provider forwarding boilerplate. Existing serde derives own DTO plumbing. derive-deftly/comprende/better_comprehension do not replace the single nonuniform source quantity algorithm; speculative dependencies would add integration and proof obligations. Reassess at a concrete repeated typed source-IR or field-forwarding consumer."
+    },
+    {
+      "architecture_status": "All eight mandatory _2 form/location cells remain REQUIRED_OPEN. No architecture completion credited.",
+      "candidate": "Preserve typed quantity ownership and reuse its numeric semantics for validation and template equality after two actual counterexamples.",
+      "decision": "SMALL_LOCAL_REFACTOR",
+      "feature_id": "RESOURCE-QUANTITY-001",
+      "four_form_review": {
+        "proc_macro_2": "Use the existing ordinary expansion/Genco substrate when resource source extraction needs it; parser arithmetic has no repeated token transform.",
+        "proc_macro_attribute_2": "Current serde/CGP attributes already express the two wire boundaries. No new attribute syntax justified by this feature.",
+        "proc_macro_delegate_2": "Existing CGP delegates the new policy in production and a quantity-only context. Keep required same-logical-crate and cross-crate authoring cells open; consumer use earns no authoring credit.",
+        "proc_macro_derive_2": "Three small error/format cases have source-specific behavior, not a repeated derive expansion. Recorded Arcane core/shim/facade remains the relevant future adoption structure."
+      },
+      "id": "RESOURCE-QUANTITY-001-typed-owner-review",
+      "next_review_trigger": "After the first terminal PR96 validation backend result or adoption of this typed quantity checkpoint, inspect concrete typed source-fixture and trait/delegation repetition for the smallest positive-ROI _2 adoption. All eight required cells stay open.",
+      "observations": "The former JSON resource storage serialized and reparsed quantities before comparison; source1000Eformats as1but retains1e21. Typed fields preserve the value and source fast-path state. The nearby Fleet i128 rational parser was a second bounded implementation and lost source rounding/capping behavior; it is removed and known template fields normalize from typed owners.",
+      "residual": "Hook/metadata ordering beyond resource placement, unmodeled wire fields, live-cluster conformance/lifecycle and all unproved original obligations remain required.",
+      "reuse": "REUSE_DIRECT: num-bigint0.4.8 BigUint multiplication, already resolved in Cargo.lock. REUSE_DIRECT: pinned CGP component/new-provider/delegate_and_check_components. Reuse actual pinned Go quantity.go/suffix.go/amount.go semantics, including fast cached spelling, nano rounding, BinarySI-only cap and empty unsupported DecimalSI suffix. Native replay supplements independent numeric/path/value invariants; it is no source-test extraction or formal proof.",
+      "roi": "The two observed semantic failures make typed ownership necessary to finish this feature. Existing serde derives express the two resource maps; CGP already owns validation policy. Reusing one factored numeric representation removes more than100lines of separately bounded quantity arithmetic and prevents repeated policy drift. No new macro syntax, generic resource framework or orchestrator adapter is introduced.",
+      "root_guidance_preferences": "CGP directly removes component/provider forwarding boilerplate. Existing serde derives own DTO plumbing. derive-deftly/comprende/better_comprehension do not replace the single nonuniform source quantity algorithm; speculative dependencies would add integration and proof obligations. Reassess at a concrete repeated typed source-IR or field-forwarding consumer."
+    },
+    {
+      "candidate": "Retain the source GameServer TypeMeta in its real DTO and Rusternetes conversion.",
+      "decision": "REUSE_EXISTING",
+      "id": "GS-TYPEMETA-001-production-review",
+      "next_review_trigger": "After the source error-data repair and complete25case native replay, reassess concrete constructor/field/projection repetition for the smallest economical _2adoption; no authoring-cell credit from using existing derives.",
+      "observations": "The source fixture guard detected dropped kind on eight original table rows. A real TypeMeta field now owns kind/apiVersion, defaulting and validation retain them, native conversion supplies canonical missing identity and rejects conflicts, and decoding restores actual wire identity. Compiler JSON spans identified25existing constructors needing an explicit empty header; no hand editing of generated output.",
+      "reuse": "Existing serde derives/flatten/null-compatible Go-value decoder, generated AgonesApiResource identity and the single generic native conversion. No facade or alternate orchestrator.",
+      "roi": "One shared data type and existing derives cover the immediate fixture gap and future CRD header consumers. A new proc-macro/default-constructor framework would add compiler/diagnostic obligations for a mechanical edit already handled by compiler spans. Reuse current serde/CGP; keep all required _2cells open."
+    },
+    {
+      "affected_architecture_cells": "All eight remain REQUIRED_OPEN; this operational repair supplies no _2authoring or production lifecycle credit.",
+      "candidate": "Reuse systemd/cgroup v2 and upload-artifact for the demonstrated verifier runner/evidence loss.",
+      "decision": "SMALL_LOCAL_REFACTOR",
+      "evidence": "verification/agones/ci/protected-model-execution-plan.json",
+      "id": "GS-VALIDATE-FEATURES-001-protected-model-execution",
+      "next_review_trigger": "After protected CI yields complete current result rows, or exposes a concrete further blocker, return to the source error-data production packet and review only demonstrated repetitions.",
+      "observations": "One serial12selection job lost contact before its final-only upload, erasing even completed ordinary step outputs. A bounded recorder reads arbitrary binary output in64KiB chunks and retains exact bytes. A narrow fixed-route service wrapper limits the verifier tree, with its recorder outside. Each completed common selection uploads before subsequent work; five source cases and the contract have independent jobs/artifacts.",
+      "reuse": "Existing foreground run.py receipt protocol, strict result parser, source bindings and GitHub Actions. The Linux service manager supplies cgroups, whole-group kill and resource accounting. No replacement scheduler, CI framework, orchestrator integration or macro is introduced.",
+      "roi": "This repairs a confirmed multi-hour loss of all12selection evidence using one fixed command wrapper and existing artifact action. Three short copies of the pinned tool setup cost less validation and comprehension than a new composite/reusable-workflow abstraction. Local controls bound byte preservation, terminal failures, missing controls and false proof acceptance. Stop expansion after the protected live attempt is recoverable; diagnose actual outcomes."
     }
   ],
-  "revision": 244,
+  "revision": 252,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [
@@ -720,14 +802,15 @@
       ],
       "disposition": "READY",
       "evidence_refs": [
-        "verification/agones/gameserver-feature-validation-evidence.json"
+        "verification/agones/gameserver-feature-validation-evidence.json",
+        "verification/agones/ci/protected-model-execution-plan.json"
       ],
       "feature_ids": [
         "gameserver-player-tracking-validation"
       ],
       "id": "GS-VALIDATE-FEATURES-001",
       "implementation_gate": "verification/agones/gates/317304e45484daa2961fdf0a6983d3e056af281f03d5597b542bc9c51a435e49.json",
-      "next_action": "Publish this reviewable validation feature to codex/agones-player-tracking-validation; recover the actual12selection CI campaign before new proof credit or merge. Use the compact validation work packet; keep all5original cases, helper covers, cleanup debt and8required _2cells.",
+      "next_action": "Publish the validated protected execution update to the existing PR96 head; recover its actual jobs and per-selection artifacts before formal credit or merge. Keep all12selected harnesses, domains, assertions, covers and unwind bounds. Independently continue the gated quantity/TypeMeta work and required validation error-data packet without repeating completed work.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
         "crates/agones-core/src/gameserver_defaulting.rs",
@@ -752,9 +835,56 @@
         "packet": "verification/agones/gameserver-feature-validation-work-packet.json",
         "packet_sha256": "a09a89f8bd0a6e2b0280bd1b2d03c97da699b0735f11c46b2c1a53269aade89a"
       },
-      "stage": "PROPERTIES_READY",
+      "stage": "VERIFYING",
       "test_ids": [
         "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+      ]
+    },
+    {
+      "dependencies": [],
+      "disposition": "READY",
+      "evidence_refs": [
+        "verification/agones/resource-quantity-isolated-recovery.json"
+      ],
+      "feature_ids": [
+        "exact-resource-quantity-validation"
+      ],
+      "id": "RESOURCE-QUANTITY-001",
+      "implementation_gate": null,
+      "next_action": "Recover actual PR96 artifacts using the proven download route. Adopt isolated typed quantity commitdd15992d4/gate1566022 with affected gate/evidence refresh before source extraction; preserve construction/numeric state and both repaired counterexamples. Do not reuse superseded gate6e5be9 as current evidence.",
+      "owned_paths": [
+        "crates/agones-core/src/resource_quantity.rs",
+        "crates/agones-rusternetes/src/lib.rs",
+        "crates/agones-rusternetes/src/gameserver_admission.rs",
+        "crates/agones-rusternetes/src/fleet_admission.rs",
+        "crates/agones-rusternetes/src/gameserverset_admission.rs",
+        "crates/agones-core/tests",
+        "crates/agones-rusternetes/tests"
+      ],
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-04",
+        "REQ-05",
+        "REQ-07",
+        "REQ-08",
+        "REQ-09",
+        "REQ-10",
+        "REQ-11",
+        "REQ-12",
+        "REQ-13"
+      ],
+      "source_config_binding": {
+        "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+        "source_files": {
+          "pkg/apis/agones/v1/gameserver.go": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
+          "vendor/k8s.io/apimachinery/pkg/api/resource/quantity.go": "9fa46ba76f6dfb0aff6fd63cd7d288531b20ab902d96450980d62c7ee8078110",
+          "vendor/k8s.io/apimachinery/pkg/api/resource/suffix.go": "bdf0d341b71f799fa80cd11d2e1e92b817f244170deb906c7e1f50ea5990b39c"
+        },
+        "work_packet": "verification/agones/resource-quantity-work-packet.json"
+      },
+      "stage": "IMPLEMENTING",
+      "test_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate"
       ]
     },
     {
@@ -965,19 +1095,100 @@
         "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
         "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
       ]
+    },
+    {
+      "dependencies": [
+        "RESOURCE-QUANTITY-001"
+      ],
+      "disposition": "READY",
+      "evidence_refs": [],
+      "feature_ids": [
+        "source-validation-error-data"
+      ],
+      "id": "GS-VALIDATION-ERROR-DATA-001",
+      "implementation_gate": null,
+      "next_action": "Repair source error data/mapping support from the focused packet, refresh gates and all25required source-case lowerings/native replays. TypeMeta is implemented/gated. In canonical checkout, prepare a protected CI attempt after actual runner loss; retain complete results before proof credit. Preserve user guidance and all required _2cells.",
+      "owned_paths": [
+        "crates/agones-core/src/gameserver.rs",
+        "crates/agones-core/src/gameserver_validation.rs",
+        "crates/agones-rusternetes/examples/codegen/gameserver_features.rs",
+        "crates/agones-rusternetes/tests/source_gameserver_feature_validation.rs"
+      ],
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-04",
+        "REQ-05",
+        "REQ-07",
+        "REQ-08",
+        "REQ-09",
+        "REQ-10",
+        "REQ-11",
+        "REQ-12",
+        "REQ-13"
+      ],
+      "source_config_binding": {
+        "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+        "isolated_commit": "e8b684a00b7758eef366ee467117c771af84b8d1",
+        "work_packet": "verification/agones/validation-error-data-work-packet.json"
+      },
+      "stage": "DISCOVERED",
+      "test_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate"
+      ]
+    },
+    {
+      "dependencies": [],
+      "disposition": "READY",
+      "evidence_refs": [
+        "verification/agones/resource-quantity-isolated-recovery.json"
+      ],
+      "feature_ids": [
+        "gameserver-source-type-meta"
+      ],
+      "id": "GS-TYPEMETA-001",
+      "implementation_gate": null,
+      "next_action": "Implementation and native gate are complete in the clean isolated worktree; adopt with source-bound gate refresh after protected CI/delivery work. Preserve actual TypeMeta in full validation fixtures; no current canonical/source assertion or formal credit.",
+      "owned_paths": [
+        "crates/agones-core/src/gameserver.rs",
+        "crates/agones-rusternetes/src/lib.rs",
+        "crates/agones-core/tests/gameserver_type_meta.rs",
+        "crates/agones-rusternetes/tests/gameserver_type_meta.rs"
+      ],
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-04",
+        "REQ-05",
+        "REQ-07",
+        "REQ-08",
+        "REQ-09",
+        "REQ-10",
+        "REQ-11",
+        "REQ-12",
+        "REQ-13"
+      ],
+      "source_config_binding": {
+        "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+        "isolated_commit": "e8b684a00b7758eef366ee467117c771af84b8d1",
+        "isolated_gate": "verification/agones/gates/d6e40365a5fabbec22b5d84d64c433528d66bd63d91a30450e32c445647b3e92.json",
+        "recovery_manifest": "verification/agones/resource-quantity-isolated-recovery.json"
+      },
+      "stage": "IMPLEMENTING",
+      "test_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate"
+      ]
     }
   ],
   "workspace": {
     "branch": "agones-rs-dev",
-    "dirty_patch_sha256": "2245f11258af98959793f975e5b2a2846024ff3ab51cdcb5ba12d49f12f69819",
-    "head": "3b1bd370c445afd30a71737474f5a411e6ccd75c",
+    "dirty_patch_sha256": "6043db6644cce3aa8953a3fc2603630a165dd4c7dad89e0a8a5d058c3fc9aa88",
+    "head": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
     "last_validated_implementation": "verification/agones/gates/317304e45484daa2961fdf0a6983d3e056af281f03d5597b542bc9c51a435e49.json",
     "path": "/home/astral/Projects/agones",
-    "source_binding_receipt": "verification/agones/runs/gs-validation-publication-fast-checks-2.json",
+    "source_binding_receipt": "verification/agones/runs/ci-model-workflow-preservation-1.json",
     "untracked_inputs": [
       "AGONES_RS_CONTINUATION_PROMPT.md",
       "AGONES_RS_PROMPT_AUDIT_RESOLUTION.md"
     ],
-    "untracked_source_binding_sha256": "6f4391c5fecb6f43fea62ee4995184dbbeaa199a7eebaadbeebeafd2d893629f"
+    "untracked_source_binding_sha256": "8833d6fda481ceac52b65b4dc65dda988900a6ccb636291f1c1aaecea7bf686d"
   }
 }

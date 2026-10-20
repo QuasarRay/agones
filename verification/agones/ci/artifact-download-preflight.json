@@ -1,0 +1,9 @@
+{
+  "archive_bytes": 313732,
+  "archive_sha256": "d21ef78a91e152937c2cc187372d068cc173ad63acea69de01f7d3924dc95c89",
+  "artifact_id": 12163546981,
+  "purpose": "Artifact retrieval preflight only; no new proof credit",
+  "safe_member_count": 15,
+  "verified_receipt_log_pairs": 5,
+  "workflow_run": 39199314045
+}

@@ -1,5 +1,10 @@
 {
+  "artifact_retrieval": "Authenticated GitHub artifact download has now been preflighted on prior run39199314045: archive digest,15safe members and5receipt/log hashes verified, with no new proof credit. See verification/agones/ci/artifact-download-preflight.json. After current terminal upload, download artifact without printing/persisting signed URLs, verify digest/safe paths/log hashes, then strictly parse all actual results/covers.",
   "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "ci_run": 39464345048,
+  "ci_source_head": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
+  "ci_tested_merge": "876ff250dae9d70f4cb76db72f826c653f941e5f",
+  "ci_tree": "893d506d71f7e348d71eceeb61df2101ed1511b8",
   "classification": "REPO_SAFE",
   "historical_observed_gap": "Pinned Go GameServerSpec.Validate begins with validateFeatureGates, which forbids non-nil Players when PlayerTracking is disabled, including the development-address early-return path. Rust GameServerSpec::validate and actual Rusternetes creation validation have no corresponding feature-gate check; the validation admission context currently owns hooks only. Fleet/GameServerSet template validation also reaches the shared spec validation and must preserve configured behavior and nested paths.",
   "implementation_gate": "verification/agones/gates/317304e45484daa2961fdf0a6983d3e056af281f03d5597b542bc9c51a435e49.json",
@@ -10,13 +15,28 @@
     "Exercise actual native admission/provider paths, default-disabled and explicitly enabled policy, absent/present players and development-server behavior before recording an implementation gate.",
     "Only after that gate, translate the selected original helper/test obligations with the existing package-aware extraction, typed IR, Genco and strict Bolero/Kani infrastructure."
   ],
+  "latest_ci_observation": {
+    "complete_artifacts": "UNAVAILABLE",
+    "formal_credit": 0,
+    "model": "FAILED_RUNNER_LOST_COMMUNICATION",
+    "receipt": "verification/agones/ci/39464345048-runner-lost-no-artifacts.json",
+    "rust": "PASSED",
+    "state": "PASSED"
+  },
   "metadata_test_identity": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures",
   "native_workspace": {
     "failed": 0,
     "ignored_runner_entries": 3,
     "passed": 603
   },
-  "next_action": "Publish review branch codex/agones-player-tracking-validation from integration1e64 with this source-bound packet. Run/recover the12selected isolated CI harnesses; all5original validation cases must be attempted, then require both validation campaigns. Retain complete actual results before any new proof credit or merge. Preserve the separate lifetime/cleanup residual, old36historical proofs and all8required _2cells. No more local high-memory retries.",
+  "next_action": "Prepare a changed operational attempt with explicit runner-protecting resource limits/recording and earlier per-selection artifact retention or isolated source-case jobs. Preserve every selected case/assertion/cover and unwind128. Do not retry the same unprotected campaign. Continue native source error-data work from the isolated checkpoint.",
+  "next_independent_implementation": {
+    "local_commit": "dd15992d4fc556528bfd956d9059234b3444c691",
+    "new_formal_credit": 0,
+    "recovery_manifest": "verification/agones/resource-quantity-isolated-recovery.json",
+    "status": "ISOLATED_TYPED_OWNER_IMPLEMENTATION_GATED_CANONICAL_ADOPTION_PENDING",
+    "work_item": "RESOURCE-QUANTITY-001"
+  },
   "ordinary_current_check": "verification/agones/runs/gs-validation-final-workspace-1.json",
   "ordinary_current_observation_replay": "verification/agones/runs/gs-validation-observation-scope-native-1.json",
   "original_test_observation": {
@@ -29,6 +49,13 @@
   },
   "proof_attempts": "verification/agones/gameserver-feature-validation-proof-attempts.json",
   "proof_order": "Implementation gate317304recorded before every new semantic extraction/property. All5exact cases/10qualified assertions now captured and generated; source/native replay is ordinary evidence. Real backend campaign and post-observation cleanup remain open.",
+  "protected_ci_recovery": {
+    "formal_credit": 0,
+    "plan": "verification/agones/ci/protected-model-execution-plan.json",
+    "prior_run": 39464345048,
+    "status": "LOCAL_CONTROLS_PASSED_PUBLICATION_PENDING"
+  },
+  "pull_request": "https://github.com/QuasarRay/agones/pull/96",
   "remaining_required_outside_this_helper": [
     "Full GameServer validation, resource-quantity exact numeric semantics, hook/metadata error ordering and every remaining source behavior remain required and are not certified by this helper.",
     "All lifecycle/boundary/conformance obligations and all eight required _2 form/location cells remain open."
@@ -65,6 +92,6 @@
     "GameServerSpec.Validate",
     "GameServer.Validate"
   ],
-  "status": "EXACT_SOURCE_PROPERTIES_READY_ISOLATED_CI_PENDING",
+  "status": "CI_FAILED_RUNNER_LOSS_NO_COMPLETE_MODEL_EVIDENCE",
   "work_item": "GS-VALIDATE-FEATURES-001"
 }

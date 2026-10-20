@@ -1,0 +1,11 @@
+{
+  "affected_architecture_cells": "All eight remain REQUIRED_OPEN; this operational repair supplies no _2authoring or production lifecycle credit.",
+  "candidate": "Reuse systemd/cgroup v2 and upload-artifact for the demonstrated verifier runner/evidence loss.",
+  "decision": "SMALL_LOCAL_REFACTOR",
+  "evidence": "verification/agones/ci/protected-model-execution-plan.json",
+  "id": "GS-VALIDATE-FEATURES-001-protected-model-execution",
+  "next_review_trigger": "After protected CI yields complete current result rows, or exposes a concrete further blocker, return to the source error-data production packet and review only demonstrated repetitions.",
+  "observations": "One serial12selection job lost contact before its final-only upload, erasing even completed ordinary step outputs. A bounded recorder reads arbitrary binary output in64KiB chunks and retains exact bytes. A narrow fixed-route service wrapper limits the verifier tree, with its recorder outside. Each completed common selection uploads before subsequent work; five source cases and the contract have independent jobs/artifacts.",
+  "reuse": "Existing foreground run.py receipt protocol, strict result parser, source bindings and GitHub Actions. The Linux service manager supplies cgroups, whole-group kill and resource accounting. No replacement scheduler, CI framework, orchestrator integration or macro is introduced.",
+  "roi": "This repairs a confirmed multi-hour loss of all12selection evidence using one fixed command wrapper and existing artifact action. Three short copies of the pinned tool setup cost less validation and comprehension than a new composite/reusable-workflow abstraction. Local controls bound byte preservation, terminal failures, missing controls and false proof acceptance. Stop expansion after the protected live attempt is recoverable; diagnose actual outcomes."
+}

@@ -1,0 +1,98 @@
+{
+  "artifact_bindings": {
+    "verification/agones/runs/ci-model-execution-controls-1.json": "3e871a9a4da760bea1c72e2a2364bb57b4066bd355bdd56f547855942bf368a4",
+    "verification/agones/runs/ci-model-execution-controls-1.log": "c4b1fc5b17ccc12075c5cfe1cc38df743d7f72b116ba6ff9fafc161c1a40de72",
+    "verification/agones/runs/ci-model-local-preflight-refusal-1.json": "c3c6b092a1465bb60d30f32d8dc09027dccc213dc1274b1f73bc82cccee85360",
+    "verification/agones/runs/ci-model-local-preflight-refusal-1.log": "45d21a19edf58c9f0813c3d97adc5f1f398c46cfa7e37f218c079d1ffdcc868a",
+    "verification/agones/runs/ci-model-result-controls-1.json": "d5a77c8571fda670c72fe1d7adc6a64e89044fe997517b5a2346bb879068602c",
+    "verification/agones/runs/ci-model-result-controls-1.log": "921b60a7fd52e978fbb551cacd29df2d6708879400278e1fcc70fceeb0c6f8e0",
+    "verification/agones/runs/ci-model-selector-controls-1.json": "0e7df52a2e185f1ed133ef146cda9eb727384f8908d8c579c6baad60a77fc8f1",
+    "verification/agones/runs/ci-model-selector-controls-1.log": "8b93be3bb3dc69e4a9135fffc41881e28441a369353b508cfa2e47cce2c3db6f",
+    "verification/agones/runs/ci-model-workflow-preservation-1.json": "86f4a92b5661dab9c4190947d5ef33f762869ba691f6d62e8bfa3f71ef06ef5c",
+    "verification/agones/runs/ci-model-workflow-preservation-1.log": "c487a0875e9852a3c081b0ac13e154919cb07d77a49592be41dda3e0b41da6f3"
+  },
+  "envelope": {
+    "command_kill_after_seconds": 15,
+    "command_timeout_seconds": 900,
+    "cpu_quota_percent": 300,
+    "identity": "same caller UID/GID",
+    "kill_mode": "control-group",
+    "memory_rationale": "The prior successful source005 selection reached RSS9712808KiB. TwelveGiB provides additional verifier-tree allowance while reserving host headroom on a standard public16GB/fourCPU Linux runner. This operational cap is not a proof-domain restriction and failures receive zero proof credit.",
+    "minimum_host_cpus": 4,
+    "minimum_host_memory_bytes": 15032385536,
+    "oom_policy": "kill",
+    "recorder_outside_cgroup": true,
+    "runtime_verification": "The inner process reads its real cgroup membership and memory.max/memory.swap.max/memory.oom.group/cpu.max before executing the selected real Bolero/Kani command. The strict summary requires one source-hash-bound actual envelope. Missing controls fail closed.",
+    "service_runtime_seconds": 930,
+    "service_stop_timeout_seconds": 15,
+    "swap_bytes": 0,
+    "whole_service_memory_bytes": 12884901888
+  },
+  "formal_proof_credit": 0,
+  "implementation_and_model_domain_changed": false,
+  "local_runtime_limit": {
+    "expected": "This desktop requires a sudo password; the real wrapper refused execution. No local cgroup enforcement success or backend proof is claimed.",
+    "receipt": "verification/agones/runs/ci-model-local-preflight-refusal-1.json"
+  },
+  "next_action": "Publish a changed PR96 head, recover its actual CI jobs/artifacts and verify all selected rows/covers. Repair explicit protected failures from their retained evidence; do not shrink domains or retry deterministically unchanged.",
+  "ordinary_checks": [
+    "verification/agones/runs/ci-model-execution-controls-1.json",
+    "verification/agones/runs/ci-model-result-controls-1.json",
+    "verification/agones/runs/ci-model-selector-controls-1.json",
+    "verification/agones/runs/ci-model-workflow-preservation-1.json"
+  ],
+  "preservation": "Every selected original fixture, assertion, cover, precondition and unwind bound is unchanged. The six common selections run serially with immediate unique uploads; all five validation cases run independently with fail-fast disabled; the separate contract has its own job. The retained aggregate check requires every selected job to succeed.",
+  "primary_documentation": [
+    "https://docs.github.com/en/actions/reference/runners/github-hosted-runners",
+    "https://www.freedesktop.org/software/systemd/man/latest/systemd-run.html",
+    "https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html",
+    "https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html",
+    "https://github.com/actions/upload-artifact/tree/v4"
+  ],
+  "prior_bindings": {
+    ".github/workflows/rust.yml": "7de20605a3e37ac3afb1d4fd06e75cb9ec5c5ab5b0391696b4f055cb2b48a7d6",
+    "build/scripts/agones-rs/kani_results.py": "61137b32f8cb47ee893be991195b4739c9bd120c81ef922b771e0c50af870e1b",
+    "build/scripts/agones-rs/run.py": "e0a238579f4059b74bb1cc68cd0f76f5ffd8b1cb874c9deb1f335e98a8804849",
+    "build/scripts/agones-rs/summarize_bool_proof.py": "1ba6c3dc5f512d7f1456a79c8311eed4c3a189f1be6b524f24b49dfdb34a070e",
+    "build/scripts/agones-rs/summarize_feature_proof.py": "067ff7e3ceb095bfc33de515f147fda697d056792cf6b8b06fbd09c7bab560f3",
+    "verification/agones/check-dependencies.json": "9d27de0b6913b6835479434b7441afed5c979f36f742a50a1ef4731e9a83afe5"
+  },
+  "prior_failure_receipt": "verification/agones/ci/39464345048-runner-lost-no-artifacts.json",
+  "reason": "Run39464345048 is terminal failure with hosted-runner communication loss, no artifacts and BlobNotFound job logs. The precise resource/network/termination cause is unknown. Do not repeat that unprotected campaign.",
+  "retention": {
+    "days": 90,
+    "download_policy": "Verify archive digest, safe members and receipt/log SHA256 before strict result parsing. Never print or persist signed download URLs.",
+    "independent_validation_and_contract_jobs": true,
+    "one_artifact_per_selection": true,
+    "unique_v4_names": true,
+    "upload_after_each_common_selection": true
+  },
+  "runner_image": "ubuntu-24.04",
+  "schema_version": 1,
+  "selections": [
+    "feature_bool_common_domain",
+    "feature_input_common_domain",
+    "source_query_case_003",
+    "health_defaulting_common_domain",
+    "source_gs_case_005",
+    "source_gs_case_014",
+    "source_gsv_case_000",
+    "source_gsv_case_001",
+    "source_gsv_case_002",
+    "source_gsv_case_003",
+    "source_gsv_case_004",
+    "gameserver_feature_validation_common_domain"
+  ],
+  "semantic_bindings": {
+    ".github/workflows/rust.yml": "4305306b62ca417385c278217b82e2d530415cbb701060669149ee773a4b44aa",
+    "build/scripts/agones-rs/kani_results.py": "0f2e6885ab25ff525ac6a77e1ed67ac02a5904e59caffc0e746258bee0cad04e",
+    "build/scripts/agones-rs/protect_model.py": "89fd094879809766a50ece3eea99fca2f9b45ac602ca5cb98fecfa1fe45d4376",
+    "build/scripts/agones-rs/run.py": "d158464261c6f591f8c2e99dca8eb2e5aed1925696c67778ccbb1fed3bbf90bd",
+    "build/scripts/agones-rs/summarize_bool_proof.py": "dee450e321588d735f1dee1dd49f245e43c395cecf800823f98374fc8f9fcf0c",
+    "build/scripts/agones-rs/summarize_feature_proof.py": "f4f95585c9649b689324ee6efc3e6436509861d55a718c581d369e527ec9ca25",
+    "build/scripts/agones-rs/test_ci_model_execution.py": "67eedce9e108c80c89aec1d4d93966fdf112e59588f84826c18f93f132f4272e",
+    "verification/agones/check-dependencies.json": "6c9c06a3156476a50307900dd8c7bf224eaa06b76e0156a9dcb6d8f33da1c521"
+  },
+  "source_head_before_change": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
+  "status": "PREPARED_LOCAL_CONTROLS_PASSED_LIVE_CGROUP_VALIDATION_REQUIRED"
+}
