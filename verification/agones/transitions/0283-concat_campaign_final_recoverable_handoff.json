@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "CONCAT_CAMPAIGN_FINAL_RECOVERABLE_HANDOFF",
+  "gate_snapshot": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
+  "predecessor_revision": 282,
+  "predecessor_sha256": "a1b5e12254625faea14c0fbbecdf631cc499cac698d7bf677f43695e7c80f8c2",
+  "reason": "Native Goal active; source4523 and complete raw evidence183f are remotely published and current. Canonical605/isolated675 native checks pass, seven current proof selections49claims/38covers retained; all five exact feature-source cases still timeout. Next expected-driven multiset work remains a pending semantics-preserving repair, with all original scope and eight _2cells required.",
+  "result_revision": 283,
+  "schema_version": 1,
+  "state_sha256": "43ca00951d34cda71e7d23064d1646632df884c8d26d2697bf2f77e3a4897700",
+  "timestamp": "2026-10-20T23:28:25.570277+00:00"
+}

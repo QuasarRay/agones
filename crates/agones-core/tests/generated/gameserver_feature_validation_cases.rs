@@ -4,7 +4,7 @@ fn source_gsv_errors_match(
     expected: &[agones_core::ValidationError],
 ) -> bool {
     actual.len() == expected.len()
-        && actual.iter().all(|error| {
+        && expected.iter().all(|error| {
             actual.iter().filter(|value| *value == error).count()
                 == expected.iter().filter(|value| *value == error).count()
         })
@@ -332,6 +332,48 @@ fn source_gsv_multiset_relation_preserves_elements_and_multiplicity() {
             _ => wrong.detail = "other".into(),
         }
         assert!(!source_gsv_errors_match(&[first.clone()], &[wrong]));
+    }
+    let mut third = first.clone();
+    third.detail = "third class".into();
+    let records = [first, second, third];
+    let mut lists = vec![Vec::<usize>::new()];
+    for length in 1..=3 {
+        for encoded in 0..3usize.pow(length) {
+            let mut value = encoded;
+            let ids = (0..length)
+                .map(|_| {
+                    let id = value % 3;
+                    value /= 3;
+                    id
+                })
+                .collect::<Vec<_>>();
+            lists.push(ids);
+        }
+    }
+    assert_eq!(lists.len(), 40);
+    for actual_ids in &lists {
+        for expected_ids in &lists {
+            let mut actual_counts = [0usize; 3];
+            let mut expected_counts = [0usize; 3];
+            for id in actual_ids {
+                actual_counts[*id] += 1;
+            }
+            for id in expected_ids {
+                expected_counts[*id] += 1;
+            }
+            let actual = actual_ids
+                .iter()
+                .map(|id| records[*id].clone())
+                .collect::<Vec<_>>();
+            let expected = expected_ids
+                .iter()
+                .map(|id| records[*id].clone())
+                .collect::<Vec<_>>();
+            assert_eq!(
+                source_gsv_errors_match(&actual, &expected),
+                actual_counts == expected_counts
+            );
+        }
     }
 }
 #[cfg(not(kani))]

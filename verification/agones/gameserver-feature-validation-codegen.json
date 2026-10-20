@@ -49,7 +49,7 @@
   "generator_path": "crates/agones-rusternetes/examples/feature_case_codegen.rs",
   "generator_sha256": "962daa419cfd16354f5c4a3f1593e02e8c6cd68eeda95830a6e721f306c1b45b",
   "generator_source_files": {
-    "crates/agones-rusternetes/examples/codegen/gameserver_features.rs": "42212f9bc36d52416a89dcafd11f822c63b5d660060a1289c046c566bc216337",
+    "crates/agones-rusternetes/examples/codegen/gameserver_features.rs": "d8c3ff457bfba714cfe891af513b45f3424de9c356dfef02cce70b21c598cf08",
     "crates/agones-rusternetes/examples/feature_case_codegen.rs": "962daa419cfd16354f5c4a3f1593e02e8c6cd68eeda95830a6e721f306c1b45b"
   },
   "harnesses": [
@@ -137,8 +137,14 @@
     "residual": "Formal post-observation cleanup and lifecycle remain required.",
     "rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1"
   },
+  "multiset_mapping": {
+    "manifest": "verification/agones/expected-multiset-relation.json",
+    "manifest_sha256": "579a7f2c5c823008adf7e3bab0dcc56d67723a0198e6a473bd903117b753b927",
+    "relation": "Equal lengths and exact full-record multiplicities for every expected error; no field or duplicate omission.",
+    "rule": "AGONES-ELEMENTSMATCH-EXPECTED-COUNTS-1"
+  },
   "output": "crates/agones-core/tests/generated/gameserver_feature_validation_cases.rs",
-  "output_sha256": "4fac7770ce0825fc65d4fe0129ec9cbca2298f6afcbb51eb238e941bb148c245",
+  "output_sha256": "9f62e205aa8dfe07cb9e59fcbe0041b477ba328facef9d97b2a06a05f4d90b95",
   "schema_version": 1,
   "scope": "All five exact original validation cases, ten qualified source assertions. Observation lifetime follows the existing retained-owner rule; no formal post-observation cleanup credit. No original case sets Players. Actual core validation and source literals are modeled; original Go/resource/hooks use ordinary replay. Full domain validation, present-Players contract proof, lifecycle/conformance and all eight _2 cells remain required."
 }

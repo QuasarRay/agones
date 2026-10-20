@@ -1,0 +1,23 @@
+{
+  "architecture": "All eight _2 form/location cells remain REQUIRED_OPEN. Shared CGP composition and existing Genco remain the economical paths here; this matcher does not establish a compiler-substrate need.",
+  "candidate": "Scan expected errors in the existing Genco ElementsMatch helper while preserving equal lengths, full record equality and duplicate counts.",
+  "checks": [
+    "verification/agones/runs/expected-multiset-native-1.json",
+    "verification/agones/runs/expected-multiset-generation-controls-1.json"
+  ],
+  "decision": "REUSE_EXISTING",
+  "evidence_invalidation": "The shared source matcher changed, so all five exact feature-source cases require a fresh bounded attempt. Their prior zero credit stays zero. All production files and the seven prior successful model programs are unchanged; retained results keep their source4523 identity and precise scope. Native histogram controls are regression evidence, not a general Kani theorem.",
+  "feature_binding": "GS-VALIDATE-FEATURES-001",
+  "id": "GS-VALIDATE-FEATURES-001-expected-multiset-review",
+  "law_manifest": "verification/agones/expected-multiset-relation.json",
+  "next_review_trigger": "After this distinct protected source-case attempt, inspect actual results and compare the remaining production/comparison bottleneck. At the next quantity/TypeMeta/six-field error adoption milestone, reassess concrete _2 repetitions and the smallest economical real-code adoption.",
+  "rationale": "The prior protected campaign reaches nested error counts and field equality but all five source cases time out. Original expected lists have zero or one errors. Moving the outer scan to expected errors is equivalent for finite multisets and reduces symbolic iteration without changing a production function or source obligation. Existing Genco owns generation; no new macro, compiler framework, selector or proof infrastructure is justified.",
+  "roi": "One shared emitter edit and bounded native controls replace repeated exploration of symbolic actual-error outer loops. Construction and maintenance costs are local. The measured benefit is still unknown until the distinct protected attempt finishes; retain the law and do not claim a speedup from native tests.",
+  "unchanged_harnesses": {
+    "source_gsv_case_000": "d4d249e4505c8d9da5d960fc9e7c995333182b7881f95ce305427ffcdf3a533d",
+    "source_gsv_case_001": "0c892e37132ec3da717e8e17d411bbb98f0631f7c9c3b7de1d8d953d50a64f44",
+    "source_gsv_case_002": "7fd69cd6d81b0dc8ae3162b346b04f1f15c6f5e4ca2bb504287f7ac53150962a",
+    "source_gsv_case_003": "db9056acf6a132ff27f78e827fdedb2cd8b081c439da94dca9f42253a4323b24",
+    "source_gsv_case_004": "72896580af14bc2c135a4e7ff978a0984ab6173dc438c1d752645957f3dd56f1"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "affected": [
+    "crates/agones-rusternetes/examples/codegen/gameserver_features.rs",
+    "crates/agones-core/tests/generated/gameserver_feature_validation_cases.rs",
+    "verification/agones/gameserver-feature-validation-codegen.json"
+  ],
+  "classification": "EXACT_RELATION_PRESERVING_ALGORITHM_CHANGE",
+  "current_formal_credit_added": 0,
+  "deductive_argument": "Equality of finite multisets implies both count relations. Conversely, the expected-driven relation matches the count of every expected equivalence class. Their counts sum to len(E). Equal total lengths give len(A)=len(E), leaving no actual element outside those matched classes. Thus every class has equal multiplicity. Empty lists and duplicates are included. No runtime assumption is introduced.",
+  "law_conditions": [
+    "Finite valid slices of ValidationError records.",
+    "ValidationError derives Eq over its kind/path/optional bad-value/detail fields; the combined six-field variant additionally compares Origin and the declarative flag.",
+    "Eq is an equivalence relation; comparisons have no user-visible side effects. Iterator counts fit usize for valid finite slices."
+  ],
+  "new_relation": "len(A)==len(E) and for every e in E, count_A(e)==count_E(e)",
+  "old_relation": "len(A)==len(E) and for every a in A, count_A(a)==count_E(a)",
+  "ordinary_controls": "Independent ID histograms for all1600pairs of lists of lengths0..3over three distinct full records, alongside existing permutation/duplicate/length and all-four-field mutations. This is bounded native regression evidence, not a general Kani theorem.",
+  "preserved": "Every original source fixture/action/assertion/cover/domain/unwind bound and all5full harness bodies are unchanged. Actual production bodies, reference relation, full Eq and duplicate counts are preserved.",
+  "production_gate": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
+  "required_next": "Pass native/fault/equivalence controls and deterministic generation; then reverify all affected exact-source cases with the actual production path and unchanged bounds. Keep unrelated and broader obligations required.",
+  "rule_id": "AGONES-ELEMENTSMATCH-EXPECTED-COUNTS-1",
+  "schema_version": 1,
+  "source": {
+    "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "path": "vendor/github.com/stretchr/testify/assert/assertions.go",
+    "semantics": "Order-independent equality with every duplicate instance counted separately.",
+    "sha256": "10087e4b00ecc9504a1b1b4758dcf909e3ab36a6e9585515335ac58c6ea56642",
+    "symbols": [
+      "ElementsMatch",
+      "diffLists"
+    ]
+  }
+}

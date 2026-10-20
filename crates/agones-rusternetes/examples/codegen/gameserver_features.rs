@@ -71,7 +71,7 @@ pub(super) fn emit_gameserver_feature_cases(root: &Path, check: bool) {
     );
     let mut tokens: rust::Tokens = quote! {
         fn source_gsv_errors_match(actual: &[agones_core::ValidationError], expected: &[agones_core::ValidationError]) -> bool {
-            actual.len() == expected.len() && actual.iter().all(|error| {
+            actual.len() == expected.len() && expected.iter().all(|error| {
                 actual.iter().filter(|value| *value == error).count()
                     == expected.iter().filter(|value| *value == error).count()
             })
@@ -98,6 +98,32 @@ pub(super) fn emit_gameserver_feature_cases(root: &Path, check: bool) {
                     _ => wrong.detail = "other".into(),
                 }
                 assert!(!source_gsv_errors_match(&[first.clone()], &[wrong]));
+            }
+            let mut third = first.clone(); third.detail = "third class".into();
+            let records = [first, second, third];
+            let mut lists = vec![Vec::<usize>::new()];
+            for length in 1..=3 {
+                for encoded in 0..3usize.pow(length) {
+                    let mut value = encoded;
+                    let ids = (0..length).map(|_| {
+                        let id = value % 3;
+                        value /= 3;
+                        id
+                    }).collect::<Vec<_>>();
+                    lists.push(ids);
+                }
+            }
+            assert_eq!(lists.len(), 40);
+            for actual_ids in &lists {
+                for expected_ids in &lists {
+                    let mut actual_counts = [0usize; 3];
+                    let mut expected_counts = [0usize; 3];
+                    for id in actual_ids { actual_counts[*id] += 1; }
+                    for id in expected_ids { expected_counts[*id] += 1; }
+                    let actual = actual_ids.iter().map(|id| records[*id].clone()).collect::<Vec<_>>();
+                    let expected = expected_ids.iter().map(|id| records[*id].clone()).collect::<Vec<_>>();
+                    assert_eq!(source_gsv_errors_match(&actual, &expected), actual_counts == expected_counts);
+                }
             }
         }
     };
@@ -227,6 +253,18 @@ pub(super) fn emit_gameserver_feature_cases(root: &Path, check: bool) {
     let output = "crates/agones-core/tests/generated/gameserver_feature_validation_cases.rs";
     let generator = "crates/agones-rusternetes/examples/feature_case_codegen.rs";
     let metadata = json!({"schema_version":1,"feature_id":"GS-VALIDATE-FEATURES-001","generator":"Genco 0.17.10 with pinned rustfmt","generator_path":generator,"generator_sha256":hash(&fs::read(root.join(generator)).unwrap()),"generator_source_files":{generator:hash(&fs::read(root.join(generator)).unwrap()),"crates/agones-rusternetes/examples/codegen/gameserver_features.rs":hash(&fs::read(root.join("crates/agones-rusternetes/examples/codegen/gameserver_features.rs")).unwrap())},"ir":ir_path,"ir_sha256":hash(&raw),"output":output,"output_sha256":hash(source.as_bytes()),"case_count":5,"assertion_count":10,"assertions":assertions,"harnesses":harnesses,"fixture_mapping":"Whole source wire object plus explicit nil/allocated Counters/Lists/Ports/Players witnesses. Source empty maps omitted by JSON are restored as allocated empty maps. Unknown fields/error metadata fail closed.","lifetime_mapping":{"rule":"GS-DEFAULTS-001-OBSERVATION-LIFETIME-1","boundary":"After every original observation and cover, retain the harness-owned fixture, parsed features, context and error lists in both engines. Source callbacks specify no GC/deallocation observation. Actual production bodies remain unchanged.","ordinary_cleanup":"Separate complete-fixture and actual adapter replay uses normal destruction.","residual":"Formal post-observation cleanup and lifecycle remain required."},"scope":"All five exact original validation cases, ten qualified source assertions. Observation lifetime follows the existing retained-owner rule; no formal post-observation cleanup credit. No original case sets Players. Actual core validation and source literals are modeled; original Go/resource/hooks use ordinary replay. Full domain validation, present-Players contract proof, lifecycle/conformance and all eight _2 cells remain required."});
+    let relation_path = "verification/agones/expected-multiset-relation.json";
+    let relation_raw = fs::read(root.join(relation_path)).unwrap();
+    let relation: Value = serde_json::from_slice(&relation_raw).unwrap();
+    assert_eq!(relation["schema_version"], 1);
+    assert_eq!(relation["rule_id"], "AGONES-ELEMENTSMATCH-EXPECTED-COUNTS-1");
+    let mut metadata = metadata;
+    metadata["multiset_mapping"] = json!({
+        "rule": "AGONES-ELEMENTSMATCH-EXPECTED-COUNTS-1",
+        "manifest": relation_path,
+        "manifest_sha256": hash(&relation_raw),
+        "relation": "Equal lengths and exact full-record multiplicities for every expected error; no field or duplicate omission."
+    });
     save_or_check(root, output, &source, check);
     save_or_check(
         root,
