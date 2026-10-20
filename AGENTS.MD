@@ -10,7 +10,7 @@
 
 4. AGGRESSIVELY use Metaprogramming and Automation to accelerate and simplify development. AGGRESSIVELY use CGP-Oriented metaprogramming, and metaprogramming with proc macro 2, proc macro 2 attribute, and proc macro 2 derive and proc macro 2 delegate to Automate, simplify and accelerate development
 
-6. Use CGP AGGRESSIVELY, to accelerate development and reduce boilerplate: https://github.com/contextgeneric/cgp.git
+6. Use CGP and derive-deftly and comprende AGGRESSIVELY, to accelerate development and reduce boilerplate: https://github.com/contextgeneric/cgp.git, https://gitlab.torproject.org/Diziet/rust-derive-deftly, https://github.com/QuasarRay/comprende.git
 
 7. This AGENTS.MD file must exist in every directory of this project
 
