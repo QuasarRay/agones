@@ -9,8 +9,8 @@
   "canonical_production_changed": false,
   "classification": "REPO_SAFE",
   "counterexamples_in_isolated_commit": "verification/agones/resource-quantity-boundary-counterexamples.json",
-  "gate_in_isolated_commit": "verification/agones/gates/10392348bf13309799699c47c539c499067e6d56e582d8356948e46776779b8a.json",
-  "gate_sha256": "10392348bf13309799699c47c539c499067e6d56e582d8356948e46776779b8a",
+  "gate_in_isolated_commit": "verification/agones/gates/34933501609927a2b2452f1265b662f7adaf5270af43805ad96e6f57e83419fa.json",
+  "gate_sha256": "34933501609927a2b2452f1265b662f7adaf5270af43805ad96e6f57e83419fa",
   "historical_production_files_at_e8b684a": {
     "Cargo.lock": "457e9915c442fc92a563532c2adeb010f5f2035fd0ae4b3c9c9ac3396d950d93",
     "Cargo.toml": "3a3f19b913b7d4fc8966288d621de4134b7b87439231dc64014ea23f7511b6f7",
@@ -26,19 +26,19 @@
     "crates/agones-rusternetes/src/gameserverset_admission.rs": "caf77937275905a45285d7e4b220f16f79a817f0e51047dfd0a22648ec214016",
     "crates/agones-rusternetes/src/lib.rs": "820298219835f53b2563a3a0d66deb21050a5930998750ffb5fad26b6f07031b"
   },
-  "local_commit": "500326772a0ad9c1300f0f8bb8acff67e27079a4",
-  "local_tree": "e71a08ceb183a00a87b349cb22ca0f79d3d62312",
+  "local_commit": "85d64a1de1bd8bc6afcdb996de07384c077a5aaf",
+  "local_tree": "44e96e7c5cd9b5a0789af0e18633396ad68fe046",
   "managed_worktree": "/home/astral/.codex/worktrees/agones-resource-quantity/agones",
   "new_formal_proof_credit": 0,
   "new_semantic_extraction": "COMPLETE25CASE_GENERATION_AND_NATIVE_REPLAY_IN_ISOLATED_COMMIT_FORMAL_REQUIRED",
-  "next_action": "Recover this complete isolated native snapshot; all25general harnesses and50covers remain formal obligations. Resolve canonical parser/iterator resource failures using retained actual traces, then integrate isolated data/mapping and verify fresh bindings without discarding any source case or assertion.",
+  "next_action": "Preserve this combined source snapshot. All25general/50covers and prior feature obligations remain formal requirements. Recover actual canonical39505643334results before deciding the next change; integrate the protected operational files and source/data snapshots without transporting proof credit across changed bindings.",
   "ordinary_checks_in_isolated_commit": [
     "verification/agones/runs/gameserver-typemeta-native-2.json"
   ],
   "ordinary_evidence": {
     "failed": 0,
     "ignored_runner_entries": 3,
-    "passed": 673
+    "passed": 675
   },
   "pinned_go_replay": {
     "cases": 1625,
@@ -52,13 +52,13 @@
     "complete_native_evidence_in_isolated_commit": "verification/agones/complete-validation-native-evidence.json",
     "error_data_work_packet": "verification/agones/validation-error-data-work-packet.json",
     "generation_failure": "verification/agones/runs/quantity-validation-genco-1.json",
-    "implementation_gate": "verification/agones/gates/10392348bf13309799699c47c539c499067e6d56e582d8356948e46776779b8a.json",
-    "implementation_snapshot": "500326772a0ad9c1300f0f8bb8acff67e27079a4",
+    "implementation_gate": "verification/agones/gates/34933501609927a2b2452f1265b662f7adaf5270af43805ad96e6f57e83419fa.json",
+    "implementation_snapshot": "85d64a1de1bd8bc6afcdb996de07384c077a5aaf",
     "ir": "verification/agones/gameserver-validation.ir.json",
     "mapping": "Capture the complete original table, actual defaulting/validation actions, source fake hooks, qualified ElementsMatch occurrences and independent expected error elements. Preserve quantity construction state; reject lossy canonical serialization.",
-    "next_action": "Recover this complete isolated native snapshot; all25general harnesses and50covers remain formal obligations. Resolve canonical parser/iterator resource failures using retained actual traces, then integrate isolated data/mapping and verify fresh bindings without discarding any source case or assertion.",
-    "related_typemeta_gate": "verification/agones/gates/7dd72b9fd25b1c2084902944a4ffcf304b5d5eed1822f032bd55d616c284f9f7.json",
-    "status": "ALL25CASES_NATIVE_REPLAY_PASSED_FORMAL_AND_CANONICAL_ADOPTION_PENDING",
+    "next_action": "Preserve this combined source snapshot. All25general/50covers and prior feature obligations remain formal requirements. Recover actual canonical39505643334results before deciding the next change; integrate the protected operational files and source/data snapshots without transporting proof credit across changed bindings.",
+    "related_typemeta_gate": "verification/agones/gates/c70a5475889860a20652a33708f45b0c92cfd7e40c2b5d57e333d04e66a41c9d.json",
+    "status": "ALL25CASES_NATIVE675_PASSED_REUSED_STREAMING_DIRECT_PATHS_FORMAL_AND_CANONICAL_ADOPTION_PENDING",
     "test_identity": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate"
   },
   "preserved_ci": {
@@ -66,13 +66,13 @@
     "run": 39464345048,
     "source_head": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af"
   },
-  "prior_local_commit": "e8b684a00b7758eef366ee467117c771af84b8d1",
+  "prior_local_commit": "500326772a0ad9c1300f0f8bb8acff67e27079a4",
   "refactoring_review": "verification/agones/refactoring/resource-quantity-typed-owner-review.json",
   "remote_publication": "NOT_STARTED",
   "schema_version": 1,
   "status": "ISOLATED_TYPED_OWNER_IMPLEMENTATION_GATED_CANONICAL_ADOPTION_PENDING",
   "superseded_gate": "verification/agones/gates/6e5be9cec685556a46a5d086899191c3ace72094d9be9c80af42faff08286f32.json",
   "superseded_isolated_commit": "1610f90a5df76b34a7d8899715ceebb7bdb91ea0",
-  "typemeta_gate": "verification/agones/gates/7dd72b9fd25b1c2084902944a4ffcf304b5d5eed1822f032bd55d616c284f9f7.json",
+  "typemeta_gate": "verification/agones/gates/c70a5475889860a20652a33708f45b0c92cfd7e40c2b5d57e333d04e66a41c9d.json",
   "work_item": "RESOURCE-QUANTITY-001"
 }

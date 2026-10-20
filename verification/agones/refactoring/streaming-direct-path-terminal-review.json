@@ -1,0 +1,13 @@
+{
+  "candidate": "Trace shared byte-search/formatting paths in retained000/002logs; distinguish harness parsed.unwrap Debug from real validation formatting before the next smallest repair.",
+  "decision": "REUSE_EXISTING",
+  "evidence_invalidation": "No additional production/generator change in this review; current49claims/38covers and isolated675 retain their exact source identities. Any next production or harness change revalidates affected evidence.",
+  "evidence_refs": [
+    "verification/agones/ci/39505643334-terminal-retained.json",
+    "verification/agones/validation-error-data-isolated-recovery.json"
+  ],
+  "feature_binding": "GS-VALIDATE-FEATURES-001",
+  "id": "GS-VALIDATE-FEATURES-001-streaming-direct-path-terminal-review",
+  "next_review_trigger": "After tracing actual first-formatting/byte-search callers, use existing CGP/Genco for one minimal semantics-preserving repair, ordinary validation and one distinct protected attempt. Preserve all source assertions/covers/domains/adequate bounds and all eight required _2cells.",
+  "rationale": "605canonical and675isolated native checks preserve behavior, but the changed campaign completes no feature-source proof:000/002/003OOM and001/004900stimeouts, all12GiB/zero rows. The previous002/003Cow-pair cleanup exhaustion is replaced by memchr_naive127;000/001/004stillend in memchr_aligned54/54/55. These are observed locations, not a unique-cause proof. Inspect actual callers before a new hypothesis."
+}

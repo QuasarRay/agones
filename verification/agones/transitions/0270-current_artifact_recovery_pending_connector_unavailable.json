@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "CURRENT_ARTIFACT_RECOVERY_PENDING_CONNECTOR_UNAVAILABLE",
+  "gate_snapshot": "verification/agones/gates/70364c20a393205d32e35c7839503eced4f6f607d9e65d312e7dc99551384eb5.json",
+  "predecessor_revision": 269,
+  "predecessor_sha256": "68cb70d1d8ed26121b5e1c7cbc5708f8c605a674766d41fc9f1f832d0b31f73d",
+  "reason": "Public metadata confirms source000/002failed and three other source jobs still active. Seven common/contract selections report successful jobs; only five strict artifacts are locally validated. Connector tools are temporarily unavailable; current failure cause and remaining proof credit stay unclassified. Native Goal remains active; full migration incomplete.",
+  "result_revision": 270,
+  "schema_version": 1,
+  "state_sha256": "a3c0039e818418cec0d48f8e49df71941476bdc612c8f02890e802a6febee286",
+  "timestamp": "2026-10-20T22:23:40.085318+00:00"
+}

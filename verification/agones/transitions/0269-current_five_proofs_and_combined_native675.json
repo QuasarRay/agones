@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "CURRENT_FIVE_PROOFS_AND_COMBINED_NATIVE675",
+  "gate_snapshot": "verification/agones/gates/70364c20a393205d32e35c7839503eced4f6f607d9e65d312e7dc99551384eb5.json",
+  "predecessor_revision": 268,
+  "predecessor_sha256": "c9da30a835a6141ec59c213f3fe68f3a172db791d6b249ce788779ecda60f440",
+  "reason": "Preserve actual current scoped backend evidence and clean combined native675isolated commit without transporting claims across source snapshots.",
+  "result_revision": 269,
+  "schema_version": 1,
+  "state_sha256": "68cb70d1d8ed26121b5e1c7cbc5708f8c605a674766d41fc9f1f832d0b31f73d",
+  "timestamp": "2026-10-20T22:16:06.974782+00:00"
+}

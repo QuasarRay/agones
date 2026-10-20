@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "STREAMING_QUERY_DIRECT_PATHS_FIRST_TWO_ARTIFACTS",
+  "gate_snapshot": "verification/agones/gates/70364c20a393205d32e35c7839503eced4f6f607d9e65d312e7dc99551384eb5.json",
+  "predecessor_revision": 264,
+  "predecessor_sha256": "91d8a0f536c8b7dcf70314fcbc0c842d153408e19b2f2da1119baa918bdb1eea",
+  "reason": "Actual first two archives match advertised digests, tested merge e301 and complete run/log/source identities; strict local summaries reproduce server results exactly. Six current semantic claims and14SATcovers; zero new original feature-source credit. Remaining live jobs are required.",
+  "result_revision": 265,
+  "schema_version": 1,
+  "state_sha256": "0be8ade3588cba33d4ce4316f67ddee93c3fc55d1df76004d66f61f919d839a4",
+  "timestamp": "2026-10-20T22:12:52.164561+00:00"
+}
