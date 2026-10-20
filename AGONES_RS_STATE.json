@@ -4,56 +4,56 @@
       "evidence_refs": [],
       "form": "proc_macro_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "Return immediately to the implementation-first PlayerTracking validation packet after source005 delivery; assess concrete shared CGP capability/declaration repetitions there.",
+      "next_review_trigger": "Continue pre-feature refactoring across the remaining high-repetition controller/configuration boundaries; only resume feature implementation after the refactor stack is validated and merged into agones-rs-dev.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_2",
       "location": "cross-crate",
-      "next_review_trigger": "Return immediately to the implementation-first PlayerTracking validation packet after source005 delivery; assess concrete shared CGP capability/declaration repetitions there.",
+      "next_review_trigger": "Continue pre-feature refactoring across the remaining high-repetition controller/configuration boundaries; only resume feature implementation after the refactor stack is validated and merged into agones-rs-dev.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_attribute_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "Return immediately to the implementation-first PlayerTracking validation packet after source005 delivery; assess concrete shared CGP capability/declaration repetitions there.",
+      "next_review_trigger": "Continue pre-feature refactoring across the remaining high-repetition controller/configuration boundaries; only resume feature implementation after the refactor stack is validated and merged into agones-rs-dev.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_attribute_2",
       "location": "cross-crate",
-      "next_review_trigger": "Return immediately to the implementation-first PlayerTracking validation packet after source005 delivery; assess concrete shared CGP capability/declaration repetitions there.",
+      "next_review_trigger": "Continue pre-feature refactoring across the remaining high-repetition controller/configuration boundaries; only resume feature implementation after the refactor stack is validated and merged into agones-rs-dev.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_derive_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "Return immediately to the implementation-first PlayerTracking validation packet after source005 delivery; assess concrete shared CGP capability/declaration repetitions there.",
+      "next_review_trigger": "Continue pre-feature refactoring across the remaining high-repetition controller/configuration boundaries; only resume feature implementation after the refactor stack is validated and merged into agones-rs-dev.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_derive_2",
       "location": "cross-crate",
-      "next_review_trigger": "Return immediately to the implementation-first PlayerTracking validation packet after source005 delivery; assess concrete shared CGP capability/declaration repetitions there.",
+      "next_review_trigger": "Continue pre-feature refactoring across the remaining high-repetition controller/configuration boundaries; only resume feature implementation after the refactor stack is validated and merged into agones-rs-dev.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_delegate_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "Return immediately to the implementation-first PlayerTracking validation packet after source005 delivery; assess concrete shared CGP capability/declaration repetitions there.",
+      "next_review_trigger": "Continue pre-feature refactoring across the remaining high-repetition controller/configuration boundaries; only resume feature implementation after the refactor stack is validated and merged into agones-rs-dev.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_delegate_2",
       "location": "cross-crate",
-      "next_review_trigger": "Return immediately to the implementation-first PlayerTracking validation packet after source005 delivery; assess concrete shared CGP capability/declaration repetitions there.",
+      "next_review_trigger": "Continue pre-feature refactoring across the remaining high-repetition controller/configuration boundaries; only resume feature implementation after the refactor stack is validated and merged into agones-rs-dev.",
       "status": "REQUIRED_OPEN"
     }
   ],
@@ -332,8 +332,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 239,
-  "previous_sha256": "38d83e7358ce442872e06cc730a3ed9b6b6d99c06db7f5c64707713373d240f9",
+  "previous_revision": 240,
+  "previous_sha256": "3dafb8cd3f907a6e4228af7b961b315ac808a9355a839d0df514415e47f43a70",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -625,9 +625,20 @@
       "reuse": "Use existing check-dependencies.json, the current source-bound evidence/CI receipts, Git ancestry/trees, and retained hash-bound artifacts. No scheduler, service, database, compiler/proof-transport framework or new dependency.",
       "roi": "One bounded selector extension and negative controls avoid repeated multi-minute, high-memory checks for metadata-only follow-ups across the remaining migration. This reduces repeat execution and agent polling/diagnosis without removing any source assertion or proof category. New or changed model inputs still require execution.",
       "success_check": "Positive unchanged-input reuse plus controls rejecting changed production/workflow/IR, unavailable artifacts, failed/skipped/empty results, unrelated heads and weakened policy. CI runs the selector controls before choosing expensive jobs."
+    },
+    {
+      "architecture_status": "Existing required metaprogramming matrix obligations remain open unless separately evidenced; this refactor earns no feature-completeness credit.",
+      "bounds": "No new Agones feature behavior in this milestone. Do not hide domain policy, source-parity conditions, CGP provider selection, or mutation/error precedence behind generated indirection. Every changed production path must pass locked workspace checks/tests and affected Bolero/Kani verification before feature development resumes.",
+      "candidate": "Before any new feature work, refactor existing Rust implementation boundaries with CGP for capabilities/lifecycle, derive-deftly for repeated structural implementations, and comprende for collection syntax where it is clearer than iterator or push ceremony.",
+      "chosen_action": "Keep CGP capability/provider/delegation tables explicit as the architectural map; co-derive HasField and Deftly on CGP contexts, reuse one exported FieldwiseDefault template across agones-core and agones-rusternetes, annotate exceptional defaults beside their fields, and use comprende only for direct collection expressions whose ordering and side effects stay obvious.",
+      "decision": "AGGRESSIVE_PRE_FEATURE_REFACTOR",
+      "id": "REFACTOR-CGP-DEFTLY-COMPRENDE-001",
+      "next_review_trigger": "Continue pre-feature refactoring across the remaining high-repetition controller/configuration boundaries; only resume feature implementation after the refactor stack is validated and merged into agones-rs-dev.",
+      "observed_repetition": "CGP contexts repeatedly combine HasField with explicit component delegation while several context/config records hand-write structurally identical Default implementations; collection construction also repeats map/filter/collect and push-loop ceremony.",
+      "roi": "This makes the combination synergistic rather than additive: CGP removes dependency/lifecycle coupling while derive-deftly removes the structural implementation ceremony around those same contexts. Comprende shortens collection transformations without introducing a competing architecture. The intended result is fewer handwritten impl blocks and less parameter/iterator noise while preserving a readable capability map."
     }
   ],
-  "revision": 240,
+  "revision": 241,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [
@@ -654,7 +665,7 @@
       ],
       "id": "GS-DEFAULTS-001",
       "implementation_gate": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
-      "next_action": "Publish complete source005 raw evidence and updated direct coverage/next feature packet to PR94; validate fresh metadata/binding CI and merge this proof milestone. Then implement GS-VALIDATE-FEATURES-001 through CGP before extracting its semantic properties.",
+      "next_action": "Revalidate this implementation and its source-bound proof/evidence after the CGP + derive-deftly + comprende refactor before resuming new feature development.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
         "crates/agones-core/src/lib.rs",
@@ -676,7 +687,7 @@
         "prerequisite_formal_debt_remains_open": true,
         "prerequisite_implementation_gates_current": true
       },
-      "stage": "VERIFYING",
+      "stage": "IMPLEMENTING",
       "test_ids": [
         "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults"
       ]
@@ -695,7 +706,7 @@
       ],
       "id": "SDK-VERSION-001",
       "implementation_gate": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json",
-      "next_action": "Complete remaining18 selected version identities and the shared-domain claims/covers. Reuse complete GameServer source proofs with the same qualified version identity counted once; retain the two Fleet assertions and full decoder/lifecycle scope.",
+      "next_action": "Revalidate this implementation and its source-bound proof/evidence after the CGP + derive-deftly + comprende refactor before resuming new feature development.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
         "crates/agones-core/src/fleet.rs",
@@ -720,7 +731,7 @@
         "observed_gap": "Original pkg.Version defaults to dev and is assigned to GameServer, Fleet and Pod SDK annotations. Rust uses Cargo package version 0.1.0, and its Pod builder inherits a preexisting GameServer annotation. The selected source policy must use one configured version identity and preserve source overwrite behavior.",
         "remaining_scope": "Command logging, sidecar image command defaults, full build/package lifecycle and all other original surfaces remain separately required; this annotation policy cannot certify those consumers."
       },
-      "stage": "VERIFYING",
+      "stage": "IMPLEMENTING",
       "test_ids": []
     },
     {
@@ -738,7 +749,7 @@
       ],
       "id": "FG-ERROR-001",
       "implementation_gate": "verification/agones/gates/37a4df79b2f04b315a5b6ac58d368f23625d98e29c9c8878ba26f960eaeb53c3.json",
-      "next_action": "Resume required ASCII/full-error proofs only with a distinct diagnosed decomposition hypothesis, preserving original byte domains, assertions, covers and source-compatible rendering; time/memory failures remain uncredited.",
+      "next_action": "Revalidate this implementation and its source-bound proof/evidence after the CGP + derive-deftly + comprende refactor before resuming new feature development.",
       "owned_paths": [
         "crates/agones-core/src/features.rs"
       ],
@@ -760,7 +771,7 @@
           "Go fmt/strconv quoted string rendering"
         ]
       },
-      "stage": "VERIFYING",
+      "stage": "IMPLEMENTING",
       "test_ids": [
         "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::invalid Feature gate::line-41"
       ]
@@ -779,7 +790,7 @@
       ],
       "id": "FG-INPUT-001",
       "implementation_gate": "verification/agones/gates/49a63a9f021af1ea515b681f7026d63524788ea15256693d9a0ab39d93b27d23.json",
-      "next_action": "Complete formal evidence for the original environment/CLI assertions and real input-binding effects beyond the proved bounded pure selector; retain every original identity and all required process/lifecycle categories.",
+      "next_action": "Revalidate this implementation and its source-bound proof/evidence after the CGP + derive-deftly + comprende refactor before resuming new feature development.",
       "owned_paths": [
         "crates/agones-core/src/features.rs",
         "crates/agones-rusternetes/src/creating_gameserver_controller.rs",
@@ -797,7 +808,7 @@
         "source": "pkg/util/runtime/features.go",
         "test": "pkg/util/runtime/features_test.go"
       },
-      "stage": "VERIFYING",
+      "stage": "IMPLEMENTING",
       "test_ids": [
         "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
       ]
@@ -816,7 +827,7 @@
       ],
       "id": "FG-CONFIG-001",
       "implementation_gate": "verification/agones/gates/9268683a31881d2317504de096972c338daebf321be9bd8d98ac7b640dceda60.json",
-      "next_action": "Complete remaining exact query/encoding source assertions with existing generated harnesses and unchanged domains/covers. Reuse the proved parse-error case and retain independent lifecycle/consumer obligations.",
+      "next_action": "Revalidate this implementation and its source-bound proof/evidence after the CGP + derive-deftly + comprende refactor before resuming new feature development.",
       "owned_paths": [
         "crates/agones-core/src/features.rs",
         "crates/agones-rusternetes/src/creating_gameserver_controller.rs",
@@ -834,7 +845,7 @@
         "commit": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
         "source_path": "pkg/util/runtime/features.go"
       },
-      "stage": "VERIFYING",
+      "stage": "IMPLEMENTING",
       "test_ids": [
         "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
         "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
@@ -884,8 +895,8 @@
   ],
   "workspace": {
     "branch": "agones-rs-dev",
-    "dirty_patch_sha256": "c3a8c8df248cd8e7ce2824c76d9c6a7fa2cf1d649bbb2d57dc0b736a74e4e8d1",
-    "head": "5185e0c18f1fff799e4f640a377194ce5dce0279",
+    "dirty_patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "head": "383afa27c3216905982033391aee9b9a71262d00",
     "last_validated_implementation": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
     "path": "/home/astral/Projects/agones",
     "source_binding_receipt": "verification/agones/runs/gs-case005-selector-reuse-controls-3.json",

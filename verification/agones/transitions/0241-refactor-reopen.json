@@ -1,0 +1,19 @@
+{
+  "affected_obligations": [
+    "FG-CONFIG-001",
+    "FG-ERROR-001",
+    "FG-INPUT-001",
+    "GS-DEFAULTS-001",
+    "SDK-VERSION-001"
+  ],
+  "authorization": "User execution contract",
+  "event": "REFACTOR_REOPEN",
+  "gate_snapshot": null,
+  "predecessor_revision": 240,
+  "predecessor_sha256": "3dafb8cd3f907a6e4228af7b961b315ac808a9355a839d0df514415e47f43a70",
+  "reason": "User-directed pre-feature CGP/derive-deftly/comprende refactor changed files bound by five VERIFYING implementation gates; reopen them honestly instead of refreshing stale evidence.",
+  "result_revision": 241,
+  "schema_version": 1,
+  "state_sha256": "7e3587f006efec5c6fd93d671269c49e660cce857b34da1f7818b9ce62368830",
+  "timestamp": "2026-10-20T10:38:57.702122+00:00"
+}
