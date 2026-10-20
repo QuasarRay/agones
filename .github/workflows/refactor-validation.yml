@@ -4,22 +4,33 @@ on:
   push:
     branches:
       - codex/agones-refactor-cgp-deftly-comprende-001
+    paths:
+      - .github/workflows/refactor-validation.yml
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   validate:
     runs-on: ubuntu-latest
+    env:
+      AGONES_REFACTOR_CHECK_RUN: refactor-workspace-check-${{ github.run_id }}-${{ github.run_attempt }}
+      AGONES_REFACTOR_TEST_RUN: refactor-workspace-tests-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - uses: actions/checkout@v4
       - name: Install pinned Rust
-        run: |
-          rustup toolchain install 1.98.1 --profile minimal
-          rustup component add rustfmt --toolchain 1.98.1
+        run: rustup toolchain install 1.98.1 --profile minimal
       - name: Install native build dependencies
         run: sudo apt-get update && sudo apt-get install -y protobuf-compiler
-      - name: Check lockfile and workspace
-        run: cargo check --locked --workspace --all-targets
-      - name: Test workspace
-        run: cargo test --locked --workspace
+      - name: Record locked workspace check
+        run: python3 build/scripts/agones-rs/run.py "$AGONES_REFACTOR_CHECK_RUN" --quiet cargo check --locked --workspace --all-targets
+      - name: Record locked workspace tests
+        run: python3 build/scripts/agones-rs/run.py "$AGONES_REFACTOR_TEST_RUN" --quiet cargo test --locked --workspace
+      - name: Commit ordinary evidence
+        run: |
+          git config user.name "agones-rs-refactor-bot"
+          git config user.email "agones-rs-refactor-bot@users.noreply.github.com"
+          git add "verification/agones/runs/$AGONES_REFACTOR_CHECK_RUN.json" "verification/agones/runs/$AGONES_REFACTOR_CHECK_RUN.log"
+          git add "verification/agones/runs/$AGONES_REFACTOR_TEST_RUN.json" "verification/agones/runs/$AGONES_REFACTOR_TEST_RUN.log"
+          git commit -m "Record refactor ordinary evidence [skip ci]"
+          git push
