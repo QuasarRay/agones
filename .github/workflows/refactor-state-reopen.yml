@@ -1,0 +1,123 @@
+name: Temporary refactor state reopen
+
+on:
+  push:
+    branches:
+      - codex/agones-refactor-cgp-deftly-comprende-001
+    paths:
+      - .github/workflows/refactor-state-reopen.yml
+
+permissions:
+  contents: write
+
+jobs:
+  reopen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned state validator
+        run: python -m pip install -r build/scripts/agones-rs/state-requirements.txt
+      - name: Reopen verification invalidated by refactor
+        run: |
+          python3 - <<'PY'
+          from datetime import datetime, timezone
+          import hashlib
+          import json
+          from pathlib import Path
+          import subprocess
+          import sys
+
+          root = Path.cwd()
+          sys.path.insert(0, str(root / "build/scripts/agones-rs"))
+          import checkpoint
+
+          affected = {
+              "GS-DEFAULTS-001",
+              "SDK-VERSION-001",
+              "FG-ERROR-001",
+              "FG-INPUT-001",
+              "FG-CONFIG-001",
+          }
+          state = checkpoint.read(checkpoint.STATE)
+          old_hash = checkpoint.digest(checkpoint.STATE)
+          old_revision = state["revision"]
+          checkpoint.write(checkpoint.OUT / "states" / f"{old_hash}.json", state)
+
+          seen = set()
+          for item in state["work_items"]:
+              if item["id"] not in affected:
+                  continue
+              assert item["stage"] == "VERIFYING", (
+                  f"{item['id']}: expected VERIFYING before refactor reopen, "
+                  f"found {item['stage']}"
+              )
+              item["stage"] = "IMPLEMENTING"
+              item["next_action"] = (
+                  "Revalidate this implementation and its source-bound proof/evidence "
+                  "after the CGP + derive-deftly + comprende refactor before resuming "
+                  "new feature development."
+              )
+              seen.add(item["id"])
+          assert seen == affected, f"missing affected work items: {sorted(affected - seen)}"
+
+          review_path = root / "verification/agones/refactoring/pre-feature-cgp-deftly-comprende.json"
+          review = json.loads(review_path.read_text())
+          state["refactoring_reviews"].append(review)
+          for cell in state["architecture_matrix"]:
+              cell["next_review_trigger"] = review["next_review_trigger"]
+
+          state["previous_revision"] = old_revision
+          state["previous_sha256"] = old_hash
+          state["revision"] = old_revision + 1
+          state["workspace"]["head"] = subprocess.check_output(
+              ["git", "rev-parse", "HEAD"], cwd=root, text=True
+          ).strip()
+          state["workspace"]["dirty_patch_sha256"] = hashlib.sha256(
+              subprocess.check_output(["git", "diff", "--binary", "HEAD"], cwd=root)
+          ).hexdigest()
+          state["jobs"] = []
+
+          # The point of reopening is to invalidate the old implementation gates
+          # rather than silently rebinding them to changed production files.
+          checkpoint.check(state)
+          checkpoint.write(checkpoint.STATE, state)
+          checkpoint.handoff(state)
+
+          receipt = {
+              "schema_version": 1,
+              "event": "REFACTOR_REOPEN",
+              "reason": (
+                  "User-directed pre-feature CGP/derive-deftly/comprende refactor "
+                  "changed files bound by five VERIFYING implementation gates; "
+                  "reopen them honestly instead of refreshing stale evidence."
+              ),
+              "predecessor_revision": old_revision,
+              "predecessor_sha256": old_hash,
+              "result_revision": state["revision"],
+              "state_sha256": checkpoint.digest(checkpoint.STATE),
+              "gate_snapshot": None,
+              "affected_obligations": sorted(affected),
+              "authorization": "User execution contract",
+              "timestamp": datetime.now(timezone.utc).isoformat(),
+          }
+          checkpoint.write(
+              checkpoint.OUT / "transitions" /
+              f"{state['revision']:04d}-refactor-reopen.json",
+              receipt,
+          )
+          PY
+      - name: Validate reopened ledger
+        run: python build/scripts/agones-rs/checkpoint.py check
+      - name: Commit reopened state
+        run: |
+          git config user.name "agones-rs-refactor-bot"
+          git config user.email "agones-rs-refactor-bot@users.noreply.github.com"
+          git add AGONES_RS_STATE.json AGONES_RS_HANDOFF.md
+          git add verification/agones/states verification/agones/transitions
+          git commit -m "Reopen verification invalidated by refactor [skip ci]"
+          git push
