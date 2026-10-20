@@ -1,0 +1,16 @@
+=== RUN   TestGameServerValidateFeatures
+=== PAUSE TestGameServerValidateFeatures
+=== CONT  TestGameServerValidateFeatures
+=== RUN   TestGameServerValidateFeatures/Invalid_container_name,_container_was_not_found
+=== RUN   TestGameServerValidateFeatures/Multiple_container_ports,_OK_scenario
+=== RUN   TestGameServerValidateFeatures/CountsAndLists_is_enabled,_Counters_field_specified
+=== RUN   TestGameServerValidateFeatures/CountsAndLists_is_enabled,_Lists_field_specified
+=== RUN   TestGameServerValidateFeatures/PortPolicyNone_is_enabled,_PortPolicy_field_set_to_None
+--- PASS: TestGameServerValidateFeatures (0.00s)
+    --- PASS: TestGameServerValidateFeatures/Invalid_container_name,_container_was_not_found (0.00s)
+    --- PASS: TestGameServerValidateFeatures/Multiple_container_ports,_OK_scenario (0.00s)
+    --- PASS: TestGameServerValidateFeatures/CountsAndLists_is_enabled,_Counters_field_specified (0.00s)
+    --- PASS: TestGameServerValidateFeatures/CountsAndLists_is_enabled,_Lists_field_specified (0.00s)
+    --- PASS: TestGameServerValidateFeatures/PortPolicyNone_is_enabled,_PortPolicy_field_set_to_None (0.00s)
+PASS
+ok  	agones.dev/agones/pkg/apis/agones/v1	0.008s

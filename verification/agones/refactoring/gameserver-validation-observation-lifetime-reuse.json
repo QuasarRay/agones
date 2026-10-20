@@ -1,0 +1,11 @@
+{
+  "candidate": "Apply the existing GS-DEFAULTS-001-OBSERVATION-LIFETIME-1 rule to these source observation harnesses in both engines.",
+  "decision": "REUSE_EXISTING",
+  "id": "GS-VALIDATE-FEATURES-001-observation-lifetime-reuse",
+  "next_review_trigger": "After the first adequate isolated validation model/source result, reassess the required remaining source/lifecycle and macro work without repeating completed binding research.",
+  "observations": "The second local attempt reached CBMC reduction with zero individual results and6GiBpeak after globally expanding the error-vector drop loop128times. The original selected Go callback observes only ParseFeatures success and complete validation-error elements, with its expected fixtures/global feature map retained beyond those observations. It specifies no GC/deallocation observation or schedule. The separate source helper relation also ends at observing returned errors.",
+  "residual": "Formal post-observation cleanup, lifecycle and unbounded external behavior remain REQUIRED_OPEN, alongside every unproved original obligation and all eight _2cells. Retaining owners earns no cleanup or _2credit.",
+  "reuse": "Use the already-existing Genco observation-lifetime correspondence: keep parsed features until observations, then retain harness-owned values after all assertions and case/branch covers. Production parsing/provider/validation bodies and all internal allocation/destruction remain unchanged.",
+  "roi": "A small, mechanically reviewable application of an existing rule avoids spending solver/agent effort on unasserted post-observation destruction. It preserves both bools, arbitrary i64capacity, every exact fixture, all source assertions, all covers and global bounds. No new trusted proof-transport rule, model framework or macro is introduced.",
+  "validation": "Ordinary exact-fixture and actual adapter tests continue to exercise normal destruction separately; native observation harnesses use the same retention under both engines. Strict summaries bind the source and explicit observation scope. No further local high-memory trials; execute the actual isolated CI campaign."
+}

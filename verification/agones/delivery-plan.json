@@ -1,5 +1,6 @@
 {
-  "acceptance": "No new case005 formal credit until its own complete selected Bolero/Kani results and both covers pass. Reuse exact source014 proof and unchanged production component proofs; retain all five full parent-CI proof logs/receipts/summaries permanently in Git after archive digest verification. A new proof-transport rule for the single005/014 pair is not introduced. Use isolated CI because source014 peak RSS9720116KiB exceeds current desktop available memory5235528KiB. All17source fixtures/304relations/unit domains/unwind64 remain intact.",
+  "acceptance": "Source005 complete backend proof established at5185 and retained in PR94; source005/014 total36 qualified assertion occurrences directly proved. Remaining15cases/268occurrences and full migration obligations stay required. Follow-up PR CI validated reuse from5185. Latest integration CI checks its metadata-only delta and14controls; no fresh proof credit.",
+  "actual_integration_head": "1e64a054901658908d0a7a4eecd3010379df9614",
   "checks": [
     {
       "cause": "Guidance existed locally at build/local-includes/AGENTS.MD but was ignored by Git and absent from clean CI checkout.",
@@ -175,25 +176,63 @@
       "status": "PASSED",
       "url": "https://github.com/QuasarRay/agones/actions/runs/39199314045",
       "workflow_run": 39199314045
+    },
+    {
+      "evidence": "verification/agones/ci/39202625160-success.json",
+      "head": "774abfa9a2a0129074d20453d94d999899cb012b",
+      "observed_results": {
+        "feature-bool-model-check": "REUSED_UNCHANGED_PRODUCTION_EVIDENCE",
+        "migration-state": "PASSED",
+        "rust": "REUSED_UNCHANGED_PRODUCTION_EVIDENCE"
+      },
+      "status": "PASSED",
+      "workflow_run": 39202625160
+    },
+    {
+      "evidence": "verification/agones/ci/39397341432-success.json",
+      "head": "1e64a054901658908d0a7a4eecd3010379df9614",
+      "observed_results": {
+        "feature-bool-model-check": "REUSED_UNCHANGED_PRODUCTION_EVIDENCE",
+        "migration-state": "PASSED",
+        "rust": "REUSED_UNCHANGED_PRODUCTION_EVIDENCE"
+      },
+      "status": "PASSED",
+      "workflow_run": 39397341432
     }
   ],
-  "expected_base": "7a8ea571f41f20addf9f47a30f2cc5f84c065488",
-  "expected_head": "5185e0c18f1fff799e4f640a377194ce5dce0279",
+  "expected_base": "1e64a054901658908d0a7a4eecd3010379df9614",
+  "expected_head": "774abfa9a2a0129074d20453d94d999899cb012b",
   "integration_branch": "agones-rs-dev",
+  "merge_result": {
+    "commit": "774abfa9a2a0129074d20453d94d999899cb012b",
+    "merged": true,
+    "method_observed": "source head is ancestor of integration; PR API reports merged",
+    "pr": "https://github.com/QuasarRay/agones/pull/94"
+  },
   "pending_checkpoint": {
-    "current_gates": {
-      "FG-CONFIG-001": "verification/agones/gates/9268683a31881d2317504de096972c338daebf321be9bd8d98ac7b640dceda60.json",
-      "FG-ERROR-001": "verification/agones/gates/37a4df79b2f04b315a5b6ac58d368f23625d98e29c9c8878ba26f960eaeb53c3.json",
-      "FG-INPUT-001": "verification/agones/gates/49a63a9f021af1ea515b681f7026d63524788ea15256693d9a0ab39d93b27d23.json",
-      "GS-DEFAULTS-001": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
-      "SDK-VERSION-001": "verification/agones/gates/17f2ad506ef74f6c8e2776041faae39c031580c117429d7f97bd09f9c537e4cd.json"
-    },
-    "expected_review_branch": "codex/agones-source-defaulting-005",
-    "native_observation": "verification/agones/goal-observation.json",
-    "next_action": "Publish exact source005 full artifact and updated36-assertion coverage accounting plus the next metadata-only CGP validation packet; require fresh state/binding CI, merge PR94, verify integration, then implement PlayerTracking validation before extracting its properties.",
-    "publication_parent": "5185e0c18f1fff799e4f640a377194ce5dce0279",
-    "status": "SOURCE005_PROOF_PASSED_FOLLOWUP_ARTIFACTS_READY",
-    "verified_scope": "Case014:18 original assertions,2covers,6436 complete results; current selected dependencies/harness revalidated.578 ordinary tests,all four generation modes and controls pass."
+    "backend_harnesses": [
+      "feature_bool_common_domain",
+      "feature_input_common_domain",
+      "source_query_case_003",
+      "health_defaulting_common_domain",
+      "source_gs_case_005",
+      "source_gs_case_014",
+      "source_gsv_case_000",
+      "source_gsv_case_001",
+      "source_gsv_case_002",
+      "source_gsv_case_003",
+      "source_gsv_case_004",
+      "gameserver_feature_validation_common_domain"
+    ],
+    "expected_review_branch": "codex/agones-player-tracking-validation",
+    "feature_id": "GS-VALIDATE-FEATURES-001",
+    "local_source_head": "3b1bd370c445afd30a71737474f5a411e6ccd75c",
+    "local_source_head_kind": "LOCAL_UNPUBLISHED_CHECKPOINT",
+    "new_contract_model_credit": 0,
+    "new_qualified_source_credit": 0,
+    "status": "PROPERTIES_READY_BACKEND_NOT_YET_RUN",
+    "user_guidance_dirty_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "work_packet": "verification/agones/gameserver-feature-validation-work-packet.json"
   },
   "pull_requests": [
     {
@@ -220,12 +259,16 @@
       "url": "https://github.com/QuasarRay/agones/pull/94"
     }
   ],
-  "remote_result": "CASE005_CI_PROOF_PASSED_ARTIFACT_ACCOUNTING_READY_TO_PUBLISH",
+  "remote_result": "VALIDATION_SOURCE_PROPERTIES_READY_REVIEW_PUBLICATION_PENDING",
   "required_checks": [
     "migration-state",
     "rust",
     "feature-bool-model-check"
   ],
   "review_branch": "codex/agones-source-defaulting-005",
-  "visible_checkout": "agones-rs-dev@5185e0c18f1fff799e4f640a377194ce5dce0279"
+  "visible_checkout": {
+    "branch": "agones-rs-dev",
+    "head": "1e64a054901658908d0a7a4eecd3010379df9614",
+    "user_guidance_dirty_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
+  }
 }

@@ -1,5 +1,5 @@
 {
-  "capture_program": "package main\nimport (\n. \"agones.dev/agones/pkg/apis/agones/v1\"\napis \"agones.dev/agones/pkg/apis\"\nassert \"github.com/stretchr/testify/assert\"\ncaptureFMT \"fmt\"\ncaptureJSON \"encoding/json\"\ncaptureSORT \"sort\"\ncorev1 \"k8s.io/api/core/v1\"\npkg \"agones.dev/agones/pkg\"\nruntime \"agones.dev/agones/pkg/util/runtime\"\n)\ntype captureTestingT struct{}\nfunc (captureTestingT) Errorf(f string,args ...interface{}) {panic(captureFMT.Sprintf(f,args...))}\nfunc main(){captureT:=captureTestingT{}\ndefaultGameServerAnd := func(f func(gss *GameServerSpec)) GameServer {\n\tgs := GameServer{\n\t\tSpec: GameServerSpec{\n\t\t\tPorts:\t[]GameServerPort{{ContainerPort: 999}},\n\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{\n\t\t\t\t\t{Name: \"testing\", Image: \"testing/image\"},\n\t\t\t\t}},\n\t\t\t},\n\t\t},\n\t}\n\tf(&gs.Spec)\n\treturn gs\n}\ntype expected struct {\n\tcontainer\t\tstring\n\tprotocol\t\tcorev1.Protocol\n\tstate\t\t\tGameServerState\n\tpolicy\t\t\tPortPolicy\n\tportRange\t\tstring\n\thealth\t\t\tHealth\n\tscheduling\t\tapis.SchedulingStrategy\n\tsdkServer\t\tSdkServer\n\talphaPlayerCapacity\t*int64\n\tcounterSpec\t\tmap[string]CounterStatus\n\tlistSpec\t\tmap[string]ListStatus\n\tevictionSafeSpec\tEvictionSafe\n\tevictionSafeStatus\tEvictionSafe\n}\nwantDefaultAnd := func(f func(e *expected)) expected {\n\te := expected{\n\t\tcontainer:\t\"testing\",\n\t\tprotocol:\t\"UDP\",\n\t\tportRange:\tDefaultPortRange,\n\t\tstate:\t\tGameServerStatePortAllocation,\n\t\tpolicy:\t\tDynamic,\n\t\tscheduling:\tapis.Packed,\n\t\thealth: Health{\n\t\t\tDisabled:\t\tfalse,\n\t\t\tFailureThreshold:\t3,\n\t\t\tInitialDelaySeconds:\t5,\n\t\t\tPeriodSeconds:\t\t5,\n\t\t},\n\t\tsdkServer: SdkServer{\n\t\t\tLogLevel:\tSdkServerLogLevelInfo,\n\t\t\tGRPCPort:\t9357,\n\t\t\tHTTPPort:\t9358,\n\t\t},\n\t\tevictionSafeSpec:\tEvictionSafeNever,\n\t\tevictionSafeStatus:\tEvictionSafeNever,\n\t}\n\tf(&e)\n\treturn e\n}\ndata := map[string]struct {\n\tgameServer\tGameServer\n\tcontainer\tstring\n\tfeatureFlags\tstring\n\texpected\texpected\n}{\n\t\"set basic defaults on a very simple gameserver\": {\n\t\tgameServer:\tdefaultGameServerAnd(func(_ *GameServerSpec) {}),\n\t\texpected:\twantDefaultAnd(func(_ *expected) {}),\n\t},\n\t\"CountsAndLists=true, Counters\": {\n\t\tfeatureFlags:\tstring(runtime.FeatureCountsAndLists) + \"=true\",\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Counters = make(map[string]CounterStatus)\n\t\t\tgss.Counters[\"games\"] = CounterStatus{Count: 1, Capacity: 100}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.counterSpec = make(map[string]CounterStatus)\n\t\t\te.counterSpec[\"games\"] = CounterStatus{Count: 1, Capacity: 100}\n\t\t}),\n\t},\n\t\"CountsAndLists=true, Lists\": {\n\t\tfeatureFlags:\tstring(runtime.FeatureCountsAndLists) + \"=true\",\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Lists = make(map[string]ListStatus)\n\t\t\tgss.Lists[\"players\"] = ListStatus{Capacity: 100, Values: []string{\"foo\", \"bar\"}}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.listSpec = make(map[string]ListStatus)\n\t\t\te.listSpec[\"players\"] = ListStatus{Capacity: 100, Values: []string{\"foo\", \"bar\"}}\n\t\t}),\n\t},\n\t\"defaults on passthrough\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Ports[0].PortPolicy = Passthrough\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.policy = Passthrough\n\t\t}),\n\t},\n\t\"defaults are already set\": {\n\t\tgameServer: GameServer{\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tContainer:\t\"testing2\",\n\t\t\t\tPorts: []GameServerPort{{\n\t\t\t\t\tProtocol:\t\"TCP\",\n\t\t\t\t\tRange:\t\tDefaultPortRange,\n\t\t\t\t\tPortPolicy:\tStatic,\n\t\t\t\t}},\n\t\t\t\tHealth: Health{\n\t\t\t\t\tDisabled:\t\tfalse,\n\t\t\t\t\tPeriodSeconds:\t\t12,\n\t\t\t\t\tInitialDelaySeconds:\t11,\n\t\t\t\t\tFailureThreshold:\t10,\n\t\t\t\t},\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{\n\t\t\t\t\t\tContainers: []corev1.Container{\n\t\t\t\t\t\t\t{Name: \"testing\", Image: \"testing/image\"},\n\t\t\t\t\t\t\t{Name: \"testing2\", Image: \"testing/image2\"},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\tSdkServer: SdkServer{\n\t\t\t\t\tLogLevel:\tSdkServerLogLevelInfo,\n\t\t\t\t\tGRPCPort:\t9357,\n\t\t\t\t\tHTTPPort:\t9358,\n\t\t\t\t},\n\t\t\t},\n\t\t\tStatus:\tGameServerStatus{State: \"TestState\"},\n\t\t},\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.container = \"testing2\"\n\t\t\te.protocol = \"TCP\"\n\t\t\te.state = \"TestState\"\n\t\t\te.health = Health{\n\t\t\t\tDisabled:\t\tfalse,\n\t\t\t\tFailureThreshold:\t10,\n\t\t\t\tInitialDelaySeconds:\t11,\n\t\t\t\tPeriodSeconds:\t\t12,\n\t\t\t}\n\t\t}),\n\t},\n\t\"set basic defaults on static gameserver\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Ports[0].PortPolicy = Static\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.state = GameServerStateCreating\n\t\t\te.policy = Static\n\t\t}),\n\t},\n\t\"health is disabled\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Health = Health{Disabled: true}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.health = Health{Disabled: true}\n\t\t}),\n\t},\n\t\"convert from legacy single port to multiple\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Ports[0] = GameServerPort{\n\t\t\t\tContainerPort:\t777,\n\t\t\t\tHostPort:\t777,\n\t\t\t\tPortPolicy:\tStatic,\n\t\t\t\tProtocol:\tcorev1.ProtocolTCP,\n\t\t\t}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.protocol = \"TCP\"\n\t\t\te.state = GameServerStateCreating\n\t\t}),\n\t},\n\t\"set Debug logging level\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.SdkServer = SdkServer{LogLevel: SdkServerLogLevelDebug}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.sdkServer.LogLevel = SdkServerLogLevelDebug\n\t\t}),\n\t},\n\t\"set gRPC and HTTP ports on SDK Server\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.SdkServer = SdkServer{\n\t\t\t\tLogLevel:\tSdkServerLogLevelError,\n\t\t\t\tGRPCPort:\t19357,\n\t\t\t\tHTTPPort:\t19358,\n\t\t\t}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.sdkServer = SdkServer{\n\t\t\t\tLogLevel:\tSdkServerLogLevelError,\n\t\t\t\tGRPCPort:\t19357,\n\t\t\t\tHTTPPort:\t19358,\n\t\t\t}\n\t\t}),\n\t},\n\t\"defaults are eviction.safe: Never\": {\n\t\tgameServer:\tdefaultGameServerAnd(func(_ *GameServerSpec) {}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.evictionSafeSpec = EvictionSafeNever\n\t\t\te.evictionSafeStatus = EvictionSafeNever\n\t\t}),\n\t},\n\t\"eviction.safe: Always\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Eviction = &Eviction{Safe: EvictionSafeAlways}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.evictionSafeSpec = EvictionSafeAlways\n\t\t\te.evictionSafeStatus = EvictionSafeAlways\n\t\t}),\n\t},\n\t\"eviction.safe: OnUpgrade\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Eviction = &Eviction{Safe: EvictionSafeOnUpgrade}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.evictionSafeSpec = EvictionSafeOnUpgrade\n\t\t\te.evictionSafeStatus = EvictionSafeOnUpgrade\n\t\t}),\n\t},\n\t\"eviction.safe: Never\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Eviction = &Eviction{Safe: EvictionSafeNever}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.evictionSafeSpec = EvictionSafeNever\n\t\t\te.evictionSafeStatus = EvictionSafeNever\n\t\t}),\n\t},\n\t\"eviction.safe: Always inferred from safe-to-evict=true\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Template.ObjectMeta.Annotations = map[string]string{PodSafeToEvictAnnotation: \"true\"}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.evictionSafeSpec = EvictionSafeNever\n\t\t\te.evictionSafeStatus = EvictionSafeAlways\n\t\t}),\n\t},\n\t\"Nothing inferred from safe-to-evict=false\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Template.ObjectMeta.Annotations = map[string]string{PodSafeToEvictAnnotation: \"false\"}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.evictionSafeSpec = EvictionSafeNever\n\t\t\te.evictionSafeStatus = EvictionSafeNever\n\t\t}),\n\t},\n\t\"safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Eviction = &Eviction{Safe: EvictionSafeAlways}\n\t\t\tgss.Template.ObjectMeta.Annotations = map[string]string{PodSafeToEvictAnnotation: \"false\"}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.evictionSafeSpec = EvictionSafeAlways\n\t\t\te.evictionSafeStatus = EvictionSafeAlways\n\t\t}),\n\t},\n}\nruntime.FeatureTestMutex.Lock();defer runtime.FeatureTestMutex.Unlock()\nkeys:=make([]string,0,len(data));for name:=range data {keys=append(keys,name)};captureSORT.Strings(keys)\nrows:=[]map[string]interface{}{}\nfor _,name:=range keys {test:=data[name]\nbefore,captureErr:=captureJSON.Marshal(test.gameServer);if captureErr!=nil {panic(captureErr)}\nassertions:=[]map[string]interface{}{}\nrecord:=func(line int,kind string,expected,actual interface{},passed bool){if !passed {panic(\"source assertion failed\")};assertions=append(assertions,map[string]interface{}{\"line\":line,\"kind\":kind,\"expected\":expected,\"observed\":actual,\"source_passed\":passed})}\nerr := runtime.ParseFeatures(test.featureFlags)\nrecord(405,\"NoError\",nil,err,assert.NoError(captureT, err))\ntest.gameServer.ApplyDefaults()\nrecord(409,\"Equal\",pkg.Version,test.gameServer.Annotations[VersionAnnotation],assert.Equal(captureT, pkg.Version, test.gameServer.Annotations[VersionAnnotation]))\nspec := test.gameServer.Spec\nrecord(412,\"Contains\",FinalizerName,test.gameServer.ObjectMeta.Finalizers,assert.Contains(captureT, test.gameServer.ObjectMeta.Finalizers, FinalizerName))\nrecord(413,\"Equal\",test.expected.container,spec.Container,assert.Equal(captureT, test.expected.container, spec.Container))\nrecord(414,\"Equal\",test.expected.protocol,spec.Ports[0].Protocol,assert.Equal(captureT, test.expected.protocol, spec.Ports[0].Protocol))\nrecord(415,\"Equal\",test.expected.portRange,spec.Ports[0].Range,assert.Equal(captureT, test.expected.portRange, spec.Ports[0].Range))\nrecord(416,\"Equal\",test.expected.state,test.gameServer.Status.State,assert.Equal(captureT, test.expected.state, test.gameServer.Status.State))\nrecord(417,\"Equal\",test.expected.scheduling,test.gameServer.Spec.Scheduling,assert.Equal(captureT, test.expected.scheduling, test.gameServer.Spec.Scheduling))\nrecord(418,\"Equal\",test.expected.health,test.gameServer.Spec.Health,assert.Equal(captureT, test.expected.health, test.gameServer.Spec.Health))\nrecord(419,\"Equal\",test.expected.sdkServer,test.gameServer.Spec.SdkServer,assert.Equal(captureT, test.expected.sdkServer, test.gameServer.Spec.SdkServer))\nif test.expected.alphaPlayerCapacity != nil {\nrecord(421,\"Equal\",*test.expected.alphaPlayerCapacity,test.gameServer.Status.Players.Capacity,assert.Equal(captureT, *test.expected.alphaPlayerCapacity, test.gameServer.Status.Players.Capacity))\n} else {\nrecord(423,\"Nil\",nil,test.gameServer.Spec.Players,assert.Nil(captureT, test.gameServer.Spec.Players))\nrecord(424,\"Nil\",nil,test.gameServer.Status.Players,assert.Nil(captureT, test.gameServer.Status.Players))\n}\nif len(test.expected.evictionSafeSpec) > 0 {\nrecord(427,\"Equal\",test.expected.evictionSafeSpec,spec.Eviction.Safe,assert.Equal(captureT, test.expected.evictionSafeSpec, spec.Eviction.Safe))\n} else {\nrecord(429,\"Nil\",nil,spec.Eviction,assert.Nil(captureT, spec.Eviction))\n}\nif len(test.expected.evictionSafeStatus) > 0 {\nrecord(432,\"Equal\",test.expected.evictionSafeStatus,test.gameServer.Status.Eviction.Safe,assert.Equal(captureT, test.expected.evictionSafeStatus, test.gameServer.Status.Eviction.Safe))\n} else {\nrecord(434,\"Nil\",nil,test.gameServer.Status.Eviction,assert.Nil(captureT, test.gameServer.Status.Eviction))\n}\nif test.expected.counterSpec != nil {\nrecord(437,\"Equal\",test.expected.counterSpec,test.gameServer.Status.Counters,assert.Equal(captureT, test.expected.counterSpec, test.gameServer.Status.Counters))\n} else {\nrecord(439,\"Nil\",nil,test.gameServer.Spec.Counters,assert.Nil(captureT, test.gameServer.Spec.Counters))\nrecord(440,\"Nil\",nil,test.gameServer.Status.Counters,assert.Nil(captureT, test.gameServer.Status.Counters))\n}\nif test.expected.listSpec != nil {\nrecord(443,\"Equal\",test.expected.listSpec,test.gameServer.Status.Lists,assert.Equal(captureT, test.expected.listSpec, test.gameServer.Status.Lists))\n} else {\nrecord(445,\"Nil\",nil,test.gameServer.Spec.Lists,assert.Nil(captureT, test.gameServer.Spec.Lists))\nrecord(446,\"Nil\",nil,test.gameServer.Status.Lists,assert.Nil(captureT, test.gameServer.Status.Lists))\n}\nrows=append(rows,map[string]interface{}{\"name\":name,\"before\":captureJSON.RawMessage(before),\"after\":test.gameServer,\"feature_flags\":test.featureFlags,\"assertions\":assertions,\"expected_context\":map[string]interface{}{\"alpha_capacity\":test.expected.alphaPlayerCapacity,\"eviction_spec\":test.expected.evictionSafeSpec,\"eviction_status\":test.expected.evictionSafeStatus,\"counter_spec\":test.expected.counterSpec,\"list_spec\":test.expected.listSpec}})}\nencoded,err:=captureJSON.Marshal(rows);if err!=nil {panic(err)};captureFMT.Println(string(encoded))}\n",
+  "capture_program": "package main\nimport (\n. \"agones.dev/agones/pkg/apis/agones/v1\"\napis \"agones.dev/agones/pkg/apis\"\nassert \"github.com/stretchr/testify/assert\"\ncaptureFMT \"fmt\"\ncaptureJSON \"encoding/json\"\ncaptureSORT \"sort\"\ncorev1 \"k8s.io/api/core/v1\"\npkg \"agones.dev/agones/pkg\"\nruntime \"agones.dev/agones/pkg/util/runtime\"\n)\ntype captureTestingT struct{}\nfunc (captureTestingT) Errorf(f string,args ...interface{}) {panic(captureFMT.Sprintf(f,args...))}\nfunc main(){captureT:=captureTestingT{}\ndefaultGameServerAnd := func(f func(gss *GameServerSpec)) GameServer {\n\tgs := GameServer{\n\t\tSpec: GameServerSpec{\n\t\t\tPorts:\t[]GameServerPort{{ContainerPort: 999}},\n\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{\n\t\t\t\t\t{Name: \"testing\", Image: \"testing/image\"},\n\t\t\t\t}},\n\t\t\t},\n\t\t},\n\t}\n\tf(\u0026gs.Spec)\n\treturn gs\n}\ntype expected struct {\n\tcontainer\t\tstring\n\tprotocol\t\tcorev1.Protocol\n\tstate\t\t\tGameServerState\n\tpolicy\t\t\tPortPolicy\n\tportRange\t\tstring\n\thealth\t\t\tHealth\n\tscheduling\t\tapis.SchedulingStrategy\n\tsdkServer\t\tSdkServer\n\talphaPlayerCapacity\t*int64\n\tcounterSpec\t\tmap[string]CounterStatus\n\tlistSpec\t\tmap[string]ListStatus\n\tevictionSafeSpec\tEvictionSafe\n\tevictionSafeStatus\tEvictionSafe\n}\nwantDefaultAnd := func(f func(e *expected)) expected {\n\te := expected{\n\t\tcontainer:\t\"testing\",\n\t\tprotocol:\t\"UDP\",\n\t\tportRange:\tDefaultPortRange,\n\t\tstate:\t\tGameServerStatePortAllocation,\n\t\tpolicy:\t\tDynamic,\n\t\tscheduling:\tapis.Packed,\n\t\thealth: Health{\n\t\t\tDisabled:\t\tfalse,\n\t\t\tFailureThreshold:\t3,\n\t\t\tInitialDelaySeconds:\t5,\n\t\t\tPeriodSeconds:\t\t5,\n\t\t},\n\t\tsdkServer: SdkServer{\n\t\t\tLogLevel:\tSdkServerLogLevelInfo,\n\t\t\tGRPCPort:\t9357,\n\t\t\tHTTPPort:\t9358,\n\t\t},\n\t\tevictionSafeSpec:\tEvictionSafeNever,\n\t\tevictionSafeStatus:\tEvictionSafeNever,\n\t}\n\tf(\u0026e)\n\treturn e\n}\ndata := map[string]struct {\n\tgameServer\tGameServer\n\tcontainer\tstring\n\tfeatureFlags\tstring\n\texpected\texpected\n}{\n\t\"set basic defaults on a very simple gameserver\": {\n\t\tgameServer:\tdefaultGameServerAnd(func(_ *GameServerSpec) {}),\n\t\texpected:\twantDefaultAnd(func(_ *expected) {}),\n\t},\n\t\"CountsAndLists=true, Counters\": {\n\t\tfeatureFlags:\tstring(runtime.FeatureCountsAndLists) + \"=true\",\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Counters = make(map[string]CounterStatus)\n\t\t\tgss.Counters[\"games\"] = CounterStatus{Count: 1, Capacity: 100}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.counterSpec = make(map[string]CounterStatus)\n\t\t\te.counterSpec[\"games\"] = CounterStatus{Count: 1, Capacity: 100}\n\t\t}),\n\t},\n\t\"CountsAndLists=true, Lists\": {\n\t\tfeatureFlags:\tstring(runtime.FeatureCountsAndLists) + \"=true\",\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Lists = make(map[string]ListStatus)\n\t\t\tgss.Lists[\"players\"] = ListStatus{Capacity: 100, Values: []string{\"foo\", \"bar\"}}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.listSpec = make(map[string]ListStatus)\n\t\t\te.listSpec[\"players\"] = ListStatus{Capacity: 100, Values: []string{\"foo\", \"bar\"}}\n\t\t}),\n\t},\n\t\"defaults on passthrough\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Ports[0].PortPolicy = Passthrough\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.policy = Passthrough\n\t\t}),\n\t},\n\t\"defaults are already set\": {\n\t\tgameServer: GameServer{\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tContainer:\t\"testing2\",\n\t\t\t\tPorts: []GameServerPort{{\n\t\t\t\t\tProtocol:\t\"TCP\",\n\t\t\t\t\tRange:\t\tDefaultPortRange,\n\t\t\t\t\tPortPolicy:\tStatic,\n\t\t\t\t}},\n\t\t\t\tHealth: Health{\n\t\t\t\t\tDisabled:\t\tfalse,\n\t\t\t\t\tPeriodSeconds:\t\t12,\n\t\t\t\t\tInitialDelaySeconds:\t11,\n\t\t\t\t\tFailureThreshold:\t10,\n\t\t\t\t},\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{\n\t\t\t\t\t\tContainers: []corev1.Container{\n\t\t\t\t\t\t\t{Name: \"testing\", Image: \"testing/image\"},\n\t\t\t\t\t\t\t{Name: \"testing2\", Image: \"testing/image2\"},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\tSdkServer: SdkServer{\n\t\t\t\t\tLogLevel:\tSdkServerLogLevelInfo,\n\t\t\t\t\tGRPCPort:\t9357,\n\t\t\t\t\tHTTPPort:\t9358,\n\t\t\t\t},\n\t\t\t},\n\t\t\tStatus:\tGameServerStatus{State: \"TestState\"},\n\t\t},\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.container = \"testing2\"\n\t\t\te.protocol = \"TCP\"\n\t\t\te.state = \"TestState\"\n\t\t\te.health = Health{\n\t\t\t\tDisabled:\t\tfalse,\n\t\t\t\tFailureThreshold:\t10,\n\t\t\t\tInitialDelaySeconds:\t11,\n\t\t\t\tPeriodSeconds:\t\t12,\n\t\t\t}\n\t\t}),\n\t},\n\t\"set basic defaults on static gameserver\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Ports[0].PortPolicy = Static\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.state = GameServerStateCreating\n\t\t\te.policy = Static\n\t\t}),\n\t},\n\t\"health is disabled\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Health = Health{Disabled: true}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.health = Health{Disabled: true}\n\t\t}),\n\t},\n\t\"convert from legacy single port to multiple\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Ports[0] = GameServerPort{\n\t\t\t\tContainerPort:\t777,\n\t\t\t\tHostPort:\t777,\n\t\t\t\tPortPolicy:\tStatic,\n\t\t\t\tProtocol:\tcorev1.ProtocolTCP,\n\t\t\t}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.protocol = \"TCP\"\n\t\t\te.state = GameServerStateCreating\n\t\t}),\n\t},\n\t\"set Debug logging level\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.SdkServer = SdkServer{LogLevel: SdkServerLogLevelDebug}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.sdkServer.LogLevel = SdkServerLogLevelDebug\n\t\t}),\n\t},\n\t\"set gRPC and HTTP ports on SDK Server\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.SdkServer = SdkServer{\n\t\t\t\tLogLevel:\tSdkServerLogLevelError,\n\t\t\t\tGRPCPort:\t19357,\n\t\t\t\tHTTPPort:\t19358,\n\t\t\t}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.sdkServer = SdkServer{\n\t\t\t\tLogLevel:\tSdkServerLogLevelError,\n\t\t\t\tGRPCPort:\t19357,\n\t\t\t\tHTTPPort:\t19358,\n\t\t\t}\n\t\t}),\n\t},\n\t\"defaults are eviction.safe: Never\": {\n\t\tgameServer:\tdefaultGameServerAnd(func(_ *GameServerSpec) {}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.evictionSafeSpec = EvictionSafeNever\n\t\t\te.evictionSafeStatus = EvictionSafeNever\n\t\t}),\n\t},\n\t\"eviction.safe: Always\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Eviction = \u0026Eviction{Safe: EvictionSafeAlways}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.evictionSafeSpec = EvictionSafeAlways\n\t\t\te.evictionSafeStatus = EvictionSafeAlways\n\t\t}),\n\t},\n\t\"eviction.safe: OnUpgrade\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Eviction = \u0026Eviction{Safe: EvictionSafeOnUpgrade}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.evictionSafeSpec = EvictionSafeOnUpgrade\n\t\t\te.evictionSafeStatus = EvictionSafeOnUpgrade\n\t\t}),\n\t},\n\t\"eviction.safe: Never\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Eviction = \u0026Eviction{Safe: EvictionSafeNever}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.evictionSafeSpec = EvictionSafeNever\n\t\t\te.evictionSafeStatus = EvictionSafeNever\n\t\t}),\n\t},\n\t\"eviction.safe: Always inferred from safe-to-evict=true\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Template.ObjectMeta.Annotations = map[string]string{PodSafeToEvictAnnotation: \"true\"}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.evictionSafeSpec = EvictionSafeNever\n\t\t\te.evictionSafeStatus = EvictionSafeAlways\n\t\t}),\n\t},\n\t\"Nothing inferred from safe-to-evict=false\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Template.ObjectMeta.Annotations = map[string]string{PodSafeToEvictAnnotation: \"false\"}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.evictionSafeSpec = EvictionSafeNever\n\t\t\te.evictionSafeStatus = EvictionSafeNever\n\t\t}),\n\t},\n\t\"safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always\": {\n\t\tgameServer: defaultGameServerAnd(func(gss *GameServerSpec) {\n\t\t\tgss.Eviction = \u0026Eviction{Safe: EvictionSafeAlways}\n\t\t\tgss.Template.ObjectMeta.Annotations = map[string]string{PodSafeToEvictAnnotation: \"false\"}\n\t\t}),\n\t\texpected: wantDefaultAnd(func(e *expected) {\n\t\t\te.evictionSafeSpec = EvictionSafeAlways\n\t\t\te.evictionSafeStatus = EvictionSafeAlways\n\t\t}),\n\t},\n}\nruntime.FeatureTestMutex.Lock();defer runtime.FeatureTestMutex.Unlock()\nkeys:=make([]string,0,len(data));for name:=range data {keys=append(keys,name)};captureSORT.Strings(keys)\nrows:=[]map[string]interface{}{}\nfor _,name:=range keys {test:=data[name]\nbefore,captureErr:=captureJSON.Marshal(test.gameServer);if captureErr!=nil {panic(captureErr)}\nassertions:=[]map[string]interface{}{}\nrecord:=func(line int,kind string,expected,actual interface{},passed bool){if !passed {panic(\"source assertion failed\")};assertions=append(assertions,map[string]interface{}{\"line\":line,\"kind\":kind,\"expected\":expected,\"observed\":actual,\"source_passed\":passed})}\nerr := runtime.ParseFeatures(test.featureFlags)\nrecord(405,\"NoError\",nil,err,assert.NoError(captureT, err))\ntest.gameServer.ApplyDefaults()\nrecord(409,\"Equal\",pkg.Version,test.gameServer.Annotations[VersionAnnotation],assert.Equal(captureT, pkg.Version, test.gameServer.Annotations[VersionAnnotation]))\nspec := test.gameServer.Spec\nrecord(412,\"Contains\",FinalizerName,test.gameServer.ObjectMeta.Finalizers,assert.Contains(captureT, test.gameServer.ObjectMeta.Finalizers, FinalizerName))\nrecord(413,\"Equal\",test.expected.container,spec.Container,assert.Equal(captureT, test.expected.container, spec.Container))\nrecord(414,\"Equal\",test.expected.protocol,spec.Ports[0].Protocol,assert.Equal(captureT, test.expected.protocol, spec.Ports[0].Protocol))\nrecord(415,\"Equal\",test.expected.portRange,spec.Ports[0].Range,assert.Equal(captureT, test.expected.portRange, spec.Ports[0].Range))\nrecord(416,\"Equal\",test.expected.state,test.gameServer.Status.State,assert.Equal(captureT, test.expected.state, test.gameServer.Status.State))\nrecord(417,\"Equal\",test.expected.scheduling,test.gameServer.Spec.Scheduling,assert.Equal(captureT, test.expected.scheduling, test.gameServer.Spec.Scheduling))\nrecord(418,\"Equal\",test.expected.health,test.gameServer.Spec.Health,assert.Equal(captureT, test.expected.health, test.gameServer.Spec.Health))\nrecord(419,\"Equal\",test.expected.sdkServer,test.gameServer.Spec.SdkServer,assert.Equal(captureT, test.expected.sdkServer, test.gameServer.Spec.SdkServer))\nif test.expected.alphaPlayerCapacity != nil {\nrecord(421,\"Equal\",*test.expected.alphaPlayerCapacity,test.gameServer.Status.Players.Capacity,assert.Equal(captureT, *test.expected.alphaPlayerCapacity, test.gameServer.Status.Players.Capacity))\n} else {\nrecord(423,\"Nil\",nil,test.gameServer.Spec.Players,assert.Nil(captureT, test.gameServer.Spec.Players))\nrecord(424,\"Nil\",nil,test.gameServer.Status.Players,assert.Nil(captureT, test.gameServer.Status.Players))\n}\nif len(test.expected.evictionSafeSpec) \u003e 0 {\nrecord(427,\"Equal\",test.expected.evictionSafeSpec,spec.Eviction.Safe,assert.Equal(captureT, test.expected.evictionSafeSpec, spec.Eviction.Safe))\n} else {\nrecord(429,\"Nil\",nil,spec.Eviction,assert.Nil(captureT, spec.Eviction))\n}\nif len(test.expected.evictionSafeStatus) \u003e 0 {\nrecord(432,\"Equal\",test.expected.evictionSafeStatus,test.gameServer.Status.Eviction.Safe,assert.Equal(captureT, test.expected.evictionSafeStatus, test.gameServer.Status.Eviction.Safe))\n} else {\nrecord(434,\"Nil\",nil,test.gameServer.Status.Eviction,assert.Nil(captureT, test.gameServer.Status.Eviction))\n}\nif test.expected.counterSpec != nil {\nrecord(437,\"Equal\",test.expected.counterSpec,test.gameServer.Status.Counters,assert.Equal(captureT, test.expected.counterSpec, test.gameServer.Status.Counters))\n} else {\nrecord(439,\"Nil\",nil,test.gameServer.Spec.Counters,assert.Nil(captureT, test.gameServer.Spec.Counters))\nrecord(440,\"Nil\",nil,test.gameServer.Status.Counters,assert.Nil(captureT, test.gameServer.Status.Counters))\n}\nif test.expected.listSpec != nil {\nrecord(443,\"Equal\",test.expected.listSpec,test.gameServer.Status.Lists,assert.Equal(captureT, test.expected.listSpec, test.gameServer.Status.Lists))\n} else {\nrecord(445,\"Nil\",nil,test.gameServer.Spec.Lists,assert.Nil(captureT, test.gameServer.Spec.Lists))\nrecord(446,\"Nil\",nil,test.gameServer.Status.Lists,assert.Nil(captureT, test.gameServer.Status.Lists))\n}\nrows=append(rows,map[string]interface{}{\"name\":name,\"before\":captureJSON.RawMessage(before),\"after\":test.gameServer,\"feature_flags\":test.featureFlags,\"assertions\":assertions,\"expected_context\":map[string]interface{}{\"alpha_capacity\":test.expected.alphaPlayerCapacity,\"eviction_spec\":test.expected.evictionSafeSpec,\"eviction_status\":test.expected.evictionSafeStatus,\"counter_spec\":test.expected.counterSpec,\"list_spec\":test.expected.listSpec}})}\nencoded,err:=captureJSON.Marshal(rows);if err!=nil {panic(err)};captureFMT.Println(string(encoded))}\n",
   "capture_program_sha256": "38c6edcc38357928ae16846254bf8ef524b5c2fc63a67e5fc5ff52ebc8d21eeb",
   "case_count": 17,
   "cases": [
@@ -3413,7 +3413,7 @@
       "assertions": [
         {
           "expected": null,
-          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-405",
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always::line-405",
           "kind": "NoError",
           "line": 405,
           "observed": null,
@@ -3421,7 +3421,7 @@
         },
         {
           "expected": "dev",
-          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-409",
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always::line-409",
           "kind": "Equal",
           "line": 409,
           "observed": "dev",
@@ -3429,7 +3429,7 @@
         },
         {
           "expected": "agones.dev/controller",
-          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-412",
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always::line-412",
           "kind": "Contains",
           "line": 412,
           "observed": [
@@ -3439,7 +3439,7 @@
         },
         {
           "expected": "testing",
-          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-413",
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always::line-413",
           "kind": "Equal",
           "line": 413,
           "observed": "testing",
@@ -3447,7 +3447,7 @@
         },
         {
           "expected": "UDP",
-          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-414",
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always::line-414",
           "kind": "Equal",
           "line": 414,
           "observed": "UDP",
@@ -3455,7 +3455,7 @@
         },
         {
           "expected": "default",
-          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-415",
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always::line-415",
           "kind": "Equal",
           "line": 415,
           "observed": "default",
@@ -3463,7 +3463,7 @@
         },
         {
           "expected": "PortAllocation",
-          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-416",
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always::line-416",
           "kind": "Equal",
           "line": 416,
           "observed": "PortAllocation",
@@ -3471,7 +3471,7 @@
         },
         {
           "expected": "Packed",
-          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-417",
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always::line-417",
           "kind": "Equal",
           "line": 417,
           "observed": "Packed",
@@ -3483,7 +3483,7 @@
             "initialDelaySeconds": 5,
             "periodSeconds": 5
           },
-          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-418",
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always::line-418",
           "kind": "Equal",
           "line": 418,
           "observed": {
@@ -3499,7 +3499,7 @@
             "httpPort": 9358,
             "logLevel": "Info"
           },
-          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-419",
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always::line-419",
           "kind": "Equal",
           "line": 419,
           "observed": {
@@ -3511,7 +3511,7 @@
         },
         {
           "expected": null,
-          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-423",
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always::line-423",
           "kind": "Nil",
           "line": 423,
           "observed": null,
@@ -3519,7 +3519,7 @@
         },
         {
           "expected": null,
-          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-424",
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always::line-424",
           "kind": "Nil",
           "line": 424,
           "observed": null,
@@ -3527,7 +3527,7 @@
         },
         {
           "expected": "Always",
-          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-427",
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always::line-427",
           "kind": "Equal",
           "line": 427,
           "observed": "Always",
@@ -3535,7 +3535,7 @@
         },
         {
           "expected": "Always",
-          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-432",
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always::line-432",
           "kind": "Equal",
           "line": 432,
           "observed": "Always",
@@ -3543,7 +3543,7 @@
         },
         {
           "expected": null,
-          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-439",
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always::line-439",
           "kind": "Nil",
           "line": 439,
           "observed": null,
@@ -3551,7 +3551,7 @@
         },
         {
           "expected": null,
-          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-440",
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always::line-440",
           "kind": "Nil",
           "line": 440,
           "observed": null,
@@ -3559,7 +3559,7 @@
         },
         {
           "expected": null,
-          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-445",
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always::line-445",
           "kind": "Nil",
           "line": 445,
           "observed": null,
@@ -3567,7 +3567,7 @@
         },
         {
           "expected": null,
-          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always::line-446",
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always::line-446",
           "kind": "Nil",
           "line": 446,
           "observed": null,
@@ -3622,8 +3622,8 @@
         "list_spec": null
       },
       "feature_flags": "",
-      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always",
-      "name": "safe-to-evict=false AND eviction.safe: Always => eviction.safe: Always"
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always",
+      "name": "safe-to-evict=false AND eviction.safe: Always =\u003e eviction.safe: Always"
     },
     {
       "after": {
@@ -4722,20 +4722,22 @@
     "GOVERSION": "go1.27.1-X:nodwarf5"
   },
   "feature_id": "GS-DEFAULTS-001",
-  "implementation_gate": "verification/agones/gates/0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c.json",
-  "implementation_gate_sha256": "0ac76d721669204c616086a87015daa6232832f7376e359e20fda8cc8a3c894c",
+  "implementation_gate": "verification/agones/gates/2b396f733249e0a8cbb80c280000330b0793cdd6d3403d024a2d3234ceacca51.json",
+  "implementation_gate_sha256": "2b396f733249e0a8cbb80c280000330b0793cdd6d3403d024a2d3234ceacca51",
   "loader_source_files": {
     "build/scripts/agones-rs/extract/gameserver_defaulting.go": "3530dbf1e91a96f2264c5e8eb21c4f69c16b50818feee975af4d5fd46d907664",
     "build/scripts/agones-rs/extract/gameserver_defaulting_test.go": "03af33d9d79bf73ad701528c07f5cdfa75758b5040465fbb52f7b95474eeb2bd",
+    "build/scripts/agones-rs/extract/gameserver_features.go": "10d4f2ab601b5586fc71cde7d3188793fb62ea398e3e47397ef5865d6b312ea1",
+    "build/scripts/agones-rs/extract/gameserver_features_test.go": "5a4ff209b50d89dd5aa8768999d189de6b4addc6e0708dc3b13f778238d9ffb6",
     "build/scripts/agones-rs/extract/go.mod": "d23234a15e7dbd4b4a9a5114b603c7b4af96faf0b28597887612f797198621db",
     "build/scripts/agones-rs/extract/go.sum": "db117b1938e16538e8fe3fc238d5185565e1a5150ed8989573f95899b23d0101",
-    "build/scripts/agones-rs/extract/main.go": "92387cb6b616e2fa55eaa224545d9f083937186b1a4e1a9998ea3c3d30c0d493",
+    "build/scripts/agones-rs/extract/main.go": "2659eb1b3e4045690025fee83efc70f060219071efcf392ed52e382cc3eb07e4",
     "build/scripts/agones-rs/extract/main_test.go": "b66449f6662bd598185fb671688d9bf566e36176c2e36ffca378d78464370213",
     "build/scripts/agones-rs/extract/sdk_version.go": "79e0e06e220484f808686dbb936cee00fe3e52b572f4c93769736dd47f5acecd",
     "build/scripts/agones-rs/extract/sdk_version_test.go": "8e7ca0a3cac25144f4289bdcdee416502b7aa63e45d3f9e215e12c7cc4fca097"
   },
   "package_id": "agones.dev/agones/pkg/apis/agones/v1 [agones.dev/agones/pkg/apis/agones/v1.test]",
-  "reused_sdk_fixture_packet_sha256": "fd8d90991cffce9bd2737e102fba09b5d36266b03231fa627612e8396d60835c",
+  "reused_sdk_fixture_packet_sha256": "24ccde1f053d8d3d684b561e52ae1fa218a2d389063c87e774e96759e0b6be9f",
   "scheduling_mapping": "Capture uses every exact fixture in sorted order under the source feature mutex. Original t.Parallel/t.Run remain in the original test replay; no concurrent executor proof is claimed.",
   "schema_version": 1,
   "scope": "Every assertion and conditional occurrence in the selected original TestGameServerApplyDefaults table. This is exact source capture/runtime evidence, not formal credit or complete baseline coverage.",
@@ -4954,7 +4956,7 @@
       "expression": "assert.Equal(t, test.expected.evictionSafeSpec, spec.Eviction.Safe)",
       "fixture_occurrences": 17,
       "guards": [
-        "len(test.expected.evictionSafeSpec) > 0"
+        "len(test.expected.evictionSafeSpec) \u003e 0"
       ],
       "kind": "Equal",
       "line": 427,
@@ -4970,7 +4972,7 @@
       "expression": "assert.Nil(t, spec.Eviction)",
       "fixture_occurrences": 0,
       "guards": [
-        "!(len(test.expected.evictionSafeSpec) > 0)"
+        "!(len(test.expected.evictionSafeSpec) \u003e 0)"
       ],
       "kind": "Nil",
       "line": 429,
@@ -4987,7 +4989,7 @@
       "expression": "assert.Equal(t, test.expected.evictionSafeStatus, test.gameServer.Status.Eviction.Safe)",
       "fixture_occurrences": 17,
       "guards": [
-        "len(test.expected.evictionSafeStatus) > 0"
+        "len(test.expected.evictionSafeStatus) \u003e 0"
       ],
       "kind": "Equal",
       "line": 432,
@@ -5003,7 +5005,7 @@
       "expression": "assert.Nil(t, test.gameServer.Status.Eviction)",
       "fixture_occurrences": 0,
       "guards": [
-        "!(len(test.expected.evictionSafeStatus) > 0)"
+        "!(len(test.expected.evictionSafeStatus) \u003e 0)"
       ],
       "kind": "Nil",
       "line": 434,

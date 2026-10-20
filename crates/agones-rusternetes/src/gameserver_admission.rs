@@ -193,7 +193,23 @@ pub fn validate_game_server_creation<H>(
 where
     H: ApiHooks,
 {
-    let mut errors = game_server.validate();
+    validate_game_server_creation_with_context(
+        &agones_core::GameServerDefaultingContext::default(),
+        game_server,
+        hooks,
+    )
+}
+
+pub fn validate_game_server_creation_with_context<C, H>(
+    context: &C,
+    game_server: &GameServer,
+    hooks: &H,
+) -> Result<Vec<ValidationError>, AdapterError>
+where
+    C: agones_core::CanValidateGameServerFeatures,
+    H: ApiHooks,
+{
+    let mut errors = game_server.validate_with_context(context);
 
     if game_server
         .get_dev_address()
@@ -239,6 +255,22 @@ pub fn validate_game_server_creation_object<H>(
 where
     H: ApiHooks,
 {
+    validate_game_server_creation_object_with_context(
+        &agones_core::GameServerDefaultingContext::default(),
+        object,
+        hooks,
+    )
+}
+
+pub fn validate_game_server_creation_object_with_context<C, H>(
+    context: &C,
+    object: &serde_json::Value,
+    hooks: &H,
+) -> Result<AdmissionResponse, AdapterError>
+where
+    C: agones_core::CanValidateGameServerFeatures,
+    H: ApiHooks,
+{
     let game_server: GameServer =
         serde_json::from_value(object.clone()).map_err(|error| {
             AdapterError::Hook(format!(
@@ -246,7 +278,7 @@ where
             ))
         })?;
 
-    let errors = validate_game_server_creation(&game_server, hooks)?;
+    let errors = validate_game_server_creation_with_context(context, &game_server, hooks)?;
     if errors.is_empty() {
         Ok(AdmissionResponse::Allow)
     } else {
@@ -406,19 +438,39 @@ where
 }
 
 #[derive(Clone, Debug)]
-pub struct GameServerCreationValidationAdmission<H> {
+pub struct GameServerCreationValidationAdmission<H, C = agones_core::GameServerDefaultingContext> {
     hooks: H,
+    validation_context: C,
 }
 
 impl<H> GameServerCreationValidationAdmission<H> {
     pub fn new(hooks: H) -> Self {
-        Self { hooks }
+        Self::from_feature_inputs(&agones_core::FeatureGateInputContext::default(), hooks)
+            .expect("invalid Agones feature gate configuration")
+    }
+
+    pub fn from_feature_inputs<I: agones_core::CanLoadFeatureGates>(
+        input: &I,
+        hooks: H,
+    ) -> Result<Self, agones_core::FeatureGateError> {
+        let gates = input.load_feature_gates()?;
+        Ok(Self::from_context(
+            agones_core::GameServerDefaultingContext::from_feature_gates(&gates),
+            hooks,
+        ))
+    }
+}
+
+impl<H, C> GameServerCreationValidationAdmission<H, C> {
+    pub fn from_context(validation_context: C, hooks: H) -> Self {
+        Self { hooks, validation_context }
     }
 }
 
 #[async_trait]
-impl<H> AdmissionController for GameServerCreationValidationAdmission<H>
+impl<H, C> AdmissionController for GameServerCreationValidationAdmission<H, C>
 where
+    C: agones_core::CanValidateGameServerFeatures + Send + Sync,
     H: ApiHooks + Send + Sync,
 {
     fn name(&self) -> &str {
@@ -433,7 +485,8 @@ where
         if request.kind != "GameServer" {
             return AdmissionResponse::Allow;
         }
-        validate_game_server_creation_object(
+        validate_game_server_creation_object_with_context(
+            &self.validation_context,
             &request.object,
             &self.hooks,
         )

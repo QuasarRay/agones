@@ -1,0 +1,123 @@
+{
+  "artifact_bindings": {
+    "verification/agones/runs/ci-39397341432-migration-state.log": "73b48438d4d2d5a402146a119d15b76e45a0f497e371def6909cbb447d53b11f"
+  },
+  "checkout": "1e64a054901658908d0a7a4eecd3010379df9614",
+  "classification": "REPO_SAFE",
+  "event": "push",
+  "head": "1e64a054901658908d0a7a4eecd3010379df9614",
+  "jobs": [
+    {
+      "conclusion": "success",
+      "id": 118543233842,
+      "logs_url": null,
+      "name": "migration-state",
+      "run_id": 39397341432,
+      "status": "completed",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-python@v5",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Install pinned state validator",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Validate source-bound implementation gate and ledger",
+          "number": 5,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Check guidance inheritance",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Reject incomplete or vacuous proof results",
+          "number": 7,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Select affected checks conservatively",
+          "number": 8,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-python@v5",
+          "number": 15,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4",
+          "number": 16,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 17,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "conclusion": "skipped",
+      "id": 118543378028,
+      "logs_url": null,
+      "name": "rust",
+      "run_id": 39397341432,
+      "status": "completed",
+      "steps": null
+    },
+    {
+      "conclusion": "skipped",
+      "id": 118543378457,
+      "logs_url": null,
+      "name": "feature-bool-model-check",
+      "run_id": 39397341432,
+      "status": "completed",
+      "steps": null
+    }
+  ],
+  "model_evidence_reuse": null,
+  "reused_production_evidence": {
+    "head": "5185e0c18f1fff799e4f640a377194ce5dce0279",
+    "receipt": "verification/agones/ci/39199314045-success.json"
+  },
+  "schema_version": 1,
+  "scope": "State and14selector controls passed. Skipped Rust/model jobs give no fresh backend/test credit; proof credit comes from retained complete proofs with unchanged inputs.",
+  "selected": {
+    "model": false,
+    "rust": false
+  },
+  "selector_controls": {
+    "passed": 14
+  },
+  "status": "PASSED",
+  "tree": "957161d113b1264a82749c9a112600b6b095e27a",
+  "url": "https://github.com/QuasarRay/agones/actions/runs/39397341432",
+  "workflow_run": 39397341432
+}

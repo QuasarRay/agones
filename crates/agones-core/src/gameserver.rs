@@ -677,7 +677,15 @@ impl GameServerSpec {
     /// Resource quantity validation and API hook validation belong to the
     /// Rusternetes integration layer because they depend on runtime/API types.
     pub fn validate(&self, dev_address: &str) -> Vec<ValidationError> {
-        let mut errors = Vec::new();
+        self.validate_with_context(&crate::GameServerDefaultingContext::default(), dev_address)
+    }
+
+    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures>(
+        &self,
+        context: &C,
+        dev_address: &str,
+    ) -> Vec<ValidationError> {
+        let mut errors = context.validate_game_server_features(self, "spec");
 
         if !dev_address.is_empty() {
             if dev_address.parse::<IpAddr>().is_err() {
@@ -1085,6 +1093,13 @@ impl GameServer {
     }
 
     pub fn validate(&self) -> Vec<ValidationError> {
+        self.validate_with_context(&crate::GameServerDefaultingContext::default())
+    }
+
+    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures>(
+        &self,
+        context: &C,
+    ) -> Vec<ValidationError> {
         let mut errors = Vec::new();
         if self.metadata.name.len() > 63 {
             errors.push(ValidationError::too_long(
@@ -1093,7 +1108,7 @@ impl GameServer {
                 63,
             ));
         }
-        errors.extend(self.spec.validate(self.get_dev_address().unwrap_or("")));
+        errors.extend(self.spec.validate_with_context(context, self.get_dev_address().unwrap_or("")));
         errors
     }
 

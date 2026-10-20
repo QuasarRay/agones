@@ -1,0 +1,51 @@
+{
+  "artifact_bindings": {
+    "verification/agones/runs/ci-39202625160-migration-state.log": "23bc7dd160d035ab7b0993c7b484cd4612a7e4d2cb2bcdc0221dd5370e6e9c9c"
+  },
+  "checkout": "5a68ad76395261f629d16f05822ef6658f0cbd81",
+  "classification": "REPO_SAFE",
+  "event": "pull_request",
+  "head": "774abfa9a2a0129074d20453d94d999899cb012b",
+  "jobs": [
+    {
+      "conclusion": "success",
+      "id": 117898638616,
+      "name": "migration-state",
+      "status": "completed"
+    },
+    {
+      "conclusion": "skipped",
+      "id": 117898747186,
+      "name": "feature-bool-model-check",
+      "status": "completed"
+    },
+    {
+      "conclusion": "skipped",
+      "id": 117898747267,
+      "name": "rust",
+      "status": "completed"
+    }
+  ],
+  "model_evidence_reuse": {
+    "head": "5185e0c18f1fff799e4f640a377194ce5dce0279",
+    "receipt": "verification/agones/ci/39199314045-success.json",
+    "tree": "7733ebb3a9cb2e3edcc35dac50d67f37a21fb1b2"
+  },
+  "reused_production_evidence": {
+    "head": "5185e0c18f1fff799e4f640a377194ce5dce0279",
+    "receipt": "verification/agones/ci/39199314045-success.json"
+  },
+  "schema_version": 1,
+  "scope": "State and14selector controls passed. Skipped Rust/model jobs give no fresh backend/test credit; proof credit comes from retained complete proofs with unchanged inputs.",
+  "selected": {
+    "model": false,
+    "rust": false
+  },
+  "selector_controls": {
+    "passed": 14
+  },
+  "status": "PASSED",
+  "tree": "4cebae589d4c882ae719a7c83bcb12f874c38088",
+  "url": "https://github.com/QuasarRay/agones/actions/runs/39202625160",
+  "workflow_run": 39202625160
+}

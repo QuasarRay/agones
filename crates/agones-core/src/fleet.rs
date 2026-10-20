@@ -268,6 +268,13 @@ impl Fleet {
     }
 
     pub fn validate(&mut self) -> Vec<ValidationError> {
+        self.validate_with_context(&crate::GameServerDefaultingContext::default())
+    }
+
+    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures>(
+        &mut self,
+        context: &C,
+    ) -> Vec<ValidationError> {
         let mut errors = validate_name(&self.metadata);
 
         match self.spec.strategy.strategy_type.as_ref() {
@@ -310,7 +317,7 @@ impl Fleet {
             self.spec
                 .template
                 .spec
-                .validate("")
+                .validate_with_context(context, "")
                 .into_iter()
                 .map(rebase_spec_error),
         );

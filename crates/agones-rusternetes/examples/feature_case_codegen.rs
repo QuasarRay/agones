@@ -12,6 +12,9 @@ use serde::Deserialize;
 use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 
+#[path = "codegen/gameserver_features.rs"]
+mod gameserver_features;
+
 #[derive(Deserialize)]
 struct Family {
     schema_version: u32,
@@ -365,6 +368,8 @@ fn gs_fixture(input: &Value, function: &str) -> rust::Tokens {
         "source fixture must round-trip completely before typed lowering"
     );
     let mut supported = GameServer::default();
+    supported.metadata.name = typed.metadata.name.clone();
+    supported.metadata.namespace = typed.metadata.namespace.clone();
     supported.spec.container = typed.spec.container.clone();
     supported.spec.ports = typed.spec.ports.clone();
     supported.spec.health = typed.spec.health.clone();
@@ -377,6 +382,15 @@ fn gs_fixture(input: &Value, function: &str) -> rust::Tokens {
     supported.spec.template.metadata.annotations = typed.spec.template.metadata.annotations.clone();
     supported.status.state = typed.status.state.clone();
     assert_eq!(supported, typed, "unsupported whole source fixture shape");
+    let mut metadata = rust::Tokens::new();
+    if !typed.metadata.name.is_empty() {
+        let name = quoted(typed.metadata.name.as_str());
+        metadata.append(quote! { value.metadata.name = $name.to_owned(); });
+    }
+    if !typed.metadata.namespace.is_empty() {
+        let namespace = quoted(typed.metadata.namespace.as_str());
+        metadata.append(quote! { value.metadata.namespace = $namespace.to_owned(); });
+    }
     let container = quoted(typed.spec.container.as_str());
     let mut ports = rust::Tokens::new();
     for port in &typed.spec.ports {
@@ -453,6 +467,7 @@ fn gs_fixture(input: &Value, function: &str) -> rust::Tokens {
     quote! {
         fn $function() -> agones_core::GameServer {
             let mut value = agones_core::GameServer::default();
+            $metadata
             value.spec.container = $container.to_owned();
             value.spec.ports = $ports;
             value.spec.health = $health;
@@ -857,6 +872,35 @@ mod gameserver_codegen_controls {
         assert!(gs_guard("test.expected.counterSpec != nil", expected));
         assert!(!gs_guard("!(test.expected.counterSpec != nil)", expected));
     }
+
+    #[test]
+    fn validation_error_lowering_rejects_unrepresented_error_data() {
+        let ir: Value = serde_json::from_str(include_str!(
+            "../../../verification/agones/gameserver-feature-validation.ir.json"
+        ))
+        .unwrap();
+        let original = &ir["cases"][0]["expected_errors"][0];
+        gameserver_features::source_validation_error(original);
+        for field in [
+            "Origin",
+            "CoveredByDeclarative",
+            "BadValue",
+            "Type",
+            "unknown",
+        ] {
+            let mut error = original.clone();
+            error[field] = match field {
+                "CoveredByDeclarative" => json!(true),
+                "BadValue" => json!(42),
+                _ => json!("unsupported"),
+            };
+            assert!(
+                std::panic::catch_unwind(|| gameserver_features::source_validation_error(&error))
+                    .is_err(),
+                "accepted changed {field}"
+            );
+        }
+    }
 }
 
 fn main() {
@@ -865,7 +909,8 @@ fn main() {
         arguments.iter().all(|argument| argument == "--check"
             || argument == "--go-quote-table"
             || argument == "--sdk-version"
-            || argument == "--gameserver-defaulting"),
+            || argument == "--gameserver-defaulting"
+            || argument == "--gameserver-features"),
         "unknown generation argument"
     );
     let root = Path::new(env!("CARGO_MANIFEST_DIR"))
@@ -877,6 +922,7 @@ fn main() {
         "--sdk-version",
         "--go-quote-table",
         "--gameserver-defaulting",
+        "--gameserver-features",
     ];
     assert!(
         modes
@@ -886,6 +932,16 @@ fn main() {
             <= 1,
         "select one generation family"
     );
+    if arguments
+        .iter()
+        .any(|argument| argument == "--gameserver-features")
+    {
+        gameserver_features::emit_gameserver_feature_cases(
+            root,
+            arguments.iter().any(|argument| argument == "--check"),
+        );
+        return;
+    }
     if arguments
         .iter()
         .any(|argument| argument == "--gameserver-defaulting")

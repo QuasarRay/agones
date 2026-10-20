@@ -1,0 +1,11 @@
+{
+  "architecture_status": "All eight required _2 cells remain REQUIRED_OPEN. Ordinary module factoring gives no macro-authoring credit. CGP/Genco remain the actual declaration/composition facilities.",
+  "bounds": "One module and inheritance pointer; no generic family registry or emitter framework. Bind root and child source bytes in new metadata and strict summaries. Keep all existing generated bodies identical.",
+  "candidate": "Move the new284line validation emitter into one ordinary Rust module while keeping shared fixture/lowering tools in the existing Genco example.",
+  "decision": "SMALL_LOCAL_REFACTOR",
+  "id": "GS-VALIDATE-FEATURES-001-genco-family-module",
+  "next_review_trigger": "After the first complete validation source-case backend result, reassess actual repeated assertion/derive/attribute/delegation declarations with the recorded Arcane core/shim/facade facilities and root preferred libraries. Select only a concrete economical _2 adoption; continue feature delivery.",
+  "observations": "The new family already reuses gs_fixture and gate/format/save helpers. Editing the shared root to add this family invalidated three existing implementation-gate file bindings. The current generator refresh proved every prior emitted Rust body byte-identical.",
+  "reuse": "Reuse existing Genco0.17.10, shared typed fixtures, current gate tools and Rust module visibility. No new library, macro authoring framework, compiler layer or alternate orchestrator.",
+  "roi": "One small module extraction limits future validation-emitter edits and context reads to its actual consumer, rather than growing the shared generator and repeatedly refreshing unrelated root-file gate bindings. Construction is mechanical; one extra source-file hash and existing generation/native controls validate the boundary. This is a concrete maintenance/context saving over the remaining source families."
+}

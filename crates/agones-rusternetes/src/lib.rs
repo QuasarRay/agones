@@ -69,6 +69,7 @@ pub use deleting_gameserver_controller::ReconcileDeletingGameServer;
 pub use fleet_admission::{
     FleetCreationMutationAdmission, FleetValidationAdmission,
     mutate_fleet_creation, validate_fleet, validate_fleet_object,
+    validate_fleet_with_context, validate_fleet_object_with_context,
     mutate_fleet_creation_with_version_context,
 };
 pub use fleet_allocation_tracker::FleetAllocationTracker;
@@ -145,12 +146,15 @@ pub use gameserver_admission::{
     mutate_game_server_creation_with_version_context,
     mutate_game_server_creation_with_context,
     validate_game_server_creation, validate_game_server_creation_object,
+    validate_game_server_creation_with_context, validate_game_server_creation_object_with_context,
 };
 pub use gameserverset_admission::{
     GameServerSetCreationValidationAdmission,
     GameServerSetUpdateValidationAdmission,
     validate_game_server_set_creation,
     validate_game_server_set_creation_object,
+    validate_game_server_set_creation_with_context,
+    validate_game_server_set_creation_object_with_context,
     validate_game_server_set_update,
     validate_game_server_set_update_objects,
 };
@@ -1436,7 +1440,14 @@ pub fn validate_game_server_resources(
 pub fn validate_game_server(
     game_server: &GameServer,
 ) -> Result<Vec<ValidationError>, AdapterError> {
-    let mut errors = game_server.validate();
+    validate_game_server_with_context(&agones_core::GameServerDefaultingContext::default(), game_server)
+}
+
+pub fn validate_game_server_with_context<C: agones_core::CanValidateGameServerFeatures>(
+    context: &C,
+    game_server: &GameServer,
+) -> Result<Vec<ValidationError>, AdapterError> {
+    let mut errors = game_server.validate_with_context(context);
     errors.extend(validate_game_server_resources(&game_server.spec)?);
     Ok(errors)
 }

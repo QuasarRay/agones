@@ -1,0 +1,129 @@
+{
+  "acceptance_criteria": [
+    "CGP owns input precedence: explicit Set override, changed flag including empty, nonempty environment, empty default.",
+    "Explicit values short-circuit the environment effect; selected input errors never fall through.",
+    "Production Linux process environment and parsed OsString flag retain raw bytes; no shared test-process environment mutation.",
+    "The same generic input/parser providers run in production and downstream captured-effect contexts.",
+    "Reach default and fallible configured GameServer, FleetAutoscaler, admission, and actual SDK environment consumers.",
+    "Focused subprocess tests require exactly one child test per execution; missing, empty, valid, invalid and raw inputs plus explicit overrides are covered."
+  ],
+  "assurance": "Ordinary implementation, downstream shared-provider composition and actual process/Rusternetes MemoryStorage configuration integration; no new source-property extraction or formal proof credited before this gate.",
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
+  "environment_bindings": {
+    "AGONES_BUILD_VERSION": {
+      "present": false,
+      "sha256": null
+    }
+  },
+  "feature_id": "feature-gates-environment-cli-binding",
+  "historical_metric_correction": "Metadata-only correction: decoder test checks 1111936 non-ASCII scalars; the original 1112064 total overstated calls by 128. The 128 ASCII values use the direct renderer branch and are separately covered by all 16513 mandatory Go observations. Production code and its successful ordinary workspace/replay checks are unchanged; provenance counts are corrected. This gate also binds the later three-test ASCII ordinary run, with zero formal credit.",
+  "id": "FG-INPUT-001-validation-addition-current-ordinary",
+  "ordinary_checks": [
+    "verification/agones/runs/gs-validation-final-workspace-1.json"
+  ],
+  "ordinary_evidence_reuse": {
+    "current_compile_runtime": "verification/agones/runs/gs-validation-final-workspace-1.json",
+    "formal_status": "Historical proofs retained; changed broad source bindings require fresh affected backend results before current formal credit."
+  },
+  "ordinary_result_counts": {
+    "exact_source_version_fixture_cases": 18,
+    "gameserver_source_assertion_occurrences_generated": 304,
+    "gameserver_source_harnesses_generated": 17,
+    "nil_slice_wire_tests": 3,
+    "normal_cargo_incremental_profiles": 11,
+    "ordinary_nonascii_leading_two_byte_inputs": 32768,
+    "ordinary_nonascii_valid_utf8_scalar_decodes": 1111936,
+    "ordinary_print_classification_codepoints": 1114112,
+    "ordinary_version_scenarios_per_go_and_rust": 10,
+    "original_go_compiled_identity_profiles": 3,
+    "real_rusternetes_admission_patch_checks": 20,
+    "resource_derive_compile_fail_cases": 3,
+    "resource_derive_positive_cargo_cases": 2,
+    "runner_entries_ignored": 2,
+    "source_version_runtime_observations": 19,
+    "version_observations_per_scenario": 4,
+    "workspace_tests_failed": 0,
+    "workspace_tests_passed": 578
+  },
+  "predecessor_ledger_revision": 241,
+  "production_files": {
+    ".cargo/config.toml": "d787ef1ca58591bcf5036c8a2386a4d31ecc54febdd5f6630fd8497a4a0d3fb2",
+    "Cargo.lock": "6f853997b27aed6de6e6be6ad0b61af663bcfd29195d7ab3dbcbf1a18c7d2f0f",
+    "Cargo.toml": "f0c28c2ca73ba51fad682c9d35950d050b0839775d0eb609e7903c47743b5d00",
+    "build/Makefile": "c2f2914aa177347650170f98d761fe77a6a4ada356bb2634b56b1f840fdf3907",
+    "build/scripts/agones-rs/probes/compile_go_print_table.go": "2fdf7febec851e457e8258683c8579dcf39736bd6ce6b8d82a27866b990542c4",
+    "crates/agones-core/Cargo.toml": "b9ff5ca08d252c07abce0e5ebb5f6a45dcbd874cebe4ba51712b5dde331b8bd6",
+    "crates/agones-core/GO-STRCONV-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+    "crates/agones-core/build.rs": "1deebfccd6024e6567573612d320770591de232f04f7b98291b0b5fa0fc78882",
+    "crates/agones-core/src/build_version.rs": "e6560758de4332abe27a97a3f3b5794068f20e0b4092380658b1cfdc4ce7e1f7",
+    "crates/agones-core/src/feature_inputs.rs": "9cfaf42de485874339a58895991ad15adff787f363d9821a3ab7f0f4c36222d4",
+    "crates/agones-core/src/features.rs": "5c1196131622ff08e4379aac3b55410bd7eeca1d3e363d27a908f02c42412412",
+    "crates/agones-core/src/fleet.rs": "d9c3e13e4f899f04e033b8a457f5ce573d2fe319200dfec32e505c5019a12c95",
+    "crates/agones-core/src/gameserver.rs": "81a633a65c0612219761d6b65a783258d846a7fd3dd1f2d4f5af1827c2482bba",
+    "crates/agones-core/src/gameserver_defaulting.rs": "9f54ce60a7c37907b9919c4286144b6d1794cbe317537189f50fd679f6ac18c5",
+    "crates/agones-core/src/generated/go_print_ranges.rs": "0b0dc1a240c33ca0e01d718f5120a0d5bd894e15740b4cf3888824a0a7e84a0b",
+    "crates/agones-core/src/go_quote.rs": "c0e5d196bb6089dd5c138e8c880964cabcf333a96d124377b370c61609c128b9",
+    "crates/agones-core/src/go_slice.rs": "1524bae25a2bf0c382c88c9afb870d43fef02b06f3edb6fdb0a846701444ada3",
+    "crates/agones-core/src/go_utf8.rs": "1178cb0dcc44e1369fa7576701d39e2b7a339343262197d2f6d891bc984158ba",
+    "crates/agones-core/src/go_value.rs": "ea849e221b593654e7049594fdcaebb4a61042e068381af5e96dd5fd017f0e25",
+    "crates/agones-core/src/lib.rs": "22d061493b23dcb58acfa18e085f58edee60ba20eecc91c4b937b5830d16ad29",
+    "crates/agones-core/src/version_annotation.rs": "9c7d5b402f759b0731d4957fe9732135f589054ed3b38a16839224b0c4b45493",
+    "crates/agones-macros/Cargo.toml": "9372efc5090b3c3c5d06b54c8e5f943025c2a73aeb54c630564ad4f1170c06a7",
+    "crates/agones-macros/src/lib.rs": "60909ed25990ea455cb8ed753548aadc87fb866d1839f7e4a7d1c293dd15a39f",
+    "crates/agones-rusternetes/Cargo.toml": "7e5c18a590b0d602c725abd853fd0ba7825e4028f8a46fc7fe404bb7b512db26",
+    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "44a262b50f09b00bdf3debc4b1243dbba0cbe0b8f22464dc678c6a32f0334581",
+    "crates/agones-rusternetes/src/creating_gameserver_controller.rs": "0bb3d4dbc4d062cadb221eaee06162fc459086d6fb243c172efab800a173ebef",
+    "crates/agones-rusternetes/src/fleet_admission.rs": "b4abe8f679d325d26e32b30249b928a79bd35667b87f453e44835afa937c578a",
+    "crates/agones-rusternetes/src/fleetautoscaler_admission.rs": "10bd2bfcfc8c1542cd5f02e504a55667fac25f277a96b0ac667edd28175ecfe6",
+    "crates/agones-rusternetes/src/fleetautoscaler_controller.rs": "9878f9e36b0aeb9c4180e69070af9f57717a5cedfdfa16413fe1ab6086750547",
+    "crates/agones-rusternetes/src/gameserver_admission.rs": "18cac613630892a854868152032578ae5aea1b8a93ab90b6b2ba9a16c7ecb099",
+    "crates/agones-rusternetes/src/lib.rs": "d137c67b112466668d39de1e18467dc33b23f9b15b31f937b76a6f0ebda7e8d8",
+    "crates/agones-rusternetes/src/request_ready_gameserver_controller.rs": "8b8227577bb23d66698312a018138540d93ad0e8fdd0e71f98167c15fab39773",
+    "crates/agones-rusternetes/src/sdk_sidecar.rs": "304724f7b6ea39c325c35f34d433a51df6527d3d1981c00d7badcc1aba818733",
+    "crates/agones-rusternetes/src/starting_gameserver_controller.rs": "698c2c5eace4fbfe03a0dcea2feda7531fc786f7afd5721b94e0295355fabba7",
+    "pkg/apis/agones/v1/apihooks.go": "3ddd2e6c35fc62c6c54ded97a97f7edc68218ed91fbfc1fd4341fc424c6a278b",
+    "pkg/apis/agones/v1/fleet.go": "52ff0dd6d1b3f8ac7feed3ba35356c16434a8ca77f531eff3434cb3ad25f0e28",
+    "pkg/apis/agones/v1/gameserver.go": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
+    "pkg/util/errors/errors.go": "b9b811509cc02053ce498cf012a58ea6fabb44d6fbf69e355d39baf0504dbc29",
+    "pkg/util/runtime/features.go": "05736b26646cf219419626dfca37c4f533302b178ca3bb542330cf7884ddc679",
+    "pkg/util/runtime/runtime.go": "d1683d9c5931891d59ae46cbfdbce13b45d2836355097e7e1bd24fd30200271a",
+    "pkg/version.go": "18a321dd868bdf897742490dde06040a35be996dbef93f4aae7ebd855c85842d",
+    "rust-toolchain.toml": "c910997cb152c6dc8ed13b1fdf9fa28a4ed30d6776123e27dd6170e5c66067a0",
+    "verification/agones/feature-input-capability-v1.json": "a307b7d5f0ec550aac46080765989fb5fc67e254eab3ae51869da8a504671064",
+    "verification/agones/go-print-codegen.json": "01d6bd5c300aab124bfd94182cf0e530b7dd10f83ed02ffb30efb1bc985e8f1f",
+    "verification/agones/go-print-expected.bin": "a30b1e23aa8a5d77ecaea1b9dd5c85e2d505cb2712b1906996c82089fa5117fc",
+    "verification/agones/go-print-table.json": "710dcd074ff09faafc79c0b8e06a5c83eb8a37beb0e1ee45d42a9556c930ef9d",
+    "verification/agones/go-quote-provenance.json": "c540fa9dad33844cd080f68cc2239812d1acbf6a87d9cfa3cd96c99408d12842",
+    "verification/agones/sdk-version-capability-v1.json": "0b95fd641b8da89d71f800ff1d9774bc6c880e87b348629f238c1c689cd3d2f5",
+    "verification/agones/sdk-version-provenance.json": "255d5be98beee4f23a3daafdce1304047e4052af872b7f568537e329bdb7d6af",
+    "verification/agones/sdk-version-witnesses.json": "48d66c4092f93672b39caf1f087b8dc5f00db85f70eceb6462275e5bf5d82398"
+  },
+  "production_symbols": [
+    "agones_core::select_feature_gate_input",
+    "agones_core::LoadAgonesFeatureGates",
+    "agones_core::ReadProcessFeatureGateEnvironment",
+    "agones_core::FeatureGateInputContext::from_parsed_flag",
+    "agones_rusternetes::CreatingGameServerController::from_feature_inputs",
+    "agones_rusternetes::FleetAutoscalerController::from_feature_inputs",
+    "agones_rusternetes::FleetAutoscalerAdmissionContext::from_feature_inputs",
+    "agones_rusternetes::SdkSidecarConfig::from_feature_inputs"
+  ],
+  "reachable_call_paths": [
+    "Production default constructors -> FeatureGateInputContext -> CGP configuration loader -> process environment effect if needed -> production raw query parser -> actual consumer configuration.",
+    "Parsed changed flag / explicit override context -> same CGP loader -> source-priority selection without environment read -> raw query parser -> fallible configured Rusternetes and SDK consumers."
+  ],
+  "reopened_reason": "Production adds reachable CGP feature validation and configured admission consumers. Existing broad source-file bindings changed; retained earlier proof results are historical and are not automatically rebound as current proof. Re-execute required affected model/source proofs without shrinking fixtures/domains/assertions/covers/bounds.",
+  "residual_work": [
+    "Exact application fatal/error rendering, complete command option parsing and top-level lifecycle remain required scope.",
+    "All original exact-case formal obligations and other remaining baseline behavior remain separate from this ordinary implementation gate."
+  ],
+  "schema_version": 1,
+  "status": "IMPLEMENTED",
+  "supersedes": "verification/agones/gates/49a63a9f021af1ea515b681f7026d63524788ea15256693d9a0ab39d93b27d23.json",
+  "workspace_snapshot": {
+    "branch": "agones-rs-dev",
+    "head": "1e64a054901658908d0a7a4eecd3010379df9614",
+    "note": "Preserve dirty root AGENTS.MD outside implementation ownership."
+  }
+}

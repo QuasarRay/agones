@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "VALIDATION_FIVE_ORIGINAL_CASES_PROPERTIES_READY",
+  "gate_snapshot": "verification/agones/gates/317304e45484daa2961fdf0a6983d3e056af281f03d5597b542bc9c51a435e49.json",
+  "predecessor_revision": 243,
+  "predecessor_sha256": "ff0a97c594f395c79e04668953c52ab77f8b88fc64928de628e2aa985c36e67d",
+  "reason": "PROGRESS: gated typed Go capture preserves every5case/10qualified occurrence, source private hooks and nil/allocated collections. Genco reuses shared lowering; original Go/core/actual Rusternetes replay and603workspace tests pass. All5generation modes/strict controls pass; both generator files are bound. Existing observation-lifetime rule applied in both engines with normal native cleanup separate and formal cleanup still required. All old generated bodies unchanged; all12isolated backend selections pending with zero new credit.",
+  "result_revision": 244,
+  "schema_version": 1,
+  "state_sha256": "adbfb83d598e5457900929448eb4e7007faa7f23edaf3821f36bbf07afcc50ba",
+  "timestamp": "2026-10-20T17:01:55.306182+00:00"
+}

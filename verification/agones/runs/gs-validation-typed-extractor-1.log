@@ -1,0 +1,24 @@
+ok  	agones.dev/agones/verification/feature-extractor	0.001s
+panic: original validation source replay: exit status 1: # command-line-arguments
+	/tmp/agones-feature-validation-source-4136646014/main.go:167:5: no new variables on left side of :=
+	
+
+goroutine 1 [running]:
+main.gameServerFeaturesMain({0x3abffb0aa0a0, 0x47c000?, 0x3abffb093868?})
+	/home/astral/Projects/agones/build/scripts/agones-rs/extract/gameserver_features.go:214 +0x3b59
+main.main()
+	/home/astral/Projects/agones/build/scripts/agones-rs/extract/main.go:115 +0x96
+exit status 2
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import json,pathlib,subprocess; subprocess.run(["go","-C","build/scripts/agones-rs/extract","test","./..."],check=True); root=pathlib.Path.cwd(); p=root/"verification/agones/gameserver-feature-validation.ir.json"; gate=json.loads((root/"verification/agones/gameserver-feature-validation-evidence.json").read_text())["implementation_gate"]; raw=subprocess.check_output(["go","-C","build/scripts/agones-rs/extract","run",".","--gameserver-features",str(root),gate]); p.write_bytes(raw); d=json.loads(raw); print(json.dumps({"cases":d["case_count"],"assertion_occurrences":d["source_assertion_occurrences"]}))
+                                                                                                                                                                                                                                                                                                                                                            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 473, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               **kwargs).stdout
+               ^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['go', '-C', 'build/scripts/agones-rs/extract', 'run', '.', '--gameserver-features', '/home/astral/Projects/agones', 'verification/agones/gates/317304e45484daa2961fdf0a6983d3e056af281f03d5597b542bc9c51a435e49.json']' returned non-zero exit status 1.

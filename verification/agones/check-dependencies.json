@@ -38,7 +38,12 @@
     "verification/agones/sdk-version-domain.json",
     ".cargo/**",
     "verification/agones/gameserver-defaulting.ir.json",
-    "verification/agones/gameserver-defaulting-codegen.json"
+    "verification/agones/gameserver-defaulting-codegen.json",
+    "verification/agones/gameserver-feature-validation.ir.json",
+    "verification/agones/gameserver-feature-validation-codegen.json",
+    "verification/agones/gameserver-feature-validation-domain.json",
+    "crates/agones-rusternetes/examples/feature_case_codegen.rs",
+    "crates/agones-rusternetes/examples/codegen/**"
   ],
   "metadata_only": [
     "**/AGENTS.MD",

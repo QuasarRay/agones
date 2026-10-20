@@ -1,0 +1,331 @@
+﻿2026-10-20T08:59:05.8874376Z Current runner version: '2.337.0'
+2026-10-20T08:59:05.8891520Z ##[group]Runner Image Provisioner
+2026-10-20T08:59:05.8892461Z Hosted Compute Agent
+2026-10-20T08:59:05.8892934Z Version: 20261012.601
+2026-10-20T08:59:05.8893425Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-20T08:59:05.8894063Z Build Date: 2026-10-12T17:48:21Z
+2026-10-20T08:59:05.8894608Z Worker ID: {22af796d-8789-4b09-a0b2-95aea8a91cd2}
+2026-10-20T08:59:05.8895234Z Region: southcentralus
+2026-10-20T08:59:05.8895709Z Cloud: Azure
+2026-10-20T08:59:05.8896138Z ##[endgroup]
+2026-10-20T08:59:05.8897300Z ##[group]Operating System
+2026-10-20T08:59:05.8897780Z Ubuntu
+2026-10-20T08:59:05.8898182Z 24.04.5
+2026-10-20T08:59:05.8898486Z LTS
+2026-10-20T08:59:05.8898783Z ##[endgroup]
+2026-10-20T08:59:05.8899132Z ##[group]Runner Image
+2026-10-20T08:59:05.8899526Z Image: ubuntu-24.04
+2026-10-20T08:59:05.8900177Z Version: 20261012.334.1
+2026-10-20T08:59:05.8901011Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-20T08:59:05.8901885Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-20T08:59:05.8902543Z ##[endgroup]
+2026-10-20T08:59:05.8903240Z ##[group]GITHUB_TOKEN Permissions
+2026-10-20T08:59:05.8904572Z Contents: read
+2026-10-20T08:59:05.8904893Z Metadata: read
+2026-10-20T08:59:05.8905271Z ##[endgroup]
+2026-10-20T08:59:05.8906572Z Secret source: Actions
+2026-10-20T08:59:05.8907117Z Cache mode: write
+2026-10-20T08:59:05.8907500Z Prepare workflow directory
+2026-10-20T08:59:05.9666264Z Prepare all required actions
+2026-10-20T08:59:05.9696495Z Getting action download info
+2026-10-20T08:59:06.2012183Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-20T08:59:06.5490610Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-10-20T08:59:06.7749492Z Complete job name: migration-state
+2026-10-20T08:59:06.8339892Z ##[group]Run actions/checkout@v4
+2026-10-20T08:59:06.8340305Z with:
+2026-10-20T08:59:06.8340524Z   fetch-depth: 0
+2026-10-20T08:59:06.8340766Z   repository: QuasarRay/agones
+2026-10-20T08:59:06.8342902Z   token: ***
+2026-10-20T08:59:06.8343127Z   ssh-strict: true
+2026-10-20T08:59:06.8343354Z   ssh-user: git
+2026-10-20T08:59:06.8343585Z   persist-credentials: true
+2026-10-20T08:59:06.8343837Z   clean: true
+2026-10-20T08:59:06.8344070Z   sparse-checkout-cone-mode: true
+2026-10-20T08:59:06.8344340Z   fetch-tags: false
+2026-10-20T08:59:06.8344569Z   show-progress: true
+2026-10-20T08:59:06.8344801Z   lfs: false
+2026-10-20T08:59:06.8345016Z   submodules: false
+2026-10-20T08:59:06.8345250Z   set-safe-directory: true
+2026-10-20T08:59:06.8345515Z   allow-unsafe-pr-checkout: false
+2026-10-20T08:59:06.8345869Z ##[endgroup]
+2026-10-20T08:59:06.9016723Z Syncing repository: QuasarRay/agones
+2026-10-20T08:59:06.9017754Z ##[group]Getting Git version info
+2026-10-20T08:59:06.9018169Z Working directory is '/home/runner/work/agones/agones'
+2026-10-20T08:59:06.9018672Z [command]/usr/bin/git version
+2026-10-20T08:59:06.9068631Z git version 2.55.0
+2026-10-20T08:59:06.9082170Z ##[endgroup]
+2026-10-20T08:59:06.9099127Z Temporarily overriding HOME='/home/runner/work/_temp/c78b35a4-5685-4e60-88b3-2185bfd282c3' before making global git config changes
+2026-10-20T08:59:06.9101738Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-20T08:59:06.9102979Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agones/agones
+2026-10-20T08:59:06.9176153Z Deleting the contents of '/home/runner/work/agones/agones'
+2026-10-20T08:59:06.9181767Z ##[group]Initializing the repository
+2026-10-20T08:59:06.9188678Z [command]/usr/bin/git init /home/runner/work/agones/agones
+2026-10-20T08:59:06.9311030Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-20T08:59:06.9323444Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-20T08:59:06.9326805Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-20T08:59:06.9327584Z hint: call:
+2026-10-20T08:59:06.9327995Z hint:
+2026-10-20T08:59:06.9328511Z hint: 	git config --global init.defaultBranch <name>
+2026-10-20T08:59:06.9329110Z hint:
+2026-10-20T08:59:06.9329743Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-20T08:59:06.9330620Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-20T08:59:06.9331499Z hint:
+2026-10-20T08:59:06.9331933Z hint: 	git branch -m <name>
+2026-10-20T08:59:06.9332582Z hint:
+2026-10-20T08:59:06.9333187Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-20T08:59:06.9339067Z Initialized empty Git repository in /home/runner/work/agones/agones/.git/
+2026-10-20T08:59:06.9340372Z [command]/usr/bin/git remote add origin https://github.com/QuasarRay/agones
+2026-10-20T08:59:06.9492854Z ##[endgroup]
+2026-10-20T08:59:06.9493939Z ##[group]Disabling automatic garbage collection
+2026-10-20T08:59:06.9495236Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-20T08:59:06.9673349Z ##[endgroup]
+2026-10-20T08:59:06.9674015Z ##[group]Setting up auth
+2026-10-20T08:59:06.9679102Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-20T08:59:06.9706156Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-20T08:59:06.9950046Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-20T08:59:06.9977134Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-20T08:59:07.0140027Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-20T08:59:07.0165637Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-20T08:59:07.0332211Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-20T08:59:07.0565722Z ##[endgroup]
+2026-10-20T08:59:07.0569794Z ##[group]Fetching the repository
+2026-10-20T08:59:07.0593667Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-10-20T08:59:15.0871678Z From https://github.com/QuasarRay/agones
+2026-10-20T08:59:15.0872909Z  * [new branch]          agones-rs-dev        -> origin/agones-rs-dev
+2026-10-20T08:59:15.0873764Z  * [new branch]          agones-rs/m1-core-ci -> origin/agones-rs/m1-core-ci
+2026-10-20T08:59:15.0874766Z  * [new branch]          agones-rs/m10-allocation-actions -> origin/agones-rs/m10-allocation-actions
+2026-10-20T08:59:15.0876103Z  * [new branch]          agones-rs/m11-autoscaling-model-defaults -> origin/agones-rs/m11-autoscaling-model-defaults
+2026-10-20T08:59:15.0877441Z  * [new branch]          agones-rs/m12-autoscaling-core-validation -> origin/agones-rs/m12-autoscaling-core-validation
+2026-10-20T08:59:15.0878979Z  * [new branch]          agones-rs/m13-autoscaling-webhook-wasm-validation -> origin/agones-rs/m13-autoscaling-webhook-wasm-validation
+2026-10-20T08:59:15.0880711Z  * [new branch]          agones-rs/m14-autoscaling-schedule-chain-validation -> origin/agones-rs/m14-autoscaling-schedule-chain-validation
+2026-10-20T08:59:15.0882235Z  * [new branch]          agones-rs/m15-fleet-invariant-automation -> origin/agones-rs/m15-fleet-invariant-automation
+2026-10-20T08:59:15.0884020Z  * [new branch]          agones-rs/m16-safe-add-invariant-automation -> origin/agones-rs/m16-safe-add-invariant-automation
+2026-10-20T08:59:15.0885443Z  * [new branch]          agones-rs/m17-counter-invariant-automation -> origin/agones-rs/m17-counter-invariant-automation
+2026-10-20T08:59:15.0887123Z  * [new branch]          agones-rs/m18-multicluster-weight-parity -> origin/agones-rs/m18-multicluster-weight-parity
+2026-10-20T08:59:15.0888701Z  * [new branch]          agones-rs/m19-autoscaling-parser-parity -> origin/agones-rs/m19-autoscaling-parser-parity
+2026-10-20T08:59:15.0890260Z  * [new branch]          agones-rs/m2-gameserver-patch -> origin/agones-rs/m2-gameserver-patch
+2026-10-20T08:59:15.0891606Z  * [new branch]          agones-rs/m20-autoscaling-invariant-automation -> origin/agones-rs/m20-autoscaling-invariant-automation
+2026-10-20T08:59:15.0893595Z  * [new branch]          agones-rs/m21-rusternetes-gameserver-crd-envelope -> origin/agones-rs/m21-rusternetes-gameserver-crd-envelope
+2026-10-20T08:59:15.0895142Z  * [new branch]          agones-rs/m22-gameserver-crd-schema-generation -> origin/agones-rs/m22-gameserver-crd-schema-generation
+2026-10-20T08:59:15.0896730Z  * [new branch]          agones-rs/m23-rusternetes-gameserverset-crd-envelope -> origin/agones-rs/m23-rusternetes-gameserverset-crd-envelope
+2026-10-20T08:59:15.0898403Z  * [new branch]          agones-rs/m24-gameserverset-crd-schema-generation -> origin/agones-rs/m24-gameserverset-crd-schema-generation
+2026-10-20T08:59:15.0899890Z  * [new branch]          agones-rs/m25-rusternetes-fleet-crd-envelope -> origin/agones-rs/m25-rusternetes-fleet-crd-envelope
+2026-10-20T08:59:15.0901346Z  * [new branch]          agones-rs/m26-fleet-crd-schema-generation -> origin/agones-rs/m26-fleet-crd-schema-generation
+2026-10-20T08:59:15.0903044Z  * [new branch]          agones-rs/m27-rusternetes-fleetautoscaler-crd-envelope -> origin/agones-rs/m27-rusternetes-fleetautoscaler-crd-envelope
+2026-10-20T08:59:15.0904788Z  * [new branch]          agones-rs/m28-fleetautoscaler-crd-schema-generation -> origin/agones-rs/m28-fleetautoscaler-crd-schema-generation
+2026-10-20T08:59:15.0906890Z  * [new branch]          agones-rs/m29-rusternetes-gameserverallocationpolicy-crd-envelope -> origin/agones-rs/m29-rusternetes-gameserverallocationpolicy-crd-envelope
+2026-10-20T08:59:15.0908633Z  * [new branch]          agones-rs/m3-rusternetes-pod-parity -> origin/agones-rs/m3-rusternetes-pod-parity
+2026-10-20T08:59:15.0910231Z  * [new branch]          agones-rs/m30-gameserverallocationpolicy-crd-schema-generation -> origin/agones-rs/m30-gameserverallocationpolicy-crd-schema-generation
+2026-10-20T08:59:15.0911819Z  * [new branch]          agones-rs/m31-api-resource-derive -> origin/agones-rs/m31-api-resource-derive
+2026-10-20T08:59:15.0913332Z  * [new branch]          agones-rs/m32-rusternetes-custom-resource-adapter -> origin/agones-rs/m32-rusternetes-custom-resource-adapter
+2026-10-20T08:59:15.0917838Z  * [new branch]          agones-rs/m33-rusternetes-storage-repository -> origin/agones-rs/m33-rusternetes-storage-repository
+2026-10-20T08:59:15.0919181Z  * [new branch]          agones-rs/m34-typed-storage-watch -> origin/agones-rs/m34-typed-storage-watch
+2026-10-20T08:59:15.0920615Z  * [new branch]          agones-rs/m35-gameserver-status-network-fields -> origin/agones-rs/m35-gameserver-status-network-fields
+2026-10-20T08:59:15.0921885Z  * [new branch]          agones-rs/m36-development-gameserver-reconcile -> origin/agones-rs/m36-development-gameserver-reconcile
+2026-10-20T08:59:15.0923589Z  * [new branch]          agones-rs/m37-development-gameserver-rusternetes-controller -> origin/agones-rs/m37-development-gameserver-rusternetes-controller
+2026-10-20T08:59:15.0925384Z  * [new branch]          agones-rs/m38-creating-static-tcpudp-normalization -> origin/agones-rs/m38-creating-static-tcpudp-normalization
+2026-10-20T08:59:15.0926654Z  * [new branch]          agones-rs/m39-cgp-instruction-sync -> origin/agones-rs/m39-cgp-instruction-sync
+2026-10-20T08:59:15.0927745Z  * [new branch]          agones-rs/m4-rusternetes-resource-validation -> origin/agones-rs/m4-rusternetes-resource-validation
+2026-10-20T08:59:15.0928783Z  * [new branch]          agones-rs/m40-cgp-creating-state -> origin/agones-rs/m40-cgp-creating-state
+2026-10-20T08:59:15.0929716Z  * [new branch]          agones-rs/m41-cgp-starting-state -> origin/agones-rs/m41-cgp-starting-state
+2026-10-20T08:59:15.0930854Z  * [new branch]          agones-rs/m42-cgp-request-ready -> origin/agones-rs/m42-cgp-request-ready
+2026-10-20T08:59:15.0932161Z  * [new branch]          agones-rs/m43-cgp-stable-pod-ips -> origin/agones-rs/m43-cgp-stable-pod-ips
+2026-10-20T08:59:15.0933429Z  * [new branch]          agones-rs/m44-shared-gameserver-pod -> origin/agones-rs/m44-shared-gameserver-pod
+2026-10-20T08:59:15.0934600Z  * [new branch]          agones-rs/m45-cgp-shutdown-deletion -> origin/agones-rs/m45-cgp-shutdown-deletion
+2026-10-20T08:59:15.0935810Z  * [new branch]          agones-rs/m46-cgp-deletion-timestamp -> origin/agones-rs/m46-cgp-deletion-timestamp
+2026-10-20T08:59:15.0936423Z  * [new branch]          agones-rs/m47-cgp-port-allocation -> origin/agones-rs/m47-cgp-port-allocation
+2026-10-20T08:59:15.0936993Z  * [new branch]          agones-rs/m48-cgp-missing-pod -> origin/agones-rs/m48-cgp-missing-pod
+2026-10-20T08:59:15.0937591Z  * [new branch]          agones-rs/m49-missing-pod-rate-events -> origin/agones-rs/m49-missing-pod-rate-events
+2026-10-20T08:59:15.0938203Z  * [new branch]          agones-rs/m5-multicluster-policy -> origin/agones-rs/m5-multicluster-policy
+2026-10-20T08:59:15.0938829Z  * [new branch]          agones-rs/m50-succeeded-controller-core -> origin/agones-rs/m50-succeeded-controller-core
+2026-10-20T08:59:15.0939477Z  * [new branch]          agones-rs/m51-health-controller-core -> origin/agones-rs/m51-health-controller-core
+2026-10-20T08:59:15.0940119Z  * [new branch]          agones-rs/m52-migration-controller-core -> origin/agones-rs/m52-migration-controller-core
+2026-10-20T08:59:15.0940756Z  * [new branch]          agones-rs/m53-per-node-counter-core -> origin/agones-rs/m53-per-node-counter-core
+2026-10-20T08:59:15.0941715Z  * [new branch]          agones-rs/m54-per-node-counter-watch -> origin/agones-rs/m54-per-node-counter-watch
+2026-10-20T08:59:15.0943130Z  * [new branch]          agones-rs/m55-gameserver-sync-pipeline -> origin/agones-rs/m55-gameserver-sync-pipeline
+2026-10-20T08:59:15.0943799Z  * [new branch]          agones-rs/m56-gameserver-watch-routing -> origin/agones-rs/m56-gameserver-watch-routing
+2026-10-20T08:59:15.0944487Z  * [new branch]          agones-rs/m57-gameserver-controller-runtime -> origin/agones-rs/m57-gameserver-controller-runtime
+2026-10-20T08:59:15.0945179Z  * [new branch]          agones-rs/m58-health-controller-runtime -> origin/agones-rs/m58-health-controller-runtime
+2026-10-20T08:59:15.0945865Z  * [new branch]          agones-rs/m59-succeeded-controller-runtime -> origin/agones-rs/m59-succeeded-controller-runtime
+2026-10-20T08:59:15.0946478Z  * [new branch]          agones-rs/m6-invariant-macro -> origin/agones-rs/m6-invariant-macro
+2026-10-20T08:59:15.0947108Z  * [new branch]          agones-rs/m60-missing-pod-controller-runtime -> origin/agones-rs/m60-missing-pod-controller-runtime
+2026-10-20T08:59:15.0947829Z  * [new branch]          agones-rs/m61-migration-controller-runtime -> origin/agones-rs/m61-migration-controller-runtime
+2026-10-20T08:59:15.0948563Z  * [new branch]          agones-rs/m62-gameserver-admission-extensions -> origin/agones-rs/m62-gameserver-admission-extensions
+2026-10-20T08:59:15.0949296Z  * [new branch]          agones-rs/m63-gameserver-pod-augmentation -> origin/agones-rs/m63-gameserver-pod-augmentation
+2026-10-20T08:59:15.0950222Z  * [new branch]          agones-rs/m64-sdk-sidecar-parity -> origin/agones-rs/m64-sdk-sidecar-parity
+2026-10-20T08:59:15.0951089Z  * [new branch]          agones-rs/m65-controller-stack-runtime -> origin/agones-rs/m65-controller-stack-runtime
+2026-10-20T08:59:15.0952223Z  * [new branch]          agones-rs/m66-creating-pod-error-service-account-parity -> origin/agones-rs/m66-creating-pod-error-service-account-parity
+2026-10-20T08:59:15.0953702Z  * [new branch]          agones-rs/m66-gameserverset-admission -> origin/agones-rs/m66-gameserverset-admission
+2026-10-20T08:59:15.0954872Z  * [new branch]          agones-rs/m66-gameserverset-status-core -> origin/agones-rs/m66-gameserverset-status-core
+2026-10-20T08:59:15.0956378Z  * [new branch]          agones-rs/m67-gameserverset-reconciliation-core -> origin/agones-rs/m67-gameserverset-reconciliation-core
+2026-10-20T08:59:15.0957826Z  * [new branch]          agones-rs/m68-gameserverset-state-cache -> origin/agones-rs/m68-gameserverset-state-cache
+2026-10-20T08:59:15.0959048Z  * [new branch]          agones-rs/m7-allocation-model-defaults -> origin/agones-rs/m7-allocation-model-defaults
+2026-10-20T08:59:15.0960379Z  * [new branch]          agones-rs/m70-gameserverset-reconciliation-io -> origin/agones-rs/m70-gameserverset-reconciliation-io
+2026-10-20T08:59:15.0962158Z  * [new branch]          agones-rs/m71-gameserverset-controller-runtime -> origin/agones-rs/m71-gameserverset-controller-runtime
+2026-10-20T08:59:15.0964477Z  * [new branch]          agones-rs/m72-allocation-overflow-controller -> origin/agones-rs/m72-allocation-overflow-controller
+2026-10-20T08:59:15.0966264Z  * [new branch]          agones-rs/m72-fix-gameserverset-admission-test -> origin/agones-rs/m72-fix-gameserverset-admission-test
+2026-10-20T08:59:15.0967986Z  * [new branch]          agones-rs/m73-gameserverset-controller-stack -> origin/agones-rs/m73-gameserverset-controller-stack
+2026-10-20T08:59:15.0969495Z  * [new branch]          agones-rs/m74-fleet-admission -> origin/agones-rs/m74-fleet-admission
+2026-10-20T08:59:15.0970300Z  * [new branch]          agones-rs/m75-fleet-status-core -> origin/agones-rs/m75-fleet-status-core
+2026-10-20T08:59:15.0971117Z  * [new branch]          agones-rs/m76-fleet-active-set-core -> origin/agones-rs/m76-fleet-active-set-core
+2026-10-20T08:59:15.0972024Z  * [new branch]          agones-rs/m77-fleet-active-replica-target -> origin/agones-rs/m77-fleet-active-replica-target
+2026-10-20T08:59:15.0973334Z  * [new branch]          agones-rs/m78-fleet-allocation-tracker -> origin/agones-rs/m78-fleet-allocation-tracker
+2026-10-20T08:59:15.0974412Z  * [new branch]          agones-rs/m79-fleet-deployment-cgp -> origin/agones-rs/m79-fleet-deployment-cgp
+2026-10-20T08:59:15.0975332Z  * [new branch]          agones-rs/m8-allocation-selector-matching -> origin/agones-rs/m8-allocation-selector-matching
+2026-10-20T08:59:15.0976762Z  * [new branch]          agones-rs/m80-fleet-reconciliation-io -> origin/agones-rs/m80-fleet-reconciliation-io
+2026-10-20T08:59:15.0978015Z  * [new branch]          agones-rs/m81-fleet-controller-runtime -> origin/agones-rs/m81-fleet-controller-runtime
+2026-10-20T08:59:15.0979293Z  * [new branch]          agones-rs/m82-fleetautoscaler-admission -> origin/agones-rs/m82-fleetautoscaler-admission
+2026-10-20T08:59:15.0980601Z  * [new branch]          agones-rs/m83-fleetautoscaler-buffer-cgp -> origin/agones-rs/m83-fleetautoscaler-buffer-cgp
+2026-10-20T08:59:15.0981972Z  * [new branch]          agones-rs/m84-fleetautoscaler-reconciliation -> origin/agones-rs/m84-fleetautoscaler-reconciliation
+2026-10-20T08:59:15.0983567Z  * [new branch]          agones-rs/m85-fleetautoscaler-counter-list-cgp -> origin/agones-rs/m85-fleetautoscaler-counter-list-cgp
+2026-10-20T08:59:15.0985325Z  * [new branch]          agones-rs/m86-fleetautoscaler-fixed-interval-runtime -> origin/agones-rs/m86-fleetautoscaler-fixed-interval-runtime
+2026-10-20T08:59:15.0986880Z  * [new branch]          agones-rs/m87-fleetautoscaler-schedule-cgp -> origin/agones-rs/m87-fleetautoscaler-schedule-cgp
+2026-10-20T08:59:15.0988275Z  * [new branch]          agones-rs/m88-fleetautoscaler-chain-cgp -> origin/agones-rs/m88-fleetautoscaler-chain-cgp
+2026-10-20T08:59:15.0989624Z  * [new branch]          agones-rs/m89-fleetautoscaler-webhook-cgp -> origin/agones-rs/m89-fleetautoscaler-webhook-cgp
+2026-10-20T08:59:15.0991018Z  * [new branch]          agones-rs/m9-allocation-validation -> origin/agones-rs/m9-allocation-validation
+2026-10-20T08:59:15.0992438Z  * [new branch]          agones-rs/m90-fleetautoscaler-wasm-cgp -> origin/agones-rs/m90-fleetautoscaler-wasm-cgp
+2026-10-20T08:59:15.0993338Z  * [new branch]          codex/agones-feature-gates-001 -> origin/codex/agones-feature-gates-001
+2026-10-20T08:59:15.0994259Z  * [new branch]          codex/agones-goal-recovery -> origin/codex/agones-goal-recovery
+2026-10-20T08:59:15.0995109Z  * [new branch]          codex/agones-source-defaulting-005 -> origin/codex/agones-source-defaulting-005
+2026-10-20T08:59:15.0995739Z  * [new branch]          main                 -> origin/main
+2026-10-20T08:59:15.0997086Z [command]/usr/bin/git branch --list --remote origin/agones-rs-dev
+2026-10-20T08:59:15.0997605Z   origin/agones-rs-dev
+2026-10-20T08:59:15.0998732Z [command]/usr/bin/git rev-parse refs/remotes/origin/agones-rs-dev
+2026-10-20T08:59:15.0999459Z 1e64a054901658908d0a7a4eecd3010379df9614
+2026-10-20T08:59:15.1000480Z ##[endgroup]
+2026-10-20T08:59:15.1001195Z ##[group]Determining the checkout info
+2026-10-20T08:59:15.1001980Z ##[endgroup]
+2026-10-20T08:59:15.1002557Z [command]/usr/bin/git sparse-checkout disable
+2026-10-20T08:59:15.1014072Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-20T08:59:15.1040210Z ##[group]Checking out the ref
+2026-10-20T08:59:15.1043840Z [command]/usr/bin/git checkout --progress --force -B agones-rs-dev refs/remotes/origin/agones-rs-dev
+2026-10-20T08:59:15.7388898Z Switched to a new branch 'agones-rs-dev'
+2026-10-20T08:59:15.7390465Z branch 'agones-rs-dev' set up to track 'origin/agones-rs-dev'.
+2026-10-20T08:59:15.7449814Z ##[endgroup]
+2026-10-20T08:59:15.7487071Z [command]/usr/bin/git log -1 --format=%H
+2026-10-20T08:59:15.7508037Z 1e64a054901658908d0a7a4eecd3010379df9614
+2026-10-20T08:59:15.7795597Z ##[group]Run actions/setup-python@v5
+2026-10-20T08:59:15.7796270Z with:
+2026-10-20T08:59:15.7796750Z   python-version: 3.12
+2026-10-20T08:59:15.7797315Z   check-latest: false
+2026-10-20T08:59:15.7802994Z   token: ***
+2026-10-20T08:59:15.7803509Z   update-environment: true
+2026-10-20T08:59:15.7804114Z   allow-prereleases: false
+2026-10-20T08:59:15.7804698Z   freethreaded: false
+2026-10-20T08:59:15.7805233Z ##[endgroup]
+2026-10-20T08:59:15.8575099Z ##[group]Installed versions
+2026-10-20T08:59:15.9061529Z (node:2085) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-20T08:59:15.9063640Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-20T08:59:15.9065008Z Successfully set up CPython (3.12.15)
+2026-10-20T08:59:15.9066271Z ##[endgroup]
+2026-10-20T08:59:15.9204002Z ##[group]Run python -m pip install -r build/scripts/agones-rs/state-requirements.txt
+2026-10-20T08:59:15.9205396Z [36;1mpython -m pip install -r build/scripts/agones-rs/state-requirements.txt[0m
+2026-10-20T08:59:16.0073884Z shell: /usr/bin/bash -e {0}
+2026-10-20T08:59:16.0074490Z env:
+2026-10-20T08:59:16.0075087Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T08:59:16.0076104Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-20T08:59:16.0077114Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T08:59:16.0078042Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T08:59:16.0078954Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T08:59:16.0079870Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-20T08:59:16.0080669Z ##[endgroup]
+2026-10-20T08:59:18.6423957Z Collecting pydantic==2.14.0 (from -r build/scripts/agones-rs/state-requirements.txt (line 1))
+2026-10-20T08:59:18.7013876Z   Downloading pydantic-2.14.0-py3-none-any.whl.metadata (131 kB)
+2026-10-20T08:59:19.1059490Z Collecting pydantic-core==2.50.0 (from -r build/scripts/agones-rs/state-requirements.txt (line 2))
+2026-10-20T08:59:19.1168420Z   Downloading pydantic_core-2.50.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.5 kB)
+2026-10-20T08:59:19.4888474Z Collecting typing-extensions==4.16.0 (from -r build/scripts/agones-rs/state-requirements.txt (line 3))
+2026-10-20T08:59:19.4991525Z   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+2026-10-20T08:59:19.5862134Z Collecting typing-inspection==0.4.4 (from -r build/scripts/agones-rs/state-requirements.txt (line 4))
+2026-10-20T08:59:19.5966306Z   Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+2026-10-20T08:59:19.6470177Z Collecting annotated-types==0.8.0 (from -r build/scripts/agones-rs/state-requirements.txt (line 5))
+2026-10-20T08:59:19.6570377Z   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+2026-10-20T08:59:19.6880702Z Downloading pydantic-2.14.0-py3-none-any.whl (487 kB)
+2026-10-20T08:59:19.7451874Z Downloading pydantic_core-2.50.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.2 MB)
+2026-10-20T08:59:19.8259298Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 24.4 MB/s  0:00:00
+2026-10-20T08:59:19.8363596Z Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+2026-10-20T08:59:19.8491604Z Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+2026-10-20T08:59:19.8748999Z Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+2026-10-20T08:59:20.0053784Z Installing collected packages: typing-extensions, annotated-types, typing-inspection, pydantic-core, pydantic
+2026-10-20T08:59:20.2422038Z 
+2026-10-20T08:59:20.2429696Z Successfully installed annotated-types-0.8.0 pydantic-2.14.0 pydantic-core-2.50.0 typing-extensions-4.16.0 typing-inspection-0.4.4
+2026-10-20T08:59:20.2915817Z ##[group]Run python build/scripts/agones-rs/checkpoint.py check
+2026-10-20T08:59:20.2916086Z [36;1mpython build/scripts/agones-rs/checkpoint.py check[0m
+2026-10-20T08:59:20.2968034Z shell: /usr/bin/bash -e {0}
+2026-10-20T08:59:20.2968170Z env:
+2026-10-20T08:59:20.2968319Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T08:59:20.2968550Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-20T08:59:20.2968776Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T08:59:20.2968983Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T08:59:20.2969182Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T08:59:20.2969395Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-20T08:59:20.2969570Z ##[endgroup]
+2026-10-20T08:59:20.5238247Z Validated ledger revision 240; migration INCOMPLETE.
+2026-10-20T08:59:20.5411146Z ##[group]Run python build/scripts/agones-rs/inventory.py guidance-check
+2026-10-20T08:59:20.5411433Z [36;1mpython build/scripts/agones-rs/inventory.py guidance-check[0m
+2026-10-20T08:59:20.5461077Z shell: /usr/bin/bash -e {0}
+2026-10-20T08:59:20.5461239Z env:
+2026-10-20T08:59:20.5461384Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T08:59:20.5461614Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-20T08:59:20.5461843Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T08:59:20.5462051Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T08:59:20.5462261Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T08:59:20.5462608Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-20T08:59:20.5462783Z ##[endgroup]
+2026-10-20T08:59:20.9439962Z {"directories": 1826, "missing": 0, "preserved_existing": 1826, "created": 0, "not_versioned": 0, "ownership": "Inherited operational guidance includes tracked vendor, generated and documentation directories; existing third-party instructions are preserved unchanged."}
+2026-10-20T08:59:20.9522182Z ##[group]Run python build/scripts/agones-rs/test_kani_results.py
+2026-10-20T08:59:20.9522772Z [36;1mpython build/scripts/agones-rs/test_kani_results.py[0m
+2026-10-20T08:59:20.9589596Z shell: /usr/bin/bash -e {0}
+2026-10-20T08:59:20.9589819Z env:
+2026-10-20T08:59:20.9590049Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T08:59:20.9590425Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-20T08:59:20.9590796Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T08:59:20.9591134Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T08:59:20.9591668Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T08:59:20.9592004Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-20T08:59:20.9592506Z ##[endgroup]
+2026-10-20T08:59:21.0853060Z ...
+2026-10-20T08:59:21.0853251Z ----------------------------------------------------------------------
+2026-10-20T08:59:21.0853505Z Ran 3 tests in 0.001s
+2026-10-20T08:59:21.0853587Z 
+2026-10-20T08:59:21.0853652Z OK
+2026-10-20T08:59:21.0924655Z ##[group]Run python build/scripts/agones-rs/select_checks.py
+2026-10-20T08:59:21.0924889Z [36;1mpython build/scripts/agones-rs/select_checks.py[0m
+2026-10-20T08:59:21.0971352Z shell: /usr/bin/bash -e {0}
+2026-10-20T08:59:21.0971509Z env:
+2026-10-20T08:59:21.0971728Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T08:59:21.0971956Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-20T08:59:21.0972181Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T08:59:21.0972586Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T08:59:21.0972799Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-20T08:59:21.0973005Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-20T08:59:21.0973215Z   AGONES_CHECK_BASE: d768c8fdda27dd2db05a51ffb6ba7aa01dd3ac45
+2026-10-20T08:59:21.0973422Z   AGONES_CHECK_HEAD: 1e64a054901658908d0a7a4eecd3010379df9614
+2026-10-20T08:59:21.0973607Z ##[endgroup]
+2026-10-20T08:59:21.7119267Z ..............
+2026-10-20T08:59:21.7119630Z ----------------------------------------------------------------------
+2026-10-20T08:59:21.7119955Z Ran 14 tests in 0.556s
+2026-10-20T08:59:21.7120077Z 
+2026-10-20T08:59:21.7120145Z OK
+2026-10-20T08:59:21.7224174Z {"selected": {"rust": false, "model": false}, "unknown_dependency_change": false, "model_evidence_reuse": null, "retained_evidence": "checkpoint.py validates bindings; reuse requires unchanged declared inputs and retained complete proof artifacts"}
+2026-10-20T08:59:21.7340394Z Post job cleanup.
+2026-10-20T08:59:21.8068515Z (node:2468) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-20T08:59:21.8068956Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-20T08:59:21.8237570Z Post job cleanup.
+2026-10-20T08:59:21.8786134Z [command]/usr/bin/git version
+2026-10-20T08:59:21.8818969Z git version 2.55.0
+2026-10-20T08:59:21.8842224Z Temporarily overriding HOME='/home/runner/work/_temp/528fdd57-47be-40ed-9f32-30c1947119b3' before making global git config changes
+2026-10-20T08:59:21.8843015Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-20T08:59:21.8845927Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agones/agones
+2026-10-20T08:59:21.8874659Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-20T08:59:21.8904951Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-20T08:59:21.9112862Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-20T08:59:21.9136427Z http.https://github.com/.extraheader
+2026-10-20T08:59:21.9153872Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-20T08:59:21.9178494Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-20T08:59:21.9375807Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-20T08:59:21.9403696Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-20T08:59:21.9681638Z Evaluate and set job outputs
+2026-10-20T08:59:21.9686672Z Set output 'rust'
+2026-10-20T08:59:21.9687637Z Set output 'model'
+2026-10-20T08:59:21.9688229Z Cleaning up orphan processes
+2026-10-20T08:59:21.9885404Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

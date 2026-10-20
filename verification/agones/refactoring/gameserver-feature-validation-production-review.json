@@ -1,0 +1,12 @@
+{
+  "architecture_status": "All eight required _2 form/location cells remain REQUIRED_OPEN; this CGP consumer gives no _2 authoring credit.",
+  "candidate": "Share feature-gate policy and its minimal CGP dependency across direct domain and actual Rusternetes validation consumers.",
+  "decision": "REUSE_EXISTING",
+  "feature_id": "GS-VALIDATE-FEATURES-001",
+  "id": "GS-VALIDATE-FEATURES-001-production-review",
+  "next_review_trigger": "After post-gate validation source-property generation, inspect the real repeated typed property/attribute/derive/delegate declarations against the current Genco site and recorded Arcane core/shim/facade reuse. Evaluate a bounded _2 adoption only with a concrete positive-ROI consumer.",
+  "observations": "One source decision was missing from four core entrypoints and three actual admissions. One CGP provider now owns it; existing getters/delegation, parsed feature configuration and nested error rebasing supply the wiring. Three admission constructors intentionally retain explicit type-specific operation and error boundaries.",
+  "reuse": "Pinned CGP component/getter/new-provider and delegate_and_check_components macros. Existing Genco and package-aware extractor are the next post-gate tools; no new macro or extraction framework.",
+  "roi": "The shared existing provider removes repeated behavioral policy immediately. A new constructor-generation or _2 framework for three small factories would add parsing/diagnostic/tooling obligations before a demonstrated reduction over the existing CGP macros; that approach has uncertain current ROI. Use current CGP and direct readable Rust.",
+  "root_guidance_preferences": "Read and preserve the user-modified root guidance, including derive-deftly, comprende and better_comprehension. This one conditional decision has no repeated field derive or collection-comprehension body to remove; do not add speculative dependencies to it. Reassess these facilities at a concrete repetitive derive or collection consumer."
+}

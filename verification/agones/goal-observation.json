@@ -1,13 +1,13 @@
 {
+  "completionBudgetReport": null,
   "goal": {
-    "threadId": "01a14ebe-10fa-7c41-9f85-256874fb4c1f",
+    "createdAt": 1792322461,
     "objective": "Referenced pasted text files:\n- pasted text file: /home/astral/.codex/attachments/5cf63dab-e5a8-49be-a2f1-ae51f5edd993/pasted-text-1.txt. Read this file before continuing.",
     "status": "active",
-    "tokensUsed": 4063005,
-    "timeUsedSeconds": 43557,
-    "createdAt": 1792322461,
-    "updatedAt": 1792382858
+    "threadId": "01a14ebe-10fa-7c41-9f85-256874fb4c1f",
+    "timeUsedSeconds": 50332,
+    "tokensUsed": 4879633,
+    "updatedAt": 1792515590
   },
-  "remainingTokens": null,
-  "completionBudgetReport": null
+  "remainingTokens": null
 }

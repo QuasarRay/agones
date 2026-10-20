@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "PLAYER_TRACKING_VALIDATION_PRODUCTION_GATE_PASSED",
+  "gate_snapshot": "verification/agones/gates/317304e45484daa2961fdf0a6983d3e056af281f03d5597b542bc9c51a435e49.json",
+  "predecessor_revision": 241,
+  "predecessor_sha256": "1b3b9edacf5ab8afe2cf5f788324c4757e4d3699e2c1efd7cc5e31f8d0deb7bf",
+  "reason": "Implemented complete source feature-gate policy through one existing CGP feature getter/provider and reachable direct/spec, GameServer, Fleet, GameServerSet and actual Rusternetes admissions. Default and configured process inputs, nested paths, development early returns and exact error fields pass. Locked check/all-target workspace tests pass:587passed,0failed,3ignored. New semantic extraction and formal proof remain pending; prior broad proof bindings reopened and historical full results retained. All eight _2 cells remain required.",
+  "result_revision": 242,
+  "schema_version": 1,
+  "state_sha256": "5a6993a38424f2c1ea01f741794e04376e675122d8a2665dc6f0eded7837cb63",
+  "timestamp": "2026-10-20T16:16:28.558947+00:00"
+}

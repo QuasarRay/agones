@@ -53,5 +53,6 @@ delegate_and_check_components! {
         AgonesVersionAnnotationGetterComponent: EncodeAgonesVersionAnnotation,
         GameServerFeatureFlagsGetterComponent: UseField<Symbol!("game_server_feature_flags")>,
         GameServerDefaulterComponent: ApplyAgonesGameServerDefaults,
+        crate::GameServerFeatureValidatorComponent: crate::ValidateAgonesGameServerFeatures,
     }
 }

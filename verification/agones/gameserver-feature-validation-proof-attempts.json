@@ -1,0 +1,49 @@
+{
+  "feature_id": "GS-VALIDATE-FEATURES-001",
+  "first_attempt": {
+    "address_space_limit_bytes": 4294967296,
+    "causes": [
+      "memcmp unwinding assertion failed: full detail comparison exceeds16iterations",
+      "Solver reported out of memory during propositional reduction under the4GiBaddress cap"
+    ],
+    "max_rss_kib": 3737588,
+    "run": "verification/agones/runs/gs-validation-source-contract-bolero-kani-1.json",
+    "snapshot_sha256": "bdf808073f19646b786a88b9b0a55505c3f698c7ed77bb9893aa258551345e70",
+    "source_snapshot": "verification/agones/gameserver-feature-validation-domain-first.rs",
+    "status": "FAILED_NO_PROOF_CREDIT",
+    "unwind": 16,
+    "wall_seconds": 62.09
+  },
+  "isolated_campaign_adaptation": {
+    "review": "verification/agones/refactoring/gameserver-validation-observation-lifetime-reuse.json",
+    "rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1",
+    "scope": "Same complete state/error observations, all inputs/assertions/covers/unwind128 retained; post-observation cleanup remains required separately.",
+    "status": "PLANNED_ISOLATED_CI_NO_LOCAL_RETRY"
+  },
+  "next_action": "No further local proof-depth experiments in this packet. Finish automated extraction of all five original feature-validation cases/ten occurrences and current gate rebindings, then use isolated CI for explicit selected model/source campaigns. Preserve all residual lifecycle/ownership and architecture obligations.",
+  "next_attempt": {
+    "address_space_limit_bytes": 6442450944,
+    "hypothesis": "Unwind128 covers the full literal. Borrowed reference observations and one deterministic full-field relation remove duplicate model string allocations/comparisons. The same provider, full input domain and all eight cover witnesses remain required.",
+    "status": "COMPLETED_FAILED_RESOURCE_LIMIT",
+    "unwind": 128,
+    "wall_limit_seconds": 240
+  },
+  "schema_version": 1,
+  "second_attempt": {
+    "address_space_limit_bytes": 6442450944,
+    "causes": [
+      "CBMC out of memory in propositional reduction, status6",
+      "Global unwind128 also expands the owned error-vector drop loop before solver reduction"
+    ],
+    "domain_and_covers": "Both arbitrary bools, arbitrary signed i64 capacity, fixed spec path, three complete relational claims and all eight required covers preserved.",
+    "individual_results": 0,
+    "max_rss_kib": 6113228,
+    "run": "verification/agones/runs/gs-validation-source-contract-bolero-kani-2.json",
+    "snapshot_sha256": "1f7c7e648729ce28f8cfa74ed3bd8b98e49621fa890a9a4118afd2887c3a8f2d",
+    "source_snapshot": "verification/agones/gameserver-feature-validation-domain-second.rs",
+    "status": "FAILED_RESOURCE_LIMIT_NO_PROOF_CREDIT",
+    "unwind": 128,
+    "wall_seconds": 78.99
+  },
+  "stop_rule": "If the changed attempt is still memory-limited or inconclusive, retain it and use isolated CI after the existing typed source-table work. Do not iterate model-depth/ownership experiments in this production packet."
+}

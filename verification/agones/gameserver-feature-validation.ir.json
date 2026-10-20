@@ -1,0 +1,404 @@
+{
+  "assertion_semantics": "Original testify NoError and ElementsMatch execute on the Go reference. ElementsMatch compares complete error elements as an unordered multiset, with nil and empty lists both empty; it does not compare error-message formatting.",
+  "capture_program": "package main\nimport (\n. \"agones.dev/agones/pkg/apis/agones/v1\"\napis \"agones.dev/agones/pkg/apis\"\nassert \"github.com/stretchr/testify/assert\"\ncaptureFMT \"fmt\"\ncaptureJSON \"encoding/json\"\ncorev1 \"k8s.io/api/core/v1\"\nfield \"k8s.io/apimachinery/pkg/util/validation/field\"\nfmt \"fmt\"\nmetav1 \"k8s.io/apimachinery/pkg/apis/meta/v1\"\nruntime \"agones.dev/agones/pkg/util/runtime\"\n)\ntype captureTestingT struct{}\nfunc(captureTestingT) Errorf(f string,args ...interface{}){panic(captureFMT.Sprintf(f,args...))}\n// fakeAPIHooks is a stubabble, fake implementation of APIHooks\n// This needs to be private, so it doesn't get picked up by the DeepCopy() generation toolkit.\ntype fakeAPIHooks struct {\n\tStubValidateGameServerSpec\tfunc(*GameServerSpec, *field.Path) field.ErrorList\n\tStubValidateScheduling\t\tfunc(apis.SchedulingStrategy, *field.Path) field.ErrorList\n\tStubMutateGameServerPod\t\tfunc(*GameServerSpec, *corev1.Pod) error\n\tStubSetEviction\t\t\tfunc(*Eviction, *corev1.Pod) error\n}\nvar _ APIHooks = fakeAPIHooks{}\n// ValidateGameServerSpec is called by GameServer.Validate to allow for product specific validation.\nfunc (f fakeAPIHooks) ValidateGameServerSpec(gss *GameServerSpec, fldPath *field.Path) field.ErrorList {\n\tif f.StubValidateGameServerSpec != nil {\n\t\treturn f.StubValidateGameServerSpec(gss, fldPath)\n\t}\n\treturn nil\n}\n// ValidateScheduling is called by Fleet and GameServerSet Validate() to allow for product specific validation of scheduling strategy.\nfunc (f fakeAPIHooks) ValidateScheduling(strategy apis.SchedulingStrategy, fldPath *field.Path) field.ErrorList {\n\tif f.StubValidateScheduling != nil {\n\t\treturn f.StubValidateScheduling(strategy, fldPath)\n\t}\n\treturn nil\n}\n// MutateGameServerPod is called by createGameServerPod to allow for product specific pod mutation.\nfunc (f fakeAPIHooks) MutateGameServerPod(gss *GameServerSpec, pod *corev1.Pod) error {\n\tif f.StubMutateGameServerPod != nil {\n\t\treturn f.StubMutateGameServerPod(gss, pod)\n\t}\n\treturn nil\n}\n// SetEviction is called by gs.Pod to enforce GameServer.Status.Eviction.\nfunc (f fakeAPIHooks) SetEviction(eviction *Eviction, pod *corev1.Pod) error {\n\tif f.StubSetEviction != nil {\n\t\treturn f.StubSetEviction(eviction, pod)\n\t}\n\treturn nil\n}\nfunc main(){t:=captureTestingT{}\nruntime.FeatureTestMutex.Lock()\ndefer runtime.FeatureTestMutex.Unlock()\nportContainerName := \"another-container\"\ntestCases := []struct {\n\tdescription\tstring\n\tfeature\t\tstring\n\tgs\t\tGameServer\n\twant\t\tfield.ErrorList\n}{\n\t{\n\t\tdescription:\t\"Invalid container name, container was not found\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tName:\t\t\"dev-game\",\n\t\t\t\tNamespace:\t\"default\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tPorts: []GameServerPort{\n\t\t\t\t\t{\n\t\t\t\t\t\tName:\t\t\"main\",\n\t\t\t\t\t\tContainerPort:\t7777,\n\t\t\t\t\t\tPortPolicy:\tDynamic,\n\t\t\t\t\t\tContainer:\t\u0026portContainerName,\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\tContainer:\t\"testing\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{\n\t\t\t\t\t\t{Name: \"testing\", Image: \"testing/image\"},\n\t\t\t\t\t}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\twant: field.ErrorList{\n\t\t\tfield.Invalid(\n\t\t\t\tfield.NewPath(\"spec\", \"ports\").Index(0).Child(\"container\"),\n\t\t\t\t\"another-container\",\n\t\t\t\t\"Container must be empty or the name of a container in the pod template\",\n\t\t\t),\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"Multiple container ports, OK scenario\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tName:\t\t\"dev-game\",\n\t\t\t\tNamespace:\t\"default\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tPorts: []GameServerPort{\n\t\t\t\t\t{\n\t\t\t\t\t\tName:\t\t\"main\",\n\t\t\t\t\t\tContainerPort:\t7777,\n\t\t\t\t\t\tPortPolicy:\tDynamic,\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\tContainer:\t\"testing\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{\n\t\t\t\t\t\t{Name: \"testing\", Image: \"testing/image\"},\n\t\t\t\t\t}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"CountsAndLists is enabled, Counters field specified\",\n\t\tfeature:\tfmt.Sprintf(\"%s=true\", runtime.FeatureCountsAndLists),\n\t\tgs: GameServer{\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tContainer:\t\"testing\",\n\t\t\t\tCounters:\tmap[string]CounterStatus{},\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{{Name: \"testing\", Image: \"testing/image\"}}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"CountsAndLists is enabled, Lists field specified\",\n\t\tfeature:\tfmt.Sprintf(\"%s=true\", runtime.FeatureCountsAndLists),\n\t\tgs: GameServer{\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tContainer:\t\"testing\",\n\t\t\t\tLists:\t\tmap[string]ListStatus{},\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{{Name: \"testing\", Image: \"testing/image\"}}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"PortPolicyNone is enabled, PortPolicy field set to None\",\n\t\tgs: GameServer{\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tPorts: []GameServerPort{\n\t\t\t\t\t{\n\t\t\t\t\t\tName:\t\t\"main\",\n\t\t\t\t\t\tContainerPort:\t7777,\n\t\t\t\t\t\tPortPolicy:\tNone,\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\tContainer:\t\"testing\",\n\t\t\t\tLists:\t\tmap[string]ListStatus{},\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{{Name: \"testing\", Image: \"testing/image\"}}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t},\n}\nrows:=[]map[string]interface{}{}\nfor _,tc:=range testCases {before,captureErr:=captureJSON.Marshal(tc.gs);if captureErr!=nil{panic(captureErr)}\nerr := runtime.ParseFeatures(tc.feature)\nassert.NoError(t, err)\nerrs := tc.gs.Validate(fakeAPIHooks{})\nassert.ElementsMatch(t, tc.want, errs, \"ErrorList check\")\nrows=append(rows,map[string]interface{}{\"name\":tc.description,\"feature_flags\":tc.feature,\"before\":captureJSON.RawMessage(before),\"fixture_presence\":map[string]bool{\"ports_nil\":tc.gs.Spec.Ports==nil,\"players_present\":tc.gs.Spec.Players!=nil,\"counters_present\":tc.gs.Spec.Counters!=nil,\"lists_present\":tc.gs.Spec.Lists!=nil},\"expected_errors\":tc.want,\"observed_errors\":errs,\"source_assertions_passed\":true})}\nencoded,err:=captureJSON.Marshal(rows);if err!=nil{panic(err)};captureFMT.Println(string(encoded))}",
+  "capture_program_sha256": "bf89dd91e0ed2fa54cdddd0670ae443e1514b3d1104c60894dd10dfd8dbb19df",
+  "case_count": 5,
+  "cases": [
+    {
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Invalid container name, container was not found::line-1479",
+          "kind": "NoError",
+          "line": 1479
+        },
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Invalid container name, container was not found::line-1482",
+          "kind": "ElementsMatch",
+          "line": 1482
+        }
+      ],
+      "before": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "container": "another-container",
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "another-container",
+          "CoveredByDeclarative": false,
+          "Detail": "Container must be empty or the name of a container in the pod template",
+          "Field": "spec.ports[0].container",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "feature_flags": "",
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": false
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Invalid container name, container was not found",
+      "name": "Invalid container name, container was not found",
+      "observed_errors": [
+        {
+          "BadValue": "another-container",
+          "CoveredByDeclarative": false,
+          "Detail": "Container must be empty or the name of a container in the pod template",
+          "Field": "spec.ports[0].container",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "source_assertions_passed": true
+    },
+    {
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Multiple container ports, OK scenario::line-1479",
+          "kind": "NoError",
+          "line": 1479
+        },
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Multiple container ports, OK scenario::line-1482",
+          "kind": "ElementsMatch",
+          "line": 1482
+        }
+      ],
+      "before": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": null,
+      "feature_flags": "",
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": false
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Multiple container ports, OK scenario",
+      "name": "Multiple container ports, OK scenario",
+      "observed_errors": null,
+      "source_assertions_passed": true
+    },
+    {
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::CountsAndLists is enabled, Counters field specified::line-1479",
+          "kind": "NoError",
+          "line": 1479
+        },
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::CountsAndLists is enabled, Counters field specified::line-1482",
+          "kind": "ElementsMatch",
+          "line": 1482
+        }
+      ],
+      "before": {
+        "metadata": {},
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": null,
+      "feature_flags": "CountsAndLists=true",
+      "fixture_presence": {
+        "counters_present": true,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": true
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::CountsAndLists is enabled, Counters field specified",
+      "name": "CountsAndLists is enabled, Counters field specified",
+      "observed_errors": null,
+      "source_assertions_passed": true
+    },
+    {
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::CountsAndLists is enabled, Lists field specified::line-1479",
+          "kind": "NoError",
+          "line": 1479
+        },
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::CountsAndLists is enabled, Lists field specified::line-1482",
+          "kind": "ElementsMatch",
+          "line": 1482
+        }
+      ],
+      "before": {
+        "metadata": {},
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": null,
+      "feature_flags": "CountsAndLists=true",
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": true,
+        "players_present": false,
+        "ports_nil": true
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::CountsAndLists is enabled, Lists field specified",
+      "name": "CountsAndLists is enabled, Lists field specified",
+      "observed_errors": null,
+      "source_assertions_passed": true
+    },
+    {
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::PortPolicyNone is enabled, PortPolicy field set to None::line-1479",
+          "kind": "NoError",
+          "line": 1479
+        },
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::PortPolicyNone is enabled, PortPolicy field set to None::line-1482",
+          "kind": "ElementsMatch",
+          "line": 1482
+        }
+      ],
+      "before": {
+        "metadata": {},
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "None"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": null,
+      "feature_flags": "",
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": true,
+        "players_present": false,
+        "ports_nil": false
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::PortPolicyNone is enabled, PortPolicy field set to None",
+      "name": "PortPolicyNone is enabled, PortPolicy field set to None",
+      "observed_errors": null,
+      "source_assertions_passed": true
+    }
+  ],
+  "classification": "EXACT_CASE_ASSERTIONS",
+  "environment": {
+    "CGO_ENABLED": "1",
+    "GOARCH": "amd64",
+    "GOENV": "/home/astral/.config/go/env",
+    "GOEXPERIMENT": "nodwarf5",
+    "GOFLAGS": "-mod=vendor",
+    "GOMOD": "/home/astral/Projects/agones/go.mod",
+    "GOOS": "linux",
+    "GOTOOLCHAIN": "local",
+    "GOVERSION": "go1.27.1-X:nodwarf5"
+  },
+  "feature_id": "GS-VALIDATE-FEATURES-001",
+  "implementation_gate": "verification/agones/gates/317304e45484daa2961fdf0a6983d3e056af281f03d5597b542bc9c51a435e49.json",
+  "implementation_gate_sha256": "317304e45484daa2961fdf0a6983d3e056af281f03d5597b542bc9c51a435e49",
+  "loader_source_files": {
+    "build/scripts/agones-rs/extract/gameserver_defaulting.go": "3530dbf1e91a96f2264c5e8eb21c4f69c16b50818feee975af4d5fd46d907664",
+    "build/scripts/agones-rs/extract/gameserver_defaulting_test.go": "03af33d9d79bf73ad701528c07f5cdfa75758b5040465fbb52f7b95474eeb2bd",
+    "build/scripts/agones-rs/extract/gameserver_features.go": "10d4f2ab601b5586fc71cde7d3188793fb62ea398e3e47397ef5865d6b312ea1",
+    "build/scripts/agones-rs/extract/gameserver_features_test.go": "5a4ff209b50d89dd5aa8768999d189de6b4addc6e0708dc3b13f778238d9ffb6",
+    "build/scripts/agones-rs/extract/go.mod": "d23234a15e7dbd4b4a9a5114b603c7b4af96faf0b28597887612f797198621db",
+    "build/scripts/agones-rs/extract/go.sum": "db117b1938e16538e8fe3fc238d5185565e1a5150ed8989573f95899b23d0101",
+    "build/scripts/agones-rs/extract/main.go": "2659eb1b3e4045690025fee83efc70f060219071efcf392ed52e382cc3eb07e4",
+    "build/scripts/agones-rs/extract/main_test.go": "b66449f6662bd598185fb671688d9bf566e36176c2e36ffca378d78464370213",
+    "build/scripts/agones-rs/extract/sdk_version.go": "79e0e06e220484f808686dbb936cee00fe3e52b572f4c93769736dd47f5acecd",
+    "build/scripts/agones-rs/extract/sdk_version_test.go": "8e7ca0a3cac25144f4289bdcdee416502b7aa63e45d3f9e215e12c7cc4fca097"
+  },
+  "package_id": "agones.dev/agones/pkg/apis/agones/v1 [agones.dev/agones/pkg/apis/agones/v1.test]",
+  "scheduling_mapping": "Source feature mutex and serial table order retained; t.Parallel and t.Run mapped to serial source replay without executor/concurrency credit.",
+  "schema_version": 1,
+  "scope": "All five original TestGameServerValidateFeatures fixtures and both assertion sites, ten qualified occurrences. Whole source fixtures and original private fakeAPIHooks declarations are captured without changing the original tree. No case sets Players, so this table gives no present-Players branch credit; the separate source-contract model remains required.",
+  "source_actions": [
+    "err := runtime.ParseFeatures(tc.feature)",
+    "assert.NoError(t, err)",
+    "errs := tc.gs.Validate(fakeAPIHooks{})",
+    "assert.ElementsMatch(t, tc.want, errs, \"ErrorList check\")"
+  ],
+  "source_assertion_occurrences": 10,
+  "source_assertion_sites": [
+    {
+      "expression": "assert.NoError(t, err)",
+      "kind": "NoError",
+      "line": 1479,
+      "package": "github.com/stretchr/testify/assert"
+    },
+    {
+      "expression": "assert.ElementsMatch(t, tc.want, errs, \"ErrorList check\")",
+      "kind": "ElementsMatch",
+      "line": 1482,
+      "package": "github.com/stretchr/testify/assert"
+    }
+  ],
+  "source_files": {
+    "go.mod": "01df333891a331341e77aab737c24dc722fab26abc8439b9c2036c71a477215a",
+    "go.sum": "d890978bc12d9c9958b2a87f99a87d8478b007208e44c5d859e973ba89adcbf7",
+    "pkg/apis/agones/v1/apihooks.go": "3ddd2e6c35fc62c6c54ded97a97f7edc68218ed91fbfc1fd4341fc424c6a278b",
+    "pkg/apis/agones/v1/apihooksfake.go": "be5b9878ef112cedbe3165ec69d87e35acaa08d5850f26d15274b11b7e2317cb",
+    "pkg/apis/agones/v1/common.go": "b0657e44bfcff65bceb01062a6051e1b3afad0065ea797db3b08b4b4de2fb9f2",
+    "pkg/apis/agones/v1/common_test.go": "fb35dcbcea5cba021159ca9e84bb282eb80568390442f3da51d3cf933e73de04",
+    "pkg/apis/agones/v1/doc.go": "cea07da3169f9c776298009e0bd27c606bcd804f23c8f91c0d7c01de6d0ae50d",
+    "pkg/apis/agones/v1/fleet.go": "52ff0dd6d1b3f8ac7feed3ba35356c16434a8ca77f531eff3434cb3ad25f0e28",
+    "pkg/apis/agones/v1/fleet_test.go": "7fed497a874406e224cc29359568418d90200739bb2e9b5887ed4712994bb600",
+    "pkg/apis/agones/v1/gameserver.go": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
+    "pkg/apis/agones/v1/gameserver_test.go": "468502ff9cbedb3a37f7ff2b5ef1207f09b770aa3fc36b5e87432b6a62068cfa",
+    "pkg/apis/agones/v1/gameserverset.go": "aa62bbb516f092cfd52e44c2090f2031d925d2d0a19bdf4fff8ba464e2982ece",
+    "pkg/apis/agones/v1/gameserverset_test.go": "09f5554bedfe73bc83b705d0c8e54738df62197022a26cbf2bab64cc35eb568f",
+    "pkg/apis/agones/v1/register.go": "145c109e956724a124fa92418ea99ddc43e2f03c59ab17522f0f74200645471b",
+    "pkg/apis/agones/v1/v1.go": "c7328ed0c771c037a14bc8472ff10bbbf22e751d638429ddb2cf69a8aa94bd0d",
+    "pkg/apis/agones/v1/zz_generated.deepcopy.go": "bde683256de58cd8236ef1bb7e25a435caa719500823c5ff63c0da317105afdd",
+    "pkg/util/errors/errors.go": "b9b811509cc02053ce498cf012a58ea6fabb44d6fbf69e355d39baf0504dbc29",
+    "pkg/util/runtime/features.go": "05736b26646cf219419626dfca37c4f533302b178ca3bb542330cf7884ddc679",
+    "pkg/util/runtime/runtime.go": "d1683d9c5931891d59ae46cbfdbce13b45d2836355097e7e1bd24fd30200271a",
+    "pkg/version.go": "18a321dd868bdf897742490dde06040a35be996dbef93f4aae7ebd855c85842d",
+    "vendor/github.com/stretchr/testify/assert/assertions.go": "10087e4b00ecc9504a1b1b4758dcf909e3ab36a6e9585515335ac58c6ea56642"
+  }
+}

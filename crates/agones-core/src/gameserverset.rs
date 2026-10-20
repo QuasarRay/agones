@@ -211,6 +211,13 @@ impl GameServerSet {
     }
 
     pub fn validate(&self) -> Vec<ValidationError> {
+        self.validate_with_context(&crate::GameServerDefaultingContext::default())
+    }
+
+    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures>(
+        &self,
+        context: &C,
+    ) -> Vec<ValidationError> {
         let mut errors = validate_name(&self.metadata);
 
         // Agones validateGSSpec applies GameServer defaults before validation.
@@ -218,7 +225,7 @@ impl GameServerSet {
         game_server_spec.apply_defaults();
         errors.extend(
             game_server_spec
-                .validate("")
+                .validate_with_context(context, "")
                 .into_iter()
                 .map(rebase_spec_error),
         );
