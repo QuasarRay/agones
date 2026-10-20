@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate"
+  ],
+  "authorization": "User execution contract",
+  "event": "ERROR_DATA_GATED_ISOLATED_WITH_MAPPING_CONTROLS",
+  "gate_snapshot": null,
+  "predecessor_revision": 253,
+  "predecessor_sha256": "709ba80198fe4cc329a7158aa3774bcd67709fbd2f28743318a91cca63842e55",
+  "reason": "The real error owner retains Origin/declarative data and exact current payload details; isolated commit190892066 gatea8a9dda6 follows514passing native-library tests. Only after that gate, bidirectional source constructor-image lowering controls pass. Canonical production adoption, complete25case generation/replay and formal evidence remain required.",
+  "result_revision": 254,
+  "schema_version": 1,
+  "state_sha256": "07af25068dd3e02477bc4968d91e92cd71afc260ff499f7ee316bf0c06453d18",
+  "timestamp": "2026-10-20T20:29:13.549264+00:00"
+}

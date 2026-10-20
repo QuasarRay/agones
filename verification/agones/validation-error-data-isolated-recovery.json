@@ -1,0 +1,26 @@
+{
+  "canonical_adoption": "PENDING; do not validate isolated source gates against the different canonical source tree or silently reuse them.",
+  "full_workspace_integration": "PENDING_GATED_GENERATION_REFRESH",
+  "implementation_commit": "190892066f793c3fd09ade9e6ec08622815c9acd",
+  "implementation_gate": "verification/agones/gates/a8a9dda678e02b3e4ed1e71129867c37a615091ad8cf272a8934247c81a50a9c.json",
+  "implementation_gate_sha256": "a8a9dda678e02b3e4ed1e71129867c37a615091ad8cf272a8934247c81a50a9c",
+  "implementation_tree": "e11ac14cb66257401dffb8f6d59d2892f17e7ecb",
+  "native_tests": 514,
+  "new_formal_credit": 0,
+  "next_action": "Only now extend error lowering with the source-bound bidirectional constructor-image mapping, bind all six fields in replay/helper domains, refresh source/generator gates, and emit/replay all25cases without subset credit.",
+  "post_gate_mapping_controls": {
+    "commit": "fe8b4301112753a721fa9b162afdd4cf05704203",
+    "implementation_gate_precedes_translation": true,
+    "run": "verification/agones/runs/validation-error-data-bidirectional-controls-2.json",
+    "scope": "Every normalized six-field source record reconstructs exactly. Required/Forbidden reject nil/nonempty raw bad value; other kinds preserve null versus empty string. Metadata emission binds the reviewed rule and pinned source constructors. Full25case regeneration/replay, actual-adapter/helper domain bindings and formal revalidation remain required.",
+    "status": "PASSED_NATIVE_CONTROLS_GENERATED_OUTPUT_REFRESH_PENDING",
+    "worktree": "/home/astral/.codex/worktrees/agones-resource-quantity/agones"
+  },
+  "refreshed_dependency_gates": {
+    "verification/agones/gates/c6cfc77ebba865ec53008598a448f5a5a796fc086bc0d873f899412ae6ca6cbf.json": "verification/agones/gates/4c862ed77211191654fda97b2d72628c0452eb51fd6f63e47ba7e148d53add76.json",
+    "verification/agones/gates/d6e40365a5fabbec22b5d84d64c433528d66bd63d91a30450e32c445647b3e92.json": "verification/agones/gates/772028df370da553b1ef6153dc822f93a5f88696f945f27ec50cbbc45d526681.json"
+  },
+  "schema_version": 1,
+  "status": "ISOLATED_ERROR_DATA_IMPLEMENTATION_GATED_ADOPTION_PENDING",
+  "worktree": "/home/astral/.codex/worktrees/agones-resource-quantity/agones"
+}

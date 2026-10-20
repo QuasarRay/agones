@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "classification": "CARGO_RESOURCE_DERIVE_HYGIENE_NOT_2_MATRIX_CREDIT",
+  "positive_cases": 2,
+  "compile_fail_cases": 3,
+  "cases": [
+    {
+      "name": "renamed",
+      "status": "PASSED",
+      "expectation": "COMPILES_AND_RUNS",
+      "expected_diagnostic": null,
+      "manifest": "[package]\nname=\"resource-derive-fixture\"\nversion=\"0.0.0\"\nedition=\"2024\"\n[workspace]\n[dependencies]\nderive_tools={package=\"agones-macros\",path=\"/home/astral/Projects/agones/crates/agones-macros\"}\nrenamed_core={package=\"agones-core\",path=\"/home/astral/Projects/agones/crates/agones-core\"}\n",
+      "source": "\ntrait AgonesApiResource {}\n#[derive(derive_tools::AgonesApiResource)]\n#[agones_resource(group=\"agones.dev\", version=\"v1\", kind=\"GameServer\", plural=\"gameservers\")]\nstruct Shape<T, const N: usize> where T: Clone {\n    marker: std::marker::PhantomData<[T;N]>,\n}\n#[test] fn identity() {\n    assert_eq!(<Shape<String,3> as renamed_core::AgonesApiResource>::API_VERSION,\"agones.dev/v1\");\n    assert_eq!(<Shape<String,3> as renamed_core::AgonesApiResource>::KIND,\"GameServer\");\n    assert_eq!(<Shape<String,3> as renamed_core::AgonesApiResource>::PLURAL,\"gameservers\");\n}\n",
+      "package_identities_unchanged": true
+    },
+    {
+      "name": "facade",
+      "status": "PASSED",
+      "expectation": "COMPILES_AND_RUNS",
+      "expected_diagnostic": null,
+      "manifest": "[package]\nname=\"resource-derive-fixture\"\nversion=\"0.0.0\"\nedition=\"2024\"\n[workspace]\n[dependencies]\nderive_tools={package=\"agones-macros\",path=\"/home/astral/Projects/agones/crates/agones-macros\"}\nrenamed_core={package=\"agones-core\",path=\"/home/astral/Projects/agones/crates/agones-core\"}\n",
+      "source": "mod facade { pub use renamed_core as runtime; }\n\ntrait AgonesApiResource {}\n#[derive(derive_tools::AgonesApiResource)]\n#[agones_resource(group=\"agones.dev\", version=\"v1\", kind=\"GameServer\", plural=\"gameservers\", core_path=\"crate::facade::runtime\")]\nstruct Shape<T, const N: usize> where T: Clone {\n    marker: std::marker::PhantomData<[T;N]>,\n}\n#[test] fn identity() {\n    assert_eq!(<Shape<String,3> as renamed_core::AgonesApiResource>::API_VERSION,\"agones.dev/v1\");\n    assert_eq!(<Shape<String,3> as renamed_core::AgonesApiResource>::KIND,\"GameServer\");\n    assert_eq!(<Shape<String,3> as renamed_core::AgonesApiResource>::PLURAL,\"gameservers\");\n}\n",
+      "package_identities_unchanged": true
+    },
+    {
+      "name": "missing-runtime",
+      "status": "PASSED",
+      "expectation": "COMPILE_REJECTED",
+      "expected_diagnostic": "AgonesApiResource requires an agones-core dependency or core_path",
+      "manifest": "[package]\nname=\"resource-derive-fixture\"\nversion=\"0.0.0\"\nedition=\"2024\"\n[workspace]\n[dependencies]\nderive_tools={package=\"agones-macros\",path=\"/home/astral/Projects/agones/crates/agones-macros\"}\n",
+      "source": "#[derive(derive_tools::AgonesApiResource)] #[agones_resource(group=\"agones.dev\", version=\"v1\", kind=\"GameServer\", plural=\"gameservers\")] struct Shape;",
+      "package_identities_unchanged": true
+    },
+    {
+      "name": "invalid-path",
+      "status": "PASSED",
+      "expectation": "COMPILE_REJECTED",
+      "expected_diagnostic": "core_path must be a valid Rust path",
+      "manifest": "[package]\nname=\"resource-derive-fixture\"\nversion=\"0.0.0\"\nedition=\"2024\"\n[workspace]\n[dependencies]\nderive_tools={package=\"agones-macros\",path=\"/home/astral/Projects/agones/crates/agones-macros\"}\nrenamed_core={package=\"agones-core\",path=\"/home/astral/Projects/agones/crates/agones-core\"}\n",
+      "source": "\ntrait AgonesApiResource {}\n#[derive(derive_tools::AgonesApiResource)]\n#[agones_resource(group=\"agones.dev\", version=\"v1\", kind=\"GameServer\", plural=\"gameservers\", core_path=\"not::\")]\nstruct Shape<T, const N: usize> where T: Clone {\n    marker: std::marker::PhantomData<[T;N]>,\n}\n#[test] fn identity() {\n    assert_eq!(<Shape<String,3> as renamed_core::AgonesApiResource>::API_VERSION,\"agones.dev/v1\");\n    assert_eq!(<Shape<String,3> as renamed_core::AgonesApiResource>::KIND,\"GameServer\");\n    assert_eq!(<Shape<String,3> as renamed_core::AgonesApiResource>::PLURAL,\"gameservers\");\n}\n",
+      "package_identities_unchanged": true
+    },
+    {
+      "name": "duplicate-path",
+      "status": "PASSED",
+      "expectation": "COMPILE_REJECTED",
+      "expected_diagnostic": "duplicate core_path",
+      "manifest": "[package]\nname=\"resource-derive-fixture\"\nversion=\"0.0.0\"\nedition=\"2024\"\n[workspace]\n[dependencies]\nderive_tools={package=\"agones-macros\",path=\"/home/astral/Projects/agones/crates/agones-macros\"}\nrenamed_core={package=\"agones-core\",path=\"/home/astral/Projects/agones/crates/agones-core\"}\n",
+      "source": "\ntrait AgonesApiResource {}\n#[derive(derive_tools::AgonesApiResource)]\n#[agones_resource(group=\"agones.dev\", version=\"v1\", kind=\"GameServer\", plural=\"gameservers\", core_path=\"renamed_core\", core_path=\"renamed_core\")]\nstruct Shape<T, const N: usize> where T: Clone {\n    marker: std::marker::PhantomData<[T;N]>,\n}\n#[test] fn identity() {\n    assert_eq!(<Shape<String,3> as renamed_core::AgonesApiResource>::API_VERSION,\"agones.dev/v1\");\n    assert_eq!(<Shape<String,3> as renamed_core::AgonesApiResource>::KIND,\"GameServer\");\n    assert_eq!(<Shape<String,3> as renamed_core::AgonesApiResource>::PLURAL,\"gameservers\");\n}\n",
+      "package_identities_unchanged": true
+    }
+  ]
+}

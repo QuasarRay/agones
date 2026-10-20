@@ -4,56 +4,56 @@
       "evidence_refs": [],
       "form": "proc_macro_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After protected CI yields complete current result rows, or exposes a concrete further blocker, return to the source error-data production packet and review only demonstrated repetitions.",
+      "next_review_trigger": "After one changed protected CI attempt for the query-allocation hypothesis, use actual retained memory/time/result rows to choose the next dependency-closing action; keep all eight _2cells required open.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_2",
       "location": "cross-crate",
-      "next_review_trigger": "After protected CI yields complete current result rows, or exposes a concrete further blocker, return to the source error-data production packet and review only demonstrated repetitions.",
+      "next_review_trigger": "After one changed protected CI attempt for the query-allocation hypothesis, use actual retained memory/time/result rows to choose the next dependency-closing action; keep all eight _2cells required open.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_attribute_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After protected CI yields complete current result rows, or exposes a concrete further blocker, return to the source error-data production packet and review only demonstrated repetitions.",
+      "next_review_trigger": "After one changed protected CI attempt for the query-allocation hypothesis, use actual retained memory/time/result rows to choose the next dependency-closing action; keep all eight _2cells required open.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_attribute_2",
       "location": "cross-crate",
-      "next_review_trigger": "After protected CI yields complete current result rows, or exposes a concrete further blocker, return to the source error-data production packet and review only demonstrated repetitions.",
+      "next_review_trigger": "After one changed protected CI attempt for the query-allocation hypothesis, use actual retained memory/time/result rows to choose the next dependency-closing action; keep all eight _2cells required open.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_derive_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After protected CI yields complete current result rows, or exposes a concrete further blocker, return to the source error-data production packet and review only demonstrated repetitions.",
+      "next_review_trigger": "After one changed protected CI attempt for the query-allocation hypothesis, use actual retained memory/time/result rows to choose the next dependency-closing action; keep all eight _2cells required open.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_derive_2",
       "location": "cross-crate",
-      "next_review_trigger": "After protected CI yields complete current result rows, or exposes a concrete further blocker, return to the source error-data production packet and review only demonstrated repetitions.",
+      "next_review_trigger": "After one changed protected CI attempt for the query-allocation hypothesis, use actual retained memory/time/result rows to choose the next dependency-closing action; keep all eight _2cells required open.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_delegate_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After protected CI yields complete current result rows, or exposes a concrete further blocker, return to the source error-data production packet and review only demonstrated repetitions.",
+      "next_review_trigger": "After one changed protected CI attempt for the query-allocation hypothesis, use actual retained memory/time/result rows to choose the next dependency-closing action; keep all eight _2cells required open.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_delegate_2",
       "location": "cross-crate",
-      "next_review_trigger": "After protected CI yields complete current result rows, or exposes a concrete further blocker, return to the source error-data production packet and review only demonstrated repetitions.",
+      "next_review_trigger": "After one changed protected CI attempt for the query-allocation hypothesis, use actual retained memory/time/result rows to choose the next dependency-closing action; keep all eight _2cells required open.",
       "status": "REQUIRED_OPEN"
     }
   ],
@@ -99,6 +99,7 @@
     "acceptance": "Source005 complete backend proof established at5185 and retained in PR94; source005/014 total36 qualified assertion occurrences directly proved. Remaining15cases/268occurrences and full migration obligations stay required. Follow-up PR CI validated reuse from5185. Latest integration CI checks its metadata-only delta and14controls; no fresh proof credit.",
     "access": "GitHub app authorized as QuasarRay with push/admin; gh CLI unauthenticated; local .git writable",
     "actual_integration_head": "1e64a054901658908d0a7a4eecd3010379df9614",
+    "actual_review_head": "7d8494d8ad8ff7ce0d14a3416fd6ab0c15c7c3da",
     "authorization": "User execution contract REQ-12/F4 and root AGENTS.MD milestone PR/merge workflow",
     "checks": [
       {
@@ -364,6 +365,9 @@
       "target_branch": "codex/agones-feature-gates-001"
     },
     "protected_execution_plan": "verification/agones/ci/protected-model-execution-plan.json",
+    "protected_terminal_receipt": "verification/agones/ci/39489621706-terminal-retained.json",
+    "protected_tested_merge": "89575a957b239dbc608ebb754cbb11ecfe8a8524",
+    "protected_workflow_run": 39489621706,
     "pull_request": "https://github.com/QuasarRay/agones/pull/96",
     "pull_requests": [
       {
@@ -390,7 +394,8 @@
         "url": "https://github.com/QuasarRay/agones/pull/94"
       }
     ],
-    "remote_result": "PR96_PROTECTED_CI_UPDATE_PREPARED",
+    "query_allocation_review": "verification/agones/refactoring/query-allocation-resource-review.json",
+    "remote_result": "PR96_QUERY_ALLOCATION_CHANGE_NATIVE_GATED_CI_UPDATE_PREPARED",
     "required_checks": [
       "migration-state",
       "rust",
@@ -406,9 +411,9 @@
   "goal": {
     "objective_attachment": "/home/astral/.codex/attachments/5cf63dab-e5a8-49be-a2f1-ae51f5edd993/pasted-text-1.txt",
     "reported_usage": {
-      "observed_at": 1792526499,
-      "time_seconds": 61241,
-      "tokens": 5934442
+      "observed_at": 1792530415,
+      "time_seconds": 65158,
+      "tokens": 6303020
     },
     "status": "active",
     "thread_id": "01a14ebe-10fa-7c41-9f85-256874fb4c1f",
@@ -416,8 +421,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 251,
-  "previous_sha256": "52e0475deb488353a9d3125adc17078592ff5d691e0758f681e98e777b25b103",
+  "previous_revision": 256,
+  "previous_sha256": "102abb399f9aff979873b5625fd91f39dc7085a56669ae174721e58f869a0850",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -790,9 +795,51 @@
       "observations": "One serial12selection job lost contact before its final-only upload, erasing even completed ordinary step outputs. A bounded recorder reads arbitrary binary output in64KiB chunks and retains exact bytes. A narrow fixed-route service wrapper limits the verifier tree, with its recorder outside. Each completed common selection uploads before subsequent work; five source cases and the contract have independent jobs/artifacts.",
       "reuse": "Existing foreground run.py receipt protocol, strict result parser, source bindings and GitHub Actions. The Linux service manager supplies cgroups, whole-group kill and resource accounting. No replacement scheduler, CI framework, orchestrator integration or macro is introduced.",
       "roi": "This repairs a confirmed multi-hour loss of all12selection evidence using one fixed command wrapper and existing artifact action. Three short copies of the pinned tool setup cost less validation and comprehension than a new composite/reusable-workflow abstraction. Local controls bound byte preservation, terminal failures, missing controls and false proof acceptance. Stop expansion after the protected live attempt is recoverable; diagnose actual outcomes."
+    },
+    {
+      "candidate": "Preserve source field.Error origin/declarative metadata and exact existing constructor/detail output in the real shared error owner.",
+      "decision": "SMALL_LOCAL_REFACTOR",
+      "id": "GS-VALIDATION-ERROR-DATA-001-production",
+      "next_review_trigger": "After the source error-data production gate, exact bidirectional mapping controls and complete25case native replay, review only concrete constructor/lowering repetitions; all eight _2cells remain required open.",
+      "observations": "All25general original validation rows were captured only after gated quantity/TypeMeta support; lowering exposed missing error payload data and exact detail mismatches. The four-class PlayerTracking source observation confirms the reviewed Required/Forbidden constructor image.",
+      "reuse": "Use the existing ValidationError representation, its constructor family and actual CGP validation consumers. Source local vendored field/errors.go and metadata validators are the pinned authority; no new abstraction or metaprogramming framework is needed.",
+      "roi": "Adding the two missing observed fields at the single shared owner and reusing constructor defaults closes an observed complete-case lowering blocker. Compiler spans can identify existing literal constructors mechanically; hand editing generated property bodies is forbidden. Shared with_origin/mark_covered_by_declarative builders retain data without repeated reconstruction. Keep broader metadata predicate parity explicitly open rather than introduce a validator framework."
+    },
+    {
+      "candidate": "Borrow unescaped query key/value byte slices with std::borrow::Cow inside the existing CGP parser; preserve owned exact error payloads and escaped-byte decoding.",
+      "decision": "REUSE_EXISTING",
+      "evidence": "verification/agones/ci/39489621706-terminal-retained.json",
+      "id": "GS-VALIDATE-FEATURES-001-query-allocation-resource-review",
+      "next_review_trigger": "After one changed protected CI attempt for the query-allocation hypothesis, use actual retained memory/time/result rows to choose the next dependency-closing action; keep all eight _2cells required open.",
+      "observations": "All five fixed original query/feature validation harnesses failed before result rows under unchanged unit domains/unwind128: three explicit12GiB OOM kills and two900s timeouts. Successful defaulting cases005/014 and the small contract retain complete proofs. Failed log tails repeatedly traverse ParseAgonesFeatureGates and Vec<(Vec<u8>,Vec<u8>)> temporary cleanup. This identifies an allocation hypothesis, not a proven unique solver bottleneck.",
+      "required_validation": "Ordinary production gate first; preserve raw bytes, percent/plus decoding, duplicate first-value behavior, semicolon/escape precedence and deterministic permitted error selection. Rebind affected gates/IR/metadata and re-run exact unchanged harnesses, assertions, covers, preconditions and unwind128. Reopen affected current proof bindings after source changes.",
+      "reuse": "The parser already has correct first-decoded-value and sorted-key/error precedence logic. Reuse std::borrow::Cow, actual providers, current original fixtures and strict property infrastructure; no new library, macro, source-model shortcut or alternate parser.",
+      "roi": "On ordinary unescaped feature queries, the current unescape always allocates/copies both key and value, and parse_query later destroys their owned vectors. Borrowing can remove those demonstrated temporary allocations with a private return-type change and owned conversion only for existing public errors. The change is small enough to validate with the full native/generation suite and exactly the same12selection CI. The benefit must be measured in the changed backend attempt; stop expansion if it does not resolve the observed resource cost. No hypothetical exact token saving is claimed."
+    },
+    {
+      "candidate": "Borrow unescaped query key/value byte slices with std::borrow::Cow inside the existing CGP parser; preserve owned exact error payloads and escaped-byte decoding.",
+      "decision": "REUSE_EXISTING",
+      "evidence": "verification/agones/ci/39489621706-terminal-retained.json",
+      "execution_scope": "Inspection confirmed cases000/001/004 use an empty query, while002/003 use CountsAndLists=true. Cover the common default-name allocations as well as decoded query copies. HasFeatureGateDefaults already supplies static feature names, so the private feature map can store borrowed static names and copy only booleans; public error payloads remain owned. This avoids a new lifetime parameter, capability, dependency or alternate parser.",
+      "generation_result": "All five deterministic modes check; all four exact-case Rust output files and every original case/assertion/cover/domain/unwind mapping remain byte-identical.",
+      "id": "GS-VALIDATE-FEATURES-001-query-allocation-resource-review",
+      "native_result": {
+        "example_controls_passed": 3,
+        "ignored_doctests": 1,
+        "ignored_process_children": 3,
+        "prior_selection_comparison": "The same603native tests selected by the previous all-target run passed; the default workspace command also observes one ignored doctest. No test was removed or newly ignored.",
+        "workspace_check_all_targets": "PASSED",
+        "workspace_tests_passed": 600
+      },
+      "next_review_trigger": "After one changed protected CI attempt for the query-allocation hypothesis, use actual retained memory/time/result rows to choose the next dependency-closing action; keep all eight _2cells required open.",
+      "observations": "All five fixed original query/feature validation harnesses failed before result rows under unchanged unit domains/unwind128: three explicit12GiB OOM kills and two900s timeouts. Successful defaulting cases005/014 and the small contract retain complete proofs. Failed log tails repeatedly traverse ParseAgonesFeatureGates and Vec<(Vec<u8>,Vec<u8>)> temporary cleanup. This identifies an allocation hypothesis, not a proven unique solver bottleneck.",
+      "required_validation": "Ordinary production gate first; preserve raw bytes, percent/plus decoding, duplicate first-value behavior, semicolon/escape precedence and deterministic permitted error selection. Rebind affected gates/IR/metadata and re-run exact unchanged harnesses, assertions, covers, preconditions and unwind128. Reopen affected current proof bindings after source changes.",
+      "reuse": "The parser already has correct first-decoded-value and sorted-key/error precedence logic. Reuse std::borrow::Cow, actual providers, current original fixtures and strict property infrastructure; no new library, macro, source-model shortcut or alternate parser.",
+      "roi": "On ordinary unescaped feature queries, the current unescape always allocates/copies both key and value, and parse_query later destroys their owned vectors. Borrowing can remove those demonstrated temporary allocations with a private return-type change and owned conversion only for existing public errors. The change is small enough to validate with the full native/generation suite and exactly the same12selection CI. The benefit must be measured in the changed backend attempt; stop expansion if it does not resolve the observed resource cost. No hypothetical exact token saving is claimed. The existing CGP capability already guarantees static feature names. Borrowing those names removes15String allocations and their cleanup from each canonical parse, including the three empty-query cases. The private query decoder can borrow unescaped byte slices and own decoded escapes. Native semantic checks and unchanged protected backend attempts determine whether this reduces the actual solver resource cost.",
+      "status": "NATIVE_GATED_GENERATED_BODIES_UNCHANGED_PROTECTED_MODEL_CI_PENDING"
     }
   ],
-  "revision": 252,
+  "revision": 257,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [
@@ -803,14 +850,17 @@
       "disposition": "READY",
       "evidence_refs": [
         "verification/agones/gameserver-feature-validation-evidence.json",
-        "verification/agones/ci/protected-model-execution-plan.json"
+        "verification/agones/ci/protected-model-execution-plan.json",
+        "verification/agones/ci/39489621706-in-progress.json",
+        "verification/agones/ci/39489621706-terminal-retained.json",
+        "verification/agones/query-borrowing-prior-assurance.json"
       ],
       "feature_ids": [
         "gameserver-player-tracking-validation"
       ],
       "id": "GS-VALIDATE-FEATURES-001",
-      "implementation_gate": "verification/agones/gates/317304e45484daa2961fdf0a6983d3e056af281f03d5597b542bc9c51a435e49.json",
-      "next_action": "Publish the validated protected execution update to the existing PR96 head; recover its actual jobs and per-selection artifacts before formal credit or merge. Keep all12selected harnesses, domains, assertions, covers and unwind bounds. Independently continue the gated quantity/TypeMeta work and required validation error-data packet without repeating completed work.",
+      "implementation_gate": "verification/agones/gates/f8271f2592ac1b7a5e27d8a9e17ad361679cbd40f113e2a8bb3dd0d75ce65810.json",
+      "next_action": "Publish the reviewable query allocation change to existing PR96 with expected-head protection and tree equality, then recover the same12selection protected CI. Compare actual resource use and full selected result rows before acceptance. Preserve all original obligations and the isolated fe8b4301source error-data work; no unprotected or identical deterministic retry.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
         "crates/agones-core/src/gameserver_defaulting.rs",
@@ -838,6 +888,48 @@
       "stage": "VERIFYING",
       "test_ids": [
         "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+      ]
+    },
+    {
+      "dependencies": [
+        "RESOURCE-QUANTITY-001"
+      ],
+      "disposition": "READY",
+      "evidence_refs": [
+        "verification/agones/validation-error-data-isolated-recovery.json"
+      ],
+      "feature_ids": [
+        "source-validation-error-data"
+      ],
+      "id": "GS-VALIDATION-ERROR-DATA-001",
+      "implementation_gate": null,
+      "next_action": "Recover isolated commit190892066, gatea8a9dda6 and passing post-gate mapping controls; finish affected gate/IR/generation refresh and native replay for every one of the25general cases. During protected CI39489621706, retain all12artifacts, restore current source005/014 proofs only from verified rows, and diagnose the explicit source002/003 resource failures before any changed attempt. No subset or weaker domain/bounds.",
+      "owned_paths": [
+        "crates/agones-core/src/gameserver.rs",
+        "crates/agones-core/src/gameserver_validation.rs",
+        "crates/agones-rusternetes/examples/codegen/gameserver_features.rs",
+        "crates/agones-rusternetes/tests/source_gameserver_feature_validation.rs"
+      ],
+      "requirement_ids": [
+        "REQ-02",
+        "REQ-04",
+        "REQ-05",
+        "REQ-07",
+        "REQ-08",
+        "REQ-09",
+        "REQ-10",
+        "REQ-11",
+        "REQ-12",
+        "REQ-13"
+      ],
+      "source_config_binding": {
+        "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+        "isolated_commit": "e8b684a00b7758eef366ee467117c771af84b8d1",
+        "work_packet": "verification/agones/validation-error-data-work-packet.json"
+      },
+      "stage": "IMPLEMENTING",
+      "test_ids": [
+        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate"
       ]
     },
     {
@@ -909,7 +1001,7 @@
         "gameserver-creation-defaulting"
       ],
       "id": "GS-DEFAULTS-001",
-      "implementation_gate": "verification/agones/gates/2b396f733249e0a8cbb80c280000330b0793cdd6d3403d024a2d3234ceacca51.json",
+      "implementation_gate": "verification/agones/gates/6d74605ee7e8503fc86bb01ce7c4379f05d1571babd555cd0e7ad166a693d7df.json",
       "next_action": "Publish complete source005 raw evidence and updated direct coverage/next feature packet to PR94; validate fresh metadata/binding CI and merge this proof milestone. Then implement GS-VALIDATE-FEATURES-001 through CGP before extracting its semantic properties.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
@@ -950,7 +1042,7 @@
         "source-sdk-version-annotation-policy"
       ],
       "id": "SDK-VERSION-001",
-      "implementation_gate": "verification/agones/gates/726aa2dd03dccbc61699aafc1ae531144ea657d65be8bf81bc80934e24ef0b6c.json",
+      "implementation_gate": "verification/agones/gates/348c892497d84b35beaf32782b33beb4bc78adbe1348b7261d1f496b8e7eba75.json",
       "next_action": "Complete remaining18 selected version identities and the shared-domain claims/covers. Reuse complete GameServer source proofs with the same qualified version identity counted once; retain the two Fleet assertions and full decoder/lifecycle scope.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
@@ -993,7 +1085,7 @@
         "source-compatible-feature-gate-error-rendering"
       ],
       "id": "FG-ERROR-001",
-      "implementation_gate": "verification/agones/gates/cc64ed03315ed3092017009eae25f0b0499ba3227bef45fe105fb91fff16d07a.json",
+      "implementation_gate": "verification/agones/gates/3e500787a04f211976e2176ffced6ae2062413054e68bc90f2c1a6959b62069d.json",
       "next_action": "Resume required ASCII/full-error proofs only with a distinct diagnosed decomposition hypothesis, preserving original byte domains, assertions, covers and source-compatible rendering; time/memory failures remain uncredited.",
       "owned_paths": [
         "crates/agones-core/src/features.rs"
@@ -1034,7 +1126,7 @@
         "feature-gates-environment-cli-binding"
       ],
       "id": "FG-INPUT-001",
-      "implementation_gate": "verification/agones/gates/f6ed2c70e0caa1a0d1be5ab8a6aba6b4a9f6c91e5a7a84d36d754dc9cb441d32.json",
+      "implementation_gate": "verification/agones/gates/51f48047b017c17aa4c17af0be2a306872ece6a31d7c8f67ca4ede57f65fe8e1.json",
       "next_action": "Complete formal evidence for the original environment/CLI assertions and real input-binding effects beyond the proved bounded pure selector; retain every original identity and all required process/lifecycle categories.",
       "owned_paths": [
         "crates/agones-core/src/features.rs",
@@ -1071,7 +1163,7 @@
         "feature-gates-configuration"
       ],
       "id": "FG-CONFIG-001",
-      "implementation_gate": "verification/agones/gates/a4fd968eb7277b34a1f542d5bc3fa8199115190a15f80e7d8c804539ed6b664e.json",
+      "implementation_gate": "verification/agones/gates/4c1ce18aa116d44065c4fe05d8515fd5da38b3d7b65411e54dcb0b25f4ae39be.json",
       "next_action": "Complete remaining exact query/encoding source assertions with existing generated harnesses and unchanged domains/covers. Reuse the proved parse-error case and retain independent lifecycle/consumer obligations.",
       "owned_paths": [
         "crates/agones-core/src/features.rs",
@@ -1094,46 +1186,6 @@
       "test_ids": [
         "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures",
         "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestEnableAllFeatures"
-      ]
-    },
-    {
-      "dependencies": [
-        "RESOURCE-QUANTITY-001"
-      ],
-      "disposition": "READY",
-      "evidence_refs": [],
-      "feature_ids": [
-        "source-validation-error-data"
-      ],
-      "id": "GS-VALIDATION-ERROR-DATA-001",
-      "implementation_gate": null,
-      "next_action": "Repair source error data/mapping support from the focused packet, refresh gates and all25required source-case lowerings/native replays. TypeMeta is implemented/gated. In canonical checkout, prepare a protected CI attempt after actual runner loss; retain complete results before proof credit. Preserve user guidance and all required _2cells.",
-      "owned_paths": [
-        "crates/agones-core/src/gameserver.rs",
-        "crates/agones-core/src/gameserver_validation.rs",
-        "crates/agones-rusternetes/examples/codegen/gameserver_features.rs",
-        "crates/agones-rusternetes/tests/source_gameserver_feature_validation.rs"
-      ],
-      "requirement_ids": [
-        "REQ-02",
-        "REQ-04",
-        "REQ-05",
-        "REQ-07",
-        "REQ-08",
-        "REQ-09",
-        "REQ-10",
-        "REQ-11",
-        "REQ-12",
-        "REQ-13"
-      ],
-      "source_config_binding": {
-        "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
-        "isolated_commit": "e8b684a00b7758eef366ee467117c771af84b8d1",
-        "work_packet": "verification/agones/validation-error-data-work-packet.json"
-      },
-      "stage": "DISCOVERED",
-      "test_ids": [
-        "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate"
       ]
     },
     {
@@ -1180,15 +1232,15 @@
   ],
   "workspace": {
     "branch": "agones-rs-dev",
-    "dirty_patch_sha256": "6043db6644cce3aa8953a3fc2603630a165dd4c7dad89e0a8a5d058c3fc9aa88",
-    "head": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
-    "last_validated_implementation": "verification/agones/gates/317304e45484daa2961fdf0a6983d3e056af281f03d5597b542bc9c51a435e49.json",
+    "dirty_patch_sha256": "b4efaed41fa683281e9b151ec6b41c635b8e932728f4e692a32eb1a1d16cf734",
+    "head": "7d8494d8ad8ff7ce0d14a3416fd6ab0c15c7c3da",
+    "last_validated_implementation": "verification/agones/gates/f8271f2592ac1b7a5e27d8a9e17ad361679cbd40f113e2a8bb3dd0d75ce65810.json",
     "path": "/home/astral/Projects/agones",
-    "source_binding_receipt": "verification/agones/runs/ci-model-workflow-preservation-1.json",
+    "source_binding_receipt": "verification/agones/runs/query-borrowing-derive-paths-1.json",
     "untracked_inputs": [
       "AGONES_RS_CONTINUATION_PROMPT.md",
       "AGONES_RS_PROMPT_AUDIT_RESOLUTION.md"
     ],
-    "untracked_source_binding_sha256": "8833d6fda481ceac52b65b4dc65dda988900a6ccb636291f1c1aaecea7bf686d"
+    "untracked_source_binding_sha256": "dc08b439611040a82bf2c1ad99b21138622b32b11dc06a503ce39e9ed710332c"
   }
 }

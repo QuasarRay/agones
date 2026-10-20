@@ -1,6 +1,7 @@
 {
   "acceptance": "Source005 complete backend proof established at5185 and retained in PR94; source005/014 total36 qualified assertion occurrences directly proved. Remaining15cases/268occurrences and full migration obligations stay required. Follow-up PR CI validated reuse from5185. Latest integration CI checks its metadata-only delta and14controls; no fresh proof credit.",
   "actual_integration_head": "1e64a054901658908d0a7a4eecd3010379df9614",
+  "actual_review_head": "7d8494d8ad8ff7ce0d14a3416fd6ab0c15c7c3da",
   "checks": [
     {
       "cause": "Guidance existed locally at build/local-includes/AGENTS.MD but was ignored by Git and absent from clean CI checkout.",
@@ -257,6 +258,9 @@
     "workflow_run": 39464345048
   },
   "protected_execution_plan": "verification/agones/ci/protected-model-execution-plan.json",
+  "protected_terminal_receipt": "verification/agones/ci/39489621706-terminal-retained.json",
+  "protected_tested_merge": "89575a957b239dbc608ebb754cbb11ecfe8a8524",
+  "protected_workflow_run": 39489621706,
   "pull_request": "https://github.com/QuasarRay/agones/pull/96",
   "pull_requests": [
     {
@@ -283,7 +287,8 @@
       "url": "https://github.com/QuasarRay/agones/pull/94"
     }
   ],
-  "remote_result": "PR96_PROTECTED_CI_UPDATE_PREPARED",
+  "query_allocation_review": "verification/agones/refactoring/query-allocation-resource-review.json",
+  "remote_result": "PR96_QUERY_ALLOCATION_CHANGE_NATIVE_GATED_CI_UPDATE_PREPARED",
   "required_checks": [
     "migration-state",
     "rust",

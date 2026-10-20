@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "QUERY_BORROWING_CHANGED_CI_READY",
+  "gate_snapshot": "verification/agones/gates/f8271f2592ac1b7a5e27d8a9e17ad361679cbd40f113e2a8bb3dd0d75ce65810.json",
+  "predecessor_revision": 256,
+  "predecessor_sha256": "102abb399f9aff979873b5625fd91f39dc7085a56669ae174721e58f869a0850",
+  "reason": "One actual production file reuses static names and std::borrow::Cow. All prior603native tests, five generation checks, parser/execution/selector/guidance and derive controls pass. Generated Rust cases and their assertions/covers/domains/bounds are unchanged. Previous7dproofs retained historically; fresh actual model results required.",
+  "result_revision": 257,
+  "schema_version": 1,
+  "state_sha256": "051320f244f4173d7082c5d129f8294353a38a3d8f592094f86c302f263936b4",
+  "timestamp": "2026-10-20T21:10:05.214423+00:00"
+}

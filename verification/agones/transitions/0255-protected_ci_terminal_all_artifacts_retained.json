@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "PROTECTED_CI_TERMINAL_ALL_ARTIFACTS_RETAINED",
+  "gate_snapshot": "verification/agones/gates/317304e45484daa2961fdf0a6983d3e056af281f03d5597b542bc9c51a435e49.json",
+  "predecessor_revision": 254,
+  "predecessor_sha256": "07af25068dd3e02477bc4968d91e92cd71afc260ff499f7ee316bf0c06453d18",
+  "reason": "CI39489621706 completed:state/Rust/sixcommon/contract passed; allfive exact validation harnesses failed before result rows (three12GiBOOM,two900stimeout). All12artifacts retained/downloaded/digest and log checked; seven strict summaries independently reproduced with49claims38covers, including36qualified defaulting assertions. Keep full required scope and active Goal; isolated error-data native gate514tests and mapping controls preserved at190892066/fe8b4301.",
+  "result_revision": 255,
+  "schema_version": 1,
+  "state_sha256": "b43c37226017abc1bd76a4437455dbfa4beab8258767586e196dda042b699efa",
+  "timestamp": "2026-10-20T20:38:36.574123+00:00"
+}

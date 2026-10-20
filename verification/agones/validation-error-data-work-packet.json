@@ -5,7 +5,8 @@
   "captured_required_assertions": 25,
   "captured_required_cases": 25,
   "classification": "REPO_SAFE",
-  "next_action": "Implement/gate the necessary source error representation and constructor/detail behavior using existing shared ValidationError constructors and CGP consumers. Use source-bound bidirectional error mapping controls. Refresh affected gates/IR/codegen, then generate/native-replay all25cases and run bounded actual backend verification. Do not merge PR96 based only on a green model job without the source-correspondence review.",
+  "isolated_recovery": "verification/agones/validation-error-data-isolated-recovery.json",
+  "next_action": "Recover isolated implementation190892066 and source-error gatea8a9dda6; mapping controls2pass in the isolated worktree. Refresh affected production/generator gates and bind all six fields in actual-adapter/helper replay metadata before emitting/native-replaying every one of the25general cases. Keep full metadata predicates and formal cleanup/lifecycle required. Separately retrieve every protected CI39489621706 artifact and diagnose original-feature source-case resource failures without shrinking any proof.",
   "no_subset_emitted_or_credited": true,
   "required_repairs": [
     {
@@ -35,7 +36,7 @@
     "inverse": "Reconstruct the fixed empty Go string from Rust None plus Required/Forbidden kind. Preserve kind/path/detail and Origin/CoveredByDeclarative. Reject values outside this declared constructor image instead of silently normalizing.",
     "justification": "The actual source constructors set BadValue to the empty string. The kind discriminant makes this a lossless representation on their output image. The Go four-class PlayerTracking observation independently confirms the helper image; raw Go/Rust field equality is not the claim.",
     "rule": "AGONES-ERROR-CONSTRUCTOR-EMPTY-1",
-    "status": "SOURCE_IMAGE_REVIEWED_BIDIRECTIONAL_CONTROLS_PENDING",
+    "status": "BIDIRECTIONAL_NATIVE_CONTROLS_PASSED_METADATA_EMISSION_BOUND_IN_ISOLATED_GENERATOR",
     "validation_required": "Add actual bidirectional reconstruction controls and bind the rule in emitter, adapter replay and helper model metadata before source-parity credit."
   },
   "source_files": {
@@ -44,5 +45,5 @@
     "vendor/k8s.io/apimachinery/pkg/apis/meta/v1/types.go": "110ef0b67dda6c349a5c8abae421360ba0aa15702f2f0e04d320bfb2687785f2",
     "vendor/k8s.io/apimachinery/pkg/util/validation/field/errors.go": "747db5374cdd58712b46d10775272508212d3201fa05c30105a5531debc666d4"
   },
-  "status": "SOURCE_LOWERING_REQUIRES_COMPLETE_ERROR_DATA_SUPPORT"
+  "status": "ISOLATED_PRODUCTION_GATED_BIDIRECTIONAL_MAPPING_CONTROLS_PASS_OUTPUT_REFRESH_PENDING"
 }

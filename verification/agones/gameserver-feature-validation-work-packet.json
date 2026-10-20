@@ -7,7 +7,7 @@
   "ci_tree": "893d506d71f7e348d71eceeb61df2101ed1511b8",
   "classification": "REPO_SAFE",
   "historical_observed_gap": "Pinned Go GameServerSpec.Validate begins with validateFeatureGates, which forbids non-nil Players when PlayerTracking is disabled, including the development-address early-return path. Rust GameServerSpec::validate and actual Rusternetes creation validation have no corresponding feature-gate check; the validation admission context currently owns hooks only. Fleet/GameServerSet template validation also reaches the shared spec validation and must preserve configured behavior and nested paths.",
-  "implementation_gate": "verification/agones/gates/317304e45484daa2961fdf0a6983d3e056af281f03d5597b542bc9c51a435e49.json",
+  "implementation_gate": "verification/agones/gates/f8271f2592ac1b7a5e27d8a9e17ad361679cbd40f113e2a8bb3dd0d75ce65810.json",
   "implementation_scope": [
     "Implement the complete source validateFeatureGates policy through an explicit CGP capability/provider, using the existing HasGameServerFeatureFlags getter and shared parsed feature configuration.",
     "Connect the policy to actual direct GameServer/spec validation and Rusternetes GameServer/Fleet/GameServerSet validation consumers with correct nested field paths and configured/default contexts.",
@@ -50,12 +50,22 @@
   "proof_attempts": "verification/agones/gameserver-feature-validation-proof-attempts.json",
   "proof_order": "Implementation gate317304recorded before every new semantic extraction/property. All5exact cases/10qualified assertions now captured and generated; source/native replay is ordinary evidence. Real backend campaign and post-observation cleanup remain open.",
   "protected_ci_recovery": {
-    "formal_credit": 0,
+    "next_action": "Implement the bounded Cow query-allocation hypothesis in the real existing CGP parser after recovering this exact snapshot; ordinary gate then affected binding/IR/generation refresh and the unchanged12selection protected CI. Preserve source0/1timeouts andsource2/3/4OOM logs; no identical retry or weaker domain/bounds. Separately recover isolated error-data gatea8a9dda6and post-gate mapping commitfe8b4301for full25case generation/replay.",
     "plan": "verification/agones/ci/protected-model-execution-plan.json",
-    "prior_run": 39464345048,
-    "status": "LOCAL_CONTROLS_PASSED_PUBLICATION_PENDING"
+    "receipt": "verification/agones/ci/39489621706-terminal-retained.json",
+    "refactoring_review": "verification/agones/refactoring/query-allocation-resource-review.json",
+    "source_head": "7d8494d8ad8ff7ce0d14a3416fd6ab0c15c7c3da",
+    "status": "COMPLETED_FAILURE_ALL12ARTIFACTS_RETAINED_7PROOFS_VERIFIED_5RESOURCE_FAILURES",
+    "workflow_run": 39489621706
   },
   "pull_request": "https://github.com/QuasarRay/agones/pull/96",
+  "query_allocation_repair": {
+    "actual_code": "Canonical/default feature names use the existing static-name capability, with per-map owned bools. Query buffers use borrowed/owned byte slices internally, and public error payloads remain owned.",
+    "gate": "verification/agones/gates/f8271f2592ac1b7a5e27d8a9e17ad361679cbd40f113e2a8bb3dd0d75ce65810.json",
+    "prior_assurance": "verification/agones/query-borrowing-prior-assurance.json",
+    "review": "verification/agones/refactoring/query-allocation-resource-review.json",
+    "status": "ORDINARY_GATED_GENERATION_REFRESHED_MODEL_PENDING"
+  },
   "remaining_required_outside_this_helper": [
     "Full GameServer validation, resource-quantity exact numeric semantics, hook/metadata error ordering and every remaining source behavior remain required and are not certified by this helper.",
     "All lifecycle/boundary/conformance obligations and all eight required _2 form/location cells remain open."

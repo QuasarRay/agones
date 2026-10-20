@@ -4045,7 +4045,7 @@
     }
   ],
   "ir": "verification/agones/gameserver-defaulting.ir.json",
-  "ir_sha256": "61b5c886b401e540d21792cefb43d04c6f8136833ece90ca6552bd8af4d2c6f6",
+  "ir_sha256": "8c128361a1a188582a09fe2747a1bf4aab2996ff73b6e31a91c4cc2359a027c4",
   "lifetime_mapping": {
     "boundary": "After every original state observation and the case cover, retain the harness-owned GameServer, parsed feature result and context through std::mem::forget in both engines. The source callback specifies no GC/deallocation observation or schedule.",
     "constant_fixture_materialization": "For nonempty queries, the independent fixed typed fixture is physically allocated after the parser/NoError observation and before its first use. It contains no feature/global effects, and the parser has no fixture capability. The source input value and action/observation order are unchanged; allocation/GC schedules are not asserted by the source callback.",

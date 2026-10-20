@@ -4,7 +4,7 @@
 //! the pinned reference. Configuration is owned by CGP contexts, avoiding the
 //! reference's process-global mutable map while preserving atomic replacement.
 
-use std::{error::Error, fmt};
+use std::{borrow::Cow, error::Error, fmt};
 
 use cgp::prelude::*;
 
@@ -40,17 +40,17 @@ static CANONICAL_FEATURE_DEFAULTS: &[(&str, bool)] = AGONES_FEATURE_DEFAULTS;
 /// Mirrors an initialized or not-yet-initialized reference feature map.
 /// `Default` is empty, as Go's map is nil before ParseFeatures/EnableAllFeatures.
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
-pub struct FeatureGates(Vec<(String, bool)>);
+pub struct FeatureGates(Vec<(&'static str, bool)>);
 
 impl FeatureGates {
     pub fn enabled(&self, feature: &str) -> bool {
         self.0
-            .binary_search_by(|(name, _)| name.as_str().cmp(feature))
+            .binary_search_by(|(name, _)| (*name).cmp(feature))
             .map(|index| self.0[index].1)
             .unwrap_or(false)
     }
 
-    fn from_defaults(defaults: &[(&str, bool)]) -> Self {
+    fn from_defaults(defaults: &[(&'static str, bool)]) -> Self {
         // The canonical source table is already sorted and unique. Preserve
         // its order directly; custom contexts retain the map-like fallback.
         // Pointer identity is only a fast path, never a semantic precondition.
@@ -58,18 +58,18 @@ impl FeatureGates {
             return Self(
                 defaults
                     .iter()
-                    .map(|(name, enabled)| ((*name).to_owned(), *enabled))
+                    .map(|(name, enabled)| (*name, *enabled))
                     .collect(),
             );
         }
-        // The production dictionary has fifteen entries. Sorted owned entries
-        // preserve map lookup/encoding behavior without general tree machinery.
+        // The capability supplies static names; each map owns its bool values.
+        // Sorted entries preserve map lookup/encoding without tree machinery.
         // Repeated default names keep their last value, as map collection did.
-        let mut values: Vec<(String, bool)> = Vec::with_capacity(defaults.len());
+        let mut values: Vec<(&'static str, bool)> = Vec::with_capacity(defaults.len());
         for (name, enabled) in defaults {
-            match values.binary_search_by(|(key, _)| key.as_str().cmp(name)) {
+            match values.binary_search_by(|(key, _)| (*key).cmp(name)) {
                 Ok(index) => values[index].1 = *enabled,
-                Err(index) => values.insert(index, ((*name).to_owned(), *enabled)),
+                Err(index) => values.insert(index, (*name, *enabled)),
             }
         }
         Self(values)
@@ -191,11 +191,11 @@ impl<Context: HasFeatureGateDefaults> FeatureGateParser<Context> for ParseAgones
             let index = features
                 .0
                 .binary_search_by(|(name, _)| name.as_bytes().cmp(&key))
-                .map_err(|_| FeatureGateError::UnknownFeature(key))?;
+                .map_err(|_| FeatureGateError::UnknownFeature(key.into_owned()))?;
             let enabled =
                 parse_feature_bool(&value).ok_or_else(|| FeatureGateError::InvalidBool {
-                    feature: features.0[index].0.clone(),
-                    value,
+                    feature: features.0[index].0.to_owned(),
+                    value: value.into_owned(),
                 })?;
             features.0[index].1 = enabled;
         }
@@ -227,8 +227,8 @@ pub fn parse_feature_bool(value: &[u8]) -> Option<bool> {
     }
 }
 
-fn parse_query(query: &[u8]) -> Result<Vec<(Vec<u8>, Vec<u8>)>, FeatureGateError> {
-    let mut values: Vec<(Vec<u8>, Vec<u8>)> = Vec::new();
+fn parse_query(query: &[u8]) -> Result<Vec<(Cow<'_, [u8]>, Cow<'_, [u8]>)>, FeatureGateError> {
+    let mut values: Vec<(Cow<'_, [u8]>, Cow<'_, [u8]>)> = Vec::new();
     let mut error = None;
     for field in query
         .split(|byte| *byte == b'&')
@@ -261,7 +261,10 @@ fn parse_query(query: &[u8]) -> Result<Vec<(Vec<u8>, Vec<u8>)>, FeatureGateError
     }
 }
 
-fn unescape(bytes: &[u8]) -> Result<Vec<u8>, FeatureGateError> {
+fn unescape(bytes: &[u8]) -> Result<Cow<'_, [u8]>, FeatureGateError> {
+    if !bytes.iter().any(|byte| matches!(byte, b'+' | b'%')) {
+        return Ok(Cow::Borrowed(bytes));
+    }
     let mut decoded = Vec::with_capacity(bytes.len());
     let mut i = 0;
     while i < bytes.len() {
@@ -291,7 +294,7 @@ fn unescape(bytes: &[u8]) -> Result<Vec<u8>, FeatureGateError> {
         }
         i += 1;
     }
-    Ok(decoded)
+    Ok(Cow::Owned(decoded))
 }
 
 fn query_escape(value: &str) -> String {
@@ -437,6 +440,12 @@ mod tests {
                 .unwrap()
                 .enabled("Example")
         );
+        for (query, expected) in [
+            ("%45xample=%74rue&Example=false", true),
+            ("Example=false&%45xample=%74rue", false),
+        ] {
+            assert_eq!(context.parse_feature_gates(query).unwrap().enabled("Example"), expected);
+        }
         assert!(matches!(
             context.parse_feature_gates("Example=TRUE;Foo=1"),
             Err(FeatureGateError::SemicolonSeparator)
