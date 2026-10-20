@@ -1,26 +1,39 @@
 {
-  "canonical_adoption": "PENDING; do not validate isolated source gates against the different canonical source tree or silently reuse them.",
-  "full_workspace_integration": "PENDING_GATED_GENERATION_REFRESH",
-  "implementation_commit": "190892066f793c3fd09ade9e6ec08622815c9acd",
-  "implementation_gate": "verification/agones/gates/a8a9dda678e02b3e4ed1e71129867c37a615091ad8cf272a8934247c81a50a9c.json",
-  "implementation_gate_sha256": "a8a9dda678e02b3e4ed1e71129867c37a615091ad8cf272a8934247c81a50a9c",
-  "implementation_tree": "e11ac14cb66257401dffb8f6d59d2892f17e7ecb",
+  "canonical_adoption": "PENDING; canonical production is unchanged. All paths/gates/native receipts in this manifest belong to the isolated commit.",
+  "complete_native_evidence_in_isolated_commit": "verification/agones/complete-validation-native-evidence.json",
+  "complete_native_evidence_sha256": "22294de6ad6bd0425fa38b36c5bd53da522c0cc08b4c29c0b93412f62964708a",
+  "full_workspace_integration": {
+    "ignored": 3,
+    "run": "verification/agones/runs/error-data-complete-workspace-1.json",
+    "status": "PASSED",
+    "tests_failed": 0,
+    "tests_passed": 673
+  },
+  "implementation_commit": "500326772a0ad9c1300f0f8bb8acff67e27079a4",
+  "implementation_gate": "verification/agones/gates/93dd4a976fa881690e9f498cdc0b6267296590697842b4f701a45c159792a0bf.json",
+  "implementation_gate_sha256": "93dd4a976fa881690e9f498cdc0b6267296590697842b4f701a45c159792a0bf",
+  "implementation_tree": "e71a08ceb183a00a87b349cb22ca0f79d3d62312",
   "native_tests": 514,
   "new_formal_credit": 0,
-  "next_action": "Only now extend error lowering with the source-bound bidirectional constructor-image mapping, bind all six fields in replay/helper domains, refresh source/generator gates, and emit/replay all25cases without subset credit.",
-  "post_gate_mapping_controls": {
-    "commit": "fe8b4301112753a721fa9b162afdd4cf05704203",
-    "implementation_gate_precedes_translation": true,
-    "run": "verification/agones/runs/validation-error-data-bidirectional-controls-2.json",
-    "scope": "Every normalized six-field source record reconstructs exactly. Required/Forbidden reject nil/nonempty raw bad value; other kinds preserve null versus empty string. Metadata emission binds the reviewed rule and pinned source constructors. Full25case regeneration/replay, actual-adapter/helper domain bindings and formal revalidation remain required.",
-    "status": "PASSED_NATIVE_CONTROLS_GENERATED_OUTPUT_REFRESH_PENDING",
-    "worktree": "/home/astral/.codex/worktrees/agones-resource-quantity/agones"
+  "next_action": "Recover this complete isolated native snapshot; all25general harnesses and50covers remain formal obligations. Resolve canonical parser/iterator resource failures using retained actual traces, then integrate isolated data/mapping and verify fresh bindings without discarding any source case or assertion.",
+  "recover": "git show 500326772a0ad9c1300f0f8bb8acff67e27079a4:verification/agones/complete-validation-native-evidence.json; verify its artifact bindings in that same commit before adoption.",
+  "refreshed_combined_gates": {
+    "FG-CONFIG-001": "verification/agones/gates/54969bbb38290cb4e5201110bb4316d6d7c87e83481a76f76e1b77a5ed9f1869.json",
+    "FG-ERROR-001": "verification/agones/gates/0f781568a914ada502a4850d6c5af70462f664c8d13885ad8538593a5701c3dc.json",
+    "FG-INPUT-001": "verification/agones/gates/5d3d634ed2a67f83e8da5dd9019abcd5ffe1a19a045e5ab9f355dbfee69337b8.json",
+    "GS-DEFAULTS-001": "verification/agones/gates/04251fc5f142f73078e6e365a1921990788a284e2fc3951532b969cbdf76f567.json",
+    "GS-TYPEMETA-001": "verification/agones/gates/7dd72b9fd25b1c2084902944a4ffcf304b5d5eed1822f032bd55d616c284f9f7.json",
+    "GS-VALIDATE-FEATURES-001": "verification/agones/gates/34f94e81d18a70c8351d5a14dc9743018ae7de144d057750f3642d30937b53d8.json",
+    "GS-VALIDATION-ERROR-DATA-001": "verification/agones/gates/93dd4a976fa881690e9f498cdc0b6267296590697842b4f701a45c159792a0bf.json",
+    "RESOURCE-QUANTITY-001": "verification/agones/gates/10392348bf13309799699c47c539c499067e6d56e582d8356948e46776779b8a.json",
+    "SDK-VERSION-001": "verification/agones/gates/765346abb764956585ac98118b9b99fc19652bbdef9f51c3524c3587d112588d.json"
   },
   "refreshed_dependency_gates": {
     "verification/agones/gates/c6cfc77ebba865ec53008598a448f5a5a796fc086bc0d873f899412ae6ca6cbf.json": "verification/agones/gates/4c862ed77211191654fda97b2d72628c0452eb51fd6f63e47ba7e148d53add76.json",
     "verification/agones/gates/d6e40365a5fabbec22b5d84d64c433528d66bd63d91a30450e32c445647b3e92.json": "verification/agones/gates/772028df370da553b1ef6153dc822f93a5f88696f945f27ec50cbbc45d526681.json"
   },
+  "remote_publication": "NOT_STARTED",
   "schema_version": 1,
-  "status": "ISOLATED_ERROR_DATA_IMPLEMENTATION_GATED_ADOPTION_PENDING",
+  "status": "COMPLETE25CASE_NATIVE_AND_ACTUAL_ADAPTER_REPLAY_PASSED_FORMAL_ADOPTION_OPEN",
   "worktree": "/home/astral/.codex/worktrees/agones-resource-quantity/agones"
 }

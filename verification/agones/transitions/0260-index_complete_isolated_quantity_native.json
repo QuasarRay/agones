@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate"
+  ],
+  "authorization": "User execution contract",
+  "event": "INDEX_COMPLETE_ISOLATED_QUANTITY_NATIVE",
+  "gate_snapshot": null,
+  "predecessor_revision": 259,
+  "predecessor_sha256": "ea473bf3b088c72f2ac6a0241b8a8af775bed698c050e7305914eaef8da4fd76",
+  "reason": "Retain actual terminal CI evidence and separately indexed complete isolated native snapshot; no feature-source proof or canonical adoption is inferred.",
+  "result_revision": 260,
+  "schema_version": 1,
+  "state_sha256": "8f6cefc6632995a629af0048e07b4b4af4174d252696e85b576b93669e8af301",
+  "timestamp": "2026-10-20T21:53:11.284277+00:00"
+}

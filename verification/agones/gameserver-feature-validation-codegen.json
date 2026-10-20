@@ -130,7 +130,7 @@
     }
   ],
   "ir": "verification/agones/gameserver-feature-validation.ir.json",
-  "ir_sha256": "74a07cbe2d9890b6dfcd0b80591d5dba82d9d5fef5c381b47939db47d0120251",
+  "ir_sha256": "ba8a4146a5dcc19be941c6c0a5322efc03e92da5e726332a6cb79e8134209984",
   "lifetime_mapping": {
     "boundary": "After every original observation and cover, retain the harness-owned fixture, parsed features, context and error lists in both engines. Source callbacks specify no GC/deallocation observation. Actual production bodies remain unchanged.",
     "ordinary_cleanup": "Separate complete-fixture and actual adapter replay uses normal destruction.",

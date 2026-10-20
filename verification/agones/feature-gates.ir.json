@@ -283,10 +283,10 @@
     "GOVERSION": "go1.27.1-X:nodwarf5"
   },
   "feature_id": "FG-CONFIG-001",
-  "implementation_gate": "verification/agones/gates/4c1ce18aa116d44065c4fe05d8515fd5da38b3d7b65411e54dcb0b25f4ae39be.json",
-  "implementation_gate_sha256": "4c1ce18aa116d44065c4fe05d8515fd5da38b3d7b65411e54dcb0b25f4ae39be",
-  "input_implementation_gate": "verification/agones/gates/51f48047b017c17aa4c17af0be2a306872ece6a31d7c8f67ca4ede57f65fe8e1.json",
-  "input_implementation_gate_sha256": "51f48047b017c17aa4c17af0be2a306872ece6a31d7c8f67ca4ede57f65fe8e1",
+  "implementation_gate": "verification/agones/gates/72061e47b8819b3c5003e4a96cec3bce01955a2c1f83b5b2cb45a11a661ad382.json",
+  "implementation_gate_sha256": "72061e47b8819b3c5003e4a96cec3bce01955a2c1f83b5b2cb45a11a661ad382",
+  "input_implementation_gate": "verification/agones/gates/3ff5615e374aed7d29634d1f3c1d2ffc8086079af7c954b76aa26aa3f509fc96.json",
+  "input_implementation_gate_sha256": "3ff5615e374aed7d29634d1f3c1d2ffc8086079af7c954b76aa26aa3f509fc96",
   "loader": "golang.org/x/tools/go/packages v0.48.0",
   "loader_source_files": {
     "build/scripts/agones-rs/extract/gameserver_defaulting.go": "3530dbf1e91a96f2264c5e8eb21c4f69c16b50818feee975af4d5fd46d907664",

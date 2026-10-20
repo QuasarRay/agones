@@ -660,6 +660,31 @@ pub(crate) fn validate_object_meta(meta: &ObjectMeta, path: &str) -> Vec<Validat
     errors
 }
 
+// Build the source field.Path index directly. Successful port validation needs
+// no path allocation; errors preserve the same decimal index and field text.
+fn indexed_validation_field(path: &str, index: usize, field: &str) -> String {
+    let mut result = String::from(path);
+    result.push('[');
+    let mut digits = [0u8; usize::BITS as usize];
+    let mut start = digits.len();
+    let mut remaining = index;
+    loop {
+        start -= 1;
+        digits[start] = b'0' + (remaining % 10) as u8;
+        remaining /= 10;
+        if remaining == 0 {
+            break;
+        }
+    }
+    for digit in &digits[start..] {
+        result.push(char::from(*digit));
+    }
+    result.push(']');
+    result.push('.');
+    result.push_str(field);
+    result
+}
+
 impl GameServerSpec {
     pub fn has_container(&self, name: &str, include_sidecar: bool) -> bool {
         if self.template.spec.containers.iter().any(|c| c.name == name) {
@@ -698,13 +723,13 @@ impl GameServerSpec {
             for (index, port) in self.ports.iter().enumerate() {
                 if port.host_port == 0 {
                     errors.push(ValidationError::required(
-                        format!("spec.ports[{index}].hostPort"),
+                        indexed_validation_field("spec.ports", index, "hostPort"),
                         DEV_ADDRESS_ANNOTATION,
                     ));
                 }
                 if port.port_policy != Some(PortPolicy::Static) {
                     errors.push(ValidationError::required(
-                        format!("spec.ports[{index}].portPolicy"),
+                        indexed_validation_field("spec.ports", index, "portPolicy"),
                         ERR_PORT_POLICY_STATIC,
                     ));
                 }
@@ -732,21 +757,20 @@ impl GameServerSpec {
         }
 
         for (index, port) in self.ports.iter().enumerate() {
-            let prefix = format!("spec.ports[{index}]");
             if matches!(
                 port.port_policy.as_ref(),
                 Some(PortPolicy::Dynamic | PortPolicy::Static)
             ) && port.container_port <= 0
             {
                 errors.push(ValidationError::required(
-                    format!("{prefix}.containerPort"),
+                    indexed_validation_field("spec.ports", index, "containerPort"),
                     ERR_CONTAINER_PORT_REQUIRED,
                 ));
             }
 
             if port.port_policy == Some(PortPolicy::Passthrough) && port.container_port > 0 {
                 errors.push(ValidationError::required(
-                    format!("{prefix}.containerPort"),
+                    indexed_validation_field("spec.ports", index, "containerPort"),
                     ERR_CONTAINER_PORT_PASSTHROUGH,
                 ));
             }
@@ -758,7 +782,7 @@ impl GameServerSpec {
                 )
             {
                 errors.push(ValidationError::forbidden(
-                    format!("{prefix}.hostPort"),
+                    indexed_validation_field("spec.ports", index, "hostPort"),
                     ERR_HOST_PORT,
                 ));
             }
@@ -766,7 +790,7 @@ impl GameServerSpec {
             if let Some(container) = port.container.as_deref() {
                 if !self.container.is_empty() && !self.has_container(container, true) {
                     errors.push(ValidationError::invalid(
-                        format!("{prefix}.container"),
+                        indexed_validation_field("spec.ports", index, "container"),
                         container,
                         ERR_CONTAINER_NAME_INVALID,
                     ));
@@ -1728,6 +1752,18 @@ mod tests {
     }
 
     use super::*;
+
+    #[test]
+    fn indexed_validation_fields_preserve_decimal_paths() {
+        for index in (0..1024).chain([usize::MAX / 10, usize::MAX - 1, usize::MAX]) {
+            for field in ["hostPort", "portPolicy", "containerPort", "container"] {
+                assert_eq!(
+                    indexed_validation_field("spec.ports", index, field),
+                    format!("spec.ports[{index}].{field}")
+                );
+            }
+        }
+    }
 
     fn simple_game_server() -> GameServer {
         GameServer {

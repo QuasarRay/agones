@@ -1,0 +1,13 @@
+{
+  "candidate": "Eliminate intermediate query-pair collection in the actual CGP parser after tracing the observed collection cleanup and byte-search paths.",
+  "decision": "REUSE_EXISTING",
+  "evidence_invalidation": "Any next production change reopens affected proof bindings. Preserve current dd4 results and isolated500326 source identities separately.",
+  "evidence_refs": [
+    "verification/agones/ci/39498916435-terminal-retained.json",
+    "verification/agones/validation-error-data-isolated-recovery.json"
+  ],
+  "feature_binding": "GS-VALIDATE-FEATURES-001",
+  "id": "GS-VALIDATE-FEATURES-001-query-allocation-terminal-review",
+  "next_review_trigger": "After one distinct production/cleanup repair and its native gate, compare actual protected backend results. Keep all eight _2cells required open.",
+  "rationale": "The borrowed-name/bytes production trial preserved native behavior but all five exact cases still reached12GiB OOM before individual rows. It did not resolve any feature-source proof. Inspect call sites before the next change; reuse current CGP provider and Genco with every domain/assertion/cover/bound retained. No new macro/framework is justified by this failure."
+}

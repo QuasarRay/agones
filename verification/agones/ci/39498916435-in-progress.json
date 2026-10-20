@@ -1,0 +1,100 @@
+{
+  "base": "1e64a054901658908d0a7a4eecd3010379df9614",
+  "changed_hypothesis": "The existing static-name capability permits borrowed feature names; std::borrow::Cow avoids unescaped query copies. Actual CGP production changes; generated Rust cases and every original assertion/cover/domain/unwind bound are unchanged.",
+  "classification": "REPO_SAFE",
+  "conclusion": null,
+  "formal_credit": 0,
+  "jobs": [
+    {
+      "active_steps": [],
+      "conclusion": "success",
+      "id": 118891076279,
+      "name": "migration-state",
+      "status": "completed"
+    },
+    {
+      "active_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "conclusion": null,
+      "id": 118891266425,
+      "name": "feature-validation-source-003",
+      "status": "in_progress"
+    },
+    {
+      "active_steps": [
+        "Test workspace"
+      ],
+      "conclusion": null,
+      "id": 118891266436,
+      "name": "rust",
+      "status": "in_progress"
+    },
+    {
+      "active_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "conclusion": null,
+      "id": 118891266468,
+      "name": "feature-validation-source-001",
+      "status": "in_progress"
+    },
+    {
+      "active_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "conclusion": null,
+      "id": 118891266500,
+      "name": "feature-validation-source-002",
+      "status": "in_progress"
+    },
+    {
+      "active_steps": [],
+      "conclusion": "success",
+      "id": 118891266682,
+      "name": "feature-validation-contract-model-check",
+      "status": "completed"
+    },
+    {
+      "active_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "conclusion": null,
+      "id": 118891266706,
+      "name": "feature-validation-source-000",
+      "status": "in_progress"
+    },
+    {
+      "active_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "conclusion": null,
+      "id": 118891266740,
+      "name": "feature-validation-source-004",
+      "status": "in_progress"
+    },
+    {
+      "active_steps": [
+        "Verify the complete original default-eviction GameServer case through Bolero and Kani"
+      ],
+      "conclusion": null,
+      "id": 118891266757,
+      "name": "feature-common-model-check",
+      "status": "in_progress"
+    }
+  ],
+  "local_equivalent_commit": "c6b2daac8d9ea2536c84249110de40ed6bd446e0",
+  "next_action": "Recover every actual artifact and verify digest/path/receipt/log/full rows/covers; compare source0/1timeouts and2/3/4OOM against this changed attempt. Keep all original and source-correspondence/lifecycle/_2obligations.",
+  "pr": 96,
+  "prior_comparison": "verification/agones/ci/39489621706-terminal-retained.json",
+  "review": "verification/agones/refactoring/query-allocation-resource-review.json",
+  "run_attempt": 1,
+  "schema_version": 1,
+  "selected_harnesses": 12,
+  "source_head": "dd4b4bfb82007eb4e8a3a84f93d276fb2f79cb27",
+  "source_tree": "c566533a5a5767c40c7d6af99f4ea434fed033e7",
+  "status": "QUERY_ALLOCATION_CHANGE_PUBLISHED_ACTUAL_PROTECTED_CI_RUNNING",
+  "tested_merge": "80901b52f41f9328f0449f16f4430e8eb2b7020f",
+  "url": "https://github.com/QuasarRay/agones/actions/runs/39498916435",
+  "workflow_run": 39498916435
+}

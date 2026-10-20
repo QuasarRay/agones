@@ -8,7 +8,7 @@
   },
   "feature_id": "GS-VALIDATE-FEATURES-001",
   "harness": "gameserver_feature_validation_common_domain",
-  "implementation_gate": "verification/agones/gates/f8271f2592ac1b7a5e27d8a9e17ad361679cbd40f113e2a8bb3dd0d75ce65810.json",
+  "implementation_gate": "verification/agones/gates/70364c20a393205d32e35c7839503eced4f6f607d9e65d312e7dc99551384eb5.json",
   "lifetime_mapping": {
     "boundary": "After all state/error observations and covers, retain harness owners in both engines. Actual production bodies and internal allocation/destruction remain unchanged.",
     "ordinary_cleanup": "Separate direct/provider/admission and whole-fixture replay exercises normal destruction.",
