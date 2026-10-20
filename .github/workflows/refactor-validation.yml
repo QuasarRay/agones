@@ -1,0 +1,25 @@
+name: Temporary refactor validation
+
+on:
+  push:
+    branches:
+      - codex/agones-refactor-cgp-deftly-comprende-001
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Rust
+        run: |
+          rustup toolchain install 1.98.1 --profile minimal
+          rustup component add rustfmt --toolchain 1.98.1
+      - name: Install native build dependencies
+        run: sudo apt-get update && sudo apt-get install -y protobuf-compiler
+      - name: Check lockfile and workspace
+        run: cargo check --locked --workspace --all-targets
+      - name: Test workspace
+        run: cargo test --locked --workspace
