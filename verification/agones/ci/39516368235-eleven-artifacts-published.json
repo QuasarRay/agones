@@ -1,0 +1,24 @@
+{
+  "available_artifacts": 11,
+  "classification": "REPO_SAFE",
+  "evidence_branch": "codex/agones-ci-evidence-39516368235",
+  "evidence_commit": "76dd4eaec524347f3493043d23cb58e54c25dc4f",
+  "evidence_tree": "73c85d968e59215a250e254d163d2d406461e7fe",
+  "failed_source_cases_retained": [
+    2,
+    3
+  ],
+  "local_evidence_checkpoint": "b9446fa1cf98819896d5151e9d45d1da9a418900",
+  "local_evidence_tree": "73c85d968e59215a250e254d163d2d406461e7fe",
+  "raw_bytes_uploaded_unchanged": true,
+  "receipt": "verification/agones/ci/39516368235-nine-retained-two-oom-source000-running.json",
+  "remote_tree_exactly_matches_local": true,
+  "required_source_case_still_running": 0,
+  "role": "Passive immutable backup. The actual tested draft PR head remains unchanged; no new CI workflow is launched by this branch.",
+  "schema_version": 1,
+  "source_head": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
+  "status": "PUBLISHED_ALL11_AVAILABLE_ARTIFACTS_SOURCE000_RUNNING",
+  "successful_strict_summaries": 9,
+  "tested_merge": "afdf77e038393296fc136dc61d81cbbc193691e4",
+  "workflow_run": 39516368235
+}
