@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "EXPECTED_MULTISET_VISIBLE_CHECKOUT_CONFIRMED",
+  "gate_snapshot": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
+  "predecessor_revision": 285,
+  "predecessor_sha256": "2bee3dbec4ec03badc0a7a9fee5a76eb19e04c8358fd6e0fb46928d9ce3d9e02",
+  "reason": "Visible agones-rs-dev HEAD now equals published e49e native tree; temporary-index content checks preserve only user AGENTS and current operational metadata. Actual merge afdf has the same tree; PR96 stays draft and migration incomplete.",
+  "result_revision": 286,
+  "schema_version": 1,
+  "state_sha256": "16328f8cb10814daa97abdf0d2986b961500b8082f25617a4b86a75c28e378f9",
+  "timestamp": "2026-10-20T23:41:07.115131+00:00"
+}

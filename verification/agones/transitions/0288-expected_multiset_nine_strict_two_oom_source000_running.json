@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "EXPECTED_MULTISET_NINE_STRICT_TWO_OOM_SOURCE000_RUNNING",
+  "gate_snapshot": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
+  "predecessor_revision": 287,
+  "predecessor_sha256": "363b4bf55e435ebc9538ea3ca4aa2c443f7ead9910e4fbe6b1883825e371f538",
+  "reason": "All11available artifacts retained; nine strict selections reproduce53claims/42SATcovers/37459rows, four feature-source assertions,36defaulting and1query-error occurrence. Cases002/003expectemptyerrors and OOM in FeatureGates::enabled binary-search expansion, so a singleton matcher is not their repair. Source000 remains running; no production change.",
+  "result_revision": 288,
+  "schema_version": 1,
+  "state_sha256": "6819aada4216288a63cd0075d6afc64edd5cb3718ede1a7569241c9f59460f9f",
+  "timestamp": "2026-10-20T23:52:11.416985+00:00"
+}

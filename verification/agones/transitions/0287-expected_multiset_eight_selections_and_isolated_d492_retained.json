@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "EXPECTED_MULTISET_EIGHT_SELECTIONS_AND_ISOLATED_D492_RETAINED",
+  "gate_snapshot": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
+  "predecessor_revision": 286,
+  "predecessor_sha256": "16328f8cb10814daa97abdf0d2986b961500b8082f25617a4b86a75c28e378f9",
+  "reason": "Eight raw artifacts hash-verified and strict summaries independently reproduced:35claims/40covers/31072rows, including four exact feature-source assertions. Shared matcher port passes675native/six modes in clean isolated d492 with all30harness bodies/nine gates unchanged; canonical queue stays here.",
+  "result_revision": 287,
+  "schema_version": 1,
+  "state_sha256": "363b4bf55e435ebc9538ea3ca4aa2c443f7ead9910e4fbe6b1883825e371f538",
+  "timestamp": "2026-10-20T23:47:01.971170+00:00"
+}

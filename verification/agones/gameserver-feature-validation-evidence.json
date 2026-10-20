@@ -9,6 +9,8 @@
     "verification/agones/ci/39505643334-terminal-retained.json": "dfc400819580c0e3feb2054bbc1b6a9d1d8ce50d86caf1ac99128ae967fa148b",
     "verification/agones/ci/39511896291-first-five-retained.json": "c61b2d440643d74eedebe3ea1f8ab24576b3451c6d6a29a8f0db2eeaa48a68f9",
     "verification/agones/ci/39511896291-terminal-retained.json": "b97d1ce65169bc780f144ede957f99492f70a1963b72e845c1a99051030db3ac",
+    "verification/agones/ci/39516368235-eight-retained.json": "f968ea212c27bdd3e8ee1ef4bdbe344144ff8aa474ad897b876295bf2d48da28",
+    "verification/agones/ci/39516368235-nine-retained-two-oom-source000-running.json": "df4660c5fdfc23dd0818ec50a63eaa1182c2ef0ebc0532bc43bb8533d8f41dbf",
     "verification/agones/ci/protected-model-execution-plan.json": "ab89b8924cba9e2bf37d712807911e037a9ace1513b3ba89e2517e1b22c7ae15",
     "verification/agones/gameserver-feature-validation-domain-first.rs": "bdf808073f19646b786a88b9b0a55505c3f698c7ed77bb9893aa258551345e70",
     "verification/agones/gameserver-feature-validation-domain-second.rs": "1f7c7e648729ce28f8cfa74ed3bd8b98e49621fa890a9a4118afd2887c3a8f2d",
@@ -200,6 +202,59 @@
   },
   "assurance": {
     "backend_campaign": {
+      "counts": {
+        "backend_rows": 37459,
+        "failed_harnesses": 2,
+        "original_defaulting_assertions": 36,
+        "original_feature_validation_assertions": 4,
+        "original_query_error_assertions": 1,
+        "retained_artifacts": 11,
+        "satisfied_covers": 42,
+        "semantic_claims": 53,
+        "successful_harnesses": 9,
+        "unreachable_credited": 0
+      },
+      "new_qualified_feature_validation_credit": 4,
+      "receipt": "verification/agones/ci/39516368235-nine-retained-two-oom-source000-running.json",
+      "source_head": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
+      "status": "NINE_STRICT_SELECTIONS_TWO_SOURCE_OOM_RETAINED_SOURCE000_RUNNING",
+      "tested_merge": "afdf77e038393296fc136dc61d81cbbc193691e4",
+      "workflow_run": 39516368235
+    },
+    "contract_domain_sampling": {
+      "accepted_inputs": 8192,
+      "precondition_rejections": 0,
+      "run": "verification/agones/runs/gs-validation-contract-domain-native-2.json",
+      "semantic_fault_controls": "Wrong flag/presence/count/kind/path/bad-value/detail rejected"
+    },
+    "contract_model_attempts": {
+      "new_formal_credit": 3,
+      "qualified_original_assertion_credit": 0,
+      "source_correspondence_limit": "Current seven successes prove their declared main-tree Rust domains and selected source cases. Complete Go six-field error correspondence and the independent isolated25case work remain required.",
+      "status": "CURRENT_RUST_CONTRACT_PASSED_FIVE_EXACT_SOURCE_TIMEOUTS",
+      "summary": "verification/agones/proof-summaries/gameserver-features-bolero-kani-ci-39511896291-1.json"
+    },
+    "current_gate_proof_status": "SOURCE001_AND004_VERIFIED_THREE_OTHER_FEATURE_SOURCE_RESULTS_REQUIRED",
+    "current_retained_backend_receipt": "verification/agones/ci/39516368235-nine-retained-two-oom-source000-running.json",
+    "expected_multiset_revalidation": {
+      "current_formal_credit_added": 4,
+      "independent_histogram_pairs": 1600,
+      "law_manifest": "verification/agones/expected-multiset-relation.json",
+      "ordinary_checks": [
+        "verification/agones/runs/expected-multiset-native-1.json",
+        "verification/agones/runs/expected-multiset-generation-controls-1.json"
+      ],
+      "original_feature_assertions_checked": 4,
+      "receipt": "verification/agones/ci/39516368235-eight-retained.json",
+      "required_feature_assertions_remaining": 6,
+      "reuse": "Seven source4523 successful selections retain their unchanged production/model program identities and exact scope. All five changed source-helper cases still require current verification. The four-field Rust contract is not full six-field Go API conformance.",
+      "review": "verification/agones/refactoring/expected-multiset-review.json",
+      "source_assertions": 10,
+      "status": "SOURCE001_AND004_PASSED_REMAINING_CASES_REQUIRED",
+      "unchanged_complete_source_harnesses": 5,
+      "unwind": 128
+    },
+    "historical_backend_campaign_before_expected_multiset": {
       "conclusion": "failure",
       "counts": {
         "backend_rows": 20132,
@@ -219,36 +274,6 @@
       "status": "TERMINAL_FAILURE_ALL12_ARTIFACTS_RETAINED_SEVEN_STRICT_SUMMARIES_REPRODUCED",
       "tested_merge": "44a9f5d940555795eeb3bc1abdacbeea1871ed4c",
       "workflow_run": 39511896291
-    },
-    "contract_domain_sampling": {
-      "accepted_inputs": 8192,
-      "precondition_rejections": 0,
-      "run": "verification/agones/runs/gs-validation-contract-domain-native-2.json",
-      "semantic_fault_controls": "Wrong flag/presence/count/kind/path/bad-value/detail rejected"
-    },
-    "contract_model_attempts": {
-      "new_formal_credit": 3,
-      "qualified_original_assertion_credit": 0,
-      "source_correspondence_limit": "Current seven successes prove their declared main-tree Rust domains and selected source cases. Complete Go six-field error correspondence and the independent isolated25case work remain required.",
-      "status": "CURRENT_RUST_CONTRACT_PASSED_FIVE_EXACT_SOURCE_TIMEOUTS",
-      "summary": "verification/agones/proof-summaries/gameserver-features-bolero-kani-ci-39511896291-1.json"
-    },
-    "current_gate_proof_status": "SEVEN_UNCHANGED_PROGRAM_SELECTIONS_RETAINED_FIVE_CHANGED_SOURCE_HELPER_CASES_PENDING",
-    "current_retained_backend_receipt": "verification/agones/ci/39511896291-terminal-retained.json",
-    "expected_multiset_revalidation": {
-      "current_formal_credit_added": 0,
-      "independent_histogram_pairs": 1600,
-      "law_manifest": "verification/agones/expected-multiset-relation.json",
-      "ordinary_checks": [
-        "verification/agones/runs/expected-multiset-native-1.json",
-        "verification/agones/runs/expected-multiset-generation-controls-1.json"
-      ],
-      "reuse": "Seven source4523 successful selections retain their unchanged production/model program identities and exact scope. All five changed source-helper cases still require current verification. The four-field Rust contract is not full six-field Go API conformance.",
-      "review": "verification/agones/refactoring/expected-multiset-review.json",
-      "source_assertions": 10,
-      "status": "NATIVE_AND_GENERATION_PASSED_PROTECTED_SOURCE_ATTEMPT_REQUIRED",
-      "unchanged_complete_source_harnesses": 5,
-      "unwind": 128
     },
     "historical_backend_campaign_before_missing_container_concat": {
       "conclusion": "failure",
@@ -332,6 +357,16 @@
       "tested_merge": "80901b52f41f9328f0449f16f4430e8eb2b7020f",
       "workflow_run": 39498916435
     },
+    "historical_production_symbol_model_checked_before_expected_multiset": [
+      {
+        "harness": "gameserver_feature_validation_common_domain",
+        "satisfied_covers": 8,
+        "scope": "Actual CGP ValidateAgonesGameServerFeatures provider and independent nonallocating match-table reference checked against the separate complete error relation. Arbitrary enabled/present booleans and signed i64 capacity, no filtering, fixed spec field path, unwind128. The deterministic relation fixes count/kind/path/optional bad value/detail for both observations. No qualified original table assertion, unbounded field path, full validation, admission, lifecycle or live-cluster proof credit. Harness owners are retained after observations under the existing lifetime rule; formal post-observation cleanup remains required.",
+        "semantic_claims": 3,
+        "source_head": "4523bffd1fc3ae01ecba4918b343cafaa688c2f7",
+        "summary": "verification/agones/proof-summaries/gameserver-features-bolero-kani-ci-39511896291-1.json"
+      }
+    ],
     "historical_protected_resource_diagnostic_before_query_borrowing": {
       "preserved_current_successful_harnesses": 5,
       "receipt": "verification/agones/ci/39489621706-health-and-source002.json",
@@ -377,15 +412,40 @@
       "run": "verification/agones/runs/expected-multiset-native-1.json",
       "scope": "Locked workspace/all-target tests, including the full source/admission fixtures, 1600 independent input-ID histogram comparisons and existing exact error-field/multiplicity fault controls."
     },
-    "original_source_assertions_model_checked": [],
+    "original_source_assertions_model_checked": [
+      {
+        "harness": "source_gsv_case_004",
+        "qualified_origins": [
+          "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::PortPolicyNone is enabled, PortPolicy field set to None::line-1482",
+          "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::PortPolicyNone is enabled, PortPolicy field set to None::line-1479"
+        ],
+        "satisfied_covers": 2,
+        "scope": "Selected exact source validation case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::PortPolicyNone is enabled, PortPolicy field set to None. All five exact original validation cases, ten qualified source assertions. Observation lifetime follows the existing retained-owner rule; no formal post-observation cleanup credit. No original case sets Players. Actual core validation and source literals are modeled; original Go/resource/hooks use ordinary replay. Full domain validation, present-Players contract proof, lifecycle/conformance and all eight _2 cells remain required.",
+        "semantic_claims": 2,
+        "source_head": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
+        "summary": "verification/agones/proof-summaries/gameserver-validation-bolero-kani-ci-39516368235-1-case-004.json"
+      },
+      {
+        "harness": "source_gsv_case_001",
+        "qualified_origins": [
+          "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Multiple container ports, OK scenario::line-1482",
+          "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Multiple container ports, OK scenario::line-1479"
+        ],
+        "satisfied_covers": 2,
+        "scope": "Selected exact source validation case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Multiple container ports, OK scenario. All five exact original validation cases, ten qualified source assertions. Observation lifetime follows the existing retained-owner rule; no formal post-observation cleanup credit. No original case sets Players. Actual core validation and source literals are modeled; original Go/resource/hooks use ordinary replay. Full domain validation, present-Players contract proof, lifecycle/conformance and all eight _2 cells remain required.",
+        "semantic_claims": 2,
+        "source_head": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
+        "summary": "verification/agones/proof-summaries/gameserver-validation-bolero-kani-ci-39516368235-1-case-001.json"
+      }
+    ],
     "production_symbol_model_checked": [
       {
         "harness": "gameserver_feature_validation_common_domain",
         "satisfied_covers": 8,
         "scope": "Actual CGP ValidateAgonesGameServerFeatures provider and independent nonallocating match-table reference checked against the separate complete error relation. Arbitrary enabled/present booleans and signed i64 capacity, no filtering, fixed spec field path, unwind128. The deterministic relation fixes count/kind/path/optional bad value/detail for both observations. No qualified original table assertion, unbounded field path, full validation, admission, lifecycle or live-cluster proof credit. Harness owners are retained after observations under the existing lifetime rule; formal post-observation cleanup remains required.",
         "semantic_claims": 3,
-        "source_head": "4523bffd1fc3ae01ecba4918b343cafaa688c2f7",
-        "summary": "verification/agones/proof-summaries/gameserver-features-bolero-kani-ci-39511896291-1.json"
+        "source_head": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
+        "summary": "verification/agones/proof-summaries/gameserver-features-bolero-kani-ci-39516368235-1.json"
       }
     ],
     "protected_execution_revalidation": {
@@ -461,7 +521,7 @@
   },
   "feature_id": "GS-VALIDATE-FEATURES-001",
   "implementation_gate": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
-  "required_next": "Publish the native-verified expected-driven multiset helper to existing draft PR96 with an expected-head lease; run one distinct protected campaign with all original cases/assertions/covers/domains/unwind128 preserved. Retain source4523 evidence with its unchanged-program scope; exact feature-source credit remains zero until successful individual rows and covers. Continue isolated complete validation work while CI runs.",
+  "required_next": "Recover all remaining artifacts/results from protected CI39516368235. Retain verified source001/004 four assertions and four satisfied covers at exact e49e bindings; other three source cases remain required. Clean isolated d4922628 has675native/six modes with30unchanged harnesses and nine gates; adoption/publication/formal proof remain pending.",
   "schema_version": 1,
   "semantic_bindings": {
     ".cargo/config.toml": "d787ef1ca58591bcf5036c8a2386a4d31ecc54febdd5f6630fd8497a4a0d3fb2",

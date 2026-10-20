@@ -1,0 +1,17 @@
+{
+  "architecture": "The isolated Genco emitter now shares its error relation and law-metadata function across feature/general validation, removing concrete repetition. All eight _2 cells remain REQUIRED_OPEN; this accessor creates no compiler-substrate need. Reassess real derive/delegation/API repetition during canonical complete-validation adoption.",
+  "candidate": "Inspect the actual FeatureGates::enabled lookup as the next production repair for source cases002/003. Preserve full name equality, initialized/uninitialized behavior, custom defaults, duplicate handling and sorted encoding.",
+  "decision": "SMALL_LOCAL_REFACTOR",
+  "evidence_invalidation": "No production or additional helper change has been made in this review. A later production accessor change must refresh every affected gate/semantic binding and reverify its actual programs; source001/004 receipts retain their e49e identities.",
+  "evidence_refs": [
+    "verification/agones/ci/39516368235-eight-retained.json",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39516368235-1-case-002.json",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39516368235-1-case-003.json"
+  ],
+  "feature_binding": "GS-VALIDATE-FEATURES-001",
+  "id": "GS-VALIDATE-FEATURES-001-partial-lookup-review",
+  "next_review_trigger": "After source000 and the terminal aggregate are recovered, inspect its distinct trace and implement the smallest justified production lookup repair. During complete-validation adoption, reassess the concrete CGP/resource/derive repetitions and all eight required _2 cells.",
+  "rationale": "The expected-driven matcher completes source001/004 with four assertions and four required covers. Cases002/003 expect empty error lists, so singleton-error matching cannot address their observed expansion. Their raw logs unfold the binary_search_by loop in FeatureGates::enabled through127 iterations, each with memcmp expansion, then complete symbolic expansion and exhaust12GiB before rows. Pinned Go FeatureEnabled performs exact map membership. An equality-based scan over the existing small unique map representation is a concrete semantics-preserving candidate; validate ordinary behavior and current production bindings before a distinct protected attempt. This is an inference from trace location, not proof of a unique root cause or claimed speedup.",
+  "roi": "The candidate is local to an existing real production accessor and uses ordinary Rust iterators inside the current CGP boundary. A small direct implementation/control costs less than building compiler or per-harness CI selection infrastructure for this repair. No new macro/general framework is justified. Actual verification benefit must be measured by the next distinct result.",
+  "secondary_candidate": "Direct empty/singleton error comparison is mathematically exact but is not the next repair for002/003, whose expected lists are empty. Review000 independently when its actual artifact is available."
+}

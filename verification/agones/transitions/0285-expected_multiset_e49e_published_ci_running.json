@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "EXPECTED_MULTISET_E49E_PUBLISHED_CI_RUNNING",
+  "gate_snapshot": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
+  "predecessor_revision": 284,
+  "predecessor_sha256": "facfc541fcbe1c8bf071a01759a545de1ee991385cb977ea00e160e4d78872e7",
+  "reason": "Remote review e49e tree equals verified native checkpoint and actual tested merge; expected-head lease succeeded; visible agones-rs-dev adopted the identical tree while preserving dirty user AGENTS. Existing full protected workflow39516368235 attempt1 is running.",
+  "result_revision": 285,
+  "schema_version": 1,
+  "state_sha256": "2bee3dbec4ec03badc0a7a9fee5a76eb19e04c8358fd6e0fb46928d9ce3d9e02",
+  "timestamp": "2026-10-20T23:39:56.351126+00:00"
+}
