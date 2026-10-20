@@ -26,9 +26,17 @@ jobs:
       - name: Install native build dependencies
         run: sudo apt-get update && sudo apt-get install -y protobuf-compiler
       - name: Record locked workspace check
-        run: python3 build/scripts/agones-rs/run.py "$AGONES_REFACTOR_CHECK_RUN" --quiet cargo check --locked --workspace --all-targets
+        run: |
+          if ! python3 build/scripts/agones-rs/run.py "$AGONES_REFACTOR_CHECK_RUN" --quiet cargo check --locked --workspace --all-targets; then
+            cat "verification/agones/runs/$AGONES_REFACTOR_CHECK_RUN.log"
+            exit 1
+          fi
       - name: Record locked workspace tests
-        run: python3 build/scripts/agones-rs/run.py "$AGONES_REFACTOR_TEST_RUN" --quiet cargo test --locked --workspace
+        run: |
+          if ! python3 build/scripts/agones-rs/run.py "$AGONES_REFACTOR_TEST_RUN" --quiet cargo test --locked --workspace; then
+            cat "verification/agones/runs/$AGONES_REFACTOR_TEST_RUN.log"
+            exit 1
+          fi
       - name: Commit ordinary evidence
         run: |
           git config user.name "agones-rs-refactor-bot"
