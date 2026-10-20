@@ -6,6 +6,9 @@ on:
       - codex/agones-refactor-cgp-deftly-comprende-001
     paths:
       - .github/workflows/refactor-validation.yml
+      - Cargo.toml
+      - Cargo.lock
+      - crates/**
 
 permissions:
   contents: write
