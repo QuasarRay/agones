@@ -21,6 +21,12 @@ pub trait AgonesApiResource {
     const PLURAL: &'static str;
 }
 
+// Derive-deftly owns repetitive fieldwise construction; CGP remains the
+// capability/delegation layer. Keeping those roles separate makes context
+// wiring concise without hiding component behavior.
+#[macro_use]
+mod deftly;
+
 pub mod fleet;
 pub mod allocation;
 pub mod autoscaling;

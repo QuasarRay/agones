@@ -8,6 +8,8 @@ rust-version.workspace = true
 
 [dependencies]
 cgp.workspace = true
+comprende.workspace = true
+derive-deftly.workspace = true
 base64.workspace = true
 chrono.workspace = true
 chrono-tz.workspace = true

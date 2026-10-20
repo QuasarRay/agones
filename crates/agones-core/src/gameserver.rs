@@ -2,6 +2,7 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::net::IpAddr;
 
 use agones_macros::{AgonesStringEnum, agones_invariant};
+use comprende::c;
 use serde::{Deserialize, Serialize};
 
 pub const GROUP_NAME: &str = "agones.dev";
@@ -1406,14 +1407,12 @@ fn truncate_list(capacity: i64, values: &mut crate::GoSlice<String>) {
 }
 
 pub fn merge_remove_duplicates(list1: &[String], list2: &[String]) -> Vec<String> {
-    let mut unique = Vec::with_capacity(list1.len() + list2.len());
     let mut seen = BTreeSet::new();
-    for value in list1.iter().chain(list2) {
-        if seen.insert(value.as_str()) {
-            unique.push(value.clone());
-        }
-    }
-    unique
+    c![
+        value.clone()
+        for value in list1.iter().chain(list2)
+        if seen.insert(value.as_str())
+    ]
 }
 
 

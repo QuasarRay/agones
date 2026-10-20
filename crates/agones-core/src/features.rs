@@ -7,6 +7,8 @@
 use std::{error::Error, fmt};
 
 use cgp::prelude::*;
+use comprende::c;
+use derive_deftly::Deftly;
 
 #[path = "go_quote.rs"]
 mod go_quote;
@@ -55,12 +57,10 @@ impl FeatureGates {
         // its order directly; custom contexts retain the map-like fallback.
         // Pointer identity is only a fast path, never a semantic precondition.
         if std::ptr::eq(defaults, CANONICAL_FEATURE_DEFAULTS) {
-            return Self(
-                defaults
-                    .iter()
-                    .map(|(name, enabled)| ((*name).to_owned(), *enabled))
-                    .collect(),
-            );
+            return Self(c![
+                ((*name).to_owned(), *enabled)
+                for (name, enabled) in defaults
+            ]);
         }
         // The production dictionary has fifteen entries. Sorted owned entries
         // preserve map lookup/encoding behavior without general tree machinery.
@@ -78,11 +78,11 @@ impl FeatureGates {
     pub fn encode(&self) -> String {
         // url::form_urlencoded uses '*' unescaped and escapes '~', whereas
         // Go's QueryEscape does the reverse. Keep the source encoding here.
-        self.0
-            .iter()
-            .map(|(key, value)| format!("{}={value}", query_escape(key)))
-            .collect::<Vec<_>>()
-            .join("&")
+        c![
+            format!("{}={value}", query_escape(key))
+            for (key, value) in &self.0
+        ]
+        .join("&")
     }
 
     /// Parse into a temporary value; a rejected configuration leaves the
@@ -156,17 +156,11 @@ pub trait CanParseFeatureGates {
     fn all_features_enabled(&self) -> FeatureGates;
 }
 
-#[derive(Clone, Copy, Debug, HasField)]
+#[derive(Clone, Copy, Debug, HasField, Deftly)]
+#[derive_deftly(FieldwiseDefault)]
 pub struct FeatureGateContext {
+    #[deftly(default = "CANONICAL_FEATURE_DEFAULTS")]
     pub feature_gate_defaults: &'static [(&'static str, bool)],
-}
-
-impl Default for FeatureGateContext {
-    fn default() -> Self {
-        Self {
-            feature_gate_defaults: CANONICAL_FEATURE_DEFAULTS,
-        }
-    }
 }
 
 #[cgp_new_provider]
@@ -204,9 +198,7 @@ impl<Context: HasFeatureGateDefaults> FeatureGateParser<Context> for ParseAgones
 
     fn all_features_enabled(context: &Context) -> FeatureGates {
         let mut features = FeatureGates::from_defaults(context.feature_gate_defaults());
-        for (_, enabled) in &mut features.0 {
-            *enabled = true;
-        }
+        c!(*enabled = true; for (_, enabled) in &mut features.0);
         features
     }
 }
