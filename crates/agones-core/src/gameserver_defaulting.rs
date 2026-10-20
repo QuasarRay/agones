@@ -1,5 +1,6 @@
 //! Source defaulting policy and its context-owned dependencies.
 use cgp::prelude::*;
+use derive_deftly::Deftly;
 
 use crate::{
     AgonesBuildVersion, AgonesBuildVersionGetterComponent, AgonesVersionAnnotationGetterComponent,
@@ -30,7 +31,8 @@ where
     }
 }
 
-#[derive(Clone, Debug, Default, HasField)]
+#[derive(Clone, Debug, HasField, Deftly)]
+#[derive_deftly(FieldwiseDefault)]
 pub struct GameServerDefaultingContext {
     pub agones_build_version: AgonesBuildVersion,
     pub game_server_feature_flags: FeatureFlags,

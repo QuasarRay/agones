@@ -5,6 +5,7 @@ use base64::{engine::general_purpose::STANDARD as BASE64, Engine as _};
 use chrono::{DateTime, Duration as ChronoDuration, Utc};
 use chrono_tz::Tz;
 use cron::Schedule;
+use derive_deftly::Deftly;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use url::Url;
 use x509_parser::pem::Pem;
@@ -74,22 +75,14 @@ impl Default for FleetAutoscalerSyncType {
     }
 }
 
-#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize, Deftly)]
+#[derive_deftly(FieldwiseDefault)]
 #[serde(rename_all = "camelCase")]
 pub struct BufferPolicy {
     pub max_replicas: i32,
     pub min_replicas: i32,
+    #[deftly(default = "IntOrPercent::Int(0)")]
     pub buffer_size: IntOrPercent,
-}
-
-impl Default for BufferPolicy {
-    fn default() -> Self {
-        Self {
-            max_replicas: 0,
-            min_replicas: 0,
-            buffer_size: IntOrPercent::Int(0),
-        }
-    }
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -119,44 +112,26 @@ pub struct UrlConfiguration {
     pub url: Option<String>,
 }
 
-#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize, Deftly)]
+#[derive_deftly(FieldwiseDefault)]
 #[serde(rename_all = "camelCase")]
 pub struct CounterPolicy {
     pub key: String,
     pub max_capacity: i64,
     pub min_capacity: i64,
+    #[deftly(default = "IntOrPercent::Int(0)")]
     pub buffer_size: IntOrPercent,
 }
 
-impl Default for CounterPolicy {
-    fn default() -> Self {
-        Self {
-            key: String::new(),
-            max_capacity: 0,
-            min_capacity: 0,
-            buffer_size: IntOrPercent::Int(0),
-        }
-    }
-}
-
-#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize, Deftly)]
+#[derive_deftly(FieldwiseDefault)]
 #[serde(rename_all = "camelCase")]
 pub struct ListPolicy {
     pub key: String,
     pub max_capacity: i64,
     pub min_capacity: i64,
+    #[deftly(default = "IntOrPercent::Int(0)")]
     pub buffer_size: IntOrPercent,
-}
-
-impl Default for ListPolicy {
-    fn default() -> Self {
-        Self {
-            key: String::new(),
-            max_capacity: 0,
-            min_capacity: 0,
-            buffer_size: IntOrPercent::Int(0),
-        }
-    }
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]

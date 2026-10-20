@@ -56,7 +56,9 @@ dependencies = [
  "cgp",
  "chrono",
  "chrono-tz",
+ "comprende",
  "cron",
+ "derive-deftly",
  "genco",
  "rand 0.8.8",
  "serde",
@@ -85,6 +87,8 @@ dependencies = [
  "bolero",
  "cgp",
  "chrono",
+ "comprende",
+ "derive-deftly",
  "extism",
  "futures",
  "genco",
@@ -5065,3 +5069,93 @@ dependencies = [
  "cc",
  "pkg-config",
 ]
+
+[[package]]
+name = "clean-macro-docs"
+version = "1.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e3cfbaef086ab626773e9e05eb05726ca0df2bc4468147f9e0deef71db0ff83c"
+dependencies = [
+ "if_chain",
+ "proc-macro2",
+ "quote",
+ "syn 1.0.109",
+]
+
+[[package]]
+name = "comprende"
+version = "1.0.0"
+source = "git+https://github.com/QuasarRay/comprende.git?rev=ef5066819c56e4f6390044e935b4912212871e58#ef5066819c56e4f6390044e935b4912212871e58"
+dependencies = [
+ "clean-macro-docs",
+]
+
+[[package]]
+name = "derive-deftly"
+version = "1.14.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "724949bdda5310709ca2f97bf69c2b01e3362f44fef1fb47913445db4c1debb5"
+dependencies = [
+ "derive-deftly-macros",
+]
+
+[[package]]
+name = "derive-deftly-macros"
+version = "1.14.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "17933e749f2502cfcd1c27519292fbbea22e8fc64ce680e863f855e8cd8cce23"
+dependencies = [
+ "indexmap 2.14.2",
+ "itertools",
+ "proc-macro-crate 3.5.0",
+ "proc-macro2",
+ "quote",
+ "strum",
+ "syn 3.0.9",
+ "unicode-ident",
+ "void",
+]
+
+[[package]]
+name = "if_chain"
+version = "1.0.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cd62e6b5e86ea8eeeb8db1de02880a6abc01a397b2ebb64b5d74ac255318f5cb"
+
+[[package]]
+name = "strum"
+version = "0.28.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9628de9b8791db39ceda2b119bbe13134770b56c138ec1d3af810d045c04f9bd"
+dependencies = [
+ "strum_macros",
+]
+
+[[package]]
+name = "strum_macros"
+version = "0.28.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ab85eea0270ee17587ed4156089e10b9e6880ee688791d45a905f5b1ca36f664"
+dependencies = [
+ "heck",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.119",
+]
+
+[[package]]
+name = "syn"
+version = "1.0.109"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "72b64191b275b66ffe2469e8af2c1cfe3bafa67b529ead792a6d0160888b4237"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "unicode-ident",
+]
+
+[[package]]
+name = "void"
+version = "1.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6a02e4885ed3bc0f2de90ea6dd45ebcbb66dacffe03547fadbb0eeae2770887d"

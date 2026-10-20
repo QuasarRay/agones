@@ -1,0 +1,11 @@
+{
+  "id": "REFACTOR-CGP-DEFTLY-COMPRENDE-001",
+  "candidate": "Before any new feature work, refactor existing Rust implementation boundaries with CGP for capabilities/lifecycle, derive-deftly for repeated structural implementations, and comprende for collection syntax where it is clearer than iterator or push ceremony.",
+  "decision": "AGGRESSIVE_PRE_FEATURE_REFACTOR",
+  "observed_repetition": "CGP contexts repeatedly combine HasField with explicit component delegation while several context/config records hand-write structurally identical Default implementations; collection construction also repeats map/filter/collect and push-loop ceremony.",
+  "chosen_action": "Keep CGP capability/provider/delegation tables explicit as the architectural map; co-derive HasField and Deftly on CGP contexts, reuse one exported FieldwiseDefault template across agones-core and agones-rusternetes, annotate exceptional defaults beside their fields, and use comprende only for direct collection expressions whose ordering and side effects stay obvious.",
+  "bounds": "No new Agones feature behavior in this milestone. Do not hide domain policy, source-parity conditions, CGP provider selection, or mutation/error precedence behind generated indirection. Every changed production path must pass locked workspace checks/tests and affected Bolero/Kani verification before feature development resumes.",
+  "roi": "This makes the combination synergistic rather than additive: CGP removes dependency/lifecycle coupling while derive-deftly removes the structural implementation ceremony around those same contexts. Comprende shortens collection transformations without introducing a competing architecture. The intended result is fewer handwritten impl blocks and less parameter/iterator noise while preserving a readable capability map.",
+  "architecture_status": "Existing required metaprogramming matrix obligations remain open unless separately evidenced; this refactor earns no feature-completeness credit.",
+  "next_review_trigger": "Continue pre-feature refactoring across the remaining high-repetition controller/configuration boundaries; only resume feature implementation after the refactor stack is validated and merged into agones-rs-dev."
+}

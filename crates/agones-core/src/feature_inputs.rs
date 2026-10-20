@@ -8,6 +8,7 @@
 use std::ffi::OsString;
 
 use cgp::prelude::*;
+use derive_deftly::Deftly;
 
 use crate::{
     AGONES_FEATURE_DEFAULTS, CanParseFeatureGates, FEATURE_GATE_ENV, FeatureGateError, FeatureGates,
@@ -82,19 +83,12 @@ where
 }
 
 /// Production input context; all input and parsing policy is selected by CGP.
-#[derive(Clone, Debug, HasField)]
+#[derive(Clone, Debug, HasField, Deftly)]
+#[derive_deftly(FieldwiseDefault)]
 pub struct FeatureGateInputContext {
+    #[deftly(default = "AGONES_FEATURE_DEFAULTS")]
     pub feature_gate_defaults: &'static [(&'static str, bool)],
     pub feature_gate_input_options: FeatureGateInputOptions,
-}
-
-impl Default for FeatureGateInputContext {
-    fn default() -> Self {
-        Self {
-            feature_gate_defaults: AGONES_FEATURE_DEFAULTS,
-            feature_gate_input_options: FeatureGateInputOptions::default(),
-        }
-    }
 }
 
 impl FeatureGateInputContext {
