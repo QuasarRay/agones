@@ -1,0 +1,3 @@
+{"harness_count": 1, "claimed_assertions": 3, "required_covers": 10, "property_count": 978, "status_counts": {"SUCCESS": 945, "SATISFIED": 10, "UNREACHABLE": 23}}
+{"harness_count": 1, "claimed_assertions": 1, "required_covers": 2, "property_count": 1507, "status_counts": {"SUCCESS": 1461, "SATISFIED": 2, "UNREACHABLE": 44}}
+{"harness_count": 1, "claimed_assertions": 3, "required_covers": 8, "property_count": 2180, "status_counts": {"SUCCESS": 2147, "SATISFIED": 8, "UNREACHABLE": 25}}

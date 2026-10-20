@@ -1,0 +1,14 @@
+{"harness_count": 1, "claimed_assertions": 3, "required_covers": 10, "property_count": 978, "status_counts": {"SUCCESS": 945, "SATISFIED": 10, "UNREACHABLE": 23}}
+Traceback (most recent call last):
+  File "/home/astral/Projects/agones/build/scripts/agones-rs/summarize_feature_proof.py", line 143, in <module>
+    assert args.case_index is not None and 0 <= args.case_index < 5, "select the exact source case"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: select the exact source case
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import subprocess,json; from pathlib import Path; selections=[("input","feature-input-bolero-kani-ci-39505643334-1"),("query","feature-query-error-bolero-kani-ci-39505643334-1"),("health","health-defaulting-bolero-kani-ci-39505643334-1")]; [subprocess.run(["python3","build/scripts/agones-rs/summarize_feature_proof.py",family,name,"--output",".git/strict-rechecked-"+name+".json"],check=True) for family,name in selections]; [exec("assert json.loads(Path(\".git/strict-rechecked-\"+name+\".json\").read_text())==json.loads(Path(\"verification/agones/proof-summaries/\"+name+\".json\").read_text())") for family,name in selections]
+                                                                                                                                                                                                                                                     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', 'build/scripts/agones-rs/summarize_feature_proof.py', 'query', 'feature-query-error-bolero-kani-ci-39505643334-1', '--output', '.git/strict-rechecked-feature-query-error-bolero-kani-ci-39505643334-1.json']' returned non-zero exit status 1.

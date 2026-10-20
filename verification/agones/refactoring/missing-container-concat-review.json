@@ -1,0 +1,19 @@
+{
+  "candidate": "Replace only the missing-container detail formatter with exact-sized direct String construction matching the pinned Go concatenation.",
+  "decision": "REUSE_EXISTING",
+  "evidence_invalidation": "Conservatively reopen affected source/proof bindings; preserve all current31cc49claims/38covers and passive59af artifacts with their exact historical identities. No source fixture/assertion/cover/domain/bound change.",
+  "evidence_refs": [
+    "verification/agones/ci/39505643334-terminal-retained.json",
+    "verification/agones/ci/39505643334-evidence-published.json"
+  ],
+  "feature_binding": "GS-VALIDATE-FEATURES-001",
+  "id": "GS-VALIDATE-FEATURES-001-missing-container-concat-review",
+  "next_review_trigger": "After the distinct protected result, inspect whether formatting/byte-search exhaustion moved or completed; keep all remaining source work and eight _2cells required.",
+  "rationale": "Both current000/002logs enter fmt::format/Arguments/write and PadAdapter recursion immediately after GameServerSpec::has_container; each records129PadAdapter recursion entries before eventual byte-search exhaustion. The first explicit general formatter after that lookup constructs the missing-container detail. The pinned Go production code concatenates the same literal and Container verbatim. This is a small real-production representation repair and a distinct measured hypothesis, not a claim of unique root cause or proof completion.",
+  "source_binding": {
+    "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "lines": "554-563",
+    "path": "pkg/apis/agones/v1/gameserver.go",
+    "sha256": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0"
+  }
+}

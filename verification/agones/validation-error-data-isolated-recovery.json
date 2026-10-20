@@ -1,32 +1,32 @@
 {
-  "canonical_adoption": "PENDING; canonical production is unchanged. All paths/gates/native receipts in this manifest belong to the isolated commit.",
+  "canonical_adoption": "PENDING; every referenced gate/path/run belongs to the isolated Git snapshot, not canonical production.",
   "complete_native_evidence_in_isolated_commit": "verification/agones/complete-validation-native-evidence.json",
-  "complete_native_evidence_sha256": "22294de6ad6bd0425fa38b36c5bd53da522c0cc08b4c29c0b93412f62964708a",
+  "complete_native_evidence_sha256": "9814c2ff0dcd7414dd9c3fd01c88412259b27c869d2e6feab1c9661c5bad0058",
   "full_workspace_integration": {
     "ignored": 3,
-    "run": "verification/agones/runs/error-data-complete-workspace-1.json",
+    "run": "verification/agones/runs/combined-streaming-direct-path-complete-checks-1.json",
     "status": "PASSED",
     "tests_failed": 0,
-    "tests_passed": 673
+    "tests_passed": 675
   },
-  "implementation_commit": "500326772a0ad9c1300f0f8bb8acff67e27079a4",
-  "implementation_gate": "verification/agones/gates/93dd4a976fa881690e9f498cdc0b6267296590697842b4f701a45c159792a0bf.json",
-  "implementation_gate_sha256": "93dd4a976fa881690e9f498cdc0b6267296590697842b4f701a45c159792a0bf",
-  "implementation_tree": "e71a08ceb183a00a87b349cb22ca0f79d3d62312",
-  "native_tests": 514,
+  "implementation_commit": "85d64a1de1bd8bc6afcdb996de07384c077a5aaf",
+  "implementation_gate": "verification/agones/gates/77a8b95a317fd9310be8f88e241672867a25ceb3653b468a6e8c99c64bddc91b.json",
+  "implementation_gate_sha256": "77a8b95a317fd9310be8f88e241672867a25ceb3653b468a6e8c99c64bddc91b",
+  "implementation_tree": "44e96e7c5cd9b5a0789af0e18633396ad68fe046",
+  "native_tests": 516,
   "new_formal_credit": 0,
-  "next_action": "Recover this complete isolated native snapshot; all25general harnesses and50covers remain formal obligations. Resolve canonical parser/iterator resource failures using retained actual traces, then integrate isolated data/mapping and verify fresh bindings without discarding any source case or assertion.",
-  "recover": "git show 500326772a0ad9c1300f0f8bb8acff67e27079a4:verification/agones/complete-validation-native-evidence.json; verify its artifact bindings in that same commit before adoption.",
+  "next_action": "Preserve this combined source snapshot. All25general/50covers and prior feature obligations remain formal requirements. Recover actual canonical39505643334results before deciding the next change; integrate the protected operational files and source/data snapshots without transporting proof credit across changed bindings.",
+  "recover": "git show 85d64a1de1bd8bc6afcdb996de07384c077a5aaf:verification/agones/complete-validation-native-evidence.json",
   "refreshed_combined_gates": {
-    "FG-CONFIG-001": "verification/agones/gates/54969bbb38290cb4e5201110bb4316d6d7c87e83481a76f76e1b77a5ed9f1869.json",
-    "FG-ERROR-001": "verification/agones/gates/0f781568a914ada502a4850d6c5af70462f664c8d13885ad8538593a5701c3dc.json",
-    "FG-INPUT-001": "verification/agones/gates/5d3d634ed2a67f83e8da5dd9019abcd5ffe1a19a045e5ab9f355dbfee69337b8.json",
-    "GS-DEFAULTS-001": "verification/agones/gates/04251fc5f142f73078e6e365a1921990788a284e2fc3951532b969cbdf76f567.json",
-    "GS-TYPEMETA-001": "verification/agones/gates/7dd72b9fd25b1c2084902944a4ffcf304b5d5eed1822f032bd55d616c284f9f7.json",
-    "GS-VALIDATE-FEATURES-001": "verification/agones/gates/34f94e81d18a70c8351d5a14dc9743018ae7de144d057750f3642d30937b53d8.json",
-    "GS-VALIDATION-ERROR-DATA-001": "verification/agones/gates/93dd4a976fa881690e9f498cdc0b6267296590697842b4f701a45c159792a0bf.json",
-    "RESOURCE-QUANTITY-001": "verification/agones/gates/10392348bf13309799699c47c539c499067e6d56e582d8356948e46776779b8a.json",
-    "SDK-VERSION-001": "verification/agones/gates/765346abb764956585ac98118b9b99fc19652bbdef9f51c3524c3587d112588d.json"
+    "FG-CONFIG-001": "verification/agones/gates/674901b88cce87ae2df6b7dcd83a2f765a5db217c1c26e13cb108378d95007c1.json",
+    "FG-ERROR-001": "verification/agones/gates/2c62d4a9eecf37c94139975e3c313d390c2fb4846ad4c07743c7d10a52b90e42.json",
+    "FG-INPUT-001": "verification/agones/gates/c95bbadbba53a4e40986c176a9345417b13de50d200725d9b04bb6b9cb82ce44.json",
+    "GS-DEFAULTS-001": "verification/agones/gates/dd9315d6375ed8a1ddbd94a566e2212eb5d5a5c441c251647fffab199a5804fc.json",
+    "GS-TYPEMETA-001": "verification/agones/gates/c70a5475889860a20652a33708f45b0c92cfd7e40c2b5d57e333d04e66a41c9d.json",
+    "GS-VALIDATE-FEATURES-001": "verification/agones/gates/0a06f90aef6548567e6e6fae21cea7f4a7843d24c935494c0b740ef726947ee4.json",
+    "GS-VALIDATION-ERROR-DATA-001": "verification/agones/gates/77a8b95a317fd9310be8f88e241672867a25ceb3653b468a6e8c99c64bddc91b.json",
+    "RESOURCE-QUANTITY-001": "verification/agones/gates/34933501609927a2b2452f1265b662f7adaf5270af43805ad96e6f57e83419fa.json",
+    "SDK-VERSION-001": "verification/agones/gates/1e5f85693f94896101036b98f57a71bf7baa86e8fe7397f5b1c92374b6969029.json"
   },
   "refreshed_dependency_gates": {
     "verification/agones/gates/c6cfc77ebba865ec53008598a448f5a5a796fc086bc0d873f899412ae6ca6cbf.json": "verification/agones/gates/4c862ed77211191654fda97b2d72628c0452eb51fd6f63e47ba7e148d53add76.json",
@@ -34,6 +34,6 @@
   },
   "remote_publication": "NOT_STARTED",
   "schema_version": 1,
-  "status": "COMPLETE25CASE_NATIVE_AND_ACTUAL_ADAPTER_REPLAY_PASSED_FORMAL_ADOPTION_OPEN",
+  "status": "COMPLETE25CASE_NATIVE675_AND_CANONICAL_RESOURCE_REFACTOR_REUSED_ADOPTION_PENDING",
   "worktree": "/home/astral/.codex/worktrees/agones-resource-quantity/agones"
 }

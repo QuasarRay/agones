@@ -1,0 +1,58 @@
+{
+  "artifact_bindings": {
+    "verification/agones/proof-summaries/feature-bool-bolero-kani-ci-39505643334-1.json": "5bcc03f235f93c00378349d07d7dab935b935f9c83f9a5bef5ab180dba04536b",
+    "verification/agones/proof-summaries/gameserver-features-bolero-kani-ci-39505643334-1.json": "44cf1a3dc4cba13a2887fd4d0f0e741c9bc040304cd82c38fab7cc5f37d2660e",
+    "verification/agones/runs/feature-bool-bolero-kani-ci-39505643334-1.json": "c8481e98e41acf374baff2674c24ba91078596066eeedd79d1d35980b21e5710",
+    "verification/agones/runs/feature-bool-bolero-kani-ci-39505643334-1.log": "72048db0a6d1d321e221848a4aa68a08cc226eb7fee4489fe0bbac87f979f9fe",
+    "verification/agones/runs/gameserver-features-bolero-kani-ci-39505643334-1.json": "886f2303bd9357d1bc55a66bc14be3b82e6d44408cc1ef21f7cf66e168a7a901",
+    "verification/agones/runs/gameserver-features-bolero-kani-ci-39505643334-1.log": "e102b4cd7caa391e552e82ab6febb873f626df6e75a1756098022cfbceb66bb2"
+  },
+  "artifacts": [
+    {
+      "archive_sha256": "c2ab935dde2b530d73c5b7bcffb89270b190b68763a685e7a64f16cc890663bc",
+      "artifact_id": 12303306241,
+      "backend_rows": 1535,
+      "harness": "gameserver_feature_validation_common_domain",
+      "run": "verification/agones/runs/gameserver-features-bolero-kani-ci-39505643334-1.json",
+      "satisfied_covers": 8,
+      "scope": "Actual CGP ValidateAgonesGameServerFeatures provider and independent nonallocating match-table reference checked against the separate complete error relation. Arbitrary enabled/present booleans and signed i64 capacity, no filtering, fixed spec field path, unwind128. The deterministic relation fixes count/kind/path/optional bad value/detail for both observations. No qualified original table assertion, unbounded field path, full validation, admission, lifecycle or live-cluster proof credit. Harness owners are retained after observations under the existing lifetime rule; formal post-observation cleanup remains required.",
+      "semantic_claims": 3,
+      "status_counts": {
+        "SATISFIED": 8,
+        "SUCCESS": 1474,
+        "UNREACHABLE": 53
+      },
+      "summary": "verification/agones/proof-summaries/gameserver-features-bolero-kani-ci-39505643334-1.json"
+    },
+    {
+      "archive_sha256": "8abba3bb34e248a31c54e9bd6551df0e326d88f444e5d13c94734bcb8ace2a76",
+      "artifact_id": 12303306235,
+      "backend_rows": 1158,
+      "harness": "feature_bool_common_domain",
+      "run": "verification/agones/runs/feature-bool-bolero-kani-ci-39505643334-1.json",
+      "satisfied_covers": 6,
+      "scope": "Only the actual production parse_feature_bool and independent reference/invariant over byte strings of length 0..5, unwind 8; no unbounded query, environment or controller proof.",
+      "semantic_claims": 3,
+      "status_counts": {
+        "SATISFIED": 6,
+        "SUCCESS": 1141,
+        "UNREACHABLE": 11
+      },
+      "summary": "verification/agones/proof-summaries/feature-bool-bolero-kani-ci-39505643334-1.json"
+    }
+  ],
+  "classification": "REPO_SAFE",
+  "counts": {
+    "backend_rows": 2693,
+    "new_original_source_assertion_credit": 0,
+    "satisfied_covers": 14,
+    "semantic_claims": 6,
+    "successful_harnesses": 2
+  },
+  "schema_version": 1,
+  "scope": "Current bool and four-field Rust PlayerTracking contract only. Full six-field Go error correspondence, all exact source feature cases, other selections and whole migration remain required.",
+  "source_head": "31cc72d92bbb9611e228ec5936d2421a5ca35f84",
+  "status": "FIRST_TWO_COMPLETE_STRICT_SELECTIONS_RETAINED_OTHER_JOBS_RUNNING",
+  "tested_merge": "e3010b88e98025e11d41f272126e8b39a171c913",
+  "workflow_run": 39505643334
+}

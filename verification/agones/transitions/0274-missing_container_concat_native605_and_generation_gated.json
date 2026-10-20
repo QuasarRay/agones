@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "MISSING_CONTAINER_CONCAT_NATIVE605_AND_GENERATION_GATED",
+  "gate_snapshot": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
+  "predecessor_revision": 273,
+  "predecessor_sha256": "cd0bb999436a9029365a2e649b623978fe0c5f2c9a07eb3584917026401b810e",
+  "reason": "Pinned Go directly concatenates missing-container text. Current000/002traces enter general formatting after that lookup; replace only this production formatter with exact-sized literal/name appends. All605native tests and5generation modes pass, including verbatim empty/Unicode/newline/NUL detail controls. Existing source case payloads/generated bodies stay byte-identical; fresh affected model results are required.",
+  "result_revision": 274,
+  "schema_version": 1,
+  "state_sha256": "65d420d1d0cdc280bb8d126083ee759aed9f43f2543be6fa76e1e3ccea6cc739",
+  "timestamp": "2026-10-20T22:55:09.870799+00:00"
+}

@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "PASSIVE_EVIDENCE59AF_PUBLISHED_AND_PR_UPDATED",
+  "gate_snapshot": "verification/agones/gates/70364c20a393205d32e35c7839503eced4f6f607d9e65d312e7dc99551384eb5.json",
+  "predecessor_revision": 272,
+  "predecessor_sha256": "6dc67e3fcfd0fe4bd340fea6775bfde25cb23c4efb2d2ff3444c656c03233833",
+  "reason": "All12archive/run/log artifacts are durable at59af, exactly matching local4c77tree; every terminal artifact binding checked against remote Git bytes. ExistingPR96description updated, tested31cc reviewhead preserved, zero workflows observed for passive evidence commit. Full migration/proofs remain incomplete.",
+  "result_revision": 273,
+  "schema_version": 1,
+  "state_sha256": "cd0bb999436a9029365a2e649b623978fe0c5f2c9a07eb3584917026401b810e",
+  "timestamp": "2026-10-20T22:44:01.994060+00:00"
+}

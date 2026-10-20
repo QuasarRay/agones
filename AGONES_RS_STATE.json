@@ -4,56 +4,56 @@
       "evidence_refs": [],
       "form": "proc_macro_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After one changed protected campaign for streaming query/direct paths, compare complete rows/covers and memory/time with394989. Preserve every remaining source obligation and all eight _2cells.",
+      "next_review_trigger": "After the distinct protected result, inspect whether formatting/byte-search exhaustion moved or completed; keep all remaining source work and eight _2cells required.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_2",
       "location": "cross-crate",
-      "next_review_trigger": "After one changed protected campaign for streaming query/direct paths, compare complete rows/covers and memory/time with394989. Preserve every remaining source obligation and all eight _2cells.",
+      "next_review_trigger": "After the distinct protected result, inspect whether formatting/byte-search exhaustion moved or completed; keep all remaining source work and eight _2cells required.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_attribute_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After one changed protected campaign for streaming query/direct paths, compare complete rows/covers and memory/time with394989. Preserve every remaining source obligation and all eight _2cells.",
+      "next_review_trigger": "After the distinct protected result, inspect whether formatting/byte-search exhaustion moved or completed; keep all remaining source work and eight _2cells required.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_attribute_2",
       "location": "cross-crate",
-      "next_review_trigger": "After one changed protected campaign for streaming query/direct paths, compare complete rows/covers and memory/time with394989. Preserve every remaining source obligation and all eight _2cells.",
+      "next_review_trigger": "After the distinct protected result, inspect whether formatting/byte-search exhaustion moved or completed; keep all remaining source work and eight _2cells required.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_derive_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After one changed protected campaign for streaming query/direct paths, compare complete rows/covers and memory/time with394989. Preserve every remaining source obligation and all eight _2cells.",
+      "next_review_trigger": "After the distinct protected result, inspect whether formatting/byte-search exhaustion moved or completed; keep all remaining source work and eight _2cells required.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_derive_2",
       "location": "cross-crate",
-      "next_review_trigger": "After one changed protected campaign for streaming query/direct paths, compare complete rows/covers and memory/time with394989. Preserve every remaining source obligation and all eight _2cells.",
+      "next_review_trigger": "After the distinct protected result, inspect whether formatting/byte-search exhaustion moved or completed; keep all remaining source work and eight _2cells required.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_delegate_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After one changed protected campaign for streaming query/direct paths, compare complete rows/covers and memory/time with394989. Preserve every remaining source obligation and all eight _2cells.",
+      "next_review_trigger": "After the distinct protected result, inspect whether formatting/byte-search exhaustion moved or completed; keep all remaining source work and eight _2cells required.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_delegate_2",
       "location": "cross-crate",
-      "next_review_trigger": "After one changed protected campaign for streaming query/direct paths, compare complete rows/covers and memory/time with394989. Preserve every remaining source obligation and all eight _2cells.",
+      "next_review_trigger": "After the distinct protected result, inspect whether formatting/byte-search exhaustion moved or completed; keep all remaining source work and eight _2cells required.",
       "status": "REQUIRED_OPEN"
     }
   ],
@@ -66,8 +66,14 @@
     ],
     "large_logs": "Retain complete REPO_SAFE diagnostic and proof log blobs in the repository Git object store. Git stores these repeated textual outputs compressed internally; no verifier output is trimmed or normalized.",
     "location": "verification/agones/runs under the verified PR/delivery commit; immutable manifests bind every full log with SHA-256.",
+    "passive_evidence_checkpoint": {
+      "branch": "codex/agones-ci-evidence-39505643334",
+      "commit": "59af9aaad462ae880b7364508270e0875cfad85b",
+      "receipt": "verification/agones/ci/39505643334-evidence-published.json",
+      "role": "immutable artifact backup, not a work queue or acceptance bypass"
+    },
     "provider": "Content-addressed Git object store in QuasarRay/agones",
-    "retention": "Keep referenced evidence commits reachable through the review branch and eventual agones-rs-dev history until their claims are explicitly superseded. Never prune the only retained artifact behind a live claim.",
+    "retention": "Keep referenced evidence commits reachable through the review/integration history or an explicitly indexed immutable passive evidence branch until their claims are superseded and all needed bytes remain retained. Never prune the only artifact behind a live claim.",
     "retrieval": "Fetch the delivery commit recorded in the ledger/PR receipt, then git show <verified-commit>:<run-receipt.log> to recover exact bytes. Check the receipt log_sha256 before accepting evidence.",
     "run_history": {
       "canonical_jobs": "Only nonterminal or incompletely finalized receipts are indexed in ledger jobs. Complete PASSED/FAILED receipts retain full intent/identity/source/command/results in the immutable run history.",
@@ -96,10 +102,12 @@
   ],
   "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
   "delivery": {
-    "acceptance": "Published dd4 and complete394989 raw evidence retain historical49claims/38covers/36defaulting+1query occurrences. The new streaming-query/direct-path production passes605native tests and19source error observations, but current affected proofs are reopened. All feature-source cases/bounds and isolated500326 native/adoption/formal residuals remain required.",
+    "acceptance": "Published review31cc and durable passive59af terminal evidence retain historical49claims/38covers/37qualified defaulting/query occurrences. New minimal direct-concatenation production passes605native tests and5generation modes; generated bodies are byte-identical and all affected current formal bindings are reopened. Exact five feature-source cases, full source-error correspondence, isolated675adoption and remaining whole migration obligations stay required.",
     "access": "GitHub app authorized as QuasarRay with push/admin; gh CLI unauthenticated; local .git writable",
     "actual_integration_head": "1e64a054901658908d0a7a4eecd3010379df9614",
-    "actual_review_head": "dd4b4bfb82007eb4e8a3a84f93d276fb2f79cb27",
+    "actual_review_head": "31cc72d92bbb9611e228ec5936d2421a5ca35f84",
+    "artifact_recovery_pending": "verification/agones/ci/39505643334-artifact-recovery-pending.json",
+    "artifact_recovery_status": "verification/agones/ci/39505643334-artifact-recovery-completed.json",
     "authorization": "User execution contract REQ-12/F4 and root AGENTS.MD milestone PR/merge workflow",
     "checks": [
       {
@@ -314,11 +322,49 @@
         "status": "FAILED",
         "tested_merge": "80901b52f41f9328f0449f16f4430e8eb2b7020f",
         "workflow_run": 39498916435
+      },
+      {
+        "evidence": "verification/agones/ci/39505643334-in-progress.json",
+        "head": "31cc72d92bbb9611e228ec5936d2421a5ca35f84",
+        "scope": "Native605passed; actual state jobpassed. Rust/common/contract/five source jobs active; no complete new model credit.",
+        "status": "IN_PROGRESS",
+        "workflow_run": 39505643334
+      },
+      {
+        "evidence": "verification/agones/ci/39505643334-terminal-retained.json",
+        "head": "31cc72d92bbb9611e228ec5936d2421a5ca35f84",
+        "scope": "State/Rust/common/contract jobs passed. All five required exact feature-source jobs and the required aggregate failed; full migration remains incomplete. Seven scoped successful selections retain their precise source/observation limits.",
+        "status": "FAILED",
+        "tested_merge": "e3010b88e98025e11d41f272126e8b39a171c913",
+        "workflow_run": 39505643334
       }
     ],
-    "current_ci_receipt": "verification/agones/ci/39498916435-terminal-retained.json",
+    "current_ci_receipt": "verification/agones/ci/39505643334-terminal-retained.json",
+    "current_public_status_receipt": "verification/agones/ci/39505643334-public-metadata-connector-unavailable.json",
+    "current_retained_evidence": "verification/agones/ci/39505643334-terminal-retained.json",
+    "current_retained_formal_counts": {
+      "original_feature_validation_assertions": 0,
+      "satisfied_covers": 0,
+      "semantic_claims": 0,
+      "status": "FRESH_CURRENT_SOURCE_RESULTS_REQUIRED",
+      "successful_harnesses": 0
+    },
     "expected_base": "1e64a054901658908d0a7a4eecd3010379df9614",
-    "expected_head": "dd4b4bfb82007eb4e8a3a84f93d276fb2f79cb27",
+    "expected_head": "31cc72d92bbb9611e228ec5936d2421a5ca35f84",
+    "historical_artifact_recovery_pending": "verification/agones/ci/39505643334-artifact-recovery-pending.json",
+    "historical_retained_formal_counts_before_concat": {
+      "backend_rows": 20132,
+      "failed_harnesses": 5,
+      "original_defaulting_assertions": 36,
+      "original_feature_validation_assertions": 0,
+      "original_query_error_assertions": 1,
+      "retained_artifacts": 12,
+      "satisfied_covers": 38,
+      "semantic_claims": 49,
+      "successful_harnesses": 7,
+      "unreachable_credited": 0
+    },
+    "historical_terminal_evidence_publication_pending": "verification/agones/ci/39505643334-evidence-publication-pending.json",
     "integration_branch": "agones-rs-dev",
     "merge_result": {
       "commit": "774abfa9a2a0129074d20453d94d999899cb012b",
@@ -326,7 +372,7 @@
       "method_observed": "source head is ancestor of integration; PR API reports merged",
       "pr": "https://github.com/QuasarRay/agones/pull/94"
     },
-    "next_action": "Publish native605test streaming-query/direct-path change to the existing draft PR96 with complete retained394989 evidence. Run one changed protected campaign at the unchanged12selections and original bounds; retain every artifact before credit or further repair.",
+    "next_action": "Publish the native605 source-concatenation repair and current metadata to existing draftPR96 using passive59af tree/blob reuse, then one distinct protected12selection attempt. Keep all original obligations/bounds and recover complete rows/covers before credit.",
     "pending_checkpoint": {
       "backend_harnesses": [
         "feature_bool_common_domain",
@@ -342,20 +388,23 @@
         "source_gsv_case_004",
         "gameserver_feature_validation_common_domain"
       ],
-      "ci_receipt": "verification/agones/ci/39498916435-terminal-retained.json",
+      "ci_receipt": "verification/agones/ci/39505643334-terminal-retained.json",
       "expected_review_branch": "codex/agones-player-tracking-validation",
+      "expected_tested_merge": "e3010b88e98025e11d41f272126e8b39a171c913",
       "feature_id": "GS-VALIDATE-FEATURES-001",
-      "head": "dd4b4bfb82007eb4e8a3a84f93d276fb2f79cb27",
-      "local_source_head": "3b1bd370c445afd30a71737474f5a411e6ccd75c",
+      "head": "31cc72d92bbb9611e228ec5936d2421a5ca35f84",
+      "local_source_head": "9cda70948b0e830bb4c8f6519afde807f5590ab3",
       "local_source_head_kind": "LOCAL_UNPUBLISHED_CHECKPOINT",
       "new_contract_model_credit": 0,
+      "new_qualified_defaulting_source_credit": 0,
       "new_qualified_feature_validation_credit": 0,
+      "new_qualified_query_error_credit": 0,
       "new_qualified_source_credit": 0,
       "publication_strategy": "Existing89immutableblobs plus48UTF8tree.content entries produced the exact staged tree in one batched tree operation; prior local source checkpoint preserved at refs/agones-checkpoints/player-tracking-validation-local.",
       "review_branch": "codex/agones-player-tracking-validation",
-      "status": "NATIVE_GATED_LOCAL_UNPUBLISHED_FRESH_AFFECTED_PROOFS_REQUIRED",
+      "status": "NATIVE605_GATED_CONCAT_REPAIR_LOCAL_UNPUBLISHED_CURRENT_PROOFS_REOPENED",
       "tested_merge": "80901b52f41f9328f0449f16f4430e8eb2b7020f",
-      "tree": "893d506d71f7e348d71eceeb61df2101ed1511b8",
+      "tree": "a2494eb241f359c76b5bb073b4dcca912eee0a2b",
       "user_guidance_dirty_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
       "visible_checkout": {
         "branch": "agones-rs-dev",
@@ -363,7 +412,7 @@
         "user_guidance_preserved": true
       },
       "work_packet": "verification/agones/gameserver-feature-validation-work-packet.json",
-      "workflow_run": 39498916435
+      "workflow_run": 39505643334
     },
     "pending_ci": "verification/agones/ci/39144973597-in-progress.json",
     "pending_publication": {
@@ -407,25 +456,35 @@
     "query_allocation_terminal_receipt": "verification/agones/ci/39498916435-terminal-retained.json",
     "query_allocation_tested_merge": "80901b52f41f9328f0449f16f4430e8eb2b7020f",
     "query_allocation_workflow_run": 39498916435,
-    "remote_result": "PR96_DD4_PUBLISHED_CURRENT_STREAMING_QUERY_DIRECT_PATHS_NATIVE_GATED_LOCAL_UNPUBLISHED",
+    "remote_result": "PR96_REVIEW31CC_AND_TERMINAL_EVIDENCE59AF_PUBLISHED_CURRENT_CONCAT_REPAIR_NATIVE605_LOCAL",
     "required_checks": [
       "migration-state",
       "rust",
       "feature-bool-model-check"
     ],
-    "review_branch": "codex/agones-source-defaulting-005",
+    "review_branch": "codex/agones-player-tracking-validation",
+    "streaming_direct_paths_expected_tested_merge": "e3010b88e98025e11d41f272126e8b39a171c913",
+    "streaming_direct_paths_terminal_receipt": "verification/agones/ci/39505643334-terminal-retained.json",
+    "streaming_direct_paths_workflow_run": 39505643334,
+    "terminal_evidence_publication": {
+      "branch": "codex/agones-ci-evidence-39505643334",
+      "commit": "59af9aaad462ae880b7364508270e0875cfad85b",
+      "receipt": "verification/agones/ci/39505643334-evidence-published.json",
+      "status": "PUBLISHED"
+    },
+    "terminal_evidence_publication_pending": "verification/agones/ci/39505643334-evidence-publication-pending.json",
     "visible_checkout": {
       "branch": "agones-rs-dev",
-      "head": "dd4b4bfb82007eb4e8a3a84f93d276fb2f79cb27",
+      "head": "31cc72d92bbb9611e228ec5936d2421a5ca35f84",
       "user_guidance_dirty_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
     }
   },
   "goal": {
     "objective_attachment": "/home/astral/.codex/attachments/5cf63dab-e5a8-49be-a2f1-ae51f5edd993/pasted-text-1.txt",
     "reported_usage": {
-      "observed_at": 1792533175,
-      "time_seconds": 67917,
-      "tokens": 6585070
+      "observed_at": 1792535739,
+      "time_seconds": 70481,
+      "tokens": 6866591
     },
     "status": "active",
     "thread_id": "01a14ebe-10fa-7c41-9f85-256874fb4c1f",
@@ -433,8 +492,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 262,
-  "previous_sha256": "799d75b71d1b93c4f99871d8fd738f811be83c741483c5c27c48369a2d11aca9",
+  "previous_revision": 274,
+  "previous_sha256": "65d420d1d0cdc280bb8d126083ee759aed9f43f2543be6fa76e1e3ccea6cc739",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -878,9 +937,41 @@
       "next_review_trigger": "After one changed protected campaign for streaming query/direct paths, compare complete rows/covers and memory/time with394989. Preserve every remaining source obligation and all eight _2cells.",
       "ordinary_result": "605workspace/all-target tests pass,0failed,3existing ignored process children. All19error observations exactly match retained immutable Go observations. Port-path native control checks0..1023 plus near/maxusize across all four field names. Original assertions/covers/domains/bounds are unchanged.",
       "rationale": "Actual protected394989 traces ended in Vec<Cow-pair> destruction for002/003, and formatting/PadAdapter/memchr after container lookup for000/001/004. Replace those two real production mechanisms: retain only first-value flags and one lexicographically minimum feature error, preserve whole-query syntax precedence and atomic replacement, and allocate indexed field paths only for actual errors using direct decimal digits. These are testable hypotheses, not a proven unique root cause or a claim of improved backend completion."
+    },
+    {
+      "candidate": "Trace shared byte-search/formatting paths in retained000/002logs; distinguish harness parsed.unwrap Debug from real validation formatting before the next smallest repair.",
+      "decision": "REUSE_EXISTING",
+      "evidence_invalidation": "No additional production/generator change in this review; current49claims/38covers and isolated675 retain their exact source identities. Any next production or harness change revalidates affected evidence.",
+      "evidence_refs": [
+        "verification/agones/ci/39505643334-terminal-retained.json",
+        "verification/agones/validation-error-data-isolated-recovery.json"
+      ],
+      "feature_binding": "GS-VALIDATE-FEATURES-001",
+      "id": "GS-VALIDATE-FEATURES-001-streaming-direct-path-terminal-review",
+      "next_review_trigger": "After tracing actual first-formatting/byte-search callers, use existing CGP/Genco for one minimal semantics-preserving repair, ordinary validation and one distinct protected attempt. Preserve all source assertions/covers/domains/adequate bounds and all eight required _2cells.",
+      "rationale": "605canonical and675isolated native checks preserve behavior, but the changed campaign completes no feature-source proof:000/002/003OOM and001/004900stimeouts, all12GiB/zero rows. The previous002/003Cow-pair cleanup exhaustion is replaced by memchr_naive127;000/001/004stillend in memchr_aligned54/54/55. These are observed locations, not a unique-cause proof. Inspect actual callers before a new hypothesis."
+    },
+    {
+      "candidate": "Replace only the missing-container detail formatter with exact-sized direct String construction matching the pinned Go concatenation.",
+      "decision": "REUSE_EXISTING",
+      "evidence_invalidation": "Conservatively reopen affected source/proof bindings; preserve all current31cc49claims/38covers and passive59af artifacts with their exact historical identities. No source fixture/assertion/cover/domain/bound change.",
+      "evidence_refs": [
+        "verification/agones/ci/39505643334-terminal-retained.json",
+        "verification/agones/ci/39505643334-evidence-published.json"
+      ],
+      "feature_binding": "GS-VALIDATE-FEATURES-001",
+      "id": "GS-VALIDATE-FEATURES-001-missing-container-concat-review",
+      "next_review_trigger": "After the distinct protected result, inspect whether formatting/byte-search exhaustion moved or completed; keep all remaining source work and eight _2cells required.",
+      "rationale": "Both current000/002logs enter fmt::format/Arguments/write and PadAdapter recursion immediately after GameServerSpec::has_container; each records129PadAdapter recursion entries before eventual byte-search exhaustion. The first explicit general formatter after that lookup constructs the missing-container detail. The pinned Go production code concatenates the same literal and Container verbatim. This is a small real-production representation repair and a distinct measured hypothesis, not a claim of unique root cause or proof completion.",
+      "source_binding": {
+        "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+        "lines": "554-563",
+        "path": "pkg/apis/agones/v1/gameserver.go",
+        "sha256": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0"
+      }
     }
   ],
-  "revision": 263,
+  "revision": 275,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [
@@ -896,14 +987,21 @@
         "verification/agones/ci/39489621706-terminal-retained.json",
         "verification/agones/query-borrowing-prior-assurance.json",
         "verification/agones/ci/39498916435-in-progress.json",
-        "verification/agones/ci/39498916435-terminal-retained.json"
+        "verification/agones/ci/39498916435-terminal-retained.json",
+        "verification/agones/ci/39505643334-in-progress.json",
+        "verification/agones/ci/39505643334-first-two-retained.json",
+        "verification/agones/ci/39505643334-first-five-retained.json",
+        "verification/agones/ci/39505643334-artifact-recovery-pending.json",
+        "verification/agones/ci/39505643334-terminal-retained.json",
+        "verification/agones/ci/39505643334-evidence-publication-pending.json",
+        "verification/agones/ci/39505643334-evidence-published.json"
       ],
       "feature_ids": [
         "gameserver-player-tracking-validation"
       ],
       "id": "GS-VALIDATE-FEATURES-001",
-      "implementation_gate": "verification/agones/gates/70364c20a393205d32e35c7839503eced4f6f607d9e65d312e7dc99551384eb5.json",
-      "next_action": "Native605tests and all19Go/Rusterror observations pass for streaming query and direct indexed paths. Four generated source bodies remain byte-identical and all5modes pass. Publish the changed native-gated checkpoint with complete394989artifact history to existing draftPR96; one distinct protected12selection attempt must retain every original assertion/cover/domain/bound and all artifacts before credit. Full source correspondence and isolated500326adoption remain required.",
+      "implementation_gate": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
+      "next_action": "Publish the native605 source-concatenation repair and current metadata to existing draftPR96 using passive59af tree/blob reuse, then one distinct protected12selection attempt. Keep all original obligations/bounds and recover complete rows/covers before credit.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
         "crates/agones-core/src/gameserver_defaulting.rs",
@@ -944,7 +1042,7 @@
       ],
       "id": "GS-TYPEMETA-001",
       "implementation_gate": null,
-      "next_action": "Recover isolated500326 with current gate7dd72b9f and complete25case core/actual-adapter native replay. Canonical adoption and formal proof remain required; preserve actual kind/apiVersion and all fixtures.",
+      "next_action": "Recover clean isolated85d64a1 with current combined TypeMeta gate and complete25case core/actual-adapter replay. Native675tests/six modes pass. Canonical adoption and formal proof remain required; preserve kind/apiVersion and all source assertions.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
         "crates/agones-rusternetes/src/lib.rs",
@@ -985,7 +1083,7 @@
       ],
       "id": "RESOURCE-QUANTITY-001",
       "implementation_gate": null,
-      "next_action": "Recover isolated500326 combined quantity/TypeMeta/error snapshot and full25case native evidence. Exact quantity production/native controls are complete in isolation; canonical adoption and formal proof remain required. Preserve typed construction state and all repaired source counterexamples.",
+      "next_action": "Recover clean isolated85d64a1 complete quantity/TypeMeta/six-field snapshot; current combined nine gates and675native tests/six modes are retained. Preserve exact typed numeric state and repaired counterexamples. Canonical adoption/publication and formal proof remain required.",
       "owned_paths": [
         "crates/agones-core/src/resource_quantity.rs",
         "crates/agones-rusternetes/src/lib.rs",
@@ -1034,7 +1132,7 @@
       ],
       "id": "GS-VALIDATION-ERROR-DATA-001",
       "implementation_gate": null,
-      "next_action": "Complete isolated commit500326 has all25general Genco/native cases, six-field source mapping,30fixture actual Rusternetes replay/35qualified occurrences,673passing workspace tests and six generation modes. Canonical adoption/publication and all formal obligations remain required; recover its indexed Git evidence before adoption.",
+      "next_action": "Clean isolated85d64a1 retains full25case lowering, six-field mapping and actual30fixture/35occurrence replay while reusing canonical streaming/parser-path changes. Native675tests/six modes passed and every generated body matches500326. Canonical adoption/publication and all formal obligations remain required.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
         "crates/agones-core/src/gameserver_validation.rs",
@@ -1085,7 +1183,7 @@
         "gameserver-creation-defaulting"
       ],
       "id": "GS-DEFAULTS-001",
-      "implementation_gate": "verification/agones/gates/f2497095cc0352dfd11b6a11e493d77c5899859e5cdccba0758e4986d6a6b829.json",
+      "implementation_gate": "verification/agones/gates/839b7ce78ea75153104d3272281ccb3a844a6385dbc480196ef2837cb4b439e9.json",
       "next_action": "Publish complete source005 raw evidence and updated direct coverage/next feature packet to PR94; validate fresh metadata/binding CI and merge this proof milestone. Then implement GS-VALIDATE-FEATURES-001 through CGP before extracting its semantic properties.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
@@ -1126,7 +1224,7 @@
         "source-sdk-version-annotation-policy"
       ],
       "id": "SDK-VERSION-001",
-      "implementation_gate": "verification/agones/gates/9d59b7b0837a46736326e7991fa818f953042c8a4bf07f8148e042c4a5ce12e2.json",
+      "implementation_gate": "verification/agones/gates/566a293ee7d457501907b1646ff43ec5d9818f3f9b3b25ed159fb69103ed77ab.json",
       "next_action": "Complete remaining18 selected version identities and the shared-domain claims/covers. Reuse complete GameServer source proofs with the same qualified version identity counted once; retain the two Fleet assertions and full decoder/lifecycle scope.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
@@ -1169,7 +1267,7 @@
         "source-compatible-feature-gate-error-rendering"
       ],
       "id": "FG-ERROR-001",
-      "implementation_gate": "verification/agones/gates/e876789f7ed6f8a978a9602cda91f559d4d34a0db6b229f28c47ca47ef8cb5e3.json",
+      "implementation_gate": "verification/agones/gates/5fddb8455f7bb9d9c3198b4f5236073dd281363c9cfc094cf4ab46518a9127e1.json",
       "next_action": "Resume required ASCII/full-error proofs only with a distinct diagnosed decomposition hypothesis, preserving original byte domains, assertions, covers and source-compatible rendering; time/memory failures remain uncredited.",
       "owned_paths": [
         "crates/agones-core/src/features.rs"
@@ -1210,7 +1308,7 @@
         "feature-gates-environment-cli-binding"
       ],
       "id": "FG-INPUT-001",
-      "implementation_gate": "verification/agones/gates/3ff5615e374aed7d29634d1f3c1d2ffc8086079af7c954b76aa26aa3f509fc96.json",
+      "implementation_gate": "verification/agones/gates/eea54f495941f20e41f1e6d4bd862727ddf2a0b74cb4ad51bafb4f13fb28e476.json",
       "next_action": "Complete formal evidence for the original environment/CLI assertions and real input-binding effects beyond the proved bounded pure selector; retain every original identity and all required process/lifecycle categories.",
       "owned_paths": [
         "crates/agones-core/src/features.rs",
@@ -1247,7 +1345,7 @@
         "feature-gates-configuration"
       ],
       "id": "FG-CONFIG-001",
-      "implementation_gate": "verification/agones/gates/72061e47b8819b3c5003e4a96cec3bce01955a2c1f83b5b2cb45a11a661ad382.json",
+      "implementation_gate": "verification/agones/gates/9c20b3d827119467d3cab75f885624bead98256955facff3fb20bdcfdb9be4c2.json",
       "next_action": "Complete remaining exact query/encoding source assertions with existing generated harnesses and unchanged domains/covers. Reuse the proved parse-error case and retain independent lifecycle/consumer obligations.",
       "owned_paths": [
         "crates/agones-core/src/features.rs",
@@ -1275,15 +1373,15 @@
   ],
   "workspace": {
     "branch": "agones-rs-dev",
-    "dirty_patch_sha256": "e8cdca28f222af027dd9a504ce6d75b0427fcd898cfbbf7f13f4e812704161a5",
-    "head": "dd4b4bfb82007eb4e8a3a84f93d276fb2f79cb27",
-    "last_validated_implementation": "verification/agones/gates/70364c20a393205d32e35c7839503eced4f6f607d9e65d312e7dc99551384eb5.json",
+    "dirty_patch_sha256": "4bcf5034834fdea551775b68cc043f93a80048b5a79a7506d6a295a3d8eb6463",
+    "head": "31cc72d92bbb9611e228ec5936d2421a5ca35f84",
+    "last_validated_implementation": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
     "path": "/home/astral/Projects/agones",
-    "source_binding_receipt": "verification/agones/runs/streaming-query-direct-path-derive-paths-1.json",
+    "source_binding_receipt": "verification/agones/runs/missing-container-concat-generation-checks-1.json",
     "untracked_inputs": [
       "AGONES_RS_CONTINUATION_PROMPT.md",
       "AGONES_RS_PROMPT_AUDIT_RESOLUTION.md"
     ],
-    "untracked_source_binding_sha256": "c0a66e108e840993cfab09940c86dc5f090ca03257c9e1d0f997fb8e7a5fe927"
+    "untracked_source_binding_sha256": "1673f428ba6d732c5205a9636fe4d0bccd92e7680472c0e76f71dca33843de40"
   }
 }

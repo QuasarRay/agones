@@ -1790,8 +1790,8 @@
     "set basic defaults on static gameserver",
     "set gRPC and HTTP ports on SDK Server"
   ],
-  "implementation_gate": "verification/agones/gates/9d59b7b0837a46736326e7991fa818f953042c8a4bf07f8148e042c4a5ce12e2.json",
-  "implementation_gate_sha256": "9d59b7b0837a46736326e7991fa818f953042c8a4bf07f8148e042c4a5ce12e2",
+  "implementation_gate": "verification/agones/gates/566a293ee7d457501907b1646ff43ec5d9818f3f9b3b25ed159fb69103ed77ab.json",
+  "implementation_gate_sha256": "566a293ee7d457501907b1646ff43ec5d9818f3f9b3b25ed159fb69103ed77ab",
   "loader_source_files": {
     "build/scripts/agones-rs/extract/gameserver_defaulting.go": "3530dbf1e91a96f2264c5e8eb21c4f69c16b50818feee975af4d5fd46d907664",
     "build/scripts/agones-rs/extract/gameserver_defaulting_test.go": "03af33d9d79bf73ad701528c07f5cdfa75758b5040465fbb52f7b95474eeb2bd",

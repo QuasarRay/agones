@@ -1,0 +1,4 @@
+{"harness_count": 1, "property_count": 1158, "status_counts": {"SUCCESS": 1141, "SATISFIED": 6, "UNREACHABLE": 11}}
+{"harness_count": 1, "claimed_assertions": 3, "required_covers": 8, "property_count": 1535, "status_counts": {"SUCCESS": 1474, "SATISFIED": 8, "UNREACHABLE": 53}}
+feature-bool-bolero-kani-ci-39505643334-1
+gameserver-features-bolero-kani-ci-39505643334-1

@@ -749,10 +749,14 @@ impl GameServerSpec {
         }
 
         if !self.has_container(&self.container, false) {
+            let prefix = "Could not find a container named ";
+            let mut detail = String::with_capacity(prefix.len() + self.container.len());
+            detail.push_str(prefix);
+            detail.push_str(&self.container);
             errors.push(ValidationError::invalid(
                 "spec.container",
                 self.container.as_str(),
-                format!("Could not find a container named {}", self.container),
+                detail,
             ));
         }
 
@@ -2102,6 +2106,22 @@ mod tests {
         assert_eq!(errors[1].kind, ValidationErrorKind::Invalid);
         assert_eq!(errors[2].path, "spec.ports[0].containerPort");
         assert_eq!(errors[3].path, "spec.ports[0].hostPort");
+
+        for (name, expected_detail) in [
+            ("", "Could not find a container named "),
+            ("missing", "Could not find a container named missing"),
+            ("🦀\n\0", "Could not find a container named 🦀\n\0"),
+        ] {
+            let errors = GameServerSpec {
+                container: name.to_owned(),
+                ..Default::default()
+            }.validate("");
+            assert_eq!(errors.len(), 1);
+            assert_eq!(errors[0].kind, ValidationErrorKind::Invalid);
+            assert_eq!(errors[0].path, "spec.container");
+            assert_eq!(errors[0].bad_value.as_deref(), Some(name));
+            assert_eq!(errors[0].detail, expected_detail);
+        }
 
         let dev = GameServerSpec {
             ports: vec![GameServerPort {

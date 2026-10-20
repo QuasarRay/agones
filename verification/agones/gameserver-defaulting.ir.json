@@ -4722,8 +4722,8 @@
     "GOVERSION": "go1.27.1-X:nodwarf5"
   },
   "feature_id": "GS-DEFAULTS-001",
-  "implementation_gate": "verification/agones/gates/f2497095cc0352dfd11b6a11e493d77c5899859e5cdccba0758e4986d6a6b829.json",
-  "implementation_gate_sha256": "f2497095cc0352dfd11b6a11e493d77c5899859e5cdccba0758e4986d6a6b829",
+  "implementation_gate": "verification/agones/gates/839b7ce78ea75153104d3272281ccb3a844a6385dbc480196ef2837cb4b439e9.json",
+  "implementation_gate_sha256": "839b7ce78ea75153104d3272281ccb3a844a6385dbc480196ef2837cb4b439e9",
   "loader_source_files": {
     "build/scripts/agones-rs/extract/gameserver_defaulting.go": "3530dbf1e91a96f2264c5e8eb21c4f69c16b50818feee975af4d5fd46d907664",
     "build/scripts/agones-rs/extract/gameserver_defaulting_test.go": "03af33d9d79bf73ad701528c07f5cdfa75758b5040465fbb52f7b95474eeb2bd",

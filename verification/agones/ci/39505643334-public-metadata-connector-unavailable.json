@@ -1,0 +1,164 @@
+{
+  "artifacts": [
+    {
+      "created_at": "2026-10-20T22:19:08Z",
+      "digest": "sha256:020b002d16a1eee39e5dbaad141b69df5ddb2a05d5625c0f280278c016a117d9",
+      "expired": false,
+      "id": 12304755583,
+      "name": "feature-kani-validation-002-39505643334-1",
+      "size_in_bytes": 75570
+    },
+    {
+      "created_at": "2026-10-20T22:13:51Z",
+      "digest": "sha256:493ac5c77e68194f8866854fdfa7c25473978f2e70e85edef62f078cc2cf4602",
+      "expired": false,
+      "id": 12304245814,
+      "name": "feature-kani-gameserver-005-39505643334-1",
+      "size_in_bytes": 146938
+    },
+    {
+      "created_at": "2026-10-20T22:10:27Z",
+      "digest": "sha256:771892ecf26205867e6a05d31b9b79da39313e13864c1548d6c515f34cdbf941",
+      "expired": false,
+      "id": 12304210339,
+      "name": "feature-kani-health-39505643334-1",
+      "size_in_bytes": 53619
+    },
+    {
+      "created_at": "2026-10-20T22:18:54Z",
+      "digest": "sha256:32d30d5432ef914ff0fc0f316809699d7670712c2b0b9ca703e1578838ac7d43",
+      "expired": false,
+      "id": 12304051862,
+      "name": "feature-kani-validation-000-39505643334-1",
+      "size_in_bytes": 59115
+    },
+    {
+      "created_at": "2026-10-20T22:17:04Z",
+      "digest": "sha256:98b12b72ba7da6e366670089d3e31778acf5344d388c809918e7d89e04ac3afc",
+      "expired": false,
+      "id": 12303602282,
+      "name": "feature-kani-gameserver-014-39505643334-1",
+      "size_in_bytes": 147244
+    },
+    {
+      "created_at": "2026-10-20T22:10:09Z",
+      "digest": "sha256:f3cb11b7a639b7be9465b14c8b72c2e2c9db4e02830b308d1714f04bbafca4b0",
+      "expired": false,
+      "id": 12303571216,
+      "name": "feature-kani-query-003-39505643334-1",
+      "size_in_bytes": 44994
+    },
+    {
+      "created_at": "2026-10-20T22:09:48Z",
+      "digest": "sha256:0186b2d976f2f7c80e9da18f3c9d825e6722bd05db693a9c8b9760681d44091a",
+      "expired": false,
+      "id": 12303456240,
+      "name": "feature-kani-input-39505643334-1",
+      "size_in_bytes": 36046
+    },
+    {
+      "created_at": "2026-10-20T22:09:25Z",
+      "digest": "sha256:c2ab935dde2b530d73c5b7bcffb89270b190b68763a685e7a64f16cc890663bc",
+      "expired": false,
+      "id": 12303306241,
+      "name": "feature-kani-player-contract-39505643334-1",
+      "size_in_bytes": 49359
+    },
+    {
+      "created_at": "2026-10-20T22:09:23Z",
+      "digest": "sha256:8abba3bb34e248a31c54e9bd6551df0e326d88f444e5d13c94734bcb8ace2a76",
+      "expired": false,
+      "id": 12303306235,
+      "name": "feature-kani-bool-39505643334-1",
+      "size_in_bytes": 38766
+    }
+  ],
+  "classification": "REPO_SAFE",
+  "jobs": [
+    {
+      "completed_at": "2026-10-20T22:07:01Z",
+      "conclusion": "success",
+      "id": 118913745163,
+      "name": "migration-state",
+      "started_at": "2026-10-20T22:06:39Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T22:17:07Z",
+      "conclusion": "success",
+      "id": 118913914667,
+      "name": "feature-common-model-check",
+      "started_at": "2026-10-20T22:07:03Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T22:09:28Z",
+      "conclusion": "success",
+      "id": 118913914797,
+      "name": "feature-validation-contract-model-check",
+      "started_at": "2026-10-20T22:07:04Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T22:18:56Z",
+      "conclusion": "failure",
+      "id": 118913914848,
+      "name": "feature-validation-source-000",
+      "started_at": "2026-10-20T22:07:03Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T22:19:10Z",
+      "conclusion": "failure",
+      "id": 118913914849,
+      "name": "feature-validation-source-002",
+      "started_at": "2026-10-20T22:07:03Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-20T22:12:03Z",
+      "conclusion": "success",
+      "id": 118913914862,
+      "name": "rust",
+      "started_at": "2026-10-20T22:07:03Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 118913914909,
+      "name": "feature-validation-source-003",
+      "started_at": "2026-10-20T22:07:03Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 118913914986,
+      "name": "feature-validation-source-001",
+      "started_at": "2026-10-20T22:07:03Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 118913915047,
+      "name": "feature-validation-source-004",
+      "started_at": "2026-10-20T22:07:04Z",
+      "status": "in_progress"
+    }
+  ],
+  "observed_at": "2026-10-20T22:20:14.034749+00:00",
+  "run": {
+    "conclusion": null,
+    "created_at": "2026-10-20T22:06:37Z",
+    "head_sha": "31cc72d92bbb9611e228ec5936d2421a5ca35f84",
+    "html_url": "https://github.com/QuasarRay/agones/actions/runs/39505643334",
+    "id": 39505643334,
+    "run_attempt": 1,
+    "status": "in_progress",
+    "updated_at": "2026-10-20T22:07:04Z"
+  },
+  "schema_version": 1,
+  "source": "Unauthenticated public GitHub REST metadata; connector tools currently return Unknown tool. No artifact proof credit from this status read."
+}
