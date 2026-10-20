@@ -1,8 +1,10 @@
 use std::sync::Arc;
 use std::time::Duration;
 
+use agones_core::derive_deftly_template_FieldwiseDefault;
 use agones_macros::agones_invariant;
 use cgp::prelude::*;
+use derive_deftly::Deftly;
 use futures::stream::FuturesUnordered;
 use futures::StreamExt;
 use rusternetes_storage::Storage;
@@ -65,21 +67,15 @@ fn game_server_retry_policy() -> FastSlowRetryPolicy {
 ///
 /// Deduplication is lane-local, as it is upstream: the same GameServer key may
 /// legitimately move between queues as its state changes.
-#[derive(Clone)]
+#[derive(Clone, Deftly)]
+#[derive_deftly(FieldwiseDefault)]
 pub struct GameServerWorkQueues {
+    #[deftly(default = "GameServerWorkQueue::new(game_server_retry_policy())")]
     main: GameServerWorkQueue,
+    #[deftly(default = "GameServerWorkQueue::new(game_server_retry_policy())")]
     creation: GameServerWorkQueue,
+    #[deftly(default = "GameServerWorkQueue::new(game_server_retry_policy())")]
     deletion: GameServerWorkQueue,
-}
-
-impl Default for GameServerWorkQueues {
-    fn default() -> Self {
-        Self {
-            main: GameServerWorkQueue::new(game_server_retry_policy()),
-            creation: GameServerWorkQueue::new(game_server_retry_policy()),
-            deletion: GameServerWorkQueue::new(game_server_retry_policy()),
-        }
-    }
 }
 
 impl GameServerWorkQueues {

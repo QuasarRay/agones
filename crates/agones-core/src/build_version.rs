@@ -4,6 +4,7 @@
 //! Cargo's package release version is a separate identity. AGONES_BUILD_VERSION
 //! supplies the source build value; it is frozen into the normal Cargo build.
 use cgp::prelude::*;
+use derive_deftly::Deftly;
 
 #[path = "version_annotation.rs"]
 mod annotation_text;
@@ -51,7 +52,8 @@ impl<Context: HasAgonesBuildVersion> AgonesVersionAnnotationGetter<Context>
     }
 }
 
-#[derive(Clone, Debug, Default, HasField)]
+#[derive(Clone, Debug, HasField, Deftly)]
+#[derive_deftly(FieldwiseDefault)]
 pub struct AgonesBuildVersionContext {
     pub agones_build_version: AgonesBuildVersion,
 }

@@ -11,6 +11,8 @@ agones-core = { path = "../agones-core" }
 agones-macros.workspace = true
 async-trait.workspace = true
 cgp.workspace = true
+comprende.workspace = true
+derive-deftly.workspace = true
 chrono.workspace = true
 futures.workspace = true
 extism.workspace = true

@@ -2,6 +2,8 @@ use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
 
+use agones_core::derive_deftly_template_FieldwiseDefault;
+use derive_deftly::Deftly;
 use futures::StreamExt;
 use futures::channel::mpsc::{
     UnboundedReceiver, UnboundedSender, unbounded,
@@ -102,17 +104,11 @@ impl RetryTokenBucket {
 /// per-item exponential schedule plus its 10qps / burst-100 global retry
 /// bucket. Normal controller operation stays in the exact zero-bucket-delay
 /// region; retry floods are additionally globally throttled.
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Deftly)]
+#[derive_deftly(FieldwiseDefault)]
 pub(crate) struct DefaultControllerRetryPolicy {
+    #[deftly(default = "Arc::new(Mutex::new(RetryTokenBucket::new()))")]
     bucket: Arc<Mutex<RetryTokenBucket>>,
-}
-
-impl Default for DefaultControllerRetryPolicy {
-    fn default() -> Self {
-        Self {
-            bucket: Arc::new(Mutex::new(RetryTokenBucket::new())),
-        }
-    }
 }
 
 impl ControllerRetryPolicy for DefaultControllerRetryPolicy {

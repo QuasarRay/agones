@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 
 use async_trait::async_trait;
+use comprende::c;
 use agones_core::{
     GameServer, ValidationError,
 };
@@ -211,9 +212,8 @@ where
 }
 
 pub(crate) fn format_validation_errors(errors: &[ValidationError]) -> String {
-    errors
-        .iter()
-        .map(|error| {
+    c![
+        {
             let value = error
                 .bad_value
                 .as_deref()
@@ -223,9 +223,10 @@ pub(crate) fn format_validation_errors(errors: &[ValidationError]) -> String {
                 "{}{:?}{}: {}",
                 error.path, error.kind, value, error.detail
             )
-        })
-        .collect::<Vec<_>>()
-        .join("; ")
+        }
+        for error in errors
+    ]
+    .join("; ")
 }
 
 /// Upstream creationValidationHandler domain behavior.

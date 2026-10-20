@@ -6,7 +6,10 @@
 use derive_deftly::define_derive_deftly;
 
 define_derive_deftly! {
-    FieldwiseDefault for struct:
+    /// Shared fieldwise Default derive used by both agones-core and the
+    /// Rusternetes adapter contexts. CGP owns capability wiring; this template
+    /// owns only structural construction policy.
+    export FieldwiseDefault for struct:
     impl ::core::default::Default for $ttype {
         fn default() -> Self {
             Self {

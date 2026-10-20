@@ -87,6 +87,8 @@ dependencies = [
  "bolero",
  "cgp",
  "chrono",
+ "comprende",
+ "derive-deftly",
  "extism",
  "futures",
  "genco",
