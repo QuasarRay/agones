@@ -1,13 +1,13 @@
 # Agones-rs handoff
 
-Generated from AGONES_RS_STATE.json revision 275.
+Generated from AGONES_RS_STATE.json revision 281.
 Contract SHA-256: `45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1`.
 Original reference: `6eb4a02588d8e7b581de187f3bc849733a78dcb2`, scope `agones-original-v1`.
-Workspace: `agones-rs-dev` at `31cc72d92bbb9611e228ec5936d2421a5ca35f84`.
+Workspace: `agones-rs-dev` at `4523bffd1fc3ae01ecba4918b343cafaa688c2f7`.
 Native Goal last reported `active`; full migration is **INCOMPLETE**.
 
 Active work: **GS-VALIDATE-FEATURES-001**, stage `VERIFYING`, disposition `READY`.
-Next action: Publish the native605 source-concatenation repair and current metadata to existing draftPR96 using passive59af tree/blob reuse, then one distinct protected12selection attempt. Keep all original obligations/bounds and recover complete rows/covers before credit.
+Next action: Review a semantics-preserving expected-driven multiset comparison in the existing Genco emitter. Equal lengths plus equal multiplicities for each expected equivalence class preserves ElementsMatch for finite error lists while bounding outer iteration by the literal expected fixture. Preserve full record Eq, duplicates, all original fixtures/actions/assertions/covers/domains/unwind128. Validate equivalence and mutation controls before one distinct attempt; no identical retry.
 Implementation gate: `verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json`.
 
 Read the active source and affected contract appendices only. Baseline metadata is in
@@ -18,10 +18,10 @@ assertions and non-Go test identities remain unresolved. This is no completeness
 
 All 8 unverified `_2` form/location cells remain required architecture work.
 Last refactoring decision: REUSE_EXISTING.
-Next review: After the distinct protected result, inspect whether formatting/byte-search exhaustion moved or completed; keep all remaining source work and eight _2cells required..
+Next review: After equivalence/mutation controls and one distinct protected source-case result, reassess the remaining actual comparison/production bottleneck. All eight _2cells and full source/architecture/lifecycle/conformance requirements stay open..
 No new macros or general frameworks are prerequisites for the next ordinary feature.
 
-Delivery: `PR96_REVIEW31CC_AND_TERMINAL_EVIDENCE59AF_PUBLISHED_CURRENT_CONCAT_REPAIR_NATIVE605_LOCAL` to `agones-rs-dev`; never modify main.
+Delivery: `PR96_CONCAT4523_PUBLISHED_CI_TERMINAL_ALL12_LOCAL_ARTIFACTS_RETAINED_FIVE_TIMEOUTS` to `agones-rs-dev`; never modify main.
 Connected GitHub app has write access; local gh CLI is logged out.
 Recover live jobs from the ledger and `verification/agones/runs/*.json` by comparing
 the stored process identity with /proc before waiting, attaching or stopping anything.

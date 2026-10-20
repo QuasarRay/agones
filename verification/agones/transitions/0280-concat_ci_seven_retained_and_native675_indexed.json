@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "CONCAT_CI_SEVEN_RETAINED_AND_NATIVE675_INDEXED",
+  "gate_snapshot": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
+  "predecessor_revision": 279,
+  "predecessor_sha256": "331860c9bbeb24d3be32ccf250f40c3e4b7592c80ca5b96be207e1e620452a1f",
+  "reason": "Current seven complete strict selections retained with exact snapshot/observation limits; five source jobs live. Updated canonical recovery points to clean combined6347616native675without adopting its production or granting formal credit.",
+  "result_revision": 280,
+  "schema_version": 1,
+  "state_sha256": "06ca26fbb376d4f5cfab68ac2d5287a9903d0117ad1208ea56e502f0c2dacb25",
+  "timestamp": "2026-10-20T23:14:43.329318+00:00"
+}

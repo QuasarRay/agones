@@ -1,0 +1,407 @@
+{
+  "acceptance": "State/Rust/common/contract passed; all five required source feature selections and aggregate failed. PR96remainsdraft/unmerged; full migration incomplete.",
+  "artifact_bindings": {
+    "verification/agones/proof-summaries/feature-bool-bolero-kani-ci-39511896291-1.json": "b741c54dfa6c63bebcd3d8bb7fcb413a9ba9582a23c6640e31f366025618c4f7",
+    "verification/agones/proof-summaries/feature-input-bolero-kani-ci-39511896291-1.json": "44f4c8cbbdb5ed0c519ca14eed6fb6f5a517d6076a7a06593c1e0d3d7c1db30c",
+    "verification/agones/proof-summaries/feature-query-error-bolero-kani-ci-39511896291-1.json": "98461628cd3f63e5704cb98a17628fd9f967b9af9332113fadd4336788959150",
+    "verification/agones/proof-summaries/gameserver-features-bolero-kani-ci-39511896291-1.json": "b830cc11c609cef7b9eecc3c4fc8b45088b7a2e362b5081076a0d7d7f736e534",
+    "verification/agones/proof-summaries/gameserver-source-005-bolero-kani-ci-39511896291-1.json": "37199392ab5937b531243d150348a3c19f3d9cbc23eb21a34f529f4b63eea3b5",
+    "verification/agones/proof-summaries/gameserver-source-014-bolero-kani-ci-39511896291-1.json": "26e69c34a24b17dd645e09f24179cfc66929944b82a8e66859006ea2b1bfa3ba",
+    "verification/agones/proof-summaries/health-defaulting-bolero-kani-ci-39511896291-1.json": "e63f5f522c97780210c764d6e6d7f8c40dce049dbc6573f203408b03f412293f",
+    "verification/agones/runs/feature-bool-bolero-kani-ci-39511896291-1.json": "68a246dccc2aa2bfe88b37379e54864b92fbb80ea2302aabad3e4407ca00802e",
+    "verification/agones/runs/feature-bool-bolero-kani-ci-39511896291-1.log": "ada82b62426e5fc552d92151be726f89e0d5626090d7d72f741e25a006a1280d",
+    "verification/agones/runs/feature-input-bolero-kani-ci-39511896291-1.json": "e0fb62ba8b35e8f0b0c647ba48d9a0207fd8cbf0501abfafe857fa5b306411ad",
+    "verification/agones/runs/feature-input-bolero-kani-ci-39511896291-1.log": "0ed0cf19262ec5279d369b5a3a90e8a9bb64359558918c5f2da51e80c6fef342",
+    "verification/agones/runs/feature-query-error-bolero-kani-ci-39511896291-1.json": "65ec29b9ae84010dc67e489888fa84bb64d87b032e968028438fa09b6bc92fe3",
+    "verification/agones/runs/feature-query-error-bolero-kani-ci-39511896291-1.log": "5b26b05646af527b6b9b8de064332e230879d34d199f8c596c769959fd7c4125",
+    "verification/agones/runs/gameserver-features-bolero-kani-ci-39511896291-1.json": "b5eebebd67f4c114c2ae8a5e2599d1a4d4fd7cd682a2197707d6ea9fd66e7626",
+    "verification/agones/runs/gameserver-features-bolero-kani-ci-39511896291-1.log": "def2d6930720a563d283695a0ca1ea958fad4602d0c87ef165fa62dbc4aea51d",
+    "verification/agones/runs/gameserver-source-005-bolero-kani-ci-39511896291-1.json": "f8ba721d975aac3e6d3d4f71391e3c9d96ef8eb697cc2c69f3cca331dc205c2f",
+    "verification/agones/runs/gameserver-source-005-bolero-kani-ci-39511896291-1.log": "0532a4872dbeda6a7e55c8799ac968b8ac0366c0a0a7186af7cf1a1be9df92e6",
+    "verification/agones/runs/gameserver-source-014-bolero-kani-ci-39511896291-1.json": "40d6ad9cf77d63ac3bd457e927ac7ff29afa114a75160dd55cfe402e6ecbf553",
+    "verification/agones/runs/gameserver-source-014-bolero-kani-ci-39511896291-1.log": "0f08de7c4c15fefb63fc4d27e29312f2bd8da05974ff253880debc98b025b740",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39511896291-1-case-000.json": "1183fbeb426435e9458d5c5e6ec355862bd5eea046c084354517cfd56b137e9f",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39511896291-1-case-000.log": "5c2c4c530846fb0763954dc79ffbfbd565126fe050d09e21403c29065f03dfcd",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39511896291-1-case-001.json": "2c0953b6be7a6169520c6a78ece8bc31fa20ae15c2dd4f74bc0fee773517ce5f",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39511896291-1-case-001.log": "9bb25ac9594781da05d794896ba9dd63fa733f3b6ae16c9ea4fa91ce50407077",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39511896291-1-case-002.json": "f12bafee10a080b4465ebfb0f63ed0c7787f0cefe15b6d2e3698c1e0f292420e",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39511896291-1-case-002.log": "c0cb841370475e508129f6e5897a4675a38a9e574650487db8032f8be6c0c8c3",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39511896291-1-case-003.json": "413449d4d648c397fbf109f0893e2a16e98b327bb20ee3e0ce9911015561c9f6",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39511896291-1-case-003.log": "6b52141a5c63d5c174c34d70a3e272c870ec408c4ecfecf6762bff7490152439",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39511896291-1-case-004.json": "1878b9b15f5985217ea338d4e1731b3d67a2ba3f6d530430aebc29b627713c44",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39511896291-1-case-004.log": "eaeef663eb8f21e1ad5e0582dbd18691abe62eaf4749a16c52b4b506c7e9f585",
+    "verification/agones/runs/health-defaulting-bolero-kani-ci-39511896291-1.json": "70aaaa40453c366a06786ade6aa9ba4611565ca70dd6467077269bc8a42a0944",
+    "verification/agones/runs/health-defaulting-bolero-kani-ci-39511896291-1.log": "9f03bd27cc5c32a29bf20eb29b88095b7148f0c4cd02a29eaa9ed7f3b84a3bc7"
+  },
+  "classification": "REPO_SAFE",
+  "completed_at": "2026-10-20T23:15:18Z",
+  "conclusion": "failure",
+  "counts": {
+    "backend_rows": 20132,
+    "failed_harnesses": 5,
+    "original_defaulting_assertions": 36,
+    "original_feature_validation_assertions": 0,
+    "original_query_error_assertions": 1,
+    "retained_artifacts": 12,
+    "satisfied_covers": 38,
+    "semantic_claims": 49,
+    "successful_harnesses": 7,
+    "unreachable_credited": 0
+  },
+  "failed_selections": [
+    {
+      "archive_sha256": "146d8168c4617a298e71f27bbd84bb5703e19422342689cb0b7f612f9d05b560",
+      "artifact_id": 12307330659,
+      "artifact_name": "feature-kani-validation-000-39511896291-1",
+      "exit_code": 124,
+      "formal_credit": 0,
+      "harness": "source_gsv_case_000",
+      "individual_rows": 0,
+      "last_unwind": [
+        "Unwinding loop memcmp.0 iteration 102 file <builtin-library-memcmp> line 25 function memcmp thread 0"
+      ],
+      "log": "verification/agones/runs/gameserver-validation-bolero-kani-ci-39511896291-1-case-000.log",
+      "memory_peak_bytes": 10918899712,
+      "observed_phase": "Generated source_gsv_errors_match nested error counts/equality; repeated ValidationError Option<String> equality and memcmp loops.",
+      "pad_adapter_recursion_entries": 0,
+      "run": "verification/agones/runs/gameserver-validation-bolero-kani-ci-39511896291-1-case-000.json",
+      "service_runtime": "15min 1.211s",
+      "status": "COMMAND_TIMEOUT_900S"
+    },
+    {
+      "archive_sha256": "f0d32bb1ca9bb9f14e53167aa2e2d4589143565c8f482f436e651c31a0f1b3be",
+      "artifact_id": 12307380916,
+      "artifact_name": "feature-kani-validation-001-39511896291-1",
+      "exit_code": 124,
+      "formal_credit": 0,
+      "harness": "source_gsv_case_001",
+      "individual_rows": 0,
+      "last_unwind": [
+        "Unwinding loop memcmp.0 iteration 124 file <builtin-library-memcmp> line 25 function memcmp thread 0"
+      ],
+      "log": "verification/agones/runs/gameserver-validation-bolero-kani-ci-39511896291-1-case-001.log",
+      "memory_peak_bytes": 5713268736,
+      "observed_phase": "Generated source_gsv_errors_match nested error counts/equality; repeated ValidationError Option<String> equality and memcmp loops.",
+      "pad_adapter_recursion_entries": 0,
+      "run": "verification/agones/runs/gameserver-validation-bolero-kani-ci-39511896291-1-case-001.json",
+      "service_runtime": "15min 1.462s",
+      "status": "COMMAND_TIMEOUT_900S"
+    },
+    {
+      "archive_sha256": "a2114a832e887db894ace9a3aa436a29e2875d9f1b73aaeda1d6378cdc4f9f7c",
+      "artifact_id": 12307495820,
+      "artifact_name": "feature-kani-validation-002-39511896291-1",
+      "exit_code": 124,
+      "formal_credit": 0,
+      "harness": "source_gsv_case_002",
+      "individual_rows": 0,
+      "last_unwind": [
+        "Unwinding loop memcmp.0 iteration 27 file <builtin-library-memcmp> line 25 function memcmp thread 0"
+      ],
+      "log": "verification/agones/runs/gameserver-validation-bolero-kani-ci-39511896291-1-case-002.log",
+      "memory_peak_bytes": 11395751936,
+      "observed_phase": "Generated source_gsv_errors_match nested error counts/equality; repeated ValidationError Option<String> equality and memcmp loops.",
+      "pad_adapter_recursion_entries": 0,
+      "run": "verification/agones/runs/gameserver-validation-bolero-kani-ci-39511896291-1-case-002.json",
+      "service_runtime": "15min 1.187s",
+      "status": "COMMAND_TIMEOUT_900S"
+    },
+    {
+      "archive_sha256": "cbbf3914e6b830b925a329c77d23f88ae3270df1ebcd4f631dff0ebff00e2035",
+      "artifact_id": 12307395878,
+      "artifact_name": "feature-kani-validation-003-39511896291-1",
+      "exit_code": 124,
+      "formal_credit": 0,
+      "harness": "source_gsv_case_003",
+      "individual_rows": 0,
+      "last_unwind": [
+        "Unwinding loop memcmp.0 iteration 71 file <builtin-library-memcmp> line 25 function memcmp thread 0"
+      ],
+      "log": "verification/agones/runs/gameserver-validation-bolero-kani-ci-39511896291-1-case-003.log",
+      "memory_peak_bytes": 8920997888,
+      "observed_phase": "Generated source_gsv_errors_match nested error counts/equality; repeated ValidationError Option<String> equality and memcmp loops.",
+      "pad_adapter_recursion_entries": 0,
+      "run": "verification/agones/runs/gameserver-validation-bolero-kani-ci-39511896291-1-case-003.json",
+      "service_runtime": "15min 825ms",
+      "status": "COMMAND_TIMEOUT_900S"
+    },
+    {
+      "archive_sha256": "cbde2fee675db2573a83f907fe99e0ab74233ca4e8c01006b922c251b5648477",
+      "artifact_id": 12306358936,
+      "artifact_name": "feature-kani-validation-004-39511896291-1",
+      "exit_code": 124,
+      "formal_credit": 0,
+      "harness": "source_gsv_case_004",
+      "individual_rows": 0,
+      "last_unwind": [
+        "Unwinding loop memcmp.0 iteration 16 file <builtin-library-memcmp> line 25 function memcmp thread 0"
+      ],
+      "log": "verification/agones/runs/gameserver-validation-bolero-kani-ci-39511896291-1-case-004.log",
+      "memory_peak_bytes": 7745859584,
+      "observed_phase": "Generated source_gsv_errors_match nested error counts/equality; repeated ValidationError Option<String> equality and memcmp loops.",
+      "pad_adapter_recursion_entries": 0,
+      "run": "verification/agones/runs/gameserver-validation-bolero-kani-ci-39511896291-1-case-004.json",
+      "service_runtime": "15min 2.369s",
+      "status": "COMMAND_TIMEOUT_900S"
+    }
+  ],
+  "jobs": [
+    {
+      "conclusion": "success",
+      "id": 118934695509,
+      "name": "migration-state",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "id": 118934813927,
+      "name": "feature-validation-contract-model-check",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "id": 118934813996,
+      "name": "rust",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "id": 118934814002,
+      "name": "feature-common-model-check",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "id": 118934814061,
+      "name": "feature-validation-source-004",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "id": 118934814069,
+      "name": "feature-validation-source-003",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "id": 118934814120,
+      "name": "feature-validation-source-000",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "id": 118934814141,
+      "name": "feature-validation-source-002",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "id": 118934814164,
+      "name": "feature-validation-source-001",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "id": 118940879591,
+      "name": "feature-bool-model-check",
+      "status": "completed"
+    }
+  ],
+  "measured_change": "All five traces now contain zero PadAdapter recursion entries and reach generated error-multiset counting/equality. Memory peaks fall below12GiB to5.3-10.6GiB. All five still time out at900s before result rows; no feature-source proof is credited and no completion/speed improvement is claimed.",
+  "native_implementation": {
+    "canonical_passed": 605,
+    "failed": 0,
+    "ignored": 3,
+    "isolated_adoption": "PENDING",
+    "isolated_commit": "634761603763068e5bb201e80db3d839e5f1c3d2",
+    "isolated_passed": 675
+  },
+  "next_action": "Review a semantics-preserving expected-driven multiset comparison in the existing Genco emitter. Equal lengths plus equal multiplicities for each expected equivalence class preserves ElementsMatch for finite error lists while bounding outer iteration by the literal expected fixture. Preserve full record Eq, duplicates, all original fixtures/actions/assertions/covers/domains/unwind128. Validate equivalence and mutation controls before one distinct attempt; no identical retry.",
+  "prior_comparison": {
+    "prior_failed_statuses": [
+      {
+        "harness": "source_gsv_case_000",
+        "memory_peak_bytes": 12884901888,
+        "service_runtime": "10min 49.547s",
+        "status": "WHOLE_SERVICE_OOM_KILL"
+      },
+      {
+        "harness": "source_gsv_case_001",
+        "memory_peak_bytes": 12884901888,
+        "service_runtime": "15min 3.608s",
+        "status": "COMMAND_TIMEOUT_900S"
+      },
+      {
+        "harness": "source_gsv_case_002",
+        "memory_peak_bytes": 12884901888,
+        "service_runtime": "11min 9.344s",
+        "status": "WHOLE_SERVICE_OOM_KILL"
+      },
+      {
+        "harness": "source_gsv_case_003",
+        "memory_peak_bytes": 12884901888,
+        "service_runtime": "14min 49.834s",
+        "status": "WHOLE_SERVICE_OOM_KILL"
+      },
+      {
+        "harness": "source_gsv_case_004",
+        "memory_peak_bytes": 12884901888,
+        "service_runtime": "15min 3.390s",
+        "status": "COMMAND_TIMEOUT_900S"
+      }
+    ],
+    "prior_source_head": "31cc72d92bbb9611e228ec5936d2421a5ca35f84",
+    "receipt": "verification/agones/ci/39505643334-terminal-retained.json"
+  },
+  "run_attempt": 1,
+  "schema_version": 1,
+  "source_correspondence_limit": "Current seven successes prove their declared main-tree Rust domains and selected source cases. Complete Go six-field error correspondence and the independent isolated25case work remain required.",
+  "source_head": "4523bffd1fc3ae01ecba4918b343cafaa688c2f7",
+  "source_tree": "9198114c9aa7223e3df515d9c9f70181da0af9b4",
+  "status": "TERMINAL_FAILURE_ALL12_ARTIFACTS_RETAINED_SEVEN_STRICT_SUMMARIES_REPRODUCED",
+  "successful_selections": [
+    {
+      "archive_sha256": "9700b11bcd70733274c14e30205b52dafb5c45f803834f2c5caadd0a34e1c17f",
+      "artifact_id": 12306601712,
+      "artifact_name": "feature-kani-health-39511896291-1",
+      "backend_rows": 2180,
+      "exit_code": 0,
+      "harness": "health_defaulting_common_domain",
+      "log": "verification/agones/runs/health-defaulting-bolero-kani-ci-39511896291-1.log",
+      "run": "verification/agones/runs/health-defaulting-bolero-kani-ci-39511896291-1.json",
+      "satisfied_covers": 8,
+      "scope": "Actual GameServerSpec::apply_defaults health observation with other spec fields zero, independent reference and relational invariant. One bool and three arbitrary i32 inputs, no filtering, unwind 16. No whole GameServer/admission/lifecycle proof or original exact-case assertion credit.",
+      "semantic_claims": 3,
+      "status_counts": {
+        "SATISFIED": 8,
+        "SUCCESS": 2147,
+        "UNREACHABLE": 25
+      },
+      "strict_summary_reproduced": true,
+      "summary": "verification/agones/proof-summaries/health-defaulting-bolero-kani-ci-39511896291-1.json"
+    },
+    {
+      "archive_sha256": "d1949596552b7c20a97bf437c7eab76199ffdd41e655e8be11ec8221c3f31743",
+      "artifact_id": 12306306529,
+      "artifact_name": "feature-kani-bool-39511896291-1",
+      "backend_rows": 1158,
+      "exit_code": 0,
+      "harness": "feature_bool_common_domain",
+      "log": "verification/agones/runs/feature-bool-bolero-kani-ci-39511896291-1.log",
+      "run": "verification/agones/runs/feature-bool-bolero-kani-ci-39511896291-1.json",
+      "satisfied_covers": 6,
+      "scope": "Only the actual production parse_feature_bool and independent reference/invariant over byte strings of length 0..5, unwind 8; no unbounded query, environment or controller proof.",
+      "semantic_claims": 3,
+      "status_counts": {
+        "SATISFIED": 6,
+        "SUCCESS": 1141,
+        "UNREACHABLE": 11
+      },
+      "strict_summary_reproduced": true,
+      "summary": "verification/agones/proof-summaries/feature-bool-bolero-kani-ci-39511896291-1.json"
+    },
+    {
+      "archive_sha256": "ef6cbe5f238e0de9bb5b986b56ad1c34e77f6ff5ac6a3c4e3a0cafdb39404df6",
+      "artifact_id": 12306098394,
+      "artifact_name": "feature-kani-input-39511896291-1",
+      "backend_rows": 978,
+      "exit_code": 0,
+      "harness": "feature_input_common_domain",
+      "log": "verification/agones/runs/feature-input-bolero-kani-ci-39511896291-1.log",
+      "run": "verification/agones/runs/feature-input-bolero-kani-ci-39511896291-1.json",
+      "satisfied_covers": 10,
+      "scope": "Production select_feature_gate_input and independent reference/invariant. Each optional raw byte string has length 0..2; no filtering, unwind 8. No OS/command/lifecycle proof or original exact-case assertion credit.",
+      "semantic_claims": 3,
+      "status_counts": {
+        "SATISFIED": 10,
+        "SUCCESS": 945,
+        "UNREACHABLE": 23
+      },
+      "strict_summary_reproduced": true,
+      "summary": "verification/agones/proof-summaries/feature-input-bolero-kani-ci-39511896291-1.json"
+    },
+    {
+      "archive_sha256": "48ed76c89e2460a7280071c44fb9d9b2f8ae033ce56d70ede54f99f02f1e59fd",
+      "artifact_id": 12306009393,
+      "artifact_name": "feature-kani-gameserver-014-39511896291-1",
+      "backend_rows": 6387,
+      "exit_code": 0,
+      "harness": "source_gs_case_014",
+      "log": "verification/agones/runs/gameserver-source-014-bolero-kani-ci-39511896291-1.log",
+      "run": "verification/agones/runs/gameserver-source-014-bolero-kani-ci-39511896291-1.json",
+      "satisfied_covers": 2,
+      "scope": "Selected exact source GameServer case only: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver. Unit input, no preconditions, unwind 64; typed whole source fixture, actual feature parser and CGP defaulting provider, literal original relations. After all observations/case cover, the harness retains its owners under GS-DEFAULTS-001-OBSERVATION-LIFETIME-1. No formal post-observation heap cleanup is claimed. Other cases, zero-occurrence sites, general domains, admission/lifecycle and executor behavior receive no credit.",
+      "semantic_claims": 18,
+      "status_counts": {
+        "SATISFIED": 2,
+        "SUCCESS": 6106,
+        "UNREACHABLE": 279
+      },
+      "strict_summary_reproduced": true,
+      "summary": "verification/agones/proof-summaries/gameserver-source-014-bolero-kani-ci-39511896291-1.json"
+    },
+    {
+      "archive_sha256": "89a7b553f45f15b6417c3862eacfc9a130636dcf900a7bb7aa3beab184662fd5",
+      "artifact_id": 12305713929,
+      "artifact_name": "feature-kani-query-003-39511896291-1",
+      "backend_rows": 1507,
+      "exit_code": 0,
+      "harness": "source_query_case_003",
+      "log": "verification/agones/runs/feature-query-error-bolero-kani-ci-39511896291-1.log",
+      "run": "verification/agones/runs/feature-query-error-bolero-kani-ci-39511896291-1.json",
+      "satisfied_covers": 2,
+      "scope": "Selected exact source case only: agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Error on query parsing. Actual production query parser and exact source assertions for all five selected cases. No unbounded input generalization, alternate production implementation, OS/command proof, or translated reference-model proof is credited. Original Go tests apply the same independent source relations separately.",
+      "semantic_claims": 1,
+      "status_counts": {
+        "SATISFIED": 2,
+        "SUCCESS": 1461,
+        "UNREACHABLE": 44
+      },
+      "strict_summary_reproduced": true,
+      "summary": "verification/agones/proof-summaries/feature-query-error-bolero-kani-ci-39511896291-1.json"
+    },
+    {
+      "archive_sha256": "5d391273e7c4889fcae2021769434a7720d26a64eb6b99d2bb6130b011c3b963",
+      "artifact_id": 12305453702,
+      "artifact_name": "feature-kani-player-contract-39511896291-1",
+      "backend_rows": 1535,
+      "exit_code": 0,
+      "harness": "gameserver_feature_validation_common_domain",
+      "log": "verification/agones/runs/gameserver-features-bolero-kani-ci-39511896291-1.log",
+      "run": "verification/agones/runs/gameserver-features-bolero-kani-ci-39511896291-1.json",
+      "satisfied_covers": 8,
+      "scope": "Actual CGP ValidateAgonesGameServerFeatures provider and independent nonallocating match-table reference checked against the separate complete error relation. Arbitrary enabled/present booleans and signed i64 capacity, no filtering, fixed spec field path, unwind128. The deterministic relation fixes count/kind/path/optional bad value/detail for both observations. No qualified original table assertion, unbounded field path, full validation, admission, lifecycle or live-cluster proof credit. Harness owners are retained after observations under the existing lifetime rule; formal post-observation cleanup remains required.",
+      "semantic_claims": 3,
+      "status_counts": {
+        "SATISFIED": 8,
+        "SUCCESS": 1474,
+        "UNREACHABLE": 53
+      },
+      "strict_summary_reproduced": true,
+      "summary": "verification/agones/proof-summaries/gameserver-features-bolero-kani-ci-39511896291-1.json"
+    },
+    {
+      "archive_sha256": "9a7e20d71308acebcf060e3989d6f93544259c0a155d370ff4811c4e7d5f0eac",
+      "artifact_id": 12305279468,
+      "artifact_name": "feature-kani-gameserver-005-39511896291-1",
+      "backend_rows": 6387,
+      "exit_code": 0,
+      "harness": "source_gs_case_005",
+      "log": "verification/agones/runs/gameserver-source-005-bolero-kani-ci-39511896291-1.log",
+      "run": "verification/agones/runs/gameserver-source-005-bolero-kani-ci-39511896291-1.json",
+      "satisfied_covers": 2,
+      "scope": "Selected exact source GameServer case only: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never. Unit input, no preconditions, unwind 64; typed whole source fixture, actual feature parser and CGP defaulting provider, literal original relations. After all observations/case cover, the harness retains its owners under GS-DEFAULTS-001-OBSERVATION-LIFETIME-1. No formal post-observation heap cleanup is claimed. Other cases, zero-occurrence sites, general domains, admission/lifecycle and executor behavior receive no credit.",
+      "semantic_claims": 18,
+      "status_counts": {
+        "SATISFIED": 2,
+        "SUCCESS": 6106,
+        "UNREACHABLE": 279
+      },
+      "strict_summary_reproduced": true,
+      "summary": "verification/agones/proof-summaries/gameserver-source-005-bolero-kani-ci-39511896291-1.json"
+    }
+  ],
+  "tested_merge": "44a9f5d940555795eeb3bc1abdacbeea1871ed4c",
+  "url": "https://github.com/QuasarRay/agones/actions/runs/39511896291",
+  "workflow_run": 39511896291
+}

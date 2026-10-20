@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "CONCAT_TERMINAL_ALL12_RETAINED_MULTISETS_NEXT",
+  "gate_snapshot": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
+  "predecessor_revision": 280,
+  "predecessor_sha256": "06ca26fbb376d4f5cfab68ac2d5287a9903d0117ad1208ea56e502f0c2dacb25",
+  "reason": "Actual395118all12archives/run/log/source bindings and7strict summaries verified. Source-concat removes all logged PadAdapter recursion and reduces peaks to5.3-10.6GiB; all five still900stimeout/zero rows at nested error-multiset comparisons. Preserve49claims/38covers scope and all full records. Next expected-driven matcher requires demonstrated semantic equivalence and full mutation checks, with no case/assertion/cover/domain/bound reduction.",
+  "result_revision": 281,
+  "schema_version": 1,
+  "state_sha256": "035417bd01d991f2a3033c4c7bc002849eb0082da8463454a717a7616ccf4142",
+  "timestamp": "2026-10-20T23:23:21.891318+00:00"
+}

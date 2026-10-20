@@ -4,56 +4,56 @@
       "evidence_refs": [],
       "form": "proc_macro_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After the distinct protected result, inspect whether formatting/byte-search exhaustion moved or completed; keep all remaining source work and eight _2cells required.",
+      "next_review_trigger": "After equivalence/mutation controls and one distinct protected source-case result, reassess the remaining actual comparison/production bottleneck. All eight _2cells and full source/architecture/lifecycle/conformance requirements stay open.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_2",
       "location": "cross-crate",
-      "next_review_trigger": "After the distinct protected result, inspect whether formatting/byte-search exhaustion moved or completed; keep all remaining source work and eight _2cells required.",
+      "next_review_trigger": "After equivalence/mutation controls and one distinct protected source-case result, reassess the remaining actual comparison/production bottleneck. All eight _2cells and full source/architecture/lifecycle/conformance requirements stay open.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_attribute_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After the distinct protected result, inspect whether formatting/byte-search exhaustion moved or completed; keep all remaining source work and eight _2cells required.",
+      "next_review_trigger": "After equivalence/mutation controls and one distinct protected source-case result, reassess the remaining actual comparison/production bottleneck. All eight _2cells and full source/architecture/lifecycle/conformance requirements stay open.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_attribute_2",
       "location": "cross-crate",
-      "next_review_trigger": "After the distinct protected result, inspect whether formatting/byte-search exhaustion moved or completed; keep all remaining source work and eight _2cells required.",
+      "next_review_trigger": "After equivalence/mutation controls and one distinct protected source-case result, reassess the remaining actual comparison/production bottleneck. All eight _2cells and full source/architecture/lifecycle/conformance requirements stay open.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_derive_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After the distinct protected result, inspect whether formatting/byte-search exhaustion moved or completed; keep all remaining source work and eight _2cells required.",
+      "next_review_trigger": "After equivalence/mutation controls and one distinct protected source-case result, reassess the remaining actual comparison/production bottleneck. All eight _2cells and full source/architecture/lifecycle/conformance requirements stay open.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_derive_2",
       "location": "cross-crate",
-      "next_review_trigger": "After the distinct protected result, inspect whether formatting/byte-search exhaustion moved or completed; keep all remaining source work and eight _2cells required.",
+      "next_review_trigger": "After equivalence/mutation controls and one distinct protected source-case result, reassess the remaining actual comparison/production bottleneck. All eight _2cells and full source/architecture/lifecycle/conformance requirements stay open.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_delegate_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After the distinct protected result, inspect whether formatting/byte-search exhaustion moved or completed; keep all remaining source work and eight _2cells required.",
+      "next_review_trigger": "After equivalence/mutation controls and one distinct protected source-case result, reassess the remaining actual comparison/production bottleneck. All eight _2cells and full source/architecture/lifecycle/conformance requirements stay open.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_delegate_2",
       "location": "cross-crate",
-      "next_review_trigger": "After the distinct protected result, inspect whether formatting/byte-search exhaustion moved or completed; keep all remaining source work and eight _2cells required.",
+      "next_review_trigger": "After equivalence/mutation controls and one distinct protected source-case result, reassess the remaining actual comparison/production bottleneck. All eight _2cells and full source/architecture/lifecycle/conformance requirements stay open.",
       "status": "REQUIRED_OPEN"
     }
   ],
@@ -102,10 +102,10 @@
   ],
   "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
   "delivery": {
-    "acceptance": "Published review31cc and durable passive59af terminal evidence retain historical49claims/38covers/37qualified defaulting/query occurrences. New minimal direct-concatenation production passes605native tests and5generation modes; generated bodies are byte-identical and all affected current formal bindings are reopened. Exact five feature-source cases, full source-error correspondence, isolated675adoption and remaining whole migration obligations stay required.",
+    "acceptance": "Native605source-concat repair published4523; prior full evidence durably published59af. Actual395118terminal:7strict selections49claims/38SATcovers/20132rows and37deduplicated defaulting/query source occurrences retained; all5feature-source cases900stimeouts with zero rows. Formatter expansion disappears from logs and measured memory falls below12GiB; no feature proof completion. Clean isolated6347616native675/six modes remains pending canonical adoption/publication/formal proof. Latest395118terminal artifacts await passive publication; PR96remainsdraft/unmerged and migration incomplete.",
     "access": "GitHub app authorized as QuasarRay with push/admin; gh CLI unauthenticated; local .git writable",
     "actual_integration_head": "1e64a054901658908d0a7a4eecd3010379df9614",
-    "actual_review_head": "31cc72d92bbb9611e228ec5936d2421a5ca35f84",
+    "actual_review_head": "4523bffd1fc3ae01ecba4918b343cafaa688c2f7",
     "artifact_recovery_pending": "verification/agones/ci/39505643334-artifact-recovery-pending.json",
     "artifact_recovery_status": "verification/agones/ci/39505643334-artifact-recovery-completed.json",
     "authorization": "User execution contract REQ-12/F4 and root AGENTS.MD milestone PR/merge workflow",
@@ -337,20 +337,40 @@
         "status": "FAILED",
         "tested_merge": "e3010b88e98025e11d41f272126e8b39a171c913",
         "workflow_run": 39505643334
+      },
+      {
+        "evidence": "verification/agones/ci/39511896291-first-five-retained.json",
+        "head": "4523bffd1fc3ae01ecba4918b343cafaa688c2f7",
+        "scope": "First5strict selections13claims/34covers/1query-error source assertion retained; remaining source jobs are required.",
+        "status": "IN_PROGRESS",
+        "workflow_run": 39511896291
+      },
+      {
+        "evidence": "verification/agones/ci/39511896291-terminal-retained.json",
+        "head": "4523bffd1fc3ae01ecba4918b343cafaa688c2f7",
+        "scope": "State/Rust/common/contract passed; all five required source feature selections and aggregate failed. PR96remainsdraft/unmerged; full migration incomplete.",
+        "status": "FAILED",
+        "tested_merge": "44a9f5d940555795eeb3bc1abdacbeea1871ed4c",
+        "workflow_run": 39511896291
       }
     ],
-    "current_ci_receipt": "verification/agones/ci/39505643334-terminal-retained.json",
+    "current_ci_receipt": "verification/agones/ci/39511896291-terminal-retained.json",
     "current_public_status_receipt": "verification/agones/ci/39505643334-public-metadata-connector-unavailable.json",
-    "current_retained_evidence": "verification/agones/ci/39505643334-terminal-retained.json",
+    "current_retained_evidence": "verification/agones/ci/39511896291-terminal-retained.json",
     "current_retained_formal_counts": {
+      "backend_rows": 20132,
+      "failed_harnesses": 5,
+      "original_defaulting_assertions": 36,
       "original_feature_validation_assertions": 0,
-      "satisfied_covers": 0,
-      "semantic_claims": 0,
-      "status": "FRESH_CURRENT_SOURCE_RESULTS_REQUIRED",
-      "successful_harnesses": 0
+      "original_query_error_assertions": 1,
+      "retained_artifacts": 12,
+      "satisfied_covers": 38,
+      "semantic_claims": 49,
+      "successful_harnesses": 7,
+      "unreachable_credited": 0
     },
     "expected_base": "1e64a054901658908d0a7a4eecd3010379df9614",
-    "expected_head": "31cc72d92bbb9611e228ec5936d2421a5ca35f84",
+    "expected_head": "4523bffd1fc3ae01ecba4918b343cafaa688c2f7",
     "historical_artifact_recovery_pending": "verification/agones/ci/39505643334-artifact-recovery-pending.json",
     "historical_retained_formal_counts_before_concat": {
       "backend_rows": 20132,
@@ -372,7 +392,7 @@
       "method_observed": "source head is ancestor of integration; PR API reports merged",
       "pr": "https://github.com/QuasarRay/agones/pull/94"
     },
-    "next_action": "Publish the native605 source-concatenation repair and current metadata to existing draftPR96 using passive59af tree/blob reuse, then one distinct protected12selection attempt. Keep all original obligations/bounds and recover complete rows/covers before credit.",
+    "next_action": "Review a semantics-preserving expected-driven multiset comparison in the existing Genco emitter. Equal lengths plus equal multiplicities for each expected equivalence class preserves ElementsMatch for finite error lists while bounding outer iteration by the literal expected fixture. Preserve full record Eq, duplicates, all original fixtures/actions/assertions/covers/domains/unwind128. Validate equivalence and mutation controls before one distinct attempt; no identical retry.",
     "pending_checkpoint": {
       "backend_harnesses": [
         "feature_bool_common_domain",
@@ -388,23 +408,23 @@
         "source_gsv_case_004",
         "gameserver_feature_validation_common_domain"
       ],
-      "ci_receipt": "verification/agones/ci/39505643334-terminal-retained.json",
+      "ci_receipt": "verification/agones/ci/39511896291-terminal-retained.json",
       "expected_review_branch": "codex/agones-player-tracking-validation",
-      "expected_tested_merge": "e3010b88e98025e11d41f272126e8b39a171c913",
+      "expected_tested_merge": "44a9f5d940555795eeb3bc1abdacbeea1871ed4c",
       "feature_id": "GS-VALIDATE-FEATURES-001",
-      "head": "31cc72d92bbb9611e228ec5936d2421a5ca35f84",
-      "local_source_head": "9cda70948b0e830bb4c8f6519afde807f5590ab3",
+      "head": "4523bffd1fc3ae01ecba4918b343cafaa688c2f7",
+      "local_source_head": "d6c6b857f8194d76889bef0544c946ab044133a2",
       "local_source_head_kind": "LOCAL_UNPUBLISHED_CHECKPOINT",
       "new_contract_model_credit": 0,
-      "new_qualified_defaulting_source_credit": 0,
+      "new_qualified_defaulting_source_credit": 36,
       "new_qualified_feature_validation_credit": 0,
-      "new_qualified_query_error_credit": 0,
-      "new_qualified_source_credit": 0,
+      "new_qualified_query_error_credit": 1,
+      "new_qualified_source_credit": 37,
       "publication_strategy": "Existing89immutableblobs plus48UTF8tree.content entries produced the exact staged tree in one batched tree operation; prior local source checkpoint preserved at refs/agones-checkpoints/player-tracking-validation-local.",
       "review_branch": "codex/agones-player-tracking-validation",
-      "status": "NATIVE605_GATED_CONCAT_REPAIR_LOCAL_UNPUBLISHED_CURRENT_PROOFS_REOPENED",
+      "status": "DRAFT_PUBLISHED_CI_TERMINAL_FAILURE_ALL12_LOCALLY_RETAINED",
       "tested_merge": "80901b52f41f9328f0449f16f4430e8eb2b7020f",
-      "tree": "a2494eb241f359c76b5bb073b4dcca912eee0a2b",
+      "tree": "9198114c9aa7223e3df515d9c9f70181da0af9b4",
       "user_guidance_dirty_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
       "visible_checkout": {
         "branch": "agones-rs-dev",
@@ -412,7 +432,7 @@
         "user_guidance_preserved": true
       },
       "work_packet": "verification/agones/gameserver-feature-validation-work-packet.json",
-      "workflow_run": 39505643334
+      "workflow_run": 39511896291
     },
     "pending_ci": "verification/agones/ci/39144973597-in-progress.json",
     "pending_publication": {
@@ -456,7 +476,7 @@
     "query_allocation_terminal_receipt": "verification/agones/ci/39498916435-terminal-retained.json",
     "query_allocation_tested_merge": "80901b52f41f9328f0449f16f4430e8eb2b7020f",
     "query_allocation_workflow_run": 39498916435,
-    "remote_result": "PR96_REVIEW31CC_AND_TERMINAL_EVIDENCE59AF_PUBLISHED_CURRENT_CONCAT_REPAIR_NATIVE605_LOCAL",
+    "remote_result": "PR96_CONCAT4523_PUBLISHED_CI_TERMINAL_ALL12_LOCAL_ARTIFACTS_RETAINED_FIVE_TIMEOUTS",
     "required_checks": [
       "migration-state",
       "rust",
@@ -475,7 +495,7 @@
     "terminal_evidence_publication_pending": "verification/agones/ci/39505643334-evidence-publication-pending.json",
     "visible_checkout": {
       "branch": "agones-rs-dev",
-      "head": "31cc72d92bbb9611e228ec5936d2421a5ca35f84",
+      "head": "4523bffd1fc3ae01ecba4918b343cafaa688c2f7",
       "user_guidance_dirty_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
     }
   },
@@ -492,8 +512,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 274,
-  "previous_sha256": "65d420d1d0cdc280bb8d126083ee759aed9f43f2543be6fa76e1e3ccea6cc739",
+  "previous_revision": 280,
+  "previous_sha256": "06ca26fbb376d4f5cfab68ac2d5287a9903d0117ad1208ea56e502f0c2dacb25",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -969,9 +989,23 @@
         "path": "pkg/apis/agones/v1/gameserver.go",
         "sha256": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0"
       }
+    },
+    {
+      "candidate": "Use expected-side multiplicity checking in the existing Genco ElementsMatch helper, with the same equal-length check and full ValidationError Eq.",
+      "decision": "REUSE_EXISTING",
+      "evidence_invalidation": "No additional source/harness change yet. Current4523seven results and all full records remain pinned; a changed matcher must revalidate affected generated harnesses. Unaffected producer outputs/production/harnesses may reuse verified evidence only with exact dependency justification.",
+      "evidence_refs": [
+        "verification/agones/ci/39511896291-terminal-retained.json",
+        "verification/agones/validation-error-data-isolated-recovery.json"
+      ],
+      "feature_binding": "GS-VALIDATE-FEATURES-001",
+      "id": "GS-VALIDATE-FEATURES-001-concat-terminal-multiset-review",
+      "law": "For finite lists with equivalence-relation Eq, equal lengths plus equal actual/expected counts for every element of either list is equivalent to multiset equality. Checking every expected equivalence class accounts for all expected cardinality; equal total length rules out any extra actual class. Empty lists, duplicate multiplicities and every compared record field remain observable. Validate this relation and existing/new semantic fault controls before changing the emitter.",
+      "next_review_trigger": "After equivalence/mutation controls and one distinct protected source-case result, reassess the remaining actual comparison/production bottleneck. All eight _2cells and full source/architecture/lifecycle/conformance requirements stay open.",
+      "rationale": "The source-concat repair eliminates logged PadAdapter recursion in all five cases and lowers measured peak memory from12GiB to5.3-10.6GiB. All five still hit900s with zero rows, now in nested error-multiset counts/field equality. The current helper iterates actual errors outside repeated actual/expected counts. Literal expected fixtures have0or1errors. Iterating expected errors instead preserves finite multiset equality while reducing symbolic outer iteration. No new macro/compiler/framework is justified."
     }
   ],
-  "revision": 275,
+  "revision": 281,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [
@@ -994,14 +1028,17 @@
         "verification/agones/ci/39505643334-artifact-recovery-pending.json",
         "verification/agones/ci/39505643334-terminal-retained.json",
         "verification/agones/ci/39505643334-evidence-publication-pending.json",
-        "verification/agones/ci/39505643334-evidence-published.json"
+        "verification/agones/ci/39505643334-evidence-published.json",
+        "verification/agones/ci/39511896291-in-progress.json",
+        "verification/agones/ci/39511896291-seven-retained-source-jobs-running.json",
+        "verification/agones/ci/39511896291-terminal-retained.json"
       ],
       "feature_ids": [
         "gameserver-player-tracking-validation"
       ],
       "id": "GS-VALIDATE-FEATURES-001",
       "implementation_gate": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
-      "next_action": "Publish the native605 source-concatenation repair and current metadata to existing draftPR96 using passive59af tree/blob reuse, then one distinct protected12selection attempt. Keep all original obligations/bounds and recover complete rows/covers before credit.",
+      "next_action": "Review a semantics-preserving expected-driven multiset comparison in the existing Genco emitter. Equal lengths plus equal multiplicities for each expected equivalence class preserves ElementsMatch for finite error lists while bounding outer iteration by the literal expected fixture. Preserve full record Eq, duplicates, all original fixtures/actions/assertions/covers/domains/unwind128. Validate equivalence and mutation controls before one distinct attempt; no identical retry.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
         "crates/agones-core/src/gameserver_defaulting.rs",
@@ -1042,7 +1079,7 @@
       ],
       "id": "GS-TYPEMETA-001",
       "implementation_gate": null,
-      "next_action": "Recover clean isolated85d64a1 with current combined TypeMeta gate and complete25case core/actual-adapter replay. Native675tests/six modes pass. Canonical adoption and formal proof remain required; preserve kind/apiVersion and all source assertions.",
+      "next_action": "Recover isolated6347616current TypeMeta/native conversion with full25case/core/actual-adapter native675replay and six deterministic modes. Canonical adoption/formal proof remain required; preserve actual kind/apiVersion and full fixtures.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
         "crates/agones-rusternetes/src/lib.rs",
@@ -1083,7 +1120,7 @@
       ],
       "id": "RESOURCE-QUANTITY-001",
       "implementation_gate": null,
-      "next_action": "Recover clean isolated85d64a1 complete quantity/TypeMeta/six-field snapshot; current combined nine gates and675native tests/six modes are retained. Preserve exact typed numeric state and repaired counterexamples. Canonical adoption/publication and formal proof remain required.",
+      "next_action": "Recover clean isolated6347616complete quantity/TypeMeta/error snapshot, retaining exact typed numeric state and counterexamples. Native675tests/six modes pass after source-concat reuse; canonical adoption and formal proof remain required.",
       "owned_paths": [
         "crates/agones-core/src/resource_quantity.rs",
         "crates/agones-rusternetes/src/lib.rs",
@@ -1132,7 +1169,7 @@
       ],
       "id": "GS-VALIDATION-ERROR-DATA-001",
       "implementation_gate": null,
-      "next_action": "Clean isolated85d64a1 retains full25case lowering, six-field mapping and actual30fixture/35occurrence replay while reusing canonical streaming/parser-path changes. Native675tests/six modes passed and every generated body matches500326. Canonical adoption/publication and all formal obligations remain required.",
+      "next_action": "Clean isolated6347616retains full25case/six-field source mapping with canonical4523concatenation repair. Native675tests/six generation modes and all9gates verified; all5generated body files unchanged. Canonical adoption/publication and formal obligations remain required.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
         "crates/agones-core/src/gameserver_validation.rs",
@@ -1373,11 +1410,11 @@
   ],
   "workspace": {
     "branch": "agones-rs-dev",
-    "dirty_patch_sha256": "4bcf5034834fdea551775b68cc043f93a80048b5a79a7506d6a295a3d8eb6463",
-    "head": "31cc72d92bbb9611e228ec5936d2421a5ca35f84",
+    "dirty_patch_sha256": "970066ccae12c3d534ffccd2e40b2be78dfd3fce94787742b6cfd71bb169757d",
+    "head": "4523bffd1fc3ae01ecba4918b343cafaa688c2f7",
     "last_validated_implementation": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
     "path": "/home/astral/Projects/agones",
-    "source_binding_receipt": "verification/agones/runs/missing-container-concat-generation-checks-1.json",
+    "source_binding_receipt": "verification/agones/runs/gameserver-validation-bolero-kani-ci-39511896291-1-case-004.json",
     "untracked_inputs": [
       "AGONES_RS_CONTINUATION_PROMPT.md",
       "AGONES_RS_PROMPT_AUDIT_RESOLUTION.md"
