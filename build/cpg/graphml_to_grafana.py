@@ -36,9 +36,13 @@ def discover_graphml(path: Path) -> list[Path]:
 
 
 def read_key_map(path: Path) -> dict[str, str]:
+    """Read GraphML key declarations without walking the whole graph."""
     keys: dict[str, str] = {}
-    for _, elem in ET.iterparse(path, events=("end",)):
-        if local_name(elem.tag) == "key":
+    for event, elem in ET.iterparse(path, events=("start", "end")):
+        tag = local_name(elem.tag)
+        if event == "start" and tag == "graph":
+            break
+        if event == "end" and tag == "key":
             key_id = elem.attrib.get("id")
             if key_id:
                 keys[key_id] = elem.attrib.get("attr.name", key_id)
@@ -108,42 +112,42 @@ def collect_nodes(
         prefix = f"g{graph_index}:"
 
         for _, elem in ET.iterparse(path, events=("end",)):
-            if local_name(elem.tag) != "node":
-                continue
+            tag = local_name(elem.tag)
+            if tag == "node":
+                props = data_properties(elem, keys)
+                kind = node_type(props)
+                counts[kind] += 1
 
-            props = data_properties(elem, keys)
-            kind = node_type(props)
-            counts[kind] += 1
+                if len(selected) < max_nodes and (
+                    allowed_labels is None or kind in allowed_labels
+                ):
+                    raw_id = elem.attrib.get("id", str(len(selected)))
+                    graph_id = prefix + raw_id
+                    title = pick(props, "NAME", "FULL_NAME", "CODE", "FILENAME") or kind
+                    filename = pick(props, "FILENAME")
+                    line = pick(props, "LINE_NUMBER", "LINE")
+                    full_name = pick(props, "FULL_NAME")
+                    code = pick(props, "CODE")
 
-            if len(selected) < max_nodes and (
-                allowed_labels is None or kind in allowed_labels
-            ):
-                raw_id = elem.attrib.get("id", str(len(selected)))
-                graph_id = prefix + raw_id
-                title = pick(props, "NAME", "FULL_NAME", "CODE", "FILENAME") or kind
-                filename = pick(props, "FILENAME")
-                line = pick(props, "LINE_NUMBER", "LINE")
-                full_name = pick(props, "FULL_NAME")
-                code = pick(props, "CODE")
+                    row: dict[str, object] = {
+                        "id": graph_id,
+                        "title": shorten(title),
+                        "subtitle": kind,
+                    }
+                    if line:
+                        row["mainstat"] = line
+                    if filename:
+                        row["detail__file"] = shorten(filename, 240)
+                    if full_name:
+                        row["detail__full_name"] = shorten(full_name, 240)
+                    if code:
+                        row["detail__code"] = shorten(code, 300)
 
-                row: dict[str, object] = {
-                    "id": graph_id,
-                    "title": shorten(title),
-                    "subtitle": kind,
-                }
-                if line:
-                    row["mainstat"] = line
-                if filename:
-                    row["detail__file"] = shorten(filename, 240)
-                if full_name:
-                    row["detail__full_name"] = shorten(full_name, 240)
-                if code:
-                    row["detail__code"] = shorten(code, 300)
+                    selected.append(row)
+                    selected_ids.add(graph_id)
 
-                selected.append(row)
-                selected_ids.add(graph_id)
-
-            elem.clear()
+            if tag in {"node", "edge"}:
+                elem.clear()
 
     return selected, selected_ids, counts
 
@@ -163,34 +167,35 @@ def collect_edges(
         edge_ordinal = 0
 
         for _, elem in ET.iterparse(path, events=("end",)):
-            if local_name(elem.tag) != "edge":
-                continue
+            tag = local_name(elem.tag)
+            if tag == "edge":
+                props = data_properties(elem, keys)
+                kind = edge_type(props)
+                counts[kind] += 1
 
-            props = data_properties(elem, keys)
-            kind = edge_type(props)
-            counts[kind] += 1
+                source = prefix + elem.attrib.get("source", "")
+                target = prefix + elem.attrib.get("target", "")
+                if (
+                    len(selected) < max_edges
+                    and source in selected_ids
+                    and target in selected_ids
+                    and (allowed_labels is None or kind in allowed_labels)
+                ):
+                    raw_id = elem.attrib.get("id")
+                    graph_id = prefix + (raw_id if raw_id else f"edge-{edge_ordinal}")
+                    selected.append(
+                        {
+                            "id": graph_id,
+                            "source": source,
+                            "target": target,
+                            "mainstat": kind,
+                        }
+                    )
 
-            source = prefix + elem.attrib.get("source", "")
-            target = prefix + elem.attrib.get("target", "")
-            if (
-                len(selected) < max_edges
-                and source in selected_ids
-                and target in selected_ids
-                and (allowed_labels is None or kind in allowed_labels)
-            ):
-                raw_id = elem.attrib.get("id")
-                graph_id = prefix + (raw_id if raw_id else f"edge-{edge_ordinal}")
-                selected.append(
-                    {
-                        "id": graph_id,
-                        "source": source,
-                        "target": target,
-                        "mainstat": kind,
-                    }
-                )
+                edge_ordinal += 1
 
-            edge_ordinal += 1
-            elem.clear()
+            if tag in {"node", "edge"}:
+                elem.clear()
 
     return selected, counts
 
