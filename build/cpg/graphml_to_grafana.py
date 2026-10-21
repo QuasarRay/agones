@@ -83,11 +83,11 @@ def parse_filter(raw: str | None) -> set[str] | None:
 
 
 def node_type(props: dict[str, str]) -> str:
-    return (pick(props, "label", "_label", "LABEL") or "NODE").upper()
+    return (pick(props, "label", "_label", "labelV", "LABEL") or "NODE").upper()
 
 
 def edge_type(props: dict[str, str]) -> str:
-    return (pick(props, "label", "_label", "LABEL") or "EDGE").upper()
+    return (pick(props, "label", "_label", "labelE", "LABEL") or "EDGE").upper()
 
 
 def write_json(path: Path, value: object) -> None:
