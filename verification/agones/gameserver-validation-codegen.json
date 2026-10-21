@@ -107,11 +107,11 @@
   "fixture_mapping": "Complete wire fixture, typed quantity construction and explicit source presence. Go capture rejects quantities whose normalized construction state is lost by String round-trip. Unknown source fields fail closed. Nil/empty init-container sequences map to the same empty traversal; no standalone identity claim.",
   "generator": "Genco0.17.10with pinned rustfmt",
   "generator_path": "crates/agones-rusternetes/examples/feature_case_codegen.rs",
-  "generator_sha256": "48991d9e64b8ce0a93329a4d4d0f6ca72ca06e5989a3a60a2490d9278cd52179",
+  "generator_sha256": "b9610a3ed5837fdc1ec5d47acf10d282400a3ea95042cf59ec95e7e1304ef412",
   "generator_source_files": {
     "crates/agones-rusternetes/examples/codegen/gameserver_features.rs": "44335a77ca34abe5d3bbbfa7d05836ecdc5ea65a59cd7520652a213e48dca848",
     "crates/agones-rusternetes/examples/codegen/gameserver_validation.rs": "9b57e988a9237055d3a76b1dbb29495804d9ed3e752638edcbbf18989bfa79c1",
-    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "48991d9e64b8ce0a93329a4d4d0f6ca72ca06e5989a3a60a2490d9278cd52179"
+    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "b9610a3ed5837fdc1ec5d47acf10d282400a3ea95042cf59ec95e7e1304ef412"
   },
   "harnesses": [
     {
@@ -466,7 +466,7 @@
     }
   ],
   "ir": "verification/agones/gameserver-validation.ir.json",
-  "ir_sha256": "85c1f3b3f20c2db634695c899337100b55d2b1d1c3f5a7aa42ad2752b97c7b65",
+  "ir_sha256": "6eebe3388b363ff8bee399773c947dd82222ec1aef6988e61bc997a67cfbbbac",
   "lifetime_mapping": {
     "boundary": "After source observation and covers, retain harness-owned fixture/context/error values in both engines; actual production bodies remain unchanged.",
     "ordinary_cleanup": "Separate complete fixture/default-action and adapter replay uses normal destruction.",

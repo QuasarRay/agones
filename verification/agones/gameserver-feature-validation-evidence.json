@@ -1,7 +1,7 @@
 {
   "artifact_bindings": {
     "verification/agones/canonical-adoption-prior-assurance.json": "da4f8482387fb0039e6016f4aa4fd3f9d0843670b9af71318aab51fdaf65e580",
-    "verification/agones/canonical-complete-validation-adoption-evidence.json": "529f71d8f18a0ceffaf5ca8b5a40fe460016ec8b6223eb76ce20962a24917d08",
+    "verification/agones/canonical-complete-validation-adoption-evidence.json": "7a0a77c9462598fbf60a9443cb318d431cce5f1761d5b6b020c9cd092003147a",
     "verification/agones/canonical-native676-prior-assurance.json": "d052da4325f30a7222b82c4129098498f9715751089542ce014e07fb9e95cd7f",
     "verification/agones/ci/39489621706-first-four-retained.json": "234af0a30a5a340914ed6e4803c977c198f90b48a7934eabeba29515680db962",
     "verification/agones/ci/39489621706-health-and-source002.json": "bc52fd2d12a728c549233ae51b2bd68dd46fa01387b4daec9a72b124641d5be9",
@@ -18,11 +18,11 @@
     "verification/agones/ci/39516368235-terminal-retained.json": "dec2e5942023b0dfa5a4fcc7eec526a48a61080e53dd8cede1b507ea40aa5b56",
     "verification/agones/ci/39519906026-terminal-retained.json": "74ba11a37da301f35a253c6606a4875b20498f6101eaf26d9e11e4a7263be049",
     "verification/agones/ci/39528223788-terminal-retention-pending.json": "74a0d421415bb5bed71777b8814c86e9fe18bfe0d959bb73fc78590cbd2831b9",
-    "verification/agones/ci/protected-model-execution-plan.json": "735af80a2fb2e0bf2bbb94b87370927104f28219c1b73e8edc2759e033cf6924",
+    "verification/agones/ci/protected-model-execution-plan.json": "aee4d796cdc5fc8531d7ab8aedb86883da2c479f473209093bfd8de198814229",
     "verification/agones/exact-lookup-singleton-prior-assurance.json": "9d0a359de671f192a6a7322a64f389076dd79a5700497934578bf04c7cc12671",
     "verification/agones/gameserver-feature-validation-domain-first.rs": "bdf808073f19646b786a88b9b0a55505c3f698c7ed77bb9893aa258551345e70",
     "verification/agones/gameserver-feature-validation-domain-second.rs": "1f7c7e648729ce28f8cfa74ed3bd8b98e49621fa890a9a4118afd2887c3a8f2d",
-    "verification/agones/gameserver-feature-validation-domain.json": "8335acb9478600d09abd52c6c3fe62122e41128fd02a11abaefe4ec9e1b1f6a0",
+    "verification/agones/gameserver-feature-validation-domain.json": "e78bdc54b2992f070ecca29b1963a9df1602d77ced873e370cf2a35f6b41226e",
     "verification/agones/gameserver-feature-validation-proof-attempts.json": "18b0b09122d4d1750ff41b18467d71880a32a360f6ba50ce6afb4e86ae9d0aef",
     "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json": "344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166",
     "verification/agones/gates/6d10b275433dcf0a49011a53dc251b062c43c50049cc3a8aebf0c161cc498b26.json": "6d10b275433dcf0a49011a53dc251b062c43c50049cc3a8aebf0c161cc498b26",
@@ -222,274 +222,88 @@
     "verification/agones/streaming-query-direct-path-prior-assurance.json": "54536680c57d62111a13d152af5aded28fbc99a9170092c4a81320fa086f5704"
   },
   "assurance": {
-    "backend_campaign": {
-      "prior_assurance": "verification/agones/canonical-adoption-prior-assurance.json",
-      "status": "HISTORICAL_SOURCE2E1D_REVERIFICATION_REQUIRED"
-    },
-    "canonical_complete_validation_adoption": {
-      "current_formal_credit": 0,
-      "evidence": "verification/agones/canonical-complete-validation-adoption-evidence.json",
-      "required_general_cases": 25,
-      "required_general_covers": 50,
-      "status": "CANONICAL_SOURCE_ADOPTED_NATIVE675_SIX_MODES_FORMAL_REQUIRED"
-    },
-    "canonical_native676_repair": {
-      "current_formal_credit": 0,
-      "evidence": "verification/agones/canonical-complete-validation-adoption-evidence.json",
-      "generation_modes": 6,
-      "native_tests": 676,
-      "old_campaign": "verification/agones/ci/39528223788-terminal-all37-retained.json",
-      "parser_controls": 11
-    },
-    "contract_domain_sampling": {
-      "accepted_inputs": 8192,
-      "precondition_rejections": 0,
-      "run": "verification/agones/runs/gs-validation-contract-domain-native-2.json",
-      "semantic_fault_controls": "Wrong flag/presence/count/kind/path/bad-value/detail rejected"
-    },
-    "contract_model_attempts": {
-      "prior_assurance": "verification/agones/canonical-adoption-prior-assurance.json",
-      "status": "HISTORICAL_SOURCE2E1D_REVERIFICATION_REQUIRED"
-    },
-    "current_gate_proof_status": "PATH_MAP_AND_MANIFEST_REPAIR_SOURCE_CHANGED_REVERIFICATION_REQUIRED",
+    "current_formal_credit": 0,
+    "current_gate_proof_status": "METADATA_PROVIDER_AND_COMPOSITION_CHANGED_CURRENT_VERIFICATION_REQUIRED",
     "current_retained_backend_receipt": null,
-    "exact_lookup_singleton_revalidation": {
-      "prior_assurance": "verification/agones/canonical-adoption-prior-assurance.json",
-      "status": "HISTORICAL_SOURCE2E1D_REVERIFICATION_REQUIRED"
+    "generation": {
+      "modes": 7,
+      "receipt": "verification/agones/runs/canonical-metadata-seven-mode-generation-1.json",
+      "strict_parser_controls": 18
     },
-    "expected_multiset_revalidation": {
-      "prior_assurance": "verification/agones/canonical-adoption-prior-assurance.json",
-      "status": "HISTORICAL_SOURCE2E1D_REVERIFICATION_REQUIRED"
+    "historical_native676_campaign": "verification/agones/ci/39556147739-terminal-all37-retained.json",
+    "implementation": {
+      "native_failed": 0,
+      "native_ignored": 3,
+      "native_passed": 704,
+      "receipt": "verification/agones/runs/canonical-metadata-native-1.json"
     },
-    "historical_backend_campaign_before_expected_multiset": {
-      "conclusion": "failure",
-      "counts": {
-        "backend_rows": 20132,
-        "failed_harnesses": 5,
-        "original_defaulting_assertions": 36,
-        "original_feature_validation_assertions": 0,
-        "original_query_error_assertions": 1,
-        "retained_artifacts": 12,
-        "satisfied_covers": 38,
-        "semantic_claims": 49,
-        "successful_harnesses": 7,
-        "unreachable_credited": 0
-      },
-      "new_qualified_feature_validation_credit": 0,
-      "receipt": "verification/agones/ci/39511896291-terminal-retained.json",
-      "source_head": "4523bffd1fc3ae01ecba4918b343cafaa688c2f7",
-      "status": "TERMINAL_FAILURE_ALL12_ARTIFACTS_RETAINED_SEVEN_STRICT_SUMMARIES_REPRODUCED",
-      "tested_merge": "44a9f5d940555795eeb3bc1abdacbeea1871ed4c",
-      "workflow_run": 39511896291
-    },
-    "historical_backend_campaign_before_missing_container_concat": {
-      "conclusion": "failure",
-      "counts": {
-        "backend_rows": 20132,
-        "failed_harnesses": 5,
-        "original_defaulting_assertions": 36,
-        "original_feature_validation_assertions": 0,
-        "original_query_error_assertions": 1,
-        "retained_artifacts": 12,
-        "satisfied_covers": 38,
-        "semantic_claims": 49,
-        "successful_harnesses": 7,
-        "unreachable_credited": 0
-      },
-      "new_qualified_feature_validation_credit": 0,
-      "receipt": "verification/agones/ci/39505643334-terminal-retained.json",
-      "source_head": "31cc72d92bbb9611e228ec5936d2421a5ca35f84",
-      "status": "TERMINAL_FAILURE_ALL12ARTIFACTS_RETAINED_AND_STRICT_SUMMARIES_REPRODUCED",
-      "tested_merge": "e3010b88e98025e11d41f272126e8b39a171c913",
-      "workflow_run": 39505643334
-    },
-    "historical_backend_campaign_before_streaming_query_direct_paths": {
-      "conclusion": "failure",
-      "counts": {
-        "backend_rows": 20424,
-        "failed_harnesses": 5,
-        "original_defaulting_assertions": 36,
-        "original_feature_validation_assertions": 0,
-        "original_query_error_assertions": 1,
-        "retained_artifacts": 12,
-        "satisfied_covers": 38,
-        "semantic_claims": 49,
-        "successful_harnesses": 7,
-        "unreachable_credited": 0
-      },
-      "new_qualified_feature_validation_credit": 0,
-      "receipt": "verification/agones/ci/39498916435-terminal-retained.json",
-      "source_head": "dd4b4bfb82007eb4e8a3a84f93d276fb2f79cb27",
-      "status": "COMPLETED_FAILURE_SEVEN_CURRENT_PROOFS_FIVE_EXACT_VALIDATION_CASES_OOM",
-      "tested_merge": "80901b52f41f9328f0449f16f4430e8eb2b7020f",
-      "workflow_run": 39498916435
-    },
-    "historical_contract_model_attempts_before_missing_container_concat": {
-      "current_summary": "verification/agones/proof-summaries/gameserver-features-bolero-kani-ci-39505643334-1.json",
-      "new_formal_credit": 3,
-      "qualified_original_assertion_credit": 0,
-      "source_correspondence_limit": "Current seven successes prove their declared main-tree Rust domains and selected source cases. Complete Go six-field error correspondence and the independent isolated25case work remain required.",
-      "status": "SCOPED_CURRENT_RUST_CONTRACT_VERIFIED_EXACT_SOURCE_CASES_RESOURCE_FAILED"
-    },
-    "historical_contract_model_attempts_before_streaming_query_direct_paths": {
-      "current_summary": "verification/agones/proof-summaries/gameserver-features-bolero-kani-ci-39498916435-1.json",
-      "manifest": "verification/agones/gameserver-feature-validation-proof-attempts.json",
-      "new_formal_credit": 3,
-      "qualified_original_assertion_credit": 0,
-      "source_correspondence_limit": "Current seven successes prove their declared main-tree Rust domains and selected source cases. Complete Go six-field error correspondence and the independent isolated25case work remain required.",
-      "status": "SCOPED_CURRENT_RUST_CONTRACT_VERIFIED_ORIGINAL_SOURCE_CASES_RESOURCE_FAILED"
-    },
-    "historical_current_retained_backend_receipt_before_missing_container_concat": "verification/agones/ci/39505643334-terminal-retained.json",
-    "historical_current_retained_backend_receipt_before_streaming_query_direct_paths": "verification/agones/ci/39498916435-terminal-retained.json",
-    "historical_current_retained_backend_selections_before_query_borrowing": {
-      "harnesses": 7,
-      "receipt": "verification/agones/ci/39489621706-terminal-retained.json",
-      "satisfied_covers": 38,
-      "semantic_claims": 49,
-      "status": "SEVEN_VERIFIED_SELECTIONS_ALL_FIVE_ORIGINAL_FEATURE_CASES_RESOURCE_FAILED"
-    },
-    "historical_native_ci_before_missing_container_concat": {
-      "head": "31cc72d92bbb9611e228ec5936d2421a5ca35f84",
-      "job_id": 118913914862,
-      "scope": "Actual native Rust job, current605ordinary tests and existing generation/derive controls. Native success does not replace failed source proofs.",
-      "status": "PASSED",
-      "tested_merge": "e3010b88e98025e11d41f272126e8b39a171c913",
-      "workflow_run": 39505643334
-    },
-    "historical_native_ci_before_streaming_query_direct_paths": {
-      "head": "dd4b4bfb82007eb4e8a3a84f93d276fb2f79cb27",
-      "job_id": 118891266436,
-      "scope": "Current canonical workspace and generation/derive controls; actual CI Rust job passed. Formal source failures are separate.",
-      "status": "PASSED",
-      "tested_merge": "80901b52f41f9328f0449f16f4430e8eb2b7020f",
-      "workflow_run": 39498916435
-    },
-    "historical_production_symbol_model_checked_before_expected_multiset": [
-      {
-        "harness": "gameserver_feature_validation_common_domain",
-        "satisfied_covers": 8,
-        "scope": "Actual CGP ValidateAgonesGameServerFeatures provider and independent nonallocating match-table reference checked against the separate complete error relation. Arbitrary enabled/present booleans and signed i64 capacity, no filtering, fixed spec field path, unwind128. The deterministic relation fixes count/kind/path/optional bad value/detail for both observations. No qualified original table assertion, unbounded field path, full validation, admission, lifecycle or live-cluster proof credit. Harness owners are retained after observations under the existing lifetime rule; formal post-observation cleanup remains required.",
-        "semantic_claims": 3,
-        "source_head": "4523bffd1fc3ae01ecba4918b343cafaa688c2f7",
-        "summary": "verification/agones/proof-summaries/gameserver-features-bolero-kani-ci-39511896291-1.json"
-      }
-    ],
-    "historical_protected_resource_diagnostic_before_query_borrowing": {
-      "preserved_current_successful_harnesses": 5,
-      "receipt": "verification/agones/ci/39489621706-health-and-source002.json",
-      "satisfied_covers": 34,
-      "semantic_claims": 13,
-      "status": "SOURCE002_EXPLICIT_OOM_FAILURE_ZERO_CREDIT_OTHER_JOBS_CONTINUE"
-    },
-    "live_cluster_conformance": "REQUIRED_OPEN",
-    "missing_container_concat_revalidation": {
-      "prior_assurance": "verification/agones/canonical-adoption-prior-assurance.json",
-      "status": "HISTORICAL_SOURCE2E1D_REVERIFICATION_REQUIRED"
-    },
-    "native_ci": {
-      "prior_assurance": "verification/agones/canonical-adoption-prior-assurance.json",
-      "status": "HISTORICAL_SOURCE2E1D_REVERIFICATION_REQUIRED"
-    },
-    "ordinary_admission_extensions": "Actual Fleet UPDATE repeats configured policy, and GameServerSet UPDATE accepts an unchanged existing players template through its separate immutable-template consumer.",
-    "ordinary_current_observations": {
-      "accepted_contract_samples": 8192,
-      "failed": 0,
-      "passed": 14,
-      "precondition_rejections": 0,
-      "run": "verification/agones/runs/gs-validation-observation-scope-native-1.json",
-      "scope": "Five exact core cases, five whole fixtures, one complete actual adapter replay and two contract-domain checks, including the multiset fault control."
-    },
-    "ordinary_workspace": {
-      "failed": 0,
-      "ignored": 3,
-      "passed": 675,
-      "run": "verification/agones/runs/canonical-complete-validation-current-native-1.json"
-    },
-    "original_source_assertions_model_checked": [],
+    "prior_assurance": "verification/agones/canonical-pre-metadata-assurance.json",
     "production_symbol_model_checked": [],
-    "protected_execution_revalidation": {
-      "prior_assurance": "verification/agones/canonical-adoption-prior-assurance.json",
-      "status": "HISTORICAL_SOURCE2E1D_REVERIFICATION_REQUIRED"
-    },
-    "query_borrowing_revalidation": {
-      "prior_assurance": "verification/agones/canonical-adoption-prior-assurance.json",
-      "status": "HISTORICAL_SOURCE2E1D_REVERIFICATION_REQUIRED"
-    },
-    "required_original_table": {
-      "assertion_sites": 2,
-      "case_count": 5,
-      "expected_dynamic_assertion_occurrences": 10,
-      "players_present_cases": 0,
-      "scope": "All five original port/CountsAndLists/None-port cases remain required for automated typed extraction. None exercises present Players, so no PlayerTracking rejection coverage is inferred from that table.",
-      "test": "TestGameServerValidateFeatures"
-    },
-    "source_contract_observation_lifetime": {
-      "candidate": "Apply the existing GS-DEFAULTS-001-OBSERVATION-LIFETIME-1 rule to these source observation harnesses in both engines.",
-      "decision": "REUSE_EXISTING",
-      "id": "GS-VALIDATE-FEATURES-001-observation-lifetime-reuse",
-      "next_review_trigger": "After the first adequate isolated validation model/source result, reassess the required remaining source/lifecycle and macro work without repeating completed binding research.",
-      "observations": "The second local attempt reached CBMC reduction with zero individual results and6GiBpeak after globally expanding the error-vector drop loop128times. The original selected Go callback observes only ParseFeatures success and complete validation-error elements, with its expected fixtures/global feature map retained beyond those observations. It specifies no GC/deallocation observation or schedule. The separate source helper relation also ends at observing returned errors.",
-      "residual": "Formal post-observation cleanup, lifecycle and unbounded external behavior remain REQUIRED_OPEN, alongside every unproved original obligation and all eight _2cells. Retaining owners earns no cleanup or _2credit.",
-      "reuse": "Use the already-existing Genco observation-lifetime correspondence: keep parsed features until observations, then retain harness-owned values after all assertions and case/branch covers. Production parsing/provider/validation bodies and all internal allocation/destruction remain unchanged.",
-      "roi": "A small, mechanically reviewable application of an existing rule avoids spending solver/agent effort on unasserted post-observation destruction. It preserves both bools, arbitrary i64capacity, every exact fixture, all source assertions, all covers and global bounds. No new trusted proof-transport rule, model framework or macro is introduced.",
-      "validation": "Ordinary exact-fixture and actual adapter tests continue to exercise normal destruction separately; native observation harnesses use the same retention under both engines. Strict summaries bind the source and explicit observation scope. No further local high-memory trials; execute the actual isolated CI campaign."
-    },
-    "streaming_query_direct_path_revalidation": {
-      "prior_assurance": "verification/agones/canonical-adoption-prior-assurance.json",
-      "status": "HISTORICAL_SOURCE2E1D_REVERIFICATION_REQUIRED"
-    }
+    "runtime_and_live_cluster_scope": "Ordinary source replay and actual Rusternetes library routes are distinct from live-cluster/executor/lifecycle conformance, which remains required.",
+    "source_model_checked": []
   },
   "current_campaign_accounting": {
-    "current_formal_credit": 0,
-    "receipt": "verification/agones/ci/39528223788-terminal-all37-retained.json",
-    "scope": "Old six strict summaries retain their original source; none is transferred across changed production/fixtures.",
-    "source_head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
-    "status": "HISTORICAL4D433_ONLY_NEW_REPAIRED_PROGRAM_REQUIRES_CURRENT_PROOF"
+    "current_source_credit": 0,
+    "historical_source_case_failures": "verification/agones/ci/39556147739-terminal-all37-retained.json",
+    "required_metadata_cases": 6,
+    "required_metadata_covers": 12,
+    "required_metadata_source_assertions": 21,
+    "required_selections": 43,
+    "status": "NEW43SELECTION_PIPELINE_READY_CURRENT_RESULTS_REQUIRED"
+  },
+  "evidence_refresh": {
+    "new_formal_credit": 0,
+    "predecessor_ledger_revision": 309,
+    "reason": "Metadata production/provider adoption and regenerated source bindings. Previous assurance remains source-bound in the retained prior snapshot. No prior backend result transfers automatically."
   },
   "feature_id": "GS-VALIDATE-FEATURES-001",
-  "implementation_gate": "verification/agones/gates/5daba4dcad178822c8f9572333d72f7efa733d6a947ae1cc24157f9fd9e404b9.json",
+  "implementation_gate": "verification/agones/gates/1a6a0ad0f3985df4c5724a539d42e845bced47dcefc11866cf9b5f310122cd5c.json",
   "required_next": "Account for all25general/50covers and every existing source/model selection through the current strict protected pipeline. Complete full source/error/metadata/lifecycle/Rusternetes/_2requirements; native675/six modes do not certify formal completion.",
   "schema_version": 1,
   "semantic_bindings": {
     ".cargo/config.toml": "d787ef1ca58591bcf5036c8a2386a4d31ecc54febdd5f6630fd8497a4a0d3fb2",
-    ".github/workflows/rust.yml": "8374b011cd28a15a365ac2c896ed068b669ea3f1fe067adcf085c012d6b1178a",
+    ".github/workflows/rust.yml": "ac58bba56e3434a60e59cd98e2b09e26157ffc9ac6fef90e29e91cfdf7c7c4d7",
     "Cargo.lock": "457e9915c442fc92a563532c2adeb010f5f2035fd0ae4b3c9c9ac3396d950d93",
     "Cargo.toml": "3a3f19b913b7d4fc8966288d621de4134b7b87439231dc64014ea23f7511b6f7",
     "build/scripts/agones-rs/extract/gameserver_features.go": "5828b8c598b622577be5515fdf743275ee6dc5ed4972fa9e12d4d78b7b0988e8",
     "build/scripts/agones-rs/extract/gameserver_features_test.go": "5a4ff209b50d89dd5aa8768999d189de6b4addc6e0708dc3b13f778238d9ffb6",
-    "build/scripts/agones-rs/extract/main.go": "2d205043df27731d7e8d789407aff62315457a694731f584b7ac82589ba3d505",
+    "build/scripts/agones-rs/extract/main.go": "7f543ce3ac11f8d5a6b6f928f6d0d4acd0ba47f9576a69a5b2adc4f9c7300af2",
     "build/scripts/agones-rs/kani_results.py": "0f2e6885ab25ff525ac6a77e1ed67ac02a5904e59caffc0e746258bee0cad04e",
     "build/scripts/agones-rs/protect_model.py": "89fd094879809766a50ece3eea99fca2f9b45ac602ca5cb98fecfa1fe45d4376",
     "build/scripts/agones-rs/run.py": "d158464261c6f591f8c2e99dca8eb2e5aed1925696c67778ccbb1fed3bbf90bd",
-    "build/scripts/agones-rs/summarize_feature_proof.py": "b85203ed7192d25445740b8fa8c1df1030d699000ef5344e8a0be7076bcbfbc6",
+    "build/scripts/agones-rs/summarize_feature_proof.py": "52cc4855ace8f680c27fe6bbce8839d39d7f2bc0abf91c1ba81cd9bf3f8dbd99",
     "build/scripts/agones-rs/test_ci_model_execution.py": "67eedce9e108c80c89aec1d4d93966fdf112e59588f84826c18f93f132f4272e",
     "crates/agones-core/Cargo.toml": "6bd2fb70b00b1ff6d34e4562ff78ab6ea86ca352a5043c87a57b8e65eb1e6a51",
     "crates/agones-core/src/features.rs": "72c9a28ba3697ac99d733a7bea5b1933ce0d3c055e813a361290bb6135b4bc98",
-    "crates/agones-core/src/fleet.rs": "bb172f3c6c5d432e74f61d17951894780361321adb4d079258437dbfb5a2071b",
-    "crates/agones-core/src/gameserver.rs": "dc6903306ef77cfb772696e3635c398944d295f59eb89c57c0c8f3d43f8db864",
-    "crates/agones-core/src/gameserver_defaulting.rs": "620966c16ea912516f508b302d179098047f4ba5039fb837c2b5b3dec90ff457",
+    "crates/agones-core/src/fleet.rs": "24148ed9c20f4e0f1cf46b6cc0be35bd3316aec01a4b39d51efa7fc910ceddba",
+    "crates/agones-core/src/gameserver.rs": "bdbf85ad795e439f4ba0d9f9030876805ec09e05c4715e6a0b95deb2eff67eb8",
+    "crates/agones-core/src/gameserver_defaulting.rs": "7ced36d2a7109e1363574d0ac8c29ef4dae08c7408d271da0f415a94d6a9ace6",
     "crates/agones-core/src/gameserver_validation.rs": "be120c2892ed50c3bb6002175d7b7c08c5215197a3f07cbddc16daffb7daf1de",
-    "crates/agones-core/src/gameserverset.rs": "ab8ca589660c03af58a9da803186a443aece04bab6eb799053cf846c9d57397b",
-    "crates/agones-core/src/lib.rs": "d1e87d9e45c1f107c6ddd13399476d3c3e4794a44772fdcf7eca11a8a3f5384b",
+    "crates/agones-core/src/gameserverset.rs": "5544e6da50d4263fd2797bf165e22e21d57ffc471a459c66ff1f1ee0cdc869a9",
+    "crates/agones-core/src/lib.rs": "1cc349ea6c273c23932e4f6797ada73629393b16ea7fbe37eeb467c8cbaae955",
+    "crates/agones-core/src/object_metadata_validation.rs": "e5e6246551da636d56b2a9604cb3e87a6c49e5afe2a2e7b2ee873effa91f39df",
     "crates/agones-core/tests/gameserver_feature_validation.rs": "eb8d732fde8d5204bbf3f09e1e96753d316602ac3e6e841479216dbb9124a6b1",
     "crates/agones-core/tests/gameserver_feature_validation_domain.rs": "875e7e5460a8724f2f403da6d485e597e461d789132562110712dda58eeb6aa9",
     "crates/agones-core/tests/generated/gameserver_feature_validation_cases.rs": "f539dbb911f2ecc352228f1046176ea86ed896fc335035884c92c363ce6f5a40",
     "crates/agones-core/tests/source_gameserver_feature_validation.rs": "c59a1ad7652512f8f49040bf8493855595c5e4d498513a922cf87c14b3355955",
     "crates/agones-rusternetes/Cargo.toml": "7e5c18a590b0d602c725abd853fd0ba7825e4028f8a46fc7fe404bb7b512db26",
     "crates/agones-rusternetes/examples/codegen/gameserver_features.rs": "44335a77ca34abe5d3bbbfa7d05836ecdc5ea65a59cd7520652a213e48dca848",
-    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "48991d9e64b8ce0a93329a4d4d0f6ca72ca06e5989a3a60a2490d9278cd52179",
-    "crates/agones-rusternetes/src/fleet_admission.rs": "4c578b1be1f6d5b023b1a882b5744aeabe9811b441a4ff26660d6cbdaf94db56",
-    "crates/agones-rusternetes/src/gameserver_admission.rs": "03710845e6c333a488068567b9e0a5b44669e43650c2f5297b57320732476c36",
-    "crates/agones-rusternetes/src/gameserverset_admission.rs": "19c47b5863e18e9d126c3c811fddee154caf61aed632531b1a849c41df60bab9",
-    "crates/agones-rusternetes/src/lib.rs": "820298219835f53b2563a3a0d66deb21050a5930998750ffb5fad26b6f07031b",
+    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "b9610a3ed5837fdc1ec5d47acf10d282400a3ea95042cf59ec95e7e1304ef412",
+    "crates/agones-rusternetes/src/fleet_admission.rs": "491bd846a0ef06bc3ef5ec8b9619701b77a205deaa01ed75dea35a093af76067",
+    "crates/agones-rusternetes/src/gameserver_admission.rs": "d14437c315ed9d2fb690878868ea7047baf722e9484b7d99d43ccca686ff0348",
+    "crates/agones-rusternetes/src/gameserverset_admission.rs": "493f024c4984206c857130dd8fd039de29f2605ee83f1e424546f90e15019194",
+    "crates/agones-rusternetes/src/lib.rs": "3b9294cc000fa7b92e2cbcd9b088e7862a11151163aa51c0d92e5ffea1ac0e64",
     "crates/agones-rusternetes/tests/gameserver_feature_validation.rs": "9e3252ad5836e808eb5d201514dc6969cd2a6a381b665768bba4aa2409769318",
     "crates/agones-rusternetes/tests/source_gameserver_feature_validation.rs": "d266bed2597c35cb918ea36ac45eada42c7be7dcc2cb237a3905172b3e7aa3b1",
     "rust-toolchain.toml": "c910997cb152c6dc8ed13b1fdf9fa28a4ed30d6776123e27dd6170e5c66067a0",
+    "verification/agones/canonical-metadata-gates.json": "8d107b17328a2c7281bd6f075ec169477beedf13c071da8a67095066e674d0f2",
+    "verification/agones/canonical-pre-metadata-assurance.json": "fc4caf7bae3c834a0714c6e384c2ab91b0a7ff2ad6267448164d2f4b37f213a9",
     "verification/agones/check-dependencies.json": "5dc51bd0fdb013204d29e69ed8b5c86d238c3daad80e3ff07516d4acf9beea05",
     "verification/agones/expected-multiset-relation.json": "8de29f21c85d420350d56363d1c39b23e601ffc18e3eb571bdbd193ff072cb92",
     "verification/agones/gameserver-feature-validation-capability-v1.json": "d6e03af89a8412b331bcafbf19472ef51bbd67f566f19235516deef15c2a19bf",
-    "verification/agones/gameserver-feature-validation-codegen.json": "5595c00cb98946143ffd99dc99d6cd2429750db1796a0faa1543a6a6b77b49dd",
-    "verification/agones/gameserver-feature-validation.ir.json": "b80a700a4075376f5c11cb7bd859b2e316b61eb81152d4e07c16b6e24fd32017"
+    "verification/agones/gameserver-feature-validation-codegen.json": "05bad26e524ff2f1e6cae3fc4d28575de6026378f06a9108e2ef333c53a435ea",
+    "verification/agones/gameserver-feature-validation.ir.json": "f6b563c7edac264b5658beb5b5f8362c4304b08c4d97f649a4d37663a56682a8",
+    "verification/agones/gates/1a6a0ad0f3985df4c5724a539d42e845bced47dcefc11866cf9b5f310122cd5c.json": "1a6a0ad0f3985df4c5724a539d42e845bced47dcefc11866cf9b5f310122cd5c"
   },
   "source_mapped": {
     "assertion_ids": [
@@ -520,5 +334,5 @@
     "source_go_replay": "verification/agones/runs/gs-validation-original-go-test-1.json",
     "typed_extraction": "verification/agones/runs/gs-validation-typed-extractor-2.json"
   },
-  "status": "CANONICAL_NATIVE676_REPAIR_IMPLEMENTED_CURRENT_FORMAL_REQUIRED"
+  "status": "CANONICAL_METADATA_ADOPTED_NATIVE704_GENERATED_CURRENT_FORMAL_REQUIRED"
 }

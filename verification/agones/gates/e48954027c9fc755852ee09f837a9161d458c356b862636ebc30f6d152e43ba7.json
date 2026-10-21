@@ -1,0 +1,88 @@
+{
+  "acceptance_criteria": [
+    "Every source defaulting method in the selected GameServer/Spec/status family is implemented through the reachable shared policy, with explicit empty strings, source zero values, unknown values and numeric widths preserved.",
+    "Spec/state/player/counter/list/eviction defaults preserve source conditional effects, status data, nil/allocated distinctions and deep copy behavior.",
+    "Canonical fields needed by defaulting preserve required JSON keys, source zero resources, null fresh values and one zero-state representation.",
+    "Configured PlayerTracking reaches actual mutation admission; malformed shapes still fall through to schema validation.",
+    "Current ordinary workspace checks, actual consumers, independent literal witnesses and full Go/Rust objects pass before new source semantic extraction."
+  ],
+  "assurance": {
+    "current_formal_credit": 0,
+    "formal": "All affected required proofs remain open for current source. Native676campaign39556147739retains its original source identity and30failed source cases.",
+    "generation": "Seven deterministic write/check modes and strict parser controls follow this gate refresh.",
+    "implementation": "Canonical locked all-target check,704native tests and guidance1828directories/zero missing passed. Shared metadata policy is selected through the existing CGP context."
+  },
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
+  "environment_bindings": {
+    "AGONES_BUILD_VERSION": {
+      "present": false,
+      "sha256": null
+    }
+  },
+  "feature_id": "GS-DEFAULTS-001",
+  "id": "GS-DEFAULTS-001-validation-addition-current-ordinary",
+  "ordinary_checks": [
+    "verification/agones/runs/canonical-metadata-native-1.json"
+  ],
+  "ordinary_result_counts": {
+    "failed": 0,
+    "ignored": 3,
+    "passed": 704
+  },
+  "predecessor_gate": "verification/agones/gates/5f49c6510dfa81c649d8220da90387124b541a6c17a763d4dbd254d4032b873b.json",
+  "predecessor_gate_sha256": "5f49c6510dfa81c649d8220da90387124b541a6c17a763d4dbd254d4032b873b",
+  "predecessor_ledger_revision": 309,
+  "production_files": {
+    ".cargo/config.toml": "d787ef1ca58591bcf5036c8a2386a4d31ecc54febdd5f6630fd8497a4a0d3fb2",
+    "Cargo.lock": "457e9915c442fc92a563532c2adeb010f5f2035fd0ae4b3c9c9ac3396d950d93",
+    "Cargo.toml": "3a3f19b913b7d4fc8966288d621de4134b7b87439231dc64014ea23f7511b6f7",
+    "crates/agones-core/Cargo.toml": "6bd2fb70b00b1ff6d34e4562ff78ab6ea86ca352a5043c87a57b8e65eb1e6a51",
+    "crates/agones-core/build.rs": "1deebfccd6024e6567573612d320770591de232f04f7b98291b0b5fa0fc78882",
+    "crates/agones-core/src/build_version.rs": "e6560758de4332abe27a97a3f3b5794068f20e0b4092380658b1cfdc4ce7e1f7",
+    "crates/agones-core/src/feature_inputs.rs": "9cfaf42de485874339a58895991ad15adff787f363d9821a3ab7f0f4c36222d4",
+    "crates/agones-core/src/features.rs": "72c9a28ba3697ac99d733a7bea5b1933ce0d3c055e813a361290bb6135b4bc98",
+    "crates/agones-core/src/gameserver.rs": "bdbf85ad795e439f4ba0d9f9030876805ec09e05c4715e6a0b95deb2eff67eb8",
+    "crates/agones-core/src/gameserver_defaulting.rs": "7ced36d2a7109e1363574d0ac8c29ef4dae08c7408d271da0f415a94d6a9ace6",
+    "crates/agones-core/src/go_slice.rs": "1524bae25a2bf0c382c88c9afb870d43fef02b06f3edb6fdb0a846701444ada3",
+    "crates/agones-core/src/go_utf8.rs": "1178cb0dcc44e1369fa7576701d39e2b7a339343262197d2f6d891bc984158ba",
+    "crates/agones-core/src/go_value.rs": "ea849e221b593654e7049594fdcaebb4a61042e068381af5e96dd5fd017f0e25",
+    "crates/agones-core/src/lib.rs": "1cc349ea6c273c23932e4f6797ada73629393b16ea7fbe37eeb467c8cbaae955",
+    "crates/agones-core/src/object_metadata_validation.rs": "e5e6246551da636d56b2a9604cb3e87a6c49e5afe2a2e7b2ee873effa91f39df",
+    "crates/agones-core/src/resource_quantity.rs": "a8f7ae7eda83f7f6f546af4700cdc562003437bd92fd6ecbed7f76e1009d8006",
+    "crates/agones-core/src/version_annotation.rs": "9c7d5b402f759b0731d4957fe9732135f589054ed3b38a16839224b0c4b45493",
+    "crates/agones-macros/Cargo.toml": "9372efc5090b3c3c5d06b54c8e5f943025c2a73aeb54c630564ad4f1170c06a7",
+    "crates/agones-macros/src/lib.rs": "60909ed25990ea455cb8ed753548aadc87fb866d1839f7e4a7d1c293dd15a39f",
+    "crates/agones-rusternetes/Cargo.toml": "7e5c18a590b0d602c725abd853fd0ba7825e4028f8a46fc7fe404bb7b512db26",
+    "crates/agones-rusternetes/src/gameserver_admission.rs": "d14437c315ed9d2fb690878868ea7047baf722e9484b7d99d43ccca686ff0348",
+    "crates/agones-rusternetes/src/lib.rs": "3b9294cc000fa7b92e2cbcd9b088e7862a11151163aa51c0d92e5ffea1ac0e64",
+    "go.mod": "01df333891a331341e77aab737c24dc722fab26abc8439b9c2036c71a477215a",
+    "go.sum": "d890978bc12d9c9958b2a87f99a87d8478b007208e44c5d859e973ba89adcbf7",
+    "pkg/apis/agones/v1/apihooks.go": "3ddd2e6c35fc62c6c54ded97a97f7edc68218ed91fbfc1fd4341fc424c6a278b",
+    "pkg/apis/agones/v1/gameserver.go": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
+    "pkg/util/runtime/features.go": "05736b26646cf219419626dfca37c4f533302b178ca3bb542330cf7884ddc679",
+    "pkg/version.go": "18a321dd868bdf897742490dde06040a35be996dbef93f4aae7ebd855c85842d",
+    "rust-toolchain.toml": "c910997cb152c6dc8ed13b1fdf9fa28a4ed30d6776123e27dd6170e5c66067a0",
+    "verification/agones/gameserver-defaulting-capability-v1.json": "a393e331e8fd1360c1fad5b11385864beb2336edd2ab1095074af7cceb600198",
+    "verification/agones/gameserver-defaulting-provenance.json": "9afa10e1dbadcab0c2cb26fd7dba9f552ba1fc74b70437e21d03ace9a70f8e1b",
+    "verification/agones/gameserver-defaulting-witnesses.json": "3d104433f28c6d85ac9b05afcd5e4169e0e9645969485e4c2d1f2383995a8aa8"
+  },
+  "production_symbols": [
+    "GameServer::apply_defaults",
+    "GameServer::apply_defaults_with_context",
+    "GameServerSpec::apply_defaults",
+    "ApplyAgonesGameServerDefaults::apply_game_server_defaults",
+    "GameServerDefaultingContext",
+    "GameServerCreationMutationAdmission::from_feature_inputs",
+    "GameServerCreationMutationAdmission::admit",
+    "mutate_game_server_creation_with_context"
+  ],
+  "schema_version": 1,
+  "source_snapshot": {
+    "head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
+    "source_binding_receipt": "verification/agones/runs/canonical-metadata-native-1.json",
+    "tracked_patch_sha256": "e748f31adc50ea7193a5f338757142ec2e13f2383e40652aa89b8cbb8a0ef098"
+  },
+  "status": "IMPLEMENTED",
+  "timestamp": "2026-10-21T08:24:24.810359+00:00"
+}

@@ -1,0 +1,48 @@
+{
+  "dependencies": [
+    "existing-object-meta-representation",
+    "existing-CGP-validation-composition"
+  ],
+  "disposition": "READY",
+  "evidence_refs": [],
+  "feature_ids": [
+    "shared-label-annotation-validation"
+  ],
+  "id": "META-VALIDATE-001",
+  "implementation_gate": null,
+  "next_action": "Complete the full shared label-key, label-value and annotation validation policy through CGP, preserving all six error fields and actual consumer paths; run ordinary native and Rusternetes checks before recording an implementation gate or extracting source properties.",
+  "owned_paths": [
+    "crates/agones-core/src/object_metadata_validation.rs",
+    "crates/agones-core/src/gameserver.rs",
+    "crates/agones-core/src/gameserver_defaulting.rs",
+    "crates/agones-core/src/fleet.rs",
+    "crates/agones-core/src/gameserverset.rs",
+    "crates/agones-core/src/allocation.rs",
+    "crates/agones-rusternetes/src/gameserver_admission.rs",
+    "crates/agones-rusternetes/src/fleet_admission.rs",
+    "crates/agones-rusternetes/src/gameserverset_admission.rs"
+  ],
+  "requirement_ids": [
+    "REQ-04",
+    "REQ-05",
+    "REQ-07",
+    "REQ-08",
+    "REQ-09",
+    "REQ-10",
+    "REQ-11",
+    "REQ-13"
+  ],
+  "source_config_binding": {
+    "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "no_semantic_extraction_before_gate": true,
+    "reuse": "Existing cgp_component/cgp_new_provider/delegate_and_check_components and Genco generation. No new macro/generalization required.",
+    "source_symbols": [
+      "pkg/apis/agones/v1/common.go::validateObjectMeta",
+      "pkg/apis/agones/v1/common.go::AllocationOverflow.Validate"
+    ],
+    "starting_commit": "6a21bc80e5b95fdcce20e4a1d1c0dcbb8606165f",
+    "worktree": "/home/astral/.codex/worktrees/agones-metadata-validation/agones"
+  },
+  "stage": "IMPLEMENTING",
+  "test_ids": []
+}

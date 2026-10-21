@@ -6,7 +6,7 @@ use agones_macros::{agones_invariant, AgonesStringEnum};
 use serde::{Deserialize, Serialize};
 
 use crate::gameserver::{
-    safe_add, validate_object_meta, GameServerSpec, ObjectMeta, Priority, SchedulingStrategy,
+    safe_add, GameServerSpec, ObjectMeta, Priority, SchedulingStrategy,
     ValidationError, ValidationErrorKind, VERSION_ANNOTATION,
 };
 use crate::gameserverset::{
@@ -279,7 +279,7 @@ impl Fleet {
         self.validate_with_context(&crate::GameServerDefaultingContext::default())
     }
 
-    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures + crate::CanValidateResourceQuantities>(
+    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures + crate::CanValidateResourceQuantities + crate::CanValidateObjectMetadata>(
         &mut self,
         context: &C,
     ) -> Vec<ValidationError> {
@@ -333,12 +333,13 @@ impl Fleet {
                 .into_iter()
                 .map(rebase_spec_error),
         );
-        errors.extend(validate_object_meta(
-            &self.spec.template.metadata,
+        errors.extend(context.validate_object_metadata(
+            &self.spec.template.metadata.labels,
+            &self.spec.template.metadata.annotations,
             "spec.template.metadata",
         ));
         if let Some(allocation_overflow) = &self.spec.allocation_overflow {
-            errors.extend(allocation_overflow.validate("spec.allocationOverflow"));
+            errors.extend(allocation_overflow.validate_with_context(context, "spec.allocationOverflow"));
         }
         errors
     }

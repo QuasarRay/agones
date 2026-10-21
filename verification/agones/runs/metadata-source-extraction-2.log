@@ -1,0 +1,17 @@
+panic: fixture.go:1:1: expected 'package', found errs
+
+goroutine 1 [running]:
+main.must(...)
+	/home/astral/.codex/worktrees/agones-metadata-validation/agones/build/scripts/agones-rs/extract/main.go:60
+main.metadataOverflow({0x7fff44bc8f64, 0x3f}, {0x33892f34e380?, 0x338947c58420?})
+	/home/astral/.codex/worktrees/agones-metadata-validation/agones/build/scripts/agones-rs/extract/object_metadata.go:193 +0x1ee5
+main.objectMetadataMain({0x33892ec820e0, 0x4e2f05?, 0x33892ecf40c8?})
+	/home/astral/.codex/worktrees/agones-metadata-validation/agones/build/scripts/agones-rs/extract/object_metadata.go:401 +0x405
+main.main()
+	/home/astral/.codex/worktrees/agones-metadata-validation/agones/build/scripts/agones-rs/extract/main.go:115 +0x96
+exit status 2
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import subprocess,json,sys; from pathlib import Path; root=Path.cwd(); go="/home/astral/.local/share/agones-rs/tools/go1.27.1-actions/bin/go"; r=subprocess.run([go,"run",".","--object-metadata",str(root),"verification/agones/gates/16598e097e857c146d1492f3bff0cb46373c25b93287caed57d8f86ab2b169dc.json"],cwd=root/"build/scripts/agones-rs/extract",capture_output=True,text=True); print(r.stderr,end=""); sys.stdout.flush(); assert r.returncode==0, "metadata source capture failed"; d=json.loads(r.stdout); assert d["case_count"]==6 and d["source_assertion_occurrences"]==21; p=root/"verification/agones/object-metadata.ir.json"; t=p.with_suffix(".tmp"); t.write_text(r.stdout); t.replace(p); print(json.dumps({k:d[k] for k in ["case_count","validation_observations","source_assertion_occurrences","runtime_version"]})); print("source_files",len(d["source_files"]))
+                                                                                                                                                                                                                                                                                                                                                                                                                                                 ^^^^^^^^^^^^^^^
+AssertionError: metadata source capture failed

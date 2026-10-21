@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "NATIVE676_PUBLISHED_CURRENT37_RUNNING_METADATA_IMPLEMENTING",
+  "gate_snapshot": "verification/agones/gates/5daba4dcad178822c8f9572333d72f7efa733d6a947ae1cc24157f9fd9e404b9.json",
+  "predecessor_revision": 306,
+  "predecessor_sha256": "7d6bb7598cfb065b962891d80bc3489f74f9e88717e94889e6c64b0210247cae",
+  "reason": "GitHub app recovered; verified exact reviewed tree published at e15139f9 and fresh protected full37 CI started. Original all37 historical artifacts retained. Add complete metadata feature to the one canonical ledger.",
+  "result_revision": 307,
+  "schema_version": 1,
+  "state_sha256": "6fa1ca1f2db91c815cf5168caed6897923c9811f3a49d5b8b057c73ec3d2ae76",
+  "timestamp": "2026-10-21T06:36:25.947549+00:00"
+}

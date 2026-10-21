@@ -1,0 +1,6 @@
+{"family": "feature-gates", "status": "CAPTURED", "case_count": 6, "source_assertions": null}
+{"family": "sdk-version", "status": "CAPTURED", "case_count": 18, "source_assertions": null}
+{"family": "gameserver-defaulting", "status": "CAPTURED", "case_count": 17, "source_assertions": 304}
+{"family": "gameserver-feature-validation", "status": "CAPTURED", "case_count": 5, "source_assertions": 10}
+{"family": "gameserver-validation", "status": "CAPTURED", "case_count": 25, "source_assertions": 25}
+{"family": "object-metadata", "status": "CAPTURED", "case_count": 6, "source_assertions": 21}

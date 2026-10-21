@@ -16,6 +16,8 @@ use sha2::{Digest, Sha256};
 mod gameserver_features;
 #[path = "codegen/gameserver_validation.rs"]
 mod gameserver_validation;
+#[path = "codegen/object_metadata.rs"]
+mod object_metadata;
 
 #[derive(Deserialize)]
 struct Family {
@@ -1000,7 +1002,8 @@ fn main() {
             || argument == "--sdk-version"
             || argument == "--gameserver-defaulting"
             || argument == "--gameserver-features"
-            || argument == "--gameserver-validation"),
+            || argument == "--gameserver-validation"
+            || argument == "--object-metadata"),
         "unknown generation argument"
     );
     let root = Path::new(env!("CARGO_MANIFEST_DIR"))
@@ -1014,6 +1017,7 @@ fn main() {
         "--gameserver-defaulting",
         "--gameserver-features",
         "--gameserver-validation",
+        "--object-metadata",
     ];
     assert!(
         modes
@@ -1023,6 +1027,10 @@ fn main() {
             <= 1,
         "select one generation family"
     );
+    if arguments.iter().any(|argument| argument == "--object-metadata") {
+        object_metadata::emit_object_metadata_cases(root, arguments.iter().any(|argument| argument == "--check"));
+        return;
+    }
     if arguments.iter().any(|argument| argument == "--gameserver-validation") {
         gameserver_validation::emit_gameserver_validation_cases(root, arguments.iter().any(|argument| argument == "--check"));
         return;

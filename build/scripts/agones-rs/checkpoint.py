@@ -125,6 +125,7 @@ if __name__ == "__main__":
     parser.add_argument("--refactoring-review")
     parser.add_argument("--evidence-ref")
     parser.add_argument("--add-work-item")
+    parser.add_argument("--source-mapping", help="Enrich the active item's source IDs/configuration without removing existing IDs")
     parser.add_argument("--goal-receipt")
     parser.add_argument("--resolve-blocker", action="append", default=[])
     parser.add_argument("--delivery-plan")
@@ -143,6 +144,14 @@ if __name__ == "__main__":
             assert len(selected) == 1, "unknown or duplicate work item"
             state["work_items"] = selected + [i for i in state["work_items"] if i["id"] != args.work_item]
         item = state["work_items"][0]
+        if args.source_mapping:
+            mapping = read(ROOT / args.source_mapping)
+            assert set(mapping) == {"id", "test_ids", "source_config_binding"}
+            assert mapping["id"] == item["id"], "source mapping belongs to a different work item"
+            assert set(item["test_ids"]) <= set(mapping["test_ids"]), "source mapping cannot remove required IDs"
+            assert len(mapping["test_ids"]) == len(set(mapping["test_ids"])), "duplicate source identity"
+            item["test_ids"] = mapping["test_ids"]
+            item["source_config_binding"].update(mapping["source_config_binding"])
         if args.stage and args.stage != item["stage"]:
             transitions = read(ROOT / "AGONES_RS_STATE.schema.json")["x-legal-stage-transitions"]
             assert args.stage in transitions[item["stage"]], "illegal stage transition"

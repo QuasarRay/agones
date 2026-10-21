@@ -1,0 +1,102 @@
+{
+  "acceptance_criteria": [
+    "Every label key and value error is retained; per entry key errors precede value errors.",
+    "Qualified keys split on every slash; DNS prefix total253bytes, name63bytes, length and format errors independent. Pinned DNS subdomain source has no per-segment63byte check.",
+    "Label key prefixes are case-sensitive. Annotation keys are simply lowercased before validation, with original bad values and original-byte aggregate size.",
+    "Annotations have arbitrary values and an inclusive262144-byte total across all original keys and values. int64 byte summation wraps exactly as the pinned Go implementation. Size error follows all annotation-key errors.",
+    "No validation method mutates labels, annotations or input objects. CGP owns provider selection; validation itself performs no effects/retries/cancellation.",
+    "The same provider compiles and runs with a metadata-only context; selected replacement provider receives every template/overflow/allocation call.",
+    "Actual Rusternetes library admissions and typed routes preserve multi-error records, original bad values, origins, case folding and exact byte-size boundary.",
+    "The full locked workspace all-target check and687native tests pass without modifying original source harnesses.",
+    "Unicode17simple lowercase matches the independent1488-entry mapping across all1112064scalars; configured native and Kani Rust compilers agree, with an explicit production Unicode version guard."
+  ],
+  "assurance": {
+    "canonical_adoption": "Isolated source at reviewed native676 tree; canonical work item remains IMPLEMENTING until adoption and all affected gates/evidence are renewed.",
+    "formal_credit": 0,
+    "integration": "Real Rusternetes library API/admission routes exercised; live-cluster conformance remains required.",
+    "native": "IMPLEMENTED; ordinary checks passed",
+    "runtime_go_replay": "Pending exact1.27.1 executable; official archive returned404. No newer Go substituted.",
+    "semantic_extraction": "Not yet started; this gate establishes legal ordering for subsequent extraction."
+  },
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "capability_profile": "verification/agones/object-metadata-capability-profile.json",
+  "capability_profile_sha256": "9eb445e69be166d4dff1dd4c47ec99d6de1606e0b7943345165568e9e8ef4be9",
+  "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
+  "environment_bindings": {
+    "AGONES_BUILD_VERSION": {
+      "present": false,
+      "sha256": null
+    }
+  },
+  "feature_id": "META-VALIDATE-001",
+  "id": "META-VALIDATE-001-implementation",
+  "ordinary_checks": [
+    "verification/agones/runs/metadata-validation-workspace-native-1.json",
+    "verification/agones/runs/metadata-validation-all-targets-native-1.json"
+  ],
+  "ordinary_result_counts": {
+    "failed": 0,
+    "ignored": 3,
+    "passed": 687,
+    "test_targets": 43
+  },
+  "predecessor_ledger_revision": 307,
+  "production_files": {
+    ".cargo/config.toml": "d787ef1ca58591bcf5036c8a2386a4d31ecc54febdd5f6630fd8497a4a0d3fb2",
+    "Cargo.lock": "457e9915c442fc92a563532c2adeb010f5f2035fd0ae4b3c9c9ac3396d950d93",
+    "Cargo.toml": "3a3f19b913b7d4fc8966288d621de4134b7b87439231dc64014ea23f7511b6f7",
+    "build/scripts/agones-rs/run.py": "d158464261c6f591f8c2e99dca8eb2e5aed1925696c67778ccbb1fed3bbf90bd",
+    "crates/agones-core/Cargo.toml": "6bd2fb70b00b1ff6d34e4562ff78ab6ea86ca352a5043c87a57b8e65eb1e6a51",
+    "crates/agones-core/src/allocation.rs": "7025e48bdde5da5cbfd45c7cf57086c768a18b9347991dbf46361b7cd9c54f08",
+    "crates/agones-core/src/features.rs": "72c9a28ba3697ac99d733a7bea5b1933ce0d3c055e813a361290bb6135b4bc98",
+    "crates/agones-core/src/fleet.rs": "24148ed9c20f4e0f1cf46b6cc0be35bd3316aec01a4b39d51efa7fc910ceddba",
+    "crates/agones-core/src/gameserver.rs": "bdbf85ad795e439f4ba0d9f9030876805ec09e05c4715e6a0b95deb2eff67eb8",
+    "crates/agones-core/src/gameserver_defaulting.rs": "7ced36d2a7109e1363574d0ac8c29ef4dae08c7408d271da0f415a94d6a9ace6",
+    "crates/agones-core/src/gameserver_validation.rs": "be120c2892ed50c3bb6002175d7b7c08c5215197a3f07cbddc16daffb7daf1de",
+    "crates/agones-core/src/gameserverset.rs": "5544e6da50d4263fd2797bf165e22e21d57ffc471a459c66ff1f1ee0cdc869a9",
+    "crates/agones-core/src/lib.rs": "1cc349ea6c273c23932e4f6797ada73629393b16ea7fbe37eeb467c8cbaae955",
+    "crates/agones-core/src/object_metadata_validation.rs": "e5e6246551da636d56b2a9604cb3e87a6c49e5afe2a2e7b2ee873effa91f39df",
+    "crates/agones-rusternetes/Cargo.toml": "7e5c18a590b0d602c725abd853fd0ba7825e4028f8a46fc7fe404bb7b512db26",
+    "crates/agones-rusternetes/src/fleet_admission.rs": "491bd846a0ef06bc3ef5ec8b9619701b77a205deaa01ed75dea35a093af76067",
+    "crates/agones-rusternetes/src/gameserver_admission.rs": "d14437c315ed9d2fb690878868ea7047baf722e9484b7d99d43ccca686ff0348",
+    "crates/agones-rusternetes/src/gameserverset_admission.rs": "493f024c4984206c857130dd8fd039de29f2605ee83f1e424546f90e15019194",
+    "crates/agones-rusternetes/src/lib.rs": "3b9294cc000fa7b92e2cbcd9b088e7862a11151163aa51c0d92e5ffea1ac0e64",
+    "rust-toolchain.toml": "c910997cb152c6dc8ed13b1fdf9fa28a4ed30d6776123e27dd6170e5c66067a0",
+    "verification/agones/gameserver-feature-validation-capability-v1.json": "d6e03af89a8412b331bcafbf19472ef51bbd67f566f19235516deef15c2a19bf"
+  },
+  "production_symbols": [
+    "ValidateAgonesObjectMetadata",
+    "CanValidateObjectMetadata",
+    "GameServerDefaultingContext metadata component selection",
+    "GameServerSpec::validate_with_context (normal and development address)",
+    "Fleet::validate_with_context",
+    "GameServerSet::validate_with_context",
+    "AllocationOverflow::validate_with_context",
+    "MetaPatch::validate_with_context",
+    "GameServerAllocation::validate_with_context",
+    "Rusternetes GameServer/Fleet/GameServerSet admission context bounds"
+  ],
+  "reachable_application_call_paths": [
+    "GameServer.validate_with_context -> GameServerSpec.validate_with_context -> selected ObjectMetadataValidator; both normal and development-address branches",
+    "Fleet/GameServerSet.validate_with_context -> selected nested template metadata and AllocationOverflow validation",
+    "GameServerAllocation.validate_with_context -> MetaPatch.validate_with_context -> selected metadata validator",
+    "Rusternetes CREATE GameServer/Fleet/GameServerSet and Fleet UPDATE admission -> same core provider"
+  ],
+  "reference_source_files": {
+    "pkg/apis/agones/v1/common.go": "b0657e44bfcff65bceb01062a6051e1b3afad0065ea797db3b08b4b4de2fb9f2",
+    "vendor/k8s.io/apimachinery/pkg/api/validate/content/dns.go": "801464585462ecec6652b53b93c7f360bd88d6830cdb50265db592a078e3af22",
+    "vendor/k8s.io/apimachinery/pkg/api/validate/content/errors.go": "1738efa870fe97b42d978df1081cb726e0e2918ebf2dd73f2d7dabd1c72cfc60",
+    "vendor/k8s.io/apimachinery/pkg/api/validate/content/kube.go": "17e67339b50be8d2d78f77608339a513c29f479874860d9e5d443af72830f7c9",
+    "vendor/k8s.io/apimachinery/pkg/api/validation/objectmeta.go": "19332a99936948911db3219dde7986c825049115650dbc1a9f5e1ccab8b06f72",
+    "vendor/k8s.io/apimachinery/pkg/apis/meta/v1/validation/validation.go": "921d3da5d6fed616b7eadafd2d9f3920f73926aab98059c19c22eaaa48ec5d2f",
+    "vendor/k8s.io/apimachinery/pkg/util/validation/field/errors.go": "747db5374cdd58712b46d10775272508212d3201fa05c30105a5531debc666d4",
+    "vendor/k8s.io/apimachinery/pkg/util/validation/validation.go": "5f4d8a4753853905faa387c0e8009a8d72900db24bb6b535de2eefcaeb30d8e2"
+  },
+  "schema_version": 1,
+  "scope_revision": "baseline-census-v1; complete shared label/annotation validation; full metadata/API compatibility remains separate required work",
+  "source_head": "6a21bc80e5b95fdcce20e4a1d1c0dcbb8606165f",
+  "source_tracked_patch_sha256": "70d94f018de4338bf6a36a003eaafa0d5c3d060dab59f96591fba7ae8dc649d0",
+  "source_worktree": "/home/astral/.codex/worktrees/agones-metadata-validation/agones",
+  "status": "IMPLEMENTED",
+  "timestamp": "2026-10-21T06:54:35.860511+00:00"
+}

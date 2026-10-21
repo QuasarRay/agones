@@ -1,0 +1,18 @@
+{
+  "base": "e15139f9cce0c60c88131f7122b4c0fc5188f420",
+  "base_tree": "aea29a660e2bc2a0bdf38d827930d29eee0250da",
+  "branch": "codex/agones-metadata-validation-native687",
+  "file_count": 54,
+  "local_commit": "576341bd8c452a7fd6244ce48e9d7dc0d67b7aef",
+  "new_bytes": 1604601,
+  "published": true,
+  "remote_commit": "f20dd2698245f6ececf0f85cc53fa4a3fc7c8f71",
+  "schema_version": 1,
+  "scope": "Passive recoverable source/evidence backup of the isolated implementation. Native687checks and sourceIR21 retained. All Rust property/model proof, canonical adoption and milestone delivery remain required; no PR/merge/completion claim.",
+  "status": "PASSIVE_SOURCE_BACKUP_PUBLISHED_NATIVE687_IR21_CANONICAL_AND_FORMAL_PENDING",
+  "tree": "bd20354d9646ca4048f30340fc7133f5d0ebadb3",
+  "upload_next": 3,
+  "uploaded_tree": "bd20354d9646ca4048f30340fc7133f5d0ebadb3",
+  "url": "https://github.com/QuasarRay/agones/tree/codex/agones-metadata-validation-native687",
+  "verified_remote_head": "f20dd2698245f6ececf0f85cc53fa4a3fc7c8f71"
+}

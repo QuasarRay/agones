@@ -1,0 +1,40 @@
+{
+  "classification": "NATIVE_BOLERO_TARGET_DISCOVERY_NOT_MODEL_PROOF",
+  "expected_targets": [
+    "source_metadata_case_000",
+    "source_metadata_case_001",
+    "source_metadata_case_002",
+    "source_metadata_case_003",
+    "source_metadata_case_004",
+    "source_metadata_case_005"
+  ],
+  "formal_credit": 0,
+  "receipt": "verification/agones/runs/canonical-metadata-bolero-discovery-1.json",
+  "schema_version": 1,
+  "selected_targets": [
+    {
+      "package": "agones-core",
+      "test": "source_metadata_case_000"
+    },
+    {
+      "package": "agones-core",
+      "test": "source_metadata_case_001"
+    },
+    {
+      "package": "agones-core",
+      "test": "source_metadata_case_004"
+    },
+    {
+      "package": "agones-core",
+      "test": "source_metadata_case_003"
+    },
+    {
+      "package": "agones-core",
+      "test": "source_metadata_case_002"
+    },
+    {
+      "package": "agones-core",
+      "test": "source_metadata_case_005"
+    }
+  ]
+}

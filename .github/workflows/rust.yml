@@ -71,6 +71,8 @@ jobs:
         run: cargo run --locked -p agones-rusternetes --example feature_case_codegen -- --gameserver-features --check
       - name: Check all 25 general GameServer validation cases
         run: cargo run --locked -p agones-rusternetes --example feature_case_codegen -- --gameserver-validation --check
+      - name: Check all complete shared metadata source cases
+        run: cargo run --locked -p agones-rusternetes --example feature_case_codegen -- --object-metadata --check
       - name: Reject unsupported GameServer source lowering
         run: cargo test --locked -p agones-rusternetes --example feature_case_codegen gameserver_codegen_controls
       - name: Check resource derive aliases, facades, generics, and rejected paths
@@ -210,9 +212,15 @@ jobs:
           - {"family": "general", "index": 22, "case": "022"}
           - {"family": "general", "index": 23, "case": "023"}
           - {"family": "general", "index": 24, "case": "024"}
+          - {"family": "metadata", "index": 0, "case": "000"}
+          - {"family": "metadata", "index": 1, "case": "001"}
+          - {"family": "metadata", "index": 2, "case": "002"}
+          - {"family": "metadata", "index": 3, "case": "003"}
+          - {"family": "metadata", "index": 4, "case": "004"}
+          - {"family": "metadata", "index": 5, "case": "005"}
     env:
       CARGO_BUILD_JOBS: "2"
-      AGONES_VALIDATION_CI_RUN: ${{ matrix.family == 'feature' && 'gameserver-validation' || 'gameserver-general-validation' }}-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}-case-${{ matrix.case }}
+      AGONES_VALIDATION_CI_RUN: ${{ matrix.family == 'metadata' && 'object-metadata' || matrix.family == 'feature' && 'gameserver-validation' || 'gameserver-general-validation' }}-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}-case-${{ matrix.case }}
     steps:
       - uses: actions/checkout@v4
       - name: Install pinned verification tools
@@ -221,14 +229,14 @@ jobs:
           cargo install kani-verifier --version 0.68.0 --locked
           cargo kani setup
           cargo install cargo-bolero --version 0.13.4 --locked --no-default-features --features kani
-      - name: Verify the complete selected original GameServer validation case
-        run: python3 build/scripts/agones-rs/run.py "$AGONES_VALIDATION_CI_RUN" --quiet --cwd crates/agones-core python3 ../../build/scripts/agones-rs/protect_model.py cargo bolero test "${{ matrix.family == 'feature' && 'source_gsv' || 'source_gs_validate' }}_case_${{ matrix.case }}" --engine kani
+      - name: Verify the complete selected original validation case
+        run: python3 build/scripts/agones-rs/run.py "$AGONES_VALIDATION_CI_RUN" --quiet --cwd crates/agones-core python3 ../../build/scripts/agones-rs/protect_model.py cargo bolero test "${{ matrix.family == 'metadata' && 'source_metadata' || matrix.family == 'feature' && 'source_gsv' || 'source_gs_validate' }}_case_${{ matrix.case }}" --engine kani
       - name: Require every selected original assertion and both non-vacuity covers
-        run: python3 build/scripts/agones-rs/summarize_feature_proof.py "${{ matrix.family == 'feature' && 'gameserver-validation-source' || 'gameserver-general-validation-source' }}" "$AGONES_VALIDATION_CI_RUN" --case-index "${{ matrix.index }}" --output "verification/agones/proof-summaries/$AGONES_VALIDATION_CI_RUN.json"
+        run: python3 build/scripts/agones-rs/summarize_feature_proof.py "${{ matrix.family == 'metadata' && 'object-metadata-source' || matrix.family == 'feature' && 'gameserver-validation-source' || 'gameserver-general-validation-source' }}" "$AGONES_VALIDATION_CI_RUN" --case-index "${{ matrix.index }}" --output "verification/agones/proof-summaries/$AGONES_VALIDATION_CI_RUN.json"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: feature-kani-${{ matrix.family == 'feature' && 'validation' || 'general-validation' }}-${{ matrix.case }}-${{ github.run_id }}-${{ github.run_attempt }}
+          name: feature-kani-${{ matrix.family == 'metadata' && 'metadata-validation' || matrix.family == 'feature' && 'validation' || 'general-validation' }}-${{ matrix.case }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             verification/agones/runs/${{ env.AGONES_VALIDATION_CI_RUN }}.*
             verification/agones/proof-summaries/${{ env.AGONES_VALIDATION_CI_RUN }}.json

@@ -47,10 +47,10 @@
   "fixture_mapping": "Whole source wire object plus explicit nil/allocated Counters/Lists/Ports/Players witnesses. Source empty maps omitted by JSON are restored as allocated empty maps. Unknown fields/error metadata fail closed.",
   "generator": "Genco 0.17.10 with pinned rustfmt",
   "generator_path": "crates/agones-rusternetes/examples/feature_case_codegen.rs",
-  "generator_sha256": "48991d9e64b8ce0a93329a4d4d0f6ca72ca06e5989a3a60a2490d9278cd52179",
+  "generator_sha256": "b9610a3ed5837fdc1ec5d47acf10d282400a3ea95042cf59ec95e7e1304ef412",
   "generator_source_files": {
     "crates/agones-rusternetes/examples/codegen/gameserver_features.rs": "44335a77ca34abe5d3bbbfa7d05836ecdc5ea65a59cd7520652a213e48dca848",
-    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "48991d9e64b8ce0a93329a4d4d0f6ca72ca06e5989a3a60a2490d9278cd52179"
+    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "b9610a3ed5837fdc1ec5d47acf10d282400a3ea95042cf59ec95e7e1304ef412"
   },
   "harnesses": [
     {
@@ -130,7 +130,7 @@
     }
   ],
   "ir": "verification/agones/gameserver-feature-validation.ir.json",
-  "ir_sha256": "b80a700a4075376f5c11cb7bd859b2e316b61eb81152d4e07c16b6e24fd32017",
+  "ir_sha256": "f6b563c7edac264b5658beb5b5f8362c4304b08c4d97f649a4d37663a56682a8",
   "lifetime_mapping": {
     "boundary": "After every original observation and cover, retain the harness-owned fixture, parsed features, context and error lists in both engines. Source callbacks specify no GC/deallocation observation. Actual production bodies remain unchanged.",
     "ordinary_cleanup": "Separate complete-fixture and actual adapter replay uses normal destruction.",

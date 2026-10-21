@@ -1,0 +1,23 @@
+panic: unmodeled whole AllocationOverflow validation action/assertion
+
+goroutine 1 [running]:
+main.metadataOverflow({0x7fff93a01f63, 0x3f}, {0x3b5cf2336380?, 0x3b5d3e60bc50?})
+	/home/astral/.codex/worktrees/agones-metadata-validation/agones/build/scripts/agones-rs/extract/object_metadata.go:200 +0x1e85
+main.objectMetadataMain({0x3b5cf1cba0e0, 0x4e2f05?, 0x3b5cf1d2c0c8?})
+	/home/astral/.codex/worktrees/agones-metadata-validation/agones/build/scripts/agones-rs/extract/object_metadata.go:533 +0x405
+main.main()
+	/home/astral/.codex/worktrees/agones-metadata-validation/agones/build/scripts/agones-rs/extract/main.go:115 +0x96
+exit status 2
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import subprocess,json,sys; from pathlib import Path; root=Path.cwd(); go="/home/astral/.local/share/agones-rs/tools/go1.27.1-actions/bin/go"; r=subprocess.run([go,"run",".","--object-metadata",str(root),"verification/agones/gates/16598e097e857c146d1492f3bff0cb46373c25b93287caed57d8f86ab2b169dc.json"],cwd=root/"build/scripts/agones-rs/extract",capture_output=True,text=True); print(r.stderr,end=""); sys.stdout.flush(); assert r.returncode==0, "metadata source capture failed"; d=json.loads(r.stdout); assert d["case_count"]==6 and d["source_assertion_occurrences"]==21; p=root/"verification/agones/object-metadata.ir.json"; t=p.with_suffix(".tmp"); t.write_text(r.stdout); t.replace(p); print(json.dumps({k:d[k] for k in ["case_count","validation_observations","source_assertion_occurrences","runtime_version"]})); print("source_files",len(d["source_files"]))
+                                                                                                                                                                                                                                                                                                                                                                                                                                                 ^^^^^^^^^^^^^^^
+AssertionError: metadata source capture failed
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import json,subprocess; r=json.load(open("verification/agones/runs/metadata-source-extraction-2.json")); subprocess.run(r["command"],cwd=r["cwd"],check=True)
+                                                                                                             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['env', 'PATH=/home/astral/.local/share/agones-rs/tools/go1.27.1-actions/bin:/home/astral/.cargo/bin:/usr/bin:/bin', 'GOEXPERIMENT=nodwarf5', 'GOTOOLCHAIN=local', 'GOFLAGS=-mod=readonly', 'GOMAXPROCS=2', 'GOMEMLIMIT=2GiB', 'python3', '-c', 'import subprocess,json,sys; from pathlib import Path; root=Path.cwd(); go="/home/astral/.local/share/agones-rs/tools/go1.27.1-actions/bin/go"; r=subprocess.run([go,"run",".","--object-metadata",str(root),"verification/agones/gates/16598e097e857c146d1492f3bff0cb46373c25b93287caed57d8f86ab2b169dc.json"],cwd=root/"build/scripts/agones-rs/extract",capture_output=True,text=True); print(r.stderr,end=""); sys.stdout.flush(); assert r.returncode==0, "metadata source capture failed"; d=json.loads(r.stdout); assert d["case_count"]==6 and d["source_assertion_occurrences"]==21; p=root/"verification/agones/object-metadata.ir.json"; t=p.with_suffix(".tmp"); t.write_text(r.stdout); t.replace(p); print(json.dumps({k:d[k] for k in ["case_count","validation_observations","source_assertion_occurrences","runtime_version"]})); print("source_files",len(d["source_files"]))']' returned non-zero exit status 1.

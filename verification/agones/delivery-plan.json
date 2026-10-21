@@ -1,26 +1,38 @@
 {
-  "acceptance": "Canonical675native/check/six modes/Go controls and nine implemented gates are recovered remotely at35659272d1e6074c0a4d8d02cbfb3a45fc277019. Current changed-program formal credit0 and full25general/50cover strict pipeline accounting pending. Existing PR96 code2e1d stays draft/unmerged; all12historical395199artifacts durable ead588 (nine scoped53claims/42covers/37459rows, same41source occurrences, three12GiBOOM). No migration/architecture/lifecycle/live conformance completion.",
+  "acceptance": "Canonical shared metadata policy adopted with704native tests/zero failures/three ignored, seven generation modes and18parsercontrols. Six complete metadata cases retain21source assertions/12covers; all47earlier whole harness bodies are unchanged. Current protected43selection results are required. Historical native676campaign retains seven scoped passes and30failed source cases; none transfers automatically. Full migration and all8_2cells remain incomplete.",
+  "access": "GitHub app authorized as QuasarRay with push/admin; gh CLI unauthenticated; local .git writable",
   "actual_integration_head": "1e64a054901658908d0a7a4eecd3010379df9614",
-  "actual_review_head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
-  "artifact_recovery_status": "ALL37_DOWNLOADED_AND_SOURCE_PIN_VERIFIED",
+  "actual_review_head": "e15139f9cce0c60c88131f7122b4c0fc5188f420",
+  "artifact_recovery_pending": null,
+  "artifact_recovery_status": "ALL37_CURRENT_ORIGINAL_ZIPS_AND_MEMBERS_SOURCE_VERIFIED_AND_LOCAL_GIT_SEALED",
+  "authorization": "User execution contract REQ-12/F4 and root AGENTS.MD milestone PR/merge workflow",
   "canonical_adoption": {
     "current_formal_credit": 0,
     "evidence": "verification/agones/canonical-complete-validation-adoption-evidence.json",
     "isolated_source": "1886ab3af0bdde934e37c07ddfbf7e62b1c8076d",
-    "published": false,
+    "published": true,
     "published_recovery": "35659272d1e6074c0a4d8d02cbfb3a45fc277019",
-    "published_review_head": false,
-    "status": "CANONICAL_SOURCE_ADOPTED_NATIVE675_SIX_MODES_FORMAL_REQUIRED"
+    "published_review_head": "e15139f9cce0c60c88131f7122b4c0fc5188f420",
+    "status": "CANONICAL_NATIVE676_PUBLISHED_CURRENT37_CI_RUNNING"
   },
   "canonical_complete_validation_pipeline": {
+    "accepted_common_contract_harnesses": 0,
+    "accepted_complete_source_cases": 0,
     "current_formal_credit": 0,
     "evidence": "verification/agones/canonical-complete-validation-adoption-evidence.json",
+    "retained_artifacts": 37,
     "review": "verification/agones/refactoring/complete-validation-parser-matrix-review.json",
-    "selected_harnesses": 37,
-    "source_assertions": 35,
-    "source_case_harnesses": 30,
-    "source_covers": 60,
-    "status": "CANONICAL_NATIVE676_REPAIR_ADOPTED_ALL37_CURRENT_BACKEND_REQUIRED"
+    "selected_harnesses": 43,
+    "source_assertions": 56,
+    "source_case_harnesses": 36,
+    "source_covers": 72,
+    "source_failures": {
+      "OOM_KILL": 18,
+      "TIMEOUT_EXIT_124": 12
+    },
+    "status": "CANONICAL_NATIVE704_METADATA_SOURCE21_READY_CURRENT43_REQUIRED",
+    "terminal_packet": "verification/agones/ci/39556147739-terminal-all37-retained.json",
+    "workflow_run": 39556147739
   },
   "checks": [
     {
@@ -308,18 +320,16 @@
   ],
   "contract_parser_repair": "verification/agones/ci/39528223788-contract-parser-diagnosis.json",
   "current_ci_receipt": null,
-  "current_formal_credit": {
-    "scope": "Current adopted native676production has no backend evidence yet.",
-    "successful_strict_harnesses": 0,
-    "successful_validation_source_cases": 0
-  },
-  "current_public_status_receipt": "verification/agones/canonical-complete-validation-adoption-evidence.json",
-  "current_retained_evidence": "verification/agones/ci/39528223788-nineteen-retained.json",
-  "current_retained_formal_counts": {
-    "satisfied_covers": 0,
-    "semantic_claims": 0,
-    "status": "NATIVE676_CHANGED_PROGRAM_REVERIFICATION_REQUIRED",
-    "successful_harnesses": 0
+  "current_formal_credit": 0,
+  "current_public_status_receipt": "verification/agones/ci/native676-published.json",
+  "current_retained_evidence": "verification/agones/ci/39556147739-terminal-all37-retained.json",
+  "current_retained_formal_counts": {},
+  "current_terminal_raw_recovery": {
+    "large_remote_artifacts": "Original configured90dayActions ZIPs; IDs/digests/expiry retained in terminal packet.",
+    "local_commit": "f1c0240b16adef332313c6964c8662cc04100d15",
+    "raw_bytes": 101535498,
+    "receipt": "verification/agones/ci/39556147739-local-recovery.json",
+    "tree": "990c06ae8655d879bac50eb1ce19ad840cd44a89"
   },
   "exact_lookup_singleton_checkpoint": {
     "current_formal_credit_added": 0,
@@ -331,7 +341,7 @@
     "workflow_run": 39519906026
   },
   "expected_base": "1e64a054901658908d0a7a4eecd3010379df9614",
-  "expected_head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
+  "expected_head": "e15139f9cce0c60c88131f7122b4c0fc5188f420",
   "expected_multiset_checkpoint": {
     "generation_controls": "verification/agones/runs/expected-multiset-generation-controls-1.json",
     "head": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
@@ -354,12 +364,28 @@
     "workflow_run": 39516368235
   },
   "expected_tested_merge": "9d4b29898d097f929ad413b88ee5667bab4663ba",
-  "github_capability_state": "GitHub namespace removed during upload; writes unavailable now. Last completed batch persisted. No approval or authorization denial observed.",
+  "github_capability_state": "GitHub app read/write operations successful; CLI authentication unavailable",
   "historical_archive_publication": "verification/agones/ci/39528223788-archive-publication-pending.json",
   "historical_artifact_recovery_pending": "verification/agones/ci/39505643334-artifact-recovery-pending.json",
   "historical_artifact_recovery_status": "ALL37_ARCHIVES_DOWNLOADED_VERIFIED_GIT_SEALED",
   "historical_artifact_recovery_status_before_expected_multiset": "verification/agones/ci/39505643334-artifact-recovery-completed.json",
   "historical_ci_before_canonical_adoption": "verification/agones/ci/39519906026-terminal-retained.json",
+  "historical_ci_before_canonical_metadata": {
+    "counts": {
+      "audited_selections": 37,
+      "backend_rows": 18858,
+      "expected_selections": 37,
+      "retained_artifacts": 37,
+      "satisfied_covers": 38,
+      "semantic_claims": 49,
+      "successful_harnesses": 7,
+      "uncredited_selections": 30,
+      "unique_qualified_source_assertions": 37,
+      "unreachable_credited": 0
+    },
+    "receipt": "verification/agones/ci/39556147739-terminal-all37-retained.json",
+    "source_head": "e15139f9cce0c60c88131f7122b4c0fc5188f420"
+  },
   "historical_ci_before_exact_lookup_singleton": "verification/agones/ci/39516368235-terminal-retained.json",
   "historical_ci_before_native676": "verification/agones/ci/39528223788-terminal-all37-retained.json",
   "historical_counts_before_canonical_adoption": {
@@ -445,6 +471,24 @@
   },
   "historical_terminal_evidence_publication_pending": "verification/agones/ci/39505643334-evidence-publication-pending.json",
   "integration_branch": "agones-rs-dev",
+  "isolated_metadata_validation": {
+    "branch": "codex/agones-metadata-validation-native687",
+    "canonical_adoption": true,
+    "canonical_evidence": "verification/agones/canonical-object-metadata-adoption.json",
+    "current_formal_credit": 0,
+    "evidence": "verification/agones/object-metadata-isolated-recovery.json",
+    "formal_credit": 0,
+    "local_commit": "576341bd8c452a7fd6244ce48e9d7dc0d67b7aef",
+    "published": true,
+    "published_commit": "f20dd2698245f6ececf0f85cc53fa4a3fc7c8f71",
+    "qualified_assertions": 21,
+    "source_case_count": 6,
+    "source_dependencies": 1570,
+    "source_evidence": "verification/agones/object-metadata-isolated-recovery.json",
+    "status": "CANONICAL_ADOPTED_NATIVE704_PROPERTIES_READY_CURRENT_MODEL_REQUIRED",
+    "tree": "bd20354d9646ca4048f30340fc7133f5d0ebadb3",
+    "validation_observations": 11
+  },
   "isolated_validation_repair": "verification/agones/validation-path-fixture-isolated-recovery.json",
   "merge_result": {
     "commit": "774abfa9a2a0129074d20453d94d999899cb012b",
@@ -458,7 +502,7 @@
     "receipt": "verification/agones/ci/native675-recovery-published.json",
     "status": "PUBLISHED_NATIVE_RECOVERY_ONLY_FORMAL_ACCEPTANCE_PENDING"
   },
-  "next_action": "Preflight and publish the native676canonical repair as a small source checkpoint using the existing full37pipeline when GitHub writes return. Resume passive historical evidence mirror at its persisted tree/batch. Preserve all current proof debt and do not repeat unchanged4d433CI.",
+  "next_action": "Publish the reviewed canonical native704/metadataIR21 checkpoint and run all43protected selections on PR96. Retain exact current-source raw results before credit or merge. All prior unresolved source obligations remain required.",
   "pending_checkpoint": {
     "base_head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
     "complete_harness_bodies_unchanged": 47,
@@ -469,10 +513,12 @@
     "parser_controls": 11,
     "status": "LOCAL_CANONICAL_NATIVE676_ADOPTED_PUBLICATION_AND_FRESH_FULL37_CI_REQUIRED"
   },
+  "pending_ci": true,
+  "pending_publication": true,
   "protected_execution_plan": "verification/agones/ci/protected-model-execution-plan.json",
   "protected_terminal_receipt": "verification/agones/ci/39489621706-terminal-retained.json",
   "protected_tested_merge": "89575a957b239dbc608ebb754cbb11ecfe8a8524",
-  "protected_workflow_run": 39489621706,
+  "protected_workflow_run": 39556147739,
   "pull_request": "https://github.com/QuasarRay/agones/pull/96",
   "pull_requests": [
     {
@@ -503,7 +549,7 @@
   "query_allocation_terminal_receipt": "verification/agones/ci/39498916435-terminal-retained.json",
   "query_allocation_tested_merge": "80901b52f41f9328f0449f16f4430e8eb2b7020f",
   "query_allocation_workflow_run": 39498916435,
-  "remote_result": "PR96_4D433_DRAFT_UNMERGED_CANONICAL_NATIVE676_READY_ALL37_RAW_RETAINED_ARCHIVE_UPLOAD_PARTIAL",
+  "remote_result": "PR96 draft/unmerged; repaired source published at e15139f9cce0c60c88131f7122b4c0fc5188f420",
   "required_checks": [
     "migration-state",
     "rust",
@@ -519,9 +565,10 @@
     "receipt": "verification/agones/ci/39519906026-evidence-published.json",
     "status": "PUBLISHED_ALL12"
   },
+  "terminal_evidence_publication_pending": "verification/agones/ci/39505643334-evidence-publication-pending.json",
   "visible_checkout": {
     "branch": "agones-rs-dev",
     "head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
-    "user_guidance_dirty_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
+    "state": "Preserved dirty development checkout; native676code adopted, metadata prototype remains in separate attached worktree/source backup."
   }
 }

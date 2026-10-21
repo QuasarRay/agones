@@ -36,12 +36,12 @@
     "whole_service_memory_bytes": 12884901888
   },
   "formal_proof_credit": 0,
-  "implementation_and_model_domain_changed": false,
+  "implementation_and_model_domain_changed": true,
   "local_runtime_limit": {
     "expected": "This desktop requires a sudo password; the real wrapper refused execution. No local cgroup enforcement success or backend proof is claimed.",
     "receipt": "verification/agones/runs/ci-model-local-preflight-refusal-1.json"
   },
-  "next_action": "Publish the current native676path/map/common-manifest repair and run the existing full37protected selections with every original assertion, cover, unit domain and unwind128 unchanged. All old4d433raw results are archived with their own source identity.",
+  "next_action": "Publish the canonical metadata source and run43protected selections. All existing30unresolved source cases remain required. Retain current results against their exact source before any milestone merge.",
   "ordinary_checks": [
     "verification/agones/runs/ci-model-execution-controls-1.json",
     "verification/agones/runs/ci-model-result-controls-1.json",
@@ -50,9 +50,11 @@
     "verification/agones/runs/complete-validation-ci-controls-2.json",
     "verification/agones/runs/complete-validation-source-parser-final-1.json",
     "verification/agones/runs/canonical-native676-adoption-native-1.json",
-    "verification/agones/runs/canonical-native676-gated-generation-1.json"
+    "verification/agones/runs/canonical-native676-gated-generation-1.json",
+    "verification/agones/runs/canonical-metadata-native-1.json",
+    "verification/agones/runs/canonical-metadata-seven-mode-generation-1.json"
   ],
-  "preservation": "All existing 12 selections remain required with unchanged fixtures, assertions, covers, preconditions and unwind bounds. The six common selections run serially with immediate unique uploads; five feature and all 25 general validation cases run independently with fail-fast disabled; the contract retains its own job. The mandatory aggregate requires every selected job to succeed. The canonical adoption preserves all 30 generated source harness bodies and uses the complete six-field error relation.",
+  "preservation": "Preserve all37prior selections and add six complete metadata cases/21source assertions/12covers. Fail-fast remains disabled, each selection uploads its own original raw artifact and strict summary, and the mandatory aggregate requires every selected job to succeed.",
   "primary_documentation": [
     "https://docs.github.com/en/actions/reference/runners/github-hosted-runners",
     "https://www.freedesktop.org/software/systemd/man/latest/systemd-run.html",
@@ -68,6 +70,7 @@
     "build/scripts/agones-rs/summarize_feature_proof.py": "067ff7e3ceb095bfc33de515f147fda697d056792cf6b8b06fbd09c7bab560f3",
     "verification/agones/check-dependencies.json": "9d27de0b6913b6835479434b7441afed5c979f36f742a50a1ef4731e9a83afe5"
   },
+  "prior_execution_plan": "verification/agones/ci/protected-model-execution-plan-before-metadata.json",
   "prior_failure_receipt": "verification/agones/ci/39464345048-runner-lost-no-artifacts.json",
   "prior_selections_before_general_validation": [
     "feature_bool_common_domain",
@@ -94,7 +97,7 @@
   },
   "runner_image": "ubuntu-24.04",
   "schema_version": 1,
-  "scope_of_unchanged_domain_flag": "The execution wrapper changes no modeled domain. Canonical production adoption is a separate change and invalidates all affected prior proofs.",
+  "scope_of_unchanged_domain_flag": "All prior37domains, assertions, covers and unwind bounds remain unchanged; six exact metadata cases are added. Production/provider changes require current-source proof. The execution envelope itself is unchanged.",
   "selections": [
     "feature_bool_common_domain",
     "feature_input_common_domain",
@@ -132,19 +135,25 @@
     "source_gs_validate_case_021",
     "source_gs_validate_case_022",
     "source_gs_validate_case_023",
-    "source_gs_validate_case_024"
+    "source_gs_validate_case_024",
+    "source_metadata_case_000",
+    "source_metadata_case_001",
+    "source_metadata_case_002",
+    "source_metadata_case_003",
+    "source_metadata_case_004",
+    "source_metadata_case_005"
   ],
   "semantic_bindings": {
-    ".github/workflows/rust.yml": "8374b011cd28a15a365ac2c896ed068b669ea3f1fe067adcf085c012d6b1178a",
+    ".github/workflows/rust.yml": "ac58bba56e3434a60e59cd98e2b09e26157ffc9ac6fef90e29e91cfdf7c7c4d7",
     "build/scripts/agones-rs/kani_results.py": "0f2e6885ab25ff525ac6a77e1ed67ac02a5904e59caffc0e746258bee0cad04e",
     "build/scripts/agones-rs/protect_model.py": "89fd094879809766a50ece3eea99fca2f9b45ac602ca5cb98fecfa1fe45d4376",
     "build/scripts/agones-rs/run.py": "d158464261c6f591f8c2e99dca8eb2e5aed1925696c67778ccbb1fed3bbf90bd",
     "build/scripts/agones-rs/summarize_bool_proof.py": "dee450e321588d735f1dee1dd49f245e43c395cecf800823f98374fc8f9fcf0c",
-    "build/scripts/agones-rs/summarize_feature_proof.py": "b85203ed7192d25445740b8fa8c1df1030d699000ef5344e8a0be7076bcbfbc6",
+    "build/scripts/agones-rs/summarize_feature_proof.py": "52cc4855ace8f680c27fe6bbce8839d39d7f2bc0abf91c1ba81cd9bf3f8dbd99",
     "build/scripts/agones-rs/test_ci_model_execution.py": "67eedce9e108c80c89aec1d4d93966fdf112e59588f84826c18f93f132f4272e",
-    "build/scripts/agones-rs/test_source_case_proofs.py": "70038dbe2abc057c1d7ea2a8f09d8616e009bbcfbb0f49e3a0759cd87b3f46bb",
+    "build/scripts/agones-rs/test_source_case_proofs.py": "eaf1268beb9ea909a19b355b378b5a714e23618196bd113e0a1193da19b9a30c",
     "verification/agones/check-dependencies.json": "5dc51bd0fdb013204d29e69ed8b5c86d238c3daad80e3ff07516d4acf9beea05"
   },
-  "source_head_before_change": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
-  "status": "CANONICAL_NATIVE676_REPAIR_CONTROLS_PASSED_FRESH_FULL37_BACKEND_REQUIRED"
+  "source_head_before_change": "e15139f9cce0c60c88131f7122b4c0fc5188f420",
+  "status": "CANONICAL_NATIVE704_43_PROTECTED_SELECTIONS_READY"
 }

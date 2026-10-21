@@ -1,0 +1,37 @@
+{
+  "all_selected_model_harnesses": 43,
+  "codegen": "verification/agones/object-metadata-codegen.json",
+  "codegen_sha256": "68914a8a187c454a85cf4fcfda8dc1cbee25916de8549de324a9289f1ee19b59",
+  "current_formal_credit": 0,
+  "feature_id": "META-VALIDATE-001",
+  "gate": "verification/agones/gates/fa682f3bc2dded24a213b49d3337fb7a5a711fb02321ddac5057353491b48f72.json",
+  "gate_map": "verification/agones/canonical-metadata-gates.json",
+  "historical_native676_campaign": "verification/agones/ci/39556147739-terminal-all37-retained.json",
+  "local_protected_backend_probe": {
+    "receipt": "verification/agones/runs/metadata-model-envelope-probe-1.json",
+    "status": "FAILED_SUDO_PASSWORD_REQUIRED_NO_UNPROTECTED_FALLBACK"
+  },
+  "negative_controls": "verification/agones/object-metadata-negative-controls.json",
+  "next_action": "Publish the current source and unchanged required source assertions plus6new metadata selections, then recover/audit current protected43selection CI before milestone delivery.",
+  "ordinary_checks": [
+    "verification/agones/runs/canonical-metadata-native-1.json",
+    "verification/agones/runs/canonical-metadata-gated-extraction-1.json",
+    "verification/agones/runs/canonical-metadata-seven-mode-generation-1.json",
+    "verification/agones/runs/canonical-metadata-post-generation-native-1.json"
+  ],
+  "ordinary_result_counts": {
+    "failed": 0,
+    "ignored": 3,
+    "passed": 704
+  },
+  "prior_assurance": "verification/agones/canonical-pre-metadata-assurance.json",
+  "prior_whole_harness_bodies_unchanged": 47,
+  "required_metadata_covers": 12,
+  "rusternetes_scope": "All5overflow source fixtures pass actual Fleet/GameServerSet native conversions and validation; core replay retains the whole MetaPatch test. Live cluster/executor and a Rusternetes allocation endpoint remain separate required work.",
+  "schema_version": 1,
+  "source_assertion_occurrences": 21,
+  "source_cases": 6,
+  "source_ir": "verification/agones/object-metadata.ir.json",
+  "status": "CANONICAL_NATIVE704_SOURCE21_GENERATED_FORMAL_REQUIRED",
+  "validation_observations": 11
+}

@@ -586,7 +586,7 @@ impl ValidationError {
         }
     }
 
-    fn invalid(
+    pub(crate) fn invalid(
         path: impl Into<String>,
         bad_value: impl Into<String>,
         detail: impl Into<String>,
@@ -601,7 +601,7 @@ impl ValidationError {
         }
     }
 
-    fn too_long(path: impl Into<String>, _bad_value: impl Into<String>, max: isize) -> Self {
+    pub(crate) fn too_long(path: impl Into<String>, _bad_value: impl Into<String>, max: isize) -> Self {
         Self {
             kind: ValidationErrorKind::TooLong,
             path: path.into(),
@@ -625,72 +625,6 @@ impl ValidationError {
         self.covered_by_declarative = true;
         self
     }
-}
-
-const QUALIFIED_NAME_FORMAT_ERROR: &str = "name part must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyName',  or 'my.name',  or '123-abc', regex used for validation is '([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]')";
-const LABEL_VALUE_FORMAT_ERROR: &str = "a valid label must be an empty string or consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyValue',  or 'my_value',  or '12345', regex used for validation is '(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?')";
-
-fn qualified_name_error(value: &str) -> Option<&'static str> {
-    let name = value.rsplit('/').next().unwrap_or(value);
-    if name.len() > 63 {
-        return Some("name part must be no more than 63 bytes");
-    }
-    if name.is_empty() {
-        return Some(QUALIFIED_NAME_FORMAT_ERROR);
-    }
-    let mut chars = name.chars();
-    let first = chars.next().unwrap();
-    let last = name.chars().last().unwrap();
-    if !first.is_ascii_alphanumeric()
-        || !last.is_ascii_alphanumeric()
-        || !name
-            .chars()
-            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.'))
-    {
-        return Some(QUALIFIED_NAME_FORMAT_ERROR);
-    }
-    None
-}
-
-pub(crate) fn validate_object_meta(meta: &ObjectMeta, path: &str) -> Vec<ValidationError> {
-    let mut errors = Vec::new();
-    for (key, value) in &meta.labels {
-        if let Some(detail) = qualified_name_error(key) {
-            errors.push(ValidationError::invalid(
-                format!("{path}.labels"),
-                key.as_str(),
-                detail,
-            ).with_origin("format=k8s-label-key"));
-        }
-        let invalid_value = value.len() > 63
-            || (!value.is_empty()
-                && (!value.chars().next().unwrap().is_ascii_alphanumeric()
-                    || !value.chars().last().unwrap().is_ascii_alphanumeric()
-                    || !value
-                        .chars()
-                        .all(|c| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.'))));
-        if invalid_value {
-            errors.push(ValidationError::invalid(
-                format!("{path}.labels"),
-                value.as_str(),
-                if value.len() > 63 {
-                    "must be no more than 63 bytes"
-                } else {
-                    LABEL_VALUE_FORMAT_ERROR
-                },
-            ).with_origin("format=k8s-label-value"));
-        }
-    }
-    for key in meta.annotations.keys() {
-        if let Some(detail) = qualified_name_error(key) {
-            errors.push(ValidationError::invalid(
-                format!("{path}.annotations"),
-                key.as_str(),
-                detail,
-            ).with_origin("format=k8s-label-key"));
-        }
-    }
-    errors
 }
 
 // Build the source field.Path index directly. Successful port validation needs
@@ -738,7 +672,7 @@ impl GameServerSpec {
         self.validate_with_context(&crate::GameServerDefaultingContext::default(), dev_address)
     }
 
-    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures + crate::CanValidateResourceQuantities>(
+    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures + crate::CanValidateResourceQuantities + crate::CanValidateObjectMetadata>(
         &self,
         context: &C,
         dev_address: &str,
@@ -767,8 +701,9 @@ impl GameServerSpec {
                     ));
                 }
             }
-            errors.extend(validate_object_meta(
-                &self.template.metadata,
+            errors.extend(context.validate_object_metadata(
+                &self.template.metadata.labels,
+                &self.template.metadata.annotations,
                 "spec.template.metadata",
             ));
             return errors;
@@ -836,8 +771,9 @@ impl GameServerSpec {
         }
 
         errors.extend(self.validate_resource_quantities_with_context(context, "spec"));
-        errors.extend(validate_object_meta(
-            &self.template.metadata,
+        errors.extend(context.validate_object_metadata(
+            &self.template.metadata.labels,
+            &self.template.metadata.annotations,
             "spec.template.metadata",
         ));
         errors
@@ -1160,7 +1096,7 @@ impl GameServer {
         self.validate_with_context(&crate::GameServerDefaultingContext::default())
     }
 
-    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures + crate::CanValidateResourceQuantities>(
+    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures + crate::CanValidateResourceQuantities + crate::CanValidateObjectMetadata>(
         &self,
         context: &C,
     ) -> Vec<ValidationError> {
