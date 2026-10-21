@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "EXACT_LOOKUP_SINGLETON2E1D_PUBLISHED_CI_RUNNING",
+  "gate_snapshot": "verification/agones/gates/c4e2a5ea6825492fb9875ede400e5136552e534d80e260295148c92c0775f096.json",
+  "predecessor_revision": 291,
+  "predecessor_sha256": "c0673d19021d3cfb4965dfcc70d14bb5f75936952bc5e3a6110d347fcdad26b6",
+  "reason": "Expected-head lease publishes exact native tree2e1d; actual tested merge99b7 has identical tree. State job passed; all12model selections scheduled by unchanged protected policy. Visible agones-rs-dev adopts native source and preserves user AGENTS. Historical e49e evidence remains durable/source-bound.",
+  "result_revision": 292,
+  "schema_version": 1,
+  "state_sha256": "f799ebd9c3039e694e22a3e3e1f393b9357ccdec0085097f2248580ccdab3738",
+  "timestamp": "2026-10-21T00:14:48.593221+00:00"
+}

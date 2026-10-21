@@ -20,6 +20,7 @@
     "verification/agones/ci/39511896291-first-five-retained.json": "c61b2d440643d74eedebe3ea1f8ab24576b3451c6d6a29a8f0db2eeaa48a68f9",
     "verification/agones/ci/39511896291-seven-retained-source-jobs-running.json": "1cdc5b89fc55b2b47e487a9b99196b3687686d253e8edf7b5b35664ebc49c0e9",
     "verification/agones/ci/39511896291-terminal-retained.json": "b97d1ce65169bc780f144ede957f99492f70a1963b72e845c1a99051030db3ac",
+    "verification/agones/ci/39519906026-terminal-retained.json": "74ba11a37da301f35a253c6606a4875b20498f6101eaf26d9e11e4a7263be049",
     "verification/agones/ci/protected-model-execution-plan.json": "ab89b8924cba9e2bf37d712807911e037a9ace1513b3ba89e2517e1b22c7ae15",
     "verification/agones/exact-lookup-singleton-prior-assurance.json": "9d0a359de671f192a6a7322a64f389076dd79a5700497934578bf04c7cc12671",
     "verification/agones/feature-query-codegen.json": "024098bce9500e6401db7403aca1cbbbe1b48ced71a70794b91c28d96a7bd02c",
@@ -104,6 +105,7 @@
     "verification/agones/resource-derive-paths-evidence.json": "2906dec6fd5e041fcf4fbe66230ae25ed63ff358134eaed6ce293c8c8bd7d748",
     "verification/agones/runs/exact-lookup-singleton-current-native-1.json": "a724bd690d24fb4c732fc4faf532ddca0672a8ae720d831e29b5694cacc9dfb6",
     "verification/agones/runs/exact-lookup-singleton-generation-native-1.json": "87551d218e64028cf8d41cb876e5ab76624c32b5b109c5138efa2f31724b5ead",
+    "verification/agones/runs/exact-lookup-terminal-audit-1.json": "97fe085b36f73c65067735db3c0f8b2573ccca73c4055c7124b6a15dcfe29b17",
     "verification/agones/runs/feature-bool-bolero-kani-ci-39489621706-1.json": "5d262de3bed4d37a22a15db797963c972d0807c906c81245e329a42518f91030",
     "verification/agones/runs/feature-bool-bolero-kani-ci-39489621706-1.log": "cb7c2eeef3e6f15721ba5d9c2dab402e31cd6392e12b2bad36d2981f40c15fa5",
     "verification/agones/runs/feature-bool-bolero-kani-ci-39498916435-1.json": "40b3abe7ee94dcb240dbdfb1ce2cc02089b78bcfa74dbf85c3cede84b8d16a90",
@@ -438,9 +440,24 @@
     "verification/agones/streaming-query-direct-path-prior-assurance.json": "54536680c57d62111a13d152af5aded28fbc99a9170092c4a81320fa086f5704"
   },
   "assurance": {
-    "complete_exact_cases_model_checked": [],
-    "current_gate_proof_status": "PRODUCTION_LOOKUP_AND_SOURCE_HELPER_CHANGED_CURRENT_REVERIFICATION_REQUIRED",
-    "current_retained_backend_receipt": null,
+    "complete_exact_cases_model_checked": [
+      {
+        "assertions": 18,
+        "case": "source_gs_case_005",
+        "covers": 2,
+        "source_head": "2e1d39f6680d055e98d702238e77e32b9562b376",
+        "summary": "verification/agones/proof-summaries/gameserver-source-005-bolero-kani-ci-39519906026-1.json"
+      },
+      {
+        "assertions": 18,
+        "case": "source_gs_case_014",
+        "covers": 2,
+        "source_head": "2e1d39f6680d055e98d702238e77e32b9562b376",
+        "summary": "verification/agones/proof-summaries/gameserver-source-014-bolero-kani-ci-39519906026-1.json"
+      }
+    ],
+    "current_gate_proof_status": "NINE_CURRENT_SCOPED_SELECTIONS_VERIFIED_SOURCE000002003_OOM_OTHER_REQUIRED",
+    "current_retained_backend_receipt": "verification/agones/ci/39519906026-terminal-retained.json",
     "exact_lookup_singleton_revalidation": {
       "current_formal_credit_added": 0,
       "ordinary_checks": [
@@ -451,11 +468,28 @@
       "prior_assurance": "verification/agones/exact-lookup-singleton-prior-assurance.json",
       "prior_source_head": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
       "prior_terminal_receipt": "verification/agones/ci/39516368235-terminal-retained.json",
+      "receipt": "verification/agones/ci/39519906026-terminal-retained.json",
       "review": "verification/agones/refactoring/exact-lookup-singleton-review.json",
+      "scope": "Same four qualified feature-source assertions and prior scoped claims reverified at2e1d. No additional source case or unbounded/lifecycle/conformance credit.",
       "source_cases_assertions_covers_domains_and_bounds_unchanged": true,
-      "status": "NATIVE_AND_GENERATION_PASSED_CURRENT_PROOF_REQUIRED"
+      "status": "TERMINAL_FAILURE_ALL12_ARTIFACTS_RETAINED_NINE_STRICT_SUMMARIES_REPRODUCED"
     },
-    "exact_provider_cases_model_checked": [],
+    "exact_provider_cases_model_checked": [
+      {
+        "assertions": 18,
+        "case": "source_gs_case_005",
+        "covers": 2,
+        "source_head": "2e1d39f6680d055e98d702238e77e32b9562b376",
+        "summary": "verification/agones/proof-summaries/gameserver-source-005-bolero-kani-ci-39519906026-1.json"
+      },
+      {
+        "assertions": 18,
+        "case": "source_gs_case_014",
+        "covers": 2,
+        "source_head": "2e1d39f6680d055e98d702238e77e32b9562b376",
+        "summary": "verification/agones/proof-summaries/gameserver-source-014-bolero-kani-ci-39519906026-1.json"
+      }
+    ],
     "full_case_diagnostics": [
       {
         "individual_results": 0,
@@ -541,7 +575,44 @@
       "source_occurrences_checked": 304
     },
     "original_go_test": "verification/agones/runs/gameserver-defaulting-original-go-tests-1.json",
-    "original_source_assertions_model_checked": [],
+    "original_source_assertions_model_checked": [
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-405",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-409",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-412",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-413",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-414",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-415",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-416",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-417",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-418",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-419",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-423",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-424",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-427",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-432",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-439",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-440",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-445",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-446",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-405",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-409",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-412",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-413",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-414",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-415",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-416",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-417",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-418",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-419",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-423",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-424",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-427",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-432",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-439",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-440",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-445",
+      "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-446"
+    ],
     "prior_gate_original_source_assertions_model_checked": [
       "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-405",
       "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-409",
@@ -562,7 +633,16 @@
       "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-445",
       "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-446"
     ],
-    "production_symbol_model_checked": [],
+    "production_symbol_model_checked": [
+      {
+        "harness": "health_defaulting_common_domain",
+        "satisfied_covers": 8,
+        "scope": "Actual GameServerSpec::apply_defaults health observation with other spec fields zero, independent reference and relational invariant. One bool and three arbitrary i32 inputs, no filtering, unwind 16. No whole GameServer/admission/lifecycle proof or original exact-case assertion credit.",
+        "semantic_claims": 3,
+        "source_head": "2e1d39f6680d055e98d702238e77e32b9562b376",
+        "summary": "verification/agones/proof-summaries/health-defaulting-bolero-kani-ci-39519906026-1.json"
+      }
+    ],
     "protected_execution_revalidation": {
       "prior_assurance": "verification/agones/exact-lookup-singleton-prior-assurance.json",
       "status": "HISTORICAL_SUPERSEDED_REVALIDATION_REQUIRED"
@@ -572,8 +652,8 @@
       "status": "HISTORICAL_SUPERSEDED_REVALIDATION_REQUIRED"
     },
     "reference_model_checked": [],
-    "remaining_exact_source_cases": 17,
-    "remaining_original_source_assertion_occurrences": 304,
+    "remaining_exact_source_cases": 15,
+    "remaining_original_source_assertion_occurrences": 268,
     "sampling": {
       "accepted_inputs": 8192,
       "precondition_rejections": 0,
@@ -609,7 +689,7 @@
     "scope": "Compact current jobs only; immutable terminal receipts/history retained. No product/formal credit."
   },
   "refactoring": "verification/agones/refactoring/gameserver-health-and-source-review.json",
-  "required_next": "Publish the native-verified exact feature lookup and exact singleton multiset repair to existing draft PR96 with the expected e49e head lease, then run one distinct full protected campaign. Preserve every source fixture/action/assertion/cover/domain/unwind128/full error field and duplicate. Current proof credit is pending after production changes; e49e receipts remain historical and durable. After the result, advance canonical complete-validation adoption with explicit proof debt.",
+  "required_next": "Advance complete-validation canonical adoption from clean1886 after durable retention of current source-bound2e1d results. Preserve all source assertions/covers/domains/bounds and all proof debt; no unchanged retry.",
   "schema_version": 1,
   "semantic_bindings": {
     ".cargo/config.toml": "d787ef1ca58591bcf5036c8a2386a4d31ecc54febdd5f6630fd8497a4a0d3fb2",
@@ -742,5 +822,5 @@
       }
     ]
   },
-  "status": "NATIVE_IMPLEMENTED_CURRENT_MODEL_REVERIFICATION_REQUIRED"
+  "status": "NATIVE_IMPLEMENTED_SCOPED_CURRENT_PROOFS_REMAINING_REQUIRED"
 }

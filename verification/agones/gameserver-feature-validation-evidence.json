@@ -13,6 +13,7 @@
     "verification/agones/ci/39516368235-evidence-published.json": "e79ff4282e895398260b59aed70fbab06c6b52f08f3fb1e5aad8f0407c4236c9",
     "verification/agones/ci/39516368235-nine-retained-two-oom-source000-running.json": "df4660c5fdfc23dd0818ec50a63eaa1182c2ef0ebc0532bc43bb8533d8f41dbf",
     "verification/agones/ci/39516368235-terminal-retained.json": "dec2e5942023b0dfa5a4fcc7eec526a48a61080e53dd8cede1b507ea40aa5b56",
+    "verification/agones/ci/39519906026-terminal-retained.json": "74ba11a37da301f35a253c6606a4875b20498f6101eaf26d9e11e4a7263be049",
     "verification/agones/ci/protected-model-execution-plan.json": "ab89b8924cba9e2bf37d712807911e037a9ace1513b3ba89e2517e1b22c7ae15",
     "verification/agones/exact-lookup-singleton-prior-assurance.json": "9d0a359de671f192a6a7322a64f389076dd79a5700497934578bf04c7cc12671",
     "verification/agones/gameserver-feature-validation-domain-first.rs": "bdf808073f19646b786a88b9b0a55505c3f698c7ed77bb9893aa258551345e70",
@@ -62,6 +63,7 @@
     "verification/agones/refactoring/streaming-query-direct-path-review.json": "3521e23d5597ef752578f81dee82375bd6db8822d176c19d46bdd88e2343fa34",
     "verification/agones/runs/exact-lookup-singleton-current-native-1.json": "a724bd690d24fb4c732fc4faf532ddca0672a8ae720d831e29b5694cacc9dfb6",
     "verification/agones/runs/exact-lookup-singleton-generation-native-1.json": "87551d218e64028cf8d41cb876e5ab76624c32b5b109c5138efa2f31724b5ead",
+    "verification/agones/runs/exact-lookup-terminal-audit-1.json": "97fe085b36f73c65067735db3c0f8b2573ccca73c4055c7124b6a15dcfe29b17",
     "verification/agones/runs/expected-multiset-generation-controls-1.json": "f1149cd8b160dd8ef99de71549bc6b6d7527a15a8f8f44214afda98e0b9fc0bd",
     "verification/agones/runs/expected-multiset-native-1.json": "d83041786a95e518924a1b242acf0fd570caa7acf7f3d1e21f7d9b806833bfd4",
     "verification/agones/runs/expected-multiset-terminal-audit-1.json": "b817f3d0972ff666d8645a9b163b5991a4694c039aad19a079604b3595852ee5",
@@ -211,8 +213,25 @@
   },
   "assurance": {
     "backend_campaign": {
-      "prior_assurance": "verification/agones/exact-lookup-singleton-prior-assurance.json",
-      "status": "HISTORICAL_SUPERSEDED_REVALIDATION_REQUIRED"
+      "conclusion": "failure",
+      "counts": {
+        "backend_rows": 37459,
+        "failed_harnesses": 3,
+        "original_defaulting_assertions": 36,
+        "original_feature_validation_assertions": 4,
+        "original_query_error_assertions": 1,
+        "retained_artifacts": 12,
+        "satisfied_covers": 42,
+        "semantic_claims": 53,
+        "successful_harnesses": 9,
+        "unreachable_credited": 0
+      },
+      "new_qualified_feature_validation_credit": 0,
+      "receipt": "verification/agones/ci/39519906026-terminal-retained.json",
+      "source_head": "2e1d39f6680d055e98d702238e77e32b9562b376",
+      "status": "TERMINAL_FAILURE_ALL12_ARTIFACTS_RETAINED_NINE_STRICT_SUMMARIES_REPRODUCED",
+      "tested_merge": "99b74719b693a663a7203f550e3d894e1c424931",
+      "workflow_run": 39519906026
     },
     "contract_domain_sampling": {
       "accepted_inputs": 8192,
@@ -221,11 +240,15 @@
       "semantic_fault_controls": "Wrong flag/presence/count/kind/path/bad-value/detail rejected"
     },
     "contract_model_attempts": {
-      "prior_assurance": "verification/agones/exact-lookup-singleton-prior-assurance.json",
-      "status": "HISTORICAL_SUPERSEDED_REVALIDATION_REQUIRED"
+      "current_semantic_claims": 3,
+      "new_formal_credit": 0,
+      "qualified_original_assertion_credit": 0,
+      "source_correspondence_limit": "Current four-field Rust model only; full six-field source constructor-image correspondence and isolated25case production still require adoption/proof.",
+      "status": "FOUR_FIELD_RUST_CONTRACT_AND_TWO_SOURCE_CASES_VERIFIED_THREE_SOURCE_OOM",
+      "summary": "verification/agones/proof-summaries/gameserver-features-bolero-kani-ci-39519906026-1.json"
     },
-    "current_gate_proof_status": "PRODUCTION_LOOKUP_AND_SOURCE_HELPER_CHANGED_CURRENT_REVERIFICATION_REQUIRED",
-    "current_retained_backend_receipt": null,
+    "current_gate_proof_status": "NINE_CURRENT_SCOPED_SELECTIONS_VERIFIED_SOURCE000002003_OOM_OTHER_REQUIRED",
+    "current_retained_backend_receipt": "verification/agones/ci/39519906026-terminal-retained.json",
     "exact_lookup_singleton_revalidation": {
       "current_formal_credit_added": 0,
       "ordinary_checks": [
@@ -236,9 +259,11 @@
       "prior_assurance": "verification/agones/exact-lookup-singleton-prior-assurance.json",
       "prior_source_head": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
       "prior_terminal_receipt": "verification/agones/ci/39516368235-terminal-retained.json",
+      "receipt": "verification/agones/ci/39519906026-terminal-retained.json",
       "review": "verification/agones/refactoring/exact-lookup-singleton-review.json",
+      "scope": "Same four qualified feature-source assertions and prior scoped claims reverified at2e1d. No additional source case or unbounded/lifecycle/conformance credit.",
       "source_cases_assertions_covers_domains_and_bounds_unchanged": true,
-      "status": "NATIVE_AND_GENERATION_PASSED_CURRENT_PROOF_REQUIRED"
+      "status": "TERMINAL_FAILURE_ALL12_ARTIFACTS_RETAINED_NINE_STRICT_SUMMARIES_REPRODUCED"
     },
     "expected_multiset_revalidation": {
       "prior_assurance": "verification/agones/exact-lookup-singleton-prior-assurance.json",
@@ -389,8 +414,42 @@
       "run": "verification/agones/runs/exact-lookup-singleton-current-native-1.json",
       "scope": "Current source-bound workspace/all-target tests, including independent map lookup and1600full-error histogram controls."
     },
-    "original_source_assertions_model_checked": [],
-    "production_symbol_model_checked": [],
+    "original_source_assertions_model_checked": [
+      {
+        "harness": "source_gsv_case_001",
+        "qualified_origins": [
+          "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Multiple container ports, OK scenario::line-1479",
+          "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Multiple container ports, OK scenario::line-1482"
+        ],
+        "satisfied_covers": 2,
+        "scope": "Selected exact source validation case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Multiple container ports, OK scenario. All five exact original validation cases, ten qualified source assertions. Observation lifetime follows the existing retained-owner rule; no formal post-observation cleanup credit. No original case sets Players. Actual core validation and source literals are modeled; original Go/resource/hooks use ordinary replay. Full domain validation, present-Players contract proof, lifecycle/conformance and all eight _2 cells remain required.",
+        "semantic_claims": 2,
+        "source_head": "2e1d39f6680d055e98d702238e77e32b9562b376",
+        "summary": "verification/agones/proof-summaries/gameserver-validation-bolero-kani-ci-39519906026-1-case-001.json"
+      },
+      {
+        "harness": "source_gsv_case_004",
+        "qualified_origins": [
+          "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::PortPolicyNone is enabled, PortPolicy field set to None::line-1479",
+          "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::PortPolicyNone is enabled, PortPolicy field set to None::line-1482"
+        ],
+        "satisfied_covers": 2,
+        "scope": "Selected exact source validation case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::PortPolicyNone is enabled, PortPolicy field set to None. All five exact original validation cases, ten qualified source assertions. Observation lifetime follows the existing retained-owner rule; no formal post-observation cleanup credit. No original case sets Players. Actual core validation and source literals are modeled; original Go/resource/hooks use ordinary replay. Full domain validation, present-Players contract proof, lifecycle/conformance and all eight _2 cells remain required.",
+        "semantic_claims": 2,
+        "source_head": "2e1d39f6680d055e98d702238e77e32b9562b376",
+        "summary": "verification/agones/proof-summaries/gameserver-validation-bolero-kani-ci-39519906026-1-case-004.json"
+      }
+    ],
+    "production_symbol_model_checked": [
+      {
+        "harness": "gameserver_feature_validation_common_domain",
+        "satisfied_covers": 8,
+        "scope": "Actual CGP ValidateAgonesGameServerFeatures provider and independent nonallocating match-table reference checked against the separate complete error relation. Arbitrary enabled/present booleans and signed i64 capacity, no filtering, fixed spec field path, unwind128. The deterministic relation fixes count/kind/path/optional bad value/detail for both observations. No qualified original table assertion, unbounded field path, full validation, admission, lifecycle or live-cluster proof credit. Harness owners are retained after observations under the existing lifetime rule; formal post-observation cleanup remains required.",
+        "semantic_claims": 3,
+        "source_head": "2e1d39f6680d055e98d702238e77e32b9562b376",
+        "summary": "verification/agones/proof-summaries/gameserver-features-bolero-kani-ci-39519906026-1.json"
+      }
+    ],
     "protected_execution_revalidation": {
       "prior_assurance": "verification/agones/exact-lookup-singleton-prior-assurance.json",
       "status": "HISTORICAL_SUPERSEDED_REVALIDATION_REQUIRED"
@@ -425,7 +484,7 @@
   },
   "feature_id": "GS-VALIDATE-FEATURES-001",
   "implementation_gate": "verification/agones/gates/c4e2a5ea6825492fb9875ede400e5136552e534d80e260295148c92c0775f096.json",
-  "required_next": "Publish the native-verified exact feature lookup and exact singleton multiset repair to existing draft PR96 with the expected e49e head lease, then run one distinct full protected campaign. Preserve every source fixture/action/assertion/cover/domain/unwind128/full error field and duplicate. Current proof credit is pending after production changes; e49e receipts remain historical and durable. After the result, advance canonical complete-validation adoption with explicit proof debt.",
+  "required_next": "Advance complete-validation canonical adoption from clean1886 after durable retention of current source-bound2e1d results. Preserve all source assertions/covers/domains/bounds and all proof debt; no unchanged retry.",
   "schema_version": 1,
   "semantic_bindings": {
     ".cargo/config.toml": "d787ef1ca58591bcf5036c8a2386a4d31ecc54febdd5f6630fd8497a4a0d3fb2",
@@ -497,5 +556,5 @@
     "source_go_replay": "verification/agones/runs/gs-validation-original-go-test-1.json",
     "typed_extraction": "verification/agones/runs/gs-validation-typed-extractor-2.json"
   },
-  "status": "NATIVE_IMPLEMENTED_CURRENT_MODEL_REVERIFICATION_REQUIRED"
+  "status": "NATIVE_IMPLEMENTED_SCOPED_CURRENT_PROOFS_REMAINING_REQUIRED"
 }
