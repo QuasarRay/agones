@@ -1,0 +1,18 @@
+{
+  "base": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
+  "commit": "ea44a0ee0ea3bc4d27bebaa74493b738c4caf231",
+  "complete_harness_bodies_unchanged": 47,
+  "evidence": "verification/agones/validation-path-fixture-evidence.json",
+  "evidence_sha256": "6d0c31bb7549135ae7aa25b0d34aad78f3e6059def669ceed17f5deeda7567dc",
+  "formal_credit": 0,
+  "generation_modes": 6,
+  "ignored": 3,
+  "native_passed": 676,
+  "next_action": "Recover the complete current4d433campaign. Then adopt this bounded source/generator/manifest repair with renewed canonical gates and evidence, retaining all original obligations and all failures. Publish through the restored authorized GitHub connector; no unchanged campaign retry.",
+  "parser_controls": 11,
+  "real_index_preserved": true,
+  "schema_version": 1,
+  "status": "LOCAL_ISOLATED_NATIVE_VERIFIED_CANDIDATE_NOT_PUBLISHED_OR_ADOPTED",
+  "tree": "ae42854c79fa5c73dce5bc9c15463055bdcb5041",
+  "workspace": "/home/astral/.codex/worktrees/agones-resource-quantity/agones"
+}

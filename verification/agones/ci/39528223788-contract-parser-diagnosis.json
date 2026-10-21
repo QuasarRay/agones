@@ -1,0 +1,32 @@
+{
+  "actual_log_reparse": "verification/agones/runs/canonical37-contract-candidate-actual-log-reparse-1.json",
+  "artifact_bindings": {
+    "verification/agones/ci/39528223788-contract-parser-candidate-summary.json": "7cf7ecb701258a2268b49f756025155f635e80e04c930883ab0d98939e47210e",
+    "verification/agones/ci/39528223788-contract-parser-repair.patch": "897a015ea0b863a61c71f40ba06f6a14d5dea9ee6d088072e67bcb1d81b42cd8",
+    "verification/agones/ci/39528223788-first-five-retained.json": "042094d5e2396535b8db7de4ffa2ad33e9113524bae6292072c22c2629bd7d17",
+    "verification/agones/runs/canonical37-contract-candidate-actual-log-reparse-1.json": "430b60e01a2dab8f2e3a48f086b3ed9bb56ec28b9710e030dec22a61b5b53ab1",
+    "verification/agones/runs/canonical37-contract-candidate-actual-log-reparse-1.log": "c7a03051fc49609b1a21546245ebdb2fbcc9d3b851f376de0904ab7011010ff5",
+    "verification/agones/runs/canonical37-contract-parser-candidate-controls-1.json": "078cb3d6aaf679ec5935cc98e5260aa380bba40776415773fc24a002903cd041",
+    "verification/agones/runs/canonical37-contract-parser-candidate-controls-1.log": "0b540e00c43f226faacae7c5318e188a38f0ca286dc95459471e9e5e3f47ec12"
+  },
+  "backend_rows": 1541,
+  "backend_status": "PASSED",
+  "candidate_controls": "verification/agones/runs/canonical37-contract-parser-candidate-controls-1.json",
+  "candidate_summary": "verification/agones/ci/39528223788-contract-parser-candidate-summary.json",
+  "cause": "New strict common-domain parser requires validation_error_mapping.fields, absent from the common-domain manifest. Actual provider/reference assertions and all eight covers passed. No accepted strict summary existed in the uploaded artifact.",
+  "ci_job_status": "FAILED",
+  "classification": "REPO_SAFE",
+  "current_partial_evidence": "verification/agones/ci/39528223788-first-five-retained.json",
+  "exit_code": 0,
+  "formal_credit": 0,
+  "job": 118987949516,
+  "next_action": "Recover the rest of the unchanged current campaign, apply this minimal manifest/regression patch, run final canonical parser controls and refresh affected evidence. Diagnose source failures from their raw logs before any further full campaign.",
+  "repair": "Add the explicit six-field manifest declaration and common-domain parser regression controls. Preserve provider code, original properties, domain, unwind128 and all covers. Validate against the retained actual log and then publish a diagnosed follow-up.",
+  "repair_patch": "verification/agones/ci/39528223788-contract-parser-repair.patch",
+  "required_covers": 8,
+  "schema_version": 1,
+  "scope": "No formal CI acceptance claim until the corrected manifest/parser controls and required current checks pass.",
+  "source_head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
+  "status": "DIAGNOSED_CANDIDATE_REPAIR_PASSED_SOURCE_HELD_DURING_RUNNING_CAMPAIGN",
+  "workflow_run": 39528223788
+}

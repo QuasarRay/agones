@@ -1,0 +1,1327 @@
+   Compiling agones-core v0.1.0 (/home/astral/.codex/worktrees/agones-resource-quantity/agones/crates/agones-core)
+warning: ambiguous glob re-exports
+  --> crates/agones-core/src/lib.rs:42:9
+   |
+42 | pub use allocation::*;
+   |         ^^^^^^^^^^^^^ the name `NodeAddress` in the type namespace is first re-exported here
+43 | pub use autoscaling::*;
+44 | pub use gameserver::*;
+   |         ------------- but the name `NodeAddress` in the type namespace is also re-exported here
+   |
+   = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: function `fleet_replica_bounds_are_bounded` is never used
+    --> crates/agones-core/src/fleet.rs:1010:4
+     |
+1010 | fn fleet_replica_bounds_are_bounded(input: (i32, i32)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `label` is never used
+    --> crates/agones-core/src/autoscaling.rs:1340:8
+     |
+1339 | impl CapacityPolicyKind {
+     | ----------------------- method in this implementation
+1340 |     fn label(self) -> &'static str {
+     |        ^^^^^
+
+warning: function `capacity_scale_up_never_decreases_replicas` is never used
+    --> crates/agones-core/src/autoscaling.rs:1839:4
+     |
+1839 | fn capacity_scale_up_never_decreases_replicas(
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `buffer_policy_integer_decision_stays_bounded` is never used
+    --> crates/agones-core/src/autoscaling.rs:1875:4
+     |
+1875 | fn buffer_policy_integer_decision_stays_bounded(
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `buffer_integer_valid_region_is_accepted` is never used
+    --> crates/agones-core/src/autoscaling.rs:1904:4
+     |
+1904 | fn buffer_integer_valid_region_is_accepted(input: (i32, i32, i32)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `capacity_integer_valid_region_is_accepted` is never used
+    --> crates/agones-core/src/autoscaling.rs:1924:4
+     |
+1924 | fn capacity_integer_valid_region_is_accepted(input: (i64, i64, i32, bool)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `fixed_interval_positive_seconds_are_accepted` is never used
+    --> crates/agones-core/src/autoscaling.rs:1957:4
+     |
+1957 | fn fixed_interval_positive_seconds_are_accepted(seconds: i32) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `health_defaulting_makes_enabled_thresholds_positive` is never used
+   --> crates/agones-core/src/gameserver.rs:284:4
+    |
+284 | fn health_defaulting_makes_enabled_thresholds_positive(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `safe_add_nonnegative_inputs_are_saturating` is never used
+   --> crates/agones-core/src/gameserver.rs:404:4
+    |
+404 | fn safe_add_nonnegative_inputs_are_saturating(input: (i64, i64)) -> bool {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `counter_updates_preserve_bounds` is never used
+    --> crates/agones-core/src/gameserver.rs:1500:4
+     |
+1500 | fn counter_updates_preserve_bounds(input: (i64, i64, i64, bool)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `gameserverset_creation_batch_respects_caps` is never used
+   --> crates/agones-core/src/gameserverset.rs:462:4
+    |
+462 | fn gameserverset_creation_batch_respects_caps(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `average_of_nonnegative_byte_weights_stays_within_input_range` is never used
+   --> crates/agones-core/src/multicluster.rs:207:4
+    |
+207 | fn average_of_nonnegative_byte_weights_stays_within_input_range(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+   Compiling agones-rusternetes v0.1.0 (/home/astral/.codex/worktrees/agones-resource-quantity/agones/crates/agones-rusternetes)
+warning: method `label` is never used
+    --> crates/agones-core/src/autoscaling.rs:1340:8
+     |
+1339 | impl CapacityPolicyKind {
+     | ----------------------- method in this implementation
+1340 |     fn label(self) -> &'static str {
+     |        ^^^^^
+     |
+     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `agones-core` (lib) generated 13 warnings
+warning: variable does not need to be mutable
+  --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:47:9
+   |
+47 |     let mut value = source_gs_validate_base_000();
+   |         ----^^^^^
+   |         |
+   |         help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:119:9
+    |
+119 |     let mut value = source_gs_validate_base_001();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:174:9
+    |
+174 |     let mut value = source_gs_validate_base_002();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:222:9
+    |
+222 |     let mut value = source_gs_validate_base_003();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:270:9
+    |
+270 |     let mut value = source_gs_validate_base_004();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:322:9
+    |
+322 |     let mut value = source_gs_validate_base_005();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:373:9
+    |
+373 |     let mut value = source_gs_validate_base_006();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:424:9
+    |
+424 |     let mut value = source_gs_validate_base_007();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:475:9
+    |
+475 |     let mut value = source_gs_validate_base_008();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:526:9
+    |
+526 |     let mut value = source_gs_validate_base_009();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:602:9
+    |
+602 |     let mut value = source_gs_validate_base_010();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:662:9
+    |
+662 |     let mut value = source_gs_validate_base_011();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:718:9
+    |
+718 |     let mut value = source_gs_validate_base_012();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:801:9
+    |
+801 |     let mut value = source_gs_validate_base_013();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:884:9
+    |
+884 |     let mut value = source_gs_validate_base_014();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:967:9
+    |
+967 |     let mut value = source_gs_validate_base_015();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:1050:9
+     |
+1050 |     let mut value = source_gs_validate_base_016();
+     |         ----^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:1133:9
+     |
+1133 |     let mut value = source_gs_validate_base_017();
+     |         ----^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:1216:9
+     |
+1216 |     let mut value = source_gs_validate_base_018();
+     |         ----^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:1304:9
+     |
+1304 |     let mut value = source_gs_validate_base_019();
+     |         ----^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:1392:9
+     |
+1392 |     let mut value = source_gs_validate_base_020();
+     |         ----^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:1480:9
+     |
+1480 |     let mut value = source_gs_validate_base_021();
+     |         ----^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:1568:9
+     |
+1568 |     let mut value = source_gs_validate_base_022();
+     |         ----^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:1656:9
+     |
+1656 |     let mut value = source_gs_validate_base_023();
+     |         ----^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:1744:9
+     |
+1744 |     let mut value = source_gs_validate_base_024();
+     |         ----^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: `agones-core` (lib test) generated 2 warnings (1 duplicate)
+warning: variable does not need to be mutable
+  --> crates/agones-core/tests/generated/gameserver_feature_validation_cases.rs:58:9
+   |
+58 |     let mut value = source_gsv_base_fixture_000();
+   |         ----^^^^^
+   |         |
+   |         help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_feature_validation_cases.rs:120:9
+    |
+120 |     let mut value = source_gsv_base_fixture_001();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: unused import: `GameServer`
+ --> crates/agones-rusternetes/src/allocation_overflow_controller.rs:4:5
+  |
+4 |     GameServer, GameServerSet, SchedulingStrategy,
+  |     ^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `agones-core` (test "source_gameserver_feature_validation") generated 2 warnings (run `cargo fix --test "source_gameserver_feature_validation" -p agones-core` to apply 2 suggestions)
+warning: `agones-core` (test "source_gameserver_validation") generated 25 warnings (run `cargo fix --test "source_gameserver_validation" -p agones-core` to apply 25 suggestions)
+warning: function `fleet_retry_policy_matches_upstream` is never used
+  --> crates/agones-rusternetes/src/fleet_controller_runtime.rs:36:4
+   |
+36 | fn fleet_retry_policy_matches_upstream(retries: u8) -> bool {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `fleet_autoscaler_retry_policy_matches_upstream` is never used
+  --> crates/agones-rusternetes/src/fleetautoscaler_controller_runtime.rs:37:4
+   |
+37 | fn fleet_autoscaler_retry_policy_matches_upstream(retries: u8) -> bool {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `game_server_set_retry_policy_matches_upstream` is never used
+  --> crates/agones-rusternetes/src/gameserverset_controller_runtime.rs:33:4
+   |
+33 | fn game_server_set_retry_policy_matches_upstream(retries: u8) -> bool {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `game_server_retry_policy_matches_upstream` is never used
+  --> crates/agones-rusternetes/src/gameserver_controller_runtime.rs:36:4
+   |
+36 | fn game_server_retry_policy_matches_upstream(retries: u8) -> bool {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `sdk_environment_variable_shape_matches_ports` is never used
+  --> crates/agones-rusternetes/src/gameserver_pod_augmentation.rs:41:4
+   |
+41 | fn sdk_environment_variable_shape_matches_ports(input: (i16, i16)) -> bool {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `state_transition_deltas_match_membership` is never used
+   --> crates/agones-rusternetes/src/per_node_counter.rs:225:4
+    |
+225 | fn state_transition_deltas_match_membership(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `default_sidecar_security_context_is_restricted` is never used
+  --> crates/agones-rusternetes/src/sdk_sidecar.rs:83:4
+   |
+83 | fn default_sidecar_security_context_is_restricted(run_as_user: i64) -> bool {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `agones-rusternetes` (lib) generated 8 warnings (run `cargo fix --lib -p agones-rusternetes` to apply 1 suggestion)
+warning: value assigned to `set` is never read
+   --> crates/agones-rusternetes/src/gameserverset_controller.rs:621:23
+    |
+621 |         let mut set = stored_set(&storage, 3).await;
+    |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this value is reassigned later and never used
+...
+639 |         set = repository.get("default", "set").await.unwrap();
+    |         --- `set` is overwritten here before the previous value is read
+    |
+    = note: `#[warn(unused_assignments)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `controller`
+   --> crates/agones-rusternetes/src/health_gameserver_controller.rs:696:13
+    |
+696 |         let controller = CreatingGameServerController::new(storage.clone());
+    |             ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_controller`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: `agones-rusternetes` (lib test) generated 2 warnings (run `cargo fix --lib -p agones-rusternetes --tests` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 19.27s
+     Running unittests src/lib.rs (target/debug/deps/agones_core-d7b46d63b3ba5d65)
+
+running 182 tests
+test allocation::tests::allocation_defaults_match_original_go_behavior ... ok
+test allocation::tests::counter_capacity_action_truncates_existing_count ... ok
+test allocation::tests::list_capacity_action_truncates_values ... ok
+test allocation::tests::new_selectors_take_precedence_for_defaulting ... ok
+test allocation::tests::action_errors_are_joined_and_later_actions_still_run ... ok
+test allocation::tests::converter_orders_preferred_before_required_and_is_idempotent ... ok
+test allocation::tests::allocation_validation_matches_scheduling_and_metadata_behavior ... ok
+test allocation::tests::counter_and_list_action_validation_matches_original_behavior ... ok
+test allocation::tests::counter_actions_apply_capacity_before_count ... ok
+test allocation::tests::label_selector_expressions_follow_kubernetes_operator_semantics ... ok
+test allocation::tests::counter_count_action_updates_count ... ok
+test allocation::tests::list_capacity_above_configured_max_errors_without_capacity_change ... ok
+test allocation::tests::selector_matching_preserves_counter_range_semantics ... ok
+test allocation::tests::list_actions_preserve_dedup_order_and_delete_after_append ... ok
+test allocation::tests::metadata_patch_validation_matches_agones_paths ... ok
+test allocation::tests::counter_actions_continue_after_capacity_error ... ok
+test allocation::tests::allocation_state_preserves_unknown_wire_values ... ok
+test api_resource_identity_tests::stored_resources_publish_exact_agones_api_identity ... ok
+test allocation::tests::list_append_silently_truncates_to_new_capacity ... ok
+test allocation::tests::priority_validation_matches_original_matrix ... ok
+test allocation::tests::selector_matching_matches_original_label_and_state_cases ... ok
+test allocation::tests::sort_key_ignores_selectors_but_tracks_scheduling_and_priorities ... ok
+test allocation::tests::selector_validation_matches_state_counter_and_list_invariants ... ok
+test allocation::tests::selector_defaults_are_idempotent_and_preserve_existing_values ... ok
+test allocation::tests::selector_validation_rejects_invalid_label_selector ... ok
+test allocation::tests::selector_matching_preserves_list_capacity_and_contains_semantics ... ok
+test autoscaling::tests::buffer_percentage_solves_future_fleet_size_with_ceil ... ok
+test autoscaling::tests::buffer_policy_invalid_string_preserves_upstream_error_shape ... ok
+test autoscaling::tests::buffer_policy_scales_up_from_integer_buffer ... ok
+test autoscaling::tests::buffer_policy_reports_min_and_max_limiting ... ok
+test autoscaling::tests::buffer_policy_validation_matches_integer_and_percentage_invariants ... ok
+test autoscaling::tests::chain_entries_inline_policy_fields_like_go_json ... ok
+test autoscaling::tests::chain_validation_preserves_duplicate_missing_and_recursive_policy_rules ... ok
+test autoscaling::tests::ca_bundle_uses_go_compatible_base64_wire_format ... ok
+test autoscaling::tests::counter_and_list_validation_share_original_capacity_rules ... ok
+test autoscaling::tests::counter_policy_ports_zero_scale_up_same_and_limit_cases ... ok
+test autoscaling::tests::counter_policy_requires_matching_spec_and_status_keys ... ok
+test autoscaling::tests::counter_policy_uses_per_replica_available_capacity ... ok
+test autoscaling::tests::core_dispatch_preserves_unknown_and_external_policy_noop_behavior ... ok
+test autoscaling::tests::defaults_preserve_explicit_sync_values ... ok
+test autoscaling::tests::fixed_interval_validation_matches_original_zero_and_negative_behavior ... ok
+test autoscaling::tests::fleet_autoscaler_core_validation_composes_policy_and_sync ... ok
+test autoscaling::tests::fleet_autoscaler_defaults_match_original_go_behavior ... ok
+test autoscaling::tests::full_fleet_autoscaler_validation_uses_policy_dispatch_and_sync ... ok
+test autoscaling::tests::int_or_percent_wire_shape_is_shared_with_fleet ... ok
+test autoscaling::tests::kubernetes_time_zero_values_serialize_as_null ... ok
+test autoscaling::tests::list_policy_ports_integer_and_percentage_scale_up ... ok
+test autoscaling::tests::missing_selected_policy_configuration_is_required ... ok
+test autoscaling::tests::policy_external_dispatch_requires_selected_configuration ... ok
+test autoscaling::tests::list_policy_scale_down_ignores_allocated_game_servers ... ok
+test autoscaling::tests::schedule_active_respects_between_bounds_and_empty_cron ... ok
+test autoscaling::tests::schedule_feature_gate_short_circuits_other_validation ... ok
+test autoscaling::tests::schedule_policy_does_not_recursively_validate_nested_policy ... ok
+test autoscaling::tests::schedule_validation_covers_timezone_and_time_window_rules ... ok
+test autoscaling::tests::unknown_policy_and_sync_types_remain_lossless ... ok
+test autoscaling::tests::schedule_active_supports_timezone_and_cron_aliases ... ok
+test autoscaling::tests::wasm_validation_preserves_feature_gate_and_from_requirements ... ok
+test autoscaling::tests::webhook_configuration_validation_matches_original_presence_rules ... ok
+test autoscaling::tests::webhook_configuration_rejects_invalid_url_and_ca_bundle ... ok
+test features::go_quote::tests::exact_go_controls_raw_bytes_and_unicode_are_preserved ... ok
+test autoscaling::tests::webhook_url_parser_accepts_relative_references_like_go_net_url ... ok
+test autoscaling::tests::schedule_active_ports_standard_cron_duration_windows ... ok
+test features::tests::canonical_defaults_match_distinct_reordered_and_duplicate_tables ... ok
+test autoscaling::tests::schedule_validation_covers_standard_cron_tz_and_go_duration ... ok
+test features::tests::configuration_is_atomic_and_uses_first_duplicate_value ... ok
+test features::tests::defaults_and_overrides_round_trip_without_global_state ... ok
+test features::tests::custom_default_duplicates_and_query_byte_order_preserve_map_semantics ... ok
+test features::tests::raw_go_strings_preserve_ignored_duplicate_bytes_and_error_values ... ok
+test features::tests::query_encoding_and_failure_precedence_follow_go ... ok
+test fleet::tests::deployment_strategy_shortcuts_match_upstream ... ok
+test fleet::tests::active_gameserverset_is_the_template_match ... ok
+test fleet::tests::fleet_counter_merge_saturates_while_list_merge_wraps ... ok
+test fleet::tests::duplicate_active_templates_keep_oldest_and_return_newer_as_rest ... ok
+test fleet::tests::fleet_status_aggregates_gameserverset_counts_and_allocations ... ok
+test fleet::tests::fleet_status_missing_scalar_fields_use_go_zero_values ... ok
+test features::tests::query_failures_preserve_first_values_and_whole_query_precedence ... ok
+test fleet::tests::active_template_uses_kubernetes_resource_quantity_semantics ... ok
+test fleet::tests::int_or_percent_resolution_matches_kubernetes_rounding ... ok
+test fleet::tests::derives_gameserverset_from_fleet ... ok
+test fleet::tests::player_tracking_recomputes_when_enabled_and_preserves_when_disabled ... ok
+test fleet::tests::missing_creation_timestamp_behaves_like_kubernetes_zero_time ... ok
+test fleet::tests::recreate_target_accounts_for_allocated_inactive_servers ... ok
+test fleet::tests::recreate_deployment_plan_scales_inactive_sets_to_zero ... ok
+test fleet::tests::replica_bounds_match_go ... ok
+test fleet::tests::rolling_update_active_adds_max_surge_and_respects_fleet_bound ... ok
+test fleet::tests::fleet_defaults_match_go_and_are_idempotent ... ok
+test fleet::tests::rolling_update_active_leaves_room_for_inactive_allocated_servers ... ok
+test fleet::tests::rolling_update_active_waits_for_inflight_scaling ... ok
+test fleet::tests::rolling_update_cleanup_removes_unhealthy_replicas_first ... ok
+test fleet::tests::rolling_update_missing_max_unavailable_is_an_error ... ok
+test fleet::tests::rolling_update_plan_does_not_scale_down_before_active_is_ready ... ok
+test fleet::tests::rolling_update_plan_matches_upstream_full_inactive_case ... ok
+test fleet::tests::rolling_update_plan_preserves_allocated_capacity ... ok
+test fleet::tests::fleet_name_template_metadata_and_allocation_overflow_validate ... ok
+test fleet::tests::rolling_update_plan_uses_ready_replica_fencepost_for_small_fleets ... ok
+test fleet::tests::validates_gameserver_spec_and_rolling_update_parameters ... ok
+test gameserver::tests::apply_defaults_matches_basic_go_gameserver_invariants ... ok
+test fleet::tests::sums_gameserverset_values_while_skipping_absent_entries ... ok
+test fleet::tests::no_template_match_returns_no_active_and_all_sets_as_rest ... ok
+test fleet::tests::rejects_unsupported_strategy ... ok
+test gameserver::tests::apply_to_pod_container_supports_regular_and_restartable_init_containers ... ok
+test gameserver::tests::counter_updates_match_go_truncation_and_error_behavior ... ok
+test gameserver::tests::counters_and_lists_are_copied_into_status ... ok
+test gameserver::tests::count_and_list_priorities_match_agones_ordering ... ok
+test gameserver::tests::creating_tcpudp_split_is_idempotent ... ok
+test gameserver::tests::deleting_development_gameserver_is_noop ... ok
+test gameserver::tests::creating_port_normalization_ignores_tcp_and_nonstatic_tcpudp ... ok
+test gameserver::tests::creating_static_tcpudp_port_splits_like_upstream_controller ... ok
+test gameserver::tests::deletion_helpers_match_allocated_reserved_behavior ... ok
+test gameserver::tests::development_gameserver_allocated_is_noop ... ok
+test gameserver::tests::development_gameserver_creating_matches_controller_transition ... ok
+test gameserver::tests::development_gameserver_request_ready_only_advances_state ... ok
+test gameserver::tests::gameserver_status_network_fields_default_without_affecting_existing_status_logic ... ok
+test gameserver::tests::disabled_health_is_not_populated ... ok
+test gameserver::tests::existing_values_and_unknown_state_are_preserved ... ok
+test gameserver::tests::gameserver_status_network_fields_match_original_json_shape ... ok
+test gameserver::tests::lifecycle_helpers_match_go_state_tables ... ok
+test gameserver::tests::list_updates_match_go_order_deduplication_and_capacity_behavior ... ok
+test gameserver::tests::merge_remove_duplicates_matches_original_ordering ... ok
+test gameserver::tests::non_development_gameserver_is_noop ... ok
+test gameserver::tests::passthrough_policy_starts_in_port_allocation ... ok
+test gameserver::tests::patch_escapes_json_pointer_segments_and_handles_add_remove ... ok
+test gameserver::tests::player_tracking_feature_initializes_status_capacity ... ok
+test gameserver::tests::port_status_matches_go_none_policy_behavior ... ok
+test gameserver::tests::priority_presence_beats_missing_priority_in_both_orders ... ok
+test gameserver::tests::priority_ties_fall_through_to_next_priority ... ok
+test gameserver::tests::pod_template_preserves_unmodeled_fields ... ok
+test gameserver::tests::production_validation_retains_all_source_error_fields ... ok
+test gameserver::tests::safe_add_saturates_positive_overflow ... ok
+test gameserver::tests::safe_to_evict_true_only_overrides_status ... ok
+test gameserver::tests::patch_matches_original_resource_version_and_replace_invariants ... ok
+test gameserver::tests::static_policy_starts_in_creating ... ok
+test gameserver::tests::string_types_round_trip_unknown_values_without_loss ... ok
+test gameserver::tests::validation_enforces_passthrough_dynamic_and_dev_policy_rules ... ok
+test gameserver::tests::validation_checks_name_metadata_and_sidecar_container_semantics ... ok
+test gameserver::tests::validation_error_constructor_payload_and_metadata_match_source ... ok
+test gameserver::tests::validation_ports_containers_and_dev_address_match_go_cases ... ok
+test gameserverset::tests::allocation_overflow_apply_merges_and_overwrites_metadata ... ok
+test gameserverset::tests::allocation_overflow_counts_only_allocated_matches ... ok
+test gameserverset::tests::allocation_overflow_validation_matches_label_annotation_rules ... ok
+test gameserverset::tests::configured_counters_and_lists_are_zero_initialized_without_servers ... ok
+test gameserverset::tests::computes_gameserverset_replica_status_like_upstream ... ok
+test gameserverset::tests::deleting_and_shutdown_servers_count_only_as_shutdown_replicas ... ok
+test gameserverset::tests::derives_gameserver_from_template_like_go ... ok
+test gameserverset::tests::distributed_scale_down_uses_oldest_creation_timestamp_first ... ok
+test gameserverset::tests::errored_gameserver_deletion_delay_matches_upstream ... ok
+test gameserverset::tests::gameserverset_status_aggregates_counters_with_safe_add ... ok
+test gameserverset::tests::gameserverset_status_aggregates_lists_and_counts_duplicates ... ok
+test gameserverset::tests::packed_scale_down_empties_least_full_nodes_first ... ok
+test gameserverset::tests::distributed_sort_applies_counter_priority_before_timestamp ... ok
+test gameserverset::tests::player_tracking_aggregates_only_ready_reserved_and_allocated_servers ... ok
+test gameserverset::tests::reconciliation_action_caps_deletion_batches ... ok
+test gameserverset::tests::reconciliation_action_matches_upstream_batch_and_state_rules ... ok
+test gameserverset::tests::reconciliation_action_ignores_already_deleting_servers_when_replacing ... ok
+test gameserverset::tests::update_allows_replica_change_but_rejects_template_change ... ok
+test gameserverset::tests::validates_names_and_rebases_nested_gameserver_errors ... ok
+test gameserverset::tests::validates_template_metadata_and_nested_pod_template_metadata ... ok
+test multicluster::tests::average_weight_wraps_sum_like_go_int64 ... ok
+test gameserver::tests::indexed_validation_fields_preserve_decimal_paths ... ok
+test multicluster::tests::empty_policy_list_is_empty ... ok
+test multicluster::tests::duplicate_cluster_same_priority_uses_average_weight_and_returns_once ... ok
+test multicluster::tests::priority_order_and_global_cluster_blacklist_match_go_iterator ... ok
+test multicluster::tests::multiple_allocation_endpoints_are_preserved ... ok
+test multicluster::tests::same_priority_clusters_are_each_returned_once ... ok
+test multicluster::tests::server_ca_uses_go_compatible_base64_json_wire_format ... ok
+test multicluster::tests::simple_iterator_preserves_connection_information ... ok
+test multicluster::tests::weighted_selection_rejects_nonpositive_total_weight ... ok
+test multicluster::tests::zero_weight_cluster_is_never_chosen_when_positive_weight_exists ... ok
+test multicluster::tests::weighted_selection_wraps_total_and_prefix_sums_like_go_int64 ... ok
+test features::go_quote::tests::utf8_decoder_preserves_every_scalar_and_rejects_invalid_two_byte_inputs ... ok
+test features::go_quote::tests::printable_table_matches_the_independent_category_bitmap_for_every_codepoint ... ok
+test autoscaling::buffer_policy_integer_decision_stays_bounded_bolero ... ok
+test autoscaling::buffer_integer_valid_region_is_accepted_bolero ... ok
+test autoscaling::capacity_integer_valid_region_is_accepted_bolero ... ok
+test autoscaling::capacity_scale_up_never_decreases_replicas_bolero ... ok
+test autoscaling::fixed_interval_positive_seconds_are_accepted_bolero ... ok
+test fleet::fleet_replica_bounds_are_bounded_bolero ... ok
+test gameserver::counter_updates_preserve_bounds_bolero ... ok
+test gameserver::health_defaulting_makes_enabled_thresholds_positive_bolero ... ok
+test gameserver::safe_add_nonnegative_inputs_are_saturating_bolero ... ok
+test gameserverset::gameserverset_creation_batch_respects_caps_bolero ... ok
+test multicluster::average_of_nonnegative_byte_weights_stays_within_input_range_bolero ... ok
+
+test result: ok. 182 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.01s
+
+     Running tests/build_version.rs (target/debug/deps/build_version-11c23d3ce448295d)
+
+running 2 tests
+test default_entry_points_use_the_compiled_source_identity ... ok
+test the_same_provider_stamps_source_values_in_a_minimal_context ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/feature_bool_domain.rs (target/debug/deps/feature_bool_domain-9d67b2b5125d85dd)
+
+running 2 tests
+test every_accepted_source_spelling_is_a_mandatory_witness ... ok
+test feature_bool_common_domain ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/feature_error_ascii_domain.rs (target/debug/deps/feature_error_ascii_domain-655bc5e5d05e6963)
+
+running 3 tests
+test independent_relation_rejects_wrong_escape_and_missing_output_mutations ... ok
+test every_go_ascii_reference_observation_is_a_mandatory_witness ... ok
+test feature_error_ascii_common_domain ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/feature_error_rendering.rs (target/debug/deps/feature_error_rendering-5db4823d615b75a7)
+
+running 1 test
+test all_error_witnesses_reach_the_public_cgp_parser_and_renderer ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/feature_input_domain.rs (target/debug/deps/feature_input_domain-91d959a60e8fc27a)
+
+running 1 test
+test feature_input_common_domain ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/feature_inputs.rs (target/debug/deps/feature_inputs-dd2de7042374a6a3)
+
+running 4 tests
+test process_environment_child ... ignored, runs only as the isolated process-effect child
+test invalid_selected_input_rejects_instead_of_falling_through_to_environment ... ok
+test source_input_precedence_and_empty_values_reach_the_same_production_provider ... ok
+test process_environment_effect_preserves_missing_empty_and_raw_os_values ... ok
+
+test result: ok. 3 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/feature_source_query_domain.rs (target/debug/deps/feature_source_query_domain-cb2042dbd1034c11)
+
+running 7 tests
+test all_source_query_cases_are_mandatory_witnesses ... ok
+test source_query_case_000 ... ok
+test source_query_case_004 ... ok
+test source_query_case_002 ... ok
+test source_query_case_001 ... ok
+test source_query_case_003 ... ok
+test source_query_case_selector_sampling ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/gameserver_defaulting.rs (target/debug/deps/gameserver_defaulting-fd68826375ec592e)
+
+running 3 tests
+test the_same_defaulting_provider_runs_in_a_minimal_composed_context ... ok
+test ordinary_source_defaulting_contract_and_wire_witnesses ... ok
+test every_exact_source_defaulting_occurrence_replays_through_cgp ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/gameserver_feature_validation.rs (target/debug/deps/gameserver_feature_validation-6c647fc6bd0b73d5)
+
+running 4 tests
+test direct_resource_consumers_use_shared_policy_and_nested_paths ... ok
+test feature_policy_preserves_presence_flag_and_exact_error_contract ... ok
+test same_provider_accepts_a_context_with_only_its_feature_dependency ... ok
+test feature_policy_runs_before_both_development_server_paths ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/gameserver_feature_validation_domain.rs (target/debug/deps/gameserver_feature_validation_domain-161ec18916ed6eb1)
+
+running 2 tests
+test source_relation_rejects_flag_presence_and_error_field_faults ... ok
+test gameserver_feature_validation_common_domain ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/gameserver_type_meta.rs (target/debug/deps/gameserver_type_meta-21d4e70f69d32b0e)
+
+running 2 tests
+test source_type_meta_accepts_missing_and_null_strings_and_rejects_wrong_types ... ok
+test source_type_meta_survives_game_server_wire_roundtrip_and_actions ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/go_status_slices.rs (target/debug/deps/go_status_slices-94407ba346806c00)
+
+running 4 tests
+test source_required_pod_containers_keep_nil_allocated_and_populated_wire_values ... ok
+test required_status_keys_and_nullable_player_list_values_follow_source_json ... ok
+test nil_and_allocated_slices_keep_distinct_value_and_append_semantics ... ok
+test source_status_slice_wire_shapes_round_trip_without_normalizing_null ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/health_defaulting_domain.rs (target/debug/deps/health_defaulting_domain-f549cefb5fd4cd67)
+
+running 2 tests
+test health_relation_rejects_overwriting_positive_or_disabled_values_and_wrong_defaults ... ok
+test health_defaulting_common_domain ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/resource_derive_paths.rs (target/debug/deps/resource_derive_paths-a87399644a1f482f)
+
+running 1 test
+test resource_derive_ignores_root_shadow_and_preserves_generic_parameters ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/resource_quantity.rs (target/debug/deps/resource_quantity-d2bc7cb74d497974)
+
+running 9 tests
+test cgp_resource_policy_preserves_phases_paths_and_all_error_values ... ok
+test quantities_keep_exact_units_rounding_caps_and_source_spelling ... ok
+test direct_spec_and_all_resource_validators_share_the_core_quantity_policy ... ok
+test decoded_resource_policy_retains_numeric_value_when_source_string_is_lossy ... ok
+test comparison_preserves_the_confirmed_source_scale_overflow_exception ... ok
+test resource_walker_preserves_every_context_call_and_exact_indexed_path ... ok
+test resource_wire_decode_is_exact_before_validation_including_null_and_escapes ... ok
+test quantity_comparison_preserves_independent_integer_and_unit_relations ... ok
+test template_equality_uses_typed_numeric_values_and_shared_quantity_rounding ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/sdk_version_domain.rs (target/debug/deps/sdk_version_domain-9216060df1c2e408)
+
+running 2 tests
+test sdk_relation_rejects_lossy_grouping_and_changed_valid_bytes ... ok
+test sdk_version_common_domain ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/source_gameserver_defaulting.rs (target/debug/deps/source_gameserver_defaulting-0223140fd334c5b2)
+
+running 18 tests
+test generated::source_gs_case_004 ... ok
+test generated::source_gs_case_000 ... ok
+test generated::source_gs_case_003 ... ok
+test generated::source_gs_case_002 ... ok
+test generated::source_gs_case_001 ... ok
+test generated::source_gs_case_008 ... ok
+test generated::source_gs_case_012 ... ok
+test generated::source_gs_case_006 ... ok
+test generated::source_gs_case_013 ... ok
+test generated::source_gs_case_009 ... ok
+test generated::source_gs_case_007 ... ok
+test generated::source_gs_case_005 ... ok
+test generated::source_gs_case_011 ... ok
+test generated::source_gs_case_016 ... ok
+test generated::source_gs_case_010 ... ok
+test generated::source_gs_case_015 ... ok
+test generated::source_gs_case_014 ... ok
+test generated::source_gs_typed_fixtures_and_complete_outputs_match_capture ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/source_gameserver_feature_validation.rs (target/debug/deps/source_gameserver_feature_validation-5f5d91d3da60af3d)
+
+running 11 tests
+test generated::source_gsv_case_000 ... ok
+test generated::source_gsv_case_002 ... ok
+test generated::source_gsv_case_001 ... ok
+test generated::source_gsv_case_004 ... ok
+test generated::source_gsv_whole_fixture_000 ... ok
+test generated::source_gsv_whole_fixture_002 ... ok
+test generated::source_gsv_whole_fixture_003 ... ok
+test generated::source_gsv_case_003 ... ok
+test generated::source_gsv_whole_fixture_001 ... ok
+test generated::source_gsv_whole_fixture_004 ... ok
+test generated::source_gsv_multiset_relation_preserves_elements_and_multiplicity ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/source_gameserver_validation.rs (target/debug/deps/source_gameserver_validation-45393e9c8f13df0e)
+
+running 51 tests
+test source_gs_validate_case_001 ... ok
+test source_gs_validate_case_000 ... ok
+test source_gs_validate_case_003 ... ok
+test source_gs_validate_case_004 ... ok
+test source_gs_validate_case_002 ... ok
+test source_gs_validate_case_007 ... ok
+test source_gs_validate_case_005 ... ok
+test source_gs_validate_case_006 ... ok
+test source_gs_validate_case_009 ... ok
+test source_gs_validate_case_011 ... ok
+test source_gs_validate_case_012 ... ok
+test source_gs_validate_case_008 ... ok
+test source_gs_validate_case_010 ... ok
+test source_gs_validate_case_013 ... ok
+test source_gs_validate_case_014 ... ok
+test source_gs_validate_case_015 ... ok
+test source_gs_validate_case_016 ... ok
+test source_gs_validate_case_019 ... ok
+test source_gs_validate_case_018 ... ok
+test source_gs_validate_case_017 ... ok
+test source_gs_validate_case_020 ... ok
+test source_gs_validate_case_021 ... ok
+test source_gs_validate_relation_rejects_mutated_error_elements_and_multiplicity ... ok
+test source_gs_validate_case_023 ... ok
+test source_gs_validate_case_024 ... ok
+test source_gs_validate_case_022 ... ok
+test source_gs_validate_whole_fixture_003 ... ok
+test source_gs_validate_whole_fixture_002 ... ok
+test source_gs_validate_whole_fixture_000 ... ok
+test source_gs_validate_whole_fixture_004 ... ok
+test source_gs_validate_whole_fixture_001 ... ok
+test source_gs_validate_whole_fixture_005 ... ok
+test source_gs_validate_whole_fixture_006 ... ok
+test source_gs_validate_whole_fixture_007 ... ok
+test source_gs_validate_whole_fixture_008 ... ok
+test source_gs_validate_whole_fixture_009 ... ok
+test source_gs_validate_whole_fixture_012 ... ok
+test source_gs_validate_whole_fixture_011 ... ok
+test source_gs_validate_whole_fixture_015 ... ok
+test source_gs_validate_whole_fixture_013 ... ok
+test source_gs_validate_whole_fixture_010 ... ok
+test source_gs_validate_whole_fixture_014 ... ok
+test source_gs_validate_whole_fixture_016 ... ok
+test source_gs_validate_whole_fixture_017 ... ok
+test source_gs_validate_whole_fixture_018 ... ok
+test source_gs_validate_whole_fixture_021 ... ok
+test source_gs_validate_whole_fixture_019 ... ok
+test source_gs_validate_whole_fixture_020 ... ok
+test source_gs_validate_whole_fixture_023 ... ok
+test source_gs_validate_whole_fixture_022 ... ok
+test source_gs_validate_whole_fixture_024 ... ok
+
+test result: ok. 51 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/source_sdk_version.rs (target/debug/deps/source_sdk_version-bdbd16f6f7be4890)
+
+running 3 tests
+test generated::source_sdk_typed_fleet_fixture_matches_exact_capture ... ok
+test generated::source_sdk_fleet_case ... ok
+test all_source_version_assertions_replay_from_exact_source_fixtures ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests examples/build_version_snapshot.rs (target/debug/examples/build_version_snapshot-4b59867923f2309c)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests examples/feature_error_replay.rs (target/debug/examples/feature_error_replay-71bda15f1908f7c0)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests examples/feature_query_replay.rs (target/debug/examples/feature_query_replay-4821d261c585e3f5)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests examples/gameserver_defaults_replay.rs (target/debug/examples/gameserver_defaults_replay-383acc23513a0e2b)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests examples/gameserver_source_defaulting_replay.rs (target/debug/examples/gameserver_source_defaulting_replay-b730abec0838048c)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests examples/resource_quantity_replay.rs (target/debug/examples/resource_quantity_replay-738a5f891ae71d82)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests examples/sdk_version_source_replay.rs (target/debug/examples/sdk_version_source_replay-6f873e2213ec4d93)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/agones_macros-912b95b4e64df56e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/agones_rusternetes-6705e072c5f12836)
+
+running 334 tests
+test controller_work_queue::tests::default_exponential_retry_schedule_matches_client_go_thresholds ... ok
+test allocation_overflow_controller::tests::watch_predicate_matches_upstream_update_guards ... ok
+test allocation_overflow_controller::tests::only_modified_events_can_enqueue_overflow_work ... ok
+test allocation_overflow_controller::tests::missing_gameserverset_is_successful_noop ... ok
+test creating_gameserver_controller::tests::deleted_development_and_noncreating_gameservers_are_noops ... ok
+test agones_resource_deletion::tests::no_finalizers_delete_resource_immediately ... ok
+test agones_resource_deletion::tests::already_deleting_resource_waits_while_finalizers_remain ... ok
+test agones_resource_deletion::tests::already_deleting_resource_without_finalizers_is_removed ... ok
+test agones_resource_deletion::tests::live_storage_finalizers_override_a_stale_controller_snapshot ... ok
+test agones_resource_deletion::tests::finalizers_mark_resource_for_deletion_without_removing_it ... ok
+test deleting_gameserver_controller::tests::no_deletion_timestamp_is_noop ... ok
+test deleting_gameserver_controller::tests::development_gameserver_releases_finalizer_without_pod ... ok
+test creating_gameserver_controller::tests::foreign_same_name_pod_does_not_advance_creating_state ... ok
+test creating_gameserver_controller::tests::existing_pod_is_not_recreated_or_renormalized ... ok
+test fleet_admission::tests::creation_mutation_falls_through_on_malformed_object ... ok
+test fleet_admission::tests::malformed_validation_object_is_denied_after_schema_boundary ... ok
+test deleting_gameserver_controller::tests::pod_delete_failure_keeps_gameserver_finalizer ... ok
+test fleet_admission::tests::creation_mutation_applies_upstream_fleet_defaults ... ok
+test fleet_admission::tests::same_validation_adapter_handles_create_and_update ... ok
+test deleting_gameserver_controller::tests::unrelated_finalizer_is_preserved_and_blocks_final_deletion ... ok
+test deleting_gameserver_controller::tests::already_deleting_owned_pod_only_waits ... ok
+test fleet_admission::tests::update_is_full_validation_not_gameserverset_style_immutability ... ok
+test fleet_admission::tests::validation_invokes_both_upstream_api_hook_boundaries ... ok
+test deleting_gameserver_controller::tests::owned_pod_is_marked_for_deletion_before_finalizer_release ... ok
+test fleet_admission::tests::validation_accepts_defaulted_valid_fleet ... ok
+test fleet_allocation_tracker::tests::increment_decrement_remove_match_upstream_tracker ... ok
+test fleet_admission::tests::validation_preserves_rolling_update_constraints ... ok
+test fleet_allocation_tracker::tests::missing_fleet_reads_zero_and_decrement_does_not_create ... ok
+test fleet_allocation_tracker::tests::snapshot_skips_zero_and_is_namespace_scoped ... ok
+test deleting_gameserver_controller::tests::foreign_same_name_pod_is_not_deleted_or_blocking ... ok
+test fleet_admission::tests::validation_rebases_nested_gameserver_and_resource_errors ... ok
+test deleting_gameserver_controller::tests::finalizer_is_released_only_after_owned_pod_is_gone ... ok
+test fleet_controller::tests::cgp_planner_uses_agones_core_policy ... ok
+test fleet_controller::tests::cgp_executor_recreate_scales_every_inactive_set_to_zero ... ok
+test development_gameserver_controller::tests::typed_watch_event_reconciles_and_persists_development_gameserver ... ok
+test fleet_controller::tests::deleting_and_missing_fleets_are_successful_noops ... ok
+test fleet_controller::tests::cgp_executor_persists_inactive_scale_plan ... ok
+test fleet_controller::tests::delete_empty_inactive_set_removes_drained_resource ... ok
+test fleet_controller_runtime::tests::allocation_counter_tracks_only_observed_transition_into_allocated ... ok
+test fleet_controller_runtime::tests::fleet_events_enqueue_updates_and_delete_tracker_state ... ok
+test fleet_allocation_tracker::tests::concurrent_increment_uses_atomic_entry_updates ... ok
+test fleet_controller_runtime::tests::retry_schedule_matches_upstream_fast_rate_limiter ... ok
+test fleet_controller_runtime::tests::gameserverset_add_enqueues_live_owner_but_deleting_update_is_ignored ... ok
+test fleet_controller::tests::owned_listing_requires_fleet_label_and_controller_uid ... ok
+test fleetautoscaler_admission::tests::admission_adapters_cover_create_and_update_only ... ok
+test fleetautoscaler_admission::tests::cgp_context_wiring_exposes_default_and_validation_capabilities ... ok
+test fleet_controller_runtime::tests::zero_workers_is_rejected ... ok
+test fleetautoscaler_admission::tests::malformed_mutation_falls_through_but_validation_errors ... ok
+test fleet_controller_runtime::tests::rebuild_baseline_does_not_count_existing_allocated_servers ... ok
+test fleetautoscaler_admission::tests::mutation_applies_fixed_interval_defaults_on_create_and_update ... ok
+test fleet_controller::tests::status_update_consumes_allocation_delta_exactly_once ... ok
+test fleetautoscaler_admission::tests::mutation_is_idempotent_after_defaults_exist ... ok
+test fleet_controller_runtime::tests::shutdown_flush_persists_pending_allocations ... ok
+test fleet_controller::tests::reconcile_creates_active_set_and_updates_status ... ok
+test fleetautoscaler_admission::tests::validation_applies_defaults_before_fixed_interval_check ... ok
+test fleetautoscaler_admission::tests::schedule_policy_uses_context_feature_gate ... ok
+test fleetautoscaler_admission::tests::validation_preserves_buffer_policy_errors ... ok
+test fleetautoscaler_controller::reconciliation_tests::missing_autoscaler_is_a_successful_noop ... ok
+test allocation_overflow_controller::tests::sync_applies_labels_to_exact_overflow_count ... ok
+test allocation_overflow_controller::tests::existing_matches_reduce_or_eliminate_updates ... ok
+test fleet_controller::tests::reconcile_updates_active_mutable_fields ... ok
+test fleetautoscaler_controller::reconciliation_tests::deleting_fleet_is_a_noop ... ok
+test fleetautoscaler_controller::reconciliation_tests::missing_fleet_marks_autoscaler_unable_to_scale ... ok
+test fleetautoscaler_controller::reconciliation_tests::no_spec_scale_preserves_last_scale_time ... ok
+test fleetautoscaler_controller::tests::cgp_buffer_provider_matches_upstream_integer_policy ... ok
+test fleetautoscaler_controller::reconciliation_tests::inactive_schedule_does_not_mark_autoscaler_unable ... ok
+test fleetautoscaler_controller::tests::cgp_chain_all_inactive_schedules_fall_off_with_inactive_error ... ok
+test fleetautoscaler_controller::tests::cgp_chain_applies_first_success_and_records_entry_identity ... ok
+test fleetautoscaler_controller::tests::cgp_chain_enforces_scheduled_autoscaler_feature_gate ... ok
+test fleetautoscaler_controller::reconciliation_tests::reconcile_scales_down_with_buffer_policy ... ok
+test fleetautoscaler_controller::tests::cgp_dispatch_uses_buffer_provider_and_preserves_policy_tag ... ok
+test fleetautoscaler_controller::tests::cgp_chain_uses_first_overlapping_active_schedule ... ok
+test fleetautoscaler_controller::tests::cgp_dispatch_uses_counter_and_list_providers ... ok
+test fleetautoscaler_controller::reconciliation_tests::reconcile_chain_persists_selected_policy_identity ... ok
+test fleetautoscaler_controller::reconciliation_tests::reconcile_active_schedule_delegates_to_nested_buffer ... ok
+test fleetautoscaler_controller::tests::cgp_schedule_dispatch_uses_explicit_clock_and_nested_provider ... ok
+test fleetautoscaler_controller::reconciliation_tests::wrong_policy_marks_unable_and_returns_calculation_error ... ok
+test fleetautoscaler_controller::tests::cgp_schedule_dispatch_enforces_feature_gate_and_inactive_error ... ok
+test fleetautoscaler_controller::tests::webhook_url_matches_upstream_url_and_service_resolution ... ok
+test development_gameserver_controller::tests::deleted_watch_event_never_recreates_development_gameserver ... ok
+test fleetautoscaler_controller::tests::missing_buffer_configuration_is_reported_without_panic ... ok
+test fleetautoscaler_controller::tests::unsupported_policy_preserves_upstream_dispatch_error ... ok
+test fleetautoscaler_controller::reconciliation_tests::reconcile_scales_up_and_persists_status ... ok
+test fleetautoscaler_controller_runtime::tests::generation_and_interval_are_read_from_resource_state ... ok
+test fleetautoscaler_controller_runtime::tests::retry_schedule_matches_upstream_fast_rate_limiter ... ok
+test fleetautoscaler_controller::reconciliation_tests::reconcile_scales_up_with_counter_policy ... ok
+test fleetautoscaler_controller_runtime::tests::event_router_adds_updates_and_deletes_uid_schedule ... ok
+test fleetautoscaler_controller::tests::inventory_loader_filters_fleet_and_rebuilds_node_counts ... ok
+test fleetautoscaler_controller_runtime::tests::rebuild_schedules_existing_autoscalers ... ok
+test fleetautoscaler_controller::tests::cgp_webhook_dispatch_honors_scale_false ... ok
+test fleetautoscaler_controller::tests::webhook_missing_response_is_rejected ... ok
+test fleetautoscaler_controller::tests::cgp_webhook_provider_posts_review_metadata_and_scales ... ok
+test fleetautoscaler_wasm::tests::cache_generation_cleanup_and_owner_eviction_are_idempotent ... ok
+test fleetautoscaler_controller_runtime::tests::zero_workers_is_rejected ... ok
+test fleetautoscaler_wasm::tests::wasm_policy_enforces_feature_gate ... ok
+test controller_work_queue::tests::generic_queue_deduplicates_and_requeues_dirty_work_once ... ok
+test creating_gameserver_controller::tests::missing_pod_is_created_then_gameserver_advances_to_starting ... ok
+test game_server_pod::tests::development_gameserver_returns_empty_pod_without_storage_lookup ... ok
+test gameserver_admission::tests::creation_mutation_falls_through_on_wrong_object_shape ... ok
+test fleetautoscaler_wasm::tests::state_key_tracks_uid_and_generation ... ok
+test game_server_pod::tests::first_controller_reference_matches_kubernetes_is_controlled_by_semantics ... ok
+test gameserver_admission::tests::creation_mutation_matches_upstream_default_patch_behavior ... ok
+test game_server_pod::tests::missing_and_foreign_pods_are_not_found ... ok
+test game_server_pod::tests::returns_owned_pod ... ok
+test gameserver_admission::tests::creation_validation_accepts_valid_and_denies_invalid_game_server ... ok
+test gameserver_admission::tests::creation_validation_reports_wrong_object_shape_as_error ... ok
+test gameserver_controller_pipeline::tests::missing_gameserver_is_successful_not_found_noop ... ok
+test gameserver_admission::tests::pod_mutation_ignores_pods_without_passthrough_annotation ... ok
+test gameserver_admission::tests::pod_mutation_replaces_passthrough_container_ports_at_leaf_paths ... ok
+test gameserver_controller_pipeline::tests::ready_without_late_pod_ip_changes_is_unchanged ... ok
+test gameserver_controller_runtime::tests::retry_counter_uses_fast_then_slow_policy_and_resets_on_success ... ok
+test gameserver_controller_pipeline::tests::development_creating_path_skips_pod_states_and_becomes_ready ... ok
+test gameserver_controller_runtime::tests::zero_workers_is_rejected ... ok
+test gameserver_controller_pipeline::tests::shutdown_pipeline_requests_background_deletion ... ok
+test gameserver_controller_stack_runtime::tests::stack_zero_workers_is_rejected_before_startup ... ok
+test gameserver_controller_pipeline::tests::creating_pipeline_can_advance_through_starting_to_scheduled ... ok
+test gameserver_controller_watch::tests::pod_ip_changes_enqueue_and_identical_updates_do_not ... ok
+test gameserver_controller_watch::tests::queue_lanes_match_upstream_state_routing ... ok
+test gameserver_controller_runtime::tests::runtime_processes_initial_informer_work_through_sync_pipeline ... ok
+test gameserver_controller_watch::tests::live_watch_stream_decodes_gameserver_and_pod_events ... ok
+test gameserver_controller_watch::tests::routing_matches_upstream_gameserver_watch_behavior ... ok
+test gameserver_pod_augmentation::tests::disabled_health_check_is_noop ... ok
+test gameserver_pod_augmentation::tests::health_check_matches_upstream_probe_fields ... ok
+test gameserver_pod_augmentation::tests::health_check_preserves_existing_user_probe ... ok
+test gameserver_controller_watch::tests::rebuild_matches_informer_initial_add_semantics ... ok
+test gameserver_pod_augmentation::tests::sdk_env_applies_to_regular_and_init_containers_but_not_sdk_sidecar ... ok
+test gameserver_pod_augmentation::tests::legacy_gameserver_without_sdk_ports_is_unchanged ... ok
+test gameserver_pod_augmentation::tests::sdk_env_replaces_conflicts_and_preserves_unreserved_env ... ok
+test gameserverset_admission::tests::creation_and_update_adapters_are_operation_specific ... ok
+test gameserverset_admission::tests::creation_validation_invokes_scheduling_hook_with_nested_path ... ok
+test gameserverset_admission::tests::creation_validation_accepts_valid_gameserverset ... ok
+test gameserverset_admission::tests::creation_validation_rebases_nested_gameserver_errors ... ok
+test gameserverset_admission::tests::hook_can_return_multiple_errors_without_losing_order ... ok
+test gameserverset_admission::tests::malformed_creation_object_is_denied_after_schema_validation_boundary ... ok
+test gameserverset_admission::tests::creation_validation_reports_nested_resource_paths ... ok
+test gameserverset_admission::tests::template_metadata_validation_remains_core_owned ... ok
+test gameserverset_admission::tests::update_validation_does_not_revalidate_mutable_scheduling ... ok
+test gameserver_controller_stack_runtime::tests::stack_starts_port_allocator_before_initial_gameserver_work ... ok
+test gameserverset_admission::tests::update_allows_replica_change_but_rejects_template_change ... ok
+test gameserverset_controller::tests::missing_gameserverset_is_successful_noop ... ok
+test gameserverset_controller::tests::deleting_gameserverset_never_scales_up ... ok
+test gameserverset_controller::tests::batch_limit_reports_partial_work_for_runtime_requeue ... ok
+test gameserverset_controller::tests::owned_listing_requires_label_and_controller_uid ... ok
+test fleetautoscaler_controller_runtime::tests::scheduler_enqueues_immediately_and_restarts_on_generation ... ok
+test fleetautoscaler_controller_runtime::tests::runtime_reconciles_initial_snapshot_immediately ... ok
+test gameserverset_controller_runtime::tests::gameserverset_delete_clears_state_cache_without_enqueue ... ok
+test gameserverset_controller_runtime::tests::gameserverset_routing_enqueues_add_and_replica_change_only ... ok
+test gameserverset_controller_runtime::tests::retry_schedule_matches_upstream_fast_rate_limiter ... ok
+test gameserverset_controller_runtime::tests::child_events_enqueue_live_owner_but_deleting_update_is_ignored ... ok
+test gameserver_controller_runtime::tests::queue_deduplicates_waiting_work_and_requeues_dirty_processing_once ... ok
+test gameserverset_controller_runtime::tests::zero_workers_is_rejected ... ok
+test gameserverset_controller_stack_runtime::tests::stack_rejects_zero_workers_before_starting_detached_runtime ... ok
+test allocation_overflow_controller::tests::runtime_does_not_replay_existing_overflow_before_an_update ... ok
+test gameserverset_controller_stack_runtime::tests::stack_runs_main_gameserverset_controller ... ok
+test gameserverset_controller::tests::scale_up_uses_generate_name_applies_defaults_and_updates_status_next_pass ... ok
+test gameserverset_state_cache::tests::locally_deleted_server_is_retired_when_absent_from_store ... ok
+test gameserverset_state_cache::tests::locally_deleted_server_stays_deleted_until_store_catches_up ... ok
+test gameserverset_state_cache::tests::state_cache_keys_entries_by_namespace_and_name ... ok
+test gameserverset_state_cache::tests::create_then_delete_cancels_pending_creation ... ok
+test gameserverset_state_cache::tests::locally_created_server_remains_visible_until_observed ... ok
+test gameserverset_state_cache::tests::status_is_preserved_through_local_overlay ... ok
+test health_controller_runtime::tests::routing_preserves_health_informer_update_delete_semantics ... ok
+test health_controller_runtime::tests::zero_workers_is_rejected ... ok
+test health_gameserver_controller::tests::failed_container_matches_legacy_and_sidecar_semantics ... ok
+test health_gameserver_controller::tests::health_write_waits_on_dedicated_limiter_after_noop_guards ... ok
+test gameserverset_controller::tests::scale_down_transitions_children_to_shutdown_without_deleting_them ... ok
+test allocation_overflow_controller::tests::live_gameserverset_update_drives_overflow_runtime ... ok
+test health_gameserver_controller::tests::informer_predicate_excludes_terminating_and_non_gameserver_pods ... ok
+test health_gameserver_controller::tests::missing_pod_moves_gameserver_to_unhealthy_and_records_event ... ok
+test health_gameserver_controller::tests::skip_unhealthy_container_preserves_ready_container_race_rules ... ok
+test health_gameserver_controller::tests::unhealthy_predicates_match_upstream_modes ... ok
+test health_gameserver_controller::tests::healthy_pod_and_restartable_preready_crash_are_noops ... ok
+test health_controller_runtime::tests::live_runtime_moves_updated_unhealthy_pod_to_unhealthy ... ok
+test health_controller_runtime::tests::live_runtime_marks_gameserver_unhealthy_after_pod_delete ... ok
+test health_gameserver_controller::tests::sidecar_failed_container_marks_unhealthy ... ok
+test migration_controller_runtime::tests::zero_workers_is_rejected ... ok
+test migration_gameserver_controller::tests::address_match_checks_all_node_addresses ... ok
+test migration_controller_runtime::tests::routing_matches_upstream_add_and_update_predicate ... ok
+test migration_controller_runtime::tests::runtime_replays_initial_migrated_pod_and_marks_allocated_unhealthy ... ok
+test migration_gameserver_controller::tests::address_change_before_ready_reapplies_address_and_ports ... ok
+test migration_gameserver_controller::tests::migration_after_ready_marks_gameserver_unhealthy ... ok
+test migration_gameserver_controller::tests::missing_gameserver_or_node_is_an_expected_noop ... ok
+test migration_gameserver_controller::tests::gameserver_without_recorded_node_is_a_noop ... ok
+test migration_gameserver_controller::tests::terminating_pod_or_node_is_not_migrated ... ok
+test migration_gameserver_controller::tests::unchanged_node_and_address_are_a_noop ... ok
+test migration_gameserver_controller::tests::non_gameserver_pod_is_not_considered_for_migration ... ok
+test missing_pod_controller_runtime::tests::healthy_pod_suppresses_enqueue_and_failed_pod_enqueues ... ok
+test missing_pod_controller_runtime::tests::routing_matches_upstream_gameserver_update_predicate ... ok
+test missing_pod_controller_runtime::tests::zero_workers_is_rejected ... ok
+test migration_gameserver_controller::tests::node_change_before_ready_reapplies_node_identity ... ok
+test missing_pod_gameserver_controller::tests::enqueue_filter_matches_upstream_preconditions ... ok
+test gameserverset_controller_runtime::tests::runtime_requeues_partial_batches_until_target_converges ... ok
+test missing_pod_gameserver_controller::tests::failed_pod_event_uses_failed_message ... ok
+test missing_pod_gameserver_controller::tests::failed_pod_moves_gameserver_to_unhealthy ... ok
+test missing_pod_gameserver_controller::tests::gameserver_pod_detection_uses_role_and_first_controller_kind ... ok
+test missing_pod_gameserver_controller::tests::missing_gameserver_after_pod_check_is_noop ... ok
+test migration_controller_runtime::tests::live_pod_node_change_marks_allocated_gameserver_unhealthy ... ok
+test gameserverset_controller_stack_runtime::tests::stack_runs_allocation_overflow_alongside_main_controller ... ok
+test missing_pod_gameserver_controller::tests::healthy_gameserver_pod_is_noop ... ok
+test missing_pod_gameserver_controller::tests::current_deleting_or_unhealthy_state_is_noop ... ok
+test missing_pod_gameserver_controller::tests::unhealthy_transition_records_warning_event ... ok
+test missing_pod_gameserver_controller::tests::missing_pod_moves_gameserver_to_unhealthy ... ok
+test missing_pod_gameserver_controller::tests::unhealthy_write_waits_on_limiter_but_noop_does_not ... ok
+test per_node_counter::tests::add_events_track_state_and_deduplicate_exact_versions ... ok
+test per_node_counter::tests::defensive_decrement_never_produces_negative_counts ... ok
+test per_node_counter::tests::delete_uses_tracked_state_and_removes_processed_entry ... ok
+test per_node_counter::tests::deleting_node_removes_only_its_counter_record ... ok
+test missing_pod_gameserver_controller::tests::non_gameserver_pod_is_treated_as_missing ... ok
+test per_node_counter::tests::state_transition_matches_upstream_ready_and_allocated_deltas ... ok
+test per_node_counter::tests::cgp_event_capability_preserves_duplicate_event_behavior ... ok
+test per_node_counter::tests::cgp_runner_rebuilds_then_tracks_live_rusternetes_events ... ok
+test per_node_counter::tests::update_events_use_tracked_previous_state_and_ignore_duplicates ... ok
+test per_node_counter::tests::rebuild_matches_upstream_initial_snapshot_semantics ... ok
+test per_node_counter::tests::watch_stream_translates_gameserver_and_node_events ... ok
+test pod_deletion::tests::configured_grace_period_is_preserved ... ok
+test pod_deletion::tests::default_delete_marks_pod_with_thirty_second_grace_period ... ok
+test pod_deletion::tests::one_update_conflict_is_retried ... ok
+test port_allocation_gameserver_controller::tests::non_port_allocation_and_deleting_gameservers_are_noops ... ok
+test pod_deletion::tests::second_update_conflict_is_propagated ... ok
+test pod_deletion::tests::zero_grace_period_force_deletes_pod ... ok
+test port_allocator::tests::allocates_dynamic_and_passthrough_tcpudp_ports ... ok
+test port_allocation_gameserver_controller::tests::port_allocation_assigns_port_and_advances_to_creating ... ok
+test port_allocator::tests::deallocation_reuses_a_port_only_for_registered_gameservers ... ok
+test port_allocator::tests::startup_sync_respects_existing_ports_and_unschedulable_nodes ... ok
+test port_allocator::tests::synthetic_node_capacity_is_added_when_real_nodes_are_exhausted ... ok
+test port_allocator::tests::unmatched_named_range_is_left_untouched ... ok
+test port_allocation_gameserver_controller::tests::update_failure_deallocates_port_for_retry ... ok
+test port_allocation_gameserver_controller::tests::startup_sync_avoids_ports_used_by_existing_gameservers ... ok
+test request_ready_gameserver_controller::tests::deleted_development_and_non_request_ready_are_noops ... ok
+test request_ready_gameserver_controller::tests::existing_pod_annotation_avoids_rewrite ... ok
+test request_ready_gameserver_controller::tests::existing_gameserver_annotation_is_preserved_and_copied_to_pod ... ok
+test request_ready_gameserver_controller::tests::foreign_same_name_pod_does_not_advance_request_ready ... ok
+test request_ready_gameserver_controller::tests::missing_address_is_populated_before_ready ... ok
+test request_ready_gameserver_controller::tests::ready_request_folds_pod_ips_into_same_state_update ... ok
+test request_ready_gameserver_controller::tests::nonrunning_or_missing_container_status_does_not_advance ... ok
+test missing_pod_controller_runtime::tests::live_missing_pod_update_moves_gameserver_to_unhealthy ... ok
+test sdk_sidecar::tests::custom_security_context_is_used_without_adding_defaults ... ok
+test sdk_sidecar::tests::default_security_context_matches_restricted_pod_security_standard ... ok
+test sdk_sidecar::tests::every_sidecar_receives_an_independent_security_context_clone ... ok
+test request_ready_gameserver_controller::tests::ready_request_pins_container_id_to_gameserver_and_pod ... ok
+test sdk_sidecar::tests::sidecar_resource_and_pull_configuration_matches_upstream_options ... ok
+test request_ready_gameserver_controller::tests::sidecar_containers_mode_skips_ready_container_annotation ... ok
+test sdk_sidecar::tests::sidecar_matches_upstream_identity_env_args_and_health_probe ... ok
+test shutdown_gameserver_controller::tests::non_shutdown_and_already_deleting_gameservers_are_noops ... ok
+test shutdown_gameserver_controller::tests::development_shutdown_still_requests_deletion ... ok
+test shutdown_gameserver_controller::tests::shutdown_without_finalizers_is_deleted_immediately ... ok
+test shutdown_gameserver_controller::tests::persistence_failure_does_not_report_deletion_started ... ok
+test shutdown_gameserver_controller::tests::shutdown_with_agones_finalizer_starts_deletion ... ok
+test stable_gameserver_pod_ip_controller::tests::deleted_development_and_nonstable_states_are_noops ... ok
+test stable_gameserver_pod_ip_controller::tests::missing_pod_is_expected_noop_for_stable_state ... ok
+test stable_gameserver_pod_ip_controller::tests::same_name_pod_controlled_by_another_owner_is_treated_as_missing ... ok
+test starting_gameserver_controller::tests::address_rejects_node_without_usable_address ... ok
+test starting_gameserver_controller::tests::address_uses_upstream_precedence_and_preserves_all_addresses ... ok
+test stable_gameserver_pod_ip_controller::tests::already_present_pod_ip_is_a_write_free_noop ... ok
+test starting_gameserver_controller::tests::deleted_development_and_nonstarting_gameservers_are_noops ... ok
+test starting_gameserver_controller::tests::missing_or_unscheduled_pod_does_not_advance_state ... ok
+test starting_gameserver_controller::tests::pod_ips_add_only_addresses_missing_from_existing_pod_ip_status ... ok
+test starting_gameserver_controller::tests::pod_ips_are_noop_when_absent_or_already_present ... ok
+test state_update_limiter::tests::zero_capacity_limiter_fails_immediately ... ok
+test stable_gameserver_pod_ip_controller::tests::every_stable_state_folds_late_pod_ip_and_persists_once ... ok
+test state_update_limiter::tests::default_limits_match_upstream_agones ... ok
+test succeeded_controller_runtime::tests::routing_matches_pod_handlers_and_gameserver_recovery_path ... ok
+test succeeded_controller_runtime::tests::zero_workers_is_rejected ... ok
+test starting_gameserver_controller::tests::scheduled_pod_populates_status_and_advances_to_scheduled ... ok
+test succeeded_gameserver_controller::tests::current_terminal_or_deleting_gameserver_is_noop ... ok
+test succeeded_controller_runtime::tests::runtime_replays_initial_completed_pod_and_moves_to_shutdown ... ok
+test succeeded_gameserver_controller::tests::clean_game_container_exit_moves_gameserver_to_shutdown ... ok
+test succeeded_gameserver_controller::tests::pod_completion_matches_upstream_rules ... ok
+test succeeded_gameserver_controller::tests::missing_running_foreign_and_terminating_pods_are_noops ... ok
+test succeeded_gameserver_controller::tests::resync_enqueue_filter_matches_upstream_preconditions ... ok
+test succeeded_gameserver_controller::tests::succeeded_pod_moves_gameserver_to_shutdown_and_records_event ... ok
+test succeeded_gameserver_controller::tests::shutdown_write_waits_on_limiter_but_terminal_noop_does_not ... ok
+test tests::agones_repository_crud_and_list_are_backend_generic ... ok
+test tests::agones_repository_requires_namespaced_named_resources ... ok
+test tests::controller_reference_matches_kubernetes_new_controller_ref ... ok
+test tests::builds_native_rusternetes_pod_with_agones_metadata_and_port ... ok
+test tests::custom_resource_adapter_fails_closed_on_metadata_loss ... ok
+test tests::custom_resource_adapter_rejects_unrepresentable_top_level_extensions ... ok
+test tests::custom_resource_adapter_preserves_supported_extended_metadata ... ok
+test tests::custom_resource_adapter_rejects_wrong_api_identity ... ok
+test tests::distributed_scheduling_does_not_add_packed_affinity ... ok
+test tests::agones_repository_watch_decodes_added_modified_and_deleted_resources ... ok
+test tests::fleet_autoscaler_crd_envelope_matches_agones_helm_static_fields ... ok
+test tests::fleet_autoscaler_crd_serializes_status_subresource_exactly ... ok
+test tests::fleet_autoscaler_schema_is_generated_from_helm_machine_sources ... ok
+test succeeded_controller_runtime::tests::live_completed_pod_update_moves_to_shutdown ... ok
+test tests::fleet_autoscaler_schema_preserves_recursive_feature_gated_policy_contexts ... ok
+test tests::fleet_autoscaler_schema_preserves_webhook_and_wasm_url_configuration ... ok
+test missing_pod_controller_runtime::tests::initial_gameserver_add_does_not_run_update_only_controller ... ok
+test tests::fleet_schema_reuses_metadata_enabled_game_server_template ... ok
+test tests::game_server_allocation_policy_crd_envelope_matches_agones_helm_static_fields ... ok
+test tests::fleet_crd_envelope_matches_agones_helm_static_fields ... ok
+test tests::game_server_allocation_policy_crd_serialization_has_no_unmodeled_subresources ... ok
+test tests::game_server_allocation_policy_schema_is_generated_from_helm_machine_source ... ok
+test tests::game_server_allocation_policy_schema_preserves_numeric_and_connection_constraints ... ok
+test tests::fleet_crd_printer_columns_match_agones_helm_order_and_types ... ok
+test tests::fleet_crd_serializes_status_and_scale_subresources ... ok
+test tests::game_server_crd_printer_columns_match_agones_helm_order_and_types ... ok
+test tests::game_server_crd_envelope_matches_agones_helm_static_fields ... ok
+test tests::game_server_crd_schema_uses_default_list_limits_and_kubernetes_list_semantics ... ok
+test tests::fleet_crd_schema_is_generated_from_helm_machine_sources ... ok
+test fleet_controller_runtime::tests::runtime_reconciles_initial_fleet_snapshot ... ok
+test tests::game_server_crd_records_unrepresentable_rusternetes_selectable_fields ... ok
+test tests::game_server_set_crd_envelope_matches_agones_helm_static_fields ... ok
+test tests::hostname_rewrites_dots_but_preserves_explicit_template_hostname ... ok
+test tests::init_sidecars_prepend_existing_init_containers_and_force_always ... ok
+test tests::missing_port_container_returns_original_error_shape ... ok
+test tests::multiple_port_allocations_target_the_declared_containers ... ok
+test tests::passthrough_annotation_is_deterministic_for_multiple_containers ... ok
+test tests::passthrough_ports_record_native_container_port_indices ... ok
+test tests::regular_sidecars_are_prepended_and_template_service_account_is_preserved ... ok
+test tests::resource_validation_covers_restartable_and_regular_init_containers ... ok
+test tests::resource_validation_matches_cpu_request_limit_invariants ... ok
+test tests::resource_validation_matches_memory_invariants ... ok
+test tests::resource_validation_reports_negative_limit_before_request_comparison ... ok
+test tests::rusternetes_registry_keys_follow_custom_resource_handler_convention ... ok
+test tests::service_account_suppression_targets_game_container ... ok
+test tests::sidecar_feature_uses_restartable_init_containers ... ok
+test tests::stored_agones_resources_share_one_generic_rusternetes_custom_resource_adapter ... ok
+test tests::game_server_set_schema_reuses_game_server_defaults_and_metadata_schema ... ok
+test tests::game_server_set_crd_printer_columns_match_agones_helm_order_and_types ... ok
+test tests::game_server_crd_schema_is_generated_from_helm_machine_sources ... ok
+test tests::game_server_set_crd_serializes_status_and_scale_subresources ... ok
+test tests::game_server_set_crd_schema_is_generated_from_helm_machine_sources ... ok
+test fleet_controller_runtime::fleet_retry_policy_matches_upstream_bolero ... ok
+test fleetautoscaler_controller_runtime::fleet_autoscaler_retry_policy_matches_upstream_bolero ... ok
+test gameserver_controller_runtime::game_server_retry_policy_matches_upstream_bolero ... ok
+test gameserver_pod_augmentation::sdk_environment_variable_shape_matches_ports_bolero ... ok
+test gameserverset_controller_runtime::game_server_set_retry_policy_matches_upstream_bolero ... ok
+test per_node_counter::state_transition_deltas_match_membership_bolero ... ok
+test sdk_sidecar::default_sidecar_security_context_is_restricted_bolero ... ok
+test fleetautoscaler_wasm::tests::wasm_policy_verifies_sha256_hash_like_upstream ... ok
+test fleetautoscaler_wasm::tests::wasm_policy_scale_none_and_empty_response_match_upstream ... ok
+test fleetautoscaler_wasm::tests::wasm_policy_executes_upstream_example_and_caches_plugin ... ok
+
+test result: ok. 334 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.32s
+
+     Running tests/feature_configuration.rs (target/debug/deps/feature_configuration-1b0da0ab57441f44)
+
+running 6 tests
+test the_same_portable_provider_runs_in_a_minimal_downstream_context ... ok
+test parsed_feature_gate_controls_the_actual_cgp_policy_dispatch ... ok
+test default_production_constructors_use_the_cgp_source_defaults ... ok
+test configured_game_server_context_uses_source_sidecar_default_and_override ... ok
+test configured_gates_reach_sdk_environment_in_either_builder_order ... ok
+test configured_autoscaler_context_preserves_independent_gate_values ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/feature_input_consumers.rs (target/debug/deps/feature_input_consumers-17d0a74188b5e030)
+
+running 2 tests
+test production_input_child ... ignored, runs only as the isolated production-input child
+test real_process_inputs_reach_default_and_explicit_production_consumers ... ok
+
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/feature_source_obligations.rs (target/debug/deps/feature_source_obligations-116af3a2bd429891)
+
+running 1 test
+test exact_source_feature_gate_assertions ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/gameserver_defaulting.rs (target/debug/deps/gameserver_defaulting-78095a7d79335a76)
+
+running 1 test
+test actual_mutation_admission_consumes_composed_player_and_version_dependencies ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/gameserver_feature_validation.rs (target/debug/deps/gameserver_feature_validation-33276841371ac520)
+
+running 7 tests
+test validation_configuration_child ... ignored, runs in isolated production-configuration child
+test invalid_feature_configuration_is_returned_by_all_admission_factories ... ok
+test development_admission_keeps_the_feature_check_before_resource_and_container_skips ... ok
+test gameserverset_update_keeps_its_separate_immutable_template_policy ... ok
+test direct_adapter_validation_accepts_the_same_explicit_feature_context ... ok
+test explicit_feature_input_reaches_all_actual_validation_admissions ... ok
+test default_admission_constructors_capture_real_process_configuration ... ok
+
+test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/gameserver_type_meta.rs (target/debug/deps/gameserver_type_meta-837313376e5cd577)
+
+running 2 tests
+test actual_native_conversion_rejects_identity_conflicts_without_changing_the_source ... ok
+test actual_native_conversion_retains_explicit_identity_and_supplies_wire_identity ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/resource_quantity.rs (target/debug/deps/resource_quantity-38cbc4b2dcd11f1c)
+
+running 5 tests
+test native_resource_requirements_reject_unparseable_values ... ok
+test resource_quantities_report_the_source_string_value ... ok
+test resource_quantities_compare_integer_bits_above_f64_precision ... ok
+test direct_core_values_keep_null_quantity_as_zero_during_native_conversion ... ok
+test actual_admissions_validate_exact_quantities_in_all_container_paths ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/sdk_version_policy.rs (target/debug/deps/sdk_version_policy-4475a0386ed68031)
+
+running 2 tests
+test default_pod_and_admission_entry_points_use_the_compiled_identity ... ok
+test all_version_witnesses_reach_the_actual_rusternetes_paths ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/source_gameserver_feature_validation.rs (target/debug/deps/source_gameserver_feature_validation-0acdc58ca7877f33)
+
+running 1 test
+test every_original_validation_fixture_reaches_the_actual_adapter_with_exact_error_elements ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests examples/feature_case_codegen.rs (target/debug/examples/feature_case_codegen-a58fe41d9ed2cb52)
+
+running 4 tests
+test gameserver_codegen_controls::validation_error_mapping_preserves_complete_source_records_bidirectionally ... ok
+test gameserver_codegen_controls::validation_error_lowering_rejects_unrepresented_error_data ... ok
+test gameserver_codegen_controls::source_relations_and_conditional_context_fail_closed ... ok
+test gameserver_codegen_controls::whole_fixture_lowering_rejects_lost_wire_and_unmodeled_values ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests examples/sdk_version_replay.rs (target/debug/examples/sdk_version_replay-3d9f24600bd029d2)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+...........
+----------------------------------------------------------------------
+Ran 11 tests in 2.908s
+
+OK

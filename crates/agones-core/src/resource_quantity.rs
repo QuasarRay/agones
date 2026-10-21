@@ -518,11 +518,14 @@ impl crate::GameServerSpec {
             ),
             ("containers", self.template.spec.containers.as_slice()),
         ] {
+            let mut container_path = String::from(spec_path);
+            container_path.push_str(".template.spec.");
+            container_path.push_str(kind);
             for (index, container) in containers.iter().enumerate() {
                 errors.extend(context.validate_resource_quantities(
                     container.resources.limits.as_ref().unwrap_or(&empty),
                     container.resources.requests.as_ref().unwrap_or(&empty),
-                    &format!("{spec_path}.template.spec.{kind}[{index}].resources"),
+                    &crate::gameserver::indexed_validation_field(&container_path, index, "resources"),
                 ));
             }
         }

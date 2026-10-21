@@ -1,7 +1,8 @@
 {
   "artifact_bindings": {
     "verification/agones/canonical-adoption-prior-assurance.json": "da4f8482387fb0039e6016f4aa4fd3f9d0843670b9af71318aab51fdaf65e580",
-    "verification/agones/canonical-complete-validation-adoption-evidence.json": "05ec973dfd5dad351d2e0663978e90bdc0a0166261afc1e97e443710e21429a9",
+    "verification/agones/canonical-complete-validation-adoption-evidence.json": "529f71d8f18a0ceffaf5ca8b5a40fe460016ec8b6223eb76ce20962a24917d08",
+    "verification/agones/canonical-native676-prior-assurance.json": "d052da4325f30a7222b82c4129098498f9715751089542ce014e07fb9e95cd7f",
     "verification/agones/ci/39190924053-artifact-retention.json": "1787811c859b695066f2215e48f7a2a1931d32d1d8d4e8bdd7664bef3a59c401",
     "verification/agones/ci/39190924053-success.json": "199d9a95367536d5c62d3ca49a08c7de5398c5b2d0b30bfc387cc178c57a8d16",
     "verification/agones/ci/39199314045-success.json": "5c540a061150f57b8628a9a6518e6f96d0a8d851c125b87f8156d8c1da609e3d",
@@ -12,11 +13,12 @@
     "verification/agones/ci/39511896291-first-five-retained.json": "c61b2d440643d74eedebe3ea1f8ab24576b3451c6d6a29a8f0db2eeaa48a68f9",
     "verification/agones/ci/39511896291-terminal-retained.json": "b97d1ce65169bc780f144ede957f99492f70a1963b72e845c1a99051030db3ac",
     "verification/agones/ci/39519906026-terminal-retained.json": "74ba11a37da301f35a253c6606a4875b20498f6101eaf26d9e11e4a7263be049",
-    "verification/agones/ci/protected-model-execution-plan.json": "912d739ba643cd47bb461634a380d2b08b2721e65e974dc83975560948e338e8",
+    "verification/agones/ci/39528223788-terminal-retention-pending.json": "74a0d421415bb5bed71777b8814c86e9fe18bfe0d959bb73fc78590cbd2831b9",
+    "verification/agones/ci/protected-model-execution-plan.json": "735af80a2fb2e0bf2bbb94b87370927104f28219c1b73e8edc2759e033cf6924",
     "verification/agones/exact-lookup-singleton-prior-assurance.json": "9d0a359de671f192a6a7322a64f389076dd79a5700497934578bf04c7cc12671",
     "verification/agones/feature-helper-bindings.json": "e527fe83f28d521ac93eedc591b97060265bbee85034df53362463938c4b43ed",
     "verification/agones/feature-input-kani-properties.json": "15e9d07430a225483e8000dab883914cef1634fb1206d0875c5cf0c8bf1bff8f",
-    "verification/agones/feature-query-codegen.json": "d961ef8bfdf43c208e5c6d7439e8878d69f3f0283d1aed99d8e39423e9d9323d",
+    "verification/agones/feature-query-codegen.json": "be18133d9274c22a1de375e1affbe879b923e6777d3bfd2c13d43a3038f44f57",
     "verification/agones/gameserver-canonical-proof-reuse.json": "f0b50390d8f0e1d384a6ad5723444a8f0ed30d4ac50d0be8e0bbc48c2797f77a",
     "verification/agones/gameserver-codegen-source-reuse.json": "30f7a1792e41fb982c7f3022384e7d425a1269ce2ba11be779ee518fe42a7511",
     "verification/agones/gameserver-final-proof-reuse.json": "7a89cd1aa1f16679aa7db9e01ab349c76a462dcfb66ef16fc48c942551b1ad64",
@@ -30,7 +32,7 @@
     "verification/agones/gates/6933692d233041bdb12a0a44ad943ac9309a81519048d2fed4f4b19fba413ef5.json": "6933692d233041bdb12a0a44ad943ac9309a81519048d2fed4f4b19fba413ef5",
     "verification/agones/gates/c61a2a58a37678c5c5668d185d7adecd0dafd3009e1a598634042a7c259e3dea.json": "c61a2a58a37678c5c5668d185d7adecd0dafd3009e1a598634042a7c259e3dea",
     "verification/agones/gates/eea54f495941f20e41f1e6d4bd862727ddf2a0b74cb4ad51bafb4f13fb28e476.json": "eea54f495941f20e41f1e6d4bd862727ddf2a0b74cb4ad51bafb4f13fb28e476",
-    "verification/agones/go-print-codegen.json": "fd9a18fab8d442f4920980d395c9c48eeeb76a1b6dd183ac7f981344820859b5",
+    "verification/agones/go-print-codegen.json": "0aa1a209b076bb2b80105c8b260adf438c48a8c49e008ade435876ed6a0d8d36",
     "verification/agones/missing-container-concat-prior-assurance.json": "38629bbbceccdae888def6151e06a42b837d8246398fac05a9b1940e8bc87528",
     "verification/agones/proof-summaries/feature-bool-bolero-kani-ci-39489621706-1.json": "3a4f2c2871a3790c68e979551c736733b628febdc5cbc0732ddfa9ed8ac27be6",
     "verification/agones/proof-summaries/feature-bool-bolero-kani-ci-39498916435-1.json": "54ccc3bd712dd98eb5c21a40a565a3cb55c228737446a819f8a71735d6cab02f",
@@ -75,6 +77,8 @@
     "verification/agones/runs/all-feature-source-go-replay-1.json": "eee665fae92e8e89ed91558799b1d4aa523e498127039e8ff5a34dfcbe04c8a7",
     "verification/agones/runs/all-feature-source-go-replay-1.log": "0da56f1002bbe6e4c36b345901d468b04ff0b567a29701bd800daf8ad29f2dc9",
     "verification/agones/runs/canonical-complete-validation-current-native-1.json": "9603a8dc29c89953b8ebf60a57cceee391a738eb7d397deaaeb21cca280de4c3",
+    "verification/agones/runs/canonical-native676-adoption-native-1.json": "8a259d7a2999c8e1864307564ccf65e52bf738af4c38fd86deafb407dc7150c7",
+    "verification/agones/runs/canonical-native676-gated-generation-1.json": "5de199d509ea3e2a5f31bf66ef60f0fa1add6311728400ebe01503855d330a34",
     "verification/agones/runs/complete-validation-source-parser-final-1.json": "743842567cf64e5f792da35d50c8bd8a46bb8ad4689d59740b100862d2b094da",
     "verification/agones/runs/error-metric-query-generation-1.json": "d1f4b2126e533017d351faaa82b3cfc2bd7129c0135070c16e231462bbe72be0",
     "verification/agones/runs/error-metric-query-generation-1.log": "8ea70cc98136059bdb2fedbf2edccc9d66257c841eaad78a6f0cba03c462bc48",
@@ -406,7 +410,7 @@
     "verification/agones/runs/source-result-controls-final-1.json": "6fad3455ae18aca9e0b8cdb00557b03215ab82edf608de081b956b1c34bc16b6",
     "verification/agones/runs/source-result-controls-final-1.log": "fe008aab760eb03ccac7578e2b84665b1b50b0d7f855b17a0c7a8d039435b658",
     "verification/agones/sdk-shared-helper-proof-reuse.json": "75e3754a32e3c9eea99ad52674109cf7246cb840df244c63413ce2ed329c2425",
-    "verification/agones/sdk-version-codegen.json": "213e0d29c49152874e4483a34db0477dd3cef8296295c33d058ab6455fbcee39",
+    "verification/agones/sdk-version-codegen.json": "d15b97d433146b3a90ed0175ddcefd81e5a61c0f6f3b4c25bcc0a800b3e164e9",
     "verification/agones/streaming-query-direct-path-prior-assurance.json": "54536680c57d62111a13d152af5aded28fbc99a9170092c4a81320fa086f5704"
   },
   "assurance": {
@@ -418,8 +422,16 @@
       "required_general_covers": 50,
       "status": "CANONICAL_SOURCE_ADOPTED_NATIVE675_SIX_MODES_FORMAL_REQUIRED"
     },
+    "canonical_native676_repair": {
+      "current_formal_credit": 0,
+      "evidence": "verification/agones/canonical-complete-validation-adoption-evidence.json",
+      "generation_modes": 6,
+      "native_tests": 676,
+      "old_campaign": "verification/agones/ci/39528223788-terminal-all37-retained.json",
+      "parser_controls": 11
+    },
     "configured_mutation_consumer": "Actual GameServerCreationMutationAdmission now consumes configured PlayerTracking through the shared CGP defaulting provider; retained process scenarios include this fifth configured consumer.",
-    "current_gate_proof_status": "CANONICAL_SIX_FIELD_QUANTITY_TYPEMETA_SOURCE_CHANGED_REVERIFICATION_REQUIRED",
+    "current_gate_proof_status": "PATH_MAP_AND_MANIFEST_REPAIR_SOURCE_CHANGED_REVERIFICATION_REQUIRED",
     "current_retained_backend_receipt": null,
     "exact_lookup_singleton_revalidation": {
       "prior_assurance": "verification/agones/canonical-adoption-prior-assurance.json",
@@ -492,6 +504,13 @@
     "unreachable_internal_checks_not_credited": 23,
     "unwind": 8
   },
+  "current_campaign_accounting": {
+    "current_formal_credit": 0,
+    "receipt": "verification/agones/ci/39528223788-terminal-all37-retained.json",
+    "scope": "Old six strict summaries retain their original source; none is transferred across changed production/fixtures.",
+    "source_head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
+    "status": "HISTORICAL4D433_ONLY_NEW_REPAIRED_PROGRAM_REQUIRES_CURRENT_PROOF"
+  },
   "evidence_refresh": {
     "kind": "ADDITIVE_VALIDATION_CURRENT_ORDINARY_GATES_FORMAL_REPROOF_REQUIRED",
     "manifest": "verification/agones/validation-production-binding-refresh.json",
@@ -499,7 +518,7 @@
     "scope": "Production adds reachable CGP feature validation and configured admission consumers. Existing broad source-file bindings changed; retained earlier proof results are historical and are not automatically rebound as current proof. Re-execute required affected model/source proofs without shrinking fixtures/domains/assertions/covers/bounds."
   },
   "feature_id": "FG-INPUT-001",
-  "implementation_gate": "verification/agones/gates/c61a2a58a37678c5c5668d185d7adecd0dafd3009e1a598634042a7c259e3dea.json",
+  "implementation_gate": "verification/agones/gates/56c041eede444c1c7deb1bf2fc074a880f6f3b2b4ee2032385315cd7c569a5a9.json",
   "metadata_count_correction": "The initial gate/provenance count 1112064 overstated decoder calls by 128. Current superseding gates record 1111936 non-ASCII decoder cases and 128 separately checked ASCII single bytes. Production code is unchanged; all 22 source assertions/defaults/helper bindings and generated Rust were revalidated unchanged, with only gate references/metadata refreshed.",
   "next_feature": "Complete source-compatible GameServer defaulting and canonical API values through the existing CGP composition; required SDK/query/error proof debt stays open.",
   "required_next": "Account for all25general/50covers and every existing source/model selection through the current strict protected pipeline. Complete full source/error/metadata/lifecycle/Rusternetes/_2requirements; native675/six modes do not certify formal completion.",
@@ -552,7 +571,7 @@
     "crates/agones-macros/Cargo.toml": "9372efc5090b3c3c5d06b54c8e5f943025c2a73aeb54c630564ad4f1170c06a7",
     "crates/agones-macros/src/lib.rs": "60909ed25990ea455cb8ed753548aadc87fb866d1839f7e4a7d1c293dd15a39f",
     "crates/agones-rusternetes/Cargo.toml": "7e5c18a590b0d602c725abd853fd0ba7825e4028f8a46fc7fe404bb7b512db26",
-    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "34f962fb5c975fade612ca2a0fa44948925c34652599119a18d54a17a3836996",
+    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "48991d9e64b8ce0a93329a4d4d0f6ca72ca06e5989a3a60a2490d9278cd52179",
     "crates/agones-rusternetes/src/creating_gameserver_controller.rs": "76c0253879ba8a1cc86df63723452f37232bec1fc9343b1e56293389481c8ff3",
     "crates/agones-rusternetes/src/fleetautoscaler_admission.rs": "10bd2bfcfc8c1542cd5f02e504a55667fac25f277a96b0ac667edd28175ecfe6",
     "crates/agones-rusternetes/src/fleetautoscaler_controller.rs": "9878f9e36b0aeb9c4180e69070af9f57717a5cedfdfa16413fe1ab6086750547",
@@ -571,9 +590,9 @@
     "rust-toolchain.toml": "c910997cb152c6dc8ed13b1fdf9fa28a4ed30d6776123e27dd6170e5c66067a0",
     "vendor/github.com/spf13/pflag/flag.go": "5699e18dd47610cf862dca1bb046f5d00a652fd412d9ac2c1a0f79b9c691c8cb",
     "vendor/github.com/spf13/viper/viper.go": "bec63043cd77615b93ffce9994e157f81a90b7e1d8a9cf7df0a343b920fabb10",
-    "verification/agones/feature-gates.ir.json": "831fa4095b5efd79e12d80d2112c4f20d427d59af3ed17a2a5fbce3c907ce8ab",
+    "verification/agones/feature-gates.ir.json": "0c7d8460409fe5ae66ec8d8cae1e69ae8ee425fecd078d83bdea042989e7f62c",
     "verification/agones/feature-input-capability-v1.json": "a307b7d5f0ec550aac46080765989fb5fc67e254eab3ae51869da8a504671064",
-    "verification/agones/go-print-codegen.json": "fd9a18fab8d442f4920980d395c9c48eeeb76a1b6dd183ac7f981344820859b5",
+    "verification/agones/go-print-codegen.json": "0aa1a209b076bb2b80105c8b260adf438c48a8c49e008ade435876ed6a0d8d36",
     "verification/agones/go-print-expected.bin": "a30b1e23aa8a5d77ecaea1b9dd5c85e2d505cb2712b1906996c82089fa5117fc",
     "verification/agones/go-print-table.json": "710dcd074ff09faafc79c0b8e06a5c83eb8a37beb0e1ee45d42a9556c930ef9d",
     "verification/agones/go-quote-provenance.json": "c540fa9dad33844cd080f68cc2239812d1acbf6a87d9cfa3cd96c99408d12842",
@@ -594,5 +613,5 @@
       "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
     ]
   },
-  "status": "NATIVE_IMPLEMENTED_CURRENT_FORMAL_REVERIFICATION_REQUIRED"
+  "status": "CANONICAL_NATIVE676_REPAIR_IMPLEMENTED_CURRENT_FORMAL_REQUIRED"
 }

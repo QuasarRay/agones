@@ -1,0 +1,148 @@
+{
+  "acceptance_criteria": [
+    "Every source defaulting method in the selected GameServer/Spec/status family is implemented through the reachable shared policy, with explicit empty strings, source zero values, unknown values and numeric widths preserved.",
+    "Spec/state/player/counter/list/eviction defaults preserve source conditional effects, status data, nil/allocated distinctions and deep copy behavior.",
+    "Canonical fields needed by defaulting preserve required JSON keys, source zero resources, null fresh values and one zero-state representation.",
+    "Configured PlayerTracking reaches actual mutation admission; malformed shapes still fall through to schema validation.",
+    "Current ordinary workspace checks, actual consumers, independent literal witnesses and full Go/Rust objects pass before new source semantic extraction."
+  ],
+  "assurance": {
+    "canonical_native_checks": "PASSED676 plus11parsercontrols",
+    "formal": "All affected required source and common obligations require current protected results. Old4d433proofs retain their original source only.",
+    "generation": "Six deterministic write/check modes are the next post-gate step.",
+    "new_formal_credit": 0
+  },
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "combined_missing_container_concat": {
+    "canonical_adoption": "PENDING",
+    "formal_credit": 0,
+    "prior_isolated_commit": "85d64a1de1bd8bc6afcdb996de07384c077a5aaf",
+    "source_repair": "Same native605canonical missing-container direct concatenation and empty/Unicode/newline/NUL detail assertions. Quantity/TypeMeta/six-field representation and every captured source case remain unchanged."
+  },
+  "combined_source_reuse": {
+    "canonical_adoption": "PENDING",
+    "formal_credit": 0,
+    "prior_isolated_commit": "500326772a0ad9c1300f0f8bb8acff67e27079a4",
+    "scope": "Copied byte-identical CGP streaming parser after validating the prior file againstdd4; applied only the same indexed validation path patch. Existing quantity/TypeMeta/six-field owner and all source case payloads remain unchanged.",
+    "source_commit": "31cc72d92bbb9611e228ec5936d2421a5ca35f84"
+  },
+  "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
+  "environment_bindings": {
+    "AGONES_BUILD_VERSION": {
+      "present": false,
+      "sha256": null
+    }
+  },
+  "feature_id": "GS-DEFAULTS-001",
+  "historical_ordinary_result_counts_before_combined_refresh": {
+    "existing_codegen_example_controls_passed": 3,
+    "ignored_doctests": 1,
+    "source_test_removal_or_bound_change": false,
+    "workspace_all_targets_check": "PASSED",
+    "workspace_ignored_process_children": 3,
+    "workspace_tests_failed": 0,
+    "workspace_tests_passed": 600
+  },
+  "id": "GS-DEFAULTS-001-validation-addition-current-ordinary",
+  "isolated_predecessor_gate": "verification/agones/gates/22e27624f49590ccd06181dd01cc4eb999a8efc377b0e946ae0962c0d92a0283.json",
+  "ordinary_checks": [
+    "verification/agones/runs/canonical-native676-adoption-native-1.json"
+  ],
+  "ordinary_evidence_reuse": {
+    "current_compile_runtime": "verification/agones/runs/gs-validation-final-workspace-1.json",
+    "formal_status": "Historical proofs retained; changed broad source bindings require fresh affected backend results before current formal credit."
+  },
+  "ordinary_result_counts": {
+    "byte_identical_source_harness_bodies": 47,
+    "new_formal_credit": 0,
+    "parser_controls_passed": 11,
+    "workspace_all_targets_check": "PASSED",
+    "workspace_ignored_process_children": 3,
+    "workspace_tests_failed": 0,
+    "workspace_tests_passed": 676
+  },
+  "post_gate_refactor": {
+    "formal_credit": 0,
+    "new_formal_credit": 0,
+    "production": "Reuse the existing decimal-index field builder for resource paths while invoking each original CGP provider; insert every extracted metadata map entry into existing empty fixture maps.",
+    "review": "verification/agones/refactoring/validation-path-fixture-construction-review.json"
+  },
+  "predecessor_ledger_revision": 305,
+  "prior_ordinary_result_counts": {
+    "gameserver_source_assertion_occurrences_generated": 304,
+    "gameserver_source_harnesses_generated": 17,
+    "independent_literal_observations_per_witness": 16,
+    "isolated_process_cases": 11,
+    "manual_source_witnesses": 14,
+    "resource_derive_compile_fail_cases": 3,
+    "resource_derive_positive_cargo_cases": 2,
+    "runner_entries_ignored": 2,
+    "whole_go_rust_objects_equal": 14,
+    "workspace_tests_failed": 0,
+    "workspace_tests_passed": 578
+  },
+  "production_files": {
+    ".cargo/config.toml": "d787ef1ca58591bcf5036c8a2386a4d31ecc54febdd5f6630fd8497a4a0d3fb2",
+    "Cargo.lock": "457e9915c442fc92a563532c2adeb010f5f2035fd0ae4b3c9c9ac3396d950d93",
+    "Cargo.toml": "3a3f19b913b7d4fc8966288d621de4134b7b87439231dc64014ea23f7511b6f7",
+    "crates/agones-core/Cargo.toml": "6bd2fb70b00b1ff6d34e4562ff78ab6ea86ca352a5043c87a57b8e65eb1e6a51",
+    "crates/agones-core/build.rs": "1deebfccd6024e6567573612d320770591de232f04f7b98291b0b5fa0fc78882",
+    "crates/agones-core/src/build_version.rs": "e6560758de4332abe27a97a3f3b5794068f20e0b4092380658b1cfdc4ce7e1f7",
+    "crates/agones-core/src/feature_inputs.rs": "9cfaf42de485874339a58895991ad15adff787f363d9821a3ab7f0f4c36222d4",
+    "crates/agones-core/src/features.rs": "72c9a28ba3697ac99d733a7bea5b1933ce0d3c055e813a361290bb6135b4bc98",
+    "crates/agones-core/src/gameserver.rs": "dc6903306ef77cfb772696e3635c398944d295f59eb89c57c0c8f3d43f8db864",
+    "crates/agones-core/src/gameserver_defaulting.rs": "620966c16ea912516f508b302d179098047f4ba5039fb837c2b5b3dec90ff457",
+    "crates/agones-core/src/go_slice.rs": "1524bae25a2bf0c382c88c9afb870d43fef02b06f3edb6fdb0a846701444ada3",
+    "crates/agones-core/src/go_utf8.rs": "1178cb0dcc44e1369fa7576701d39e2b7a339343262197d2f6d891bc984158ba",
+    "crates/agones-core/src/go_value.rs": "ea849e221b593654e7049594fdcaebb4a61042e068381af5e96dd5fd017f0e25",
+    "crates/agones-core/src/lib.rs": "d1e87d9e45c1f107c6ddd13399476d3c3e4794a44772fdcf7eca11a8a3f5384b",
+    "crates/agones-core/src/version_annotation.rs": "9c7d5b402f759b0731d4957fe9732135f589054ed3b38a16839224b0c4b45493",
+    "crates/agones-macros/Cargo.toml": "9372efc5090b3c3c5d06b54c8e5f943025c2a73aeb54c630564ad4f1170c06a7",
+    "crates/agones-macros/src/lib.rs": "60909ed25990ea455cb8ed753548aadc87fb866d1839f7e4a7d1c293dd15a39f",
+    "crates/agones-rusternetes/Cargo.toml": "7e5c18a590b0d602c725abd853fd0ba7825e4028f8a46fc7fe404bb7b512db26",
+    "crates/agones-rusternetes/src/gameserver_admission.rs": "03710845e6c333a488068567b9e0a5b44669e43650c2f5297b57320732476c36",
+    "crates/agones-rusternetes/src/lib.rs": "820298219835f53b2563a3a0d66deb21050a5930998750ffb5fad26b6f07031b",
+    "go.mod": "01df333891a331341e77aab737c24dc722fab26abc8439b9c2036c71a477215a",
+    "go.sum": "d890978bc12d9c9958b2a87f99a87d8478b007208e44c5d859e973ba89adcbf7",
+    "pkg/apis/agones/v1/apihooks.go": "3ddd2e6c35fc62c6c54ded97a97f7edc68218ed91fbfc1fd4341fc424c6a278b",
+    "pkg/apis/agones/v1/gameserver.go": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
+    "pkg/util/runtime/features.go": "05736b26646cf219419626dfca37c4f533302b178ca3bb542330cf7884ddc679",
+    "pkg/version.go": "18a321dd868bdf897742490dde06040a35be996dbef93f4aae7ebd855c85842d",
+    "rust-toolchain.toml": "c910997cb152c6dc8ed13b1fdf9fa28a4ed30d6776123e27dd6170e5c66067a0",
+    "verification/agones/gameserver-defaulting-capability-v1.json": "a393e331e8fd1360c1fad5b11385864beb2336edd2ab1095074af7cceb600198",
+    "verification/agones/gameserver-defaulting-provenance.json": "9afa10e1dbadcab0c2cb26fd7dba9f552ba1fc74b70437e21d03ace9a70f8e1b",
+    "verification/agones/gameserver-defaulting-witnesses.json": "3d104433f28c6d85ac9b05afcd5e4169e0e9645969485e4c2d1f2383995a8aa8"
+  },
+  "production_symbols": [
+    "GameServer::apply_defaults",
+    "GameServer::apply_defaults_with_context",
+    "GameServerSpec::apply_defaults",
+    "ApplyAgonesGameServerDefaults::apply_game_server_defaults",
+    "GameServerDefaultingContext",
+    "GameServerCreationMutationAdmission::from_feature_inputs",
+    "GameServerCreationMutationAdmission::admit",
+    "mutate_game_server_creation_with_context"
+  ],
+  "reachable_call_paths": [
+    "GameServer::apply_defaults -> default composed CGP context -> selected defaulter -> shared spec/status algorithm.",
+    "Actual configured Rusternetes AdmissionController -> captured CGP defaulter and feature/version dependencies -> shared production defaults -> serialization/diff.",
+    "Minimal captured context -> same production provider and domain algorithm; no alternative orchestrator or test algorithm."
+  ],
+  "reopened_reason": "Production adds reachable CGP feature validation and configured admission consumers. Existing broad source-file bindings changed; retained earlier proof results are historical and are not automatically rebound as current proof. Re-execute required affected model/source proofs without shrinking fixtures/domains/assertions/covers/bounds.",
+  "residual_work": [
+    "Extract every original defaulting assertion and helper/table semantics after this gate; unresolved dynamic totals remain unresolved.",
+    "Complete non-vacuous model/source/production proofs through Bolero/Kani and required Rusternetes conformance.",
+    "Full Kubernetes/schema/quantity/raw JSON decoding, remaining validation/lifecycle/source scope, all eight _2 cells and final delivery remain required."
+  ],
+  "schema_version": 1,
+  "status": "IMPLEMENTED",
+  "supersedes": "verification/agones/gates/25e9cf3229a7801c872ff6e57fceb23112fb9edbfff0294e265f322786f6be04.json",
+  "supersedes_gate": "verification/agones/gates/6d74605ee7e8503fc86bb01ce7c4379f05d1571babd555cd0e7ad166a693d7df.json",
+  "workspace_snapshot": {
+    "branch": "agones-rs-dev",
+    "head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
+    "isolated_source": "ea44a0ee0ea3bc4d27bebaa74493b738c4caf231",
+    "note": "Canonical ordinary676and11parsercontrols pass before renewing these gates and rebinding unchanged source obligations. Original4d433CI is pinned separately for full raw artifact recovery.",
+    "production_closure_sha256": "badf1eb1de062fc9dc5a0461127cbe0b79b86574567ca59f6c0f98c1d32b0928"
+  }
+}

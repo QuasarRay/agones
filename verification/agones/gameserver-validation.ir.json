@@ -3413,8 +3413,8 @@
     "GOVERSION": "go1.27.1-X:nodwarf5"
   },
   "feature_id": "RESOURCE-QUANTITY-001",
-  "implementation_gate": "verification/agones/gates/d02fc52133e046b4405b028f93094123b27e215ce2ed9cbc1f57a663d5d5b5fb.json",
-  "implementation_gate_sha256": "d02fc52133e046b4405b028f93094123b27e215ce2ed9cbc1f57a663d5d5b5fb",
+  "implementation_gate": "verification/agones/gates/3d9b83c2771f038ecfaa7c92a4f060cc8b692e670f0318672edef5ddea483516.json",
+  "implementation_gate_sha256": "3d9b83c2771f038ecfaa7c92a4f060cc8b692e670f0318672edef5ddea483516",
   "loader_source_files": {
     "build/scripts/agones-rs/extract/gameserver_defaulting.go": "3530dbf1e91a96f2264c5e8eb21c4f69c16b50818feee975af4d5fd46d907664",
     "build/scripts/agones-rs/extract/gameserver_defaulting_test.go": "03af33d9d79bf73ad701528c07f5cdfa75758b5040465fbb52f7b95474eeb2bd",
@@ -3472,12 +3472,12 @@
   },
   "supporting_implementation_gates": {
     "GS-TYPEMETA-001": {
-      "path": "verification/agones/gates/1f3bb5f54866727ee6b443c8469eb9d0dbe2c7133c543c62154e3702413b5bc2.json",
-      "sha256": "1f3bb5f54866727ee6b443c8469eb9d0dbe2c7133c543c62154e3702413b5bc2"
+      "path": "verification/agones/gates/d6ff1597de0be25a6cfebf8dbbfc11e155ab20494d78dcccac731f66852c7116.json",
+      "sha256": "d6ff1597de0be25a6cfebf8dbbfc11e155ab20494d78dcccac731f66852c7116"
     },
     "GS-VALIDATION-ERROR-DATA-001": {
-      "path": "verification/agones/gates/b27ab9d7d52fea6cff48ce63877509d53a3830e2a112b5d004214326e9a13a33.json",
-      "sha256": "b27ab9d7d52fea6cff48ce63877509d53a3830e2a112b5d004214326e9a13a33"
+      "path": "verification/agones/gates/9bba6d1b4366a99bd6865906d6f76e3901e05945d6d0f107c8da4b7aaaab7ecc.json",
+      "sha256": "9bba6d1b4366a99bd6865906d6f76e3901e05945d6d0f107c8da4b7aaaab7ecc"
     }
   }
 }

@@ -100,7 +100,7 @@ Next review: {state['refactoring_reviews'][-1]['next_review_trigger']}.
 No new macros or general frameworks are prerequisites for the next ordinary feature.
 
 Delivery: `{state['delivery']['remote_result']}` to `agones-rs-dev`; never modify main.
-Connected GitHub app has write access; local gh CLI is logged out.
+Inspect currently exposed GitHub tools and local Git credentials before publication.
 Recover live jobs from the ledger and `verification/agones/runs/*.json` by comparing
 the stored process identity with /proc before waiting, attaching or stopping anything.
 Initial Cargo network failures are recorded; resolution subsequently succeeded.

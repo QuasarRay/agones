@@ -695,7 +695,7 @@ pub(crate) fn validate_object_meta(meta: &ObjectMeta, path: &str) -> Vec<Validat
 
 // Build the source field.Path index directly. Successful port validation needs
 // no path allocation; errors preserve the same decimal index and field text.
-fn indexed_validation_field(path: &str, index: usize, field: &str) -> String {
+pub(crate) fn indexed_validation_field(path: &str, index: usize, field: &str) -> String {
     let mut result = String::from(path);
     result.push('[');
     let mut digits = [0u8; usize::BITS as usize];

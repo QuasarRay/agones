@@ -1,5 +1,6 @@
 use agones_core::{
     CanValidateResourceQuantities, Container, GameServerDefaultingContext, ResourceQuantity,
+    ResourceQuantityValidator, ResourceQuantityValidatorComponent,
 };
 use cgp::prelude::*;
 use serde_json::json;
@@ -10,6 +11,47 @@ delegate_and_check_components! {
         agones_core::ResourceQuantityValidatorComponent: agones_core::ValidateAgonesResourceQuantities,
     }
 }
+
+struct ResourcePathContext(std::cell::RefCell<Vec<String>>);
+
+#[cgp_new_provider]
+impl ResourceQuantityValidator<ResourcePathContext> for ObserveResourcePaths {
+    fn validate_resource_quantities(
+        context: &ResourcePathContext,
+        limits: &std::collections::BTreeMap<String, ResourceQuantity>,
+        requests: &std::collections::BTreeMap<String, ResourceQuantity>,
+        path: &str,
+    ) -> Vec<agones_core::ValidationError> {
+        assert!(limits.is_empty() && requests.is_empty());
+        context.0.borrow_mut().push(path.to_owned());
+        Vec::new()
+    }
+}
+
+delegate_and_check_components! {
+    ResourcePathContext {
+        agones_core::ResourceQuantityValidatorComponent: ObserveResourcePaths,
+    }
+}
+
+#[test]
+fn resource_walker_preserves_every_context_call_and_exact_indexed_path() {
+    let mut spec = agones_core::GameServerSpec::default();
+    spec.template.spec.init_containers = vec![Container::default(); 2];
+    spec.template.spec.containers = vec![Container::default(); 12].into();
+    for prefix in ["spec", "", "前缀\0.with.dots"] {
+        let context = ResourcePathContext(Default::default());
+        assert!(spec.validate_resource_quantities_with_context(&context, prefix).is_empty());
+        let expected = [("initContainers", 2), ("containers", 12)]
+            .into_iter()
+            .flat_map(|(kind, count)| (0..count).map(move |index| {
+                format!("{prefix}.template.spec.{kind}[{index}].resources")
+            }))
+            .collect::<Vec<_>>();
+        assert_eq!(*context.0.borrow(), expected);
+    }
+}
+
 use std::{cmp::Ordering, collections::BTreeMap};
 
 fn quantity(text: &str) -> ResourceQuantity {

@@ -1,0 +1,62 @@
+{
+  "artifact_bindings": {
+    "verification/agones/refactoring/validation-path-fixture-construction-review.json": "cc202f4b7ceb25c6bcd5c200a461d0287c475e675c54e228f9caeec47784383a",
+    "verification/agones/runs/validation-path-context-control-2.json": "da58a6bec5ebd7b6b9afca6c8179c38fd8f168ba744c1fdc72d5bf98632a3a88",
+    "verification/agones/runs/validation-path-fixture-generation-3.json": "fd296f6a31a34dc15d338cadf91b03aed18ad9458d6c4131eb9698aca6febb8d",
+    "verification/agones/runs/validation-path-fixture-post-generation-native-3.json": "a3c57b64d49a2d8f06dcb8f077d4bc0b983b86f4e2465d34b4f5aa0000ef0899",
+    "verification/agones/runs/validation-path-fixture-refactor-native-1.json": "91e278a5435bfdb9f056f4e9230f57a8c5bff0c13d17e21e06b1b64dffeb9916",
+    "verification/agones/validation-path-fixture-gates.json": "fb9ee00780bd8d4ed9ab347c48c0072d111531a5b0f7f1b5fa7ac3dc79147ae7"
+  },
+  "base_head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
+  "byte_identical_harness_bodies": {
+    "defaulting": 17,
+    "feature_validation": 5,
+    "general_validation": 25,
+    "total": 47
+  },
+  "canonical_status": "Published4d433 remains unchanged. Current campaign artifacts belong to that source, never to this candidate.",
+  "classification": "REPO_SAFE",
+  "failed_attempts_retained": [
+    "validation-path-context-control-1: compile missing CGP component import, corrected",
+    "validation-path-fixture-generation-1: stale input implementation gate, corrected",
+    "validation-path-fixture-generation-2: production Go-print metadata changed after gate freeze, corrected",
+    "validation-path-fixture-post-generation-native-1: stale IR rejected after premature dependent launch; no credit"
+  ],
+  "formal_credit": 0,
+  "new_control": "Every original CGP resource call survives with empty maps, init-before-regular order, indices0..11 and exact arbitrary UTF-8/NUL/empty-prefix path bytes.",
+  "ordinary": {
+    "generation_modes_write_and_check": 6,
+    "ignored_process_children": 3,
+    "parser_controls_passed": 11,
+    "workspace_all_targets_check": "PASSED before generation",
+    "workspace_tests_failed": 0,
+    "workspace_tests_passed": 676
+  },
+  "qualified_source_assertions_preserved": {
+    "defaulting": 304,
+    "feature_validation": 10,
+    "general_validation": 25
+  },
+  "refactor": "Reuse existing indexed path builder and Genco map insert construction. Preserve all domains, bounds, covers and six-field multiplicities.",
+  "residual": [
+    "Canonical adoption, ledger/evidence refresh, publication and all required current CI results.",
+    "No verifier improvement is established before a distinct actual protected campaign.",
+    "All remaining source/API/metadata/lifecycle/live Rusternetes, post-observation cleanup and eight _2cells remain required."
+  ],
+  "schema_version": 1,
+  "semantic_bindings": {
+    "build/scripts/agones-rs/test_source_case_proofs.py": "70038dbe2abc057c1d7ea2a8f09d8616e009bbcfbb0f49e3a0759cd87b3f46bb",
+    "crates/agones-core/src/gameserver.rs": "dc6903306ef77cfb772696e3635c398944d295f59eb89c57c0c8f3d43f8db864",
+    "crates/agones-core/src/resource_quantity.rs": "a8f7ae7eda83f7f6f546af4700cdc562003437bd92fd6ecbed7f76e1009d8006",
+    "crates/agones-core/tests/resource_quantity.rs": "183c6f001ed7f46f7ff7e684b6fda2970c8ad6c90e9599fd443f60f6d95e3a24",
+    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "48991d9e64b8ce0a93329a4d4d0f6ca72ca06e5989a3a60a2490d9278cd52179",
+    "verification/agones/feature-query-codegen.json": "f42fde325b0a0f92c03a5e49416e347754aa926a01816466d04a1d64c6c79d23",
+    "verification/agones/gameserver-defaulting-codegen.json": "d85e4f22f2d22afc5630d06f72055ab28035334d9f6af7e0f3d094790c2f4e68",
+    "verification/agones/gameserver-feature-validation-codegen.json": "01e53fc08919fda5f1f6e1475aa0d4d8685d4618b87fe8f2a0bf8edea32e67c3",
+    "verification/agones/gameserver-feature-validation-domain.json": "a7e15f8312abbc1fd958fa7921d7d879e3616330c7ae045afb256c21b39eef55",
+    "verification/agones/gameserver-validation-codegen.json": "01c8ca13de502861c2b3d46d0ff6773c9c66090b62d6509ba1745d0383dcb220",
+    "verification/agones/go-print-codegen.json": "0aa1a209b076bb2b80105c8b260adf438c48a8c49e008ade435876ed6a0d8d36",
+    "verification/agones/sdk-version-codegen.json": "33ed3b64c1d55291219600a0efaa79e81f58c31e932d8fdb83af2a6afbb9003f"
+  },
+  "status": "ISOLATED_NATIVE676_SIX_MODES_ELEVEN_PARSER_CONTROLS_PASSED_CANONICAL_ADOPTION_FORMAL_PENDING"
+}

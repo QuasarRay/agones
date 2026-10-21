@@ -47,10 +47,10 @@
   "fixture_mapping": "Whole source wire object plus explicit nil/allocated Counters/Lists/Ports/Players witnesses. Source empty maps omitted by JSON are restored as allocated empty maps. Unknown fields/error metadata fail closed.",
   "generator": "Genco 0.17.10 with pinned rustfmt",
   "generator_path": "crates/agones-rusternetes/examples/feature_case_codegen.rs",
-  "generator_sha256": "34f962fb5c975fade612ca2a0fa44948925c34652599119a18d54a17a3836996",
+  "generator_sha256": "48991d9e64b8ce0a93329a4d4d0f6ca72ca06e5989a3a60a2490d9278cd52179",
   "generator_source_files": {
     "crates/agones-rusternetes/examples/codegen/gameserver_features.rs": "44335a77ca34abe5d3bbbfa7d05836ecdc5ea65a59cd7520652a213e48dca848",
-    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "34f962fb5c975fade612ca2a0fa44948925c34652599119a18d54a17a3836996"
+    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "48991d9e64b8ce0a93329a4d4d0f6ca72ca06e5989a3a60a2490d9278cd52179"
   },
   "harnesses": [
     {
@@ -130,7 +130,7 @@
     }
   ],
   "ir": "verification/agones/gameserver-feature-validation.ir.json",
-  "ir_sha256": "83eaaa213e686e442b07df4fce82cb6cfab3ce5f0cd4475f65630422ebd8532c",
+  "ir_sha256": "b80a700a4075376f5c11cb7bd859b2e316b61eb81152d4e07c16b6e24fd32017",
   "lifetime_mapping": {
     "boundary": "After every original observation and cover, retain the harness-owned fixture, parsed features, context and error lists in both engines. Source callbacks specify no GC/deallocation observation. Actual production bodies remain unchanged.",
     "ordinary_cleanup": "Separate complete-fixture and actual adapter replay uses normal destruction.",
@@ -144,7 +144,7 @@
     "rule": "AGONES-ELEMENTSMATCH-EXPECTED-COUNTS-1"
   },
   "output": "crates/agones-core/tests/generated/gameserver_feature_validation_cases.rs",
-  "output_sha256": "d9f5d6a299619b87d35cc522735a5533a837b4c9fec653f878662308b899b01b",
+  "output_sha256": "f539dbb911f2ecc352228f1046176ea86ed896fc335035884c92c363ce6f5a40",
   "schema_version": 1,
   "scope": "All five exact original validation cases, ten qualified source assertions. Observation lifetime follows the existing retained-owner rule; no formal post-observation cleanup credit. No original case sets Players. Actual core validation and source literals are modeled; original Go/resource/hooks use ordinary replay. Full domain validation, present-Players contract proof, lifecycle/conformance and all eight _2 cells remain required.",
   "validation_error_mapping": {

@@ -1,7 +1,7 @@
 {
   "assurance": "Production data and ordinary independent category validation only; no test-obligation extraction or formal proof credit.",
   "generator": "crates/agones-rusternetes/examples/feature_case_codegen.rs",
-  "generator_sha256": "34f962fb5c975fade612ca2a0fa44948925c34652599119a18d54a17a3836996",
+  "generator_sha256": "48991d9e64b8ce0a93329a4d4d0f6ca72ca06e5989a3a60a2490d9278cd52179",
   "go_source_hashes": {
     "VERSION": "25eb74b09036e1ad894fb63b86cb0f0ee53342df8d2e2e860da4ff5079607758",
     "src/net/url/url.go": "44c33f88526abf3b5955d6c97297be5c9d228e741b33e52c940dcac5a496e091",

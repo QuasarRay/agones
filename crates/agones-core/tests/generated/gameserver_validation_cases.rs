@@ -40,7 +40,6 @@ fn source_gs_validate_base_000() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -113,7 +112,6 @@ fn source_gs_validate_base_001() -> agones_core::GameServer {
         },
     ]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -138,10 +136,10 @@ fn source_gs_validate_base_002() -> agones_core::GameServer {
     let mut value = agones_core::GameServer::default();
     value.metadata.name = "dev-game".to_owned();
     value.metadata.namespace = "default".to_owned();
-    value.metadata.annotations = std::collections::BTreeMap::from([(
-        "agones.dev/dev-address".to_owned(),
-        "invalid-ip".to_owned(),
-    )]);
+    value
+        .metadata
+        .annotations
+        .insert("agones.dev/dev-address".to_owned(), "invalid-ip".to_owned());
     value.spec.container = "".to_owned();
     value.spec.ports = vec![agones_core::GameServerPort {
         name: "main".to_owned(),
@@ -169,7 +167,6 @@ fn source_gs_validate_base_002() -> agones_core::GameServer {
     value.spec.counters = None;
     value.spec.lists = None;
     value.spec.template.spec.containers = agones_core::GoSlice::default();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -218,7 +215,6 @@ fn source_gs_validate_base_003() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -267,7 +263,6 @@ fn source_gs_validate_base_004() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -316,11 +311,10 @@ fn source_gs_validate_base_005() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
-    value.spec.template.metadata.labels = std::collections::BTreeMap::from([(
+    value.spec.template.metadata.labels.insert(
         "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff".to_owned(),
         "".to_owned(),
-    )]);
+    );
     value.status.state = None;
     value
 }
@@ -368,11 +362,10 @@ fn source_gs_validate_base_006() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
-    value.spec.template.metadata.labels = std::collections::BTreeMap::from([(
+    value.spec.template.metadata.labels.insert(
         "agones.dev/longValueKey".to_owned(),
         "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff".to_owned(),
-    )]);
+    );
     value.status.state = None;
     value
 }
@@ -420,10 +413,10 @@ fn source_gs_validate_base_007() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([(
+    value.spec.template.metadata.annotations.insert(
         "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff".to_owned(),
         "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff".to_owned(),
-    )]);
+    );
     value.status.state = None;
     value
 }
@@ -471,10 +464,10 @@ fn source_gs_validate_base_008() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([(
+    value.spec.template.metadata.annotations.insert(
         "agones.dev/short±Name".to_owned(),
         "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff".to_owned(),
-    )]);
+    );
     value.status.state = None;
     value
 }
@@ -522,10 +515,10 @@ fn source_gs_validate_base_009() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([(
+    value.spec.template.metadata.annotations.insert(
         "agones.dev/shortName".to_owned(),
         "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff".to_owned(),
-    )]);
+    );
     value.status.state = None;
     value
 }
@@ -602,7 +595,6 @@ fn source_gs_validate_base_010() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -627,10 +619,10 @@ fn source_gs_validate_base_011() -> agones_core::GameServer {
     let mut value = agones_core::GameServer::default();
     value.metadata.name = "dev-game".to_owned();
     value.metadata.namespace = "default".to_owned();
-    value.metadata.annotations = std::collections::BTreeMap::from([(
-        "agones.dev/dev-address".to_owned(),
-        "127.1.1.1".to_owned(),
-    )]);
+    value
+        .metadata
+        .annotations
+        .insert("agones.dev/dev-address".to_owned(), "127.1.1.1".to_owned());
     value.spec.container = "my_image".to_owned();
     value.spec.ports = vec![agones_core::GameServerPort {
         name: "main".to_owned(),
@@ -663,7 +655,6 @@ fn source_gs_validate_base_011() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -720,7 +711,6 @@ fn source_gs_validate_base_012() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -804,7 +794,6 @@ fn source_gs_validate_base_013() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -888,7 +877,6 @@ fn source_gs_validate_base_014() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -972,7 +960,6 @@ fn source_gs_validate_base_015() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -1056,7 +1043,6 @@ fn source_gs_validate_base_016() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -1140,7 +1126,6 @@ fn source_gs_validate_base_017() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -1224,7 +1209,6 @@ fn source_gs_validate_base_018() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -1281,7 +1265,6 @@ fn source_gs_validate_base_019() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.spec.template.spec.init_containers = vec![agones_core::Container {
         name: "sidecar".to_owned(),
         image: "testing/image".to_owned(),
@@ -1370,7 +1353,6 @@ fn source_gs_validate_base_020() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.spec.template.spec.init_containers = vec![agones_core::Container {
         name: "sidecar".to_owned(),
         image: "testing/image".to_owned(),
@@ -1459,7 +1441,6 @@ fn source_gs_validate_base_021() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.spec.template.spec.init_containers = vec![agones_core::Container {
         name: "testing".to_owned(),
         image: "testing/image".to_owned(),
@@ -1548,7 +1529,6 @@ fn source_gs_validate_base_022() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.spec.template.spec.init_containers = vec![agones_core::Container {
         name: "testing".to_owned(),
         image: "testing/image".to_owned(),
@@ -1637,7 +1617,6 @@ fn source_gs_validate_base_023() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.spec.template.spec.init_containers = vec![agones_core::Container {
         name: "testing".to_owned(),
         image: "testing/image".to_owned(),
@@ -1726,7 +1705,6 @@ fn source_gs_validate_base_024() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.spec.template.spec.init_containers = vec![agones_core::Container {
         name: "testing".to_owned(),
         image: "testing/image".to_owned(),

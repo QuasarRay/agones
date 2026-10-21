@@ -214,5 +214,85 @@ class MatrixControls(unittest.TestCase):
         self.assertIn("--gameserver-validation --check", workflow)
 
 
+class ContractControls(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.domain_path = "verification/agones/gameserver-feature-validation-domain.json"
+        self.domain = json.loads((ROOT / self.domain_path).read_text())
+        gate = json.loads((ROOT / self.domain["implementation_gate"]).read_text())
+        paths = set(gate["production_files"]) | {
+            self.domain_path, self.domain["implementation_gate"],
+            "crates/agones-core/tests/gameserver_feature_validation_domain.rs",
+            self.domain["validation_error_mapping"]["source"],
+        } | {str(SCRIPTS / name) for name in (
+            "summarize_feature_proof.py", "kani_results.py", "protect_model.py")}
+        for path in paths:
+            target = self.root / path
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(ROOT / path, target)
+        self.run_name = "synthetic-contract-control"
+        self.run_path = self.root / f"verification/agones/runs/{self.run_name}.json"
+        self.log_path = self.run_path.with_suffix(".log")
+        self.run_path.parent.mkdir(parents=True, exist_ok=True)
+        self.record = {
+            "status": "PASSED", "exit_code": 0,
+            "command": ["cargo", "bolero", "test", self.domain["harness"], "--engine", "kani"],
+            "source_files": {path: hashlib.sha256((self.root / path).read_bytes()).hexdigest()
+                             for path in paths},
+            "log": str(self.log_path.relative_to(self.root)),
+        }
+        harness = self.domain["harness"]
+        rows = [(f"{harness}::{{closure#0}}.assertion.{index}", "SUCCESS", "contract relation")
+                for index in range(1, 4)]
+        rows += [(f"{harness}::witness.cover.{index}", "SATISFIED", description)
+                 for index, description in enumerate(self.domain["required_covers"])]
+        self.log = "".join(
+            f'\nCheck {index}: {symbol}\n - Status: {status}\n'
+            f' - Description: "{description}"\n'
+            ' - Location: crates/agones-core/tests/gameserver_feature_validation_domain.rs:1\n'
+            for index, (symbol, status, description) in enumerate(rows, 1)) + COMPLETE
+
+    def invoke(self, accepted):
+        self.log_path.write_text(self.log)
+        self.record["log_sha256"] = hashlib.sha256(self.log_path.read_bytes()).hexdigest()
+        self.run_path.write_text(json.dumps(self.record))
+        (self.root / self.domain_path).write_text(json.dumps(self.domain))
+        result = subprocess.run(
+            [sys.executable, str(self.root / SCRIPTS / "summarize_feature_proof.py"),
+             "gameserver-features", self.run_name, "--output", "synthetic-summary.json"],
+            capture_output=True, text=True)
+        if accepted:
+            self.assertEqual(result.returncode, 0, result.stderr)
+            summary = json.loads((self.root / "synthetic-summary.json").read_text())
+            self.assertEqual(len(summary["assertions"]), 3)
+            self.assertEqual(len(summary["covers"]), 8)
+        else:
+            self.assertNotEqual(result.returncode, 0, result.stdout)
+
+    def test_real_common_manifest_shape_and_six_field_mapping(self):
+        self.invoke(True)
+        fields = self.domain["validation_error_mapping"].pop("fields")
+        self.invoke(False)
+        self.domain["validation_error_mapping"]["fields"] = fields[:-1]
+        self.invoke(False)
+
+    def test_contract_assertion_and_cover_failures_reject(self):
+        baseline = self.log
+        self.log = baseline.replace(" - Status: SUCCESS", " - Status: UNREACHABLE", 1)
+        self.invoke(False)
+        self.log = baseline.replace(" - Status: SATISFIED", " - Status: UNSATISFIABLE", 1)
+        self.invoke(False)
+
+    def test_actual_provider_and_constructor_bindings_reject(self):
+        del self.record["source_files"]["crates/agones-core/src/gameserver_validation.rs"]
+        self.invoke(False)
+        self.record["source_files"]["crates/agones-core/src/gameserver_validation.rs"] = hashlib.sha256(
+            (self.root / "crates/agones-core/src/gameserver_validation.rs").read_bytes()).hexdigest()
+        self.domain["validation_error_mapping"]["source_sha256"] = "0" * 64
+        self.invoke(False)
+
+
 if __name__ == "__main__":
     unittest.main()

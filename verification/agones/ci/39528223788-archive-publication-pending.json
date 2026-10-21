@@ -1,0 +1,20 @@
+{
+  "artifact_recovery": "37of37 archives and raw members verified;23OOM/7timeout source failures,6strict summaries, contract summary failure.",
+  "classification": "REPO_SAFE",
+  "local_commit": "f61d6130cdf537348283d5603956b578cf283d9d",
+  "local_tree": "91bb1b8bad3f9a350cbb7a3d9e2a139e630efdbe",
+  "next_action": "Resume from uploaded_batches only when the GitHub tree tool is available; do not reupload verified completed batches or restart old CI. Publishing the already prepared small repaired code checkpoint may proceed while this passive mirror resumes; the complete old run is already retained locally and in90dayActions archives.",
+  "remote_branch_published": false,
+  "remote_uploaded_tree": "c661d678a530ac267e4585afe0c94d6a1eacc394",
+  "resume_manifest": ".git/agones-ci39528223788-publication.json",
+  "schema_version": 1,
+  "source_head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
+  "source_pin": "verification/agones/ci/39528223788-pinned-source.json",
+  "status": "ALL37_LOCALLY_RETAINED_GIT_SEALED_REMOTE_UPLOAD_PARTIAL_TOOLS_REMOVED",
+  "target_branch": "codex/agones-ci-evidence-39528223788",
+  "total_batches": 74,
+  "uploaded_batches": 50,
+  "worker": ".git/agones-evidence-upload-worker.js",
+  "worker_sha256": "e394b361c4484127b8569cae327bbd2a4c41242395fb389876c4d29c183e4b15",
+  "workflow_run": 39528223788
+}
