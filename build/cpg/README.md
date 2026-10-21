@@ -24,6 +24,7 @@ Grafana is pinned to 12.2.5 and the Grafana Labs Infinity data source to 4.1.1.
 
 ```bash
 cd build/cpg
+make validate
 make generate
 make up
 ```
@@ -32,7 +33,9 @@ Open <http://localhost:3000/d/agones-joern-cpg/agones-joern-cpg>.
 
 The local Grafana instance has anonymous Viewer access enabled and the login form disabled. It is intended only for local analysis.
 
-Stop it with:
+The `make validate` target runs a small GraphML conversion regression test and validates the Compose file before the expensive Joern parse.
+
+Stop the stack with:
 
 ```bash
 make down
