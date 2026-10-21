@@ -4,9 +4,16 @@
     "crates/agones-core/tests/generated/gameserver_feature_validation_cases.rs",
     "verification/agones/gameserver-feature-validation-codegen.json"
   ],
+  "algorithm_revision": 2,
   "classification": "EXACT_RELATION_PRESERVING_ALGORITHM_CHANGE",
   "current_formal_credit_added": 0,
   "deductive_argument": "Equality of finite multisets implies both count relations. Conversely, the expected-driven relation matches the count of every expected equivalence class. Their counts sum to len(E). Equal total lengths give len(A)=len(E), leaving no actual element outside those matched classes. Thus every class has equal multiplicity. Empty lists and duplicates are included. No runtime assumption is introduced.",
+  "exact_cardinality_specialization": {
+    "empty": "For E=[] finite multiset equality holds exactly when A=[]. Return actual.is_empty().",
+    "larger": "For every expected length>=2 retain equal total lengths and every exact expected equivalence-class count. No cardinality limit or unsupported branch is introduced.",
+    "side_conditions": "The existing pure derived Eq and valid finite slice conditions remain unchanged. No field, duplicate, assertion, cover, input or unwind reduction.",
+    "singleton": "For E=[e], finite multiset equality holds exactly when A=[a] and a==e. Slice patterns enforce the complete cardinalities, then use the same full ValidationError Eq once."
+  },
   "law_conditions": [
     "Finite valid slices of ValidationError records.",
     "ValidationError derives Eq over its kind/path/optional bad-value/detail fields; the combined six-field variant additionally compares Origin and the declarative flag.",
@@ -16,8 +23,8 @@
   "old_relation": "len(A)==len(E) and for every a in A, count_A(a)==count_E(a)",
   "ordinary_controls": "Independent ID histograms for all1600pairs of lists of lengths0..3over three distinct full records, alongside existing permutation/duplicate/length and all-four-field mutations. This is bounded native regression evidence, not a general Kani theorem.",
   "preserved": "Every original source fixture/action/assertion/cover/domain/unwind bound and all5full harness bodies are unchanged. Actual production bodies, reference relation, full Eq and duplicate counts are preserved.",
-  "production_gate": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
-  "required_next": "Pass native/fault/equivalence controls and deterministic generation; then reverify all affected exact-source cases with the actual production path and unchanged bounds. Keep unrelated and broader obligations required.",
+  "production_gate": "verification/agones/gates/c4e2a5ea6825492fb9875ede400e5136552e534d80e260295148c92c0775f096.json",
+  "required_next": "Pass the existing1600independent histogram and full-field controls with deterministic generation. Reverify every affected actual production/source program with unchanged original obligations and bounds. Keep all broader work required.",
   "rule_id": "AGONES-ELEMENTSMATCH-EXPECTED-COUNTS-1",
   "schema_version": 1,
   "source": {

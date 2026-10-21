@@ -1,22 +1,41 @@
 {
   "canonical_adoption": "PENDING; all referenced gates/run/evidence paths belong to this isolated Git snapshot.",
   "complete_native_evidence_in_isolated_commit": "verification/agones/complete-validation-native-evidence.json",
-  "complete_native_evidence_sha256": "6a8354560c25a21b9ed1d47a2cee768f7f13cff0113fcce78b716e79ebd62ce6",
+  "complete_native_evidence_sha256": "5bc753ef63cbdcf92f0eac318bc044443bbe106f73d7c70e86a63e2626104cb6",
+  "expected_multiset_reuse": {
+    "canonical_source_commit": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
+    "current_formal_credit_added": 0,
+    "current_production_gates_revalidated": 9,
+    "exact_fields": 6,
+    "families": [
+      "TestGameServerValidateFeatures",
+      "TestGameServerValidate"
+    ],
+    "independent_histogram_pairs": 1600,
+    "law_manifest": "verification/agones/expected-multiset-relation.json",
+    "rule": "AGONES-ELEMENTSMATCH-EXPECTED-COUNTS-1",
+    "scope": "Same full-record finite multiset law via the existing shared emitter. Preserve quantity, TypeMeta, constructor-image mapping, all actions/assertions/covers/domains/bounds and ordinary actual adapter replay. No isolated backend campaign or canonical adoption yet.",
+    "shared_emitter": "validation_error_relation",
+    "unchanged_feature_source_harnesses": 5,
+    "unchanged_general_source_harnesses": 25
+  },
   "full_workspace_integration": {
+    "generation_modes": 6,
     "ignored": 3,
-    "run": "verification/agones/runs/combined-missing-container-concat-workspace-1.json",
+    "run": "verification/agones/runs/combined-expected-multiset-native-1.json",
     "status": "PASSED",
     "tests_failed": 0,
     "tests_passed": 675
   },
-  "implementation_commit": "634761603763068e5bb201e80db3d839e5f1c3d2",
+  "implementation_commit": "d492262816ce869777449731e7c89318599f3230",
   "implementation_gate": "verification/agones/gates/2c4e63a09ec31d00ea665b0018d334af4d8c34bd6cef714ce72be3b2dbc42f05.json",
   "implementation_gate_sha256": "2c4e63a09ec31d00ea665b0018d334af4d8c34bd6cef714ce72be3b2dbc42f05",
-  "implementation_tree": "d63eb82ec21a16a6b72198f618febf7c77c606a4",
+  "implementation_tree": "a8e16023ecfd860b53e016e7cb26182ca8f316f9",
   "native_tests": 516,
   "new_formal_credit": 0,
-  "next_action": "Preserve this clean combined source snapshot. Recover canonical39511896291actual model results before the next repair. Canonical adoption must preserve protected execution tools/ledger and revalidate changed source bindings; all25general harnesses/50covers and previous source obligations remain formal requirements.",
-  "recover": "git show 634761603763068e5bb201e80db3d839e5f1c3d2:verification/agones/complete-validation-native-evidence.json",
+  "next_action": "Canonical adoption and publication of quantity/TypeMeta/six-field validation remain pending. Recover actual e49e protected source results; preserve current operational ledger/protected workflows and all required source/general assertions, covers and bounds. Isolated25 general harnesses and50 covers still require formal proof.",
+  "prior_local_commit": "634761603763068e5bb201e80db3d839e5f1c3d2",
+  "recover": "git show d492262816ce869777449731e7c89318599f3230:verification/agones/complete-validation-native-evidence.json",
   "refreshed_combined_gates": {
     "FG-CONFIG-001": "verification/agones/gates/f1754f100d28250b688893509aa2688a1abf5abf5c100f6ca7793b51895395e8.json",
     "FG-ERROR-001": "verification/agones/gates/6dcdcf98f8ec19efab1a5b45d2eca47a8b42ab76c680010bee4c4545db3f33fd.json",

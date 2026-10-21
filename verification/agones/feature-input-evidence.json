@@ -10,9 +10,10 @@
     "verification/agones/ci/39511896291-first-five-retained.json": "c61b2d440643d74eedebe3ea1f8ab24576b3451c6d6a29a8f0db2eeaa48a68f9",
     "verification/agones/ci/39511896291-terminal-retained.json": "b97d1ce65169bc780f144ede957f99492f70a1963b72e845c1a99051030db3ac",
     "verification/agones/ci/protected-model-execution-plan.json": "ab89b8924cba9e2bf37d712807911e037a9ace1513b3ba89e2517e1b22c7ae15",
+    "verification/agones/exact-lookup-singleton-prior-assurance.json": "9d0a359de671f192a6a7322a64f389076dd79a5700497934578bf04c7cc12671",
     "verification/agones/feature-helper-bindings.json": "e527fe83f28d521ac93eedc591b97060265bbee85034df53362463938c4b43ed",
     "verification/agones/feature-input-kani-properties.json": "15e9d07430a225483e8000dab883914cef1634fb1206d0875c5cf0c8bf1bff8f",
-    "verification/agones/feature-query-codegen.json": "6008d4f903d505b600b122af47d7c641c58f9113252bc5031ada1bdafaf3a2c4",
+    "verification/agones/feature-query-codegen.json": "024098bce9500e6401db7403aca1cbbbe1b48ced71a70794b91c28d96a7bd02c",
     "verification/agones/gameserver-canonical-proof-reuse.json": "f0b50390d8f0e1d384a6ad5723444a8f0ed30d4ac50d0be8e0bbc48c2797f77a",
     "verification/agones/gameserver-codegen-source-reuse.json": "30f7a1792e41fb982c7f3022384e7d425a1269ce2ba11be779ee518fe42a7511",
     "verification/agones/gameserver-final-proof-reuse.json": "7a89cd1aa1f16679aa7db9e01ab349c76a462dcfb66ef16fc48c942551b1ad64",
@@ -23,6 +24,7 @@
     "verification/agones/gameserver-shared-proof-reuse.json": "be302d2de4fb1d536faa13ef268726ee3a83564d6e31fff01436351dd4c293d8",
     "verification/agones/gameserver-static-name-source-reuse.json": "45e0c7b1df93c1e3f57fd6cce91e1cfc79da556edcc02b6535615d0a5198ff20",
     "verification/agones/gates/3ff5615e374aed7d29634d1f3c1d2ffc8086079af7c954b76aa26aa3f509fc96.json": "3ff5615e374aed7d29634d1f3c1d2ffc8086079af7c954b76aa26aa3f509fc96",
+    "verification/agones/gates/6933692d233041bdb12a0a44ad943ac9309a81519048d2fed4f4b19fba413ef5.json": "6933692d233041bdb12a0a44ad943ac9309a81519048d2fed4f4b19fba413ef5",
     "verification/agones/gates/eea54f495941f20e41f1e6d4bd862727ddf2a0b74cb4ad51bafb4f13fb28e476.json": "eea54f495941f20e41f1e6d4bd862727ddf2a0b74cb4ad51bafb4f13fb28e476",
     "verification/agones/go-print-codegen.json": "5952e170055bee1f0ed3492ae8aed71fb428ab60ea83f9fbf79694fc885bc80e",
     "verification/agones/missing-container-concat-prior-assurance.json": "38629bbbceccdae888def6151e06a42b837d8246398fac05a9b1940e8bc87528",
@@ -57,6 +59,7 @@
     "verification/agones/proof-summaries/sdk-query-error-source.json": "03240cff1b1123ff88e34a541249553b1436f998ee804ae85f718b2ae0675d3f",
     "verification/agones/query-borrowing-prior-assurance.json": "29f20948c0b32e1d5f7226641d45507d9017316e74f942fa72cd5d45f4581a46",
     "verification/agones/query-proof-campaign.json": "e6756cca08fe0b71060dba7aabc1390108543bfef7a16afa13b2adbd89bb558c",
+    "verification/agones/refactoring/exact-lookup-singleton-review.json": "e37d8e2a526af6042844a7d86276c95b4c17b5056b50ae96aa12f8e6b08abf37",
     "verification/agones/refactoring/gameserver-ownership-experiment-decision.json": "7d9da5acd66ef684befc9bcd3e5acd5360a0b3b52e68b8915f5a7f1d1b52eefd",
     "verification/agones/refactoring/missing-container-concat-review.json": "741b2298796d14b4dcd037819962e1e88d8273ff08ac37f106703902362aa94f",
     "verification/agones/refactoring/sdk-source-and-proof-review.json": "b696f54d3cc4f82bf10ca77ff57d391e8c5c900a62867b268a31b337554a4342",
@@ -88,6 +91,8 @@
     "verification/agones/runs/error-reused-proof-results-1.log": "bfda7ca7009a5f8a16ed8c73162b2affc63845fc4b2840e558c7357349914cb5",
     "verification/agones/runs/error-source-obligations-runtime-1.json": "78a0672cbd24f2a694e5bee699f2088ebfa1e39c660241e3796d18c2e7893f20",
     "verification/agones/runs/error-source-obligations-runtime-1.log": "8d1ba33a5af32aea038638143201821356c1710f73e2ad348e12e9cd328ebcbe",
+    "verification/agones/runs/exact-lookup-singleton-current-native-1.json": "a724bd690d24fb4c732fc4faf532ddca0672a8ae720d831e29b5694cacc9dfb6",
+    "verification/agones/runs/exact-lookup-singleton-generation-native-1.json": "87551d218e64028cf8d41cb876e5ab76624c32b5b109c5138efa2f31724b5ead",
     "verification/agones/runs/feature-bool-bolero-kani-ci-39489621706-1.json": "5d262de3bed4d37a22a15db797963c972d0807c906c81245e329a42518f91030",
     "verification/agones/runs/feature-bool-bolero-kani-ci-39489621706-1.log": "cb7c2eeef3e6f15721ba5d9c2dab402e31cd6392e12b2bad36d2981f40c15fa5",
     "verification/agones/runs/feature-bool-bolero-kani-ci-39498916435-1.json": "40b3abe7ee94dcb240dbdfb1ce2cc02089b78bcfa74dbf85c3cede84b8d16a90",
@@ -393,14 +398,28 @@
     "verification/agones/runs/source-result-controls-final-1.json": "6fad3455ae18aca9e0b8cdb00557b03215ab82edf608de081b956b1c34bc16b6",
     "verification/agones/runs/source-result-controls-final-1.log": "fe008aab760eb03ccac7578e2b84665b1b50b0d7f855b17a0c7a8d039435b658",
     "verification/agones/sdk-shared-helper-proof-reuse.json": "75e3754a32e3c9eea99ad52674109cf7246cb840df244c63413ce2ed329c2425",
-    "verification/agones/sdk-version-codegen.json": "c03ed2d6a60d602ecc557b135bc4308ff270a27b77064fc2f7ee3513db4d40fb",
+    "verification/agones/sdk-version-codegen.json": "873cd7dd7851422dfa9eeaa8a541eb513998b4e6d36be014c94fec27ffd545a0",
     "verification/agones/streaming-query-direct-path-prior-assurance.json": "54536680c57d62111a13d152af5aded28fbc99a9170092c4a81320fa086f5704"
   },
   "assurance": {
     "actual_process_fixture": "Test=true with the original Example=true/Test=false defaults is exercised in the isolated core process test; process input and production consumers have eleven nonempty child cases.",
     "configured_mutation_consumer": "Actual GameServerCreationMutationAdmission now consumes configured PlayerTracking through the shared CGP defaulting provider; retained process scenarios include this fifth configured consumer.",
-    "current_gate_proof_status": "SEVEN_CURRENT_SELECTIONS_VERIFIED_FIVE_EXACT_FEATURE_SOURCE_TIMEOUTS",
-    "current_retained_backend_receipt": "verification/agones/ci/39511896291-terminal-retained.json",
+    "current_gate_proof_status": "PRODUCTION_LOOKUP_AND_SOURCE_HELPER_CHANGED_CURRENT_REVERIFICATION_REQUIRED",
+    "current_retained_backend_receipt": null,
+    "exact_lookup_singleton_revalidation": {
+      "current_formal_credit_added": 0,
+      "ordinary_checks": [
+        "verification/agones/runs/exact-lookup-workspace-1.json",
+        "verification/agones/runs/exact-lookup-singleton-generation-native-1.json",
+        "verification/agones/runs/exact-lookup-singleton-current-native-1.json"
+      ],
+      "prior_assurance": "verification/agones/exact-lookup-singleton-prior-assurance.json",
+      "prior_source_head": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
+      "prior_terminal_receipt": "verification/agones/ci/39516368235-terminal-retained.json",
+      "review": "verification/agones/refactoring/exact-lookup-singleton-review.json",
+      "source_cases_assertions_covers_domains_and_bounds_unchanged": true,
+      "status": "NATIVE_AND_GENERATION_PASSED_CURRENT_PROOF_REQUIRED"
+    },
     "external_cluster_conformance": [],
     "historical_current_retained_backend_receipt_before_missing_container_concat": "verification/agones/ci/39505643334-terminal-retained.json",
     "historical_current_retained_backend_receipt_before_query_borrowing": "verification/agones/ci/39489621706-terminal-retained.json",
@@ -415,17 +434,8 @@
       "receipt": "verification/agones/ci/39190924053-success.json"
     },
     "missing_container_concat_revalidation": {
-      "current_formal_credit_added": "Only the individually scoped current entries; zero exact feature-source credit.",
-      "measured_change": "All five traces now contain zero PadAdapter recursion entries and reach generated error-multiset counting/equality. Memory peaks fall below12GiB to5.3-10.6GiB. All five still time out at900s before result rows; no feature-source proof is credited and no completion/speed improvement is claimed.",
-      "ordinary_checks": [
-        "verification/agones/runs/missing-container-concat-workspace-1.json",
-        "verification/agones/runs/missing-container-concat-generation-checks-1.json"
-      ],
-      "prior_assurance": "verification/agones/missing-container-concat-prior-assurance.json",
-      "receipt": "verification/agones/ci/39511896291-terminal-retained.json",
-      "review": "verification/agones/refactoring/missing-container-concat-review.json",
-      "scope": "Only real missing-container detail construction changed from general formatting to exact-sized concatenation matching pinned Go. Every source fixture/action/assertion/cover/domain/bound and generated Rust case body is unchanged.",
-      "status": "TERMINAL_ALL12_ARTIFACTS_VERIFIED_SEVEN_STRICT_SELECTIONS"
+      "prior_assurance": "verification/agones/exact-lookup-singleton-prior-assurance.json",
+      "status": "HISTORICAL_SUPERSEDED_REVALIDATION_REQUIRED"
     },
     "modeled_fixture_or_static_binding_assertion_ids": [
       "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-73",
@@ -437,53 +447,14 @@
       "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-81",
       "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars::line-82"
     ],
-    "production_symbol_model_checked": [
-      {
-        "harness": "feature_input_common_domain",
-        "satisfied_covers": 10,
-        "scope": "Production select_feature_gate_input and independent reference/invariant. Each optional raw byte string has length 0..2; no filtering, unwind 8. No OS/command/lifecycle proof or original exact-case assertion credit.",
-        "semantic_claims": 3,
-        "source_head": "4523bffd1fc3ae01ecba4918b343cafaa688c2f7",
-        "summary": "verification/agones/proof-summaries/feature-input-bolero-kani-ci-39511896291-1.json"
-      }
-    ],
+    "production_symbol_model_checked": [],
     "protected_execution_revalidation": {
-      "binding_refresh_credit_added": 0,
-      "changed_bindings": [
-        {
-          "current_sha256": "0f2e6885ab25ff525ac6a77e1ed67ac02a5904e59caffc0e746258bee0cad04e",
-          "path": "build/scripts/agones-rs/kani_results.py",
-          "previous_sha256": "61137b32f8cb47ee893be991195b4739c9bd120c81ef922b771e0c50af870e1b"
-        },
-        {
-          "current_sha256": "dee450e321588d735f1dee1dd49f245e43c395cecf800823f98374fc8f9fcf0c",
-          "path": "build/scripts/agones-rs/summarize_bool_proof.py",
-          "previous_sha256": "1ba6c3dc5f512d7f1456a79c8311eed4c3a189f1be6b524f24b49dfdb34a070e"
-        },
-        {
-          "current_sha256": "f4f95585c9649b689324ee6efc3e6436509861d55a718c581d369e527ec9ca25",
-          "path": "build/scripts/agones-rs/summarize_feature_proof.py",
-          "previous_sha256": "067ff7e3ceb095bfc33de515f147fda697d056792cf6b8b06fbd09c7bab560f3"
-        }
-      ],
-      "plan": "verification/agones/ci/protected-model-execution-plan.json",
-      "scope": "Only execution/acceptance machinery changed. Native implementation gates and unchanged original/model bodies are preserved. Earlier results retain their historical source and tool identities.",
-      "status": "PROTECTED_CAMPAIGN_COMPLETED_RESULTS_SCOPED_BY_RETAINED_RECEIPT",
-      "terminal_receipt": "verification/agones/ci/39489621706-terminal-retained.json"
+      "prior_assurance": "verification/agones/exact-lookup-singleton-prior-assurance.json",
+      "status": "HISTORICAL_SUPERSEDED_REVALIDATION_REQUIRED"
     },
     "query_borrowing_revalidation": {
-      "allocation_trial_result": "Borrowed default names/query bytes preserve native behavior but do not resolve any selected feature-validation proof. All five reached12GiB OOM before individual rows. Prior cases000/001timed out; other cases already OOM. No performance or verification-completion improvement is claimed.",
-      "current_formal_credit_added": "Only the selections explicitly indexed here; five feature-validation source cases failed with zero credit.",
-      "generation_checks": "verification/agones/runs/query-borrowing-generation-checks-1.json",
-      "ordinary_checks": [
-        "verification/agones/runs/query-borrowing-workspace-check-1.json",
-        "verification/agones/runs/query-borrowing-workspace-native-1.json",
-        "verification/agones/runs/query-borrowing-genco-controls-1.json"
-      ],
-      "prior_assurance": "verification/agones/query-borrowing-prior-assurance.json",
-      "scope": "Every original fixture/action/assertion and every generated Rust harness body remains unchanged. The real production parser/map changes allocation representation. Prior7d8494d8backend results retain their original snapshot; current affected proofs require new complete rows/covers.",
-      "status": "PROTECTED_CAMPAIGN_TERMINAL_ALL_ARTIFACTS_VERIFIED",
-      "terminal_receipt": "verification/agones/ci/39498916435-terminal-retained.json"
+      "prior_assurance": "verification/agones/exact-lookup-singleton-prior-assurance.json",
+      "status": "HISTORICAL_SUPERSEDED_REVALIDATION_REQUIRED"
     },
     "reference_model_checked": [],
     "rusternetes_integrated": [
@@ -501,17 +472,8 @@
     ],
     "source_rust_ir_assertions_evaluated": 5,
     "streaming_query_direct_path_revalidation": {
-      "current_formal_credit_added": "Only individually scoped current entries; shared source identities counted once in terminal receipt. No exact feature-source credit.",
-      "generation_checks": "verification/agones/runs/streaming-query-direct-path-generation-checks-1.json",
-      "ordinary_checks": [
-        "verification/agones/runs/streaming-query-direct-path-workspace-1.json",
-        "verification/agones/runs/streaming-query-direct-path-error-replay-1.json"
-      ],
-      "prior_assurance": "verification/agones/streaming-query-direct-path-prior-assurance.json",
-      "receipt": "verification/agones/ci/39505643334-terminal-retained.json",
-      "scope": "Every generated Rust source-case body and every original fixture/action/assertion/cover/domain/unwind declaration is byte-identical. Only actual production collection and indexed path construction changed. Prior dd4 backend rows/covers retain historical identities.",
-      "status": "TERMINAL_ALL12ARTIFACTS_VERIFIED_SEVEN_STRICT_SELECTIONS",
-      "trial_result": "Real streaming query and direct indexed paths preserve native behavior but complete no exact feature-validation proof. Cases000/002/003 OOM;001/004 time out at900s. Every service peaked12GiB and produced zero individual rows. No verification-completion or speed improvement is claimed."
+      "prior_assurance": "verification/agones/exact-lookup-singleton-prior-assurance.json",
+      "status": "HISTORICAL_SUPERSEDED_REVALIDATION_REQUIRED"
     }
   },
   "bounded_domain": {
@@ -532,9 +494,10 @@
     "scope": "Production adds reachable CGP feature validation and configured admission consumers. Existing broad source-file bindings changed; retained earlier proof results are historical and are not automatically rebound as current proof. Re-execute required affected model/source proofs without shrinking fixtures/domains/assertions/covers/bounds."
   },
   "feature_id": "FG-INPUT-001",
-  "implementation_gate": "verification/agones/gates/eea54f495941f20e41f1e6d4bd862727ddf2a0b74cb4ad51bafb4f13fb28e476.json",
+  "implementation_gate": "verification/agones/gates/6933692d233041bdb12a0a44ad943ac9309a81519048d2fed4f4b19fba413ef5.json",
   "metadata_count_correction": "The initial gate/provenance count 1112064 overstated decoder calls by 128. Current superseding gates record 1111936 non-ASCII decoder cases and 128 separately checked ASCII single bytes. Production code is unchanged; all 22 source assertions/defaults/helper bindings and generated Rust were revalidated unchanged, with only gate references/metadata refreshed.",
   "next_feature": "Complete source-compatible GameServer defaulting and canonical API values through the existing CGP composition; required SDK/query/error proof debt stays open.",
+  "required_next": "Publish the native-verified exact feature lookup and exact singleton multiset repair to existing draft PR96 with the expected e49e head lease, then run one distinct full protected campaign. Preserve every source fixture/action/assertion/cover/domain/unwind128/full error field and duplicate. Current proof credit is pending after production changes; e49e receipts remain historical and durable. After the result, advance canonical complete-validation adoption with explicit proof debt.",
   "residual_obligations": [
     "All five exact original input assertions still require an explicit adequate formal mapping; the current three-assertion selector proof is a separate source-contract property.",
     "The IR interpreter models successful setup/static binding. It does not prove real OS mutation or command registration; actual process input replay and source Go execution are separate evidence.",
@@ -568,7 +531,7 @@
     "crates/agones-core/examples/feature_query_replay.rs": "10d260d187ce77aae7955ecd50649ca8e87b8c0493d7079299807760c9d57f1c",
     "crates/agones-core/src/build_version.rs": "e6560758de4332abe27a97a3f3b5794068f20e0b4092380658b1cfdc4ce7e1f7",
     "crates/agones-core/src/feature_inputs.rs": "9cfaf42de485874339a58895991ad15adff787f363d9821a3ab7f0f4c36222d4",
-    "crates/agones-core/src/features.rs": "110bb3dd227d59c8b4bdb53112c2d9fac666fb791cbc1aae44bc4f111d29387a",
+    "crates/agones-core/src/features.rs": "2976d95a06bfd3d8c7364ca19288bc1b7d08e52ba15023bb30b8eca850bb916d",
     "crates/agones-core/src/gameserver_defaulting.rs": "9f54ce60a7c37907b9919c4286144b6d1794cbe317537189f50fd679f6ac18c5",
     "crates/agones-core/src/generated/go_print_ranges.rs": "0b0dc1a240c33ca0e01d718f5120a0d5bd894e15740b4cf3888824a0a7e84a0b",
     "crates/agones-core/src/go_quote.rs": "c0e5d196bb6089dd5c138e8c880964cabcf333a96d124377b370c61609c128b9",
@@ -603,7 +566,7 @@
     "rust-toolchain.toml": "c910997cb152c6dc8ed13b1fdf9fa28a4ed30d6776123e27dd6170e5c66067a0",
     "vendor/github.com/spf13/pflag/flag.go": "5699e18dd47610cf862dca1bb046f5d00a652fd412d9ac2c1a0f79b9c691c8cb",
     "vendor/github.com/spf13/viper/viper.go": "bec63043cd77615b93ffce9994e157f81a90b7e1d8a9cf7df0a343b920fabb10",
-    "verification/agones/feature-gates.ir.json": "b2801f04d07b79fd5f24d9a7701266b75442fef669ab135366e8a91312bb20c9",
+    "verification/agones/feature-gates.ir.json": "1060a5113d77dde203d1d8f344166ceec85a12c1fe4b271c28957eb0e0be2cd6",
     "verification/agones/feature-input-capability-v1.json": "a307b7d5f0ec550aac46080765989fb5fc67e254eab3ae51869da8a504671064",
     "verification/agones/go-print-codegen.json": "5952e170055bee1f0ed3492ae8aed71fb428ab60ea83f9fbf79694fc885bc80e",
     "verification/agones/go-print-expected.bin": "a30b1e23aa8a5d77ecaea1b9dd5c85e2d505cb2712b1906996c82089fa5117fc",
@@ -626,5 +589,5 @@
       "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::parse env vars"
     ]
   },
-  "status": "NATIVE_IMPLEMENTED_SCOPED_CURRENT_PROOFS_REMAINING_REQUIRED"
+  "status": "NATIVE_IMPLEMENTED_CURRENT_MODEL_REVERIFICATION_REQUIRED"
 }

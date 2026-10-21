@@ -71,10 +71,14 @@ pub(super) fn emit_gameserver_feature_cases(root: &Path, check: bool) {
     );
     let mut tokens: rust::Tokens = quote! {
         fn source_gsv_errors_match(actual: &[agones_core::ValidationError], expected: &[agones_core::ValidationError]) -> bool {
-            actual.len() == expected.len() && expected.iter().all(|error| {
-                actual.iter().filter(|value| *value == error).count()
-                    == expected.iter().filter(|value| *value == error).count()
-            })
+            match expected {
+                [] => actual.is_empty(),
+                [error] => matches!(actual, [value] if value == error),
+                _ => actual.len() == expected.len() && expected.iter().all(|error| {
+                    actual.iter().filter(|value| *value == error).count()
+                        == expected.iter().filter(|value| *value == error).count()
+                }),
+            }
         }
     };
     let mut ordinary: rust::Tokens = quote! {

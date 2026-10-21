@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "EXPECTED_MULTISET_TERMINAL_ALL12_RETAINED",
+  "gate_snapshot": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
+  "predecessor_revision": 288,
+  "predecessor_sha256": "6819aada4216288a63cd0075d6afc64edd5cb3718ede1a7569241c9f59460f9f",
+  "reason": "Actual CI395163 terminal failure; all12artifact ZIP/log/source/protector bindings pass audit. Nine strict summaries reproduce53claims/42covers/37459rows and41unique source occurrences, including four newly verified feature assertions. Source000900stimeout/00200312GiBOOM have zero rows. No fixtures/assertions/covers/domains/bounds weakened; next trace-bound repairs recorded.",
+  "result_revision": 289,
+  "schema_version": 1,
+  "state_sha256": "e9a3d8eb2af316302658263d8c157a014dda4b4b5b5e8bd0a8dc935840c929bb",
+  "timestamp": "2026-10-20T23:58:44.623417+00:00"
+}

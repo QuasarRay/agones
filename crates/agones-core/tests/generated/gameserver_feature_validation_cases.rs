@@ -3,11 +3,17 @@ fn source_gsv_errors_match(
     actual: &[agones_core::ValidationError],
     expected: &[agones_core::ValidationError],
 ) -> bool {
-    actual.len() == expected.len()
-        && expected.iter().all(|error| {
-            actual.iter().filter(|value| *value == error).count()
-                == expected.iter().filter(|value| *value == error).count()
-        })
+    match expected {
+        [] => actual.is_empty(),
+        [error] => matches!(actual, [value] if value == error),
+        _ => {
+            actual.len() == expected.len()
+                && expected.iter().all(|error| {
+                    actual.iter().filter(|value| *value == error).count()
+                        == expected.iter().filter(|value| *value == error).count()
+                })
+        }
+    }
 }
 fn source_gsv_base_fixture_000() -> agones_core::GameServer {
     let mut value = agones_core::GameServer::default();

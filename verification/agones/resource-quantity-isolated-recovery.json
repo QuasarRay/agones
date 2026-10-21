@@ -9,6 +9,31 @@
   "canonical_production_changed": false,
   "classification": "REPO_SAFE",
   "counterexamples_in_isolated_commit": "verification/agones/resource-quantity-boundary-counterexamples.json",
+  "expected_multiset_reuse": {
+    "canonical_source_commit": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
+    "current_formal_credit_added": 0,
+    "current_production_gates_revalidated": 9,
+    "exact_fields": 6,
+    "families": [
+      "TestGameServerValidateFeatures",
+      "TestGameServerValidate"
+    ],
+    "independent_histogram_pairs": 1600,
+    "law_manifest": "verification/agones/expected-multiset-relation.json",
+    "rule": "AGONES-ELEMENTSMATCH-EXPECTED-COUNTS-1",
+    "scope": "Same full-record finite multiset law via the existing shared emitter. Preserve quantity, TypeMeta, constructor-image mapping, all actions/assertions/covers/domains/bounds and ordinary actual adapter replay. No isolated backend campaign or canonical adoption yet.",
+    "shared_emitter": "validation_error_relation",
+    "unchanged_feature_source_harnesses": 5,
+    "unchanged_general_source_harnesses": 25
+  },
+  "full_workspace_integration": {
+    "generation_modes": 6,
+    "ignored": 3,
+    "run": "verification/agones/runs/combined-expected-multiset-native-1.json",
+    "status": "PASSED",
+    "tests_failed": 0,
+    "tests_passed": 675
+  },
   "gate_in_isolated_commit": "verification/agones/gates/bcdf960555f3b127874e4c853f021634e70b53cde0adf90ee4bd2090f3312ebd.json",
   "gate_sha256": "bcdf960555f3b127874e4c853f021634e70b53cde0adf90ee4bd2090f3312ebd",
   "historical_production_files_at_e8b684a": {
@@ -26,12 +51,12 @@
     "crates/agones-rusternetes/src/gameserverset_admission.rs": "caf77937275905a45285d7e4b220f16f79a817f0e51047dfd0a22648ec214016",
     "crates/agones-rusternetes/src/lib.rs": "820298219835f53b2563a3a0d66deb21050a5930998750ffb5fad26b6f07031b"
   },
-  "local_commit": "634761603763068e5bb201e80db3d839e5f1c3d2",
-  "local_tree": "d63eb82ec21a16a6b72198f618febf7c77c606a4",
+  "local_commit": "d492262816ce869777449731e7c89318599f3230",
+  "local_tree": "a8e16023ecfd860b53e016e7cb26182ca8f316f9",
   "managed_worktree": "/home/astral/.codex/worktrees/agones-resource-quantity/agones",
   "new_formal_proof_credit": 0,
   "new_semantic_extraction": "COMPLETE25CASE_GENERATION_AND_NATIVE_REPLAY_IN_ISOLATED_COMMIT_FORMAL_REQUIRED",
-  "next_action": "Preserve this clean combined source snapshot. Recover canonical39511896291actual model results before the next repair. Canonical adoption must preserve protected execution tools/ledger and revalidate changed source bindings; all25general harnesses/50covers and previous source obligations remain formal requirements.",
+  "next_action": "Canonical adoption and publication of quantity/TypeMeta/six-field validation remain pending. Recover actual e49e protected source results; preserve current operational ledger/protected workflows and all required source/general assertions, covers and bounds. Isolated25 general harnesses and50 covers still require formal proof.",
   "ordinary_checks_in_isolated_commit": [
     "verification/agones/runs/gameserver-typemeta-native-2.json"
   ],
@@ -66,7 +91,7 @@
     "run": 39464345048,
     "source_head": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af"
   },
-  "prior_local_commit": "85d64a1de1bd8bc6afcdb996de07384c077a5aaf",
+  "prior_local_commit": "634761603763068e5bb201e80db3d839e5f1c3d2",
   "refactoring_review": "verification/agones/refactoring/resource-quantity-typed-owner-review.json",
   "remote_publication": "NOT_STARTED",
   "schema_version": 1,

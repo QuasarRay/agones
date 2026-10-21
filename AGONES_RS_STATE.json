@@ -4,56 +4,56 @@
       "evidence_refs": [],
       "form": "proc_macro_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After this distinct protected source-case attempt, inspect actual results and compare the remaining production/comparison bottleneck. At the next quantity/TypeMeta/six-field error adoption milestone, reassess concrete _2 repetitions and the smallest economical real-code adoption.",
+      "next_review_trigger": "After this single distinct protected attempt, reassess actual outcomes and advance canonical quantity/TypeMeta/six-field complete-validation adoption with explicit remaining proof debt. Do not repeat an unchanged attempt.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_2",
       "location": "cross-crate",
-      "next_review_trigger": "After this distinct protected source-case attempt, inspect actual results and compare the remaining production/comparison bottleneck. At the next quantity/TypeMeta/six-field error adoption milestone, reassess concrete _2 repetitions and the smallest economical real-code adoption.",
+      "next_review_trigger": "After this single distinct protected attempt, reassess actual outcomes and advance canonical quantity/TypeMeta/six-field complete-validation adoption with explicit remaining proof debt. Do not repeat an unchanged attempt.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_attribute_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After this distinct protected source-case attempt, inspect actual results and compare the remaining production/comparison bottleneck. At the next quantity/TypeMeta/six-field error adoption milestone, reassess concrete _2 repetitions and the smallest economical real-code adoption.",
+      "next_review_trigger": "After this single distinct protected attempt, reassess actual outcomes and advance canonical quantity/TypeMeta/six-field complete-validation adoption with explicit remaining proof debt. Do not repeat an unchanged attempt.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_attribute_2",
       "location": "cross-crate",
-      "next_review_trigger": "After this distinct protected source-case attempt, inspect actual results and compare the remaining production/comparison bottleneck. At the next quantity/TypeMeta/six-field error adoption milestone, reassess concrete _2 repetitions and the smallest economical real-code adoption.",
+      "next_review_trigger": "After this single distinct protected attempt, reassess actual outcomes and advance canonical quantity/TypeMeta/six-field complete-validation adoption with explicit remaining proof debt. Do not repeat an unchanged attempt.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_derive_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After this distinct protected source-case attempt, inspect actual results and compare the remaining production/comparison bottleneck. At the next quantity/TypeMeta/six-field error adoption milestone, reassess concrete _2 repetitions and the smallest economical real-code adoption.",
+      "next_review_trigger": "After this single distinct protected attempt, reassess actual outcomes and advance canonical quantity/TypeMeta/six-field complete-validation adoption with explicit remaining proof debt. Do not repeat an unchanged attempt.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_derive_2",
       "location": "cross-crate",
-      "next_review_trigger": "After this distinct protected source-case attempt, inspect actual results and compare the remaining production/comparison bottleneck. At the next quantity/TypeMeta/six-field error adoption milestone, reassess concrete _2 repetitions and the smallest economical real-code adoption.",
+      "next_review_trigger": "After this single distinct protected attempt, reassess actual outcomes and advance canonical quantity/TypeMeta/six-field complete-validation adoption with explicit remaining proof debt. Do not repeat an unchanged attempt.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_delegate_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After this distinct protected source-case attempt, inspect actual results and compare the remaining production/comparison bottleneck. At the next quantity/TypeMeta/six-field error adoption milestone, reassess concrete _2 repetitions and the smallest economical real-code adoption.",
+      "next_review_trigger": "After this single distinct protected attempt, reassess actual outcomes and advance canonical quantity/TypeMeta/six-field complete-validation adoption with explicit remaining proof debt. Do not repeat an unchanged attempt.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_delegate_2",
       "location": "cross-crate",
-      "next_review_trigger": "After this distinct protected source-case attempt, inspect actual results and compare the remaining production/comparison bottleneck. At the next quantity/TypeMeta/six-field error adoption milestone, reassess concrete _2 repetitions and the smallest economical real-code adoption.",
+      "next_review_trigger": "After this single distinct protected attempt, reassess actual outcomes and advance canonical quantity/TypeMeta/six-field complete-validation adoption with explicit remaining proof debt. Do not repeat an unchanged attempt.",
       "status": "REQUIRED_OPEN"
     }
   ],
@@ -64,13 +64,19 @@
       "SENSITIVE_LOCAL",
       "SECRET_NEVER_PERSIST"
     ],
-    "large_logs": "Retain complete REPO_SAFE diagnostic and proof log blobs in the repository Git object store. Git stores these repeated textual outputs compressed internally; no verifier output is trimmed or normalized.",
-    "location": "verification/agones/runs under the verified PR/delivery commit; immutable manifests bind every full log with SHA-256.",
-    "passive_evidence_checkpoint": {
+    "historical_passive_evidence_checkpoint_before_expected_multiset": {
       "branch": "codex/agones-ci-evidence-39511896291",
       "commit": "183f6192b23f21d681218590a71ffe754b5f6981",
       "receipt": "verification/agones/ci/39511896291-evidence-published.json",
       "role": "immutable backup, no second queue or acceptance bypass"
+    },
+    "large_logs": "Retain complete REPO_SAFE diagnostic and proof log blobs in the repository Git object store. Git stores these repeated textual outputs compressed internally; no verifier output is trimmed or normalized.",
+    "location": "verification/agones/runs under the verified PR/delivery commit; immutable manifests bind every full log with SHA-256.",
+    "passive_evidence_checkpoint": {
+      "branch": "codex/agones-ci-evidence-39516368235",
+      "commit": "7a1c58ddd9ca0a8b911e2a2f2de98616c00c2fe0",
+      "receipt": "verification/agones/ci/39516368235-evidence-published.json",
+      "role": "Immutable complete all12 backup, not a second queue or acceptance bypass."
     },
     "provider": "Content-addressed Git object store in QuasarRay/agones",
     "retention": "Keep referenced evidence commits reachable through the review/integration history or an explicitly indexed immutable passive evidence branch until their claims are superseded and all needed bytes remain retained. Never prune the only artifact behind a live claim.",
@@ -102,12 +108,12 @@
   ],
   "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
   "delivery": {
-    "acceptance": "Expected-driven error multiset helper passes 605 native tests and all five deterministic generation modes; five complete source harness bodies are unchanged. Source4523 seven retained successful selections keep their exact scope, 49 claims and 38 covers. Prior five exact source timeouts receive zero credit. Full previous CI evidence is durably published at183f6192. Matcher publication/current protected verification remain pending. Isolated6347616 native675/six modes, complete migration, lifecycle, Rusternetes conformance and all eight _2 cells remain required.",
+    "acceptance": "Exact production lookup and exact empty/singleton multiset helper pass source-bound605native tests and all five generation modes. All five full source harness bodies are unchanged, with generic full-field multiplicities for larger lists. Six implementation gates refreshed. Current proofs require revalidation; prior e49e nine scoped successes53claims/42covers and all12raw artifacts remain durable at7a1c/b9f6. Clean isolatedd492675native/six modes and full canonical adoption/formal/lifecycle/Rusternetes/_2requirements remain pending.",
     "access": "GitHub app authorized as QuasarRay with push/admin; gh CLI unauthenticated; local .git writable",
     "actual_integration_head": "1e64a054901658908d0a7a4eecd3010379df9614",
-    "actual_review_head": "4523bffd1fc3ae01ecba4918b343cafaa688c2f7",
+    "actual_review_head": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
     "artifact_recovery_pending": "verification/agones/ci/39505643334-artifact-recovery-pending.json",
-    "artifact_recovery_status": "verification/agones/ci/39505643334-artifact-recovery-completed.json",
+    "artifact_recovery_status": "verification/agones/ci/39516368235-terminal-retained.json",
     "authorization": "User execution contract REQ-12/F4 and root AGENTS.MD milestone PR/merge workflow",
     "checks": [
       {
@@ -352,36 +358,73 @@
         "status": "FAILED",
         "tested_merge": "44a9f5d940555795eeb3bc1abdacbeea1871ed4c",
         "workflow_run": 39511896291
+      },
+      {
+        "evidence": "verification/agones/ci/39516368235-in-progress.json",
+        "head": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
+        "scope": "Existing full protected policy. No current new proof credited.",
+        "status": "IN_PROGRESS",
+        "tested_merge": "afdf77e038393296fc136dc61d81cbbc193691e4",
+        "workflow_run": 39516368235
+      },
+      {
+        "evidence": "verification/agones/ci/39516368235-terminal-retained.json",
+        "head": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
+        "scope": "State/Rust/common/contract/source001/source004 passed; source000/002/003 and mandatory aggregate failed. Nine strict selections retained; no proof credit for failed cases.",
+        "status": "FAILED",
+        "tested_merge": "afdf77e038393296fc136dc61d81cbbc193691e4",
+        "workflow_run": 39516368235
       }
     ],
-    "current_ci_receipt": "verification/agones/ci/39511896291-terminal-retained.json",
-    "current_public_status_receipt": "verification/agones/ci/39505643334-public-metadata-connector-unavailable.json",
-    "current_retained_evidence": "verification/agones/ci/39511896291-terminal-retained.json",
+    "current_ci_receipt": "verification/agones/ci/39516368235-terminal-retained.json",
+    "current_public_status_receipt": "verification/agones/ci/39516368235-terminal-retained.json",
+    "current_retained_evidence": "verification/agones/ci/39516368235-terminal-retained.json",
     "current_retained_formal_counts": {
-      "backend_rows": 20132,
-      "failed_harnesses": 5,
-      "original_defaulting_assertions": 36,
+      "historical_source": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
       "original_feature_validation_assertions": 0,
-      "original_query_error_assertions": 1,
-      "retained_artifacts": 12,
-      "satisfied_covers": 38,
-      "semantic_claims": 49,
-      "successful_harnesses": 7,
-      "unreachable_credited": 0
+      "satisfied_covers": 0,
+      "semantic_claims": 0,
+      "status": "REVERIFICATION_REQUIRED",
+      "successful_harnesses": 0
     },
     "expected_base": "1e64a054901658908d0a7a4eecd3010379df9614",
-    "expected_head": "4523bffd1fc3ae01ecba4918b343cafaa688c2f7",
+    "expected_head": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
     "expected_multiset_checkpoint": {
       "generation_controls": "verification/agones/runs/expected-multiset-generation-controls-1.json",
+      "head": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
       "histogram_pairs": 1600,
       "law_manifest": "verification/agones/expected-multiset-relation.json",
+      "local_native_checkpoint": "5cf1cd9f0afee7006f1188e5cd42510f54e9500e",
       "native": "verification/agones/runs/expected-multiset-native-1.json",
-      "qualified_source_credit_added": 0,
+      "qualified_source_credit_added": 4,
+      "retained_receipt": "verification/agones/ci/39516368235-eight-retained.json",
       "review": "verification/agones/refactoring/expected-multiset-review.json",
       "source_harnesses_unchanged": 5,
-      "status": "NATIVE_VERIFIED_UNPUBLISHED"
+      "status": "DRAFT_PUBLISHED_CI_TERMINAL_FAILURE_ALL12_RETAINED",
+      "successful_feature_source_cases": [
+        1,
+        4
+      ],
+      "terminal_receipt": "verification/agones/ci/39516368235-terminal-retained.json",
+      "tested_merge": "afdf77e038393296fc136dc61d81cbbc193691e4",
+      "tree": "beffc3e30a13e5869c028ec1fd7bfb698d76981d",
+      "workflow_run": 39516368235
     },
     "historical_artifact_recovery_pending": "verification/agones/ci/39505643334-artifact-recovery-pending.json",
+    "historical_artifact_recovery_status_before_expected_multiset": "verification/agones/ci/39505643334-artifact-recovery-completed.json",
+    "historical_ci_before_exact_lookup_singleton": "verification/agones/ci/39516368235-terminal-retained.json",
+    "historical_retained_counts_before_exact_lookup_singleton": {
+      "backend_rows": 37459,
+      "failed_harnesses": 3,
+      "original_defaulting_assertions": 36,
+      "original_feature_validation_assertions": 4,
+      "original_query_error_assertions": 1,
+      "retained_artifacts": 12,
+      "satisfied_covers": 42,
+      "semantic_claims": 53,
+      "successful_harnesses": 9,
+      "unreachable_credited": 0
+    },
     "historical_retained_formal_counts_before_concat": {
       "backend_rows": 20132,
       "failed_harnesses": 5,
@@ -402,47 +445,40 @@
       "method_observed": "source head is ancestor of integration; PR API reports merged",
       "pr": "https://github.com/QuasarRay/agones/pull/94"
     },
-    "next_action": "Publish the native-verified expected-driven multiset helper to existing draft PR96 with an expected-head lease; run one distinct protected campaign with all original cases/assertions/covers/domains/unwind128 preserved. Retain source4523 evidence with its unchanged-program scope; exact feature-source credit remains zero until successful individual rows and covers. Continue isolated complete validation work while CI runs.",
+    "next_action": "Publish the native-verified exact feature lookup and exact singleton multiset repair to existing draft PR96 with the expected e49e head lease, then run one distinct full protected campaign. Preserve every source fixture/action/assertion/cover/domain/unwind128/full error field and duplicate. Current proof credit is pending after production changes; e49e receipts remain historical and durable. After the result, advance canonical complete-validation adoption with explicit proof debt.",
     "pending_checkpoint": {
       "backend_harnesses": [
-        "feature_bool_common_domain",
-        "feature_input_common_domain",
-        "source_query_case_003",
-        "health_defaulting_common_domain",
-        "source_gs_case_005",
-        "source_gs_case_014",
-        "source_gsv_case_000",
-        "source_gsv_case_001",
-        "source_gsv_case_002",
-        "source_gsv_case_003",
         "source_gsv_case_004",
-        "gameserver_feature_validation_common_domain"
+        "feature_bool_common_domain",
+        "source_query_case_003",
+        "source_gsv_case_001",
+        "health_defaulting_common_domain",
+        "feature_input_common_domain",
+        "gameserver_feature_validation_common_domain",
+        "source_gs_case_005",
+        "source_gsv_case_002",
+        "source_gs_case_014",
+        "source_gsv_case_003",
+        "source_gsv_case_000"
       ],
-      "ci_receipt": "verification/agones/ci/39511896291-terminal-retained.json",
-      "expected_review_branch": "codex/agones-player-tracking-validation",
-      "expected_tested_merge": "44a9f5d940555795eeb3bc1abdacbeea1871ed4c",
+      "current_unique_source_assertions_verified": 41,
       "feature_id": "GS-VALIDATE-FEATURES-001",
-      "head": "4523bffd1fc3ae01ecba4918b343cafaa688c2f7",
-      "local_source_head": "d6c6b857f8194d76889bef0544c946ab044133a2",
-      "local_source_head_kind": "LOCAL_UNPUBLISHED_CHECKPOINT",
-      "new_contract_model_credit": 0,
-      "new_qualified_defaulting_source_credit": 36,
-      "new_qualified_feature_validation_credit": 0,
-      "new_qualified_query_error_credit": 1,
-      "new_qualified_source_credit": 37,
-      "publication_strategy": "Existing89immutableblobs plus48UTF8tree.content entries produced the exact staged tree in one batched tree operation; prior local source checkpoint preserved at refs/agones-checkpoints/player-tracking-validation-local.",
+      "head": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
+      "local_native_checkpoint": "5cf1cd9f0afee7006f1188e5cd42510f54e9500e",
+      "new_qualified_source_credit_since_previous_campaign": 4,
+      "qualified_feature_validation_assertions_required": 6,
+      "qualified_feature_validation_assertions_verified": 4,
       "review_branch": "codex/agones-player-tracking-validation",
-      "status": "DRAFT_PUBLISHED_CI_TERMINAL_FAILURE_ALL12_LOCALLY_RETAINED",
-      "tested_merge": "80901b52f41f9328f0449f16f4430e8eb2b7020f",
-      "tree": "9198114c9aa7223e3df515d9c9f70181da0af9b4",
+      "status": "DRAFT_PUBLISHED_CI_TERMINAL_FAILURE_NINE_STRICT_SELECTIONS",
+      "tested_merge": "afdf77e038393296fc136dc61d81cbbc193691e4",
+      "tree": "beffc3e30a13e5869c028ec1fd7bfb698d76981d",
       "user_guidance_dirty_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
       "visible_checkout": {
         "branch": "agones-rs-dev",
-        "head": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
-        "user_guidance_preserved": true
+        "head": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
+        "user_guidance_dirty_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
       },
-      "work_packet": "verification/agones/gameserver-feature-validation-work-packet.json",
-      "workflow_run": 39511896291
+      "workflow_run": 39516368235
     },
     "pending_ci": "verification/agones/ci/39144973597-in-progress.json",
     "pending_publication": {
@@ -486,7 +522,7 @@
     "query_allocation_terminal_receipt": "verification/agones/ci/39498916435-terminal-retained.json",
     "query_allocation_tested_merge": "80901b52f41f9328f0449f16f4430e8eb2b7020f",
     "query_allocation_workflow_run": 39498916435,
-    "remote_result": "EXPECTED_MULTISET_NATIVE_VERIFIED_PUBLICATION_PENDING_PR96_DRAFT",
+    "remote_result": "EXACT_LOOKUP_SINGLETON_NATIVE605_VERIFIED_PUBLICATION_PENDING",
     "required_checks": [
       "migration-state",
       "rust",
@@ -497,24 +533,25 @@
     "streaming_direct_paths_terminal_receipt": "verification/agones/ci/39505643334-terminal-retained.json",
     "streaming_direct_paths_workflow_run": 39505643334,
     "terminal_evidence_publication": {
-      "branch": "codex/agones-ci-evidence-39511896291",
-      "commit": "183f6192b23f21d681218590a71ffe754b5f6981",
-      "receipt": "verification/agones/ci/39511896291-evidence-published.json",
-      "status": "PUBLISHED"
+      "branch": "codex/agones-ci-evidence-39516368235",
+      "commit": "7a1c58ddd9ca0a8b911e2a2f2de98616c00c2fe0",
+      "receipt": "verification/agones/ci/39516368235-evidence-published.json",
+      "status": "PUBLISHED_ALL12",
+      "tree": "f5e3aede674f11e29972ec6089cc4acc463695a4"
     },
     "terminal_evidence_publication_pending": "verification/agones/ci/39505643334-evidence-publication-pending.json",
     "visible_checkout": {
       "branch": "agones-rs-dev",
-      "head": "4523bffd1fc3ae01ecba4918b343cafaa688c2f7",
+      "head": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
       "user_guidance_dirty_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
     }
   },
   "goal": {
     "objective_attachment": "/home/astral/.codex/attachments/5cf63dab-e5a8-49be-a2f1-ae51f5edd993/pasted-text-1.txt",
     "reported_usage": {
-      "observed_at": 1792539405,
-      "time_seconds": 74148,
-      "tokens": 7252967
+      "observed_at": 1792541070,
+      "time_seconds": 75812,
+      "tokens": 7472103
     },
     "status": "active",
     "thread_id": "01a14ebe-10fa-7c41-9f85-256874fb4c1f",
@@ -522,8 +559,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 283,
-  "previous_sha256": "43ca00951d34cda71e7d23064d1646632df884c8d26d2697bf2f77e3a4897700",
+  "previous_revision": 290,
+  "previous_sha256": "1160a7ba66e4a716d6e2e0e7dccea97c2333aa77c8813d95184c87a83e69ccc9",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -1036,9 +1073,59 @@
         "source_gsv_case_003": "db9056acf6a132ff27f78e827fdedb2cd8b081c439da94dca9f42253a4323b24",
         "source_gsv_case_004": "72896580af14bc2c135a4e7ff978a0984ab6173dc438c1d752645957f3dd56f1"
       }
+    },
+    {
+      "architecture": "The isolated Genco emitter now shares its error relation and law-metadata function across feature/general validation, removing concrete repetition. All eight _2 cells remain REQUIRED_OPEN; this accessor creates no compiler-substrate need. Reassess real derive/delegation/API repetition during canonical complete-validation adoption.",
+      "candidate": "Inspect the actual FeatureGates::enabled lookup as the next production repair for source cases002/003. Preserve full name equality, initialized/uninitialized behavior, custom defaults, duplicate handling and sorted encoding.",
+      "decision": "SMALL_LOCAL_REFACTOR",
+      "evidence_invalidation": "No production or additional helper change has been made in this review. A later production accessor change must refresh every affected gate/semantic binding and reverify its actual programs; source001/004 receipts retain their e49e identities.",
+      "evidence_refs": [
+        "verification/agones/ci/39516368235-eight-retained.json",
+        "verification/agones/runs/gameserver-validation-bolero-kani-ci-39516368235-1-case-002.json",
+        "verification/agones/runs/gameserver-validation-bolero-kani-ci-39516368235-1-case-003.json"
+      ],
+      "feature_binding": "GS-VALIDATE-FEATURES-001",
+      "id": "GS-VALIDATE-FEATURES-001-partial-lookup-review",
+      "next_review_trigger": "After source000 and the terminal aggregate are recovered, inspect its distinct trace and implement the smallest justified production lookup repair. During complete-validation adoption, reassess the concrete CGP/resource/derive repetitions and all eight required _2 cells.",
+      "rationale": "The expected-driven matcher completes source001/004 with four assertions and four required covers. Cases002/003 expect empty error lists, so singleton-error matching cannot address their observed expansion. Their raw logs unfold the binary_search_by loop in FeatureGates::enabled through127 iterations, each with memcmp expansion, then complete symbolic expansion and exhaust12GiB before rows. Pinned Go FeatureEnabled performs exact map membership. An equality-based scan over the existing small unique map representation is a concrete semantics-preserving candidate; validate ordinary behavior and current production bindings before a distinct protected attempt. This is an inference from trace location, not proof of a unique root cause or claimed speedup.",
+      "roi": "The candidate is local to an existing real production accessor and uses ordinary Rust iterators inside the current CGP boundary. A small direct implementation/control costs less than building compiler or per-harness CI selection infrastructure for this repair. No new macro/general framework is justified. Actual verification benefit must be measured by the next distinct result.",
+      "secondary_candidate": "Direct empty/singleton error comparison is mathematically exact but is not the next repair for002/003, whose expected lists are empty. Review000 independently when its actual artifact is available."
+    },
+    {
+      "architecture": "The isolated Genco emitter now shares its error relation and law-metadata function across feature/general validation, removing concrete repetition. All eight _2 cells remain REQUIRED_OPEN; this accessor creates no compiler-substrate need. Reassess real derive/delegation/API repetition during canonical complete-validation adoption.",
+      "candidate": "Use exact equality lookup in FeatureGates::enabled for002/003, and direct exact empty/singleton comparison in the existing Genco error-multiset helper for000.",
+      "decision": "SMALL_LOCAL_REFACTOR",
+      "evidence_invalidation": "Current e49e nine successful selections retain53claims/42covers and their exact current source bindings. No additional production/helper edit has been made. A production lookup change invalidates every affected production gate and semantic proof closure; a singleton matcher change also reopens all five generated source-helper cases. Preserve historical receipts with their exact identities; do not transport e49e proof credit to changed programs.",
+      "evidence_refs": [
+        "verification/agones/ci/39516368235-terminal-retained.json",
+        "verification/agones/validation-error-data-isolated-recovery.json"
+      ],
+      "feature_binding": "GS-VALIDATE-FEATURES-001",
+      "id": "GS-VALIDATE-FEATURES-001-expected-multiset-terminal-review",
+      "next_review_trigger": "After ordinary controls and one distinct protected result for these trace-bound repairs, reassess actual outcomes and proceed to canonical complete-validation adoption with explicit remaining proof debt. Reassess concrete CGP/resource/derive repetitions and all eight required _2 cells at that adoption milestone.",
+      "rationale": "The expected-driven matcher completes source001/004 with four assertions and four required covers. Cases002/003 expect empty error lists, so singleton-error matching cannot address their observed expansion. Their raw logs unfold the binary_search_by loop in FeatureGates::enabled through127 iterations, each with memcmp expansion, then complete symbolic expansion and exhaust12GiB before rows. Pinned Go FeatureEnabled performs exact map membership. An equality-based scan over the existing small unique map representation is a concrete semantics-preserving candidate; validate ordinary behavior and current production bindings before a distinct protected attempt. This is an inference from trace location, not proof of a unique root cause or claimed speedup.",
+      "roi": "The candidate is local to an existing real production accessor and uses ordinary Rust iterators inside the current CGP boundary. A small direct implementation/control costs less than building compiler or per-harness CI selection infrastructure for this repair. No new macro/general framework is justified. Actual verification benefit must be measured by the next distinct result.",
+      "secondary_candidate": "Source000 expects one error and times out at900s with MemoryPeak6034563072 while unfolding source_gsv_errors_match/filter counts and full record/string equality. For expected length0, multiset equality is actual.is_empty(); for expected length1, it is actual length1 plus full-record Eq. Keep the existing exact generic multiset fallback for every larger cardinality. The1600 histogram controls already include empty, singleton, duplicate and length0..3 cases; preserve all field controls and all source bodies."
+    },
+    {
+      "architecture": "The small algorithms remain within existing CGP composition. Existing Genco owns the helper, with all source functions and input domains retained. All eight _2 form/location cells remain REQUIRED_OPEN; canonical complete-validation adoption is the next concrete opportunity to reassess resource/derive/delegation repetition.",
+      "candidate": "Use exact membership equality in the existing production feature map and direct exact empty/singleton error matching in the existing Genco emitter.",
+      "decision": "SMALL_LOCAL_REFACTOR",
+      "evidence_invalidation": "All six production gates and dependent semantic bindings refreshed after native check/tests. Retain e49e nine results53claims/42covers at their original source identity; all current affected model selections require fresh proof. Zero proof credit added by native checks or the case-analysis law.",
+      "feature_binding": "GS-VALIDATE-FEATURES-001",
+      "id": "GS-VALIDATE-FEATURES-001-exact-lookup-singleton-review",
+      "law_manifest": "verification/agones/expected-multiset-relation.json",
+      "next_review_trigger": "After this single distinct protected attempt, reassess actual outcomes and advance canonical quantity/TypeMeta/six-field complete-validation adoption with explicit remaining proof debt. Do not repeat an unchanged attempt.",
+      "ordinary_checks": [
+        "verification/agones/runs/exact-lookup-workspace-1.json",
+        "verification/agones/runs/exact-lookup-singleton-generation-native-1.json",
+        "verification/agones/runs/exact-lookup-singleton-current-native-1.json"
+      ],
+      "rationale": "Current e49e traces locate002/003 expansion in FeatureGates::enabled binary_search_by/memcmp and000 expansion in repeated full-error multiplicity folds. The production accessor now finds the same exact unique key and bool without ordering comparison. The generated helper handles empty/singleton cardinalities by exact slice matching/full Eq and retains exact multiplicities for all larger lists. The independent1600pair histogram and all-field controls pass; every original full source harness body is unchanged.",
+      "roi": "Two local algorithm changes reuse existing Rust/CGP/Genco boundaries and controls. No dependency, macro/compiler framework, registry, alternate provider, per-harness CI selector or weakened bound is introduced. Configured lookup is now linear in name count (15canonical), with fewer ordering requirements; no runtime or formal speedup is claimed before actual CI."
     }
   ],
-  "revision": 284,
+  "revision": 291,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [
@@ -1066,14 +1153,20 @@
         "verification/agones/ci/39511896291-seven-retained-source-jobs-running.json",
         "verification/agones/ci/39511896291-terminal-retained.json",
         "verification/agones/ci/39511896291-evidence-published.json",
-        "verification/agones/expected-multiset-relation.json"
+        "verification/agones/expected-multiset-relation.json",
+        "verification/agones/ci/39516368235-in-progress.json",
+        "verification/agones/ci/39516368235-eight-retained.json",
+        "verification/agones/ci/39516368235-nine-retained-two-oom-source000-running.json",
+        "verification/agones/ci/39516368235-terminal-retained.json",
+        "verification/agones/ci/39516368235-evidence-published.json",
+        "verification/agones/exact-lookup-singleton-prior-assurance.json"
       ],
       "feature_ids": [
         "gameserver-player-tracking-validation"
       ],
       "id": "GS-VALIDATE-FEATURES-001",
-      "implementation_gate": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
-      "next_action": "Publish the verified expected-driven multiset matcher to draft PR96, then recover one distinct protected CI campaign. Preserve all source cases/assertions/covers/domains/unwind128 and zero pending exact-source credit. Continue isolated full validation while CI runs.",
+      "implementation_gate": "verification/agones/gates/c4e2a5ea6825492fb9875ede400e5136552e534d80e260295148c92c0775f096.json",
+      "next_action": "Publish the native-verified exact feature lookup and exact singleton multiset repair to existing draft PR96 with the expected e49e head lease, then run one distinct full protected campaign. Preserve every source fixture/action/assertion/cover/domain/unwind128/full error field and duplicate. Current proof credit is pending after production changes; e49e receipts remain historical and durable. After the result, advance canonical complete-validation adoption with explicit proof debt.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
         "crates/agones-core/src/gameserver_defaulting.rs",
@@ -1255,7 +1348,7 @@
         "gameserver-creation-defaulting"
       ],
       "id": "GS-DEFAULTS-001",
-      "implementation_gate": "verification/agones/gates/839b7ce78ea75153104d3272281ccb3a844a6385dbc480196ef2837cb4b439e9.json",
+      "implementation_gate": "verification/agones/gates/acb9bffecd474a0b55775db612bbc62126cb5a52e2cf6bf3fc8ed708c539e846.json",
       "next_action": "Publish complete source005 raw evidence and updated direct coverage/next feature packet to PR94; validate fresh metadata/binding CI and merge this proof milestone. Then implement GS-VALIDATE-FEATURES-001 through CGP before extracting its semantic properties.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
@@ -1296,7 +1389,7 @@
         "source-sdk-version-annotation-policy"
       ],
       "id": "SDK-VERSION-001",
-      "implementation_gate": "verification/agones/gates/566a293ee7d457501907b1646ff43ec5d9818f3f9b3b25ed159fb69103ed77ab.json",
+      "implementation_gate": "verification/agones/gates/e74cea1b118291a5b4daee2f04a790a6a5b3e314e519794063d5f90acbae1af5.json",
       "next_action": "Complete remaining18 selected version identities and the shared-domain claims/covers. Reuse complete GameServer source proofs with the same qualified version identity counted once; retain the two Fleet assertions and full decoder/lifecycle scope.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
@@ -1339,7 +1432,7 @@
         "source-compatible-feature-gate-error-rendering"
       ],
       "id": "FG-ERROR-001",
-      "implementation_gate": "verification/agones/gates/5fddb8455f7bb9d9c3198b4f5236073dd281363c9cfc094cf4ab46518a9127e1.json",
+      "implementation_gate": "verification/agones/gates/c314d7b1d1f1bbb3e3aace2d9d3e62c5c3d22b6d143177ad8c37bc76d55d9ed9.json",
       "next_action": "Resume required ASCII/full-error proofs only with a distinct diagnosed decomposition hypothesis, preserving original byte domains, assertions, covers and source-compatible rendering; time/memory failures remain uncredited.",
       "owned_paths": [
         "crates/agones-core/src/features.rs"
@@ -1380,7 +1473,7 @@
         "feature-gates-environment-cli-binding"
       ],
       "id": "FG-INPUT-001",
-      "implementation_gate": "verification/agones/gates/eea54f495941f20e41f1e6d4bd862727ddf2a0b74cb4ad51bafb4f13fb28e476.json",
+      "implementation_gate": "verification/agones/gates/6933692d233041bdb12a0a44ad943ac9309a81519048d2fed4f4b19fba413ef5.json",
       "next_action": "Complete formal evidence for the original environment/CLI assertions and real input-binding effects beyond the proved bounded pure selector; retain every original identity and all required process/lifecycle categories.",
       "owned_paths": [
         "crates/agones-core/src/features.rs",
@@ -1417,7 +1510,7 @@
         "feature-gates-configuration"
       ],
       "id": "FG-CONFIG-001",
-      "implementation_gate": "verification/agones/gates/9c20b3d827119467d3cab75f885624bead98256955facff3fb20bdcfdb9be4c2.json",
+      "implementation_gate": "verification/agones/gates/ad59e390e41e49a0f0d55c2d776a88c7d371cb0cb8a69cfd11a0a3b4a63d6ab5.json",
       "next_action": "Complete remaining exact query/encoding source assertions with existing generated harnesses and unchanged domains/covers. Reuse the proved parse-error case and retain independent lifecycle/consumer obligations.",
       "owned_paths": [
         "crates/agones-core/src/features.rs",
@@ -1445,15 +1538,15 @@
   ],
   "workspace": {
     "branch": "agones-rs-dev",
-    "dirty_patch_sha256": "50081bd8090cd57494024d8f894fb552b62794e8ed930497ead9da1e5f5f2cbe",
-    "head": "4523bffd1fc3ae01ecba4918b343cafaa688c2f7",
-    "last_validated_implementation": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
+    "dirty_patch_sha256": "298e455adf83bc166476a131a538c271d0748160f9d1325fa63d9ae73b7f204a",
+    "head": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
+    "last_validated_implementation": "verification/agones/gates/c4e2a5ea6825492fb9875ede400e5136552e534d80e260295148c92c0775f096.json",
     "path": "/home/astral/Projects/agones",
-    "source_binding_receipt": "verification/agones/runs/expected-multiset-generation-controls-1.json",
+    "source_binding_receipt": "verification/agones/runs/exact-lookup-singleton-current-native-1.json",
     "untracked_inputs": [
       "AGONES_RS_CONTINUATION_PROMPT.md",
       "AGONES_RS_PROMPT_AUDIT_RESOLUTION.md"
     ],
-    "untracked_source_binding_sha256": "fb948b2e8fa7aebb95a7754b8613dc586bbbb16e0bd119b6c65558560e851c18"
+    "untracked_source_binding_sha256": "b7dc8fd97092f2655f266a87633ad6cff27b91220254fb03fd44c254c593364c"
   }
 }

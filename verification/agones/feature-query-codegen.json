@@ -211,7 +211,7 @@
     }
   ],
   "ir": "verification/agones/feature-gates.ir.json",
-  "ir_sha256": "b2801f04d07b79fd5f24d9a7701266b75442fef669ab135366e8a91312bb20c9",
+  "ir_sha256": "1060a5113d77dde203d1d8f344166ceec85a12c1fe4b271c28957eb0e0be2cd6",
   "output": "crates/agones-core/tests/generated/feature_gate_cases.rs",
   "output_sha256": "46f05e90380d2c292b4e888294e1dae11239b66e9a9e6c42f2bbfdd2c69a2b00",
   "preconditions": [],

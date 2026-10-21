@@ -45,8 +45,8 @@ pub struct FeatureGates(Vec<(&'static str, bool)>);
 impl FeatureGates {
     pub fn enabled(&self, feature: &str) -> bool {
         self.0
-            .binary_search_by(|(name, _)| (*name).cmp(feature))
-            .map(|index| self.0[index].1)
+            .iter()
+            .find_map(|(name, enabled)| (*name == feature).then_some(*enabled))
             .unwrap_or(false)
     }
 
@@ -399,6 +399,29 @@ mod tests {
             context.all_features_enabled().encode(),
             "A=true&Z=true&a~%2A+=true"
         );
+        let custom = [
+            ("z", true),
+            ("a", false),
+            ("aa", false),
+            ("a\0", true),
+            ("é", true),
+            ("🦀", false),
+            ("", true),
+            ("a", true),
+        ];
+        let expected = custom
+            .into_iter()
+            .collect::<std::collections::BTreeMap<_, _>>();
+        let gates = FeatureGates::from_defaults(&custom);
+        for name in [
+            "", "a", "aa", "a\0", "é", "🦀", "z", "A", "a\0x", "é\0", "🦀x", "missing",
+        ] {
+            assert_eq!(
+                gates.enabled(name),
+                expected.get(name).copied().unwrap_or(false)
+            );
+            assert!(!FeatureGates::default().enabled(name));
+        }
     }
 
     #[test]
