@@ -1,0 +1,28 @@
+{
+  "artifact_bindings": {
+    "verification/agones/runs/canonical-complete-validation-current-native-1.json": "9603a8dc29c89953b8ebf60a57cceee391a738eb7d397deaaeb21cca280de4c3",
+    "verification/agones/runs/canonical-complete-validation-generation-1.json": "2dd6d8710f74ec7f1c1318b96b82ac9aa0adfbbd9166f3857a1c80a94eae788f",
+    "verification/agones/runs/canonical-complete-validation-go-controls-1.json": "23005352789078d5fc95350656ee428ac9209270da92515597acd5f2ed5e6319"
+  },
+  "branch": "codex/agones-native-recovery-675",
+  "classification": "REPO_SAFE",
+  "commit": "35659272d1e6074c0a4d8d02cbfb3a45fc277019",
+  "current_formal_credit": 0,
+  "generation_modes": 6,
+  "go_controls": "PASSED",
+  "ignored": 3,
+  "ledger_revision_in_snapshot": 300,
+  "local_commit": "30ee173467689960a6a474fa214b38ec4631508b",
+  "local_tree": "4caf1c7e307b0200303a4cadf47d3587aa7e5931",
+  "native_source_gate_count": 9,
+  "native_tests_failed": 0,
+  "native_tests_passed": 675,
+  "observed_at": "2026-10-21T01:18:12.409268+00:00",
+  "remote_tree_exactly_matches_local": true,
+  "review_code_head_unchanged": true,
+  "schema_version": 1,
+  "scope": "Recoverable canonical quantity/TypeMeta/six-field/source25 implementation and private split name/value storage. No new PR/merge/current formal proof or complete migration claim. All25general/50covers and all existing selections require strict protected accounting/reverification.",
+  "status": "PUBLISHED_NATIVE_RECOVERY_ONLY_FORMAL_ACCEPTANCE_PENDING",
+  "tested_review_head": "2e1d39f6680d055e98d702238e77e32b9562b376",
+  "tree": "4caf1c7e307b0200303a4cadf47d3587aa7e5931"
+}

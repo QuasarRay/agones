@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "EXPECTED_MULTISET_TERMINAL7A1C_DURABLE_PR96_UPDATED",
+  "gate_snapshot": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
+  "predecessor_revision": 289,
+  "predecessor_sha256": "e9a3d8eb2af316302658263d8c157a014dda4b4b5b5e8bd0a8dc935840c929bb",
+  "reason": "Complete all12raw artifacts/nine strict summaries/terminal audit published7a1c with exact local tree identity and zero passive workflows. PR96 draft head remains e49e; public remote main715ce and integration1e64 unchanged. User AGENTS preserved; active Goal remains incomplete. Next trace-bound accessor/singleton repairs and isolatedd492 adoption packet are durable.",
+  "result_revision": 290,
+  "schema_version": 1,
+  "state_sha256": "1160a7ba66e4a716d6e2e0e7dccea97c2333aa77c8813d95184c87a83e69ccc9",
+  "timestamp": "2026-10-21T00:02:09.327390+00:00"
+}

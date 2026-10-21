@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "STREAMING_DIRECT_PATHS_TERMINAL_ALL12_RETAINED",
+  "gate_snapshot": "verification/agones/gates/70364c20a393205d32e35c7839503eced4f6f607d9e65d312e7dc99551384eb5.json",
+  "predecessor_revision": 270,
+  "predecessor_sha256": "a3c0039e818418cec0d48f8e49df71941476bdc612c8f02890e802a6febee286",
+  "reason": "Actual395056failed with3OOM/2timeouts and zero exact feature result rows; all12archive/run/log/source identities and7strict summaries verified. Current49claims/38covers/37deduplicated defaulting/query source occurrences restored with precise scope; no feature-source, six-field source-correspondence or full-migration completion inferred. Connector recovery completed without retrying models.",
+  "result_revision": 271,
+  "schema_version": 1,
+  "state_sha256": "3441fcf1c854f8968b34b3930c0d30be4ba3823704681623a7d9860da8d3a6c7",
+  "timestamp": "2026-10-20T22:31:23.042186+00:00"
+}

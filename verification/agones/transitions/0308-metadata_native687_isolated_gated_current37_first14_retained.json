@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "METADATA_NATIVE687_ISOLATED_GATED_CURRENT37_FIRST14_RETAINED",
+  "gate_snapshot": null,
+  "predecessor_revision": 307,
+  "predecessor_sha256": "6fa1ca1f2db91c815cf5168caed6897923c9811f3a49d5b8b057c73ec3d2ae76",
+  "reason": "Complete shared label/annotation production implementation passed locked all-target check and687native tests and real Rusternetes admissions, then content-bound gate16598e09 was sealed in893af2bc before semantic extraction. Canonical adoption pending. Fourteen native676campaign artifacts retained and audited: seven scoped successes, seven source OOM failures; no aggregate completion.",
+  "result_revision": 308,
+  "schema_version": 1,
+  "state_sha256": "e270b856d4ebc6b61f174ff2595f4b4f1dcd257a56449464804a6c7638605268",
+  "timestamp": "2026-10-21T06:59:06.724264+00:00"
+}

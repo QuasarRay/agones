@@ -1,0 +1,450 @@
+{
+  "artifact_retrieval": "Authenticated download connector intermittently returns Unknown tool; public API status reads work. Five original artifacts fully retained, SHA/source checked and audited. No permission denial or new authorization requirement observed.",
+  "attempt": 1,
+  "available_artifacts": [
+    {
+      "digest": "sha256:d40122cd87ea93f69bffe8b7eb2838d2e6af983a4276ba2efa1a8a939cbd1367",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12315155890,
+      "name": "feature-kani-general-validation-021-39528223788-1",
+      "size_in_bytes": 57937
+    },
+    {
+      "digest": "sha256:b47f0bcd45c22d9fced11d2da8c7e7134e6b93fad465750ceaba2b8a77496d5c",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314781625,
+      "name": "feature-kani-gameserver-014-39528223788-1",
+      "size_in_bytes": 153900
+    },
+    {
+      "digest": "sha256:4065fa5ddce4dcdc4a0c31fb7b8d84443ec48ebc0312a6f5a74bb99b3ebdb068",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314741630,
+      "name": "feature-kani-validation-001-39528223788-1",
+      "size_in_bytes": 59980
+    },
+    {
+      "digest": "sha256:1c2b16cfba73e091a901bbcbabb228ff6186d2d3eb213ab5cfbf5f936476ec57",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314736703,
+      "name": "feature-kani-general-validation-011-39528223788-1",
+      "size_in_bytes": 56030
+    },
+    {
+      "digest": "sha256:af35949a5ee511bf4c67348c384015178cf905829fb2cfcc9e2bcddb064d150d",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314725693,
+      "name": "feature-kani-query-003-39528223788-1",
+      "size_in_bytes": 46647
+    },
+    {
+      "digest": "sha256:93273e84efbb0865dee66c7674da0d6a1157fa98908456deb62a6d91c9458ae2",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314520875,
+      "name": "feature-kani-health-39528223788-1",
+      "size_in_bytes": 58464
+    },
+    {
+      "digest": "sha256:fefd68b2a5ce74b414b3279974c0445fce2e41e582796f6bd0b9bd41e1f27e5d",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314475776,
+      "name": "feature-kani-player-contract-39528223788-1",
+      "size_in_bytes": 46625
+    },
+    {
+      "digest": "sha256:a8113f28f8ef5a81c3e59998a4965ed42265e5a9ea5650d00a793efd32064239",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314471846,
+      "name": "feature-kani-general-validation-016-39528223788-1",
+      "size_in_bytes": 58074
+    },
+    {
+      "digest": "sha256:d9c496d4e2cdbaad4a0c899152bd780da330667275e0a55a0f1e5d57a9cba7ae",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314291588,
+      "name": "feature-kani-gameserver-005-39528223788-1",
+      "size_in_bytes": 154280
+    },
+    {
+      "digest": "sha256:4bd10a82cad30f8c7582baf2c7a30ff8ffc34418c24a20b2f15c059748a18e8f",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314161019,
+      "name": "feature-kani-bool-39528223788-1",
+      "size_in_bytes": 39659
+    },
+    {
+      "digest": "sha256:35ce4c52418c27c7a2f7eefbaad962fe3545a48618caf0be948331dc7e06106d",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314156070,
+      "name": "feature-kani-input-39528223788-1",
+      "size_in_bytes": 37179
+    }
+  ],
+  "classification": "REPO_SAFE",
+  "contract_diagnosis": "verification/agones/ci/39528223788-contract-parser-diagnosis.json",
+  "current_formal_credit": 0,
+  "current_strict_partial_counts": {
+    "backend_rows": 6089,
+    "qualified_original_assertions": 1,
+    "satisfied_covers": 26,
+    "semantic_claims": 10,
+    "successful_harnesses": 4
+  },
+  "head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
+  "jobs": [
+    {
+      "completed_at": "2026-10-21T01:36:12Z",
+      "conclusion": "success",
+      "failed_steps": [],
+      "id": 118987780123,
+      "name": "migration-state",
+      "started_at": "2026-10-21T01:35:42Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:42:00Z",
+      "conclusion": "success",
+      "failed_steps": [],
+      "id": 118987949387,
+      "name": "rust",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:46:18Z",
+      "conclusion": "success",
+      "failed_steps": [],
+      "id": 118987949467,
+      "name": "feature-common-model-check",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:38:41Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Require all three contract claims and eight non-vacuity covers"
+      ],
+      "id": 118987949516,
+      "name": "feature-validation-contract-model-check",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987949829,
+      "name": "general-validation-source-010",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987949838,
+      "name": "general-validation-source-006",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987949845,
+      "name": "general-validation-source-009",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987949848,
+      "name": "general-validation-source-008",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987949854,
+      "name": "general-validation-source-012",
+      "started_at": "2026-10-21T01:36:19Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987949856,
+      "name": "feature-validation-source-003",
+      "started_at": "2026-10-21T01:36:15Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": "2026-10-21T01:45:30Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949859,
+      "name": "general-validation-source-016",
+      "started_at": "2026-10-21T01:36:15Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987949867,
+      "name": "general-validation-source-022",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987949869,
+      "name": "general-validation-source-003",
+      "started_at": "2026-10-21T01:36:15Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987949897,
+      "name": "general-validation-source-005",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": "2026-10-21T01:45:57Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949900,
+      "name": "feature-validation-source-001",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987949902,
+      "name": "general-validation-source-002",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": "2026-10-21T01:46:44Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949908,
+      "name": "general-validation-source-021",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987949909,
+      "name": "general-validation-source-001",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987949916,
+      "name": "general-validation-source-017",
+      "started_at": "2026-10-21T01:46:19Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987949918,
+      "name": "feature-validation-source-000",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987949936,
+      "name": "general-validation-source-000",
+      "started_at": "2026-10-21T01:36:13Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987949944,
+      "name": "general-validation-source-004",
+      "started_at": "2026-10-21T01:36:15Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": "2026-10-21T01:45:56Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949945,
+      "name": "general-validation-source-011",
+      "started_at": "2026-10-21T01:36:15Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987950005,
+      "name": "general-validation-source-023",
+      "started_at": "2026-10-21T01:42:01Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987950021,
+      "name": "general-validation-source-018",
+      "started_at": "2026-10-21T01:38:43Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987950027,
+      "name": "general-validation-source-014",
+      "started_at": "2026-10-21T01:45:59Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987950028,
+      "name": "general-validation-source-015",
+      "started_at": "2026-10-21T01:46:22Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987950036,
+      "name": "feature-validation-source-004",
+      "started_at": "2026-10-21T01:36:13Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987950037,
+      "name": "general-validation-source-013",
+      "started_at": "2026-10-21T01:45:32Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987950044,
+      "name": "general-validation-source-019",
+      "started_at": "2026-10-21T01:46:45Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987950074,
+      "name": "general-validation-source-007",
+      "started_at": "2026-10-21T01:36:13Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987950097,
+      "name": "general-validation-source-024",
+      "started_at": "2026-10-21T01:36:13Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987950170,
+      "name": "feature-validation-source-002",
+      "started_at": "2026-10-21T01:36:13Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 118987950215,
+      "name": "general-validation-source-020",
+      "started_at": "2026-10-21T01:36:13Z",
+      "status": "queued"
+    }
+  ],
+  "next_action": "Retain every unique raw artifact and independently reproduce all successful strict summaries; failures, missing rows or covers receive no credit. Keep source stable while collecting this campaign.",
+  "observed_at": "2026-10-21T01:50:56.161335+00:00",
+  "required_source_assertions": 35,
+  "required_source_covers": 60,
+  "retained_artifacts": [
+    12314156070,
+    12314161019,
+    12314475776,
+    12314520875,
+    12314725693
+  ],
+  "retention_pending_artifacts": [
+    12315155890,
+    12314781625,
+    12314741630,
+    12314736703,
+    12314471846,
+    12314291588
+  ],
+  "schema_version": 1,
+  "selected_harnesses": 37,
+  "source_case_jobs": 30,
+  "status": "IN_PROGRESS",
+  "tested_merge": "9d4b29898d097f929ad413b88ee5667bab4663ba",
+  "tree": "c970a219af824d89c46bafb236eb55fdfb7bd267",
+  "url": "https://github.com/QuasarRay/agones/actions/runs/39528223788",
+  "workflow_run": 39528223788
+}

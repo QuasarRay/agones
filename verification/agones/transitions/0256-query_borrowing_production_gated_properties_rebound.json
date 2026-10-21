@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "QUERY_BORROWING_PRODUCTION_GATED_PROPERTIES_REBOUND",
+  "gate_snapshot": "verification/agones/gates/f8271f2592ac1b7a5e27d8a9e17ad361679cbd40f113e2a8bb3dd0d75ce65810.json",
+  "predecessor_revision": 255,
+  "predecessor_sha256": "b43c37226017abc1bd76a4437455dbfa4beab8258767586e196dda042b699efa",
+  "reason": "Existing CGP static feature names and std::borrow::Cow remove avoidable owned copies in real production; the same603native tests pass plus the default workspace ignored doctest. All five deterministic generator modes check and all four exact-case Rust bodies/case/assertion/cover/domain/unwind declarations are unchanged. Six affected gates refreshed and prior7dproofs retained as historical; no current formal credit from rebinding.",
+  "result_revision": 256,
+  "schema_version": 1,
+  "state_sha256": "102abb399f9aff979873b5625fd91f39dc7085a56669ae174721e58f869a0850",
+  "timestamp": "2026-10-20T21:05:41.883327+00:00"
+}

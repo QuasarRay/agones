@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "NATIVE675_RECOVERY356592_AND_EAD588_COMPLETE_DURABLE",
+  "gate_snapshot": "verification/agones/gates/6d10b275433dcf0a49011a53dc251b062c43c50049cc3a8aebf0c161cc498b26.json",
+  "predecessor_revision": 300,
+  "predecessor_sha256": "0fef09dbada9a1178e7c4b952be218558d5ac3fd50b6321eef3a14b9f6fb064b",
+  "reason": "Complete canonical source/native evidence is remotely recoverable356592 with exact local tree, while PR96 tested code2e1d stays unchanged. Full historical2e1d terminal12artifacts publishedead588. Native675/check/six modes/Go controls and three IMPLEMENTED/nine gate records are accurate; all changed-program proofs,25general/50covers, full metadata/lifecycle/Rusternetes and eight _2cells remain required. Goal active.",
+  "result_revision": 301,
+  "schema_version": 1,
+  "state_sha256": "6b52ed1ca3716f638e5ef84594e2449d4c0941142d2e5d4bf3d95f906ea553aa",
+  "timestamp": "2026-10-21T01:18:14.326120+00:00"
+}

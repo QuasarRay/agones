@@ -1,0 +1,183 @@
+{
+  "acceptance": "Each archive digest, safe member path, tested merge, exact receipt/log SHA and locally recomputed strict summary were validated. This is real current Bolero/Kani evidence for these four declared harness domains only. The12selection campaign and final required CI gate remain in progress.",
+  "artifact_bindings": {
+    "verification/agones/proof-summaries/feature-bool-bolero-kani-ci-39489621706-1.json": "3a4f2c2871a3790c68e979551c736733b628febdc5cbc0732ddfa9ed8ac27be6",
+    "verification/agones/proof-summaries/feature-input-bolero-kani-ci-39489621706-1.json": "f94adc442902e5a26555a8441942a52604d77a05c8c7c1fd68567bd15a7115d8",
+    "verification/agones/proof-summaries/feature-query-error-bolero-kani-ci-39489621706-1.json": "33ca23dda2596892ef6bfa76f947d1079e1001b2a18145a812138606280794dc",
+    "verification/agones/proof-summaries/gameserver-features-bolero-kani-ci-39489621706-1.json": "155e341b2acdd721a554b411d3f2ec30f1b003200b70cf51d1dc5efa3eed59c9",
+    "verification/agones/runs/feature-bool-bolero-kani-ci-39489621706-1.json": "5d262de3bed4d37a22a15db797963c972d0807c906c81245e329a42518f91030",
+    "verification/agones/runs/feature-bool-bolero-kani-ci-39489621706-1.log": "cb7c2eeef3e6f15721ba5d9c2dab402e31cd6392e12b2bad36d2981f40c15fa5",
+    "verification/agones/runs/feature-input-bolero-kani-ci-39489621706-1.json": "e0ee9326cad3a92eecf2d637a2b8bdf67f3d3f4d9cfc4b0d47c18b02e3bd1881",
+    "verification/agones/runs/feature-input-bolero-kani-ci-39489621706-1.log": "3d3138a23ab4e5f50f210ae75e86bbffedcd45cf6a56db2a6fd8c483db37c767",
+    "verification/agones/runs/feature-query-error-bolero-kani-ci-39489621706-1.json": "916027d654bc0f36eff0b00eaad940eb08a9853577374d6a1cef4061f8ffb6c1",
+    "verification/agones/runs/feature-query-error-bolero-kani-ci-39489621706-1.log": "50bd9f369e561e5aae1bb9f33a5f54f9e181c53fe4d9f0b1e80bb2051791c742",
+    "verification/agones/runs/gameserver-features-bolero-kani-ci-39489621706-1.json": "ce450459268bc61768d6f0e56272f5d085572041d8d830ef0c8b751d6dfcf25e",
+    "verification/agones/runs/gameserver-features-bolero-kani-ci-39489621706-1.log": "78195492435972a874325fe3b435a69c607166dfe8101137a847d4a5af627265",
+    "verification/agones/runs/protected-ci-first-four-strict-reparse-1.json": "5d1a40b2d405d9d8d1911e332a9e92361fde39c7b73e0cdc50c7425fd8338f75",
+    "verification/agones/runs/protected-ci-first-four-strict-reparse-1.log": "292289e56653d6cc6f4d06ad594564ab11ebdadd5131087215def35c1275c967"
+  },
+  "classification": "REPO_SAFE",
+  "counts": {
+    "backend_rows": 5223,
+    "satisfied_covers": 26,
+    "selected_harnesses": 4,
+    "semantic_claims": 10,
+    "unreachable_credited": 0
+  },
+  "run_attempt": 1,
+  "schema_version": 1,
+  "selections": [
+    {
+      "archive_sha256": "d7635895955dacbaf02d98425e2690d83d351a96629dc10742942f275892df22",
+      "artifact_id": 12296105262,
+      "backend_property_rows": 1158,
+      "envelope": {
+        "cgroup": "/system.slice/agones-model-33686b42b2ce483b951c6cb4cda3fbf2.service",
+        "cpu_count": 3,
+        "gid": 1001,
+        "host_memory_bytes": 16765378560,
+        "kill_after_seconds": 15,
+        "memory_bytes": 12884901888,
+        "observed_controls": {
+          "cpu.max": "300000 100000",
+          "memory.max": "12884901888",
+          "memory.oom.group": "1",
+          "memory.swap.max": "0"
+        },
+        "schema_version": 1,
+        "script_sha256": "89fd094879809766a50ece3eea99fca2f9b45ac602ca5cb98fecfa1fe45d4376",
+        "service_runtime_seconds": 930,
+        "timeout_seconds": 900,
+        "uid": 1001,
+        "unit": "agones-model-33686b42b2ce483b951c6cb4cda3fbf2.service"
+      },
+      "harness": "feature_bool_common_domain",
+      "run": "verification/agones/runs/feature-bool-bolero-kani-ci-39489621706-1.json",
+      "satisfied_covers": 6,
+      "scope": "Only the actual production parse_feature_bool and independent reference/invariant over byte strings of length 0..5, unwind 8; no unbounded query, environment or controller proof.",
+      "semantic_claims": 3,
+      "status_counts": {
+        "SATISFIED": 6,
+        "SUCCESS": 1141,
+        "UNREACHABLE": 11
+      },
+      "summary": "verification/agones/proof-summaries/feature-bool-bolero-kani-ci-39489621706-1.json"
+    },
+    {
+      "archive_sha256": "f3cb31129122500b45c81ddda31238ba99840569406bd0d4bf5ca5d41520361b",
+      "artifact_id": 12296030189,
+      "backend_property_rows": 978,
+      "envelope": {
+        "cgroup": "/system.slice/agones-model-3692d0475ac84bd89ad8044ee0419d10.service",
+        "cpu_count": 3,
+        "gid": 1001,
+        "host_memory_bytes": 16765378560,
+        "kill_after_seconds": 15,
+        "memory_bytes": 12884901888,
+        "observed_controls": {
+          "cpu.max": "300000 100000",
+          "memory.max": "12884901888",
+          "memory.oom.group": "1",
+          "memory.swap.max": "0"
+        },
+        "schema_version": 1,
+        "script_sha256": "89fd094879809766a50ece3eea99fca2f9b45ac602ca5cb98fecfa1fe45d4376",
+        "service_runtime_seconds": 930,
+        "timeout_seconds": 900,
+        "uid": 1001,
+        "unit": "agones-model-3692d0475ac84bd89ad8044ee0419d10.service"
+      },
+      "harness": "feature_input_common_domain",
+      "run": "verification/agones/runs/feature-input-bolero-kani-ci-39489621706-1.json",
+      "satisfied_covers": 10,
+      "scope": "Production select_feature_gate_input and independent reference/invariant. Each optional raw byte string has length 0..2; no filtering, unwind 8. No OS/command/lifecycle proof or original exact-case assertion credit.",
+      "semantic_claims": 3,
+      "status_counts": {
+        "SATISFIED": 10,
+        "SUCCESS": 945,
+        "UNREACHABLE": 23
+      },
+      "summary": "verification/agones/proof-summaries/feature-input-bolero-kani-ci-39489621706-1.json"
+    },
+    {
+      "archive_sha256": "78908217735215470338c7094cb9535976bb6d964394c2f8481209dc551f0f3c",
+      "artifact_id": 12295366176,
+      "backend_property_rows": 1552,
+      "envelope": {
+        "cgroup": "/system.slice/agones-model-0edfe9e6a73a4f5ca6874429aadcdb79.service",
+        "cpu_count": 3,
+        "gid": 1001,
+        "host_memory_bytes": 16765378560,
+        "kill_after_seconds": 15,
+        "memory_bytes": 12884901888,
+        "observed_controls": {
+          "cpu.max": "300000 100000",
+          "memory.max": "12884901888",
+          "memory.oom.group": "1",
+          "memory.swap.max": "0"
+        },
+        "schema_version": 1,
+        "script_sha256": "89fd094879809766a50ece3eea99fca2f9b45ac602ca5cb98fecfa1fe45d4376",
+        "service_runtime_seconds": 930,
+        "timeout_seconds": 900,
+        "uid": 1001,
+        "unit": "agones-model-0edfe9e6a73a4f5ca6874429aadcdb79.service"
+      },
+      "harness": "source_query_case_003",
+      "run": "verification/agones/runs/feature-query-error-bolero-kani-ci-39489621706-1.json",
+      "satisfied_covers": 2,
+      "scope": "Selected exact source case only: agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Error on query parsing. Actual production query parser and exact source assertions for all five selected cases. No unbounded input generalization, alternate production implementation, OS/command proof, or translated reference-model proof is credited. Original Go tests apply the same independent source relations separately.",
+      "semantic_claims": 1,
+      "status_counts": {
+        "SATISFIED": 2,
+        "SUCCESS": 1501,
+        "UNREACHABLE": 49
+      },
+      "summary": "verification/agones/proof-summaries/feature-query-error-bolero-kani-ci-39489621706-1.json"
+    },
+    {
+      "archive_sha256": "142b73a30925bd1d7bc3abb9a4a6d101036326bc6bca363ddd72dbd36cc215fe",
+      "artifact_id": 12294339379,
+      "backend_property_rows": 1535,
+      "envelope": {
+        "cgroup": "/system.slice/agones-model-39fcacee7ab04310866e7453526d1461.service",
+        "cpu_count": 3,
+        "gid": 1001,
+        "host_memory_bytes": 16766414848,
+        "kill_after_seconds": 15,
+        "memory_bytes": 12884901888,
+        "observed_controls": {
+          "cpu.max": "300000 100000",
+          "memory.max": "12884901888",
+          "memory.oom.group": "1",
+          "memory.swap.max": "0"
+        },
+        "schema_version": 1,
+        "script_sha256": "89fd094879809766a50ece3eea99fca2f9b45ac602ca5cb98fecfa1fe45d4376",
+        "service_runtime_seconds": 930,
+        "timeout_seconds": 900,
+        "uid": 1001,
+        "unit": "agones-model-39fcacee7ab04310866e7453526d1461.service"
+      },
+      "harness": "gameserver_feature_validation_common_domain",
+      "run": "verification/agones/runs/gameserver-features-bolero-kani-ci-39489621706-1.json",
+      "satisfied_covers": 8,
+      "scope": "Actual CGP ValidateAgonesGameServerFeatures provider and independent nonallocating match-table reference checked against the separate complete error relation. Arbitrary enabled/present booleans and signed i64 capacity, no filtering, fixed spec field path, unwind128. The deterministic relation fixes count/kind/path/optional bad value/detail for both observations. No qualified original table assertion, unbounded field path, full validation, admission, lifecycle or live-cluster proof credit. Harness owners are retained after observations under the existing lifetime rule; formal post-observation cleanup remains required.",
+      "semantic_claims": 3,
+      "status_counts": {
+        "SATISFIED": 8,
+        "SUCCESS": 1474,
+        "UNREACHABLE": 53
+      },
+      "summary": "verification/agones/proof-summaries/gameserver-features-bolero-kani-ci-39489621706-1.json"
+    }
+  ],
+  "source_correspondence_limit": "The PlayerTracking proof establishes the three relations for the current Rust error owner. Complete Go six-field error correspondence and the reviewed Required/Forbidden constructor-image bidirectional controls remain required. The original five-case feature table contains no present Players. No qualified PlayerTracking source-table assertion or cleanup/lifecycle/full-migration credit is inferred.",
+  "source_head": "7d8494d8ad8ff7ce0d14a3416fd6ab0c15c7c3da",
+  "source_tree": "766005b8daae7242957af433202df84548f56363",
+  "status": "FOUR_CURRENT_BACKEND_SELECTIONS_RETAINED_VERIFIED_CAMPAIGN_IN_PROGRESS",
+  "strict_reparse": "verification/agones/runs/protected-ci-first-four-strict-reparse-1.json",
+  "tested_merge": "89575a957b239dbc608ebb754cbb11ecfe8a8524",
+  "url": "https://github.com/QuasarRay/agones/actions/runs/39489621706",
+  "workflow_run": 39489621706
+}

@@ -1,0 +1,18 @@
+gs-validation-source-contract-bolero-kani-1: rejected incomplete failed proof
+Traceback (most recent call last):
+  File "/home/astral/Projects/agones/build/scripts/agones-rs/summarize_feature_proof.py", line 15, in <module>
+    rows = read_results(args.run_id)
+  File "/home/astral/Projects/agones/build/scripts/agones-rs/kani_results.py", line 35, in read_results
+    assert run["exit_code"] == 0 and run["status"] == "PASSED"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+gs-validation-source-contract-bolero-kani-2: rejected incomplete failed proof
+Traceback (most recent call last):
+  File "/home/astral/Projects/agones/build/scripts/agones-rs/summarize_feature_proof.py", line 15, in <module>
+    rows = read_results(args.run_id)
+  File "/home/astral/Projects/agones/build/scripts/agones-rs/kani_results.py", line 35, in read_results
+    assert run["exit_code"] == 0 and run["status"] == "PASSED"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+

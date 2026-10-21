@@ -1,0 +1,76 @@
+{
+  "base": "1e64a054901658908d0a7a4eecd3010379df9614",
+  "classification": "REPO_SAFE",
+  "conclusion": null,
+  "formal_proof_credit": 0,
+  "jobs": [
+    {
+      "conclusion": "success",
+      "id": 118859003246,
+      "name": "migration-state",
+      "status": "completed"
+    },
+    {
+      "conclusion": null,
+      "id": 118859176785,
+      "name": "rust",
+      "status": "in_progress"
+    },
+    {
+      "conclusion": null,
+      "id": 118859176834,
+      "name": "feature-validation-contract-model-check",
+      "status": "in_progress"
+    },
+    {
+      "conclusion": null,
+      "id": 118859176988,
+      "name": "feature-validation-source-001",
+      "status": "in_progress"
+    },
+    {
+      "conclusion": null,
+      "id": 118859177058,
+      "name": "feature-common-model-check",
+      "status": "in_progress"
+    },
+    {
+      "conclusion": null,
+      "id": 118859177115,
+      "name": "feature-validation-source-002",
+      "status": "in_progress"
+    },
+    {
+      "conclusion": null,
+      "id": 118859177146,
+      "name": "feature-validation-source-000",
+      "status": "in_progress"
+    },
+    {
+      "conclusion": null,
+      "id": 118859177156,
+      "name": "feature-validation-source-003",
+      "status": "in_progress"
+    },
+    {
+      "conclusion": null,
+      "id": 118859177192,
+      "name": "feature-validation-source-004",
+      "status": "in_progress"
+    }
+  ],
+  "local_equivalent_commit": "ef07182d18d973797d05cf3d1de79ac6afd81f89",
+  "note": "An in-progress job or step badge supplies no model credit. Retrieve complete exact-byte logs/receipts and strict summaries from the12unique artifacts before acceptance.",
+  "parent": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
+  "plan": "verification/agones/ci/protected-model-execution-plan.json",
+  "plan_sha256": "ab89b8924cba9e2bf37d712807911e037a9ace1513b3ba89e2517e1b22c7ae15",
+  "pr": 96,
+  "run_attempt": 1,
+  "schema_version": 1,
+  "source_head": "7d8494d8ad8ff7ce0d14a3416fd6ab0c15c7c3da",
+  "source_tree": "766005b8daae7242957af433202df84548f56363",
+  "status": "PUBLISHED_ACTUAL_PROTECTED_CI_RUNNING",
+  "tested_merge": "89575a957b239dbc608ebb754cbb11ecfe8a8524",
+  "url": "https://github.com/QuasarRay/agones/actions/runs/39489621706",
+  "workflow_run": 39489621706
+}

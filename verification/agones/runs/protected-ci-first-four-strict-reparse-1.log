@@ -1,0 +1,5 @@
+{"harness_count": 1, "property_count": 1158, "status_counts": {"SUCCESS": 1141, "SATISFIED": 6, "UNREACHABLE": 11}}
+{"harness_count": 1, "claimed_assertions": 3, "required_covers": 10, "property_count": 978, "status_counts": {"SUCCESS": 945, "SATISFIED": 10, "UNREACHABLE": 23}}
+{"harness_count": 1, "claimed_assertions": 1, "required_covers": 2, "property_count": 1552, "status_counts": {"SUCCESS": 1501, "SATISFIED": 2, "UNREACHABLE": 49}}
+{"harness_count": 1, "claimed_assertions": 3, "required_covers": 8, "property_count": 1535, "status_counts": {"SUCCESS": 1474, "SATISFIED": 8, "UNREACHABLE": 53}}
+All four retrieved complete backend summaries independently rechecked; exact CI summaries reproduced.

@@ -1,0 +1,20 @@
+{
+  "architecture": "CGP application composition is unchanged. No new macro or general framework. All eight _2 form/location cells remain required and open.",
+  "candidate": "Account for all 30 exact validation source cases with the existing strict parser and protected workflow.",
+  "decision": "REUSE_EXISTING",
+  "evidence_refs": [
+    "verification/agones/runs/complete-validation-ci-controls-2.json",
+    "verification/agones/runs/complete-validation-source-parser-final-1.json"
+  ],
+  "feature_binding": "GS-VALIDATE-FEATURES-001 / RESOURCE-QUANTITY-001 / GS-VALIDATION-ERROR-DATA-001",
+  "id": "COMPLETE-VALIDATION-EXISTING-PARSER-MATRIX-REUSE",
+  "next_review_trigger": "After the first complete 37-selection campaign, inspect retained failures and actual repeated CGP/derive wiring; continue the next dependency-closing feature without weakening proof obligations.",
+  "rationale": "The same generated per-case metadata, one-harness Bolero/Kani route, unit domain, unwind128 and required two-cover protocol apply to five feature and 25 general cases. Extend the existing matrix and parser family dispatch; retain the existing recorder, resource protection, artifact upload and mandatory aggregate.",
+  "roi": "A bounded extension and stdlib synthetic acceptance controls reuse the existing protocol and eliminate manual case/accounting edits. A new CI framework or macro would add validation and maintenance without a demonstrated completion benefit.",
+  "semantic_bindings": {
+    ".github/workflows/rust.yml": "8374b011cd28a15a365ac2c896ed068b669ea3f1fe067adcf085c012d6b1178a",
+    "build/scripts/agones-rs/summarize_feature_proof.py": "b85203ed7192d25445740b8fa8c1df1030d699000ef5344e8a0be7076bcbfbc6",
+    "build/scripts/agones-rs/test_source_case_proofs.py": "d050660da62c8063df844d11ff71c49bb5a2997398806506cef0db7492f9f7d8",
+    "verification/agones/check-dependencies.json": "5dc51bd0fdb013204d29e69ed8b5c86d238c3daad80e3ff07516d4acf9beea05"
+  }
+}

@@ -164,6 +164,16 @@ pub enum SchedulingStrategy {
     Unknown(String),
 }
 
+/// Source metav1.TypeMeta, retained independently of static resource identity.
+#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TypeMeta {
+    #[serde(default, skip_serializing_if = "String::is_empty", deserialize_with = "crate::go_value::deserialize_go_value")]
+    pub kind: String,
+    #[serde(default, skip_serializing_if = "String::is_empty", deserialize_with = "crate::go_value::deserialize_go_value")]
+    pub api_version: String,
+}
+
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ObjectMeta {
@@ -213,7 +223,7 @@ pub struct Container {
     #[serde(default, skip_serializing_if = "is_false", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub tty: bool,
     #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
-    pub resources: BTreeMap<String, serde_json::Value>,
+    pub resources: crate::ContainerResourceRequirements,
     #[serde(flatten)]
     pub extensions: BTreeMap<String, serde_json::Value>,
 }
@@ -549,6 +559,8 @@ pub struct ValidationError {
     pub path: String,
     pub bad_value: Option<String>,
     pub detail: String,
+    pub origin: String,
+    pub covered_by_declarative: bool,
 }
 
 impl ValidationError {
@@ -558,6 +570,8 @@ impl ValidationError {
             path: path.into(),
             bad_value: None,
             detail: detail.into(),
+            origin: String::new(),
+            covered_by_declarative: false,
         }
     }
 
@@ -567,10 +581,12 @@ impl ValidationError {
             path: path.into(),
             bad_value: None,
             detail: detail.into(),
+            origin: String::new(),
+            covered_by_declarative: false,
         }
     }
 
-    fn invalid(
+    pub(crate) fn invalid(
         path: impl Into<String>,
         bad_value: impl Into<String>,
         detail: impl Into<String>,
@@ -580,84 +596,60 @@ impl ValidationError {
             path: path.into(),
             bad_value: Some(bad_value.into()),
             detail: detail.into(),
+            origin: String::new(),
+            covered_by_declarative: false,
         }
     }
 
-    fn too_long(path: impl Into<String>, bad_value: impl Into<String>, max: usize) -> Self {
+    pub(crate) fn too_long(path: impl Into<String>, _bad_value: impl Into<String>, max: isize) -> Self {
         Self {
             kind: ValidationErrorKind::TooLong,
             path: path.into(),
-            bad_value: Some(bad_value.into()),
-            detail: format!("must be no more than {max} bytes"),
+            bad_value: Some("<value omitted>".into()),
+            detail: if max < 0 {
+                "value is too long".into()
+            } else {
+                format!("may not be more than {max} {}", if max == 1 { "byte" } else { "bytes" })
+            },
+            origin: String::new(),
+            covered_by_declarative: false,
         }
+    }
+
+    pub fn with_origin(mut self, origin: impl Into<String>) -> Self {
+        self.origin = origin.into();
+        self
+    }
+
+    pub fn mark_covered_by_declarative(mut self) -> Self {
+        self.covered_by_declarative = true;
+        self
     }
 }
 
-fn qualified_name_error(value: &str) -> Option<&'static str> {
-    let name = value.rsplit('/').next().unwrap_or(value);
-    if name.len() > 63 {
-        return Some("name part must be no more than 63 bytes");
-    }
-    if name.is_empty() {
-        return Some(
-            "name part must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character",
-        );
-    }
-    let mut chars = name.chars();
-    let first = chars.next().unwrap();
-    let last = name.chars().last().unwrap();
-    if !first.is_ascii_alphanumeric()
-        || !last.is_ascii_alphanumeric()
-        || !name
-            .chars()
-            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.'))
-    {
-        return Some(
-            "name part must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character",
-        );
-    }
-    None
-}
-
-pub(crate) fn validate_object_meta(meta: &ObjectMeta, path: &str) -> Vec<ValidationError> {
-    let mut errors = Vec::new();
-    for (key, value) in &meta.labels {
-        if let Some(detail) = qualified_name_error(key) {
-            errors.push(ValidationError::invalid(
-                format!("{path}.labels"),
-                key.as_str(),
-                detail,
-            ));
-        }
-        let invalid_value = value.len() > 63
-            || (!value.is_empty()
-                && (!value.chars().next().unwrap().is_ascii_alphanumeric()
-                    || !value.chars().last().unwrap().is_ascii_alphanumeric()
-                    || !value
-                        .chars()
-                        .all(|c| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.'))));
-        if invalid_value {
-            errors.push(ValidationError::invalid(
-                format!("{path}.labels"),
-                value.as_str(),
-                if value.len() > 63 {
-                    "must be no more than 63 bytes"
-                } else {
-                    "must be empty or consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character"
-                },
-            ));
+// Build the source field.Path index directly. Successful port validation needs
+// no path allocation; errors preserve the same decimal index and field text.
+pub(crate) fn indexed_validation_field(path: &str, index: usize, field: &str) -> String {
+    let mut result = String::from(path);
+    result.push('[');
+    let mut digits = [0u8; usize::BITS as usize];
+    let mut start = digits.len();
+    let mut remaining = index;
+    loop {
+        start -= 1;
+        digits[start] = b'0' + (remaining % 10) as u8;
+        remaining /= 10;
+        if remaining == 0 {
+            break;
         }
     }
-    for key in meta.annotations.keys() {
-        if let Some(detail) = qualified_name_error(key) {
-            errors.push(ValidationError::invalid(
-                format!("{path}.annotations"),
-                key.as_str(),
-                detail,
-            ));
-        }
+    for digit in &digits[start..] {
+        result.push(char::from(*digit));
     }
-    errors
+    result.push(']');
+    result.push('.');
+    result.push_str(field);
+    result
 }
 
 impl GameServerSpec {
@@ -674,10 +666,18 @@ impl GameServerSpec {
     /// Domain-level validation directly corresponding to the Kubernetes-independent
     /// checks in Agones GameServerSpec.Validate.
     ///
-    /// Resource quantity validation and API hook validation belong to the
-    /// Rusternetes integration layer because they depend on runtime/API types.
+    /// Resource quantities use the shared core CGP policy. API hook effects
+    /// are supplied by the Rusternetes integration layer.
     pub fn validate(&self, dev_address: &str) -> Vec<ValidationError> {
-        let mut errors = Vec::new();
+        self.validate_with_context(&crate::GameServerDefaultingContext::default(), dev_address)
+    }
+
+    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures + crate::CanValidateResourceQuantities + crate::CanValidateObjectMetadata>(
+        &self,
+        context: &C,
+        dev_address: &str,
+    ) -> Vec<ValidationError> {
+        let mut errors = context.validate_game_server_features(self, "spec");
 
         if !dev_address.is_empty() {
             if dev_address.parse::<IpAddr>().is_err() {
@@ -690,19 +690,20 @@ impl GameServerSpec {
             for (index, port) in self.ports.iter().enumerate() {
                 if port.host_port == 0 {
                     errors.push(ValidationError::required(
-                        format!("spec.ports[{index}].hostPort"),
+                        indexed_validation_field("spec.ports", index, "hostPort"),
                         DEV_ADDRESS_ANNOTATION,
                     ));
                 }
                 if port.port_policy != Some(PortPolicy::Static) {
                     errors.push(ValidationError::required(
-                        format!("spec.ports[{index}].portPolicy"),
+                        indexed_validation_field("spec.ports", index, "portPolicy"),
                         ERR_PORT_POLICY_STATIC,
                     ));
                 }
             }
-            errors.extend(validate_object_meta(
-                &self.template.metadata,
+            errors.extend(context.validate_object_metadata(
+                &self.template.metadata.labels,
+                &self.template.metadata.annotations,
                 "spec.template.metadata",
             ));
             return errors;
@@ -716,29 +717,32 @@ impl GameServerSpec {
         }
 
         if !self.has_container(&self.container, false) {
+            let prefix = "Could not find a container named ";
+            let mut detail = String::with_capacity(prefix.len() + self.container.len());
+            detail.push_str(prefix);
+            detail.push_str(&self.container);
             errors.push(ValidationError::invalid(
                 "spec.container",
                 self.container.as_str(),
-                format!("Could not find a container named {}", self.container),
+                detail,
             ));
         }
 
         for (index, port) in self.ports.iter().enumerate() {
-            let prefix = format!("spec.ports[{index}]");
             if matches!(
                 port.port_policy.as_ref(),
                 Some(PortPolicy::Dynamic | PortPolicy::Static)
             ) && port.container_port <= 0
             {
                 errors.push(ValidationError::required(
-                    format!("{prefix}.containerPort"),
+                    indexed_validation_field("spec.ports", index, "containerPort"),
                     ERR_CONTAINER_PORT_REQUIRED,
                 ));
             }
 
             if port.port_policy == Some(PortPolicy::Passthrough) && port.container_port > 0 {
                 errors.push(ValidationError::required(
-                    format!("{prefix}.containerPort"),
+                    indexed_validation_field("spec.ports", index, "containerPort"),
                     ERR_CONTAINER_PORT_PASSTHROUGH,
                 ));
             }
@@ -750,7 +754,7 @@ impl GameServerSpec {
                 )
             {
                 errors.push(ValidationError::forbidden(
-                    format!("{prefix}.hostPort"),
+                    indexed_validation_field("spec.ports", index, "hostPort"),
                     ERR_HOST_PORT,
                 ));
             }
@@ -758,7 +762,7 @@ impl GameServerSpec {
             if let Some(container) = port.container.as_deref() {
                 if !self.container.is_empty() && !self.has_container(container, true) {
                     errors.push(ValidationError::invalid(
-                        format!("{prefix}.container"),
+                        indexed_validation_field("spec.ports", index, "container"),
                         container,
                         ERR_CONTAINER_NAME_INVALID,
                     ));
@@ -766,8 +770,10 @@ impl GameServerSpec {
             }
         }
 
-        errors.extend(validate_object_meta(
-            &self.template.metadata,
+        errors.extend(self.validate_resource_quantities_with_context(context, "spec"));
+        errors.extend(context.validate_object_metadata(
+            &self.template.metadata.labels,
+            &self.template.metadata.annotations,
             "spec.template.metadata",
         ));
         errors
@@ -793,6 +799,8 @@ impl GameServerSpec {
 )]
 #[serde(rename_all = "camelCase")]
 pub struct GameServer {
+    #[serde(flatten)]
+    pub type_meta: TypeMeta,
     #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub metadata: ObjectMeta,
     #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
@@ -1085,6 +1093,13 @@ impl GameServer {
     }
 
     pub fn validate(&self) -> Vec<ValidationError> {
+        self.validate_with_context(&crate::GameServerDefaultingContext::default())
+    }
+
+    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures + crate::CanValidateResourceQuantities + crate::CanValidateObjectMetadata>(
+        &self,
+        context: &C,
+    ) -> Vec<ValidationError> {
         let mut errors = Vec::new();
         if self.metadata.name.len() > 63 {
             errors.push(ValidationError::too_long(
@@ -1093,7 +1108,7 @@ impl GameServer {
                 63,
             ));
         }
-        errors.extend(self.spec.validate(self.get_dev_address().unwrap_or("")));
+        errors.extend(self.spec.validate_with_context(context, self.get_dev_address().unwrap_or("")));
         errors
     }
 
@@ -1557,6 +1572,7 @@ mod tests {
 
     fn development_game_server(state: GameServerState) -> GameServer {
         let mut game_server = GameServer {
+            type_meta: Default::default(),
             metadata: ObjectMeta {
                 annotations: BTreeMap::from([(
                     DEV_ADDRESS_ANNOTATION.to_owned(),
@@ -1713,6 +1729,18 @@ mod tests {
     }
 
     use super::*;
+
+    #[test]
+    fn indexed_validation_fields_preserve_decimal_paths() {
+        for index in (0..1024).chain([usize::MAX / 10, usize::MAX - 1, usize::MAX]) {
+            for field in ["hostPort", "portPolicy", "containerPort", "container"] {
+                assert_eq!(
+                    indexed_validation_field("spec.ports", index, field),
+                    format!("spec.ports[{index}].{field}")
+                );
+            }
+        }
+    }
 
     fn simple_game_server() -> GameServer {
         GameServer {
@@ -2052,6 +2080,22 @@ mod tests {
         assert_eq!(errors[2].path, "spec.ports[0].containerPort");
         assert_eq!(errors[3].path, "spec.ports[0].hostPort");
 
+        for (name, expected_detail) in [
+            ("", "Could not find a container named "),
+            ("missing", "Could not find a container named missing"),
+            ("🦀\n\0", "Could not find a container named 🦀\n\0"),
+        ] {
+            let errors = GameServerSpec {
+                container: name.to_owned(),
+                ..Default::default()
+            }.validate("");
+            assert_eq!(errors.len(), 1);
+            assert_eq!(errors[0].kind, ValidationErrorKind::Invalid);
+            assert_eq!(errors[0].path, "spec.container");
+            assert_eq!(errors[0].bad_value.as_deref(), Some(name));
+            assert_eq!(errors[0].detail, expected_detail);
+        }
+
         let dev = GameServerSpec {
             ports: vec![GameServerPort {
                 name: "main".into(),
@@ -2162,6 +2206,75 @@ mod tests {
         });
         assert!(gs.spec.has_container("sdk", true));
         assert!(!gs.spec.has_container("sdk", false));
+    }
+
+    #[test]
+    fn validation_error_constructor_payload_and_metadata_match_source() {
+        for (maximum, detail) in [
+            (-1, "value is too long"),
+            (0, "may not be more than 0 bytes"),
+            (1, "may not be more than 1 byte"),
+            (63, "may not be more than 63 bytes"),
+        ] {
+            let error = ValidationError::too_long("metadata.name", "private-value", maximum);
+            assert_eq!(error, ValidationError {
+                kind: ValidationErrorKind::TooLong,
+                path: "metadata.name".into(),
+                bad_value: Some("<value omitted>".into()),
+                detail: detail.into(),
+                origin: String::new(),
+                covered_by_declarative: false,
+            });
+        }
+        let error = ValidationError::invalid("spec.field", "value", "detail");
+        let marked = error.clone().with_origin("format=example").mark_covered_by_declarative();
+        assert_eq!(marked.kind, error.kind);
+        assert_eq!(marked.path, error.path);
+        assert_eq!(marked.bad_value, error.bad_value);
+        assert_eq!(marked.detail, error.detail);
+        assert_eq!(marked.origin, "format=example");
+        assert!(marked.covered_by_declarative);
+        assert_ne!(marked, error);
+        let other_origin = marked.clone().with_origin("format=other");
+        assert!(other_origin.covered_by_declarative);
+        assert_ne!(marked, other_origin);
+    }
+
+    #[test]
+    fn production_validation_retains_all_source_error_fields() {
+        let mut gs = simple_game_server();
+        gs.apply_defaults();
+        gs.metadata.name = "n".repeat(64);
+        let errors = gs.validate();
+        assert_eq!(errors, vec![ValidationError {
+            kind: ValidationErrorKind::TooLong,
+            path: "metadata.name".into(),
+            bad_value: Some("<value omitted>".into()),
+            detail: "may not be more than 63 bytes".into(),
+            origin: String::new(),
+            covered_by_declarative: false,
+        }]);
+        gs.metadata.name.clear();
+        gs.spec.template.metadata.annotations.insert("agones.dev/short±Name".into(), "value".into());
+        let errors = gs.validate();
+        assert_eq!(errors, vec![ValidationError {
+            kind: ValidationErrorKind::Invalid,
+            path: "spec.template.metadata.annotations".into(),
+            bad_value: Some("agones.dev/short±Name".into()),
+            detail: "name part must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyName',  or 'my.name',  or '123-abc', regex used for validation is '([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]')".into(),
+            origin: "format=k8s-label-key".into(),
+            covered_by_declarative: false,
+        }]);
+        gs.spec.template.metadata.annotations.clear();
+        gs.spec.template.metadata.labels.insert("label".into(), "v".repeat(64));
+        assert_eq!(gs.validate(), vec![ValidationError {
+            kind: ValidationErrorKind::Invalid,
+            path: "spec.template.metadata.labels".into(),
+            bad_value: Some("v".repeat(64)),
+            detail: "must be no more than 63 bytes".into(),
+            origin: "format=k8s-label-value".into(),
+            covered_by_declarative: false,
+        }]);
     }
 
     #[test]

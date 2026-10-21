@@ -1,0 +1,167 @@
+{
+  "artifact_bindings": {
+    "verification/agones/proof-summaries/feature-bool-bolero-kani-ci-39528223788-1.json": "b631781ba0be9bdd08563347cd902529140d7f77695cb66f6e187448b19f8697",
+    "verification/agones/proof-summaries/feature-input-bolero-kani-ci-39528223788-1.json": "5ef26086ed4ba040692b3c92f90f763345d995bdbc7d56d93d33dfa8de0799a3",
+    "verification/agones/proof-summaries/feature-query-error-bolero-kani-ci-39528223788-1.json": "bb14e28dfa0159f911aa563fa059d5a73d3c3dbc76f2cf5cc9dfe0415aa18f0a",
+    "verification/agones/proof-summaries/health-defaulting-bolero-kani-ci-39528223788-1.json": "405f7bcabca6da4b250f52902f435bcc0b4485b42d8a1cdb16201bca74ccd14c",
+    "verification/agones/runs/feature-bool-bolero-kani-ci-39528223788-1.json": "7cb729c853991a8d953394573d9fa5c69f19603d8d451fa5d13ac9af969aaa8c",
+    "verification/agones/runs/feature-bool-bolero-kani-ci-39528223788-1.log": "47cef0518f5ade02d41e554385baed41257ace2524b99669aa80ee1de477c662",
+    "verification/agones/runs/feature-input-bolero-kani-ci-39528223788-1.json": "4e7f6ea62e9a0937b73ee30095567198078b12a2baecf3f17c625fcfc1a2d04d",
+    "verification/agones/runs/feature-input-bolero-kani-ci-39528223788-1.log": "6473fc64b99cb01f0ba6d9966eb0fd7fcef36699c3c5712a165cc99a4a0a1bb2",
+    "verification/agones/runs/feature-query-error-bolero-kani-ci-39528223788-1.json": "abeb219d406fdad66d940e065a3d8c2b199545483c87db51d29d966a477dd74f",
+    "verification/agones/runs/feature-query-error-bolero-kani-ci-39528223788-1.log": "af7ed993c0545248ab107c2399de9cf8fba2456280c692bc036a11314b06abac",
+    "verification/agones/runs/gameserver-features-bolero-kani-ci-39528223788-1.json": "12cc4a40c7ccad4e4a9974ae73fa9468b0ce8d68feef942675cad60410e6fe0f",
+    "verification/agones/runs/gameserver-features-bolero-kani-ci-39528223788-1.log": "b3a598b928d8b2bcb76e83c42ab3a6c15768c6438adbe11ce4084ece0dd3f4fb",
+    "verification/agones/runs/health-defaulting-bolero-kani-ci-39528223788-1.json": "1c82324e3c29edd93bb2aa28c9549e7e153969040e05541f90b535df921f1f16",
+    "verification/agones/runs/health-defaulting-bolero-kani-ci-39528223788-1.log": "e04e6f39c04d85cb3b6c28d15cab7db935dbe1f91dcf2ad61726c95f91bd4f33"
+  },
+  "artifacts": [
+    {
+      "archive_sha256": "fefd68b2a5ce74b414b3279974c0445fce2e41e582796f6bd0b9bd41e1f27e5d",
+      "artifact_id": 12314475776,
+      "members": [
+        "verification/agones/runs/gameserver-features-bolero-kani-ci-39528223788-1.json",
+        "verification/agones/runs/gameserver-features-bolero-kani-ci-39528223788-1.log"
+      ],
+      "name": "feature-kani-player-contract-39528223788-1"
+    },
+    {
+      "archive_sha256": "4bd10a82cad30f8c7582baf2c7a30ff8ffc34418c24a20b2f15c059748a18e8f",
+      "artifact_id": 12314161019,
+      "members": [
+        "verification/agones/runs/feature-bool-bolero-kani-ci-39528223788-1.json",
+        "verification/agones/runs/feature-bool-bolero-kani-ci-39528223788-1.log",
+        "verification/agones/proof-summaries/feature-bool-bolero-kani-ci-39528223788-1.json"
+      ],
+      "name": "feature-kani-bool-39528223788-1"
+    },
+    {
+      "archive_sha256": "35ce4c52418c27c7a2f7eefbaad962fe3545a48618caf0be948331dc7e06106d",
+      "artifact_id": 12314156070,
+      "members": [
+        "verification/agones/runs/feature-input-bolero-kani-ci-39528223788-1.json",
+        "verification/agones/runs/feature-input-bolero-kani-ci-39528223788-1.log",
+        "verification/agones/proof-summaries/feature-input-bolero-kani-ci-39528223788-1.json"
+      ],
+      "name": "feature-kani-input-39528223788-1"
+    },
+    {
+      "archive_sha256": "af35949a5ee511bf4c67348c384015178cf905829fb2cfcc9e2bcddb064d150d",
+      "artifact_id": 12314725693,
+      "members": [
+        "verification/agones/runs/feature-query-error-bolero-kani-ci-39528223788-1.json",
+        "verification/agones/runs/feature-query-error-bolero-kani-ci-39528223788-1.log",
+        "verification/agones/proof-summaries/feature-query-error-bolero-kani-ci-39528223788-1.json"
+      ],
+      "name": "feature-kani-query-003-39528223788-1"
+    },
+    {
+      "archive_sha256": "93273e84efbb0865dee66c7674da0d6a1157fa98908456deb62a6d91c9458ae2",
+      "artifact_id": 12314520875,
+      "members": [
+        "verification/agones/runs/health-defaulting-bolero-kani-ci-39528223788-1.json",
+        "verification/agones/runs/health-defaulting-bolero-kani-ci-39528223788-1.log",
+        "verification/agones/proof-summaries/health-defaulting-bolero-kani-ci-39528223788-1.json"
+      ],
+      "name": "feature-kani-health-39528223788-1"
+    }
+  ],
+  "classification": "REPO_SAFE",
+  "contract_parser_diagnosis": {
+    "backend_rows": 1541,
+    "backend_status": "PASSED",
+    "cause": "New strict common-domain parser requires validation_error_mapping.fields, absent from the common-domain manifest. Actual provider/reference assertions and all eight covers passed. No accepted strict summary existed in the uploaded artifact.",
+    "ci_job_status": "FAILED",
+    "exit_code": 0,
+    "job": 118987949516,
+    "repair": "Add the explicit six-field manifest declaration and common-domain parser regression controls. Preserve provider code, original properties, domain, unwind128 and all covers. Validate against the retained actual log and then publish a diagnosed follow-up.",
+    "required_covers": 8,
+    "scope": "No formal CI acceptance claim until the corrected manifest/parser controls and required current checks pass.",
+    "source_head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
+    "workflow_run": 39528223788
+  },
+  "counts": {
+    "audited_selections": 5,
+    "backend_rows": 6089,
+    "expected_selections": 37,
+    "retained_artifacts": 5,
+    "satisfied_covers": 26,
+    "semantic_claims": 10,
+    "successful_harnesses": 4,
+    "uncredited_selections": 1,
+    "unique_qualified_source_assertions": 1,
+    "unreachable_credited": 0
+  },
+  "qualified_source_origins": [
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Error on query parsing::line-65"
+  ],
+  "results": [
+    {
+      "backend_rows": 1158,
+      "exit_code": 0,
+      "family": "bool",
+      "formal_credit": true,
+      "harness": "feature_bool_common_domain",
+      "log_sha256": "47cef0518f5ade02d41e554385baed41257ace2524b99669aa80ee1de477c662",
+      "run": "verification/agones/runs/feature-bool-bolero-kani-ci-39528223788-1.json",
+      "satisfied_covers": 6,
+      "semantic_claims": 3,
+      "status": "PASSED"
+    },
+    {
+      "backend_rows": 978,
+      "exit_code": 0,
+      "family": "input",
+      "formal_credit": true,
+      "harness": "feature_input_common_domain",
+      "log_sha256": "6473fc64b99cb01f0ba6d9966eb0fd7fcef36699c3c5712a165cc99a4a0a1bb2",
+      "run": "verification/agones/runs/feature-input-bolero-kani-ci-39528223788-1.json",
+      "satisfied_covers": 10,
+      "semantic_claims": 3,
+      "status": "PASSED"
+    },
+    {
+      "backend_rows": 1542,
+      "exit_code": 0,
+      "family": "query",
+      "formal_credit": true,
+      "harness": "source_query_case_003",
+      "log_sha256": "af7ed993c0545248ab107c2399de9cf8fba2456280c692bc036a11314b06abac",
+      "run": "verification/agones/runs/feature-query-error-bolero-kani-ci-39528223788-1.json",
+      "satisfied_covers": 2,
+      "semantic_claims": 1,
+      "status": "PASSED"
+    },
+    {
+      "backend_rows": 2411,
+      "exit_code": 0,
+      "family": "health",
+      "formal_credit": true,
+      "harness": "health_defaulting_common_domain",
+      "log_sha256": "e04e6f39c04d85cb3b6c28d15cab7db935dbe1f91dcf2ad61726c95f91bd4f33",
+      "run": "verification/agones/runs/health-defaulting-bolero-kani-ci-39528223788-1.json",
+      "satisfied_covers": 8,
+      "semantic_claims": 3,
+      "status": "PASSED"
+    },
+    {
+      "complete_individual_rows": 1541,
+      "diagnostic_tail": "tion: <builtin-library-memcmp>:27 in function memcmp\n\nCheck 1533: memcmp.pointer_dereference.5\n\t - Status: SUCCESS\n\t - Description: \"dereference failure: pointer outside object bounds\"\n\t - Location: <builtin-library-memcmp>:27 in function memcmp\n\nCheck 1534: memcmp.pointer_dereference.6\n\t - Status: SUCCESS\n\t - Description: \"dereference failure: invalid integer address\"\n\t - Location: <builtin-library-memcmp>:27 in function memcmp\n\nCheck 1535: memcmp.pointer_dereference.7\n\t - Status: SUCCESS\n\t - Description: \"dereference failure: pointer NULL\"\n\t - Location: <builtin-library-memcmp>:27 in function memcmp\n\nCheck 1536: memcmp.pointer_dereference.8\n\t - Status: SUCCESS\n\t - Description: \"dereference failure: pointer invalid\"\n\t - Location: <builtin-library-memcmp>:27 in function memcmp\n\nCheck 1537: memcmp.pointer_dereference.9\n\t - Status: SUCCESS\n\t - Description: \"dereference failure: deallocated dynamic object\"\n\t - Location: <builtin-library-memcmp>:27 in function memcmp\n\nCheck 1538: memcmp.pointer_dereference.10\n\t - Status: SUCCESS\n\t - Description: \"dereference failure: dead object\"\n\t - Location: <builtin-library-memcmp>:27 in function memcmp\n\nCheck 1539: memcmp.pointer_dereference.11\n\t - Status: SUCCESS\n\t - Description: \"dereference failure: pointer outside object bounds\"\n\t - Location: <builtin-library-memcmp>:27 in function memcmp\n\nCheck 1540: memcmp.pointer_dereference.12\n\t - Status: SUCCESS\n\t - Description: \"dereference failure: invalid integer address\"\n\t - Location: <builtin-library-memcmp>:27 in function memcmp\n\nCheck 1541: memcmp.unwind.0\n\t - Status: SUCCESS\n\t - Description: \"unwinding assertion loop 0\"\n\t - Location: <builtin-library-memcmp>:25 in function memcmp\n\n\nSUMMARY:\n ** 0 of 1533 failed (53 unreachable)\n\n ** 8 of 8 cover properties satisfied\n\n\nVERIFICATION:- SUCCESSFUL\nVerification Time: 24.62042s\n\nManual Harness Summary:\nComplete - 1 successfully verified harnesses, 0 failures, 1 total.\n\tCommand being timed: \"cargo bolero test gameserver_feature_validation_common_domain --engine kani\"\n\tUser time (seconds): 102.45\n\tSystem time (seconds): 13.47\n\tPercent of CPU this job got: 145%\n\tElapsed (wall clock) time (h:mm:ss or m:ss): 1:19.59\n\tAverage shared text size (kbytes): 0\n\tAverage unshared data size (kbytes): 0\n\tAverage stack size (kbytes): 0\n\tAverage total size (kbytes): 0\n\tMaximum resident set size (kbytes): 2366016\n\tAverage resident set size (kbytes): 0\n\tMajor (requiring I/O) page faults: 1868\n\tMinor (reclaiming a frame) page faults: 2881919\n\tVoluntary context switches: 43880\n\tInvoluntary context switches: 2675\n\tSwaps: 0\n\tFile system inputs: 23384\n\tFile system outputs: 2682600\n\tSocket messages sent: 0\n\tSocket messages received: 0\n\tSignals delivered: 0\n\tPage size (bytes): 4096\n\tExit status: 0\nFinished with result: success\nMain processes terminated with: code=exited/status=0\nService runtime: 1min 19.643s\nCPU time consumed: 1min 55.980s\nMemory peak: 3.7M\nMemory swap peak: 0B\nResult=success\nExecMainCode=0\nExecMainStatus=0\nMemoryPeak=[not set]\n",
+      "exit_code": 0,
+      "family": "gameserver-features",
+      "formal_credit": false,
+      "harness": "gameserver_feature_validation_common_domain",
+      "log_sha256": "b3a598b928d8b2bcb76e83c42ab3a6c15768c6438adbe11ce4084ece0dd3f4fb",
+      "run": "verification/agones/runs/gameserver-features-bolero-kani-ci-39528223788-1.json",
+      "scope": "No complete accepted strict summary; zero assertion or cover credit.",
+      "status": "PASSED"
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Exact selected source cases or declared bounded common domains only. Preserve the constructor-image and observation-lifetime limits. No full API, lifecycle, post-observation cleanup, executor or live-cluster proof.",
+  "source_head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
+  "source_tree": "c970a219af824d89c46bafb236eb55fdfb7bd267",
+  "status": "PARTIAL_FIVE_ARTIFACTS_FOUR_STRICT_SUCCESSES",
+  "tested_merge": "9d4b29898d097f929ad413b88ee5667bab4663ba",
+  "workflow_run": 39528223788
+}

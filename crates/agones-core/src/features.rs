@@ -4,7 +4,7 @@
 //! the pinned reference. Configuration is owned by CGP contexts, avoiding the
 //! reference's process-global mutable map while preserving atomic replacement.
 
-use std::{error::Error, fmt};
+use std::{borrow::Cow, error::Error, fmt};
 
 use cgp::prelude::*;
 
@@ -40,46 +40,50 @@ static CANONICAL_FEATURE_DEFAULTS: &[(&str, bool)] = AGONES_FEATURE_DEFAULTS;
 /// Mirrors an initialized or not-yet-initialized reference feature map.
 /// `Default` is empty, as Go's map is nil before ParseFeatures/EnableAllFeatures.
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
-pub struct FeatureGates(Vec<(String, bool)>);
+pub struct FeatureGates {
+    names: Vec<&'static str>,
+    values: Vec<bool>,
+}
 
 impl FeatureGates {
     pub fn enabled(&self, feature: &str) -> bool {
-        self.0
-            .binary_search_by(|(name, _)| name.as_str().cmp(feature))
-            .map(|index| self.0[index].1)
-            .unwrap_or(false)
+        self.names
+            .iter()
+            .position(|name| *name == feature)
+            .is_some_and(|index| self.values[index])
     }
 
-    fn from_defaults(defaults: &[(&str, bool)]) -> Self {
+    fn from_defaults(defaults: &[(&'static str, bool)]) -> Self {
         // The canonical source table is already sorted and unique. Preserve
         // its order directly; custom contexts retain the map-like fallback.
         // Pointer identity is only a fast path, never a semantic precondition.
         if std::ptr::eq(defaults, CANONICAL_FEATURE_DEFAULTS) {
-            return Self(
-                defaults
-                    .iter()
-                    .map(|(name, enabled)| ((*name).to_owned(), *enabled))
-                    .collect(),
-            );
+            let (names, values) = defaults.iter().copied().unzip();
+            return Self { names, values };
         }
-        // The production dictionary has fifteen entries. Sorted owned entries
-        // preserve map lookup/encoding behavior without general tree machinery.
+        // The capability supplies static names; each map owns its bool values.
+        // Sorted entries preserve map lookup/encoding without tree machinery.
         // Repeated default names keep their last value, as map collection did.
-        let mut values: Vec<(String, bool)> = Vec::with_capacity(defaults.len());
+        let mut names = Vec::with_capacity(defaults.len());
+        let mut values = Vec::with_capacity(defaults.len());
         for (name, enabled) in defaults {
-            match values.binary_search_by(|(key, _)| key.as_str().cmp(name)) {
-                Ok(index) => values[index].1 = *enabled,
-                Err(index) => values.insert(index, ((*name).to_owned(), *enabled)),
+            match names.binary_search(name) {
+                Ok(index) => values[index] = *enabled,
+                Err(index) => {
+                    names.insert(index, *name);
+                    values.insert(index, *enabled);
+                }
             }
         }
-        Self(values)
+        Self { names, values }
     }
 
     pub fn encode(&self) -> String {
         // url::form_urlencoded uses '*' unescaped and escapes '~', whereas
         // Go's QueryEscape does the reverse. Keep the source encoding here.
-        self.0
+        self.names
             .iter()
+            .zip(&self.values)
             .map(|(key, value)| format!("{}={value}", query_escape(key)))
             .collect::<Vec<_>>()
             .join("&")
@@ -182,31 +186,52 @@ impl<Context: HasFeatureGateDefaults> FeatureGateParser<Context> for ParseAgones
         context: &Context,
         query: &[u8],
     ) -> Result<FeatureGates, FeatureGateError> {
-        let values = parse_query(query)?;
         let mut features = FeatureGates::from_defaults(context.feature_gate_defaults());
+        let mut seen = vec![false; features.names.len()];
+        let mut feature_error: Option<(Cow<'_, [u8]>, FeatureGateError)> = None;
 
         // Go map iteration may choose any failing key. Sorted iteration chooses
-        // one member of that permitted error set deterministically.
-        for (key, value) in values {
+        // one member of that permitted error set deterministically. Keep only
+        // that error while applying each known key's first decoded value.
+        parse_query(query, |key, value| {
             let index = features
-                .0
-                .binary_search_by(|(name, _)| name.as_bytes().cmp(&key))
-                .map_err(|_| FeatureGateError::UnknownFeature(key))?;
-            let enabled =
-                parse_feature_bool(&value).ok_or_else(|| FeatureGateError::InvalidBool {
-                    feature: features.0[index].0.clone(),
-                    value,
-                })?;
-            features.0[index].1 = enabled;
+                .names
+                .binary_search_by(|name| name.as_bytes().cmp(&key));
+            if let Ok(index) = index {
+                if seen[index] {
+                    return;
+                }
+                seen[index] = true;
+                if let Some(enabled) = parse_feature_bool(&value) {
+                    features.values[index] = enabled;
+                    return;
+                }
+            }
+            if feature_error
+                .as_ref()
+                .is_none_or(|(previous, _)| key < *previous)
+            {
+                let error = match index {
+                    Ok(index) => FeatureGateError::InvalidBool {
+                        feature: features.names[index].to_owned(),
+                        value: value.into_owned(),
+                    },
+                    Err(_) => FeatureGateError::UnknownFeature(key.to_vec()),
+                };
+                feature_error = Some((key, error));
+            }
+        })?;
+        // Query syntax errors take precedence over feature errors even when
+        // they occur in a later field or an otherwise ignored duplicate.
+        if let Some((_, error)) = feature_error {
+            return Err(error);
         }
         Ok(features)
     }
 
     fn all_features_enabled(context: &Context) -> FeatureGates {
         let mut features = FeatureGates::from_defaults(context.feature_gate_defaults());
-        for (_, enabled) in &mut features.0 {
-            *enabled = true;
-        }
+        features.values.fill(true);
         features
     }
 }
@@ -227,8 +252,10 @@ pub fn parse_feature_bool(value: &[u8]) -> Option<bool> {
     }
 }
 
-fn parse_query(query: &[u8]) -> Result<Vec<(Vec<u8>, Vec<u8>)>, FeatureGateError> {
-    let mut values: Vec<(Vec<u8>, Vec<u8>)> = Vec::new();
+fn parse_query<'a>(
+    query: &'a [u8],
+    mut visit: impl FnMut(Cow<'a, [u8]>, Cow<'a, [u8]>),
+) -> Result<(), FeatureGateError> {
     let mut error = None;
     for field in query
         .split(|byte| *byte == b'&')
@@ -244,12 +271,7 @@ fn parse_query(query: &[u8]) -> Result<Vec<(Vec<u8>, Vec<u8>)>, FeatureGateError
         };
         let decoded = unescape(key).and_then(|key| unescape(value).map(|value| (key, value)));
         match decoded {
-            Ok((key, value)) => {
-                // Keep byte order and the first value of every decoded key.
-                if let Err(index) = values.binary_search_by(|(name, _)| name.cmp(&key)) {
-                    values.insert(index, (key, value));
-                }
-            }
+            Ok((key, value)) => visit(key, value),
             Err(err) if error.is_none() => error = Some(err),
             Err(_) => {}
         }
@@ -257,11 +279,14 @@ fn parse_query(query: &[u8]) -> Result<Vec<(Vec<u8>, Vec<u8>)>, FeatureGateError
     if let Some(error) = error {
         Err(error)
     } else {
-        Ok(values)
+        Ok(())
     }
 }
 
-fn unescape(bytes: &[u8]) -> Result<Vec<u8>, FeatureGateError> {
+fn unescape(bytes: &[u8]) -> Result<Cow<'_, [u8]>, FeatureGateError> {
+    if !bytes.iter().any(|byte| matches!(byte, b'+' | b'%')) {
+        return Ok(Cow::Borrowed(bytes));
+    }
     let mut decoded = Vec::with_capacity(bytes.len());
     let mut i = 0;
     while i < bytes.len() {
@@ -291,7 +316,7 @@ fn unescape(bytes: &[u8]) -> Result<Vec<u8>, FeatureGateError> {
         }
         i += 1;
     }
-    Ok(decoded)
+    Ok(Cow::Owned(decoded))
 }
 
 fn query_escape(value: &str) -> String {
@@ -376,6 +401,29 @@ mod tests {
             context.all_features_enabled().encode(),
             "A=true&Z=true&a~%2A+=true"
         );
+        let custom = [
+            ("z", true),
+            ("a", false),
+            ("aa", false),
+            ("a\0", true),
+            ("é", true),
+            ("🦀", false),
+            ("", true),
+            ("a", true),
+        ];
+        let expected = custom
+            .into_iter()
+            .collect::<std::collections::BTreeMap<_, _>>();
+        let gates = FeatureGates::from_defaults(&custom);
+        for name in [
+            "", "a", "aa", "a\0", "é", "🦀", "z", "A", "a\0x", "é\0", "🦀x", "missing",
+        ] {
+            assert_eq!(
+                gates.enabled(name),
+                expected.get(name).copied().unwrap_or(false)
+            );
+            assert!(!FeatureGates::default().enabled(name));
+        }
     }
 
     #[test]
@@ -404,7 +452,8 @@ mod tests {
     fn defaults_and_overrides_round_trip_without_global_state() {
         let context = FeatureGateContext::default();
         let gates = context.parse_feature_gates("").unwrap();
-        assert_eq!(gates.0.len(), 15);
+        assert_eq!(gates.names.len(), 15);
+        assert_eq!(gates.values.len(), 15);
         assert_eq!(context.parse_feature_gates(&gates.encode()).unwrap(), gates);
         assert!(gates.enabled("SidecarContainers"));
         assert!(gates.enabled("ScheduledAutoscaler"));
@@ -415,9 +464,9 @@ mod tests {
         assert!(
             context
                 .all_features_enabled()
-                .0
+                .values
                 .iter()
-                .all(|(_, value)| *value)
+                .all(|value| *value)
         );
         // The actual source allows false for stable gates despite its comment.
         assert!(
@@ -437,6 +486,18 @@ mod tests {
                 .unwrap()
                 .enabled("Example")
         );
+        for (query, expected) in [
+            ("%45xample=%74rue&Example=false", true),
+            ("Example=false&%45xample=%74rue", false),
+        ] {
+            assert_eq!(
+                context
+                    .parse_feature_gates(query)
+                    .unwrap()
+                    .enabled("Example"),
+                expected
+            );
+        }
         assert!(matches!(
             context.parse_feature_gates("Example=TRUE;Foo=1"),
             Err(FeatureGateError::SemicolonSeparator)
@@ -488,6 +549,59 @@ mod tests {
         assert_eq!(
             context.parse_feature_gates_bytes(b"Example=true&Example=\xff%QQ"),
             Err(FeatureGateError::InvalidEscape(b"%QQ".to_vec()))
+        );
+    }
+
+    #[test]
+    fn query_failures_preserve_first_values_and_whole_query_precedence() {
+        let context = FeatureGateContext::default();
+        for (query, expected) in [
+            (
+                "WasmAutoscaler=bad&Example=0&Example=bad",
+                FeatureGateError::InvalidBool {
+                    feature: "WasmAutoscaler".into(),
+                    value: b"bad".to_vec(),
+                },
+            ),
+            (
+                "WasmAutoscaler=bad&%45xample=bad&Example=true",
+                FeatureGateError::InvalidBool {
+                    feature: "Example".into(),
+                    value: b"bad".to_vec(),
+                },
+            ),
+            (
+                "ZZZ=0&AAA=1",
+                FeatureGateError::UnknownFeature(b"AAA".to_vec()),
+            ),
+            (
+                "Example=bad&AAA=0",
+                FeatureGateError::UnknownFeature(b"AAA".to_vec()),
+            ),
+            (
+                "AAA=0&%GG=1",
+                FeatureGateError::InvalidEscape(b"%GG".to_vec()),
+            ),
+            (
+                "Example=%XY&foo;bar=1&Example=%ZZ",
+                FeatureGateError::SemicolonSeparator,
+            ),
+        ] {
+            assert_eq!(context.parse_feature_gates(query), Err(expected));
+        }
+        let query = std::iter::once("%45xample=true")
+            .chain(std::iter::repeat_n("Example=not-a-bool", 256))
+            .collect::<Vec<_>>()
+            .join("&");
+        assert!(
+            context
+                .parse_feature_gates(&query)
+                .unwrap()
+                .enabled("Example")
+        );
+        assert_eq!(
+            context.parse_feature_gates_bytes(b"\xff=0&\0=1"),
+            Err(FeatureGateError::UnknownFeature(vec![0]))
         );
     }
 }

@@ -1,0 +1,16 @@
+{
+  "candidate": "Stream decoded query fields in the existing CGP provider and build indexed port-error paths directly.",
+  "decision": "REUSE_EXISTING",
+  "evidence_invalidation": "features.rs/gameserver.rs changes reopen affected formal bindings. Current dd4 proof rows remain historical with their exact original source identity. Refresh native gates before rebinding IR/generation.",
+  "evidence_refs": [
+    "verification/agones/ci/39498916435-terminal-retained.json",
+    "verification/agones/runs/streaming-query-direct-path-workspace-1.json",
+    "verification/agones/runs/streaming-query-direct-path-error-replay-1.json",
+    "verification/agones/runs/streaming-query-direct-path-quote-check-1.json"
+  ],
+  "feature_binding": "GS-VALIDATE-FEATURES-001",
+  "id": "GS-VALIDATE-FEATURES-001-streaming-query-direct-path-review",
+  "next_review_trigger": "After one changed protected campaign for streaming query/direct paths, compare complete rows/covers and memory/time with394989. Preserve every remaining source obligation and all eight _2cells.",
+  "ordinary_result": "605workspace/all-target tests pass,0failed,3existing ignored process children. All19error observations exactly match retained immutable Go observations. Port-path native control checks0..1023 plus near/maxusize across all four field names. Original assertions/covers/domains/bounds are unchanged.",
+  "rationale": "Actual protected394989 traces ended in Vec<Cow-pair> destruction for002/003, and formatting/PadAdapter/memchr after container lookup for000/001/004. Replace those two real production mechanisms: retain only first-value flags and one lexicographically minimum feature error, preserve whole-query syntax precedence and atomic replacement, and allocate indexed field paths only for actual errors using direct decimal digits. These are testable hypotheses, not a proven unique root cause or a claim of improved backend completion."
+}

@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "CANONICAL_COMPLETE_VALIDATION_LOCAL_RECOVERY_READY",
+  "gate_snapshot": "verification/agones/gates/6d10b275433dcf0a49011a53dc251b062c43c50049cc3a8aebf0c161cc498b26.json",
+  "predecessor_revision": 298,
+  "predecessor_sha256": "de7c8ed52b014bbbf635dd43cbf82100000baa38e7435534fabd257ea54ec355",
+  "reason": "Native675/check/six generation modes and Go controls pass; quantity/TypeMeta/six-field selected production gates are implemented and all changed-program proofs remain required. GitHub and plugin-discovery calls return Unknown tool; CLI unauthenticated. Preserve exact source, failed native1/corrected native2 receipts, complete2e1d terminal packet and resumable upload11/21. Goal remains active/incomplete.",
+  "result_revision": 299,
+  "schema_version": 1,
+  "state_sha256": "b55a35b5efbfdd8bd42f4852d34a86889f3653ffda006e8207475ea6a19ad7f5",
+  "timestamp": "2026-10-21T01:10:08.025733+00:00"
+}

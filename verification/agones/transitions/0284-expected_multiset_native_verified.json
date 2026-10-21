@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "EXPECTED_MULTISET_NATIVE_VERIFIED",
+  "gate_snapshot": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
+  "predecessor_revision": 283,
+  "predecessor_sha256": "43ca00951d34cda71e7d23064d1646632df884c8d26d2697bf2f77e3a4897700",
+  "reason": "605 native tests, three Genco controls and five generation modes pass; all five source harness bodies are byte-identical; only shared matcher and ordinary controls change. Seven unchanged-program results retain their source identity; affected exact cases require one new protected attempt.",
+  "result_revision": 284,
+  "schema_version": 1,
+  "state_sha256": "facfc541fcbe1c8bf071a01759a545de1ee991385cb977ea00e160e4d78872e7",
+  "timestamp": "2026-10-20T23:37:43.296942+00:00"
+}

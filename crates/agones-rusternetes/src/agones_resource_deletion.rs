@@ -94,6 +94,7 @@ mod tests {
 
     fn game_server(finalizers: Vec<String>) -> GameServer {
         GameServer {
+            type_meta: Default::default(),
             metadata: ObjectMeta {
                 name: "server".into(),
                 namespace: "default".into(),

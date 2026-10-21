@@ -111,6 +111,18 @@ func supportedObservation(name string) bool {
 }
 
 func main() {
+	if len(os.Args) > 1 && os.Args[1] == "--object-metadata" {
+		objectMetadataMain(os.Args[2:])
+		return
+	}
+	if len(os.Args) > 1 && os.Args[1] == "--gameserver-validation" {
+		gameServerValidationMain(os.Args[2:], false)
+		return
+	}
+	if len(os.Args) > 1 && os.Args[1] == "--gameserver-features" {
+		gameServerFeaturesMain(os.Args[2:])
+		return
+	}
 	if len(os.Args) > 1 && os.Args[1] == "--gameserver-defaulting" {
 		gameServerDefaultingMain(os.Args[2:])
 		return

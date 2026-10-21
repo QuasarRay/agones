@@ -31,6 +31,9 @@ pub mod features;
 pub mod feature_inputs;
 pub mod build_version;
 pub mod gameserver_defaulting;
+pub mod gameserver_validation;
+pub mod resource_quantity;
+pub mod object_metadata_validation;
 mod go_utf8;
 mod go_slice;
 mod go_value;
@@ -46,6 +49,9 @@ pub use features::*;
 pub use feature_inputs::*;
 pub use build_version::*;
 pub use gameserver_defaulting::*;
+pub use gameserver_validation::*;
+pub use resource_quantity::*;
+pub use object_metadata_validation::*;
 
 
 #[cfg(test)]

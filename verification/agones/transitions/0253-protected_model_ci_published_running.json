@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "PROTECTED_MODEL_CI_PUBLISHED_RUNNING",
+  "gate_snapshot": "verification/agones/gates/317304e45484daa2961fdf0a6983d3e056af281f03d5597b542bc9c51a435e49.json",
+  "predecessor_revision": 252,
+  "predecessor_sha256": "edf1eb00864b96de3c5f372156ea0aa4834856c6bb4cc2d57908d01bacf7cff3",
+  "reason": "Connector recovered; remote tree exactly matches local checkpoint ef07182, PR96 advanced by an expected-head fast-forward to7d8494d8, and actual protected CI39489621706 is running. Preserve zero current proof credit until verified artifacts.",
+  "result_revision": 253,
+  "schema_version": 1,
+  "state_sha256": "709ba80198fe4cc329a7158aa3774bcd67709fbd2f28743318a91cca63842e55",
+  "timestamp": "2026-10-20T20:12:15.384028+00:00"
+}

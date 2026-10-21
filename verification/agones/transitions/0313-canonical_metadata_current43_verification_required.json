@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate",
+    "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestMetaPatchValidate"
+  ],
+  "authorization": "User execution contract",
+  "event": "CANONICAL_METADATA_CURRENT43_VERIFICATION_REQUIRED",
+  "gate_snapshot": "verification/agones/gates/fa682f3bc2dded24a213b49d3337fb7a5a711fb02321ddac5057353491b48f72.json",
+  "predecessor_revision": 312,
+  "predecessor_sha256": "3787c09de4f19eac7ebc17ea3fe333253bc46c1281cd82ab88dbc44aecbc82d9",
+  "reason": "Local protected probe requires sudo credentials and has no unprotected fallback. Existing authorized GitHub protected CI is the available backend route; no formal result is inferred from native/parser/mutation checks.",
+  "result_revision": 313,
+  "schema_version": 1,
+  "state_sha256": "bf4ba58c2907adcbefa30e14308d47dfba7b49a824c72a7b4bb67989f19c5ed5",
+  "timestamp": "2026-10-21T08:40:34.363021+00:00"
+}

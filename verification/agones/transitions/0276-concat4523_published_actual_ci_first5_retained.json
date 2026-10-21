@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "CONCAT4523_PUBLISHED_ACTUAL_CI_FIRST5_RETAINED",
+  "gate_snapshot": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
+  "predecessor_revision": 275,
+  "predecessor_sha256": "fc86661dc17cbd8694864e8adfb52b1bdeebaa9b85b472f1a441e567d51b415d",
+  "reason": "Published native605tree exactly matches locald6c6tree; actual395118 protected campaign running. First5archives match advertised digests, actual44a9tested merge and source/log identities; strict summaries reproduce13claims/34covers/1query assertion. All source feature/defaulting results remain pending and uncredited.",
+  "result_revision": 276,
+  "schema_version": 1,
+  "state_sha256": "e1ef364d43fc604de494edb8e82fd681791a8d58cb02b63c86d39a8335339b42",
+  "timestamp": "2026-10-20T23:08:00.934387+00:00"
+}

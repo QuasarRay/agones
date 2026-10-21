@@ -221,6 +221,7 @@ mod tests {
 
     fn creating_game_server() -> GameServer {
         GameServer {
+            type_meta: Default::default(),
             metadata: ObjectMeta {
                 name: "server".into(),
                 namespace: "default".into(),

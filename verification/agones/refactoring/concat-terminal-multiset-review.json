@@ -1,0 +1,14 @@
+{
+  "candidate": "Use expected-side multiplicity checking in the existing Genco ElementsMatch helper, with the same equal-length check and full ValidationError Eq.",
+  "decision": "REUSE_EXISTING",
+  "evidence_invalidation": "No additional source/harness change yet. Current4523seven results and all full records remain pinned; a changed matcher must revalidate affected generated harnesses. Unaffected producer outputs/production/harnesses may reuse verified evidence only with exact dependency justification.",
+  "evidence_refs": [
+    "verification/agones/ci/39511896291-terminal-retained.json",
+    "verification/agones/validation-error-data-isolated-recovery.json"
+  ],
+  "feature_binding": "GS-VALIDATE-FEATURES-001",
+  "id": "GS-VALIDATE-FEATURES-001-concat-terminal-multiset-review",
+  "law": "For finite lists with equivalence-relation Eq, equal lengths plus equal actual/expected counts for every element of either list is equivalent to multiset equality. Checking every expected equivalence class accounts for all expected cardinality; equal total length rules out any extra actual class. Empty lists, duplicate multiplicities and every compared record field remain observable. Validate this relation and existing/new semantic fault controls before changing the emitter.",
+  "next_review_trigger": "After equivalence/mutation controls and one distinct protected source-case result, reassess the remaining actual comparison/production bottleneck. All eight _2cells and full source/architecture/lifecycle/conformance requirements stay open.",
+  "rationale": "The source-concat repair eliminates logged PadAdapter recursion in all five cases and lowers measured peak memory from12GiB to5.3-10.6GiB. All five still hit900s with zero rows, now in nested error-multiset counts/field equality. The current helper iterates actual errors outside repeated actual/expected counts. Literal expected fixtures have0or1errors. Iterating expected errors instead preserves finite multiset equality while reducing symbolic outer iteration. No new macro/compiler/framework is justified."
+}

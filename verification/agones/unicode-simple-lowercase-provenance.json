@@ -1,0 +1,12 @@
+{
+  "fixture_sha256": "76eb7600bbf1036caff5ff176cee4a0d9d7b126e0c94808d94335cc00120efe9",
+  "independent_fixture": "verification/agones/unicode-simple-lowercase-table.json",
+  "license_file": "verification/agones/unicode-data-license.txt",
+  "license_sha256": "e7a93b009565cfce55919a381437ac4db883e9da2126fa28b91d12732bc53d96",
+  "license_url": "https://www.unicode.org/license.txt",
+  "schema_version": 1,
+  "source_sha256": "2e1efc1dcb59c575eedf5ccae60f95229f706ee6d031835247d843c11d96470c",
+  "source_url": "https://www.unicode.org/Public/17.0.0/ucd/UnicodeData.txt",
+  "unicode_version": "17.0.0",
+  "use": "Independent ordinary validation fixture for simple lowercase. Production uses the version-guarded Rust standard library; this fixture is not production code or a formal proof."
+}

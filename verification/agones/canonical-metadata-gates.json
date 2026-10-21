@@ -1,0 +1,35 @@
+{
+  "gates": {
+    "FG-CONFIG-001": "verification/agones/gates/7bfd62fa471d2e81f1c01d5adb7d8c90ccdf011e9e510cbe3aeae264bd11c11c.json",
+    "FG-ERROR-001": "verification/agones/gates/3d8192b2263a6caf0cd51f74e3db0a7dbbf7e7367ca88341ae043be5d79be37b.json",
+    "FG-INPUT-001": "verification/agones/gates/bec0518bd3889a762933b7be92b199c84586b7e733c21bd2704179d72777c4d9.json",
+    "GS-DEFAULTS-001": "verification/agones/gates/e48954027c9fc755852ee09f837a9161d458c356b862636ebc30f6d152e43ba7.json",
+    "GS-TYPEMETA-001": "verification/agones/gates/cd25bfe732426915201fdbba0ba568216a9a59eae793c88dc76a24ecc868da2f.json",
+    "GS-VALIDATE-FEATURES-001": "verification/agones/gates/1a6a0ad0f3985df4c5724a539d42e845bced47dcefc11866cf9b5f310122cd5c.json",
+    "GS-VALIDATION-ERROR-DATA-001": "verification/agones/gates/18ae47425956d12f4e280b20749b73e3a77aad132bec216d777468608935f386.json",
+    "META-VALIDATE-001": "verification/agones/gates/fa682f3bc2dded24a213b49d3337fb7a5a711fb02321ddac5057353491b48f72.json",
+    "RESOURCE-QUANTITY-001": "verification/agones/gates/109f6d28e8e90dfe6ba51b9f2ec16852a9dfff9d10db88be7a7961d537a4898f.json",
+    "SDK-VERSION-001": "verification/agones/gates/95becbc894219fa3e3a642b4fcc4fb3f8554d5f01fd6582f35f3f19a0e9c5e96.json"
+  },
+  "new_formal_credit": 0,
+  "ordinary_result_counts": {
+    "failed": 0,
+    "ignored": 3,
+    "passed": 704
+  },
+  "predecessor_ledger_revision": 309,
+  "replacements": {
+    "verification/agones/gates/16598e097e857c146d1492f3bff0cb46373c25b93287caed57d8f86ab2b169dc.json": "verification/agones/gates/fa682f3bc2dded24a213b49d3337fb7a5a711fb02321ddac5057353491b48f72.json",
+    "verification/agones/gates/265e90701ceb64c01033eb75fd78eec1a905537121717e71abea49ed2a89bfe2.json": "verification/agones/gates/95becbc894219fa3e3a642b4fcc4fb3f8554d5f01fd6582f35f3f19a0e9c5e96.json",
+    "verification/agones/gates/3d9b83c2771f038ecfaa7c92a4f060cc8b692e670f0318672edef5ddea483516.json": "verification/agones/gates/109f6d28e8e90dfe6ba51b9f2ec16852a9dfff9d10db88be7a7961d537a4898f.json",
+    "verification/agones/gates/55deca60aa4abf805c44e6bb446ea33f332983dcb780ceeec3d8be67208105e2.json": "verification/agones/gates/7bfd62fa471d2e81f1c01d5adb7d8c90ccdf011e9e510cbe3aeae264bd11c11c.json",
+    "verification/agones/gates/56c041eede444c1c7deb1bf2fc074a880f6f3b2b4ee2032385315cd7c569a5a9.json": "verification/agones/gates/bec0518bd3889a762933b7be92b199c84586b7e733c21bd2704179d72777c4d9.json",
+    "verification/agones/gates/5daba4dcad178822c8f9572333d72f7efa733d6a947ae1cc24157f9fd9e404b9.json": "verification/agones/gates/1a6a0ad0f3985df4c5724a539d42e845bced47dcefc11866cf9b5f310122cd5c.json",
+    "verification/agones/gates/5f49c6510dfa81c649d8220da90387124b541a6c17a763d4dbd254d4032b873b.json": "verification/agones/gates/e48954027c9fc755852ee09f837a9161d458c356b862636ebc30f6d152e43ba7.json",
+    "verification/agones/gates/9bba6d1b4366a99bd6865906d6f76e3901e05945d6d0f107c8da4b7aaaab7ecc.json": "verification/agones/gates/18ae47425956d12f4e280b20749b73e3a77aad132bec216d777468608935f386.json",
+    "verification/agones/gates/ba4109c4929f48ba6ed401b28bbb15e8478640558eedaa4b4840d9c628cb8884.json": "verification/agones/gates/3d8192b2263a6caf0cd51f74e3db0a7dbbf7e7367ca88341ae043be5d79be37b.json",
+    "verification/agones/gates/d6ff1597de0be25a6cfebf8dbbfc11e155ab20494d78dcccac731f66852c7116.json": "verification/agones/gates/cd25bfe732426915201fdbba0ba568216a9a59eae793c88dc76a24ecc868da2f.json"
+  },
+  "schema_version": 1,
+  "status": "CANONICAL_IMPLEMENTATION_CHECKS_PASSED_GENERATION_NEXT"
+}

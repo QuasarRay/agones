@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "EXACT_LOOKUP_SINGLETON_NATIVE605_GATES_REFRESHED",
+  "gate_snapshot": "verification/agones/gates/c4e2a5ea6825492fb9875ede400e5136552e534d80e260295148c92c0775f096.json",
+  "predecessor_revision": 290,
+  "predecessor_sha256": "1160a7ba66e4a716d6e2e0e7dccea97c2333aa77c8813d95184c87a83e69ccc9",
+  "reason": "Trace-bound production accessor and generated empty/singleton relation pass605source-bound native tests and five deterministic modes. All original harness bodies/assertions/covers/domains/unwind128/full Eq and larger multiplicities retained. Six production gates/semantic bindings refreshed; all affected current proofs reopened with e49e history durable.",
+  "result_revision": 291,
+  "schema_version": 1,
+  "state_sha256": "c0673d19021d3cfb4965dfcc70d14bb5f75936952bc5e3a6110d347fcdad26b6",
+  "timestamp": "2026-10-21T00:10:39.357443+00:00"
+}

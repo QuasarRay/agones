@@ -1,0 +1,16 @@
+{"harness_count": 1, "claimed_assertions": 3, "required_covers": 8, "property_count": 1535, "status_counts": {"SUCCESS": 1474, "SATISFIED": 8, "UNREACHABLE": 53}}
+{"artifact_id": 12311042294, "harness": "gameserver_feature_validation_common_domain", "claims": 3, "covers": 8, "rows": 1535}
+{"harness_count": 1, "claimed_assertions": 3, "required_covers": 10, "property_count": 978, "status_counts": {"SUCCESS": 945, "SATISFIED": 10, "UNREACHABLE": 23}}
+{"artifact_id": 12311037197, "harness": "feature_input_common_domain", "claims": 3, "covers": 10, "rows": 978}
+{"harness_count": 1, "claimed_assertions": 1, "required_covers": 2, "property_count": 1507, "status_counts": {"SUCCESS": 1461, "SATISFIED": 2, "UNREACHABLE": 44}}
+{"artifact_id": 12310647529, "harness": "source_query_case_003", "claims": 1, "covers": 2, "rows": 1507}
+{"harness_count": 1, "property_count": 1158, "status_counts": {"SUCCESS": 1141, "SATISFIED": 6, "UNREACHABLE": 11}}
+{"artifact_id": 12310647422, "harness": "feature_bool_common_domain", "claims": 3, "covers": 6, "rows": 1158}
+{"harness_count": 1, "claimed_assertions": 3, "required_covers": 8, "property_count": 2180, "status_counts": {"SUCCESS": 2147, "SATISFIED": 8, "UNREACHABLE": 25}}
+{"artifact_id": 12310322684, "harness": "health_defaulting_common_domain", "claims": 3, "covers": 8, "rows": 2180}
+{"harness_count": 1, "claimed_assertions": 18, "required_covers": 2, "property_count": 6381, "status_counts": {"SUCCESS": 6100, "SATISFIED": 2, "UNREACHABLE": 279}}
+{"artifact_id": 12311187387, "harness": "source_gs_case_005", "claims": 18, "covers": 2, "rows": 6381}
+{"harness_count": 1, "claimed_assertions": 2, "required_covers": 2, "property_count": 8669, "status_counts": {"SUCCESS": 8112, "SATISFIED": 2, "UNREACHABLE": 555}}
+{"artifact_id": 12309888541, "harness": "source_gsv_case_001", "claims": 2, "covers": 2, "rows": 8669}
+{"harness_count": 1, "claimed_assertions": 2, "required_covers": 2, "property_count": 8670, "status_counts": {"SUCCESS": 8113, "SATISFIED": 2, "UNREACHABLE": 555}}
+{"artifact_id": 12309843647, "harness": "source_gsv_case_004", "claims": 2, "covers": 2, "rows": 8670}

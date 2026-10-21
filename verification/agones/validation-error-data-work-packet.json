@@ -1,0 +1,49 @@
+{
+  "all_cases_remain_required": true,
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "captured_ir": "verification/agones/gameserver-validation.ir.json",
+  "captured_required_assertions": 25,
+  "captured_required_cases": 25,
+  "classification": "REPO_SAFE",
+  "isolated_recovery": "verification/agones/validation-error-data-isolated-recovery.json",
+  "next_action": "Recover isolated implementation190892066 and source-error gatea8a9dda6; mapping controls2pass in the isolated worktree. Refresh affected production/generator gates and bind all six fields in actual-adapter/helper replay metadata before emitting/native-replaying every one of the25general cases. Keep full metadata predicates and formal cleanup/lifecycle required. Separately retrieve every protected CI39489621706 artifact and diagnose original-feature source-case resource failures without shrinking any proof.",
+  "no_subset_emitted_or_credited": true,
+  "required_repairs": [
+    {
+      "existing_player_contract": "Source correspondence requires this explicit mapping review before source-parity credit; raw-field equality must not be claimed.",
+      "finding": "Pinned Required/Forbidden constructors store an empty Go string. Rust uses None for their absence of meaningful bad value. Make the constructor-image mapping explicit and lossless in both directions; reject a nonempty/nil raw Go value rather than silently normalizing it. Invalid empty strings must remain distinct from null.",
+      "id": "ERROR-CONSTRUCTOR-EMPTY-BAD-VALUE-MAPPING",
+      "proof_credit": 0,
+      "source_observation": "verification/agones/runs/player-feature-complete-source-error-observation-3.json",
+      "source_reference_rows": 4
+    },
+    {
+      "finding": "Original metadata errors include nonempty Origin such as format=k8s-label-key and format=k8s-label-value. Current ValidationError has no Origin/CoveredByDeclarative fields. Preserve them in actual production errors, model/reference/lowering and actual-adapter comparison.",
+      "id": "VALIDATION-ERROR-ORIGIN-COVERED-DATA"
+    },
+    {
+      "finding": "Pinned TooLongMaxLength uses BadValue <value omitted> and detail may not be more than63bytes. Current core returns the original name and a different detail. Implement actual source constructor behavior before credit.",
+      "id": "SOURCE-TOO-LONG-PAYLOAD"
+    },
+    {
+      "finding": "The original invalid annotation-key detail includes examples and exact regex text; current core returns a shorter approximation. Preserve the exact source detail and Origin. Full remaining metadata predicates remain required.",
+      "id": "SOURCE-METADATA-REGEX-DETAIL"
+    }
+  ],
+  "schema_version": 1,
+  "source_constructor_mapping_review": {
+    "forward": "For the pinned Required/Forbidden constructor image, require raw Go BadValue to be exactly the empty string and encode absence of meaningful bad value as Rust None. Other kinds retain empty string versus null distinctly.",
+    "inverse": "Reconstruct the fixed empty Go string from Rust None plus Required/Forbidden kind. Preserve kind/path/detail and Origin/CoveredByDeclarative. Reject values outside this declared constructor image instead of silently normalizing.",
+    "justification": "The actual source constructors set BadValue to the empty string. The kind discriminant makes this a lossless representation on their output image. The Go four-class PlayerTracking observation independently confirms the helper image; raw Go/Rust field equality is not the claim.",
+    "rule": "AGONES-ERROR-CONSTRUCTOR-EMPTY-1",
+    "status": "BIDIRECTIONAL_NATIVE_CONTROLS_PASSED_METADATA_EMISSION_BOUND_IN_ISOLATED_GENERATOR",
+    "validation_required": "Add actual bidirectional reconstruction controls and bind the rule in emitter, adapter replay and helper model metadata before source-parity credit."
+  },
+  "source_files": {
+    "pkg/apis/agones/v1/common.go": "b0657e44bfcff65bceb01062a6051e1b3afad0065ea797db3b08b4b4de2fb9f2",
+    "pkg/apis/agones/v1/gameserver.go": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
+    "vendor/k8s.io/apimachinery/pkg/apis/meta/v1/types.go": "110ef0b67dda6c349a5c8abae421360ba0aa15702f2f0e04d320bfb2687785f2",
+    "vendor/k8s.io/apimachinery/pkg/util/validation/field/errors.go": "747db5374cdd58712b46d10775272508212d3201fa05c30105a5531debc666d4"
+  },
+  "status": "ISOLATED_PRODUCTION_GATED_BIDIRECTIONAL_MAPPING_CONTROLS_PASS_OUTPUT_REFRESH_PENDING"
+}

@@ -1,0 +1,49 @@
+{
+  "artifact_bindings": {
+    "verification/agones/proof-summaries/health-defaulting-bolero-kani-ci-39489621706-1.json": "a039176f65164f542ab96b75f3fe179acec3fa9a242334ae8106ec765253d019",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39489621706-1-case-002.json": "9707c4102bafe295277ff19c88d8345a7d0fa11d558805c0d0926def613987fd",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39489621706-1-case-002.log": "ca856496c11fc3b4b153f838edd4057a6ae47bc148dad4eb42cefad32891f132",
+    "verification/agones/runs/health-defaulting-bolero-kani-ci-39489621706-1.json": "dae15cdb52e7f294b5a6d9af3f04630a8db45ef69d653bfbc37e4caa3213e34a",
+    "verification/agones/runs/health-defaulting-bolero-kani-ci-39489621706-1.log": "3eab89b907a7355f2b336665ac272ab19c505c204d44a57e0cac3e6e52c82b29"
+  },
+  "campaign": "Other jobs continue independently; the aggregate must fail if any selected job fails. Preserve every successful complete selection separately; no full-CI acceptance or PR merge from partial success.",
+  "classification": "REPO_SAFE",
+  "health": {
+    "archive_sha256": "c2c8f549080b967994328cfdaa2a7d38cf469de664998ee57e87c8a182db37b6",
+    "artifact_id": 12296005621,
+    "backend_rows": 2180,
+    "run": "verification/agones/runs/health-defaulting-bolero-kani-ci-39489621706-1.json",
+    "satisfied_covers": 8,
+    "semantic_claims": 3,
+    "status_counts": {
+      "SATISFIED": 8,
+      "SUCCESS": 2147,
+      "UNREACHABLE": 25
+    },
+    "strict_summary_reproduced": true,
+    "summary": "verification/agones/proof-summaries/health-defaulting-bolero-kani-ci-39489621706-1.json"
+  },
+  "schema_version": 1,
+  "source_case_002": {
+    "archive_sha256": "a1f4204afcd3312114eb9397422524e010d5bd60df89819fb646a68107218d45",
+    "artifact_id": 12296035737,
+    "complete_proof_report": false,
+    "diagnosis": "The verified12GiB verifier-tree cap was reached and systemd killed the whole service. The recorder and Actions runner survived and the job uploaded its failed receipt/full log. This is an explicit resource failure; it is not an original assertion counterexample or a successful proof.",
+    "exec_main_code": 2,
+    "exec_main_status": 9,
+    "exit_code": 1,
+    "formal_credit": 0,
+    "individual_result_rows": 0,
+    "next_action": "Keep the exact case, assertions, covers, unit domain and unwind128. Diagnose avoidable actual production/harness allocation and symbolic work using this retained log before any changed attempt; no identical retry or bound reduction.",
+    "observed_memory_peak_bytes": 12884901888,
+    "observed_swap_peak_bytes": 0,
+    "run": "verification/agones/runs/gameserver-validation-bolero-kani-ci-39489621706-1-case-002.json",
+    "service_result": "oom-kill",
+    "service_runtime": "5min56.180s",
+    "status": "FAILED_WHOLE_SERVICE_OOM_KILL"
+  },
+  "source_head": "7d8494d8ad8ff7ce0d14a3416fd6ab0c15c7c3da",
+  "status": "HEALTH_PROOF_RETAINED_SOURCE002_EXPLICIT_PROTECTED_OOM_FAILURE",
+  "tested_merge": "89575a957b239dbc608ebb754cbb11ecfe8a8524",
+  "workflow_run": 39489621706
+}

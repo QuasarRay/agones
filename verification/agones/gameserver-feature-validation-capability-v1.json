@@ -1,0 +1,68 @@
+{
+  "capability": "CanValidateGameServerFeatures",
+  "composition": [
+    "GameServerDefaultingContext delegates the existing feature getter and new validator",
+    "Direct spec/GameServer/Fleet/GameServerSet APIs expose explicit contexts and default-disabled wrappers",
+    "Actual Rusternetes admission constructors capture parsed defaults/environment or explicit input; from_context permits static CGP composition"
+  ],
+  "dependencies": [
+    "HasGameServerFeatureFlags; the provider needs no version, storage, transport or runtime capability"
+  ],
+  "effects": {
+    "cancellation": "synchronous",
+    "duplicates": "deterministic repeated result",
+    "error_classes": [
+      "Forbidden"
+    ],
+    "mutation": "none",
+    "ownership": "borrowed inputs; owned returned errors",
+    "retries": "none",
+    "storage_consistency": "not applicable; pure borrowed decision"
+  },
+  "feature_id": "GS-VALIDATE-FEATURES-001",
+  "formal_status": "NOT_EXTRACTED_OR_PROVED_BEFORE_IMPLEMENTATION_GATE",
+  "id": "GAMESERVER_FEATURE_VALIDATION_V1",
+  "inputs": [
+    "Borrowed GameServerSpec; Players nil/present distinction",
+    "Borrowed context-owned PlayerTracking boolean",
+    "Caller field path; an empty root produces players"
+  ],
+  "ordering": [
+    "GameServerSpec begins with feature errors before development-address branching",
+    "GameServer metadata errors retain their prior position",
+    "Fleet/GameServerSet use the same provider with existing nested-path rebasing",
+    "GameServerSet update retains its distinct source immutability policy"
+  ],
+  "ordinary_conformance": [
+    "Default-disabled and explicitly enabled; absent/zero/extreme-capacity players",
+    "Minimal feature-only CGP context uses the same production provider",
+    "Exact kind/path/detail/no bad value; nested resource paths",
+    "Valid/invalid development addresses retain the feature error before early return",
+    "Actual Rusternetes CREATE admissions, Fleet UPDATE support, malformed input, unrelated kinds",
+    "Isolated real-process configuration reaches all default admission constructors; invalid configuration returns an error"
+  ],
+  "outputs": [
+    "Empty error list unless PlayerTracking is disabled and Players is present",
+    "One Forbidden error with <path>.players, no bad value, exact source detail"
+  ],
+  "postconditions": [
+    "Input spec and context unchanged",
+    "Player capacity does not affect this gate; present zero and all i64 values remain present"
+  ],
+  "preconditions": [
+    "Feature configuration loaded through the existing CGP input/parser before admission"
+  ],
+  "provider": "ValidateAgonesGameServerFeatures",
+  "residual": [
+    "Full GameServer validation, exact resource quantity semantics, formatting and hook/metadata error ordering",
+    "Live Rusternetes cluster conformance, lifecycle and all remaining original obligations",
+    "All eight mandatory _2 form/location cells"
+  ],
+  "schema_version": 1,
+  "source": {
+    "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "path": "pkg/apis/agones/v1/gameserver.go",
+    "sha256": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
+    "symbol": "GameServerSpec.validateFeatureGates"
+  }
+}

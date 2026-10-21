@@ -1,6 +1,13 @@
 {
+  "artifact_retrieval": "Authenticated GitHub artifact download has now been preflighted on prior run39199314045: archive digest,15safe members and5receipt/log hashes verified, with no new proof credit. See verification/agones/ci/artifact-download-preflight.json. After current terminal upload, download artifact without printing/persisting signed URLs, verify digest/safe paths/log hashes, then strictly parse all actual results/covers.",
   "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "ci_run": 39464345048,
+  "ci_source_head": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
+  "ci_tested_merge": "876ff250dae9d70f4cb76db72f826c653f941e5f",
+  "ci_tree": "893d506d71f7e348d71eceeb61df2101ed1511b8",
   "classification": "REPO_SAFE",
+  "historical_observed_gap": "Pinned Go GameServerSpec.Validate begins with validateFeatureGates, which forbids non-nil Players when PlayerTracking is disabled, including the development-address early-return path. Rust GameServerSpec::validate and actual Rusternetes creation validation have no corresponding feature-gate check; the validation admission context currently owns hooks only. Fleet/GameServerSet template validation also reaches the shared spec validation and must preserve configured behavior and nested paths.",
+  "implementation_gate": "verification/agones/gates/f8271f2592ac1b7a5e27d8a9e17ad361679cbd40f113e2a8bb3dd0d75ce65810.json",
   "implementation_scope": [
     "Implement the complete source validateFeatureGates policy through an explicit CGP capability/provider, using the existing HasGameServerFeatureFlags getter and shared parsed feature configuration.",
     "Connect the policy to actual direct GameServer/spec validation and Rusternetes GameServer/Fleet/GameServerSet validation consumers with correct nested field paths and configured/default contexts.",
@@ -8,9 +15,57 @@
     "Exercise actual native admission/provider paths, default-disabled and explicitly enabled policy, absent/present players and development-server behavior before recording an implementation gate.",
     "Only after that gate, translate the selected original helper/test obligations with the existing package-aware extraction, typed IR, Genco and strict Bolero/Kani infrastructure."
   ],
+  "latest_ci_observation": {
+    "complete_artifacts": "UNAVAILABLE",
+    "formal_credit": 0,
+    "model": "FAILED_RUNNER_LOST_COMMUNICATION",
+    "receipt": "verification/agones/ci/39464345048-runner-lost-no-artifacts.json",
+    "rust": "PASSED",
+    "state": "PASSED"
+  },
   "metadata_test_identity": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures",
-  "observed_gap": "Pinned Go GameServerSpec.Validate begins with validateFeatureGates, which forbids non-nil Players when PlayerTracking is disabled, including the development-address early-return path. Rust GameServerSpec::validate and actual Rusternetes creation validation have no corresponding feature-gate check; the validation admission context currently owns hooks only. Fleet/GameServerSet template validation also reaches the shared spec validation and must preserve configured behavior and nested paths.",
-  "proof_order": "Implementation and ordinary checks -> immutable gate -> source semantic extraction -> actual bounded backend/integration evidence. No new semantic IR or formal credit in this discovery packet.",
+  "native_workspace": {
+    "failed": 0,
+    "ignored_runner_entries": 3,
+    "passed": 603
+  },
+  "next_action": "Prepare a changed operational attempt with explicit runner-protecting resource limits/recording and earlier per-selection artifact retention or isolated source-case jobs. Preserve every selected case/assertion/cover and unwind128. Do not retry the same unprotected campaign. Continue native source error-data work from the isolated checkpoint.",
+  "next_independent_implementation": {
+    "local_commit": "dd15992d4fc556528bfd956d9059234b3444c691",
+    "new_formal_credit": 0,
+    "recovery_manifest": "verification/agones/resource-quantity-isolated-recovery.json",
+    "status": "ISOLATED_TYPED_OWNER_IMPLEMENTATION_GATED_CANONICAL_ADOPTION_PENDING",
+    "work_item": "RESOURCE-QUANTITY-001"
+  },
+  "ordinary_current_check": "verification/agones/runs/gs-validation-final-workspace-1.json",
+  "ordinary_current_observation_replay": "verification/agones/runs/gs-validation-observation-scope-native-1.json",
+  "original_test_observation": {
+    "assertion_sites": 2,
+    "case_count": 5,
+    "expected_dynamic_assertion_occurrences": 10,
+    "players_present_cases": 0,
+    "scope": "All five original port/CountsAndLists/None-port cases remain required for automated typed extraction. None exercises present Players, so no PlayerTracking rejection coverage is inferred from that table.",
+    "test": "TestGameServerValidateFeatures"
+  },
+  "proof_attempts": "verification/agones/gameserver-feature-validation-proof-attempts.json",
+  "proof_order": "Implementation gate317304recorded before every new semantic extraction/property. All5exact cases/10qualified assertions now captured and generated; source/native replay is ordinary evidence. Real backend campaign and post-observation cleanup remain open.",
+  "protected_ci_recovery": {
+    "next_action": "Implement the bounded Cow query-allocation hypothesis in the real existing CGP parser after recovering this exact snapshot; ordinary gate then affected binding/IR/generation refresh and the unchanged12selection protected CI. Preserve source0/1timeouts andsource2/3/4OOM logs; no identical retry or weaker domain/bounds. Separately recover isolated error-data gatea8a9dda6and post-gate mapping commitfe8b4301for full25case generation/replay.",
+    "plan": "verification/agones/ci/protected-model-execution-plan.json",
+    "receipt": "verification/agones/ci/39489621706-terminal-retained.json",
+    "refactoring_review": "verification/agones/refactoring/query-allocation-resource-review.json",
+    "source_head": "7d8494d8ad8ff7ce0d14a3416fd6ab0c15c7c3da",
+    "status": "COMPLETED_FAILURE_ALL12ARTIFACTS_RETAINED_7PROOFS_VERIFIED_5RESOURCE_FAILURES",
+    "workflow_run": 39489621706
+  },
+  "pull_request": "https://github.com/QuasarRay/agones/pull/96",
+  "query_allocation_repair": {
+    "actual_code": "Canonical/default feature names use the existing static-name capability, with per-map owned bools. Query buffers use borrowed/owned byte slices internally, and public error payloads remain owned.",
+    "gate": "verification/agones/gates/f8271f2592ac1b7a5e27d8a9e17ad361679cbd40f113e2a8bb3dd0d75ce65810.json",
+    "prior_assurance": "verification/agones/query-borrowing-prior-assurance.json",
+    "review": "verification/agones/refactoring/query-allocation-resource-review.json",
+    "status": "ORDINARY_GATED_GENERATION_REFRESHED_MODEL_PENDING"
+  },
   "remaining_required_outside_this_helper": [
     "Full GameServer validation, resource-quantity exact numeric semantics, hook/metadata error ordering and every remaining source behavior remain required and are not certified by this helper.",
     "All lifecycle/boundary/conformance obligations and all eight required _2 form/location cells remain open."
@@ -21,15 +76,32 @@
     "Reuse existing ValidationError and actual Rusternetes admission contracts; no alternate orchestrator, provider registry or plugin system."
   ],
   "schema_version": 1,
+  "settled_decisions": [
+    "Production CGP feature/provider wiring is complete and ordinarily checked; do not restart it.",
+    "Actual default/configured GameServer/Fleet/GameServerSet admissions and nested/direct paths are implemented.",
+    "All five original TestGameServerValidateFeatures cases remain selected; none sets Players. Preserve10assertion occurrences and use a separate source-contract helper model without qualified-source credit.",
+    "First proof had insufficient memcmp unwind and4GiBcap; second at128/6GiB produced no individual results. Stop local proof-depth experiments; retain both logs and failed source snapshot.",
+    "Old36direct GS assertion proofs remain historical after changed broad bindings. Refresh required current backend results; do not re-credit by changing hashes alone.",
+    "Root user AGENTS.MD edit and absent prompt-audit file must remain preserved. All eight _2 cells remain required.",
+    "Original Go test, typed core fixtures and actual Rusternetes replay pass for all5cases/10assertions; empty allocated maps are preserved separately from omitted JSON.",
+    "All5Genco modes check; prior generated core data and source-case bodies stay byte-identical. Refresh standalone go-quote metadata before dependent gates, then IR and generation metadata.",
+    "New emitter lives in examples/codegen/gameserver_features.rs; bind both source modules. Existing observation-lifetime rule retains harness owners in both engines after all assertions/covers; internal production allocation/destruction is unchanged and formal post-observation cleanup stays required."
+  ],
+  "source_codegen": "verification/agones/gameserver-feature-validation-codegen.json",
+  "source_contract_proof": {
+    "harness": "gameserver_feature_validation_common_domain",
+    "scope": "Distinct post-gate source-contract relation for actual CGP helper; no qualified original assertion credit."
+  },
   "source_files": {
     "pkg/apis/agones/v1/gameserver.go": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
     "pkg/apis/agones/v1/gameserver_test.go": "468502ff9cbedb3a37f7ff2b5ef1207f09b770aa3fc36b5e87432b6a62068cfa"
   },
+  "source_ir": "verification/agones/gameserver-feature-validation.ir.json",
   "source_symbols": [
     "GameServerSpec.validateFeatureGates",
     "GameServerSpec.Validate",
     "GameServer.Validate"
   ],
-  "status": "DISCOVERED_NOT_IMPLEMENTED_NO_SEMANTIC_EXTRACTION",
+  "status": "CI_FAILED_RUNNER_LOSS_NO_COMPLETE_MODEL_EVIDENCE",
   "work_item": "GS-VALIDATE-FEATURES-001"
 }

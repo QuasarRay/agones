@@ -1,0 +1,29 @@
+{
+  "acceptance": "Seven selections reported successful jobs, but only five strict artifact summaries currently have local acceptance. No added defaulting or feature-source credit from undownloaded artifacts. All remaining source cases/assertions/covers/domains/bounds stay required.",
+  "classification": "REPO_SAFE",
+  "failure_cause": "UNCLASSIFIED_PENDING_RAW_RESULTS; job failure alone is neither a counterexample nor evidence of OOM/timeout.",
+  "known_failed_source_jobs": [
+    "source_gsv_case_000",
+    "source_gsv_case_002"
+  ],
+  "last_public_status": "verification/agones/ci/39505643334-public-metadata-connector-unavailable.json",
+  "missing_artifacts_known_at_observation": [
+    12304245814,
+    12303602282,
+    12304051862,
+    12304755583
+  ],
+  "next_action": "Recover the terminal public status and all remaining artifact IDs/digests. When the connector is available, download each archive once, verify archive digest/tested merge/source/run/log identities, reproduce strict summaries with exact case indices, then classify failures from raw rows/service metrics before any further attempt. Preserve native675isolated85d64a1 and canonical31cc sources.",
+  "remaining_source_jobs_at_observation": [
+    "source_gsv_case_001",
+    "source_gsv_case_003",
+    "source_gsv_case_004"
+  ],
+  "retained_strict_receipt": "verification/agones/ci/39505643334-first-five-retained.json",
+  "schema_version": 1,
+  "source_head": "31cc72d92bbb9611e228ec5936d2421a5ca35f84",
+  "status": "PARTIAL_STRICT_EVIDENCE_RETAINED_REMAINING_ARTIFACT_RECOVERY_REQUIRED",
+  "tested_merge_from_retained_runs": "e3010b88e98025e11d41f272126e8b39a171c913",
+  "tool_observation": "GitHub fetch/download and Plugin Management search return MCP -32001 Unknown tool. Public artifact ZIP endpoint returns401 without connector authentication. No permission change, new model retry, job cancellation, or credential workaround was attempted.",
+  "workflow_run": 39505643334
+}

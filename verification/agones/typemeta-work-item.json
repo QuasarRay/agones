@@ -1,0 +1,41 @@
+{
+  "dependencies": [],
+  "disposition": "READY",
+  "evidence_refs": [
+    "verification/agones/resource-quantity-isolated-recovery.json"
+  ],
+  "feature_ids": [
+    "gameserver-source-type-meta"
+  ],
+  "id": "GS-TYPEMETA-001",
+  "implementation_gate": null,
+  "next_action": "Implementation and native gate are complete in the clean isolated worktree; adopt with source-bound gate refresh after protected CI/delivery work. Preserve actual TypeMeta in full validation fixtures; no current canonical/source assertion or formal credit.",
+  "owned_paths": [
+    "crates/agones-core/src/gameserver.rs",
+    "crates/agones-rusternetes/src/lib.rs",
+    "crates/agones-core/tests/gameserver_type_meta.rs",
+    "crates/agones-rusternetes/tests/gameserver_type_meta.rs"
+  ],
+  "requirement_ids": [
+    "REQ-02",
+    "REQ-04",
+    "REQ-05",
+    "REQ-07",
+    "REQ-08",
+    "REQ-09",
+    "REQ-10",
+    "REQ-11",
+    "REQ-12",
+    "REQ-13"
+  ],
+  "source_config_binding": {
+    "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "isolated_commit": "e8b684a00b7758eef366ee467117c771af84b8d1",
+    "isolated_gate": "verification/agones/gates/d6e40365a5fabbec22b5d84d64c433528d66bd63d91a30450e32c445647b3e92.json",
+    "recovery_manifest": "verification/agones/resource-quantity-isolated-recovery.json"
+  },
+  "stage": "IMPLEMENTING",
+  "test_ids": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate"
+  ]
+}

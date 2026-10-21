@@ -1,0 +1,17 @@
+{
+  "architecture": "Existing CGP remains composition/lifecycle owner. This is an ordinary private value representation; no registry, alternate provider, orchestrator, plugin, macro or compiler substrate. All eight _2cells remain required and are reassessed against real resource/derive/delegation repetition after adoption.",
+  "candidate": "Separate feature-name metadata from mutable bool storage while keeping the public map API and all source relations.",
+  "decision": "SMALL_LOCAL_REFACTOR",
+  "evidence_invalidation": "Rerun canonical ordinary checks before refreshing all nine affected gates and rebinding existing IR. Preserve all previous receipts by source identity and retain all formal debt.",
+  "evidence_refs": [
+    "verification/agones/ci/39519906026-terminal-retained.json",
+    "verification/agones/runs/complete-validation-canonical-adoption-native-1.json"
+  ],
+  "feature_binding": "GS-VALIDATE-FEATURES-001 / RESOURCE-QUANTITY-001 / GS-TYPEMETA-001 / GS-VALIDATION-ERROR-DATA-001",
+  "id": "COMPLETE-VALIDATION-ADOPTION-key-value-ownership-review",
+  "invariant": "Private constructors maintain equal names/values lengths, unique sorted names and one bool owner per key. Empty/uninitialized maps return false; encoding remains sorted; custom/duplicate/Unicode/NUL names and first query values remain supported. No input, field, source assertion, cover or unwind change.",
+  "next_review_trigger": "After native675/six-mode adoption gates, inspect actual full required model results and real CGP/resource/derive repetitions; no identical proof retry or reduced scope.",
+  "rationale": "Canonical adoption already passes675native tests and six modes. Both ordering and equality-iteration variants still expand enabled lookup127times in cases002/003 after nonempty query mutation; empty-query000 unfolds15iterations. The current Vec stores each immutable fat string pointer beside a bool changed through a query-derived index. Separate name and bool allocations and compute the name position before reading its value. This targets concrete mutable-state/key-metadata coupling without assuming it is the unique cause.",
+  "roi": "One local representation change reuses Vec, existing sorted construction, CGP and the independent native map oracle. It is smaller than a known-feature enum/bitset compiler or new macro/CI system, and removes mutable bool writes from key allocation. There remain15canonical keys and many actual consumers. Native lookup semantics/encoding/last-duplicate/atomicity checks must pass; any formal benefit is unproven until actual results.",
+  "tradeoff": "Two allocations instead of one at construction; fewer bytes per name scan. No runtime speedup is claimed. Internal derived Debug layout changes; encoded public configuration semantics stay identical."
+}

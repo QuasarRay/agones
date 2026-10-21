@@ -1,0 +1,77 @@
+{
+  "domain": {
+    "enabled": "arbitrary bool",
+    "initial_capacity": "arbitrary signed i64",
+    "other_spec_fields": "source zero/default representation",
+    "path": "spec",
+    "players_present": "arbitrary bool"
+  },
+  "feature_id": "GS-VALIDATE-FEATURES-001",
+  "harness": "gameserver_feature_validation_common_domain",
+  "implementation_gate": "verification/agones/gates/1a6a0ad0f3985df4c5724a539d42e845bced47dcefc11866cf9b5f310122cd5c.json",
+  "implementation_gate_sha256": "1a6a0ad0f3985df4c5724a539d42e845bced47dcefc11866cf9b5f310122cd5c",
+  "lifetime_mapping": {
+    "boundary": "After all state/error observations and covers, retain harness owners in both engines. Actual production bodies and internal allocation/destruction remain unchanged.",
+    "ordinary_cleanup": "Separate direct/provider/admission and whole-fixture replay exercises normal destruction.",
+    "residual": "Formal post-observation cleanup and lifecycle remain required.",
+    "rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1"
+  },
+  "lifetime_review": "verification/agones/refactoring/gameserver-validation-observation-lifetime-reuse.json",
+  "observation": "Count plus first error kind/path/optional bad value/detail/Origin/CoveredByDeclarative. The independent relation rejects every extra error, wrong decision and any changed one of the six fields. Source Required/Forbidden empty-string bad values map bijectively to kind+None under the pinned constructor-image rule; source null and empty stay distinct for other supported kinds.",
+  "preconditions": [],
+  "properties": [
+    "Independent nonallocating match-table reference satisfies separately stated full source error relation",
+    "Actual shared CGP provider satisfies that same complete error relation",
+    "Reference and actual counts agree; the deterministic relation uniquely fixes every remaining observed field"
+  ],
+  "required_covers": [
+    "disabled PlayerTracking absent players",
+    "disabled PlayerTracking present players forbidden",
+    "enabled PlayerTracking absent players",
+    "enabled PlayerTracking present players accepted",
+    "present zero player capacity remains present",
+    "disabled minimum player capacity remains forbidden",
+    "enabled maximum player capacity remains accepted",
+    "the generator should produce at least one valid value"
+  ],
+  "required_original_table": {
+    "assertion_sites": 2,
+    "case_count": 5,
+    "expected_dynamic_assertion_occurrences": 10,
+    "players_present_cases": 0,
+    "scope": "All five original port/CountsAndLists/None-port cases remain required for automated typed extraction. None exercises present Players, so no PlayerTracking rejection coverage is inferred from that table.",
+    "test": "TestGameServerValidateFeatures"
+  },
+  "residual": [
+    "Automated typed extraction/replay and formal checking of all five qualified original cases and10assertion occurrences",
+    "Unbounded field paths/full spec validation/resource quantities/hooks/lifecycle/Rusternetes live conformance",
+    "Current production reproof of earlier changed broad bindings; original36assertions retained historically",
+    "All eight required _2 architecture cells"
+  ],
+  "schema_version": 1,
+  "source_contract": {
+    "path": "pkg/apis/agones/v1/gameserver.go",
+    "sha256": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
+    "symbol": "GameServerSpec.validateFeatureGates"
+  },
+  "source_original_assertion_credit": 0,
+  "unwind": 128,
+  "validation_error_mapping": {
+    "actual_adapter_replay": "crates/agones-rusternetes/tests/source_gameserver_feature_validation.rs",
+    "fields": [
+      "Type",
+      "Field",
+      "BadValue",
+      "Detail",
+      "Origin",
+      "CoveredByDeclarative"
+    ],
+    "forward": "Require the exact empty source string for Required/Forbidden and encode kind+None; reject nil/nonempty source values. Preserve all other fields and supported string/null payloads.",
+    "helper_relation": "All six fields observed, with fault controls for each; same bool/bool/i64 domain, no preconditions, unwind128 and all eight covers.",
+    "inverse": "Reconstruct source empty string from Required/Forbidden+None, rejecting non-None; preserve Origin/CoveredByDeclarative and other fields. Every emitted source error round-trips in full.",
+    "native_controls": "verification/agones/runs/validation-error-data-bidirectional-controls-2.json",
+    "rule": "AGONES-ERROR-CONSTRUCTOR-EMPTY-1",
+    "source": "vendor/k8s.io/apimachinery/pkg/util/validation/field/errors.go",
+    "source_sha256": "747db5374cdd58712b46d10775272508212d3201fa05c30105a5531debc666d4"
+  }
+}

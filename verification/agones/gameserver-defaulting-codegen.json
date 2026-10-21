@@ -3463,7 +3463,7 @@
   "fixture_mapping": "Whole captured canonical GameServer equals a typed constructor and round-trips exactly at generation and ordinary replay. Proof harnesses contain no JSON decoder. Source parse/assert/default/assert order and conditional assertion selection are retained.",
   "generator": "Genco 0.17.10 with pinned rustfmt",
   "generator_path": "crates/agones-rusternetes/examples/feature_case_codegen.rs",
-  "generator_sha256": "44a262b50f09b00bdf3debc4b1243dbba0cbe0b8f22464dc678c6a32f0334581",
+  "generator_sha256": "b9610a3ed5837fdc1ec5d47acf10d282400a3ea95042cf59ec95e7e1304ef412",
   "harnesses": [
     {
       "assertion_functions": [
@@ -4045,7 +4045,7 @@
     }
   ],
   "ir": "verification/agones/gameserver-defaulting.ir.json",
-  "ir_sha256": "e74f5781d7addd7d76c902f8da93abd454bb5fea8d4ad596821c08828a594fe8",
+  "ir_sha256": "0faae88a3b4717f8538189a8db9f735143e7c47fa331b6e7d69b9029c7bfa55f",
   "lifetime_mapping": {
     "boundary": "After every original state observation and the case cover, retain the harness-owned GameServer, parsed feature result and context through std::mem::forget in both engines. The source callback specifies no GC/deallocation observation or schedule.",
     "constant_fixture_materialization": "For nonempty queries, the independent fixed typed fixture is physically allocated after the parser/NoError observation and before its first use. It contains no feature/global effects, and the parser has no fixture capability. The source input value and action/observation order are unchanged; allocation/GC schedules are not asserted by the source callback.",
@@ -4056,7 +4056,7 @@
     "rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1"
   },
   "output": "crates/agones-core/tests/generated/gameserver_defaulting_cases.rs",
-  "output_sha256": "c144e47059f49880099411cfedb9e7d2a2ad89665e28defd150cc4d72267277a",
+  "output_sha256": "febe3bc908d057de1d63fa6fb5d6acfef587369ad5cdbba2cfc2d2dd2c098f16",
   "schema_version": 1,
   "scope": "All 17 exact source cases and 304 executed occurrences only. Three zero-occurrence sites remain open. Sampling and generated/compiled harnesses give no formal credit. The 17 SDK version identities overlapping this family must not be double-counted; no generalized GameServer, admission, lifecycle or executor proof is claimed.",
   "source_assertion_sites": [

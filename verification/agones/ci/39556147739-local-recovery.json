@@ -1,0 +1,12 @@
+{
+  "base": "e15139f9cce0c60c88131f7122b4c0fc5188f420",
+  "large_remote_artifacts": "Original configured90dayActions artifacts; all37IDs/digests/expiry dates retained. No duplicate unchanged CI launched.",
+  "local_commit": "f1c0240b16adef332313c6964c8662cc04100d15",
+  "local_ref": "refs/agones-checkpoints/ci39556147739-all37",
+  "published": false,
+  "schema_version": 1,
+  "status": "ALL37_RAW_MEMBERS_SEALED_IN_LOCAL_GIT",
+  "terminal_packet": "verification/agones/ci/39556147739-terminal-all37-retained.json",
+  "total_bytes": 101535498,
+  "tree": "990c06ae8655d879bac50eb1ce19ad840cd44a89"
+}

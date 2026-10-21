@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "PR94_DELIVERED_VALIDATION_IMPLEMENTATION_STARTED",
+  "gate_snapshot": null,
+  "predecessor_revision": 240,
+  "predecessor_sha256": "3dafb8cd3f907a6e4228af7b961b315ac808a9355a839d0df514415e47f43a70",
+  "reason": "PROGRESS: source005 actual proof and follow-up published; PR94 merged externally. Verified source ancestry, remote/local integration1e64, latest pushCI success and14reuse controls. Preserved root guidance user edits and selected the next production feature before new semantic extraction.",
+  "result_revision": 241,
+  "schema_version": 1,
+  "state_sha256": "1b3b9edacf5ab8afe2cf5f788324c4757e4d3699e2c1efd7cc5e31f8d0deb7bf",
+  "timestamp": "2026-10-20T16:06:33.654291+00:00"
+}

@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "index_isolated_typemeta_feature",
+  "gate_snapshot": "verification/agones/gates/317304e45484daa2961fdf0a6983d3e056af281f03d5597b542bc9c51a435e49.json",
+  "predecessor_revision": 250,
+  "predecessor_sha256": "ca0389dd8e2383439d05bd13569991c46b657fe343387f975e54dea063f7897d",
+  "reason": "Index the real implemented/native-gated TypeMeta capability in the one canonical queue, with adoption pending and no current formal credit; retain all source cases and error-data requirements.",
+  "result_revision": 251,
+  "schema_version": 1,
+  "state_sha256": "52e0475deb488353a9d3125adc17078592ff5d691e0758f681e98e777b25b103",
+  "timestamp": "2026-10-20T19:44:52.172717+00:00"
+}

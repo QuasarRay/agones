@@ -1,0 +1,22 @@
+{
+  "candidate": "Borrow unescaped query key/value byte slices with std::borrow::Cow inside the existing CGP parser; preserve owned exact error payloads and escaped-byte decoding.",
+  "decision": "REUSE_EXISTING",
+  "evidence": "verification/agones/ci/39489621706-terminal-retained.json",
+  "execution_scope": "Inspection confirmed cases000/001/004 use an empty query, while002/003 use CountsAndLists=true. Cover the common default-name allocations as well as decoded query copies. HasFeatureGateDefaults already supplies static feature names, so the private feature map can store borrowed static names and copy only booleans; public error payloads remain owned. This avoids a new lifetime parameter, capability, dependency or alternate parser.",
+  "generation_result": "All five deterministic modes check; all four exact-case Rust output files and every original case/assertion/cover/domain/unwind mapping remain byte-identical.",
+  "id": "GS-VALIDATE-FEATURES-001-query-allocation-resource-review",
+  "native_result": {
+    "example_controls_passed": 3,
+    "ignored_doctests": 1,
+    "ignored_process_children": 3,
+    "prior_selection_comparison": "The same603native tests selected by the previous all-target run passed; the default workspace command also observes one ignored doctest. No test was removed or newly ignored.",
+    "workspace_check_all_targets": "PASSED",
+    "workspace_tests_passed": 600
+  },
+  "next_review_trigger": "After one changed protected CI attempt for the query-allocation hypothesis, use actual retained memory/time/result rows to choose the next dependency-closing action; keep all eight _2cells required open.",
+  "observations": "All five fixed original query/feature validation harnesses failed before result rows under unchanged unit domains/unwind128: three explicit12GiB OOM kills and two900s timeouts. Successful defaulting cases005/014 and the small contract retain complete proofs. Failed log tails repeatedly traverse ParseAgonesFeatureGates and Vec<(Vec<u8>,Vec<u8>)> temporary cleanup. This identifies an allocation hypothesis, not a proven unique solver bottleneck.",
+  "required_validation": "Ordinary production gate first; preserve raw bytes, percent/plus decoding, duplicate first-value behavior, semicolon/escape precedence and deterministic permitted error selection. Rebind affected gates/IR/metadata and re-run exact unchanged harnesses, assertions, covers, preconditions and unwind128. Reopen affected current proof bindings after source changes.",
+  "reuse": "The parser already has correct first-decoded-value and sorted-key/error precedence logic. Reuse std::borrow::Cow, actual providers, current original fixtures and strict property infrastructure; no new library, macro, source-model shortcut or alternate parser.",
+  "roi": "On ordinary unescaped feature queries, the current unescape always allocates/copies both key and value, and parse_query later destroys their owned vectors. Borrowing can remove those demonstrated temporary allocations with a private return-type change and owned conversion only for existing public errors. The change is small enough to validate with the full native/generation suite and exactly the same12selection CI. The benefit must be measured in the changed backend attempt; stop expansion if it does not resolve the observed resource cost. No hypothetical exact token saving is claimed. The existing CGP capability already guarantees static feature names. Borrowing those names removes15String allocations and their cleanup from each canonical parse, including the three empty-query cases. The private query decoder can borrow unescaped byte slices and own decoded escapes. Native semantic checks and unchanged protected backend attempts determine whether this reduces the actual solver resource cost.",
+  "status": "NATIVE_GATED_GENERATED_BODIES_UNCHANGED_PROTECTED_MODEL_CI_PENDING"
+}

@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "ci_runner_lost_typemeta_and_full_validation_capture",
+  "gate_snapshot": "verification/agones/gates/317304e45484daa2961fdf0a6983d3e056af281f03d5597b542bc9c51a435e49.json",
+  "predecessor_revision": 249,
+  "predecessor_sha256": "31d344b946c0564eeea7ca55f4ffe31f52c682eeac581c3c7da0b6af68b5479c",
+  "reason": "CI39464345048is terminal failure: hosted runner lost communication, artifacts empty and job logs BlobNotFound404; no model proof credit. Clean isolated commite8b684a00implements/gates realTypeMeta storage with616native passes and captures all25original validation assertions. Source error-data support remains required; no subset or generated proof credited.",
+  "result_revision": 250,
+  "schema_version": 1,
+  "state_sha256": "ca0389dd8e2383439d05bd13569991c46b657fe343387f975e54dea063f7897d",
+  "timestamp": "2026-10-20T19:43:00.935240+00:00"
+}

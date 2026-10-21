@@ -1,0 +1,102 @@
+{
+  "acceptance_criteria": [
+    "Default-disabled and explicitly enabled; absent/zero/extreme-capacity players",
+    "Minimal feature-only CGP context uses the same production provider",
+    "Exact kind/path/detail/no bad value; nested resource paths",
+    "Valid/invalid development addresses retain the feature error before early return",
+    "Actual Rusternetes CREATE admissions, Fleet UPDATE support, malformed input, unrelated kinds",
+    "Isolated real-process configuration reaches all default admission constructors; invalid configuration returns an error"
+  ],
+  "assurance": {
+    "live_cluster_conformance": "NOT_CLAIMED",
+    "new_formal_proof_credit": 0,
+    "new_original_source_semantic_extraction": "NOT_STARTED_BEFORE_THIS_GATE"
+  },
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
+  "environment_bindings": {
+    "AGONES_BUILD_VERSION": {
+      "present": false,
+      "sha256": null
+    }
+  },
+  "feature_id": "GS-VALIDATE-FEATURES-001",
+  "id": "GS-VALIDATE-FEATURES-001-implementation",
+  "ordinary_checks": [
+    "verification/agones/runs/query-borrowing-workspace-check-1.json",
+    "verification/agones/runs/query-borrowing-workspace-native-1.json",
+    "verification/agones/runs/query-borrowing-genco-controls-1.json",
+    "verification/agones/runs/query-borrowing-quote-table-check-1.json"
+  ],
+  "ordinary_result_counts": {
+    "existing_codegen_example_controls_passed": 3,
+    "ignored_doctests": 1,
+    "source_test_removal_or_bound_change": false,
+    "workspace_all_targets_check": "PASSED",
+    "workspace_ignored_process_children": 3,
+    "workspace_tests_failed": 0,
+    "workspace_tests_passed": 600
+  },
+  "post_gate_refactor": {
+    "feature": "CGP feature parsing allocation reduction",
+    "formal_credit": 0,
+    "ordinary_validation": "600workspace tests plus the same3example controls pass, covering every prior603selected native test; the default workspace command additionally observes one ignored doctest. No ignored test was added.",
+    "preserved": "Raw-byte/percent/plus behavior, first decoded value, semicolon/escape precedence, sorted permitted failing-key choice, duplicate-default last-value behavior, encoding and context independence. No alternate provider, filtering, cfg(kani) behavior, assertion or domain/bound reduction.",
+    "production": "Existing HasFeatureGateDefaults already supplies static names; the private feature map borrows those names and owns bools. Private query decoding borrows unescaped bytes with std::borrow::Cow and owns escaped bytes. Public errors keep owned exact payloads.",
+    "reason": "Current7d8494d8backend artifacts remain historical after the changed physical production binding. Fresh affected model results are required.",
+    "review": "verification/agones/refactoring/query-allocation-resource-review.json"
+  },
+  "predecessor_ledger_revision": 255,
+  "production_files": {
+    ".cargo/config.toml": "d787ef1ca58591bcf5036c8a2386a4d31ecc54febdd5f6630fd8497a4a0d3fb2",
+    "Cargo.lock": "6f853997b27aed6de6e6be6ad0b61af663bcfd29195d7ab3dbcbf1a18c7d2f0f",
+    "Cargo.toml": "f0c28c2ca73ba51fad682c9d35950d050b0839775d0eb609e7903c47743b5d00",
+    "crates/agones-core/Cargo.toml": "b9ff5ca08d252c07abce0e5ebb5f6a45dcbd874cebe4ba51712b5dde331b8bd6",
+    "crates/agones-core/src/features.rs": "10ca420b036eeff86e2ff07e97e8466e4e69b3ce891bf28b0e5de0987d81cb30",
+    "crates/agones-core/src/fleet.rs": "d9c3e13e4f899f04e033b8a457f5ce573d2fe319200dfec32e505c5019a12c95",
+    "crates/agones-core/src/gameserver.rs": "81a633a65c0612219761d6b65a783258d846a7fd3dd1f2d4f5af1827c2482bba",
+    "crates/agones-core/src/gameserver_defaulting.rs": "9f54ce60a7c37907b9919c4286144b6d1794cbe317537189f50fd679f6ac18c5",
+    "crates/agones-core/src/gameserver_validation.rs": "89edf96da9895d20de792fe6fafabfcb5a4d11e9e7cca594d2106a402189fee7",
+    "crates/agones-core/src/gameserverset.rs": "6f0a81f2aa7be18fef08100d3a8267f477e1073e122d87c8dd6d697112da2d5c",
+    "crates/agones-core/src/lib.rs": "22d061493b23dcb58acfa18e085f58edee60ba20eecc91c4b937b5830d16ad29",
+    "crates/agones-rusternetes/Cargo.toml": "7e5c18a590b0d602c725abd853fd0ba7825e4028f8a46fc7fe404bb7b512db26",
+    "crates/agones-rusternetes/src/fleet_admission.rs": "b4abe8f679d325d26e32b30249b928a79bd35667b87f453e44835afa937c578a",
+    "crates/agones-rusternetes/src/gameserver_admission.rs": "18cac613630892a854868152032578ae5aea1b8a93ab90b6b2ba9a16c7ecb099",
+    "crates/agones-rusternetes/src/gameserverset_admission.rs": "dedfbdf6c86df0f46231438c1f0d390ee98a268f2b3a45704443d8e717d6fbc2",
+    "crates/agones-rusternetes/src/lib.rs": "d137c67b112466668d39de1e18467dc33b23f9b15b31f937b76a6f0ebda7e8d8",
+    "rust-toolchain.toml": "c910997cb152c6dc8ed13b1fdf9fa28a4ed30d6776123e27dd6170e5c66067a0",
+    "verification/agones/gameserver-feature-validation-capability-v1.json": "d6e03af89a8412b331bcafbf19472ef51bbd67f566f19235516deef15c2a19bf"
+  },
+  "production_symbols": [
+    "ValidateAgonesGameServerFeatures::validate_game_server_features",
+    "CanValidateGameServerFeatures",
+    "GameServerSpec::validate_with_context",
+    "GameServer::validate_with_context",
+    "Fleet::validate_with_context",
+    "GameServerSet::validate_with_context",
+    "GameServerCreationValidationAdmission::from_feature_inputs/admit",
+    "FleetValidationAdmission::from_feature_inputs/admit",
+    "GameServerSetCreationValidationAdmission::from_feature_inputs/admit",
+    "validate_game_server_with_context"
+  ],
+  "reachable_call_paths": [
+    "GameServerDefaultingContext delegates the existing feature getter and new validator",
+    "Direct spec/GameServer/Fleet/GameServerSet APIs expose explicit contexts and default-disabled wrappers",
+    "Actual Rusternetes admission constructors capture parsed defaults/environment or explicit input; from_context permits static CGP composition"
+  ],
+  "residual_work": [
+    "Full GameServer validation, exact resource quantity semantics, formatting and hook/metadata error ordering",
+    "Live Rusternetes cluster conformance, lifecycle and all remaining original obligations",
+    "All eight mandatory _2 form/location cells",
+    "After this gate, translate every selected original validateFeatureGates assertion through the existing typed package-aware machinery and run non-vacuous Bolero/Kani on the real provider."
+  ],
+  "schema_version": 1,
+  "status": "IMPLEMENTED",
+  "supersedes": "verification/agones/gates/317304e45484daa2961fdf0a6983d3e056af281f03d5597b542bc9c51a435e49.json",
+  "workspace_snapshot": {
+    "branch": "agones-rs-dev",
+    "head": "7d8494d8ad8ff7ce0d14a3416fd6ab0c15c7c3da",
+    "note": "Ordinary implementation gate precedes semantic IR/metadata rebinding. Root user AGENTS.MD stays outside edit/staging ownership.",
+    "production_patch_sha256": "caf2cb18e9eefb0c186389d7ed22742fcff026112becfeebdadd5345a0bc35d7"
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "assertion_count": 10,
+  "assertions": [
+    {
+      "function": "source_gsv_assertion_000",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Invalid container name, container was not found::line-1479"
+    },
+    {
+      "function": "source_gsv_assertion_001",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Invalid container name, container was not found::line-1482"
+    },
+    {
+      "function": "source_gsv_assertion_002",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Multiple container ports, OK scenario::line-1479"
+    },
+    {
+      "function": "source_gsv_assertion_003",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Multiple container ports, OK scenario::line-1482"
+    },
+    {
+      "function": "source_gsv_assertion_004",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::CountsAndLists is enabled, Counters field specified::line-1479"
+    },
+    {
+      "function": "source_gsv_assertion_005",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::CountsAndLists is enabled, Counters field specified::line-1482"
+    },
+    {
+      "function": "source_gsv_assertion_006",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::CountsAndLists is enabled, Lists field specified::line-1479"
+    },
+    {
+      "function": "source_gsv_assertion_007",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::CountsAndLists is enabled, Lists field specified::line-1482"
+    },
+    {
+      "function": "source_gsv_assertion_008",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::PortPolicyNone is enabled, PortPolicy field set to None::line-1479"
+    },
+    {
+      "function": "source_gsv_assertion_009",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::PortPolicyNone is enabled, PortPolicy field set to None::line-1482"
+    }
+  ],
+  "case_count": 5,
+  "feature_id": "GS-VALIDATE-FEATURES-001",
+  "fixture_mapping": "Whole source wire object plus explicit nil/allocated Counters/Lists/Ports/Players witnesses. Source empty maps omitted by JSON are restored as allocated empty maps. Unknown fields/error metadata fail closed.",
+  "generator": "Genco 0.17.10 with pinned rustfmt",
+  "generator_path": "crates/agones-rusternetes/examples/feature_case_codegen.rs",
+  "generator_sha256": "b9610a3ed5837fdc1ec5d47acf10d282400a3ea95042cf59ec95e7e1304ef412",
+  "generator_source_files": {
+    "crates/agones-rusternetes/examples/codegen/gameserver_features.rs": "44335a77ca34abe5d3bbbfa7d05836ecdc5ea65a59cd7520652a213e48dca848",
+    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "b9610a3ed5837fdc1ec5d47acf10d282400a3ea95042cf59ec95e7e1304ef412"
+  },
+  "harnesses": [
+    {
+      "assertion_functions": [
+        "source_gsv_assertion_000",
+        "source_gsv_assertion_001"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Invalid container name, container was not found",
+      "harness": "source_gsv_case_000",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer validation case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Invalid container name, container was not found",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gsv_assertion_002",
+        "source_gsv_assertion_003"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Multiple container ports, OK scenario",
+      "harness": "source_gsv_case_001",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer validation case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Multiple container ports, OK scenario",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gsv_assertion_004",
+        "source_gsv_assertion_005"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::CountsAndLists is enabled, Counters field specified",
+      "harness": "source_gsv_case_002",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer validation case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::CountsAndLists is enabled, Counters field specified",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gsv_assertion_006",
+        "source_gsv_assertion_007"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::CountsAndLists is enabled, Lists field specified",
+      "harness": "source_gsv_case_003",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer validation case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::CountsAndLists is enabled, Lists field specified",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gsv_assertion_008",
+        "source_gsv_assertion_009"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::PortPolicyNone is enabled, PortPolicy field set to None",
+      "harness": "source_gsv_case_004",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer validation case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::PortPolicyNone is enabled, PortPolicy field set to None",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    }
+  ],
+  "ir": "verification/agones/gameserver-feature-validation.ir.json",
+  "ir_sha256": "f6b563c7edac264b5658beb5b5f8362c4304b08c4d97f649a4d37663a56682a8",
+  "lifetime_mapping": {
+    "boundary": "After every original observation and cover, retain the harness-owned fixture, parsed features, context and error lists in both engines. Source callbacks specify no GC/deallocation observation. Actual production bodies remain unchanged.",
+    "ordinary_cleanup": "Separate complete-fixture and actual adapter replay uses normal destruction.",
+    "residual": "Formal post-observation cleanup and lifecycle remain required.",
+    "rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1"
+  },
+  "multiset_mapping": {
+    "manifest": "verification/agones/expected-multiset-relation.json",
+    "manifest_sha256": "8de29f21c85d420350d56363d1c39b23e601ffc18e3eb571bdbd193ff072cb92",
+    "relation": "Equal lengths and exact full-record multiplicities for every expected error; no field or duplicate omission.",
+    "rule": "AGONES-ELEMENTSMATCH-EXPECTED-COUNTS-1"
+  },
+  "output": "crates/agones-core/tests/generated/gameserver_feature_validation_cases.rs",
+  "output_sha256": "f539dbb911f2ecc352228f1046176ea86ed896fc335035884c92c363ce6f5a40",
+  "schema_version": 1,
+  "scope": "All five exact original validation cases, ten qualified source assertions. Observation lifetime follows the existing retained-owner rule; no formal post-observation cleanup credit. No original case sets Players. Actual core validation and source literals are modeled; original Go/resource/hooks use ordinary replay. Full domain validation, present-Players contract proof, lifecycle/conformance and all eight _2 cells remain required.",
+  "validation_error_mapping": {
+    "fields": [
+      "Type",
+      "Field",
+      "BadValue",
+      "Detail",
+      "Origin",
+      "CoveredByDeclarative"
+    ],
+    "forward": "Require the exact empty Go string for Required/Forbidden and encode it as kind+None. Other supported kinds preserve string versus null distinctly. Copy every other field exactly.",
+    "inverse": "Reconstruct the fixed empty source string from Required/Forbidden+None; reject a non-None value. Other kinds reconstruct their original string/null. Every lowered error must round-trip in full.",
+    "native_fault_controls": "All six error fields and multiset multiplicity are independently observable. Bidirectional constructor-image controls exercise both directions and reject nonempty/nil source values.",
+    "rule": "AGONES-ERROR-CONSTRUCTOR-EMPTY-1",
+    "source": "vendor/k8s.io/apimachinery/pkg/util/validation/field/errors.go",
+    "source_sha256": "747db5374cdd58712b46d10775272508212d3201fa05c30105a5531debc666d4",
+    "unsupported": "Non-string/non-null bad values, unknown kinds/fields and values outside the declared constructor image reject; their obligations remain open."
+  }
+}

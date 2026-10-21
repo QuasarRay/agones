@@ -1,0 +1,165 @@
+warning: ambiguous glob re-exports
+  --> crates/agones-core/src/lib.rs:41:9
+   |
+41 | pub use allocation::*;
+   |         ^^^^^^^^^^^^^ the name `NodeAddress` in the type namespace is first re-exported here
+42 | pub use autoscaling::*;
+43 | pub use gameserver::*;
+   |         ------------- but the name `NodeAddress` in the type namespace is also re-exported here
+   |
+   = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: function `fleet_replica_bounds_are_bounded` is never used
+    --> crates/agones-core/src/fleet.rs:1117:4
+     |
+1117 | fn fleet_replica_bounds_are_bounded(input: (i32, i32)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `label` is never used
+    --> crates/agones-core/src/autoscaling.rs:1332:8
+     |
+1331 | impl CapacityPolicyKind {
+     | ----------------------- method in this implementation
+1332 |     fn label(self) -> &'static str {
+     |        ^^^^^
+
+warning: function `capacity_scale_up_never_decreases_replicas` is never used
+    --> crates/agones-core/src/autoscaling.rs:1831:4
+     |
+1831 | fn capacity_scale_up_never_decreases_replicas(
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `buffer_policy_integer_decision_stays_bounded` is never used
+    --> crates/agones-core/src/autoscaling.rs:1867:4
+     |
+1867 | fn buffer_policy_integer_decision_stays_bounded(
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `buffer_integer_valid_region_is_accepted` is never used
+    --> crates/agones-core/src/autoscaling.rs:1896:4
+     |
+1896 | fn buffer_integer_valid_region_is_accepted(input: (i32, i32, i32)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `capacity_integer_valid_region_is_accepted` is never used
+    --> crates/agones-core/src/autoscaling.rs:1916:4
+     |
+1916 | fn capacity_integer_valid_region_is_accepted(input: (i64, i64, i32, bool)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `fixed_interval_positive_seconds_are_accepted` is never used
+    --> crates/agones-core/src/autoscaling.rs:1949:4
+     |
+1949 | fn fixed_interval_positive_seconds_are_accepted(seconds: i32) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `health_defaulting_makes_enabled_thresholds_positive` is never used
+   --> crates/agones-core/src/gameserver.rs:274:4
+    |
+274 | fn health_defaulting_makes_enabled_thresholds_positive(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `safe_add_nonnegative_inputs_are_saturating` is never used
+   --> crates/agones-core/src/gameserver.rs:394:4
+    |
+394 | fn safe_add_nonnegative_inputs_are_saturating(input: (i64, i64)) -> bool {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `counter_updates_preserve_bounds` is never used
+    --> crates/agones-core/src/gameserver.rs:1460:4
+     |
+1460 | fn counter_updates_preserve_bounds(input: (i64, i64, i64, bool)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `gameserverset_creation_batch_respects_caps` is never used
+   --> crates/agones-core/src/gameserverset.rs:458:4
+    |
+458 | fn gameserverset_creation_batch_respects_caps(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `average_of_nonnegative_byte_weights_stays_within_input_range` is never used
+   --> crates/agones-core/src/multicluster.rs:207:4
+    |
+207 | fn average_of_nonnegative_byte_weights_stays_within_input_range(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+[
+  {
+    "id": "escape-percent",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing query string for feature gates: invalid URL escape \"%\""
+  },
+  {
+    "id": "escape-short",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing query string for feature gates: invalid URL escape \"%A\""
+  },
+  {
+    "id": "escape-invalid",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing query string for feature gates: invalid URL escape \"%GG\""
+  },
+  {
+    "id": "escape-raw",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing query string for feature gates: invalid URL escape \"%\\xff\""
+  },
+  {
+    "id": "semicolon",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing query string for feature gates: invalid semicolon separator in query"
+  },
+  {
+    "id": "key-ascii",
+    "error": "agones.dev/agones/pkg/util/runtime: Feature Gate \"Foo\" is not a valid Feature Gate"
+  },
+  {
+    "id": "key-invalid-byte",
+    "error": "agones.dev/agones/pkg/util/runtime: Feature Gate \"\\xff\" is not a valid Feature Gate"
+  },
+  {
+    "id": "key-control",
+    "error": "agones.dev/agones/pkg/util/runtime: Feature Gate \"\\x00\\a\" is not a valid Feature Gate"
+  },
+  {
+    "id": "key-quote-slash",
+    "error": "agones.dev/agones/pkg/util/runtime: Feature Gate \"\\\"\\\\\" is not a valid Feature Gate"
+  },
+  {
+    "id": "key-soft-hyphen",
+    "error": "agones.dev/agones/pkg/util/runtime: Feature Gate \"\\u00ad\" is not a valid Feature Gate"
+  },
+  {
+    "id": "key-printable",
+    "error": "agones.dev/agones/pkg/util/runtime: Feature Gate \"未知😀\" is not a valid Feature Gate"
+  },
+  {
+    "id": "key-max-scalar",
+    "error": "agones.dev/agones/pkg/util/runtime: Feature Gate \"\\U0010ffff\" is not a valid Feature Gate"
+  },
+  {
+    "id": "bool-mixed-case",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag Example : strconv.ParseBool: parsing \"faLsE\": invalid syntax"
+  },
+  {
+    "id": "bool-nul",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag Example : strconv.ParseBool: parsing \"\\x00\": invalid syntax"
+  },
+  {
+    "id": "bool-invalid-byte",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag Example : strconv.ParseBool: parsing \"\\xff\": invalid syntax"
+  },
+  {
+    "id": "bool-truncated",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag Example : strconv.ParseBool: parsing \"\\xe2\\x82\": invalid syntax"
+  },
+  {
+    "id": "bool-surrogate",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag Example : strconv.ParseBool: parsing \"\\xed\\xa0\\x80\": invalid syntax"
+  },
+  {
+    "id": "bool-printable",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag Example : strconv.ParseBool: parsing \"€😀�\": invalid syntax"
+  },
+  {
+    "id": "bool-nonprintable",
+    "error": "agones.dev/agones/pkg/util/runtime: error parsing bool value from flag Example : strconv.ParseBool: parsing \"\\u0085\\u00a0\\u200b\\u2028\\ue000\": invalid syntax"
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "affected_obligations": [],
+  "authorization": "User execution contract",
+  "event": "METADATA_NATIVE687_IR21_BACKED_UP_NATIVE676_TERMINAL_ALL37_RETAINED",
+  "gate_snapshot": null,
+  "predecessor_revision": 308,
+  "predecessor_sha256": "e270b856d4ebc6b61f174ff2595f4b4f1dcd257a56449464804a6c7638605268",
+  "reason": "Restored exact Go1.27.1-X:nodwarf5 with matching8stdlibsourcehashes, all-scalar lowercase checks and original source tests passed; package-aware capture retains all6cases/11observations/21qualified assertions over1570baselinefiles after implementation gate. Source backed up at f20dd269. All37current CI artifacts fully recovered and independently audited, raw101535498bytes sealed in local f1c0240b; no source-case proof credited.",
+  "result_revision": 309,
+  "schema_version": 1,
+  "state_sha256": "286661bd1752fda1f8553ccb2f9b646f6f7296dc53e89f5750b0d31af647340e",
+  "timestamp": "2026-10-21T07:39:07.604180+00:00"
+}

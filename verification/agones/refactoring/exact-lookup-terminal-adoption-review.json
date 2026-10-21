@@ -1,0 +1,16 @@
+{
+  "architecture": "All eight _2cells stay REQUIRED_OPEN. Existing shared Genco and CGP resource conversion/provider code are the concrete adoption paths; reassess real resource/derive/delegation repetition there. No new compiler/CI framework is justified for this result.",
+  "candidate": "Advance canonical adoption of the native-complete quantity/TypeMeta/six-field validation snapshot.",
+  "decision": "REUSE_EXISTING",
+  "evidence_invalidation": "Current9scoped results belong exactly to2e1d and must not be transferred to changed six-field/quantity programs. Canonical adoption requires source-bound native checks, current implementation gates and fresh affected formal evidence.",
+  "evidence_refs": [
+    "verification/agones/ci/39519906026-terminal-retained.json",
+    "verification/agones/validation-error-data-isolated-recovery.json"
+  ],
+  "feature_binding": "GS-VALIDATE-FEATURES-001",
+  "id": "GS-VALIDATE-FEATURES-001-exact-lookup-terminal-adoption-review",
+  "next_candidate": "During adoption, inspect ownership of immutable feature-name metadata and mutable bool values before another proof repair. Their tuple co-location may contribute to post-query alias/iteration expansion; this is an inference, not an established cause. Compare a small existing-Vec separation against typed-codegen machinery under G1 before editing.",
+  "next_review_trigger": "After canonical complete-validation adoption and its native/generation gates, inspect the actual feature name/value ownership and concrete resource/derive repetitions. Keep all25general proofs/50covers and other required source/lifecycle/conformance/_2work visible.",
+  "rationale": "The distinct2e1d attempt revalidates nine scoped selections53claims/42covers/37459rows and four exact feature-source assertions, but closes no additional source case. All000/002/003OOM at12GiB. Source000 finishes symbolic expansion in26.0322s with323256steps/43614VCCs, then OOM during conversion/solving; no proof gain. Source002/003 still unfold the enabled find_map loop127times after nonempty query mutation, versus15iterations in000. Changing ordering to equality or removing the singleton count fold alone does not discharge the remaining cases. Preserve this evidence and move actual complete-validation behavior into canonical source.",
+  "reuse": "Clean1886 passes675source-bound native tests and six generation modes with all30source harness bodies unchanged and nine current gates. Reuse its existing implementation/Genco/error-constructor law; preserve the canonical protected recorder/parser/workflow/ledger."
+}

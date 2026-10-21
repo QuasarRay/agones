@@ -1,0 +1,6 @@
+{"harness_count": 1, "property_count": 1158, "status_counts": {"SUCCESS": 1141, "SATISFIED": 6, "UNREACHABLE": 11}}
+{"harness_count": 1, "claimed_assertions": 3, "required_covers": 10, "property_count": 978, "status_counts": {"SUCCESS": 945, "SATISFIED": 10, "UNREACHABLE": 23}}
+{"harness_count": 1, "claimed_assertions": 1, "required_covers": 2, "property_count": 1597, "status_counts": {"SUCCESS": 1543, "SATISFIED": 2, "UNREACHABLE": 52}}
+{"harness_count": 1, "claimed_assertions": 3, "required_covers": 8, "property_count": 2180, "status_counts": {"SUCCESS": 2147, "SATISFIED": 8, "UNREACHABLE": 25}}
+{"harness_count": 1, "claimed_assertions": 18, "required_covers": 2, "property_count": 6488, "status_counts": {"SUCCESS": 6199, "SATISFIED": 2, "UNREACHABLE": 287}}
+{"harness_count": 1, "claimed_assertions": 3, "required_covers": 8, "property_count": 1535, "status_counts": {"SUCCESS": 1474, "SATISFIED": 8, "UNREACHABLE": 53}}

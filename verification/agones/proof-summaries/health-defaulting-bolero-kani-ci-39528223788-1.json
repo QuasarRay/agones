@@ -1,0 +1,309 @@
+{
+  "assertions": [
+    {
+      "description": "assertion failed: satisfies_relation(input, model)",
+      "id": 64,
+      "location": "crates/agones-core/tests/health_defaulting_domain.rs:64:13 in function health_defaulting_common_domain::{closure#0}",
+      "status": "SUCCESS",
+      "symbol": "health_defaulting_common_domain::{closure#0}.assertion.1"
+    },
+    {
+      "description": "assertion failed: satisfies_relation(input, actual)",
+      "id": 65,
+      "location": "crates/agones-core/tests/health_defaulting_domain.rs:65:13 in function health_defaulting_common_domain::{closure#0}",
+      "status": "SUCCESS",
+      "symbol": "health_defaulting_common_domain::{closure#0}.assertion.2"
+    },
+    {
+      "description": "assertion failed: model == actual",
+      "id": 66,
+      "location": "crates/agones-core/tests/health_defaulting_domain.rs:66:13 in function health_defaulting_common_domain::{closure#0}",
+      "status": "SUCCESS",
+      "symbol": "health_defaulting_common_domain::{closure#0}.assertion.3"
+    }
+  ],
+  "covers": [
+    {
+      "description": "disabled health keeps nonpositive values",
+      "id": 67,
+      "location": "crates/agones-core/tests/health_defaulting_domain.rs:69:17 in function health_defaulting_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "health_defaulting_common_domain::{closure#0}.cover.1"
+    },
+    {
+      "description": "enabled health sets all three defaults",
+      "id": 68,
+      "location": "crates/agones-core/tests/health_defaulting_domain.rs:73:17 in function health_defaulting_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "health_defaulting_common_domain::{closure#0}.cover.2"
+    },
+    {
+      "description": "small positive health values stay unchanged",
+      "id": 69,
+      "location": "crates/agones-core/tests/health_defaulting_domain.rs:77:17 in function health_defaulting_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "health_defaulting_common_domain::{closure#0}.cover.3"
+    },
+    {
+      "description": "zero health threshold receives source default",
+      "id": 70,
+      "location": "crates/agones-core/tests/health_defaulting_domain.rs:81:17 in function health_defaulting_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "health_defaulting_common_domain::{closure#0}.cover.4"
+    },
+    {
+      "description": "signed health extremes remain exact",
+      "id": 71,
+      "location": "crates/agones-core/tests/health_defaulting_domain.rs:85:17 in function health_defaulting_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "health_defaulting_common_domain::{closure#0}.cover.5"
+    },
+    {
+      "description": "disabled minimum delay remains exact",
+      "id": 72,
+      "location": "crates/agones-core/tests/health_defaulting_domain.rs:89:17 in function health_defaulting_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "health_defaulting_common_domain::{closure#0}.cover.6"
+    },
+    {
+      "description": "mixed health thresholds default independently",
+      "id": 73,
+      "location": "crates/agones-core/tests/health_defaulting_domain.rs:93:17 in function health_defaulting_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "health_defaulting_common_domain::{closure#0}.cover.7"
+    },
+    {
+      "description": "the generator should produce at least one valid value",
+      "id": 173,
+      "location": "../../../../../.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bolero-kani-0.13.0/src/lib.rs:37:21 in function <bolero::DefaultEngine as bolero::Engine<bolero::bolero_engine::BorrowedGeneratorTest<{closure@crates/agones-core/tests/health_defaulting_domain.rs:41:19: 41:56}, bolero::generator::bolero_generator::TypeValueGenerator<(bool, i32, i32, i32)>, (bool, i32, i32, i32)>>>::run",
+      "status": "SATISFIED",
+      "symbol": "<bolero::DefaultEngine as bolero::Engine<bolero::bolero_engine::BorrowedGeneratorTest<{closure@crates/agones-core/tests/health_defaulting_domain.rs:41:19: 41:56}, bolero::generator::bolero_generator::TypeValueGenerator<(bool, i32, i32, i32)>, (bool, i32, i32, i32)>>>::run.cover.1"
+    }
+  ],
+  "family": "health",
+  "harness_count": 1,
+  "property_count": 2411,
+  "run": "verification/agones/runs/health-defaulting-bolero-kani-ci-39528223788-1.json",
+  "schema_version": 1,
+  "scope": "Actual GameServerSpec::apply_defaults health observation with other spec fields zero, independent reference and relational invariant. One bool and three arbitrary i32 inputs, no filtering, unwind 16. No whole GameServer/admission/lifecycle proof or original exact-case assertion credit.",
+  "selected_harnesses": [
+    "health_defaulting_common_domain"
+  ],
+  "status_counts": {
+    "SATISFIED": 8,
+    "SUCCESS": 2373,
+    "UNREACHABLE": 30
+  },
+  "unreachable_not_credited": [
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 2,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:1116:33 in function alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::ResourceQuantity, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::Edge>::descend",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::ResourceQuantity, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::Edge>::descend.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 34,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:1116:33 in function alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::ListStatus, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::Edge>::descend",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::ListStatus, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::Edge>::descend.assertion.1"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 38,
+      "location": "crates/agones-core/src/gameserver.rs:466:30 in function agones_core::GameServerSpec::apply_defaults",
+      "status": "UNREACHABLE",
+      "symbol": "agones_core::GameServerSpec::apply_defaults.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 44,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:812:46 in function alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::ListStatus, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::KV>::right_edge",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::ListStatus, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::KV>::right_edge.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 77,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:812:46 in function alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::ListStatus, alloc::collections::btree::node::marker::Leaf>, alloc::collections::btree::node::marker::KV>::right_edge",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::ListStatus, alloc::collections::btree::node::marker::Leaf>, alloc::collections::btree::node::marker::KV>::right_edge.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 87,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/map.rs:1939:13 in function std::collections::btree_map::IntoIter::<std::string::String, agones_core::ListStatus>::dying_next",
+      "status": "UNREACHABLE",
+      "symbol": "std::collections::btree_map::IntoIter::<std::string::String, agones_core::ListStatus>::dying_next.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 93,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:341:55 in function alloc::collections::btree::node::NodeRef::<alloc::collections::btree::node::marker::Dying, std::string::String, serde_json::value::Value, alloc::collections::btree::node::marker::LeafOrInternal>::ascend::{closure#0}",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::NodeRef::<alloc::collections::btree::node::marker::Dying, std::string::String, serde_json::value::Value, alloc::collections::btree::node::marker::LeafOrInternal>::ascend::{closure#0}.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 97,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:812:46 in function alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::CounterStatus, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::KV>::right_edge",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::CounterStatus, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::KV>::right_edge.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 110,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ptr/const_ptr.rs:1360:23 in function std::ptr::const_ptr::<impl *const ()>::is_aligned_to",
+      "status": "UNREACHABLE",
+      "symbol": "std::ptr::const_ptr::<impl *const ()>::is_aligned_to.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 134,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:1116:33 in function alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, serde_json::value::Value, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::Edge>::descend",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, serde_json::value::Value, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::Edge>::descend.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 140,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:812:46 in function alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, serde_json::value::Value, alloc::collections::btree::node::marker::Leaf>, alloc::collections::btree::node::marker::KV>::right_edge",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, serde_json::value::Value, alloc::collections::btree::node::marker::Leaf>, alloc::collections::btree::node::marker::KV>::right_edge.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 143,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:812:46 in function alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::ResourceQuantity, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::KV>::right_edge",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::ResourceQuantity, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::KV>::right_edge.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 146,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/map.rs:1939:13 in function std::collections::btree_map::IntoIter::<std::string::String, agones_core::ResourceQuantity>::dying_next",
+      "status": "UNREACHABLE",
+      "symbol": "std::collections::btree_map::IntoIter::<std::string::String, agones_core::ResourceQuantity>::dying_next.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 149,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:341:55 in function alloc::collections::btree::node::NodeRef::<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::CounterStatus, alloc::collections::btree::node::marker::LeafOrInternal>::ascend::{closure#0}",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::NodeRef::<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::CounterStatus, alloc::collections::btree::node::marker::LeafOrInternal>::ascend::{closure#0}.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 169,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/num/uint_macros.rs:3182:21 in function core::num::<impl usize>::abs_diff",
+      "status": "UNREACHABLE",
+      "symbol": "core::num::<impl usize>::abs_diff.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 170,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/num/uint_macros.rs:3184:21 in function core::num::<impl usize>::abs_diff",
+      "status": "UNREACHABLE",
+      "symbol": "core::num::<impl usize>::abs_diff.assertion.2"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 190,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:1116:33 in function alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::CounterStatus, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::Edge>::descend",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::CounterStatus, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::Edge>::descend.assertion.1"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 196,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:820:38 in function std::fmt::Arguments::<'_>::from_str",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Arguments::<'_>::from_str.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 200,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/map.rs:1939:13 in function std::collections::btree_map::IntoIter::<std::string::String, serde_json::value::Value>::dying_next",
+      "status": "UNREACHABLE",
+      "symbol": "std::collections::btree_map::IntoIter::<std::string::String, serde_json::value::Value>::dying_next.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 206,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:812:46 in function alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::ResourceQuantity, alloc::collections::btree::node::marker::Leaf>, alloc::collections::btree::node::marker::KV>::right_edge",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::ResourceQuantity, alloc::collections::btree::node::marker::Leaf>, alloc::collections::btree::node::marker::KV>::right_edge.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 218,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:341:55 in function alloc::collections::btree::node::NodeRef::<alloc::collections::btree::node::marker::Dying, std::string::String, std::string::String, alloc::collections::btree::node::marker::LeafOrInternal>::ascend::{closure#0}",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::NodeRef::<alloc::collections::btree::node::marker::Dying, std::string::String, std::string::String, alloc::collections::btree::node::marker::LeafOrInternal>::ascend::{closure#0}.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 219,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/map.rs:1939:13 in function std::collections::btree_map::IntoIter::<std::string::String, std::string::String>::dying_next",
+      "status": "UNREACHABLE",
+      "symbol": "std::collections::btree_map::IntoIter::<std::string::String, std::string::String>::dying_next.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 245,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:812:46 in function alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, std::string::String, alloc::collections::btree::node::marker::Leaf>, alloc::collections::btree::node::marker::KV>::right_edge",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, std::string::String, alloc::collections::btree::node::marker::Leaf>, alloc::collections::btree::node::marker::KV>::right_edge.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 250,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:812:46 in function alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, std::string::String, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::KV>::right_edge",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, std::string::String, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::KV>::right_edge.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 274,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:812:46 in function alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, serde_json::value::Value, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::KV>::right_edge",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, serde_json::value::Value, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::KV>::right_edge.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 280,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:1116:33 in function alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, std::string::String, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::Edge>::descend",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, std::string::String, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::Edge>::descend.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 287,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:341:55 in function alloc::collections::btree::node::NodeRef::<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::ListStatus, alloc::collections::btree::node::marker::LeafOrInternal>::ascend::{closure#0}",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::NodeRef::<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::ListStatus, alloc::collections::btree::node::marker::LeafOrInternal>::ascend::{closure#0}.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 288,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/map.rs:1939:13 in function std::collections::btree_map::IntoIter::<std::string::String, agones_core::CounterStatus>::dying_next",
+      "status": "UNREACHABLE",
+      "symbol": "std::collections::btree_map::IntoIter::<std::string::String, agones_core::CounterStatus>::dying_next.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 293,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:341:55 in function alloc::collections::btree::node::NodeRef::<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::ResourceQuantity, alloc::collections::btree::node::marker::LeafOrInternal>::ascend::{closure#0}",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::NodeRef::<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::ResourceQuantity, alloc::collections::btree::node::marker::LeafOrInternal>::ascend::{closure#0}.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 310,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:812:46 in function alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::CounterStatus, alloc::collections::btree::node::marker::Leaf>, alloc::collections::btree::node::marker::KV>::right_edge",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, agones_core::CounterStatus, alloc::collections::btree::node::marker::Leaf>, alloc::collections::btree::node::marker::KV>::right_edge.assertion.1"
+    }
+  ]
+}

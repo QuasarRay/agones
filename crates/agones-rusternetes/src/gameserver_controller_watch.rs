@@ -360,6 +360,7 @@ mod tests {
 
     fn game_server(state: Option<GameServerState>) -> GameServer {
         GameServer {
+            type_meta: Default::default(),
             metadata: ObjectMeta {
                 name: "test".into(),
                 namespace: "default".into(),

@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "classification": "REPO_SAFE",
+  "status": "ACTUAL_PROTECTED_CI_IN_PROGRESS_NO_COMPLETE_SOURCE_FEATURE_CREDIT",
+  "workflow_run": 39511896291,
+  "run_attempt": 1,
+  "url": "https://github.com/QuasarRay/agones/actions/runs/39511896291",
+  "source_head": "4523bffd1fc3ae01ecba4918b343cafaa688c2f7",
+  "source_tree": "9198114c9aa7223e3df515d9c9f70181da0af9b4",
+  "local_native_commit": "d6c6b857f8194d76889bef0544c946ab044133a2",
+  "expected_tested_merge": "44a9f5d940555795eeb3bc1abdacbeea1871ed4c",
+  "pull_request": "https://github.com/QuasarRay/agones/pull/96",
+  "review_branch": "codex/agones-player-tracking-validation",
+  "base_head": "1e64a054901658908d0a7a4eecd3010379df9614",
+  "jobs": [
+    {
+      "id": 118934695509,
+      "name": "migration-state",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 118934813927,
+      "name": "feature-validation-contract-model-check",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 118934813996,
+      "name": "rust",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "id": 118934814002,
+      "name": "feature-common-model-check",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "id": 118934814061,
+      "name": "feature-validation-source-004",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "id": 118934814069,
+      "name": "feature-validation-source-003",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "id": 118934814120,
+      "name": "feature-validation-source-000",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "id": 118934814141,
+      "name": "feature-validation-source-002",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "id": 118934814164,
+      "name": "feature-validation-source-001",
+      "status": "in_progress",
+      "conclusion": null
+    }
+  ],
+  "native_validation": {
+    "passed": 605,
+    "failed": 0,
+    "ignored": 3,
+    "generation_modes": 5,
+    "generated_source_case_bodies": "byte-identical"
+  },
+  "preserved": "All12exact selections, original fixtures/actions/assertions/covers/domains/bounds, fixed12GiB/900s/CPU300%/swap0 controls.",
+  "hypothesis": "Pinned Go directly concatenates missing-container prefix/name. Replace only the general formatter reached after container lookup with one exact-sized String and verbatim appends; no unique-cause or completion claim.",
+  "historical_evidence": {
+    "source_head": "31cc72d92bbb9611e228ec5936d2421a5ca35f84",
+    "workflow_run": 39505643334,
+    "passive_commit": "59af9aaad462ae880b7364508270e0875cfad85b",
+    "receipt": "verification/agones/ci/39505643334-terminal-retained.json"
+  },
+  "new_formal_credit": 0,
+  "next_action": "Recover each actual archive and complete required rows/covers before credit. Do not restart live jobs or repeat an identical resource failure."
+}

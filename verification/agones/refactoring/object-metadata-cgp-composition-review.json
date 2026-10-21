@@ -1,0 +1,15 @@
+{
+  "architecture_status": "All eight required_2same-logical-crate/cross-crate cells remain REQUIRED_OPEN. Existing partial macro facilities are not credited as completed cells.",
+  "candidate": "Generalize repeated validation capability bounds or introduce _2 metadata wiring/fixture syntax.",
+  "decision": "REUSE_EXISTING_CGP_CONTINUE_FEATURE_VERIFICATION",
+  "feature_id": "META-VALIDATE-001",
+  "id": "G3-METADATA-CGP-COMPOSITION-001",
+  "new_generalization_implemented": false,
+  "next_review_trigger": "After the metadata source-test extraction and generated fixture families are complete, inspect the concrete repeated fixture/observation declarations for the next economical shared Genco/_2step; retain every required final cell.",
+  "production_binding_sha256": "88c9422e1140b73bf792fd3f8df69e6760cd9106f76560df243cbbd9185b357f",
+  "reuse": "Existing cgp_component/cgp_new_provider/delegate_and_check_components provide replaceable behavior; existing Genco supports source fixture generation. The shared policy removes duplicated semantics without a new framework.",
+  "roi": "The remaining repetition is ten explicit capability bounds and two direct map arguments. Extending compiler/macro machinery, wiring it through all eight required ergonomics cells and maintaining diagnostics would cost more than these few ordinary lines. No active feature is blocked by missing macro syntax. Native687 and actual Rusternetes admission tests validate the direct CGP implementation.",
+  "source_commit": "893af2bc25034a84fd566fe5020aa809de022fc5",
+  "source_tree": "49f2b6c8a6b7e07f94643909c4dede196f1f8d8c",
+  "timestamp": "2026-10-21T06:57:21.782451+00:00"
+}

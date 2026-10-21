@@ -1,0 +1,9 @@
+{
+  "candidate": "Preserve source field.Error origin/declarative metadata and exact existing constructor/detail output in the real shared error owner.",
+  "decision": "SMALL_LOCAL_REFACTOR",
+  "id": "GS-VALIDATION-ERROR-DATA-001-production",
+  "next_review_trigger": "After the source error-data production gate, exact bidirectional mapping controls and complete25case native replay, review only concrete constructor/lowering repetitions; all eight _2cells remain required open.",
+  "observations": "All25general original validation rows were captured only after gated quantity/TypeMeta support; lowering exposed missing error payload data and exact detail mismatches. The four-class PlayerTracking source observation confirms the reviewed Required/Forbidden constructor image.",
+  "reuse": "Use the existing ValidationError representation, its constructor family and actual CGP validation consumers. Source local vendored field/errors.go and metadata validators are the pinned authority; no new abstraction or metaprogramming framework is needed.",
+  "roi": "Adding the two missing observed fields at the single shared owner and reusing constructor defaults closes an observed complete-case lowering blocker. Compiler spans can identify existing literal constructors mechanically; hand editing generated property bodies is forbidden. Shared with_origin/mark_covered_by_declarative builders retain data without repeated reconstruction. Keep broader metadata predicate parity explicitly open rather than introduce a validator framework."
+}

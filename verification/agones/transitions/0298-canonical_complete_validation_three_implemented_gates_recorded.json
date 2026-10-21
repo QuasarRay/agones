@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "CANONICAL_COMPLETE_VALIDATION_THREE_IMPLEMENTED_GATES_RECORDED",
+  "gate_snapshot": "verification/agones/gates/6d10b275433dcf0a49011a53dc251b062c43c50049cc3a8aebf0c161cc498b26.json",
+  "predecessor_revision": 297,
+  "predecessor_sha256": "6ff0f0080607711de19e921dea5a0877622e631f0aa373783c4993479ffce0ee",
+  "reason": "All three selected quantity/TypeMeta/six-field production slices are adopted and recorded IMPLEMENTED with current gates; nine closures native-validated. Active source pipeline remains VERIFYING with0current proof credit and all original/global requirements intact. GitHub/Plugin tools return Unknown tool; local source/evidence recovery continues.",
+  "result_revision": 298,
+  "schema_version": 1,
+  "state_sha256": "de7c8ed52b014bbbf635dd43cbf82100000baa38e7435534fabd257ea54ec355",
+  "timestamp": "2026-10-21T01:08:24.935129+00:00"
+}

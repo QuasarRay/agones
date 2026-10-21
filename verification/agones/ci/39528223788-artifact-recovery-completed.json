@@ -1,0 +1,17 @@
+{
+  "artifacts": 37,
+  "classification": "REPO_SAFE",
+  "formal_credit_for_repaired_canonical": 0,
+  "pending": 0,
+  "raw_log_policy": "Original binary recorder output and complete archive members are retained unchanged.",
+  "schema_version": 1,
+  "source_head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
+  "source_paths": 190,
+  "source_tree": "c970a219af824d89c46bafb236eb55fdfb7bd267",
+  "status": "ALL37_ARTIFACT_RETENTION_AND_PINNED_STRICT_AUDIT_COMPLETE",
+  "strict_summary_count": 6,
+  "terminal_receipt": "verification/agones/ci/39528223788-terminal-all37-retained.json",
+  "terminal_sha256": "73424f01792f62635676eb576093cd9a1986f0854a3af70c93c63998918314c5",
+  "tested_merge": "9d4b29898d097f929ad413b88ee5667bab4663ba",
+  "workflow_run": 39528223788
+}

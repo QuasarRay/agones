@@ -1,0 +1,9 @@
+{
+  "bound": "Exactly the two pinned original test tables; unsupported body/setup/assertions or lossy quantity state abort extraction. No formal or architecture credit from generation.",
+  "candidate": "Reuse the existing package-aware GameServer feature-validation capture for the complete original general validation table.",
+  "decision": "SMALL_LOCAL_REFACTOR",
+  "id": "RESOURCE-QUANTITY-001-validation-source-reuse",
+  "next_review_trigger": "After the first full generated/native validation-table replay, inspect actual repeated Genco assertion/fixture/delegation declarations for economical _2 adoption; all eight cells stay required.",
+  "reuse": "Use existing typed packages loader, baseline source binding, fakeAPIHooks declaration capture, identity builder, error relation and Genco fixture lowering. Two actual validation tables share the same loader/callback/table structure.",
+  "roi": "Factor the existing238line capture into a private two-mode helper instead of copying it. Add only the plain-table action/defaulting/constant and quantity-preservation checks needed by TestGameServerValidate. This removes immediate duplicated source/effect validation and retains fail-closed checks. No generalized source language or new macro framework."
+}

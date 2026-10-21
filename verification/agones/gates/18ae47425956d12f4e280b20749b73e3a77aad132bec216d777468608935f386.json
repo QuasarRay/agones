@@ -1,0 +1,63 @@
+{
+  "acceptance_criteria": [
+    "The real shared error owns and retains all six source-observed fields; no generator-only replacement.",
+    "Pinned TooLong/TooLongMaxLength payload omits the value and handles negative/zero/singular/plural byte limits exactly.",
+    "The currently implemented metadata error paths preserve exact source regex/example detail and key/value Origins.",
+    "Every production and native-library consumer compiles; all514workspace library tests pass, including whole-record production observations and constructor/metadata mutation controls."
+  ],
+  "assurance": {
+    "current_formal_credit": 0,
+    "formal": "All affected required proofs remain open for current source. Native676campaign39556147739retains its original source identity and30failed source cases.",
+    "generation": "Seven deterministic write/check modes and strict parser controls follow this gate refresh.",
+    "implementation": "Canonical locked all-target check,704native tests and guidance1828directories/zero missing passed. Shared metadata policy is selected through the existing CGP context."
+  },
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
+  "feature_id": "GS-VALIDATION-ERROR-DATA-001",
+  "id": "GS-VALIDATION-ERROR-DATA-001-implementation",
+  "ordinary_checks": [
+    "verification/agones/runs/canonical-metadata-native-1.json"
+  ],
+  "ordinary_result_counts": {
+    "failed": 0,
+    "ignored": 3,
+    "passed": 704
+  },
+  "predecessor_gate": "verification/agones/gates/9bba6d1b4366a99bd6865906d6f76e3901e05945d6d0f107c8da4b7aaaab7ecc.json",
+  "predecessor_gate_sha256": "9bba6d1b4366a99bd6865906d6f76e3901e05945d6d0f107c8da4b7aaaab7ecc",
+  "predecessor_ledger_revision": 309,
+  "production_files": {
+    "Cargo.lock": "457e9915c442fc92a563532c2adeb010f5f2035fd0ae4b3c9c9ac3396d950d93",
+    "Cargo.toml": "3a3f19b913b7d4fc8966288d621de4134b7b87439231dc64014ea23f7511b6f7",
+    "crates/agones-core/Cargo.toml": "6bd2fb70b00b1ff6d34e4562ff78ab6ea86ca352a5043c87a57b8e65eb1e6a51",
+    "crates/agones-core/src/allocation.rs": "7025e48bdde5da5cbfd45c7cf57086c768a18b9347991dbf46361b7cd9c54f08",
+    "crates/agones-core/src/autoscaling.rs": "7d4d7fd44d52556a1874ccc018c6bdd03e01982e283471cb3472715b6b7adc24",
+    "crates/agones-core/src/features.rs": "72c9a28ba3697ac99d733a7bea5b1933ce0d3c055e813a361290bb6135b4bc98",
+    "crates/agones-core/src/fleet.rs": "24148ed9c20f4e0f1cf46b6cc0be35bd3316aec01a4b39d51efa7fc910ceddba",
+    "crates/agones-core/src/gameserver.rs": "bdbf85ad795e439f4ba0d9f9030876805ec09e05c4715e6a0b95deb2eff67eb8",
+    "crates/agones-core/src/gameserver_validation.rs": "be120c2892ed50c3bb6002175d7b7c08c5215197a3f07cbddc16daffb7daf1de",
+    "crates/agones-core/src/gameserverset.rs": "5544e6da50d4263fd2797bf165e22e21d57ffc471a459c66ff1f1ee0cdc869a9",
+    "crates/agones-core/src/go_value.rs": "ea849e221b593654e7049594fdcaebb4a61042e068381af5e96dd5fd017f0e25",
+    "crates/agones-core/src/resource_quantity.rs": "a8f7ae7eda83f7f6f546af4700cdc562003437bd92fd6ecbed7f76e1009d8006",
+    "crates/agones-rusternetes/src/fleet_admission.rs": "491bd846a0ef06bc3ef5ec8b9619701b77a205deaa01ed75dea35a093af76067",
+    "crates/agones-rusternetes/src/gameserver_admission.rs": "d14437c315ed9d2fb690878868ea7047baf722e9484b7d99d43ccca686ff0348",
+    "crates/agones-rusternetes/src/gameserverset_admission.rs": "493f024c4984206c857130dd8fd039de29f2605ee83f1e424546f90e15019194",
+    "crates/agones-rusternetes/src/lib.rs": "3b9294cc000fa7b92e2cbcd9b088e7862a11151163aa51c0d92e5ffea1ac0e64"
+  },
+  "production_symbols": [
+    "ValidationError",
+    "ValidationError::{required,forbidden,invalid,too_long,with_origin,mark_covered_by_declarative}",
+    "validate_object_meta",
+    "GameServer::validate_with_context",
+    "GameServerSpec::validate_with_context",
+    "ValidateAgonesGameServerFeatures"
+  ],
+  "schema_version": 1,
+  "source_snapshot": {
+    "head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
+    "source_binding_receipt": "verification/agones/runs/canonical-metadata-native-1.json",
+    "tracked_patch_sha256": "e748f31adc50ea7193a5f338757142ec2e13f2383e40652aa89b8cbb8a0ef098"
+  },
+  "status": "IMPLEMENTED",
+  "timestamp": "2026-10-21T08:24:24.805554+00:00"
+}

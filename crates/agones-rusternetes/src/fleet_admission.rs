@@ -6,7 +6,6 @@ use rusternetes_common::admission::{
 
 use crate::{
     AdapterError, ApiHooks, admission_json_patch,
-    validate_game_server_resources_at,
 };
 use crate::gameserver_admission::format_validation_errors;
 
@@ -55,19 +54,32 @@ pub fn validate_fleet<H>(
 where
     H: ApiHooks,
 {
+    validate_fleet_with_context(
+        &agones_core::GameServerDefaultingContext::default(),
+        fleet,
+        hooks,
+    )
+}
+
+pub fn validate_fleet_with_context<C, H>(
+    context: &C,
+    fleet: &Fleet,
+    hooks: &H,
+) -> Result<Vec<ValidationError>, AdapterError>
+where
+    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities + agones_core::CanValidateObjectMetadata,
+    H: ApiHooks,
+{
     // Upstream Fleet.Validate mutates the nested GameServerSpec by applying
     // defaults through validateGSSpec. Validate a clone so admission remains a
     // pure decision over the supplied object.
     let mut validated = fleet.clone();
-    let mut errors = validated.validate();
+    let mut errors = validated.validate_with_context(context);
 
     let mut game_server_spec = fleet.spec.template.spec.clone();
     game_server_spec.apply_defaults();
 
-    errors.extend(validate_game_server_resources_at(
-        &game_server_spec,
-        "spec.template.spec",
-    )?);
+    let _pod_spec: rusternetes_common::resources::PodSpec = crate::to_native(&game_server_spec.template.spec)?;
     errors.extend(hooks.validate_game_server_spec_at(
         &game_server_spec,
         "spec.template.spec",
@@ -87,6 +99,22 @@ pub fn validate_fleet_object<H>(
 where
     H: ApiHooks,
 {
+    validate_fleet_object_with_context(
+        &agones_core::GameServerDefaultingContext::default(),
+        object,
+        hooks,
+    )
+}
+
+pub fn validate_fleet_object_with_context<C, H>(
+    context: &C,
+    object: &serde_json::Value,
+    hooks: &H,
+) -> Result<AdmissionResponse, AdapterError>
+where
+    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities + agones_core::CanValidateObjectMetadata,
+    H: ApiHooks,
+{
     let fleet: Fleet =
         serde_json::from_value(object.clone()).map_err(|error| {
             AdapterError::Hook(format!(
@@ -94,7 +122,7 @@ where
             ))
         })?;
 
-    let errors = validate_fleet(&fleet, hooks)?;
+    let errors = validate_fleet_with_context(context, &fleet, hooks)?;
     if errors.is_empty() {
         Ok(AdmissionResponse::Allow)
     } else {
@@ -128,19 +156,39 @@ impl AdmissionController for FleetCreationMutationAdmission {
 }
 
 #[derive(Clone, Debug)]
-pub struct FleetValidationAdmission<H> {
+pub struct FleetValidationAdmission<H, C = agones_core::GameServerDefaultingContext> {
     hooks: H,
+    validation_context: C,
 }
 
 impl<H> FleetValidationAdmission<H> {
     pub fn new(hooks: H) -> Self {
-        Self { hooks }
+        Self::from_feature_inputs(&agones_core::FeatureGateInputContext::default(), hooks)
+            .expect("invalid Agones feature gate configuration")
+    }
+
+    pub fn from_feature_inputs<I: agones_core::CanLoadFeatureGates>(
+        input: &I,
+        hooks: H,
+    ) -> Result<Self, agones_core::FeatureGateError> {
+        let gates = input.load_feature_gates()?;
+        Ok(Self::from_context(
+            agones_core::GameServerDefaultingContext::from_feature_gates(&gates),
+            hooks,
+        ))
+    }
+}
+
+impl<H, C> FleetValidationAdmission<H, C> {
+    pub fn from_context(validation_context: C, hooks: H) -> Self {
+        Self { hooks, validation_context }
     }
 }
 
 #[async_trait]
-impl<H> AdmissionController for FleetValidationAdmission<H>
+impl<H, C> AdmissionController for FleetValidationAdmission<H, C>
 where
+    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities + agones_core::CanValidateObjectMetadata + Send + Sync,
     H: ApiHooks + Send + Sync,
 {
     fn name(&self) -> &str {
@@ -156,7 +204,7 @@ where
             return AdmissionResponse::Allow;
         }
 
-        validate_fleet_object(&request.object, &self.hooks)
+        validate_fleet_object_with_context(&self.validation_context, &request.object, &self.hooks)
             .unwrap_or_else(|error| AdmissionResponse::Deny(error.to_string()))
     }
 }
@@ -296,13 +344,7 @@ mod tests {
             });
         fleet.spec.template.spec.container = "missing".into();
         fleet.spec.template.spec.template.spec.containers[0]
-            .resources
-            .insert(
-                "requests".into(),
-                serde_json::json!({
-                    "cpu": "-1"
-                }),
-            );
+            .resources.requests = Some(serde_json::from_value(serde_json::json!({"cpu": "-1"})).unwrap());
 
         let response = validate_fleet_object(
             &serde_json::to_value(fleet).unwrap(),
@@ -356,6 +398,8 @@ mod tests {
             path: &str,
         ) -> Vec<ValidationError> {
             vec![ValidationError {
+                origin: String::new(),
+                covered_by_declarative: false,
                 kind: ValidationErrorKind::Invalid,
                 path: format!("{path}.hook"),
                 bad_value: None,
@@ -369,6 +413,8 @@ mod tests {
             path: &str,
         ) -> Vec<ValidationError> {
             vec![ValidationError {
+                origin: String::new(),
+                covered_by_declarative: false,
                 kind: ValidationErrorKind::Invalid,
                 path: path.into(),
                 bad_value: None,

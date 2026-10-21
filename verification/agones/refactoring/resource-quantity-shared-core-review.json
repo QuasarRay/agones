@@ -1,0 +1,19 @@
+{
+  "architecture_status": "All eight mandatory _2 form/location cells remain REQUIRED_OPEN. No architecture completion credited.",
+  "candidate": "Replace the private f64 parser and share the actual quantity/resource policy between core validation and Rusternetes consumers.",
+  "decision": "SMALL_LOCAL_REFACTOR",
+  "feature_id": "RESOURCE-QUANTITY-001",
+  "four_form_review": {
+    "proc_macro_2": "Use the existing ordinary expansion/Genco substrate when resource source extraction needs it; parser arithmetic has no repeated token transform.",
+    "proc_macro_attribute_2": "Current serde/CGP attributes already express the two wire boundaries. No new attribute syntax justified by this feature.",
+    "proc_macro_delegate_2": "Existing CGP delegates the new policy in production and a quantity-only context. Keep required same-logical-crate and cross-crate authoring cells open; consumer use earns no authoring credit.",
+    "proc_macro_derive_2": "Three small error/format cases have source-specific behavior, not a repeated derive expansion. Recorded Arcane core/shim/facade remains the relevant future adoption structure."
+  },
+  "id": "RESOURCE-QUANTITY-001-shared-core-review",
+  "next_review_trigger": "When this quantity implementation is adopted into the canonical checkout and its source-bound gates/extraction are refreshed, inspect the concrete repeated typed resource fixtures and trait/delegation plumbing for the smallest positive-ROI _2 adoption.",
+  "observations": "One former adapter-only policy skipped core validation and duplicated traversal. The shared CGP provider now owns exact nonnegative/request-limit decisions; GameServerSpec owns the shared source-ordered resource traversal. Four core entrypoints and three real admissions reach it. Rusternetes types stay in the adapter; null quantities cannot disappear through its string-map decoder.",
+  "residual": "Hook/metadata ordering beyond resource placement, unmodeled wire fields, live-cluster conformance/lifecycle and all unproved original obligations remain required.",
+  "reuse": "REUSE_DIRECT: num-bigint0.4.8 BigUint multiplication, already resolved in Cargo.lock. REUSE_DIRECT: pinned CGP component/new-provider/delegate_and_check_components. Reuse actual pinned Go quantity.go/suffix.go/amount.go semantics, including fast cached spelling, nano rounding, BinarySI-only cap and empty unsupported DecimalSI suffix. Native replay supplements independent numeric/path/value invariants; it is no source-test extraction or formal proof.",
+  "roi": "A small local relocation removes repeated validation loops and prevents each future core/admission consumer from reconstructing numeric policy. Parsing is a concrete missing behavior: the pinned Rusternetes scheduler helper returns f64 and its common DTO stores strings. No new general parser framework or proc-macro substrate is needed. Exact numeric comparison and source formatting are ordinary algorithms, not repeated token templates.",
+  "root_guidance_preferences": "CGP directly removes component/provider forwarding boilerplate. Existing serde derives own DTO plumbing. derive-deftly/comprende/better_comprehension do not replace the single nonuniform source quantity algorithm; speculative dependencies would add integration and proof obligations. Reassess at a concrete repeated typed source-IR or field-forwarding consumer."
+}

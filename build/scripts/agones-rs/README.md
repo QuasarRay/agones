@@ -88,3 +88,22 @@ and any timed-out fixed case remain explicit open proof work in
 
 Both summary commands share `kani_results.py`; controls reject incomplete,
 empty, failing and unreachable claims and unsatisfied/missing/extra covers.
+
+The gated GameServer validation table uses the same pipeline:
+`go -C build/scripts/agones-rs/extract run . --gameserver-features <root> <gate>`
+captures all five `TestGameServerValidateFeatures` cases and ten qualified
+assertion occurrences. It copies the original private API hook declarations
+and preserves nil/allocated collection witnesses omitted by Go JSON.
+`feature_case_codegen --gameserver-features [--check]` reuses the typed
+GameServer lowering and emits `source_gsv_case_000` through `004`. The source
+assertion is complete error-element multiset equality, including multiplicity;
+source error auxiliary fields must remain their captured zero values.
+Summarize actual backend runs with `summarize_feature_proof.py
+gameserver-validation-source <run-id> --case-index <0..4> --output <path>`.
+These original cases never set Players; the separate `gameserver-features`
+contract model retains that branch's independent relation and required covers.
+
+When a shared generator change affects existing gates, refresh standalone
+`--go-quote-table` provenance first, then renew the dependent gates, rebind the
+existing IR and regenerate the case metadata. This order prevents stale
+quote-metadata bindings. Rebinding metadata gives no new formal credit.

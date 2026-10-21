@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "QUERY_BORROWING_ACTUAL_PROTECTED_CI_RUNNING",
+  "gate_snapshot": "verification/agones/gates/f8271f2592ac1b7a5e27d8a9e17ad361679cbd40f113e2a8bb3dd0d75ce65810.json",
+  "predecessor_revision": 257,
+  "predecessor_sha256": "051320f244f4173d7082c5d129f8294353a38a3d8f592094f86c302f263936b4",
+  "reason": "Remote uploaded tree exactly matches local native-gated commit c6b2daac8; expected-head fast-forward published dd4b4bfb8 and actual CI39498916435 started the unchanged12selection protected campaign. Preserve historical7dresults and zero new formal credit until actual artifacts.",
+  "result_revision": 258,
+  "schema_version": 1,
+  "state_sha256": "54b9d68fe18ee25c166b7bbd9a71ec8113be940bf9f5384bc8223aa3d13e2f0b",
+  "timestamp": "2026-10-20T21:20:26.785807+00:00"
+}

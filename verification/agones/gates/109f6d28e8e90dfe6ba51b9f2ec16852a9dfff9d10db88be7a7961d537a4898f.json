@@ -1,0 +1,70 @@
+{
+  "acceptance_criteria": [
+    "Exact DecimalSI/BinarySI/decimal exponent interpretation, sign, source precision/rounding/capping and cached/canonical String semantics; no f64 quantity comparisons.",
+    "Exact JSON numeric tokens, null-as-zero and malformed known-resource maps handled before actual admission policy, including development addresses.",
+    "One CGP resource provider and shared core traversal; direct GameServer/spec/Fleet/GameServerSet validation and real Rusternetes admissions consume it.",
+    "Source error phase ordering, Invalid kind, complete canonical bad values, paths and limit details; all normal/init/restartable container paths.",
+    "Independent integer/unit/path/value invariants, minimal quantity-only context, actual admission checks and1625pinned-Go ordinary replay cases with zero differences.",
+    "Keep typed numeric/source-representation state through decoding and validation even when source String is lossy; actual admissions exercise request1000Eabove limit2.",
+    "Preserve the confirmed fast-amount scale-overflow exception in actual comparison; five source-exception rows agree in native Go/Rust probes.",
+    "Share the exact quantity representation with Fleet semantic template equality, including source nano rounding, BinarySI caps and quantities whose String loses exponent."
+  ],
+  "assurance": {
+    "current_formal_credit": 0,
+    "formal": "All affected required proofs remain open for current source. Native676campaign39556147739retains its original source identity and30failed source cases.",
+    "generation": "Seven deterministic write/check modes and strict parser controls follow this gate refresh.",
+    "implementation": "Canonical locked all-target check,704native tests and guidance1828directories/zero missing passed. Shared metadata policy is selected through the existing CGP context."
+  },
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
+  "feature_id": "RESOURCE-QUANTITY-001",
+  "id": "RESOURCE-QUANTITY-001-with-typemeta-implementation",
+  "ordinary_checks": [
+    "verification/agones/runs/canonical-metadata-native-1.json"
+  ],
+  "ordinary_result_counts": {
+    "failed": 0,
+    "ignored": 3,
+    "passed": 704
+  },
+  "predecessor_gate": "verification/agones/gates/3d9b83c2771f038ecfaa7c92a4f060cc8b692e670f0318672edef5ddea483516.json",
+  "predecessor_gate_sha256": "3d9b83c2771f038ecfaa7c92a4f060cc8b692e670f0318672edef5ddea483516",
+  "predecessor_ledger_revision": 309,
+  "production_files": {
+    "Cargo.lock": "457e9915c442fc92a563532c2adeb010f5f2035fd0ae4b3c9c9ac3396d950d93",
+    "Cargo.toml": "3a3f19b913b7d4fc8966288d621de4134b7b87439231dc64014ea23f7511b6f7",
+    "crates/agones-core/Cargo.toml": "6bd2fb70b00b1ff6d34e4562ff78ab6ea86ca352a5043c87a57b8e65eb1e6a51",
+    "crates/agones-core/src/features.rs": "72c9a28ba3697ac99d733a7bea5b1933ce0d3c055e813a361290bb6135b4bc98",
+    "crates/agones-core/src/fleet.rs": "24148ed9c20f4e0f1cf46b6cc0be35bd3316aec01a4b39d51efa7fc910ceddba",
+    "crates/agones-core/src/gameserver.rs": "bdbf85ad795e439f4ba0d9f9030876805ec09e05c4715e6a0b95deb2eff67eb8",
+    "crates/agones-core/src/gameserver_defaulting.rs": "7ced36d2a7109e1363574d0ac8c29ef4dae08c7408d271da0f415a94d6a9ace6",
+    "crates/agones-core/src/gameserverset.rs": "5544e6da50d4263fd2797bf165e22e21d57ffc471a459c66ff1f1ee0cdc869a9",
+    "crates/agones-core/src/go_value.rs": "ea849e221b593654e7049594fdcaebb4a61042e068381af5e96dd5fd017f0e25",
+    "crates/agones-core/src/lib.rs": "1cc349ea6c273c23932e4f6797ada73629393b16ea7fbe37eeb467c8cbaae955",
+    "crates/agones-core/src/object_metadata_validation.rs": "e5e6246551da636d56b2a9604cb3e87a6c49e5afe2a2e7b2ee873effa91f39df",
+    "crates/agones-core/src/resource_quantity.rs": "a8f7ae7eda83f7f6f546af4700cdc562003437bd92fd6ecbed7f76e1009d8006",
+    "crates/agones-rusternetes/src/fleet_admission.rs": "491bd846a0ef06bc3ef5ec8b9619701b77a205deaa01ed75dea35a093af76067",
+    "crates/agones-rusternetes/src/gameserver_admission.rs": "d14437c315ed9d2fb690878868ea7047baf722e9484b7d99d43ccca686ff0348",
+    "crates/agones-rusternetes/src/gameserverset_admission.rs": "493f024c4984206c857130dd8fd039de29f2605ee83f1e424546f90e15019194",
+    "crates/agones-rusternetes/src/lib.rs": "3b9294cc000fa7b92e2cbcd9b088e7862a11151163aa51c0d92e5ffea1ac0e64"
+  },
+  "production_symbols": [
+    "ResourceQuantity::from_str/compare/fmt/deserialize",
+    "ValidateAgonesResourceQuantities::validate_resource_quantities",
+    "GameServerSpec::validate_resource_quantities_with_context",
+    "GameServerSpec/GameServer/Fleet/GameServerSet::validate_with_context",
+    "GameServerDefaultingContext",
+    "validate_resource_requirements_with_context",
+    "GameServerCreationValidationAdmission::admit",
+    "FleetValidationAdmission::admit",
+    "GameServerSetCreationValidationAdmission::admit"
+  ],
+  "schema_version": 1,
+  "source_snapshot": {
+    "head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
+    "source_binding_receipt": "verification/agones/runs/canonical-metadata-native-1.json",
+    "tracked_patch_sha256": "e748f31adc50ea7193a5f338757142ec2e13f2383e40652aa89b8cbb8a0ef098"
+  },
+  "status": "IMPLEMENTED",
+  "timestamp": "2026-10-21T08:24:24.808085+00:00"
+}

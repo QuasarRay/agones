@@ -1,0 +1,105 @@
+{
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "boundary_counterexample": {
+    "current_gate_status": "REOPENED_BY_COUNTEREXAMPLE_NO_SOURCE_EXTRACTION",
+    "input": {
+      "other": "1m",
+      "value": "1e2147483647"
+    },
+    "next_action": "Preserve typed quantity state through core resource validation, reproduce confirmed bounded source exceptional comparison behavior, rerun affected native/replay checks and create a successor gate. Keep canonical PR96 source unchanged for actual CI artifact recovery.",
+    "prior_isolated_gate": "6e5be9cec685556a46a5d086899191c3ace72094d9be9c80af42faff08286f32",
+    "receipt_in_worktree": "verification/agones/runs/resource-quantity-exponent-overflow-observation-1.json",
+    "source_observation": "Go Cmp panics with runtime error: integer divide by zero after int32 scale subtraction overflow. Rust returnedGreater. Source failure and Rust output retained in actual probe receipt."
+  },
+  "boundary_counterexamples": {
+    "extraction_requirement": "Quantity.String/JSON equality is not numeric/source-representation preservation; fail closed on lossy lowering.",
+    "manifest_in_commit": "verification/agones/resource-quantity-boundary-counterexamples.json",
+    "retained_previous_gate": "verification/agones/gates/6e5be9cec685556a46a5d086899191c3ace72094d9be9c80af42faff08286f32.json",
+    "status": "REPAIRED_IN_SUCCESSOR_ISOLATED_GATE"
+  },
+  "canonical_implementation_gate": null,
+  "captured_source_assertions": 25,
+  "captured_source_cases": 25,
+  "classification": "REPO_SAFE",
+  "current_rust_symbols": [
+    "parse_quantity_value",
+    "validate_resource_requirements",
+    "validate_game_server_resources_at"
+  ],
+  "dynamic_case_assertion_counts": "UNRESOLVED; do not build semantic IR until the selected production gate",
+  "isolated_activity": "SOURCE_CAPTURE_COMPLETE_ERROR_DATA_SUPPORT_REQUIRED",
+  "isolated_gate": "verification/agones/gates/c6cfc77ebba865ec53008598a448f5a5a796fc086bc0d873f899412ae6ca6cbf.json",
+  "local_commit": "e8b684a00b7758eef366ee467117c771af84b8d1",
+  "metadata_test_candidates": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate"
+  ],
+  "next_action": "Repair source error data/mapping support from the focused packet, refresh gates and all25required source-case lowerings/native replays. TypeMeta is implemented/gated. In canonical checkout, prepare a protected CI attempt after actual runner loss; retain complete results before proof credit. Preserve user guidance and all required _2cells.",
+  "observed_code_gap": "Pinned Go compares resource.Quantity values exactly and formats canonical Quantity.String values. Current Rust parses through f64, supports an incomplete explicit suffix set, and uses original input strings in errors. Precision, nano/micro-unit and canonical-format discrepancies require ordinary reproduction and a complete implementation before source semantic extraction. No counterexample or proof is claimed by this static discovery.",
+  "ordinary_progress": {
+    "formal_credit": 0,
+    "implementation_gate_in_isolated_commit": "verification/agones/gates/1566022a425b37fc4b0f03d2101acbef8f833b56cf01cd088d66785e1b8eff81.json",
+    "pinned_go_replay": {
+      "cases": 1625,
+      "confirmed_source_exception_rows": 5,
+      "differences": 0
+    },
+    "quantity_tests": 13,
+    "workspace": {
+      "failed": 0,
+      "ignored_runner_entries": 4,
+      "passed": 612
+    }
+  },
+  "ordinary_workspace": {
+    "failed": 0,
+    "ignored_runner_entries": 4,
+    "passed": 616
+  },
+  "post_gate_extraction": {
+    "canonical_adoption": "PENDING; main checkout and current formal credit remain unchanged.",
+    "captured_assertions": 25,
+    "captured_cases": 25,
+    "error_data_work_packet": "verification/agones/validation-error-data-work-packet.json",
+    "generation_failure": "verification/agones/runs/quantity-validation-genco-1.json",
+    "implementation_gate": "verification/agones/gates/c6cfc77ebba865ec53008598a448f5a5a796fc086bc0d873f899412ae6ca6cbf.json",
+    "implementation_snapshot": "dd15992d4fc556528bfd956d9059234b3444c691",
+    "ir": "verification/agones/gameserver-validation.ir.json",
+    "mapping": "Capture the complete original table, actual defaulting/validation actions, source fake hooks, qualified ElementsMatch occurrences and independent expected error elements. Preserve quantity construction state; reject lossy canonical serialization.",
+    "next_action": "Implement/gate the necessary source error representation and constructor/detail behavior using existing shared ValidationError constructors and CGP consumers. Use source-bound bidirectional error mapping controls. Refresh affected gates/IR/codegen, then generate/native-replay all25cases and run bounded actual backend verification. Do not merge PR96 based only on a green model job without the source-correspondence review.",
+    "related_typemeta_gate": "verification/agones/gates/d6e40365a5fabbec22b5d84d64c433528d66bd63d91a30450e32c445647b3e92.json",
+    "status": "FULL_CAPTURE_RETAINED_SOURCE_ERROR_DATA_SUPPORT_REQUIRED",
+    "test_identity": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate"
+  },
+  "production_acceptance": [
+    "One source-compatible quantity representation owns numeric and canonical display semantics across required DecimalSI/BinarySI/exponent forms, boundaries, source rounding and overflow behavior.",
+    "Nonnegative checks and request/limit comparisons preserve complete source error values, paths, details and source-observed ordering/equivalence.",
+    "Actual normal/init/restartable-container and nested GameServer/Fleet/GameServerSet consumers use the policy; invalid input is handled at its actual source validation/decoding boundary.",
+    "Run ordinary native and independently specified boundary checks, then record the immutable gate before enriching source-test semantics."
+  ],
+  "proof_credit": 0,
+  "recovery_manifest": "verification/agones/resource-quantity-isolated-recovery.json",
+  "reuse_first": [
+    "Inspect the actual pinned Rusternetes common resource representation/parser and its tests before introducing quantity machinery. Unknown support is not demonstrated absence.",
+    "Cargo.lock already contains num-bigint0.4.8 transitively; evaluate component-level exact arithmetic reuse if needed, with source scale/rounding/capping/canonicalization semantics intact. Do not assume floating-point approximation is compatible.",
+    "Reuse existing CGP getter/component/provider composition, actual Rusternetes resource consumers and the package-aware Go/Genco pipeline after implementation. No macro framework or extra orchestrator is a prerequisite."
+  ],
+  "scheduling": "Keep the current PR96 campaign source inputs unchanged while its12selected checks run. Prepare this dependency-closing feature as next production work; it is not semantically blocked by unfinished _2 machinery or a new general framework.",
+  "schema_version": 1,
+  "scope_exclusions": [],
+  "source_files": {
+    "pkg/apis/agones/v1/gameserver.go": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
+    "vendor/k8s.io/apimachinery/pkg/api/resource/quantity.go": "9fa46ba76f6dfb0aff6fd63cd7d288531b20ab902d96450980d62c7ee8078110",
+    "vendor/k8s.io/apimachinery/pkg/api/resource/suffix.go": "bdf0d341b71f799fa80cd11d2e1e92b817f244170deb906c7e1f50ea5990b39c"
+  },
+  "source_symbols": [
+    "ValidateResourceRequirements",
+    "ValidateNonnegativeQuantity",
+    "resource.Quantity.Cmp",
+    "resource.Quantity.String"
+  ],
+  "status": "ISOLATED_TYPED_OWNER_IMPLEMENTATION_GATED_CANONICAL_ADOPTION_PENDING",
+  "typemeta_gate": "verification/agones/gates/d6e40365a5fabbec22b5d84d64c433528d66bd63d91a30450e32c445647b3e92.json",
+  "work_item": "RESOURCE-QUANTITY-001",
+  "worktree": "/home/astral/.codex/worktrees/agones-resource-quantity/agones",
+  "worktree_base": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af"
+}

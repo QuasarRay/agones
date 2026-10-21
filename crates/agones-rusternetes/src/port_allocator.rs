@@ -397,6 +397,7 @@ mod tests {
         node_name: &str,
     ) -> GameServer {
         GameServer {
+            type_meta: Default::default(),
             metadata: ObjectMeta {
                 name: uid.into(),
                 namespace: "default".into(),

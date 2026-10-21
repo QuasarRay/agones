@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "complete_validation_strict37_controls_passed_publication_ready",
+  "gate_snapshot": "verification/agones/gates/6d10b275433dcf0a49011a53dc251b062c43c50049cc3a8aebf0c161cc498b26.json",
+  "predecessor_revision": 301,
+  "predecessor_sha256": "6b52ed1ca3716f638e5ef84594e2449d4c0941142d2e5d4bf3d95f906ea553aa",
+  "reason": "Reuse the existing parser, protected matrix and mandatory aggregate for all 25 general validation cases plus every existing selection; all acceptance controls pass, nine production gates match, formal debt remains open.",
+  "result_revision": 302,
+  "schema_version": 1,
+  "state_sha256": "bdd29ab27ce2eef4c83427fbd71abdad2c2fa2f6037a1675c8a8a9045b52891f",
+  "timestamp": "2026-10-21T01:34:12.269834+00:00"
+}

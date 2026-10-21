@@ -1,0 +1,627 @@
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.27
+   Compiling cgp-component v0.8.0-alpha
+   Compiling cgp-base-types v0.8.0-alpha
+   Compiling libc v0.2.191
+   Compiling stable_deref_trait v1.2.1
+   Compiling cfg-if v1.0.5
+   Compiling autocfg v1.5.1
+   Compiling zerocopy v0.8.63
+   Compiling getrandom v0.3.4
+   Compiling memchr v2.8.3
+   Compiling minimal-lexical v0.2.1
+   Compiling indexmap v2.14.2
+   Compiling writeable v0.6.4
+   Compiling litemap v0.8.3
+   Compiling icu_normalizer_data v2.3.0
+   Compiling utf8_iter v1.0.4
+   Compiling thiserror v1.0.69
+   Compiling icu_properties_data v2.3.0
+   Compiling time-macros v0.2.32
+   Compiling toml_datetime v0.6.11
+   Compiling winnow v0.5.40
+   Compiling num-conv v0.2.2
+   Compiling powerfmt v0.2.1
+   Compiling genco-macros v0.17.10
+   Compiling deranged v0.5.9
+   Compiling time-core v0.1.9
+   Compiling smallvec v1.16.3
+   Compiling serde_core v1.0.229
+   Compiling lazy_static v1.5.1
+   Compiling anyhow v1.0.104
+   Compiling toml_datetime v1.1.2+spec-1.1.0
+   Compiling oid-registry v0.7.1
+   Compiling nom v7.1.3
+   Compiling siphasher v1.0.4
+   Compiling num-traits v0.2.19
+   Compiling zmij v1.0.23
+   Compiling iana-time-zone v0.1.65
+   Compiling toml_edit v0.25.17+spec-1.1.0
+   Compiling phf_shared v0.12.1
+   Compiling serde v1.0.229
+   Compiling percent-encoding v2.3.2
+   Compiling serde_json v1.0.154
+   Compiling chrono-tz v0.10.4
+   Compiling either v1.19.0
+   Compiling form_urlencoded v1.2.2
+   Compiling syn v2.0.119
+   Compiling syn v3.0.9
+   Compiling phf v0.12.1
+   Compiling pretty-hex v0.4.2
+   Compiling data-encoding v2.11.1
+   Compiling once_cell v1.21.4
+   Compiling itoa v1.0.18
+   Compiling proc-macro-crate v3.5.0
+   Compiling base64 v0.22.1
+   Compiling num-integer v0.1.47
+   Compiling getrandom v0.2.17
+   Compiling chrono v0.4.45
+   Compiling rand_core v0.9.5
+   Compiling num-bigint v0.4.8
+   Compiling rand_core v0.6.4
+   Compiling toml_edit v0.20.7
+   Compiling rand_xoshiro v0.7.0
+   Compiling rusticata-macros v4.1.0
+   Compiling time v0.3.55
+   Compiling cron v0.12.1
+   Compiling synstructure v0.14.0
+   Compiling proc-macro-crate v2.0.0
+   Compiling displaydoc v0.2.7
+   Compiling zerofrom-derive v0.1.8
+   Compiling yoke-derive v0.8.4
+   Compiling zerovec-derive v0.11.6
+   Compiling serde_derive v1.0.229
+   Compiling ppv-lite86 v0.2.21
+   Compiling cgp-macro-core v0.8.0-alpha
+   Compiling synstructure v0.13.2
+   Compiling rand_chacha v0.9.0
+   Compiling rand_chacha v0.3.1
+   Compiling rand v0.9.5
+   Compiling rand v0.8.8
+   Compiling zerofrom v0.1.8
+   Compiling yoke v0.8.3
+   Compiling zerovec v0.11.8
+   Compiling zerotrie v0.2.5
+   Compiling cgp-async-macro v0.8.0-alpha
+   Compiling thiserror-impl v1.0.69
+   Compiling asn1-rs-derive v0.5.1
+   Compiling asn1-rs-impl v0.2.0
+   Compiling bolero-generator-derive v0.13.4
+   Compiling agones-macros v0.1.0 (/home/astral/Projects/agones/crates/agones-macros)
+   Compiling tinystr v0.8.4
+   Compiling potential_utf v0.1.6
+   Compiling icu_collections v2.3.0
+   Compiling icu_locale_core v2.3.0
+   Compiling bolero-generator v0.13.5
+   Compiling genco v0.17.10
+   Compiling cgp-macro-lib v0.8.0-alpha
+   Compiling cgp-extra-macro-lib v0.8.0-alpha
+   Compiling asn1-rs v0.6.2
+   Compiling icu_provider v2.3.1
+   Compiling cgp-macro v0.8.0-alpha
+   Compiling cgp-extra-macro v0.8.0-alpha
+   Compiling icu_properties v2.3.0
+   Compiling icu_normalizer v2.3.0
+   Compiling agones-core v0.1.0 (/home/astral/Projects/agones/crates/agones-core)
+   Compiling der-parser v9.0.0
+   Compiling cgp-base v0.8.0-alpha
+   Compiling cgp-type v0.8.0-alpha
+   Compiling cgp-field v0.8.0-alpha
+   Compiling cgp-base-extra v0.8.0-alpha
+   Compiling bolero-engine v0.13.4
+   Compiling idna_adapter v1.2.2
+   Compiling cgp-error v0.8.0-alpha
+   Compiling cgp-field-extra v0.8.0-alpha
+   Compiling x509-parser v0.16.0
+   Compiling cgp-core v0.8.0-alpha
+   Compiling cgp-handler v0.8.0-alpha
+   Compiling cgp-runtime v0.8.0-alpha
+   Compiling cgp-error-extra v0.8.0-alpha
+   Compiling cgp-run v0.8.0-alpha
+   Compiling idna v1.1.0
+   Compiling bolero v0.13.4
+   Compiling url v2.5.8
+   Compiling cgp-monad v0.8.0-alpha
+   Compiling cgp-dispatch v0.8.0-alpha
+   Compiling cgp-extra v0.8.0-alpha
+   Compiling cgp v0.8.0-alpha
+warning: ambiguous glob re-exports
+  --> crates/agones-core/src/lib.rs:43:9
+   |
+43 | pub use allocation::*;
+   |         ^^^^^^^^^^^^^ the name `NodeAddress` in the type namespace is first re-exported here
+44 | pub use autoscaling::*;
+45 | pub use gameserver::*;
+   |         ------------- but the name `NodeAddress` in the type namespace is also re-exported here
+   |
+   = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: function `fleet_replica_bounds_are_bounded` is never used
+    --> crates/agones-core/src/fleet.rs:1011:4
+     |
+1011 | fn fleet_replica_bounds_are_bounded(input: (i32, i32)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `label` is never used
+    --> crates/agones-core/src/autoscaling.rs:1340:8
+     |
+1339 | impl CapacityPolicyKind {
+     | ----------------------- method in this implementation
+1340 |     fn label(self) -> &'static str {
+     |        ^^^^^
+
+warning: function `capacity_scale_up_never_decreases_replicas` is never used
+    --> crates/agones-core/src/autoscaling.rs:1839:4
+     |
+1839 | fn capacity_scale_up_never_decreases_replicas(
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `buffer_policy_integer_decision_stays_bounded` is never used
+    --> crates/agones-core/src/autoscaling.rs:1875:4
+     |
+1875 | fn buffer_policy_integer_decision_stays_bounded(
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `buffer_integer_valid_region_is_accepted` is never used
+    --> crates/agones-core/src/autoscaling.rs:1904:4
+     |
+1904 | fn buffer_integer_valid_region_is_accepted(input: (i32, i32, i32)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `capacity_integer_valid_region_is_accepted` is never used
+    --> crates/agones-core/src/autoscaling.rs:1924:4
+     |
+1924 | fn capacity_integer_valid_region_is_accepted(input: (i64, i64, i32, bool)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `fixed_interval_positive_seconds_are_accepted` is never used
+    --> crates/agones-core/src/autoscaling.rs:1957:4
+     |
+1957 | fn fixed_interval_positive_seconds_are_accepted(seconds: i32) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `health_defaulting_makes_enabled_thresholds_positive` is never used
+   --> crates/agones-core/src/gameserver.rs:284:4
+    |
+284 | fn health_defaulting_makes_enabled_thresholds_positive(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `safe_add_nonnegative_inputs_are_saturating` is never used
+   --> crates/agones-core/src/gameserver.rs:404:4
+    |
+404 | fn safe_add_nonnegative_inputs_are_saturating(input: (i64, i64)) -> bool {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `counter_updates_preserve_bounds` is never used
+    --> crates/agones-core/src/gameserver.rs:1436:4
+     |
+1436 | fn counter_updates_preserve_bounds(input: (i64, i64, i64, bool)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `gameserverset_creation_batch_respects_caps` is never used
+   --> crates/agones-core/src/gameserverset.rs:464:4
+    |
+464 | fn gameserverset_creation_batch_respects_caps(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `average_of_nonnegative_byte_weights_stays_within_input_range` is never used
+   --> crates/agones-core/src/multicluster.rs:207:4
+    |
+207 | fn average_of_nonnegative_byte_weights_stays_within_input_range(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `label` is never used
+    --> crates/agones-core/src/autoscaling.rs:1340:8
+     |
+1339 | impl CapacityPolicyKind {
+     | ----------------------- method in this implementation
+1340 |     fn label(self) -> &'static str {
+     |        ^^^^^
+     |
+     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `agones-core` (lib) generated 13 warnings
+warning: variable does not need to be mutable
+  --> crates/agones-core/tests/generated/gameserver_feature_validation_cases.rs:58:9
+   |
+58 |     let mut value = source_gsv_base_fixture_000();
+   |         ----^^^^^
+   |         |
+   |         help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_feature_validation_cases.rs:120:9
+    |
+120 |     let mut value = source_gsv_base_fixture_001();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+  --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:47:9
+   |
+47 |     let mut value = source_gs_validate_base_000();
+   |         ----^^^^^
+   |         |
+   |         help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:119:9
+    |
+119 |     let mut value = source_gs_validate_base_001();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:174:9
+    |
+174 |     let mut value = source_gs_validate_base_002();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:222:9
+    |
+222 |     let mut value = source_gs_validate_base_003();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:270:9
+    |
+270 |     let mut value = source_gs_validate_base_004();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:322:9
+    |
+322 |     let mut value = source_gs_validate_base_005();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:373:9
+    |
+373 |     let mut value = source_gs_validate_base_006();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:424:9
+    |
+424 |     let mut value = source_gs_validate_base_007();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:475:9
+    |
+475 |     let mut value = source_gs_validate_base_008();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:526:9
+    |
+526 |     let mut value = source_gs_validate_base_009();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:602:9
+    |
+602 |     let mut value = source_gs_validate_base_010();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:662:9
+    |
+662 |     let mut value = source_gs_validate_base_011();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:718:9
+    |
+718 |     let mut value = source_gs_validate_base_012();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:801:9
+    |
+801 |     let mut value = source_gs_validate_base_013();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:884:9
+    |
+884 |     let mut value = source_gs_validate_base_014();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: `agones-core` (test "source_gameserver_feature_validation") generated 2 warnings (run `cargo fix --test "source_gameserver_feature_validation" -p agones-core` to apply 2 suggestions)
+warning: variable does not need to be mutable
+   --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:967:9
+    |
+967 |     let mut value = source_gs_validate_base_015();
+    |         ----^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:1050:9
+     |
+1050 |     let mut value = source_gs_validate_base_016();
+     |         ----^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:1133:9
+     |
+1133 |     let mut value = source_gs_validate_base_017();
+     |         ----^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:1216:9
+     |
+1216 |     let mut value = source_gs_validate_base_018();
+     |         ----^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:1304:9
+     |
+1304 |     let mut value = source_gs_validate_base_019();
+     |         ----^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:1392:9
+     |
+1392 |     let mut value = source_gs_validate_base_020();
+     |         ----^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:1480:9
+     |
+1480 |     let mut value = source_gs_validate_base_021();
+     |         ----^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:1568:9
+     |
+1568 |     let mut value = source_gs_validate_base_022();
+     |         ----^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:1656:9
+     |
+1656 |     let mut value = source_gs_validate_base_023();
+     |         ----^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/agones-core/tests/generated/gameserver_validation_cases.rs:1744:9
+     |
+1744 |     let mut value = source_gs_validate_base_024();
+     |         ----^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: `agones-core` (test "source_gameserver_validation") generated 25 warnings (run `cargo fix --test "source_gameserver_validation" -p agones-core` to apply 25 suggestions)
+warning: `agones-core` (lib test) generated 2 warnings (1 duplicate)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 21.07s
+  Executable unittests src/lib.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/agones_core-42a867a66bb00767)
+  Executable tests/build_version.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/build_version-d418e36d08a42149)
+  Executable tests/feature_bool_domain.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/feature_bool_domain-b9a1871b99793c2f)
+  Executable tests/feature_error_ascii_domain.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/feature_error_ascii_domain-8bb092c73d8a011f)
+  Executable tests/feature_error_rendering.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/feature_error_rendering-1df53a89899ab9be)
+  Executable tests/feature_input_domain.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/feature_input_domain-123a659046896e07)
+  Executable tests/feature_inputs.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/feature_inputs-31a16fc80ea38baf)
+  Executable tests/feature_source_query_domain.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/feature_source_query_domain-7ac09608ab15f17a)
+  Executable tests/gameserver_defaulting.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/gameserver_defaulting-45514365697e2769)
+  Executable tests/gameserver_feature_validation.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/gameserver_feature_validation-468380e869854cc3)
+  Executable tests/gameserver_feature_validation_domain.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/gameserver_feature_validation_domain-a82cb47759e63b07)
+  Executable tests/gameserver_type_meta.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/gameserver_type_meta-db5b3d4246091ab5)
+  Executable tests/go_status_slices.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/go_status_slices-1a19127e7e7041da)
+  Executable tests/health_defaulting_domain.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/health_defaulting_domain-b2b1acf27f5e557a)
+  Executable tests/object_metadata_validation.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/object_metadata_validation-0fa38aa9a6e9b8d4)
+  Executable tests/resource_derive_paths.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/resource_derive_paths-961a85f78d8912c2)
+  Executable tests/resource_quantity.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/resource_quantity-fe260e849528d5f4)
+  Executable tests/sdk_version_domain.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/sdk_version_domain-d6fb946df9c5c30c)
+  Executable tests/source_gameserver_defaulting.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/source_gameserver_defaulting-38aa14ccdf4fb618)
+  Executable tests/source_gameserver_feature_validation.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/source_gameserver_feature_validation-4b0f4093c60b26d2)
+  Executable tests/source_gameserver_validation.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/source_gameserver_validation-3eee5fba1ec431d5)
+  Executable tests/source_object_metadata_validation.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/source_object_metadata_validation-3b806262b27a38a8)
+  Executable tests/source_sdk_version.rs (/home/astral/Projects/agones/target/x86_64-unknown-linux-gnu/debug/deps/source_sdk_version-12f2dbd1e1381c43)
+{"package":"agones-core","test":"autoscaling::buffer_policy_integer_decision_stays_bounded_bolero"}
+
+{"package":"agones-core","test":"autoscaling::fixed_interval_positive_seconds_are_accepted_bolero"}
+
+{"package":"agones-core","test":"autoscaling::buffer_integer_valid_region_is_accepted_bolero"}
+
+{"package":"agones-core","test":"autoscaling::capacity_integer_valid_region_is_accepted_bolero"}
+
+{"package":"agones-core","test":"autoscaling::capacity_scale_up_never_decreases_replicas_bolero"}
+
+{"package":"agones-core","test":"fleet::fleet_replica_bounds_are_bounded_bolero"}
+
+{"package":"agones-core","test":"gameserver::counter_updates_preserve_bounds_bolero"}
+
+{"package":"agones-core","test":"gameserver::health_defaulting_makes_enabled_thresholds_positive_bolero"}
+
+{"package":"agones-core","test":"gameserver::safe_add_nonnegative_inputs_are_saturating_bolero"}
+
+{"package":"agones-core","test":"gameserverset::gameserverset_creation_batch_respects_caps_bolero"}
+
+{"package":"agones-core","test":"multicluster::average_of_nonnegative_byte_weights_stays_within_input_range_bolero"}
+
+{"package":"agones-core","test":"feature_bool_common_domain"}
+
+{"package":"agones-core","test":"feature_error_ascii_common_domain"}
+
+{"package":"agones-core","test":"feature_input_common_domain"}
+
+{"package":"agones-core","test":"source_query_case_000"}
+
+{"package":"agones-core","test":"source_query_case_001"}
+
+{"package":"agones-core","test":"source_query_case_002"}
+
+{"package":"agones-core","test":"source_query_case_003"}
+
+{"package":"agones-core","test":"source_query_case_selector_sampling"}
+
+{"package":"agones-core","test":"source_query_case_004"}
+
+{"package":"agones-core","test":"gameserver_feature_validation_common_domain"}
+
+{"package":"agones-core","test":"health_defaulting_common_domain"}
+
+{"package":"agones-core","test":"sdk_version_common_domain"}
+
+{"package":"agones-core","test":"generated::source_gs_case_001"}
+
+{"package":"agones-core","test":"generated::source_gs_case_000"}
+
+{"package":"agones-core","test":"generated::source_gs_case_002"}
+
+{"package":"agones-core","test":"generated::source_gs_case_003"}
+
+{"package":"agones-core","test":"generated::source_gs_case_005"}
+
+{"package":"agones-core","test":"generated::source_gs_case_004"}
+
+{"package":"agones-core","test":"generated::source_gs_case_006"}
+
+{"package":"agones-core","test":"generated::source_gs_case_007"}
+
+{"package":"agones-core","test":"generated::source_gs_case_008"}
+
+{"package":"agones-core","test":"generated::source_gs_case_009"}
+
+{"package":"agones-core","test":"generated::source_gs_case_010"}
+
+{"package":"agones-core","test":"generated::source_gs_case_011"}
+
+{"package":"agones-core","test":"generated::source_gs_case_012"}
+
+{"package":"agones-core","test":"generated::source_gs_case_013"}
+
+{"package":"agones-core","test":"generated::source_gs_case_014"}
+
+{"package":"agones-core","test":"generated::source_gs_case_015"}
+
+{"package":"agones-core","test":"generated::source_gs_case_016"}
+
+{"package":"agones-core","test":"generated::source_gsv_case_000"}
+
+{"package":"agones-core","test":"generated::source_gsv_case_001"}
+
+{"package":"agones-core","test":"generated::source_gsv_case_002"}
+
+{"package":"agones-core","test":"generated::source_gsv_case_003"}
+
+{"package":"agones-core","test":"generated::source_gsv_case_004"}
+
+{"package":"agones-core","test":"source_gs_validate_case_000"}
+
+{"package":"agones-core","test":"source_gs_validate_case_001"}
+
+{"package":"agones-core","test":"source_gs_validate_case_002"}
+
+{"package":"agones-core","test":"source_gs_validate_case_003"}
+
+{"package":"agones-core","test":"source_gs_validate_case_004"}
+
+{"package":"agones-core","test":"source_gs_validate_case_006"}
+
+{"package":"agones-core","test":"source_gs_validate_case_005"}
+
+{"package":"agones-core","test":"source_gs_validate_case_007"}
+
+{"package":"agones-core","test":"source_gs_validate_case_008"}
+
+{"package":"agones-core","test":"source_gs_validate_case_010"}
+
+{"package":"agones-core","test":"source_gs_validate_case_009"}
+
+{"package":"agones-core","test":"source_gs_validate_case_011"}
+
+{"package":"agones-core","test":"source_gs_validate_case_012"}
+
+{"package":"agones-core","test":"source_gs_validate_case_013"}
+
+{"package":"agones-core","test":"source_gs_validate_case_014"}
+
+{"package":"agones-core","test":"source_gs_validate_case_015"}
+
+{"package":"agones-core","test":"source_gs_validate_case_016"}
+
+{"package":"agones-core","test":"source_gs_validate_case_017"}
+
+{"package":"agones-core","test":"source_gs_validate_case_018"}
+
+{"package":"agones-core","test":"source_gs_validate_case_020"}
+
+{"package":"agones-core","test":"source_gs_validate_case_019"}
+
+{"package":"agones-core","test":"source_gs_validate_case_021"}
+
+{"package":"agones-core","test":"source_gs_validate_case_022"}
+
+{"package":"agones-core","test":"source_gs_validate_case_023"}
+
+{"package":"agones-core","test":"source_gs_validate_case_024"}
+
+{"package":"agones-core","test":"source_metadata_case_000"}
+
+{"package":"agones-core","test":"source_metadata_case_001"}
+
+{"package":"agones-core","test":"source_metadata_case_004"}
+
+{"package":"agones-core","test":"source_metadata_case_003"}
+
+{"package":"agones-core","test":"source_metadata_case_002"}
+
+{"package":"agones-core","test":"source_metadata_case_005"}
+
+{"package":"agones-core","test":"generated::source_sdk_fleet_case"}
+

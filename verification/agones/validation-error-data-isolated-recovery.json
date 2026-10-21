@@ -1,0 +1,56 @@
+{
+  "canonical_adoption": "PENDING; all referenced gates/run/evidence paths belong to this isolated Git snapshot.",
+  "canonical_production_reuse": {
+    "canonical_adoption": "PENDING",
+    "formal_credit": 0,
+    "prior_isolated_commit": "d492262816ce869777449731e7c89318599f3230",
+    "scope": "Exact same production accessor/map controls and empty/singleton/full-multiset law, through the shared six-field helper for both source tables. All30source harness bodies/fixtures/actions/assertions/covers/domains/bounds are unchanged. Quantity/TypeMeta/error-constructor semantics stay intact.",
+    "source_commit": "2e1d39f6680d055e98d702238e77e32b9562b376"
+  },
+  "complete_native_evidence_in_isolated_commit": "verification/agones/complete-validation-native-evidence.json",
+  "complete_native_evidence_sha256": "1a07966b59cfe556b6db2518e25b9815c4fd671e96e78ea0fe5d54028614afe0",
+  "expected_multiset_reuse": {
+    "algorithm_revision": 2,
+    "canonical_source_commit": "2e1d39f6680d055e98d702238e77e32b9562b376",
+    "current_formal_credit_added": 0,
+    "current_production_gates_revalidated": 9,
+    "exact_fields": 6,
+    "families": [
+      "TestGameServerValidateFeatures",
+      "TestGameServerValidate"
+    ],
+    "independent_histogram_pairs": 1600,
+    "law_manifest": "verification/agones/expected-multiset-relation.json",
+    "rule": "AGONES-ELEMENTSMATCH-EXPECTED-COUNTS-1",
+    "scope": "Same full-record finite multiset law via the existing shared emitter. Preserve quantity, TypeMeta, constructor-image mapping, all actions/assertions/covers/domains/bounds and ordinary actual adapter replay. No isolated backend campaign or canonical adoption yet.",
+    "shared_emitter": "validation_error_relation",
+    "unchanged_feature_source_harnesses": 5,
+    "unchanged_general_source_harnesses": 25
+  },
+  "full_workspace_integration": {
+    "failed": 0,
+    "generation_checks": "verification/agones/runs/combined-exact-lookup-singleton-generation-1.json",
+    "generation_modes": 6,
+    "ignored": 3,
+    "passed": 675,
+    "run": "verification/agones/runs/combined-exact-lookup-singleton-current-native-1.json"
+  },
+  "implementation_commit": "1886ab3af0bdde934e37c07ddfbf7e62b1c8076d",
+  "implementation_gate": "verification/agones/gates/723e3ea36ffa8b5ddbf362f50cc00f0c7c6f6e0662049ef5c6df263dd015deb4.json",
+  "implementation_gate_sha256": "723e3ea36ffa8b5ddbf362f50cc00f0c7c6f6e0662049ef5c6df263dd015deb4",
+  "implementation_tree": "1be23178865da7e3611bb40d5b544353993be038",
+  "native_tests": 516,
+  "new_formal_credit": 0,
+  "next_action": "Advance canonical quantity/TypeMeta/six-field complete-validation adoption after current CI395199 results are retained. Reuse current canonical protected tools/workflow/ledger; keep all25general formal obligations/50covers and remaining source/API/lifecycle/conformance/_2requirements explicit. No unchanged proof retry.",
+  "prior_local_commit": "d492262816ce869777449731e7c89318599f3230",
+  "recover": "git show 1886ab3af0bdde934e37c07ddfbf7e62b1c8076d:verification/agones/complete-validation-native-evidence.json",
+  "refreshed_combined_gates": "verification/agones/combined-exact-lookup-singleton-gates.json",
+  "refreshed_dependency_gates": {
+    "verification/agones/gates/c6cfc77ebba865ec53008598a448f5a5a796fc086bc0d873f899412ae6ca6cbf.json": "verification/agones/gates/4c862ed77211191654fda97b2d72628c0452eb51fd6f63e47ba7e148d53add76.json",
+    "verification/agones/gates/d6e40365a5fabbec22b5d84d64c433528d66bd63d91a30450e32c445647b3e92.json": "verification/agones/gates/772028df370da553b1ef6153dc822f93a5f88696f945f27ec50cbbc45d526681.json"
+  },
+  "remote_publication": "NOT_STARTED",
+  "schema_version": 1,
+  "status": "COMPLETE25CASE_NATIVE675_WITH_CANONICAL_SOURCE_CONCAT_REUSE_ADOPTION_PENDING",
+  "worktree": "/home/astral/.codex/worktrees/agones-resource-quantity/agones"
+}

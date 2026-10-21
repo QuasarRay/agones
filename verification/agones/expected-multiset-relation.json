@@ -1,0 +1,48 @@
+{
+  "affected": [
+    "crates/agones-rusternetes/examples/codegen/gameserver_features.rs",
+    "crates/agones-core/tests/generated/gameserver_feature_validation_cases.rs",
+    "verification/agones/gameserver-feature-validation-codegen.json",
+    "crates/agones-rusternetes/examples/codegen/gameserver_validation.rs",
+    "crates/agones-core/tests/generated/gameserver_validation_cases.rs",
+    "verification/agones/gameserver-validation-codegen.json"
+  ],
+  "algorithm_revision": 2,
+  "canonical_reuse": {
+    "rule": "AGONES-ELEMENTSMATCH-EXPECTED-COUNTS-1",
+    "scope": "The same exact finite-multiset relation and empty/singleton specialization through the existing shared six-field Genco helper for both validation families. Full larger-list multiplicity fallback retained.",
+    "source_head": "2e1d39f6680d055e98d702238e77e32b9562b376"
+  },
+  "classification": "EXACT_RELATION_PRESERVING_ALGORITHM_CHANGE",
+  "current_formal_credit_added": 0,
+  "deductive_argument": "Equality of finite multisets implies both count relations. Conversely, the expected-driven relation matches the count of every expected equivalence class. Their counts sum to len(E). Equal total lengths give len(A)=len(E), leaving no actual element outside those matched classes. Thus every class has equal multiplicity. Empty lists and duplicates are included. No runtime assumption is introduced.",
+  "exact_cardinality_specialization": {
+    "empty": "For E=[] finite multiset equality holds exactly when A=[]. Return actual.is_empty().",
+    "larger": "For every expected length>=2 retain equal total lengths and every exact expected equivalence-class count. No cardinality limit or unsupported branch is introduced.",
+    "side_conditions": "The existing pure derived Eq and valid finite slice conditions remain unchanged. No field, duplicate, assertion, cover, input or unwind reduction.",
+    "singleton": "For E=[e], finite multiset equality holds exactly when A=[a] and a==e. Slice patterns enforce the complete cardinalities, then use the same full ValidationError Eq once."
+  },
+  "law_conditions": [
+    "Finite valid slices of ValidationError records.",
+    "ValidationError derives Eq over its kind/path/optional bad-value/detail fields; the combined six-field variant additionally compares Origin and the declarative flag.",
+    "Eq is an equivalence relation; comparisons have no user-visible side effects. Iterator counts fit usize for valid finite slices."
+  ],
+  "new_relation": "len(A)==len(E) and for every e in E, count_A(e)==count_E(e)",
+  "old_relation": "len(A)==len(E) and for every a in A, count_A(a)==count_E(a)",
+  "ordinary_controls": "Independent input-ID histograms for all 1600 pairs of lists of lengths 0 through 3 over three distinct full six-field records, alongside existing permutation, duplicate, length and all-six-field mutations. Bounded native regression evidence, not a general Kani theorem.",
+  "preserved": "All five feature and all twenty-five general source harness bodies, fixtures, actions, assertions, covers, domains and unwind bounds remain unchanged. Shared matching compares all six fields. Production bodies and constructor-image mapping remain unchanged.",
+  "production_gate": "verification/agones/gates/6d10b275433dcf0a49011a53dc251b062c43c50049cc3a8aebf0c161cc498b26.json",
+  "required_next": "Pass native/fault/equivalence controls and deterministic generation; then reverify all affected exact-source cases with the actual production path and unchanged bounds. Keep unrelated and broader obligations required.",
+  "rule_id": "AGONES-ELEMENTSMATCH-EXPECTED-COUNTS-1",
+  "schema_version": 1,
+  "source": {
+    "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "path": "vendor/github.com/stretchr/testify/assert/assertions.go",
+    "semantics": "Order-independent equality with every duplicate instance counted separately.",
+    "sha256": "10087e4b00ecc9504a1b1b4758dcf909e3ab36a6e9585515335ac58c6ea56642",
+    "symbols": [
+      "ElementsMatch",
+      "diffLists"
+    ]
+  }
+}

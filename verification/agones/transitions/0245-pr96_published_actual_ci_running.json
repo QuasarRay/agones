@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "PR96_PUBLISHED_ACTUAL_CI_RUNNING",
+  "gate_snapshot": "verification/agones/gates/317304e45484daa2961fdf0a6983d3e056af281f03d5597b542bc9c51a435e49.json",
+  "predecessor_revision": 244,
+  "predecessor_sha256": "adbfb83d598e5457900929448eb4e7007faa7f23edaf3821f36bbf07afcc50ba",
+  "reason": "PROGRESS: published draftPR96/source1edb803, verified exact tree893d506 and CI-tested merge876ff250 with base1e64. CI39464345048 is actually running; state passed and Rust/model jobs live. Formal credit remains zero until full individual results/covers and retained artifacts. Preserved user guidance and local3b1checkpoint; inline Git tree content avoided48remaining blob uploads after connector dispatch/timeouts. Added metadata-only exact resource-quantity gap; no implementation or semantic extraction yet.",
+  "result_revision": 245,
+  "schema_version": 1,
+  "state_sha256": "32f70774702ddfd9aaf75bc08d9fe1311118cc9e835cd3b052937285c6021073",
+  "timestamp": "2026-10-20T17:30:09.280473+00:00"
+}

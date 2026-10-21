@@ -1,0 +1,13 @@
+go: inconsistent vendoring in /home/astral/.codex/worktrees/agones-metadata-validation/agones/build/scripts/agones-rs/extract:
+	golang.org/x/tools@v0.48.0: is explicitly required in go.mod, but not marked as explicit in vendor/modules.txt
+	golang.org/x/mod@v0.38.0: is explicitly required in go.mod, but not marked as explicit in vendor/modules.txt
+	golang.org/x/sync@v0.22.0: is explicitly required in go.mod, but not marked as explicit in vendor/modules.txt
+
+	To ignore the vendor directory, use -mod=readonly or -mod=mod.
+	To sync the vendor directory, run:
+		go mod vendor
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import subprocess,json,sys; from pathlib import Path; root=Path.cwd(); go="/home/astral/.local/share/agones-rs/tools/go1.27.1-actions/bin/go"; r=subprocess.run([go,"run",".","--object-metadata",str(root),"verification/agones/gates/16598e097e857c146d1492f3bff0cb46373c25b93287caed57d8f86ab2b169dc.json"],cwd=root/"build/scripts/agones-rs/extract",capture_output=True,text=True); print(r.stderr,end=""); sys.stdout.flush(); assert r.returncode==0, "metadata source capture failed"; d=json.loads(r.stdout); assert d["case_count"]==6 and d["source_assertion_occurrences"]==21; p=root/"verification/agones/object-metadata.ir.json"; t=p.with_suffix(".tmp"); t.write_text(r.stdout); t.replace(p); print(json.dumps({k:d[k] for k in ["case_count","validation_observations","source_assertion_occurrences","runtime_version"]})); print("source_files",len(d["source_files"]))
+                                                                                                                                                                                                                                                                                                                                                                                                                                                 ^^^^^^^^^^^^^^^
+AssertionError: metadata source capture failed

@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "workflow_run": 39556147739,
+  "tested_merge": "5832f26d6e0577a84acf108c8514817fd2f72afc",
+  "source_head": "5832f26d6e0577a84acf108c8514817fd2f72afc",
+  "source_tree": "aea29a660e2bc2a0bdf38d827930d29eee0250da",
+  "review_head": "e15139f9cce0c60c88131f7122b4c0fc5188f420",
+  "source_root": "/home/astral/.codex/worktrees/agones-resource-quantity/agones",
+  "scope": "Immutable tested merge checkout with tree identical to the reviewed and published native676 snapshot; old campaign remains separately pinned."
+}

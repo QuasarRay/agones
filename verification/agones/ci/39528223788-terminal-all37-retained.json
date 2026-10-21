@@ -1,0 +1,1221 @@
+{
+  "artifact_bindings": {
+    "verification/agones/ci/39528223788-pinned-source.json": "e02dbe7e66ec1a329852d4a6a719f6d653db15594111374ca196d5114a7c323b",
+    "verification/agones/proof-summaries/feature-bool-bolero-kani-ci-39528223788-1.json": "b631781ba0be9bdd08563347cd902529140d7f77695cb66f6e187448b19f8697",
+    "verification/agones/proof-summaries/feature-input-bolero-kani-ci-39528223788-1.json": "5ef26086ed4ba040692b3c92f90f763345d995bdbc7d56d93d33dfa8de0799a3",
+    "verification/agones/proof-summaries/feature-query-error-bolero-kani-ci-39528223788-1.json": "bb14e28dfa0159f911aa563fa059d5a73d3c3dbc76f2cf5cc9dfe0415aa18f0a",
+    "verification/agones/proof-summaries/gameserver-source-005-bolero-kani-ci-39528223788-1.json": "027400a44d63d9a211bd2c0b52c0302b8b3d2d32fe3311be70f5abd278bfd805",
+    "verification/agones/proof-summaries/gameserver-source-014-bolero-kani-ci-39528223788-1.json": "e89f655b03a571dee89663a503bc5bb99a37971bb973f91c27d8e0bbfd8d898e",
+    "verification/agones/proof-summaries/health-defaulting-bolero-kani-ci-39528223788-1.json": "405f7bcabca6da4b250f52902f435bcc0b4485b42d8a1cdb16201bca74ccd14c",
+    "verification/agones/runs/complete-4d433-pinned-terminal-audit-1.json": "4e7eb24a85e1eb95688cffce191d2fb2644e1fda30486206300884077bf8fc01",
+    "verification/agones/runs/complete-4d433-pinned-terminal-audit-1.log": "37cf63903219c381a33c34b2c82f46e2564fd2c6b8413a8966c7dcfa2cd76ced",
+    "verification/agones/runs/feature-bool-bolero-kani-ci-39528223788-1.json": "7cb729c853991a8d953394573d9fa5c69f19603d8d451fa5d13ac9af969aaa8c",
+    "verification/agones/runs/feature-bool-bolero-kani-ci-39528223788-1.log": "47cef0518f5ade02d41e554385baed41257ace2524b99669aa80ee1de477c662",
+    "verification/agones/runs/feature-input-bolero-kani-ci-39528223788-1.json": "4e7f6ea62e9a0937b73ee30095567198078b12a2baecf3f17c625fcfc1a2d04d",
+    "verification/agones/runs/feature-input-bolero-kani-ci-39528223788-1.log": "6473fc64b99cb01f0ba6d9966eb0fd7fcef36699c3c5712a165cc99a4a0a1bb2",
+    "verification/agones/runs/feature-query-error-bolero-kani-ci-39528223788-1.json": "abeb219d406fdad66d940e065a3d8c2b199545483c87db51d29d966a477dd74f",
+    "verification/agones/runs/feature-query-error-bolero-kani-ci-39528223788-1.log": "af7ed993c0545248ab107c2399de9cf8fba2456280c692bc036a11314b06abac",
+    "verification/agones/runs/gameserver-features-bolero-kani-ci-39528223788-1.json": "12cc4a40c7ccad4e4a9974ae73fa9468b0ce8d68feef942675cad60410e6fe0f",
+    "verification/agones/runs/gameserver-features-bolero-kani-ci-39528223788-1.log": "b3a598b928d8b2bcb76e83c42ab3a6c15768c6438adbe11ce4084ece0dd3f4fb",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-000.json": "ee6488b7e61a3e75148a1e8dc89da5b1fab53292c35db96c4bf9419554a1ce0f",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-000.log": "4e4d06acacbda746d88527e31ae05a7bc06e0fff55ec6765884026cef72d6da6",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-001.json": "64ff926463756de3e42257c247c75aff38d209a7346cfb6fb8e2acc171db0c8c",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-001.log": "bec9d5e2960fb870c3a9a13df8b7efd54fac0e038a0f0fc9f2faa5c690b0fc8a",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-002.json": "a219bae5d5a8f81ce9344d1dedb752b60078135a11a238bb305361ad3bf804b2",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-002.log": "e80e7094c4c6cf7a2ad8a42bfb13372d4f6e67537faeb0ee63db525acc070f97",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-003.json": "6b4e567f87c9c33e96d00efcfcfa4491a95630177e2ad96558047e3cb0bf96e7",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-003.log": "231aa96e3811776002fdd6c2f4f7d883fe56b491b2222682dbd378c8b146c619",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-004.json": "e8490af695375db722cf78e6a1153897a1e20e85bf130cf1f2bb4b199a5089d3",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-004.log": "6e491aa9c29bc0d3672b0c2d99710295454dd398bfd2c5a6656da5220924766e",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-005.json": "4a65b94949eb3d0db250ff3546d0546f55d2a23203ff8dd4165e0c48cd8e825c",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-005.log": "ccb12f9da5d89196a1fed0fbaec4a0551137cd44e915327bf35f5f95d5c2d663",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-006.json": "e0d78570870f9fba023a046186a5956fdc6b541b4514d46572b659f3bb2dc7a2",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-006.log": "9d70c0306491c223c8c0127edd4a7499705ebfaa514ef8eeecbbf8a71a51e78e",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-007.json": "955a12631487d0222ee87e602e5f07f0b37568feb532136601e27a61edbaba67",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-007.log": "b3bb33f8ff174ca0950929aac8da08b99fbad2bcb038c02ee6f4cddaec773741",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-008.json": "d55f8dd71ce31ff6db7a0fe8e9c8d2fc607e8566c75bce903ab4914505195899",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-008.log": "a3be5d8c36341de57af12cf8737a855b0e0f71899f2ed79bc4f5088414d0f577",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-009.json": "934f272430a54a1ba243cff09835c640cf9ec489cb03c816cce03c9eab3afadc",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-009.log": "aa2804e46227c67eb1bd5320abf683c35a3bc149f57fb7cadffcb6d6459b9839",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-010.json": "ebf888856928e96e4092c56481a0a6a586fe9ec231d3cf59cbe76fd1f24b1fcd",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-010.log": "78740539c45d4f964290e3250fade04c91c32942eb16addc31bf80c36df01cb4",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-011.json": "16f84e746ba29fd537c1dfff4075fbb091e5b084a7415a893c97e3c26acd929d",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-011.log": "dda603d7cc527117717966ccc5df1fca9569c899b6be2f602bd6099d338fe93a",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-012.json": "c88a036bb06d49f51714659af8b4d8d9c594bb17180d09ae5fc8337556c92f8a",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-012.log": "c6ed2468e5fc88584a46055485530874e0536e1fb6ac3568d938d73205c1311d",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-013.json": "9235fb4facdb1a7c6e22461745eed3072da79e9ecf93b2033eb136c79d8a746d",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-013.log": "6b56d2acf4b34dd192a54f4595c064e7b404194fd4259376ec97c4c2c028953c",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-014.json": "e00feb9da1e74f6ce6777930cf0ae8acfd61d14cd6d47ff0ca38cdd1b784c8a9",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-014.log": "400b828b9592738cde98895692474ef657140c50a835bb6f533f90335ddae536",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-015.json": "fca163ed43e659da735fc0ce4f311fa3c9dcd9fd75853998d70096adcc404adc",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-015.log": "a64fa9f3055c1cad8c16d31844c5fa35453f39c79d92f121db9db4b854254dc5",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-016.json": "638720ebf7f9d007203e28b5e88616cbc1141805fa90c92700d2fa01e1a84a7e",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-016.log": "300ccd2a3ddd0950979b73dc7558c4d3c9b62699c6768f982c80c6dd2fb3c327",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-017.json": "82ffe6ed60f14111fef9996b8b3fd2a3d183d69f6254698c4187a3834c3d57c7",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-017.log": "40d883655c818ddf4ea68624f28e0906d9bcffad87f1295cc87cdae626066d07",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-018.json": "95b14222f7144b7b98a5105606372b8651df10e74561bbe8207f158128db99a1",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-018.log": "141bc9d3a386ade256366cfa9a2142089ffb314c8337025788c62d8cf35200aa",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-019.json": "f40e989ba6813b9f4da253c1380eb93afb19dbe4e4488777efd75141da7c6368",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-019.log": "df48b32829cfdcaf80c8124cc71175742d51ac9ba95ff451fae5dc2ce9c645d6",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-020.json": "090d18ba15d1e217a46b11488ab809b682b62bf58378464f02d1e142cd3955f0",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-020.log": "d54ea6d37de02fd076416b47bcf9bfc058d5c15f917db33bda7a69532b9deb7f",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-021.json": "b582ba2df38a4b32de1bc03edd0ea7b2a04d4f00b270ae5bcd70a78970268ba6",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-021.log": "1fcbff6e509821877f3f895a7689451414851b346c39a2f6ef90d594322a98f9",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-022.json": "7f6a0ae86f8b8720972a68e18e3f3ac7facc60dc2da008a42ceeeae107615ec5",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-022.log": "673dd4461e5b5f1fc9c14c38d807422041df183763fd44b7a2e465259fc585be",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-023.json": "a452ba518701e7cde919cd29bbc2811ecc912ae54c44a09e9aea20371481818c",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-023.log": "7b22181bae90ebac6e6931eb1d24891f5ba2082f0e135d6426fc2108573d4412",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-024.json": "45b3f21423952740d8bc96fa5d0041421a3d4bc5cb5bc1dd1f2286bf9e990535",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-024.log": "891d559c007aa37d2afde3a8a6012b2877c568a4972c4fe637a3cb39a6563d2f",
+    "verification/agones/runs/gameserver-source-005-bolero-kani-ci-39528223788-1.json": "d6420c4d44c09536c4f53d6ae11a891f61dd4dcc0788c11bd95f5738784e7e6b",
+    "verification/agones/runs/gameserver-source-005-bolero-kani-ci-39528223788-1.log": "69782b3340420c4809895247ba2edd2dddf9ffc04f9f33dbfe8e6a62af425ed4",
+    "verification/agones/runs/gameserver-source-014-bolero-kani-ci-39528223788-1.json": "7455e2d90de9de071ad359f05053e306de8b4112ac46adb57989f2e13f4d8906",
+    "verification/agones/runs/gameserver-source-014-bolero-kani-ci-39528223788-1.log": "923d2636dce37c852d51675509d8ca100b618d2cfded9bfaf242a96133d7d04c",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-000.json": "e99b59f0f30ab711081dfbfbfba845387f54685f85e4c38d4fbb88c0144dfafd",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-000.log": "5d2beb5640b8b9dc6af348833e3569e065dcc273a908e408a24b3437d8578dee",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-001.json": "c09963d761c41c820852a901ff100d4da117da1fbba04cad2c270f19df1c2bc4",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-001.log": "4355c16733b6964aca4ba579232bec1c34e4b0c05ad2ab02d075314d297e2096",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-002.json": "331207b12fce6bf22ca1bf0aaaca55353e7349585218ea46bbad3ee83b3622d6",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-002.log": "296a3a91d5ca6ee24c1ba59e0a43edb07cd67428d987e6a20fb336fa9b0b8c84",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-003.json": "4f36d2088acf765da0a70ac3aaadaed792439ffba11f6b4987011cc7a0a84a1b",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-003.log": "3cff7da8a4ab2b308b9da26d508dd6cb8c75b83f02b7ec5108f9855d14881611",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-004.json": "870d32477b9317069cec2a1ba804c1b9fd7321b250f4751cd4fba942896f0fa1",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-004.log": "1c197f72e1a5c86cef34c1e12fd1acf690a5eda8e1ffd2b440243e26254c08d4",
+    "verification/agones/runs/health-defaulting-bolero-kani-ci-39528223788-1.json": "1c82324e3c29edd93bb2aa28c9549e7e153969040e05541f90b535df921f1f16",
+    "verification/agones/runs/health-defaulting-bolero-kani-ci-39528223788-1.log": "e04e6f39c04d85cb3b6c28d15cab7db935dbe1f91dcf2ad61726c95f91bd4f33",
+    "verification/agones/runs/pinned-4d433-artifact-recovery-controls-1.json": "c44893cbe3d5aecbdb6edb70f1bab32704a61f2e8c5bacf4dec2c28738bc132e",
+    "verification/agones/runs/pinned-4d433-artifact-recovery-controls-1.log": "8c3e58f62407d11f08f89498e1cf54662b0b3ba60a6750376615bb4ae0ef52e8"
+  },
+  "artifacts": [
+    {
+      "archive_sha256": "fefd68b2a5ce74b414b3279974c0445fce2e41e582796f6bd0b9bd41e1f27e5d",
+      "artifact_id": 12314475776,
+      "members": [
+        "verification/agones/runs/gameserver-features-bolero-kani-ci-39528223788-1.json",
+        "verification/agones/runs/gameserver-features-bolero-kani-ci-39528223788-1.log"
+      ],
+      "name": "feature-kani-player-contract-39528223788-1"
+    },
+    {
+      "archive_sha256": "4bd10a82cad30f8c7582baf2c7a30ff8ffc34418c24a20b2f15c059748a18e8f",
+      "artifact_id": 12314161019,
+      "members": [
+        "verification/agones/runs/feature-bool-bolero-kani-ci-39528223788-1.json",
+        "verification/agones/runs/feature-bool-bolero-kani-ci-39528223788-1.log",
+        "verification/agones/proof-summaries/feature-bool-bolero-kani-ci-39528223788-1.json"
+      ],
+      "name": "feature-kani-bool-39528223788-1"
+    },
+    {
+      "archive_sha256": "35ce4c52418c27c7a2f7eefbaad962fe3545a48618caf0be948331dc7e06106d",
+      "artifact_id": 12314156070,
+      "members": [
+        "verification/agones/runs/feature-input-bolero-kani-ci-39528223788-1.json",
+        "verification/agones/runs/feature-input-bolero-kani-ci-39528223788-1.log",
+        "verification/agones/proof-summaries/feature-input-bolero-kani-ci-39528223788-1.json"
+      ],
+      "name": "feature-kani-input-39528223788-1"
+    },
+    {
+      "archive_sha256": "af35949a5ee511bf4c67348c384015178cf905829fb2cfcc9e2bcddb064d150d",
+      "artifact_id": 12314725693,
+      "members": [
+        "verification/agones/runs/feature-query-error-bolero-kani-ci-39528223788-1.json",
+        "verification/agones/runs/feature-query-error-bolero-kani-ci-39528223788-1.log",
+        "verification/agones/proof-summaries/feature-query-error-bolero-kani-ci-39528223788-1.json"
+      ],
+      "name": "feature-kani-query-003-39528223788-1"
+    },
+    {
+      "archive_sha256": "93273e84efbb0865dee66c7674da0d6a1157fa98908456deb62a6d91c9458ae2",
+      "artifact_id": 12314520875,
+      "members": [
+        "verification/agones/runs/health-defaulting-bolero-kani-ci-39528223788-1.json",
+        "verification/agones/runs/health-defaulting-bolero-kani-ci-39528223788-1.log",
+        "verification/agones/proof-summaries/health-defaulting-bolero-kani-ci-39528223788-1.json"
+      ],
+      "name": "feature-kani-health-39528223788-1"
+    },
+    {
+      "archive_sha256": "d40122cd87ea93f69bffe8b7eb2838d2e6af983a4276ba2efa1a8a939cbd1367",
+      "artifact_id": 12315155890,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-021.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-021.log"
+      ],
+      "name": "feature-kani-general-validation-021-39528223788-1"
+    },
+    {
+      "archive_sha256": "abbc9d17672316a110306caee07afcd34db8820e2f830aae159f8de50b824277",
+      "artifact_id": 12314921644,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-018.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-018.log"
+      ],
+      "name": "feature-kani-general-validation-018-39528223788-1"
+    },
+    {
+      "archive_sha256": "21bb561d1e0856dc2aa14ae3f4ce992b3d2d1122a972280009e98063b7ff7c3e",
+      "artifact_id": 12314872215,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-005.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-005.log"
+      ],
+      "name": "feature-kani-general-validation-005-39528223788-1"
+    },
+    {
+      "archive_sha256": "b47f0bcd45c22d9fced11d2da8c7e7134e6b93fad465750ceaba2b8a77496d5c",
+      "artifact_id": 12314781625,
+      "members": [
+        "verification/agones/runs/gameserver-source-014-bolero-kani-ci-39528223788-1.json",
+        "verification/agones/runs/gameserver-source-014-bolero-kani-ci-39528223788-1.log",
+        "verification/agones/proof-summaries/gameserver-source-014-bolero-kani-ci-39528223788-1.json"
+      ],
+      "name": "feature-kani-gameserver-014-39528223788-1"
+    },
+    {
+      "archive_sha256": "4065fa5ddce4dcdc4a0c31fb7b8d84443ec48ebc0312a6f5a74bb99b3ebdb068",
+      "artifact_id": 12314741630,
+      "members": [
+        "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-001.json",
+        "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-001.log"
+      ],
+      "name": "feature-kani-validation-001-39528223788-1"
+    },
+    {
+      "archive_sha256": "1c2b16cfba73e091a901bbcbabb228ff6186d2d3eb213ab5cfbf5f936476ec57",
+      "artifact_id": 12314736703,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-011.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-011.log"
+      ],
+      "name": "feature-kani-general-validation-011-39528223788-1"
+    },
+    {
+      "archive_sha256": "1d3a0b44923ebe05981bc0380e40fbf93dba2de25486eead512d4a7dcdc30a49",
+      "artifact_id": 12314566986,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-012.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-012.log"
+      ],
+      "name": "feature-kani-general-validation-012-39528223788-1"
+    },
+    {
+      "archive_sha256": "a8113f28f8ef5a81c3e59998a4965ed42265e5a9ea5650d00a793efd32064239",
+      "artifact_id": 12314471846,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-016.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-016.log"
+      ],
+      "name": "feature-kani-general-validation-016-39528223788-1"
+    },
+    {
+      "archive_sha256": "c7f236e1e1fcba176dc8322231e871f307dfb05f9e8517308c6ed4721b91f2f6",
+      "artifact_id": 12314437603,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-008.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-008.log"
+      ],
+      "name": "feature-kani-general-validation-008-39528223788-1"
+    },
+    {
+      "archive_sha256": "fcdadc2038f7d789f2b3409b8493fc61f39252fd7dd654179beb1260532c0c53",
+      "artifact_id": 12314392531,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-009.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-009.log"
+      ],
+      "name": "feature-kani-general-validation-009-39528223788-1"
+    },
+    {
+      "archive_sha256": "285a1a0b9e628b6cbf7efbe36b92da0fab3766b4fc8a6d2daf5f2978fb73b97e",
+      "artifact_id": 12314357772,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-003.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-003.log"
+      ],
+      "name": "feature-kani-general-validation-003-39528223788-1"
+    },
+    {
+      "archive_sha256": "d9c496d4e2cdbaad4a0c899152bd780da330667275e0a55a0f1e5d57a9cba7ae",
+      "artifact_id": 12314291588,
+      "members": [
+        "verification/agones/runs/gameserver-source-005-bolero-kani-ci-39528223788-1.json",
+        "verification/agones/runs/gameserver-source-005-bolero-kani-ci-39528223788-1.log",
+        "verification/agones/proof-summaries/gameserver-source-005-bolero-kani-ci-39528223788-1.json"
+      ],
+      "name": "feature-kani-gameserver-005-39528223788-1"
+    },
+    {
+      "archive_sha256": "75bc0547b9c1c1c3dd0ff17b90ffebf01341c7e64ddb9381e5d3d158a2f5b4fe",
+      "artifact_id": 12314267963,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-002.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-002.log"
+      ],
+      "name": "feature-kani-general-validation-002-39528223788-1"
+    },
+    {
+      "archive_sha256": "0604516d861c0b28a2ef782f3c7b2464ee243e6be1a426f98de9b6e802224e5e",
+      "artifact_id": 12314142695,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-001.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-001.log"
+      ],
+      "name": "feature-kani-general-validation-001-39528223788-1"
+    },
+    {
+      "archive_sha256": "75940f531877c7b20f7e6d195894d0d9e950447f25a7a9f292ef9bb078fdecd8",
+      "artifact_id": 12315515438,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-024.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-024.log"
+      ],
+      "name": "feature-kani-general-validation-024-39528223788-1"
+    },
+    {
+      "archive_sha256": "75a0afde0031824379bdd7aec2c54140104f4eff93c4d7bdf9dec0c9cd03f823",
+      "artifact_id": 12315288342,
+      "members": [
+        "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-002.json",
+        "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-002.log"
+      ],
+      "name": "feature-kani-validation-002-39528223788-1"
+    },
+    {
+      "archive_sha256": "c3b55982308941b600752b1f8f9ec3ae06231a55f3a2e2a6c4c5fef89123b3d6",
+      "artifact_id": 12315106721,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-006.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-006.log"
+      ],
+      "name": "feature-kani-general-validation-006-39528223788-1"
+    },
+    {
+      "archive_sha256": "b3819a8238c9a232f119ffa0a7e71a78b044fd03a06ad9d4f559a7cec1ef7f49",
+      "artifact_id": 12314972086,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-019.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-019.log"
+      ],
+      "name": "feature-kani-general-validation-019-39528223788-1"
+    },
+    {
+      "archive_sha256": "9de21e9530a761de213e45d83745b613a0774eca98f364ce1724f0092e78deee",
+      "artifact_id": 12314933350,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-007.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-007.log"
+      ],
+      "name": "feature-kani-general-validation-007-39528223788-1"
+    },
+    {
+      "archive_sha256": "12489a3548e1ddb247834b5533220540bbcfb5ff20b268da37326b9c7b558bf4",
+      "artifact_id": 12314919263,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-000.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-000.log"
+      ],
+      "name": "feature-kani-general-validation-000-39528223788-1"
+    },
+    {
+      "archive_sha256": "7538510b86cf48975e56ca2b6e812c76cbcf2905100467c24636408ba577cfe7",
+      "artifact_id": 12314877086,
+      "members": [
+        "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-003.json",
+        "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-003.log"
+      ],
+      "name": "feature-kani-validation-003-39528223788-1"
+    },
+    {
+      "archive_sha256": "687169cba6d82ac4ff39efb29ae724a4ea51322619f19ea2ead4becb757fe456",
+      "artifact_id": 12314697808,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-022.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-022.log"
+      ],
+      "name": "feature-kani-general-validation-022-39528223788-1"
+    },
+    {
+      "archive_sha256": "61c1f224bf0a03f6f983eeea37b4c6702b1aaa88aaef787f9e782b3ff654d8c2",
+      "artifact_id": 12314669788,
+      "members": [
+        "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-004.json",
+        "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-004.log"
+      ],
+      "name": "feature-kani-validation-004-39528223788-1"
+    },
+    {
+      "archive_sha256": "71b7397364be3c73b843e4de37cf5e97e8179ba74b3a4cf9b971d5f7bc94b75a",
+      "artifact_id": 12314592898,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-004.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-004.log"
+      ],
+      "name": "feature-kani-general-validation-004-39528223788-1"
+    },
+    {
+      "archive_sha256": "bfc3bf5eb077c3133f21a1da3923820ecaa01cfe462c317c8e3afc739c7b42cd",
+      "artifact_id": 12314548657,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-014.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-014.log"
+      ],
+      "name": "feature-kani-general-validation-014-39528223788-1"
+    },
+    {
+      "archive_sha256": "9415f981d8331a410bc028bc7a4efdbfd35f5d92812b40ab17c15a2deb0cfc2e",
+      "artifact_id": 12314478533,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-015.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-015.log"
+      ],
+      "name": "feature-kani-general-validation-015-39528223788-1"
+    },
+    {
+      "archive_sha256": "31623752d18ee6e638ae133fe775f3f22d582fa769057ccaf901b2304fb1548e",
+      "artifact_id": 12314397970,
+      "members": [
+        "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-000.json",
+        "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-000.log"
+      ],
+      "name": "feature-kani-validation-000-39528223788-1"
+    },
+    {
+      "archive_sha256": "4a6af76eeb97e1cb29c19b0a36a9a3c586fca180c99a8448cdc2f10b6545f774",
+      "artifact_id": 12314374629,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-017.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-017.log"
+      ],
+      "name": "feature-kani-general-validation-017-39528223788-1"
+    },
+    {
+      "archive_sha256": "fe76deadb9f490ab874b057f72ed94c64d17cf299b2debfa1b520b52c910ab69",
+      "artifact_id": 12314258123,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-010.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-010.log"
+      ],
+      "name": "feature-kani-general-validation-010-39528223788-1"
+    },
+    {
+      "archive_sha256": "3fdd3c5fc245ccd2352c296fc185d7b2acc4231579cde468821eaab381716882",
+      "artifact_id": 12314253212,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-013.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-013.log"
+      ],
+      "name": "feature-kani-general-validation-013-39528223788-1"
+    },
+    {
+      "archive_sha256": "6e5056e74e310c45cf8de3306f97d1e9148be233021666ee898a13e6a4737628",
+      "artifact_id": 12314189634,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-020.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-020.log"
+      ],
+      "name": "feature-kani-general-validation-020-39528223788-1"
+    },
+    {
+      "archive_sha256": "23cb71becaf9319010364c10f27a38df3a97ed2d77f9af5db969d97a591ceb80",
+      "artifact_id": 12314124037,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-023.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-023.log"
+      ],
+      "name": "feature-kani-general-validation-023-39528223788-1"
+    }
+  ],
+  "candidate": "Isolated ea44a0ee0ea3bc4d27bebaa74493b738c4caf231 native676/six modes/11parsercontrols; all47existing harness bodies byte-identical. Not adopted or published; no verifier improvement claim.",
+  "classification": "REPO_SAFE",
+  "completed_at": "2026-10-21T02:06:33Z",
+  "conclusion": "failure",
+  "connector_state": "GitHub capability restored. All37archives, member bytes, hashes,190source bindings and real command/resource envelopes validated against pinned4d433checkout. No source transfer to the dirty repaired program.",
+  "counts": {
+    "audited_selections": 37,
+    "backend_rows": 19541,
+    "expected_selections": 37,
+    "new_source_case_credit_added": 0,
+    "qualified_feature_validation_assertions_credited": 0,
+    "qualified_general_validation_assertions_credited": 0,
+    "raw_artifacts_pending": 0,
+    "raw_artifacts_retained": 37,
+    "retained_artifacts": 37,
+    "satisfied_covers": 30,
+    "selected_harnesses": 37,
+    "semantic_claims": 46,
+    "source_case_oom_kills": 23,
+    "source_case_timeouts": 7,
+    "strict_contract_summary_failure": 1,
+    "successful_harnesses": 6,
+    "uncredited_selections": 31,
+    "unique_qualified_source_assertions": 37,
+    "unreachable_credited": 0
+  },
+  "jobs": [
+    {
+      "completed_at": "2026-10-21T01:36:12Z",
+      "conclusion": "success",
+      "failed_steps": [],
+      "id": 118987780123,
+      "name": "migration-state",
+      "started_at": "2026-10-21T01:35:42Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:42:00Z",
+      "conclusion": "success",
+      "failed_steps": [],
+      "id": 118987949387,
+      "name": "rust",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:46:18Z",
+      "conclusion": "success",
+      "failed_steps": [],
+      "id": 118987949467,
+      "name": "feature-common-model-check",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:38:41Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Require all three contract claims and eight non-vacuity covers"
+      ],
+      "id": 118987949516,
+      "name": "feature-validation-contract-model-check",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:52:21Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949829,
+      "name": "general-validation-source-010",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:52:23Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949838,
+      "name": "general-validation-source-006",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:48:14Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949845,
+      "name": "general-validation-source-009",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:49:37Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949848,
+      "name": "general-validation-source-008",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:47:18Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949854,
+      "name": "general-validation-source-012",
+      "started_at": "2026-10-21T01:36:19Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:52:25Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949856,
+      "name": "feature-validation-source-003",
+      "started_at": "2026-10-21T01:36:15Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:45:30Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949859,
+      "name": "general-validation-source-016",
+      "started_at": "2026-10-21T01:36:15Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:52:20Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949867,
+      "name": "general-validation-source-022",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:51:02Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949869,
+      "name": "general-validation-source-003",
+      "started_at": "2026-10-21T01:36:15Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:50:52Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949897,
+      "name": "general-validation-source-005",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:45:57Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949900,
+      "name": "feature-validation-source-001",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:51:28Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949902,
+      "name": "general-validation-source-002",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:46:44Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949908,
+      "name": "general-validation-source-021",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:49:30Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949909,
+      "name": "general-validation-source-001",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T02:00:50Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949916,
+      "name": "general-validation-source-017",
+      "started_at": "2026-10-21T01:46:19Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:52:23Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949918,
+      "name": "feature-validation-source-000",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T02:03:26Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949936,
+      "name": "general-validation-source-000",
+      "started_at": "2026-10-21T01:48:15Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:52:08Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949944,
+      "name": "general-validation-source-004",
+      "started_at": "2026-10-21T01:36:15Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:45:56Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949945,
+      "name": "general-validation-source-011",
+      "started_at": "2026-10-21T01:36:15Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:55:38Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950005,
+      "name": "general-validation-source-023",
+      "started_at": "2026-10-21T01:42:01Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:50:31Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950021,
+      "name": "general-validation-source-018",
+      "started_at": "2026-10-21T01:38:43Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:57:25Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950027,
+      "name": "general-validation-source-014",
+      "started_at": "2026-10-21T01:45:59Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:56:17Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950028,
+      "name": "general-validation-source-015",
+      "started_at": "2026-10-21T01:46:22Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T02:03:28Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950036,
+      "name": "feature-validation-source-004",
+      "started_at": "2026-10-21T01:47:20Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:53:57Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950037,
+      "name": "general-validation-source-013",
+      "started_at": "2026-10-21T01:45:32Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:54:13Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950044,
+      "name": "general-validation-source-019",
+      "started_at": "2026-10-21T01:46:45Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T02:03:55Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950074,
+      "name": "general-validation-source-007",
+      "started_at": "2026-10-21T01:50:54Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T02:05:43Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950097,
+      "name": "general-validation-source-024",
+      "started_at": "2026-10-21T01:49:32Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T02:06:29Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950170,
+      "name": "feature-validation-source-002",
+      "started_at": "2026-10-21T01:50:32Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T02:02:21Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950215,
+      "name": "general-validation-source-020",
+      "started_at": "2026-10-21T01:49:39Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T02:06:33Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Require every selected model job to succeed"
+      ],
+      "id": 118997084948,
+      "name": "feature-bool-model-check",
+      "started_at": "2026-10-21T02:06:31Z",
+      "status": "completed"
+    }
+  ],
+  "next_action": "Publish this complete historical evidence packet, preserve its source identity, then publish the already native676verified repaired canonical production with zero carried proof credit and run one distinct full37protected campaign.",
+  "observed_at": "2026-10-21T02:36:40.065972+00:00",
+  "qualified_source_origins": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-405",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-409",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-412",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-413",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-414",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-415",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-416",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-417",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-418",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-419",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-423",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-424",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-427",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-432",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-439",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-440",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-445",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-446",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-405",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-409",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-412",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-413",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-414",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-415",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-416",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-417",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-418",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-419",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-423",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-424",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-427",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-432",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-439",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-440",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-445",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-446",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Error on query parsing::line-65"
+  ],
+  "retained_failure_classification": "All30source model steps failed with zero complete individual rows:23oom-kill and7timeout. The envelopes retain12GiB memory/swap0/CPU300%/900s command limit. Reported per-unit peak measurements are retained literally; no derived peak is substituted.",
+  "run_attempt": 1,
+  "schema_version": 1,
+  "scope": "Six independently reproduced archived strict summaries retain46semantic claims/30SATcovers/19541backend rows/37qualified original defaulting/query assertions. Contract backend passed but no accepted CI summary existed because the common manifest omitted the required fields declaration. All35validation source assertions and60covers remain required. No full API/lifecycle/live-cluster/post-observation-cleanup proof.",
+  "source_failure_metrics": [
+    {
+      "classification": "TIMEOUT",
+      "complete_individual_rows": 0,
+      "exit_code": 124,
+      "formal_credit": 0,
+      "harness": "source_gsv_case_000",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "exit-code",
+      "service_runtime": "15min 3.250s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gsv_case_001",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "8min 40.694s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gsv_case_002",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "14min 51.131s"
+    },
+    {
+      "classification": "TIMEOUT",
+      "complete_individual_rows": 0,
+      "exit_code": 124,
+      "formal_credit": 0,
+      "harness": "source_gsv_case_003",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "9922211840",
+      "service_result": "exit-code",
+      "service_runtime": "15min 2.246s"
+    },
+    {
+      "classification": "TIMEOUT",
+      "complete_individual_rows": 0,
+      "exit_code": 124,
+      "formal_credit": 0,
+      "harness": "source_gsv_case_004",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "11799220224",
+      "service_result": "exit-code",
+      "service_runtime": "15min 2.668s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_000",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "14min 6.581s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_001",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "12min 7.914s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_002",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "14min 15.251s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_003",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "13min 44.905s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_004",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "14min 48.470s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_005",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "13min 36.956s"
+    },
+    {
+      "classification": "TIMEOUT",
+      "complete_individual_rows": 0,
+      "exit_code": 124,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_006",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "exit-code",
+      "service_runtime": "15min 3.731s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_007",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "11min 59.560s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_008",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "12min 13.896s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_009",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "10min 55.596s"
+    },
+    {
+      "classification": "TIMEOUT",
+      "complete_individual_rows": 0,
+      "exit_code": 124,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_010",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "10935734272",
+      "service_result": "exit-code",
+      "service_runtime": "15min 1.895s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_011",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "8min 38.266s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_012",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "10min 2.657s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_013",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "7min 29.803s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_014",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "10min 39.512s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_015",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "9min 5.938s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_016",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "8min 17.793s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_017",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "13min 30.555s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_018",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "10min 41.579s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_019",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "3145728",
+      "service_result": "oom-kill",
+      "service_runtime": "6min 40.897s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_020",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "11min 34.845s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_021",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "9min 34.404s"
+    },
+    {
+      "classification": "TIMEOUT",
+      "complete_individual_rows": 0,
+      "exit_code": 124,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_022",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "exit-code",
+      "service_runtime": "15min 3.368s"
+    },
+    {
+      "classification": "OOM_KILL",
+      "complete_individual_rows": 0,
+      "exit_code": 1,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_023",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "oom-kill",
+      "service_runtime": "12min 29.471s"
+    },
+    {
+      "classification": "TIMEOUT",
+      "complete_individual_rows": 0,
+      "exit_code": 124,
+      "formal_credit": 0,
+      "harness": "source_gs_validate_case_024",
+      "memory_limit_bytes": 12884901888,
+      "reported_memory_peak_bytes": "12884901888",
+      "service_result": "exit-code",
+      "service_runtime": "15min 3.339s"
+    }
+  ],
+  "source_head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
+  "source_tree": "c970a219af824d89c46bafb236eb55fdfb7bd267",
+  "status": "TERMINAL_ALL37_RAW_RETAINED_SOURCE_PIN_VERIFIED_SIX_STRICT_SUMMARIES",
+  "strict_scope": "Six independently reproduced strict summaries:46claims/30SATcovers/19541rows/37distinct qualified source assertions. Original source005/014 and query003 scopes only; lifecycle, post-observation cleanup, full metadata/API and live cluster are unproved.",
+  "tested_merge": "9d4b29898d097f929ad413b88ee5667bab4663ba",
+  "url": "https://github.com/QuasarRay/agones/actions/runs/39528223788",
+  "workflow_run": 39528223788
+}

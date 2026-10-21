@@ -1,0 +1,3 @@
+feature-gates: original semantic payload unchanged; gate bindings refreshed
+sdk-version: original semantic payload unchanged; gate bindings refreshed
+gameserver-defaulting: original semantic payload unchanged; gate bindings refreshed

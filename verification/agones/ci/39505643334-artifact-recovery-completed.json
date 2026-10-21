@@ -1,0 +1,12 @@
+{
+  "artifact_bindings": {
+    "verification/agones/ci/39505643334-terminal-retained.json": "dfc400819580c0e3feb2054bbc1b6a9d1d8ce50d86caf1ac99128ae967fa148b"
+  },
+  "classification": "REPO_SAFE",
+  "new_formal_credit_from_tool_recovery_itself": 0,
+  "resolved": "GitHub connector became available; all remaining seven archives downloaded and checked. No user permission, credentials change or model rerun required.",
+  "schema_version": 1,
+  "status": "RECOVERED_ALL12_ARTIFACTS_RETAINED",
+  "supersedes_pending_observation": "verification/agones/ci/39505643334-artifact-recovery-pending.json",
+  "terminal_receipt": "verification/agones/ci/39505643334-terminal-retained.json"
+}

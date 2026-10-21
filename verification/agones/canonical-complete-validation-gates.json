@@ -1,0 +1,11 @@
+{
+  "FG-CONFIG-001": "verification/agones/gates/55deca60aa4abf805c44e6bb446ea33f332983dcb780ceeec3d8be67208105e2.json",
+  "FG-ERROR-001": "verification/agones/gates/ba4109c4929f48ba6ed401b28bbb15e8478640558eedaa4b4840d9c628cb8884.json",
+  "FG-INPUT-001": "verification/agones/gates/56c041eede444c1c7deb1bf2fc074a880f6f3b2b4ee2032385315cd7c569a5a9.json",
+  "GS-DEFAULTS-001": "verification/agones/gates/5f49c6510dfa81c649d8220da90387124b541a6c17a763d4dbd254d4032b873b.json",
+  "GS-TYPEMETA-001": "verification/agones/gates/d6ff1597de0be25a6cfebf8dbbfc11e155ab20494d78dcccac731f66852c7116.json",
+  "GS-VALIDATE-FEATURES-001": "verification/agones/gates/5daba4dcad178822c8f9572333d72f7efa733d6a947ae1cc24157f9fd9e404b9.json",
+  "GS-VALIDATION-ERROR-DATA-001": "verification/agones/gates/9bba6d1b4366a99bd6865906d6f76e3901e05945d6d0f107c8da4b7aaaab7ecc.json",
+  "RESOURCE-QUANTITY-001": "verification/agones/gates/3d9b83c2771f038ecfaa7c92a4f060cc8b692e670f0318672edef5ddea483516.json",
+  "SDK-VERSION-001": "verification/agones/gates/265e90701ceb64c01033eb75fd78eec1a905537121717e71abea49ed2a89bfe2.json"
+}

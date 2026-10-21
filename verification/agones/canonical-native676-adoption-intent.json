@@ -1,0 +1,354 @@
+{
+  "base_head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
+  "candidate": "ea44a0ee0ea3bc4d27bebaa74493b738c4caf231",
+  "files": [
+    {
+      "already_equal": false,
+      "path": "build/scripts/agones-rs/test_source_case_proofs.py",
+      "status": "M",
+      "target_sha256": "70038dbe2abc057c1d7ea2a8f09d8616e009bbcfbb0f49e3a0759cd87b3f46bb"
+    },
+    {
+      "already_equal": false,
+      "path": "crates/agones-core/src/gameserver.rs",
+      "status": "M",
+      "target_sha256": "dc6903306ef77cfb772696e3635c398944d295f59eb89c57c0c8f3d43f8db864"
+    },
+    {
+      "already_equal": false,
+      "path": "crates/agones-core/src/resource_quantity.rs",
+      "status": "M",
+      "target_sha256": "a8f7ae7eda83f7f6f546af4700cdc562003437bd92fd6ecbed7f76e1009d8006"
+    },
+    {
+      "already_equal": false,
+      "path": "crates/agones-core/tests/generated/gameserver_defaulting_cases.rs",
+      "status": "M",
+      "target_sha256": "febe3bc908d057de1d63fa6fb5d6acfef587369ad5cdbba2cfc2d2dd2c098f16"
+    },
+    {
+      "already_equal": false,
+      "path": "crates/agones-core/tests/generated/gameserver_feature_validation_cases.rs",
+      "status": "M",
+      "target_sha256": "f539dbb911f2ecc352228f1046176ea86ed896fc335035884c92c363ce6f5a40"
+    },
+    {
+      "already_equal": false,
+      "path": "crates/agones-core/tests/generated/gameserver_validation_cases.rs",
+      "status": "M",
+      "target_sha256": "aa7d7682b7b62ed5d1ecaf98362cf9c5731180ea24657ed674cddcb843f6fea1"
+    },
+    {
+      "already_equal": false,
+      "path": "crates/agones-core/tests/resource_quantity.rs",
+      "status": "M",
+      "target_sha256": "183c6f001ed7f46f7ff7e684b6fda2970c8ad6c90e9599fd443f60f6d95e3a24"
+    },
+    {
+      "already_equal": false,
+      "path": "crates/agones-rusternetes/examples/feature_case_codegen.rs",
+      "status": "M",
+      "target_sha256": "48991d9e64b8ce0a93329a4d4d0f6ca72ca06e5989a3a60a2490d9278cd52179"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/feature-gates.ir.json",
+      "status": "M",
+      "target_sha256": "168f9dfb255443a9361cfffcc8eff555c22a0d0b3fc49e57269497d8ebc16ed5"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/feature-query-codegen.json",
+      "status": "M",
+      "target_sha256": "f42fde325b0a0f92c03a5e49416e347754aa926a01816466d04a1d64c6c79d23"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/gameserver-defaulting-codegen.json",
+      "status": "M",
+      "target_sha256": "d85e4f22f2d22afc5630d06f72055ab28035334d9f6af7e0f3d094790c2f4e68"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/gameserver-defaulting.ir.json",
+      "status": "M",
+      "target_sha256": "bfadc2018affcd66e1a306a7757db3415af57989ee76119e3cba54a7169b165f"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/gameserver-feature-validation-codegen.json",
+      "status": "M",
+      "target_sha256": "01e53fc08919fda5f1f6e1475aa0d4d8685d4618b87fe8f2a0bf8edea32e67c3"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/gameserver-feature-validation-domain.json",
+      "status": "M",
+      "target_sha256": "a7e15f8312abbc1fd958fa7921d7d879e3616330c7ae045afb256c21b39eef55"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/gameserver-feature-validation.ir.json",
+      "status": "M",
+      "target_sha256": "a19e353e42b8910c09f54e96eb4a00070cd45b081356ca2da5ff2075eb2a3168"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/gameserver-validation-codegen.json",
+      "status": "M",
+      "target_sha256": "01c8ca13de502861c2b3d46d0ff6773c9c66090b62d6509ba1745d0383dcb220"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/gameserver-validation.ir.json",
+      "status": "M",
+      "target_sha256": "53db2b11fad18a75c9b96123df92982abb2d7f0d804476244afdca42be2eb460"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/gates/0680284d599336cb2ab48eba3700f7f04be43141345d6c73d054e5a5a8d15fb1.json",
+      "status": "A",
+      "target_sha256": "0680284d599336cb2ab48eba3700f7f04be43141345d6c73d054e5a5a8d15fb1"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/gates/1557a50ebe70df64c6b30b908f4fb1e81be35e95c90b5fee479dd96abbf59433.json",
+      "status": "A",
+      "target_sha256": "1557a50ebe70df64c6b30b908f4fb1e81be35e95c90b5fee479dd96abbf59433"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/gates/18f3fa0ab1f4f252df6c2102dab95760e79abc6754f3507c7b50f02feacb4fbd.json",
+      "status": "A",
+      "target_sha256": "18f3fa0ab1f4f252df6c2102dab95760e79abc6754f3507c7b50f02feacb4fbd"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/gates/19601148fade25661c0f6ecae3607fb0494878495f6dd178c93ff826565dc8d3.json",
+      "status": "A",
+      "target_sha256": "19601148fade25661c0f6ecae3607fb0494878495f6dd178c93ff826565dc8d3"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/gates/22e27624f49590ccd06181dd01cc4eb999a8efc377b0e946ae0962c0d92a0283.json",
+      "status": "A",
+      "target_sha256": "22e27624f49590ccd06181dd01cc4eb999a8efc377b0e946ae0962c0d92a0283"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/gates/3d03634931dcc3d7dbe65a1c1131d450e853fdb84e4ff0e67a0d403e620bd531.json",
+      "status": "A",
+      "target_sha256": "3d03634931dcc3d7dbe65a1c1131d450e853fdb84e4ff0e67a0d403e620bd531"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/gates/3ed8ec9ba6ce4f0780128467a4f3c01ce1490dcf01b2920d60be6ae1edccc449.json",
+      "status": "A",
+      "target_sha256": "3ed8ec9ba6ce4f0780128467a4f3c01ce1490dcf01b2920d60be6ae1edccc449"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/gates/44f98087daa7624c3c58f242199f3da97eaae46b8f106aaf70903256f2be7435.json",
+      "status": "A",
+      "target_sha256": "44f98087daa7624c3c58f242199f3da97eaae46b8f106aaf70903256f2be7435"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/gates/4677d53dae049a128515406607b07ff1a7c78bd641a86090b4df13ca37c92669.json",
+      "status": "A",
+      "target_sha256": "4677d53dae049a128515406607b07ff1a7c78bd641a86090b4df13ca37c92669"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/gates/5b66abe55c20cdb25e8f16f440dbafc3cdd0ce8a591f311a5df040d3005fe69b.json",
+      "status": "A",
+      "target_sha256": "5b66abe55c20cdb25e8f16f440dbafc3cdd0ce8a591f311a5df040d3005fe69b"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/gates/e1018a4c6887452c88452394a0757d5b6c10ed4d21b9cff14cc34321a3d94b43.json",
+      "status": "A",
+      "target_sha256": "e1018a4c6887452c88452394a0757d5b6c10ed4d21b9cff14cc34321a3d94b43"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/gates/fa5ffff46c487e7f2c1cb8e5b15853816a4763ddc6cd470e901fc649892a1a20.json",
+      "status": "A",
+      "target_sha256": "fa5ffff46c487e7f2c1cb8e5b15853816a4763ddc6cd470e901fc649892a1a20"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/go-print-codegen.json",
+      "status": "M",
+      "target_sha256": "0aa1a209b076bb2b80105c8b260adf438c48a8c49e008ade435876ed6a0d8d36"
+    },
+    {
+      "already_equal": true,
+      "path": "verification/agones/refactoring/validation-path-fixture-construction-review.json",
+      "status": "A",
+      "target_sha256": "cc202f4b7ceb25c6bcd5c200a461d0287c475e675c54e228f9caeec47784383a"
+    },
+    {
+      "already_equal": true,
+      "path": "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-011.json",
+      "status": "A",
+      "target_sha256": "16f84e746ba29fd537c1dfff4075fbb091e5b084a7415a893c97e3c26acd929d"
+    },
+    {
+      "already_equal": true,
+      "path": "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-011.log",
+      "status": "A",
+      "target_sha256": "dda603d7cc527117717966ccc5df1fca9569c899b6be2f602bd6099d338fe93a"
+    },
+    {
+      "already_equal": true,
+      "path": "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-001.json",
+      "status": "A",
+      "target_sha256": "c09963d761c41c820852a901ff100d4da117da1fbba04cad2c270f19df1c2bc4"
+    },
+    {
+      "already_equal": true,
+      "path": "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-001.log",
+      "status": "A",
+      "target_sha256": "4355c16733b6964aca4ba579232bec1c34e4b0c05ad2ab02d075314d297e2096"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/runs/validation-path-context-control-1.json",
+      "status": "A",
+      "target_sha256": "35e48d105d2100ed8f684b8e8be86bcf626f0e3959fab55ef9c20c86420bc7a9"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/runs/validation-path-context-control-1.log",
+      "status": "A",
+      "target_sha256": "7502770d8c4a7859ca6c9b7f27dfaaaa5a0c15e1afa54a9d0e26ea2d2fbd12e7"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/runs/validation-path-context-control-2.json",
+      "status": "A",
+      "target_sha256": "da58a6bec5ebd7b6b9afca6c8179c38fd8f168ba744c1fdc72d5bf98632a3a88"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/runs/validation-path-context-control-2.log",
+      "status": "A",
+      "target_sha256": "a08b8aa35606d6ecc79310d5169372a523f21188b3a1f903aca0a5ca44793ba1"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/runs/validation-path-fixture-generation-1.json",
+      "status": "A",
+      "target_sha256": "87385627e2628672cd9055e3ebae759144f165b2268e8ab07293bd77ca3c8211"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/runs/validation-path-fixture-generation-1.log",
+      "status": "A",
+      "target_sha256": "8fc1a6e4cb0f8a3957310d47f5fb834df470243aeeab453a417a6cb4ad68608d"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/runs/validation-path-fixture-generation-2.json",
+      "status": "A",
+      "target_sha256": "31583a2a9d9dc45d081846150315ccf1cd7a391ac52e793ca24405a2f0489961"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/runs/validation-path-fixture-generation-2.log",
+      "status": "A",
+      "target_sha256": "a1238f87f7a6debfb458e12b54b4afe30d2ab659c572e0427cd49a31787d005a"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/runs/validation-path-fixture-generation-3.json",
+      "status": "A",
+      "target_sha256": "fd296f6a31a34dc15d338cadf91b03aed18ad9458d6c4131eb9698aca6febb8d"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/runs/validation-path-fixture-generation-3.log",
+      "status": "A",
+      "target_sha256": "087cf6bc6dcbfc0992ae3cad92d3dcc8995bd9f42f383a8beceb37aef89e2cde"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/runs/validation-path-fixture-post-generation-native-1.json",
+      "status": "A",
+      "target_sha256": "6791731b9a80c1f7a22147a72cb3d1798d46a80d4749a29de91ca7da363681d7"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/runs/validation-path-fixture-post-generation-native-1.log",
+      "status": "A",
+      "target_sha256": "378e28643de4c1e8726a0f9a496bc1a52253aab086df7cda29332854df0b2432"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/runs/validation-path-fixture-post-generation-native-2.json",
+      "status": "A",
+      "target_sha256": "a402da49a8ffb2e6ca0c1dc914a6af3a5d60f3109a4f0b1b0bfffeea2835eb33"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/runs/validation-path-fixture-post-generation-native-2.log",
+      "status": "A",
+      "target_sha256": "8792f5898a35f757969e1c718f8c27331f4417998396080d1dce14d7fee53084"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/runs/validation-path-fixture-post-generation-native-3.json",
+      "status": "A",
+      "target_sha256": "a3c57b64d49a2d8f06dcb8f077d4bc0b983b86f4e2465d34b4f5aa0000ef0899"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/runs/validation-path-fixture-post-generation-native-3.log",
+      "status": "A",
+      "target_sha256": "496433e2f11569d3c19a77de8f9ab0cd4dd41f535b8fac31d11c218d57c4bda2"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/runs/validation-path-fixture-refactor-native-1.json",
+      "status": "A",
+      "target_sha256": "91e278a5435bfdb9f056f4e9230f57a8c5bff0c13d17e21e06b1b64dffeb9916"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/runs/validation-path-fixture-refactor-native-1.log",
+      "status": "A",
+      "target_sha256": "193c303fa1168b461e99e4b6c885e3154b2dee2e1844c7e35710de6049da6baa"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/sdk-version-codegen.json",
+      "status": "M",
+      "target_sha256": "33ed3b64c1d55291219600a0efaa79e81f58c31e932d8fdb83af2a6afbb9003f"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/sdk-version.ir.json",
+      "status": "M",
+      "target_sha256": "19a91e624634cb166a57dfbab2c3f820f72deac3bfd1a85e1c17f1bddb167090"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/validation-path-fixture-evidence.json",
+      "status": "A",
+      "target_sha256": "6d0c31bb7549135ae7aa25b0d34aad78f3e6059def669ceed17f5deeda7567dc"
+    },
+    {
+      "already_equal": false,
+      "path": "verification/agones/validation-path-fixture-gates.json",
+      "status": "A",
+      "target_sha256": "fb9ee00780bd8d4ed9ab347c48c0072d111531a5b0f7f1b5fa7ac3dc79147ae7"
+    }
+  ],
+  "formal_credit_added": 0,
+  "old_ci_source_pin": "verification/agones/ci/39528223788-pinned-source.json",
+  "schema_version": 1,
+  "source_paths": 57,
+  "status": "COPY_VERIFIED_CANDIDATE_INTO_CANONICAL",
+  "user_guidance_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
+}

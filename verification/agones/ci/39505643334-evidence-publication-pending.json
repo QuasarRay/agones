@@ -1,0 +1,20 @@
+{
+  "classification": "REPO_SAFE",
+  "local_evidence_commit": "4c77ee6cb44d5dcad95039c01217d8b28e0dcc1b",
+  "local_evidence_ref": "refs/agones-checkpoints/streaming-terminal-and-native675-271",
+  "local_evidence_tree": "38b64d1b909b4dd15b1dacfa4bcc7f6eac06c154",
+  "next_action": "Resume passive evidence publication from its immutable local tree when the GitHub write tools are available. Verify the resulting remote tree equals the local tree before creating the evidence branch; update existingPR96with the prepared terminal description. Keep review head31cc and do not repeat the unchanged failed campaign. Then trace retained formatting/byte-search callers for the next distinct repair.",
+  "observed_delivery_failure": "GitHub create_tree/update_pull_request return MCP -32001 Unknown tool. Noninteractive git push --dry-run fails because no GitHub credentials are available to Git. This is tool/transport unavailability, not an automatic approval rejection.",
+  "passive_evidence_branch_planned": "codex/agones-ci-evidence-39505643334",
+  "pending_pr_description": "verification/agones/ci/39505643334-pr-description-pending.md",
+  "publication_manifest": ".git/agones-terminal-evidence-publication.json",
+  "pull_request": "https://github.com/QuasarRay/agones/pull/96",
+  "remote_evidence_branch_created": false,
+  "remote_ref_verified": "Review branch remains31cc; main remains715ceffc39ac1f2703dbd40e1c9973f540f5924c; planned evidence branch is absent. No model rerun or review ref change occurred.",
+  "schema_version": 1,
+  "source_review_branch": "codex/agones-player-tracking-validation",
+  "source_review_head": "31cc72d92bbb9611e228ec5936d2421a5ca35f84",
+  "status": "NATIVE_SOURCE_PUBLISHED_TERMINAL_EVIDENCE_REMOTE_PUBLICATION_PENDING",
+  "terminal_receipt": "verification/agones/ci/39505643334-terminal-retained.json",
+  "upload_next": 0
+}

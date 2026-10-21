@@ -1,0 +1,308 @@
+{
+  "assertion_count": 21,
+  "assertions": [
+    {
+      "function": "source_metadata_assertion_000",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::empty::line-82",
+      "relation": "length",
+      "source_line": 82
+    },
+    {
+      "function": "source_metadata_assertion_001",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::bad label name::line-82",
+      "relation": "length",
+      "source_line": 82
+    },
+    {
+      "function": "source_metadata_assertion_002",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::bad label name::line-84::error-index-0",
+      "relation": "type",
+      "source_line": 84
+    },
+    {
+      "function": "source_metadata_assertion_003",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::bad label name::line-85::error-index-0",
+      "relation": "field",
+      "source_line": 85
+    },
+    {
+      "function": "source_metadata_assertion_004",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::bad label value::line-82",
+      "relation": "length",
+      "source_line": 82
+    },
+    {
+      "function": "source_metadata_assertion_005",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::bad label value::line-84::error-index-0",
+      "relation": "type",
+      "source_line": 84
+    },
+    {
+      "function": "source_metadata_assertion_006",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::bad label value::line-85::error-index-0",
+      "relation": "field",
+      "source_line": 85
+    },
+    {
+      "function": "source_metadata_assertion_007",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::bad annotation name::line-82",
+      "relation": "length",
+      "source_line": 82
+    },
+    {
+      "function": "source_metadata_assertion_008",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::bad annotation name::line-84::error-index-0",
+      "relation": "type",
+      "source_line": 84
+    },
+    {
+      "function": "source_metadata_assertion_009",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::bad annotation name::line-85::error-index-0",
+      "relation": "field",
+      "source_line": 85
+    },
+    {
+      "function": "source_metadata_assertion_010",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::valid full::line-82",
+      "relation": "length",
+      "source_line": 82
+    },
+    {
+      "function": "source_metadata_assertion_011",
+      "origin": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestMetaPatchValidate::line-315",
+      "relation": "length",
+      "source_line": 315
+    },
+    {
+      "function": "source_metadata_assertion_012",
+      "origin": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestMetaPatchValidate::line-320",
+      "relation": "length",
+      "source_line": 320
+    },
+    {
+      "function": "source_metadata_assertion_013",
+      "origin": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestMetaPatchValidate::line-325",
+      "relation": "length",
+      "source_line": 325
+    },
+    {
+      "function": "source_metadata_assertion_014",
+      "origin": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestMetaPatchValidate::line-331",
+      "relation": "length",
+      "source_line": 331
+    },
+    {
+      "function": "source_metadata_assertion_015",
+      "origin": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestMetaPatchValidate::line-332",
+      "relation": "field",
+      "source_line": 332
+    },
+    {
+      "function": "source_metadata_assertion_016",
+      "origin": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestMetaPatchValidate::line-339",
+      "relation": "length",
+      "source_line": 339
+    },
+    {
+      "function": "source_metadata_assertion_017",
+      "origin": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestMetaPatchValidate::line-340",
+      "relation": "field",
+      "source_line": 340
+    },
+    {
+      "function": "source_metadata_assertion_018",
+      "origin": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestMetaPatchValidate::line-345",
+      "relation": "length",
+      "source_line": 345
+    },
+    {
+      "function": "source_metadata_assertion_019",
+      "origin": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestMetaPatchValidate::line-346",
+      "relation": "field",
+      "source_line": 346
+    },
+    {
+      "function": "source_metadata_assertion_020",
+      "origin": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestMetaPatchValidate::line-347",
+      "relation": "field",
+      "source_line": 347
+    }
+  ],
+  "case_count": 6,
+  "feature_id": "META-VALIDATE-001",
+  "formal_credit": 0,
+  "generator": "Genco0.17.10 with pinned rustfmt",
+  "generator_path": "crates/agones-rusternetes/examples/feature_case_codegen.rs",
+  "generator_sha256": "b9610a3ed5837fdc1ec5d47acf10d282400a3ea95042cf59ec95e7e1304ef412",
+  "generator_source_files": {
+    "crates/agones-rusternetes/examples/codegen/gameserver_features.rs": "44335a77ca34abe5d3bbbfa7d05836ecdc5ea65a59cd7520652a213e48dca848",
+    "crates/agones-rusternetes/examples/codegen/object_metadata.rs": "e8b22f0e46c00f2d1f996ad4afee85ffd62c9cc9ec3c5ae86602e0205e92204b",
+    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "b9610a3ed5837fdc1ec5d47acf10d282400a3ea95042cf59ec95e7e1304ef412"
+  },
+  "harnesses": [
+    {
+      "assertion_functions": [
+        "source_metadata_assertion_000"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::empty",
+      "harness": "source_metadata_case_000",
+      "preconditions": [],
+      "production_symbols": [
+        "AllocationOverflow::validate_with_context or MetaPatch::validate_with_context",
+        "ValidateAgonesObjectMetadata::validate_object_metadata"
+      ],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source metadata validation case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::empty",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_metadata_assertion_001",
+        "source_metadata_assertion_002",
+        "source_metadata_assertion_003"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::bad label name",
+      "harness": "source_metadata_case_001",
+      "preconditions": [],
+      "production_symbols": [
+        "AllocationOverflow::validate_with_context or MetaPatch::validate_with_context",
+        "ValidateAgonesObjectMetadata::validate_object_metadata"
+      ],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source metadata validation case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::bad label name",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_metadata_assertion_004",
+        "source_metadata_assertion_005",
+        "source_metadata_assertion_006"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::bad label value",
+      "harness": "source_metadata_case_002",
+      "preconditions": [],
+      "production_symbols": [
+        "AllocationOverflow::validate_with_context or MetaPatch::validate_with_context",
+        "ValidateAgonesObjectMetadata::validate_object_metadata"
+      ],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source metadata validation case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::bad label value",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_metadata_assertion_007",
+        "source_metadata_assertion_008",
+        "source_metadata_assertion_009"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::bad annotation name",
+      "harness": "source_metadata_case_003",
+      "preconditions": [],
+      "production_symbols": [
+        "AllocationOverflow::validate_with_context or MetaPatch::validate_with_context",
+        "ValidateAgonesObjectMetadata::validate_object_metadata"
+      ],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source metadata validation case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::bad annotation name",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_metadata_assertion_010"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::valid full",
+      "harness": "source_metadata_case_004",
+      "preconditions": [],
+      "production_symbols": [
+        "AllocationOverflow::validate_with_context or MetaPatch::validate_with_context",
+        "ValidateAgonesObjectMetadata::validate_object_metadata"
+      ],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source metadata validation case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::valid full",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_metadata_assertion_011",
+        "source_metadata_assertion_012",
+        "source_metadata_assertion_013",
+        "source_metadata_assertion_014",
+        "source_metadata_assertion_015",
+        "source_metadata_assertion_016",
+        "source_metadata_assertion_017",
+        "source_metadata_assertion_018",
+        "source_metadata_assertion_019",
+        "source_metadata_assertion_020"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestMetaPatchValidate",
+      "harness": "source_metadata_case_005",
+      "preconditions": [],
+      "production_symbols": [
+        "AllocationOverflow::validate_with_context or MetaPatch::validate_with_context",
+        "ValidateAgonesObjectMetadata::validate_object_metadata"
+      ],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source metadata validation case: agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestMetaPatchValidate",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    }
+  ],
+  "integration_output": "crates/agones-rusternetes/tests/generated/object_metadata_cases.rs",
+  "integration_output_sha256": "35e6c99e2d3b81253e89df99a6e093ee0e398cddd61559289151ce892e6b13e5",
+  "ir": "verification/agones/object-metadata.ir.json",
+  "ir_sha256": "744c0a4aa76e2893bb9645c5ce6e3513f9cdb9af3cd590a27ae69de8739ffc6c",
+  "lifetime_mapping": {
+    "ordinary_cleanup": "Separate complete source replays use normal destruction.",
+    "residual": "Formal post-observation cleanup/lifecycle remain required.",
+    "rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1"
+  },
+  "mapping": {
+    "deep_copy": "Both original DeepCopy calls clone the current mp into independent owned map states. Earlier copy and validation observations are retained in SSA bindings until final source observations and covers.",
+    "independent_invariants": "Each original length/type/field assertion checks the separately captured Go reference and actual Rust production observation. Six-field differential equality and input-state snapshots are additional ordinary replay checks.",
+    "kind": "EXACT_CASE",
+    "lifetime_rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1; retain all fixture, copy and observation values after source assertions/covers in both Bolero/Kani. Separate ordinary replays use normal destruction. Post-observation cleanup/lifecycle remains required.",
+    "nil_empty": "Original nil/empty map construction actions and flags remain in IR and source action order. Both map images refine the same empty validation traversal; no standalone nil/empty identity or broader API claim.",
+    "scheduling": "t.Parallel is a serial isolated-instance replay; overflow fixture declaration order is one permitted map iteration order. No executor/concurrency proof."
+  },
+  "output": "crates/agones-core/tests/generated/object_metadata_cases.rs",
+  "output_sha256": "93ef972a52c59db53a164ca204cdc3a60a676ce68952adc08c72f5145177c9a2",
+  "schema_version": 1,
+  "scope": "All5AllocationOverflow cases and whole6-call MetaPatch test, preserving all21qualified assertions. All5overflow cases also traverse actual Rusternetes Fleet/GameServerSet conversions and typed validation. A Rusternetes allocation endpoint is not implemented by this change. Exact cases do not establish an unbounded key/value law or complete API/lifecycle/live Rusternetes/_2 migration.",
+  "source_capture_evidence": "verification/agones/object-metadata-source-evidence.json",
+  "source_capture_evidence_sha256": "35e8a32ac91d733ec7a0592f0a4952a20851e8954add546d006b53dde3dc2241",
+  "validation_error_mapping": {
+    "fields": [
+      "Type",
+      "Field",
+      "BadValue",
+      "Detail",
+      "Origin",
+      "CoveredByDeclarative"
+    ],
+    "forward": "Require the exact empty Go string for Required/Forbidden and encode it as kind+None. Other supported kinds preserve string versus null distinctly. Copy every other field exactly.",
+    "inverse": "Reconstruct the fixed empty source string from Required/Forbidden+None; reject a non-None value. Other kinds reconstruct their original string/null. Every lowered error must round-trip in full.",
+    "native_fault_controls": "All six error fields and multiset multiplicity are independently observable. Bidirectional constructor-image controls exercise both directions and reject nonempty/nil source values.",
+    "rule": "AGONES-ERROR-CONSTRUCTOR-EMPTY-1",
+    "source": "vendor/k8s.io/apimachinery/pkg/util/validation/field/errors.go",
+    "source_sha256": "747db5374cdd58712b46d10775272508212d3201fa05c30105a5531debc666d4",
+    "unsupported": "Non-string/non-null bad values, unknown kinds/fields and values outside the declared constructor image reject; their obligations remain open."
+  },
+  "validation_observations": 11
+}
