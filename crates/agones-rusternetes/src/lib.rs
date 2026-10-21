@@ -1358,7 +1358,7 @@ pub fn validate_game_server(
     validate_game_server_with_context(&agones_core::GameServerDefaultingContext::default(), game_server)
 }
 
-pub fn validate_game_server_with_context<C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities>(
+pub fn validate_game_server_with_context<C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities + agones_core::CanValidateObjectMetadata>(
     context: &C,
     game_server: &GameServer,
 ) -> Result<Vec<ValidationError>, AdapterError> {

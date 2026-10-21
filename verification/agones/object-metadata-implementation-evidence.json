@@ -1,0 +1,21 @@
+{
+  "feature_id": "META-VALIDATE-001",
+  "formal_credit": 0,
+  "gate": "verification/agones/gates/16598e097e857c146d1492f3bff0cb46373c25b93287caed57d8f86ab2b169dc.json",
+  "gate_sha256": "16598e097e857c146d1492f3bff0cb46373c25b93287caed57d8f86ab2b169dc",
+  "next_action": "Restore the exact pinned Go runtime, then extend the existing package-aware extractor for source-bound shared metadata cases. Keep PR96/native676 CI source stable. Canonical adoption must renew all affected implementation gates and strict source/proof/integration bindings.",
+  "no_source_test_semantic_extraction_before_gate": true,
+  "ordinary_checks": [
+    "verification/agones/runs/metadata-validation-workspace-native-1.json",
+    "verification/agones/runs/metadata-validation-all-targets-native-1.json"
+  ],
+  "ordinary_result_counts": {
+    "failed": 0,
+    "ignored": 3,
+    "passed": 687,
+    "test_targets": 43
+  },
+  "production_binding_sha256": "88c9422e1140b73bf792fd3f8df69e6760cd9106f76560df243cbbd9185b357f",
+  "schema_version": 1,
+  "status": "ISOLATED_IMPLEMENTED_NATIVE687_GATED_CANONICAL_ADOPTION_PENDING"
+}

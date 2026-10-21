@@ -1,0 +1,36 @@
+{
+  "archive_sha256": "6f00fbc5b337fbf00581b7ced382fecdc4fa9493aef971277652a25f7aa14c6e",
+  "archive_url": "https://github.com/actions/go-versions/releases/download/1.27.1-33583469715/go-1.27.1-linux-x64.tar.gz",
+  "asset_digest": "sha256:6f00fbc5b337fbf00581b7ced382fecdc4fa9493aef971277652a25f7aa14c6e",
+  "asset_id": 540496935,
+  "build_config": {
+    "CGO_ENABLED": "1",
+    "GOARCH": "amd64",
+    "GOEXPERIMENT": "nodwarf5",
+    "GOOS": "linux",
+    "GOTOOLCHAIN": "local"
+  },
+  "classification": "REPO_SAFE",
+  "go_executable": "/home/astral/.local/share/agones-rs/tools/go1.27.1-actions/bin/go",
+  "go_executable_sha256": "30969f97169d7f43fe6a085873d75613adc21e30818a8c61d95bd27275df4624",
+  "old_recorded_runtime_version": "go1.27.1-X:nodwarf5",
+  "probe_source": "package main\nimport(\"encoding/json\";\"os\";\"runtime\";\"unicode\")\nfunc main(){ rows:=[][2]int32{}; for r:=rune(0);r<=unicode.MaxRune;r++ {if r>=0xd800&&r<=0xdfff {continue}; lower:=unicode.ToLower(r);if lower!=r {rows=append(rows,[2]int32{r,lower})}}; json.NewEncoder(os.Stdout).Encode(map[string]any{\"runtime_version\":runtime.Version(),\"unicode_version\":unicode.Version,\"mappings\":rows}) }\n",
+  "probe_source_sha256": "a0c5030e37807ce7bb0f8d6ac5d6170c22328feae669f6db10119a14ee8950f3",
+  "provenance": "Alternative official distribution of the exact1.27.1version; source/tool configuration identity must be checked before any reuse.",
+  "recorded_stdlib_source_hashes": {
+    "VERSION": "25eb74b09036e1ad894fb63b86cb0f0ee53342df8d2e2e860da4ff5079607758",
+    "src/net/url/url.go": "44c33f88526abf3b5955d6c97297be5c9d228e741b33e52c940dcac5a496e091",
+    "src/strconv/isprint.go": "e6f4b35fbf38f9c9c8b251e5d3cf94daa880789cb89825f11f9734ba4a42e9ff",
+    "src/strconv/number.go": "dda43e8c91d95f9dea0c46b2fec6637e5520cae099e40c5965dca0e41bbaab9e",
+    "src/strconv/quote.go": "6602960ec8777de9926c1d02fbf5cb0828d4aefa38083865f4af17b6892c09a2",
+    "src/unicode/letter.go": "b35a6d259313cef88d07e9e4027b8bd72c60ae140418f5be2c41a2ecea6074fe",
+    "src/unicode/tables.go": "ac0e5d5d1b58ed4b02d7cb4a0085bdefbdb4f7aae6fadddbc9477f8463da8bd8",
+    "src/unicode/utf8/utf8.go": "3c145ee25fd7631ebbc670fd1236e8c163ca30ae8913c796489efbf3f267ad54"
+  },
+  "source": "actions/go-versions official release1.27.1-33583469715",
+  "status": "EXACT_VERSION_RESTORED_RECORDED_STDLIB_SOURCES_MATCH_RUNTIME_CONFIG_CHECK_PENDING",
+  "strings_source_sha256": "a81bdf73a308277c322e35d0c602e3813f57b6f769c091f8f8962c8884a45ea3",
+  "tool_version": "go1.27.1",
+  "unicode_fixture": "verification/agones/unicode-simple-lowercase-table.json",
+  "unicode_fixture_sha256": "76eb7600bbf1036caff5ff176cee4a0d9d7b126e0c94808d94335cc00120efe9"
+}

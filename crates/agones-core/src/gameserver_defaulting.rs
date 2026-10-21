@@ -55,5 +55,6 @@ delegate_and_check_components! {
         GameServerDefaulterComponent: ApplyAgonesGameServerDefaults,
         crate::GameServerFeatureValidatorComponent: crate::ValidateAgonesGameServerFeatures,
         crate::ResourceQuantityValidatorComponent: crate::ValidateAgonesResourceQuantities,
+        crate::ObjectMetadataValidatorComponent: crate::ValidateAgonesObjectMetadata,
     }
 }

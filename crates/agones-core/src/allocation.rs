@@ -596,12 +596,15 @@ pub fn validate_list_actions(
 
 impl MetaPatch {
     pub fn validate(&self, path: &str) -> Vec<ValidationError> {
-        let metadata = ObjectMeta {
-            labels: self.labels.clone(),
-            annotations: self.annotations.clone(),
-            ..Default::default()
-        };
-        crate::gameserver::validate_object_meta(&metadata, path)
+        self.validate_with_context(&crate::GameServerDefaultingContext::default(), path)
+    }
+
+    pub fn validate_with_context<C: crate::CanValidateObjectMetadata>(
+        &self,
+        context: &C,
+        path: &str,
+    ) -> Vec<ValidationError> {
+        context.validate_object_metadata(&self.labels, &self.annotations, path)
     }
 }
 
@@ -717,6 +720,13 @@ impl GameServerAllocation {
     }
 
     pub fn validate(&self) -> Vec<ValidationError> {
+        self.validate_with_context(&crate::GameServerDefaultingContext::default())
+    }
+
+    pub fn validate_with_context<C: crate::CanValidateObjectMetadata>(
+        &self,
+        context: &C,
+    ) -> Vec<ValidationError> {
         let mut errors = Vec::new();
 
         match self.spec.scheduling.as_ref() {
@@ -744,7 +754,7 @@ impl GameServerAllocation {
         errors.extend(validate_priorities(&self.spec.priorities, "spec.priorities"));
         errors.extend(validate_counter_actions(&self.spec.counters, "spec.counters"));
         errors.extend(validate_list_actions(&self.spec.lists, "spec.lists"));
-        errors.extend(self.spec.metadata.validate("spec.metadata"));
+        errors.extend(self.spec.metadata.validate_with_context(context, "spec.metadata"));
         errors
     }
 
