@@ -10,6 +10,7 @@
     "verification/agones/ci/39511896291-first-five-retained.json": "c61b2d440643d74eedebe3ea1f8ab24576b3451c6d6a29a8f0db2eeaa48a68f9",
     "verification/agones/ci/39511896291-terminal-retained.json": "b97d1ce65169bc780f144ede957f99492f70a1963b72e845c1a99051030db3ac",
     "verification/agones/ci/39516368235-eight-retained.json": "f968ea212c27bdd3e8ee1ef4bdbe344144ff8aa474ad897b876295bf2d48da28",
+    "verification/agones/ci/39516368235-evidence-published.json": "e79ff4282e895398260b59aed70fbab06c6b52f08f3fb1e5aad8f0407c4236c9",
     "verification/agones/ci/39516368235-nine-retained-two-oom-source000-running.json": "df4660c5fdfc23dd0818ec50a63eaa1182c2ef0ebc0532bc43bb8533d8f41dbf",
     "verification/agones/ci/39516368235-terminal-retained.json": "dec2e5942023b0dfa5a4fcc7eec526a48a61080e53dd8cede1b507ea40aa5b56",
     "verification/agones/ci/protected-model-execution-plan.json": "ab89b8924cba9e2bf37d712807911e037a9ace1513b3ba89e2517e1b22c7ae15",
@@ -244,6 +245,7 @@
     "current_retained_backend_receipt": "verification/agones/ci/39516368235-terminal-retained.json",
     "expected_multiset_revalidation": {
       "current_formal_credit_added": 4,
+      "durable_evidence": "verification/agones/ci/39516368235-evidence-published.json",
       "independent_histogram_pairs": 1600,
       "law_manifest": "verification/agones/expected-multiset-relation.json",
       "measured_change": "Exact source001/004 now pass four qualified assertions and four SAT covers. Source000 still reaches900s with peak6034563072bytes; source002/003 OOM at12884901888bytes after binary-search/memcmp expansion. Resource failures have zero complete individual rows and zero proof credit.",

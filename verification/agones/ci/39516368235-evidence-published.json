@@ -1,0 +1,38 @@
+{
+  "artifact_bindings": {
+    "verification/agones/ci/39516368235-terminal-retained.json": "dec2e5942023b0dfa5a4fcc7eec526a48a61080e53dd8cede1b507ea40aa5b56"
+  },
+  "backend_rows": 37459,
+  "classification": "REPO_SAFE",
+  "evidence_branch": "codex/agones-ci-evidence-39516368235",
+  "evidence_commit": "7a1c58ddd9ca0a8b911e2a2f2de98616c00c2fe0",
+  "evidence_tree": "f5e3aede674f11e29972ec6089cc4acc463695a4",
+  "failed_source_cases": [
+    0,
+    2,
+    3
+  ],
+  "feature_source_assertions_remaining": 6,
+  "feature_source_assertions_verified": 4,
+  "local_evidence_checkpoint": "3eb89c6d203b693cae2dddc3acfe4ad1bbd6cfee",
+  "local_evidence_tree": "f5e3aede674f11e29972ec6089cc4acc463695a4",
+  "observed_at": "2026-10-21T00:02:07.781635+00:00",
+  "passive_workflow_runs_observed": 0,
+  "pr_draft": true,
+  "pr_merged": false,
+  "raw_bytes_uploaded_unchanged": true,
+  "remote_tree_exactly_matches_local": true,
+  "retained_artifacts": 12,
+  "review_head_unchanged": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
+  "role": "Passive immutable backup with complete raw outputs. No duplicate queue or change to the tested review head. Source claims retain exact source/domain scope; migration is incomplete.",
+  "satisfied_covers": 42,
+  "schema_version": 1,
+  "semantic_claims": 53,
+  "source_head": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
+  "status": "PUBLISHED_ALL12_COMPLETE_ARTIFACTS_NINE_STRICT_SUMMARIES",
+  "successful_strict_summaries": 9,
+  "terminal_receipt": "verification/agones/ci/39516368235-terminal-retained.json",
+  "tested_merge": "afdf77e038393296fc136dc61d81cbbc193691e4",
+  "unique_qualified_source_occurrences": 41,
+  "workflow_run": 39516368235
+}

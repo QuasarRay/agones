@@ -1,6 +1,6 @@
 # Agones-rs handoff
 
-Generated from AGONES_RS_STATE.json revision 289.
+Generated from AGONES_RS_STATE.json revision 290.
 Contract SHA-256: `45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1`.
 Original reference: `6eb4a02588d8e7b581de187f3bc849733a78dcb2`, scope `agones-original-v1`.
 Workspace: `agones-rs-dev` at `e49e1beb679a56d78c5d1ae93876af15a161aa46`.
@@ -21,7 +21,7 @@ Last refactoring decision: SMALL_LOCAL_REFACTOR.
 Next review: After ordinary controls and one distinct protected result for these trace-bound repairs, reassess actual outcomes and proceed to canonical complete-validation adoption with explicit remaining proof debt. Reassess concrete CGP/resource/derive repetitions and all eight required _2 cells at that adoption milestone..
 No new macros or general frameworks are prerequisites for the next ordinary feature.
 
-Delivery: `PR96_E49E_NATIVE_VERIFIED_TWO_SOURCE_CASES_PASSED_THREE_RESOURCE_FAILURES_ALL12_RETAINED` to `agones-rs-dev`; never modify main.
+Delivery: `PR96_E49E_AND_COMPLETE_TERMINAL_EVIDENCE7A1C_PUBLISHED_TWO_SOURCE_CASES_PASSED_THREE_RESOURCE_FAILURES` to `agones-rs-dev`; never modify main.
 Connected GitHub app has write access; local gh CLI is logged out.
 Recover live jobs from the ledger and `verification/agones/runs/*.json` by comparing
 the stored process identity with /proc before waiting, attaching or stopping anything.

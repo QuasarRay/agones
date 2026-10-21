@@ -64,13 +64,19 @@
       "SENSITIVE_LOCAL",
       "SECRET_NEVER_PERSIST"
     ],
-    "large_logs": "Retain complete REPO_SAFE diagnostic and proof log blobs in the repository Git object store. Git stores these repeated textual outputs compressed internally; no verifier output is trimmed or normalized.",
-    "location": "verification/agones/runs under the verified PR/delivery commit; immutable manifests bind every full log with SHA-256.",
-    "passive_evidence_checkpoint": {
+    "historical_passive_evidence_checkpoint_before_expected_multiset": {
       "branch": "codex/agones-ci-evidence-39511896291",
       "commit": "183f6192b23f21d681218590a71ffe754b5f6981",
       "receipt": "verification/agones/ci/39511896291-evidence-published.json",
       "role": "immutable backup, no second queue or acceptance bypass"
+    },
+    "large_logs": "Retain complete REPO_SAFE diagnostic and proof log blobs in the repository Git object store. Git stores these repeated textual outputs compressed internally; no verifier output is trimmed or normalized.",
+    "location": "verification/agones/runs under the verified PR/delivery commit; immutable manifests bind every full log with SHA-256.",
+    "passive_evidence_checkpoint": {
+      "branch": "codex/agones-ci-evidence-39516368235",
+      "commit": "7a1c58ddd9ca0a8b911e2a2f2de98616c00c2fe0",
+      "receipt": "verification/agones/ci/39516368235-evidence-published.json",
+      "role": "Immutable complete all12 backup, not a second queue or acceptance bypass."
     },
     "provider": "Content-addressed Git object store in QuasarRay/agones",
     "retention": "Keep referenced evidence commits reachable through the review/integration history or an explicitly indexed immutable passive evidence branch until their claims are superseded and all needed bytes remain retained. Never prune the only artifact behind a live claim.",
@@ -102,12 +108,12 @@
   ],
   "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
   "delivery": {
-    "acceptance": "Published e49e preserves all five source bodies and passes605native/five generation modes. Terminal395163 campaign has nine strict successful selections53claims/42SATcovers/37459rows, including four feature-source assertions,36defaulting and one query-error occurrence counted once. Source000 times out;002/003 OOM, leaving six feature-source assertions required. All12artifacts retained; first11durably published76dd and final passive append pending. Clean isolated d492native675/six modes remains pending canonical adoption/publication/formal proof. Full migration, lifecycle, live Rusternetes conformance and all eight _2cells remain required.",
+    "acceptance": "Published e49e matcher passes605native/five deterministic modes and preserves all five source bodies. Actual terminal395163: nine strict selections53claims/42SATcovers/37459rows and41unique qualified source occurrences (four feature assertions,36defaulting,one query-error). Source000900stimeout and002/00312GiBOOM leave six feature-source assertions required. All12full artifacts and terminal audit are durably published7a1c58dd with exact remote/local tree identity; PR96 stays draft/unmerged. Clean isolatedd492675native/six modes, quantity/TypeMeta/six-field support and25general source cases remain pending canonical adoption/publication/formal proof. Full migration/lifecycle/liveRusternetes/all eight _2cells stay required.",
     "access": "GitHub app authorized as QuasarRay with push/admin; gh CLI unauthenticated; local .git writable",
     "actual_integration_head": "1e64a054901658908d0a7a4eecd3010379df9614",
     "actual_review_head": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
     "artifact_recovery_pending": "verification/agones/ci/39505643334-artifact-recovery-pending.json",
-    "artifact_recovery_status": "verification/agones/ci/39505643334-artifact-recovery-completed.json",
+    "artifact_recovery_status": "verification/agones/ci/39516368235-terminal-retained.json",
     "authorization": "User execution contract REQ-12/F4 and root AGENTS.MD milestone PR/merge workflow",
     "checks": [
       {
@@ -409,6 +415,7 @@
       "workflow_run": 39516368235
     },
     "historical_artifact_recovery_pending": "verification/agones/ci/39505643334-artifact-recovery-pending.json",
+    "historical_artifact_recovery_status_before_expected_multiset": "verification/agones/ci/39505643334-artifact-recovery-completed.json",
     "historical_retained_formal_counts_before_concat": {
       "backend_rows": 20132,
       "failed_harnesses": 5,
@@ -506,7 +513,7 @@
     "query_allocation_terminal_receipt": "verification/agones/ci/39498916435-terminal-retained.json",
     "query_allocation_tested_merge": "80901b52f41f9328f0449f16f4430e8eb2b7020f",
     "query_allocation_workflow_run": 39498916435,
-    "remote_result": "PR96_E49E_NATIVE_VERIFIED_TWO_SOURCE_CASES_PASSED_THREE_RESOURCE_FAILURES_ALL12_RETAINED",
+    "remote_result": "PR96_E49E_AND_COMPLETE_TERMINAL_EVIDENCE7A1C_PUBLISHED_TWO_SOURCE_CASES_PASSED_THREE_RESOURCE_FAILURES",
     "required_checks": [
       "migration-state",
       "rust",
@@ -518,9 +525,10 @@
     "streaming_direct_paths_workflow_run": 39505643334,
     "terminal_evidence_publication": {
       "branch": "codex/agones-ci-evidence-39516368235",
-      "commit": "76dd4eaec524347f3493043d23cb58e54c25dc4f",
-      "receipt": "verification/agones/ci/39516368235-eleven-artifacts-published.json",
-      "status": "PARTIAL11_PUBLISHED_SOURCE000_RUNNING"
+      "commit": "7a1c58ddd9ca0a8b911e2a2f2de98616c00c2fe0",
+      "receipt": "verification/agones/ci/39516368235-evidence-published.json",
+      "status": "PUBLISHED_ALL12",
+      "tree": "f5e3aede674f11e29972ec6089cc4acc463695a4"
     },
     "terminal_evidence_publication_pending": "verification/agones/ci/39505643334-evidence-publication-pending.json",
     "visible_checkout": {
@@ -532,9 +540,9 @@
   "goal": {
     "objective_attachment": "/home/astral/.codex/attachments/5cf63dab-e5a8-49be-a2f1-ae51f5edd993/pasted-text-1.txt",
     "reported_usage": {
-      "observed_at": 1792540487,
-      "time_seconds": 75230,
-      "tokens": 7408793
+      "observed_at": 1792540861,
+      "time_seconds": 75604,
+      "tokens": 7444152
     },
     "status": "active",
     "thread_id": "01a14ebe-10fa-7c41-9f85-256874fb4c1f",
@@ -542,8 +550,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 288,
-  "previous_sha256": "6819aada4216288a63cd0075d6afc64edd5cb3718ede1a7569241c9f59460f9f",
+  "previous_revision": 289,
+  "previous_sha256": "e9a3d8eb2af316302658263d8c157a014dda4b4b5b5e8bd0a8dc935840c929bb",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -1091,7 +1099,7 @@
       "secondary_candidate": "Source000 expects one error and times out at900s with MemoryPeak6034563072 while unfolding source_gsv_errors_match/filter counts and full record/string equality. For expected length0, multiset equality is actual.is_empty(); for expected length1, it is actual length1 plus full-record Eq. Keep the existing exact generic multiset fallback for every larger cardinality. The1600 histogram controls already include empty, singleton, duplicate and length0..3 cases; preserve all field controls and all source bodies."
     }
   ],
-  "revision": 289,
+  "revision": 290,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [
@@ -1123,7 +1131,8 @@
         "verification/agones/ci/39516368235-in-progress.json",
         "verification/agones/ci/39516368235-eight-retained.json",
         "verification/agones/ci/39516368235-nine-retained-two-oom-source000-running.json",
-        "verification/agones/ci/39516368235-terminal-retained.json"
+        "verification/agones/ci/39516368235-terminal-retained.json",
+        "verification/agones/ci/39516368235-evidence-published.json"
       ],
       "feature_ids": [
         "gameserver-player-tracking-validation"
@@ -1502,7 +1511,7 @@
   ],
   "workspace": {
     "branch": "agones-rs-dev",
-    "dirty_patch_sha256": "6b5914d92ed0ba603767f20879f7a21c025fefb132e4e20fdcca28a91589c02f",
+    "dirty_patch_sha256": "4200427c64c74dd8826fbb4db59be9f1fa777e5b6dfc5b81f389ffe8f9bf7443",
     "head": "e49e1beb679a56d78c5d1ae93876af15a161aa46",
     "last_validated_implementation": "verification/agones/gates/344f995f9464279cf16b6442afe3630de20fa067daa80a65268de552c017f166.json",
     "path": "/home/astral/Projects/agones",
