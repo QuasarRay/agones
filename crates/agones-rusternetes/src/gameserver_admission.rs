@@ -12,7 +12,7 @@ use rusternetes_common::resources::Pod;
 
 use crate::{
     AdapterError, ApiHooks, PASSTHROUGH_PORT_ASSIGNMENT_ANNOTATION,
-    validate_game_server_resources,
+    validate_game_server_with_context,
 };
 
 fn patch_add(path: String, value: serde_json::Value) -> PatchOperation {
@@ -206,18 +206,15 @@ pub fn validate_game_server_creation_with_context<C, H>(
     hooks: &H,
 ) -> Result<Vec<ValidationError>, AdapterError>
 where
-    C: agones_core::CanValidateGameServerFeatures,
+    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities,
     H: ApiHooks,
 {
-    let mut errors = game_server.validate_with_context(context);
+    let mut errors = validate_game_server_with_context(context, game_server)?;
 
     if game_server
         .get_dev_address()
         .is_none_or(str::is_empty)
     {
-        errors.extend(validate_game_server_resources(
-            &game_server.spec,
-        )?);
         errors.extend(hooks.validate_game_server_spec(
             &game_server.spec,
         ));
@@ -268,7 +265,7 @@ pub fn validate_game_server_creation_object_with_context<C, H>(
     hooks: &H,
 ) -> Result<AdmissionResponse, AdapterError>
 where
-    C: agones_core::CanValidateGameServerFeatures,
+    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities,
     H: ApiHooks,
 {
     let game_server: GameServer =
@@ -470,7 +467,7 @@ impl<H, C> GameServerCreationValidationAdmission<H, C> {
 #[async_trait]
 impl<H, C> AdmissionController for GameServerCreationValidationAdmission<H, C>
 where
-    C: agones_core::CanValidateGameServerFeatures + Send + Sync,
+    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities + Send + Sync,
     H: ApiHooks + Send + Sync,
 {
     fn name(&self) -> &str {

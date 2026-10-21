@@ -13,6 +13,8 @@ struct ErrorView<'a> {
     path: &'a str,
     bad_value: Option<&'a str>,
     detail: &'a str,
+    origin: &'a str,
+    covered_by_declarative: bool,
 }
 
 #[derive(Clone, Copy)]
@@ -29,6 +31,8 @@ fn observe(errors: &[ValidationError]) -> Observation<'_> {
             path: &error.path,
             bad_value: error.bad_value.as_deref(),
             detail: &error.detail,
+            origin: &error.origin,
+            covered_by_declarative: error.covered_by_declarative,
         }),
     }
 }
@@ -42,6 +46,8 @@ fn reference(enabled: bool, present: bool) -> Observation<'static> {
                 path: "spec.players",
                 bad_value: None,
                 detail: "Value cannot be set unless feature flag PlayerTracking is enabled",
+                origin: "",
+                covered_by_declarative: false,
             }),
         },
         (false, false) | (true, false) | (true, true) => Observation {
@@ -63,6 +69,8 @@ fn satisfies_source_relation(enabled: bool, present: bool, output: Observation<'
         && error.path == "spec.players"
         && error.bad_value.is_none()
         && error.detail == "Value cannot be set unless feature flag PlayerTracking is enabled"
+        && error.origin.is_empty()
+        && !error.covered_by_declarative
 }
 
 #[derive(HasField)]
@@ -153,6 +161,8 @@ fn source_relation_rejects_flag_presence_and_error_field_faults() {
         path: "spec.players".into(),
         bad_value: None,
         detail: "Value cannot be set unless feature flag PlayerTracking is enabled".into(),
+        origin: String::new(),
+        covered_by_declarative: false,
     }];
     assert!(satisfies_source_relation(false, true, observe(&expected)));
     assert!(!satisfies_source_relation(true, true, observe(&expected)));
@@ -163,13 +173,15 @@ fn source_relation_rejects_flag_presence_and_error_field_faults() {
         true,
         observe(&[expected[0].clone(), expected[0].clone()])
     ));
-    for field in 0..4 {
+    for field in 0..6 {
         let mut wrong = expected.clone();
         match field {
             0 => wrong[0].kind = ValidationErrorKind::Invalid,
             1 => wrong[0].path = "players".into(),
             2 => wrong[0].bad_value = Some("0".into()),
-            _ => wrong[0].detail = "PlayerTracking".into(),
+            3 => wrong[0].detail = "PlayerTracking".into(),
+            4 => wrong[0].origin = "format=wrong".into(),
+            _ => wrong[0].covered_by_declarative = true,
         }
         assert!(!satisfies_source_relation(false, true, observe(&wrong)));
     }

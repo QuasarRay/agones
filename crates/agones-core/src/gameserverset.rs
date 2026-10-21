@@ -180,6 +180,8 @@ fn validate_name(metadata: &ObjectMeta) -> Vec<ValidationError> {
         return Vec::new();
     }
     vec![ValidationError {
+        origin: String::new(),
+        covered_by_declarative: false,
         kind: ValidationErrorKind::TooLong,
         path: "metadata.name".to_owned(),
         bad_value: Some(metadata.name.clone()),
@@ -201,6 +203,8 @@ impl GameServerSet {
         let mut errors = validate_name(&new.metadata);
         if self.spec.template != new.spec.template {
             errors.push(ValidationError {
+                origin: String::new(),
+                covered_by_declarative: false,
                 kind: ValidationErrorKind::Invalid,
                 path: "spec.template".to_owned(),
                 bad_value: None,
@@ -214,7 +218,7 @@ impl GameServerSet {
         self.validate_with_context(&crate::GameServerDefaultingContext::default())
     }
 
-    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures>(
+    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures + crate::CanValidateResourceQuantities>(
         &self,
         context: &C,
     ) -> Vec<ValidationError> {

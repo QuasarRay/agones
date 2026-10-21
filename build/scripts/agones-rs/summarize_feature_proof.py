@@ -7,7 +7,7 @@ import json
 from kani_results import ROOT, read_results, require_claims_and_covers, require_run_command
 
 parser = argparse.ArgumentParser()
-parser.add_argument("family", choices=["input", "query", "error-ascii", "sdk-version", "sdk-source", "health", "gameserver-source", "gameserver-features", "gameserver-validation-source"])
+parser.add_argument("family", choices=["input", "query", "error-ascii", "sdk-version", "sdk-source", "health", "gameserver-source", "gameserver-features", "gameserver-validation-source", "gameserver-general-validation-source"])
 parser.add_argument("run_id")
 parser.add_argument("--output", required=True)
 parser.add_argument("--case-index", type=int)
@@ -69,7 +69,11 @@ elif args.family == "gameserver-features":
                 "enabled maximum player capacity remains accepted", "the generator should produce at least one valid value"]
     assert domain["required_covers"] == required
     assert domain["lifetime_mapping"]["rule"] == "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1"
-    scope = "Actual CGP ValidateAgonesGameServerFeatures provider and independent nonallocating match-table reference checked against the separate complete error relation. Arbitrary enabled/present booleans and signed i64 capacity, no filtering, fixed spec field path, unwind128. The deterministic relation fixes count/kind/path/optional bad value/detail for both observations. No qualified original table assertion, unbounded field path, full validation, admission, lifecycle or live-cluster proof credit. Harness owners are retained after observations under the existing lifetime rule; formal post-observation cleanup remains required."
+    mapping = domain["validation_error_mapping"]
+    assert mapping["rule"] == "AGONES-ERROR-CONSTRUCTOR-EMPTY-1"
+    assert mapping["fields"] == ["Type", "Field", "BadValue", "Detail", "Origin", "CoveredByDeclarative"]
+    assert hashlib.sha256((ROOT / mapping["source"]).read_bytes()).hexdigest() == mapping["source_sha256"]
+    scope = "Actual CGP ValidateAgonesGameServerFeatures provider and independent nonallocating match-table reference checked against the separate complete six-field error relation. Arbitrary enabled/present booleans and signed i64 capacity, no filtering, fixed spec field path, unwind128. The deterministic relation fixes count/kind/path/optional bad value/detail/origin/declarative flag for both observations. Source Required/Forbidden empty bad values use the pinned bidirectional constructor-image rule. No qualified original table assertion, unbounded field path, full validation, admission, lifecycle or live-cluster proof credit. Harness owners are retained after observations under the existing lifetime rule; formal post-observation cleanup remains required."
 elif args.family == "health":
     harness = "health_defaulting_common_domain"
     claims = [r for r in rows if r["symbol"].startswith(harness+"::{closure#0}.assertion.")]
@@ -80,15 +84,22 @@ elif args.family == "health":
                 "signed health extremes remain exact", "disabled minimum delay remains exact",
                 "mixed health thresholds default independently", "the generator should produce at least one valid value"]
     scope = "Actual GameServerSpec::apply_defaults health observation with other spec fields zero, independent reference and relational invariant. One bool and three arbitrary i32 inputs, no filtering, unwind 16. No whole GameServer/admission/lifecycle proof or original exact-case assertion credit."
-elif args.family in ("gameserver-source", "gameserver-validation-source"):
-    validation = args.family == "gameserver-validation-source"
+elif args.family in ("gameserver-source", "gameserver-validation-source", "gameserver-general-validation-source"):
+    general = args.family == "gameserver-general-validation-source"
+    validation = args.family != "gameserver-source"
     name, feature, case_count, assertion_count = (
+        ("gameserver-validation", "RESOURCE-QUANTITY-001", 25, 25) if general else
         ("gameserver-feature-validation", "GS-VALIDATE-FEATURES-001", 5, 10) if validation else
         ("gameserver-defaulting", "GS-DEFAULTS-001", 17, 304)
     )
     metadata = json.loads((ROOT / f"verification/agones/{name}-codegen.json").read_text())
     assert metadata["feature_id"] == feature
     assert metadata["case_count"] == case_count and metadata["assertion_count"] == assertion_count
+    assert len(metadata["harnesses"]) == case_count and len(metadata["assertions"]) == assertion_count
+    assert len({item["harness"] for item in metadata["harnesses"]}) == case_count
+    assert len({item["case_id"] for item in metadata["harnesses"]}) == case_count
+    assert len({item["function"] for item in metadata["assertions"]}) == assertion_count
+    assert len({item["origin"] for item in metadata["assertions"]}) == assertion_count
     assert args.case_index is not None and 0 <= args.case_index < case_count, "select the exact source case"
     selected = metadata["harnesses"][args.case_index]
     harness = selected["harness"]
@@ -101,13 +112,44 @@ elif args.family in ("gameserver-source", "gameserver-validation-source"):
     assert ["bolero", "test", harness, "--engine", "kani"] == command[-5:], "require the selected real Bolero/Kani route"
     if validation:
         sources = metadata["generator_source_files"]
-        assert set(sources) == {metadata["generator_path"], "crates/agones-rusternetes/examples/codegen/gameserver_features.rs"}
+        expected_sources = {metadata["generator_path"], "crates/agones-rusternetes/examples/codegen/gameserver_features.rs"}
+        if general:
+            expected_sources.add("crates/agones-rusternetes/examples/codegen/gameserver_validation.rs")
+        assert set(sources) == expected_sources
         for path, expected in sources.items():
             assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == expected, f"stale generator module: {path}"
             assert run["source_files"][path] == expected, f"proof used different generator module: {path}"
+        ir = json.loads((ROOT / metadata["ir"]).read_text())
+        assert ir["feature_id"] == feature and ir["case_count"] == len(ir["cases"]) == case_count
+        gate_path = ir["implementation_gate"]
+        gate_raw = (ROOT / gate_path).read_bytes()
+        assert hashlib.sha256(gate_raw).hexdigest() == ir["implementation_gate_sha256"]
+        gate = json.loads(gate_raw)
+        assert gate["feature_id"] == feature and gate["status"] == "IMPLEMENTED"
+        for path, expected in gate["production_files"].items():
+            assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == expected, f"stale production: {path}"
+            if path.startswith("crates/") or path in ("Cargo.toml", "Cargo.lock", "rust-toolchain.toml", ".cargo/config.toml"):
+                assert run["source_files"][path] == expected, f"proof used different production: {path}"
+        assert selected["case_id"] == ir["cases"][args.case_index]["id"]
+        prefix = "source_gs_validate" if general else "source_gsv"
+        assert harness == f"{prefix}_case_{args.case_index:03}"
+        assert len(selected["assertion_functions"]) == (1 if general else 2)
+        mapping = metadata["validation_error_mapping"]
+        assert mapping["rule"] == "AGONES-ERROR-CONSTRUCTOR-EMPTY-1"
+        assert mapping["fields"] == ["Type", "Field", "BadValue", "Detail", "Origin", "CoveredByDeclarative"]
+        assert hashlib.sha256((ROOT / mapping["source"]).read_bytes()).hexdigest() == mapping["source_sha256"]
+        multiset = metadata["multiset_mapping"]
+        assert multiset["rule"] == "AGONES-ELEMENTSMATCH-EXPECTED-COUNTS-1"
+        assert hashlib.sha256((ROOT / multiset["manifest"]).read_bytes()).hexdigest() == multiset["manifest_sha256"]
     functions = {claim["function"]: claim for claim in metadata["assertions"] if claim["function"] in selected["assertion_functions"]}
     assert len(functions) == len(selected["assertion_functions"])
+    if validation:
+        assert {claim["origin"] for claim in functions.values()} == {
+            claim["id"] for claim in ir["cases"][args.case_index]["assertions"]
+        }, "selected assertion origins differ from source IR"
     names = lambda row: row["symbol"].split(".assertion.")[0].split("::")[-1]
+    all_functions = {claim["function"] for claim in metadata["assertions"]}
+    assert {names(row) for row in rows if names(row) in all_functions} == set(functions), "unexpected original source assertion selection"
     claims = [row for row in rows if names(row) in functions]
     assert len(claims) == len(functions), "missing/duplicate original source assertions"
     assert {names(row) for row in claims} == set(functions)
@@ -118,6 +160,7 @@ elif args.family in ("gameserver-source", "gameserver-validation-source"):
     if validation:
         assert metadata["lifetime_mapping"]["rule"] == "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1"
         assert selected["raw_domain"] == "unit" and selected["preconditions"] == [] and selected["unwind"] == 128
+        assert len(required) == len(set(required)) == 2
         scope = "Selected exact source validation case: "+selected["case_id"]+". "+metadata["scope"]
     else:
         scope = ("Selected exact source GameServer case only: "+selected["case_id"]+
@@ -159,7 +202,7 @@ summary = {"schema_version":1, "family":args.family, "run":f"verification/agones
            "assertions":claims, "covers":covers,
            "status_counts":{status:sum(row["status"]==status for row in rows) for status in ("SUCCESS","SATISFIED","UNREACHABLE")},
            "unreachable_not_credited":[r for r in rows if r["status"]=="UNREACHABLE"], "scope":scope}
-if args.family in ("gameserver-source", "gameserver-validation-source"):
+if args.family in ("gameserver-source", "gameserver-validation-source", "gameserver-general-validation-source"):
     summary["lifetime_mapping"] = metadata["lifetime_mapping"]
 elif args.family == "gameserver-features":
     summary["lifetime_mapping"] = domain["lifetime_mapping"]

@@ -27,6 +27,8 @@ fn forbidden(path: &str) -> ValidationError {
         path: path.into(),
         bad_value: None,
         detail: "Value cannot be set unless feature flag PlayerTracking is enabled".into(),
+        origin: String::new(),
+        covered_by_declarative: false,
     }
 }
 
@@ -131,5 +133,5 @@ fn same_provider_accepts_a_context_with_only_its_feature_dependency() {
     };
     let mut spec = valid_spec();
     spec.players = Some(PlayersSpec::default());
-    assert!(spec.validate_with_context(&context, "").is_empty());
+    assert!(context.validate_game_server_features(&spec, "spec").is_empty());
 }

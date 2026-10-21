@@ -5,7 +5,7 @@ use rusternetes_common::admission::{
 };
 
 use crate::{
-    AdapterError, ApiHooks, validate_game_server_resources_at,
+    AdapterError, ApiHooks,
 };
 use crate::gameserver_admission::format_validation_errors;
 
@@ -36,7 +36,7 @@ pub fn validate_game_server_set_creation_with_context<C, H>(
     hooks: &H,
 ) -> Result<Vec<ValidationError>, AdapterError>
 where
-    C: agones_core::CanValidateGameServerFeatures,
+    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities,
     H: ApiHooks,
 {
     let mut errors = game_server_set.validate_with_context(context);
@@ -47,10 +47,7 @@ where
     let mut game_server_spec = game_server_set.spec.template.spec.clone();
     game_server_spec.apply_defaults();
 
-    errors.extend(validate_game_server_resources_at(
-        &game_server_spec,
-        "spec.template.spec",
-    )?);
+    let _pod_spec: rusternetes_common::resources::PodSpec = crate::to_native(&game_server_spec.template.spec)?;
     errors.extend(hooks.validate_game_server_spec_at(
         &game_server_spec,
         "spec.template.spec",
@@ -83,7 +80,7 @@ pub fn validate_game_server_set_creation_object_with_context<C, H>(
     hooks: &H,
 ) -> Result<AdmissionResponse, AdapterError>
 where
-    C: agones_core::CanValidateGameServerFeatures,
+    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities,
     H: ApiHooks,
 {
     let game_server_set: GameServerSet =
@@ -178,7 +175,7 @@ impl<H, C> GameServerSetCreationValidationAdmission<H, C> {
 #[async_trait]
 impl<H, C> AdmissionController for GameServerSetCreationValidationAdmission<H, C>
 where
-    C: agones_core::CanValidateGameServerFeatures + Send + Sync,
+    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities + Send + Sync,
     H: ApiHooks + Send + Sync,
 {
     fn name(&self) -> &str {
@@ -322,13 +319,7 @@ mod tests {
     fn creation_validation_reports_nested_resource_paths() {
         let mut set = fixture();
         set.spec.template.spec.template.spec.containers[0]
-            .resources
-            .insert(
-                "requests".into(),
-                serde_json::json!({
-                    "cpu": "-1"
-                }),
-            );
+            .resources.requests = Some(serde_json::from_value(serde_json::json!({"cpu": "-1"})).unwrap());
 
         let response = validate_game_server_set_creation_object(
             &serde_json::to_value(set).unwrap(),
@@ -355,6 +346,8 @@ mod tests {
         ) -> Vec<ValidationError> {
             if matches!(scheduling, Some(SchedulingStrategy::Distributed)) {
                 vec![ValidationError {
+                    origin: String::new(),
+                    covered_by_declarative: false,
                     kind: ValidationErrorKind::Invalid,
                     path: path.into(),
                     bad_value: Some("Distributed".into()),
@@ -454,12 +447,16 @@ mod tests {
             ) -> Vec<ValidationError> {
                 vec![
                     ValidationError {
+                        origin: String::new(),
+                        covered_by_declarative: false,
                         kind: ValidationErrorKind::Invalid,
                         path: path.into(),
                         bad_value: None,
                         detail: "first".into(),
                     },
                     ValidationError {
+                        origin: String::new(),
+                        covered_by_declarative: false,
                         kind: ValidationErrorKind::Invalid,
                         path: format!("{path}.secondary"),
                         bad_value: None,

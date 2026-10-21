@@ -34,6 +34,8 @@ jobs:
         run: python build/scripts/agones-rs/test_kani_results.py
       - name: Reject unprotected execution and corrupted recorder output
         run: python build/scripts/agones-rs/test_ci_model_execution.py
+      - name: Require complete source-case parser and matrix coverage
+        run: python build/scripts/agones-rs/test_source_case_proofs.py
       - name: Select affected checks conservatively
         id: affected
         env:
@@ -67,6 +69,8 @@ jobs:
         run: cargo run --locked -p agones-rusternetes --example feature_case_codegen -- --gameserver-defaulting --check
       - name: Check all exact GameServer validation source-case generation
         run: cargo run --locked -p agones-rusternetes --example feature_case_codegen -- --gameserver-features --check
+      - name: Check all 25 general GameServer validation cases
+        run: cargo run --locked -p agones-rusternetes --example feature_case_codegen -- --gameserver-validation --check
       - name: Reject unsupported GameServer source lowering
         run: cargo test --locked -p agones-rusternetes --example feature_case_codegen gameserver_codegen_controls
       - name: Check resource derive aliases, facades, generics, and rejected paths
@@ -169,21 +173,46 @@ jobs:
   feature-validation-source-model-check:
     needs: migration-state
     if: needs.migration-state.outputs.model == 'true'
-    name: feature-validation-source-${{ matrix.case }}
+    name: ${{ matrix.family }}-validation-source-${{ matrix.case }}
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
         include:
-          - { index: 0, case: "000" }
-          - { index: 1, case: "001" }
-          - { index: 2, case: "002" }
-          - { index: 3, case: "003" }
-          - { index: 4, case: "004" }
+          - {"family": "feature", "index": 0, "case": "000"}
+          - {"family": "feature", "index": 1, "case": "001"}
+          - {"family": "feature", "index": 2, "case": "002"}
+          - {"family": "feature", "index": 3, "case": "003"}
+          - {"family": "feature", "index": 4, "case": "004"}
+          - {"family": "general", "index": 0, "case": "000"}
+          - {"family": "general", "index": 1, "case": "001"}
+          - {"family": "general", "index": 2, "case": "002"}
+          - {"family": "general", "index": 3, "case": "003"}
+          - {"family": "general", "index": 4, "case": "004"}
+          - {"family": "general", "index": 5, "case": "005"}
+          - {"family": "general", "index": 6, "case": "006"}
+          - {"family": "general", "index": 7, "case": "007"}
+          - {"family": "general", "index": 8, "case": "008"}
+          - {"family": "general", "index": 9, "case": "009"}
+          - {"family": "general", "index": 10, "case": "010"}
+          - {"family": "general", "index": 11, "case": "011"}
+          - {"family": "general", "index": 12, "case": "012"}
+          - {"family": "general", "index": 13, "case": "013"}
+          - {"family": "general", "index": 14, "case": "014"}
+          - {"family": "general", "index": 15, "case": "015"}
+          - {"family": "general", "index": 16, "case": "016"}
+          - {"family": "general", "index": 17, "case": "017"}
+          - {"family": "general", "index": 18, "case": "018"}
+          - {"family": "general", "index": 19, "case": "019"}
+          - {"family": "general", "index": 20, "case": "020"}
+          - {"family": "general", "index": 21, "case": "021"}
+          - {"family": "general", "index": 22, "case": "022"}
+          - {"family": "general", "index": 23, "case": "023"}
+          - {"family": "general", "index": 24, "case": "024"}
     env:
       CARGO_BUILD_JOBS: "2"
-      AGONES_VALIDATION_CI_RUN: gameserver-validation-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}-case-${{ matrix.case }}
+      AGONES_VALIDATION_CI_RUN: ${{ matrix.family == 'feature' && 'gameserver-validation' || 'gameserver-general-validation' }}-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}-case-${{ matrix.case }}
     steps:
       - uses: actions/checkout@v4
       - name: Install pinned verification tools
@@ -193,13 +222,13 @@ jobs:
           cargo kani setup
           cargo install cargo-bolero --version 0.13.4 --locked --no-default-features --features kani
       - name: Verify the complete selected original GameServer validation case
-        run: python3 build/scripts/agones-rs/run.py "$AGONES_VALIDATION_CI_RUN" --quiet --cwd crates/agones-core python3 ../../build/scripts/agones-rs/protect_model.py cargo bolero test "source_gsv_case_${{ matrix.case }}" --engine kani
-      - name: Require both original assertions and both non-vacuity covers
-        run: python3 build/scripts/agones-rs/summarize_feature_proof.py gameserver-validation-source "$AGONES_VALIDATION_CI_RUN" --case-index "${{ matrix.index }}" --output "verification/agones/proof-summaries/$AGONES_VALIDATION_CI_RUN.json"
+        run: python3 build/scripts/agones-rs/run.py "$AGONES_VALIDATION_CI_RUN" --quiet --cwd crates/agones-core python3 ../../build/scripts/agones-rs/protect_model.py cargo bolero test "${{ matrix.family == 'feature' && 'source_gsv' || 'source_gs_validate' }}_case_${{ matrix.case }}" --engine kani
+      - name: Require every selected original assertion and both non-vacuity covers
+        run: python3 build/scripts/agones-rs/summarize_feature_proof.py "${{ matrix.family == 'feature' && 'gameserver-validation-source' || 'gameserver-general-validation-source' }}" "$AGONES_VALIDATION_CI_RUN" --case-index "${{ matrix.index }}" --output "verification/agones/proof-summaries/$AGONES_VALIDATION_CI_RUN.json"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: feature-kani-validation-${{ matrix.case }}-${{ github.run_id }}-${{ github.run_attempt }}
+          name: feature-kani-${{ matrix.family == 'feature' && 'validation' || 'general-validation' }}-${{ matrix.case }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             verification/agones/runs/${{ env.AGONES_VALIDATION_CI_RUN }}.*
             verification/agones/proof-summaries/${{ env.AGONES_VALIDATION_CI_RUN }}.json

@@ -1,39 +1,108 @@
 use super::*;
 
-pub(super) fn source_validation_error(error: &Value) -> rust::Tokens {
+pub(super) fn source_validation_error_record(error: &Value) -> agones_core::ValidationError {
+    use agones_core::ValidationErrorKind::*;
     assert_eq!(
         error.as_object().unwrap().len(),
         6,
         "unmodeled source error field"
     );
-    assert_eq!(
-        error["Origin"], "",
-        "nonzero source error origin is not modeled"
-    );
-    assert_eq!(error["CoveredByDeclarative"], false);
     let kind = match error["Type"].as_str().unwrap() {
-        "FieldValueInvalid" => "Invalid",
-        "FieldValueForbidden" => "Forbidden",
-        "FieldValueRequired" => "Required",
-        "FieldValueDuplicate" => "Duplicate",
-        "FieldValueNotSupported" => "NotSupported",
-        "FieldValueTooLong" => "TooLong",
+        "FieldValueInvalid" => Invalid,
+        "FieldValueForbidden" => Forbidden,
+        "FieldValueRequired" => Required,
+        "FieldValueDuplicate" => Duplicate,
+        "FieldValueNotSupported" => NotSupported,
+        "FieldValueTooLong" => TooLong,
         other => panic!("unmodeled source error type: {other}"),
     };
-    let path = quoted(error["Field"].as_str().unwrap());
-    let detail = quoted(error["Detail"].as_str().unwrap());
-    let bad = if error["BadValue"].is_null() {
-        quote! { None }
+    // AGONES-ERROR-CONSTRUCTOR-EMPTY-1: the pinned Required/Forbidden
+    // constructors store the empty Go string. Kind+None encodes that image
+    // losslessly. A nil/nonempty value is outside the image and must reject.
+    let bad_value = if matches!(kind, Required | Forbidden) {
+        assert_eq!(error["BadValue"], "", "outside the source constructor image");
+        None
+    } else if error["BadValue"].is_null() {
+        None
     } else {
-        let value = quoted(
-            error["BadValue"]
-                .as_str()
-                .expect("unmodeled non-string bad value"),
-        );
-        quote! { Some($value.to_owned()) }
+        Some(error["BadValue"].as_str().expect("unmodeled non-string bad value").to_owned())
     };
+    agones_core::ValidationError {
+        kind, path: error["Field"].as_str().unwrap().to_owned(), bad_value,
+        detail: error["Detail"].as_str().unwrap().to_owned(),
+        origin: error["Origin"].as_str().expect("non-string origin").to_owned(),
+        covered_by_declarative: error["CoveredByDeclarative"].as_bool().expect("non-boolean coverage"),
+    }
+}
+
+pub(super) fn reconstruct_source_validation_error(error: &agones_core::ValidationError) -> Value {
+    use agones_core::ValidationErrorKind::*;
+    let kind = match error.kind { Invalid => "FieldValueInvalid", Forbidden => "FieldValueForbidden",
+        Required => "FieldValueRequired", Duplicate => "FieldValueDuplicate",
+        NotSupported => "FieldValueNotSupported", TooLong => "FieldValueTooLong" };
+    let bad_value = if matches!(error.kind, Required | Forbidden) {
+        assert!(error.bad_value.is_none(), "outside the normalized constructor image");
+        json!("")
+    } else { json!(error.bad_value) };
+    json!({"Type":kind,"Field":error.path,"BadValue":bad_value,"Detail":error.detail,
+        "Origin":error.origin,"CoveredByDeclarative":error.covered_by_declarative})
+}
+
+pub(super) fn source_validation_error(error: &Value) -> rust::Tokens {
+    let record = source_validation_error_record(error);
+    assert_eq!(reconstruct_source_validation_error(&record), *error, "lossy source error mapping");
+    let kind = format!("{:?}", record.kind);
+    let path = quoted(&record.path);
+    let detail = quoted(&record.detail);
+    let origin = quoted(&record.origin);
+    let covered = record.covered_by_declarative.to_string();
+    let bad = match record.bad_value { None => quote! { None }, Some(value) => {
+        let value = quoted(value); quote! { Some($value.to_owned()) }
+    }};
     quote! { agones_core::ValidationError { kind: agones_core::ValidationErrorKind::$kind,
-    path: $path.to_owned(), bad_value: $bad, detail: $detail.to_owned() } }
+    path: $path.to_owned(), bad_value: $bad, detail: $detail.to_owned(),
+    origin: $origin.to_owned(), covered_by_declarative: $covered } }
+}
+
+pub(super) fn validation_error_relation(name: &str) -> rust::Tokens {
+    quote! {
+        fn $name(actual: &[agones_core::ValidationError], expected: &[agones_core::ValidationError]) -> bool {
+            match expected {
+                [] => actual.is_empty(),
+                [error] => matches!(actual, [value] if value == error),
+                _ => actual.len() == expected.len() && expected.iter().all(|error| {
+                    actual.iter().filter(|value| *value == error).count()
+                        == expected.iter().filter(|value| *value == error).count()
+                }),
+            }
+        }
+    }
+}
+
+pub(super) fn validation_multiset_mapping(root: &Path) -> Value {
+    let path = "verification/agones/expected-multiset-relation.json";
+    let raw = fs::read(root.join(path)).unwrap();
+    let relation: Value = serde_json::from_slice(&raw).unwrap();
+    assert_eq!(relation["schema_version"], 1);
+    assert_eq!(relation["rule_id"], "AGONES-ELEMENTSMATCH-EXPECTED-COUNTS-1");
+    json!({
+        "rule": "AGONES-ELEMENTSMATCH-EXPECTED-COUNTS-1",
+        "manifest": path,
+        "manifest_sha256": hash(&raw),
+        "relation": "Equal lengths and exact full-record multiplicities for every expected error; no field or duplicate omission."
+    })
+}
+
+pub(super) fn validation_error_mapping(root: &Path) -> Value {
+    let source = "vendor/k8s.io/apimachinery/pkg/util/validation/field/errors.go";
+    let digest = hash(&fs::read(root.join(source)).unwrap());
+    assert_eq!(digest, "747db5374cdd58712b46d10775272508212d3201fa05c30105a5531debc666d4", "changed pinned source error constructors");
+    json!({"rule":"AGONES-ERROR-CONSTRUCTOR-EMPTY-1","source":source,"source_sha256":digest,
+        "fields":["Type","Field","BadValue","Detail","Origin","CoveredByDeclarative"],
+        "forward":"Require the exact empty Go string for Required/Forbidden and encode it as kind+None. Other supported kinds preserve string versus null distinctly. Copy every other field exactly.",
+        "inverse":"Reconstruct the fixed empty source string from Required/Forbidden+None; reject a non-None value. Other kinds reconstruct their original string/null. Every lowered error must round-trip in full.",
+        "unsupported":"Non-string/non-null bad values, unknown kinds/fields and values outside the declared constructor image reject; their obligations remain open.",
+        "native_fault_controls":"All six error fields and multiset multiplicity are independently observable. Bidirectional constructor-image controls exercise both directions and reject nonempty/nil source values."})
 }
 
 pub(super) fn emit_gameserver_feature_cases(root: &Path, check: bool) {
@@ -69,18 +138,7 @@ pub(super) fn emit_gameserver_feature_cases(root: &Path, check: bool) {
             "assert.ElementsMatch(t, tc.want, errs, \"ErrorList check\")"
         ])
     );
-    let mut tokens: rust::Tokens = quote! {
-        fn source_gsv_errors_match(actual: &[agones_core::ValidationError], expected: &[agones_core::ValidationError]) -> bool {
-            match expected {
-                [] => actual.is_empty(),
-                [error] => matches!(actual, [value] if value == error),
-                _ => actual.len() == expected.len() && expected.iter().all(|error| {
-                    actual.iter().filter(|value| *value == error).count()
-                        == expected.iter().filter(|value| *value == error).count()
-                }),
-            }
-        }
-    };
+    let mut tokens = validation_error_relation("source_gsv_errors_match");
     let mut ordinary: rust::Tokens = quote! {
         #[cfg(not(kani))]
         #[test]
@@ -88,18 +146,21 @@ pub(super) fn emit_gameserver_feature_cases(root: &Path, check: bool) {
             let first = agones_core::ValidationError {
                 kind: agones_core::ValidationErrorKind::Invalid,
                 path: "spec.first".into(), bad_value: None, detail: "detail".into(),
+                origin: String::new(), covered_by_declarative: false,
             };
             let mut second = first.clone(); second.path = "spec.second".into();
             assert!(source_gsv_errors_match(&[first.clone(), second.clone()], &[second.clone(), first.clone()]));
             assert!(!source_gsv_errors_match(&[first.clone(), first.clone()], &[first.clone(), second.clone()]));
             assert!(!source_gsv_errors_match(&[], &[first.clone()]));
-            for field in 0..4 {
+            for field in 0..6 {
                 let mut wrong = first.clone();
                 match field {
                     0 => wrong.kind = agones_core::ValidationErrorKind::Forbidden,
                     1 => wrong.path = "other".into(),
                     2 => wrong.bad_value = Some("bad".into()),
-                    _ => wrong.detail = "other".into(),
+                    3 => wrong.detail = "other".into(),
+                    4 => wrong.origin = "format=other".into(),
+                    _ => wrong.covered_by_declarative = true,
                 }
                 assert!(!source_gsv_errors_match(&[first.clone()], &[wrong]));
             }
@@ -256,19 +317,9 @@ pub(super) fn emit_gameserver_feature_cases(root: &Path, check: bool) {
     );
     let output = "crates/agones-core/tests/generated/gameserver_feature_validation_cases.rs";
     let generator = "crates/agones-rusternetes/examples/feature_case_codegen.rs";
-    let metadata = json!({"schema_version":1,"feature_id":"GS-VALIDATE-FEATURES-001","generator":"Genco 0.17.10 with pinned rustfmt","generator_path":generator,"generator_sha256":hash(&fs::read(root.join(generator)).unwrap()),"generator_source_files":{generator:hash(&fs::read(root.join(generator)).unwrap()),"crates/agones-rusternetes/examples/codegen/gameserver_features.rs":hash(&fs::read(root.join("crates/agones-rusternetes/examples/codegen/gameserver_features.rs")).unwrap())},"ir":ir_path,"ir_sha256":hash(&raw),"output":output,"output_sha256":hash(source.as_bytes()),"case_count":5,"assertion_count":10,"assertions":assertions,"harnesses":harnesses,"fixture_mapping":"Whole source wire object plus explicit nil/allocated Counters/Lists/Ports/Players witnesses. Source empty maps omitted by JSON are restored as allocated empty maps. Unknown fields/error metadata fail closed.","lifetime_mapping":{"rule":"GS-DEFAULTS-001-OBSERVATION-LIFETIME-1","boundary":"After every original observation and cover, retain the harness-owned fixture, parsed features, context and error lists in both engines. Source callbacks specify no GC/deallocation observation. Actual production bodies remain unchanged.","ordinary_cleanup":"Separate complete-fixture and actual adapter replay uses normal destruction.","residual":"Formal post-observation cleanup and lifecycle remain required."},"scope":"All five exact original validation cases, ten qualified source assertions. Observation lifetime follows the existing retained-owner rule; no formal post-observation cleanup credit. No original case sets Players. Actual core validation and source literals are modeled; original Go/resource/hooks use ordinary replay. Full domain validation, present-Players contract proof, lifecycle/conformance and all eight _2 cells remain required."});
-    let relation_path = "verification/agones/expected-multiset-relation.json";
-    let relation_raw = fs::read(root.join(relation_path)).unwrap();
-    let relation: Value = serde_json::from_slice(&relation_raw).unwrap();
-    assert_eq!(relation["schema_version"], 1);
-    assert_eq!(relation["rule_id"], "AGONES-ELEMENTSMATCH-EXPECTED-COUNTS-1");
-    let mut metadata = metadata;
-    metadata["multiset_mapping"] = json!({
-        "rule": "AGONES-ELEMENTSMATCH-EXPECTED-COUNTS-1",
-        "manifest": relation_path,
-        "manifest_sha256": hash(&relation_raw),
-        "relation": "Equal lengths and exact full-record multiplicities for every expected error; no field or duplicate omission."
-    });
+    let mut metadata = json!({"schema_version":1,"feature_id":"GS-VALIDATE-FEATURES-001","generator":"Genco 0.17.10 with pinned rustfmt","generator_path":generator,"generator_sha256":hash(&fs::read(root.join(generator)).unwrap()),"generator_source_files":{generator:hash(&fs::read(root.join(generator)).unwrap()),"crates/agones-rusternetes/examples/codegen/gameserver_features.rs":hash(&fs::read(root.join("crates/agones-rusternetes/examples/codegen/gameserver_features.rs")).unwrap())},"ir":ir_path,"ir_sha256":hash(&raw),"output":output,"output_sha256":hash(source.as_bytes()),"case_count":5,"assertion_count":10,"assertions":assertions,"harnesses":harnesses,"fixture_mapping":"Whole source wire object plus explicit nil/allocated Counters/Lists/Ports/Players witnesses. Source empty maps omitted by JSON are restored as allocated empty maps. Unknown fields/error metadata fail closed.","lifetime_mapping":{"rule":"GS-DEFAULTS-001-OBSERVATION-LIFETIME-1","boundary":"After every original observation and cover, retain the harness-owned fixture, parsed features, context and error lists in both engines. Source callbacks specify no GC/deallocation observation. Actual production bodies remain unchanged.","ordinary_cleanup":"Separate complete-fixture and actual adapter replay uses normal destruction.","residual":"Formal post-observation cleanup and lifecycle remain required."},"scope":"All five exact original validation cases, ten qualified source assertions. Observation lifetime follows the existing retained-owner rule; no formal post-observation cleanup credit. No original case sets Players. Actual core validation and source literals are modeled; original Go/resource/hooks use ordinary replay. Full domain validation, present-Players contract proof, lifecycle/conformance and all eight _2 cells remain required."});
+    metadata["validation_error_mapping"] = validation_error_mapping(root);
+    metadata["multiset_mapping"] = validation_multiset_mapping(root);
     save_or_check(root, output, &source, check);
     save_or_check(
         root,

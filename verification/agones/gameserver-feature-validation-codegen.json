@@ -47,10 +47,10 @@
   "fixture_mapping": "Whole source wire object plus explicit nil/allocated Counters/Lists/Ports/Players witnesses. Source empty maps omitted by JSON are restored as allocated empty maps. Unknown fields/error metadata fail closed.",
   "generator": "Genco 0.17.10 with pinned rustfmt",
   "generator_path": "crates/agones-rusternetes/examples/feature_case_codegen.rs",
-  "generator_sha256": "962daa419cfd16354f5c4a3f1593e02e8c6cd68eeda95830a6e721f306c1b45b",
+  "generator_sha256": "34f962fb5c975fade612ca2a0fa44948925c34652599119a18d54a17a3836996",
   "generator_source_files": {
-    "crates/agones-rusternetes/examples/codegen/gameserver_features.rs": "e2701769b2d9c4d9780ffb4ca6e578cb3d0b11d589fbb49963ec07bba3615233",
-    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "962daa419cfd16354f5c4a3f1593e02e8c6cd68eeda95830a6e721f306c1b45b"
+    "crates/agones-rusternetes/examples/codegen/gameserver_features.rs": "44335a77ca34abe5d3bbbfa7d05836ecdc5ea65a59cd7520652a213e48dca848",
+    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "34f962fb5c975fade612ca2a0fa44948925c34652599119a18d54a17a3836996"
   },
   "harnesses": [
     {
@@ -130,7 +130,7 @@
     }
   ],
   "ir": "verification/agones/gameserver-feature-validation.ir.json",
-  "ir_sha256": "0060c1db68e3b5ea8abf4ac0b01435c4ef8f4036fa0c1ac0bd17c85ee20c0006",
+  "ir_sha256": "83eaaa213e686e442b07df4fce82cb6cfab3ce5f0cd4475f65630422ebd8532c",
   "lifetime_mapping": {
     "boundary": "After every original observation and cover, retain the harness-owned fixture, parsed features, context and error lists in both engines. Source callbacks specify no GC/deallocation observation. Actual production bodies remain unchanged.",
     "ordinary_cleanup": "Separate complete-fixture and actual adapter replay uses normal destruction.",
@@ -139,12 +139,29 @@
   },
   "multiset_mapping": {
     "manifest": "verification/agones/expected-multiset-relation.json",
-    "manifest_sha256": "59e33a7e32b700d6c31f6af5bfae85a062ea7aef955e11da90fb4ec810ff6229",
+    "manifest_sha256": "8de29f21c85d420350d56363d1c39b23e601ffc18e3eb571bdbd193ff072cb92",
     "relation": "Equal lengths and exact full-record multiplicities for every expected error; no field or duplicate omission.",
     "rule": "AGONES-ELEMENTSMATCH-EXPECTED-COUNTS-1"
   },
   "output": "crates/agones-core/tests/generated/gameserver_feature_validation_cases.rs",
-  "output_sha256": "d6ac86507ddceb7cfd41d69f4527f54abf25cbf64f3e49ceced66eda005a9a58",
+  "output_sha256": "d9f5d6a299619b87d35cc522735a5533a837b4c9fec653f878662308b899b01b",
   "schema_version": 1,
-  "scope": "All five exact original validation cases, ten qualified source assertions. Observation lifetime follows the existing retained-owner rule; no formal post-observation cleanup credit. No original case sets Players. Actual core validation and source literals are modeled; original Go/resource/hooks use ordinary replay. Full domain validation, present-Players contract proof, lifecycle/conformance and all eight _2 cells remain required."
+  "scope": "All five exact original validation cases, ten qualified source assertions. Observation lifetime follows the existing retained-owner rule; no formal post-observation cleanup credit. No original case sets Players. Actual core validation and source literals are modeled; original Go/resource/hooks use ordinary replay. Full domain validation, present-Players contract proof, lifecycle/conformance and all eight _2 cells remain required.",
+  "validation_error_mapping": {
+    "fields": [
+      "Type",
+      "Field",
+      "BadValue",
+      "Detail",
+      "Origin",
+      "CoveredByDeclarative"
+    ],
+    "forward": "Require the exact empty Go string for Required/Forbidden and encode it as kind+None. Other supported kinds preserve string versus null distinctly. Copy every other field exactly.",
+    "inverse": "Reconstruct the fixed empty source string from Required/Forbidden+None; reject a non-None value. Other kinds reconstruct their original string/null. Every lowered error must round-trip in full.",
+    "native_fault_controls": "All six error fields and multiset multiplicity are independently observable. Bidirectional constructor-image controls exercise both directions and reject nonempty/nil source values.",
+    "rule": "AGONES-ERROR-CONSTRUCTOR-EMPTY-1",
+    "source": "vendor/k8s.io/apimachinery/pkg/util/validation/field/errors.go",
+    "source_sha256": "747db5374cdd58712b46d10775272508212d3201fa05c30105a5531debc666d4",
+    "unsupported": "Non-string/non-null bad values, unknown kinds/fields and values outside the declared constructor image reject; their obligations remain open."
+  }
 }

@@ -9,8 +9,13 @@
     "verification/agones/runs/ci-model-selector-controls-1.json": "0e7df52a2e185f1ed133ef146cda9eb727384f8908d8c579c6baad60a77fc8f1",
     "verification/agones/runs/ci-model-selector-controls-1.log": "8b93be3bb3dc69e4a9135fffc41881e28441a369353b508cfa2e47cce2c3db6f",
     "verification/agones/runs/ci-model-workflow-preservation-1.json": "86f4a92b5661dab9c4190947d5ef33f762869ba691f6d62e8bfa3f71ef06ef5c",
-    "verification/agones/runs/ci-model-workflow-preservation-1.log": "c487a0875e9852a3c081b0ac13e154919cb07d77a49592be41dda3e0b41da6f3"
+    "verification/agones/runs/ci-model-workflow-preservation-1.log": "c487a0875e9852a3c081b0ac13e154919cb07d77a49592be41dda3e0b41da6f3",
+    "verification/agones/runs/complete-validation-ci-controls-2.json": "a2a2f356e1e99bb082904f994be9c47a1c803f8d96b89c80383a4fad002bce17",
+    "verification/agones/runs/complete-validation-ci-controls-2.log": "53bedfdda7297d6d75e91877f8e5c2c25f7e24cb3cdfbde81a5c267cdf63b819",
+    "verification/agones/runs/complete-validation-source-parser-final-1.json": "743842567cf64e5f792da35d50c8bd8a46bb8ad4689d59740b100862d2b094da",
+    "verification/agones/runs/complete-validation-source-parser-final-1.log": "fba85adec5a4cf6bef082fa22f66e9bb7e261e8f87c967a5763f18019396eb30"
   },
+  "canonical_adoption_requires_fresh_proof": true,
   "envelope": {
     "command_kill_after_seconds": 15,
     "command_timeout_seconds": 900,
@@ -34,14 +39,16 @@
     "expected": "This desktop requires a sudo password; the real wrapper refused execution. No local cgroup enforcement success or backend proof is claimed.",
     "receipt": "verification/agones/runs/ci-model-local-preflight-refusal-1.json"
   },
-  "next_action": "Publish a changed PR96 head, recover its actual CI jobs/artifacts and verify all selected rows/covers. Repair explicit protected failures from their retained evidence; do not shrink domains or retry deterministically unchanged.",
+  "next_action": "Publish the canonical adoption plus this existing protected 37-selection pipeline to draft PR96, collect every raw CI result and strictly validate each actual assertion and cover. No deterministic unchanged retries or smaller proof domains.",
   "ordinary_checks": [
     "verification/agones/runs/ci-model-execution-controls-1.json",
     "verification/agones/runs/ci-model-result-controls-1.json",
     "verification/agones/runs/ci-model-selector-controls-1.json",
-    "verification/agones/runs/ci-model-workflow-preservation-1.json"
+    "verification/agones/runs/ci-model-workflow-preservation-1.json",
+    "verification/agones/runs/complete-validation-ci-controls-2.json",
+    "verification/agones/runs/complete-validation-source-parser-final-1.json"
   ],
-  "preservation": "Every selected original fixture, assertion, cover, precondition and unwind bound is unchanged. The six common selections run serially with immediate unique uploads; all five validation cases run independently with fail-fast disabled; the separate contract has its own job. The retained aggregate check requires every selected job to succeed.",
+  "preservation": "All existing 12 selections remain required with unchanged fixtures, assertions, covers, preconditions and unwind bounds. The six common selections run serially with immediate unique uploads; five feature and all 25 general validation cases run independently with fail-fast disabled; the contract retains its own job. The mandatory aggregate requires every selected job to succeed. The canonical adoption preserves all 30 generated source harness bodies and uses the complete six-field error relation.",
   "primary_documentation": [
     "https://docs.github.com/en/actions/reference/runners/github-hosted-runners",
     "https://www.freedesktop.org/software/systemd/man/latest/systemd-run.html",
@@ -58,18 +65,7 @@
     "verification/agones/check-dependencies.json": "9d27de0b6913b6835479434b7441afed5c979f36f742a50a1ef4731e9a83afe5"
   },
   "prior_failure_receipt": "verification/agones/ci/39464345048-runner-lost-no-artifacts.json",
-  "reason": "Run39464345048 is terminal failure with hosted-runner communication loss, no artifacts and BlobNotFound job logs. The precise resource/network/termination cause is unknown. Do not repeat that unprotected campaign.",
-  "retention": {
-    "days": 90,
-    "download_policy": "Verify archive digest, safe members and receipt/log SHA256 before strict result parsing. Never print or persist signed download URLs.",
-    "independent_validation_and_contract_jobs": true,
-    "one_artifact_per_selection": true,
-    "unique_v4_names": true,
-    "upload_after_each_common_selection": true
-  },
-  "runner_image": "ubuntu-24.04",
-  "schema_version": 1,
-  "selections": [
+  "prior_selections_before_general_validation": [
     "feature_bool_common_domain",
     "feature_input_common_domain",
     "source_query_case_003",
@@ -83,16 +79,68 @@
     "source_gsv_case_004",
     "gameserver_feature_validation_common_domain"
   ],
+  "reason": "Run39464345048 is terminal failure with hosted-runner communication loss, no artifacts and BlobNotFound job logs. The precise resource/network/termination cause is unknown. Do not repeat that unprotected campaign.",
+  "retention": {
+    "days": 90,
+    "download_policy": "Verify archive digest, safe members and receipt/log SHA256 before strict result parsing. Never print or persist signed download URLs.",
+    "independent_validation_and_contract_jobs": true,
+    "one_artifact_per_selection": true,
+    "unique_v4_names": true,
+    "upload_after_each_common_selection": true
+  },
+  "runner_image": "ubuntu-24.04",
+  "schema_version": 1,
+  "scope_of_unchanged_domain_flag": "The execution wrapper changes no modeled domain. Canonical production adoption is a separate change and invalidates all affected prior proofs.",
+  "selections": [
+    "feature_bool_common_domain",
+    "feature_input_common_domain",
+    "source_query_case_003",
+    "health_defaulting_common_domain",
+    "source_gs_case_005",
+    "source_gs_case_014",
+    "source_gsv_case_000",
+    "source_gsv_case_001",
+    "source_gsv_case_002",
+    "source_gsv_case_003",
+    "source_gsv_case_004",
+    "gameserver_feature_validation_common_domain",
+    "source_gs_validate_case_000",
+    "source_gs_validate_case_001",
+    "source_gs_validate_case_002",
+    "source_gs_validate_case_003",
+    "source_gs_validate_case_004",
+    "source_gs_validate_case_005",
+    "source_gs_validate_case_006",
+    "source_gs_validate_case_007",
+    "source_gs_validate_case_008",
+    "source_gs_validate_case_009",
+    "source_gs_validate_case_010",
+    "source_gs_validate_case_011",
+    "source_gs_validate_case_012",
+    "source_gs_validate_case_013",
+    "source_gs_validate_case_014",
+    "source_gs_validate_case_015",
+    "source_gs_validate_case_016",
+    "source_gs_validate_case_017",
+    "source_gs_validate_case_018",
+    "source_gs_validate_case_019",
+    "source_gs_validate_case_020",
+    "source_gs_validate_case_021",
+    "source_gs_validate_case_022",
+    "source_gs_validate_case_023",
+    "source_gs_validate_case_024"
+  ],
   "semantic_bindings": {
-    ".github/workflows/rust.yml": "4305306b62ca417385c278217b82e2d530415cbb701060669149ee773a4b44aa",
+    ".github/workflows/rust.yml": "8374b011cd28a15a365ac2c896ed068b669ea3f1fe067adcf085c012d6b1178a",
     "build/scripts/agones-rs/kani_results.py": "0f2e6885ab25ff525ac6a77e1ed67ac02a5904e59caffc0e746258bee0cad04e",
     "build/scripts/agones-rs/protect_model.py": "89fd094879809766a50ece3eea99fca2f9b45ac602ca5cb98fecfa1fe45d4376",
     "build/scripts/agones-rs/run.py": "d158464261c6f591f8c2e99dca8eb2e5aed1925696c67778ccbb1fed3bbf90bd",
     "build/scripts/agones-rs/summarize_bool_proof.py": "dee450e321588d735f1dee1dd49f245e43c395cecf800823f98374fc8f9fcf0c",
-    "build/scripts/agones-rs/summarize_feature_proof.py": "f4f95585c9649b689324ee6efc3e6436509861d55a718c581d369e527ec9ca25",
+    "build/scripts/agones-rs/summarize_feature_proof.py": "b85203ed7192d25445740b8fa8c1df1030d699000ef5344e8a0be7076bcbfbc6",
     "build/scripts/agones-rs/test_ci_model_execution.py": "67eedce9e108c80c89aec1d4d93966fdf112e59588f84826c18f93f132f4272e",
-    "verification/agones/check-dependencies.json": "6c9c06a3156476a50307900dd8c7bf224eaa06b76e0156a9dcb6d8f33da1c521"
+    "build/scripts/agones-rs/test_source_case_proofs.py": "d050660da62c8063df844d11ff71c49bb5a2997398806506cef0db7492f9f7d8",
+    "verification/agones/check-dependencies.json": "5dc51bd0fdb013204d29e69ed8b5c86d238c3daad80e3ff07516d4acf9beea05"
   },
   "source_head_before_change": "1edb803b6f61c4552fb6c4311f3ba97fde61e1af",
-  "status": "PREPARED_LOCAL_CONTROLS_PASSED_LIVE_CGROUP_VALIDATION_REQUIRED"
+  "status": "STRICT_37_SELECTION_CONTROLS_PASSED_CANONICAL_ADOPTION_REQUIRES_FRESH_CI"
 }

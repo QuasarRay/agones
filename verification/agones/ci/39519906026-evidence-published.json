@@ -1,0 +1,32 @@
+{
+  "additional_original_source_cases_closed": 0,
+  "artifact_bindings": {
+    "verification/agones/ci/39519906026-terminal-retained.json": "74ba11a37da301f35a253c6606a4875b20498f6101eaf26d9e11e4a7263be049"
+  },
+  "backend_rows": 37459,
+  "classification": "REPO_SAFE",
+  "current_adopted_program_credit": 0,
+  "evidence_branch": "codex/agones-ci-evidence-39519906026",
+  "evidence_commit": "ead5883f8c2d8fd03bb98073fee7aa5e1c010f54",
+  "evidence_tree": "bb7dd21777cb278823f84e0c22926e8c12e6443e",
+  "failed_source_cases": [
+    0,
+    2,
+    3
+  ],
+  "local_evidence_checkpoint": "509e966b2f5d07c962d5f91a15c7e5efb582d8df",
+  "local_evidence_tree": "bb7dd21777cb278823f84e0c22926e8c12e6443e",
+  "observed_at": "2026-10-21T01:13:54.744268+00:00",
+  "original_feature_assertions_verified": 4,
+  "remote_tree_exactly_matches_local": true,
+  "retained_artifacts": 12,
+  "role": "Immutable source2e1d evidence. Current canonical six-field/quantity/TypeMeta/private-storage programs are different and require fresh verification.",
+  "satisfied_covers": 42,
+  "schema_version": 1,
+  "semantic_claims": 53,
+  "source_head": "2e1d39f6680d055e98d702238e77e32b9562b376",
+  "status": "PUBLISHED_ALL12_COMPLETE_ARTIFACTS_NINE_STRICT_SUMMARIES",
+  "successful_strict_summaries": 9,
+  "tested_merge": "99b74719b693a663a7203f550e3d894e1c424931",
+  "workflow_run": 39519906026
+}

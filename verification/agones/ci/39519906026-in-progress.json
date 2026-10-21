@@ -1,0 +1,100 @@
+{
+  "base": "1e64a054901658908d0a7a4eecd3010379df9614",
+  "classification": "REPO_SAFE",
+  "created_at": "2026-10-21T00:12:31Z",
+  "generation": {
+    "modes": 5,
+    "run": "verification/agones/runs/exact-lookup-singleton-generation-native-1.json"
+  },
+  "head": "2e1d39f6680d055e98d702238e77e32b9562b376",
+  "historical_evidence": {
+    "commit": "7a1c58ddd9ca0a8b911e2a2f2de98616c00c2fe0",
+    "receipt": "verification/agones/ci/39516368235-terminal-retained.json",
+    "scope": "Nine53claims/42covers and two exact feature-source cases retain their earlier source identity. Current changed programs require revalidation.",
+    "source": "e49e1beb679a56d78c5d1ae93876af15a161aa46"
+  },
+  "jobs": [
+    {
+      "conclusion": "success",
+      "id": 118960913684,
+      "name": "migration-state",
+      "status": "completed"
+    },
+    {
+      "conclusion": null,
+      "id": 118961071969,
+      "name": "feature-common-model-check",
+      "status": "in_progress"
+    },
+    {
+      "conclusion": null,
+      "id": 118961072098,
+      "name": "feature-validation-source-004",
+      "status": "in_progress"
+    },
+    {
+      "conclusion": null,
+      "id": 118961072104,
+      "name": "feature-validation-contract-model-check",
+      "status": "in_progress"
+    },
+    {
+      "conclusion": null,
+      "id": 118961072126,
+      "name": "rust",
+      "status": "in_progress"
+    },
+    {
+      "conclusion": null,
+      "id": 118961072127,
+      "name": "feature-validation-source-002",
+      "status": "in_progress"
+    },
+    {
+      "conclusion": null,
+      "id": 118961072149,
+      "name": "feature-validation-source-003",
+      "status": "in_progress"
+    },
+    {
+      "conclusion": null,
+      "id": 118961072190,
+      "name": "feature-validation-source-000",
+      "status": "in_progress"
+    },
+    {
+      "conclusion": null,
+      "id": 118961072201,
+      "name": "feature-validation-source-001",
+      "status": "in_progress"
+    }
+  ],
+  "local_native_checkpoint": "12c2571c230c22d550e16bfc9864a1289062949c",
+  "native": {
+    "failed": 0,
+    "ignored": 3,
+    "passed": 605,
+    "run": "verification/agones/runs/exact-lookup-singleton-current-native-1.json"
+  },
+  "observed_status": "in_progress",
+  "policy": "Existing full protected workflow unchanged: all12model selections, every required assertion and cover, full binary logs and resource envelopes. No reduced scope or bound.",
+  "production_change": "FeatureGates::enabled exact equality membership, preserving all configured names/bools and existing construction/encoding semantics.",
+  "pull_request": "https://github.com/QuasarRay/agones/pull/96",
+  "review_branch": "codex/agones-player-tracking-validation",
+  "run_attempt": 1,
+  "schema_version": 1,
+  "source_helper_change": "Exact empty/singleton cardinalities and full record Eq; exact expected-class multiplicity fallback for every larger list.",
+  "source_obligations": {
+    "assertions": 10,
+    "cases": 5,
+    "current_formal_credit_added": 0,
+    "domain": "unit source fixtures",
+    "unchanged_complete_harnesses": 5,
+    "unwind": 128
+  },
+  "status": "PUBLISHED_CI_IN_PROGRESS",
+  "tested_merge": "99b74719b693a663a7203f550e3d894e1c424931",
+  "tree": "89dc0df67ab8af6934742ea5f10913c6f27b9ab8",
+  "url": "https://github.com/QuasarRay/agones/actions/runs/39519906026",
+  "workflow_run": 39519906026
+}

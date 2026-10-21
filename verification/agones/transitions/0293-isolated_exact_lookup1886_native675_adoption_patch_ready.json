@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "ISOLATED_EXACT_LOOKUP1886_NATIVE675_ADOPTION_PATCH_READY",
+  "gate_snapshot": "verification/agones/gates/c4e2a5ea6825492fb9875ede400e5136552e534d80e260295148c92c0775f096.json",
+  "predecessor_revision": 292,
+  "predecessor_sha256": "f799ebd9c3039e694e22a3e3e1f393b9357ccdec0085097f2248580ccdab3738",
+  "reason": "Exact accessor/singleton repair reused through full six-field Genco helper. Isolated1886 is clean with source-bound675tests, six modes, nine fresh gates and30unchanged source bodies. Canonical indexes updated; selected58implementation-path patch passes git apply --check without overwriting current source/operations. CI remains live for003;000/002resource failures do not receive proof credit.",
+  "result_revision": 293,
+  "schema_version": 1,
+  "state_sha256": "6b13294531aab212e3f7e5f1289ee04dc9729eb3f3c20814b8d546b470d3a2a8",
+  "timestamp": "2026-10-21T00:26:35.288597+00:00"
+}

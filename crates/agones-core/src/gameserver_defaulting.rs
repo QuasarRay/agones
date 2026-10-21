@@ -54,5 +54,6 @@ delegate_and_check_components! {
         GameServerFeatureFlagsGetterComponent: UseField<Symbol!("game_server_feature_flags")>,
         GameServerDefaulterComponent: ApplyAgonesGameServerDefaults,
         crate::GameServerFeatureValidatorComponent: crate::ValidateAgonesGameServerFeatures,
+        crate::ResourceQuantityValidatorComponent: crate::ValidateAgonesResourceQuantities,
     }
 }

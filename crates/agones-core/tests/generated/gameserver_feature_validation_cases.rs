@@ -76,7 +76,7 @@ fn source_gsv_assertion_001(relation: bool) {
 #[cfg_attr(kani, kani::unwind(128))]
 fn source_gsv_case_000() {
     use agones_core::CanParseFeatureGates;
-    bolero::check!().with_type::<()>().with_iterations(1).for_each(|_| { let gs = source_gsv_fixture_000(); let parsed = agones_core::FeatureGateContext::default().parse_feature_gates(""); source_gsv_assertion_000(parsed.is_ok()); let gates = parsed.unwrap(); let context = agones_core::GameServerDefaultingContext::from_feature_gates(&gates); let actual = gs.validate_with_context(&context); let expected = vec![agones_core::ValidationError { kind: agones_core::ValidationErrorKind::Invalid, path: "spec.ports[0].container".to_owned(), bad_value: Some("another-container".to_owned()), detail: "Container must be empty or the name of a container in the pod template".to_owned() },]; source_gsv_assertion_001(source_gsv_errors_match(&actual, &expected)); #[cfg(kani)] { kani::cover!(true, "source GameServer validation case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Invalid container name, container was not found"); } std::mem::forget((gs, gates, context, expected, actual)); });
+    bolero::check!().with_type::<()>().with_iterations(1).for_each(|_| { let gs = source_gsv_fixture_000(); let parsed = agones_core::FeatureGateContext::default().parse_feature_gates(""); source_gsv_assertion_000(parsed.is_ok()); let gates = parsed.unwrap(); let context = agones_core::GameServerDefaultingContext::from_feature_gates(&gates); let actual = gs.validate_with_context(&context); let expected = vec![agones_core::ValidationError { kind: agones_core::ValidationErrorKind::Invalid, path: "spec.ports[0].container".to_owned(), bad_value: Some("another-container".to_owned()), detail: "Container must be empty or the name of a container in the pod template".to_owned(), origin: "".to_owned(), covered_by_declarative: false },]; source_gsv_assertion_001(source_gsv_errors_match(&actual, &expected)); #[cfg(kani)] { kani::cover!(true, "source GameServer validation case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures::Invalid container name, container was not found"); } std::mem::forget((gs, gates, context, expected, actual)); });
 }
 fn source_gsv_base_fixture_001() -> agones_core::GameServer {
     let mut value = agones_core::GameServer::default();
@@ -317,6 +317,8 @@ fn source_gsv_multiset_relation_preserves_elements_and_multiplicity() {
         path: "spec.first".into(),
         bad_value: None,
         detail: "detail".into(),
+        origin: String::new(),
+        covered_by_declarative: false,
     };
     let mut second = first.clone();
     second.path = "spec.second".into();
@@ -329,13 +331,15 @@ fn source_gsv_multiset_relation_preserves_elements_and_multiplicity() {
         &[first.clone(), second.clone()]
     ));
     assert!(!source_gsv_errors_match(&[], &[first.clone()]));
-    for field in 0..4 {
+    for field in 0..6 {
         let mut wrong = first.clone();
         match field {
             0 => wrong.kind = agones_core::ValidationErrorKind::Forbidden,
             1 => wrong.path = "other".into(),
             2 => wrong.bad_value = Some("bad".into()),
-            _ => wrong.detail = "other".into(),
+            3 => wrong.detail = "other".into(),
+            4 => wrong.origin = "format=other".into(),
+            _ => wrong.covered_by_declarative = true,
         }
         assert!(!source_gsv_errors_match(&[first.clone()], &[wrong]));
     }

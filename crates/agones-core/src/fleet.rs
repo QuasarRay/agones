@@ -129,6 +129,8 @@ fn validate_name(metadata: &ObjectMeta) -> Vec<ValidationError> {
         return Vec::new();
     }
     vec![ValidationError {
+        origin: String::new(),
+        covered_by_declarative: false,
         kind: ValidationErrorKind::TooLong,
         path: "metadata.name".to_owned(),
         bad_value: Some(metadata.name.clone()),
@@ -153,6 +155,8 @@ fn validate_rolling_update(
         IntOrPercent::String(_) => {
             let Ok(resolved) = value.value() else {
                 return Some(ValidationError {
+                    origin: String::new(),
+                    covered_by_declarative: false,
                     kind: ValidationErrorKind::Invalid,
                     path: path.to_owned(),
                     bad_value: None,
@@ -161,6 +165,8 @@ fn validate_rolling_update(
             };
             if !(1..=99).contains(&resolved) {
                 Some(ValidationError {
+                    origin: String::new(),
+                    covered_by_declarative: false,
                     kind: ValidationErrorKind::Invalid,
                     path: path.to_owned(),
                     bad_value: None,
@@ -171,6 +177,8 @@ fn validate_rolling_update(
             }
         }
         IntOrPercent::Int(value) if *value < 1 => Some(ValidationError {
+            origin: String::new(),
+            covered_by_declarative: false,
             kind: ValidationErrorKind::Invalid,
             path: path.to_owned(),
             bad_value: Some(value.to_string()),
@@ -271,7 +279,7 @@ impl Fleet {
         self.validate_with_context(&crate::GameServerDefaultingContext::default())
     }
 
-    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures>(
+    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures + crate::CanValidateResourceQuantities>(
         &mut self,
         context: &C,
     ) -> Vec<ValidationError> {
@@ -299,12 +307,16 @@ impl Fleet {
             }
             Some(DeploymentStrategyType::Recreate) => {}
             Some(strategy) => errors.push(ValidationError {
+                origin: String::new(),
+                covered_by_declarative: false,
                 kind: ValidationErrorKind::NotSupported,
                 path: "spec.strategy.type".to_owned(),
                 bad_value: Some(strategy.as_str().to_owned()),
                 detail: "supported values: RollingUpdate, Recreate".to_owned(),
             }),
             None => errors.push(ValidationError {
+                origin: String::new(),
+                covered_by_declarative: false,
                 kind: ValidationErrorKind::NotSupported,
                 path: "spec.strategy.type".to_owned(),
                 bad_value: Some(String::new()),
@@ -760,137 +772,6 @@ pub fn fleet_deployment_plan(
     })
 }
 
-fn checked_pow_i128(base: i128, exponent: u32) -> Option<i128> {
-    let mut value = 1i128;
-    for _ in 0..exponent {
-        value = value.checked_mul(base)?;
-    }
-    Some(value)
-}
-
-fn gcd_i128(mut left: i128, mut right: i128) -> i128 {
-    left = left.abs();
-    right = right.abs();
-    while right != 0 {
-        let remainder = left % right;
-        left = right;
-        right = remainder;
-    }
-    left.max(1)
-}
-
-/// Parses the practical Kubernetes Quantity forms used in Pod resource maps
-/// into an exact reduced rational. This is for semantic equality, not resource
-/// admission; unparseable/overflowing values remain structurally compared.
-fn quantity_rational(value: &str) -> Option<(i128, i128)> {
-    let value = value.trim();
-    if value.is_empty() {
-        return None;
-    }
-
-    let binary_suffixes = [
-        ("Ki", 10u32),
-        ("Mi", 20),
-        ("Gi", 30),
-        ("Ti", 40),
-        ("Pi", 50),
-        ("Ei", 60),
-    ];
-    let decimal_suffixes = [
-        ("m", -3i32),
-        ("k", 3),
-        ("M", 6),
-        ("G", 9),
-        ("T", 12),
-        ("P", 15),
-        ("E", 18),
-    ];
-
-    let mut mantissa = value;
-    let mut decimal_exponent = 0i32;
-    let mut binary_exponent = None;
-
-    if let Some((suffix, exponent)) = binary_suffixes
-        .iter()
-        .find(|(suffix, _)| value.ends_with(*suffix))
-    {
-        mantissa = value.strip_suffix(*suffix)?;
-        binary_exponent = Some(*exponent);
-    } else if let Some((suffix, exponent)) = decimal_suffixes
-        .iter()
-        .find(|(suffix, _)| value.ends_with(*suffix))
-    {
-        mantissa = value.strip_suffix(*suffix)?;
-        decimal_exponent = *exponent;
-    } else if let Some(index) = value
-        .char_indices()
-        .rev()
-        .find_map(|(index, character)| {
-            matches!(character, 'e' | 'E').then_some(index)
-        })
-    {
-        let exponent = value[index + 1..].parse::<i32>().ok()?;
-        mantissa = &value[..index];
-        decimal_exponent = exponent;
-    }
-
-    let (negative, unsigned) = match mantissa.as_bytes().first() {
-        Some(b'-') => (true, &mantissa[1..]),
-        Some(b'+') => (false, &mantissa[1..]),
-        _ => (false, mantissa),
-    };
-    if unsigned.is_empty() {
-        return None;
-    }
-
-    let mut digits = String::new();
-    let mut fractional_digits = 0u32;
-    let mut seen_dot = false;
-    for character in unsigned.chars() {
-        match character {
-            '0'..='9' => {
-                digits.push(character);
-                if seen_dot {
-                    fractional_digits = fractional_digits.checked_add(1)?;
-                }
-            }
-            '.' if !seen_dot => seen_dot = true,
-            _ => return None,
-        }
-    }
-    if digits.is_empty() {
-        return None;
-    }
-
-    let mut numerator = digits.parse::<i128>().ok()?;
-    if negative {
-        numerator = numerator.checked_neg()?;
-    }
-    let mut denominator = checked_pow_i128(10, fractional_digits)?;
-
-    if decimal_exponent > 0 {
-        numerator = numerator.checked_mul(checked_pow_i128(
-            10,
-            decimal_exponent as u32,
-        )?)?;
-    } else if decimal_exponent < 0 {
-        denominator = denominator.checked_mul(checked_pow_i128(
-            10,
-            decimal_exponent.unsigned_abs(),
-        )?)?;
-    }
-
-    if let Some(binary_exponent) = binary_exponent {
-        numerator = numerator.checked_mul(checked_pow_i128(
-            2,
-            binary_exponent,
-        )?)?;
-    }
-
-    let divisor = gcd_i128(numerator, denominator);
-    Some((numerator / divisor, denominator / divisor))
-}
-
 fn normalize_quantity_map(value: &mut serde_json::Value) {
     let Some(map) = value.as_object_mut() else {
         return;
@@ -899,13 +780,9 @@ fn normalize_quantity_map(value: &mut serde_json::Value) {
         let Some(raw) = quantity.as_str() else {
             continue;
         };
-        let Some((numerator, denominator)) = quantity_rational(raw) else {
-            continue;
-        };
-        *quantity = serde_json::json!({
-            "$agonesQuantityNumerator": numerator.to_string(),
-            "$agonesQuantityDenominator": denominator.to_string(),
-        });
+        if let Ok(value) = raw.trim().parse::<crate::ResourceQuantity>() {
+            *quantity = value.semantic_key();
+        }
     }
 }
 
@@ -941,14 +818,30 @@ pub fn game_server_templates_semantically_equal(
         return true;
     }
 
-    let Ok(mut left) = serde_json::to_value(left) else {
-        return false;
+    let normalized = |template: &GameServerTemplateSpec| -> Option<serde_json::Value> {
+        let mut value = serde_json::to_value(template).ok()?;
+        normalize_template_quantities(&mut value);
+        // The wire String is lossy for some source-supported decimal values.
+        // Normalize known resource fields from their typed owners instead.
+        for (kind, containers) in [
+            ("initContainers", template.spec.template.spec.init_containers.as_slice()),
+            ("containers", template.spec.template.spec.containers.as_slice()),
+        ] {
+            for (index, container) in containers.iter().enumerate() {
+                let resources = value.pointer_mut(&format!("/spec/template/spec/{kind}/{index}/resources"))?.as_object_mut()?;
+                for (field, quantities) in [("limits", &container.resources.limits), ("requests", &container.resources.requests)] {
+                    if let Some(quantities) = quantities && !quantities.is_empty() {
+                        resources.insert(field.into(), serde_json::Value::Object(
+                            quantities.iter().map(|(name, quantity)| (name.clone(), quantity.semantic_key())).collect(),
+                        ));
+                    }
+                }
+            }
+        }
+        Some(value)
     };
-    let Ok(mut right) = serde_json::to_value(right) else {
-        return false;
-    };
-    normalize_template_quantities(&mut left);
-    normalize_template_quantities(&mut right);
+    let Some(left) = normalized(left) else { return false; };
+    let Some(right) = normalized(right) else { return false; };
     left == right
 }
 
@@ -1842,13 +1735,9 @@ mod tests {
                                 containers: vec![Container {
                                     name: "game".into(),
                                     image: "game:v1".into(),
-                                    resources: BTreeMap::from([(
-                                        "limits".into(),
-                                        serde_json::json!({
-                                            "cpu": "1000m",
-                                            "memory": "1Gi"
-                                        }),
-                                    )]),
+                                    resources: serde_json::from_value(serde_json::json!({"limits": {
+                                        "cpu": "1000m", "memory": "1Gi"
+                                    }})).unwrap(),
                                     ..Default::default()
                                 }].into(),
                                 ..Default::default()
@@ -1868,14 +1757,9 @@ mod tests {
         let mut equivalent = fleet.game_server_set();
         equivalent.metadata.name = "equivalent".into();
         equivalent.spec.template.spec.template.spec.containers[0]
-            .resources
-            .insert(
-                "limits".into(),
-                serde_json::json!({
-                    "cpu": "1",
-                    "memory": "1024Mi"
-                }),
-            );
+            .resources.limits = Some(serde_json::from_value(serde_json::json!({
+                "cpu": "1", "memory": "1024Mi"
+            })).unwrap());
 
         assert!(game_server_templates_semantically_equal(
             &fleet.spec.template,

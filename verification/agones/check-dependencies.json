@@ -13,7 +13,10 @@
     "verification/agones/sdk-version.ir.json",
     "verification/agones/sdk-version-codegen.json",
     "verification/agones/sdk-version-witnesses.json",
-    ".cargo/**"
+    ".cargo/**",
+    "verification/agones/gameserver-validation.ir.json",
+    "verification/agones/gameserver-validation-codegen.json",
+    "verification/agones/expected-multiset-relation.json"
   ],
   "model": [
     "Cargo.toml",
@@ -45,7 +48,11 @@
     "crates/agones-rusternetes/examples/feature_case_codegen.rs",
     "crates/agones-rusternetes/examples/codegen/**",
     "build/scripts/agones-rs/protect_model.py",
-    "build/scripts/agones-rs/test_ci_model_execution.py"
+    "build/scripts/agones-rs/test_ci_model_execution.py",
+    "verification/agones/gameserver-validation.ir.json",
+    "verification/agones/gameserver-validation-codegen.json",
+    "verification/agones/expected-multiset-relation.json",
+    "build/scripts/agones-rs/test_source_case_proofs.py"
   ],
   "metadata_only": [
     "**/AGENTS.MD",
