@@ -1,5 +1,6 @@
 {
-  "canonical_adoption": true,
+  "canonical_adoption": false,
+  "current_formal_credit": 0,
   "feature_id": "META-VALIDATE-001",
   "formal_credit": 0,
   "go_runtime_restored": {
@@ -12,22 +13,24 @@
     "unicode_version": "17.0.0",
     "version": "go1.27.1-X:nodwarf5"
   },
-  "implementation_gate": "verification/agones/gates/fa682f3bc2dded24a213b49d3337fb7a5a711fb02321ddac5057353491b48f72.json",
-  "implementation_gate_sha256": "fa682f3bc2dded24a213b49d3337fb7a5a711fb02321ddac5057353491b48f72",
+  "implementation_gate": "verification/agones/gates/d44c76cac31d09f43594ea8b5cf1fe2a19a11b07081c5638ac714b8988d853a2.json",
+  "implementation_gate_sha256": "d44c76cac31d09f43594ea8b5cf1fe2a19a11b07081c5638ac714b8988d853a2",
   "ir": "verification/agones/object-metadata.ir.json",
-  "ir_sha256": "744c0a4aa76e2893bb9645c5ce6e3513f9cdb9af3cd590a27ae69de8739ffc6c",
+  "ir_sha256": "47086006fc118a53b2e34a4945ffda26b307d82e97750be01cda2f5c3510d4b2",
   "native_failed": 0,
   "native_ignored": 3,
-  "native_implementation_commit": "893af2bc25034a84fd566fe5020aa809de022fc5",
+  "native_implementation_commit": "6492f41e3ddfe1a75e2889f8fd510b3eb2c5ff2d",
   "native_passed": 704,
-  "next_action": "Extend the existing Genco emitter to translate the complete typed source action sequence and all21independent assertions into six Bolero/Kani harnesses plus ordinary replay. Preserve original nil/empty actions, DeepCopy ordering, Go reference error records and qualified source identities. Then run protected model checks and actual Rusternetes replay. Canonical adoption requires every affected gate/generation/evidence binding renewed.",
+  "next_action": "Regenerate/check existing metadata outputs with identical complete bodies and source assertions; run a protected whole MetaPatch diagnostic before scheduling another full required campaign.",
   "passed_checks": [
     "verification/agones/runs/metadata-go-runtime-unicode-reference-1.json",
     "verification/agones/runs/metadata-original-go-tests-1.json",
     "verification/agones/runs/metadata-extractor-controls-4.json",
     "verification/agones/runs/metadata-source-extraction-4.json",
     "verification/agones/runs/canonical-metadata-native-1.json",
-    "verification/agones/runs/canonical-metadata-gated-extraction-1.json"
+    "verification/agones/runs/canonical-metadata-gated-extraction-1.json",
+    "verification/agones/runs/metadata-byte-scan-native-1.json",
+    "verification/agones/runs/metadata-byte-scan-source-replay-1.json"
   ],
   "prior_source_evidence": "verification/agones/object-metadata-source-pre-canonical.json",
   "published": false,
@@ -63,6 +66,6 @@
   "schema_version": 1,
   "source_cases": 6,
   "source_files": 1570,
-  "status": "CANONICAL_SOURCE_IR21_CAPTURED_PROPERTIES_COMPILED_CURRENT_MODEL_CHECKS_REQUIRED",
+  "status": "ISOLATED_BYTE_SCAN_NATIVE704_SOURCE_IR21_REPLAYED_MODEL_REQUIRED",
   "validation_observations": 11
 }

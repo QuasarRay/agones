@@ -105,23 +105,41 @@ fn valid_name(value: &str) -> bool {
 fn valid_dns_subdomain(value: &str) -> bool {
     // IsDNS1123Subdomain checks total length separately. In this source it
     // deliberately does not impose the DNS-label 63-byte limit per segment.
-    value.split('.').all(|label| {
-        let bytes = label.as_bytes();
-        let alphanumeric = |b: &u8| b.is_ascii_lowercase() || b.is_ascii_digit();
-        bytes.first().is_some_and(alphanumeric)
-            && bytes.last().is_some_and(alphanumeric)
-            && bytes.iter().all(|b| alphanumeric(b) || *b == b'-')
-    })
+    let mut label_start = true;
+    let mut last_alphanumeric = false;
+    for byte in value.bytes() {
+        if byte == b'.' {
+            if !last_alphanumeric {
+                return false;
+            }
+            label_start = true;
+            last_alphanumeric = false;
+        } else {
+            last_alphanumeric = byte.is_ascii_lowercase() || byte.is_ascii_digit();
+            if !last_alphanumeric && (label_start || byte != b'-') {
+                return false;
+            }
+            label_start = false;
+        }
+    }
+    last_alphanumeric
 }
 
 fn qualified_name_errors(value: &str) -> Vec<&'static str> {
     let mut errors = Vec::new();
-    let mut parts = value.split('/');
-    let first = parts.next().unwrap();
-    let name = if let Some(name) = parts.next() {
-        if parts.next().is_some() {
-            return vec![QUALIFIED_KEY_FORMAT_ERROR];
+    let mut slash = None;
+    for (index, byte) in value.bytes().enumerate() {
+        if byte == b'/' {
+            if slash.is_some() {
+                return vec![QUALIFIED_KEY_FORMAT_ERROR];
+            }
+            slash = Some(index);
         }
+    }
+    let name = if let Some(index) = slash {
+        // An ASCII slash is always a UTF-8 boundary, including in malformed
+        // qualified names whose non-ASCII bytes are rejected below.
+        let first = &value[..index];
         if first.is_empty() {
             errors.push("prefix part must be non-empty");
         } else {
@@ -132,9 +150,9 @@ fn qualified_name_errors(value: &str) -> Vec<&'static str> {
                 errors.push(DNS_PREFIX_FORMAT_ERROR);
             }
         }
-        name
+        &value[index + 1..]
     } else {
-        first
+        value
     };
     if name.is_empty() {
         errors.push("name part must be non-empty");

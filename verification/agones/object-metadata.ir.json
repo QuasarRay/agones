@@ -19,14 +19,14 @@
     "GOENV": "/home/astral/.config/go/env",
     "GOEXPERIMENT": "nodwarf5",
     "GOFLAGS": "-mod=vendor",
-    "GOMOD": "/home/astral/Projects/agones/go.mod",
+    "GOMOD": "/home/astral/.codex/worktrees/agones-metadata-scan/agones/go.mod",
     "GOOS": "linux",
     "GOTOOLCHAIN": "local",
     "GOVERSION": "go1.27.1"
   },
   "feature_id": "META-VALIDATE-001",
-  "implementation_gate": "verification/agones/gates/fa682f3bc2dded24a213b49d3337fb7a5a711fb02321ddac5057353491b48f72.json",
-  "implementation_gate_sha256": "fa682f3bc2dded24a213b49d3337fb7a5a711fb02321ddac5057353491b48f72",
+  "implementation_gate": "verification/agones/gates/d44c76cac31d09f43594ea8b5cf1fe2a19a11b07081c5638ac714b8988d853a2.json",
+  "implementation_gate_sha256": "d44c76cac31d09f43594ea8b5cf1fe2a19a11b07081c5638ac714b8988d853a2",
   "loader_source_files": {
     "build/scripts/agones-rs/extract/gameserver_defaulting.go": "3530dbf1e91a96f2264c5e8eb21c4f69c16b50818feee975af4d5fd46d907664",
     "build/scripts/agones-rs/extract/gameserver_defaulting_test.go": "03af33d9d79bf73ad701528c07f5cdfa75758b5040465fbb52f7b95474eeb2bd",

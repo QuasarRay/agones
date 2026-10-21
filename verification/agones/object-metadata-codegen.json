@@ -267,7 +267,7 @@
   "integration_output": "crates/agones-rusternetes/tests/generated/object_metadata_cases.rs",
   "integration_output_sha256": "35e6c99e2d3b81253e89df99a6e093ee0e398cddd61559289151ce892e6b13e5",
   "ir": "verification/agones/object-metadata.ir.json",
-  "ir_sha256": "744c0a4aa76e2893bb9645c5ce6e3513f9cdb9af3cd590a27ae69de8739ffc6c",
+  "ir_sha256": "47086006fc118a53b2e34a4945ffda26b307d82e97750be01cda2f5c3510d4b2",
   "lifetime_mapping": {
     "ordinary_cleanup": "Separate complete source replays use normal destruction.",
     "residual": "Formal post-observation cleanup/lifecycle remain required.",
@@ -286,7 +286,7 @@
   "schema_version": 1,
   "scope": "All5AllocationOverflow cases and whole6-call MetaPatch test, preserving all21qualified assertions. All5overflow cases also traverse actual Rusternetes Fleet/GameServerSet conversions and typed validation. A Rusternetes allocation endpoint is not implemented by this change. Exact cases do not establish an unbounded key/value law or complete API/lifecycle/live Rusternetes/_2 migration.",
   "source_capture_evidence": "verification/agones/object-metadata-source-evidence.json",
-  "source_capture_evidence_sha256": "35e8a32ac91d733ec7a0592f0a4952a20851e8954add546d006b53dde3dc2241",
+  "source_capture_evidence_sha256": "c0a8e95fdcc5a18661fe844c9e3d64c4600ebaa471de8709875d163bdaffdfd9",
   "validation_error_mapping": {
     "fields": [
       "Type",

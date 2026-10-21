@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - agones-rs-dev
+      - codex/agones-model-diagnostic-*
   pull_request:
     branches:
       - agones-rs-dev
@@ -13,6 +14,7 @@ permissions:
 
 jobs:
   migration-state:
+    if: ${{ !startsWith(github.ref_name, 'codex/agones-model-diagnostic-') }}
     runs-on: ubuntu-latest
     outputs:
       rust: ${{ steps.affected.outputs.rust }}
@@ -285,3 +287,33 @@ jobs:
           test "$COMMON_RESULT" = success
           test "$VALIDATION_RESULT" = success
           test "$CONTRACT_RESULT" = success
+
+  metadata-whole-case-diagnostic:
+    # A bounded diagnostic of an isolated production change. The ordinary
+    # required43selection matrix above remains the acceptance path.
+    if: github.event_name == 'push' && startsWith(github.ref_name, 'codex/agones-model-diagnostic-')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      CARGO_BUILD_JOBS: "2"
+      AGONES_METADATA_DIAGNOSTIC_RUN: object-metadata-bolero-kani-ci-${{ github.run_id }}-${{ github.run_attempt }}-case-005
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned verification tools
+        run: |
+          rustup toolchain install 1.98.1 --profile minimal
+          cargo install kani-verifier --version 0.68.0 --locked
+          cargo kani setup
+          cargo install cargo-bolero --version 0.13.4 --locked --no-default-features --features kani
+      - name: Verify the complete original MetaPatch action sequence
+        run: python3 build/scripts/agones-rs/run.py "$AGONES_METADATA_DIAGNOSTIC_RUN" --quiet --cwd crates/agones-core python3 ../../build/scripts/agones-rs/protect_model.py cargo bolero test source_metadata_case_005 --engine kani
+      - name: Require all ten original assertions and both covers
+        run: python3 build/scripts/agones-rs/summarize_feature_proof.py object-metadata-source "$AGONES_METADATA_DIAGNOSTIC_RUN" --case-index 5 --output "verification/agones/proof-summaries/$AGONES_METADATA_DIAGNOSTIC_RUN.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: metadata-whole-case-diagnostic-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            verification/agones/runs/${{ env.AGONES_METADATA_DIAGNOSTIC_RUN }}.*
+            verification/agones/proof-summaries/${{ env.AGONES_METADATA_DIAGNOSTIC_RUN }}.json
+          retention-days: 90
