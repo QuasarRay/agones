@@ -203,7 +203,7 @@ async fn development_admission_keeps_the_feature_check_before_resource_and_conta
         let object = json!({
             "metadata":{"annotations":{"agones.dev/dev-address":"127.0.0.1"}},
             "spec":{"players":{},"container":"missing","template":{"spec":{"containers":[{
-                "name":"game","resources":{"requests":{"cpu":"invalid-quantity"}}
+                "name":"game","resources":{"requests":{"cpu":"-1"}}
             }]}}}
         });
         let response = admission.admit(&request("GameServer", object)).await;

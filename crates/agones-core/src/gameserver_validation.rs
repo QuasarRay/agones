@@ -24,6 +24,8 @@ where
     ) -> Vec<ValidationError> {
         if !context.game_server_feature_flags().player_tracking && spec.players.is_some() {
             vec![ValidationError {
+                origin: String::new(),
+                covered_by_declarative: false,
                 kind: ValidationErrorKind::Forbidden,
                 path: if path.is_empty() {
                     "players".to_owned()

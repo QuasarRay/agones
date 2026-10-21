@@ -1,0 +1,3483 @@
+{
+  "assertion_semantics": "Original testify ElementsMatch executes on the reference, preserving all complete error elements and multiplicities. Nil and empty error lists are both empty; no error-message-only replacement. Quantity construction state must survive lowering; unsupported lossy serialization aborts capture.",
+  "capture_program": "package main\nimport (\n. \"agones.dev/agones/pkg/apis/agones/v1\"\napis \"agones.dev/agones/pkg/apis\"\nassert \"github.com/stretchr/testify/assert\"\ncaptureFMT \"fmt\"\ncaptureJSON \"encoding/json\"\ncaptureReflect \"reflect\"\ncorev1 \"k8s.io/api/core/v1\"\nfield \"k8s.io/apimachinery/pkg/util/validation/field\"\nmetav1 \"k8s.io/apimachinery/pkg/apis/meta/v1\"\nresource \"k8s.io/apimachinery/pkg/api/resource\"\nstrings \"strings\"\nvalidation \"k8s.io/apimachinery/pkg/util/validation\"\n)\ntype captureTestingT struct{}\nfunc(captureTestingT) Errorf(f string,args ...interface{}){panic(captureFMT.Sprintf(f,args...))}\n// fakeAPIHooks is a stubabble, fake implementation of APIHooks\n// This needs to be private, so it doesn't get picked up by the DeepCopy() generation toolkit.\ntype fakeAPIHooks struct {\n\tStubValidateGameServerSpec\tfunc(*GameServerSpec, *field.Path) field.ErrorList\n\tStubValidateScheduling\t\tfunc(apis.SchedulingStrategy, *field.Path) field.ErrorList\n\tStubMutateGameServerPod\t\tfunc(*GameServerSpec, *corev1.Pod) error\n\tStubSetEviction\t\t\tfunc(*Eviction, *corev1.Pod) error\n}\nvar _ APIHooks = fakeAPIHooks{}\n// ValidateGameServerSpec is called by GameServer.Validate to allow for product specific validation.\nfunc (f fakeAPIHooks) ValidateGameServerSpec(gss *GameServerSpec, fldPath *field.Path) field.ErrorList {\n\tif f.StubValidateGameServerSpec != nil {\n\t\treturn f.StubValidateGameServerSpec(gss, fldPath)\n\t}\n\treturn nil\n}\n// ValidateScheduling is called by Fleet and GameServerSet Validate() to allow for product specific validation of scheduling strategy.\nfunc (f fakeAPIHooks) ValidateScheduling(strategy apis.SchedulingStrategy, fldPath *field.Path) field.ErrorList {\n\tif f.StubValidateScheduling != nil {\n\t\treturn f.StubValidateScheduling(strategy, fldPath)\n\t}\n\treturn nil\n}\n// MutateGameServerPod is called by createGameServerPod to allow for product specific pod mutation.\nfunc (f fakeAPIHooks) MutateGameServerPod(gss *GameServerSpec, pod *corev1.Pod) error {\n\tif f.StubMutateGameServerPod != nil {\n\t\treturn f.StubMutateGameServerPod(gss, pod)\n\t}\n\treturn nil\n}\n// SetEviction is called by gs.Pod to enforce GameServer.Status.Eviction.\nfunc (f fakeAPIHooks) SetEviction(eviction *Eviction, pod *corev1.Pod) error {\n\tif f.StubSetEviction != nil {\n\t\treturn f.StubSetEviction(eviction, pod)\n\t}\n\treturn nil\n}\nconst ipFixture = \"127.1.1.1\"\nfunc captureQuantityState(q resource.Quantity) {\n    canonical := q.String()\n    restored, err := resource.ParseQuantity(canonical)\n    if err != nil { panic(err) }\n    _ = restored.String()\n    if !captureReflect.DeepEqual(q, restored) { panic(\"unsupported lossy quantity construction: \" + canonical) }\n}\nfunc main(){t:=captureTestingT{}\nlongNameLen64 := strings.Repeat(\"f\", validation.LabelValueMaxLength+1)\ntestCases := []struct {\n\tdescription\tstring\n\tgs\t\tGameServer\n\tapplyDefaults\tbool\n\twant\t\tfield.ErrorList\n}{\n\t{\n\t\tdescription:\t\"Valid game server\",\n\t\tgs: GameServer{\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{{Name: \"testing\", Image: \"testing/image\"}}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\ttrue,\n\t},\n\t{\n\t\tdescription:\t\"Invalid gs: container, containerPort, hostPort\",\n\t\tgs: GameServer{\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tContainer:\t\"\",\n\t\t\t\tPorts: []GameServerPort{{\n\t\t\t\t\tName:\t\t\"main\",\n\t\t\t\t\tHostPort:\t5001,\n\t\t\t\t\tPortPolicy:\tDynamic,\n\t\t\t\t}, {\n\t\t\t\t\tName:\t\t\"sidecar\",\n\t\t\t\t\tHostPort:\t5002,\n\t\t\t\t\tPortPolicy:\tStatic,\n\t\t\t\t\tContainerPort:\t5002,\n\t\t\t\t}},\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{\n\t\t\t\t\t\t{Name: \"testing\", Image: \"testing/image\"},\n\t\t\t\t\t\t{Name: \"anothertest\", Image: \"testing/image\"},\n\t\t\t\t\t}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t\twant: field.ErrorList{\n\t\t\tfield.Required(field.NewPath(\"spec\", \"container\"), \"Container is required when using multiple containers in the pod template\"),\n\t\t\tfield.Invalid(field.NewPath(\"spec\", \"container\"), \"\", \"Could not find a container named \"),\n\t\t\tfield.Required(field.NewPath(\"spec\", \"ports\").Index(0).Child(\"containerPort\"), \"ContainerPort must be defined for Dynamic and Static PortPolicies\"),\n\t\t\tfield.Forbidden(field.NewPath(\"spec\", \"ports\").Index(0).Child(\"hostPort\"), \"HostPort cannot be specified with a Dynamic or Passthrough PortPolicy\"),\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"DevAddressAnnotation: Invalid IP, no host port\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tName:\t\t\"dev-game\",\n\t\t\t\tNamespace:\t\"default\",\n\t\t\t\tAnnotations:\tmap[string]string{DevAddressAnnotation: \"invalid-ip\"},\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tPorts: []GameServerPort{{Name: \"main\", ContainerPort: 7777, PortPolicy: Static}},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t\twant: field.ErrorList{\n\t\t\tfield.Invalid(field.NewPath(\"metadata\").Child(\"annotations\", \"agones.dev/dev-address\"), \"invalid-ip\", \"must be a valid IP address\"),\n\t\t\tfield.Required(field.NewPath(\"spec\").Child(\"ports\").Index(0).Child(\"hostPort\"), \"agones.dev/dev-address\"),\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"Long gs name\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tName: longNameLen64,\n\t\t\t},\n\t\t\tTypeMeta: metav1.TypeMeta{\n\t\t\t\tKind: \"test-kind\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tContainer:\t\"my_image\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{\n\t\t\t\t\t\tContainers: []corev1.Container{\n\t\t\t\t\t\t\t{Name: \"my_image\", Image: \"foo/my_image\"},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t\twant: field.ErrorList{\n\t\t\tfield.TooLongMaxLength(field.NewPath(\"metadata\", \"name\"), longNameLen64, 63),\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"Long gs GenerateName is not validated on agones side\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tGenerateName: longNameLen64,\n\t\t\t},\n\t\t\tTypeMeta: metav1.TypeMeta{\n\t\t\t\tKind: \"test-kind\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tContainer:\t\"my_image\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{\n\t\t\t\t\t\tContainers: []corev1.Container{\n\t\t\t\t\t\t\t{Name: \"my_image\", Image: \"foo/my_image\"},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t},\n\t{\n\t\tdescription:\t\"Long label key is invalid\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tGenerateName: longNameLen64,\n\t\t\t},\n\t\t\tTypeMeta: metav1.TypeMeta{\n\t\t\t\tKind: \"test-kind\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tContainer:\t\"my_image\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{\n\t\t\t\t\t\tContainers: []corev1.Container{\n\t\t\t\t\t\t\t{Name: \"my_image\", Image: \"foo/my_image\"},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\t\t\tLabels: map[string]string{longNameLen64: \"\"},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t\twant: field.ErrorList{\n\t\t\t&field.Error{\n\t\t\t\tType:\t\tfield.ErrorTypeInvalid,\n\t\t\t\tField:\t\tfield.NewPath(\"spec\", \"template\", \"metadata\", \"labels\").String(),\n\t\t\t\tBadValue:\tlongNameLen64,\n\t\t\t\tDetail:\t\t\"name part must be no more than 63 bytes\",\n\t\t\t\tOrigin:\t\t\"format=k8s-label-key\",\n\t\t\t},\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"Long label value is invalid\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tGenerateName: \"ok-name\",\n\t\t\t},\n\t\t\tTypeMeta: metav1.TypeMeta{\n\t\t\t\tKind: \"test-kind\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tContainer:\t\"my_image\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{\n\t\t\t\t\t\tContainers: []corev1.Container{\n\t\t\t\t\t\t\t{Name: \"my_image\", Image: \"foo/my_image\"},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\t\t\tLabels: map[string]string{\"agones.dev/longValueKey\": longNameLen64},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t\twant: field.ErrorList{\n\t\t\tfield.Invalid(field.NewPath(\"spec\", \"template\", \"metadata\", \"labels\"), longNameLen64, \"must be no more than 63 bytes\").WithOrigin(\"format=k8s-label-value\"),\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"Long annotation key is invalid\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tGenerateName: \"ok-name\",\n\t\t\t},\n\t\t\tTypeMeta: metav1.TypeMeta{\n\t\t\t\tKind: \"test-kind\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tContainer:\t\"my_image\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{\n\t\t\t\t\t\tContainers: []corev1.Container{\n\t\t\t\t\t\t\t{Name: \"my_image\", Image: \"foo/my_image\"},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\t\t\tAnnotations: map[string]string{longNameLen64: longNameLen64},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t\twant: field.ErrorList{\n\t\t\tfield.Invalid(field.NewPath(\"spec\", \"template\", \"metadata\", \"annotations\"), longNameLen64, \"name part must be no more than 63 bytes\").WithOrigin(\"format=k8s-label-key\"),\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"Invalid character in annotation key\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tGenerateName: \"ok-name\",\n\t\t\t},\n\t\t\tTypeMeta: metav1.TypeMeta{\n\t\t\t\tKind: \"test-kind\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tContainer:\t\"my_image\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{\n\t\t\t\t\t\tContainers: []corev1.Container{\n\t\t\t\t\t\t\t{Name: \"my_image\", Image: \"foo/my_image\"},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\t\t\tAnnotations: map[string]string{\"agones.dev/short\u00b1Name\": longNameLen64},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t\twant: field.ErrorList{\n\t\t\tfield.Invalid(field.NewPath(\"spec\", \"template\", \"metadata\", \"annotations\"), \"agones.dev/short\u00b1Name\", \"name part must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyName',  or 'my.name',  or '123-abc', regex used for validation is '([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]')\").WithOrigin(\"format=k8s-label-key\"),\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"Valid annotation key\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tGenerateName: \"ok-name\",\n\t\t\t},\n\t\t\tTypeMeta: metav1.TypeMeta{\n\t\t\t\tKind: \"test-kind\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tContainer:\t\"my_image\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{\n\t\t\t\t\t\tContainers: []corev1.Container{\n\t\t\t\t\t\t\t{Name: \"my_image\", Image: \"foo/my_image\"},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\t\t\tAnnotations: map[string]string{\"agones.dev/shortName\": longNameLen64},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t},\n\t{\n\t\tdescription:\t\"Check ContainerPort and HostPort with different policies\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tGenerateName: \"ok-name\",\n\t\t\t},\n\t\t\tTypeMeta: metav1.TypeMeta{\n\t\t\t\tKind: \"test-kind\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tPorts: []GameServerPort{\n\t\t\t\t\t{Name: \"one\", PortPolicy: Passthrough, ContainerPort: 1294},\n\t\t\t\t\t{PortPolicy: Passthrough, Name: \"two\", HostPort: 7890},\n\t\t\t\t\t{PortPolicy: Dynamic, Name: \"three\", HostPort: 7890, ContainerPort: 1294},\n\t\t\t\t},\n\t\t\t\tContainer:\t\"my_image\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{\n\t\t\t\t\t\tContainers: []corev1.Container{\n\t\t\t\t\t\t\t{Name: \"my_image\", Image: \"foo/my_image\"},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\ttrue,\n\t\twant: field.ErrorList{\n\t\t\tfield.Required(field.NewPath(\"spec\", \"ports\").Index(0).Child(\"containerPort\"), \"ContainerPort cannot be specified with Passthrough PortPolicy\"),\n\t\t\tfield.Forbidden(field.NewPath(\"spec\", \"ports\").Index(1).Child(\"hostPort\"), \"HostPort cannot be specified with a Dynamic or Passthrough PortPolicy\"),\n\t\t\tfield.Forbidden(field.NewPath(\"spec\", \"ports\").Index(2).Child(\"hostPort\"), \"HostPort cannot be specified with a Dynamic or Passthrough PortPolicy\"),\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"PortPolicy must be Static with HostPort specified\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tName:\t\t\"dev-game\",\n\t\t\t\tNamespace:\t\"default\",\n\t\t\t\tAnnotations:\tmap[string]string{DevAddressAnnotation: ipFixture},\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tPorts: []GameServerPort{\n\t\t\t\t\t{PortPolicy: Passthrough, Name: \"main\", HostPort: 7890, ContainerPort: 7777},\n\t\t\t\t},\n\t\t\t\tContainer:\t\"my_image\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{\n\t\t\t\t\t\tContainers: []corev1.Container{\n\t\t\t\t\t\t\t{Name: \"my_image\", Image: \"foo/my_image\"},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\ttrue,\n\t\twant: field.ErrorList{\n\t\t\tfield.Required(\n\t\t\t\tfield.NewPath(\"spec\", \"ports\").Index(0).Child(\"portPolicy\"),\n\t\t\t\t\"PortPolicy must be Static\"),\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"ContainerPort is less than zero\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tName:\t\t\"dev-game\",\n\t\t\t\tNamespace:\t\"default\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tPorts: []GameServerPort{{\n\t\t\t\t\tName:\t\t\"main\",\n\t\t\t\t\tContainerPort:\t-4,\n\t\t\t\t\tPortPolicy:\tDynamic,\n\t\t\t\t}},\n\t\t\t\tContainer:\t\"testing\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{\n\t\t\t\t\t\t{Name: \"testing\", Image: \"testing/image\"},\n\t\t\t\t\t}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t\twant: field.ErrorList{\n\t\t\tfield.Required(\n\t\t\t\tfield.NewPath(\"spec\", \"ports\").Index(0).Child(\"containerPort\"),\n\t\t\t\t\"ContainerPort must be defined for Dynamic and Static PortPolicies\",\n\t\t\t),\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"CPU Request > Limit\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tName:\t\t\"dev-game\",\n\t\t\t\tNamespace:\t\"default\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tPorts: []GameServerPort{{\n\t\t\t\t\tName:\t\t\"main\",\n\t\t\t\t\tContainerPort:\t7777,\n\t\t\t\t\tPortPolicy:\tDynamic,\n\t\t\t\t}},\n\t\t\t\tContainer:\t\"testing\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\tName:\t\"testing\",\n\t\t\t\t\t\t\tImage:\t\"testing/image\",\n\t\t\t\t\t\t\tResources: corev1.ResourceRequirements{\n\t\t\t\t\t\t\t\tRequests: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"50m\"),\n\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"32Mi\"),\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\tLimits: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"30m\"),\n\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"32Mi\"),\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t},\n\t\t\t\t\t}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t\twant: field.ErrorList{\n\t\t\tfield.Invalid(\n\t\t\t\tfield.NewPath(\"spec\", \"template\", \"spec\", \"containers\").Index(0).Child(\"resources\", \"requests\"),\n\t\t\t\t\"50m\",\n\t\t\t\t\"must be less than or equal to cpu limit of 30m\",\n\t\t\t),\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"CPU negative request\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tName:\t\t\"dev-game\",\n\t\t\t\tNamespace:\t\"default\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tPorts: []GameServerPort{{\n\t\t\t\t\tName:\t\t\"main\",\n\t\t\t\t\tContainerPort:\t7777,\n\t\t\t\t\tPortPolicy:\tDynamic,\n\t\t\t\t}},\n\t\t\t\tContainer:\t\"testing\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\tName:\t\"testing\",\n\t\t\t\t\t\t\tImage:\t\"testing/image\",\n\t\t\t\t\t\t\tResources: corev1.ResourceRequirements{\n\t\t\t\t\t\t\t\tRequests: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"-30m\"),\n\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"32Mi\"),\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\tLimits: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"30m\"),\n\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"32Mi\"),\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t},\n\t\t\t\t\t}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t\twant: field.ErrorList{\n\t\t\tfield.Invalid(\n\t\t\t\tfield.NewPath(\"spec\", \"template\", \"spec\", \"containers\").Index(0).Child(\"resources\", \"requests\").Key(\"cpu\"),\n\t\t\t\t\"-30m\",\n\t\t\t\t\"must be greater than or equal to 0\",\n\t\t\t),\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"CPU negative limit\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tName:\t\t\"dev-game\",\n\t\t\t\tNamespace:\t\"default\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tPorts: []GameServerPort{{\n\t\t\t\t\tName:\t\t\"main\",\n\t\t\t\t\tContainerPort:\t7777,\n\t\t\t\t\tPortPolicy:\tDynamic,\n\t\t\t\t}},\n\t\t\t\tContainer:\t\"testing\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\tName:\t\"testing\",\n\t\t\t\t\t\t\tImage:\t\"testing/image\",\n\t\t\t\t\t\t\tResources: corev1.ResourceRequirements{\n\t\t\t\t\t\t\t\tRequests: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"30m\"),\n\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"32Mi\"),\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\tLimits: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"-30m\"),\n\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"32Mi\"),\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t},\n\t\t\t\t\t}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t\twant: field.ErrorList{\n\t\t\tfield.Invalid(\n\t\t\t\tfield.NewPath(\"spec\", \"template\", \"spec\", \"containers\").Index(0).Child(\"resources\", \"limits\").Key(\"cpu\"),\n\t\t\t\t\"-30m\",\n\t\t\t\t\"must be greater than or equal to 0\",\n\t\t\t),\n\t\t\tfield.Invalid(\n\t\t\t\tfield.NewPath(\"spec\", \"template\", \"spec\", \"containers\").Index(0).Child(\"resources\", \"requests\"),\n\t\t\t\t\"30m\",\n\t\t\t\t\"must be less than or equal to cpu limit of -30m\",\n\t\t\t),\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"Memory Request > Limit\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tName:\t\t\"dev-game\",\n\t\t\t\tNamespace:\t\"default\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tPorts: []GameServerPort{{\n\t\t\t\t\tName:\t\t\"main\",\n\t\t\t\t\tContainerPort:\t7777,\n\t\t\t\t\tPortPolicy:\tDynamic,\n\t\t\t\t}},\n\t\t\t\tContainer:\t\"testing\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\tName:\t\"testing\",\n\t\t\t\t\t\t\tImage:\t\"testing/image\",\n\t\t\t\t\t\t\tResources: corev1.ResourceRequirements{\n\t\t\t\t\t\t\t\tRequests: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"30m\"),\n\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"55Mi\"),\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\tLimits: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"30m\"),\n\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"32Mi\"),\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t},\n\t\t\t\t\t}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t\twant: field.ErrorList{\n\t\t\tfield.Invalid(\n\t\t\t\tfield.NewPath(\"spec\", \"template\", \"spec\", \"containers\").Index(0).Child(\"resources\", \"requests\"),\n\t\t\t\t\"55Mi\",\n\t\t\t\t\"must be less than or equal to memory limit of 32Mi\",\n\t\t\t),\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"Memory negative request\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tName:\t\t\"dev-game\",\n\t\t\t\tNamespace:\t\"default\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tPorts: []GameServerPort{{\n\t\t\t\t\tName:\t\t\"main\",\n\t\t\t\t\tContainerPort:\t7777,\n\t\t\t\t\tPortPolicy:\tDynamic,\n\t\t\t\t}},\n\t\t\t\tContainer:\t\"testing\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\tName:\t\"testing\",\n\t\t\t\t\t\t\tImage:\t\"testing/image\",\n\t\t\t\t\t\t\tResources: corev1.ResourceRequirements{\n\t\t\t\t\t\t\t\tRequests: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"30m\"),\n\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"-32Mi\"),\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\tLimits: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"30m\"),\n\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"32Mi\"),\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t},\n\t\t\t\t\t}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t\twant: field.ErrorList{\n\t\t\tfield.Invalid(\n\t\t\t\tfield.NewPath(\"spec\", \"template\", \"spec\", \"containers\").Index(0).Child(\"resources\", \"requests\").Key(\"memory\"),\n\t\t\t\t\"-32Mi\",\n\t\t\t\t\"must be greater than or equal to 0\",\n\t\t\t),\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"Memory negative limit\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tName:\t\t\"dev-game\",\n\t\t\t\tNamespace:\t\"default\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tPorts: []GameServerPort{{\n\t\t\t\t\tName:\t\t\"main\",\n\t\t\t\t\tContainerPort:\t7777,\n\t\t\t\t\tPortPolicy:\tDynamic,\n\t\t\t\t}},\n\t\t\t\tContainer:\t\"testing\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\tName:\t\"testing\",\n\t\t\t\t\t\t\tImage:\t\"testing/image\",\n\t\t\t\t\t\t\tResources: corev1.ResourceRequirements{\n\t\t\t\t\t\t\t\tRequests: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"30m\"),\n\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"32Mi\"),\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\tLimits: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"30m\"),\n\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"-32Mi\"),\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t},\n\t\t\t\t\t}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t\twant: field.ErrorList{\n\t\t\tfield.Invalid(\n\t\t\t\tfield.NewPath(\"spec\", \"template\", \"spec\", \"containers\").Index(0).Child(\"resources\", \"limits\").Key(\"memory\"),\n\t\t\t\t\"-32Mi\",\n\t\t\t\t\"must be greater than or equal to 0\",\n\t\t\t),\n\t\t\tfield.Invalid(\n\t\t\t\tfield.NewPath(\"spec\", \"template\", \"spec\", \"containers\").Index(0).Child(\"resources\", \"requests\"),\n\t\t\t\t\"32Mi\",\n\t\t\t\t\"must be less than or equal to memory limit of -32Mi\",\n\t\t\t),\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"Init CPU Request > Limit\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tName:\t\t\"dev-game\",\n\t\t\t\tNamespace:\t\"default\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tPorts: []GameServerPort{{\n\t\t\t\t\tName:\t\t\"main\",\n\t\t\t\t\tContainerPort:\t7777,\n\t\t\t\t\tPortPolicy:\tDynamic,\n\t\t\t\t}},\n\t\t\t\tContainer:\t\"testing\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{{Name: \"testing\", Image: \"testing/image\"}},\n\t\t\t\t\t\tInitContainers: []corev1.Container{\n\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\tName:\t\"sidecar\",\n\t\t\t\t\t\t\t\tImage:\t\"testing/image\",\n\t\t\t\t\t\t\t\tResources: corev1.ResourceRequirements{\n\t\t\t\t\t\t\t\t\tRequests: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"50m\"),\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"32Mi\"),\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\tLimits: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"30m\"),\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"32Mi\"),\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t\twant: field.ErrorList{\n\t\t\tfield.Invalid(\n\t\t\t\tfield.NewPath(\"spec\", \"template\", \"spec\", \"initContainers\").Index(0).Child(\"resources\", \"requests\"),\n\t\t\t\t\"50m\",\n\t\t\t\t\"must be less than or equal to cpu limit of 30m\",\n\t\t\t),\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"Init CPU negative request\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tName:\t\t\"dev-game\",\n\t\t\t\tNamespace:\t\"default\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tPorts: []GameServerPort{{\n\t\t\t\t\tName:\t\t\"main\",\n\t\t\t\t\tContainerPort:\t7777,\n\t\t\t\t\tPortPolicy:\tDynamic,\n\t\t\t\t}},\n\t\t\t\tContainer:\t\"testing\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{{Name: \"testing\", Image: \"testing/image\"}},\n\t\t\t\t\t\tInitContainers: []corev1.Container{\n\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\tName:\t\"sidecar\",\n\t\t\t\t\t\t\t\tImage:\t\"testing/image\",\n\t\t\t\t\t\t\t\tResources: corev1.ResourceRequirements{\n\t\t\t\t\t\t\t\t\tRequests: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"-30m\"),\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"32Mi\"),\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\tLimits: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"30m\"),\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"32Mi\"),\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t\twant: field.ErrorList{\n\t\t\tfield.Invalid(\n\t\t\t\tfield.NewPath(\"spec\", \"template\", \"spec\", \"initContainers\").Index(0).Child(\"resources\", \"requests\").Key(\"cpu\"),\n\t\t\t\t\"-30m\",\n\t\t\t\t\"must be greater than or equal to 0\",\n\t\t\t),\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"Init CPU negative limit\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tName:\t\t\"dev-game\",\n\t\t\t\tNamespace:\t\"default\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tPorts: []GameServerPort{{\n\t\t\t\t\tName:\t\t\"main\",\n\t\t\t\t\tContainerPort:\t7777,\n\t\t\t\t\tPortPolicy:\tDynamic,\n\t\t\t\t}},\n\t\t\t\tContainer:\t\"testing\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{{Name: \"testing\", Image: \"testing/image\"}},\n\t\t\t\t\t\tInitContainers: []corev1.Container{\n\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\tName:\t\"testing\",\n\t\t\t\t\t\t\t\tImage:\t\"testing/image\",\n\t\t\t\t\t\t\t\tResources: corev1.ResourceRequirements{\n\t\t\t\t\t\t\t\t\tRequests: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"30m\"),\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"32Mi\"),\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\tLimits: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"-30m\"),\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"32Mi\"),\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t\twant: field.ErrorList{\n\t\t\tfield.Invalid(\n\t\t\t\tfield.NewPath(\"spec\", \"template\", \"spec\", \"initContainers\").Index(0).Child(\"resources\", \"limits\").Key(\"cpu\"),\n\t\t\t\t\"-30m\",\n\t\t\t\t\"must be greater than or equal to 0\",\n\t\t\t),\n\t\t\tfield.Invalid(\n\t\t\t\tfield.NewPath(\"spec\", \"template\", \"spec\", \"initContainers\").Index(0).Child(\"resources\", \"requests\"),\n\t\t\t\t\"30m\",\n\t\t\t\t\"must be less than or equal to cpu limit of -30m\",\n\t\t\t),\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"Init Memory Request > Limit\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tName:\t\t\"dev-game\",\n\t\t\t\tNamespace:\t\"default\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tPorts: []GameServerPort{{\n\t\t\t\t\tName:\t\t\"main\",\n\t\t\t\t\tContainerPort:\t7777,\n\t\t\t\t\tPortPolicy:\tDynamic,\n\t\t\t\t}},\n\t\t\t\tContainer:\t\"testing\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{{Name: \"testing\", Image: \"testing/image\"}},\n\t\t\t\t\t\tInitContainers: []corev1.Container{\n\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\tName:\t\"testing\",\n\t\t\t\t\t\t\t\tImage:\t\"testing/image\",\n\t\t\t\t\t\t\t\tResources: corev1.ResourceRequirements{\n\t\t\t\t\t\t\t\t\tRequests: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"30m\"),\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"55Mi\"),\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\tLimits: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"30m\"),\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"32Mi\"),\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t\twant: field.ErrorList{\n\t\t\tfield.Invalid(\n\t\t\t\tfield.NewPath(\"spec\", \"template\", \"spec\", \"initContainers\").Index(0).Child(\"resources\", \"requests\"),\n\t\t\t\t\"55Mi\",\n\t\t\t\t\"must be less than or equal to memory limit of 32Mi\",\n\t\t\t),\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"Init Memory negative request\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tName:\t\t\"dev-game\",\n\t\t\t\tNamespace:\t\"default\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tPorts: []GameServerPort{{\n\t\t\t\t\tName:\t\t\"main\",\n\t\t\t\t\tContainerPort:\t7777,\n\t\t\t\t\tPortPolicy:\tDynamic,\n\t\t\t\t}},\n\t\t\t\tContainer:\t\"testing\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{{Name: \"testing\", Image: \"testing/image\"}},\n\t\t\t\t\t\tInitContainers: []corev1.Container{\n\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\tName:\t\"testing\",\n\t\t\t\t\t\t\t\tImage:\t\"testing/image\",\n\t\t\t\t\t\t\t\tResources: corev1.ResourceRequirements{\n\t\t\t\t\t\t\t\t\tRequests: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"30m\"),\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"-32Mi\"),\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\tLimits: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"30m\"),\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"32Mi\"),\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t\twant: field.ErrorList{\n\t\t\tfield.Invalid(\n\t\t\t\tfield.NewPath(\"spec\", \"template\", \"spec\", \"initContainers\").Index(0).Child(\"resources\", \"requests\").Key(\"memory\"),\n\t\t\t\t\"-32Mi\",\n\t\t\t\t\"must be greater than or equal to 0\",\n\t\t\t),\n\t\t},\n\t},\n\t{\n\t\tdescription:\t\"Init Memory negative limit\",\n\t\tgs: GameServer{\n\t\t\tObjectMeta: metav1.ObjectMeta{\n\t\t\t\tName:\t\t\"dev-game\",\n\t\t\t\tNamespace:\t\"default\",\n\t\t\t},\n\t\t\tSpec: GameServerSpec{\n\t\t\t\tPorts: []GameServerPort{{\n\t\t\t\t\tName:\t\t\"main\",\n\t\t\t\t\tContainerPort:\t7777,\n\t\t\t\t\tPortPolicy:\tDynamic,\n\t\t\t\t}},\n\t\t\t\tContainer:\t\"testing\",\n\t\t\t\tTemplate: corev1.PodTemplateSpec{\n\t\t\t\t\tSpec: corev1.PodSpec{Containers: []corev1.Container{{Name: \"testing\", Image: \"testing/image\"}},\n\t\t\t\t\t\tInitContainers: []corev1.Container{\n\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\tName:\t\"testing\",\n\t\t\t\t\t\t\t\tImage:\t\"testing/image\",\n\t\t\t\t\t\t\t\tResources: corev1.ResourceRequirements{\n\t\t\t\t\t\t\t\t\tRequests: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"30m\"),\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"32Mi\"),\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\tLimits: corev1.ResourceList{\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceCPU:\tresource.MustParse(\"30m\"),\n\t\t\t\t\t\t\t\t\t\tcorev1.ResourceMemory:\tresource.MustParse(\"-32Mi\"),\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t}},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tapplyDefaults:\tfalse,\n\t\twant: field.ErrorList{\n\t\t\tfield.Invalid(\n\t\t\t\tfield.NewPath(\"spec\", \"template\", \"spec\", \"initContainers\").Index(0).Child(\"resources\", \"limits\").Key(\"memory\"),\n\t\t\t\t\"-32Mi\",\n\t\t\t\t\"must be greater than or equal to 0\",\n\t\t\t),\n\t\t\tfield.Invalid(\n\t\t\t\tfield.NewPath(\"spec\", \"template\", \"spec\", \"initContainers\").Index(0).Child(\"resources\", \"requests\"),\n\t\t\t\t\"32Mi\",\n\t\t\t\t\"must be less than or equal to memory limit of -32Mi\",\n\t\t\t),\n\t\t},\n\t},\n}\nrows:=[]map[string]interface{}{}\nfor _,tc:=range testCases {before,captureErr:=captureJSON.Marshal(tc.gs);if captureErr!=nil{panic(captureErr)}\ncapturePresence:=map[string]bool{\"ports_nil\":tc.gs.Spec.Ports==nil,\"players_present\":tc.gs.Spec.Players!=nil,\"counters_present\":tc.gs.Spec.Counters!=nil,\"lists_present\":tc.gs.Spec.Lists!=nil}\nfor _, containers := range [][]corev1.Container{tc.gs.Spec.Template.Spec.InitContainers,tc.gs.Spec.Template.Spec.Containers} {\n    for _, container := range containers {\n        for _, quantities := range []corev1.ResourceList{container.Resources.Limits,container.Resources.Requests} {\n            for _, quantity := range quantities { captureQuantityState(quantity) }\n        }\n    }\n}\nif tc.applyDefaults {\n\ttc.gs.ApplyDefaults()\n}\nerrs := tc.gs.Validate(fakeAPIHooks{})\nassert.ElementsMatch(t, tc.want, errs, \"ErrorList check\")\nafter,captureErr:=captureJSON.Marshal(tc.gs);if captureErr!=nil{panic(captureErr)}\nrows=append(rows,map[string]interface{}{\"name\":tc.description,\"apply_defaults\":tc.applyDefaults,\"before\":captureJSON.RawMessage(before),\"after\":captureJSON.RawMessage(after),\"fixture_presence\":capturePresence,\"expected_errors\":tc.want,\"observed_errors\":errs,\"source_assertions_passed\":true,\"quantity_construction_roundtrip_checked\":true})}\nencoded,err:=captureJSON.Marshal(rows);if err!=nil{panic(err)};captureFMT.Println(string(encoded))}",
+  "capture_program_sha256": "401223c7920f480619b12b2c7ea92450ec90fdb03191da7824f356f73dbc54ba",
+  "captured_private_constants": [
+    {
+      "line": 37,
+      "name": "ipFixture",
+      "source": "pkg/apis/agones/v1/gameserver_test.go",
+      "value": "\"127.1.1.1\""
+    }
+  ],
+  "case_count": 25,
+  "cases": [
+    {
+      "after": {
+        "metadata": {
+          "annotations": {
+            "agones.dev/sdk-version": "dev"
+          },
+          "finalizers": [
+            "agones.dev/controller"
+          ]
+        },
+        "spec": {
+          "container": "testing",
+          "eviction": {
+            "safe": "Never"
+          },
+          "health": {
+            "failureThreshold": 3,
+            "initialDelaySeconds": 5,
+            "periodSeconds": 5
+          },
+          "scheduling": "Packed",
+          "sdkServer": {
+            "grpcPort": 9357,
+            "httpPort": 9358,
+            "logLevel": "Info"
+          },
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "eviction": {
+            "safe": "Never"
+          },
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": "Creating"
+        }
+      },
+      "apply_defaults": true,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Valid game server::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "metadata": {},
+        "spec": {
+          "health": {},
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": null,
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": true
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Valid game server",
+      "name": "Valid game server",
+      "observed_errors": null,
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "metadata": {},
+        "spec": {
+          "health": {},
+          "ports": [
+            {
+              "hostPort": 5001,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            },
+            {
+              "containerPort": 5002,
+              "hostPort": 5002,
+              "name": "sidecar",
+              "portPolicy": "Static"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                },
+                {
+                  "image": "testing/image",
+                  "name": "anothertest",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Invalid gs: container, containerPort, hostPort::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "metadata": {},
+        "spec": {
+          "health": {},
+          "ports": [
+            {
+              "hostPort": 5001,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            },
+            {
+              "containerPort": 5002,
+              "hostPort": 5002,
+              "name": "sidecar",
+              "portPolicy": "Static"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                },
+                {
+                  "image": "testing/image",
+                  "name": "anothertest",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "",
+          "CoveredByDeclarative": false,
+          "Detail": "Container is required when using multiple containers in the pod template",
+          "Field": "spec.container",
+          "Origin": "",
+          "Type": "FieldValueRequired"
+        },
+        {
+          "BadValue": "",
+          "CoveredByDeclarative": false,
+          "Detail": "Could not find a container named ",
+          "Field": "spec.container",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        },
+        {
+          "BadValue": "",
+          "CoveredByDeclarative": false,
+          "Detail": "ContainerPort must be defined for Dynamic and Static PortPolicies",
+          "Field": "spec.ports[0].containerPort",
+          "Origin": "",
+          "Type": "FieldValueRequired"
+        },
+        {
+          "BadValue": "",
+          "CoveredByDeclarative": false,
+          "Detail": "HostPort cannot be specified with a Dynamic or Passthrough PortPolicy",
+          "Field": "spec.ports[0].hostPort",
+          "Origin": "",
+          "Type": "FieldValueForbidden"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": false
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Invalid gs: container, containerPort, hostPort",
+      "name": "Invalid gs: container, containerPort, hostPort",
+      "observed_errors": [
+        {
+          "BadValue": "",
+          "CoveredByDeclarative": false,
+          "Detail": "Container is required when using multiple containers in the pod template",
+          "Field": "spec.container",
+          "Origin": "",
+          "Type": "FieldValueRequired"
+        },
+        {
+          "BadValue": "",
+          "CoveredByDeclarative": false,
+          "Detail": "Could not find a container named ",
+          "Field": "spec.container",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        },
+        {
+          "BadValue": "",
+          "CoveredByDeclarative": false,
+          "Detail": "ContainerPort must be defined for Dynamic and Static PortPolicies",
+          "Field": "spec.ports[0].containerPort",
+          "Origin": "",
+          "Type": "FieldValueRequired"
+        },
+        {
+          "BadValue": "",
+          "CoveredByDeclarative": false,
+          "Detail": "HostPort cannot be specified with a Dynamic or Passthrough PortPolicy",
+          "Field": "spec.ports[0].hostPort",
+          "Origin": "",
+          "Type": "FieldValueForbidden"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "metadata": {
+          "annotations": {
+            "agones.dev/dev-address": "invalid-ip"
+          },
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Static"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": null
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::DevAddressAnnotation: Invalid IP, no host port::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "metadata": {
+          "annotations": {
+            "agones.dev/dev-address": "invalid-ip"
+          },
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Static"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": null
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "invalid-ip",
+          "CoveredByDeclarative": false,
+          "Detail": "must be a valid IP address",
+          "Field": "metadata.annotations.agones.dev/dev-address",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        },
+        {
+          "BadValue": "",
+          "CoveredByDeclarative": false,
+          "Detail": "agones.dev/dev-address",
+          "Field": "spec.ports[0].hostPort",
+          "Origin": "",
+          "Type": "FieldValueRequired"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": false
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::DevAddressAnnotation: Invalid IP, no host port",
+      "name": "DevAddressAnnotation: Invalid IP, no host port",
+      "observed_errors": [
+        {
+          "BadValue": "invalid-ip",
+          "CoveredByDeclarative": false,
+          "Detail": "must be a valid IP address",
+          "Field": "metadata.annotations.agones.dev/dev-address",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        },
+        {
+          "BadValue": "",
+          "CoveredByDeclarative": false,
+          "Detail": "agones.dev/dev-address",
+          "Field": "spec.ports[0].hostPort",
+          "Origin": "",
+          "Type": "FieldValueRequired"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "kind": "test-kind",
+        "metadata": {
+          "name": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "spec": {
+          "container": "my_image",
+          "health": {},
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "foo/my_image",
+                  "name": "my_image",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long gs name::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "kind": "test-kind",
+        "metadata": {
+          "name": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "spec": {
+          "container": "my_image",
+          "health": {},
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "foo/my_image",
+                  "name": "my_image",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "<value omitted>",
+          "CoveredByDeclarative": false,
+          "Detail": "may not be more than 63 bytes",
+          "Field": "metadata.name",
+          "Origin": "",
+          "Type": "FieldValueTooLong"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": true
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long gs name",
+      "name": "Long gs name",
+      "observed_errors": [
+        {
+          "BadValue": "<value omitted>",
+          "CoveredByDeclarative": false,
+          "Detail": "may not be more than 63 bytes",
+          "Field": "metadata.name",
+          "Origin": "",
+          "Type": "FieldValueTooLong"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "kind": "test-kind",
+        "metadata": {
+          "generateName": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "spec": {
+          "container": "my_image",
+          "health": {},
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "foo/my_image",
+                  "name": "my_image",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long gs GenerateName is not validated on agones side::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "kind": "test-kind",
+        "metadata": {
+          "generateName": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "spec": {
+          "container": "my_image",
+          "health": {},
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "foo/my_image",
+                  "name": "my_image",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": null,
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": true
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long gs GenerateName is not validated on agones side",
+      "name": "Long gs GenerateName is not validated on agones side",
+      "observed_errors": null,
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "kind": "test-kind",
+        "metadata": {
+          "generateName": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "spec": {
+          "container": "my_image",
+          "health": {},
+          "sdkServer": {},
+          "template": {
+            "metadata": {
+              "labels": {
+                "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff": ""
+              }
+            },
+            "spec": {
+              "containers": [
+                {
+                  "image": "foo/my_image",
+                  "name": "my_image",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long label key is invalid::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "kind": "test-kind",
+        "metadata": {
+          "generateName": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        },
+        "spec": {
+          "container": "my_image",
+          "health": {},
+          "sdkServer": {},
+          "template": {
+            "metadata": {
+              "labels": {
+                "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff": ""
+              }
+            },
+            "spec": {
+              "containers": [
+                {
+                  "image": "foo/my_image",
+                  "name": "my_image",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "CoveredByDeclarative": false,
+          "Detail": "name part must be no more than 63 bytes",
+          "Field": "spec.template.metadata.labels",
+          "Origin": "format=k8s-label-key",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": true
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long label key is invalid",
+      "name": "Long label key is invalid",
+      "observed_errors": [
+        {
+          "BadValue": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "CoveredByDeclarative": false,
+          "Detail": "name part must be no more than 63 bytes",
+          "Field": "spec.template.metadata.labels",
+          "Origin": "format=k8s-label-key",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "kind": "test-kind",
+        "metadata": {
+          "generateName": "ok-name"
+        },
+        "spec": {
+          "container": "my_image",
+          "health": {},
+          "sdkServer": {},
+          "template": {
+            "metadata": {
+              "labels": {
+                "agones.dev/longValueKey": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+              }
+            },
+            "spec": {
+              "containers": [
+                {
+                  "image": "foo/my_image",
+                  "name": "my_image",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long label value is invalid::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "kind": "test-kind",
+        "metadata": {
+          "generateName": "ok-name"
+        },
+        "spec": {
+          "container": "my_image",
+          "health": {},
+          "sdkServer": {},
+          "template": {
+            "metadata": {
+              "labels": {
+                "agones.dev/longValueKey": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+              }
+            },
+            "spec": {
+              "containers": [
+                {
+                  "image": "foo/my_image",
+                  "name": "my_image",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "CoveredByDeclarative": false,
+          "Detail": "must be no more than 63 bytes",
+          "Field": "spec.template.metadata.labels",
+          "Origin": "format=k8s-label-value",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": true
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long label value is invalid",
+      "name": "Long label value is invalid",
+      "observed_errors": [
+        {
+          "BadValue": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "CoveredByDeclarative": false,
+          "Detail": "must be no more than 63 bytes",
+          "Field": "spec.template.metadata.labels",
+          "Origin": "format=k8s-label-value",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "kind": "test-kind",
+        "metadata": {
+          "generateName": "ok-name"
+        },
+        "spec": {
+          "container": "my_image",
+          "health": {},
+          "sdkServer": {},
+          "template": {
+            "metadata": {
+              "annotations": {
+                "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+              }
+            },
+            "spec": {
+              "containers": [
+                {
+                  "image": "foo/my_image",
+                  "name": "my_image",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long annotation key is invalid::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "kind": "test-kind",
+        "metadata": {
+          "generateName": "ok-name"
+        },
+        "spec": {
+          "container": "my_image",
+          "health": {},
+          "sdkServer": {},
+          "template": {
+            "metadata": {
+              "annotations": {
+                "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+              }
+            },
+            "spec": {
+              "containers": [
+                {
+                  "image": "foo/my_image",
+                  "name": "my_image",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "CoveredByDeclarative": false,
+          "Detail": "name part must be no more than 63 bytes",
+          "Field": "spec.template.metadata.annotations",
+          "Origin": "format=k8s-label-key",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": true
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long annotation key is invalid",
+      "name": "Long annotation key is invalid",
+      "observed_errors": [
+        {
+          "BadValue": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "CoveredByDeclarative": false,
+          "Detail": "name part must be no more than 63 bytes",
+          "Field": "spec.template.metadata.annotations",
+          "Origin": "format=k8s-label-key",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "kind": "test-kind",
+        "metadata": {
+          "generateName": "ok-name"
+        },
+        "spec": {
+          "container": "my_image",
+          "health": {},
+          "sdkServer": {},
+          "template": {
+            "metadata": {
+              "annotations": {
+                "agones.dev/short\u00b1Name": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+              }
+            },
+            "spec": {
+              "containers": [
+                {
+                  "image": "foo/my_image",
+                  "name": "my_image",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Invalid character in annotation key::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "kind": "test-kind",
+        "metadata": {
+          "generateName": "ok-name"
+        },
+        "spec": {
+          "container": "my_image",
+          "health": {},
+          "sdkServer": {},
+          "template": {
+            "metadata": {
+              "annotations": {
+                "agones.dev/short\u00b1Name": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+              }
+            },
+            "spec": {
+              "containers": [
+                {
+                  "image": "foo/my_image",
+                  "name": "my_image",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "agones.dev/short\u00b1Name",
+          "CoveredByDeclarative": false,
+          "Detail": "name part must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyName',  or 'my.name',  or '123-abc', regex used for validation is '([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]')",
+          "Field": "spec.template.metadata.annotations",
+          "Origin": "format=k8s-label-key",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": true
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Invalid character in annotation key",
+      "name": "Invalid character in annotation key",
+      "observed_errors": [
+        {
+          "BadValue": "agones.dev/short\u00b1Name",
+          "CoveredByDeclarative": false,
+          "Detail": "name part must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyName',  or 'my.name',  or '123-abc', regex used for validation is '([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]')",
+          "Field": "spec.template.metadata.annotations",
+          "Origin": "format=k8s-label-key",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "kind": "test-kind",
+        "metadata": {
+          "generateName": "ok-name"
+        },
+        "spec": {
+          "container": "my_image",
+          "health": {},
+          "sdkServer": {},
+          "template": {
+            "metadata": {
+              "annotations": {
+                "agones.dev/shortName": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+              }
+            },
+            "spec": {
+              "containers": [
+                {
+                  "image": "foo/my_image",
+                  "name": "my_image",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Valid annotation key::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "kind": "test-kind",
+        "metadata": {
+          "generateName": "ok-name"
+        },
+        "spec": {
+          "container": "my_image",
+          "health": {},
+          "sdkServer": {},
+          "template": {
+            "metadata": {
+              "annotations": {
+                "agones.dev/shortName": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+              }
+            },
+            "spec": {
+              "containers": [
+                {
+                  "image": "foo/my_image",
+                  "name": "my_image",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": null,
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": true
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Valid annotation key",
+      "name": "Valid annotation key",
+      "observed_errors": null,
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "kind": "test-kind",
+        "metadata": {
+          "annotations": {
+            "agones.dev/sdk-version": "dev"
+          },
+          "finalizers": [
+            "agones.dev/controller"
+          ],
+          "generateName": "ok-name"
+        },
+        "spec": {
+          "container": "my_image",
+          "eviction": {
+            "safe": "Never"
+          },
+          "health": {
+            "failureThreshold": 3,
+            "initialDelaySeconds": 5,
+            "periodSeconds": 5
+          },
+          "ports": [
+            {
+              "container": "my_image",
+              "containerPort": 1294,
+              "name": "one",
+              "portPolicy": "Passthrough",
+              "protocol": "UDP",
+              "range": "default"
+            },
+            {
+              "container": "my_image",
+              "hostPort": 7890,
+              "name": "two",
+              "portPolicy": "Passthrough",
+              "protocol": "UDP",
+              "range": "default"
+            },
+            {
+              "container": "my_image",
+              "containerPort": 1294,
+              "hostPort": 7890,
+              "name": "three",
+              "portPolicy": "Dynamic",
+              "protocol": "UDP",
+              "range": "default"
+            }
+          ],
+          "scheduling": "Packed",
+          "sdkServer": {
+            "grpcPort": 9357,
+            "httpPort": 9358,
+            "logLevel": "Info"
+          },
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "foo/my_image",
+                  "name": "my_image",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "eviction": {
+            "safe": "Never"
+          },
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": "PortAllocation"
+        }
+      },
+      "apply_defaults": true,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Check ContainerPort and HostPort with different policies::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "kind": "test-kind",
+        "metadata": {
+          "generateName": "ok-name"
+        },
+        "spec": {
+          "container": "my_image",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 1294,
+              "name": "one",
+              "portPolicy": "Passthrough"
+            },
+            {
+              "hostPort": 7890,
+              "name": "two",
+              "portPolicy": "Passthrough"
+            },
+            {
+              "containerPort": 1294,
+              "hostPort": 7890,
+              "name": "three",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "foo/my_image",
+                  "name": "my_image",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "",
+          "CoveredByDeclarative": false,
+          "Detail": "ContainerPort cannot be specified with Passthrough PortPolicy",
+          "Field": "spec.ports[0].containerPort",
+          "Origin": "",
+          "Type": "FieldValueRequired"
+        },
+        {
+          "BadValue": "",
+          "CoveredByDeclarative": false,
+          "Detail": "HostPort cannot be specified with a Dynamic or Passthrough PortPolicy",
+          "Field": "spec.ports[1].hostPort",
+          "Origin": "",
+          "Type": "FieldValueForbidden"
+        },
+        {
+          "BadValue": "",
+          "CoveredByDeclarative": false,
+          "Detail": "HostPort cannot be specified with a Dynamic or Passthrough PortPolicy",
+          "Field": "spec.ports[2].hostPort",
+          "Origin": "",
+          "Type": "FieldValueForbidden"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": false
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Check ContainerPort and HostPort with different policies",
+      "name": "Check ContainerPort and HostPort with different policies",
+      "observed_errors": [
+        {
+          "BadValue": "",
+          "CoveredByDeclarative": false,
+          "Detail": "ContainerPort cannot be specified with Passthrough PortPolicy",
+          "Field": "spec.ports[0].containerPort",
+          "Origin": "",
+          "Type": "FieldValueRequired"
+        },
+        {
+          "BadValue": "",
+          "CoveredByDeclarative": false,
+          "Detail": "HostPort cannot be specified with a Dynamic or Passthrough PortPolicy",
+          "Field": "spec.ports[1].hostPort",
+          "Origin": "",
+          "Type": "FieldValueForbidden"
+        },
+        {
+          "BadValue": "",
+          "CoveredByDeclarative": false,
+          "Detail": "HostPort cannot be specified with a Dynamic or Passthrough PortPolicy",
+          "Field": "spec.ports[2].hostPort",
+          "Origin": "",
+          "Type": "FieldValueForbidden"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "metadata": {
+          "annotations": {
+            "agones.dev/dev-address": "127.1.1.1",
+            "agones.dev/sdk-version": "dev"
+          },
+          "finalizers": [
+            "agones.dev/controller"
+          ],
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "my_image",
+          "eviction": {
+            "safe": "Never"
+          },
+          "health": {
+            "failureThreshold": 3,
+            "initialDelaySeconds": 5,
+            "periodSeconds": 5
+          },
+          "ports": [
+            {
+              "container": "my_image",
+              "containerPort": 7777,
+              "hostPort": 7890,
+              "name": "main",
+              "portPolicy": "Passthrough",
+              "protocol": "UDP",
+              "range": "default"
+            }
+          ],
+          "scheduling": "Packed",
+          "sdkServer": {
+            "grpcPort": 9357,
+            "httpPort": 9358,
+            "logLevel": "Info"
+          },
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "foo/my_image",
+                  "name": "my_image",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "eviction": {
+            "safe": "Never"
+          },
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": "PortAllocation"
+        }
+      },
+      "apply_defaults": true,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::PortPolicy must be Static with HostPort specified::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "metadata": {
+          "annotations": {
+            "agones.dev/dev-address": "127.1.1.1"
+          },
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "my_image",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "hostPort": 7890,
+              "name": "main",
+              "portPolicy": "Passthrough"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "foo/my_image",
+                  "name": "my_image",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "",
+          "CoveredByDeclarative": false,
+          "Detail": "PortPolicy must be Static",
+          "Field": "spec.ports[0].portPolicy",
+          "Origin": "",
+          "Type": "FieldValueRequired"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": false
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::PortPolicy must be Static with HostPort specified",
+      "name": "PortPolicy must be Static with HostPort specified",
+      "observed_errors": [
+        {
+          "BadValue": "",
+          "CoveredByDeclarative": false,
+          "Detail": "PortPolicy must be Static",
+          "Field": "spec.ports[0].portPolicy",
+          "Origin": "",
+          "Type": "FieldValueRequired"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": -4,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::ContainerPort is less than zero::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": -4,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "",
+          "CoveredByDeclarative": false,
+          "Detail": "ContainerPort must be defined for Dynamic and Static PortPolicies",
+          "Field": "spec.ports[0].containerPort",
+          "Origin": "",
+          "Type": "FieldValueRequired"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": false
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::ContainerPort is less than zero",
+      "name": "ContainerPort is less than zero",
+      "observed_errors": [
+        {
+          "BadValue": "",
+          "CoveredByDeclarative": false,
+          "Detail": "ContainerPort must be defined for Dynamic and Static PortPolicies",
+          "Field": "spec.ports[0].containerPort",
+          "Origin": "",
+          "Type": "FieldValueRequired"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {
+                    "limits": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    },
+                    "requests": {
+                      "cpu": "50m",
+                      "memory": "32Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::CPU Request > Limit::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {
+                    "limits": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    },
+                    "requests": {
+                      "cpu": "50m",
+                      "memory": "32Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "50m",
+          "CoveredByDeclarative": false,
+          "Detail": "must be less than or equal to cpu limit of 30m",
+          "Field": "spec.template.spec.containers[0].resources.requests",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": false
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::CPU Request > Limit",
+      "name": "CPU Request > Limit",
+      "observed_errors": [
+        {
+          "BadValue": "50m",
+          "CoveredByDeclarative": false,
+          "Detail": "must be less than or equal to cpu limit of 30m",
+          "Field": "spec.template.spec.containers[0].resources.requests",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {
+                    "limits": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    },
+                    "requests": {
+                      "cpu": "-30m",
+                      "memory": "32Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::CPU negative request::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {
+                    "limits": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    },
+                    "requests": {
+                      "cpu": "-30m",
+                      "memory": "32Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "-30m",
+          "CoveredByDeclarative": false,
+          "Detail": "must be greater than or equal to 0",
+          "Field": "spec.template.spec.containers[0].resources.requests[cpu]",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": false
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::CPU negative request",
+      "name": "CPU negative request",
+      "observed_errors": [
+        {
+          "BadValue": "-30m",
+          "CoveredByDeclarative": false,
+          "Detail": "must be greater than or equal to 0",
+          "Field": "spec.template.spec.containers[0].resources.requests[cpu]",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {
+                    "limits": {
+                      "cpu": "-30m",
+                      "memory": "32Mi"
+                    },
+                    "requests": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::CPU negative limit::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {
+                    "limits": {
+                      "cpu": "-30m",
+                      "memory": "32Mi"
+                    },
+                    "requests": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "-30m",
+          "CoveredByDeclarative": false,
+          "Detail": "must be greater than or equal to 0",
+          "Field": "spec.template.spec.containers[0].resources.limits[cpu]",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        },
+        {
+          "BadValue": "30m",
+          "CoveredByDeclarative": false,
+          "Detail": "must be less than or equal to cpu limit of -30m",
+          "Field": "spec.template.spec.containers[0].resources.requests",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": false
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::CPU negative limit",
+      "name": "CPU negative limit",
+      "observed_errors": [
+        {
+          "BadValue": "-30m",
+          "CoveredByDeclarative": false,
+          "Detail": "must be greater than or equal to 0",
+          "Field": "spec.template.spec.containers[0].resources.limits[cpu]",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        },
+        {
+          "BadValue": "30m",
+          "CoveredByDeclarative": false,
+          "Detail": "must be less than or equal to cpu limit of -30m",
+          "Field": "spec.template.spec.containers[0].resources.requests",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {
+                    "limits": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    },
+                    "requests": {
+                      "cpu": "30m",
+                      "memory": "55Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Memory Request > Limit::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {
+                    "limits": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    },
+                    "requests": {
+                      "cpu": "30m",
+                      "memory": "55Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "55Mi",
+          "CoveredByDeclarative": false,
+          "Detail": "must be less than or equal to memory limit of 32Mi",
+          "Field": "spec.template.spec.containers[0].resources.requests",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": false
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Memory Request > Limit",
+      "name": "Memory Request > Limit",
+      "observed_errors": [
+        {
+          "BadValue": "55Mi",
+          "CoveredByDeclarative": false,
+          "Detail": "must be less than or equal to memory limit of 32Mi",
+          "Field": "spec.template.spec.containers[0].resources.requests",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {
+                    "limits": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    },
+                    "requests": {
+                      "cpu": "30m",
+                      "memory": "-32Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Memory negative request::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {
+                    "limits": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    },
+                    "requests": {
+                      "cpu": "30m",
+                      "memory": "-32Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "-32Mi",
+          "CoveredByDeclarative": false,
+          "Detail": "must be greater than or equal to 0",
+          "Field": "spec.template.spec.containers[0].resources.requests[memory]",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": false
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Memory negative request",
+      "name": "Memory negative request",
+      "observed_errors": [
+        {
+          "BadValue": "-32Mi",
+          "CoveredByDeclarative": false,
+          "Detail": "must be greater than or equal to 0",
+          "Field": "spec.template.spec.containers[0].resources.requests[memory]",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {
+                    "limits": {
+                      "cpu": "30m",
+                      "memory": "-32Mi"
+                    },
+                    "requests": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Memory negative limit::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {
+                    "limits": {
+                      "cpu": "30m",
+                      "memory": "-32Mi"
+                    },
+                    "requests": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "-32Mi",
+          "CoveredByDeclarative": false,
+          "Detail": "must be greater than or equal to 0",
+          "Field": "spec.template.spec.containers[0].resources.limits[memory]",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        },
+        {
+          "BadValue": "32Mi",
+          "CoveredByDeclarative": false,
+          "Detail": "must be less than or equal to memory limit of -32Mi",
+          "Field": "spec.template.spec.containers[0].resources.requests",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": false
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Memory negative limit",
+      "name": "Memory negative limit",
+      "observed_errors": [
+        {
+          "BadValue": "-32Mi",
+          "CoveredByDeclarative": false,
+          "Detail": "must be greater than or equal to 0",
+          "Field": "spec.template.spec.containers[0].resources.limits[memory]",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        },
+        {
+          "BadValue": "32Mi",
+          "CoveredByDeclarative": false,
+          "Detail": "must be less than or equal to memory limit of -32Mi",
+          "Field": "spec.template.spec.containers[0].resources.requests",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ],
+              "initContainers": [
+                {
+                  "image": "testing/image",
+                  "name": "sidecar",
+                  "resources": {
+                    "limits": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    },
+                    "requests": {
+                      "cpu": "50m",
+                      "memory": "32Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init CPU Request > Limit::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ],
+              "initContainers": [
+                {
+                  "image": "testing/image",
+                  "name": "sidecar",
+                  "resources": {
+                    "limits": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    },
+                    "requests": {
+                      "cpu": "50m",
+                      "memory": "32Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "50m",
+          "CoveredByDeclarative": false,
+          "Detail": "must be less than or equal to cpu limit of 30m",
+          "Field": "spec.template.spec.initContainers[0].resources.requests",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": false
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init CPU Request > Limit",
+      "name": "Init CPU Request > Limit",
+      "observed_errors": [
+        {
+          "BadValue": "50m",
+          "CoveredByDeclarative": false,
+          "Detail": "must be less than or equal to cpu limit of 30m",
+          "Field": "spec.template.spec.initContainers[0].resources.requests",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ],
+              "initContainers": [
+                {
+                  "image": "testing/image",
+                  "name": "sidecar",
+                  "resources": {
+                    "limits": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    },
+                    "requests": {
+                      "cpu": "-30m",
+                      "memory": "32Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init CPU negative request::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ],
+              "initContainers": [
+                {
+                  "image": "testing/image",
+                  "name": "sidecar",
+                  "resources": {
+                    "limits": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    },
+                    "requests": {
+                      "cpu": "-30m",
+                      "memory": "32Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "-30m",
+          "CoveredByDeclarative": false,
+          "Detail": "must be greater than or equal to 0",
+          "Field": "spec.template.spec.initContainers[0].resources.requests[cpu]",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": false
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init CPU negative request",
+      "name": "Init CPU negative request",
+      "observed_errors": [
+        {
+          "BadValue": "-30m",
+          "CoveredByDeclarative": false,
+          "Detail": "must be greater than or equal to 0",
+          "Field": "spec.template.spec.initContainers[0].resources.requests[cpu]",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ],
+              "initContainers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {
+                    "limits": {
+                      "cpu": "-30m",
+                      "memory": "32Mi"
+                    },
+                    "requests": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init CPU negative limit::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ],
+              "initContainers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {
+                    "limits": {
+                      "cpu": "-30m",
+                      "memory": "32Mi"
+                    },
+                    "requests": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "-30m",
+          "CoveredByDeclarative": false,
+          "Detail": "must be greater than or equal to 0",
+          "Field": "spec.template.spec.initContainers[0].resources.limits[cpu]",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        },
+        {
+          "BadValue": "30m",
+          "CoveredByDeclarative": false,
+          "Detail": "must be less than or equal to cpu limit of -30m",
+          "Field": "spec.template.spec.initContainers[0].resources.requests",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": false
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init CPU negative limit",
+      "name": "Init CPU negative limit",
+      "observed_errors": [
+        {
+          "BadValue": "-30m",
+          "CoveredByDeclarative": false,
+          "Detail": "must be greater than or equal to 0",
+          "Field": "spec.template.spec.initContainers[0].resources.limits[cpu]",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        },
+        {
+          "BadValue": "30m",
+          "CoveredByDeclarative": false,
+          "Detail": "must be less than or equal to cpu limit of -30m",
+          "Field": "spec.template.spec.initContainers[0].resources.requests",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ],
+              "initContainers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {
+                    "limits": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    },
+                    "requests": {
+                      "cpu": "30m",
+                      "memory": "55Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init Memory Request > Limit::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ],
+              "initContainers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {
+                    "limits": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    },
+                    "requests": {
+                      "cpu": "30m",
+                      "memory": "55Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "55Mi",
+          "CoveredByDeclarative": false,
+          "Detail": "must be less than or equal to memory limit of 32Mi",
+          "Field": "spec.template.spec.initContainers[0].resources.requests",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": false
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init Memory Request > Limit",
+      "name": "Init Memory Request > Limit",
+      "observed_errors": [
+        {
+          "BadValue": "55Mi",
+          "CoveredByDeclarative": false,
+          "Detail": "must be less than or equal to memory limit of 32Mi",
+          "Field": "spec.template.spec.initContainers[0].resources.requests",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ],
+              "initContainers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {
+                    "limits": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    },
+                    "requests": {
+                      "cpu": "30m",
+                      "memory": "-32Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init Memory negative request::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ],
+              "initContainers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {
+                    "limits": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    },
+                    "requests": {
+                      "cpu": "30m",
+                      "memory": "-32Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "-32Mi",
+          "CoveredByDeclarative": false,
+          "Detail": "must be greater than or equal to 0",
+          "Field": "spec.template.spec.initContainers[0].resources.requests[memory]",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": false
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init Memory negative request",
+      "name": "Init Memory negative request",
+      "observed_errors": [
+        {
+          "BadValue": "-32Mi",
+          "CoveredByDeclarative": false,
+          "Detail": "must be greater than or equal to 0",
+          "Field": "spec.template.spec.initContainers[0].resources.requests[memory]",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    },
+    {
+      "after": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ],
+              "initContainers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {
+                    "limits": {
+                      "cpu": "30m",
+                      "memory": "-32Mi"
+                    },
+                    "requests": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "apply_defaults": false,
+      "assertions": [
+        {
+          "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init Memory negative limit::line-1355",
+          "kind": "ElementsMatch",
+          "line": 1355
+        }
+      ],
+      "before": {
+        "metadata": {
+          "name": "dev-game",
+          "namespace": "default"
+        },
+        "spec": {
+          "container": "testing",
+          "health": {},
+          "ports": [
+            {
+              "containerPort": 7777,
+              "name": "main",
+              "portPolicy": "Dynamic"
+            }
+          ],
+          "sdkServer": {},
+          "template": {
+            "metadata": {},
+            "spec": {
+              "containers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {}
+                }
+              ],
+              "initContainers": [
+                {
+                  "image": "testing/image",
+                  "name": "testing",
+                  "resources": {
+                    "limits": {
+                      "cpu": "30m",
+                      "memory": "-32Mi"
+                    },
+                    "requests": {
+                      "cpu": "30m",
+                      "memory": "32Mi"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "status": {
+          "address": "",
+          "addresses": null,
+          "nodeName": "",
+          "players": null,
+          "ports": null,
+          "reservedUntil": null,
+          "state": ""
+        }
+      },
+      "expected_errors": [
+        {
+          "BadValue": "-32Mi",
+          "CoveredByDeclarative": false,
+          "Detail": "must be greater than or equal to 0",
+          "Field": "spec.template.spec.initContainers[0].resources.limits[memory]",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        },
+        {
+          "BadValue": "32Mi",
+          "CoveredByDeclarative": false,
+          "Detail": "must be less than or equal to memory limit of -32Mi",
+          "Field": "spec.template.spec.initContainers[0].resources.requests",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "fixture_presence": {
+        "counters_present": false,
+        "lists_present": false,
+        "players_present": false,
+        "ports_nil": false
+      },
+      "id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init Memory negative limit",
+      "name": "Init Memory negative limit",
+      "observed_errors": [
+        {
+          "BadValue": "-32Mi",
+          "CoveredByDeclarative": false,
+          "Detail": "must be greater than or equal to 0",
+          "Field": "spec.template.spec.initContainers[0].resources.limits[memory]",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        },
+        {
+          "BadValue": "32Mi",
+          "CoveredByDeclarative": false,
+          "Detail": "must be less than or equal to memory limit of -32Mi",
+          "Field": "spec.template.spec.initContainers[0].resources.requests",
+          "Origin": "",
+          "Type": "FieldValueInvalid"
+        }
+      ],
+      "quantity_construction_roundtrip_checked": true,
+      "source_assertions_passed": true
+    }
+  ],
+  "classification": "EXACT_CASE_ASSERTIONS",
+  "environment": {
+    "CGO_ENABLED": "1",
+    "GOARCH": "amd64",
+    "GOENV": "/home/astral/.config/go/env",
+    "GOEXPERIMENT": "nodwarf5",
+    "GOFLAGS": "-mod=vendor",
+    "GOMOD": "/home/astral/.codex/worktrees/agones-resource-quantity/agones/go.mod",
+    "GOOS": "linux",
+    "GOTOOLCHAIN": "local",
+    "GOVERSION": "go1.27.1-X:nodwarf5"
+  },
+  "feature_id": "RESOURCE-QUANTITY-001",
+  "implementation_gate": "verification/agones/gates/d02fc52133e046b4405b028f93094123b27e215ce2ed9cbc1f57a663d5d5b5fb.json",
+  "implementation_gate_sha256": "d02fc52133e046b4405b028f93094123b27e215ce2ed9cbc1f57a663d5d5b5fb",
+  "loader_source_files": {
+    "build/scripts/agones-rs/extract/gameserver_defaulting.go": "3530dbf1e91a96f2264c5e8eb21c4f69c16b50818feee975af4d5fd46d907664",
+    "build/scripts/agones-rs/extract/gameserver_defaulting_test.go": "03af33d9d79bf73ad701528c07f5cdfa75758b5040465fbb52f7b95474eeb2bd",
+    "build/scripts/agones-rs/extract/gameserver_features.go": "5828b8c598b622577be5515fdf743275ee6dc5ed4972fa9e12d4d78b7b0988e8",
+    "build/scripts/agones-rs/extract/gameserver_features_test.go": "5a4ff209b50d89dd5aa8768999d189de6b4addc6e0708dc3b13f778238d9ffb6",
+    "build/scripts/agones-rs/extract/gameserver_validation.go": "e16fc88cc4cc768d391f297438ecf0637f8f67e94e7576626baff1d809c7d1c2",
+    "build/scripts/agones-rs/extract/gameserver_validation_test.go": "335351777f38f9ff83a732f51fa93f422478cd2318f8b7afe1b8de5c11f6ff4a",
+    "build/scripts/agones-rs/extract/go.mod": "d23234a15e7dbd4b4a9a5114b603c7b4af96faf0b28597887612f797198621db",
+    "build/scripts/agones-rs/extract/go.sum": "db117b1938e16538e8fe3fc238d5185565e1a5150ed8989573f95899b23d0101",
+    "build/scripts/agones-rs/extract/main.go": "2d205043df27731d7e8d789407aff62315457a694731f584b7ac82589ba3d505",
+    "build/scripts/agones-rs/extract/main_test.go": "b66449f6662bd598185fb671688d9bf566e36176c2e36ffca378d78464370213",
+    "build/scripts/agones-rs/extract/sdk_version.go": "79e0e06e220484f808686dbb936cee00fe3e52b572f4c93769736dd47f5acecd",
+    "build/scripts/agones-rs/extract/sdk_version_test.go": "8e7ca0a3cac25144f4289bdcdee416502b7aa63e45d3f9e215e12c7cc4fca097"
+  },
+  "package_id": "agones.dev/agones/pkg/apis/agones/v1 [agones.dev/agones/pkg/apis/agones/v1.test]",
+  "scheduling_mapping": "Original t.Parallel/t.Run mapped to serial exact-case replay; no executor/concurrency credit. The original test has no feature-mutex setup.",
+  "schema_version": 1,
+  "scope": "The entire pinned original TestGameServerValidate table, every conditional ApplyDefaults action, validation call and qualified ElementsMatch occurrence. Independent expected error elements and actual source fake hooks are retained. No formal credit or complete migration claim.",
+  "source_actions": [
+    "if tc.applyDefaults {\n\ttc.gs.ApplyDefaults()\n}",
+    "errs := tc.gs.Validate(fakeAPIHooks{})",
+    "assert.ElementsMatch(t, tc.want, errs, \"ErrorList check\")"
+  ],
+  "source_assertion_occurrences": 25,
+  "source_assertion_sites": [
+    {
+      "expression": "assert.ElementsMatch(t, tc.want, errs, \"ErrorList check\")",
+      "kind": "ElementsMatch",
+      "line": 1355,
+      "package": "github.com/stretchr/testify/assert"
+    }
+  ],
+  "source_files": {
+    "go.mod": "01df333891a331341e77aab737c24dc722fab26abc8439b9c2036c71a477215a",
+    "go.sum": "d890978bc12d9c9958b2a87f99a87d8478b007208e44c5d859e973ba89adcbf7",
+    "pkg/apis/agones/v1/apihooks.go": "3ddd2e6c35fc62c6c54ded97a97f7edc68218ed91fbfc1fd4341fc424c6a278b",
+    "pkg/apis/agones/v1/apihooksfake.go": "be5b9878ef112cedbe3165ec69d87e35acaa08d5850f26d15274b11b7e2317cb",
+    "pkg/apis/agones/v1/common.go": "b0657e44bfcff65bceb01062a6051e1b3afad0065ea797db3b08b4b4de2fb9f2",
+    "pkg/apis/agones/v1/common_test.go": "fb35dcbcea5cba021159ca9e84bb282eb80568390442f3da51d3cf933e73de04",
+    "pkg/apis/agones/v1/doc.go": "cea07da3169f9c776298009e0bd27c606bcd804f23c8f91c0d7c01de6d0ae50d",
+    "pkg/apis/agones/v1/fleet.go": "52ff0dd6d1b3f8ac7feed3ba35356c16434a8ca77f531eff3434cb3ad25f0e28",
+    "pkg/apis/agones/v1/fleet_test.go": "7fed497a874406e224cc29359568418d90200739bb2e9b5887ed4712994bb600",
+    "pkg/apis/agones/v1/gameserver.go": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
+    "pkg/apis/agones/v1/gameserver_test.go": "468502ff9cbedb3a37f7ff2b5ef1207f09b770aa3fc36b5e87432b6a62068cfa",
+    "pkg/apis/agones/v1/gameserverset.go": "aa62bbb516f092cfd52e44c2090f2031d925d2d0a19bdf4fff8ba464e2982ece",
+    "pkg/apis/agones/v1/gameserverset_test.go": "09f5554bedfe73bc83b705d0c8e54738df62197022a26cbf2bab64cc35eb568f",
+    "pkg/apis/agones/v1/register.go": "145c109e956724a124fa92418ea99ddc43e2f03c59ab17522f0f74200645471b",
+    "pkg/apis/agones/v1/v1.go": "c7328ed0c771c037a14bc8472ff10bbbf22e751d638429ddb2cf69a8aa94bd0d",
+    "pkg/apis/agones/v1/zz_generated.deepcopy.go": "bde683256de58cd8236ef1bb7e25a435caa719500823c5ff63c0da317105afdd",
+    "pkg/util/errors/errors.go": "b9b811509cc02053ce498cf012a58ea6fabb44d6fbf69e355d39baf0504dbc29",
+    "pkg/util/runtime/features.go": "05736b26646cf219419626dfca37c4f533302b178ca3bb542330cf7884ddc679",
+    "pkg/util/runtime/runtime.go": "d1683d9c5931891d59ae46cbfdbce13b45d2836355097e7e1bd24fd30200271a",
+    "pkg/version.go": "18a321dd868bdf897742490dde06040a35be996dbef93f4aae7ebd855c85842d",
+    "vendor/github.com/stretchr/testify/assert/assertions.go": "10087e4b00ecc9504a1b1b4758dcf909e3ab36a6e9585515335ac58c6ea56642"
+  },
+  "supporting_implementation_gates": {
+    "GS-TYPEMETA-001": {
+      "path": "verification/agones/gates/1f3bb5f54866727ee6b443c8469eb9d0dbe2c7133c543c62154e3702413b5bc2.json",
+      "sha256": "1f3bb5f54866727ee6b443c8469eb9d0dbe2c7133c543c62154e3702413b5bc2"
+    },
+    "GS-VALIDATION-ERROR-DATA-001": {
+      "path": "verification/agones/gates/b27ab9d7d52fea6cff48ce63877509d53a3830e2a112b5d004214326e9a13a33.json",
+      "sha256": "b27ab9d7d52fea6cff48ce63877509d53a3830e2a112b5d004214326e9a13a33"
+    }
+  }
+}

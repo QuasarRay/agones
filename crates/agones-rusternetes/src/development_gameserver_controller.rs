@@ -108,6 +108,7 @@ mod tests {
         let mut watch = repository.watch::<GameServer>("default").await.unwrap();
 
         let game_server = GameServer {
+            type_meta: Default::default(),
             metadata: ObjectMeta {
                 name: "dev-server".into(),
                 namespace: "default".into(),

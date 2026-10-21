@@ -1,14 +1,14 @@
 # Agones-rs handoff
 
-Generated from AGONES_RS_STATE.json revision 294.
+Generated from AGONES_RS_STATE.json revision 300.
 Contract SHA-256: `45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1`.
 Original reference: `6eb4a02588d8e7b581de187f3bc849733a78dcb2`, scope `agones-original-v1`.
 Workspace: `agones-rs-dev` at `2e1d39f6680d055e98d702238e77e32b9562b376`.
 Native Goal last reported `active`; full migration is **INCOMPLETE**.
 
 Active work: **GS-VALIDATE-FEATURES-001**, stage `VERIFYING`, disposition `READY`.
-Next action: Retain/publish all12current CI artifacts, then apply the checked58path complete-validation adoption from clean1886. Preserve canonical queue/protected operations/user AGENTS. Run canonical675native/six-mode checks, record adopted gates, and retain all25general/50cover plus other source/lifecycle/conformance/_2debt. No unchanged proof retry.
-Implementation gate: `verification/agones/gates/c4e2a5ea6825492fb9875ede400e5136552e534d80e260295148c92c0775f096.json`.
+Next action: Extend existing strict parser/protected workflow for all25general harnesses/50covers and six-field scope while preserving every existing selection/assertion/cover/domain/unwind. Native675/check/six modes/Go controls and nine production gates pass; current changed-program proof credit0. Full old2e1d terminal evidence is published ead588; avoid reupload/retry. Publish the complete next review head after pipeline accounting, then run one changed-program campaign.
+Implementation gate: `verification/agones/gates/6d10b275433dcf0a49011a53dc251b062c43c50049cc3a8aebf0c161cc498b26.json`.
 
 Read the active source and affected contract appendices only. Baseline metadata is in
 `verification/agones/baseline.json`, `scope-v1.json`, `baseline-tree.tsv`, and `baseline-tests.json`.
@@ -17,11 +17,11 @@ assertions and non-Go test identities remain unresolved. This is no completeness
 
 
 All 8 unverified `_2` form/location cells remain required architecture work.
-Last refactoring decision: REUSE_EXISTING.
-Next review: After canonical complete-validation adoption and its native/generation gates, inspect the actual feature name/value ownership and concrete resource/derive repetitions. Keep all25general proofs/50covers and other required source/lifecycle/conformance/_2work visible..
+Last refactoring decision: SMALL_LOCAL_REFACTOR.
+Next review: After native675/six-mode adoption gates, inspect actual full required model results and real CGP/resource/derive repetitions; no identical proof retry or reduced scope..
 No new macros or general frameworks are prerequisites for the next ordinary feature.
 
-Delivery: `PR96_2E1D_TERMINAL_NINE_SCOPED_SUCCESSES_THREE_SOURCE_OOM_ALL12_RETAINED` to `agones-rs-dev`; never modify main.
+Delivery: `PR96_2E1D_AND_ALL12_TERMINAL_EVIDENCE_EAD588_PUBLISHED_CANONICAL_ADOPTION_LOCAL` to `agones-rs-dev`; never modify main.
 Connected GitHub app has write access; local gh CLI is logged out.
 Recover live jobs from the ledger and `verification/agones/runs/*.json` by comparing
 the stored process identity with /proc before waiting, attaching or stopping anything.

@@ -1,0 +1,94 @@
+{
+  "acceptance_criteria": [
+    "Preserve nonempty kind/apiVersion, missing/empty/null source strings and source rejection of wrong JSON types.",
+    "Actual defaulting/validation retains custom TypeMeta, including original test-kind fixtures.",
+    "Actual native conversions retain canonical wire identity, supply missing identity and reject explicit conflicts without mutating source.",
+    "All existing native checks pass with the new typed field."
+  ],
+  "assurance": {
+    "closure": "Combined existing quantity/TypeMeta/six-field error production and the native-gated real query allocation refactor. Added features.rs as the configured-context dependency.",
+    "current_generator_example_controls": "PASSED including six-field bidirectional image controls",
+    "full_workspace_integration": "REQUIRED_AFTER_GATED_GENERATION_REFRESH",
+    "native_library_tests": {
+      "failed": 0,
+      "ignored": 0,
+      "passed": 514
+    },
+    "new_formal_credit": 0,
+    "source_replay": "Complete25case generation and whole native replay are the next post-gate step; no subset emitted or credited."
+  },
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "combined_missing_container_concat": {
+    "canonical_adoption": "PENDING",
+    "formal_credit": 0,
+    "prior_isolated_commit": "85d64a1de1bd8bc6afcdb996de07384c077a5aaf",
+    "source_repair": "Same native605canonical missing-container direct concatenation and empty/Unicode/newline/NUL detail assertions. Quantity/TypeMeta/six-field representation and every captured source case remain unchanged."
+  },
+  "combined_source_reuse": {
+    "canonical_adoption": "PENDING",
+    "formal_credit": 0,
+    "prior_isolated_commit": "500326772a0ad9c1300f0f8bb8acff67e27079a4",
+    "scope": "Copied byte-identical CGP streaming parser after validating the prior file againstdd4; applied only the same indexed validation path patch. Existing quantity/TypeMeta/six-field owner and all source case payloads remain unchanged.",
+    "source_commit": "31cc72d92bbb9611e228ec5936d2421a5ca35f84"
+  },
+  "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
+  "feature_id": "GS-TYPEMETA-001",
+  "id": "GS-TYPEMETA-001-implementation",
+  "ordinary_checks": [
+    "verification/agones/runs/combined-exact-lookup-workspace-1.json"
+  ],
+  "ordinary_result_counts": {
+    "lookup_controls": "Exact canonical and custom map oracle, duplicates, empty/Unicode/NUL/unknown names; uninitialized false.",
+    "unchanged": "Quantity, TypeMeta, six-field source errors, all fixtures/actions/assertions/covers/domains/bounds.",
+    "workspace_all_targets_test": "PASSED",
+    "workspace_ignored_process_children": 3,
+    "workspace_tests_failed": 0,
+    "workspace_tests_passed": 675
+  },
+  "post_gate_refactor": {
+    "canonical_source_head": "2e1d39f6680d055e98d702238e77e32b9562b376",
+    "formal_credit": 0,
+    "production": "Reuse exact FeatureGates::enabled equality lookup and native map controls from canonical2e1d; all other production source unchanged."
+  },
+  "predecessor_ledger_revision": 292,
+  "production_files": {
+    "Cargo.lock": "457e9915c442fc92a563532c2adeb010f5f2035fd0ae4b3c9c9ac3396d950d93",
+    "Cargo.toml": "3a3f19b913b7d4fc8966288d621de4134b7b87439231dc64014ea23f7511b6f7",
+    "crates/agones-core/Cargo.toml": "6bd2fb70b00b1ff6d34e4562ff78ab6ea86ca352a5043c87a57b8e65eb1e6a51",
+    "crates/agones-core/src/build_version.rs": "e6560758de4332abe27a97a3f3b5794068f20e0b4092380658b1cfdc4ce7e1f7",
+    "crates/agones-core/src/features.rs": "2976d95a06bfd3d8c7364ca19288bc1b7d08e52ba15023bb30b8eca850bb916d",
+    "crates/agones-core/src/gameserver.rs": "6522ccf0cc70dbed07a7bb8a908e1e639108bc6a6e2c39e19a3d558eed66fa2b",
+    "crates/agones-core/src/gameserver_defaulting.rs": "620966c16ea912516f508b302d179098047f4ba5039fb837c2b5b3dec90ff457",
+    "crates/agones-core/src/go_value.rs": "ea849e221b593654e7049594fdcaebb4a61042e068381af5e96dd5fd017f0e25",
+    "crates/agones-rusternetes/src/gameserver_admission.rs": "03710845e6c333a488068567b9e0a5b44669e43650c2f5297b57320732476c36",
+    "crates/agones-rusternetes/src/lib.rs": "820298219835f53b2563a3a0d66deb21050a5930998750ffb5fad26b6f07031b"
+  },
+  "production_symbols": [
+    "TypeMeta",
+    "GameServer::Serialize/Deserialize",
+    "GameServer::apply_defaults_with_context/validate_with_context",
+    "RusternetesCustomResource::to_rusternetes_custom_resource/from_rusternetes_custom_resource"
+  ],
+  "refresh_reason": "The shared source error owner now preserves Origin/CoveredByDeclarative and exact current metadata payloads. All514workspace native-library checks passed. This refresh does not add formal evidence or claim integration regeneration; rerun full workspace after gated output refresh.",
+  "residual_work": [
+    "Source error-data/projection support before lowering the complete original validation table.",
+    "Other resource DTO TypeMeta storage, every remaining original obligation and full wire/lifecycle/conformance compatibility remain required.",
+    "All eight mandatory _2cells remain REQUIRED_OPEN."
+  ],
+  "schema_version": 1,
+  "status": "IMPLEMENTED",
+  "supersedes": "verification/agones/gates/1da75ba37da51d069b339e59f669ad890d0119451bc0b40333009d07bb766b83.json",
+  "supersedes_gate": "verification/agones/gates/772028df370da553b1ef6153dc822f93a5f88696f945f27ec50cbbc45d526681.json",
+  "validation_files": {
+    "crates/agones-core/tests/gameserver_type_meta.rs": "f908ba06cfafec8ea2dcaa3ecf53a8ccf663a9d8b5aaaa1098b68c34d52de780",
+    "crates/agones-rusternetes/tests/gameserver_type_meta.rs": "16bb4d2c9f5b92199e258fe7643d2108b6144a1cc56ff21d4406f7858b47619e"
+  },
+  "workspace_snapshot": {
+    "branch": "codex/agones-resource-quantity",
+    "canonical_ledger": "/home/astral/Projects/agones/AGONES_RS_STATE.json",
+    "canonical_ledger_revision": 292,
+    "head": "d492262816ce869777449731e7c89318599f3230",
+    "note": "Isolated source gate only; no second queue or isolated ledger checkpoint.",
+    "production_patch_sha256": "044b95fd8d0c78556121b39dcf4dcbb2617e7cd6b41c5d458f3b26ea549b30c6"
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "acceptance_criteria": [
+    "Default-disabled and explicitly enabled; absent/zero/extreme-capacity players",
+    "Minimal feature-only CGP context uses the same production provider",
+    "Exact kind/path/detail/no bad value; nested resource paths",
+    "Valid/invalid development addresses retain the feature error before early return",
+    "Actual Rusternetes CREATE admissions, Fleet UPDATE support, malformed input, unrelated kinds",
+    "Isolated real-process configuration reaches all default admission constructors; invalid configuration returns an error"
+  ],
+  "assurance": {
+    "closure": "Combined existing quantity/TypeMeta/six-field error production and the native-gated real query allocation refactor. Added features.rs as the configured-context dependency.",
+    "current_generator_example_controls": "PASSED including six-field bidirectional image controls",
+    "full_workspace_integration": "REQUIRED_AFTER_GATED_GENERATION_REFRESH",
+    "native_library_tests": {
+      "failed": 0,
+      "ignored": 0,
+      "passed": 514
+    },
+    "new_formal_credit": 0,
+    "source_replay": "Complete25case generation and whole native replay are the next post-gate step; no subset emitted or credited."
+  },
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "combined_missing_container_concat": {
+    "canonical_adoption": "PENDING",
+    "formal_credit": 0,
+    "prior_isolated_commit": "85d64a1de1bd8bc6afcdb996de07384c077a5aaf",
+    "source_repair": "Same native605canonical missing-container direct concatenation and empty/Unicode/newline/NUL detail assertions. Quantity/TypeMeta/six-field representation and every captured source case remain unchanged."
+  },
+  "combined_source_reuse": {
+    "canonical_adoption": "PENDING",
+    "formal_credit": 0,
+    "prior_isolated_commit": "500326772a0ad9c1300f0f8bb8acff67e27079a4",
+    "scope": "Copied byte-identical CGP streaming parser after validating the prior file againstdd4; applied only the same indexed validation path patch. Existing quantity/TypeMeta/six-field owner and all source case payloads remain unchanged.",
+    "source_commit": "31cc72d92bbb9611e228ec5936d2421a5ca35f84"
+  },
+  "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
+  "environment_bindings": {
+    "AGONES_BUILD_VERSION": {
+      "present": false,
+      "sha256": null
+    }
+  },
+  "feature_id": "GS-VALIDATE-FEATURES-001",
+  "historical_ordinary_result_counts_before_combined_refresh": {
+    "existing_codegen_example_controls_passed": 3,
+    "ignored_doctests": 1,
+    "source_test_removal_or_bound_change": false,
+    "workspace_all_targets_check": "PASSED",
+    "workspace_ignored_process_children": 3,
+    "workspace_tests_failed": 0,
+    "workspace_tests_passed": 600
+  },
+  "id": "GS-VALIDATE-FEATURES-001-implementation",
+  "ordinary_checks": [
+    "verification/agones/runs/canonical-adoption-split-key-values-native-2.json"
+  ],
+  "ordinary_result_counts": {
+    "feature_map_controls": "Exact independent map oracle, duplicates, first query values, atomicity, empty/Unicode/NUL/unknown names and both private lengths; default encoding and all-true map semantics.",
+    "source_scope": "Quantity/TypeMeta/six-field data plus all30fixture source actions/observations, with all original assertions/covers/domains/bounds retained.",
+    "workspace_all_targets_check": "PASSED",
+    "workspace_ignored_process_children": 3,
+    "workspace_tests_failed": 0,
+    "workspace_tests_passed": 675
+  },
+  "post_gate_refactor": {
+    "new_formal_credit": 0,
+    "production": "Adopt isolated1886 native-complete behavior, then separate immutable feature-name metadata and mutable bool values in ordinary private Vec storage. CGP/API behavior preserved.",
+    "review": "verification/agones/refactoring/canonical-adoption-key-value-review.json"
+  },
+  "predecessor_ledger_revision": 294,
+  "production_files": {
+    ".cargo/config.toml": "d787ef1ca58591bcf5036c8a2386a4d31ecc54febdd5f6630fd8497a4a0d3fb2",
+    "Cargo.lock": "457e9915c442fc92a563532c2adeb010f5f2035fd0ae4b3c9c9ac3396d950d93",
+    "Cargo.toml": "3a3f19b913b7d4fc8966288d621de4134b7b87439231dc64014ea23f7511b6f7",
+    "crates/agones-core/Cargo.toml": "6bd2fb70b00b1ff6d34e4562ff78ab6ea86ca352a5043c87a57b8e65eb1e6a51",
+    "crates/agones-core/src/features.rs": "72c9a28ba3697ac99d733a7bea5b1933ce0d3c055e813a361290bb6135b4bc98",
+    "crates/agones-core/src/fleet.rs": "bb172f3c6c5d432e74f61d17951894780361321adb4d079258437dbfb5a2071b",
+    "crates/agones-core/src/gameserver.rs": "6522ccf0cc70dbed07a7bb8a908e1e639108bc6a6e2c39e19a3d558eed66fa2b",
+    "crates/agones-core/src/gameserver_defaulting.rs": "620966c16ea912516f508b302d179098047f4ba5039fb837c2b5b3dec90ff457",
+    "crates/agones-core/src/gameserver_validation.rs": "be120c2892ed50c3bb6002175d7b7c08c5215197a3f07cbddc16daffb7daf1de",
+    "crates/agones-core/src/gameserverset.rs": "ab8ca589660c03af58a9da803186a443aece04bab6eb799053cf846c9d57397b",
+    "crates/agones-core/src/lib.rs": "d1e87d9e45c1f107c6ddd13399476d3c3e4794a44772fdcf7eca11a8a3f5384b",
+    "crates/agones-rusternetes/Cargo.toml": "7e5c18a590b0d602c725abd853fd0ba7825e4028f8a46fc7fe404bb7b512db26",
+    "crates/agones-rusternetes/src/fleet_admission.rs": "4c578b1be1f6d5b023b1a882b5744aeabe9811b441a4ff26660d6cbdaf94db56",
+    "crates/agones-rusternetes/src/gameserver_admission.rs": "03710845e6c333a488068567b9e0a5b44669e43650c2f5297b57320732476c36",
+    "crates/agones-rusternetes/src/gameserverset_admission.rs": "19c47b5863e18e9d126c3c811fddee154caf61aed632531b1a849c41df60bab9",
+    "crates/agones-rusternetes/src/lib.rs": "820298219835f53b2563a3a0d66deb21050a5930998750ffb5fad26b6f07031b",
+    "rust-toolchain.toml": "c910997cb152c6dc8ed13b1fdf9fa28a4ed30d6776123e27dd6170e5c66067a0",
+    "verification/agones/gameserver-feature-validation-capability-v1.json": "d6e03af89a8412b331bcafbf19472ef51bbd67f566f19235516deef15c2a19bf"
+  },
+  "production_symbols": [
+    "ValidateAgonesGameServerFeatures::validate_game_server_features",
+    "CanValidateGameServerFeatures",
+    "GameServerSpec::validate_with_context",
+    "GameServer::validate_with_context",
+    "Fleet::validate_with_context",
+    "GameServerSet::validate_with_context",
+    "GameServerCreationValidationAdmission::from_feature_inputs/admit",
+    "FleetValidationAdmission::from_feature_inputs/admit",
+    "GameServerSetCreationValidationAdmission::from_feature_inputs/admit",
+    "validate_game_server_with_context"
+  ],
+  "reachable_call_paths": [
+    "GameServerDefaultingContext delegates the existing feature getter and new validator",
+    "Direct spec/GameServer/Fleet/GameServerSet APIs expose explicit contexts and default-disabled wrappers",
+    "Actual Rusternetes admission constructors capture parsed defaults/environment or explicit input; from_context permits static CGP composition"
+  ],
+  "residual_work": [
+    "Full GameServer validation, exact resource quantity semantics, formatting and hook/metadata error ordering",
+    "Live Rusternetes cluster conformance, lifecycle and all remaining original obligations",
+    "All eight mandatory _2 form/location cells",
+    "After this gate, translate every selected original validateFeatureGates assertion through the existing typed package-aware machinery and run non-vacuous Bolero/Kani on the real provider."
+  ],
+  "schema_version": 1,
+  "status": "IMPLEMENTED",
+  "supersedes": "verification/agones/gates/5461fd8f294c52fd59fcde27c08c499d560efaa4d8edb5151129ab69edae8a53.json",
+  "supersedes_gate": "verification/agones/gates/f8271f2592ac1b7a5e27d8a9e17ad361679cbd40f113e2a8bb3dd0d75ce65810.json",
+  "workspace_snapshot": {
+    "branch": "agones-rs-dev",
+    "head": "2e1d39f6680d055e98d702238e77e32b9562b376",
+    "note": "Canonical source-bound675check/test passes before existing IR/generator rebinding. Source-adoption provenance1886; user guidance and protected operations preserved.",
+    "production_patch_sha256": "c5984dd5f089c37d0fed473379102ef7f1a037a96aceefccadba43dd9201259e"
+  }
+}

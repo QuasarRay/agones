@@ -275,7 +275,7 @@ use futures::StreamExt;
 
 use agones_core::{
     AgonesApiResource, Eviction, GameServer, GameServerSpec, ObjectMeta as CoreObjectMeta,
-    PortPolicy, SchedulingStrategy, ValidationError, ValidationErrorKind, FINALIZER_NAME,
+    PortPolicy, SchedulingStrategy, ValidationError, FINALIZER_NAME,
     VERSION_ANNOTATION,
 };
 use rusternetes_common::resources::{
@@ -789,6 +789,7 @@ pub enum AdapterError {
     MetadataLoss,
     MissingField(&'static str),
     UnexpectedTopLevelFields(Vec<String>),
+    InvalidResourceQuantity { path: String, source: agones_core::ParseQuantityError },
     InvalidPort { field: &'static str, value: i32 },
     ContainerNotFound(String),
     Hook(String),
@@ -800,6 +801,7 @@ pub enum AdapterError {
 impl fmt::Display for AdapterError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
+            Self::InvalidResourceQuantity { path, source } => write!(f, "{path}: {source}"),
             Self::Serde(error) => write!(f, "Rusternetes conversion failed: {error}"),
             Self::Rusternetes(error) => write!(f, "Rusternetes storage failed: {error}"),
             Self::ResourceIdentity {
@@ -898,6 +900,20 @@ pub trait RusternetesCustomResource:
             .ok_or(AdapterError::MissingField("spec"))?;
         let status = object.remove("status");
 
+        let mut identity = |name: &str, expected: &str| -> Result<String, AdapterError> {
+            let Some(value) = object.remove(name) else { return Ok(expected.to_owned()); };
+            let value: String = serde_json::from_value(value)?;
+            Ok(if value.is_empty() { expected.to_owned() } else { value })
+        };
+        let api_version = identity("apiVersion", Self::API_VERSION)?;
+        let kind = identity("kind", Self::KIND)?;
+        if api_version != Self::API_VERSION || kind != Self::KIND {
+            return Err(AdapterError::ResourceIdentity {
+                expected_api_version: Self::API_VERSION, expected_kind: Self::KIND,
+                actual_api_version: api_version, actual_kind: kind,
+            });
+        }
+
         if !object.is_empty() {
             let mut fields: Vec<_> = object.keys().cloned().collect();
             fields.sort();
@@ -933,6 +949,8 @@ pub trait RusternetesCustomResource:
         }
 
         let mut object = serde_json::Map::new();
+        object.insert("apiVersion".to_owned(), resource.api_version.into());
+        object.insert("kind".to_owned(), resource.kind.into());
         object.insert(
             "metadata".to_owned(),
             serde_json::to_value(resource.metadata)?,
@@ -1285,156 +1303,53 @@ fn port(value: i32, field: &'static str) -> Result<u16, AdapterError> {
     u16::try_from(value).map_err(|_| AdapterError::InvalidPort { field, value })
 }
 
-const QUANTITY_SUFFIXES: &[(&str, f64)] = &[
-    ("Ki", 1024.0),
-    ("Mi", 1_048_576.0),
-    ("Gi", 1_073_741_824.0),
-    ("Ti", 1_099_511_627_776.0),
-    ("Pi", 1_125_899_906_842_624.0),
-    ("Ei", 1_152_921_504_606_846_976.0),
-    ("m", 0.001),
-    ("k", 1_000.0),
-    ("M", 1_000_000.0),
-    ("G", 1_000_000_000.0),
-    ("T", 1_000_000_000_000.0),
-    ("P", 1_000_000_000_000_000.0),
-    ("E", 1_000_000_000_000_000_000.0),
-];
-
-fn parse_quantity_value(quantity: &str) -> Option<f64> {
-    let quantity = quantity.trim();
-    if quantity.is_empty() {
-        return None;
-    }
-
-    let value = match quantity.parse::<f64>() {
-        Ok(value) => value,
-        Err(_) => {
-            let (digits, multiplier) = QUANTITY_SUFFIXES
-                .iter()
-                .find_map(|(suffix, multiplier)| {
-                    quantity
-                        .strip_suffix(suffix)
-                        .map(|digits| (digits, multiplier))
-                })?;
-            digits.trim().parse::<f64>().ok()? * multiplier
-        }
-    };
-
-    value.is_finite().then_some(value)
-}
-
-fn invalid_resource_quantity(path: String, value: &str, detail: String) -> ValidationError {
-    ValidationError {
-        kind: ValidationErrorKind::Invalid,
-        path,
-        bad_value: Some(value.to_owned()),
-        detail,
-    }
-}
-
+/// Validate native Rusternetes quantities using the configured core policy.
 pub fn validate_resource_requirements(
     requirements: &ResourceRequirements,
     path: &str,
-) -> Vec<ValidationError> {
-    let mut errors = Vec::new();
-    let limits = requirements.limits.as_ref();
-    let requests = requirements.requests.as_ref();
-
-    if let Some(limits) = limits {
-        let mut names: Vec<_> = limits.keys().collect();
-        names.sort();
-        for name in names {
-            let quantity = &limits[name];
-            if let Some(value) = parse_quantity_value(quantity) {
-                if value < 0.0 {
-                    errors.push(invalid_resource_quantity(
-                        format!("{path}.limits[{name}]"),
-                        quantity,
-                        "must be greater than or equal to 0".to_owned(),
-                    ));
-                }
-            }
-        }
-    }
-
-    if let Some(requests) = requests {
-        let mut names: Vec<_> = requests.keys().collect();
-        names.sort();
-        for name in names {
-            let quantity = &requests[name];
-            let request = parse_quantity_value(quantity);
-
-            if request.is_some_and(|value| value < 0.0) {
-                errors.push(invalid_resource_quantity(
-                    format!("{path}.requests[{name}]"),
-                    quantity,
-                    "must be greater than or equal to 0".to_owned(),
-                ));
-            }
-
-            let Some(limit_quantity) = limits.and_then(|limits| limits.get(name)) else {
-                continue;
-            };
-            let Some(request) = request else {
-                continue;
-            };
-            let Some(limit) = parse_quantity_value(limit_quantity) else {
-                continue;
-            };
-            if request > limit {
-                errors.push(invalid_resource_quantity(
-                    format!("{path}.requests"),
-                    quantity,
-                    format!(
-                        "must be less than or equal to {name} limit of {limit_quantity}"
-                    ),
-                ));
-            }
-        }
-    }
-
-    errors
+) -> Result<Vec<ValidationError>, AdapterError> {
+    validate_resource_requirements_with_context(
+        &agones_core::GameServerDefaultingContext::default(), requirements, path,
+    )
 }
 
-pub(crate) fn validate_game_server_resources_at(
+pub fn validate_resource_requirements_with_context<C: agones_core::CanValidateResourceQuantities>(
+    context: &C,
+    requirements: &ResourceRequirements,
+    path: &str,
+) -> Result<Vec<ValidationError>, AdapterError> {
+    let parse = |values: &Option<HashMap<String, String>>, field: &str| {
+        values.iter().flat_map(|map| map.iter()).map(|(name, value)| {
+            value.trim().parse::<agones_core::ResourceQuantity>()
+                .map(|value| (name.clone(), value))
+                .map_err(|source| AdapterError::InvalidResourceQuantity {
+                    path: format!("{path}.{field}[{name}]"), source,
+                })
+        }).collect::<Result<std::collections::BTreeMap<_, _>, _>>()
+    };
+    Ok(context.validate_resource_quantities(
+        &parse(&requirements.limits, "limits")?,
+        &parse(&requirements.requests, "requests")?, path,
+    ))
+}
+
+pub(crate) fn validate_game_server_resources_at_with_context<C: agones_core::CanValidateResourceQuantities>(
+    context: &C,
     spec: &GameServerSpec,
     spec_path: &str,
 ) -> Result<Vec<ValidationError>, AdapterError> {
-    let pod_spec: PodSpec = to_native(&spec.template.spec)?;
-    let mut errors = Vec::new();
-
-    if let Some(init_containers) = &pod_spec.init_containers {
-        for (index, container) in init_containers.iter().enumerate() {
-            if let Some(resources) = &container.resources {
-                errors.extend(validate_resource_requirements(
-                    resources,
-                    &format!(
-                        "{spec_path}.template.spec.initContainers[{index}].resources"
-                    ),
-                ));
-            }
-        }
-    }
-
-    for (index, container) in pod_spec.containers.iter().enumerate() {
-        if let Some(resources) = &container.resources {
-            errors.extend(validate_resource_requirements(
-                resources,
-                &format!(
-                    "{spec_path}.template.spec.containers[{index}].resources"
-                ),
-            ));
-        }
-    }
-
-    Ok(errors)
+    // Runtime shape checking stays at the adapter. Quantities are read by
+    // the core policy so Rusternetes' tolerant maps cannot drop null values.
+    let _pod_spec: PodSpec = to_native(&spec.template.spec)?;
+    Ok(spec.validate_resource_quantities_with_context(context, spec_path))
 }
 
 pub fn validate_game_server_resources(
     spec: &GameServerSpec,
 ) -> Result<Vec<ValidationError>, AdapterError> {
-    validate_game_server_resources_at(spec, "spec")
+    validate_game_server_resources_at_with_context(
+        &agones_core::GameServerDefaultingContext::default(), spec, "spec",
+    )
 }
 
 pub fn validate_game_server(
@@ -1443,12 +1358,14 @@ pub fn validate_game_server(
     validate_game_server_with_context(&agones_core::GameServerDefaultingContext::default(), game_server)
 }
 
-pub fn validate_game_server_with_context<C: agones_core::CanValidateGameServerFeatures>(
+pub fn validate_game_server_with_context<C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities>(
     context: &C,
     game_server: &GameServer,
 ) -> Result<Vec<ValidationError>, AdapterError> {
-    let mut errors = game_server.validate_with_context(context);
-    errors.extend(validate_game_server_resources(&game_server.spec)?);
+    let errors = game_server.validate_with_context(context);
+    if game_server.get_dev_address().is_none_or(str::is_empty) {
+        let _pod_spec: PodSpec = to_native(&game_server.spec.template.spec)?;
+    }
     Ok(errors)
 }
 
@@ -1864,7 +1781,10 @@ mod tests {
     where
         T: RusternetesCustomResource + Default + PartialEq + fmt::Debug,
     {
-        let typed = T::default();
+        let mut wire = serde_json::to_value(T::default()).unwrap();
+        wire["apiVersion"] = serde_json::json!(T::API_VERSION);
+        wire["kind"] = serde_json::json!(T::KIND);
+        let typed: T = serde_json::from_value(wire).unwrap();
         let resource = typed.to_rusternetes_custom_resource().unwrap();
 
         assert_eq!(resource.api_version, T::API_VERSION);
@@ -2593,6 +2513,7 @@ mod tests {
 
     fn fixture() -> GameServer {
         let mut gs = GameServer {
+            type_meta: Default::default(),
             metadata: agones_core::ObjectMeta {
                 name: "game.server".into(),
                 namespace: "default".into(),
@@ -2768,16 +2689,6 @@ mod tests {
             errors[0].detail,
             "must be less than or equal to cpu limit of 30m"
         );
-    }
-
-    #[test]
-    fn quantity_parser_covers_kubernetes_binary_decimal_and_exponent_forms() {
-        assert_eq!(parse_quantity_value("100m"), Some(0.1));
-        assert_eq!(parse_quantity_value("1Ki"), Some(1024.0));
-        assert_eq!(parse_quantity_value("0.5Gi"), Some(536_870_912.0));
-        assert_eq!(parse_quantity_value("1e3"), Some(1000.0));
-        assert_eq!(parse_quantity_value("-32Mi"), Some(-33_554_432.0));
-        assert_eq!(parse_quantity_value("NaN"), None);
     }
 
     #[test]

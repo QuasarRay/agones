@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate"
+  ],
+  "authorization": "User execution contract",
+  "event": "CANONICAL_COMPLETE_VALIDATION_ADOPTED_TYPEMETA_IMPLEMENTED",
+  "gate_snapshot": "verification/agones/gates/1f3bb5f54866727ee6b443c8469eb9d0dbe2c7133c543c62154e3702413b5bc2.json",
+  "predecessor_revision": 294,
+  "predecessor_sha256": "c27a9f8008b1d6b3b4e5c92ba3899ab84f41c7d3533e7d5f7dbd48814136376d",
+  "reason": "58implementation paths adopted from1886, then private names/values storage separated. Canonical all-target check/675tests/six modes/Go controls pass with all30harness bodies retained. Nine gates source-bound; all affected proofs reopened. User guidance/current protected operations preserved; remote publication pending connector recovery.",
+  "result_revision": 295,
+  "schema_version": 1,
+  "state_sha256": "a51c262cb49194ab32b1ff8e10f8b07defeee61a27bf2aaeca3e44925b66a9bb",
+  "timestamp": "2026-10-21T01:06:17.108780+00:00"
+}

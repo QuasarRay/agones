@@ -40,14 +40,17 @@ static CANONICAL_FEATURE_DEFAULTS: &[(&str, bool)] = AGONES_FEATURE_DEFAULTS;
 /// Mirrors an initialized or not-yet-initialized reference feature map.
 /// `Default` is empty, as Go's map is nil before ParseFeatures/EnableAllFeatures.
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
-pub struct FeatureGates(Vec<(&'static str, bool)>);
+pub struct FeatureGates {
+    names: Vec<&'static str>,
+    values: Vec<bool>,
+}
 
 impl FeatureGates {
     pub fn enabled(&self, feature: &str) -> bool {
-        self.0
+        self.names
             .iter()
-            .find_map(|(name, enabled)| (*name == feature).then_some(*enabled))
-            .unwrap_or(false)
+            .position(|name| *name == feature)
+            .is_some_and(|index| self.values[index])
     }
 
     fn from_defaults(defaults: &[(&'static str, bool)]) -> Self {
@@ -55,31 +58,32 @@ impl FeatureGates {
         // its order directly; custom contexts retain the map-like fallback.
         // Pointer identity is only a fast path, never a semantic precondition.
         if std::ptr::eq(defaults, CANONICAL_FEATURE_DEFAULTS) {
-            return Self(
-                defaults
-                    .iter()
-                    .map(|(name, enabled)| (*name, *enabled))
-                    .collect(),
-            );
+            let (names, values) = defaults.iter().copied().unzip();
+            return Self { names, values };
         }
         // The capability supplies static names; each map owns its bool values.
         // Sorted entries preserve map lookup/encoding without tree machinery.
         // Repeated default names keep their last value, as map collection did.
-        let mut values: Vec<(&'static str, bool)> = Vec::with_capacity(defaults.len());
+        let mut names = Vec::with_capacity(defaults.len());
+        let mut values = Vec::with_capacity(defaults.len());
         for (name, enabled) in defaults {
-            match values.binary_search_by(|(key, _)| (*key).cmp(name)) {
-                Ok(index) => values[index].1 = *enabled,
-                Err(index) => values.insert(index, (*name, *enabled)),
+            match names.binary_search(name) {
+                Ok(index) => values[index] = *enabled,
+                Err(index) => {
+                    names.insert(index, *name);
+                    values.insert(index, *enabled);
+                }
             }
         }
-        Self(values)
+        Self { names, values }
     }
 
     pub fn encode(&self) -> String {
         // url::form_urlencoded uses '*' unescaped and escapes '~', whereas
         // Go's QueryEscape does the reverse. Keep the source encoding here.
-        self.0
+        self.names
             .iter()
+            .zip(&self.values)
             .map(|(key, value)| format!("{}={value}", query_escape(key)))
             .collect::<Vec<_>>()
             .join("&")
@@ -183,7 +187,7 @@ impl<Context: HasFeatureGateDefaults> FeatureGateParser<Context> for ParseAgones
         query: &[u8],
     ) -> Result<FeatureGates, FeatureGateError> {
         let mut features = FeatureGates::from_defaults(context.feature_gate_defaults());
-        let mut seen = vec![false; features.0.len()];
+        let mut seen = vec![false; features.names.len()];
         let mut feature_error: Option<(Cow<'_, [u8]>, FeatureGateError)> = None;
 
         // Go map iteration may choose any failing key. Sorted iteration chooses
@@ -191,15 +195,15 @@ impl<Context: HasFeatureGateDefaults> FeatureGateParser<Context> for ParseAgones
         // that error while applying each known key's first decoded value.
         parse_query(query, |key, value| {
             let index = features
-                .0
-                .binary_search_by(|(name, _)| name.as_bytes().cmp(&key));
+                .names
+                .binary_search_by(|name| name.as_bytes().cmp(&key));
             if let Ok(index) = index {
                 if seen[index] {
                     return;
                 }
                 seen[index] = true;
                 if let Some(enabled) = parse_feature_bool(&value) {
-                    features.0[index].1 = enabled;
+                    features.values[index] = enabled;
                     return;
                 }
             }
@@ -209,7 +213,7 @@ impl<Context: HasFeatureGateDefaults> FeatureGateParser<Context> for ParseAgones
             {
                 let error = match index {
                     Ok(index) => FeatureGateError::InvalidBool {
-                        feature: features.0[index].0.to_owned(),
+                        feature: features.names[index].to_owned(),
                         value: value.into_owned(),
                     },
                     Err(_) => FeatureGateError::UnknownFeature(key.to_vec()),
@@ -227,9 +231,7 @@ impl<Context: HasFeatureGateDefaults> FeatureGateParser<Context> for ParseAgones
 
     fn all_features_enabled(context: &Context) -> FeatureGates {
         let mut features = FeatureGates::from_defaults(context.feature_gate_defaults());
-        for (_, enabled) in &mut features.0 {
-            *enabled = true;
-        }
+        features.values.fill(true);
         features
     }
 }
@@ -450,7 +452,8 @@ mod tests {
     fn defaults_and_overrides_round_trip_without_global_state() {
         let context = FeatureGateContext::default();
         let gates = context.parse_feature_gates("").unwrap();
-        assert_eq!(gates.0.len(), 15);
+        assert_eq!(gates.names.len(), 15);
+        assert_eq!(gates.values.len(), 15);
         assert_eq!(context.parse_feature_gates(&gates.encode()).unwrap(), gates);
         assert!(gates.enabled("SidecarContainers"));
         assert!(gates.enabled("ScheduledAutoscaler"));
@@ -461,9 +464,9 @@ mod tests {
         assert!(
             context
                 .all_features_enabled()
-                .0
+                .values
                 .iter()
-                .all(|(_, value)| *value)
+                .all(|value| *value)
         );
         // The actual source allows false for stable gates despite its comment.
         assert!(

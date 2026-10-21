@@ -6,7 +6,6 @@ use rusternetes_common::admission::{
 
 use crate::{
     AdapterError, ApiHooks, admission_json_patch,
-    validate_game_server_resources_at,
 };
 use crate::gameserver_admission::format_validation_errors;
 
@@ -68,7 +67,7 @@ pub fn validate_fleet_with_context<C, H>(
     hooks: &H,
 ) -> Result<Vec<ValidationError>, AdapterError>
 where
-    C: agones_core::CanValidateGameServerFeatures,
+    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities,
     H: ApiHooks,
 {
     // Upstream Fleet.Validate mutates the nested GameServerSpec by applying
@@ -80,10 +79,7 @@ where
     let mut game_server_spec = fleet.spec.template.spec.clone();
     game_server_spec.apply_defaults();
 
-    errors.extend(validate_game_server_resources_at(
-        &game_server_spec,
-        "spec.template.spec",
-    )?);
+    let _pod_spec: rusternetes_common::resources::PodSpec = crate::to_native(&game_server_spec.template.spec)?;
     errors.extend(hooks.validate_game_server_spec_at(
         &game_server_spec,
         "spec.template.spec",
@@ -116,7 +112,7 @@ pub fn validate_fleet_object_with_context<C, H>(
     hooks: &H,
 ) -> Result<AdmissionResponse, AdapterError>
 where
-    C: agones_core::CanValidateGameServerFeatures,
+    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities,
     H: ApiHooks,
 {
     let fleet: Fleet =
@@ -192,7 +188,7 @@ impl<H, C> FleetValidationAdmission<H, C> {
 #[async_trait]
 impl<H, C> AdmissionController for FleetValidationAdmission<H, C>
 where
-    C: agones_core::CanValidateGameServerFeatures + Send + Sync,
+    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities + Send + Sync,
     H: ApiHooks + Send + Sync,
 {
     fn name(&self) -> &str {
@@ -348,13 +344,7 @@ mod tests {
             });
         fleet.spec.template.spec.container = "missing".into();
         fleet.spec.template.spec.template.spec.containers[0]
-            .resources
-            .insert(
-                "requests".into(),
-                serde_json::json!({
-                    "cpu": "-1"
-                }),
-            );
+            .resources.requests = Some(serde_json::from_value(serde_json::json!({"cpu": "-1"})).unwrap());
 
         let response = validate_fleet_object(
             &serde_json::to_value(fleet).unwrap(),
@@ -408,6 +398,8 @@ mod tests {
             path: &str,
         ) -> Vec<ValidationError> {
             vec![ValidationError {
+                origin: String::new(),
+                covered_by_declarative: false,
                 kind: ValidationErrorKind::Invalid,
                 path: format!("{path}.hook"),
                 bad_value: None,
@@ -421,6 +413,8 @@ mod tests {
             path: &str,
         ) -> Vec<ValidationError> {
             vec![ValidationError {
+                origin: String::new(),
+                covered_by_declarative: false,
                 kind: ValidationErrorKind::Invalid,
                 path: path.into(),
                 bad_value: None,

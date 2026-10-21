@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate"
+  ],
+  "authorization": "User execution contract",
+  "event": "CANONICAL_TYPED_QUANTITY_IMPLEMENTED",
+  "gate_snapshot": "verification/agones/gates/d02fc52133e046b4405b028f93094123b27e215ce2ed9cbc1f57a663d5d5b5fb.json",
+  "predecessor_revision": 295,
+  "predecessor_sha256": "a51c262cb49194ab32b1ff8e10f8b07defeee61a27bf2aaeca3e44925b66a9bb",
+  "reason": "Canonical source owns exact typed quantities and six-field errors;675source-bound native tests/check, six deterministic modes and Go controls pass after implementation. Current adopted gate matches every production dependency. No formal evidence is transported across changed code; all original obligations remain required.",
+  "result_revision": 296,
+  "schema_version": 1,
+  "state_sha256": "8e3fd9cdd4aa6c73270080162d76d56dcdba8fd37ab126fd0d852c7b726c8c70",
+  "timestamp": "2026-10-21T01:08:22.988342+00:00"
+}

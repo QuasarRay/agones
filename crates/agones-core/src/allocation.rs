@@ -328,6 +328,8 @@ pub struct GameServerAllocationList {
 
 fn invalid(path: impl Into<String>, bad_value: impl Into<String>, detail: impl Into<String>) -> ValidationError {
     ValidationError {
+        origin: String::new(),
+        covered_by_declarative: false,
         kind: ValidationErrorKind::Invalid,
         path: path.into(),
         bad_value: Some(bad_value.into()),
@@ -337,6 +339,8 @@ fn invalid(path: impl Into<String>, bad_value: impl Into<String>, detail: impl I
 
 fn not_supported(path: impl Into<String>, bad_value: impl Into<String>, detail: impl Into<String>) -> ValidationError {
     ValidationError {
+        origin: String::new(),
+        covered_by_declarative: false,
         kind: ValidationErrorKind::NotSupported,
         path: path.into(),
         bad_value: Some(bad_value.into()),

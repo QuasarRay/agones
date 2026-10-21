@@ -331,6 +331,8 @@ pub struct FleetAutoscaleReview {
 
 fn validation_required(path: impl Into<String>, detail: impl Into<String>) -> ValidationError {
     ValidationError {
+        origin: String::new(),
+        covered_by_declarative: false,
         kind: ValidationErrorKind::Required,
         path: path.into(),
         bad_value: None,
@@ -344,6 +346,8 @@ fn validation_invalid(
     detail: impl Into<String>,
 ) -> ValidationError {
     ValidationError {
+        origin: String::new(),
+        covered_by_declarative: false,
         kind: ValidationErrorKind::Invalid,
         path: path.into(),
         bad_value: Some(bad_value.into()),
@@ -352,6 +356,8 @@ fn validation_invalid(
 }
 fn validation_duplicate(path: impl Into<String>, detail: impl Into<String>) -> ValidationError {
     ValidationError {
+        origin: String::new(),
+        covered_by_declarative: false,
         kind: ValidationErrorKind::Duplicate,
         path: path.into(),
         bad_value: None,
@@ -361,6 +367,8 @@ fn validation_duplicate(path: impl Into<String>, detail: impl Into<String>) -> V
 
 fn validation_forbidden(path: impl Into<String>, detail: impl Into<String>) -> ValidationError {
     ValidationError {
+        origin: String::new(),
+        covered_by_declarative: false,
         kind: ValidationErrorKind::Forbidden,
         path: path.into(),
         bad_value: None,

@@ -164,6 +164,16 @@ pub enum SchedulingStrategy {
     Unknown(String),
 }
 
+/// Source metav1.TypeMeta, retained independently of static resource identity.
+#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TypeMeta {
+    #[serde(default, skip_serializing_if = "String::is_empty", deserialize_with = "crate::go_value::deserialize_go_value")]
+    pub kind: String,
+    #[serde(default, skip_serializing_if = "String::is_empty", deserialize_with = "crate::go_value::deserialize_go_value")]
+    pub api_version: String,
+}
+
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ObjectMeta {
@@ -213,7 +223,7 @@ pub struct Container {
     #[serde(default, skip_serializing_if = "is_false", deserialize_with = "crate::go_value::deserialize_go_value")]
     pub tty: bool,
     #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
-    pub resources: BTreeMap<String, serde_json::Value>,
+    pub resources: crate::ContainerResourceRequirements,
     #[serde(flatten)]
     pub extensions: BTreeMap<String, serde_json::Value>,
 }
@@ -549,6 +559,8 @@ pub struct ValidationError {
     pub path: String,
     pub bad_value: Option<String>,
     pub detail: String,
+    pub origin: String,
+    pub covered_by_declarative: bool,
 }
 
 impl ValidationError {
@@ -558,6 +570,8 @@ impl ValidationError {
             path: path.into(),
             bad_value: None,
             detail: detail.into(),
+            origin: String::new(),
+            covered_by_declarative: false,
         }
     }
 
@@ -567,6 +581,8 @@ impl ValidationError {
             path: path.into(),
             bad_value: None,
             detail: detail.into(),
+            origin: String::new(),
+            covered_by_declarative: false,
         }
     }
 
@@ -580,18 +596,39 @@ impl ValidationError {
             path: path.into(),
             bad_value: Some(bad_value.into()),
             detail: detail.into(),
+            origin: String::new(),
+            covered_by_declarative: false,
         }
     }
 
-    fn too_long(path: impl Into<String>, bad_value: impl Into<String>, max: usize) -> Self {
+    fn too_long(path: impl Into<String>, _bad_value: impl Into<String>, max: isize) -> Self {
         Self {
             kind: ValidationErrorKind::TooLong,
             path: path.into(),
-            bad_value: Some(bad_value.into()),
-            detail: format!("must be no more than {max} bytes"),
+            bad_value: Some("<value omitted>".into()),
+            detail: if max < 0 {
+                "value is too long".into()
+            } else {
+                format!("may not be more than {max} {}", if max == 1 { "byte" } else { "bytes" })
+            },
+            origin: String::new(),
+            covered_by_declarative: false,
         }
     }
+
+    pub fn with_origin(mut self, origin: impl Into<String>) -> Self {
+        self.origin = origin.into();
+        self
+    }
+
+    pub fn mark_covered_by_declarative(mut self) -> Self {
+        self.covered_by_declarative = true;
+        self
+    }
 }
+
+const QUALIFIED_NAME_FORMAT_ERROR: &str = "name part must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyName',  or 'my.name',  or '123-abc', regex used for validation is '([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]')";
+const LABEL_VALUE_FORMAT_ERROR: &str = "a valid label must be an empty string or consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyValue',  or 'my_value',  or '12345', regex used for validation is '(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?')";
 
 fn qualified_name_error(value: &str) -> Option<&'static str> {
     let name = value.rsplit('/').next().unwrap_or(value);
@@ -599,9 +636,7 @@ fn qualified_name_error(value: &str) -> Option<&'static str> {
         return Some("name part must be no more than 63 bytes");
     }
     if name.is_empty() {
-        return Some(
-            "name part must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character",
-        );
+        return Some(QUALIFIED_NAME_FORMAT_ERROR);
     }
     let mut chars = name.chars();
     let first = chars.next().unwrap();
@@ -612,9 +647,7 @@ fn qualified_name_error(value: &str) -> Option<&'static str> {
             .chars()
             .all(|c| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.'))
     {
-        return Some(
-            "name part must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character",
-        );
+        return Some(QUALIFIED_NAME_FORMAT_ERROR);
     }
     None
 }
@@ -627,7 +660,7 @@ pub(crate) fn validate_object_meta(meta: &ObjectMeta, path: &str) -> Vec<Validat
                 format!("{path}.labels"),
                 key.as_str(),
                 detail,
-            ));
+            ).with_origin("format=k8s-label-key"));
         }
         let invalid_value = value.len() > 63
             || (!value.is_empty()
@@ -643,9 +676,9 @@ pub(crate) fn validate_object_meta(meta: &ObjectMeta, path: &str) -> Vec<Validat
                 if value.len() > 63 {
                     "must be no more than 63 bytes"
                 } else {
-                    "must be empty or consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character"
+                    LABEL_VALUE_FORMAT_ERROR
                 },
-            ));
+            ).with_origin("format=k8s-label-value"));
         }
     }
     for key in meta.annotations.keys() {
@@ -654,7 +687,7 @@ pub(crate) fn validate_object_meta(meta: &ObjectMeta, path: &str) -> Vec<Validat
                 format!("{path}.annotations"),
                 key.as_str(),
                 detail,
-            ));
+            ).with_origin("format=k8s-label-key"));
         }
     }
     errors
@@ -699,13 +732,13 @@ impl GameServerSpec {
     /// Domain-level validation directly corresponding to the Kubernetes-independent
     /// checks in Agones GameServerSpec.Validate.
     ///
-    /// Resource quantity validation and API hook validation belong to the
-    /// Rusternetes integration layer because they depend on runtime/API types.
+    /// Resource quantities use the shared core CGP policy. API hook effects
+    /// are supplied by the Rusternetes integration layer.
     pub fn validate(&self, dev_address: &str) -> Vec<ValidationError> {
         self.validate_with_context(&crate::GameServerDefaultingContext::default(), dev_address)
     }
 
-    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures>(
+    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures + crate::CanValidateResourceQuantities>(
         &self,
         context: &C,
         dev_address: &str,
@@ -802,6 +835,7 @@ impl GameServerSpec {
             }
         }
 
+        errors.extend(self.validate_resource_quantities_with_context(context, "spec"));
         errors.extend(validate_object_meta(
             &self.template.metadata,
             "spec.template.metadata",
@@ -829,6 +863,8 @@ impl GameServerSpec {
 )]
 #[serde(rename_all = "camelCase")]
 pub struct GameServer {
+    #[serde(flatten)]
+    pub type_meta: TypeMeta,
     #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
     pub metadata: ObjectMeta,
     #[serde(default, deserialize_with = "crate::go_value::deserialize_go_value")]
@@ -1124,7 +1160,7 @@ impl GameServer {
         self.validate_with_context(&crate::GameServerDefaultingContext::default())
     }
 
-    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures>(
+    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures + crate::CanValidateResourceQuantities>(
         &self,
         context: &C,
     ) -> Vec<ValidationError> {
@@ -1600,6 +1636,7 @@ mod tests {
 
     fn development_game_server(state: GameServerState) -> GameServer {
         let mut game_server = GameServer {
+            type_meta: Default::default(),
             metadata: ObjectMeta {
                 annotations: BTreeMap::from([(
                     DEV_ADDRESS_ANNOTATION.to_owned(),
@@ -2233,6 +2270,75 @@ mod tests {
         });
         assert!(gs.spec.has_container("sdk", true));
         assert!(!gs.spec.has_container("sdk", false));
+    }
+
+    #[test]
+    fn validation_error_constructor_payload_and_metadata_match_source() {
+        for (maximum, detail) in [
+            (-1, "value is too long"),
+            (0, "may not be more than 0 bytes"),
+            (1, "may not be more than 1 byte"),
+            (63, "may not be more than 63 bytes"),
+        ] {
+            let error = ValidationError::too_long("metadata.name", "private-value", maximum);
+            assert_eq!(error, ValidationError {
+                kind: ValidationErrorKind::TooLong,
+                path: "metadata.name".into(),
+                bad_value: Some("<value omitted>".into()),
+                detail: detail.into(),
+                origin: String::new(),
+                covered_by_declarative: false,
+            });
+        }
+        let error = ValidationError::invalid("spec.field", "value", "detail");
+        let marked = error.clone().with_origin("format=example").mark_covered_by_declarative();
+        assert_eq!(marked.kind, error.kind);
+        assert_eq!(marked.path, error.path);
+        assert_eq!(marked.bad_value, error.bad_value);
+        assert_eq!(marked.detail, error.detail);
+        assert_eq!(marked.origin, "format=example");
+        assert!(marked.covered_by_declarative);
+        assert_ne!(marked, error);
+        let other_origin = marked.clone().with_origin("format=other");
+        assert!(other_origin.covered_by_declarative);
+        assert_ne!(marked, other_origin);
+    }
+
+    #[test]
+    fn production_validation_retains_all_source_error_fields() {
+        let mut gs = simple_game_server();
+        gs.apply_defaults();
+        gs.metadata.name = "n".repeat(64);
+        let errors = gs.validate();
+        assert_eq!(errors, vec![ValidationError {
+            kind: ValidationErrorKind::TooLong,
+            path: "metadata.name".into(),
+            bad_value: Some("<value omitted>".into()),
+            detail: "may not be more than 63 bytes".into(),
+            origin: String::new(),
+            covered_by_declarative: false,
+        }]);
+        gs.metadata.name.clear();
+        gs.spec.template.metadata.annotations.insert("agones.dev/short±Name".into(), "value".into());
+        let errors = gs.validate();
+        assert_eq!(errors, vec![ValidationError {
+            kind: ValidationErrorKind::Invalid,
+            path: "spec.template.metadata.annotations".into(),
+            bad_value: Some("agones.dev/short±Name".into()),
+            detail: "name part must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyName',  or 'my.name',  or '123-abc', regex used for validation is '([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]')".into(),
+            origin: "format=k8s-label-key".into(),
+            covered_by_declarative: false,
+        }]);
+        gs.spec.template.metadata.annotations.clear();
+        gs.spec.template.metadata.labels.insert("label".into(), "v".repeat(64));
+        assert_eq!(gs.validate(), vec![ValidationError {
+            kind: ValidationErrorKind::Invalid,
+            path: "spec.template.metadata.labels".into(),
+            bad_value: Some("v".repeat(64)),
+            detail: "must be no more than 63 bytes".into(),
+            origin: "format=k8s-label-value".into(),
+            covered_by_declarative: false,
+        }]);
     }
 
     #[test]

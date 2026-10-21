@@ -59,6 +59,7 @@ mod tests {
 
     fn game_server(name: &str, state: GameServerState) -> GameServer {
         GameServer {
+            type_meta: Default::default(),
             metadata: ObjectMeta {
                 name: name.into(),
                 namespace: "default".into(),

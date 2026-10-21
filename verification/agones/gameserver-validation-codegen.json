@@ -1,0 +1,503 @@
+{
+  "assertion_count": 25,
+  "assertions": [
+    {
+      "function": "source_gs_validate_assertion_000",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Valid game server::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_001",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Invalid gs: container, containerPort, hostPort::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_002",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::DevAddressAnnotation: Invalid IP, no host port::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_003",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long gs name::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_004",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long gs GenerateName is not validated on agones side::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_005",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long label key is invalid::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_006",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long label value is invalid::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_007",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long annotation key is invalid::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_008",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Invalid character in annotation key::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_009",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Valid annotation key::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_010",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Check ContainerPort and HostPort with different policies::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_011",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::PortPolicy must be Static with HostPort specified::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_012",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::ContainerPort is less than zero::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_013",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::CPU Request > Limit::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_014",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::CPU negative request::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_015",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::CPU negative limit::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_016",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Memory Request > Limit::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_017",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Memory negative request::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_018",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Memory negative limit::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_019",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init CPU Request > Limit::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_020",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init CPU negative request::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_021",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init CPU negative limit::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_022",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init Memory Request > Limit::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_023",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init Memory negative request::line-1355"
+    },
+    {
+      "function": "source_gs_validate_assertion_024",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init Memory negative limit::line-1355"
+    }
+  ],
+  "case_count": 25,
+  "feature_id": "RESOURCE-QUANTITY-001",
+  "fixture_mapping": "Complete wire fixture, typed quantity construction and explicit source presence. Go capture rejects quantities whose normalized construction state is lost by String round-trip. Unknown source fields fail closed. Nil/empty init-container sequences map to the same empty traversal; no standalone identity claim.",
+  "generator": "Genco0.17.10with pinned rustfmt",
+  "generator_path": "crates/agones-rusternetes/examples/feature_case_codegen.rs",
+  "generator_sha256": "34f962fb5c975fade612ca2a0fa44948925c34652599119a18d54a17a3836996",
+  "generator_source_files": {
+    "crates/agones-rusternetes/examples/codegen/gameserver_features.rs": "44335a77ca34abe5d3bbbfa7d05836ecdc5ea65a59cd7520652a213e48dca848",
+    "crates/agones-rusternetes/examples/codegen/gameserver_validation.rs": "9b57e988a9237055d3a76b1dbb29495804d9ed3e752638edcbbf18989bfa79c1",
+    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "34f962fb5c975fade612ca2a0fa44948925c34652599119a18d54a17a3836996"
+  },
+  "harnesses": [
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_000"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Valid game server",
+      "harness": "source_gs_validate_case_000",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Valid game server",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_001"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Invalid gs: container, containerPort, hostPort",
+      "harness": "source_gs_validate_case_001",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Invalid gs: container, containerPort, hostPort",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_002"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::DevAddressAnnotation: Invalid IP, no host port",
+      "harness": "source_gs_validate_case_002",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::DevAddressAnnotation: Invalid IP, no host port",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_003"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long gs name",
+      "harness": "source_gs_validate_case_003",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long gs name",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_004"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long gs GenerateName is not validated on agones side",
+      "harness": "source_gs_validate_case_004",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long gs GenerateName is not validated on agones side",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_005"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long label key is invalid",
+      "harness": "source_gs_validate_case_005",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long label key is invalid",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_006"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long label value is invalid",
+      "harness": "source_gs_validate_case_006",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long label value is invalid",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_007"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long annotation key is invalid",
+      "harness": "source_gs_validate_case_007",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Long annotation key is invalid",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_008"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Invalid character in annotation key",
+      "harness": "source_gs_validate_case_008",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Invalid character in annotation key",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_009"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Valid annotation key",
+      "harness": "source_gs_validate_case_009",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Valid annotation key",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_010"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Check ContainerPort and HostPort with different policies",
+      "harness": "source_gs_validate_case_010",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Check ContainerPort and HostPort with different policies",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_011"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::PortPolicy must be Static with HostPort specified",
+      "harness": "source_gs_validate_case_011",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::PortPolicy must be Static with HostPort specified",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_012"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::ContainerPort is less than zero",
+      "harness": "source_gs_validate_case_012",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::ContainerPort is less than zero",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_013"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::CPU Request > Limit",
+      "harness": "source_gs_validate_case_013",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::CPU Request > Limit",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_014"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::CPU negative request",
+      "harness": "source_gs_validate_case_014",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::CPU negative request",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_015"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::CPU negative limit",
+      "harness": "source_gs_validate_case_015",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::CPU negative limit",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_016"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Memory Request > Limit",
+      "harness": "source_gs_validate_case_016",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Memory Request > Limit",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_017"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Memory negative request",
+      "harness": "source_gs_validate_case_017",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Memory negative request",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_018"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Memory negative limit",
+      "harness": "source_gs_validate_case_018",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Memory negative limit",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_019"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init CPU Request > Limit",
+      "harness": "source_gs_validate_case_019",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init CPU Request > Limit",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_020"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init CPU negative request",
+      "harness": "source_gs_validate_case_020",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init CPU negative request",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_021"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init CPU negative limit",
+      "harness": "source_gs_validate_case_021",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init CPU negative limit",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_022"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init Memory Request > Limit",
+      "harness": "source_gs_validate_case_022",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init Memory Request > Limit",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_023"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init Memory negative request",
+      "harness": "source_gs_validate_case_023",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init Memory negative request",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    },
+    {
+      "assertion_functions": [
+        "source_gs_validate_assertion_024"
+      ],
+      "case_id": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init Memory negative limit",
+      "harness": "source_gs_validate_case_024",
+      "preconditions": [],
+      "raw_domain": "unit",
+      "required_covers": [
+        "source GameServer Validate case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate::Init Memory negative limit",
+        "the generator should produce at least one valid value"
+      ],
+      "unwind": 128
+    }
+  ],
+  "ir": "verification/agones/gameserver-validation.ir.json",
+  "ir_sha256": "342cc78c35f1b662e9085ba1a76956bc1e3a2ca47b4dc391ed76ff480465a364",
+  "lifetime_mapping": {
+    "boundary": "After source observation and covers, retain harness-owned fixture/context/error values in both engines; actual production bodies remain unchanged.",
+    "ordinary_cleanup": "Separate complete fixture/default-action and adapter replay uses normal destruction.",
+    "residual": "Formal post-observation cleanup/lifecycle remain required.",
+    "rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1"
+  },
+  "multiset_mapping": {
+    "manifest": "verification/agones/expected-multiset-relation.json",
+    "manifest_sha256": "8de29f21c85d420350d56363d1c39b23e601ffc18e3eb571bdbd193ff072cb92",
+    "relation": "Equal lengths and exact full-record multiplicities for every expected error; no field or duplicate omission.",
+    "rule": "AGONES-ELEMENTSMATCH-EXPECTED-COUNTS-1"
+  },
+  "output": "crates/agones-core/tests/generated/gameserver_validation_cases.rs",
+  "output_sha256": "b4ba415c9f789d7ce9546fe1793eae25d9aa4b0c9dc64950067288802aaa0a6b",
+  "schema_version": 1,
+  "scope": "All25original cases and25qualified ElementsMatch occurrences with exact conditional defaulting. Extra whole-before/after native checks are replay evidence, not extra source assertion credit. No formal/conformance/lifecycle/_2completion claim.",
+  "validation_error_mapping": {
+    "fields": [
+      "Type",
+      "Field",
+      "BadValue",
+      "Detail",
+      "Origin",
+      "CoveredByDeclarative"
+    ],
+    "forward": "Require the exact empty Go string for Required/Forbidden and encode it as kind+None. Other supported kinds preserve string versus null distinctly. Copy every other field exactly.",
+    "inverse": "Reconstruct the fixed empty source string from Required/Forbidden+None; reject a non-None value. Other kinds reconstruct their original string/null. Every lowered error must round-trip in full.",
+    "native_fault_controls": "All six error fields and multiset multiplicity are independently observable. Bidirectional constructor-image controls exercise both directions and reject nonempty/nil source values.",
+    "rule": "AGONES-ERROR-CONSTRUCTOR-EMPTY-1",
+    "source": "vendor/k8s.io/apimachinery/pkg/util/validation/field/errors.go",
+    "source_sha256": "747db5374cdd58712b46d10775272508212d3201fa05c30105a5531debc666d4",
+    "unsupported": "Non-string/non-null bad values, unknown kinds/fields and values outside the declared constructor image reject; their obligations remain open."
+  }
+}

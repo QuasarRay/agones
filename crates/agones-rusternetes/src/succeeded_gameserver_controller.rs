@@ -229,6 +229,7 @@ mod tests {
         }
 
         GameServer {
+            type_meta: Default::default(),
             metadata: ObjectMeta {
                 name: "server".into(),
                 namespace: "default".into(),

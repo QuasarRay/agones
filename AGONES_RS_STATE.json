@@ -4,56 +4,56 @@
       "evidence_refs": [],
       "form": "proc_macro_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After canonical complete-validation adoption and its native/generation gates, inspect the actual feature name/value ownership and concrete resource/derive repetitions. Keep all25general proofs/50covers and other required source/lifecycle/conformance/_2work visible.",
+      "next_review_trigger": "After native675/six-mode adoption gates, inspect actual full required model results and real CGP/resource/derive repetitions; no identical proof retry or reduced scope.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_2",
       "location": "cross-crate",
-      "next_review_trigger": "After canonical complete-validation adoption and its native/generation gates, inspect the actual feature name/value ownership and concrete resource/derive repetitions. Keep all25general proofs/50covers and other required source/lifecycle/conformance/_2work visible.",
+      "next_review_trigger": "After native675/six-mode adoption gates, inspect actual full required model results and real CGP/resource/derive repetitions; no identical proof retry or reduced scope.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_attribute_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After canonical complete-validation adoption and its native/generation gates, inspect the actual feature name/value ownership and concrete resource/derive repetitions. Keep all25general proofs/50covers and other required source/lifecycle/conformance/_2work visible.",
+      "next_review_trigger": "After native675/six-mode adoption gates, inspect actual full required model results and real CGP/resource/derive repetitions; no identical proof retry or reduced scope.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_attribute_2",
       "location": "cross-crate",
-      "next_review_trigger": "After canonical complete-validation adoption and its native/generation gates, inspect the actual feature name/value ownership and concrete resource/derive repetitions. Keep all25general proofs/50covers and other required source/lifecycle/conformance/_2work visible.",
+      "next_review_trigger": "After native675/six-mode adoption gates, inspect actual full required model results and real CGP/resource/derive repetitions; no identical proof retry or reduced scope.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_derive_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After canonical complete-validation adoption and its native/generation gates, inspect the actual feature name/value ownership and concrete resource/derive repetitions. Keep all25general proofs/50covers and other required source/lifecycle/conformance/_2work visible.",
+      "next_review_trigger": "After native675/six-mode adoption gates, inspect actual full required model results and real CGP/resource/derive repetitions; no identical proof retry or reduced scope.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_derive_2",
       "location": "cross-crate",
-      "next_review_trigger": "After canonical complete-validation adoption and its native/generation gates, inspect the actual feature name/value ownership and concrete resource/derive repetitions. Keep all25general proofs/50covers and other required source/lifecycle/conformance/_2work visible.",
+      "next_review_trigger": "After native675/six-mode adoption gates, inspect actual full required model results and real CGP/resource/derive repetitions; no identical proof retry or reduced scope.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_delegate_2",
       "location": "same-logical-crate",
-      "next_review_trigger": "After canonical complete-validation adoption and its native/generation gates, inspect the actual feature name/value ownership and concrete resource/derive repetitions. Keep all25general proofs/50covers and other required source/lifecycle/conformance/_2work visible.",
+      "next_review_trigger": "After native675/six-mode adoption gates, inspect actual full required model results and real CGP/resource/derive repetitions; no identical proof retry or reduced scope.",
       "status": "REQUIRED_OPEN"
     },
     {
       "evidence_refs": [],
       "form": "proc_macro_delegate_2",
       "location": "cross-crate",
-      "next_review_trigger": "After canonical complete-validation adoption and its native/generation gates, inspect the actual feature name/value ownership and concrete resource/derive repetitions. Keep all25general proofs/50covers and other required source/lifecycle/conformance/_2work visible.",
+      "next_review_trigger": "After native675/six-mode adoption gates, inspect actual full required model results and real CGP/resource/derive repetitions; no identical proof retry or reduced scope.",
       "status": "REQUIRED_OPEN"
     }
   ],
@@ -70,13 +70,19 @@
       "receipt": "verification/agones/ci/39511896291-evidence-published.json",
       "role": "immutable backup, no second queue or acceptance bypass"
     },
-    "large_logs": "Retain complete REPO_SAFE diagnostic and proof log blobs in the repository Git object store. Git stores these repeated textual outputs compressed internally; no verifier output is trimmed or normalized.",
-    "location": "verification/agones/runs under the verified PR/delivery commit; immutable manifests bind every full log with SHA-256.",
-    "passive_evidence_checkpoint": {
+    "historical_passive_evidence_checkpoint_before_lookup": {
       "branch": "codex/agones-ci-evidence-39516368235",
       "commit": "7a1c58ddd9ca0a8b911e2a2f2de98616c00c2fe0",
       "receipt": "verification/agones/ci/39516368235-evidence-published.json",
       "role": "Immutable complete all12 backup, not a second queue or acceptance bypass."
+    },
+    "large_logs": "Retain complete REPO_SAFE diagnostic and proof log blobs in the repository Git object store. Git stores these repeated textual outputs compressed internally; no verifier output is trimmed or normalized.",
+    "location": "verification/agones/runs under the verified PR/delivery commit; immutable manifests bind every full log with SHA-256.",
+    "passive_evidence_checkpoint": {
+      "branch": "codex/agones-ci-evidence-39519906026",
+      "commit": "ead5883f8c2d8fd03bb98073fee7aa5e1c010f54",
+      "receipt": "verification/agones/ci/39519906026-evidence-published.json",
+      "role": "Complete source2e1d full-output backup; current changed programs require proof."
     },
     "provider": "Content-addressed Git object store in QuasarRay/agones",
     "retention": "Keep referenced evidence commits reachable through the review/integration history or an explicitly indexed immutable passive evidence branch until their claims are superseded and all needed bytes remain retained. Never prune the only artifact behind a live claim.",
@@ -108,13 +114,20 @@
   ],
   "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
   "delivery": {
-    "acceptance": "Published2e1d605native/five modes with six refreshed gates. Current395199terminal:9strict scoped successes53claims/42covers/37459rows, same41unique source occurrences and four feature assertions. All000/002/00312GiBOOM with zero individual rows; no new source coverage. All12artifacts audited, passive publication pending. Clean1886675native/six modes/nine gates and checked58path adoption patch ready. Full migration and all broader obligations remain required.",
+    "acceptance": "Canonical adoption/native675/check/six modes/Go controls is local and implemented with nine gates and0changed-program proof credit. Historical2e1d395199all12artifacts are durable atead5883f8c2d8fd03bb98073fee7aa5e1c010f54; nine exact scoped selections53claims/42covers/37459rows reverify prior41source occurrences, while000/002/00312GiBOOM. No additional source case closed. Current25general/50cover pipeline accounting and full original/metadata/lifecycle/Rusternetes/_2requirements remain required.",
     "access": "GitHub app authorized as QuasarRay with push/admin; gh CLI unauthenticated; local .git writable",
     "actual_integration_head": "1e64a054901658908d0a7a4eecd3010379df9614",
     "actual_review_head": "2e1d39f6680d055e98d702238e77e32b9562b376",
     "artifact_recovery_pending": "verification/agones/ci/39505643334-artifact-recovery-pending.json",
     "artifact_recovery_status": "verification/agones/ci/39516368235-terminal-retained.json",
     "authorization": "User execution contract REQ-12/F4 and root AGENTS.MD milestone PR/merge workflow",
+    "canonical_adoption": {
+      "current_formal_credit": 0,
+      "evidence": "verification/agones/canonical-complete-validation-adoption-evidence.json",
+      "isolated_source": "1886ab3af0bdde934e37c07ddfbf7e62b1c8076d",
+      "published": false,
+      "status": "CANONICAL_SOURCE_ADOPTED_NATIVE675_SIX_MODES_FORMAL_REQUIRED"
+    },
     "checks": [
       {
         "cause": "Guidance existed locally at build/local-includes/AGENTS.MD but was ignored by Git and absent from clean CI checkout.",
@@ -395,16 +408,10 @@
     "current_public_status_receipt": "verification/agones/ci/39519906026-terminal-retained.json",
     "current_retained_evidence": "verification/agones/ci/39519906026-terminal-retained.json",
     "current_retained_formal_counts": {
-      "backend_rows": 37459,
-      "failed_harnesses": 3,
-      "original_defaulting_assertions": 36,
-      "original_feature_validation_assertions": 4,
-      "original_query_error_assertions": 1,
-      "retained_artifacts": 12,
-      "satisfied_covers": 42,
-      "semantic_claims": 53,
-      "successful_harnesses": 9,
-      "unreachable_credited": 0
+      "satisfied_covers": 0,
+      "semantic_claims": 0,
+      "status": "CHANGED_CANONICAL_PROGRAMS_REVERIFICATION_REQUIRED",
+      "successful_harnesses": 0
     },
     "exact_lookup_singleton_checkpoint": {
       "current_formal_credit_added": 0,
@@ -440,7 +447,20 @@
     },
     "historical_artifact_recovery_pending": "verification/agones/ci/39505643334-artifact-recovery-pending.json",
     "historical_artifact_recovery_status_before_expected_multiset": "verification/agones/ci/39505643334-artifact-recovery-completed.json",
+    "historical_ci_before_canonical_adoption": "verification/agones/ci/39519906026-terminal-retained.json",
     "historical_ci_before_exact_lookup_singleton": "verification/agones/ci/39516368235-terminal-retained.json",
+    "historical_counts_before_canonical_adoption": {
+      "backend_rows": 37459,
+      "failed_harnesses": 3,
+      "original_defaulting_assertions": 36,
+      "original_feature_validation_assertions": 4,
+      "original_query_error_assertions": 1,
+      "retained_artifacts": 12,
+      "satisfied_covers": 42,
+      "semantic_claims": 53,
+      "successful_harnesses": 9,
+      "unreachable_credited": 0
+    },
     "historical_retained_counts_before_exact_lookup_singleton": {
       "backend_rows": 37459,
       "failed_harnesses": 3,
@@ -473,7 +493,7 @@
       "method_observed": "source head is ancestor of integration; PR API reports merged",
       "pr": "https://github.com/QuasarRay/agones/pull/94"
     },
-    "next_action": "Publish full current CI evidence passively and advance the checked58path canonical complete-validation adoption from clean1886. Keep canonical protected operations/queue, all source semantics and all remaining proof/architecture/lifecycle/conformance requirements.",
+    "next_action": "Extend existing strict parser/protected workflow for all25general harnesses/50covers and six-field scope, preserving every old selection/assertion/cover/domain/unwind; then publish native675canonical adoption and run one complete changed-program campaign. Connector recovered and full2e1d terminal evidence is durable; do not reupload those logs.",
     "pending_checkpoint": {
       "backend_harnesses": [
         "source_gsv_case_004",
@@ -550,7 +570,7 @@
     "query_allocation_terminal_receipt": "verification/agones/ci/39498916435-terminal-retained.json",
     "query_allocation_tested_merge": "80901b52f41f9328f0449f16f4430e8eb2b7020f",
     "query_allocation_workflow_run": 39498916435,
-    "remote_result": "PR96_2E1D_TERMINAL_NINE_SCOPED_SUCCESSES_THREE_SOURCE_OOM_ALL12_RETAINED",
+    "remote_result": "PR96_2E1D_AND_ALL12_TERMINAL_EVIDENCE_EAD588_PUBLISHED_CANONICAL_ADOPTION_LOCAL",
     "required_checks": [
       "migration-state",
       "rust",
@@ -561,11 +581,10 @@
     "streaming_direct_paths_terminal_receipt": "verification/agones/ci/39505643334-terminal-retained.json",
     "streaming_direct_paths_workflow_run": 39505643334,
     "terminal_evidence_publication": {
-      "branch": "codex/agones-ci-evidence-39516368235",
-      "commit": "7a1c58ddd9ca0a8b911e2a2f2de98616c00c2fe0",
-      "receipt": "verification/agones/ci/39516368235-evidence-published.json",
-      "status": "PUBLISHED_ALL12",
-      "tree": "f5e3aede674f11e29972ec6089cc4acc463695a4"
+      "branch": "codex/agones-ci-evidence-39519906026",
+      "commit": "ead5883f8c2d8fd03bb98073fee7aa5e1c010f54",
+      "receipt": "verification/agones/ci/39519906026-evidence-published.json",
+      "status": "PUBLISHED_ALL12"
     },
     "terminal_evidence_publication_pending": "verification/agones/ci/39505643334-evidence-publication-pending.json",
     "visible_checkout": {
@@ -577,9 +596,9 @@
   "goal": {
     "objective_attachment": "/home/astral/.codex/attachments/5cf63dab-e5a8-49be-a2f1-ae51f5edd993/pasted-text-1.txt",
     "reported_usage": {
-      "observed_at": 1792541070,
-      "time_seconds": 75812,
-      "tokens": 7472103
+      "observed_at": 1792545236,
+      "time_seconds": 79979,
+      "tokens": 7797467
     },
     "status": "active",
     "thread_id": "01a14ebe-10fa-7c41-9f85-256874fb4c1f",
@@ -587,8 +606,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 293,
-  "previous_sha256": "6b13294531aab212e3f7e5f1289ee04dc9729eb3f3c20814b8d546b470d3a2a8",
+  "previous_revision": 299,
+  "previous_sha256": "b55a35b5efbfdd8bd42f4852d34a86889f3653ffda006e8207475ea6a19ad7f5",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -1167,9 +1186,26 @@
       "next_review_trigger": "After canonical complete-validation adoption and its native/generation gates, inspect the actual feature name/value ownership and concrete resource/derive repetitions. Keep all25general proofs/50covers and other required source/lifecycle/conformance/_2work visible.",
       "rationale": "The distinct2e1d attempt revalidates nine scoped selections53claims/42covers/37459rows and four exact feature-source assertions, but closes no additional source case. All000/002/003OOM at12GiB. Source000 finishes symbolic expansion in26.0322s with323256steps/43614VCCs, then OOM during conversion/solving; no proof gain. Source002/003 still unfold the enabled find_map loop127times after nonempty query mutation, versus15iterations in000. Changing ordering to equality or removing the singleton count fold alone does not discharge the remaining cases. Preserve this evidence and move actual complete-validation behavior into canonical source.",
       "reuse": "Clean1886 passes675source-bound native tests and six generation modes with all30source harness bodies unchanged and nine current gates. Reuse its existing implementation/Genco/error-constructor law; preserve the canonical protected recorder/parser/workflow/ledger."
+    },
+    {
+      "architecture": "Existing CGP remains composition/lifecycle owner. This is an ordinary private value representation; no registry, alternate provider, orchestrator, plugin, macro or compiler substrate. All eight _2cells remain required and are reassessed against real resource/derive/delegation repetition after adoption.",
+      "candidate": "Separate feature-name metadata from mutable bool storage while keeping the public map API and all source relations.",
+      "decision": "SMALL_LOCAL_REFACTOR",
+      "evidence_invalidation": "Rerun canonical ordinary checks before refreshing all nine affected gates and rebinding existing IR. Preserve all previous receipts by source identity and retain all formal debt.",
+      "evidence_refs": [
+        "verification/agones/ci/39519906026-terminal-retained.json",
+        "verification/agones/runs/complete-validation-canonical-adoption-native-1.json"
+      ],
+      "feature_binding": "GS-VALIDATE-FEATURES-001 / RESOURCE-QUANTITY-001 / GS-TYPEMETA-001 / GS-VALIDATION-ERROR-DATA-001",
+      "id": "COMPLETE-VALIDATION-ADOPTION-key-value-ownership-review",
+      "invariant": "Private constructors maintain equal names/values lengths, unique sorted names and one bool owner per key. Empty/uninitialized maps return false; encoding remains sorted; custom/duplicate/Unicode/NUL names and first query values remain supported. No input, field, source assertion, cover or unwind change.",
+      "next_review_trigger": "After native675/six-mode adoption gates, inspect actual full required model results and real CGP/resource/derive repetitions; no identical proof retry or reduced scope.",
+      "rationale": "Canonical adoption already passes675native tests and six modes. Both ordering and equality-iteration variants still expand enabled lookup127times in cases002/003 after nonempty query mutation; empty-query000 unfolds15iterations. The current Vec stores each immutable fat string pointer beside a bool changed through a query-derived index. Separate name and bool allocations and compute the name position before reading its value. This targets concrete mutable-state/key-metadata coupling without assuming it is the unique cause.",
+      "roi": "One local representation change reuses Vec, existing sorted construction, CGP and the independent native map oracle. It is smaller than a known-feature enum/bitset compiler or new macro/CI system, and removes mutable bool writes from key allocation. There remain15canonical keys and many actual consumers. Native lookup semantics/encoding/last-duplicate/atomicity checks must pass; any formal benefit is unproven until actual results.",
+      "tradeoff": "Two allocations instead of one at construction; fewer bytes per name scan. No runtime speedup is claimed. Internal derived Debug layout changes; encoded public configuration semantics stay identical."
     }
   ],
-  "revision": 294,
+  "revision": 300,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [
@@ -1205,14 +1241,15 @@
         "verification/agones/ci/39516368235-evidence-published.json",
         "verification/agones/exact-lookup-singleton-prior-assurance.json",
         "verification/agones/ci/39519906026-in-progress.json",
-        "verification/agones/ci/39519906026-terminal-retained.json"
+        "verification/agones/ci/39519906026-terminal-retained.json",
+        "verification/agones/ci/39519906026-evidence-published.json"
       ],
       "feature_ids": [
         "gameserver-player-tracking-validation"
       ],
       "id": "GS-VALIDATE-FEATURES-001",
-      "implementation_gate": "verification/agones/gates/c4e2a5ea6825492fb9875ede400e5136552e534d80e260295148c92c0775f096.json",
-      "next_action": "Retain/publish all12current CI artifacts, then apply the checked58path complete-validation adoption from clean1886. Preserve canonical queue/protected operations/user AGENTS. Run canonical675native/six-mode checks, record adopted gates, and retain all25general/50cover plus other source/lifecycle/conformance/_2debt. No unchanged proof retry.",
+      "implementation_gate": "verification/agones/gates/6d10b275433dcf0a49011a53dc251b062c43c50049cc3a8aebf0c161cc498b26.json",
+      "next_action": "Extend existing strict parser/protected workflow for all25general harnesses/50covers and six-field scope while preserving every existing selection/assertion/cover/domain/unwind. Native675/check/six modes/Go controls and nine production gates pass; current changed-program proof credit0. Full old2e1d terminal evidence is published ead588; avoid reupload/retry. Publish the complete next review head after pipeline accounting, then run one changed-program campaign.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
         "crates/agones-core/src/gameserver_defaulting.rs",
@@ -1243,22 +1280,25 @@
       ]
     },
     {
-      "dependencies": [],
+      "dependencies": [
+        "RESOURCE-QUANTITY-001"
+      ],
       "disposition": "READY",
       "evidence_refs": [
-        "verification/agones/resource-quantity-isolated-recovery.json"
+        "verification/agones/validation-error-data-isolated-recovery.json",
+        "verification/agones/canonical-complete-validation-adoption-evidence.json"
       ],
       "feature_ids": [
-        "gameserver-source-type-meta"
+        "source-validation-error-data"
       ],
-      "id": "GS-TYPEMETA-001",
-      "implementation_gate": null,
-      "next_action": "Recover isolated6347616current TypeMeta/native conversion with full25case/core/actual-adapter native675replay and six deterministic modes. Canonical adoption/formal proof remain required; preserve actual kind/apiVersion and full fixtures.",
+      "id": "GS-VALIDATION-ERROR-DATA-001",
+      "implementation_gate": "verification/agones/gates/b27ab9d7d52fea6cff48ce63877509d53a3830e2a112b5d004214326e9a13a33.json",
+      "next_action": "Selected canonical production/data behavior is native675/six-mode implemented. Reuse existing source obligations, extend the strict protected pipeline for all25general cases/50covers and six-field scope, and retain all remaining metadata/API/lifecycle/conformance/_2requirements.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
-        "crates/agones-rusternetes/src/lib.rs",
-        "crates/agones-core/tests/gameserver_type_meta.rs",
-        "crates/agones-rusternetes/tests/gameserver_type_meta.rs"
+        "crates/agones-core/src/gameserver_validation.rs",
+        "crates/agones-rusternetes/examples/codegen/gameserver_features.rs",
+        "crates/agones-rusternetes/tests/source_gameserver_feature_validation.rs"
       ],
       "requirement_ids": [
         "REQ-02",
@@ -1275,10 +1315,9 @@
       "source_config_binding": {
         "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
         "isolated_commit": "e8b684a00b7758eef366ee467117c771af84b8d1",
-        "isolated_gate": "verification/agones/gates/d6e40365a5fabbec22b5d84d64c433528d66bd63d91a30450e32c445647b3e92.json",
-        "recovery_manifest": "verification/agones/resource-quantity-isolated-recovery.json"
+        "work_packet": "verification/agones/validation-error-data-work-packet.json"
       },
-      "stage": "IMPLEMENTING",
+      "stage": "IMPLEMENTED",
       "test_ids": [
         "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate"
       ]
@@ -1287,14 +1326,15 @@
       "dependencies": [],
       "disposition": "READY",
       "evidence_refs": [
-        "verification/agones/resource-quantity-isolated-recovery.json"
+        "verification/agones/resource-quantity-isolated-recovery.json",
+        "verification/agones/canonical-complete-validation-adoption-evidence.json"
       ],
       "feature_ids": [
         "exact-resource-quantity-validation"
       ],
       "id": "RESOURCE-QUANTITY-001",
-      "implementation_gate": null,
-      "next_action": "Recover clean isolated6347616complete quantity/TypeMeta/error snapshot, retaining exact typed numeric state and counterexamples. Native675tests/six modes pass after source-concat reuse; canonical adoption and formal proof remain required.",
+      "implementation_gate": "verification/agones/gates/d02fc52133e046b4405b028f93094123b27e215ce2ed9cbc1f57a663d5d5b5fb.json",
+      "next_action": "Selected canonical production/data behavior is native675/six-mode implemented. Reuse existing source obligations, extend the strict protected pipeline for all25general cases/50covers and six-field scope, and retain all remaining metadata/API/lifecycle/conformance/_2requirements.",
       "owned_paths": [
         "crates/agones-core/src/resource_quantity.rs",
         "crates/agones-rusternetes/src/lib.rs",
@@ -1325,30 +1365,29 @@
         },
         "work_packet": "verification/agones/resource-quantity-work-packet.json"
       },
-      "stage": "IMPLEMENTING",
+      "stage": "IMPLEMENTED",
       "test_ids": [
         "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate"
       ]
     },
     {
-      "dependencies": [
-        "RESOURCE-QUANTITY-001"
-      ],
+      "dependencies": [],
       "disposition": "READY",
       "evidence_refs": [
-        "verification/agones/validation-error-data-isolated-recovery.json"
+        "verification/agones/resource-quantity-isolated-recovery.json",
+        "verification/agones/canonical-complete-validation-adoption-evidence.json"
       ],
       "feature_ids": [
-        "source-validation-error-data"
+        "gameserver-source-type-meta"
       ],
-      "id": "GS-VALIDATION-ERROR-DATA-001",
-      "implementation_gate": null,
-      "next_action": "Clean isolated6347616retains full25case/six-field source mapping with canonical4523concatenation repair. Native675tests/six generation modes and all9gates verified; all5generated body files unchanged. Canonical adoption/publication and formal obligations remain required.",
+      "id": "GS-TYPEMETA-001",
+      "implementation_gate": "verification/agones/gates/1f3bb5f54866727ee6b443c8469eb9d0dbe2c7133c543c62154e3702413b5bc2.json",
+      "next_action": "Canonical TypeMeta/native conversion adopted and675native verified. All other CRD identity surfaces, full metadata/lifecycle/live conformance and formal proof remain required. Continue the complete-validation gate/strict pipeline adoption.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
-        "crates/agones-core/src/gameserver_validation.rs",
-        "crates/agones-rusternetes/examples/codegen/gameserver_features.rs",
-        "crates/agones-rusternetes/tests/source_gameserver_feature_validation.rs"
+        "crates/agones-rusternetes/src/lib.rs",
+        "crates/agones-core/tests/gameserver_type_meta.rs",
+        "crates/agones-rusternetes/tests/gameserver_type_meta.rs"
       ],
       "requirement_ids": [
         "REQ-02",
@@ -1365,9 +1404,10 @@
       "source_config_binding": {
         "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
         "isolated_commit": "e8b684a00b7758eef366ee467117c771af84b8d1",
-        "work_packet": "verification/agones/validation-error-data-work-packet.json"
+        "isolated_gate": "verification/agones/gates/d6e40365a5fabbec22b5d84d64c433528d66bd63d91a30450e32c445647b3e92.json",
+        "recovery_manifest": "verification/agones/resource-quantity-isolated-recovery.json"
       },
-      "stage": "IMPLEMENTING",
+      "stage": "IMPLEMENTED",
       "test_ids": [
         "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidate"
       ]
@@ -1394,7 +1434,7 @@
         "gameserver-creation-defaulting"
       ],
       "id": "GS-DEFAULTS-001",
-      "implementation_gate": "verification/agones/gates/acb9bffecd474a0b55775db612bbc62126cb5a52e2cf6bf3fc8ed708c539e846.json",
+      "implementation_gate": "verification/agones/gates/25e9cf3229a7801c872ff6e57fceb23112fb9edbfff0294e265f322786f6be04.json",
       "next_action": "Publish complete source005 raw evidence and updated direct coverage/next feature packet to PR94; validate fresh metadata/binding CI and merge this proof milestone. Then implement GS-VALIDATE-FEATURES-001 through CGP before extracting its semantic properties.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
@@ -1435,7 +1475,7 @@
         "source-sdk-version-annotation-policy"
       ],
       "id": "SDK-VERSION-001",
-      "implementation_gate": "verification/agones/gates/e74cea1b118291a5b4daee2f04a790a6a5b3e314e519794063d5f90acbae1af5.json",
+      "implementation_gate": "verification/agones/gates/cca6ceced3facde42b58f61471696bba242fb1a42871b530de2df4e851c99f37.json",
       "next_action": "Complete remaining18 selected version identities and the shared-domain claims/covers. Reuse complete GameServer source proofs with the same qualified version identity counted once; retain the two Fleet assertions and full decoder/lifecycle scope.",
       "owned_paths": [
         "crates/agones-core/src/gameserver.rs",
@@ -1478,7 +1518,7 @@
         "source-compatible-feature-gate-error-rendering"
       ],
       "id": "FG-ERROR-001",
-      "implementation_gate": "verification/agones/gates/c314d7b1d1f1bbb3e3aace2d9d3e62c5c3d22b6d143177ad8c37bc76d55d9ed9.json",
+      "implementation_gate": "verification/agones/gates/007b51b3e929c497e06f43d83c4f4c0c036e42ab2707451f82ed990c07e094a5.json",
       "next_action": "Resume required ASCII/full-error proofs only with a distinct diagnosed decomposition hypothesis, preserving original byte domains, assertions, covers and source-compatible rendering; time/memory failures remain uncredited.",
       "owned_paths": [
         "crates/agones-core/src/features.rs"
@@ -1519,7 +1559,7 @@
         "feature-gates-environment-cli-binding"
       ],
       "id": "FG-INPUT-001",
-      "implementation_gate": "verification/agones/gates/6933692d233041bdb12a0a44ad943ac9309a81519048d2fed4f4b19fba413ef5.json",
+      "implementation_gate": "verification/agones/gates/c61a2a58a37678c5c5668d185d7adecd0dafd3009e1a598634042a7c259e3dea.json",
       "next_action": "Complete formal evidence for the original environment/CLI assertions and real input-binding effects beyond the proved bounded pure selector; retain every original identity and all required process/lifecycle categories.",
       "owned_paths": [
         "crates/agones-core/src/features.rs",
@@ -1556,7 +1596,7 @@
         "feature-gates-configuration"
       ],
       "id": "FG-CONFIG-001",
-      "implementation_gate": "verification/agones/gates/ad59e390e41e49a0f0d55c2d776a88c7d371cb0cb8a69cfd11a0a3b4a63d6ab5.json",
+      "implementation_gate": "verification/agones/gates/678d7eec9e1ea8cb24cf38bd4b32b9f5e12e21c05d3615bf44bb632bf0107bc3.json",
       "next_action": "Complete remaining exact query/encoding source assertions with existing generated harnesses and unchanged domains/covers. Reuse the proved parse-error case and retain independent lifecycle/consumer obligations.",
       "owned_paths": [
         "crates/agones-core/src/features.rs",
@@ -1584,15 +1624,15 @@
   ],
   "workspace": {
     "branch": "agones-rs-dev",
-    "dirty_patch_sha256": "f741b67f5c89969fd9b58d92d4886c8038e564d1f52208339673f2137414943d",
+    "dirty_patch_sha256": "c84be66a147c1800a9beb09bd65853f894d09b1e3f6bd47f7a4c8d2729d93d4e",
     "head": "2e1d39f6680d055e98d702238e77e32b9562b376",
-    "last_validated_implementation": "verification/agones/gates/c4e2a5ea6825492fb9875ede400e5136552e534d80e260295148c92c0775f096.json",
+    "last_validated_implementation": "verification/agones/gates/6d10b275433dcf0a49011a53dc251b062c43c50049cc3a8aebf0c161cc498b26.json",
     "path": "/home/astral/Projects/agones",
-    "source_binding_receipt": "verification/agones/runs/exact-lookup-terminal-audit-1.json",
+    "source_binding_receipt": "verification/agones/runs/canonical-complete-validation-current-native-1.json",
     "untracked_inputs": [
       "AGONES_RS_CONTINUATION_PROMPT.md",
       "AGONES_RS_PROMPT_AUDIT_RESOLUTION.md"
     ],
-    "untracked_source_binding_sha256": "b7dc8fd97092f2655f266a87633ad6cff27b91220254fb03fd44c254c593364c"
+    "untracked_source_binding_sha256": "b7ea8e7c26e69348b288dbc6b7f29d5786cbbeaa1d069daf1512ea49494557d4"
   }
 }
