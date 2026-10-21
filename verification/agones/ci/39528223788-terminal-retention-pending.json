@@ -1,0 +1,801 @@
+{
+  "artifact_bindings": {
+    "verification/agones/ci/39528223788-contract-parser-diagnosis.json": "1bf04bce650ff0e9149d6336976ca2218414bbee950e573e5626db762c4ff447",
+    "verification/agones/ci/39528223788-nineteen-retained.json": "0355a84d0cf77503c60a56eb1824316336964b67d0fa336a57d1d8baf3487810",
+    "verification/agones/ci/complete-validation-37-published.json": "e4292e6dec66e5d1c307d038d2fe44bacc002f927dfb6de347c5713a702cb4d2",
+    "verification/agones/validation-path-fixture-isolated-recovery.json": "ac2aedb1bdfc8b7e4cae5fa6408fff2deb963364f83514f9b75bd3dcc9a8f280"
+  },
+  "artifacts": [
+    {
+      "created_at": "2026-10-21T02:05:41Z",
+      "digest": "sha256:75940f531877c7b20f7e6d195894d0d9e950447f25a7a9f292ef9bb078fdecd8",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12315515438,
+      "name": "feature-kani-general-validation-024-39528223788-1",
+      "raw_download_verified": false,
+      "size_in_bytes": 57693
+    },
+    {
+      "created_at": "2026-10-21T02:06:27Z",
+      "digest": "sha256:75a0afde0031824379bdd7aec2c54140104f4eff93c4d7bdf9dec0c9cd03f823",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12315288342,
+      "name": "feature-kani-validation-002-39528223788-1",
+      "raw_download_verified": false,
+      "size_in_bytes": 75467
+    },
+    {
+      "created_at": "2026-10-21T01:46:42Z",
+      "digest": "sha256:d40122cd87ea93f69bffe8b7eb2838d2e6af983a4276ba2efa1a8a939cbd1367",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12315155890,
+      "name": "feature-kani-general-validation-021-39528223788-1",
+      "raw_download_verified": true,
+      "size_in_bytes": 57937
+    },
+    {
+      "created_at": "2026-10-21T01:52:22Z",
+      "digest": "sha256:c3b55982308941b600752b1f8f9ec3ae06231a55f3a2e2a6c4c5fef89123b3d6",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12315106721,
+      "name": "feature-kani-general-validation-006-39528223788-1",
+      "raw_download_verified": false,
+      "size_in_bytes": 53765
+    },
+    {
+      "created_at": "2026-10-21T01:54:11Z",
+      "digest": "sha256:b3819a8238c9a232f119ffa0a7e71a78b044fd03a06ad9d4f559a7cec1ef7f49",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314972086,
+      "name": "feature-kani-general-validation-019-39528223788-1",
+      "raw_download_verified": false,
+      "size_in_bytes": 57952
+    },
+    {
+      "created_at": "2026-10-21T02:03:54Z",
+      "digest": "sha256:9de21e9530a761de213e45d83745b613a0774eca98f364ce1724f0092e78deee",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314933350,
+      "name": "feature-kani-general-validation-007-39528223788-1",
+      "raw_download_verified": false,
+      "size_in_bytes": 56021
+    },
+    {
+      "created_at": "2026-10-21T01:50:28Z",
+      "digest": "sha256:abbc9d17672316a110306caee07afcd34db8820e2f830aae159f8de50b824277",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314921644,
+      "name": "feature-kani-general-validation-018-39528223788-1",
+      "raw_download_verified": true,
+      "size_in_bytes": 58092
+    },
+    {
+      "created_at": "2026-10-21T02:03:25Z",
+      "digest": "sha256:12489a3548e1ddb247834b5533220540bbcfb5ff20b268da37326b9c7b558bf4",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314919263,
+      "name": "feature-kani-general-validation-000-39528223788-1",
+      "raw_download_verified": false,
+      "size_in_bytes": 70684
+    },
+    {
+      "created_at": "2026-10-21T01:52:23Z",
+      "digest": "sha256:7538510b86cf48975e56ca2b6e812c76cbcf2905100467c24636408ba577cfe7",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314877086,
+      "name": "feature-kani-validation-003-39528223788-1",
+      "raw_download_verified": false,
+      "size_in_bytes": 65073
+    },
+    {
+      "created_at": "2026-10-21T01:50:50Z",
+      "digest": "sha256:21bb561d1e0856dc2aa14ae3f4ce992b3d2d1122a972280009e98063b7ff7c3e",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314872215,
+      "name": "feature-kani-general-validation-005-39528223788-1",
+      "raw_download_verified": true,
+      "size_in_bytes": 56032
+    },
+    {
+      "created_at": "2026-10-21T01:46:15Z",
+      "digest": "sha256:b47f0bcd45c22d9fced11d2da8c7e7134e6b93fad465750ceaba2b8a77496d5c",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314781625,
+      "name": "feature-kani-gameserver-014-39528223788-1",
+      "raw_download_verified": true,
+      "size_in_bytes": 153900
+    },
+    {
+      "created_at": "2026-10-21T01:45:55Z",
+      "digest": "sha256:4065fa5ddce4dcdc4a0c31fb7b8d84443ec48ebc0312a6f5a74bb99b3ebdb068",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314741630,
+      "name": "feature-kani-validation-001-39528223788-1",
+      "raw_download_verified": true,
+      "size_in_bytes": 59980
+    },
+    {
+      "created_at": "2026-10-21T01:45:55Z",
+      "digest": "sha256:1c2b16cfba73e091a901bbcbabb228ff6186d2d3eb213ab5cfbf5f936476ec57",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314736703,
+      "name": "feature-kani-general-validation-011-39528223788-1",
+      "raw_download_verified": true,
+      "size_in_bytes": 56030
+    },
+    {
+      "created_at": "2026-10-21T01:39:09Z",
+      "digest": "sha256:af35949a5ee511bf4c67348c384015178cf905829fb2cfcc9e2bcddb064d150d",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314725693,
+      "name": "feature-kani-query-003-39528223788-1",
+      "raw_download_verified": true,
+      "size_in_bytes": 46647
+    },
+    {
+      "created_at": "2026-10-21T01:52:18Z",
+      "digest": "sha256:687169cba6d82ac4ff39efb29ae724a4ea51322619f19ea2ead4becb757fe456",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314697808,
+      "name": "feature-kani-general-validation-022-39528223788-1",
+      "raw_download_verified": false,
+      "size_in_bytes": 56827
+    },
+    {
+      "created_at": "2026-10-21T02:03:25Z",
+      "digest": "sha256:61c1f224bf0a03f6f983eeea37b4c6702b1aaa88aaef787f9e782b3ff654d8c2",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314669788,
+      "name": "feature-kani-validation-004-39528223788-1",
+      "raw_download_verified": false,
+      "size_in_bytes": 55123
+    },
+    {
+      "created_at": "2026-10-21T01:52:05Z",
+      "digest": "sha256:71b7397364be3c73b843e4de37cf5e97e8179ba74b3a4cf9b971d5f7bc94b75a",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314592898,
+      "name": "feature-kani-general-validation-004-39528223788-1",
+      "raw_download_verified": false,
+      "size_in_bytes": 58813
+    },
+    {
+      "created_at": "2026-10-21T01:47:15Z",
+      "digest": "sha256:1d3a0b44923ebe05981bc0380e40fbf93dba2de25486eead512d4a7dcdc30a49",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314566986,
+      "name": "feature-kani-general-validation-012-39528223788-1",
+      "raw_download_verified": true,
+      "size_in_bytes": 57635
+    },
+    {
+      "created_at": "2026-10-21T01:57:24Z",
+      "digest": "sha256:bfc3bf5eb077c3133f21a1da3923820ecaa01cfe462c317c8e3afc739c7b42cd",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314548657,
+      "name": "feature-kani-general-validation-014-39528223788-1",
+      "raw_download_verified": false,
+      "size_in_bytes": 58087
+    },
+    {
+      "created_at": "2026-10-21T01:39:26Z",
+      "digest": "sha256:93273e84efbb0865dee66c7674da0d6a1157fa98908456deb62a6d91c9458ae2",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314520875,
+      "name": "feature-kani-health-39528223788-1",
+      "raw_download_verified": true,
+      "size_in_bytes": 58464
+    },
+    {
+      "created_at": "2026-10-21T01:56:16Z",
+      "digest": "sha256:9415f981d8331a410bc028bc7a4efdbfd35f5d92812b40ab17c15a2deb0cfc2e",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314478533,
+      "name": "feature-kani-general-validation-015-39528223788-1",
+      "raw_download_verified": false,
+      "size_in_bytes": 58071
+    },
+    {
+      "created_at": "2026-10-21T01:38:39Z",
+      "digest": "sha256:fefd68b2a5ce74b414b3279974c0445fce2e41e582796f6bd0b9bd41e1f27e5d",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314475776,
+      "name": "feature-kani-player-contract-39528223788-1",
+      "raw_download_verified": true,
+      "size_in_bytes": 46625
+    },
+    {
+      "created_at": "2026-10-21T01:45:28Z",
+      "digest": "sha256:a8113f28f8ef5a81c3e59998a4965ed42265e5a9ea5650d00a793efd32064239",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314471846,
+      "name": "feature-kani-general-validation-016-39528223788-1",
+      "raw_download_verified": true,
+      "size_in_bytes": 58074
+    },
+    {
+      "created_at": "2026-10-21T01:49:35Z",
+      "digest": "sha256:c7f236e1e1fcba176dc8322231e871f307dfb05f9e8517308c6ed4721b91f2f6",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314437603,
+      "name": "feature-kani-general-validation-008-39528223788-1",
+      "raw_download_verified": true,
+      "size_in_bytes": 56001
+    },
+    {
+      "created_at": "2026-10-21T01:52:21Z",
+      "digest": "sha256:31623752d18ee6e638ae133fe775f3f22d582fa769057ccaf901b2304fb1548e",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314397970,
+      "name": "feature-kani-validation-000-39528223788-1",
+      "raw_download_verified": false,
+      "size_in_bytes": 55866
+    },
+    {
+      "created_at": "2026-10-21T01:48:12Z",
+      "digest": "sha256:fcdadc2038f7d789f2b3409b8493fc61f39252fd7dd654179beb1260532c0c53",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314392531,
+      "name": "feature-kani-general-validation-009-39528223788-1",
+      "raw_download_verified": true,
+      "size_in_bytes": 56017
+    },
+    {
+      "created_at": "2026-10-21T02:00:49Z",
+      "digest": "sha256:4a6af76eeb97e1cb29c19b0a36a9a3c586fca180c99a8448cdc2f10b6545f774",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314374629,
+      "name": "feature-kani-general-validation-017-39528223788-1",
+      "raw_download_verified": false,
+      "size_in_bytes": 58076
+    },
+    {
+      "created_at": "2026-10-21T01:50:59Z",
+      "digest": "sha256:285a1a0b9e628b6cbf7efbe36b92da0fab3766b4fc8a6d2daf5f2978fb73b97e",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314357772,
+      "name": "feature-kani-general-validation-003-39528223788-1",
+      "raw_download_verified": true,
+      "size_in_bytes": 58216
+    },
+    {
+      "created_at": "2026-10-21T01:42:50Z",
+      "digest": "sha256:d9c496d4e2cdbaad4a0c899152bd780da330667275e0a55a0f1e5d57a9cba7ae",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314291588,
+      "name": "feature-kani-gameserver-005-39528223788-1",
+      "raw_download_verified": true,
+      "size_in_bytes": 154280
+    },
+    {
+      "created_at": "2026-10-21T01:51:27Z",
+      "digest": "sha256:75bc0547b9c1c1c3dd0ff17b90ffebf01341c7e64ddb9381e5d3d158a2f5b4fe",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314267963,
+      "name": "feature-kani-general-validation-002-39528223788-1",
+      "raw_download_verified": true,
+      "size_in_bytes": 56010
+    },
+    {
+      "created_at": "2026-10-21T01:52:19Z",
+      "digest": "sha256:fe76deadb9f490ab874b057f72ed94c64d17cf299b2debfa1b520b52c910ab69",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314258123,
+      "name": "feature-kani-general-validation-010-39528223788-1",
+      "raw_download_verified": false,
+      "size_in_bytes": 64975
+    },
+    {
+      "created_at": "2026-10-21T01:53:55Z",
+      "digest": "sha256:3fdd3c5fc245ccd2352c296fc185d7b2acc4231579cde468821eaab381716882",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314253212,
+      "name": "feature-kani-general-validation-013-39528223788-1",
+      "raw_download_verified": false,
+      "size_in_bytes": 58059
+    },
+    {
+      "created_at": "2026-10-21T02:02:19Z",
+      "digest": "sha256:6e5056e74e310c45cf8de3306f97d1e9148be233021666ee898a13e6a4737628",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314189634,
+      "name": "feature-kani-general-validation-020-39528223788-1",
+      "raw_download_verified": false,
+      "size_in_bytes": 57968
+    },
+    {
+      "created_at": "2026-10-21T01:38:23Z",
+      "digest": "sha256:4bd10a82cad30f8c7582baf2c7a30ff8ffc34418c24a20b2f15c059748a18e8f",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314161019,
+      "name": "feature-kani-bool-39528223788-1",
+      "raw_download_verified": true,
+      "size_in_bytes": 39659
+    },
+    {
+      "created_at": "2026-10-21T01:38:46Z",
+      "digest": "sha256:35ce4c52418c27c7a2f7eefbaad962fe3545a48618caf0be948331dc7e06106d",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314156070,
+      "name": "feature-kani-input-39528223788-1",
+      "raw_download_verified": true,
+      "size_in_bytes": 37179
+    },
+    {
+      "created_at": "2026-10-21T01:49:29Z",
+      "digest": "sha256:0604516d861c0b28a2ef782f3c7b2464ee243e6be1a426f98de9b6e802224e5e",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314142695,
+      "name": "feature-kani-general-validation-001-39528223788-1",
+      "raw_download_verified": true,
+      "size_in_bytes": 55647
+    },
+    {
+      "created_at": "2026-10-21T01:55:37Z",
+      "digest": "sha256:23cb71becaf9319010364c10f27a38df3a97ed2d77f9af5db969d97a591ceb80",
+      "expired": false,
+      "expires_at": "2027-01-19T01:35:39Z",
+      "id": 12314124037,
+      "name": "feature-kani-general-validation-023-39528223788-1",
+      "raw_download_verified": false,
+      "size_in_bytes": 57945
+    }
+  ],
+  "candidate": "Isolated ea44a0ee0ea3bc4d27bebaa74493b738c4caf231 native676/six modes/11parsercontrols; all47existing harness bodies byte-identical. Not adopted or published; no verifier improvement claim.",
+  "classification": "REPO_SAFE",
+  "completed_at": "2026-10-21T02:06:33Z",
+  "conclusion": "failure",
+  "connector_state": "GitHub namespace removed from enabled tools during this turn. Authenticated writes/downloads unavailable; public read-only GitHub API remains usable. This is not an approval denial. No credential or plugin changes made.",
+  "counts": {
+    "all_source_case_jobs_failed": 30,
+    "artifacts_available": 37,
+    "audited_selections": 19,
+    "backend_rows": 19541,
+    "contract_backend_passed_without_accepted_summary": 1,
+    "expected_selections": 37,
+    "new_source_case_credit_added": 0,
+    "qualified_feature_validation_assertions_credited": 0,
+    "qualified_general_validation_assertions_credited": 0,
+    "raw_artifacts_pending": 18,
+    "raw_artifacts_retained": 19,
+    "retained_artifacts": 19,
+    "satisfied_covers": 30,
+    "semantic_claims": 46,
+    "successful_harnesses": 6,
+    "successful_strict_source_case_jobs": 0,
+    "total_selected_harnesses": 37,
+    "total_unaccepted_selections": 31,
+    "uncredited_selections": 13,
+    "unique_qualified_source_assertions": 37,
+    "unreachable_credited": 0
+  },
+  "jobs": [
+    {
+      "completed_at": "2026-10-21T01:36:12Z",
+      "conclusion": "success",
+      "failed_steps": [],
+      "id": 118987780123,
+      "name": "migration-state",
+      "started_at": "2026-10-21T01:35:42Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:42:00Z",
+      "conclusion": "success",
+      "failed_steps": [],
+      "id": 118987949387,
+      "name": "rust",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:46:18Z",
+      "conclusion": "success",
+      "failed_steps": [],
+      "id": 118987949467,
+      "name": "feature-common-model-check",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:38:41Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Require all three contract claims and eight non-vacuity covers"
+      ],
+      "id": 118987949516,
+      "name": "feature-validation-contract-model-check",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:52:21Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949829,
+      "name": "general-validation-source-010",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:52:23Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949838,
+      "name": "general-validation-source-006",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:48:14Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949845,
+      "name": "general-validation-source-009",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:49:37Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949848,
+      "name": "general-validation-source-008",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:47:18Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949854,
+      "name": "general-validation-source-012",
+      "started_at": "2026-10-21T01:36:19Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:52:25Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949856,
+      "name": "feature-validation-source-003",
+      "started_at": "2026-10-21T01:36:15Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:45:30Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949859,
+      "name": "general-validation-source-016",
+      "started_at": "2026-10-21T01:36:15Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:52:20Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949867,
+      "name": "general-validation-source-022",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:51:02Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949869,
+      "name": "general-validation-source-003",
+      "started_at": "2026-10-21T01:36:15Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:50:52Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949897,
+      "name": "general-validation-source-005",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:45:57Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949900,
+      "name": "feature-validation-source-001",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:51:28Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949902,
+      "name": "general-validation-source-002",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:46:44Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949908,
+      "name": "general-validation-source-021",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:49:30Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949909,
+      "name": "general-validation-source-001",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T02:00:50Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949916,
+      "name": "general-validation-source-017",
+      "started_at": "2026-10-21T01:46:19Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:52:23Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949918,
+      "name": "feature-validation-source-000",
+      "started_at": "2026-10-21T01:36:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T02:03:26Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949936,
+      "name": "general-validation-source-000",
+      "started_at": "2026-10-21T01:48:15Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:52:08Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949944,
+      "name": "general-validation-source-004",
+      "started_at": "2026-10-21T01:36:15Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:45:56Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987949945,
+      "name": "general-validation-source-011",
+      "started_at": "2026-10-21T01:36:15Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:55:38Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950005,
+      "name": "general-validation-source-023",
+      "started_at": "2026-10-21T01:42:01Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:50:31Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950021,
+      "name": "general-validation-source-018",
+      "started_at": "2026-10-21T01:38:43Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:57:25Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950027,
+      "name": "general-validation-source-014",
+      "started_at": "2026-10-21T01:45:59Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:56:17Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950028,
+      "name": "general-validation-source-015",
+      "started_at": "2026-10-21T01:46:22Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T02:03:28Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950036,
+      "name": "feature-validation-source-004",
+      "started_at": "2026-10-21T01:47:20Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:53:57Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950037,
+      "name": "general-validation-source-013",
+      "started_at": "2026-10-21T01:45:32Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T01:54:13Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950044,
+      "name": "general-validation-source-019",
+      "started_at": "2026-10-21T01:46:45Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T02:03:55Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950074,
+      "name": "general-validation-source-007",
+      "started_at": "2026-10-21T01:50:54Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T02:05:43Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950097,
+      "name": "general-validation-source-024",
+      "started_at": "2026-10-21T01:49:32Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T02:06:29Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950170,
+      "name": "feature-validation-source-002",
+      "started_at": "2026-10-21T01:50:32Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T02:02:21Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 118987950215,
+      "name": "general-validation-source-020",
+      "started_at": "2026-10-21T01:49:39Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T02:06:33Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Require every selected model job to succeed"
+      ],
+      "id": 118997084948,
+      "name": "feature-bool-model-check",
+      "started_at": "2026-10-21T02:06:31Z",
+      "status": "completed"
+    }
+  ],
+  "next_action": "Restore artifact-download/write capability, recover18remaining artifacts against pinned4d433source, and independently audit all37. Adopt the tested path/map/parser-manifest candidate with renewed canonical source/gate/evidence bindings; run a distinct justified protected campaign. No unchanged retry, scope reduction or credit for failed cases.",
+  "observed_at": "2026-10-21T02:12:05.391453+00:00",
+  "retained_failure_classification": "All12retained source failures are actual12GiB whole-service OOM kills with zero complete individual rows. The other18source cases have failed model steps; their raw failure causes are unclassified until downloaded.",
+  "run_attempt": 1,
+  "schema_version": 1,
+  "source_head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
+  "source_tree": "c970a219af824d89c46bafb236eb55fdfb7bd267",
+  "status": "CI_TERMINAL_FAILURE_ALL37_INDEXED_19_RAW_RETAINED_18_RETENTION_PENDING",
+  "strict_scope": "Six independently reproduced strict summaries:46claims/30SATcovers/19541rows/37distinct qualified source assertions. Original source005/014 and query003 scopes only; lifecycle, post-observation cleanup, full metadata/API and live cluster are unproved.",
+  "tested_merge": "9d4b29898d097f929ad413b88ee5667bab4663ba",
+  "url": "https://github.com/QuasarRay/agones/actions/runs/39528223788",
+  "workflow_run": 39528223788
+}

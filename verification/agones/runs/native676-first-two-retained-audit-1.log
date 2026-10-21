@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/home/astral/Projects/agones/.git/agones-audit-pinned37.py", line 69, in <module>
+    assert parsed.returncode==0, f'{name}: {parsed.stderr[-2000:]}'
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError: health-defaulting-bolero-kani-ci-39556147739-1: Traceback (most recent call last):
+  File "/home/astral/.codex/worktrees/agones-resource-quantity/agones/build/scripts/agones-rs/summarize_feature_proof.py", line 15, in <module>
+    rows = read_results(args.run_id)
+  File "/home/astral/.codex/worktrees/agones-resource-quantity/agones/build/scripts/agones-rs/kani_results.py", line 71, in read_results
+    run = json.loads((ROOT / f"verification/agones/runs/{run_name}.json").read_text())
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/astral/.codex/worktrees/agones-resource-quantity/agones/verification/agones/runs/health-defaulting-bolero-kani-ci-39556147739-1.json'
+

@@ -1,0 +1,20 @@
+{
+  "id": "META-VALIDATE-001",
+  "source_config_binding": {
+    "canonical_implementation_gate": "verification/agones/gates/fa682f3bc2dded24a213b49d3337fb7a5a711fb02321ddac5057353491b48f72.json",
+    "modeled_domain": "Unit domain for each complete original source fixture and the whole MetaPatch action sequence.",
+    "no_semantic_extraction_before_gate": true,
+    "original_implementation_gate": "verification/agones/gates/16598e097e857c146d1492f3bff0cb46373c25b93287caed57d8f86ab2b169dc.json",
+    "prototype_source_commit": "576341bd8c452a7fd6244ce48e9d7dc0d67b7aef",
+    "qualified_assertions": 21,
+    "required_covers": 12,
+    "source_case_count": 6,
+    "source_ir": "verification/agones/object-metadata.ir.json",
+    "source_ir_sha256": "744c0a4aa76e2893bb9645c5ce6e3513f9cdb9af3cd590a27ae69de8739ffc6c",
+    "worktree": "/home/astral/Projects/agones"
+  },
+  "test_ids": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate",
+    "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestMetaPatchValidate"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "classification": "REPO_SAFE",
+  "current_formal_credit": 0,
+  "generation_modes": 6,
+  "guidance_directories": 1827,
+  "guidance_missing": 0,
+  "historical_archive_local_commit": "f61d6130cdf537348283d5603956b578cf283d9d",
+  "historical_raw_logs_omitted_from_review_tree": 35,
+  "ledger_check": "PASSED in the actual clean review checkout",
+  "ledger_revision": 306,
+  "native_source_reused_from": "verification/agones/runs/canonical-native676-adoption-native-1.json",
+  "native_tests": 676,
+  "parser_controls_in_clean_checkout": 11,
+  "publication_pending_reason": "GitHub write tools removed; upload/code manifests are saved for exact resumption.",
+  "schema_version": 1,
+  "scope": "Same compiled production/harness inputs as the canonical676/six-mode evidence. Historical rawlogs belong to the separately sealed4d433archive; only two curated source traces accompany the repair. No current formal credit or remote publication claim.",
+  "source_base": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
+  "source_snapshot": "6a21bc80e5b95fdcce20e4a1d1c0dcbb8606165f",
+  "source_tree": "aea29a660e2bc2a0bdf38d827930d29eee0250da",
+  "status": "CLEAN_REVIEW_CHECKOUT_PREFLIGHT_PASSED"
+}

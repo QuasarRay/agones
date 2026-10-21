@@ -1,0 +1,79 @@
+{
+  "all_generated_code_bytes_unchanged": true,
+  "base_head": "6492f41e3ddfe1a75e2889f8fd510b3eb2c5ff2d",
+  "branch": "codex/agones-model-diagnostic-metadata-scan",
+  "canonical_adoption": false,
+  "change": "Use direct byte scans for slash cardinality and DNS subdomain segments in the actual shared metadata provider. Preserve all source cases, complete six-field errors, Unicode casing, map actions, lifetime mapping, unit domains, unwind128 and12required covers.",
+  "ci_url": "https://github.com/QuasarRay/agones/actions/runs/39575531788",
+  "current_formal_credit": 0,
+  "diagnosed_log": "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-005.log",
+  "diagnosed_log_sha256": "7aa4c22f2eabc6d7e5acbfd9263d095a1f6de5eaadc7c58e093247ec7e5099ac",
+  "diagnostic_harness": "source_metadata_case_005",
+  "diagnostic_required_covers": 2,
+  "diagnostic_source_assertions": 10,
+  "hypothesis": "Replacing standard string split search removes the observed generic memchr paths. Whole-case protected Bolero/Kani evidence is still required to establish whether this is sufficient.",
+  "isolated_implementation_gate": "verification/agones/gates/d44c76cac31d09f43594ea8b5cf1fe2a19a11b07081c5638ac714b8988d853a2.json",
+  "isolated_ordinary_checks": [
+    "verification/agones/runs/metadata-byte-scan-native-1.json",
+    "verification/agones/runs/metadata-byte-scan-source-replay-1.json",
+    "verification/agones/runs/metadata-byte-scan-generation-1.json",
+    "verification/agones/runs/metadata-byte-scan-generation-check-1.json",
+    "verification/agones/runs/metadata-byte-scan-parser-controls-1.json"
+  ],
+  "local_recovery_commit": "132709bf65dc6297b63990e83ce5ddac7f891814",
+  "local_recovery_ref": "refs/agones-checkpoints/metadata-byte-scan-native704-diagnostic",
+  "loop_unwind_diagnostics": {
+    "locations": [
+      {
+        "line": "41",
+        "path": "/home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs",
+        "rows": 2159
+      },
+      {
+        "line": "83",
+        "path": "/home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs",
+        "rows": 762
+      },
+      {
+        "line": "634",
+        "path": "/home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/navigate.rs",
+        "rows": 254
+      },
+      {
+        "line": "387",
+        "path": "/home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/navigate.rs",
+        "rows": 127
+      },
+      {
+        "line": "435",
+        "path": "/home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/pattern.rs",
+        "rows": 5
+      }
+    ],
+    "memchr_rows": 2921,
+    "total_rows": 3307
+  },
+  "native_check": "verification/agones/runs/metadata-byte-scan-native-1.json",
+  "next_action": "Complete ordinary checks and record implementation gate before rebinding/reusing sourceIR21 or attempting a protected diagnostic.",
+  "observed_at": "2026-10-21T09:16:55.087668+00:00",
+  "observed_failure": "Actual protected MetaPatch source005 command exhausted12GiB; zero complete assertion rows. Standard memchr expansion dominates the recorded loop-unwind diagnostics. This does not establish the whole cause of the resource cost.",
+  "ordinary_counts": {
+    "failed": 0,
+    "ignored": 3,
+    "passed": 704
+  },
+  "publication_scope": "Passive diagnostic branch only, no PR/milestone or merge acceptance. The copied revision314ledger/gates for other features describe the unmodified base snapshot; the current canonical migration ledger remains /home/astral/Projects/agones/AGONES_RS_STATE.json. This single-job diagnostic uses and validates the new metadata implementation gate directly, retains its native704check/GoIR21 and all original MetaPatch actions. All43required ordinary CI selections remain in the unchanged acceptance matrix.",
+  "published": true,
+  "published_commit": "bc235d121bfb8152ec6c835900a6159957101254",
+  "published_tree": "6c32a575c5dd7d1514e3560444d45a58b30d0ce0",
+  "required_covers": 12,
+  "schema_version": 1,
+  "source_assertions": 21,
+  "source_case_count": 6,
+  "source_root": "/home/astral/.codex/worktrees/agones-metadata-scan/agones",
+  "source_root_pin": "verification/agones/ci/39575531788-pinned-source.json",
+  "status": "ISOLATED_NATIVE704_DIAGNOSTIC_PUBLISHED_MODEL_CHECK_RUNNING",
+  "workflow": ".github/workflows/rust.yml",
+  "workflow_run": 39575531788,
+  "workflow_sha256": "63130ac33981ac63367c6555c072ec7428d59dadbddce075ff20f15f69b93a44"
+}

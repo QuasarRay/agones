@@ -1,0 +1,33 @@
+{
+  "architecture": "Existing CGP providers retain policy ownership; all eight _2cells remain required/open. No alternate orchestrator or plugin.",
+  "artifact_bindings": {
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-011.log": "dda603d7cc527117717966ccc5df1fca9569c899b6be2f602bd6099d338fe93a",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-001.log": "4355c16733b6964aca4ba579232bec1c34e4b0c05ad2ab02d075314d297e2096"
+  },
+  "candidate": "Reuse indexed_validation_field for resource-container paths and emit ordered map inserts into the existing default fixture maps.",
+  "decision": "SMALL_LOCAL_REFACTOR",
+  "evidence": "At source4d433, case001 enabled lookup expands only15iterations, but resource-path formatter string search expands to127 and exhausts12GiB. General011 terminates in BTreeMap::from bulk construction/internal-parent-link loops at127 despite a fixed singleton source map. Twelve collected source failures have zero complete result rows. These traces identify concrete work to remove, not unique causes or a promised proof gain.",
+  "evidence_refs": [
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39528223788-1-case-001.log",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39528223788-1-case-011.log"
+  ],
+  "execution_order": [
+    "Generate production Go-print data/metadata before freezing gates when the shared emitter changes.",
+    "Refresh every affected gate, including input_implementation_gate and supporting gates, then rebind unchanged IR.",
+    "Generate all six modes and require every --check to pass before dependent verification.",
+    "Compare all47full harness bodies, then run the fresh all-target676 native suite and all11parser controls."
+  ],
+  "feature_binding": "RESOURCE-QUANTITY-001 / GS-VALIDATE-FEATURES-001 / general validation fixtures",
+  "id": "CANONICAL37-VALIDATION-PATH-AND-FIXTURE-CONSTRUCTION",
+  "invariants": [
+    "Every original fixture field, action, assertion, cover, source identity and unwind128 is unchanged.",
+    "All six error fields and duplicate multiplicities remain observed.",
+    "CGP resource validation is invoked for every original container, including empty maps, with byte-identical paths for all UTF-8 spec paths and decimal indices.",
+    "Map inserts preserve exactly the extracted unique key/value pairs into initially empty maps; ordinary full fixture round-trips remain required."
+  ],
+  "next_review_trigger": "After native checks, renewed gates, deterministic regeneration and complete actual protected results; stop expansion if this hypothesis fails and diagnose from retained traces.",
+  "ordinary_result": "PASSED676 native plus11Pythoncontrols and sixwrite/checkmodes; no model-checking or canonical-adoption credit.",
+  "rationale": "The quantity walker constructs a formatted path for every container, including empty resource maps. Existing decimal-index construction already has0..1023 and usize extremes checked against ordinary format!. Reuse it while preserving every provider call. Generated fixture metadata currently uses BTreeMap::from; default fixtures already own empty maps, so generated inserts preserve all unique extracted pairs, key order and fields while avoiding bulk array construction.",
+  "roi": "Two narrow changes reuse existing CGP traversal, decimal-path helper and Genco fixture emitter. No new map abstraction, macro or framework. Native whole-before/after checks cover every generated fixture. Validation and regeneration remain bounded to affected existing families; real proof benefit must be measured by a distinct unchanged-domain campaign.",
+  "source_head": "4d433085206c0c77fd16024c64c120b9e2cebe4e"
+}

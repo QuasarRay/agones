@@ -1,0 +1,17 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetUpperBoundReplicas",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetLowerBoundReplicas",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestSumGameServerSets"
+  ],
+  "authorization": "User execution contract",
+  "event": "fleet_replica_helpers_implementing_ci_recovery_retained",
+  "gate_snapshot": null,
+  "predecessor_revision": 317,
+  "predecessor_sha256": "3c18f1c17d417d53790728d9e2f39f65398154713a11697451244242c7034538",
+  "reason": "Host removed GitHub tools during artifact recovery. Thirty-three current artifacts retain eight strict scoped passes and25failures; ten results and the diagnostic remain uncredited. Continue the ready source-compatible Fleet helper feature independently; no Goal blocker threshold is met.",
+  "result_revision": 318,
+  "schema_version": 1,
+  "state_sha256": "3da424a14bc0b8139c987083b14fd49aef25f6ddd8805cb0d05fa9089773e997",
+  "timestamp": "2026-10-21T09:26:30.798707+00:00"
+}

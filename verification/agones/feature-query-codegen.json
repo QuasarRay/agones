@@ -129,7 +129,7 @@
   ],
   "classification": "EXACT_CASE",
   "generator": "crates/agones-rusternetes/examples/feature_case_codegen.rs",
-  "generator_sha256": "34f962fb5c975fade612ca2a0fa44948925c34652599119a18d54a17a3836996",
+  "generator_sha256": "b9610a3ed5837fdc1ec5d47acf10d282400a3ea95042cf59ec95e7e1304ef412",
   "harness_prefix": "source_query_case_",
   "harnesses": [
     {
@@ -211,7 +211,7 @@
     }
   ],
   "ir": "verification/agones/feature-gates.ir.json",
-  "ir_sha256": "831fa4095b5efd79e12d80d2112c4f20d427d59af3ed17a2a5fbce3c907ce8ab",
+  "ir_sha256": "03f381ad38068f148ef508a87ee1bd5132bf4b41f8ff7671b6c846cdda8d4b4a",
   "output": "crates/agones-core/tests/generated/feature_gate_cases.rs",
   "output_sha256": "46f05e90380d2c292b4e888294e1dae11239b66e9a9e6c42f2bbfdd2c69a2b00",
   "preconditions": [],

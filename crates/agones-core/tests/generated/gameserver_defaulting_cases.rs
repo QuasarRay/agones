@@ -44,7 +44,6 @@ fn source_gs_fixture_000() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -200,7 +199,6 @@ fn source_gs_fixture_001() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -346,10 +344,10 @@ fn source_gs_fixture_002() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([(
+    value.spec.template.metadata.annotations.insert(
         "cluster-autoscaler.kubernetes.io/safe-to-evict".to_owned(),
         "false".to_owned(),
-    )]);
+    );
     value.status.state = None;
     value
 }
@@ -501,7 +499,6 @@ fn source_gs_fixture_003() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -660,7 +657,6 @@ fn source_gs_fixture_004() -> agones_core::GameServer {
         },
     ]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = Some(agones_core::GameServerState::from("TestState"));
     value
 }
@@ -812,7 +808,6 @@ fn source_gs_fixture_005() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -964,7 +959,6 @@ fn source_gs_fixture_006() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -1118,7 +1112,6 @@ fn source_gs_fixture_007() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -1270,10 +1263,10 @@ fn source_gs_fixture_008() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([(
+    value.spec.template.metadata.annotations.insert(
         "cluster-autoscaler.kubernetes.io/safe-to-evict".to_owned(),
         "true".to_owned(),
-    )]);
+    );
     value.status.state = None;
     value
 }
@@ -1427,7 +1420,6 @@ fn source_gs_fixture_009() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -1581,7 +1573,6 @@ fn source_gs_fixture_010() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -1733,7 +1724,6 @@ fn source_gs_fixture_011() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -1887,10 +1877,10 @@ fn source_gs_fixture_012() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([(
+    value.spec.template.metadata.annotations.insert(
         "cluster-autoscaler.kubernetes.io/safe-to-evict".to_owned(),
         "false".to_owned(),
-    )]);
+    );
     value.status.state = None;
     value
 }
@@ -2042,7 +2032,6 @@ fn source_gs_fixture_013() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -2194,7 +2183,6 @@ fn source_gs_fixture_014() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -2346,7 +2334,6 @@ fn source_gs_fixture_015() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -2498,7 +2485,6 @@ fn source_gs_fixture_016() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }

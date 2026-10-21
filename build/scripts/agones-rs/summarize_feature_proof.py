@@ -7,7 +7,7 @@ import json
 from kani_results import ROOT, read_results, require_claims_and_covers, require_run_command
 
 parser = argparse.ArgumentParser()
-parser.add_argument("family", choices=["input", "query", "error-ascii", "sdk-version", "sdk-source", "health", "gameserver-source", "gameserver-features", "gameserver-validation-source", "gameserver-general-validation-source"])
+parser.add_argument("family", choices=["input", "query", "error-ascii", "sdk-version", "sdk-source", "health", "gameserver-source", "gameserver-features", "gameserver-validation-source", "gameserver-general-validation-source", "object-metadata-source"])
 parser.add_argument("run_id")
 parser.add_argument("--output", required=True)
 parser.add_argument("--case-index", type=int)
@@ -84,10 +84,12 @@ elif args.family == "health":
                 "signed health extremes remain exact", "disabled minimum delay remains exact",
                 "mixed health thresholds default independently", "the generator should produce at least one valid value"]
     scope = "Actual GameServerSpec::apply_defaults health observation with other spec fields zero, independent reference and relational invariant. One bool and three arbitrary i32 inputs, no filtering, unwind 16. No whole GameServer/admission/lifecycle proof or original exact-case assertion credit."
-elif args.family in ("gameserver-source", "gameserver-validation-source", "gameserver-general-validation-source"):
+elif args.family in ("gameserver-source", "gameserver-validation-source", "gameserver-general-validation-source", "object-metadata-source"):
+    object_metadata = args.family == "object-metadata-source"
     general = args.family == "gameserver-general-validation-source"
     validation = args.family != "gameserver-source"
     name, feature, case_count, assertion_count = (
+        ("object-metadata", "META-VALIDATE-001", 6, 21) if object_metadata else
         ("gameserver-validation", "RESOURCE-QUANTITY-001", 25, 25) if general else
         ("gameserver-feature-validation", "GS-VALIDATE-FEATURES-001", 5, 10) if validation else
         ("gameserver-defaulting", "GS-DEFAULTS-001", 17, 304)
@@ -113,6 +115,8 @@ elif args.family in ("gameserver-source", "gameserver-validation-source", "games
     if validation:
         sources = metadata["generator_source_files"]
         expected_sources = {metadata["generator_path"], "crates/agones-rusternetes/examples/codegen/gameserver_features.rs"}
+        if object_metadata:
+            expected_sources.add("crates/agones-rusternetes/examples/codegen/object_metadata.rs")
         if general:
             expected_sources.add("crates/agones-rusternetes/examples/codegen/gameserver_validation.rs")
         assert set(sources) == expected_sources
@@ -120,7 +124,34 @@ elif args.family in ("gameserver-source", "gameserver-validation-source", "games
             assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == expected, f"stale generator module: {path}"
             assert run["source_files"][path] == expected, f"proof used different generator module: {path}"
         ir = json.loads((ROOT / metadata["ir"]).read_text())
-        assert ir["feature_id"] == feature and ir["case_count"] == len(ir["cases"]) == case_count
+        source_cases = ir["cases"] if not object_metadata else ir["overflow"]["cases"] + [
+            {**ir["metadata_patch"], "assertions": [assertion for step in ir["metadata_patch"]["validation_steps"] for assertion in step["assertions"]]}
+        ]
+        assert ir["feature_id"] == feature and ir["case_count"] == len(source_cases) == case_count
+        if object_metadata:
+            assert ir["classification"] == "EXACT_CASE_AND_WHOLE_TEST_ASSERTIONS"
+            assert ir["source_assertion_occurrences"] == 21 and ir["validation_observations"] == 11
+            assert len(ir["metadata_patch"]["validation_steps"]) == 6
+            assert sum(a["kind"] == "clone_patch" for a in ir["metadata_patch"]["source_actions"]) == 2
+            assert {a["origin"] for a in metadata["assertions"]} == {a["id"] for case in source_cases for a in case["assertions"]}
+            for entry, case in zip(metadata["harnesses"], source_cases):
+                functions = {a["function"]: a["origin"] for a in metadata["assertions"]}
+                assert entry["case_id"] == case["id"]
+                assert [functions[f] for f in entry["assertion_functions"]] == [a["id"] for a in case["assertions"]]
+            assert ir["source_files"] and ir["loader_source_files"]
+            for field in ("source_files", "loader_source_files"):
+                for path, expected in ir[field].items():
+                    assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == expected, f"stale original metadata dependency: {path}"
+            evidence_path = metadata["source_capture_evidence"]
+            evidence_raw = (ROOT / evidence_path).read_bytes()
+            assert hashlib.sha256(evidence_raw).hexdigest() == metadata["source_capture_evidence_sha256"]
+            evidence = json.loads(evidence_raw)
+            assert evidence["ir_sha256"] == metadata["ir_sha256"]
+            provenance = evidence["go_runtime_restored"]
+            for path, expected in [(provenance["manifest"], provenance["manifest_sha256"]),
+                                   (provenance["unicode_reference"], provenance["reference_sha256"])]:
+                assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == expected
+            assert ir["runtime_version"] == provenance["version"] == "go1.27.1-X:nodwarf5"
         gate_path = ir["implementation_gate"]
         gate_raw = (ROOT / gate_path).read_bytes()
         assert hashlib.sha256(gate_raw).hexdigest() == ir["implementation_gate_sha256"]
@@ -130,22 +161,23 @@ elif args.family in ("gameserver-source", "gameserver-validation-source", "games
             assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == expected, f"stale production: {path}"
             if path.startswith("crates/") or path in ("Cargo.toml", "Cargo.lock", "rust-toolchain.toml", ".cargo/config.toml"):
                 assert run["source_files"][path] == expected, f"proof used different production: {path}"
-        assert selected["case_id"] == ir["cases"][args.case_index]["id"]
-        prefix = "source_gs_validate" if general else "source_gsv"
+        assert selected["case_id"] == source_cases[args.case_index]["id"]
+        prefix = "source_metadata" if object_metadata else "source_gs_validate" if general else "source_gsv"
         assert harness == f"{prefix}_case_{args.case_index:03}"
-        assert len(selected["assertion_functions"]) == (1 if general else 2)
+        assert len(selected["assertion_functions"]) == (len(source_cases[args.case_index]["assertions"]) if object_metadata else 1 if general else 2)
         mapping = metadata["validation_error_mapping"]
         assert mapping["rule"] == "AGONES-ERROR-CONSTRUCTOR-EMPTY-1"
         assert mapping["fields"] == ["Type", "Field", "BadValue", "Detail", "Origin", "CoveredByDeclarative"]
         assert hashlib.sha256((ROOT / mapping["source"]).read_bytes()).hexdigest() == mapping["source_sha256"]
-        multiset = metadata["multiset_mapping"]
-        assert multiset["rule"] == "AGONES-ELEMENTSMATCH-EXPECTED-COUNTS-1"
-        assert hashlib.sha256((ROOT / multiset["manifest"]).read_bytes()).hexdigest() == multiset["manifest_sha256"]
+        if not object_metadata:
+            multiset = metadata["multiset_mapping"]
+            assert multiset["rule"] == "AGONES-ELEMENTSMATCH-EXPECTED-COUNTS-1"
+            assert hashlib.sha256((ROOT / multiset["manifest"]).read_bytes()).hexdigest() == multiset["manifest_sha256"]
     functions = {claim["function"]: claim for claim in metadata["assertions"] if claim["function"] in selected["assertion_functions"]}
     assert len(functions) == len(selected["assertion_functions"])
     if validation:
         assert {claim["origin"] for claim in functions.values()} == {
-            claim["id"] for claim in ir["cases"][args.case_index]["assertions"]
+            claim["id"] for claim in source_cases[args.case_index]["assertions"]
         }, "selected assertion origins differ from source IR"
     names = lambda row: row["symbol"].split(".assertion.")[0].split("::")[-1]
     all_functions = {claim["function"] for claim in metadata["assertions"]}

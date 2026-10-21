@@ -1,0 +1,104 @@
+{
+  "acceptance_criteria": [
+    "The real shared error owns and retains all six source-observed fields; no generator-only replacement.",
+    "Pinned TooLong/TooLongMaxLength payload omits the value and handles negative/zero/singular/plural byte limits exactly.",
+    "The currently implemented metadata error paths preserve exact source regex/example detail and key/value Origins.",
+    "Every production and native-library consumer compiles; all514workspace library tests pass, including whole-record production observations and constructor/metadata mutation controls."
+  ],
+  "assurance": {
+    "full_workspace_integration": "PASSED675 before generation refresh",
+    "new_formal_credit": 0,
+    "scope": "Same required source cases, assertions, covers, domains and unwind; no acceptance claim for the canonical branch or unrun backend.",
+    "source_replay": "Regenerate six existing modes and rerun complete fixture/native coverage after this gate."
+  },
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "combined_missing_container_concat": {
+    "canonical_adoption": "PENDING",
+    "formal_credit": 0,
+    "prior_isolated_commit": "85d64a1de1bd8bc6afcdb996de07384c077a5aaf",
+    "source_repair": "Same native605canonical missing-container direct concatenation and empty/Unicode/newline/NUL detail assertions. Quantity/TypeMeta/six-field representation and every captured source case remain unchanged."
+  },
+  "combined_source_reuse": {
+    "canonical_adoption": "PENDING",
+    "formal_credit": 0,
+    "prior_isolated_commit": "500326772a0ad9c1300f0f8bb8acff67e27079a4",
+    "scope": "Copied byte-identical CGP streaming parser after validating the prior file againstdd4; applied only the same indexed validation path patch. Existing quantity/TypeMeta/six-field owner and all source case payloads remain unchanged.",
+    "source_commit": "31cc72d92bbb9611e228ec5936d2421a5ca35f84"
+  },
+  "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
+  "feature_id": "GS-VALIDATION-ERROR-DATA-001",
+  "id": "GS-VALIDATION-ERROR-DATA-001-implementation",
+  "ordinary_checks": [
+    "verification/agones/runs/validation-path-fixture-refactor-native-1.json",
+    "verification/agones/runs/validation-path-context-control-2.json"
+  ],
+  "ordinary_result_counts": {
+    "additional_resource_controls_passed": 9,
+    "generation_refresh": "NEXT_POST_GATE_STEP",
+    "new_resource_path_effect_control": "PASSED; init/regular order, all14empty maps, indices0..11, empty/Unicode/NUL prefixes",
+    "workspace_all_targets_check": "PASSED",
+    "workspace_ignored_process_children": 3,
+    "workspace_tests_failed": 0,
+    "workspace_tests_passed": 675
+  },
+  "post_gate_refactor": {
+    "formal_credit": 0,
+    "production": "Reuse the existing decimal-index field builder for resource paths while invoking each original CGP provider; insert every extracted metadata map entry into existing empty fixture maps.",
+    "review": "verification/agones/refactoring/validation-path-fixture-construction-review.json"
+  },
+  "predecessor_ledger_revision": 294,
+  "production_files": {
+    "Cargo.lock": "457e9915c442fc92a563532c2adeb010f5f2035fd0ae4b3c9c9ac3396d950d93",
+    "Cargo.toml": "3a3f19b913b7d4fc8966288d621de4134b7b87439231dc64014ea23f7511b6f7",
+    "crates/agones-core/Cargo.toml": "6bd2fb70b00b1ff6d34e4562ff78ab6ea86ca352a5043c87a57b8e65eb1e6a51",
+    "crates/agones-core/src/allocation.rs": "2c0efbb8424e2c4655ffab235db4308d4eba4bd3089ed14ecaeffe665e6436a4",
+    "crates/agones-core/src/autoscaling.rs": "7d4d7fd44d52556a1874ccc018c6bdd03e01982e283471cb3472715b6b7adc24",
+    "crates/agones-core/src/features.rs": "72c9a28ba3697ac99d733a7bea5b1933ce0d3c055e813a361290bb6135b4bc98",
+    "crates/agones-core/src/fleet.rs": "bb172f3c6c5d432e74f61d17951894780361321adb4d079258437dbfb5a2071b",
+    "crates/agones-core/src/gameserver.rs": "dc6903306ef77cfb772696e3635c398944d295f59eb89c57c0c8f3d43f8db864",
+    "crates/agones-core/src/gameserver_validation.rs": "be120c2892ed50c3bb6002175d7b7c08c5215197a3f07cbddc16daffb7daf1de",
+    "crates/agones-core/src/gameserverset.rs": "ab8ca589660c03af58a9da803186a443aece04bab6eb799053cf846c9d57397b",
+    "crates/agones-core/src/resource_quantity.rs": "a8f7ae7eda83f7f6f546af4700cdc562003437bd92fd6ecbed7f76e1009d8006",
+    "crates/agones-rusternetes/src/fleet_admission.rs": "4c578b1be1f6d5b023b1a882b5744aeabe9811b441a4ff26660d6cbdaf94db56",
+    "crates/agones-rusternetes/src/gameserver_admission.rs": "03710845e6c333a488068567b9e0a5b44669e43650c2f5297b57320732476c36",
+    "crates/agones-rusternetes/src/gameserverset_admission.rs": "19c47b5863e18e9d126c3c811fddee154caf61aed632531b1a849c41df60bab9",
+    "crates/agones-rusternetes/src/lib.rs": "820298219835f53b2563a3a0d66deb21050a5930998750ffb5fad26b6f07031b"
+  },
+  "production_symbols": [
+    "ValidationError",
+    "ValidationError::{required,forbidden,invalid,too_long,with_origin,mark_covered_by_declarative}",
+    "validate_object_meta",
+    "GameServer::validate_with_context",
+    "GameServerSpec::validate_with_context",
+    "ValidateAgonesGameServerFeatures"
+  ],
+  "reachable_call_paths": [
+    "The shared GameServer/spec validation invokes actual metadata constructors with source Origin; GameServer name validation invokes source TooLong payload semantics. Fleet/GameServerSet and Rusternetes validation consumers retain the real shared error owner.",
+    "Existing error constructors carry explicit empty Origin/false declarative defaults. Origin/declarative builders preserve all four preexisting fields and full equality observes both added fields."
+  ],
+  "residual_work": [
+    "Declare and validate the constructor-image mapping in lowering, complete adapter replay and PlayerTracking model metadata.",
+    "Refresh affected gates/IR/generators; emit and native-replay every one of the25general source cases before bounded formal evidence.",
+    "Broader metadata predicates, including DNS prefixes, multiple diagnostics and annotation total size, remain required; exact currently reached error data is not full metadata-validator parity.",
+    "All remaining source obligations, formal post-observation cleanup, wire/lifecycle/conformance and all eight _2cells remain required."
+  ],
+  "schema_version": 1,
+  "source_bindings": {
+    "pkg/apis/agones/v1/gameserver.go": "7df5b0d1da0985786664c31a0f27eb01ffcabeabdabcdf519193c5b7184fbaa0",
+    "vendor/k8s.io/apimachinery/pkg/api/validate/content/errors.go": "1738efa870fe97b42d978df1081cb726e0e2918ebf2dd73f2d7dabd1c72cfc60",
+    "vendor/k8s.io/apimachinery/pkg/api/validate/content/kube.go": "17e67339b50be8d2d78f77608339a513c29f479874860d9e5d443af72830f7c9",
+    "vendor/k8s.io/apimachinery/pkg/api/validation/objectmeta.go": "19332a99936948911db3219dde7986c825049115650dbc1a9f5e1ccab8b06f72",
+    "vendor/k8s.io/apimachinery/pkg/util/validation/field/errors.go": "747db5374cdd58712b46d10775272508212d3201fa05c30105a5531debc666d4"
+  },
+  "status": "IMPLEMENTED",
+  "supersedes": "verification/agones/gates/b27ab9d7d52fea6cff48ce63877509d53a3830e2a112b5d004214326e9a13a33.json",
+  "supersedes_gate": "verification/agones/gates/a8a9dda678e02b3e4ed1e71129867c37a615091ad8cf272a8934247c81a50a9c.json",
+  "validation_files": {
+    "crates/agones-core/src/gameserver.rs": "e25732007ff3b6025508d8ad3a0e1f913a3a0c19b14a85fd362567003439432c"
+  },
+  "workspace_snapshot": {
+    "branch": "DETACHED_ISOLATED_CANDIDATE",
+    "head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
+    "note": "Existing isolated worktree reused after preserving1886. Source-bound full675 and focused CGP path-effect control pass before generator rebinding. Canonical4d433 campaign source remains unchanged."
+  }
+}

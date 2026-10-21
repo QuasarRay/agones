@@ -28,7 +28,8 @@ class SourceCaseControls(unittest.TestCase):
 
     def fixture(self, family, index):
         general = family == "gameserver-general-validation-source"
-        stem = "gameserver-validation" if general else "gameserver-feature-validation"
+        metadata_family = family == "object-metadata-source"
+        stem = "object-metadata" if metadata_family else "gameserver-validation" if general else "gameserver-feature-validation"
         self.metadata_path = f"verification/agones/{stem}-codegen.json"
         self.metadata = json.loads((ROOT / self.metadata_path).read_text())
         self.family, self.index = family, index
@@ -38,8 +39,15 @@ class SourceCaseControls(unittest.TestCase):
         gate = json.loads((ROOT / self.gate_path).read_text())
         paths = set(gate["production_files"]) | set(self.metadata["generator_source_files"])
         paths |= {self.metadata_path, self.metadata["output"], self.metadata["ir"],
-                  self.gate_path, self.metadata["validation_error_mapping"]["source"],
-                  self.metadata["multiset_mapping"]["manifest"]}
+                  self.gate_path, self.metadata["validation_error_mapping"]["source"]}
+        if metadata_family:
+            evidence_path = self.metadata["source_capture_evidence"]
+            evidence = json.loads((ROOT / evidence_path).read_text())
+            paths |= set(ir["source_files"]) | set(ir["loader_source_files"]) | {
+                evidence_path, evidence["go_runtime_restored"]["manifest"],
+                evidence["go_runtime_restored"]["unicode_reference"]}
+        else:
+            paths.add(self.metadata["multiset_mapping"]["manifest"])
         for path in paths:
             self.copy(path)
         for name in ("summarize_feature_proof.py", "kani_results.py", "protect_model.py"):
@@ -131,8 +139,9 @@ class SourceCaseControls(unittest.TestCase):
         assertion["origin"] = original
         baseline = self.log
         extra = self.metadata["assertions"][1]["function"]
+        next_check = len(re.findall(r"(?m)^Check [0-9]+:", baseline)) + 1
         self.log = baseline.replace(
-            COMPLETE, f'\nCheck 4: source_module::{extra}.assertion.1\n'
+            COMPLETE, f'\nCheck {next_check}: source_module::{extra}.assertion.1\n'
             ' - Status: SUCCESS\n - Description: "unexpected original assertion"\n'
             f' - Location: {self.metadata["output"]}:1\n' + COMPLETE)
         # Keep result numbering complete so the exact source-selection check
@@ -184,6 +193,49 @@ class SourceCaseControls(unittest.TestCase):
         self.invoke(False)
 
 
+class MetadataSourceCaseControls(SourceCaseControls):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.fixture("object-metadata-source", 5)
+
+    def test_every_general_and_feature_case_is_accounted(self):
+        origins = []
+        for index, count in enumerate([1, 3, 3, 3, 1, 10]):
+            with self.subTest(metadata_case=index):
+                self.fixture("object-metadata-source", index)
+                summary = self.invoke(True)
+                self.assertEqual(len(summary["assertions"]), count)
+                self.assertEqual(len(summary["covers"]), 2)
+                origins.extend(row["origin"] for row in summary["assertions"])
+        self.assertEqual(len(origins), len(set(origins)))
+        self.assertEqual(len(origins), 21)
+
+    def test_stale_source_gate_generator_and_full_field_mapping_reject(self):
+        ir = json.loads((ROOT / self.metadata["ir"]).read_text())
+        for path in [self.metadata["output"], self.metadata["ir"],
+                     *self.metadata["generator_source_files"], self.gate_path,
+                     "crates/agones-core/src/object_metadata_validation.rs",
+                     "pkg/apis/agones/v1/common_test.go",
+                     next(iter(ir["loader_source_files"]))]:
+            with self.subTest(path=path):
+                target = self.root / path
+                before = target.read_bytes()
+                target.write_bytes(before + b"\n")
+                self.invoke(False)
+                target.write_bytes(before)
+        self.metadata["validation_error_mapping"]["fields"].pop()
+        self.invoke(False)
+        self.metadata["validation_error_mapping"]["fields"].append("CoveredByDeclarative")
+        self.metadata["source_capture_evidence_sha256"] = "0" * 64
+        self.invoke(False)
+
+    def test_missing_actual_production_binding_rejects(self):
+        del self.record["source_files"]["crates/agones-core/src/object_metadata_validation.rs"]
+        self.invoke(False)
+
+
 class MatrixControls(unittest.TestCase):
     def test_matrix_contains_every_source_case_and_preserves_protected_aggregate(self):
         workflow = (ROOT / ".github/workflows/rust.yml").read_text()
@@ -193,7 +245,8 @@ class MatrixControls(unittest.TestCase):
         observed = [(row["family"], row["index"], row["case"]) for row in entries]
         expected = []
         for family, stem in [("feature", "gameserver-feature-validation"),
-                             ("general", "gameserver-validation")]:
+                             ("general", "gameserver-validation"),
+                             ("metadata", "object-metadata")]:
             metadata = json.loads((ROOT / f"verification/agones/{stem}-codegen.json").read_text())
             for index, harness in enumerate(metadata["harnesses"]):
                 case = f"{index:03}"
@@ -212,6 +265,88 @@ class MatrixControls(unittest.TestCase):
         self.assertIn("feature-validation-source-model-check", aggregate)
         self.assertIn('test "$VALIDATION_RESULT" = success', aggregate)
         self.assertIn("--gameserver-validation --check", workflow)
+        self.assertIn("--object-metadata --check", workflow)
+        self.assertEqual(len(observed), 36)
+
+
+class ContractControls(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.domain_path = "verification/agones/gameserver-feature-validation-domain.json"
+        self.domain = json.loads((ROOT / self.domain_path).read_text())
+        gate = json.loads((ROOT / self.domain["implementation_gate"]).read_text())
+        paths = set(gate["production_files"]) | {
+            self.domain_path, self.domain["implementation_gate"],
+            "crates/agones-core/tests/gameserver_feature_validation_domain.rs",
+            self.domain["validation_error_mapping"]["source"],
+        } | {str(SCRIPTS / name) for name in (
+            "summarize_feature_proof.py", "kani_results.py", "protect_model.py")}
+        for path in paths:
+            target = self.root / path
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(ROOT / path, target)
+        self.run_name = "synthetic-contract-control"
+        self.run_path = self.root / f"verification/agones/runs/{self.run_name}.json"
+        self.log_path = self.run_path.with_suffix(".log")
+        self.run_path.parent.mkdir(parents=True, exist_ok=True)
+        self.record = {
+            "status": "PASSED", "exit_code": 0,
+            "command": ["cargo", "bolero", "test", self.domain["harness"], "--engine", "kani"],
+            "source_files": {path: hashlib.sha256((self.root / path).read_bytes()).hexdigest()
+                             for path in paths},
+            "log": str(self.log_path.relative_to(self.root)),
+        }
+        harness = self.domain["harness"]
+        rows = [(f"{harness}::{{closure#0}}.assertion.{index}", "SUCCESS", "contract relation")
+                for index in range(1, 4)]
+        rows += [(f"{harness}::witness.cover.{index}", "SATISFIED", description)
+                 for index, description in enumerate(self.domain["required_covers"])]
+        self.log = "".join(
+            f'\nCheck {index}: {symbol}\n - Status: {status}\n'
+            f' - Description: "{description}"\n'
+            ' - Location: crates/agones-core/tests/gameserver_feature_validation_domain.rs:1\n'
+            for index, (symbol, status, description) in enumerate(rows, 1)) + COMPLETE
+
+    def invoke(self, accepted):
+        self.log_path.write_text(self.log)
+        self.record["log_sha256"] = hashlib.sha256(self.log_path.read_bytes()).hexdigest()
+        self.run_path.write_text(json.dumps(self.record))
+        (self.root / self.domain_path).write_text(json.dumps(self.domain))
+        result = subprocess.run(
+            [sys.executable, str(self.root / SCRIPTS / "summarize_feature_proof.py"),
+             "gameserver-features", self.run_name, "--output", "synthetic-summary.json"],
+            capture_output=True, text=True)
+        if accepted:
+            self.assertEqual(result.returncode, 0, result.stderr)
+            summary = json.loads((self.root / "synthetic-summary.json").read_text())
+            self.assertEqual(len(summary["assertions"]), 3)
+            self.assertEqual(len(summary["covers"]), 8)
+        else:
+            self.assertNotEqual(result.returncode, 0, result.stdout)
+
+    def test_real_common_manifest_shape_and_six_field_mapping(self):
+        self.invoke(True)
+        fields = self.domain["validation_error_mapping"].pop("fields")
+        self.invoke(False)
+        self.domain["validation_error_mapping"]["fields"] = fields[:-1]
+        self.invoke(False)
+
+    def test_contract_assertion_and_cover_failures_reject(self):
+        baseline = self.log
+        self.log = baseline.replace(" - Status: SUCCESS", " - Status: UNREACHABLE", 1)
+        self.invoke(False)
+        self.log = baseline.replace(" - Status: SATISFIED", " - Status: UNSATISFIABLE", 1)
+        self.invoke(False)
+
+    def test_actual_provider_and_constructor_bindings_reject(self):
+        del self.record["source_files"]["crates/agones-core/src/gameserver_validation.rs"]
+        self.invoke(False)
+        self.record["source_files"]["crates/agones-core/src/gameserver_validation.rs"] = hashlib.sha256(
+            (self.root / "crates/agones-core/src/gameserver_validation.rs").read_bytes()).hexdigest()
+        self.domain["validation_error_mapping"]["source_sha256"] = "0" * 64
+        self.invoke(False)
 
 
 if __name__ == "__main__":

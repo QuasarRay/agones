@@ -1,0 +1,53 @@
+{
+  "dependencies": [
+    "existing-Fleet-and-GameServerSet-canonical-types"
+  ],
+  "disposition": "READY",
+  "evidence_refs": [],
+  "feature_ids": [
+    "fleet-replica-clamps-and-null-skipping-int32-aggregation"
+  ],
+  "id": "FLEET-REPLICA-HELPERS-001",
+  "implementation_gate": null,
+  "next_action": "After current metadata diagnostic recovery, complete the three original public replica helpers: preserve arbitrary i32 clamp inputs, null skipping, selector invocation order/count and wrapping sum. Route actual existing aggregation consumers where applicable; test overflow and callbacks natively, record gate, then extend the existing source pipeline for all three complete source tests without weakening invariants. This does not certify complete Fleet validation or lifecycle.",
+  "owned_paths": [
+    "crates/agones-core/src/fleet.rs",
+    "crates/agones-core/tests/fleet_replica_helpers.rs"
+  ],
+  "requirement_ids": [
+    "REQ-02",
+    "REQ-04",
+    "REQ-05",
+    "REQ-07",
+    "REQ-08",
+    "REQ-09",
+    "REQ-10",
+    "REQ-11",
+    "REQ-13"
+  ],
+  "source_config_binding": {
+    "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "no_semantic_extraction_before_gate": true,
+    "production_gap": "sum_game_server_sets currently uses Iterator::sum<i32>, which can panic on overflow in the pinned debug/test build. The original int32 accumulator wraps. Existing replica-policy consumers already use wrapping arithmetic and must remain consistent.",
+    "reachable_production_path": "Rusternetes ReconcileFleetWithComponents -> ExecuteFleetDeploymentWithComponents -> selected UseAgonesFleetDeploymentPlanner -> core fleet_deployment_plan -> fleet_active_replicas_target/rolling_update_active_replicas -> replica helpers. Route existing sum folds through the same public helper; do not add a context or alternate algorithm.",
+    "reuse": "Reuse existing public Fleet/GameServerSet types, pure helper consumers, CGP-owned controller policy and Genco/typed extraction after gate. No new macro, orchestration adapter or framework required.",
+    "semantic_extraction_status": "NOT_STARTED",
+    "source_assertion_count": "UNRESOLVED_UNTIL_GATED_EXTRACTION",
+    "source_files": {
+      "pkg/apis/agones/v1/fleet.go": "52ff0dd6d1b3f8ac7feed3ba35356c16434a8ca77f531eff3434cb3ad25f0e28",
+      "pkg/apis/agones/v1/fleet_test.go": "7fed497a874406e224cc29359568418d90200739bb2e9b5887ed4712994bb600"
+    },
+    "source_symbols": [
+      "Fleet.UpperBoundReplicas",
+      "Fleet.LowerBoundReplicas",
+      "SumGameServerSets"
+    ],
+    "worktree": "/home/astral/.codex/worktrees/agones-fleet-replica-helpers/agones"
+  },
+  "stage": "DISCOVERED",
+  "test_ids": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetUpperBoundReplicas",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetLowerBoundReplicas",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestSumGameServerSets"
+  ]
+}

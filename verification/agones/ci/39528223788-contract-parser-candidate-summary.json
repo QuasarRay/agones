@@ -1,0 +1,476 @@
+{
+  "assertions": [
+    {
+      "description": "assertion failed: satisfies_source_relation(enabled, present, model)",
+      "id": 224,
+      "location": "crates/agones-core/tests/gameserver_feature_validation_domain.rs:112:13 in function gameserver_feature_validation_common_domain::{closure#0}",
+      "status": "SUCCESS",
+      "symbol": "gameserver_feature_validation_common_domain::{closure#0}.assertion.1"
+    },
+    {
+      "description": "assertion failed: satisfies_source_relation(enabled, present, actual)",
+      "id": 225,
+      "location": "crates/agones-core/tests/gameserver_feature_validation_domain.rs:113:13 in function gameserver_feature_validation_common_domain::{closure#0}",
+      "status": "SUCCESS",
+      "symbol": "gameserver_feature_validation_common_domain::{closure#0}.assertion.2"
+    },
+    {
+      "description": "assertion failed: model.count == actual.count",
+      "id": 226,
+      "location": "crates/agones-core/tests/gameserver_feature_validation_domain.rs:116:13 in function gameserver_feature_validation_common_domain::{closure#0}",
+      "status": "SUCCESS",
+      "symbol": "gameserver_feature_validation_common_domain::{closure#0}.assertion.3"
+    }
+  ],
+  "covers": [
+    {
+      "description": "the generator should produce at least one valid value",
+      "id": 138,
+      "location": "../../../../../.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bolero-kani-0.13.0/src/lib.rs:37:21 in function <bolero::DefaultEngine as bolero::Engine<bolero::bolero_engine::BorrowedGeneratorTest<{closure@crates/agones-core/tests/gameserver_feature_validation_domain.rs:97:19: 97:58}, bolero::generator::bolero_generator::TypeValueGenerator<(bool, bool, i64)>, (bool, bool, i64)>>>::run",
+      "status": "SATISFIED",
+      "symbol": "<bolero::DefaultEngine as bolero::Engine<bolero::bolero_engine::BorrowedGeneratorTest<{closure@crates/agones-core/tests/gameserver_feature_validation_domain.rs:97:19: 97:58}, bolero::generator::bolero_generator::TypeValueGenerator<(bool, bool, i64)>, (bool, bool, i64)>>>::run.cover.1"
+    },
+    {
+      "description": "disabled PlayerTracking absent players",
+      "id": 227,
+      "location": "crates/agones-core/tests/gameserver_feature_validation_domain.rs:119:17 in function gameserver_feature_validation_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "gameserver_feature_validation_common_domain::{closure#0}.cover.1"
+    },
+    {
+      "description": "disabled PlayerTracking present players forbidden",
+      "id": 228,
+      "location": "crates/agones-core/tests/gameserver_feature_validation_domain.rs:123:17 in function gameserver_feature_validation_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "gameserver_feature_validation_common_domain::{closure#0}.cover.2"
+    },
+    {
+      "description": "enabled PlayerTracking absent players",
+      "id": 229,
+      "location": "crates/agones-core/tests/gameserver_feature_validation_domain.rs:127:17 in function gameserver_feature_validation_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "gameserver_feature_validation_common_domain::{closure#0}.cover.3"
+    },
+    {
+      "description": "enabled PlayerTracking present players accepted",
+      "id": 230,
+      "location": "crates/agones-core/tests/gameserver_feature_validation_domain.rs:128:17 in function gameserver_feature_validation_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "gameserver_feature_validation_common_domain::{closure#0}.cover.4"
+    },
+    {
+      "description": "present zero player capacity remains present",
+      "id": 231,
+      "location": "crates/agones-core/tests/gameserver_feature_validation_domain.rs:132:17 in function gameserver_feature_validation_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "gameserver_feature_validation_common_domain::{closure#0}.cover.5"
+    },
+    {
+      "description": "disabled minimum player capacity remains forbidden",
+      "id": 232,
+      "location": "crates/agones-core/tests/gameserver_feature_validation_domain.rs:136:17 in function gameserver_feature_validation_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "gameserver_feature_validation_common_domain::{closure#0}.cover.6"
+    },
+    {
+      "description": "enabled maximum player capacity remains accepted",
+      "id": 233,
+      "location": "crates/agones-core/tests/gameserver_feature_validation_domain.rs:140:17 in function gameserver_feature_validation_common_domain::{closure#0}",
+      "status": "SATISFIED",
+      "symbol": "gameserver_feature_validation_common_domain::{closure#0}.cover.7"
+    }
+  ],
+  "family": "gameserver-features",
+  "harness_count": 1,
+  "lifetime_mapping": {
+    "boundary": "After all state/error observations and covers, retain harness owners in both engines. Actual production bodies and internal allocation/destruction remain unchanged.",
+    "ordinary_cleanup": "Separate direct/provider/admission and whole-fixture replay exercises normal destruction.",
+    "residual": "Formal post-observation cleanup and lifecycle remain required.",
+    "rule": "GS-DEFAULTS-001-OBSERVATION-LIFETIME-1"
+  },
+  "property_count": 1541,
+  "run": "verification/agones/runs/gameserver-features-bolero-kani-ci-39528223788-1.json",
+  "schema_version": 1,
+  "scope": "Actual CGP ValidateAgonesGameServerFeatures provider and independent nonallocating match-table reference checked against the separate complete six-field error relation. Arbitrary enabled/present booleans and signed i64 capacity, no filtering, fixed spec field path, unwind128. The deterministic relation fixes count/kind/path/optional bad value/detail/origin/declarative flag for both observations. Source Required/Forbidden empty bad values use the pinned bidirectional constructor-image rule. No qualified original table assertion, unbounded field path, full validation, admission, lifecycle or live-cluster proof credit. Harness owners are retained after observations under the existing lifetime rule; formal post-observation cleanup remains required.",
+  "selected_harnesses": [
+    "gameserver_feature_validation_common_domain"
+  ],
+  "status_counts": {
+    "SATISFIED": 8,
+    "SUCCESS": 1480,
+    "UNREACHABLE": 53
+  },
+  "unreachable_not_credited": [
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 3,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:883:21 in function std::fmt::Arguments::<'_>::as_str",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Arguments::<'_>::as_str.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 9,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:777:21 in function std::fmt::Arguments::<'_>::estimated_capacity",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Arguments::<'_>::estimated_capacity.assertion.2"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 10,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:778:45 in function std::fmt::Arguments::<'_>::estimated_capacity",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Arguments::<'_>::estimated_capacity.assertion.3"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 38,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:127:52 in function core::str::count::sum_bytes_in_usize",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::sum_bytes_in_usize.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 39,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:127:27 in function core::str::count::sum_bytes_in_usize",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::sum_bytes_in_usize.assertion.2"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 40,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:128:43 in function core::str::count::sum_bytes_in_usize",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::sum_bytes_in_usize.assertion.3"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 41,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:128:42 in function core::str::count::sum_bytes_in_usize",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::sum_bytes_in_usize.assertion.4"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 42,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:128:5 in function core::str::count::sum_bytes_in_usize",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::sum_bytes_in_usize.assertion.5"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 43,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:1399:32 in function core::slice::<impl [usize]>::as_chunks::<4>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [usize]>::as_chunks::<4>.assertion.1"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 45,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:1399:32 in function core::slice::<impl [usize]>::as_chunks::<4>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [usize]>::as_chunks::<4>.assertion.2"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 49,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs:354:58 in function std::alloc::Global::grow_impl_runtime",
+      "status": "UNREACHABLE",
+      "symbol": "std::alloc::Global::grow_impl_runtime.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 56,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:1927:25 in function std::fmt::Formatter::<'_>::pad",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Formatter::<'_>::pad.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 57,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:1938:30 in function std::fmt::Formatter::<'_>::pad",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Formatter::<'_>::pad.assertion.2"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 68,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:820:38 in function std::fmt::Arguments::<'_>::from_str",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Arguments::<'_>::from_str.assertion.1"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 84,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:28:57 in function core::str::count::count_chars",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::count_chars.assertion.1"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 86,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/validations.rs:17:5 in function core::str::validations::utf8_acc_cont_byte",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::validations::utf8_acc_cont_byte.assertion.1"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 91,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/validations.rs:11:13 in function core::str::validations::utf8_first_byte",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::validations::utf8_first_byte.assertion.1"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 97,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:4479:25 in function core::slice::<impl [u8]>::align_to_offsets::<usize>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [u8]>::align_to_offsets::<usize>.assertion.1"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 99,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:4480:25 in function core::slice::<impl [u8]>::align_to_offsets::<usize>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [u8]>::align_to_offsets::<usize>.assertion.2"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 101,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:4483:22 in function core::slice::<impl [u8]>::align_to_offsets::<usize>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [u8]>::align_to_offsets::<usize>.assertion.3"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 103,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:4483:22 in function core::slice::<impl [u8]>::align_to_offsets::<usize>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [u8]>::align_to_offsets::<usize>.assertion.4"
+    },
+    {
+      "description": "attempt to calculate the remainder with a divisor of zero",
+      "id": 104,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:4485:22 in function core::slice::<impl [u8]>::align_to_offsets::<usize>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [u8]>::align_to_offsets::<usize>.assertion.5"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 111,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ptr/const_ptr.rs:1360:23 in function std::ptr::const_ptr::<impl *const ()>::is_aligned_to",
+      "status": "UNREACHABLE",
+      "symbol": "std::ptr::const_ptr::<impl *const ()>::is_aligned_to.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 122,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ptr/mod.rs:2317:49 in function std::ptr::align_offset::mod_inv",
+      "status": "UNREACHABLE",
+      "symbol": "std::ptr::align_offset::mod_inv.assertion.1"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 123,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ptr/mod.rs:2317:44 in function std::ptr::align_offset::mod_inv",
+      "status": "UNREACHABLE",
+      "symbol": "std::ptr::align_offset::mod_inv.assertion.2"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 124,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ptr/mod.rs:2317:27 in function std::ptr::align_offset::mod_inv",
+      "status": "UNREACHABLE",
+      "symbol": "std::ptr::align_offset::mod_inv.assertion.3"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 143,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/iter/traits/iterator.rs:334:64 in function <std::str::CharIndices<'_> as std::iter::Iterator::advance_by::SpecAdvanceBy>::spec_advance_by::{closure#0}",
+      "status": "UNREACHABLE",
+      "symbol": "<std::str::CharIndices<'_> as std::iter::Iterator::advance_by::SpecAdvanceBy>::spec_advance_by::{closure#0}.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 156,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/num/uint_macros.rs:3182:21 in function core::num::<impl usize>::abs_diff",
+      "status": "UNREACHABLE",
+      "symbol": "core::num::<impl usize>::abs_diff.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 157,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/num/uint_macros.rs:3184:21 in function core::num::<impl usize>::abs_diff",
+      "status": "UNREACHABLE",
+      "symbol": "core::num::<impl usize>::abs_diff.assertion.2"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 159,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/validations.rs:57:14 in function core::str::next_code_point::<'_, std::slice::Iter<'_, u8>>",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::next_code_point::<'_, std::slice::Iter<'_, u8>>.assertion.1"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 160,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/validations.rs:64:18 in function core::str::next_code_point::<'_, std::slice::Iter<'_, u8>>",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::next_code_point::<'_, std::slice::Iter<'_, u8>>.assertion.2"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 176,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/char/methods.rs:2562:22 in function std::char::encode_utf8_raw_unchecked",
+      "status": "UNREACHABLE",
+      "symbol": "std::char::encode_utf8_raw_unchecked.assertion.1"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 177,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/char/methods.rs:2563:22 in function std::char::encode_utf8_raw_unchecked",
+      "status": "UNREACHABLE",
+      "symbol": "std::char::encode_utf8_raw_unchecked.assertion.2"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 178,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/char/methods.rs:2564:22 in function std::char::encode_utf8_raw_unchecked",
+      "status": "UNREACHABLE",
+      "symbol": "std::char::encode_utf8_raw_unchecked.assertion.3"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 179,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/char/methods.rs:2565:22 in function std::char::encode_utf8_raw_unchecked",
+      "status": "UNREACHABLE",
+      "symbol": "std::char::encode_utf8_raw_unchecked.assertion.4"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 206,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:117:6 in function core::str::count::contains_non_continuation_byte",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::contains_non_continuation_byte.assertion.1"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 207,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:117:18 in function core::str::count::contains_non_continuation_byte",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::contains_non_continuation_byte.assertion.2"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 209,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:4548:54 in function core::slice::<impl [u8]>::align_to::<usize>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [u8]>::align_to::<usize>.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 212,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/iter.rs:189:38 in function <std::str::CharIndices<'_> as std::iter::Iterator>::next",
+      "status": "UNREACHABLE",
+      "symbol": "<std::str::CharIndices<'_> as std::iter::Iterator>::next.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 213,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/iter.rs:189:17 in function <std::str::CharIndices<'_> as std::iter::Iterator>::next",
+      "status": "UNREACHABLE",
+      "symbol": "<std::str::CharIndices<'_> as std::iter::Iterator>::next.assertion.2"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 216,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/iter/traits/accum.rs:55:28 in function <usize as std::iter::Sum>::sum::<std::iter::Map<std::slice::Iter<'_, u8>, {closure@<std::iter::Filter<I, P> as std::iter::Iterator>::count::to_usize<&u8, {closure@core::str::count::char_count_general_case::{closure#0}}>::{closure#0}}>>::{closure#0}",
+      "status": "UNREACHABLE",
+      "symbol": "<usize as std::iter::Sum>::sum::<std::iter::Map<std::slice::Iter<'_, u8>, {closure@<std::iter::Filter<I, P> as std::iter::Iterator>::count::to_usize<&u8, {closure@core::str::count::char_count_general_case::{closure#0}}>::{closure#0}}>>::{closure#0}.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 253,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/char/convert.rs:293:44 in function std::char::convert::char_try_from_u32",
+      "status": "UNREACHABLE",
+      "symbol": "std::char::convert::char_try_from_u32.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 254,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:72:21 in function core::str::count::do_count_chars",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::do_count_chars.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 255,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:85:17 in function core::str::count::do_count_chars",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::do_count_chars.assertion.2"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 256,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:91:9 in function core::str::count::do_count_chars",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::do_count_chars.assertion.3"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 258,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:101:17 in function core::str::count::do_count_chars",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::do_count_chars.assertion.4"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 259,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:103:13 in function core::str::count::do_count_chars",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::do_count_chars.assertion.5"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 261,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/string.rs:1440:30 in function std::string::String::push",
+      "status": "UNREACHABLE",
+      "symbol": "std::string::String::push.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 270,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:1737:13 in function std::fmt::write",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::write.assertion.2"
+    },
+    {
+      "description": "attempt to calculate the remainder with a divisor of zero",
+      "id": 272,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/num/uint_macros.rs:3875:22 in function core::num::<impl usize>::is_multiple_of",
+      "status": "UNREACHABLE",
+      "symbol": "core::num::<impl usize>::is_multiple_of.assertion.1"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 281,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ub_checks.rs:148:54 in function core::ub_checks::is_valid_allocation_size",
+      "status": "UNREACHABLE",
+      "symbol": "core::ub_checks::is_valid_allocation_size.assertion.1"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 286,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:1963:34 in function std::fmt::Formatter::<'_>::padding",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Formatter::<'_>::padding.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 290,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:1970:35 in function std::fmt::Formatter::<'_>::padding",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Formatter::<'_>::padding.assertion.2"
+    }
+  ]
+}

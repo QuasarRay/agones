@@ -6,7 +6,7 @@ use agones_macros::agones_invariant;
 use serde::{Deserialize, Serialize};
 
 use crate::gameserver::{
-    safe_add, validate_object_meta, CounterStatus, GameServer, GameServerSpec, GameServerState,
+    safe_add, CounterStatus, GameServer, GameServerSpec, GameServerState,
     ListStatus, ObjectMeta, Priority, SchedulingStrategy, ValidationError, ValidationErrorKind,
 };
 
@@ -39,14 +39,15 @@ pub struct AllocationOverflow {
 
 impl AllocationOverflow {
     pub fn validate(&self, path: &str) -> Vec<ValidationError> {
-        validate_object_meta(
-            &ObjectMeta {
-                labels: self.labels.clone(),
-                annotations: self.annotations.clone(),
-                ..Default::default()
-            },
-            path,
-        )
+        self.validate_with_context(&crate::GameServerDefaultingContext::default(), path)
+    }
+
+    pub fn validate_with_context<C: crate::CanValidateObjectMetadata>(
+        &self,
+        context: &C,
+        path: &str,
+    ) -> Vec<ValidationError> {
+        context.validate_object_metadata(&self.labels, &self.annotations, path)
     }
 
     pub fn count_matches<'a>(
@@ -218,7 +219,7 @@ impl GameServerSet {
         self.validate_with_context(&crate::GameServerDefaultingContext::default())
     }
 
-    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures + crate::CanValidateResourceQuantities>(
+    pub fn validate_with_context<C: crate::CanValidateGameServerFeatures + crate::CanValidateResourceQuantities + crate::CanValidateObjectMetadata>(
         &self,
         context: &C,
     ) -> Vec<ValidationError> {
@@ -233,12 +234,13 @@ impl GameServerSet {
                 .into_iter()
                 .map(rebase_spec_error),
         );
-        errors.extend(validate_object_meta(
-            &self.spec.template.metadata,
+        errors.extend(context.validate_object_metadata(
+            &self.spec.template.metadata.labels,
+            &self.spec.template.metadata.annotations,
             "spec.template.metadata",
         ));
         if let Some(allocation_overflow) = &self.spec.allocation_overflow {
-            errors.extend(allocation_overflow.validate("spec.allocationOverflow"));
+            errors.extend(allocation_overflow.validate_with_context(context, "spec.allocationOverflow"));
         }
         errors
     }

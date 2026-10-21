@@ -3407,14 +3407,14 @@
     "GOENV": "/home/astral/.config/go/env",
     "GOEXPERIMENT": "nodwarf5",
     "GOFLAGS": "-mod=vendor",
-    "GOMOD": "/home/astral/.codex/worktrees/agones-resource-quantity/agones/go.mod",
+    "GOMOD": "/home/astral/Projects/agones/go.mod",
     "GOOS": "linux",
     "GOTOOLCHAIN": "local",
-    "GOVERSION": "go1.27.1-X:nodwarf5"
+    "GOVERSION": "go1.27.1"
   },
   "feature_id": "RESOURCE-QUANTITY-001",
-  "implementation_gate": "verification/agones/gates/d02fc52133e046b4405b028f93094123b27e215ce2ed9cbc1f57a663d5d5b5fb.json",
-  "implementation_gate_sha256": "d02fc52133e046b4405b028f93094123b27e215ce2ed9cbc1f57a663d5d5b5fb",
+  "implementation_gate": "verification/agones/gates/109f6d28e8e90dfe6ba51b9f2ec16852a9dfff9d10db88be7a7961d537a4898f.json",
+  "implementation_gate_sha256": "109f6d28e8e90dfe6ba51b9f2ec16852a9dfff9d10db88be7a7961d537a4898f",
   "loader_source_files": {
     "build/scripts/agones-rs/extract/gameserver_defaulting.go": "3530dbf1e91a96f2264c5e8eb21c4f69c16b50818feee975af4d5fd46d907664",
     "build/scripts/agones-rs/extract/gameserver_defaulting_test.go": "03af33d9d79bf73ad701528c07f5cdfa75758b5040465fbb52f7b95474eeb2bd",
@@ -3424,8 +3424,10 @@
     "build/scripts/agones-rs/extract/gameserver_validation_test.go": "335351777f38f9ff83a732f51fa93f422478cd2318f8b7afe1b8de5c11f6ff4a",
     "build/scripts/agones-rs/extract/go.mod": "d23234a15e7dbd4b4a9a5114b603c7b4af96faf0b28597887612f797198621db",
     "build/scripts/agones-rs/extract/go.sum": "db117b1938e16538e8fe3fc238d5185565e1a5150ed8989573f95899b23d0101",
-    "build/scripts/agones-rs/extract/main.go": "2d205043df27731d7e8d789407aff62315457a694731f584b7ac82589ba3d505",
+    "build/scripts/agones-rs/extract/main.go": "7f543ce3ac11f8d5a6b6f928f6d0d4acd0ba47f9576a69a5b2adc4f9c7300af2",
     "build/scripts/agones-rs/extract/main_test.go": "b66449f6662bd598185fb671688d9bf566e36176c2e36ffca378d78464370213",
+    "build/scripts/agones-rs/extract/object_metadata.go": "74d070b2480421e506eb60f82c00435ef672acd467e82e8f0c0e6a2da7474935",
+    "build/scripts/agones-rs/extract/object_metadata_test.go": "006e94e3d14efbc485c3c3ce9d8f71bfc37791495eb9469aab2b7b2668f75fab",
     "build/scripts/agones-rs/extract/sdk_version.go": "79e0e06e220484f808686dbb936cee00fe3e52b572f4c93769736dd47f5acecd",
     "build/scripts/agones-rs/extract/sdk_version_test.go": "8e7ca0a3cac25144f4289bdcdee416502b7aa63e45d3f9e215e12c7cc4fca097"
   },
@@ -3472,12 +3474,12 @@
   },
   "supporting_implementation_gates": {
     "GS-TYPEMETA-001": {
-      "path": "verification/agones/gates/1f3bb5f54866727ee6b443c8469eb9d0dbe2c7133c543c62154e3702413b5bc2.json",
-      "sha256": "1f3bb5f54866727ee6b443c8469eb9d0dbe2c7133c543c62154e3702413b5bc2"
+      "path": "verification/agones/gates/cd25bfe732426915201fdbba0ba568216a9a59eae793c88dc76a24ecc868da2f.json",
+      "sha256": "cd25bfe732426915201fdbba0ba568216a9a59eae793c88dc76a24ecc868da2f"
     },
     "GS-VALIDATION-ERROR-DATA-001": {
-      "path": "verification/agones/gates/b27ab9d7d52fea6cff48ce63877509d53a3830e2a112b5d004214326e9a13a33.json",
-      "sha256": "b27ab9d7d52fea6cff48ce63877509d53a3830e2a112b5d004214326e9a13a33"
+      "path": "verification/agones/gates/18ae47425956d12f4e280b20749b73e3a77aad132bec216d777468608935f386.json",
+      "sha256": "18ae47425956d12f4e280b20749b73e3a77aad132bec216d777468608935f386"
     }
   }
 }

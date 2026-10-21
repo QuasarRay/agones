@@ -8,7 +8,8 @@
   },
   "feature_id": "GS-VALIDATE-FEATURES-001",
   "harness": "gameserver_feature_validation_common_domain",
-  "implementation_gate": "verification/agones/gates/6d10b275433dcf0a49011a53dc251b062c43c50049cc3a8aebf0c161cc498b26.json",
+  "implementation_gate": "verification/agones/gates/1a6a0ad0f3985df4c5724a539d42e845bced47dcefc11866cf9b5f310122cd5c.json",
+  "implementation_gate_sha256": "1a6a0ad0f3985df4c5724a539d42e845bced47dcefc11866cf9b5f310122cd5c",
   "lifetime_mapping": {
     "boundary": "After all state/error observations and covers, retain harness owners in both engines. Actual production bodies and internal allocation/destruction remain unchanged.",
     "ordinary_cleanup": "Separate direct/provider/admission and whole-fixture replay exercises normal destruction.",
@@ -57,6 +58,14 @@
   "unwind": 128,
   "validation_error_mapping": {
     "actual_adapter_replay": "crates/agones-rusternetes/tests/source_gameserver_feature_validation.rs",
+    "fields": [
+      "Type",
+      "Field",
+      "BadValue",
+      "Detail",
+      "Origin",
+      "CoveredByDeclarative"
+    ],
     "forward": "Require the exact empty source string for Required/Forbidden and encode kind+None; reject nil/nonempty source values. Preserve all other fields and supported string/null payloads.",
     "helper_relation": "All six fields observed, with fault controls for each; same bool/bool/i64 domain, no preconditions, unwind128 and all eight covers.",
     "inverse": "Reconstruct source empty string from Required/Forbidden+None, rejecting non-None; preserve Origin/CoveredByDeclarative and other fields. Every emitted source error round-trips in full.",

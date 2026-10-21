@@ -1,0 +1,56 @@
+{
+  "acceptance_criteria": [
+    "Preserve nonempty kind/apiVersion, missing/empty/null source strings and source rejection of wrong JSON types.",
+    "Actual defaulting/validation retains custom TypeMeta, including original test-kind fixtures.",
+    "Actual native conversions retain canonical wire identity, supply missing identity and reject explicit conflicts without mutating source.",
+    "All existing native checks pass with the new typed field."
+  ],
+  "assurance": {
+    "current_formal_credit": 0,
+    "formal": "All affected required proofs remain open for current source. Native676campaign39556147739retains its original source identity and30failed source cases.",
+    "generation": "Seven deterministic write/check modes and strict parser controls follow this gate refresh.",
+    "implementation": "Canonical locked all-target check,704native tests and guidance1828directories/zero missing passed. Shared metadata policy is selected through the existing CGP context."
+  },
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
+  "feature_id": "GS-TYPEMETA-001",
+  "id": "GS-TYPEMETA-001-implementation",
+  "ordinary_checks": [
+    "verification/agones/runs/canonical-metadata-native-1.json"
+  ],
+  "ordinary_result_counts": {
+    "failed": 0,
+    "ignored": 3,
+    "passed": 704
+  },
+  "predecessor_gate": "verification/agones/gates/d6ff1597de0be25a6cfebf8dbbfc11e155ab20494d78dcccac731f66852c7116.json",
+  "predecessor_gate_sha256": "d6ff1597de0be25a6cfebf8dbbfc11e155ab20494d78dcccac731f66852c7116",
+  "predecessor_ledger_revision": 309,
+  "production_files": {
+    "Cargo.lock": "457e9915c442fc92a563532c2adeb010f5f2035fd0ae4b3c9c9ac3396d950d93",
+    "Cargo.toml": "3a3f19b913b7d4fc8966288d621de4134b7b87439231dc64014ea23f7511b6f7",
+    "crates/agones-core/Cargo.toml": "6bd2fb70b00b1ff6d34e4562ff78ab6ea86ca352a5043c87a57b8e65eb1e6a51",
+    "crates/agones-core/src/build_version.rs": "e6560758de4332abe27a97a3f3b5794068f20e0b4092380658b1cfdc4ce7e1f7",
+    "crates/agones-core/src/features.rs": "72c9a28ba3697ac99d733a7bea5b1933ce0d3c055e813a361290bb6135b4bc98",
+    "crates/agones-core/src/gameserver.rs": "bdbf85ad795e439f4ba0d9f9030876805ec09e05c4715e6a0b95deb2eff67eb8",
+    "crates/agones-core/src/gameserver_defaulting.rs": "7ced36d2a7109e1363574d0ac8c29ef4dae08c7408d271da0f415a94d6a9ace6",
+    "crates/agones-core/src/go_value.rs": "ea849e221b593654e7049594fdcaebb4a61042e068381af5e96dd5fd017f0e25",
+    "crates/agones-core/src/resource_quantity.rs": "a8f7ae7eda83f7f6f546af4700cdc562003437bd92fd6ecbed7f76e1009d8006",
+    "crates/agones-rusternetes/src/gameserver_admission.rs": "d14437c315ed9d2fb690878868ea7047baf722e9484b7d99d43ccca686ff0348",
+    "crates/agones-rusternetes/src/lib.rs": "3b9294cc000fa7b92e2cbcd9b088e7862a11151163aa51c0d92e5ffea1ac0e64"
+  },
+  "production_symbols": [
+    "TypeMeta",
+    "GameServer::Serialize/Deserialize",
+    "GameServer::apply_defaults_with_context/validate_with_context",
+    "RusternetesCustomResource::to_rusternetes_custom_resource/from_rusternetes_custom_resource"
+  ],
+  "schema_version": 1,
+  "source_snapshot": {
+    "head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
+    "source_binding_receipt": "verification/agones/runs/canonical-metadata-native-1.json",
+    "tracked_patch_sha256": "e748f31adc50ea7193a5f338757142ec2e13f2383e40652aa89b8cbb8a0ef098"
+  },
+  "status": "IMPLEMENTED",
+  "timestamp": "2026-10-21T08:24:24.808947+00:00"
+}

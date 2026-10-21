@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "canonical_native676_adopted_all37_old_raw_recovered_publication_pending",
+  "gate_snapshot": "verification/agones/gates/5daba4dcad178822c8f9572333d72f7efa733d6a947ae1cc24157f9fd9e404b9.json",
+  "predecessor_revision": 305,
+  "predecessor_sha256": "60e53b7ec894b1cf46e821a3525e69c266c0977d5f644e6fbd3b223a4898875c",
+  "reason": "Actual canonical676tests, six generation checks and11parser controls pass;47harness bodies unchanged. Nine gates renewed before existing IR translation. All37old artifacts source-pinned/audited:23OOM7timeouts, six strict summaries for old source only. GitHub tools removed at archive batch50; no new publication or backend acceptance claimed.",
+  "result_revision": 306,
+  "schema_version": 1,
+  "state_sha256": "7d6bb7598cfb065b962891d80bc3489f74f9e88717e94889e6c64b0210247cae",
+  "timestamp": "2026-10-21T02:58:01.998140+00:00"
+}

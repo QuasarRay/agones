@@ -206,7 +206,7 @@ pub fn validate_game_server_creation_with_context<C, H>(
     hooks: &H,
 ) -> Result<Vec<ValidationError>, AdapterError>
 where
-    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities,
+    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities + agones_core::CanValidateObjectMetadata,
     H: ApiHooks,
 {
     let mut errors = validate_game_server_with_context(context, game_server)?;
@@ -265,7 +265,7 @@ pub fn validate_game_server_creation_object_with_context<C, H>(
     hooks: &H,
 ) -> Result<AdmissionResponse, AdapterError>
 where
-    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities,
+    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities + agones_core::CanValidateObjectMetadata,
     H: ApiHooks,
 {
     let game_server: GameServer =
@@ -467,7 +467,7 @@ impl<H, C> GameServerCreationValidationAdmission<H, C> {
 #[async_trait]
 impl<H, C> AdmissionController for GameServerCreationValidationAdmission<H, C>
 where
-    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities + Send + Sync,
+    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities + agones_core::CanValidateObjectMetadata + Send + Sync,
     H: ApiHooks + Send + Sync,
 {
     fn name(&self) -> &str {

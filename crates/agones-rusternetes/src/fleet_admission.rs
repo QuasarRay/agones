@@ -67,7 +67,7 @@ pub fn validate_fleet_with_context<C, H>(
     hooks: &H,
 ) -> Result<Vec<ValidationError>, AdapterError>
 where
-    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities,
+    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities + agones_core::CanValidateObjectMetadata,
     H: ApiHooks,
 {
     // Upstream Fleet.Validate mutates the nested GameServerSpec by applying
@@ -112,7 +112,7 @@ pub fn validate_fleet_object_with_context<C, H>(
     hooks: &H,
 ) -> Result<AdmissionResponse, AdapterError>
 where
-    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities,
+    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities + agones_core::CanValidateObjectMetadata,
     H: ApiHooks,
 {
     let fleet: Fleet =
@@ -188,7 +188,7 @@ impl<H, C> FleetValidationAdmission<H, C> {
 #[async_trait]
 impl<H, C> AdmissionController for FleetValidationAdmission<H, C>
 where
-    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities + Send + Sync,
+    C: agones_core::CanValidateGameServerFeatures + agones_core::CanValidateResourceQuantities + agones_core::CanValidateObjectMetadata + Send + Sync,
     H: ApiHooks + Send + Sync,
 {
     fn name(&self) -> &str {

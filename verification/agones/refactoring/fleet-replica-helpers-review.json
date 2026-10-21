@@ -1,0 +1,12 @@
+{
+  "all_eight_architecture_cells": "REQUIRED_OPEN; no cell credited by this helper/native gate.",
+  "candidate": "Introduce a generic aggregation macro/new _2 machinery versus reuse the existing public replica helper.",
+  "concrete_reuse": "Five active/rolling policy folds now use sum_game_server_sets, while the existing CGP FleetDeploymentPlanner and storage/lifecycle components remain the real application path. Genco and package-aware extraction will be reused after the implementation gate.",
+  "decision": "REUSE_EXISTING_PUBLIC_HELPER_AND_CGP_POLICY_WITHOUT_NEW_MACRO",
+  "feature_id": "FLEET-REPLICA-HELPERS-001",
+  "id": "G3-FLEET-REPLICA-HELPERS-001",
+  "next_review_trigger": "At the next source-family emission or API validation feature, measure repeated typed assertion declarations and CGP wiring against existing Genco/CGP and pinned Arcane probes; take only the smallest demonstrated positive-ROI _2 step while all eight cells remain mandatory.",
+  "production_gate": "verification/agones/gates/911456eea0a5c0700a785e00f32adde7313270693cc3de9942d27c5677ad3e5f.json",
+  "roi": "A wrapping fold and FnMut selector close the concrete source defect and remove repeated aggregation code in a few lines. A new macro/compiler layer would add construction, diagnostic, Cargo/IDE and matrix-verification cost without reducing this feature work. No new generalization is needed. The required eight _2 architecture cells remain open.",
+  "timestamp": "2026-10-21T09:42:01.132215+00:00"
+}

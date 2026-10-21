@@ -1,0 +1,343 @@
+{
+  "current_formal_credit": 0,
+  "draft": true,
+  "head": "861f4eb5b3d5a9d47d2364edc83b32a1da3e9c71",
+  "jobs": [
+    {
+      "completed_at": "2026-10-21T08:49:49Z",
+      "conclusion": "success",
+      "id": 119128674916,
+      "name": "migration-state",
+      "started_at": "2026-10-21T08:49:07Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128982809,
+      "name": "feature-common-model-check",
+      "started_at": "2026-10-21T08:49:51Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128982947,
+      "name": "feature-validation-contract-model-check",
+      "started_at": "2026-10-21T08:49:52Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983025,
+      "name": "rust",
+      "started_at": "2026-10-21T08:49:52Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983576,
+      "name": "general-validation-source-001",
+      "started_at": "2026-10-21T08:49:52Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983600,
+      "name": "feature-validation-source-002",
+      "started_at": "2026-10-21T08:49:52Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983640,
+      "name": "feature-validation-source-001",
+      "started_at": "2026-10-21T08:49:52Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983666,
+      "name": "feature-validation-source-003",
+      "started_at": "2026-10-21T08:49:52Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983669,
+      "name": "general-validation-source-005",
+      "started_at": "2026-10-21T08:49:52Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983696,
+      "name": "general-validation-source-004",
+      "started_at": "2026-10-21T08:49:52Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983726,
+      "name": "general-validation-source-002",
+      "started_at": "2026-10-21T08:49:52Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983737,
+      "name": "feature-validation-source-004",
+      "started_at": "2026-10-21T08:49:52Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983754,
+      "name": "general-validation-source-000",
+      "started_at": "2026-10-21T08:49:50Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983774,
+      "name": "general-validation-source-008",
+      "started_at": "2026-10-21T08:49:52Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983776,
+      "name": "general-validation-source-013",
+      "started_at": "2026-10-21T08:49:52Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983796,
+      "name": "general-validation-source-011",
+      "started_at": "2026-10-21T08:49:50Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983817,
+      "name": "metadata-validation-source-005",
+      "started_at": "2026-10-21T08:49:52Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983830,
+      "name": "general-validation-source-010",
+      "started_at": "2026-10-21T08:49:52Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983840,
+      "name": "general-validation-source-003",
+      "started_at": "2026-10-21T08:49:50Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983844,
+      "name": "general-validation-source-007",
+      "started_at": "2026-10-21T08:49:50Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983848,
+      "name": "general-validation-source-018",
+      "started_at": "2026-10-21T08:49:52Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983851,
+      "name": "metadata-validation-source-003",
+      "started_at": "2026-10-21T08:49:52Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983884,
+      "name": "general-validation-source-012",
+      "started_at": "2026-10-21T08:49:52Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983891,
+      "name": "general-validation-source-009",
+      "started_at": "2026-10-21T08:49:52Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983898,
+      "name": "general-validation-source-017",
+      "started_at": "2026-10-21T08:49:50Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983907,
+      "name": "general-validation-source-022",
+      "started_at": "2026-10-21T08:49:50Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983910,
+      "name": "general-validation-source-015",
+      "started_at": "2026-10-21T08:49:50Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983911,
+      "name": "general-validation-source-023",
+      "started_at": "2026-10-21T08:49:50Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983924,
+      "name": "general-validation-source-014",
+      "started_at": "2026-10-21T08:49:50Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983936,
+      "name": "general-validation-source-006",
+      "started_at": "2026-10-21T08:49:52Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983943,
+      "name": "metadata-validation-source-001",
+      "started_at": "2026-10-21T08:49:50Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983993,
+      "name": "general-validation-source-020",
+      "started_at": "2026-10-21T08:49:50Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128983994,
+      "name": "general-validation-source-019",
+      "started_at": "2026-10-21T08:49:50Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128984000,
+      "name": "metadata-validation-source-002",
+      "started_at": "2026-10-21T08:49:50Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128984023,
+      "name": "general-validation-source-016",
+      "started_at": "2026-10-21T08:49:50Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128984031,
+      "name": "metadata-validation-source-004",
+      "started_at": "2026-10-21T08:49:50Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128984036,
+      "name": "general-validation-source-021",
+      "started_at": "2026-10-21T08:49:50Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128984116,
+      "name": "feature-validation-source-000",
+      "started_at": "2026-10-21T08:49:50Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128984131,
+      "name": "metadata-validation-source-000",
+      "started_at": "2026-10-21T08:49:50Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "id": 119128984298,
+      "name": "general-validation-source-024",
+      "started_at": "2026-10-21T08:49:50Z",
+      "status": "queued"
+    }
+  ],
+  "merged": false,
+  "metadata_required_covers": 12,
+  "metadata_source_assertions": 21,
+  "next_action": "Retain every current raw artifact and independently reproduce all strict summaries against pinned source. Missing/failed/timed-out selections receive no credit. Keep the reviewed source stable while collecting this campaign.",
+  "observed_at": "2026-10-21T08:53:30.740809+00:00",
+  "pull_request": "https://github.com/QuasarRay/agones/pull/96",
+  "required_source_assertions": 56,
+  "required_source_covers": 72,
+  "schema_version": 1,
+  "selected_harnesses": 43,
+  "source_case_jobs": 36,
+  "status": "IN_PROGRESS",
+  "tested_merge": "6492f41e3ddfe1a75e2889f8fd510b3eb2c5ff2d",
+  "tree": "c2df876a919c11ceecb88fa8108ee47c384774f9",
+  "url": "https://github.com/QuasarRay/agones/actions/runs/39572135297",
+  "workflow_run": 39572135297
+}

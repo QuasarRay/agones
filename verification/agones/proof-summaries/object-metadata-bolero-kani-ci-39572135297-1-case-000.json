@@ -1,0 +1,1801 @@
+{
+  "assertions": [
+    {
+      "description": "\"agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::empty::line-82\"",
+      "id": 60,
+      "location": "crates/agones-core/tests/generated/object_metadata_cases.rs:24:5 in function source_metadata_assertion_000",
+      "origin": "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::empty::line-82",
+      "status": "SUCCESS",
+      "symbol": "source_metadata_assertion_000.assertion.1"
+    }
+  ],
+  "covers": [
+    {
+      "description": "source metadata validation case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::empty",
+      "id": 240,
+      "location": "crates/agones-core/tests/generated/object_metadata_cases.rs:168:9 in function source_metadata_program_000",
+      "status": "SATISFIED",
+      "symbol": "source_metadata_program_000.cover.1"
+    },
+    {
+      "description": "the generator should produce at least one valid value",
+      "id": 449,
+      "location": "../../../../../.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bolero-kani-0.13.0/src/lib.rs:37:21 in function <bolero::DefaultEngine as bolero::Engine<bolero::bolero_engine::BorrowedGeneratorTest<{closure@crates/agones-core/tests/generated/object_metadata_cases.rs:519:19: 519:22}, bolero::generator::bolero_generator::TypeValueGenerator<()>, ()>>>::run",
+      "status": "SATISFIED",
+      "symbol": "<bolero::DefaultEngine as bolero::Engine<bolero::bolero_engine::BorrowedGeneratorTest<{closure@crates/agones-core/tests/generated/object_metadata_cases.rs:519:19: 519:22}, bolero::generator::bolero_generator::TypeValueGenerator<()>, ()>>>::run.cover.1"
+    }
+  ],
+  "family": "object-metadata-source",
+  "harness_count": 1,
+  "property_count": 3975,
+  "run": "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-000.json",
+  "schema_version": 1,
+  "scope": "Selected exact source validation case: agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::empty. All5AllocationOverflow cases and whole6-call MetaPatch test, preserving all21qualified assertions. All5overflow cases also traverse actual Rusternetes Fleet/GameServerSet conversions and typed validation. A Rusternetes allocation endpoint is not implemented by this change. Exact cases do not establish an unbounded key/value law or complete API/lifecycle/live Rusternetes/_2 migration.",
+  "selected_harnesses": [
+    "source_metadata_case_000"
+  ],
+  "status_counts": {
+    "SATISFIED": 2,
+    "SUCCESS": 3722,
+    "UNREACHABLE": 251
+  },
+  "unreachable_not_credited": [
+    {
+      "description": "attempt to calculate the remainder with a divisor of zero",
+      "id": 1,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:35:33 in function core::fmt::num::<impl std::fmt::UpperHex for u32>::fmt",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::<impl std::fmt::UpperHex for u32>::fmt.assertion.1"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 3,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:36:21 in function core::fmt::num::<impl std::fmt::UpperHex for u32>::fmt",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::<impl std::fmt::UpperHex for u32>::fmt.assertion.2"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 5,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:38:21 in function core::fmt::num::<impl std::fmt::UpperHex for u32>::fmt",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::<impl std::fmt::UpperHex for u32>::fmt.assertion.3"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 6,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:41:21 in function core::fmt::num::<impl std::fmt::UpperHex for u32>::fmt",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::<impl std::fmt::UpperHex for u32>::fmt.assertion.4"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 7,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:41:39 in function core::fmt::num::<impl std::fmt::UpperHex for u32>::fmt",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::<impl std::fmt::UpperHex for u32>::fmt.assertion.5"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 12,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:812:46 in function alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, std::string::String, alloc::collections::btree::node::marker::Leaf>, alloc::collections::btree::node::marker::KV>::right_edge",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, std::string::String, alloc::collections::btree::node::marker::Leaf>, alloc::collections::btree::node::marker::KV>::right_edge.assertion.1"
+    },
+    {
+      "description": "misaligned pointer dereference: address must be a multiple of its type's alignment",
+      "id": 17,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/macros.rs:60:86 in function agones_core::object_metadata_validation::qualified_name_errors",
+      "status": "UNREACHABLE",
+      "symbol": "agones_core::object_metadata_validation::qualified_name_errors.safety_check.1"
+    },
+    {
+      "description": "null pointer dereference occurred",
+      "id": 18,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/macros.rs:60:86 in function agones_core::object_metadata_validation::qualified_name_errors",
+      "status": "UNREACHABLE",
+      "symbol": "agones_core::object_metadata_validation::qualified_name_errors.safety_check.2"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 19,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:4479:25 in function core::slice::<impl [u8]>::align_to_offsets::<usize>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [u8]>::align_to_offsets::<usize>.assertion.1"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 21,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:4480:25 in function core::slice::<impl [u8]>::align_to_offsets::<usize>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [u8]>::align_to_offsets::<usize>.assertion.2"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 23,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:4483:22 in function core::slice::<impl [u8]>::align_to_offsets::<usize>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [u8]>::align_to_offsets::<usize>.assertion.3"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 25,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:4483:22 in function core::slice::<impl [u8]>::align_to_offsets::<usize>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [u8]>::align_to_offsets::<usize>.assertion.4"
+    },
+    {
+      "description": "attempt to calculate the remainder with a divisor of zero",
+      "id": 26,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:4485:22 in function core::slice::<impl [u8]>::align_to_offsets::<usize>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [u8]>::align_to_offsets::<usize>.assertion.5"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 30,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/iter/adapters/enumerate.rs:82:9 in function <std::iter::Enumerate<std::slice::IterMut<'_, u8>> as std::iter::Iterator>::next",
+      "status": "UNREACHABLE",
+      "symbol": "<std::iter::Enumerate<std::slice::IterMut<'_, u8>> as std::iter::Iterator>::next.assertion.1"
+    },
+    {
+      "description": "attempt to calculate the remainder with a divisor of zero",
+      "id": 38,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/iter.rs:1850:19 in function std::slice::ChunksExact::<'_, u8>::new",
+      "status": "UNREACHABLE",
+      "symbol": "std::slice::ChunksExact::<'_, u8>::new.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 40,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/iter.rs:1851:23 in function std::slice::ChunksExact::<'_, u8>::new",
+      "status": "UNREACHABLE",
+      "symbol": "std::slice::ChunksExact::<'_, u8>::new.assertion.2"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 44,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:812:46 in function alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Immut<'_>, std::string::String, std::string::String, alloc::collections::btree::node::marker::Leaf>, alloc::collections::btree::node::marker::KV>::right_edge",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Immut<'_>, std::string::String, std::string::String, alloc::collections::btree::node::marker::Leaf>, alloc::collections::btree::node::marker::KV>::right_edge.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 45,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:341:55 in function alloc::collections::btree::node::NodeRef::<alloc::collections::btree::node::marker::Immut<'_>, std::string::String, std::string::String, alloc::collections::btree::node::marker::LeafOrInternal>::ascend::{closure#0}",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::NodeRef::<alloc::collections::btree::node::marker::Immut<'_>, std::string::String, std::string::String, alloc::collections::btree::node::marker::LeafOrInternal>::ascend::{closure#0}.assertion.1"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 47,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ub_checks.rs:148:54 in function core::ub_checks::is_valid_allocation_size",
+      "status": "UNREACHABLE",
+      "symbol": "core::ub_checks::is_valid_allocation_size.assertion.1"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 71,
+      "location": "library/kani/src/models/mod.rs:100:30 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 72,
+      "location": "library/kani/src/models/mod.rs:102:35 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.2"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 73,
+      "location": "library/kani/src/models/mod.rs:104:47 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.3"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 74,
+      "location": "library/kani/src/models/mod.rs:104:78 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.4"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 75,
+      "location": "library/kani/src/models/mod.rs:105:51 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.5"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 76,
+      "location": "library/kani/src/models/mod.rs:105:45 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.6"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 77,
+      "location": "library/kani/src/models/mod.rs:105:80 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.7"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 78,
+      "location": "library/kani/src/models/mod.rs:106:51 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.8"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 79,
+      "location": "library/kani/src/models/mod.rs:106:45 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.9"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 80,
+      "location": "library/kani/src/models/mod.rs:106:80 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.10"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 81,
+      "location": "library/kani/src/models/mod.rs:107:51 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.11"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 82,
+      "location": "library/kani/src/models/mod.rs:107:45 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.12"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 83,
+      "location": "library/kani/src/models/mod.rs:107:80 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.13"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 84,
+      "location": "library/kani/src/models/mod.rs:108:51 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.14"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 85,
+      "location": "library/kani/src/models/mod.rs:108:45 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.15"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 86,
+      "location": "library/kani/src/models/mod.rs:108:80 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.16"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 87,
+      "location": "library/kani/src/models/mod.rs:109:51 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.17"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 88,
+      "location": "library/kani/src/models/mod.rs:109:45 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.18"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 89,
+      "location": "library/kani/src/models/mod.rs:109:80 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.19"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 90,
+      "location": "library/kani/src/models/mod.rs:110:51 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.20"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 91,
+      "location": "library/kani/src/models/mod.rs:110:45 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.21"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 92,
+      "location": "library/kani/src/models/mod.rs:110:80 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.22"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 93,
+      "location": "library/kani/src/models/mod.rs:111:51 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.23"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 94,
+      "location": "library/kani/src/models/mod.rs:111:45 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.24"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 95,
+      "location": "library/kani/src/models/mod.rs:111:80 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.25"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 96,
+      "location": "library/kani/src/models/mod.rs:115:24 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.26"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 97,
+      "location": "library/kani/src/models/mod.rs:116:24 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.27"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 98,
+      "location": "library/kani/src/models/mod.rs:121:30 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.28"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 99,
+      "location": "library/kani/src/models/mod.rs:121:24 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.29"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 100,
+      "location": "library/kani/src/models/mod.rs:122:30 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.30"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 101,
+      "location": "library/kani/src/models/mod.rs:122:24 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.31"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 102,
+      "location": "library/kani/src/models/mod.rs:127:30 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.32"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 103,
+      "location": "library/kani/src/models/mod.rs:127:24 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.33"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 104,
+      "location": "library/kani/src/models/mod.rs:128:30 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.34"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 105,
+      "location": "library/kani/src/models/mod.rs:128:24 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.35"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 106,
+      "location": "library/kani/src/models/mod.rs:133:30 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.36"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 107,
+      "location": "library/kani/src/models/mod.rs:133:24 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.37"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 108,
+      "location": "library/kani/src/models/mod.rs:134:30 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.38"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 109,
+      "location": "library/kani/src/models/mod.rs:134:24 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.39"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 110,
+      "location": "library/kani/src/models/mod.rs:139:30 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.40"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 111,
+      "location": "library/kani/src/models/mod.rs:139:24 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.41"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 112,
+      "location": "library/kani/src/models/mod.rs:140:30 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.42"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 113,
+      "location": "library/kani/src/models/mod.rs:140:24 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.43"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 114,
+      "location": "library/kani/src/models/mod.rs:145:30 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.44"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 115,
+      "location": "library/kani/src/models/mod.rs:145:24 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.45"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 116,
+      "location": "library/kani/src/models/mod.rs:146:30 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.46"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 117,
+      "location": "library/kani/src/models/mod.rs:146:24 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.47"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 118,
+      "location": "library/kani/src/models/mod.rs:151:30 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.48"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 119,
+      "location": "library/kani/src/models/mod.rs:151:24 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.49"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 120,
+      "location": "library/kani/src/models/mod.rs:152:30 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.50"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 121,
+      "location": "library/kani/src/models/mod.rs:152:24 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.51"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 122,
+      "location": "library/kani/src/models/mod.rs:157:30 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.52"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 123,
+      "location": "library/kani/src/models/mod.rs:157:24 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.53"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 124,
+      "location": "library/kani/src/models/mod.rs:158:30 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.54"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 125,
+      "location": "library/kani/src/models/mod.rs:158:24 in function kani::models::intrinsics::simd_bitmask_impl::<i8, 16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::models::intrinsics::simd_bitmask_impl::<i8, 16>.assertion.55"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 136,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/vec/mod.rs:1038:24 in function std::vec::Vec::<agones_core::ValidationError>::push_mut",
+      "status": "UNREACHABLE",
+      "symbol": "std::vec::Vec::<agones_core::ValidationError>::push_mut.assertion.1"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 144,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/char/mod.rs:544:12 in function std::char::CaseMappingIter::new",
+      "status": "UNREACHABLE",
+      "symbol": "std::char::CaseMappingIter::new.assertion.1"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 145,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/char/mod.rs:546:16 in function std::char::CaseMappingIter::new",
+      "status": "UNREACHABLE",
+      "symbol": "std::char::CaseMappingIter::new.assertion.2"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 151,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:1116:33 in function alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Immut<'_>, std::string::String, std::string::String, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::Edge>::descend",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Immut<'_>, std::string::String, std::string::String, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::Edge>::descend.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 152,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs:354:58 in function std::alloc::Global::grow_impl_runtime",
+      "status": "UNREACHABLE",
+      "symbol": "std::alloc::Global::grow_impl_runtime.assertion.1"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 155,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:2999:24 in function core::slice::<impl [(u16, [u16; 3])]>::binary_search_by::<'_, {closure@core::slice::<impl [(u16, [u16; 3])]>::binary_search_by_key<'_, u16, {closure@core::unicode::unicode_data::conversions::lookup::{closure#1}}>::{closure#0}}>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [(u16, [u16; 3])]>::binary_search_by::<'_, {closure@core::slice::<impl [(u16, [u16; 3])]>::binary_search_by_key<'_, u16, {closure@core::unicode::unicode_data::conversions::lookup::{closure#1}}>::{closure#0}}>.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 157,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:3000:23 in function core::slice::<impl [(u16, [u16; 3])]>::binary_search_by::<'_, {closure@core::slice::<impl [(u16, [u16; 3])]>::binary_search_by_key<'_, u16, {closure@core::unicode::unicode_data::conversions::lookup::{closure#1}}>::{closure#0}}>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [(u16, [u16; 3])]>::binary_search_by::<'_, {closure@core::slice::<impl [(u16, [u16; 3])]>::binary_search_by_key<'_, u16, {closure@core::unicode::unicode_data::conversions::lookup::{closure#1}}>::{closure#0}}>.assertion.2"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 158,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:3020:13 in function core::slice::<impl [(u16, [u16; 3])]>::binary_search_by::<'_, {closure@core::slice::<impl [(u16, [u16; 3])]>::binary_search_by_key<'_, u16, {closure@core::unicode::unicode_data::conversions::lookup::{closure#1}}>::{closure#0}}>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [(u16, [u16; 3])]>::binary_search_by::<'_, {closure@core::slice::<impl [(u16, [u16; 3])]>::binary_search_by_key<'_, u16, {closure@core::unicode::unicode_data::conversions::lookup::{closure#1}}>::{closure#0}}>.assertion.3"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 159,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:3030:26 in function core::slice::<impl [(u16, [u16; 3])]>::binary_search_by::<'_, {closure@core::slice::<impl [(u16, [u16; 3])]>::binary_search_by_key<'_, u16, {closure@core::unicode::unicode_data::conversions::lookup::{closure#1}}>::{closure#0}}>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [(u16, [u16; 3])]>::binary_search_by::<'_, {closure@core::slice::<impl [(u16, [u16; 3])]>::binary_search_by_key<'_, u16, {closure@core::unicode::unicode_data::conversions::lookup::{closure#1}}>::{closure#0}}>.assertion.4"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 169,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:1116:33 in function alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, std::string::String, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::Edge>::descend",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, std::string::String, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::Edge>::descend.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 170,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:1835:13 in function std::fmt::Formatter::<'_>::pad_integral",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Formatter::<'_>::pad_integral.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 171,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:1832:13 in function std::fmt::Formatter::<'_>::pad_integral",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Formatter::<'_>::pad_integral.assertion.2"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 172,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:1839:13 in function std::fmt::Formatter::<'_>::pad_integral",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Formatter::<'_>::pad_integral.assertion.3"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 174,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:1866:45 in function std::fmt::Formatter::<'_>::pad_integral",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Formatter::<'_>::pad_integral.assertion.4"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 176,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:1873:45 in function std::fmt::Formatter::<'_>::pad_integral",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Formatter::<'_>::pad_integral.assertion.5"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 183,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:4548:54 in function core::slice::<impl [u8]>::align_to::<usize>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [u8]>::align_to::<usize>.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 193,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/string.rs:1440:30 in function std::string::String::push",
+      "status": "UNREACHABLE",
+      "symbol": "std::string::String::push.assertion.1"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 202,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:42:12 in function core::slice::memchr::memchr_naive",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_naive.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 203,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:46:9 in function core::slice::memchr::memchr_naive",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_naive.assertion.2"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 205,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/map.rs:1739:13 in function <std::collections::btree_map::Iter<'_, std::string::String, std::string::String> as std::iter::Iterator>::next",
+      "status": "UNREACHABLE",
+      "symbol": "<std::collections::btree_map::Iter<'_, std::string::String, std::string::String> as std::iter::Iterator>::next.assertion.1"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 212,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:1399:32 in function core::slice::<impl [u8]>::as_chunks::<64>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [u8]>::as_chunks::<64>.assertion.1"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 214,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:1399:32 in function core::slice::<impl [u8]>::as_chunks::<64>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [u8]>::as_chunks::<64>.assertion.2"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 219,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:1399:32 in function core::slice::<impl [usize]>::as_chunks::<4>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [usize]>::as_chunks::<4>.assertion.1"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 221,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:1399:32 in function core::slice::<impl [usize]>::as_chunks::<4>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [usize]>::as_chunks::<4>.assertion.2"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 235,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/map.rs:1939:13 in function std::collections::btree_map::IntoIter::<std::string::String, std::string::String>::dying_next",
+      "status": "UNREACHABLE",
+      "symbol": "std::collections::btree_map::IntoIter::<std::string::String, std::string::String>::dying_next.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 263,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:1689:13 in function std::fmt::write",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::write.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 265,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:1737:13 in function std::fmt::write",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::write.assertion.2"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 282,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:772:21 in function std::fmt::Arguments::<'_>::estimated_capacity",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Arguments::<'_>::estimated_capacity.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 283,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:777:21 in function std::fmt::Arguments::<'_>::estimated_capacity",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Arguments::<'_>::estimated_capacity.assertion.2"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 284,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:778:45 in function std::fmt::Arguments::<'_>::estimated_capacity",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Arguments::<'_>::estimated_capacity.assertion.3"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 285,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:786:32 in function std::fmt::Arguments::<'_>::estimated_capacity",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Arguments::<'_>::estimated_capacity.assertion.4"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 286,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:787:27 in function std::fmt::Arguments::<'_>::estimated_capacity",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Arguments::<'_>::estimated_capacity.assertion.5"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 287,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:786:32 in function std::fmt::Arguments::<'_>::estimated_capacity",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Arguments::<'_>::estimated_capacity.assertion.6"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 288,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:788:27 in function std::fmt::Arguments::<'_>::estimated_capacity",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Arguments::<'_>::estimated_capacity.assertion.7"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 289,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:786:32 in function std::fmt::Arguments::<'_>::estimated_capacity",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Arguments::<'_>::estimated_capacity.assertion.8"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 290,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:789:27 in function std::fmt::Arguments::<'_>::estimated_capacity",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Arguments::<'_>::estimated_capacity.assertion.9"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 291,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:786:32 in function std::fmt::Arguments::<'_>::estimated_capacity",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Arguments::<'_>::estimated_capacity.assertion.10"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 293,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:28:57 in function core::str::count::count_chars",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::count_chars.assertion.1"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 296,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:1963:34 in function std::fmt::Formatter::<'_>::padding",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Formatter::<'_>::padding.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 300,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:1970:35 in function std::fmt::Formatter::<'_>::padding",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Formatter::<'_>::padding.assertion.2"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 302,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:883:21 in function std::fmt::Arguments::<'_>::as_str",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Arguments::<'_>::as_str.assertion.1"
+    },
+    {
+      "description": "Cannot compute offset of a ZST",
+      "id": 339,
+      "location": "library/kani/src/lib.rs:57:1 in function kani::rustc_intrinsics::ptr_offset_from::<u16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<u16>.assertion.1"
+    },
+    {
+      "description": "attempt to calculate the remainder with a divisor of zero",
+      "id": 341,
+      "location": "library/kani_core/src/models.rs:93:25 in function kani::rustc_intrinsics::ptr_offset_from::<u16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<u16>.assertion.2"
+    },
+    {
+      "description": "attempt to calculate the remainder with overflow",
+      "id": 342,
+      "location": "library/kani_core/src/models.rs:93:25 in function kani::rustc_intrinsics::ptr_offset_from::<u16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<u16>.assertion.3"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 346,
+      "location": "library/kani_core/src/models.rs:97:21 in function kani::rustc_intrinsics::ptr_offset_from::<u16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<u16>.assertion.4"
+    },
+    {
+      "description": "attempt to divide with overflow",
+      "id": 347,
+      "location": "library/kani_core/src/models.rs:97:21 in function kani::rustc_intrinsics::ptr_offset_from::<u16>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<u16>.assertion.5"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 353,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:2666:35 in function core::slice::<impl [u8]>::ends_with",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [u8]>::ends_with.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 354,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/builders.rs:371:9 in function std::fmt::DebugTuple::<'_, '_>::field",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::DebugTuple::<'_, '_>::field.assertion.1"
+    },
+    {
+      "description": "Cannot compute offset of a ZST",
+      "id": 359,
+      "location": "library/kani/src/lib.rs:57:1 in function kani::rustc_intrinsics::ptr_offset_from::<&str>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<&str>.assertion.1"
+    },
+    {
+      "description": "attempt to calculate the remainder with a divisor of zero",
+      "id": 361,
+      "location": "library/kani_core/src/models.rs:93:25 in function kani::rustc_intrinsics::ptr_offset_from::<&str>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<&str>.assertion.2"
+    },
+    {
+      "description": "attempt to calculate the remainder with overflow",
+      "id": 362,
+      "location": "library/kani_core/src/models.rs:93:25 in function kani::rustc_intrinsics::ptr_offset_from::<&str>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<&str>.assertion.3"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 366,
+      "location": "library/kani_core/src/models.rs:97:21 in function kani::rustc_intrinsics::ptr_offset_from::<&str>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<&str>.assertion.4"
+    },
+    {
+      "description": "attempt to divide with overflow",
+      "id": 367,
+      "location": "library/kani_core/src/models.rs:97:21 in function kani::rustc_intrinsics::ptr_offset_from::<&str>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<&str>.assertion.5"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 371,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/validations.rs:57:14 in function core::str::next_code_point::<'_, std::slice::Iter<'_, u8>>",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::next_code_point::<'_, std::slice::Iter<'_, u8>>.assertion.1"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 372,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/validations.rs:64:18 in function core::str::next_code_point::<'_, std::slice::Iter<'_, u8>>",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::next_code_point::<'_, std::slice::Iter<'_, u8>>.assertion.2"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 374,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/validations.rs:17:5 in function core::str::validations::utf8_acc_cont_byte",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::validations::utf8_acc_cont_byte.assertion.1"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 379,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:117:6 in function core::str::count::contains_non_continuation_byte",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::contains_non_continuation_byte.assertion.1"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 380,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:117:18 in function core::str::count::contains_non_continuation_byte",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::contains_non_continuation_byte.assertion.2"
+    },
+    {
+      "description": "Cannot compute offset of a ZST",
+      "id": 391,
+      "location": "library/kani/src/lib.rs:57:1 in function kani::rustc_intrinsics::ptr_offset_from::<u8>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<u8>.assertion.1"
+    },
+    {
+      "description": "attempt to calculate the remainder with a divisor of zero",
+      "id": 393,
+      "location": "library/kani_core/src/models.rs:93:25 in function kani::rustc_intrinsics::ptr_offset_from::<u8>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<u8>.assertion.2"
+    },
+    {
+      "description": "attempt to calculate the remainder with overflow",
+      "id": 394,
+      "location": "library/kani_core/src/models.rs:93:25 in function kani::rustc_intrinsics::ptr_offset_from::<u8>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<u8>.assertion.3"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 398,
+      "location": "library/kani_core/src/models.rs:97:21 in function kani::rustc_intrinsics::ptr_offset_from::<u8>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<u8>.assertion.4"
+    },
+    {
+      "description": "attempt to divide with overflow",
+      "id": 399,
+      "location": "library/kani_core/src/models.rs:97:21 in function kani::rustc_intrinsics::ptr_offset_from::<u8>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<u8>.assertion.5"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 404,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/vec/mod.rs:1038:24 in function std::vec::Vec::<&str>::push_mut",
+      "status": "UNREACHABLE",
+      "symbol": "std::vec::Vec::<&str>::push_mut.assertion.1"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 421,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:820:38 in function std::fmt::Arguments::<'_>::from_str",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Arguments::<'_>::from_str.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 423,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ptr/const_ptr.rs:1360:23 in function std::ptr::const_ptr::<impl *const ()>::is_aligned_to",
+      "status": "UNREACHABLE",
+      "symbol": "std::ptr::const_ptr::<impl *const ()>::is_aligned_to.assertion.1"
+    },
+    {
+      "description": "attempt to calculate the remainder with a divisor of zero",
+      "id": 427,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/num/uint_macros.rs:3875:22 in function core::num::<impl usize>::is_multiple_of",
+      "status": "UNREACHABLE",
+      "symbol": "core::num::<impl usize>::is_multiple_of.assertion.1"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 443,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/unicode/unicode_data.rs:995:43 in function core::unicode::unicode_data::conversions::reconstruct",
+      "status": "UNREACHABLE",
+      "symbol": "core::unicode::unicode_data::conversions::reconstruct.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 450,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:812:46 in function alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, std::string::String, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::KV>::right_edge",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Dying, std::string::String, std::string::String, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::KV>::right_edge.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 457,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/alloc/layout.rs:97:32 in function std::alloc::Layout::max_size_for_alignment",
+      "status": "UNREACHABLE",
+      "symbol": "std::alloc::Layout::max_size_for_alignment.assertion.1"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 471,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs:523:28 in function alloc::raw_vec::RawVecInner::grow_amortized",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::raw_vec::RawVecInner::grow_amortized.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 475,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ptr/mod.rs:2317:49 in function std::ptr::align_offset::mod_inv",
+      "status": "UNREACHABLE",
+      "symbol": "std::ptr::align_offset::mod_inv.assertion.1"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 476,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ptr/mod.rs:2317:44 in function std::ptr::align_offset::mod_inv",
+      "status": "UNREACHABLE",
+      "symbol": "std::ptr::align_offset::mod_inv.assertion.2"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 477,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ptr/mod.rs:2317:27 in function std::ptr::align_offset::mod_inv",
+      "status": "UNREACHABLE",
+      "symbol": "std::ptr::align_offset::mod_inv.assertion.3"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 481,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:83:35 in function core::slice::memchr::memchr_aligned::runtime",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_aligned::runtime.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 482,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:83:29 in function core::slice::memchr::memchr_aligned::runtime",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_aligned::runtime.assertion.2"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 483,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:88:39 in function core::slice::memchr::memchr_aligned::runtime",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_aligned::runtime.assertion.3"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 484,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:97:27 in function core::slice::memchr::memchr_aligned::runtime",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_aligned::runtime.assertion.4"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 485,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:97:17 in function core::slice::memchr::memchr_aligned::runtime",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_aligned::runtime.assertion.5"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 486,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:105:75 in function core::slice::memchr::memchr_aligned::runtime",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_aligned::runtime.assertion.6"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 488,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:106:60 in function core::slice::memchr::memchr_aligned::runtime",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_aligned::runtime.assertion.7"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 489,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:205:21 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.1"
+    },
+    {
+      "description": "attempt to calculate the remainder with a divisor of zero",
+      "id": 490,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:209:32 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.2"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 492,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:210:21 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.3"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 494,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:211:33 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.4"
+    },
+    {
+      "description": "attempt to calculate the remainder with a divisor of zero",
+      "id": 496,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:212:33 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.5"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 498,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:213:25 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.6"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 499,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:213:21 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.7"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 500,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:213:57 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.8"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 501,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:213:57 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.9"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 502,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:213:43 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.10"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 503,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:214:25 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.11"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 504,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:214:21 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.12"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 505,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:214:57 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.13"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 506,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:214:57 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.14"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 507,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:214:43 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.15"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 508,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:215:25 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.16"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 509,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:215:21 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.17"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 510,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:215:57 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.18"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 511,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:215:57 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.19"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 512,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:215:43 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.20"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 513,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:216:25 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.21"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 514,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:216:21 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.22"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 515,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:216:57 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.23"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 516,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:216:57 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.24"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 517,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:216:43 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.25"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 518,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:227:21 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.26"
+    },
+    {
+      "description": "attempt to calculate the remainder with a divisor of zero",
+      "id": 519,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:229:32 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.27"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 521,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:230:21 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.28"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 523,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:231:25 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.29"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 524,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:231:21 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.30"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 525,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:231:57 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.31"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 526,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:231:57 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.32"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 527,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:231:43 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.33"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 528,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:232:25 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.34"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 529,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:232:21 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.35"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 530,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:232:57 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.36"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 531,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:232:57 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.37"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 532,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:232:43 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.38"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 533,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:243:21 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.39"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 534,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:248:21 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.40"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 535,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:248:53 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.41"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 536,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:248:53 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.42"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 537,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:248:39 in function core::fmt::num::imp::<impl usize>::_fmt_inner",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::imp::<impl usize>::_fmt_inner.assertion.43"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 540,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:127:52 in function core::str::count::sum_bytes_in_usize",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::sum_bytes_in_usize.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 541,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:127:27 in function core::str::count::sum_bytes_in_usize",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::sum_bytes_in_usize.assertion.2"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 542,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:128:43 in function core::str::count::sum_bytes_in_usize",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::sum_bytes_in_usize.assertion.3"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 543,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:128:42 in function core::str::count::sum_bytes_in_usize",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::sum_bytes_in_usize.assertion.4"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 544,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:128:5 in function core::str::count::sum_bytes_in_usize",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::sum_bytes_in_usize.assertion.5"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 561,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:28:25 in function core::slice::memchr::memchr",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr.assertion.1"
+    },
+    {
+      "description": "attempt to calculate the remainder with a divisor of zero",
+      "id": 568,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:35:33 in function core::fmt::num::<impl std::fmt::UpperHex for usize>::fmt",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::<impl std::fmt::UpperHex for usize>::fmt.assertion.1"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 570,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:36:21 in function core::fmt::num::<impl std::fmt::UpperHex for usize>::fmt",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::<impl std::fmt::UpperHex for usize>::fmt.assertion.2"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 572,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:38:21 in function core::fmt::num::<impl std::fmt::UpperHex for usize>::fmt",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::<impl std::fmt::UpperHex for usize>::fmt.assertion.3"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 573,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:41:21 in function core::fmt::num::<impl std::fmt::UpperHex for usize>::fmt",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::<impl std::fmt::UpperHex for usize>::fmt.assertion.4"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 574,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:41:39 in function core::fmt::num::<impl std::fmt::UpperHex for usize>::fmt",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::<impl std::fmt::UpperHex for usize>::fmt.assertion.5"
+    },
+    {
+      "description": "attempt to calculate the remainder with a divisor of zero",
+      "id": 575,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:35:33 in function core::fmt::num::<impl std::fmt::LowerHex for usize>::fmt",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::<impl std::fmt::LowerHex for usize>::fmt.assertion.1"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 577,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:36:21 in function core::fmt::num::<impl std::fmt::LowerHex for usize>::fmt",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::<impl std::fmt::LowerHex for usize>::fmt.assertion.2"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 579,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:38:21 in function core::fmt::num::<impl std::fmt::LowerHex for usize>::fmt",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::<impl std::fmt::LowerHex for usize>::fmt.assertion.3"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 580,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:41:21 in function core::fmt::num::<impl std::fmt::LowerHex for usize>::fmt",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::<impl std::fmt::LowerHex for usize>::fmt.assertion.4"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 581,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/num.rs:41:39 in function core::fmt::num::<impl std::fmt::LowerHex for usize>::fmt",
+      "status": "UNREACHABLE",
+      "symbol": "core::fmt::num::<impl std::fmt::LowerHex for usize>::fmt.assertion.5"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 584,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/char/methods.rs:2562:22 in function std::char::encode_utf8_raw_unchecked",
+      "status": "UNREACHABLE",
+      "symbol": "std::char::encode_utf8_raw_unchecked.assertion.1"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 585,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/char/methods.rs:2563:22 in function std::char::encode_utf8_raw_unchecked",
+      "status": "UNREACHABLE",
+      "symbol": "std::char::encode_utf8_raw_unchecked.assertion.2"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 586,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/char/methods.rs:2564:22 in function std::char::encode_utf8_raw_unchecked",
+      "status": "UNREACHABLE",
+      "symbol": "std::char::encode_utf8_raw_unchecked.assertion.3"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 587,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/char/methods.rs:2565:22 in function std::char::encode_utf8_raw_unchecked",
+      "status": "UNREACHABLE",
+      "symbol": "std::char::encode_utf8_raw_unchecked.assertion.4"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 590,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/unicode/unicode_data.rs:988:21 in function core::unicode::unicode_data::conversions::deconstruct",
+      "status": "UNREACHABLE",
+      "symbol": "core::unicode::unicode_data::conversions::deconstruct.assertion.1"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 599,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/validations.rs:11:13 in function core::str::validations::utf8_first_byte",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::validations::utf8_first_byte.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 604,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/pattern.rs:440:71 in function <std::str::pattern::CharSearcher<'_> as std::str::pattern::Searcher<'_>>::next_match",
+      "status": "UNREACHABLE",
+      "symbol": "<std::str::pattern::CharSearcher<'_> as std::str::pattern::Searcher<'_>>::next_match.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 605,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/pattern.rs:459:32 in function <std::str::pattern::CharSearcher<'_> as std::str::pattern::Searcher<'_>>::next_match",
+      "status": "UNREACHABLE",
+      "symbol": "<std::str::pattern::CharSearcher<'_> as std::str::pattern::Searcher<'_>>::next_match.assertion.2"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 606,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/pattern.rs:459:17 in function <std::str::pattern::CharSearcher<'_> as std::str::pattern::Searcher<'_>>::next_match",
+      "status": "UNREACHABLE",
+      "symbol": "<std::str::pattern::CharSearcher<'_> as std::str::pattern::Searcher<'_>>::next_match.assertion.3"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 607,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/pattern.rs:461:38 in function <std::str::pattern::CharSearcher<'_> as std::str::pattern::Searcher<'_>>::next_match",
+      "status": "UNREACHABLE",
+      "symbol": "<std::str::pattern::CharSearcher<'_> as std::str::pattern::Searcher<'_>>::next_match.assertion.4"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 615,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/iter/traits/accum.rs:55:28 in function <usize as std::iter::Sum>::sum::<std::iter::Map<std::slice::Iter<'_, u8>, {closure@<std::iter::Filter<I, P> as std::iter::Iterator>::count::to_usize<&u8, {closure@core::str::count::char_count_general_case::{closure#0}}>::{closure#0}}>>::{closure#0}",
+      "status": "UNREACHABLE",
+      "symbol": "<usize as std::iter::Sum>::sum::<std::iter::Map<std::slice::Iter<'_, u8>, {closure@<std::iter::Filter<I, P> as std::iter::Iterator>::count::to_usize<&u8, {closure@core::str::count::char_count_general_case::{closure#0}}>::{closure#0}}>>::{closure#0}.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 616,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:72:21 in function core::str::count::do_count_chars",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::do_count_chars.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 617,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:85:17 in function core::str::count::do_count_chars",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::do_count_chars.assertion.2"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 618,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:91:9 in function core::str::count::do_count_chars",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::do_count_chars.assertion.3"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 620,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:101:17 in function core::str::count::do_count_chars",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::do_count_chars.assertion.4"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 621,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/count.rs:103:13 in function core::str::count::do_count_chars",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::count::do_count_chars.assertion.5"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 630,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:812:46 in function alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Immut<'_>, std::string::String, std::string::String, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::KV>::right_edge",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::Handle::<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Immut<'_>, std::string::String, std::string::String, alloc::collections::btree::node::marker::Internal>, alloc::collections::btree::node::marker::KV>::right_edge.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 634,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/iter/traits/iterator.rs:334:64 in function <std::str::CharIndices<'_> as std::iter::Iterator::advance_by::SpecAdvanceBy>::spec_advance_by::{closure#0}",
+      "status": "UNREACHABLE",
+      "symbol": "<std::str::CharIndices<'_> as std::iter::Iterator::advance_by::SpecAdvanceBy>::spec_advance_by::{closure#0}.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 643,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/iter.rs:189:38 in function <std::str::CharIndices<'_> as std::iter::Iterator>::next",
+      "status": "UNREACHABLE",
+      "symbol": "<std::str::CharIndices<'_> as std::iter::Iterator>::next.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 644,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/iter.rs:189:17 in function <std::str::CharIndices<'_> as std::iter::Iterator>::next",
+      "status": "UNREACHABLE",
+      "symbol": "<std::str::CharIndices<'_> as std::iter::Iterator>::next.assertion.2"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 645,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/unicode/unicode_data.rs:982:13 in function core::unicode::unicode_data::conversions::Range::end",
+      "status": "UNREACHABLE",
+      "symbol": "core::unicode::unicode_data::conversions::Range::end.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 659,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/str/iter.rs:646:45 in function core::str::iter::SplitInternal::<'_, char>::get_end",
+      "status": "UNREACHABLE",
+      "symbol": "core::str::iter::SplitInternal::<'_, char>::get_end.assertion.1"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 669,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:403:35 in function std::fmt::FormattingOptions::fill",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::FormattingOptions::fill.assertion.1"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 678,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:2999:24 in function core::slice::<impl [(core::unicode::unicode_data::conversions::Range, i16)]>::binary_search_by::<'_, {closure@core::unicode::unicode_data::conversions::lookup::{closure#0}}>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [(core::unicode::unicode_data::conversions::Range, i16)]>::binary_search_by::<'_, {closure@core::unicode::unicode_data::conversions::lookup::{closure#0}}>.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 680,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:3000:23 in function core::slice::<impl [(core::unicode::unicode_data::conversions::Range, i16)]>::binary_search_by::<'_, {closure@core::unicode::unicode_data::conversions::lookup::{closure#0}}>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [(core::unicode::unicode_data::conversions::Range, i16)]>::binary_search_by::<'_, {closure@core::unicode::unicode_data::conversions::lookup::{closure#0}}>.assertion.2"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 681,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:3020:13 in function core::slice::<impl [(core::unicode::unicode_data::conversions::Range, i16)]>::binary_search_by::<'_, {closure@core::unicode::unicode_data::conversions::lookup::{closure#0}}>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [(core::unicode::unicode_data::conversions::Range, i16)]>::binary_search_by::<'_, {closure@core::unicode::unicode_data::conversions::lookup::{closure#0}}>.assertion.3"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 682,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:3030:26 in function core::slice::<impl [(core::unicode::unicode_data::conversions::Range, i16)]>::binary_search_by::<'_, {closure@core::unicode::unicode_data::conversions::lookup::{closure#0}}>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [(core::unicode::unicode_data::conversions::Range, i16)]>::binary_search_by::<'_, {closure@core::unicode::unicode_data::conversions::lookup::{closure#0}}>.assertion.4"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 686,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:1927:25 in function std::fmt::Formatter::<'_>::pad",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Formatter::<'_>::pad.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 687,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:1938:30 in function std::fmt::Formatter::<'_>::pad",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Formatter::<'_>::pad.assertion.2"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 704,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/num/uint_macros.rs:3788:21 in function core::num::<impl usize>::div_ceil",
+      "status": "UNREACHABLE",
+      "symbol": "core::num::<impl usize>::div_ceil.assertion.1"
+    },
+    {
+      "description": "attempt to calculate the remainder with a divisor of zero",
+      "id": 706,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/num/uint_macros.rs:3789:21 in function core::num::<impl usize>::div_ceil",
+      "status": "UNREACHABLE",
+      "symbol": "core::num::<impl usize>::div_ceil.assertion.2"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 708,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/num/uint_macros.rs:3791:17 in function core::num::<impl usize>::div_ceil",
+      "status": "UNREACHABLE",
+      "symbol": "core::num::<impl usize>::div_ceil.assertion.3"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 714,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/num/uint_macros.rs:3182:21 in function core::num::<impl usize>::abs_diff",
+      "status": "UNREACHABLE",
+      "symbol": "core::num::<impl usize>::abs_diff.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 715,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/num/uint_macros.rs:3184:21 in function core::num::<impl usize>::abs_diff",
+      "status": "UNREACHABLE",
+      "symbol": "core::num::<impl usize>::abs_diff.assertion.2"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 716,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/char/convert.rs:293:44 in function std::char::convert::char_try_from_u32",
+      "status": "UNREACHABLE",
+      "symbol": "std::char::convert::char_try_from_u32.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 719,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/vec/mod.rs:2986:9 in function std::vec::Vec::<u8>::append_elements_unreserved",
+      "status": "UNREACHABLE",
+      "symbol": "std::vec::Vec::<u8>::append_elements_unreserved.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 721,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/btree/node.rs:341:55 in function alloc::collections::btree::node::NodeRef::<alloc::collections::btree::node::marker::Dying, std::string::String, std::string::String, alloc::collections::btree::node::marker::LeafOrInternal>::ascend::{closure#0}",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::collections::btree::node::NodeRef::<alloc::collections::btree::node::marker::Dying, std::string::String, std::string::String, alloc::collections::btree::node::marker::LeafOrInternal>::ascend::{closure#0}.assertion.1"
+    }
+  ]
+}

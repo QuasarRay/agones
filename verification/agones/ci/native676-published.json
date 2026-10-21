@@ -1,0 +1,31 @@
+{
+  "base": "1e64a054901658908d0a7a4eecd3010379df9614",
+  "classification": "REPO_SAFE",
+  "current_formal_credit": 0,
+  "draft": true,
+  "head": "e15139f9cce0c60c88131f7122b4c0fc5188f420",
+  "historical_campaign": "verification/agones/ci/39528223788-terminal-all37-retained.json",
+  "local_review_commit": "6a21bc80e5b95fdcce20e4a1d1c0dcbb8606165f",
+  "merged": false,
+  "next_action": "Retain all current source-bound raw artifacts and strict summaries. Do not merge until every required current check passes. Continue shared metadata validation implementation independently.",
+  "observed_at": "2026-10-21T06:36:23.918838+00:00",
+  "ordinary_validation": {
+    "clean_checkout_preflight": "verification/agones/canonical-native676-review-ready.json",
+    "generation_modes_passed": 6,
+    "native_failed": 0,
+    "native_ignored": 3,
+    "native_passed": 676,
+    "parser_controls_passed": 11
+  },
+  "published": true,
+  "pull_request": "https://github.com/QuasarRay/agones/pull/96",
+  "required_source_assertions": 35,
+  "required_source_covers": 60,
+  "schema_version": 1,
+  "selected_harnesses": 37,
+  "source_case_jobs": 30,
+  "status": "PUBLISHED_CI_RUNNING",
+  "tree": "aea29a660e2bc2a0bdf38d827930d29eee0250da",
+  "url": "https://github.com/QuasarRay/agones/actions/runs/39556147739",
+  "workflow_run": 39556147739
+}

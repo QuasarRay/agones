@@ -1,0 +1,4 @@
+{"artifact_id": 12315155890, "retained_members": 2}
+{"downloaded": 1, "total_retained": 19}
+{"artifact_id": 12315155890, "error_type": "AssertionError", "validation_failed": true}
+{"cached_pin_accept": 0, "changed_canonical_source_reject": 1, "helper_sha256": "f0c337b1cee15f5346a4f2cd0eb3ae30b635fa1c57d1414d35dc9f72676865c3"}

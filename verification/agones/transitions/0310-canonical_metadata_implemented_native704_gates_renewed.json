@@ -1,0 +1,16 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate",
+    "agones.dev/agones/pkg/apis/allocation/v1::pkg/apis/allocation/v1/gameserverallocation_test.go::TestMetaPatchValidate"
+  ],
+  "authorization": "User execution contract",
+  "event": "CANONICAL_METADATA_IMPLEMENTED_NATIVE704_GATES_RENEWED",
+  "gate_snapshot": "verification/agones/gates/fa682f3bc2dded24a213b49d3337fb7a5a711fb02321ddac5057353491b48f72.json",
+  "predecessor_revision": 309,
+  "predecessor_sha256": "286661bd1752fda1f8553ccb2f9b646f6f7296dc53e89f5750b0d31af647340e",
+  "reason": "Canonical production adopted;704native tests and guidance1828/zero missing passed. Ten gates renewed. Prior source adoption and execution plan preserved separately; current bindings refreshed without transferring model credit.",
+  "result_revision": 310,
+  "schema_version": 1,
+  "state_sha256": "9e04315d29839d2917d1ab98122b41b5b91b08ed6e50a47a6118f0706768ce00",
+  "timestamp": "2026-10-21T08:38:37.237415+00:00"
+}

@@ -1,0 +1,95 @@
+{
+  "acceptance_criteria": [
+    "UpperBoundReplicas returns the smaller arbitrary i32 input and source replicas, including negative replica values; LowerBoundReplicas clamps only belowzero.",
+    "SumGameServerSets accepts a stateful FnMut selector, skips absent pointers before invocation, calls it once per present item in input order and folds modulo2^32 in every build profile. Empty/all-absent inputs yieldzero; selector panics propagate normally.",
+    "Actual existing active replica-policy consumers reuse the same public sum helper for all five selected aggregation sites and retain their prior wrapping arithmetic results.",
+    "Ordinary regression uses independent wide i64 accumulation/narrowing for both wrap directions and repeated extremes; checks exact callback order and no callback on None.",
+    "Full locked workspace/all-target705native tests pass; no production behavior is replaced under cfg(kani), and no extra orchestrator or context is introduced."
+  ],
+  "assurance": {
+    "formal": "Zero formal credit; all three complete original helper tests and any separately justified general property require post-gate typed extraction and protected Bolero/Kani evidence.",
+    "implementation": "Final stateful-selector public helper and all five existing CGP-selected active policy aggregation sites pass705native checks with every recorded source hash current. Canonical adoption and external publication remain pending.",
+    "integration": "Existing real Rusternetes Fleet planner/controller native tests are included in full workspace check; no live cluster/executor proof."
+  },
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "canonical_adoption": false,
+  "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
+  "environment_bindings": {
+    "AGONES_BUILD_VERSION": {
+      "present": false,
+      "sha256": null
+    }
+  },
+  "feature_id": "FLEET-REPLICA-HELPERS-001",
+  "id": "FLEET-REPLICA-HELPERS-001-implementation",
+  "ordinary_check_history": [
+    "verification/agones/runs/fleet-replica-helpers-native-1.json",
+    "verification/agones/runs/fleet-replica-helpers-native-2.json"
+  ],
+  "ordinary_checks": [
+    "verification/agones/runs/fleet-replica-helpers-native-3.json"
+  ],
+  "ordinary_result_counts": {
+    "failed": 0,
+    "ignored": 3,
+    "passed": 705
+  },
+  "predecessor_gate": "verification/agones/gates/2437c452acf5b4ee8885b2a37a5606b200413b6f6cb091f54b45637b21c16fb8.json",
+  "predecessor_gate_sha256": "2437c452acf5b4ee8885b2a37a5606b200413b6f6cb091f54b45637b21c16fb8",
+  "preserved_red_check": "verification/agones/runs/fleet-replica-helpers-red-1.json",
+  "production_files": {
+    ".cargo/config.toml": "d787ef1ca58591bcf5036c8a2386a4d31ecc54febdd5f6630fd8497a4a0d3fb2",
+    "Cargo.lock": "457e9915c442fc92a563532c2adeb010f5f2035fd0ae4b3c9c9ac3396d950d93",
+    "Cargo.toml": "3a3f19b913b7d4fc8966288d621de4134b7b87439231dc64014ea23f7511b6f7",
+    "build/scripts/agones-rs/run.py": "d158464261c6f591f8c2e99dca8eb2e5aed1925696c67778ccbb1fed3bbf90bd",
+    "crates/agones-core/Cargo.toml": "6bd2fb70b00b1ff6d34e4562ff78ab6ea86ca352a5043c87a57b8e65eb1e6a51",
+    "crates/agones-core/src/allocation.rs": "7025e48bdde5da5cbfd45c7cf57086c768a18b9347991dbf46361b7cd9c54f08",
+    "crates/agones-core/src/autoscaling.rs": "7d4d7fd44d52556a1874ccc018c6bdd03e01982e283471cb3472715b6b7adc24",
+    "crates/agones-core/src/build_version.rs": "e6560758de4332abe27a97a3f3b5794068f20e0b4092380658b1cfdc4ce7e1f7",
+    "crates/agones-core/src/feature_inputs.rs": "9cfaf42de485874339a58895991ad15adff787f363d9821a3ab7f0f4c36222d4",
+    "crates/agones-core/src/features.rs": "72c9a28ba3697ac99d733a7bea5b1933ce0d3c055e813a361290bb6135b4bc98",
+    "crates/agones-core/src/fleet.rs": "fba62b2df25ba06ca5d206b8bf8ac96e06e03f92f61276f18590d39997f701bd",
+    "crates/agones-core/src/gameserver.rs": "bdbf85ad795e439f4ba0d9f9030876805ec09e05c4715e6a0b95deb2eff67eb8",
+    "crates/agones-core/src/gameserver_defaulting.rs": "7ced36d2a7109e1363574d0ac8c29ef4dae08c7408d271da0f415a94d6a9ace6",
+    "crates/agones-core/src/gameserver_validation.rs": "be120c2892ed50c3bb6002175d7b7c08c5215197a3f07cbddc16daffb7daf1de",
+    "crates/agones-core/src/gameserverset.rs": "5544e6da50d4263fd2797bf165e22e21d57ffc471a459c66ff1f1ee0cdc869a9",
+    "crates/agones-core/src/generated/go_print_ranges.rs": "0b0dc1a240c33ca0e01d718f5120a0d5bd894e15740b4cf3888824a0a7e84a0b",
+    "crates/agones-core/src/go_quote.rs": "c0e5d196bb6089dd5c138e8c880964cabcf333a96d124377b370c61609c128b9",
+    "crates/agones-core/src/go_slice.rs": "1524bae25a2bf0c382c88c9afb870d43fef02b06f3edb6fdb0a846701444ada3",
+    "crates/agones-core/src/go_utf8.rs": "1178cb0dcc44e1369fa7576701d39e2b7a339343262197d2f6d891bc984158ba",
+    "crates/agones-core/src/go_value.rs": "ea849e221b593654e7049594fdcaebb4a61042e068381af5e96dd5fd017f0e25",
+    "crates/agones-core/src/lib.rs": "1cc349ea6c273c23932e4f6797ada73629393b16ea7fbe37eeb467c8cbaae955",
+    "crates/agones-core/src/multicluster.rs": "675703c308c5e181a1fabfc75e07c4629a77f06b5da7ac9abacce843a28387cd",
+    "crates/agones-core/src/object_metadata_validation.rs": "e5e6246551da636d56b2a9604cb3e87a6c49e5afe2a2e7b2ee873effa91f39df",
+    "crates/agones-core/src/resource_quantity.rs": "a8f7ae7eda83f7f6f546af4700cdc562003437bd92fd6ecbed7f76e1009d8006",
+    "crates/agones-core/src/version_annotation.rs": "9c7d5b402f759b0731d4957fe9732135f589054ed3b38a16839224b0c4b45493",
+    "crates/agones-rusternetes/Cargo.toml": "7e5c18a590b0d602c725abd853fd0ba7825e4028f8a46fc7fe404bb7b512db26",
+    "crates/agones-rusternetes/src/fleet_controller.rs": "0cd4dbaa22b31beeee9c6946c85c9fbf9f161fe95635d67f3154e1722d9cb0d9",
+    "crates/agones-rusternetes/src/fleet_controller_runtime.rs": "872fdefb055d8e883a23815dacfa2e4de7f4d674498de6d534dbb62a588935ba",
+    "crates/agones-rusternetes/src/lib.rs": "3b9294cc000fa7b92e2cbcd9b088e7862a11151163aa51c0d92e5ffea1ac0e64",
+    "rust-toolchain.toml": "c910997cb152c6dc8ed13b1fdf9fa28a4ed30d6776123e27dd6170e5c66067a0"
+  },
+  "production_symbols": [
+    "Fleet::upper_bound_replicas",
+    "Fleet::lower_bound_replicas",
+    "sum_game_server_sets",
+    "fleet_active_replicas_target",
+    "rolling_update_active_replicas"
+  ],
+  "reachable_application_call_paths": [
+    "Rusternetes ReconcileFleetWithComponents -> ExecuteFleetDeploymentWithComponents -> selected UseAgonesFleetDeploymentPlanner -> fleet_deployment_plan -> fleet_active_replicas_target / rolling_update_active_replicas -> public replica helpers"
+  ],
+  "schema_version": 1,
+  "source_snapshot": {
+    "head": "861f4eb5b3d5a9d47d2364edc83b32a1da3e9c71",
+    "source_binding_receipt": "verification/agones/runs/fleet-replica-helpers-native-3.json",
+    "tracked_patch_sha256": "49417c9b2ed3ba68a07dfb7aa8d54a5c29be6696822cb4ef5866cea5010aa4f8"
+  },
+  "source_type_mapping": "Go func(*GameServerSet) int32 -> Rust FnMut(&GameServerSet)->i32; sequential callback mutations remain observable without interior-mutability wrappers.",
+  "status": "IMPLEMENTED",
+  "superseded_ordinary_check": {
+    "reason": "Passed before final rustfmt changed only the regression-test source bytes. Retained without source-current credit; native-2rechecked every recorded source hash.",
+    "receipt": "verification/agones/runs/fleet-replica-helpers-native-1.json"
+  },
+  "timestamp": "2026-10-21T09:39:28.995929+00:00"
+}

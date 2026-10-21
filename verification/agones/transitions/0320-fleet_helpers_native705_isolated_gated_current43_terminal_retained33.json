@@ -1,0 +1,17 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetUpperBoundReplicas",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetLowerBoundReplicas",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestSumGameServerSets"
+  ],
+  "authorization": "User execution contract",
+  "event": "fleet_helpers_native705_isolated_gated_current43_terminal_retained33",
+  "gate_snapshot": null,
+  "predecessor_revision": 319,
+  "predecessor_sha256": "340ac0d3ecc8f445473ddd86ad7b31cb4e5be507ceb6533c9e66d4ee56b8b3af",
+  "reason": "The complete helper implementation and existing CGP consumer reuse passed705native checks plus all three original Go tests after gate911456e. Local commitaf574b3seals the exact source; canonical adoption/source properties/publication remain open. Original CI43 is terminal failure with33archives Git-sealed and ten downloads missing. Metadata byte-scan diagnostic failed and remains isolated; authenticated recovery is unavailable after host tool removal.",
+  "result_revision": 320,
+  "schema_version": 1,
+  "state_sha256": "8be9ebe2e2d3dcc58959ad6ff3f3da512a4ba2ff0197bd558ef62d56a8bb865a",
+  "timestamp": "2026-10-21T09:47:19.391183+00:00"
+}

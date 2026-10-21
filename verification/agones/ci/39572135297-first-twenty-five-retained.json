@@ -1,0 +1,662 @@
+{
+  "artifact_bindings": {
+    "verification/agones/proof-summaries/feature-bool-bolero-kani-ci-39572135297-1.json": "74fd920d0fe6464069c8471c0a2a33f7370609956ecdc91ca457fd3410225726",
+    "verification/agones/proof-summaries/feature-input-bolero-kani-ci-39572135297-1.json": "e9240d021713db08abab6ec27e3bbdd6b05712ee957ba9454c8b5deec59bac69",
+    "verification/agones/proof-summaries/feature-query-error-bolero-kani-ci-39572135297-1.json": "66557d45b367e6493091c13310ddd8f9771452a205a2923b34ee31b7f66f176d",
+    "verification/agones/proof-summaries/gameserver-features-bolero-kani-ci-39572135297-1.json": "6befca5de304c0c265d302a37ae27bc9f809c76780b79d41dbaaeef25c5b7eb2",
+    "verification/agones/proof-summaries/gameserver-source-005-bolero-kani-ci-39572135297-1.json": "72f79c3c410038eb3f9165d37de438bea188f2fac3e436b0d0fb293ab458875e",
+    "verification/agones/proof-summaries/gameserver-source-014-bolero-kani-ci-39572135297-1.json": "91f74084ffccf168cf656bf9c6e9c77a8a4fdf46503c472e331308a645a77f18",
+    "verification/agones/proof-summaries/health-defaulting-bolero-kani-ci-39572135297-1.json": "93b853fb8a6fc79fa01b66ee228b173bde44ef48036debdb42cec51595d7d031",
+    "verification/agones/proof-summaries/object-metadata-bolero-kani-ci-39572135297-1-case-000.json": "a0e47fc3d7a86bb4c0710a50a24d4543dfe1c54d7870820859dbe1a81129b22b",
+    "verification/agones/runs/feature-bool-bolero-kani-ci-39572135297-1.json": "24bb369cee9af9cb80eecb025eef4e501190bc57eba499fc4ea94e32b6bacefa",
+    "verification/agones/runs/feature-bool-bolero-kani-ci-39572135297-1.log": "f1ed47b04a55a6413c094b04270bb03af94defd2fcb1ab909e616d625eb0ed19",
+    "verification/agones/runs/feature-input-bolero-kani-ci-39572135297-1.json": "c43ecdfb039cfcd92e8be7717047e591577331dc6be0c801c1e06cec73eeb3fb",
+    "verification/agones/runs/feature-input-bolero-kani-ci-39572135297-1.log": "2a219e85aa8921f4cf8f2d19ae3ebfc53514030a5c31de03fbca683033950790",
+    "verification/agones/runs/feature-query-error-bolero-kani-ci-39572135297-1.json": "67e87741dd2352ada4b8a72d22a0b13e1b345dd0f5ffdbaf9562794ca05fe6de",
+    "verification/agones/runs/feature-query-error-bolero-kani-ci-39572135297-1.log": "cd6a7774b332f58418846514962944569fb306dc73fbaaecc0bb44c84a7a528e",
+    "verification/agones/runs/gameserver-features-bolero-kani-ci-39572135297-1.json": "be8f289784e10eca06ac23dfcb231c2ca3e875555f6f5630a5a9373409a4d14e",
+    "verification/agones/runs/gameserver-features-bolero-kani-ci-39572135297-1.log": "50387b7b849aacae05b24958cd65fc3c90091b5d18c2e0a6ad1d4a2bd8e41000",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-000.json": "a23d8eece7cd6c06a6b81f9d5f68e9c8a4c60eda634503f690150cfd5f7e421d",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-000.log": "4f3d8fdb1c9caa0130cb62d78eecea66e937b19971cb6d14c6de2f4e91d987bb",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-001.json": "fb7038f741b577a760bb3d2692014f9487d93e65030d223f088611424a25532f",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-001.log": "59e34196c53aead89037fa0bd07059937082ba2af5a2979b79b0205221826499",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-004.json": "4270a154e52d632959fe14dcd23c626df3f11a5876efae9513f9e581065fc81c",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-004.log": "410559d41871ea01a86372bfa3d54b61130d3bb18e09252ecf7b43b2d6fef212",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-006.json": "57bf30049aa9a2aefb0fcc1cfacc47a2584f42906c5424ec349e0298f3437557",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-006.log": "8b1d200f4b339cd4f314343b7db4ca69fdd46a10ed8f67d73b4e4058ebf7d070",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-007.json": "c264bf4568f092f373be13351686872df2c3b635d3282f8a322edb1f26e61d9e",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-007.log": "8fe6fcf3393fff2ec73ebbbb8529a0898fb4d01792b4a1ec09bd2d3000c3cc64",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-008.json": "2188cb87a45afef1f9e682532779df5942b2d9c07b99c095bd17aa3c3b87afba",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-008.log": "e407efb2d7675b6199f131264127dd7211b02812366e8b13862c24ea923138c9",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-009.json": "48751843a1232be12b59fea49bd75de7c0399395df37981d23ccb17f7237075a",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-009.log": "13188476417f51b5c8b0687b8b28882778ea75fac9d848bc77bb801e9ebb37ba",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-012.json": "92dbc668c8ddbebb54da39c00ce5c2bb780372596f10d533b3b47d66cbdddf4b",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-012.log": "d71ad890078a38222da87e6880e8683c565ac13b7b801058380fa8110c56b172",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-013.json": "8bf9c2950a6b8f3d57c741a041de50a6394e3c407e79dfb8bdbb7d37be359c05",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-013.log": "11ee5a807d0852930fad5e18dafd5d629b46a611427aa3d18f8696d1d300848a",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-017.json": "cc3e47598cd5cc089638310de57cc77021d99929a2f8d256f4f18ecb9faf14b1",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-017.log": "aecdf5b1a484d2f6580a97a6f4cb72e811bbf005815590f63b95988d6ea629ca",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-018.json": "8c6058b482be9c67e72e4dfd11a144a9fe3f5cbee4fac8d1435a2f760cdeddcc",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-018.log": "5a84eaf7bb5c1b31bae1ebd6ab127091639b2006a9139399b1d63f45e758a9a4",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-023.json": "615385d4c2a18be666309ef9de14bbc70e9b26ab73da72ca55b582ae19e291d8",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-023.log": "a9c5a3cf018f011d137effd382c0d776bdea3756ebb957d154287f4fb155851e",
+    "verification/agones/runs/gameserver-source-005-bolero-kani-ci-39572135297-1.json": "ea59af5eedc9096234a40940febc813dc48f099eb7cec6a8a769849f404e8a21",
+    "verification/agones/runs/gameserver-source-005-bolero-kani-ci-39572135297-1.log": "0dc5c31ead41a818fbffc1a5c90cefb86f737a22dd42bd0cc5bd6d3abdf91b99",
+    "verification/agones/runs/gameserver-source-014-bolero-kani-ci-39572135297-1.json": "d96cb0b355bc6aceca2b409a200f95e30696f2ed7b57f3a3b1a3c297c0fa9ff9",
+    "verification/agones/runs/gameserver-source-014-bolero-kani-ci-39572135297-1.log": "65fcca661e1732bf1b255b926299eae652b15e5359addba0ac8b93588beb198a",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39572135297-1-case-002.json": "7e6e100f235fa40fd8025ab99c22485ef07a93c299067001f93813df26d61f28",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39572135297-1-case-002.log": "4d368fa10f8f73ffd13ee4339d60ec27c2aae242d6746944850521fa3be5f67b",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39572135297-1-case-004.json": "47878a5245c36eb0b11c0e9c86b68aab3f5e544b8689637a2bce2c023634f967",
+    "verification/agones/runs/gameserver-validation-bolero-kani-ci-39572135297-1-case-004.log": "cb9f558af575a20d39f2781a3af81c05d7c2de3597b22a1545676b6c95b03a4a",
+    "verification/agones/runs/health-defaulting-bolero-kani-ci-39572135297-1.json": "82b435e04d03bf9d0cccda236a5b4f930b835718752a8da2e31f0518ea37743c",
+    "verification/agones/runs/health-defaulting-bolero-kani-ci-39572135297-1.log": "520e5c9f71d1a41ef74dd1a186bff499c084b464b3c783e5da0c76dd04430f59",
+    "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-000.json": "37a50c46d35f3fc3eb692ad813e487b3de13f613b29ac26f3e2e71fdd097f490",
+    "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-000.log": "53e0fdf129e88763aae1e5e9fb63d43f4d3bd83ad7478420073b51a9fc38c2a5",
+    "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-001.json": "00380bff8a586c9f621d2121cad84acc13e975d3d28e180eb6aa4e65e2ea81ea",
+    "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-001.log": "8fb2a769d216b8b2196409f4641205124b971ed302a7bc877a81389eed0e9530",
+    "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-003.json": "d7c6976bed83df41075a8a7a7c0dd4479fd82f9c2585d28a6c2fb7bdd6f9e923",
+    "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-003.log": "dffeab934306a77311f0607ee8f4461413c477df5b27b0acf3fbbfbf0a427e6c",
+    "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-005.json": "103b1b4961b4561cc77aee0862b30b9c3794623350ca158adc881b20ff1202a4",
+    "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-005.log": "7aa4c22f2eabc6d7e5acbfd9263d095a1f6de5eaadc7c58e093247ec7e5099ac"
+  },
+  "artifacts": [
+    {
+      "archive_sha256": "15bb11ada03cc2888dc8ce5e268cf55c60d9a0699360f288f5cff0eb8ecbc2e3",
+      "artifact_id": 12332753676,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-006.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-006.log"
+      ],
+      "name": "feature-kani-general-validation-006-39572135297-1"
+    },
+    {
+      "archive_sha256": "fae71ea7b91d6d7862381b398122fc697d76e3ad02b11491031dab687ae57095",
+      "artifact_id": 12332652711,
+      "members": [
+        "verification/agones/runs/gameserver-features-bolero-kani-ci-39572135297-1.json",
+        "verification/agones/runs/gameserver-features-bolero-kani-ci-39572135297-1.log",
+        "verification/agones/proof-summaries/gameserver-features-bolero-kani-ci-39572135297-1.json"
+      ],
+      "name": "feature-kani-player-contract-39572135297-1"
+    },
+    {
+      "archive_sha256": "c2228fd27c7954ff9a2669622de36b6cb228c9ad69da829a1e57fd9db7bfdaad",
+      "artifact_id": 12332627680,
+      "members": [
+        "verification/agones/runs/feature-bool-bolero-kani-ci-39572135297-1.json",
+        "verification/agones/runs/feature-bool-bolero-kani-ci-39572135297-1.log",
+        "verification/agones/proof-summaries/feature-bool-bolero-kani-ci-39572135297-1.json"
+      ],
+      "name": "feature-kani-bool-39572135297-1"
+    },
+    {
+      "archive_sha256": "bcc398785d0109d85b56a2384c3f3aac08281a1e913cf9a0f21baeca0c9303d4",
+      "artifact_id": 12332617583,
+      "members": [
+        "verification/agones/runs/feature-query-error-bolero-kani-ci-39572135297-1.json",
+        "verification/agones/runs/feature-query-error-bolero-kani-ci-39572135297-1.log",
+        "verification/agones/proof-summaries/feature-query-error-bolero-kani-ci-39572135297-1.json"
+      ],
+      "name": "feature-kani-query-003-39572135297-1"
+    },
+    {
+      "archive_sha256": "059c9f53071530c9dcf5930aacfb1545995e37189c6682b04fbd3c4d9062784a",
+      "artifact_id": 12332592508,
+      "members": [
+        "verification/agones/runs/feature-input-bolero-kani-ci-39572135297-1.json",
+        "verification/agones/runs/feature-input-bolero-kani-ci-39572135297-1.log",
+        "verification/agones/proof-summaries/feature-input-bolero-kani-ci-39572135297-1.json"
+      ],
+      "name": "feature-kani-input-39572135297-1"
+    },
+    {
+      "archive_sha256": "79fa7e4541ea87832e52e68e4767c16cea79a6e1d173a16af0a3ab09cacf78dd",
+      "artifact_id": 12332044898,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-018.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-018.log"
+      ],
+      "name": "feature-kani-general-validation-018-39572135297-1"
+    },
+    {
+      "archive_sha256": "36d0b5f983c1f02cab07d736d7b9d973563bf1336c6b7e0a1fef734c3a9197ea",
+      "artifact_id": 12331994275,
+      "members": [
+        "verification/agones/runs/health-defaulting-bolero-kani-ci-39572135297-1.json",
+        "verification/agones/proof-summaries/health-defaulting-bolero-kani-ci-39572135297-1.json",
+        "verification/agones/runs/health-defaulting-bolero-kani-ci-39572135297-1.log"
+      ],
+      "name": "feature-kani-health-39572135297-1"
+    },
+    {
+      "archive_sha256": "d77b8743b9670caa1c925ea979c75a27ec52cf549d34a34dc3a2346aff97ad55",
+      "artifact_id": 12331924126,
+      "members": [
+        "verification/agones/runs/gameserver-source-014-bolero-kani-ci-39572135297-1.json",
+        "verification/agones/proof-summaries/gameserver-source-014-bolero-kani-ci-39572135297-1.json",
+        "verification/agones/runs/gameserver-source-014-bolero-kani-ci-39572135297-1.log"
+      ],
+      "name": "feature-kani-gameserver-014-39572135297-1"
+    },
+    {
+      "archive_sha256": "68610e01c0bb01246ef31050ea6f508daf7cb3a87eb1123140bf51095c524da1",
+      "artifact_id": 12331689117,
+      "members": [
+        "verification/agones/runs/gameserver-source-005-bolero-kani-ci-39572135297-1.log",
+        "verification/agones/proof-summaries/gameserver-source-005-bolero-kani-ci-39572135297-1.json",
+        "verification/agones/runs/gameserver-source-005-bolero-kani-ci-39572135297-1.json"
+      ],
+      "name": "feature-kani-gameserver-005-39572135297-1"
+    },
+    {
+      "archive_sha256": "6d339d59390235c41e320673d199af8b4d2723ef9920b5d06dcc3446b13714d1",
+      "artifact_id": 12333091225,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-012.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-012.log"
+      ],
+      "name": "feature-kani-general-validation-012-39572135297-1"
+    },
+    {
+      "archive_sha256": "ed7e1898f2d18475110996d18a9e8c5056bbd5beb6c041e2d9061c8f3d1cde83",
+      "artifact_id": 12332723177,
+      "members": [
+        "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-005.json",
+        "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-005.log"
+      ],
+      "name": "feature-kani-metadata-validation-005-39572135297-1"
+    },
+    {
+      "archive_sha256": "44c0ea2e06b61fcc482a08ebb4eac4fe90d3a4d8f836426213c28a5bee782a98",
+      "artifact_id": 12331614802,
+      "members": [
+        "verification/agones/runs/gameserver-validation-bolero-kani-ci-39572135297-1-case-004.json",
+        "verification/agones/runs/gameserver-validation-bolero-kani-ci-39572135297-1-case-004.log"
+      ],
+      "name": "feature-kani-validation-004-39572135297-1"
+    },
+    {
+      "archive_sha256": "cd494fd2f599e2f1f743504cb15dbfb122c5ce9202ffb1df09471152a9fce345",
+      "artifact_id": 12334130135,
+      "members": [
+        "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-001.json",
+        "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-001.log"
+      ],
+      "name": "feature-kani-metadata-validation-001-39572135297-1"
+    },
+    {
+      "archive_sha256": "9a055ef30820e09c645f9dda0d407f258b8d9e48235a7ad71f6208ccfb02d085",
+      "artifact_id": 12333980210,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-004.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-004.log"
+      ],
+      "name": "feature-kani-general-validation-004-39572135297-1"
+    },
+    {
+      "archive_sha256": "cfb9103867fae30471238649f8a9f4f3fc511085e9cc1c0394bafaf196b62f02",
+      "artifact_id": 12333865836,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-001.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-001.log"
+      ],
+      "name": "feature-kani-general-validation-001-39572135297-1"
+    },
+    {
+      "archive_sha256": "4612081270d07acff85583194344ab2f4cd281a1f65da6eb26df97912d063997",
+      "artifact_id": 12333740761,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-009.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-009.log"
+      ],
+      "name": "feature-kani-general-validation-009-39572135297-1"
+    },
+    {
+      "archive_sha256": "6bd4fa5cb4e3b15e2f8fc2e5094ebde8e40337ff4d667eb84275ff3413eb9e04",
+      "artifact_id": 12332913583,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-008.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-008.log"
+      ],
+      "name": "feature-kani-general-validation-008-39572135297-1"
+    },
+    {
+      "archive_sha256": "f4b36aaeb18132908575b4c24d7d4779c64f38ddf98688edcbdf97d310a566f7",
+      "artifact_id": 12332819811,
+      "members": [
+        "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-000.json",
+        "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-000.log",
+        "verification/agones/proof-summaries/object-metadata-bolero-kani-ci-39572135297-1-case-000.json"
+      ],
+      "name": "feature-kani-metadata-validation-000-39572135297-1"
+    },
+    {
+      "archive_sha256": "148f63913843c47269d775b3ac7981cdc40351c623ea50c74c7535130887fde1",
+      "artifact_id": 12334116148,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-007.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-007.log"
+      ],
+      "name": "feature-kani-general-validation-007-39572135297-1"
+    },
+    {
+      "archive_sha256": "00caa7d60c378c519acbae0ebcc291328d63953fc852c9d2ceb963659d647801",
+      "artifact_id": 12334090748,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-013.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-013.log"
+      ],
+      "name": "feature-kani-general-validation-013-39572135297-1"
+    },
+    {
+      "archive_sha256": "738b6f0cbcf495da201b6bf599fbf26eec46c6137ab0bc592a430de420b29c4a",
+      "artifact_id": 12333896786,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-017.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-017.log"
+      ],
+      "name": "feature-kani-general-validation-017-39572135297-1"
+    },
+    {
+      "archive_sha256": "69d21f55c39d5d30efc9afd4a64df0d67a75a184f82a213d9786e5994116fcdf",
+      "artifact_id": 12333822489,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-000.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-000.log"
+      ],
+      "name": "feature-kani-general-validation-000-39572135297-1"
+    },
+    {
+      "archive_sha256": "3b645608664956c5c670dbebcf15d4dbe39f2800d41af08a3f0eb2952e719259",
+      "artifact_id": 12333411582,
+      "members": [
+        "verification/agones/runs/gameserver-validation-bolero-kani-ci-39572135297-1-case-002.json",
+        "verification/agones/runs/gameserver-validation-bolero-kani-ci-39572135297-1-case-002.log"
+      ],
+      "name": "feature-kani-validation-002-39572135297-1"
+    },
+    {
+      "archive_sha256": "e6003ba3fa4a972722cc856b7053ee4bb18a01e4c8077ca083cc209738518821",
+      "artifact_id": 12333406650,
+      "members": [
+        "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-003.json",
+        "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-003.log"
+      ],
+      "name": "feature-kani-metadata-validation-003-39572135297-1"
+    },
+    {
+      "archive_sha256": "3da5fe6098c6528697230f5a87983a6a03280a6073d36fa6f10b1be1569bd07d",
+      "artifact_id": 12333147442,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-023.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-023.log"
+      ],
+      "name": "feature-kani-general-validation-023-39572135297-1"
+    }
+  ],
+  "ci_url": "https://github.com/QuasarRay/agones/actions/runs/39572135297",
+  "counts": {
+    "audited_selections": 25,
+    "backend_rows": 22833,
+    "expected_selections": 43,
+    "retained_artifacts": 25,
+    "satisfied_covers": 40,
+    "semantic_claims": 50,
+    "successful_harnesses": 8,
+    "uncredited_selections": 17,
+    "unique_qualified_source_assertions": 38,
+    "unreachable_credited": 0
+  },
+  "migration_status": "INCOMPLETE",
+  "qualified_source_origins": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/common_test.go::TestAllocationOverflowValidate::empty::line-82",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-405",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-409",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-412",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-413",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-414",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-415",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-416",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-417",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-418",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-419",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-423",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-424",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-427",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-432",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-439",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-440",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-445",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-446",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-405",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-409",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-412",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-413",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-414",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-415",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-416",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-417",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-418",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-419",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-423",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-424",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-427",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-432",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-439",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-440",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-445",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-446",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Error on query parsing::line-65"
+  ],
+  "remaining_selections": 18,
+  "results": [
+    {
+      "backend_rows": 1158,
+      "exit_code": 0,
+      "family": "bool",
+      "formal_credit": true,
+      "harness": "feature_bool_common_domain",
+      "log_sha256": "f1ed47b04a55a6413c094b04270bb03af94defd2fcb1ab909e616d625eb0ed19",
+      "run": "verification/agones/runs/feature-bool-bolero-kani-ci-39572135297-1.json",
+      "satisfied_covers": 6,
+      "semantic_claims": 3,
+      "status": "PASSED"
+    },
+    {
+      "backend_rows": 978,
+      "exit_code": 0,
+      "family": "input",
+      "formal_credit": true,
+      "harness": "feature_input_common_domain",
+      "log_sha256": "2a219e85aa8921f4cf8f2d19ae3ebfc53514030a5c31de03fbca683033950790",
+      "run": "verification/agones/runs/feature-input-bolero-kani-ci-39572135297-1.json",
+      "satisfied_covers": 10,
+      "semantic_claims": 3,
+      "status": "PASSED"
+    },
+    {
+      "backend_rows": 1542,
+      "exit_code": 0,
+      "family": "query",
+      "formal_credit": true,
+      "harness": "source_query_case_003",
+      "log_sha256": "cd6a7774b332f58418846514962944569fb306dc73fbaaecc0bb44c84a7a528e",
+      "run": "verification/agones/runs/feature-query-error-bolero-kani-ci-39572135297-1.json",
+      "satisfied_covers": 2,
+      "semantic_claims": 1,
+      "status": "PASSED"
+    },
+    {
+      "backend_rows": 2411,
+      "exit_code": 0,
+      "family": "health",
+      "formal_credit": true,
+      "harness": "health_defaulting_common_domain",
+      "log_sha256": "520e5c9f71d1a41ef74dd1a186bff499c084b464b3c783e5da0c76dd04430f59",
+      "run": "verification/agones/runs/health-defaulting-bolero-kani-ci-39572135297-1.json",
+      "satisfied_covers": 8,
+      "semantic_claims": 3,
+      "status": "PASSED"
+    },
+    {
+      "backend_rows": 5614,
+      "exit_code": 0,
+      "family": "gameserver-source",
+      "formal_credit": true,
+      "harness": "source_gs_case_005",
+      "log_sha256": "0dc5c31ead41a818fbffc1a5c90cefb86f737a22dd42bd0cc5bd6d3abdf91b99",
+      "run": "verification/agones/runs/gameserver-source-005-bolero-kani-ci-39572135297-1.json",
+      "satisfied_covers": 2,
+      "semantic_claims": 18,
+      "status": "PASSED"
+    },
+    {
+      "backend_rows": 5614,
+      "exit_code": 0,
+      "family": "gameserver-source",
+      "formal_credit": true,
+      "harness": "source_gs_case_014",
+      "log_sha256": "65fcca661e1732bf1b255b926299eae652b15e5359addba0ac8b93588beb198a",
+      "run": "verification/agones/runs/gameserver-source-014-bolero-kani-ci-39572135297-1.json",
+      "satisfied_covers": 2,
+      "semantic_claims": 18,
+      "status": "PASSED"
+    },
+    {
+      "backend_rows": 1541,
+      "exit_code": 0,
+      "family": "gameserver-features",
+      "formal_credit": true,
+      "harness": "gameserver_feature_validation_common_domain",
+      "log_sha256": "50387b7b849aacae05b24958cd65fc3c90091b5d18c2e0a6ad1d4a2bd8e41000",
+      "run": "verification/agones/runs/gameserver-features-bolero-kani-ci-39572135297-1.json",
+      "satisfied_covers": 8,
+      "semantic_claims": 3,
+      "status": "PASSED"
+    },
+    {
+      "complete_individual_rows": 0,
+      "diagnostic_tail": "_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 658 column 9 function alloc::raw_vec::RawVecInner::<A>::reserve::do_reserve_and_handle::<std::alloc::Global> thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/mod.rs line 134 column 15 function <std::collections::TryReserveErrorKind as std::clone::Clone>::clone thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 888 column 11 function alloc::raw_vec::handle_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs line 602 column 5 function std::alloc::handle_alloc_error::rt_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs line 643 column 13 function std::alloc::handle_alloc_error::rt_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs line 649 column 9 function std::alloc::handle_alloc_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 890 column 38 function alloc::raw_vec::handle_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 28 column 5 function alloc::raw_vec::capacity_overflow thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 889 column 29 function alloc::raw_vec::handle_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 666 column 17 function alloc::raw_vec::RawVecInner::<A>::reserve::do_reserve_and_handle::<std::alloc::Global> thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\nFinished with result: exit-code\nMain processes terminated with: code=exited/status=124\nService runtime: 15min 3.371s\nCPU time consumed: 15min 37.335s\nMemory peak: 10.7G\nMemory swap peak: 0B\nResult=exit-code\nExecMainCode=1\nExecMainStatus=124\nMemoryPeak=11551182848\n",
+      "exit_code": 124,
+      "family": "gameserver-validation-source",
+      "formal_credit": false,
+      "harness": "source_gsv_case_002",
+      "log_sha256": "4d368fa10f8f73ffd13ee4339d60ec27c2aae242d6746944850521fa3be5f67b",
+      "run": "verification/agones/runs/gameserver-validation-bolero-kani-ci-39572135297-1-case-002.json",
+      "scope": "No complete accepted strict summary; zero assertion or cover credit.",
+      "status": "FAILED"
+    },
+    {
+      "complete_individual_rows": 0,
+      "diagnostic_tail": "o_reserve_and_handle::<std::alloc::Global> thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/mod.rs line 134 column 15 function <std::collections::TryReserveErrorKind as std::clone::Clone>::clone thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 888 column 11 function alloc::raw_vec::handle_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs line 602 column 5 function std::alloc::handle_alloc_error::rt_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs line 643 column 13 function std::alloc::handle_alloc_error::rt_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs line 649 column 9 function std::alloc::handle_alloc_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 890 column 38 function alloc::raw_vec::handle_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 28 column 5 function alloc::raw_vec::capacity_overflow thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 889 column 29 function alloc::raw_vec::handle_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 666 column 17 function alloc::raw_vec::RawVecInner::<A>::reserve::do_reserve_and_handle::<std::alloc::Global> thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\nFinished with result: oom-kill\nMain processes terminated with: code=killed/status=KILL\nService runtime: 8min 56.441s\nCPU time consumed: 9min 19.769s\nMemory peak: 12.0G\nMemory swap peak: 0B\nResult=oom-kill\nExecMainCode=2\nExecMainStatus=9\nMemoryPeak=12884901888\n",
+      "exit_code": 1,
+      "family": "gameserver-validation-source",
+      "formal_credit": false,
+      "harness": "source_gsv_case_004",
+      "log_sha256": "cb9f558af575a20d39f2781a3af81c05d7c2de3597b22a1545676b6c95b03a4a",
+      "run": "verification/agones/runs/gameserver-validation-bolero-kani-ci-39572135297-1-case-004.json",
+      "scope": "No complete accepted strict summary; zero assertion or cover credit.",
+      "status": "FAILED"
+    },
+    {
+      "complete_individual_rows": 0,
+      "diagnostic_tail": "se) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\nUnwinding loop _RNvNtCsgVugCEqaZtI_11agones_core10gameserver24indexed_validation_field.0 iteration 6 file crates/agones-core/src/gameserver.rs line 646 column 5 function agones_core::gameserver::indexed_validation_field thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/option.rs line 1334 column 15 function std::option::Option::<usize>::ok_or::<std::collections::TryReserveErrorKind> thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/result.rs line 2177 column 15 function <std::result::Result<usize, std::collections::TryReserveErrorKind> as std::ops::Try>::branch thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/result.rs line 965 column 15 function std::result::Result::<std::alloc::Layout, std::alloc::LayoutError>::map_err::<std::collections::TryReserveError, {closure@alloc::raw_vec::layout_array::{closure#0}}> thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/result.rs line 2177 column 15 function <std::result::Result<std::alloc::Layout, std::collections::TryReserveError> as std::ops::Try>::branch thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 549 column 26 function alloc::raw_vec::RawVecInner::finish_grow thread 0\nFinished with result: oom-kill\nMain processes terminated with: code=killed/status=KILL\nService runtime: 11min 20.672s\nCPU time consumed: 11min 40.470s\nMemory peak: 12.0G\nMemory swap peak: 0B\nResult=oom-kill\nExecMainCode=2\nExecMainStatus=9\nMemoryPeak=12884901888\n",
+      "exit_code": 1,
+      "family": "gameserver-general-validation-source",
+      "formal_credit": false,
+      "harness": "source_gs_validate_case_000",
+      "log_sha256": "4f3d8fdb1c9caa0130cb62d78eecea66e937b19971cb6d14c6de2f4e91d987bb",
+      "run": "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-000.json",
+      "scope": "No complete accepted strict summary; zero assertion or cover credit.",
+      "status": "FAILED"
+    },
+    {
+      "complete_individual_rows": 0,
+      "diagnostic_tail": "_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 658 column 9 function alloc::raw_vec::RawVecInner::<A>::reserve::do_reserve_and_handle::<std::alloc::Global> thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/mod.rs line 134 column 15 function <std::collections::TryReserveErrorKind as std::clone::Clone>::clone thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 888 column 11 function alloc::raw_vec::handle_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs line 602 column 5 function std::alloc::handle_alloc_error::rt_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs line 643 column 13 function std::alloc::handle_alloc_error::rt_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs line 649 column 9 function std::alloc::handle_alloc_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 890 column 38 function alloc::raw_vec::handle_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 28 column 5 function alloc::raw_vec::capacity_overflow thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 889 column 29 function alloc::raw_vec::handle_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 666 column 17 function alloc::raw_vec::RawVecInner::<A>::reserve::do_reserve_and_handle::<std::alloc::Global> thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\nFinished with result: exit-code\nMain processes terminated with: code=exited/status=124\nService runtime: 15min 2.923s\nCPU time consumed: 15min 39.286s\nMemory peak: 12.0G\nMemory swap peak: 0B\nResult=exit-code\nExecMainCode=1\nExecMainStatus=124\nMemoryPeak=12884901888\n",
+      "exit_code": 124,
+      "family": "gameserver-general-validation-source",
+      "formal_credit": false,
+      "harness": "source_gs_validate_case_001",
+      "log_sha256": "59e34196c53aead89037fa0bd07059937082ba2af5a2979b79b0205221826499",
+      "run": "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-001.json",
+      "scope": "No complete accepted strict summary; zero assertion or cover credit.",
+      "status": "FAILED"
+    },
+    {
+      "complete_individual_rows": 0,
+      "diagnostic_tail": "86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 658 column 9 function alloc::raw_vec::RawVecInner::<A>::reserve::do_reserve_and_handle::<std::alloc::Global> thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/mod.rs line 134 column 15 function <std::collections::TryReserveErrorKind as std::clone::Clone>::clone thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 888 column 11 function alloc::raw_vec::handle_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs line 602 column 5 function std::alloc::handle_alloc_error::rt_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs line 643 column 13 function std::alloc::handle_alloc_error::rt_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs line 649 column 9 function std::alloc::handle_alloc_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 890 column 38 function alloc::raw_vec::handle_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 28 column 5 function alloc::raw_vec::capacity_overflow thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 889 column 29 function alloc::raw_vec::handle_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 666 column 17 function alloc::raw_vec::RawVecInner::<A>::reserve::do_reserve_and_handle::<std::alloc::Global> thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\nFinished with result: oom-kill\nMain processes terminated with: code=killed/status=KILL\nService runtime: 12min 35.035s\nCPU time consumed: 13min 12.849s\nMemory peak: 12.0G\nMemory swap peak: 0B\nResult=oom-kill\nExecMainCode=2\nExecMainStatus=9\nMemoryPeak=12884901888\n",
+      "exit_code": 1,
+      "family": "gameserver-general-validation-source",
+      "formal_credit": false,
+      "harness": "source_gs_validate_case_004",
+      "log_sha256": "410559d41871ea01a86372bfa3d54b61130d3bb18e09252ecf7b43b2d6fef212",
+      "run": "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-004.json",
+      "scope": "No complete accepted strict summary; zero assertion or cover credit.",
+      "status": "FAILED"
+    },
+    {
+      "complete_individual_rows": 0,
+      "diagnostic_tail": "lse) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\nUnwinding loop _RNvNtCsgVugCEqaZtI_11agones_core10gameserver24indexed_validation_field.0 iteration 14 file crates/agones-core/src/gameserver.rs line 646 column 5 function agones_core::gameserver::indexed_validation_field thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/option.rs line 1334 column 15 function std::option::Option::<usize>::ok_or::<std::collections::TryReserveErrorKind> thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/result.rs line 2177 column 15 function <std::result::Result<usize, std::collections::TryReserveErrorKind> as std::ops::Try>::branch thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/result.rs line 965 column 15 function std::result::Result::<std::alloc::Layout, std::alloc::LayoutError>::map_err::<std::collections::TryReserveError, {closure@alloc::raw_vec::layout_array::{closure#0}}> thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/result.rs line 2177 column 15 function <std::result::Result<std::alloc::Layout, std::collections::TryReserveError> as std::ops::Try>::branch thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 549 column 26 function alloc::raw_vec::RawVecInner::finish_grow thread 0\nFinished with result: oom-kill\nMain processes terminated with: code=killed/status=KILL\nService runtime: 7min 25.362s\nCPU time consumed: 7min 46.483s\nMemory peak: 12.0G\nMemory swap peak: 0B\nResult=oom-kill\nExecMainCode=2\nExecMainStatus=9\nMemoryPeak=12884901888\n",
+      "exit_code": 1,
+      "family": "gameserver-general-validation-source",
+      "formal_credit": false,
+      "harness": "source_gs_validate_case_006",
+      "log_sha256": "8b1d200f4b339cd4f314343b7db4ca69fdd46a10ed8f67d73b4e4058ebf7d070",
+      "run": "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-006.json",
+      "scope": "No complete accepted strict summary; zero assertion or cover credit.",
+      "status": "FAILED"
+    },
+    {
+      "complete_individual_rows": 0,
+      "diagnostic_tail": "86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 658 column 9 function alloc::raw_vec::RawVecInner::<A>::reserve::do_reserve_and_handle::<std::alloc::Global> thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/mod.rs line 134 column 15 function <std::collections::TryReserveErrorKind as std::clone::Clone>::clone thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 888 column 11 function alloc::raw_vec::handle_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs line 602 column 5 function std::alloc::handle_alloc_error::rt_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs line 643 column 13 function std::alloc::handle_alloc_error::rt_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs line 649 column 9 function std::alloc::handle_alloc_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 890 column 38 function alloc::raw_vec::handle_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 28 column 5 function alloc::raw_vec::capacity_overflow thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 889 column 29 function alloc::raw_vec::handle_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 666 column 17 function alloc::raw_vec::RawVecInner::<A>::reserve::do_reserve_and_handle::<std::alloc::Global> thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\nFinished with result: oom-kill\nMain processes terminated with: code=killed/status=KILL\nService runtime: 12min 21.098s\nCPU time consumed: 12min 55.603s\nMemory peak: 12.0G\nMemory swap peak: 0B\nResult=oom-kill\nExecMainCode=2\nExecMainStatus=9\nMemoryPeak=12884901888\n",
+      "exit_code": 1,
+      "family": "gameserver-general-validation-source",
+      "formal_credit": false,
+      "harness": "source_gs_validate_case_007",
+      "log_sha256": "8fe6fcf3393fff2ec73ebbbb8529a0898fb4d01792b4a1ec09bd2d3000c3cc64",
+      "run": "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-007.json",
+      "scope": "No complete accepted strict summary; zero assertion or cover credit.",
+      "status": "FAILED"
+    },
+    {
+      "complete_individual_rows": 0,
+      "diagnostic_tail": "e) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\nUnwinding loop _RNvNtCsgVugCEqaZtI_11agones_core10gameserver24indexed_validation_field.0 iteration 14 file crates/agones-core/src/gameserver.rs line 646 column 5 function agones_core::gameserver::indexed_validation_field thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/option.rs line 1334 column 15 function std::option::Option::<usize>::ok_or::<std::collections::TryReserveErrorKind> thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/result.rs line 2177 column 15 function <std::result::Result<usize, std::collections::TryReserveErrorKind> as std::ops::Try>::branch thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/result.rs line 965 column 15 function std::result::Result::<std::alloc::Layout, std::alloc::LayoutError>::map_err::<std::collections::TryReserveError, {closure@alloc::raw_vec::layout_array::{closure#0}}> thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/result.rs line 2177 column 15 function <std::result::Result<std::alloc::Layout, std::collections::TryReserveError> as std::ops::Try>::branch thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 549 column 26 function alloc::raw_vec::RawVecInner::finish_grow thread 0\nFinished with result: oom-kill\nMain processes terminated with: code=killed/status=KILL\nService runtime: 13min 45.814s\nCPU time consumed: 14min 20.258s\nMemory peak: 12.0G\nMemory swap peak: 0B\nResult=oom-kill\nExecMainCode=2\nExecMainStatus=9\nMemoryPeak=12884901888\n",
+      "exit_code": 1,
+      "family": "gameserver-general-validation-source",
+      "formal_credit": false,
+      "harness": "source_gs_validate_case_008",
+      "log_sha256": "e407efb2d7675b6199f131264127dd7211b02812366e8b13862c24ea923138c9",
+      "run": "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-008.json",
+      "scope": "No complete accepted strict summary; zero assertion or cover credit.",
+      "status": "FAILED"
+    },
+    {
+      "complete_individual_rows": 0,
+      "diagnostic_tail": "026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/collections/mod.rs line 134 column 15 function <std::collections::TryReserveErrorKind as std::clone::Clone>::clone thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 888 column 11 function alloc::raw_vec::handle_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs line 602 column 5 function std::alloc::handle_alloc_error::rt_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs line 643 column 13 function std::alloc::handle_alloc_error::rt_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs line 649 column 9 function std::alloc::handle_alloc_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 890 column 38 function alloc::raw_vec::handle_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 28 column 5 function alloc::raw_vec::capacity_overflow thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 889 column 29 function alloc::raw_vec::handle_error thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 666 column 17 function alloc::raw_vec::RawVecInner::<A>::reserve::do_reserve_and_handle::<std::alloc::Global> thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\nFinished with result: oom-kill\nMain processes terminated with: code=killed/status=KILL\nService runtime: 13min 1.256s\nCPU time consumed: 13min 40.429s\nMemory peak: 12.0G\nMemory swap peak: 0B\nResult=oom-kill\nExecMainCode=2\nExecMainStatus=9\nMemoryPeak=12884901888\n",
+      "exit_code": 1,
+      "family": "gameserver-general-validation-source",
+      "formal_credit": false,
+      "harness": "source_gs_validate_case_009",
+      "log_sha256": "13188476417f51b5c8b0687b8b28882778ea75fac9d848bc77bb801e9ebb37ba",
+      "run": "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-009.json",
+      "scope": "No complete accepted strict summary; zero assertion or cover credit.",
+      "status": "FAILED"
+    },
+    {
+      "complete_individual_rows": 0,
+      "diagnostic_tail": "rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\nUnwinding loop _RNvNtCsgVugCEqaZtI_11agones_core10gameserver24indexed_validation_field.0 iteration 4 file crates/agones-core/src/gameserver.rs line 646 column 5 function agones_core::gameserver::indexed_validation_field thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/option.rs line 1334 column 15 function std::option::Option::<usize>::ok_or::<std::collections::TryReserveErrorKind> thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/result.rs line 2177 column 15 function <std::result::Result<usize, std::collections::TryReserveErrorKind> as std::ops::Try>::branch thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/result.rs line 965 column 15 function std::result::Result::<std::alloc::Layout, std::alloc::LayoutError>::map_err::<std::collections::TryReserveError, {closure@alloc::raw_vec::layout_array::{closure#0}}> thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/result.rs line 2177 column 15 function <std::result::Result<std::alloc::Layout, std::collections::TryReserveError> as std::ops::Try>::branch thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 549 column 26 function alloc::raw_vec::RawVecInner::finish_grow thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/result.rs line 2177 column 15 function <std::result::Result<std::ptr::NonNull<[u8]>, std::alloc::AllocError> as std::ops::Try>::branch thread 0\nFinished with result: oom-kill\nMain processes terminated with: code=killed/status=KILL\nService runtime: 9min 30.416s\nCPU time consumed: 9min 55.628s\nMemory peak: 12.0G\nMemory swap peak: 0B\nResult=oom-kill\nExecMainCode=2\nExecMainStatus=9\nMemoryPeak=12884901888\n",
+      "exit_code": 1,
+      "family": "gameserver-general-validation-source",
+      "formal_credit": false,
+      "harness": "source_gs_validate_case_012",
+      "log_sha256": "d71ad890078a38222da87e6880e8683c565ac13b7b801058380fa8110c56b172",
+      "run": "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-012.json",
+      "scope": "No complete accepted strict summary; zero assertion or cover credit.",
+      "status": "FAILED"
+    },
+    {
+      "complete_individual_rows": 0,
+      "diagnostic_tail": "src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\nUnwinding loop _RNvNvNtNtCs8xvirJzNMvV_4core5slice6memchr14memchr_aligned7runtimeCsiCCRzKceGR8_28source_gameserver_validation.0 iteration 37 file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs line 83 column 13 function core::slice::memchr::memchr_aligned::runtime thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\nUnwinding loop _RNvNvNtNtCs8xvirJzNMvV_4core5slice6memchr14memchr_aligned7runtimeCsiCCRzKceGR8_28source_gameserver_validation.0 iteration 38 file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs line 83 column 13 function core::slice::memchr::memchr_aligned::runtime thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\nFinished with result: exit-code\nMain processes terminated with: code=exited/status=124\nService runtime: 15min 2.293s\nCPU time consumed: 15min 33.031s\nMemory peak: 11.4G\nMemory swap peak: 0B\nResult=exit-code\nExecMainCode=1\nExecMainStatus=124\nMemoryPeak=12267503616\n",
+      "exit_code": 124,
+      "family": "gameserver-general-validation-source",
+      "formal_credit": false,
+      "harness": "source_gs_validate_case_013",
+      "log_sha256": "11ee5a807d0852930fad5e18dafd5d629b46a611427aa3d18f8696d1d300848a",
+      "run": "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-013.json",
+      "scope": "No complete accepted strict summary; zero assertion or cover credit.",
+      "status": "FAILED"
+    },
+    {
+      "complete_individual_rows": 0,
+      "diagnostic_tail": " line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\nUnwinding loop _RNvNvNtNtCs8xvirJzNMvV_4core5slice6memchr14memchr_aligned7runtimeCsiCCRzKceGR8_28source_gameserver_validation.0 iteration 89 file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs line 83 column 13 function core::slice::memchr::memchr_aligned::runtime thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\nUnwinding loop _RNvNvNtNtCs8xvirJzNMvV_4core5slice6memchr14memchr_aligned7runtimeCsiCCRzKceGR8_28source_gameserver_validation.0 iteration 90 file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs line 83 column 13 function core::slice::memchr::memchr_aligned::runtime thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\nFinished with result: oom-kill\nMain processes terminated with: code=killed/status=KILL\nService runtime: 10min 38.067s\nCPU time consumed: 11min 13.013s\nMemory peak: 12.0G\nMemory swap peak: 0B\nResult=oom-kill\nExecMainCode=2\nExecMainStatus=9\nMemoryPeak=12884901888\n",
+      "exit_code": 1,
+      "family": "gameserver-general-validation-source",
+      "formal_credit": false,
+      "harness": "source_gs_validate_case_017",
+      "log_sha256": "aecdf5b1a484d2f6580a97a6f4cb72e811bbf005815590f63b95988d6ea629ca",
+      "run": "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-017.json",
+      "scope": "No complete accepted strict summary; zero assertion or cover credit.",
+      "status": "FAILED"
+    },
+    {
+      "complete_individual_rows": 0,
+      "diagnostic_tail": "nu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs line 83 column 13 function core::slice::memchr::memchr_aligned::runtime thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\nUnwinding loop _RNvNvNtNtCs8xvirJzNMvV_4core5slice6memchr14memchr_aligned7runtimeCsiCCRzKceGR8_28source_gameserver_validation.0 iteration 89 file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs line 83 column 13 function core::slice::memchr::memchr_aligned::runtime thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\nFinished with result: oom-kill\nMain processes terminated with: code=killed/status=KILL\nService runtime: 7min 51.248s\nCPU time consumed: 8min 13.198s\nMemory peak: 12.0G\nMemory swap peak: 0B\nResult=oom-kill\nExecMainCode=2\nExecMainStatus=9\nMemoryPeak=12884901888\n",
+      "exit_code": 1,
+      "family": "gameserver-general-validation-source",
+      "formal_credit": false,
+      "harness": "source_gs_validate_case_018",
+      "log_sha256": "5a84eaf7bb5c1b31bae1ebd6ab127091639b2006a9139399b1d63f45e758a9a4",
+      "run": "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-018.json",
+      "scope": "No complete accepted strict summary; zero assertion or cover credit.",
+      "status": "FAILED"
+    },
+    {
+      "complete_individual_rows": 0,
+      "diagnostic_tail": "e 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\nUnwinding loop _RNvNvNtNtCs8xvirJzNMvV_4core5slice6memchr14memchr_aligned7runtimeCsiCCRzKceGR8_28source_gameserver_validation.0 iteration 123 file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs line 83 column 13 function core::slice::memchr::memchr_aligned::runtime thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\nUnwinding loop _RNvNvNtNtCs8xvirJzNMvV_4core5slice6memchr14memchr_aligned7runtimeCsiCCRzKceGR8_28source_gameserver_validation.0 iteration 124 file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs line 83 column 13 function core::slice::memchr::memchr_aligned::runtime thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\nFinished with result: exit-code\nMain processes terminated with: code=exited/status=124\nService runtime: 15min 3.128s\nCPU time consumed: 15min 39.539s\nMemory peak: 11.8G\nMemory swap peak: 0B\nResult=exit-code\nExecMainCode=1\nExecMainStatus=124\nMemoryPeak=12758188032\n",
+      "exit_code": 124,
+      "family": "gameserver-general-validation-source",
+      "formal_credit": false,
+      "harness": "source_gs_validate_case_023",
+      "log_sha256": "a9c5a3cf018f011d137effd382c0d776bdea3756ebb957d154287f4fb155851e",
+      "run": "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-023.json",
+      "scope": "No complete accepted strict summary; zero assertion or cover credit.",
+      "status": "FAILED"
+    },
+    {
+      "backend_rows": 3975,
+      "exit_code": 0,
+      "family": "object-metadata-source",
+      "formal_credit": true,
+      "harness": "source_metadata_case_000",
+      "log_sha256": "53e0fdf129e88763aae1e5e9fb63d43f4d3bd83ad7478420073b51a9fc38c2a5",
+      "run": "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-000.json",
+      "satisfied_covers": 2,
+      "semantic_claims": 1,
+      "status": "PASSED"
+    },
+    {
+      "complete_individual_rows": 0,
+      "diagnostic_tail": "/rustlib/src/rust/library/core/src/slice/memchr.rs line 83 column 13 function core::slice::memchr::memchr_aligned::runtime thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\nUnwinding loop _RNvNvNtNtCs8xvirJzNMvV_4core5slice6memchr14memchr_aligned7runtimeCsg0m3o66cY1q_33source_object_metadata_validation.0 iteration 127 file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs line 83 column 13 function core::slice::memchr::memchr_aligned::runtime thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\nFinished with result: oom-kill\nMain processes terminated with: code=killed/status=KILL\nService runtime: 4min 55.112s\nCPU time consumed: 5min 15.658s\nMemory peak: 12.0G\nMemory swap peak: 0B\nResult=oom-kill\nExecMainCode=2\nExecMainStatus=9\nMemoryPeak=12884901888\n",
+      "exit_code": 1,
+      "family": "object-metadata-source",
+      "formal_credit": false,
+      "harness": "source_metadata_case_001",
+      "log_sha256": "8fb2a769d216b8b2196409f4641205124b971ed302a7bc877a81389eed0e9530",
+      "run": "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-001.json",
+      "scope": "No complete accepted strict summary; zero assertion or cover credit.",
+      "status": "FAILED"
+    },
+    {
+      "complete_individual_rows": 0,
+      "diagnostic_tail": "_implaKj10_ECsg0m3o66cY1q_33source_object_metadata_validation.0 iteration 1 file library/kani/src/models/mod.rs line 98 column 9 function kani::models::intrinsics::simd_bitmask_impl::<i8, 16> thread 0\nUnwinding loop _RINvNtNtCs7f35Cc4Kq59_4kani6models10intrinsics17simd_bitmask_implaKj10_ECsg0m3o66cY1q_33source_object_metadata_validation.0 iteration 2 file library/kani/src/models/mod.rs line 98 column 9 function kani::models::intrinsics::simd_bitmask_impl::<i8, 16> thread 0\naborting path on assume(false) at file library/kani/src/models/mod.rs line 155 column 13 function kani::models::intrinsics::simd_bitmask_impl::<i8, 16> thread 0\naborting path on assume(false) at file library/kani/src/models/mod.rs line 149 column 13 function kani::models::intrinsics::simd_bitmask_impl::<i8, 16> thread 0\naborting path on assume(false) at file library/kani/src/models/mod.rs line 143 column 13 function kani::models::intrinsics::simd_bitmask_impl::<i8, 16> thread 0\naborting path on assume(false) at file library/kani/src/models/mod.rs line 137 column 13 function kani::models::intrinsics::simd_bitmask_impl::<i8, 16> thread 0\naborting path on assume(false) at file library/kani/src/models/mod.rs line 131 column 13 function kani::models::intrinsics::simd_bitmask_impl::<i8, 16> thread 0\naborting path on assume(false) at file library/kani/src/models/mod.rs line 125 column 13 function kani::models::intrinsics::simd_bitmask_impl::<i8, 16> thread 0\naborting path on assume(false) at file library/kani/src/models/mod.rs line 119 column 13 function kani::models::intrinsics::simd_bitmask_impl::<i8, 16> thread 0\naborting path on assume(false) at file library/kani/src/models/mod.rs line 113 column 13 function kani::models::intrinsics::simd_bitmask_impl::<i8, 16> thread 0\nUnwinding loop _RNvNtNtCs8xvirJzNMvV_4core5slice5ascii13is_ascii_sse2Csg0m3o66cY1q_33source_object_metadata_validation.0 iteration 58 file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/ascii.rs line 571 column 5 function core::slice::ascii::is_ascii_sse2 thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/ascii.rs line 571 column 18 function core::slice::ascii::is_ascii_sse2 thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\nFinished with result: exit-code\nMain processes terminated with: code=exited/status=124\nService runtime: 15min 3.318s\nCPU time consumed: 15min 36.346s\nMemory peak: 10.2G\nMemory swap peak: 0B\nResult=exit-code\nExecMainCode=1\nExecMainStatus=124\nMemoryPeak=11009363968\n",
+      "exit_code": 124,
+      "family": "object-metadata-source",
+      "formal_credit": false,
+      "harness": "source_metadata_case_003",
+      "log_sha256": "dffeab934306a77311f0607ee8f4461413c477df5b27b0acf3fbbfbf0a427e6c",
+      "run": "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-003.json",
+      "scope": "No complete accepted strict summary; zero assertion or cover credit.",
+      "status": "FAILED"
+    },
+    {
+      "complete_individual_rows": 0,
+      "diagnostic_tail": "/rustlib/src/rust/library/core/src/slice/memchr.rs line 83 column 13 function core::slice::memchr::memchr_aligned::runtime thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\nUnwinding loop _RNvNvNtNtCs8xvirJzNMvV_4core5slice6memchr14memchr_aligned7runtimeCsg0m3o66cY1q_33source_object_metadata_validation.0 iteration 127 file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs line 83 column 13 function core::slice::memchr::memchr_aligned::runtime thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\nFinished with result: oom-kill\nMain processes terminated with: code=killed/status=KILL\nService runtime: 8min 35.436s\nCPU time consumed: 9min 11.175s\nMemory peak: 12.0G\nMemory swap peak: 0B\nResult=oom-kill\nExecMainCode=2\nExecMainStatus=9\nMemoryPeak=12884901888\n",
+      "exit_code": 1,
+      "family": "object-metadata-source",
+      "formal_credit": false,
+      "harness": "source_metadata_case_005",
+      "log_sha256": "7aa4c22f2eabc6d7e5acbfd9263d095a1f6de5eaadc7c58e093247ec7e5099ac",
+      "run": "verification/agones/runs/object-metadata-bolero-kani-ci-39572135297-1-case-005.json",
+      "scope": "No complete accepted strict summary; zero assertion or cover credit.",
+      "status": "FAILED"
+    }
+  ],
+  "retention": "Original Actions artifacts retain90days; archive digests and raw members recovered locally and mirrored into pinned source for independent strict parsing. Campaign is still running.",
+  "schema_version": 1,
+  "scope": "Exact selected source cases or declared bounded common domains only. Preserve the constructor-image and observation-lifetime limits. No full API, lifecycle, post-observation cleanup, executor or live-cluster proof.",
+  "source_head": "861f4eb5b3d5a9d47d2364edc83b32a1da3e9c71",
+  "source_root_pin": "verification/agones/ci/39572135297-pinned-source.json",
+  "status": "FIRST25_RETAINED_EIGHT_STRICT_PASSES_SEVENTEEN_RESOURCE_FAILURES",
+  "tested_merge": "6492f41e3ddfe1a75e2889f8fd510b3eb2c5ff2d",
+  "workflow_run": 39572135297
+}

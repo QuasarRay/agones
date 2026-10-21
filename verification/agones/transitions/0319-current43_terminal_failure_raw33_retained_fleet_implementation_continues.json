@@ -1,0 +1,17 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetUpperBoundReplicas",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetLowerBoundReplicas",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestSumGameServerSets"
+  ],
+  "authorization": "User execution contract",
+  "event": "current43_terminal_failure_raw33_retained_fleet_implementation_continues",
+  "gate_snapshot": null,
+  "predecessor_revision": 318,
+  "predecessor_sha256": "3da424a14bc0b8139c987083b14fd49aef25f6ddd8805cb0d05fa9089773e997",
+  "reason": "Public REST confirms terminal failure and all43artifact identities.33original archives are source-verified; ten authenticated downloads remain unavailable after host removed GitHub tools. Continue meaningful authorized Fleet implementation; no proof is inferred from missing raw data or diagnostic status.",
+  "result_revision": 319,
+  "schema_version": 1,
+  "state_sha256": "340ac0d3ecc8f445473ddd86ad7b31cb4e5be507ceb6533c9e66d4ee56b8b3af",
+  "timestamp": "2026-10-21T09:32:27.843420+00:00"
+}

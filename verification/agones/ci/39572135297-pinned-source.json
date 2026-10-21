@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "workflow_run": 39572135297,
+  "tested_merge": "6492f41e3ddfe1a75e2889f8fd510b3eb2c5ff2d",
+  "source_head": "6492f41e3ddfe1a75e2889f8fd510b3eb2c5ff2d",
+  "source_tree": "c2df876a919c11ceecb88fa8108ee47c384774f9",
+  "review_head": "861f4eb5b3d5a9d47d2364edc83b32a1da3e9c71",
+  "source_root": "/home/astral/.codex/worktrees/agones-metadata-validation/agones",
+  "scope": "Pinned tested merge; tree matches the reviewed native704/metadata43source. Recover original raw artifacts and parse with these exact source-bound tools."
+}

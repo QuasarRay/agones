@@ -1,0 +1,380 @@
+{
+  "assertions": [
+    {
+      "description": "\"agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Error on query parsing::line-65\"",
+      "id": 123,
+      "location": "crates/agones-core/tests/generated/feature_gate_cases.rs:70:5 in function source_assertion_011",
+      "origin": "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Error on query parsing::line-65",
+      "status": "SUCCESS",
+      "symbol": "source_assertion_011.assertion.1"
+    }
+  ],
+  "covers": [
+    {
+      "description": "the generator should produce at least one valid value",
+      "id": 145,
+      "location": "../../../../../.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bolero-kani-0.13.0/src/lib.rs:37:21 in function <bolero::DefaultEngine as bolero::Engine<bolero::bolero_engine::BorrowedGeneratorTest<{closure@crates/agones-core/tests/generated/feature_gate_cases.rs:218:19: 218:22}, bolero::generator::bolero_generator::TypeValueGenerator<()>, ()>>>::run",
+      "status": "SATISFIED",
+      "symbol": "<bolero::DefaultEngine as bolero::Engine<bolero::bolero_engine::BorrowedGeneratorTest<{closure@crates/agones-core/tests/generated/feature_gate_cases.rs:218:19: 218:22}, bolero::generator::bolero_generator::TypeValueGenerator<()>, ()>>>::run.cover.1"
+    },
+    {
+      "description": "source query case: agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Error on query parsing",
+      "id": 201,
+      "location": "crates/agones-core/tests/generated/feature_gate_cases.rs:205:9 in function check_source_query_case_003",
+      "status": "SATISFIED",
+      "symbol": "check_source_query_case_003.cover.1"
+    }
+  ],
+  "family": "query",
+  "harness_count": 1,
+  "property_count": 1542,
+  "run": "verification/agones/runs/feature-query-error-bolero-kani-ci-39528223788-1.json",
+  "schema_version": 1,
+  "scope": "Selected exact source case only: agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Error on query parsing. Actual production query parser and exact source assertions for all five selected cases. No unbounded input generalization, alternate production implementation, OS/command proof, or translated reference-model proof is credited. Original Go tests apply the same independent source relations separately.",
+  "selected_harnesses": [
+    "source_query_case_003"
+  ],
+  "status_counts": {
+    "SATISFIED": 2,
+    "SUCCESS": 1492,
+    "UNREACHABLE": 48
+  },
+  "unreachable_not_credited": [
+    {
+      "description": "attempt to divide by zero",
+      "id": 26,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ub_checks.rs:148:54 in function core::ub_checks::is_valid_allocation_size",
+      "status": "UNREACHABLE",
+      "symbol": "core::ub_checks::is_valid_allocation_size.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 36,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:3030:26 in function core::slice::<impl [&str]>::binary_search_by::<'_, {closure@<agones_core::ParseAgonesFeatureGates as agones_core::FeatureGateParser<agones_core::FeatureGateContext>>::parse_feature_gates_bytes::{closure#0}::{closure#0}}>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [&str]>::binary_search_by::<'_, {closure@<agones_core::ParseAgonesFeatureGates as agones_core::FeatureGateParser<agones_core::FeatureGateContext>>::parse_feature_gates_bytes::{closure#0}::{closure#0}}>.assertion.4"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 58,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/vec/mod.rs:1038:24 in function std::vec::Vec::<u8>::push_mut",
+      "status": "UNREACHABLE",
+      "symbol": "std::vec::Vec::<u8>::push_mut.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 67,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ptr/mod.rs:2317:49 in function std::ptr::align_offset::mod_inv",
+      "status": "UNREACHABLE",
+      "symbol": "std::ptr::align_offset::mod_inv.assertion.1"
+    },
+    {
+      "description": "attempt to shift right with overflow",
+      "id": 68,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ptr/mod.rs:2317:44 in function std::ptr::align_offset::mod_inv",
+      "status": "UNREACHABLE",
+      "symbol": "std::ptr::align_offset::mod_inv.assertion.2"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 69,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ptr/mod.rs:2317:27 in function std::ptr::align_offset::mod_inv",
+      "status": "UNREACHABLE",
+      "symbol": "std::ptr::align_offset::mod_inv.assertion.3"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 71,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/vec/mod.rs:4086:26 in function <std::vec::Vec<bool> as std::iter::Extend<bool>>::extend_one_unchecked",
+      "status": "UNREACHABLE",
+      "symbol": "<std::vec::Vec<bool> as std::iter::Extend<bool>>::extend_one_unchecked.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 81,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/iter.rs:471:81 in function <std::slice::Split<'_, u8, {closure@agones_core::features::parse_query<'_, {closure@<agones_core::ParseAgonesFeatureGates as agones_core::FeatureGateParser<agones_core::FeatureGateContext>>::parse_feature_gates_bytes::{closure#0}}>::{closure#0}}> as std::iter::Iterator>::next",
+      "status": "UNREACHABLE",
+      "symbol": "<std::slice::Split<'_, u8, {closure@agones_core::features::parse_query<'_, {closure@<agones_core::ParseAgonesFeatureGates as agones_core::FeatureGateParser<agones_core::FeatureGateContext>>::parse_feature_gates_bytes::{closure#0}}>::{closure#0}}> as std::iter::Iterator>::next.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 117,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/alloc.rs:354:58 in function std::alloc::Global::grow_impl_runtime",
+      "status": "UNREACHABLE",
+      "symbol": "std::alloc::Global::grow_impl_runtime.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 124,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ptr/const_ptr.rs:1360:23 in function std::ptr::const_ptr::<impl *const ()>::is_aligned_to",
+      "status": "UNREACHABLE",
+      "symbol": "std::ptr::const_ptr::<impl *const ()>::is_aligned_to.assertion.1"
+    },
+    {
+      "description": "attempt to shift left with overflow",
+      "id": 137,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/fmt/mod.rs:820:38 in function std::fmt::Arguments::<'_>::from_str",
+      "status": "UNREACHABLE",
+      "symbol": "std::fmt::Arguments::<'_>::from_str.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 179,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/vec/set_len_on_drop.rs:19:9 in function std::vec::set_len_on_drop::SetLenOnDrop::<'_>::increment_len",
+      "status": "UNREACHABLE",
+      "symbol": "std::vec::set_len_on_drop::SetLenOnDrop::<'_>::increment_len.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 180,
+      "location": "crates/agones-core/src/features.rs:297:41 in function agones_core::features::unescape::{closure#1}",
+      "status": "UNREACHABLE",
+      "symbol": "agones_core::features::unescape::{closure#1}.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 181,
+      "location": "crates/agones-core/src/features.rs:298:41 in function agones_core::features::unescape::{closure#1}",
+      "status": "UNREACHABLE",
+      "symbol": "agones_core::features::unescape::{closure#1}.assertion.2"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 182,
+      "location": "crates/agones-core/src/features.rs:298:41 in function agones_core::features::unescape::{closure#1}",
+      "status": "UNREACHABLE",
+      "symbol": "agones_core::features::unescape::{closure#1}.assertion.3"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 183,
+      "location": "crates/agones-core/src/features.rs:299:41 in function agones_core::features::unescape::{closure#1}",
+      "status": "UNREACHABLE",
+      "symbol": "agones_core::features::unescape::{closure#1}.assertion.4"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 184,
+      "location": "crates/agones-core/src/features.rs:299:41 in function agones_core::features::unescape::{closure#1}",
+      "status": "UNREACHABLE",
+      "symbol": "agones_core::features::unescape::{closure#1}.assertion.5"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 190,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/vec/mod.rs:1038:24 in function std::vec::Vec::<&str>::push_mut",
+      "status": "UNREACHABLE",
+      "symbol": "std::vec::Vec::<&str>::push_mut.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 193,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/vec/mod.rs:2360:44 in function std::vec::Vec::<&str>::insert_mut",
+      "status": "UNREACHABLE",
+      "symbol": "std::vec::Vec::<&str>::insert_mut.assertion.1"
+    },
+    {
+      "description": "index out of bounds: the length is less than or equal to the given index",
+      "id": 202,
+      "location": "crates/agones-core/src/features.rs:293:15 in function agones_core::features::unescape",
+      "status": "UNREACHABLE",
+      "symbol": "agones_core::features::unescape.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 203,
+      "location": "crates/agones-core/src/features.rs:303:26 in function agones_core::features::unescape",
+      "status": "UNREACHABLE",
+      "symbol": "agones_core::features::unescape.assertion.2"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 204,
+      "location": "crates/agones-core/src/features.rs:306:36 in function agones_core::features::unescape",
+      "status": "UNREACHABLE",
+      "symbol": "agones_core::features::unescape.assertion.3"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 206,
+      "location": "crates/agones-core/src/features.rs:309:50 in function agones_core::features::unescape",
+      "status": "UNREACHABLE",
+      "symbol": "agones_core::features::unescape.assertion.4"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 207,
+      "location": "crates/agones-core/src/features.rs:312:30 in function agones_core::features::unescape",
+      "status": "UNREACHABLE",
+      "symbol": "agones_core::features::unescape.assertion.5"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 208,
+      "location": "crates/agones-core/src/features.rs:312:30 in function agones_core::features::unescape",
+      "status": "UNREACHABLE",
+      "symbol": "agones_core::features::unescape.assertion.6"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 209,
+      "location": "crates/agones-core/src/features.rs:313:17 in function agones_core::features::unescape",
+      "status": "UNREACHABLE",
+      "symbol": "agones_core::features::unescape.assertion.7"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 210,
+      "location": "crates/agones-core/src/features.rs:317:9 in function agones_core::features::unescape",
+      "status": "UNREACHABLE",
+      "symbol": "agones_core::features::unescape.assertion.8"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 211,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/num/uint_macros.rs:3182:21 in function core::num::<impl usize>::abs_diff",
+      "status": "UNREACHABLE",
+      "symbol": "core::num::<impl usize>::abs_diff.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 212,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/num/uint_macros.rs:3184:21 in function core::num::<impl usize>::abs_diff",
+      "status": "UNREACHABLE",
+      "symbol": "core::num::<impl usize>::abs_diff.assertion.2"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 215,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:83:35 in function core::slice::memchr::memchr_aligned::runtime",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_aligned::runtime.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 216,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:83:29 in function core::slice::memchr::memchr_aligned::runtime",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_aligned::runtime.assertion.2"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 217,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:88:39 in function core::slice::memchr::memchr_aligned::runtime",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_aligned::runtime.assertion.3"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 218,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:97:27 in function core::slice::memchr::memchr_aligned::runtime",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_aligned::runtime.assertion.4"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 219,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:97:17 in function core::slice::memchr::memchr_aligned::runtime",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_aligned::runtime.assertion.5"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 220,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:105:75 in function core::slice::memchr::memchr_aligned::runtime",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_aligned::runtime.assertion.6"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 222,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs:106:60 in function core::slice::memchr::memchr_aligned::runtime",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::memchr::memchr_aligned::runtime.assertion.7"
+    },
+    {
+      "description": "Cannot compute offset of a ZST",
+      "id": 233,
+      "location": "library/kani/src/lib.rs:57:1 in function kani::rustc_intrinsics::ptr_offset_from::<(&str, bool)>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<(&str, bool)>.assertion.1"
+    },
+    {
+      "description": "attempt to calculate the remainder with a divisor of zero",
+      "id": 235,
+      "location": "library/kani_core/src/models.rs:93:25 in function kani::rustc_intrinsics::ptr_offset_from::<(&str, bool)>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<(&str, bool)>.assertion.2"
+    },
+    {
+      "description": "attempt to calculate the remainder with overflow",
+      "id": 236,
+      "location": "library/kani_core/src/models.rs:93:25 in function kani::rustc_intrinsics::ptr_offset_from::<(&str, bool)>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<(&str, bool)>.assertion.3"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 240,
+      "location": "library/kani_core/src/models.rs:97:21 in function kani::rustc_intrinsics::ptr_offset_from::<(&str, bool)>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<(&str, bool)>.assertion.4"
+    },
+    {
+      "description": "attempt to divide with overflow",
+      "id": 241,
+      "location": "library/kani_core/src/models.rs:97:21 in function kani::rustc_intrinsics::ptr_offset_from::<(&str, bool)>",
+      "status": "UNREACHABLE",
+      "symbol": "kani::rustc_intrinsics::ptr_offset_from::<(&str, bool)>.assertion.5"
+    },
+    {
+      "description": "attempt to multiply with overflow",
+      "id": 246,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs:523:28 in function alloc::raw_vec::RawVecInner::grow_amortized",
+      "status": "UNREACHABLE",
+      "symbol": "alloc::raw_vec::RawVecInner::grow_amortized.assertion.1"
+    },
+    {
+      "description": "attempt to divide by zero",
+      "id": 249,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:2999:24 in function core::slice::<impl [&str]>::binary_search_by::<'_, {closure@core::slice::<impl [&str]>::binary_search::{closure#0}}>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [&str]>::binary_search_by::<'_, {closure@core::slice::<impl [&str]>::binary_search::{closure#0}}>.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 251,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:3000:23 in function core::slice::<impl [&str]>::binary_search_by::<'_, {closure@core::slice::<impl [&str]>::binary_search::{closure#0}}>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [&str]>::binary_search_by::<'_, {closure@core::slice::<impl [&str]>::binary_search::{closure#0}}>.assertion.2"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 252,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs:3020:13 in function core::slice::<impl [&str]>::binary_search_by::<'_, {closure@core::slice::<impl [&str]>::binary_search::{closure#0}}>",
+      "status": "UNREACHABLE",
+      "symbol": "core::slice::<impl [&str]>::binary_search_by::<'_, {closure@core::slice::<impl [&str]>::binary_search::{closure#0}}>.assertion.3"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 258,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/vec/mod.rs:4086:26 in function <std::vec::Vec<&str> as std::iter::Extend<&str>>::extend_one_unchecked",
+      "status": "UNREACHABLE",
+      "symbol": "<std::vec::Vec<&str> as std::iter::Extend<&str>>::extend_one_unchecked.assertion.1"
+    },
+    {
+      "description": "attempt to add with overflow",
+      "id": 260,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/vec/mod.rs:1038:24 in function std::vec::Vec::<bool>::push_mut",
+      "status": "UNREACHABLE",
+      "symbol": "std::vec::Vec::<bool>::push_mut.assertion.1"
+    },
+    {
+      "description": "attempt to subtract with overflow",
+      "id": 291,
+      "location": "../../../../../.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/vec/mod.rs:2360:44 in function std::vec::Vec::<bool>::insert_mut",
+      "status": "UNREACHABLE",
+      "symbol": "std::vec::Vec::<bool>::insert_mut.assertion.1"
+    }
+  ]
+}

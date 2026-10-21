@@ -1,0 +1,291 @@
+{
+  "artifact_bindings": {
+    "verification/agones/proof-summaries/feature-bool-bolero-kani-ci-39572135297-1.json": "74fd920d0fe6464069c8471c0a2a33f7370609956ecdc91ca457fd3410225726",
+    "verification/agones/proof-summaries/feature-input-bolero-kani-ci-39572135297-1.json": "e9240d021713db08abab6ec27e3bbdd6b05712ee957ba9454c8b5deec59bac69",
+    "verification/agones/proof-summaries/feature-query-error-bolero-kani-ci-39572135297-1.json": "66557d45b367e6493091c13310ddd8f9771452a205a2923b34ee31b7f66f176d",
+    "verification/agones/proof-summaries/gameserver-features-bolero-kani-ci-39572135297-1.json": "6befca5de304c0c265d302a37ae27bc9f809c76780b79d41dbaaeef25c5b7eb2",
+    "verification/agones/proof-summaries/gameserver-source-005-bolero-kani-ci-39572135297-1.json": "72f79c3c410038eb3f9165d37de438bea188f2fac3e436b0d0fb293ab458875e",
+    "verification/agones/proof-summaries/gameserver-source-014-bolero-kani-ci-39572135297-1.json": "91f74084ffccf168cf656bf9c6e9c77a8a4fdf46503c472e331308a645a77f18",
+    "verification/agones/proof-summaries/health-defaulting-bolero-kani-ci-39572135297-1.json": "93b853fb8a6fc79fa01b66ee228b173bde44ef48036debdb42cec51595d7d031",
+    "verification/agones/runs/feature-bool-bolero-kani-ci-39572135297-1.json": "24bb369cee9af9cb80eecb025eef4e501190bc57eba499fc4ea94e32b6bacefa",
+    "verification/agones/runs/feature-bool-bolero-kani-ci-39572135297-1.log": "f1ed47b04a55a6413c094b04270bb03af94defd2fcb1ab909e616d625eb0ed19",
+    "verification/agones/runs/feature-input-bolero-kani-ci-39572135297-1.json": "c43ecdfb039cfcd92e8be7717047e591577331dc6be0c801c1e06cec73eeb3fb",
+    "verification/agones/runs/feature-input-bolero-kani-ci-39572135297-1.log": "2a219e85aa8921f4cf8f2d19ae3ebfc53514030a5c31de03fbca683033950790",
+    "verification/agones/runs/feature-query-error-bolero-kani-ci-39572135297-1.json": "67e87741dd2352ada4b8a72d22a0b13e1b345dd0f5ffdbaf9562794ca05fe6de",
+    "verification/agones/runs/feature-query-error-bolero-kani-ci-39572135297-1.log": "cd6a7774b332f58418846514962944569fb306dc73fbaaecc0bb44c84a7a528e",
+    "verification/agones/runs/gameserver-features-bolero-kani-ci-39572135297-1.json": "be8f289784e10eca06ac23dfcb231c2ca3e875555f6f5630a5a9373409a4d14e",
+    "verification/agones/runs/gameserver-features-bolero-kani-ci-39572135297-1.log": "50387b7b849aacae05b24958cd65fc3c90091b5d18c2e0a6ad1d4a2bd8e41000",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-006.json": "57bf30049aa9a2aefb0fcc1cfacc47a2584f42906c5424ec349e0298f3437557",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-006.log": "8b1d200f4b339cd4f314343b7db4ca69fdd46a10ed8f67d73b4e4058ebf7d070",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-018.json": "8c6058b482be9c67e72e4dfd11a144a9fe3f5cbee4fac8d1435a2f760cdeddcc",
+    "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-018.log": "5a84eaf7bb5c1b31bae1ebd6ab127091639b2006a9139399b1d63f45e758a9a4",
+    "verification/agones/runs/gameserver-source-005-bolero-kani-ci-39572135297-1.json": "ea59af5eedc9096234a40940febc813dc48f099eb7cec6a8a769849f404e8a21",
+    "verification/agones/runs/gameserver-source-005-bolero-kani-ci-39572135297-1.log": "0dc5c31ead41a818fbffc1a5c90cefb86f737a22dd42bd0cc5bd6d3abdf91b99",
+    "verification/agones/runs/gameserver-source-014-bolero-kani-ci-39572135297-1.json": "d96cb0b355bc6aceca2b409a200f95e30696f2ed7b57f3a3b1a3c297c0fa9ff9",
+    "verification/agones/runs/gameserver-source-014-bolero-kani-ci-39572135297-1.log": "65fcca661e1732bf1b255b926299eae652b15e5359addba0ac8b93588beb198a",
+    "verification/agones/runs/health-defaulting-bolero-kani-ci-39572135297-1.json": "82b435e04d03bf9d0cccda236a5b4f930b835718752a8da2e31f0518ea37743c",
+    "verification/agones/runs/health-defaulting-bolero-kani-ci-39572135297-1.log": "520e5c9f71d1a41ef74dd1a186bff499c084b464b3c783e5da0c76dd04430f59"
+  },
+  "artifacts": [
+    {
+      "archive_sha256": "15bb11ada03cc2888dc8ce5e268cf55c60d9a0699360f288f5cff0eb8ecbc2e3",
+      "artifact_id": 12332753676,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-006.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-006.log"
+      ],
+      "name": "feature-kani-general-validation-006-39572135297-1"
+    },
+    {
+      "archive_sha256": "fae71ea7b91d6d7862381b398122fc697d76e3ad02b11491031dab687ae57095",
+      "artifact_id": 12332652711,
+      "members": [
+        "verification/agones/runs/gameserver-features-bolero-kani-ci-39572135297-1.json",
+        "verification/agones/runs/gameserver-features-bolero-kani-ci-39572135297-1.log",
+        "verification/agones/proof-summaries/gameserver-features-bolero-kani-ci-39572135297-1.json"
+      ],
+      "name": "feature-kani-player-contract-39572135297-1"
+    },
+    {
+      "archive_sha256": "c2228fd27c7954ff9a2669622de36b6cb228c9ad69da829a1e57fd9db7bfdaad",
+      "artifact_id": 12332627680,
+      "members": [
+        "verification/agones/runs/feature-bool-bolero-kani-ci-39572135297-1.json",
+        "verification/agones/runs/feature-bool-bolero-kani-ci-39572135297-1.log",
+        "verification/agones/proof-summaries/feature-bool-bolero-kani-ci-39572135297-1.json"
+      ],
+      "name": "feature-kani-bool-39572135297-1"
+    },
+    {
+      "archive_sha256": "bcc398785d0109d85b56a2384c3f3aac08281a1e913cf9a0f21baeca0c9303d4",
+      "artifact_id": 12332617583,
+      "members": [
+        "verification/agones/runs/feature-query-error-bolero-kani-ci-39572135297-1.json",
+        "verification/agones/runs/feature-query-error-bolero-kani-ci-39572135297-1.log",
+        "verification/agones/proof-summaries/feature-query-error-bolero-kani-ci-39572135297-1.json"
+      ],
+      "name": "feature-kani-query-003-39572135297-1"
+    },
+    {
+      "archive_sha256": "059c9f53071530c9dcf5930aacfb1545995e37189c6682b04fbd3c4d9062784a",
+      "artifact_id": 12332592508,
+      "members": [
+        "verification/agones/runs/feature-input-bolero-kani-ci-39572135297-1.json",
+        "verification/agones/runs/feature-input-bolero-kani-ci-39572135297-1.log",
+        "verification/agones/proof-summaries/feature-input-bolero-kani-ci-39572135297-1.json"
+      ],
+      "name": "feature-kani-input-39572135297-1"
+    },
+    {
+      "archive_sha256": "79fa7e4541ea87832e52e68e4767c16cea79a6e1d173a16af0a3ab09cacf78dd",
+      "artifact_id": 12332044898,
+      "members": [
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-018.json",
+        "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-018.log"
+      ],
+      "name": "feature-kani-general-validation-018-39572135297-1"
+    },
+    {
+      "archive_sha256": "36d0b5f983c1f02cab07d736d7b9d973563bf1336c6b7e0a1fef734c3a9197ea",
+      "artifact_id": 12331994275,
+      "members": [
+        "verification/agones/runs/health-defaulting-bolero-kani-ci-39572135297-1.json",
+        "verification/agones/proof-summaries/health-defaulting-bolero-kani-ci-39572135297-1.json",
+        "verification/agones/runs/health-defaulting-bolero-kani-ci-39572135297-1.log"
+      ],
+      "name": "feature-kani-health-39572135297-1"
+    },
+    {
+      "archive_sha256": "d77b8743b9670caa1c925ea979c75a27ec52cf549d34a34dc3a2346aff97ad55",
+      "artifact_id": 12331924126,
+      "members": [
+        "verification/agones/runs/gameserver-source-014-bolero-kani-ci-39572135297-1.json",
+        "verification/agones/proof-summaries/gameserver-source-014-bolero-kani-ci-39572135297-1.json",
+        "verification/agones/runs/gameserver-source-014-bolero-kani-ci-39572135297-1.log"
+      ],
+      "name": "feature-kani-gameserver-014-39572135297-1"
+    },
+    {
+      "archive_sha256": "68610e01c0bb01246ef31050ea6f508daf7cb3a87eb1123140bf51095c524da1",
+      "artifact_id": 12331689117,
+      "members": [
+        "verification/agones/runs/gameserver-source-005-bolero-kani-ci-39572135297-1.log",
+        "verification/agones/proof-summaries/gameserver-source-005-bolero-kani-ci-39572135297-1.json",
+        "verification/agones/runs/gameserver-source-005-bolero-kani-ci-39572135297-1.json"
+      ],
+      "name": "feature-kani-gameserver-005-39572135297-1"
+    }
+  ],
+  "ci_url": "https://github.com/QuasarRay/agones/actions/runs/39572135297",
+  "counts": {
+    "audited_selections": 9,
+    "backend_rows": 18858,
+    "expected_selections": 43,
+    "retained_artifacts": 9,
+    "satisfied_covers": 38,
+    "semantic_claims": 49,
+    "successful_harnesses": 7,
+    "uncredited_selections": 2,
+    "unique_qualified_source_assertions": 37,
+    "unreachable_credited": 0
+  },
+  "migration_status": "INCOMPLETE",
+  "qualified_source_origins": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-405",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-409",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-412",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-413",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-414",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-415",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-416",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-417",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-418",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-419",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-423",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-424",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-427",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-432",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-439",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-440",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-445",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::defaults are eviction.safe: Never::line-446",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-405",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-409",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-412",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-413",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-414",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-415",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-416",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-417",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-418",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-419",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-423",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-424",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-427",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-432",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-439",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-440",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-445",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerApplyDefaults::set basic defaults on a very simple gameserver::line-446",
+    "agones.dev/agones/pkg/util/runtime::pkg/util/runtime/features_test.go::TestFeatures::Error on query parsing::line-65"
+  ],
+  "remaining_selections": 34,
+  "results": [
+    {
+      "backend_rows": 1158,
+      "exit_code": 0,
+      "family": "bool",
+      "formal_credit": true,
+      "harness": "feature_bool_common_domain",
+      "log_sha256": "f1ed47b04a55a6413c094b04270bb03af94defd2fcb1ab909e616d625eb0ed19",
+      "run": "verification/agones/runs/feature-bool-bolero-kani-ci-39572135297-1.json",
+      "satisfied_covers": 6,
+      "semantic_claims": 3,
+      "status": "PASSED"
+    },
+    {
+      "backend_rows": 978,
+      "exit_code": 0,
+      "family": "input",
+      "formal_credit": true,
+      "harness": "feature_input_common_domain",
+      "log_sha256": "2a219e85aa8921f4cf8f2d19ae3ebfc53514030a5c31de03fbca683033950790",
+      "run": "verification/agones/runs/feature-input-bolero-kani-ci-39572135297-1.json",
+      "satisfied_covers": 10,
+      "semantic_claims": 3,
+      "status": "PASSED"
+    },
+    {
+      "backend_rows": 1542,
+      "exit_code": 0,
+      "family": "query",
+      "formal_credit": true,
+      "harness": "source_query_case_003",
+      "log_sha256": "cd6a7774b332f58418846514962944569fb306dc73fbaaecc0bb44c84a7a528e",
+      "run": "verification/agones/runs/feature-query-error-bolero-kani-ci-39572135297-1.json",
+      "satisfied_covers": 2,
+      "semantic_claims": 1,
+      "status": "PASSED"
+    },
+    {
+      "backend_rows": 2411,
+      "exit_code": 0,
+      "family": "health",
+      "formal_credit": true,
+      "harness": "health_defaulting_common_domain",
+      "log_sha256": "520e5c9f71d1a41ef74dd1a186bff499c084b464b3c783e5da0c76dd04430f59",
+      "run": "verification/agones/runs/health-defaulting-bolero-kani-ci-39572135297-1.json",
+      "satisfied_covers": 8,
+      "semantic_claims": 3,
+      "status": "PASSED"
+    },
+    {
+      "backend_rows": 5614,
+      "exit_code": 0,
+      "family": "gameserver-source",
+      "formal_credit": true,
+      "harness": "source_gs_case_005",
+      "log_sha256": "0dc5c31ead41a818fbffc1a5c90cefb86f737a22dd42bd0cc5bd6d3abdf91b99",
+      "run": "verification/agones/runs/gameserver-source-005-bolero-kani-ci-39572135297-1.json",
+      "satisfied_covers": 2,
+      "semantic_claims": 18,
+      "status": "PASSED"
+    },
+    {
+      "backend_rows": 5614,
+      "exit_code": 0,
+      "family": "gameserver-source",
+      "formal_credit": true,
+      "harness": "source_gs_case_014",
+      "log_sha256": "65fcca661e1732bf1b255b926299eae652b15e5359addba0ac8b93588beb198a",
+      "run": "verification/agones/runs/gameserver-source-014-bolero-kani-ci-39572135297-1.json",
+      "satisfied_covers": 2,
+      "semantic_claims": 18,
+      "status": "PASSED"
+    },
+    {
+      "backend_rows": 1541,
+      "exit_code": 0,
+      "family": "gameserver-features",
+      "formal_credit": true,
+      "harness": "gameserver_feature_validation_common_domain",
+      "log_sha256": "50387b7b849aacae05b24958cd65fc3c90091b5d18c2e0a6ad1d4a2bd8e41000",
+      "run": "verification/agones/runs/gameserver-features-bolero-kani-ci-39572135297-1.json",
+      "satisfied_covers": 8,
+      "semantic_claims": 3,
+      "status": "PASSED"
+    },
+    {
+      "complete_individual_rows": 0,
+      "diagnostic_tail": "lse) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\nUnwinding loop _RNvNtCsgVugCEqaZtI_11agones_core10gameserver24indexed_validation_field.0 iteration 14 file crates/agones-core/src/gameserver.rs line 646 column 5 function agones_core::gameserver::indexed_validation_field thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/option.rs line 1334 column 15 function std::option::Option::<usize>::ok_or::<std::collections::TryReserveErrorKind> thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/result.rs line 2177 column 15 function <std::result::Result<usize, std::collections::TryReserveErrorKind> as std::ops::Try>::branch thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/result.rs line 965 column 15 function std::result::Result::<std::alloc::Layout, std::alloc::LayoutError>::map_err::<std::collections::TryReserveError, {closure@alloc::raw_vec::layout_array::{closure#0}}> thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/result.rs line 2177 column 15 function <std::result::Result<std::alloc::Layout, std::collections::TryReserveError> as std::ops::Try>::branch thread 0\naborting path on assume(false) at file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/raw_vec/mod.rs line 549 column 26 function alloc::raw_vec::RawVecInner::finish_grow thread 0\nFinished with result: oom-kill\nMain processes terminated with: code=killed/status=KILL\nService runtime: 7min 25.362s\nCPU time consumed: 7min 46.483s\nMemory peak: 12.0G\nMemory swap peak: 0B\nResult=oom-kill\nExecMainCode=2\nExecMainStatus=9\nMemoryPeak=12884901888\n",
+      "exit_code": 1,
+      "family": "gameserver-general-validation-source",
+      "formal_credit": false,
+      "harness": "source_gs_validate_case_006",
+      "log_sha256": "8b1d200f4b339cd4f314343b7db4ca69fdd46a10ed8f67d73b4e4058ebf7d070",
+      "run": "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-006.json",
+      "scope": "No complete accepted strict summary; zero assertion or cover credit.",
+      "status": "FAILED"
+    },
+    {
+      "complete_individual_rows": 0,
+      "diagnostic_tail": "nu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs line 83 column 13 function core::slice::memchr::memchr_aligned::runtime thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\nUnwinding loop _RNvNvNtNtCs8xvirJzNMvV_4core5slice6memchr14memchr_aligned7runtimeCsiCCRzKceGR8_28source_gameserver_validation.0 iteration 89 file /home/runner/.rustup/toolchains/nightly-2026-08-21-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/memchr.rs line 83 column 13 function core::slice::memchr::memchr_aligned::runtime thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function kani::mem::cbmc::same_allocation thread 0\naborting path on assume(false) at file library/kani_core/src/models.rs line 203 column 17 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\naborting path on assume(false) at file library/kani/src/lib.rs line 57 column 1 function <usize as kani::rustc_intrinsics::ToISize>::to_isize thread 0\nFinished with result: oom-kill\nMain processes terminated with: code=killed/status=KILL\nService runtime: 7min 51.248s\nCPU time consumed: 8min 13.198s\nMemory peak: 12.0G\nMemory swap peak: 0B\nResult=oom-kill\nExecMainCode=2\nExecMainStatus=9\nMemoryPeak=12884901888\n",
+      "exit_code": 1,
+      "family": "gameserver-general-validation-source",
+      "formal_credit": false,
+      "harness": "source_gs_validate_case_018",
+      "log_sha256": "5a84eaf7bb5c1b31bae1ebd6ab127091639b2006a9139399b1d63f45e758a9a4",
+      "run": "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-018.json",
+      "scope": "No complete accepted strict summary; zero assertion or cover credit.",
+      "status": "FAILED"
+    }
+  ],
+  "retention": "Original Actions artifacts retain90days; ZIP digests and complete raw members recovered and checked locally. CI remains running.",
+  "schema_version": 1,
+  "scope": "Exact selected source cases or declared bounded common domains only. Preserve the constructor-image and observation-lifetime limits. No full API, lifecycle, post-observation cleanup, executor or live-cluster proof.",
+  "source_head": "861f4eb5b3d5a9d47d2364edc83b32a1da3e9c71",
+  "source_root_pin": "verification/agones/ci/39572135297-pinned-source.json",
+  "status": "FIRST9_RETAINED_SEVEN_STRICT_PASSES_TWO_OOM_FAILURES",
+  "tested_merge": "6492f41e3ddfe1a75e2889f8fd510b3eb2c5ff2d",
+  "workflow_run": 39572135297
+}

@@ -1,0 +1,487 @@
+{
+  "artifact_retrieval": "Original ZIPs and members are digest/source verified against pinned tested merge; download connector intermittently reports Unknown tool, retain pending IDs for bounded recovery. No new permission request required.",
+  "available_artifacts": [
+    {
+      "digest": "sha256:458faba0cc58980fc905c7860646856406ab7643fd76746847a0de6316304151",
+      "expired": false,
+      "expires_at": "2027-01-19T06:33:29Z",
+      "id": 12326465178,
+      "name": "feature-kani-validation-004-39556147739-1",
+      "size_in_bytes": 46749
+    },
+    {
+      "digest": "sha256:2c041cc3321b6228d04a38912a729f3c33932330857fcd8c42c3580f461580e1",
+      "expired": false,
+      "expires_at": "2027-01-19T06:33:29Z",
+      "id": 12326386149,
+      "name": "feature-kani-general-validation-003-39556147739-1",
+      "size_in_bytes": 58401
+    },
+    {
+      "digest": "sha256:bedc8d593355dea51097e14bb029810dffec8c79216b53757bb3bec7dd9c3b06",
+      "expired": false,
+      "expires_at": "2027-01-19T06:33:29Z",
+      "id": 12326026345,
+      "name": "feature-kani-player-contract-39556147739-1",
+      "size_in_bytes": 50123
+    },
+    {
+      "digest": "sha256:b9617f1b612170bf0af8c25319c90cad4467c6976e9b38f65ce076bb5fb26cf9",
+      "expired": false,
+      "expires_at": "2027-01-19T06:33:29Z",
+      "id": 12325912930,
+      "name": "feature-kani-general-validation-007-39556147739-1",
+      "size_in_bytes": 43169
+    },
+    {
+      "digest": "sha256:24ce5b61365fc4b70b2b5f3a4e1971d520bcba83b31bb4d6d25b27b5950f2d33",
+      "expired": false,
+      "expires_at": "2027-01-19T06:33:29Z",
+      "id": 12325869963,
+      "name": "feature-kani-general-validation-008-39556147739-1",
+      "size_in_bytes": 43160
+    },
+    {
+      "digest": "sha256:5c17c132afe0d716b718aa7ba24a7bed5759e4e7a6774c8b674d471edd722ae9",
+      "expired": false,
+      "expires_at": "2027-01-19T06:33:29Z",
+      "id": 12325788215,
+      "name": "feature-kani-query-003-39556147739-1",
+      "size_in_bytes": 46637
+    },
+    {
+      "digest": "sha256:8e958f389f62d9b67063dcccd4447b86ed7d42f96dda494a565d8be73866d6a6",
+      "expired": false,
+      "expires_at": "2027-01-19T06:33:29Z",
+      "id": 12325748499,
+      "name": "feature-kani-bool-39556147739-1",
+      "size_in_bytes": 39661
+    },
+    {
+      "digest": "sha256:37a558840f5b99fb0a0f5122396c77358cca746e5d6eaf03206220de6ebd91a8",
+      "expired": false,
+      "expires_at": "2027-01-19T06:33:29Z",
+      "id": 12325673858,
+      "name": "feature-kani-input-39556147739-1",
+      "size_in_bytes": 37171
+    },
+    {
+      "digest": "sha256:617d5678df3e02025c7bf9935e41a25d0c7ae1620fbc10632a744df03fe8a928",
+      "expired": false,
+      "expires_at": "2027-01-19T06:33:29Z",
+      "id": 12325508482,
+      "name": "feature-kani-general-validation-009-39556147739-1",
+      "size_in_bytes": 43162
+    },
+    {
+      "digest": "sha256:c429f4da752805d84dc61832d6ac8d5238f70ce97f571f265905dbf3e3283653",
+      "expired": false,
+      "expires_at": "2027-01-19T06:33:29Z",
+      "id": 12325303200,
+      "name": "feature-kani-health-39556147739-1",
+      "size_in_bytes": 58458
+    },
+    {
+      "digest": "sha256:6df1b2c79b1b083d27cdd1229328b6b101393d4e97369b8ac4047a9515247bff",
+      "expired": false,
+      "expires_at": "2027-01-19T06:33:29Z",
+      "id": 12325284432,
+      "name": "feature-kani-gameserver-014-39556147739-1",
+      "size_in_bytes": 126838
+    },
+    {
+      "digest": "sha256:7309adc9ae65724d74b3bd0532853c0c19bcc64dceeaa30747876cec339fcca5",
+      "expired": false,
+      "expires_at": "2027-01-19T06:33:29Z",
+      "id": 12325258743,
+      "name": "feature-kani-gameserver-005-39556147739-1",
+      "size_in_bytes": 125434
+    },
+    {
+      "digest": "sha256:8b9f161d3aac83f4d5ebcdbf9afb892da4f1ff4f5340d6c6451d736767cfda52",
+      "expired": false,
+      "expires_at": "2027-01-19T06:33:29Z",
+      "id": 12325189698,
+      "name": "feature-kani-general-validation-023-39556147739-1",
+      "size_in_bytes": 58189
+    },
+    {
+      "digest": "sha256:d9d3b4e990f9f9c86cddf7a4ca7b0c400cc5d12a966c1f2ca1c99fadcff1b151",
+      "expired": false,
+      "expires_at": "2027-01-19T06:33:29Z",
+      "id": 12325189442,
+      "name": "feature-kani-general-validation-015-39556147739-1",
+      "size_in_bytes": 58236
+    }
+  ],
+  "base": "1e64a054901658908d0a7a4eecd3010379df9614",
+  "classification": "REPO_SAFE",
+  "current_formal_credit": 0,
+  "draft": true,
+  "head": "e15139f9cce0c60c88131f7122b4c0fc5188f420",
+  "historical_campaign": "verification/agones/ci/39528223788-terminal-all37-retained.json",
+  "jobs": [
+    {
+      "completed_at": "2026-10-21T06:34:00Z",
+      "conclusion": "success",
+      "failed_steps": [],
+      "id": 119076253464,
+      "name": "migration-state",
+      "started_at": "2026-10-21T06:33:31Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T06:36:25Z",
+      "conclusion": "success",
+      "failed_steps": [],
+      "id": 119076422300,
+      "name": "feature-validation-contract-model-check",
+      "started_at": "2026-10-21T06:34:02Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T06:39:08Z",
+      "conclusion": "success",
+      "failed_steps": [],
+      "id": 119076422306,
+      "name": "rust",
+      "started_at": "2026-10-21T06:34:02Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T06:46:09Z",
+      "conclusion": "success",
+      "failed_steps": [],
+      "id": 119076422391,
+      "name": "feature-common-model-check",
+      "started_at": "2026-10-21T06:34:02Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076422707,
+      "name": "feature-validation-source-001",
+      "started_at": "2026-10-21T06:34:02Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076422777,
+      "name": "general-validation-source-006",
+      "started_at": "2026-10-21T06:34:02Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": "2026-10-21T06:48:30Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 119076422781,
+      "name": "general-validation-source-008",
+      "started_at": "2026-10-21T06:34:02Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T06:48:02Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 119076422803,
+      "name": "general-validation-source-003",
+      "started_at": "2026-10-21T06:34:02Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076422821,
+      "name": "general-validation-source-012",
+      "started_at": "2026-10-21T06:34:02Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076422829,
+      "name": "feature-validation-source-003",
+      "started_at": "2026-10-21T06:34:02Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076422837,
+      "name": "general-validation-source-000",
+      "started_at": "2026-10-21T06:34:02Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": "2026-10-21T06:43:47Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 119076422852,
+      "name": "feature-validation-source-004",
+      "started_at": "2026-10-21T06:34:02Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T06:45:58Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 119076422860,
+      "name": "general-validation-source-015",
+      "started_at": "2026-10-21T06:34:03Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T06:43:07Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 119076422861,
+      "name": "general-validation-source-007",
+      "started_at": "2026-10-21T06:34:02Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076422882,
+      "name": "general-validation-source-002",
+      "started_at": "2026-10-21T06:34:02Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076422890,
+      "name": "feature-validation-source-000",
+      "started_at": "2026-10-21T06:39:10Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076422903,
+      "name": "general-validation-source-010",
+      "started_at": "2026-10-21T06:34:02Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": "2026-10-21T06:42:07Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 119076422946,
+      "name": "general-validation-source-009",
+      "started_at": "2026-10-21T06:34:02Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076422960,
+      "name": "general-validation-source-011",
+      "started_at": "2026-10-21T06:48:04Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076422965,
+      "name": "general-validation-source-020",
+      "started_at": "2026-10-21T06:46:00Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076422968,
+      "name": "general-validation-source-004",
+      "started_at": "2026-10-21T06:43:49Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076422970,
+      "name": "general-validation-source-005",
+      "started_at": "2026-10-21T06:47:40Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076422974,
+      "name": "feature-validation-source-002",
+      "started_at": "2026-10-21T06:46:10Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": "2026-10-21T06:47:39Z",
+      "conclusion": "failure",
+      "failed_steps": [
+        "Verify the complete selected original GameServer validation case"
+      ],
+      "id": 119076422990,
+      "name": "general-validation-source-023",
+      "started_at": "2026-10-21T06:34:02Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076422997,
+      "name": "general-validation-source-014",
+      "started_at": "2026-10-21T06:42:08Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076423000,
+      "name": "general-validation-source-024",
+      "started_at": "2026-10-21T06:43:09Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076423011,
+      "name": "general-validation-source-018",
+      "started_at": "2026-10-21T06:36:26Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076423027,
+      "name": "general-validation-source-019",
+      "started_at": "2026-10-21T06:34:02Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076423038,
+      "name": "general-validation-source-017",
+      "started_at": "2026-10-21T06:34:02Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076423046,
+      "name": "general-validation-source-016",
+      "started_at": "2026-10-21T06:48:31Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076423053,
+      "name": "general-validation-source-013",
+      "started_at": "2026-10-21T06:34:02Z",
+      "status": "in_progress"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076423069,
+      "name": "general-validation-source-021",
+      "started_at": "2026-10-21T06:34:00Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076423156,
+      "name": "general-validation-source-022",
+      "started_at": "2026-10-21T06:34:00Z",
+      "status": "queued"
+    },
+    {
+      "completed_at": null,
+      "conclusion": null,
+      "failed_steps": [],
+      "id": 119076423470,
+      "name": "general-validation-source-001",
+      "started_at": "2026-10-21T06:34:00Z",
+      "status": "queued"
+    }
+  ],
+  "local_review_commit": "6a21bc80e5b95fdcce20e4a1d1c0dcbb8606165f",
+  "merged": false,
+  "next_action": "Retain all current source-bound raw artifacts and strict summaries. Do not merge until every required current check passes. Continue shared metadata validation implementation independently.",
+  "observed_at": "2026-10-21T06:52:19.509244+00:00",
+  "ordinary_validation": {
+    "clean_checkout_preflight": "verification/agones/canonical-native676-review-ready.json",
+    "generation_modes_passed": 6,
+    "native_failed": 0,
+    "native_ignored": 3,
+    "native_passed": 676,
+    "parser_controls_passed": 11
+  },
+  "published": true,
+  "pull_request": "https://github.com/QuasarRay/agones/pull/96",
+  "required_source_assertions": 35,
+  "required_source_covers": 60,
+  "retained_artifacts": [
+    12326026345,
+    12325303200,
+    12325788215,
+    12326465178,
+    12326386149,
+    12325912930,
+    12325869963,
+    12325748499,
+    12325673858,
+    12325508482,
+    12325284432
+  ],
+  "retention_pending_artifacts": [
+    12325258743,
+    12325189698,
+    12325189442
+  ],
+  "schema_version": 1,
+  "selected_harnesses": 37,
+  "source_case_jobs": 30,
+  "status": "IN_PROGRESS",
+  "tested_merge": "5832f26d6e0577a84acf108c8514817fd2f72afc",
+  "tree": "aea29a660e2bc2a0bdf38d827930d29eee0250da",
+  "url": "https://github.com/QuasarRay/agones/actions/runs/39556147739",
+  "workflow_run": 39556147739
+}

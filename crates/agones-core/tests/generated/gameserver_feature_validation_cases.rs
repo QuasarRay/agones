@@ -51,7 +51,6 @@ fn source_gsv_base_fixture_000() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -114,7 +113,6 @@ fn source_gsv_base_fixture_001() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -166,7 +164,6 @@ fn source_gsv_base_fixture_002() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -219,7 +216,6 @@ fn source_gsv_base_fixture_003() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }
@@ -281,7 +277,6 @@ fn source_gsv_base_fixture_004() -> agones_core::GameServer {
         ..Default::default()
     }]
     .into();
-    value.spec.template.metadata.annotations = std::collections::BTreeMap::from([]);
     value.status.state = None;
     value
 }

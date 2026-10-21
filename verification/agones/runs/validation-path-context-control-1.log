@@ -1,0 +1,103 @@
+   Compiling agones-core v0.1.0 (/home/astral/.codex/worktrees/agones-resource-quantity/agones/crates/agones-core)
+warning: ambiguous glob re-exports
+  --> crates/agones-core/src/lib.rs:42:9
+   |
+42 | pub use allocation::*;
+   |         ^^^^^^^^^^^^^ the name `NodeAddress` in the type namespace is first re-exported here
+43 | pub use autoscaling::*;
+44 | pub use gameserver::*;
+   |         ------------- but the name `NodeAddress` in the type namespace is also re-exported here
+   |
+   = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: function `fleet_replica_bounds_are_bounded` is never used
+    --> crates/agones-core/src/fleet.rs:1010:4
+     |
+1010 | fn fleet_replica_bounds_are_bounded(input: (i32, i32)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `label` is never used
+    --> crates/agones-core/src/autoscaling.rs:1340:8
+     |
+1339 | impl CapacityPolicyKind {
+     | ----------------------- method in this implementation
+1340 |     fn label(self) -> &'static str {
+     |        ^^^^^
+
+warning: function `capacity_scale_up_never_decreases_replicas` is never used
+    --> crates/agones-core/src/autoscaling.rs:1839:4
+     |
+1839 | fn capacity_scale_up_never_decreases_replicas(
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `buffer_policy_integer_decision_stays_bounded` is never used
+    --> crates/agones-core/src/autoscaling.rs:1875:4
+     |
+1875 | fn buffer_policy_integer_decision_stays_bounded(
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `buffer_integer_valid_region_is_accepted` is never used
+    --> crates/agones-core/src/autoscaling.rs:1904:4
+     |
+1904 | fn buffer_integer_valid_region_is_accepted(input: (i32, i32, i32)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `capacity_integer_valid_region_is_accepted` is never used
+    --> crates/agones-core/src/autoscaling.rs:1924:4
+     |
+1924 | fn capacity_integer_valid_region_is_accepted(input: (i64, i64, i32, bool)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `fixed_interval_positive_seconds_are_accepted` is never used
+    --> crates/agones-core/src/autoscaling.rs:1957:4
+     |
+1957 | fn fixed_interval_positive_seconds_are_accepted(seconds: i32) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `health_defaulting_makes_enabled_thresholds_positive` is never used
+   --> crates/agones-core/src/gameserver.rs:284:4
+    |
+284 | fn health_defaulting_makes_enabled_thresholds_positive(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `safe_add_nonnegative_inputs_are_saturating` is never used
+   --> crates/agones-core/src/gameserver.rs:404:4
+    |
+404 | fn safe_add_nonnegative_inputs_are_saturating(input: (i64, i64)) -> bool {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `counter_updates_preserve_bounds` is never used
+    --> crates/agones-core/src/gameserver.rs:1500:4
+     |
+1500 | fn counter_updates_preserve_bounds(input: (i64, i64, i64, bool)) -> bool {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `gameserverset_creation_batch_respects_caps` is never used
+   --> crates/agones-core/src/gameserverset.rs:462:4
+    |
+462 | fn gameserverset_creation_batch_respects_caps(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `average_of_nonnegative_byte_weights_stays_within_input_range` is never used
+   --> crates/agones-core/src/multicluster.rs:207:4
+    |
+207 | fn average_of_nonnegative_byte_weights_stays_within_input_range(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `agones-core` (lib) generated 13 warnings
+error[E0425]: cannot find type `ResourceQuantityValidatorComponent` in this scope
+  --> crates/agones-core/tests/resource_quantity.rs:16:1
+   |
+16 | #[cgp_new_provider]
+   | ^^^^^^^^^^^^^^^^^^^ not found in this scope
+   |
+   = note: this error originates in the attribute macro `cgp_new_provider` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: you might be missing a type parameter
+   |
+17 | impl<ResourceQuantityValidatorComponent> agones_core::ResourceQuantityValidator<ResourcePathContext> for ObserveResourcePaths {
+   |     ++++++++++++++++++++++++++++++++++++
+
+For more information about this error, try `rustc --explain E0425`.
+error: could not compile `agones-core` (test "resource_quantity") due to 1 previous error

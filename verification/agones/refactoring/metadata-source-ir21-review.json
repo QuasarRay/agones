@@ -1,0 +1,26 @@
+{
+  "all_eight_architecture_cells": "REQUIRED_OPEN; no same-logical-crate or cross-crate cell is credited by these fixtures/providers.",
+  "candidate": "Extend _2 compiler machinery or generalize all source assertion emission while adding the metadata family.",
+  "concrete_reuse": "The new source family reuses package/type loading, complete six-field error lowering, gate validation, strict result parsing and protected model execution. One local SourceAssertions emitter supplies both the core and Rusternetes targets without copying their assertion semantics.",
+  "decision": "REUSE_CGP_AND_EXISTING_GENCO_KEEP_FEATURE_VERIFICATION_MOVING",
+  "feature_id": "META-VALIDATE-001",
+  "generator_source_files": {
+    "crates/agones-rusternetes/examples/codegen/gameserver_features.rs": "44335a77ca34abe5d3bbbfa7d05836ecdc5ea65a59cd7520652a213e48dca848",
+    "crates/agones-rusternetes/examples/codegen/object_metadata.rs": "e8b22f0e46c00f2d1f996ad4afee85ffd62c9cc9ec3c5ae86602e0205e92204b",
+    "crates/agones-rusternetes/examples/feature_case_codegen.rs": "b9610a3ed5837fdc1ec5d47acf10d282400a3ea95042cf59ec95e7e1304ef412"
+  },
+  "id": "G3-METADATA-SOURCE-IR21-001",
+  "ir_sha256": "744c0a4aa76e2893bb9645c5ce6e3513f9cdb9af3cd590a27ae69de8739ffc6c",
+  "next_review_trigger": "After the next API validation feature or two further Genco source families, whichever occurs first, measure repeated assertion declarations and context wiring against existing CGP/Genco and the pinned Arcane probes, then take the smallest positive-ROI _2 step. All eight final cells remain mandatory.",
+  "production_gate": "verification/agones/gates/fa682f3bc2dded24a213b49d3337fb7a5a711fb02321ddac5057353491b48f72.json",
+  "roi": "The active need is already handled by the existing CGP/Genco boundary. A _2 staging/compiler extension would add Cargo/IDE, diagnostic and eight-cell verification work without removing a demonstrated blocker. The three current validation generators repeat a small declaration pattern, but changing their shared source now would invalidate freshly rebound evidence. Preserve the small local helper and revisit shared declarations when the next source family supplies concrete additional reuse. No new macro/general framework is introduced.",
+  "timestamp": "2026-10-21T08:36:25.817821+00:00",
+  "verified_scope": {
+    "action_faults_detected": 4,
+    "existing_whole_harness_bodies_unchanged": 47,
+    "generated_core_tests": 12,
+    "qualified_assertions": 21,
+    "rusternetes_conversion_validation_cases": 5,
+    "source_cases": 6
+  }
+}

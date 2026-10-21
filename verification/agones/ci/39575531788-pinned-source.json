@@ -1,0 +1,10 @@
+{
+  "review_head": "bc235d121bfb8152ec6c835900a6159957101254",
+  "schema_version": 1,
+  "scope": "Passive single MetaPatch source005 diagnostic push, no PR or full43acceptance claim. Exact clean source tree verified against published commit.",
+  "source_head": "bc235d121bfb8152ec6c835900a6159957101254",
+  "source_root": "/home/astral/.codex/worktrees/agones-metadata-scan/agones",
+  "source_tree": "6c32a575c5dd7d1514e3560444d45a58b30d0ce0",
+  "tested_merge": "bc235d121bfb8152ec6c835900a6159957101254",
+  "workflow_run": 39575531788
+}

@@ -1,0 +1,12 @@
+{
+  "local_commit": "b03fbd76f5245754a59541ab18aa68c51634b2dc",
+  "missing_artifacts": 10,
+  "raw_and_summary_paths": 74,
+  "ref": "refs/agones-checkpoints/ci39572135297-first33",
+  "retained_artifacts": 33,
+  "retained_bytes": 86671811,
+  "schema_version": 1,
+  "scope": "Content-addressed local Git seal of exact reviewed source plus33recovered original raw artifacts and strict summaries. Actions original ZIPs are digest-verified and retain90days; missingten are not credited. No remote publication of this local archive claimed.",
+  "tree": "5419b232f0af892f6692e43949aea4c7f928a945",
+  "workflow_run": 39572135297
+}

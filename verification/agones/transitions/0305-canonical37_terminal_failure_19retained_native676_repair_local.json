@@ -1,0 +1,15 @@
+{
+  "affected_obligations": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/gameserver_test.go::TestGameServerValidateFeatures"
+  ],
+  "authorization": "User execution contract",
+  "event": "canonical37_terminal_failure_19retained_native676_repair_local",
+  "gate_snapshot": "verification/agones/gates/6d10b275433dcf0a49011a53dc251b062c43c50049cc3a8aebf0c161cc498b26.json",
+  "predecessor_revision": 304,
+  "predecessor_sha256": "4cba886e18e9837c5b0622ab782f3407a907dcfab997942bd742f8bfdc461cbd",
+  "reason": "Full37campaign terminal: state/Rust/common pass; all30source cases, contract parser and aggregate fail. Six strict summaries reproduce46claims/30SATcovers/37source occurrences;12retained source OOMs have zero rows and18raw failures await download. A trace-based isolated repair passes676native/sixmodes/11controls with47harness bodies unchanged. GitHub tools were removed; Goal remains active and no further publication or formal improvement is claimed.",
+  "result_revision": 305,
+  "schema_version": 1,
+  "state_sha256": "60e53b7ec894b1cf46e821a3525e69c266c0977d5f644e6fbd3b223a4898875c",
+  "timestamp": "2026-10-21T02:14:19.727834+00:00"
+}

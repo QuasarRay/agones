@@ -16,6 +16,8 @@ use sha2::{Digest, Sha256};
 mod gameserver_features;
 #[path = "codegen/gameserver_validation.rs"]
 mod gameserver_validation;
+#[path = "codegen/object_metadata.rs"]
+mod object_metadata;
 
 #[derive(Deserialize)]
 struct Family {
@@ -432,12 +434,10 @@ fn gs_fixture(input: &Value, function: &str) -> rust::Tokens {
     }
     for (field, values) in [("labels", &typed.metadata.labels), ("annotations", &typed.metadata.annotations)] {
         if !values.is_empty() {
-            let mut entries = rust::Tokens::new();
             for (key, value) in values {
                 let key = quoted(key.as_str()); let value = quoted(value.as_str());
-                entries.append(quote! { ($key.to_owned(), $value.to_owned()), });
+                metadata.append(quote! { value.metadata.$field.insert($key.to_owned(), $value.to_owned()); });
             }
-            metadata.append(quote! { value.metadata.$field = std::collections::BTreeMap::from([$entries]); });
         }
     }
     if !typed.type_meta.kind.is_empty() {
@@ -494,18 +494,16 @@ fn gs_fixture(input: &Value, function: &str) -> rust::Tokens {
         additional_template.append(quote! { value.spec.template.spec.init_containers = vec![$values]; });
     }
     if !typed.spec.template.metadata.labels.is_empty() {
-        let mut entries = rust::Tokens::new();
         for (key, value) in &typed.spec.template.metadata.labels {
             let key = quoted(key.as_str()); let value = quoted(value.as_str());
-            entries.append(quote! { ($key.to_owned(), $value.to_owned()), });
+            additional_template.append(quote! { value.spec.template.metadata.labels.insert($key.to_owned(), $value.to_owned()); });
         }
-        additional_template.append(quote! { value.spec.template.metadata.labels = std::collections::BTreeMap::from([$entries]); });
     }
     let mut annotations = rust::Tokens::new();
     for (key, value) in &typed.spec.template.metadata.annotations {
         let key = quoted(key.as_str());
         let value = quoted(value.as_str());
-        annotations.append(quote! { ($key.to_owned(), $value.to_owned()), });
+        annotations.append(quote! { value.spec.template.metadata.annotations.insert($key.to_owned(), $value.to_owned()); });
     }
     let health = gs_health(&typed.spec.health);
     let sdk = gs_sdk(&typed.spec.sdk_server);
@@ -539,7 +537,7 @@ fn gs_fixture(input: &Value, function: &str) -> rust::Tokens {
             value.spec.counters = $counters;
             value.spec.lists = $lists;
             value.spec.template.spec.containers = $containers;
-            value.spec.template.metadata.annotations = std::collections::BTreeMap::from([$annotations]);
+            $annotations
             $additional_template
             value.status.state = $state;
             value
@@ -1004,7 +1002,8 @@ fn main() {
             || argument == "--sdk-version"
             || argument == "--gameserver-defaulting"
             || argument == "--gameserver-features"
-            || argument == "--gameserver-validation"),
+            || argument == "--gameserver-validation"
+            || argument == "--object-metadata"),
         "unknown generation argument"
     );
     let root = Path::new(env!("CARGO_MANIFEST_DIR"))
@@ -1018,6 +1017,7 @@ fn main() {
         "--gameserver-defaulting",
         "--gameserver-features",
         "--gameserver-validation",
+        "--object-metadata",
     ];
     assert!(
         modes
@@ -1027,6 +1027,10 @@ fn main() {
             <= 1,
         "select one generation family"
     );
+    if arguments.iter().any(|argument| argument == "--object-metadata") {
+        object_metadata::emit_object_metadata_cases(root, arguments.iter().any(|argument| argument == "--check"));
+        return;
+    }
     if arguments.iter().any(|argument| argument == "--gameserver-validation") {
         gameserver_validation::emit_gameserver_validation_cases(root, arguments.iter().any(|argument| argument == "--check"));
         return;

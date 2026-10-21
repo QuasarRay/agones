@@ -1,0 +1,35 @@
+{
+  "artifact_bindings": {
+    "verification/agones/fleet-replica-helpers-capability-v1.json": "513a6bc7ba8df989b50c52091d4c0832f2deba03cdd37899044b452997b6462b",
+    "verification/agones/gates/911456eea0a5c0700a785e00f32adde7313270693cc3de9942d27c5677ad3e5f.json": "911456eea0a5c0700a785e00f32adde7313270693cc3de9942d27c5677ad3e5f",
+    "verification/agones/refactoring/fleet-replica-helpers-review.json": "94ba45467843737519db5374cfee3cac3b3b6e1511c83e9b381823d335b51944"
+  },
+  "canonical_adoption": false,
+  "canonical_implementation_gate": null,
+  "feature_id": "FLEET-REPLICA-HELPERS-001",
+  "files": 17,
+  "formal_credit": 0,
+  "intermediate_verified_source_commit": "72a2729add83fc6c611a39ed9c0e2464429c17b0",
+  "isolated_implementation_gate": "verification/agones/gates/911456eea0a5c0700a785e00f32adde7313270693cc3de9942d27c5677ad3e5f.json",
+  "local_commit": "af574b37efa798d10f90ec17463e9b2f3b5b39c4",
+  "native_failed": 0,
+  "native_ignored": 3,
+  "native_passed": 705,
+  "next_action": "Reuse the existing typed Go extractor/Genco to preserve all three complete original helper tests and separately justified integer-domain properties. Recover pending metadata CI evidence, then rebind affected gates/generation during canonical adoption. Publish only through authorized available GitHub access.",
+  "original_go_tests_passed": 3,
+  "published": false,
+  "ref": "refs/agones-checkpoints/fleet-replica-helpers-native705",
+  "schema_version": 1,
+  "snapshot_artifact_bindings": {
+    "verification/agones/runs/fleet-replica-helpers-native-3.json": "e14eda9971d6f59af46315c0d8dd755e8d9c832cb8c1f8f124034987b126a2c8",
+    "verification/agones/runs/fleet-replica-helpers-native-3.log": "02472a01df81fb4ab8add75cd2a5424abeefd39468ca33fbfb4b73a3d26b4b5f",
+    "verification/agones/runs/fleet-replica-helpers-original-go-1.json": "627575fc52711ef0bb3ec562f6540bdc3fdc454507579ff4b4bc60c18c36e162",
+    "verification/agones/runs/fleet-replica-helpers-original-go-1.log": "fb737c4be0ab6661059557f99fcb21892b42313fbde9100732700da7c447267e"
+  },
+  "snapshot_artifact_resolution": "Resolve these paths against the source_root or local_commit tree, not the canonical production checkout. The canonical runs namespace retains its own source-bound records.",
+  "source_extraction_status": "NOT_STARTED;implementation gate precedes new typed source work",
+  "source_implementation_snapshot": "Complete native implementation is recoverable in the isolated Git tree; canonical production remains the published metadata/native704source. The copied gate/native receipts are historical isolated-source evidence and do not certify the canonical old Fleet body.",
+  "source_root": "/home/astral/.codex/worktrees/agones-fleet-replica-helpers/agones",
+  "status": "LOCAL_ISOLATED_IMPLEMENTED_NATIVE705_GATE_READY_POST_GATE_SOURCE_WORK_REQUIRED",
+  "tree": "867f0d9d480096a76cc39328b215b9dab155fdd7"
+}

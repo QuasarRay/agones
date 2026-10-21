@@ -1,0 +1,36 @@
+{
+  "id": "FLEET-REPLICA-HELPERS-001",
+  "source_config_binding": {
+    "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "canonical_adoption": false,
+    "formal_credit": 0,
+    "isolated_implementation_gate": "verification/agones/gates/911456eea0a5c0700a785e00f32adde7313270693cc3de9942d27c5677ad3e5f.json",
+    "isolated_local_commit": "af574b37efa798d10f90ec17463e9b2f3b5b39c4",
+    "isolated_tree": "867f0d9d480096a76cc39328b215b9dab155fdd7",
+    "native_failed": 0,
+    "native_ignored": 3,
+    "native_passed": 705,
+    "no_semantic_extraction_before_gate": true,
+    "original_go_tests_passed": 3,
+    "production_gap": "sum_game_server_sets currently uses Iterator::sum<i32>, which can panic on overflow in the pinned debug/test build. The original int32 accumulator wraps. Existing replica-policy consumers already use wrapping arithmetic and must remain consistent.",
+    "reachable_production_path": "Rusternetes ReconcileFleetWithComponents -> ExecuteFleetDeploymentWithComponents -> selected UseAgonesFleetDeploymentPlanner -> core fleet_deployment_plan -> fleet_active_replicas_target/rolling_update_active_replicas -> replica helpers. Route existing sum folds through the same public helper; do not add a context or alternate algorithm.",
+    "reuse": "Reuse existing public Fleet/GameServerSet types, pure helper consumers, CGP-owned controller policy and Genco/typed extraction after gate. No new macro, orchestration adapter or framework required.",
+    "semantic_extraction_status": "NOT_STARTED",
+    "source_assertion_count": "UNRESOLVED_UNTIL_GATED_EXTRACTION",
+    "source_files": {
+      "pkg/apis/agones/v1/fleet.go": "52ff0dd6d1b3f8ac7feed3ba35356c16434a8ca77f531eff3434cb3ad25f0e28",
+      "pkg/apis/agones/v1/fleet_test.go": "7fed497a874406e224cc29359568418d90200739bb2e9b5887ed4712994bb600"
+    },
+    "source_symbols": [
+      "Fleet.UpperBoundReplicas",
+      "Fleet.LowerBoundReplicas",
+      "SumGameServerSets"
+    ],
+    "worktree": "/home/astral/.codex/worktrees/agones-fleet-replica-helpers/agones"
+  },
+  "test_ids": [
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetUpperBoundReplicas",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestFleetLowerBoundReplicas",
+    "agones.dev/agones/pkg/apis/agones/v1::pkg/apis/agones/v1/fleet_test.go::TestSumGameServerSets"
+  ]
+}

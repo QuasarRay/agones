@@ -1,0 +1,762 @@
+{
+  "artifact_access": {
+    "connector": "Host removed GitHub tools during collection.",
+    "unauthenticated_public_metadata": "Run/jobs/artifact inventories retrieved successfully.",
+    "unauthenticated_zip": "HTTP401; archives require authenticated retrieval. No credentials searched or requested."
+  },
+  "available_artifacts": [
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12334551311/zip",
+      "created_at": "2026-10-21T09:22:03Z",
+      "digest": "sha256:a5ab3673f07febd7161a9ccabf8d91a324c7bcc943c44a577df06d617c97a437",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12334551311,
+      "name": "feature-kani-general-validation-014-39572135297-1",
+      "size_in_bytes": 54871,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12334551311"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12334550151/zip",
+      "created_at": "2026-10-21T09:14:22Z",
+      "digest": "sha256:96057ecbf3143510504e67ed73e5f401a33c1b218cb652a5864f66a5609eac2d",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12334550151,
+      "name": "feature-kani-metadata-validation-002-39572135297-1",
+      "size_in_bytes": 53567,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12334550151"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12334447334/zip",
+      "created_at": "2026-10-21T09:22:13Z",
+      "digest": "sha256:69f6f035b78380add6ae9bcfb35d64ddc122a408d5651ce85c4bf47ef233aef3",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12334447334,
+      "name": "feature-kani-general-validation-015-39572135297-1",
+      "size_in_bytes": 55783,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12334447334"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12334441703/zip",
+      "created_at": "2026-10-21T09:18:38Z",
+      "digest": "sha256:a84826ab9d6b07d6e01be2519012c85d2c2a3bc54671a40c81fa7ea77d7651f7",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12334441703,
+      "name": "feature-kani-general-validation-021-39572135297-1",
+      "size_in_bytes": 59519,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12334441703"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12334343223/zip",
+      "created_at": "2026-10-21T09:22:07Z",
+      "digest": "sha256:a3832ed1090e1950c9ec03950b333162fe0b8fd0f483fd92db164afa0887f967",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12334343223,
+      "name": "feature-kani-general-validation-016-39572135297-1",
+      "size_in_bytes": 59536,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12334343223"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12334242909/zip",
+      "created_at": "2026-10-21T09:20:55Z",
+      "digest": "sha256:67922cc55fb140aaf9d99564f30fc0673f73ec58bce9d35b2e50a122f5575e37",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12334242909,
+      "name": "feature-kani-general-validation-022-39572135297-1",
+      "size_in_bytes": 59521,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12334242909"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12334130135/zip",
+      "created_at": "2026-10-21T09:05:30Z",
+      "digest": "sha256:cd494fd2f599e2f1f743504cb15dbfb122c5ce9202ffb1df09471152a9fce345",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12334130135,
+      "name": "feature-kani-metadata-validation-001-39572135297-1",
+      "size_in_bytes": 53515,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12334130135"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12334116832/zip",
+      "created_at": "2026-10-21T09:16:34Z",
+      "digest": "sha256:0715fb1758c794b5ad88437808778ccbc3a7b84c93129e3407425219ef7ceee2",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12334116832,
+      "name": "feature-kani-general-validation-019-39572135297-1",
+      "size_in_bytes": 59554,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12334116832"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12334116148/zip",
+      "created_at": "2026-10-21T09:12:10Z",
+      "digest": "sha256:148f63913843c47269d775b3ac7981cdc40351c623ea50c74c7535130887fde1",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12334116148,
+      "name": "feature-kani-general-validation-007-39572135297-1",
+      "size_in_bytes": 44586,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12334116148"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12334090748/zip",
+      "created_at": "2026-10-21T09:05:58Z",
+      "digest": "sha256:00caa7d60c378c519acbae0ebcc291328d63953fc852c9d2ceb963659d647801",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12334090748,
+      "name": "feature-kani-general-validation-013-39572135297-1",
+      "size_in_bytes": 53985,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12334090748"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333980210/zip",
+      "created_at": "2026-10-21T09:03:34Z",
+      "digest": "sha256:9a055ef30820e09c645f9dda0d407f258b8d9e48235a7ad71f6208ccfb02d085",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12333980210,
+      "name": "feature-kani-general-validation-004-39572135297-1",
+      "size_in_bytes": 44567,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333980210"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333896786/zip",
+      "created_at": "2026-10-21T09:11:54Z",
+      "digest": "sha256:738b6f0cbcf495da201b6bf599fbf26eec46c6137ab0bc592a430de420b29c4a",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12333896786,
+      "name": "feature-kani-general-validation-017-39572135297-1",
+      "size_in_bytes": 59684,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333896786"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333865836/zip",
+      "created_at": "2026-10-21T09:06:00Z",
+      "digest": "sha256:cfb9103867fae30471238649f8a9f4f3fc511085e9cc1c0394bafaf196b62f02",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12333865836,
+      "name": "feature-kani-general-validation-001-39572135297-1",
+      "size_in_bytes": 44096,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333865836"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333823083/zip",
+      "created_at": "2026-10-21T09:14:41Z",
+      "digest": "sha256:7386200d549975040693a29739aeae9b5a1d1c0660ab3732a182644e25b9a690",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12333823083,
+      "name": "feature-kani-general-validation-020-39572135297-1",
+      "size_in_bytes": 56701,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333823083"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333822489/zip",
+      "created_at": "2026-10-21T09:11:50Z",
+      "digest": "sha256:69d21f55c39d5d30efc9afd4a64df0d67a75a184f82a213d9786e5994116fcdf",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12333822489,
+      "name": "feature-kani-general-validation-000-39572135297-1",
+      "size_in_bytes": 62960,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333822489"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333740761/zip",
+      "created_at": "2026-10-21T09:04:01Z",
+      "digest": "sha256:4612081270d07acff85583194344ab2f4cd281a1f65da6eb26df97912d063997",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12333740761,
+      "name": "feature-kani-general-validation-009-39572135297-1",
+      "size_in_bytes": 44600,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333740761"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333727728/zip",
+      "created_at": "2026-10-21T09:19:00Z",
+      "digest": "sha256:88bd0cd4e4f0d306a005094564265779f2bed79b84565cc930e73726465df254",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12333727728,
+      "name": "feature-kani-general-validation-024-39572135297-1",
+      "size_in_bytes": 59545,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333727728"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333622132/zip",
+      "created_at": "2026-10-21T09:14:16Z",
+      "digest": "sha256:944097d9cbf2164473cc51f93675efa0852fb2a1c3e9c442bdf5cdccf5ce020e",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12333622132,
+      "name": "feature-kani-general-validation-011-39572135297-1",
+      "size_in_bytes": 54751,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333622132"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333411582/zip",
+      "created_at": "2026-10-21T09:06:00Z",
+      "digest": "sha256:3b645608664956c5c670dbebcf15d4dbe39f2800d41af08a3f0eb2952e719259",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12333411582,
+      "name": "feature-kani-validation-002-39572135297-1",
+      "size_in_bytes": 62156,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333411582"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333406650/zip",
+      "created_at": "2026-10-21T09:05:59Z",
+      "digest": "sha256:e6003ba3fa4a972722cc856b7053ee4bb18a01e4c8077ca083cc209738518821",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12333406650,
+      "name": "feature-kani-metadata-validation-003-39572135297-1",
+      "size_in_bytes": 31114,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333406650"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333349251/zip",
+      "created_at": "2026-10-21T09:19:44Z",
+      "digest": "sha256:566ea8fbbb3ba28ed7ab2f4ba397bdffc4e9a47a3a2ef37d1a584a00d7df686b",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12333349251,
+      "name": "feature-kani-metadata-validation-004-39572135297-1",
+      "size_in_bytes": 58434,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333349251"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333239612/zip",
+      "created_at": "2026-10-21T09:22:12Z",
+      "digest": "sha256:b45a8ffc170e83acee99d309913d791a0fe4f96583902f51d740a7c1a2a544c0",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12333239612,
+      "name": "feature-kani-validation-000-39572135297-1",
+      "size_in_bytes": 44997,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333239612"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333147442/zip",
+      "created_at": "2026-10-21T09:08:32Z",
+      "digest": "sha256:3da5fe6098c6528697230f5a87983a6a03280a6073d36fa6f10b1be1569bd07d",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12333147442,
+      "name": "feature-kani-general-validation-023-39572135297-1",
+      "size_in_bytes": 55291,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333147442"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333091225/zip",
+      "created_at": "2026-10-21T09:00:17Z",
+      "digest": "sha256:6d339d59390235c41e320673d199af8b4d2723ef9920b5d06dcc3446b13714d1",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12333091225,
+      "name": "feature-kani-general-validation-012-39572135297-1",
+      "size_in_bytes": 45189,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333091225"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333077171/zip",
+      "created_at": "2026-10-21T09:07:38Z",
+      "digest": "sha256:a6ab7e165e42e4980a2a55ffd8107f2ff4503fe232a6f31434af7a2026cab742",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12333077171,
+      "name": "feature-kani-general-validation-003-39572135297-1",
+      "size_in_bytes": 59828,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333077171"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333002456/zip",
+      "created_at": "2026-10-21T09:05:50Z",
+      "digest": "sha256:514ee68aacb7fe0abc4619eedcee52c7621f33acdc353982dfcb4fbef2621657",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12333002456,
+      "name": "feature-kani-general-validation-005-39572135297-1",
+      "size_in_bytes": 44566,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12333002456"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332913583/zip",
+      "created_at": "2026-10-21T09:04:41Z",
+      "digest": "sha256:6bd4fa5cb4e3b15e2f8fc2e5094ebde8e40337ff4d667eb84275ff3413eb9e04",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12332913583,
+      "name": "feature-kani-general-validation-008-39572135297-1",
+      "size_in_bytes": 44555,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332913583"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332903824/zip",
+      "created_at": "2026-10-21T09:05:57Z",
+      "digest": "sha256:dc5f2abfcc2e71a9ac66cfd67e220888b028bcdcd00dbd1dfb178f3a871a66e6",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12332903824,
+      "name": "feature-kani-validation-001-39572135297-1",
+      "size_in_bytes": 44601,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332903824"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332869183/zip",
+      "created_at": "2026-10-21T09:06:07Z",
+      "digest": "sha256:967774c5b14c7695584d64c4d8f1da5d175621d5560d8606e5414506153a21d4",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12332869183,
+      "name": "feature-kani-validation-003-39572135297-1",
+      "size_in_bytes": 66113,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332869183"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332869153/zip",
+      "created_at": "2026-10-21T09:05:59Z",
+      "digest": "sha256:a5c35dd82160e9673b30e45718e410b2a8514a89c7e73bc098b38933d6effbb9",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12332869153,
+      "name": "feature-kani-general-validation-010-39572135297-1",
+      "size_in_bytes": 56454,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332869153"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332819811/zip",
+      "created_at": "2026-10-21T09:08:07Z",
+      "digest": "sha256:f4b36aaeb18132908575b4c24d7d4779c64f38ddf98688edcbdf97d310a566f7",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12332819811,
+      "name": "feature-kani-metadata-validation-000-39572135297-1",
+      "size_in_bytes": 90120,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332819811"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332753676/zip",
+      "created_at": "2026-10-21T08:58:09Z",
+      "digest": "sha256:15bb11ada03cc2888dc8ce5e268cf55c60d9a0699360f288f5cff0eb8ecbc2e3",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12332753676,
+      "name": "feature-kani-general-validation-006-39572135297-1",
+      "size_in_bytes": 44544,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332753676"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332723177/zip",
+      "created_at": "2026-10-21T08:59:35Z",
+      "digest": "sha256:ed7e1898f2d18475110996d18a9e8c5056bbd5beb6c041e2d9061c8f3d1cde83",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12332723177,
+      "name": "feature-kani-metadata-validation-005-39572135297-1",
+      "size_in_bytes": 53503,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332723177"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332664425/zip",
+      "created_at": "2026-10-21T09:06:06Z",
+      "digest": "sha256:fff7a1f2b1cfdc6038a62d1fe318d88b41b9b9244da0d4a4f45e0d1de75fff45",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12332664425,
+      "name": "feature-kani-general-validation-002-39572135297-1",
+      "size_in_bytes": 61425,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332664425"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332652711/zip",
+      "created_at": "2026-10-21T08:52:19Z",
+      "digest": "sha256:fae71ea7b91d6d7862381b398122fc697d76e3ad02b11491031dab687ae57095",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12332652711,
+      "name": "feature-kani-player-contract-39572135297-1",
+      "size_in_bytes": 51550,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332652711"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332627680/zip",
+      "created_at": "2026-10-21T08:51:38Z",
+      "digest": "sha256:c2228fd27c7954ff9a2669622de36b6cb228c9ad69da829a1e57fd9db7bfdaad",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12332627680,
+      "name": "feature-kani-bool-39572135297-1",
+      "size_in_bytes": 41063,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332627680"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332617583/zip",
+      "created_at": "2026-10-21T08:52:14Z",
+      "digest": "sha256:bcc398785d0109d85b56a2384c3f3aac08281a1e913cf9a0f21baeca0c9303d4",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12332617583,
+      "name": "feature-kani-query-003-39572135297-1",
+      "size_in_bytes": 48086,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332617583"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332592508/zip",
+      "created_at": "2026-10-21T08:51:57Z",
+      "digest": "sha256:059c9f53071530c9dcf5930aacfb1545995e37189c6682b04fbd3c4d9062784a",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12332592508,
+      "name": "feature-kani-input-39572135297-1",
+      "size_in_bytes": 38618,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332592508"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332044898/zip",
+      "created_at": "2026-10-21T08:58:40Z",
+      "digest": "sha256:79fa7e4541ea87832e52e68e4767c16cea79a6e1d173a16af0a3ab09cacf78dd",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12332044898,
+      "name": "feature-kani-general-validation-018-39572135297-1",
+      "size_in_bytes": 59663,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12332044898"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12331994275/zip",
+      "created_at": "2026-10-21T08:52:28Z",
+      "digest": "sha256:36d0b5f983c1f02cab07d736d7b9d973563bf1336c6b7e0a1fef734c3a9197ea",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12331994275,
+      "name": "feature-kani-health-39572135297-1",
+      "size_in_bytes": 59840,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12331994275"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12331924126/zip",
+      "created_at": "2026-10-21T08:58:30Z",
+      "digest": "sha256:d77b8743b9670caa1c925ea979c75a27ec52cf549d34a34dc3a2346aff97ad55",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12331924126,
+      "name": "feature-kani-gameserver-014-39572135297-1",
+      "size_in_bytes": 126955,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12331924126"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12331689117/zip",
+      "created_at": "2026-10-21T08:55:26Z",
+      "digest": "sha256:68610e01c0bb01246ef31050ea6f508daf7cb3a87eb1123140bf51095c524da1",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12331689117,
+      "name": "feature-kani-gameserver-005-39572135297-1",
+      "size_in_bytes": 126996,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12331689117"
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12331614802/zip",
+      "created_at": "2026-10-21T08:59:41Z",
+      "digest": "sha256:44c0ea2e06b61fcc482a08ebb4eac4fe90d3a4d8f836426213c28a5bee782a98",
+      "expires_at": "2027-01-19T08:49:04Z",
+      "id": 12331614802,
+      "name": "feature-kani-validation-004-39572135297-1",
+      "size_in_bytes": 48188,
+      "url": "https://api.github.com/repos/QuasarRay/agones/actions/artifacts/12331614802"
+    }
+  ],
+  "head": "861f4eb5b3d5a9d47d2364edc83b32a1da3e9c71",
+  "jobs": [
+    {
+      "completed_at": "2026-10-21T08:49:49Z",
+      "conclusion": "success",
+      "id": 119128674916,
+      "name": "migration-state",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T08:58:32Z",
+      "conclusion": "success",
+      "id": 119128982809,
+      "name": "feature-common-model-check",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T08:52:21Z",
+      "conclusion": "success",
+      "id": 119128982947,
+      "name": "feature-validation-contract-model-check",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T08:55:21Z",
+      "conclusion": "success",
+      "id": 119128983025,
+      "name": "rust",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:06:01Z",
+      "conclusion": "failure",
+      "id": 119128983576,
+      "name": "general-validation-source-001",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:06:02Z",
+      "conclusion": "failure",
+      "id": 119128983600,
+      "name": "feature-validation-source-002",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:05:59Z",
+      "conclusion": "failure",
+      "id": 119128983640,
+      "name": "feature-validation-source-001",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:06:09Z",
+      "conclusion": "failure",
+      "id": 119128983666,
+      "name": "feature-validation-source-003",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:05:52Z",
+      "conclusion": "failure",
+      "id": 119128983669,
+      "name": "general-validation-source-005",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:03:36Z",
+      "conclusion": "failure",
+      "id": 119128983696,
+      "name": "general-validation-source-004",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:06:08Z",
+      "conclusion": "failure",
+      "id": 119128983726,
+      "name": "general-validation-source-002",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T08:59:43Z",
+      "conclusion": "failure",
+      "id": 119128983737,
+      "name": "feature-validation-source-004",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:11:51Z",
+      "conclusion": "failure",
+      "id": 119128983754,
+      "name": "general-validation-source-000",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:04:42Z",
+      "conclusion": "failure",
+      "id": 119128983774,
+      "name": "general-validation-source-008",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:06:01Z",
+      "conclusion": "failure",
+      "id": 119128983776,
+      "name": "general-validation-source-013",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:14:18Z",
+      "conclusion": "failure",
+      "id": 119128983796,
+      "name": "general-validation-source-011",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T08:59:38Z",
+      "conclusion": "failure",
+      "id": 119128983817,
+      "name": "metadata-validation-source-005",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:06:01Z",
+      "conclusion": "failure",
+      "id": 119128983830,
+      "name": "general-validation-source-010",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:07:39Z",
+      "conclusion": "failure",
+      "id": 119128983840,
+      "name": "general-validation-source-003",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:12:14Z",
+      "conclusion": "failure",
+      "id": 119128983844,
+      "name": "general-validation-source-007",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T08:58:43Z",
+      "conclusion": "failure",
+      "id": 119128983848,
+      "name": "general-validation-source-018",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:06:01Z",
+      "conclusion": "failure",
+      "id": 119128983851,
+      "name": "metadata-validation-source-003",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:00:19Z",
+      "conclusion": "failure",
+      "id": 119128983884,
+      "name": "general-validation-source-012",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:04:04Z",
+      "conclusion": "failure",
+      "id": 119128983891,
+      "name": "general-validation-source-009",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:11:55Z",
+      "conclusion": "failure",
+      "id": 119128983898,
+      "name": "general-validation-source-017",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:20:58Z",
+      "conclusion": "failure",
+      "id": 119128983907,
+      "name": "general-validation-source-022",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:22:16Z",
+      "conclusion": "failure",
+      "id": 119128983910,
+      "name": "general-validation-source-015",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:08:35Z",
+      "conclusion": "failure",
+      "id": 119128983911,
+      "name": "general-validation-source-023",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:22:05Z",
+      "conclusion": "failure",
+      "id": 119128983924,
+      "name": "general-validation-source-014",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T08:58:10Z",
+      "conclusion": "failure",
+      "id": 119128983936,
+      "name": "general-validation-source-006",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:05:32Z",
+      "conclusion": "failure",
+      "id": 119128983943,
+      "name": "metadata-validation-source-001",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:14:44Z",
+      "conclusion": "failure",
+      "id": 119128983993,
+      "name": "general-validation-source-020",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:16:36Z",
+      "conclusion": "failure",
+      "id": 119128983994,
+      "name": "general-validation-source-019",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:14:24Z",
+      "conclusion": "failure",
+      "id": 119128984000,
+      "name": "metadata-validation-source-002",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:22:09Z",
+      "conclusion": "failure",
+      "id": 119128984023,
+      "name": "general-validation-source-016",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:19:47Z",
+      "conclusion": "failure",
+      "id": 119128984031,
+      "name": "metadata-validation-source-004",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:18:40Z",
+      "conclusion": "failure",
+      "id": 119128984036,
+      "name": "general-validation-source-021",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:22:14Z",
+      "conclusion": "failure",
+      "id": 119128984116,
+      "name": "feature-validation-source-000",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:08:09Z",
+      "conclusion": "success",
+      "id": 119128984131,
+      "name": "metadata-validation-source-000",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:19:02Z",
+      "conclusion": "failure",
+      "id": 119128984298,
+      "name": "general-validation-source-024",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-21T09:22:20Z",
+      "conclusion": "failure",
+      "id": 119142951966,
+      "name": "feature-bool-model-check",
+      "status": "completed"
+    }
+  ],
+  "migration_status": "INCOMPLETE",
+  "missing_artifact_ids": [
+    12334551311,
+    12334447334,
+    12334441703,
+    12334343223,
+    12334242909,
+    12334116832,
+    12333727728,
+    12333349251,
+    12333239612,
+    12332664425
+  ],
+  "next_action": "Recover all ten original archive ZIPs using the existing authenticated artifact tool when available; verify digest/source identities and independently reparse. Do not relaunch this unchanged failed campaign or credit missing results.",
+  "observed_at": "2026-10-21T09:27:13.780217+00:00",
+  "retained_evidence": "verification/agones/ci/39572135297-first-thirty-three-retained.json",
+  "schema_version": 1,
+  "status": "TERMINAL_FAILURE_43_ARTIFACTS_EXIST_33_RETAINED_TEN_RECOVERY_PENDING",
+  "strict_retained_counts": {
+    "audited_selections": 33,
+    "backend_rows": 22833,
+    "expected_selections": 43,
+    "retained_artifacts": 33,
+    "satisfied_covers": 40,
+    "semantic_claims": 50,
+    "successful_harnesses": 8,
+    "uncredited_selections": 25,
+    "unique_qualified_source_assertions": 38,
+    "unreachable_credited": 0
+  },
+  "terminal_conclusion": "failure",
+  "tested_merge": "6492f41e3ddfe1a75e2889f8fd510b3eb2c5ff2d",
+  "workflow_run": 39572135297
+}

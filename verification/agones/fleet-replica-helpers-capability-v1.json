@@ -1,0 +1,27 @@
+{
+  "canonical_adoption": false,
+  "cgp_composition": "Existing UseAgonesFleetDeploymentPlanner remains selected by FleetController CGP. Its core active/rolling policies reuse the public sum helper at five sites; Rusternetes supplies the existing storage effects.",
+  "conformance": "705locked all-target native checks, including existing real Rusternetes Fleet policy/controller tests, plus the regression for both overflow directions, repeated extremes, None/empty and callback order/count. No live-cluster or executor proof.",
+  "consistency": "Synchronous calculation over the provided objects; no persistence, retries, event ordering or conditional-write behavior is introduced.",
+  "feature_id": "FLEET-REPLICA-HELPERS-001",
+  "formal_status": "Required post-gate typed extraction of all three original tests and protected Bolero/Kani evidence remains open. Current formal credit zero.",
+  "id": "FLEET-REPLICA-HELPERS-CAPABILITY-V1",
+  "inputs": "Arbitrary i32 clamp arguments/replica bound, ordered finite iterator of optional GameServerSet references, stateful FnMut field selector returning i32.",
+  "ordering_replay": "Iterator order and duplicate references are preserved. No selection/callback deduplication.",
+  "outputs": "i32 replica value; selector invocation sequence is observable.",
+  "ownership": "Existing core domain types remain canonical; the caller owns the objects and selector.",
+  "postconditions": [
+    "Upper bound returns the smaller input or Fleet.spec.replicas; lower bound returns the greater input orzero.",
+    "Sum starts atzero, skips absent references, invokes the selector once for each present reference in input order and adds modulo2^32.",
+    "Empty/all-absent collections returnzero without a selector call. The helper does not mutate input objects; captured selector state can change. Selector panic propagates at its invocation."
+  ],
+  "preconditions": "No numeric filtering. Rust borrowing/lifetime requirements apply; missing references use Option::None.",
+  "production_gate": "verification/agones/gates/911456eea0a5c0700a785e00f32adde7313270693cc3de9942d27c5677ad3e5f.json",
+  "proof_domain": "Not yet declared by a new property family; do not infer symbolic exhaustiveness from native examples.",
+  "schema_version": 1,
+  "source_symbols": [
+    "Fleet.UpperBoundReplicas",
+    "Fleet.LowerBoundReplicas",
+    "SumGameServerSets"
+  ]
+}
