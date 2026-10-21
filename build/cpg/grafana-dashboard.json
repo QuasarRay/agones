@@ -1,0 +1,210 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": false,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "cpg-infinity"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "nodes": {
+          "mainStatUnit": "",
+          "secondaryStatUnit": ""
+        },
+        "edges": {
+          "mainStatUnit": "",
+          "secondaryStatUnit": ""
+        },
+        "layout": "force"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "cpg-infinity"
+          },
+          "columns": [],
+          "filters": [],
+          "format": "node-graph-nodes",
+          "global_query_id": "",
+          "parser": "backend",
+          "refId": "nodes",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "http://cpg-data/nodes.json",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        },
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "cpg-infinity"
+          },
+          "columns": [],
+          "filters": [],
+          "format": "node-graph-edges",
+          "global_query_id": "",
+          "parser": "backend",
+          "refId": "edges",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "http://cpg-data/edges.json",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "Bounded raw CPG sample",
+      "type": "nodeGraph"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "cpg-infinity"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 15
+      },
+      "id": 2,
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "cpg-infinity"
+          },
+          "columns": [],
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "parser": "backend",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "http://cpg-data/node-types.json",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "CPG node kinds",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "cpg-infinity"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 15
+      },
+      "id": 3,
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "cpg-infinity"
+          },
+          "columns": [],
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "parser": "backend",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "http://cpg-data/edge-types.json",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "CPG edge kinds",
+      "type": "table"
+    },
+    {
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 25
+      },
+      "id": 4,
+      "options": {
+        "mode": "markdown",
+        "content": "### How to read this dashboard\\n\\n`out/cpg.bin` is the authoritative Joern CPG. The Node Graph above is a bounded, regenerable sample derived from Joern's full GraphML export so the browser is not asked to render an entire repository-scale graph. Regenerate with `CPG_GRAFANA_NODE_LABELS` and `CPG_GRAFANA_EDGE_LABELS` to focus the view on specific CPG semantics. The tables count all node and edge labels present in the GraphML export, not only the visible sample."
+      },
+      "title": "CPG visualization contract",
+      "type": "text"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 41,
+  "tags": [
+    "agones",
+    "joern",
+    "cpg",
+    "static-analysis"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Agones Joern CPG",
+  "uid": "agones-joern-cpg",
+  "version": 1
+}

@@ -1,0 +1,50 @@
+name: agones-cpg
+
+services:
+  joern:
+    image: ${JOERN_IMAGE:-ghcr.io/joernio/joern:nightly}
+    working_dir: /workspace
+    volumes:
+      - ../..:/workspace:ro
+      - ./out:/out
+    entrypoint: ["/bin/bash", "-lc"]
+    profiles: ["tools"]
+
+  converter:
+    image: python:3.13-alpine
+    working_dir: /work
+    volumes:
+      - .:/work:ro
+      - ./out:/out
+    entrypoint: ["python3", "/work/graphml_to_grafana.py"]
+    profiles: ["tools"]
+
+  cpg-data:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    volumes:
+      - ./out/grafana:/usr/share/nginx/html:ro
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://127.0.0.1/manifest.json"]
+      interval: 5s
+      timeout: 2s
+      retries: 12
+
+  grafana:
+    image: grafana/grafana:12.2.5
+    restart: unless-stopped
+    depends_on:
+      cpg-data:
+        condition: service_healthy
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_AUTH_DISABLE_LOGIN_FORM: "true"
+      GF_PLUGINS_PREINSTALL_SYNC: yesoreyeram-infinity-datasource@4.1.1
+      GF_USERS_DEFAULT_THEME: dark
+    ports:
+      - "${GRAFANA_PORT:-3000}:3000"
+    volumes:
+      - ./grafana-datasource.yaml:/etc/grafana/provisioning/datasources/cpg.yaml:ro
+      - ./grafana-dashboard-provider.yaml:/etc/grafana/provisioning/dashboards/cpg.yaml:ro
+      - ./grafana-dashboard.json:/var/lib/grafana/dashboards/agones-joern-cpg.json:ro

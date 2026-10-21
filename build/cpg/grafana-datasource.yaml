@@ -1,0 +1,9 @@
+apiVersion: 1
+
+datasources:
+  - name: Agones CPG JSON
+    uid: cpg-infinity
+    type: yesoreyeram-infinity-datasource
+    access: proxy
+    isDefault: true
+    editable: false
