@@ -3,7 +3,7 @@
   "traceSha256": "cf87ec1715d88cae8647f6985b3beeb16d73a6b2eef4190d779426568fae7ef1",
   "generatorSha256": "6fbc594f296a10a8d2df3330a2a771f1dc9ddbde6f0335af328e1c7061ce87a9",
   "schemaImplementationSha256": "babf6e69f2f3ef53da71dd793aa07419cf1c21ebc19f6ae110b78a7ee6a63251",
-  "cargoLockSha256": "f419a62535a6092f4f9699846d9576ad1297482efb18dd1ee21868128f7cb9c7",
+  "cargoLockSha256": "8be7a4707eaa6a5e6e47043192bbf5de68ce407dd300949387112cdc4bef815d",
   "outputSha256": "6fbe7d7c7d74296bdd85a02e3579debc2d4233f37a3c96abb28bd15d2ad864e6",
   "domainEvents": 1503,
   "protobufEvents": 1504,
@@ -153910,8 +153910,8 @@
       "startByte": 368421
     }
   ],
-  "runtimeModuleSha256": "caf0c8b26137b110d50a13545bd30e4ec576365bf80d8d45297c0c9c6d8ed177",
-  "cargoManifestSha256": "8be85f9e4f7030a63bc965ca54af4ce78f3e5efb2b8dd4df5ccec179d1469e0f",
+  "runtimeModuleSha256": "9d4df5cfabc8c4ecf199f554117750df4bfe16d47b522170e507d44cd1a8dfc3",
+  "cargoManifestSha256": "89d0296c256019afd77f31750974cc9df87f6dbd97d0908238c218f9e3aac32f",
   "protoIdConstants": 185,
   "sourceInventorySha256": "eb0b862f9edcda83e4f3a7de0804027f4a21af71ea6fbd0d30899c1162643a0c",
   "protoIdsSourceSha256": "0251b6a362c4ea92e37e94280c1f67c5bc19e343ce77c903d27fa784177ad8fe"

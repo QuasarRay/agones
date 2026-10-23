@@ -176,23 +176,8 @@ fn path_parts(path:&str)->Vec<String> {
 }
 /// Scala StringOps.toInt delegates to Integer.parseInt. Java counts UTF-16 units
 /// and accepts BMP decimal digits; accumulation in the negative range retains MIN_VALUE.
-pub fn parse_overlay_integer_units(units:&[u16])->Option<i32> {
-    static ZEROES:std::sync::OnceLock<Vec<u16>>=std::sync::OnceLock::new();
-    let zeroes=ZEROES.get_or_init(||serde_json::from_str(include_str!("../templates/java-decimal-zeroes.json")).expect("pinned decimal character table"));
-    let first=*units.first()?;let negative=first==u16::from(b'-');
-    let start=usize::from(negative || first==u16::from(b'+'));
-    if start==units.len() {return None;}
-    let limit=if negative {i32::MIN} else {-i32::MAX};let minimum=limit/10;
-    let mut result=0i32;
-    for unit in &units[start..] {
-        let digit=zeroes.iter().find_map(|zero|unit.checked_sub(*zero).filter(|digit|*digit<10).map(i32::from))?;
-        if result<minimum {return None;}
-        result*=10;
-        if result<limit+digit {return None;}
-        result-=digit;
-    }
-    Some(if negative {result} else {-result})
-}
+pub fn parse_overlay_integer_units(units:&[u16])->Option<i32> {crate::utilities::parse_java_integer_units(units)}
+
 pub fn compare_overlay_path(left:&str,right:&str)->Result<Ordering> {
     let a=path_parts(left);let b=path_parts(right);
     if a.len()<2 || b.len()<2 {return Ok(left.encode_utf16().cmp(right.encode_utf16()));}

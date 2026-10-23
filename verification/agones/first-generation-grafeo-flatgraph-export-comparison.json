@@ -1,0 +1,16 @@
+{
+  "actual_original_reader_output": "verification/agones/first-generation-grafeo-flatgraph-export-reference.json",
+  "actual_sha256": "0b1f75c325830c5186a4c64ea2bdba903034afe7c0a96ab163c4d3ffbec95e59",
+  "expected_sha256": "6d11a9cbfe6c285863b4b71cc13221db7d568bacc1bb08cce030f597cc33bed0",
+  "expected_source": "verification/agones/first-generation-flatgraph-reference.json",
+  "finished_at": "2026-10-23T13:41:07.446972+00:00",
+  "native_controls": "verification/agones/first-generation-cpg-runtime-controls-3.json",
+  "native_controls_sha256": "ee0e12cc8036bba054cebc9a2e7312acf69617aa54604031919a72c46bca57db",
+  "native_export": "verification/agones/first-generation-grafeo-flatgraph-export.fg",
+  "native_export_sha256": "82caaa399e2a4e7c32094e4b00f3f70d42c8f1b2019d903cd0ff1950c3c81869",
+  "original_reader_run": "verification/agones/first-generation-grafeo-flatgraph-export-reference-run-1.json",
+  "original_reader_run_sha256": "38864282a742737b033bd6e7d5f287afe4e277a9e598d7de187ea2995de31054",
+  "purpose": "Original pinned CPG reader consumes Flatgraph exported from native Grafeo-backed cpg-rs; no generated Agones validation",
+  "schema_version": 1,
+  "status": "MATCHED"
+}

@@ -6,6 +6,8 @@ use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 use std::{collections::BTreeMap, path::Path};
 use crate::construction::{SchemaConstructorGeneratorComponent,CompileSchemaConstructors};
+#[path="codegen_graph.rs"]
+mod graph_domain;
 
 #[cgp_component(BootstrapLoader)]
 pub trait CanLoadBootstrap { fn load_bootstrap(&self, path: &Path) -> Result<Bootstrap>; }
@@ -53,6 +55,10 @@ pub struct DomainReport {
     pub edge_types: usize,
     pub properties: usize,
     pub mappings: Vec<Value>,
+    #[serde(default)] pub graph_output_sha256:String,
+    #[serde(default)] pub graph_generator_sha256:String,
+    #[serde(default)] pub graph_runtime_sha256:BTreeMap<String,String>,
+    #[serde(default)] pub graph_api:graph_domain::GraphApiReport,
 }
 fn field_name(name: &str) -> String {
     let name = snake_case(name);

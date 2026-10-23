@@ -1,0 +1,87 @@
+[package]
+name = "grafeo"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "A high-performance, embeddable graph database with a Rust core and no required C dependencies"
+keywords = ["graph", "database", "gql", "knowledge-graph", "embedded"]
+categories = ["database-implementations", "data-structures"]
+
+[dependencies]
+grafeo-engine.workspace = true
+grafeo-core.workspace = true
+grafeo-common.workspace = true
+grafeo-adapters.workspace = true
+
+# Platform-optimized allocators (optional)
+[target.'cfg(all(not(target_os = "windows"), not(target_os = "openbsd"), not(target_env = "musl"), any(target_arch = "x86_64", target_arch = "aarch64")))'.dependencies]
+tikv-jemallocator = { workspace = true, optional = true }
+
+[target.'cfg(target_os = "windows")'.dependencies]
+mimalloc = { workspace = true, optional = true }
+
+[features]
+default = ["embedded"]
+
+# Atomic query language features
+gql = ["grafeo-engine/gql"]
+cypher = ["grafeo-engine/cypher"]
+sparql = ["grafeo-engine/sparql", "grafeo-engine/triple-store"]
+gremlin = ["grafeo-engine/gremlin"]
+graphql = ["grafeo-engine/graphql"]
+sql-pgq = ["grafeo-engine/sql-pgq"]
+
+# Atomic search & AI features
+vector-index = ["grafeo-engine/vector-index"]
+text-index = ["grafeo-engine/text-index"]
+hybrid-search = ["grafeo-engine/hybrid-search"]
+cdc = ["grafeo-engine/cdc"]
+embed = ["grafeo-engine/embed"]  # Opt-in ONNX embedding generation (~17MB)
+
+# Convenience groups
+languages = ["gql", "cypher", "sparql", "gremlin", "graphql", "sql-pgq"]  # All query languages
+storage = ["wal", "grafeo-file", "spill", "mmap"]  # Persistent storage (WAL, single-file, disk spill, mmap)
+algos = ["grafeo-engine/algos"]  # Graph algorithms (SSSP, PageRank, etc.)
+triple-store = ["grafeo-engine/triple-store"]  # RDF triple store
+regex = ["grafeo-engine/regex"]  # Full regex (default for non-WASM)
+regex-lite = ["grafeo-engine/regex-lite"]  # Lightweight regex (for WASM)
+shacl = ["grafeo-engine/shacl"]  # SHACL shapes constraint language (W3C validation)
+ring-index = ["grafeo-engine/ring-index", "triple-store"]  # Ring Index for compact RDF (3x memory reduction)
+metrics = ["grafeo-engine/metrics"]  # Lock-free query, transaction, and session metrics
+tracing = ["grafeo-engine/tracing"]  # Observability spans and events
+arrow-export = ["grafeo-engine/arrow-export"]  # Arrow IPC zero-copy export
+jsonl-import = ["grafeo-engine/jsonl-import"]  # JSON Lines bulk import
+parquet-import = ["grafeo-engine/parquet-import"]  # Apache Parquet bulk import
+
+# Persona-based profiles
+lpg = ["grafeo-engine/lpg", "gql", "cypher", "gremlin", "sql-pgq", "storage", "regex"]  # Graph App Developer: LPG model + all LPG query languages
+rdf = ["triple-store", "grafeo-engine/lpg", "gql", "sparql", "graphql", "storage", "regex", "shacl"]  # Knowledge Engineer: RDF model + SPARQL/GraphQL + SHACL validation; the LPG store is needed for persistence until #544
+analytics = ["algos", "vector-index", "text-index", "hybrid-search", "jsonl-import", "parquet-import"]  # Data Scientist: algorithms + search + bulk import
+ai = ["vector-index", "text-index", "hybrid-search", "cdc"]  # AI/Agent Developer: search + change tracking
+edge = ["grafeo-engine/lpg", "gql", "regex-lite"]  # Frontend/Edge: minimal WASM-friendly
+enterprise = ["metrics", "tracing", "async-storage"]  # Platform Operator: observability + async I/O
+
+# Deployment-based profiles (deprecated, use persona profiles instead)
+embedded = ["grafeo-engine/lpg", "gql", "ai", "algos", "parallel", "regex", "grafeo-file", "arrow-export"]  # Deprecated: use lpg + ai + algos
+browser = ["edge"]  # Deprecated: use edge
+server = ["embedded", "languages", "storage", "triple-store", "cdc", "async-storage", "tracing", "shacl"]  # Deprecated: use lpg + rdf + ai + enterprise
+full = ["server"]  # Deprecated: use lpg + rdf + analytics + ai
+
+# Platform capabilities
+parallel = ["grafeo-engine/parallel"]
+wal = ["grafeo-engine/wal"]
+spill = ["grafeo-engine/spill"]
+mmap = ["grafeo-engine/mmap"]
+temporal = ["grafeo-engine/temporal"]  # Append-only versioned properties
+compact-store = ["grafeo-engine/compact-store"]  # CompactStore: columnar graph for read-only workloads
+grafeo-file = ["grafeo-engine/grafeo-file"]  # Single-file .grafeo database format
+async-storage = ["grafeo-engine/async-storage"]  # Async WAL and storage backend
+
+# Enable platform-optimized memory allocator (10-20% faster allocations)
+jemalloc = ["tikv-jemallocator"]
+mimalloc-allocator = ["mimalloc"]
+
+[lints]
+workspace = true

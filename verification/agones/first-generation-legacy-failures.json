@@ -1,0 +1,27 @@
+{
+  "primitive-array": {
+    "error": "org.msgpack.core.MessageTypeCastException",
+    "message": ""
+  },
+  "character": {
+    "error": "scala.NotImplementedError",
+    "message": "an implementation is missing"
+  },
+  "version": {
+    "error": "overflowdb.storage.BackwardsCompatibilityError",
+    "message": "attempting to open storage with different version: 3; this version of overflowdb requires the version to be exactly 2"
+  },
+  "null-only": {
+    "snapshot": {
+      "nodes": [
+        {
+          "id": "107374182400",
+          "label": "METHOD",
+          "properties": {},
+          "out": [],
+          "in": []
+        }
+      ]
+    }
+  }
+}

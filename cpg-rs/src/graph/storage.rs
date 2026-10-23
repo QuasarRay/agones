@@ -1,4 +1,4 @@
-//! Native pinned Flatgraph v0 storage: typed Zstandard columns and the original manifest.
+//! Flatgraph v0 compatibility import/export. Grafeo owns canonical CPG storage.
 use super::*;
 use serde::{Serialize,Deserialize};
 use std::{fs::{File,OpenOptions},io::{Read,Write,Seek,SeekFrom},path::Path};
@@ -105,30 +105,30 @@ fn quantities(file:&mut File,outline:Option<&Outline>,nnodes:usize,pool:&[Arc<st
     if offsets.len()<nnodes+1 {return Err(invalid("quantity column is shorter than node count"));}Ok(offsets)
 }
 
-pub fn read_graph(schema:Arc<Schema>,path:&Path,persist_on_close:bool)->Result<Graph> {
+pub fn read_graph(schema:Arc<Schema>,path:&Path)->Result<Graph> {
     let manifest=read_manifest(path)?;let mut file=File::open(path)?;let pool=read_pool(&mut file,&manifest)?;
-    let mut graph=Graph::new(schema)?;let mut remapper=Vec::with_capacity(manifest.nodes.len());
+    let mut graph=Graph::new(schema)?;let mut nodes:Vec<Vec<StoredNode>>=graph.schema.node_types.iter().map(|_|Vec::new()).collect();let mut remapper=Vec::with_capacity(manifest.nodes.len());
     for item in &manifest.nodes {
         let Some(kind)=graph.kinds.get(&item.node_label).copied() else {remapper.push(None);continue;};
         if item.nnodes>i32::MAX as usize {return Err(invalid("node count exceeds source sequence range"));}
-        let mut nodes=Vec::with_capacity(item.nnodes);let mut handles=Vec::with_capacity(item.nnodes);
+        let mut kind_nodes=Vec::with_capacity(item.nnodes);let mut handles=Vec::with_capacity(item.nnodes);
         let deleted:BTreeSet<_>=item.deletions.iter().flatten().copied().collect();
         if deleted.iter().any(|seq|*seq>=item.nnodes) || deleted.len()!=item.deletions.as_ref().map_or(0,Vec::len) {return Err(invalid("invalid or duplicate node deletion"));}
         for sequence in 0..item.nnodes {let handle=NodeHandle {graph:graph.identity,id:NodeId::new(kind,sequence as u32)};
-            nodes.push(StoredNode {handle,label:item.node_label.clone(),properties:BTreeMap::new(),deleted:deleted.contains(&sequence)});handles.push(handle);}
-        graph.nodes[kind as usize]=nodes;remapper.push(Some(handles));
+            kind_nodes.push(StoredNode {handle,label:item.node_label.clone(),properties:BTreeMap::new(),deleted:deleted.contains(&sequence)});handles.push(handle);}
+        nodes[kind as usize]=kind_nodes;remapper.push(Some(handles));
     }
     for item in &manifest.properties {
         let Some(kind)=graph.kinds.get(&item.node_label).copied() else {continue;};
         if !graph.fields[kind as usize].contains_key(&item.property_label) {continue;}
-        let count=graph.nodes[kind as usize].len();let qty=quantities(&mut file,item.qty.as_ref(),count,&pool)?;
+        let count=nodes[kind as usize].len();let qty=quantities(&mut file,item.qty.as_ref(),count,&pool)?;
         let values=read_array(&mut file,item.property.as_ref(),&remapper,&pool)?;
         graph.property_slots.insert((kind,item.property_label.clone()));
         if let Some(outline)=&item.property {graph.property_storage_types.insert((kind,item.property_label.clone()),outline.kind);}
         for sequence in 0..count {
             let start=qty[sequence];let end=qty[sequence+1];
             if start>end || end>values.len() {return Err(invalid("property offsets exceed values"));}
-            if start!=end {graph.nodes[kind as usize][sequence].properties.insert(item.property_label.clone(),values[start..end].to_vec());}
+            if start!=end {nodes[kind as usize][sequence].properties.insert(item.property_label.clone(),values[start..end].to_vec());}
         }
     }
     // Outgoing and incoming columns carry independent encounter order. Pair the nth
@@ -137,7 +137,7 @@ pub fn read_graph(schema:Arc<Schema>,path:&Path,persist_on_close:bool)->Result<G
     for item in &manifest.edges {
         if item.inout>1 {return Err(Error::IllegalArgument("illegal encoding for direction".into()));}
         let (Some(kind),Some(edge_kind))=(graph.kinds.get(&item.node_label).copied(),graph.edge_kinds.get(&item.edge_label).copied()) else {continue;};
-        let count=graph.nodes[kind as usize].len();let qty=quantities(&mut file,item.qty.as_ref(),count,&pool)?;
+        let count=nodes[kind as usize].len();let qty=quantities(&mut file,item.qty.as_ref(),count,&pool)?;
         if item.neighbors.as_ref().is_some_and(|outline|outline.kind!=StorageType::Ref) {return Err(invalid("neighbor column is not ref"));}
         let neighbors=read_array(&mut file,item.neighbors.as_ref(),&remapper,&pool)?;
         let properties=read_array(&mut file,item.property.as_ref(),&remapper,&pool)?;
@@ -146,7 +146,7 @@ pub fn read_graph(schema:Arc<Schema>,path:&Path,persist_on_close:bool)->Result<G
         let default=graph.edge_property(edge_kind,EdgeProperty::Default)?;
         for sequence in 0..count {
             let start=qty[sequence];let end=qty[sequence+1];if start>end || end>neighbors.len() {return Err(invalid("neighbor offsets exceed values"));}
-            let base=graph.nodes[kind as usize][sequence].handle;
+            let base=nodes[kind as usize][sequence].handle;
             for position in start..end {
                 let Value::Node(neighbor)=neighbors[position] else {return Err(invalid("null/missing graph neighbor"));};
                 let property=if item.property.is_none(){default.clone()}else{properties.get(position).cloned().ok_or_else(||invalid("edge property column shorter than neighbors"))?};
@@ -155,11 +155,16 @@ pub fn read_graph(schema:Arc<Schema>,path:&Path,persist_on_close:bool)->Result<G
             }
         }
     }
+    install_columns(&mut graph,nodes,halves)?;graph.changed=true;Ok(graph)
+}
+
+pub(super) fn install_columns(graph:&mut Graph,nodes:Vec<Vec<StoredNode>>,halves:Vec<(NodeHandle,NodeHandle,u16,u8,u64,Value)>)->Result<()> {
     // BTreeMap keys use canonical bit/identity encodings instead of floating Eq.
+    let mut edges=BTreeMap::new();
     let mut paired:BTreeMap<Vec<u8>,VecDeque<u64>>=BTreeMap::new();
     for (source,target,kind,direction,order,property) in halves.iter().filter(|half|half.3==1) {
         let id=graph.next_edge;graph.next_edge+=1;
-        graph.edges.insert(id,Edge {handle:EdgeHandle {graph:graph.identity,id},source:*source,target:*target,kind:*kind,
+        edges.insert(id,Edge {handle:EdgeHandle {graph:graph.identity,id},source:*source,target:*target,kind:*kind,
             label:graph.schema.edges[*kind as usize].name.clone(),property:property.clone(),outgoing:true,incoming:false,out_order:*order,in_order:0});
         paired.entry(edge_key(*source,*target,*kind,property)?).or_default().push_back(id);
         let _=direction;
@@ -167,15 +172,18 @@ pub fn read_graph(schema:Arc<Schema>,path:&Path,persist_on_close:bool)->Result<G
     for (source,target,kind,_,order,property) in halves.into_iter().filter(|half|half.3==0) {
         let key=edge_key(source,target,kind,&property)?;
         if let Some(id)=paired.get_mut(&key).and_then(VecDeque::pop_front) {
-            let edge=graph.edges.get_mut(&id).expect("paired outgoing edge");edge.incoming=true;edge.in_order=order;
+            let edge=edges.get_mut(&id).expect("paired outgoing edge");edge.incoming=true;edge.in_order=order;
         } else {
             let id=graph.next_edge;graph.next_edge+=1;
-            graph.edges.insert(id,Edge {handle:EdgeHandle {graph:graph.identity,id},source,target,kind,
+            edges.insert(id,Edge {handle:EdgeHandle {graph:graph.identity,id},source,target,kind,
                 label:graph.schema.edges[kind as usize].name.clone(),property,outgoing:false,incoming:true,out_order:0,in_order:order});
         }
     }
-    graph.storage_path=persist_on_close.then(||path.to_owned());graph.changed=false;Ok(graph)
+    for node in nodes.into_iter().flatten() {graph.database.insert_node(node)?;}
+    for edge in edges.into_values() {graph.database.insert_edge(edge)?;}
+    Ok(())
 }
+
 fn edge_key(source:NodeHandle,target:NodeHandle,kind:u16,property:&Value)->Result<Vec<u8>> {
     let mut bytes=Vec::new();bytes.extend(source.id.0.to_le_bytes());bytes.extend(target.id.0.to_le_bytes());bytes.extend(kind.to_le_bytes());
     // Edge properties are schema-typed; include the canonical scalar kind to avoid collisions.
@@ -235,13 +243,13 @@ pub fn write_graph(graph:&Graph,path:&Path)->Result<Counts> {
     let file=OpenOptions::new().create(true).read(true).write(true).open(path)?;
     let mut writer=Writer {file,offset:16,pool:StringPool::default()};
     let nodes=graph.schema.node_types.iter().enumerate().map(|(kind,node)| {
-        let deleted:Vec<_>=graph.nodes[kind].iter().filter(|node|node.deleted).map(|node|node.handle.id.sequence() as usize).collect();
-        NodeItem {node_label:node.name.clone(),nnodes:graph.nodes[kind].len(),deletions:(!deleted.is_empty()).then_some(deleted)}
+        let deleted:Vec<_>=graph.database.view().nodes[kind].iter().filter(|node|node.deleted).map(|node|node.handle.id.sequence() as usize).collect();
+        NodeItem {node_label:node.name.clone(),nnodes:graph.database.view().nodes[kind].len(),deletions:(!deleted.is_empty()).then_some(deleted)}
     }).collect::<Vec<_>>();
     let mut edges=Vec::new();
     for (node_kind,edge_kind,direction) in &graph.adjacency_slots {
         let mut counts=Vec::new();let mut neighbors=Vec::new();let mut properties=Vec::new();
-        for node in &graph.nodes[*node_kind as usize] {
+        for node in &graph.database.view().nodes[*node_kind as usize] {
             let found=graph.edges(node.handle,if *direction==1 {Direction::Outgoing}else{Direction::Incoming},Some(&graph.schema.edges[*edge_kind as usize].name))?;
             counts.push(found.len());
             for edge in found {neighbors.push(Value::Node(if *direction==1 {edge.target}else{edge.source}));properties.push(edge.property.clone());}
@@ -263,7 +271,7 @@ pub fn write_graph(graph:&Graph,path:&Path)->Result<Counts> {
     let mut properties=Vec::new();
     for (kind,name) in &graph.property_slots {
         let definition=&graph.fields[*kind as usize][name];let mut counts=Vec::new();let mut values=Vec::new();
-        for node in &graph.nodes[*kind as usize] {
+        for node in &graph.database.view().nodes[*kind as usize] {
             let values_at=node.properties.get(name).map(Vec::as_slice).unwrap_or(&[]);counts.push(values_at.len());values.extend_from_slice(values_at);
         }
         let typ=graph.property_storage_types.get(&(*kind,name.clone())).copied().map(Ok).unwrap_or_else(||StorageType::from_value_type(definition.value_type))?;
@@ -279,18 +287,26 @@ pub fn write_graph(graph:&Graph,path:&Path)->Result<Counts> {
     writer.file.seek(SeekFrom::Start(offset))?;writer.file.write_all(&[b'\n';20])?;
     let json=serde_json::to_vec(&manifest)?;writer.file.write_all(&json)?;writer.file.set_len(offset+20+json.len() as u64)?;writer.file.flush()?;Ok(counts)
 }
-impl Graph {
-    pub fn with_storage(schema:Arc<Schema>,path:&Path,persist_on_close:bool)->Result<Self> {
-        if path.exists() && std::fs::metadata(path)?.len()>0 {return read_graph(schema,path,persist_on_close);}
-        let mut graph=Self::new(schema)?;graph.storage_path=persist_on_close.then(||path.to_owned());Ok(graph)
-    }
-}
 #[cgp_component(GraphStorageRewriter)]
-pub trait CanRewriteGraphStorage {fn rewrite_graph_storage(&self,input:&Path,output:&Path,bootstrap:Option<&Path>)->Result<Counts>;}
+pub trait CanRewriteGraphStorage {
+    fn rewrite_graph_storage(&self,input:&Path,output:&Path,bootstrap:Option<&Path>)->Result<Counts>;
+    fn import_flatgraph_storage(&self,input:&Path,output:&Path,bootstrap:Option<&Path>)->Result<usize>;
+    fn export_flatgraph_storage(&self,input:&Path,output:&Path,bootstrap:Option<&Path>)->Result<Counts>;
+}
 #[cgp_new_provider]
 impl<Context:CanCreateCpg+crate::codegen::CanLoadBootstrap> GraphStorageRewriter<Context> for RewriteNativeGraphStorage {
     fn rewrite_graph_storage(context:&Context,input:&Path,output:&Path,bootstrap:Option<&Path>)->Result<Counts> {
         let schema=match bootstrap {Some(path)=>Arc::new(context.load_bootstrap(path)?.domain_schema),None=>context.create_cpg()?.graph.schema.clone()};
-        let graph=read_graph(schema,input,false)?;write_graph(&graph,output)
+        let graph=read_graph(schema,input)?;write_graph(&graph,output)
+    }
+    fn import_flatgraph_storage(context:&Context,input:&Path,output:&Path,bootstrap:Option<&Path>)->Result<usize> {
+        if input==output {return Err(Error::Invalid("import requires separate Flatgraph input and Grafeo output paths".into()));}
+        let schema=match bootstrap {Some(path)=>Arc::new(context.load_bootstrap(path)?.domain_schema),None=>context.create_cpg()?.graph.schema.clone()};
+        let graph=read_graph(schema,input)?;graph.save_database(output)?;Ok(graph.node_count())
+    }
+    fn export_flatgraph_storage(context:&Context,input:&Path,output:&Path,bootstrap:Option<&Path>)->Result<Counts> {
+        if input==output {return Err(Error::Invalid("export requires separate Grafeo input and Flatgraph output paths".into()));}
+        let schema=match bootstrap {Some(path)=>Arc::new(context.load_bootstrap(path)?.domain_schema),None=>context.create_cpg()?.graph.schema.clone()};
+        let graph=Graph::with_storage(schema,input,false)?;write_graph(&graph,output)
     }
 }

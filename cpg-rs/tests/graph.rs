@@ -44,7 +44,7 @@ fn native_mutation_sequence_matches_the_original_pinned_cpg_observation() {
     deletion.set_edge_property(reaching[0], Value::string("updated")).remove_edge(reaching[1]);
     let third_changes = graph.apply_diff(deletion).unwrap().applied_changes;
     let deleted = snapshot(graph);
-    graph.close();
+    graph.close().unwrap();
     let closed_rejected = graph.apply_diff(DiffGraphBuilder::new()).is_err();
     let mut failing = Cpg::empty().unwrap();
     let removed = DetachedNode::new("METHOD");

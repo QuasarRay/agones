@@ -1,0 +1,183 @@
+{
+  "nodes": [
+    {
+      "id": "64424509440",
+      "label": "FINDING",
+      "properties": {
+        "evidence": [
+          {
+            "kind": "Ref",
+            "id": "107374182401"
+          },
+          {
+            "kind": "Ref",
+            "id": "107374182400"
+          },
+          {
+            "kind": "Null"
+          }
+        ]
+      },
+      "out": [],
+      "in": []
+    },
+    {
+      "id": "68719476736",
+      "label": "IDENTIFIER",
+      "properties": {
+        "NAME": [
+          {
+            "kind": "String",
+            "value": "x"
+          }
+        ]
+      },
+      "out": [],
+      "in": [
+        {
+          "src": "107374182401",
+          "dst": "68719476736",
+          "label": "AST",
+          "property": {
+            "kind": "Null"
+          }
+        },
+        {
+          "src": "107374182400",
+          "dst": "68719476736",
+          "label": "AST",
+          "property": {
+            "kind": "Null"
+          }
+        }
+      ]
+    },
+    {
+      "id": "107374182400",
+      "label": "METHOD",
+      "properties": {
+        "NAME": [
+          {
+            "kind": "String",
+            "value": "same"
+          }
+        ],
+        "ORDER": [
+          {
+            "kind": "Int",
+            "decimal": "-2"
+          }
+        ]
+      },
+      "out": [
+        {
+          "src": "107374182400",
+          "dst": "68719476736",
+          "label": "AST",
+          "property": {
+            "kind": "Null"
+          }
+        },
+        {
+          "src": "107374182400",
+          "dst": "107374182401",
+          "label": "REACHING_DEF",
+          "property": {
+            "kind": "String",
+            "value": "<empty>"
+          }
+        },
+        {
+          "src": "107374182400",
+          "dst": "107374182401",
+          "label": "REACHING_DEF",
+          "property": {
+            "kind": "Null"
+          }
+        },
+        {
+          "src": "107374182400",
+          "dst": "107374182401",
+          "label": "REACHING_DEF",
+          "property": {
+            "kind": "String",
+            "value": "x"
+          }
+        }
+      ],
+      "in": []
+    },
+    {
+      "id": "107374182401",
+      "label": "METHOD",
+      "properties": {
+        "IS_EXTERNAL": [
+          {
+            "kind": "Boolean",
+            "value": true
+          }
+        ],
+        "NAME": [
+          {
+            "kind": "String",
+            "value": "same"
+          }
+        ]
+      },
+      "out": [
+        {
+          "src": "107374182401",
+          "dst": "68719476736",
+          "label": "AST",
+          "property": {
+            "kind": "Null"
+          }
+        },
+        {
+          "src": "107374182401",
+          "dst": "68719476736",
+          "label": "CFG",
+          "property": {
+            "kind": "Null"
+          }
+        }
+      ],
+      "in": [
+        {
+          "src": "107374182400",
+          "dst": "107374182401",
+          "label": "CFG",
+          "property": {
+            "kind": "Null"
+          }
+        },
+        {
+          "src": "107374182400",
+          "dst": "107374182401",
+          "label": "REACHING_DEF",
+          "property": {
+            "kind": "String",
+            "value": "<empty>"
+          }
+        },
+        {
+          "src": "107374182400",
+          "dst": "107374182401",
+          "label": "REACHING_DEF",
+          "property": {
+            "kind": "Null"
+          }
+        },
+        {
+          "src": "107374182400",
+          "dst": "107374182401",
+          "label": "REACHING_DEF",
+          "property": {
+            "kind": "String",
+            "value": "x"
+          }
+        }
+      ]
+    }
+  ]
+}

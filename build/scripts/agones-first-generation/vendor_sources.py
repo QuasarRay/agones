@@ -176,7 +176,7 @@ def vendor(name, cached_git_archive=False, retained_archive_receipt=None, recove
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("source", choices=["genco", "cpg", "joern", "goastgen", "flatgraph", "comprende", "better-comprehension"])
+    parser.add_argument("source", choices=["genco", "cpg", "joern", "goastgen", "flatgraph", "comprende", "better-comprehension", "grafeo"])
     transport = parser.add_mutually_exclusive_group()
     transport.add_argument("--cached-git-archive", action="store_true")
     transport.add_argument("--retained-archive-receipt")

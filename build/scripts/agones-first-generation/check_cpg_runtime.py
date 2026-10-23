@@ -32,8 +32,19 @@ def main():
         'first-generation-complete-schema-bootstrap.json', 'first-generation-cpg-body-inventory.json')]
     inputs += [ROOT/'verification/agones'/name for name in ('first-generation-proto-reference.json',
         'first-generation-proto-reference-run-2.json','first-generation-integer-prefix-reference.json',
-        'first-generation-protoc-pin.json','first-generation-protoc-descriptor-reference.json')]
-    inputs += [path for pattern in ('first-generation-*.pb','first-generation-*.zip') for path in (ROOT/'verification/agones').glob(pattern)]
+        'first-generation-protoc-pin.json','first-generation-protoc-descriptor-reference.json',
+        'first-generation-flatgraph-reference.json','first-generation-flatgraph-reference-run-1.json',
+        'first-generation-grafeo-pin.json','first-generation-rust-toolchain.json')]
+    inputs += [ROOT/'verification/agones'/name for name in (
+        'first-generation-legacy-storage-pins.json','first-generation-legacy-reference.json',
+        'first-generation-legacy-reference-run-1.json','first-generation-legacy-failures.json',
+        'first-generation-legacy-failures-run-1.json','first-generation-legacy-modes.json',
+        'first-generation-legacy-modes-run-1.json','first-generation-legacy-metadata.json',
+        'first-generation-legacy-metadata-run-1.json')]
+    inputs += [path for pattern in ('first-generation-*.pb','first-generation-*.zip','first-generation-*.fg') for path in (ROOT/'verification/agones').glob(pattern)]
+    inputs += [path for path in (ROOT/'third_party/first-generation/grafeo').rglob('*') if path.is_file()]
+    inputs += list((ROOT/'verification/agones').glob('first-generation-legacy-*.odb'))
+    inputs += [path for name in ('h2-mvstore','overflowdb-core') for path in (ROOT/'third_party/first-generation'/name).rglob('*') if path.is_file()]
     inputs=sorted(set(inputs))
     expected_tests={str(path.relative_to(ROOT)):len(re.findall(r'(?m)^#\[test\]$',path.read_text())) for path in sorted((ROOT/'cpg-rs/tests').glob('*.rs'))}
     record = dict(schema_version=1, status='INTENT_RECORDED', purpose='Native CPG support checks before Agones emission',

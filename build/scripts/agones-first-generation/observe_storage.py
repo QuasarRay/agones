@@ -18,7 +18,7 @@ def sha(path):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--attempt', type=int, default=1)
-    parser.add_argument('--mode', choices=['generate', 'inspect', 'inspect-free'], default='generate')
+    parser.add_argument('--mode', choices=['generate', 'generate-legacy', 'generate-legacy-failures', 'generate-legacy-modes', 'generate-legacy-metadata', 'inspect', 'inspect-free'], default='generate')
     parser.add_argument('--input')
     parser.add_argument('--name', default='first-generation-flatgraph-reference')
     args = parser.parse_args()
@@ -31,7 +31,7 @@ def main():
     cache = ROOT / '.git/agones-first-generation-sources/cpg'
     target = cache / 'codepropertygraph/src/main/scala/StorageReference.scala'
     if target.exists() and target.read_bytes() != source.read_bytes():
-        previous = [json.loads(path.read_text()) for path in evidence.glob('*flatgraph*-run-*.json')]
+        previous = [json.loads(path.read_text()) for pattern in ('*flatgraph*-run-*.json','*legacy*-run-*.json') for path in evidence.glob(pattern)]
         assert any(row.get('source_sha256') == sha(target) for row in previous)
         (ROOT / '.git' / f'storage-reference-source-{sha(target)}.scala').write_bytes(target.read_bytes())
     target.write_bytes(source.read_bytes())
@@ -69,8 +69,10 @@ def main():
         record.update(status='OBSERVED' if code == 0 and output.exists() else 'FAILED', exit_code=code)
         if output.exists():
             record['output_sha256'] = sha(output)
-        if code == 0 and args.mode == 'generate':
+        if code == 0 and args.mode in ('generate','generate-legacy','generate-legacy-failures','generate-legacy-modes','generate-legacy-metadata'):
             record['binary_outputs'] = {str(path.relative_to(ROOT)): sha(path) for path in evidence.glob('first-generation-flatgraph-*.fg')}
+            if args.mode.startswith('generate-legacy'):
+                record['binary_outputs'].update({str(path.relative_to(ROOT)):sha(path) for path in evidence.glob('first-generation-legacy-*') if path.suffix in ('.fg','.odb')})
         return code
     finally:
         record.update(finished_at=datetime.now(timezone.utc).isoformat(), log_sha256=sha(log))

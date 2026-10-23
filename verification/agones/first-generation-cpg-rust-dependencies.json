@@ -1,5 +1,5 @@
 {
-  "cargo_lock_sha256": "f419a62535a6092f4f9699846d9576ad1297482efb18dd1ee21868128f7cb9c7",
+  "cargo_lock_sha256": "8be7a4707eaa6a5e6e47043192bbf5de68ce407dd300949387112cdc4bef815d",
   "command": [
     "cargo",
     "metadata",
@@ -36,6 +36,17 @@
       "version": "1.1.5"
     },
     {
+      "checksum": "683d7910e743518b0e34f1186f92494becacb047c7b6bf616c96772180fef923",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#allocator-api2@0.2.21",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/allocator-api2-0.2.21/Cargo.toml",
+      "name": "allocator-api2",
+      "repository": "https://github.com/zakarumych/allocator-api2",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.2.21"
+    },
+    {
       "checksum": "330a5ed07fa54e4702c9d6c4174f74427fc0ef6e214bbd677ae50a5099946470",
       "id": "registry+https://github.com/rust-lang/crates.io-index#anyhow@1.0.104",
       "license": "MIT OR Apache-2.0",
@@ -58,6 +69,28 @@
       "version": "1.5.0"
     },
     {
+      "checksum": "03918c3dbd7701a85c6b9887732e2921175f26c350b4563841d0958c21d57e6d",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#arcstr@1.2.0",
+      "license": "Apache-2.0 OR MIT OR Zlib",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/arcstr-1.2.0/Cargo.toml",
+      "name": "arcstr",
+      "repository": "https://github.com/thomcc/arcstr",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.2.0"
+    },
+    {
+      "checksum": "f2032f911046de80f0a198e0901378627c33f59ea0ac00e363d481118bd70a53",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#autocfg@1.5.1",
+      "license": "Apache-2.0 OR MIT",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/autocfg-1.5.1/Cargo.toml",
+      "name": "autocfg",
+      "repository": "https://github.com/cuviper/autocfg",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.5.1"
+    },
+    {
       "checksum": null,
       "id": "path+file:///home/astral/Projects/agones/third_party/first-generation/better-comprehension#better_comprehension@3.0.3",
       "license": "MIT",
@@ -67,6 +100,28 @@
       "repository": "https://github.com/Natural-selection1/better-comprehension-in-rust",
       "source": null,
       "version": "3.0.3"
+    },
+    {
+      "checksum": "36eaf5d7b090263e8150820482d5d93cd964a81e4019913c972f4edcc6edb740",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#bincode@2.0.1",
+      "license": "MIT",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bincode-2.0.1/Cargo.toml",
+      "name": "bincode",
+      "repository": "https://github.com/bincode-org/bincode",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "2.0.1"
+    },
+    {
+      "checksum": "bf95709a440f45e986983918d0e8a1f30a9b1df04918fc828670606804ac3c09",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#bincode_derive@2.0.1",
+      "license": "MIT",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bincode_derive-2.0.1/Cargo.toml",
+      "name": "bincode_derive",
+      "repository": "https://github.com/bincode-org/bincode",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "2.0.1"
     },
     {
       "checksum": "3ded4057c258ba199e2d26386d3af3780957ecaee6c4ef4041c6b4b8b97c0b06",
@@ -100,6 +155,28 @@
       "repository": "https://github.com/fitzgen/bumpalo",
       "source": "registry+https://github.com/rust-lang/crates.io-index",
       "version": "3.20.3"
+    },
+    {
+      "checksum": "1fd0f2584146f6f2ef48085050886acf353beff7305ebd1ae69500e27c67f64b",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#byteorder@1.5.0",
+      "license": "Unlicense OR MIT",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/byteorder-1.5.0/Cargo.toml",
+      "name": "byteorder",
+      "repository": "https://github.com/BurntSushi/byteorder",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.5.0"
+    },
+    {
+      "checksum": "fc652a48c352aef3ea3aed32080501cf3ef6ed5da78602a020c991775b0aff04",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#bytes@1.12.1",
+      "license": "MIT",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bytes-1.12.1/Cargo.toml",
+      "name": "bytes",
+      "repository": "https://github.com/tokio-rs/bytes",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.12.1"
     },
     {
       "checksum": "86e055fa6e3e40ad6187ba25b6855eeb635d5271f8e0f0e1e9a5826b8d75bea0",
@@ -412,7 +489,7 @@
     {
       "checksum": null,
       "id": "path+file:///home/astral/Projects/agones/cpg-rs#0.1.0",
-      "license": "Apache-2.0",
+      "license": "Apache-2.0 AND (MPL-2.0 OR EPL-1.0)",
       "license_file": null,
       "manifest_path": "/home/astral/Projects/agones/cpg-rs/Cargo.toml",
       "name": "cpg-rs",
@@ -443,6 +520,28 @@
       "version": "1.5.3"
     },
     {
+      "checksum": "e71406cd8807725f7ac2f999a4cdd32e98f829fdf65f528343cebf945e41df1e",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#crossbeam@0.8.5",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/crossbeam-0.8.5/Cargo.toml",
+      "name": "crossbeam",
+      "repository": "https://github.com/crossbeam-rs/crossbeam",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.8.5"
+    },
+    {
+      "checksum": "98b0cc327b5bc766e7fda9c9260cc0fa81b43a8e240440422dff70788e3f9ef1",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#crossbeam-channel@0.5.17",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/crossbeam-channel-0.5.17/Cargo.toml",
+      "name": "crossbeam-channel",
+      "repository": "https://github.com/crossbeam-rs/crossbeam",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.5.17"
+    },
+    {
       "checksum": "622f3fc73690be383c7214310406f28a90e6edeadc3cea882f9d71e495b9711a",
       "id": "registry+https://github.com/rust-lang/crates.io-index#crossbeam-deque@0.8.8",
       "license": "MIT OR Apache-2.0",
@@ -465,6 +564,17 @@
       "version": "0.9.21"
     },
     {
+      "checksum": "03e8bd762f7479489c70ed6c768ddca99d7296857de437a68dcb2a94365b3fae",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#crossbeam-queue@0.3.14",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/crossbeam-queue-0.3.14/Cargo.toml",
+      "name": "crossbeam-queue",
+      "repository": "https://github.com/crossbeam-rs/crossbeam",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.3.14"
+    },
+    {
       "checksum": "a31eee39dddec8330830986fcd7625edb5a24ec90ea038215273bbc3adb08ac6",
       "id": "registry+https://github.com/rust-lang/crates.io-index#crossbeam-utils@0.8.23",
       "license": "MIT OR Apache-2.0",
@@ -485,6 +595,17 @@
       "repository": "https://github.com/RustCrypto/traits",
       "source": "registry+https://github.com/rust-lang/crates.io-index",
       "version": "0.2.2"
+    },
+    {
+      "checksum": "e6361d5c062261c78a176addb82d4c821ae42bed6089de0e12603cd25de2059c",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#dashmap@6.2.1",
+      "license": "MIT",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/dashmap-6.2.1/Cargo.toml",
+      "name": "dashmap",
+      "repository": "https://github.com/xacrimon/dashmap",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "6.2.1"
     },
     {
       "checksum": "724949bdda5310709ca2f97bf69c2b01e3362f44fef1fb47913445db4c1debb5",
@@ -619,6 +740,17 @@
       "version": "0.2.0"
     },
     {
+      "checksum": "9564fc758e15025b46aa6643b1b77d047d1a56a1aea6e01002ac0c7026876213",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#fs2@0.4.3",
+      "license": "MIT/Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fs2-0.4.3/Cargo.toml",
+      "name": "fs2",
+      "repository": "https://github.com/danburkert/fs2-rs",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.4.3"
+    },
+    {
       "checksum": null,
       "id": "path+file:///home/astral/Projects/agones/third_party/first-generation/genco#0.17.10",
       "license": "MIT OR Apache-2.0",
@@ -650,6 +782,95 @@
       "repository": "https://github.com/rust-random/getrandom",
       "source": "registry+https://github.com/rust-lang/crates.io-index",
       "version": "0.4.3"
+    },
+    {
+      "checksum": null,
+      "id": "path+file:///home/astral/Projects/agones/third_party/first-generation/grafeo/grafeo#0.5.44",
+      "license": "Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/Projects/agones/third_party/first-generation/grafeo/grafeo/Cargo.toml",
+      "name": "grafeo",
+      "repository": "https://github.com/GrafeoDB/grafeo",
+      "source": null,
+      "vendored_package_checksum": "29af4411d0dd42516da00555c1e87e8f901d55f934bee27c69a6357d8fe29cf9",
+      "vendored_source_pin": "verification/agones/first-generation-grafeo-pin.json",
+      "version": "0.5.44"
+    },
+    {
+      "checksum": null,
+      "id": "path+file:///home/astral/Projects/agones/third_party/first-generation/grafeo/grafeo-adapters#0.5.44",
+      "license": "Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/Projects/agones/third_party/first-generation/grafeo/grafeo-adapters/Cargo.toml",
+      "name": "grafeo-adapters",
+      "repository": "https://github.com/GrafeoDB/grafeo",
+      "source": null,
+      "vendored_package_checksum": "64e442f93246d7dd3f13f897623579ae4468844ecd60d8c129716980d18f426c",
+      "vendored_source_pin": "verification/agones/first-generation-grafeo-pin.json",
+      "version": "0.5.44"
+    },
+    {
+      "checksum": null,
+      "id": "path+file:///home/astral/Projects/agones/third_party/first-generation/grafeo/grafeo-common#0.5.44",
+      "license": "Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/Projects/agones/third_party/first-generation/grafeo/grafeo-common/Cargo.toml",
+      "name": "grafeo-common",
+      "repository": "https://github.com/GrafeoDB/grafeo",
+      "source": null,
+      "vendored_package_checksum": "57df2ae6f700d93d8f5bc7d46de2acd566b38eeb7c12edc0cb1a69923597f94f",
+      "vendored_source_pin": "verification/agones/first-generation-grafeo-pin.json",
+      "version": "0.5.44"
+    },
+    {
+      "checksum": null,
+      "id": "path+file:///home/astral/Projects/agones/third_party/first-generation/grafeo/grafeo-core#0.5.44",
+      "license": "Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/Projects/agones/third_party/first-generation/grafeo/grafeo-core/Cargo.toml",
+      "name": "grafeo-core",
+      "repository": "https://github.com/GrafeoDB/grafeo",
+      "source": null,
+      "vendored_package_checksum": "3212b5678e1fcd0afc2762c9100d578566341a9e9f2359e652666068f17469b2",
+      "vendored_source_pin": "verification/agones/first-generation-grafeo-pin.json",
+      "version": "0.5.44"
+    },
+    {
+      "checksum": null,
+      "id": "path+file:///home/astral/Projects/agones/third_party/first-generation/grafeo/grafeo-engine#0.5.44",
+      "license": "Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/Projects/agones/third_party/first-generation/grafeo/grafeo-engine/Cargo.toml",
+      "name": "grafeo-engine",
+      "repository": "https://github.com/GrafeoDB/grafeo",
+      "source": null,
+      "vendored_package_checksum": "4b6cb79b84db29dded59ecc526823befa20177b763b61fc82bcbad15405c60c1",
+      "vendored_source_pin": "verification/agones/first-generation-grafeo-pin.json",
+      "version": "0.5.44"
+    },
+    {
+      "checksum": null,
+      "id": "path+file:///home/astral/Projects/agones/third_party/first-generation/grafeo/grafeo-storage#0.5.44",
+      "license": "Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/Projects/agones/third_party/first-generation/grafeo/grafeo-storage/Cargo.toml",
+      "name": "grafeo-storage",
+      "repository": "https://github.com/GrafeoDB/grafeo",
+      "source": null,
+      "vendored_package_checksum": "d0239c820e1cbef635eb47afb03d47fded93feca9eed3302bf59ad0671d8ca1e",
+      "vendored_source_pin": "verification/agones/first-generation-grafeo-pin.json",
+      "version": "0.5.44"
+    },
+    {
+      "checksum": "e5274423e17b7c9fc20b6e7e208532f9b19825d82dfd615708b70edd83df41f1",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#hashbrown@0.14.5",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/hashbrown-0.14.5/Cargo.toml",
+      "name": "hashbrown",
+      "repository": "https://github.com/rust-lang/hashbrown",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.14.5"
     },
     {
       "checksum": "ed5909b6e89a2db4456e54cd5f673791d7eca6732202bbf2a9cc504fe2f9b84a",
@@ -751,6 +972,17 @@
       "version": "1.0.18"
     },
     {
+      "checksum": "1c00acbd29eabad4a2392fa0e921c874934dbbf4194312ad20f04a0ed67a3cb3",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#jobserver@0.1.35",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jobserver-0.1.35/Cargo.toml",
+      "name": "jobserver",
+      "repository": "https://github.com/rust-lang/jobserver-rs",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.1.35"
+    },
+    {
       "checksum": "d8f198d1db720e4940b5a493201d199d9f24f568f8f746bd13706243a2f71598",
       "id": "registry+https://github.com/rust-lang/crates.io-index#keccak@0.2.2",
       "license": "Apache-2.0 OR MIT",
@@ -773,6 +1005,17 @@
       "version": "0.2.191"
     },
     {
+      "checksum": "32a66949e030da00e8c7d4434b251670a91556f4144941d37452769c25d58a53",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#linux-raw-sys@0.12.1",
+      "license": "Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/linux-raw-sys-0.12.1/Cargo.toml",
+      "name": "linux-raw-sys",
+      "repository": "https://github.com/sunfishcode/linux-raw-sys",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.12.1"
+    },
+    {
       "checksum": "d26c52dbd32dccf2d10cac7725f8eae5296885fb5703b261f7d0a0739ec807ab",
       "id": "registry+https://github.com/rust-lang/crates.io-index#linux-raw-sys@0.4.15",
       "license": "Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT",
@@ -784,15 +1027,15 @@
       "version": "0.4.15"
     },
     {
-      "checksum": "32a66949e030da00e8c7d4434b251670a91556f4144941d37452769c25d58a53",
-      "id": "registry+https://github.com/rust-lang/crates.io-index#linux-raw-sys@0.12.1",
-      "license": "Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT",
+      "checksum": "224399e74b87b5f3557511d98dff8b14089b3dadafcab6bb93eab67d3aace965",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#lock_api@0.4.14",
+      "license": "MIT OR Apache-2.0",
       "license_file": null,
-      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/linux-raw-sys-0.12.1/Cargo.toml",
-      "name": "linux-raw-sys",
-      "repository": "https://github.com/sunfishcode/linux-raw-sys",
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lock_api-0.4.14/Cargo.toml",
+      "name": "lock_api",
+      "repository": "https://github.com/Amanieu/parking_lot",
       "source": "registry+https://github.com/rust-lang/crates.io-index",
-      "version": "0.12.1"
+      "version": "0.4.14"
     },
     {
       "checksum": "f9f8bd3e56ce4dfc153cf470fffbfa98c7620958b312ca5c3a4b8d5181fd13c6",
@@ -817,6 +1060,17 @@
       "version": "2.8.3"
     },
     {
+      "checksum": "6b0ca1155a9ecc25aa12e8313a119f32edf0255fea2f44839c4ac0a12b2ac157",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#memmap2@0.9.12",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/memmap2-0.9.12/Cargo.toml",
+      "name": "memmap2",
+      "repository": "https://github.com/RazrFalcon/memmap2-rs",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.9.12"
+    },
+    {
       "checksum": "b63fbc4a50860e98e7b2aa7804ded1db5cbc3aff9193adaff57a6931bf7c4b4c",
       "id": "registry+https://github.com/rust-lang/crates.io-index#miniz_oxide@0.9.1",
       "license": "MIT OR Zlib OR Apache-2.0",
@@ -826,6 +1080,17 @@
       "repository": "https://github.com/Frommi/miniz_oxide/tree/master/miniz_oxide",
       "source": "registry+https://github.com/rust-lang/crates.io-index",
       "version": "0.9.1"
+    },
+    {
+      "checksum": "071dfc062690e90b734c0b2273ce72ad0ffa95f0c74596bc250dcfd960262841",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#num-traits@0.2.19",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/num-traits-0.2.19/Cargo.toml",
+      "name": "num-traits",
+      "repository": "https://github.com/rust-num/num-traits",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.2.19"
     },
     {
       "checksum": "9f7c3e4beb33f85d45ae3e3a1792185706c8e16d043238c593331cc7cd313b50",
@@ -839,6 +1104,28 @@
       "version": "1.21.4"
     },
     {
+      "checksum": "93857453250e3077bd71ff98b6a65ea6621a19bb0f559a85248955ac12c45a1a",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#parking_lot@0.12.5",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/parking_lot-0.12.5/Cargo.toml",
+      "name": "parking_lot",
+      "repository": "https://github.com/Amanieu/parking_lot",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.12.5"
+    },
+    {
+      "checksum": "2621685985a2ebf1c516881c026032ac7deafcda1a2c9b7850dc81e3dfcb64c1",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#parking_lot_core@0.9.12",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/parking_lot_core-0.9.12/Cargo.toml",
+      "name": "parking_lot_core",
+      "repository": "https://github.com/Amanieu/parking_lot",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.9.12"
+    },
+    {
       "checksum": "a89322df9ebe1c1578d689c92318e070967d1042b512afbe49518723f4e6d5cd",
       "id": "registry+https://github.com/rust-lang/crates.io-index#pin-project-lite@0.2.17",
       "license": "Apache-2.0 OR MIT",
@@ -848,6 +1135,17 @@
       "repository": "https://github.com/taiki-e/pin-project-lite",
       "source": "registry+https://github.com/rust-lang/crates.io-index",
       "version": "0.2.17"
+    },
+    {
+      "checksum": "f6b464fbc74e149a392436b17d523f769e057cb6877f6a5c4618bc6f11800548",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#pkg-config@0.3.34",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/pkg-config-0.3.34/Cargo.toml",
+      "name": "pkg-config",
+      "repository": "https://github.com/rust-lang/pkg-config-rs",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.3.34"
     },
     {
       "checksum": "e67ba7e9b2b56446f1d419b1d807906278ffa1a658a8a5d8a39dcb1f5a78614f",
@@ -960,6 +1258,17 @@
       "version": "1.13.0"
     },
     {
+      "checksum": "ed2bf2547551a7053d6fdfafda3f938979645c44812fbfcda098faae3f1a362d",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#redox_syscall@0.5.18",
+      "license": "MIT",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/redox_syscall-0.5.18/Cargo.toml",
+      "name": "redox_syscall",
+      "repository": "https://gitlab.redox-os.org/redox-os/syscall",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.5.18"
+    },
+    {
       "checksum": "f020237b6c8eed93db2e2cb53c00c60a8e1bc73da7d073199a1180401450218d",
       "id": "registry+https://github.com/rust-lang/crates.io-index#regex@1.13.1",
       "license": "MIT OR Apache-2.0",
@@ -980,6 +1289,17 @@
       "repository": "https://github.com/rust-lang/regex",
       "source": "registry+https://github.com/rust-lang/crates.io-index",
       "version": "0.4.18"
+    },
+    {
+      "checksum": "cab834c73d247e67f4fae452806d17d3c7501756d98c8808d7c9c7aa7d18f973",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#regex-lite@0.1.9",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/regex-lite-0.1.9/Cargo.toml",
+      "name": "regex-lite",
+      "repository": "https://github.com/rust-lang/regex",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.1.9"
     },
     {
       "checksum": "d6f6ff9a378485b298a5286656da665ba74413d36db0979633275d2e708145d4",
@@ -1004,6 +1324,28 @@
       "version": "1.9.3"
     },
     {
+      "checksum": "4ba8be72d372b2c9b35542551678538b562e7cf86c3315773cae48dfbfe7790c",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#rmp@0.8.15",
+      "license": "MIT",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rmp-0.8.15/Cargo.toml",
+      "name": "rmp",
+      "repository": "https://github.com/3Hren/msgpack-rust",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.8.15"
+    },
+    {
+      "checksum": "7a4e1d4b9b938a26d2996af33229f0ca0956c652c1375067f0b45291c1df8417",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#rmpv@1.3.1",
+      "license": "MIT",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rmpv-1.3.1/Cargo.toml",
+      "name": "rmpv",
+      "repository": "https://github.com/3Hren/msgpack-rust",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.3.1"
+    },
+    {
       "checksum": "fdb5bc1ae2baa591800df16c9ca78619bf65c0488b41b96ccec5d11220d8c154",
       "id": "registry+https://github.com/rust-lang/crates.io-index#rustix@0.38.44",
       "license": "Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT",
@@ -1024,6 +1366,17 @@
       "repository": "https://github.com/bytecodealliance/rustix",
       "source": "registry+https://github.com/rust-lang/crates.io-index",
       "version": "1.1.5"
+    },
+    {
+      "checksum": "94143f37725109f92c262ed2cf5e59bce7498c01bcc1502d7b9afe439a4e9f49",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#scopeguard@1.2.0",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/scopeguard-1.2.0/Cargo.toml",
+      "name": "scopeguard",
+      "repository": "https://github.com/bluss/scopeguard",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.2.0"
     },
     {
       "checksum": "4148590afebada386688f18773da617792bf2ef03ffc1e4cbd2b1d45b023e0ba",
@@ -1257,6 +1610,39 @@
       "version": "2.0.21"
     },
     {
+      "checksum": "fd3ca314f692efd6c868f8408f53fe444634a845f96c028b97d35f6a1f79f0ee",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#tinyvec@1.13.3",
+      "license": "Zlib OR Apache-2.0 OR MIT",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.13.3/Cargo.toml",
+      "name": "tinyvec",
+      "repository": "https://github.com/Lokathor/tinyvec",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.13.3"
+    },
+    {
+      "checksum": "b52fd3255258d26fac7264ab5a76b53c13367136dc011d3d6ad4f8ed070396a3",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#tokio@1.54.1",
+      "license": "MIT",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.54.1/Cargo.toml",
+      "name": "tokio",
+      "repository": "https://github.com/tokio-rs/tokio",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.54.1"
+    },
+    {
+      "checksum": "78773a2a397f451582ce068015985c33193cf6dea8b74d2a639fe457b2f07b0e",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#tokio-macros@2.7.2",
+      "license": "MIT",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-macros-2.7.2/Cargo.toml",
+      "name": "tokio-macros",
+      "repository": "https://github.com/tokio-rs/tokio",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "2.7.2"
+    },
+    {
       "checksum": "2b86d767906c6c42421dcba507eb9d203e779497710a47782a224bb871653053",
       "id": "registry+https://github.com/rust-lang/crates.io-index#toml_datetime@1.1.2+spec-1.1.0",
       "license": "MIT OR Apache-2.0",
@@ -1389,6 +1775,39 @@
       "version": "1.0.27"
     },
     {
+      "checksum": "75cd3fb03d5288b3ba9a1ee103ac7e9cbb59f0b03d64f8ddfcc04dd42758a85d",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#unicode-normalization@0.1.26",
+      "license": "(MIT OR Apache-2.0) AND Unicode-3.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/unicode-normalization-0.1.26/Cargo.toml",
+      "name": "unicode-normalization",
+      "repository": "https://github.com/unicode-rs/unicode-normalization",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.1.26"
+    },
+    {
+      "checksum": "6d49784317cd0d1ee7ec5c716dd598ec5b4483ea832a2dced265471cc0f690ae",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#unty@0.0.4",
+      "license": "MIT OR Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/unty-0.0.4/Cargo.toml",
+      "name": "unty",
+      "repository": "https://github.com/bincode-org/unty",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.0.4"
+    },
+    {
+      "checksum": "051eb1abcf10076295e815102942cc58f9d5e3b4560e46e53c21e8ff6f3af7b1",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#virtue@0.0.18",
+      "license": "MIT",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/virtue-0.0.18/Cargo.toml",
+      "name": "virtue",
+      "repository": "https://github.com/bincode-org/virtue",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.0.18"
+    },
+    {
       "checksum": "6a02e4885ed3bc0f2de90ea6dd45ebcbb66dacffe03547fadbb0eeae2770887d",
       "id": "registry+https://github.com/rust-lang/crates.io-index#void@1.0.2",
       "license": "MIT",
@@ -1409,6 +1828,39 @@
       "repository": "https://github.com/harryfei/which-rs.git",
       "source": "registry+https://github.com/rust-lang/crates.io-index",
       "version": "4.4.2"
+    },
+    {
+      "checksum": "5c839a674fcd7a98952e593242ea400abe93992746761e38641405d28b00f419",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#winapi@0.3.9",
+      "license": "MIT/Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/winapi-0.3.9/Cargo.toml",
+      "name": "winapi",
+      "repository": "https://github.com/retep998/winapi-rs",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.3.9"
+    },
+    {
+      "checksum": "ac3b87c63620426dd9b991e5ce0329eff545bccbbb34f3be09ff6fb6ab51b7b6",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#winapi-i686-pc-windows-gnu@0.4.0",
+      "license": "MIT/Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/winapi-i686-pc-windows-gnu-0.4.0/Cargo.toml",
+      "name": "winapi-i686-pc-windows-gnu",
+      "repository": "https://github.com/retep998/winapi-rs",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.4.0"
+    },
+    {
+      "checksum": "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#winapi-x86_64-pc-windows-gnu@0.4.0",
+      "license": "MIT/Apache-2.0",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/winapi-x86_64-pc-windows-gnu-0.4.0/Cargo.toml",
+      "name": "winapi-x86_64-pc-windows-gnu",
+      "repository": "https://github.com/retep998/winapi-rs",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.4.0"
     },
     {
       "checksum": "f0805222e57f7521d6a62e36fa9163bc891acd422f971defe97d64e70d0a4fe5",
@@ -1565,6 +2017,17 @@
       "version": "2.4.2"
     },
     {
+      "checksum": "b268e58e7c693d7c271f93ffc4ba3b380412554231c85bf61ca7af91042a4112",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#zlib-rs@0.6.8",
+      "license": "Zlib",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zlib-rs-0.6.8/Cargo.toml",
+      "name": "zlib-rs",
+      "repository": "https://github.com/trifectatechfoundation/zlib-rs",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.6.8"
+    },
+    {
       "checksum": "29666d0abbfad1e3dc4dcf6144730dd3a3ab225bbbdac83319345b1b44ccfc1b",
       "id": "registry+https://github.com/rust-lang/crates.io-index#zmij@1.0.23",
       "license": "MIT",
@@ -1585,6 +2048,39 @@
       "repository": "https://github.com/zopfli-rs/zopfli",
       "source": "registry+https://github.com/rust-lang/crates.io-index",
       "version": "0.8.4"
+    },
+    {
+      "checksum": "e91ee311a569c327171651566e07972200e76fcfe2242a4fa446149a3881c08a",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#zstd@0.13.3",
+      "license": "MIT",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zstd-0.13.3/Cargo.toml",
+      "name": "zstd",
+      "repository": "https://github.com/gyscos/zstd-rs",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.13.3"
+    },
+    {
+      "checksum": "64d80649ab6db9d9f6f9c80a40becd948eda4714a0a5ac8c4d157a32231c7882",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#zstd-safe@7.3.0",
+      "license": "BSD-3-Clause",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zstd-safe-7.3.0/Cargo.toml",
+      "name": "zstd-safe",
+      "repository": "https://github.com/gyscos/zstd-rs",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "7.3.0"
+    },
+    {
+      "checksum": "481ada9c543b2323cbb7bbdbb5249177fbf0188ed959ed2c15e4b22421c84ed3",
+      "id": "registry+https://github.com/rust-lang/crates.io-index#zstd-sys@2.1.2+zstd.1.5.7",
+      "license": "BSD-3-Clause",
+      "license_file": null,
+      "manifest_path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zstd-sys-2.1.2+zstd.1.5.7/Cargo.toml",
+      "name": "zstd-sys",
+      "repository": "https://github.com/gyscos/zstd-rs",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "2.1.2+zstd.1.5.7"
     }
   ],
   "schema_version": 1

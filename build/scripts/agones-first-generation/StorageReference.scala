@@ -73,7 +73,93 @@ object StorageReference {
   }
   def main(args: Array[String]): Unit = {
     val mode = args(0); val output = Paths.get(args(1))
-    if (mode == "generate") {
+    if (mode == "generate-legacy-metadata") {
+      val result=Obj()
+      for ((name,key) <- Seq("library"->"LIBRARY_VERSIONS_MAX_ID","strings"->"STRING_TO_INT_MAX_ID")) {
+        val path=output.resolveSibling(s"first-generation-legacy-meta-$name.odb");require(!Files.exists(path))
+        Files.copy(output.resolveSibling("first-generation-legacy-reference.odb"),path)
+        val store=new org.h2.mvstore.MVStore.Builder().fileName(path.toString).open()
+        val meta=store.openMap[String,String]("metadata");meta.put(key,"invalid")
+        if (name=="library") meta.put("STORAGE_FORMAT_VERSION","3")
+        store.close()
+        try {flatgraph.convert.Convert.convertOdbToFlatgraph(path,output.resolveSibling(s"first-generation-legacy-meta-$name.fg"));result(name)=Obj("unexpectedSuccess"->true)}
+        catch {case error:Throwable=>result(name)=Obj("error"->error.getClass.getName)}
+      }
+      Files.writeString(output,write(result,indent=2))
+    } else if (mode == "generate-legacy-modes") {
+      val result=Obj()
+      for (mode <- Seq("plain","deflate","empty")) {
+        val path=output.resolveSibling(s"first-generation-legacy-mode-$mode.odb");require(!Files.exists(path))
+        val builder=new org.h2.mvstore.MVStore.Builder().fileName(path.toString).autoCommitDisabled()
+        if (mode=="deflate") builder.compressHigh()
+        val store=builder.open()
+        val meta=store.openMap[String,String]("metadata");meta.put("STORAGE_FORMAT_VERSION","2");meta.put("STRING_TO_INT_MAX_ID","2")
+        val dictionary=store.openMap[String,java.lang.Integer]("stringToIntMappings");dictionary.put("METHOD",1);dictionary.put("NAME",2)
+        val nodes=store.openMap[java.lang.Long,Array[Byte]]("nodes")
+        if (mode!="empty") for (id <- 0 until 3) {
+          val packer=org.msgpack.core.MessagePack.newDefaultBufferPacker()
+          packer.packLong(id);packer.packInt(1);packer.packMapHeader(1);packer.packInt(2);packer.packArrayHeader(2);packer.packByte(1)
+          packer.packString(s"$mode-$id-"+"large-value-λ-😀"*3000);packer.packInt(0);packer.packInt(0);nodes.put(id.toLong,packer.toByteArray)
+        }
+        store.close()
+        val target=output.resolveSibling(s"first-generation-legacy-mode-$mode.fg")
+        flatgraph.convert.Convert.convertOdbToFlatgraph(path,target)
+        val cpg=Cpg.withStorage(target,false);result(mode)=snapshot(cpg.graph);cpg.close()
+      }
+      Files.writeString(output,write(result,indent=2))
+    } else if (mode == "generate-legacy-failures") {
+      val result=Obj()
+      for ((name,typ) <- Seq("primitive-array"->14,"character"->11,"version"->1,"null-only"->10)) {
+        val path=output.resolveSibling(s"first-generation-legacy-failure-$name.odb")
+        require(!Files.exists(path))
+        val storage=overflowdb.storage.OdbStorage.createWithSpecificLocation(path.toFile,new overflowdb.util.StringInterner)
+        val label=storage.lookupOrCreateStringToIntMapping("METHOD");val prop=storage.lookupOrCreateStringToIntMapping("NAME")
+        val packer=org.msgpack.core.MessagePack.newDefaultBufferPacker()
+        packer.packLong(42);packer.packInt(label);packer.packMapHeader(1);packer.packInt(prop);packer.packArrayHeader(2);packer.packByte(typ.toByte)
+        if (typ==14) {packer.packArrayHeader(2);packer.packInt(1);packer.packInt(2)}
+        else if (typ==11) packer.packInt(65)
+        else if (typ==10) packer.packNil()
+        else packer.packString("valid")
+        packer.packInt(0);packer.packInt(0);storage.persist(42,packer.toByteArray);storage.flush()
+        if (name=="version") {storage.getMetaDataMVMap.put("STORAGE_FORMAT_VERSION","3");storage.getMetaDataMVMap.getStore.close()}
+        else storage.close()
+        val target=output.resolveSibling(s"first-generation-legacy-failure-$name.fg")
+        try {
+          flatgraph.convert.Convert.convertOdbToFlatgraph(path,target)
+          val cpg=Cpg.withStorage(target,false);result(name)=Obj("snapshot"->snapshot(cpg.graph));cpg.close()
+        } catch {case error:Throwable=>result(name)=Obj("error"->error.getClass.getName,"message"->Option(error.getMessage).getOrElse(""))}
+      }
+      Files.writeString(output,write(result,indent=2))
+    } else if (mode == "generate-legacy") {
+      val graph=buildCpg()
+      val fg=output.resolveSibling("first-generation-legacy-input.fg")
+      val odb=output.resolveSibling("first-generation-legacy-reference.odb")
+      val converted=output.resolveSibling("first-generation-legacy-converted.fg")
+      Serialization.writeGraph(graph,fg)
+      flatgraph.convert.Convert.convertFlatgraphToOdb(fg,odb)
+      flatgraph.convert.Convert.convertOdbToFlatgraph(odb,converted)
+      val cpg=Cpg.withStorage(converted,false)
+      val stressPath=output.resolveSibling("first-generation-legacy-multipage.odb")
+      val storage=overflowdb.storage.OdbStorage.createWithSpecificLocation(stressPath.toFile,new overflowdb.util.StringInterner)
+      val labelId=storage.lookupOrCreateStringToIntMapping("METHOD")
+      val nameId=storage.lookupOrCreateStringToIntMapping("NAME")
+      def raw(id:Long,name:String):Array[Byte] = {
+        val packer=org.msgpack.core.MessagePack.newDefaultBufferPacker()
+        packer.packLong(id);packer.packInt(labelId);packer.packMapHeader(1);packer.packInt(nameId)
+        packer.packArrayHeader(2);packer.packByte(1);packer.packString(name);packer.packInt(0);packer.packInt(0)
+        packer.toByteArray
+      }
+      for (id <- (0 until 1800).reverse) storage.persist(id.toLong-900,raw(id.toLong-900,s"method-$id-"+"same"*32+"-λ-😀"))
+      storage.flush()
+      for (id <- 0 until 1800 if id%7==0) storage.removeNode((id.toLong-900):java.lang.Long)
+      for (id <- 0 until 1800 if id%11==0 && id%7!=0) storage.persist(id.toLong-900,raw(id.toLong-900,s"updated-$id"))
+      storage.close()
+      val stressConverted=output.resolveSibling("first-generation-legacy-multipage-converted.fg")
+      flatgraph.convert.Convert.convertOdbToFlatgraph(stressPath,stressConverted)
+      val stress=Cpg.withStorage(stressConverted,false)
+      Files.writeString(output,write(Obj("cpg"->snapshot(cpg.graph),"multipage"->snapshot(stress.graph)),indent=2))
+      cpg.close();stress.close();graph.close()
+    } else if (mode == "generate") {
       val cpg = buildCpg(); val primitive = buildPrimitive()
       val cpgPath = output.resolveSibling("first-generation-flatgraph-reference.fg")
       val primitivePath = output.resolveSibling("first-generation-flatgraph-primitives.fg")

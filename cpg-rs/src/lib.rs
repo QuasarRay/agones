@@ -40,6 +40,15 @@ pub enum Error {
     FileSystemAlreadyExists,
     GraphClosed,
     Deserialization(String),
+    Database(grafeo::Error),
+    LegacyStorage(String),
+    BackwardsCompatibility(String),
+    ClassCast(String),
+    SourceNotImplemented(&'static str),
+    MessageTypeCast(String),
+    MessageIntegerOverflow(String),
+    SourceAssertion(String),
+    SchemaViolation(String),
     Io(std::io::Error),
     Json(serde_json::Error),
     Protobuf(protobuf::Error),
@@ -57,6 +66,12 @@ impl std::fmt::Display for Error {
             Self::FileSystemAlreadyExists => formatter.write_str("serialized ZIP filesystem already open"),
             Self::GraphClosed => formatter.write_str("graph cannot be modified any longer since it is closed"),
             Self::Deserialization(message) => formatter.write_str(message),
+            Self::Database(error) => error.fmt(formatter),
+            Self::LegacyStorage(message) | Self::BackwardsCompatibility(message) | Self::ClassCast(message) => formatter.write_str(message),
+            Self::SourceNotImplemented(operation) => write!(formatter,"source NotImplementedError: {operation}"),
+            Self::MessageTypeCast(message) | Self::MessageIntegerOverflow(message) => formatter.write_str(message),
+            Self::SourceAssertion(message) => formatter.write_str(message),
+            Self::SchemaViolation(message) => formatter.write_str(message),
             Self::Io(error) => error.fmt(formatter),
             Self::Json(error) => error.fmt(formatter),
             Self::Protobuf(error) => error.fmt(formatter),
@@ -78,6 +93,14 @@ impl Error {
             Self::FileSystemAlreadyExists => Some("java.nio.file.FileSystemAlreadyExistsException"),
             Self::GraphClosed => Some("flatgraph.GraphClosedException"),
             Self::Deserialization(_) => Some("flatgraph.storage.Deserialization$DeserializationException"),
+            Self::LegacyStorage(_) => Some("java.lang.IllegalStateException"),
+            Self::BackwardsCompatibility(_) => Some("overflowdb.storage.BackwardsCompatibilityError"),
+            Self::ClassCast(_) => Some("java.lang.ClassCastException"),
+            Self::SourceNotImplemented(_) => Some("scala.NotImplementedError"),
+            Self::MessageTypeCast(_) => Some("org.msgpack.core.MessageTypeCastException"),
+            Self::MessageIntegerOverflow(_) => Some("org.msgpack.core.MessageIntegerOverflowException"),
+            Self::SourceAssertion(_) => Some("java.lang.AssertionError"),
+            Self::SchemaViolation(_) => Some("flatgraph.SchemaViolationException"),
             _ => None,
         }
     }
@@ -90,6 +113,7 @@ impl From<serde_json::Error> for Error {
 }
 impl From<protobuf::Error> for Error { fn from(value: protobuf::Error) -> Self { Self::Protobuf(value) } }
 impl From<zip::result::ZipError> for Error { fn from(value: zip::result::ZipError) -> Self { Self::Zip(value) } }
+impl From<grafeo::Error> for Error { fn from(value: grafeo::Error) -> Self { Self::Database(value) } }
 pub type Result<T> = std::result::Result<T, Error>;
 
 pub fn content_digest(bytes: &[u8]) -> String {

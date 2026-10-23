@@ -26,6 +26,10 @@
 !.github
 *.iml
 bin
+!cpg-rs/src/bin/
+!cpg-rs/src/bin/**
+!third_party/first-generation/grafeo/**/.cargo_vcs_info.json
+!third_party/first-generation/grafeo/**/.gitkeep
 *.o
 *.sln
 tmp

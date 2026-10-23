@@ -1,0 +1,416 @@
+{
+  "finished_at": "2026-10-23T13:50:25.634170+00:00",
+  "packages": [
+    {
+      "bytes": 147506,
+      "destination": "third_party/first-generation/h2-mvstore",
+      "files": {
+        "META-INF/MANIFEST.MF": {
+          "bytes": 217,
+          "sha256": "b9ae8990016b45cd6bce0d23b4cccf35d8bd33dfe20644942a8fa320a3326f71"
+        },
+        "META-INF/services/java.sql.Driver": {
+          "bytes": 13,
+          "sha256": "3af2d11bcee89e3c4f14fedf376a6db8bc9b2ade8933f15636940ea77a98e8b1"
+        },
+        "org/h2/mvstore/Chunk.java": {
+          "bytes": 15868,
+          "sha256": "5598c58a33516902d875f01da788f9810df801579e8d85366e1b158e4774e8bf"
+        },
+        "org/h2/mvstore/Cursor.java": {
+          "bytes": 4885,
+          "sha256": "e0e8871f22a79d84a39af7097a5dc4d2e67464b916df9c60c022f69140e0881e"
+        },
+        "org/h2/mvstore/CursorPos.java": {
+          "bytes": 2570,
+          "sha256": "93952de4f26bee7adeb7f2e0a6616c292a6394e106c809db26067c6c6f68fbfc"
+        },
+        "org/h2/mvstore/DataUtils.java": {
+          "bytes": 33679,
+          "sha256": "3c03c874fcb2880049dabe3afed1456f319e1cc44a27421a5e815de8677b15a3"
+        },
+        "org/h2/mvstore/FileStore.java": {
+          "bytes": 12357,
+          "sha256": "309a5e6c0bce70390d4a84116ec57da40b37f10567d644784f45bdfeda3f95eb"
+        },
+        "org/h2/mvstore/FreeSpaceBitSet.java": {
+          "bytes": 10857,
+          "sha256": "fd26960aada28ed977707c3c8e1e1242abe2f156acbd5ec033baaebae6a72194"
+        },
+        "org/h2/mvstore/MVMap.java": {
+          "bytes": 67968,
+          "sha256": "419e30fa95bf646ef7e1aa41b21bb79a06b83596f16290827c79efae70865d7e"
+        },
+        "org/h2/mvstore/MVStore.java": {
+          "bytes": 131994,
+          "sha256": "affd4a668de60927edb4f929b68c696a809d294bcb5fdbec45e8a7fd1892e36e"
+        },
+        "org/h2/mvstore/MVStoreTool.java": {
+          "bytes": 31225,
+          "sha256": "77024b63f7bec80d9f21e421845f2f46b5d82f5b93dd5ad8146d892b8e08bf2d"
+        },
+        "org/h2/mvstore/OffHeapStore.java": {
+          "bytes": 4511,
+          "sha256": "757e5b5b42c9b85f4196434c5a0aa88135c14b8df16289bfa94372f645c6a073"
+        },
+        "org/h2/mvstore/Page.java": {
+          "bytes": 48508,
+          "sha256": "9dd2a83eeae1fda63fda16daf985f2f0c855ea9c9430da43ed940f7c2f59ea61"
+        },
+        "org/h2/mvstore/RootReference.java": {
+          "bytes": 9251,
+          "sha256": "46ba98e610d3d61625937fc5a837af435bf35fc847b980b7ce53bab8b8b71024"
+        },
+        "org/h2/mvstore/StreamStore.java": {
+          "bytes": 18838,
+          "sha256": "939a4cd08e77af9398cf3f8b2c5e5a865f4d04713e215aef6d9a2c6582395d73"
+        },
+        "org/h2/mvstore/WriteBuffer.java": {
+          "bytes": 7230,
+          "sha256": "e95dfd43128ee6574a8b4c5f7e2762fb33f12e440f375142264495e86958a5ef"
+        },
+        "org/h2/mvstore/cache/CacheLongKeyLIRS.java": {
+          "bytes": 38015,
+          "sha256": "8da9e1793adc94cc8ddf6e428cfbe7c53a433b390eb85ba3ce66add58d48f9ee"
+        },
+        "org/h2/mvstore/cache/FilePathCache.java": {
+          "bytes": 5064,
+          "sha256": "2b5c9028e470494ba4960d4bb6211d995a5c570c25b5d65ed9c18ed637ce364a"
+        },
+        "org/h2/mvstore/rtree/MVRTreeMap.java": {
+          "bytes": 21522,
+          "sha256": "39c71643f83a3f690bd54b34a1385725e0a0c89b36461f6956c89ea57ec666d9"
+        },
+        "org/h2/mvstore/rtree/SpatialDataType.java": {
+          "bytes": 11280,
+          "sha256": "d5a1bb8a5ed0e787f5b105c3d6ebd9e6911caa0364c9bcedd6b2081cc92db55a"
+        },
+        "org/h2/mvstore/rtree/SpatialKey.java": {
+          "bytes": 2811,
+          "sha256": "813f354a30f5760d2d2fedd7e35d87e52c9cab6d1656683150b00d3ca1682e64"
+        },
+        "org/h2/mvstore/tx/CommitDecisionMaker.java": {
+          "bytes": 2202,
+          "sha256": "1e0920248ada1aac04148b3696423d8af2cc4e33e4652c5e37bd3567a1643951"
+        },
+        "org/h2/mvstore/tx/RollbackDecisionMaker.java": {
+          "bytes": 2538,
+          "sha256": "e47e3ee4713ad60db1e46fb738a5800f68dfd7baf9787389e6bf8113d662c122"
+        },
+        "org/h2/mvstore/tx/Snapshot.java": {
+          "bytes": 1315,
+          "sha256": "8bfb6c8aedef562b340bce2ff4fbbce19f5be4245a81b4b7fb6c2c549080941d"
+        },
+        "org/h2/mvstore/tx/Transaction.java": {
+          "bytes": 28654,
+          "sha256": "214d834c22f963c58cab13b9773c4523a471690eb855cbed196991ad5cbe02b3"
+        },
+        "org/h2/mvstore/tx/TransactionMap.java": {
+          "bytes": 33550,
+          "sha256": "ece0c42a70b236baca2ef41a66f119f4f85c55f2c81e884f27ad586f9c2a15a9"
+        },
+        "org/h2/mvstore/tx/TransactionStore.java": {
+          "bytes": 32677,
+          "sha256": "2c3dc5ca9012b64587b85ffdf8358f12f6652ae816c0f42b58f8f25f3c2d64ce"
+        },
+        "org/h2/mvstore/tx/TxDecisionMaker.java": {
+          "bytes": 12113,
+          "sha256": "cbd8811f03426e25009a99c836ec064884748145f8b245d7862fec308611c723"
+        },
+        "org/h2/mvstore/tx/VersionedBitSet.java": {
+          "bytes": 780,
+          "sha256": "88485c6c2e9a3e3ab68e5d022da43c2061a6f4a47c9011bb5420663afb145efc"
+        },
+        "org/h2/mvstore/tx/VersionedValueCommitted.java": {
+          "bytes": 1185,
+          "sha256": "f658438026f2e560354e3dafe4567144d8a75943d3701d47964b8a8f724ee729"
+        },
+        "org/h2/mvstore/tx/VersionedValueType.java": {
+          "bytes": 4328,
+          "sha256": "6df9448d5f912bc07f03295da5544152e9abc8324546eb59460b9b7388c33bb5"
+        },
+        "org/h2/mvstore/tx/VersionedValueUncommitted.java": {
+          "bytes": 1668,
+          "sha256": "da022d2c7a64f93b1f2879bffe86c27188c204a95472083a868fa68d1300a667"
+        },
+        "org/h2/mvstore/type/DataType.java": {
+          "bytes": 1652,
+          "sha256": "fb46a5d5181165a1a9535a8f9ae30c57868d496eb26a398250be9ebb1368575c"
+        },
+        "org/h2/mvstore/type/ObjectDataType.java": {
+          "bytes": 50217,
+          "sha256": "a83659d876be1d3f1822a6e0df2be5d51d4dbb42a7a5f1a4cf92743695c1a107"
+        },
+        "org/h2/mvstore/type/StringDataType.java": {
+          "bytes": 1338,
+          "sha256": "1adb270bdf54cf9907e44632a3d0e8c4a2dac42fec5978a490fbd4918e40c889"
+        }
+      },
+      "guidance_overlays": [
+        {
+          "path": "AGENTS.MD",
+          "sha256": "ff281f8d1e713caff1bb95a3d7c641cc1a4dcc4fc99188d9a85b1a4e94a42e1f"
+        },
+        {
+          "path": "META-INF/AGENTS.MD",
+          "sha256": "0a4a88f0e441ed2117d047cc445c0395cd7ab4e5aace2759c0f7510ad3db78c3"
+        },
+        {
+          "path": "META-INF/services/AGENTS.MD",
+          "sha256": "2dc7d70c6047be100cf4782210853cc5975b47eb72a06298d3403f9ab9b19eee"
+        },
+        {
+          "path": "org/AGENTS.MD",
+          "sha256": "0a4a88f0e441ed2117d047cc445c0395cd7ab4e5aace2759c0f7510ad3db78c3"
+        },
+        {
+          "path": "org/h2/AGENTS.MD",
+          "sha256": "2dc7d70c6047be100cf4782210853cc5975b47eb72a06298d3403f9ab9b19eee"
+        },
+        {
+          "path": "org/h2/mvstore/AGENTS.MD",
+          "sha256": "70ac0992edfdadde92f546e5caab0444415c3a44c7ac3fe2770dfb9a6fc31c5a"
+        },
+        {
+          "path": "org/h2/mvstore/cache/AGENTS.MD",
+          "sha256": "50d811694b7e57507ebcafb77388f52c3f6e0865548c83999d7180d6fe119b99"
+        },
+        {
+          "path": "org/h2/mvstore/rtree/AGENTS.MD",
+          "sha256": "50d811694b7e57507ebcafb77388f52c3f6e0865548c83999d7180d6fe119b99"
+        },
+        {
+          "path": "org/h2/mvstore/tx/AGENTS.MD",
+          "sha256": "50d811694b7e57507ebcafb77388f52c3f6e0865548c83999d7180d6fe119b99"
+        },
+        {
+          "path": "org/h2/mvstore/type/AGENTS.MD",
+          "sha256": "50d811694b7e57507ebcafb77388f52c3f6e0865548c83999d7180d6fe119b99"
+        }
+      ],
+      "license": "MPL-2.0 OR EPL-1.0",
+      "license_provenance": "Retained Java source copyright/license headers and original published Maven POM license declarations",
+      "name": "h2-mvstore",
+      "path": ".git/agones-first-generation-sources/legacy-storage/h2-mvstore-1.4.200-sources.jar",
+      "pom_sha256": "74bd768041187ae57629ecfc06938e65a8a259146e9142addf8f85f7051e3108",
+      "sha1": "64810dd1e3c8a90ed53eb1769caf059072f3b059",
+      "sha256": "049b0e8ac9fe8b7840907c4bc541426ff287542adcd1053dc89fc7eada5c73ca",
+      "source_file_count": 35,
+      "url": "https://repo.maven.apache.org/maven2/com/h2database/h2-mvstore/1.4.200/h2-mvstore-1.4.200-sources.jar",
+      "version": "1.4.200"
+    },
+    {
+      "bytes": 55934,
+      "destination": "third_party/first-generation/overflowdb-core",
+      "files": {
+        "META-INF/MANIFEST.MF": {
+          "bytes": 129,
+          "sha256": "ed699ea01ac60f3444a321bb2087a1640f2b8195e33041ef5af5d41bdc9d1f0c"
+        },
+        "overflowdb/AdjacentNodes.java": {
+          "bytes": 3770,
+          "sha256": "4946c1515d271c5c38bd1c1c0e5585f4406923c98e54751f84fab8bedb5e8a9d"
+        },
+        "overflowdb/ArrayIter.scala": {
+          "bytes": 422,
+          "sha256": "3ca76cbd6ea469493c0e55504976c19cf22e8a93e98be0816de2f43382e436ff"
+        },
+        "overflowdb/BatchedUpdate.java": {
+          "bytes": 11914,
+          "sha256": "1bfb919dab06bdf1e4ed47a92c801b22387799e2d16d6a4355ec6a28ba008402"
+        },
+        "overflowdb/Config.java": {
+          "bytes": 2210,
+          "sha256": "bfff161b6f047eb53686c47a35df85c6039da973e76917264151fb1b2d97b59b"
+        },
+        "overflowdb/DetachedNodeData.java": {
+          "bytes": 455,
+          "sha256": "feacd25e1862004a7462951a41aee15ca37db58b55577164c33d4fec29df8dac"
+        },
+        "overflowdb/DetachedNodeGeneric.java": {
+          "bytes": 588,
+          "sha256": "1b0d2ca618dd277eec685d91e9b3f6b47a63ed0fcc071cf129ba6c2a21925919"
+        },
+        "overflowdb/Direction.java": {
+          "bytes": 63,
+          "sha256": "eeaf1aca4842e7db857845cd92778a2790755fdce5c9e6084474e7ff973c00a4"
+        },
+        "overflowdb/Edge.java": {
+          "bytes": 7704,
+          "sha256": "9906647534da57f89f523a855e0f3416599b2467251a81663679fd2ebbde15b9"
+        },
+        "overflowdb/EdgeFactory.java": {
+          "bytes": 169,
+          "sha256": "7a4d0e8a69955851eb410b96445d5f106aba92a502637cc472dddb37c7f8b4da"
+        },
+        "overflowdb/EdgeLayoutInformation.java": {
+          "bytes": 415,
+          "sha256": "a8eb37bc45ce2cff6d2c14406794beaea64ca7c297e4468350f7b21911eda48f"
+        },
+        "overflowdb/Element.java": {
+          "bytes": 2251,
+          "sha256": "8b8e57a55f100c23ecf3169f640e77e8289665d11444d6492bdc40127634603e"
+        },
+        "overflowdb/Graph.java": {
+          "bytes": 16301,
+          "sha256": "5635b1084c09b00c8a4d97d73dd69f94dff8d3ffbfa8e250e219c142eeb38cad"
+        },
+        "overflowdb/HeapUsageMonitor.java": {
+          "bytes": 5289,
+          "sha256": "869f4777f696b219ae19068cb54c13c7681e3060355b35fbfd353e0e9499a522"
+        },
+        "overflowdb/IndexManager.java": {
+          "bytes": 5654,
+          "sha256": "248cd8565eaf4c220c7ec08742fde7a4416182c179e9a7b6107e372749848b95"
+        },
+        "overflowdb/Misc.java": {
+          "bytes": 163,
+          "sha256": "e3cf83d20af799cd6376fd866f74761fb74ae1e2e5784fd2ce1665b6507941a2"
+        },
+        "overflowdb/Node.java": {
+          "bytes": 4609,
+          "sha256": "11bf46f46a3c6c030d63185a309b751075d506d96db0f909dee4037a344895ac"
+        },
+        "overflowdb/NodeDb.java": {
+          "bytes": 30966,
+          "sha256": "98ba07e55fdca2251e649b8d2aff4d36c9ad49a6562e53e91a3d0c927980dd93"
+        },
+        "overflowdb/NodeFactory.java": {
+          "bytes": 683,
+          "sha256": "434305cd7f7f5c0c20f4a65272dd98cfb763c8b25e2bfcebd576b0fdbb560b7c"
+        },
+        "overflowdb/NodeLayoutInformation.java": {
+          "bytes": 7303,
+          "sha256": "f248a1aadebd403c2878a278ca9b56c06af8bbee55df25cfc818232422547b31"
+        },
+        "overflowdb/NodeOrDetachedNode.java": {
+          "bytes": 61,
+          "sha256": "11dd65ddabe26186c7f2de65ac4f51867f37ba208fcfa8ec7378bbef436ed689"
+        },
+        "overflowdb/NodeRef.java": {
+          "bytes": 8657,
+          "sha256": "116b66be005f9c8362d11c1160ad7c530866708ec9877de56069b158dad580e6"
+        },
+        "overflowdb/Property.java": {
+          "bytes": 308,
+          "sha256": "ed920062b7c9ee56a3709fcf26373fe9e64b3f22124417a9f87671990677ed76"
+        },
+        "overflowdb/PropertyKey.java": {
+          "bytes": 224,
+          "sha256": "af4f9d8f143f25a51972af3ca9c7dafbbcbf23fbb613a69a2a7c2f05c4e9de22"
+        },
+        "overflowdb/ReferenceManager.java": {
+          "bytes": 6183,
+          "sha256": "24ef54d74fd94f7f5db1eefc781787ed9922e118125717fa431773a398e0536d"
+        },
+        "overflowdb/SchemaViolationException.java": {
+          "bytes": 281,
+          "sha256": "cb50347e50cbe07f4b51ceee73f229481eede1cfa991286adbd826d6dfe85e28"
+        },
+        "overflowdb/storage/BackwardsCompatibilityError.java": {
+          "bytes": 170,
+          "sha256": "996ba5c1f9509caa27dc9ff55284220f300c27258243c0ec915f03c243d4ac6a"
+        },
+        "overflowdb/storage/BookKeeper.java": {
+          "bytes": 1393,
+          "sha256": "5bea427c9ca782e2c37962d045d6c52b248516a63346c8a4222ef807c303f99c"
+        },
+        "overflowdb/storage/NodeDeserializer.java": {
+          "bytes": 11368,
+          "sha256": "8ef6407055208832d8fe029f5a4ddcd1884eee817910f99524f3b039df906680"
+        },
+        "overflowdb/storage/NodeSerializer.java": {
+          "bytes": 10741,
+          "sha256": "a230e427226db692eece49ff9847ff63089cea588da3198e62c140dac1807c19"
+        },
+        "overflowdb/storage/NodesWriter.java": {
+          "bytes": 3077,
+          "sha256": "cc87c3a70b2b169edb586973efb7ab5433972cea125860c8a4f9997ae8151900"
+        },
+        "overflowdb/storage/OdbStorage.java": {
+          "bytes": 10989,
+          "sha256": "3cd5dcd4478583d7115ac6ecf4ecb495c586b7286d4d0d74c987f3e4c4590628"
+        },
+        "overflowdb/storage/ValueTypes.java": {
+          "bytes": 1930,
+          "sha256": "5e393681ff505be3082ce969a75713234505fe9da5b69e15a2a773212c347913"
+        },
+        "overflowdb/util/ArrayOffsetIterator.java": {
+          "bytes": 1353,
+          "sha256": "16d7b8b905a8415b5470ed292483f64a5dac1d5d216e338a647adcb9bf305af0"
+        },
+        "overflowdb/util/DiffTool.java": {
+          "bytes": 6199,
+          "sha256": "6cfbd5f47238994ff19dfa67ccbc9df417913ecde32b2aced61155e8747c1c26"
+        },
+        "overflowdb/util/DummyEdgeIterator.java": {
+          "bytes": 2452,
+          "sha256": "9bd51eadf94b09025523d97eb336399f892d3e0511bef07d8b5bf8fa8325abe5"
+        },
+        "overflowdb/util/IteratorUtils.java": {
+          "bytes": 3764,
+          "sha256": "e7c0310978ed49754e5ef401b52ab4266f605d8c318fb5c30e50efe3bfa50307"
+        },
+        "overflowdb/util/MultiIterator.java": {
+          "bytes": 1835,
+          "sha256": "041a549bd41315554c463030dc2d3093c0d2e905e71419237672612b99545874"
+        },
+        "overflowdb/util/NamedThreadFactory.java": {
+          "bytes": 641,
+          "sha256": "bac2b144a523006a9f7f31922e0b1878e5d6676af4bf4b8c4615010a49b8558f"
+        },
+        "overflowdb/util/NodesList.java": {
+          "bytes": 7872,
+          "sha256": "d39633b40733ef615cf4ebd5fe9febd7a81b24df03784bdda794c5fdda58ceeb"
+        },
+        "overflowdb/util/PropertyHelper.java": {
+          "bytes": 1200,
+          "sha256": "0d3b3a21e802bd0a67d292d56b5ce1c8ffa1c20a674b8fdb682d67e07529aee6"
+        },
+        "overflowdb/util/StringInterner.java": {
+          "bytes": 393,
+          "sha256": "9e65de5bb19dc290fe6247b5d41394c10170a68a80a6273cc2b41f94f07a6e93"
+        }
+      },
+      "guidance_overlays": [
+        {
+          "path": "AGENTS.MD",
+          "sha256": "ff281f8d1e713caff1bb95a3d7c641cc1a4dcc4fc99188d9a85b1a4e94a42e1f"
+        },
+        {
+          "path": "META-INF/AGENTS.MD",
+          "sha256": "0a4a88f0e441ed2117d047cc445c0395cd7ab4e5aace2759c0f7510ad3db78c3"
+        },
+        {
+          "path": "overflowdb/AGENTS.MD",
+          "sha256": "0a4a88f0e441ed2117d047cc445c0395cd7ab4e5aace2759c0f7510ad3db78c3"
+        },
+        {
+          "path": "overflowdb/storage/AGENTS.MD",
+          "sha256": "2dc7d70c6047be100cf4782210853cc5975b47eb72a06298d3403f9ab9b19eee"
+        },
+        {
+          "path": "overflowdb/util/AGENTS.MD",
+          "sha256": "2dc7d70c6047be100cf4782210853cc5975b47eb72a06298d3403f9ab9b19eee"
+        }
+      ],
+      "license": "Apache-2.0",
+      "license_provenance": "Retained Java source copyright/license headers and original published Maven POM license declarations",
+      "name": "overflowdb-core_3",
+      "path": ".git/agones-first-generation-sources/legacy-storage/overflowdb-core_3-1.194-sources.jar",
+      "pom_sha256": "5aed2e51a06568d3c56e33906d9fac699cdb679db3611d1d8521cdbc33ea2c4a",
+      "sha1": "a4331a7e738ebdcff4d8c78123ccc6858946c747",
+      "sha256": "8862b5cbd71a65c155ac1c4b51ed9ff6b5a233351a22d57251a08ff4dfd094f7",
+      "source_file_count": 42,
+      "url": "https://repo.maven.apache.org/maven2/io/shiftleft/overflowdb-core_3/1.194/overflowdb-core_3-1.194-sources.jar",
+      "version": "1.194"
+    }
+  ],
+  "patches": [],
+  "purpose": "Native read-only legacy OverflowDB/H2 compatibility import into Grafeo",
+  "schema_version": 1,
+  "script_sha256": "19940ffbee1e82d71587e3a73655008546c9a515254e3c8236de2c795ee9b8b2",
+  "selected_binary_closure": "verification/agones/first-generation-proto-reference-maven-lock.json",
+  "selected_binary_closure_sha256": "a77a42d4c174e5dfea42855a5341c86086421a6bf504d11de33565e7561c5a4b",
+  "status": "VENDORED_PUBLISHED_SOURCE"
+}

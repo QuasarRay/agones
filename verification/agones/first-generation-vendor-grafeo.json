@@ -1,0 +1,14 @@
+{
+  "archive_url": "https://codeload.github.com/GrafeoDB/grafeo/tar.gz/2150b0fe171834bc618ffb8be18864ade7e0fd17",
+  "commit": "2150b0fe171834bc618ffb8be18864ade7e0fd17",
+  "destination": "third_party/first-generation/grafeo",
+  "error": "Codeload response raised http.client.IncompleteRead after 4 MiB were retained; partial archive is not accepted as source.",
+  "finished_at": "2026-10-23T13:33:16.273980+00:00",
+  "name": "grafeo",
+  "partial_archive": ".git/agones-first-generation-sources/grafeo-2150b0fe171834bc618ffb8be18864ade7e0fd17.tar.download",
+  "repository": "https://github.com/GrafeoDB/grafeo",
+  "schema_version": 1,
+  "started_at": "2026-10-23T13:21:22.275901+00:00",
+  "status": "SOURCE_ARCHIVE_TRANSPORT_INTERRUPTED",
+  "tree": "b681d4cd510c5e687b405a4719d6523b1914d87c"
+}

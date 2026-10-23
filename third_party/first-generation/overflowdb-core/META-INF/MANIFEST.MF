@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Specification-Title: overflowdb-core
+Specification-Version: 1.194
+Specification-Vendor: io.shiftleft
+

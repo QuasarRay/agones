@@ -189,3 +189,22 @@ pub fn only_checked_with_warning<S: IterableOnceSource>(source: &mut S, mut warn
 pub fn only_checked<S: IterableOnceSource>(source: &mut S) -> Result<S::Item> {
     only_checked_with_warning(source, |message| tracing::warn!("{message}"))
 }
+
+/// Java Integer.parseInt semantics, including signed limits and BMP decimal digits.
+pub fn parse_java_integer_units(units:&[u16])->Option<i32> {
+    static ZEROES:std::sync::OnceLock<Vec<u16>>=std::sync::OnceLock::new();
+    let zeroes=ZEROES.get_or_init(||serde_json::from_str(include_str!("../templates/java-decimal-zeroes.json")).expect("pinned decimal character table"));
+    let first=*units.first()?;let negative=first==u16::from(b'-');
+    let start=usize::from(negative || first==u16::from(b'+'));
+    if start==units.len() {return None;}
+    let limit=if negative {i32::MIN} else {-i32::MAX};let minimum=limit/10;
+    let mut result=0i32;
+    for unit in &units[start..] {
+        let digit=zeroes.iter().find_map(|zero|unit.checked_sub(*zero).filter(|digit|*digit<10).map(i32::from))?;
+        if result<minimum {return None;}
+        result*=10;
+        if result<limit+digit {return None;}
+        result-=digit;
+    }
+    Some(if negative {result} else {-result})
+}

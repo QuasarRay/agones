@@ -5,6 +5,10 @@ use crate::{Error, Result, schema::{Cardinality, Scalar, Schema, ValueType}};
 use cgp::prelude::*;
 use std::{collections::{BTreeMap, BTreeSet, VecDeque}, sync::{Arc, Mutex, atomic::{AtomicU64, Ordering}}};
 pub mod storage;
+mod grafeo;
+mod mvstore;
+pub mod legacy;
+pub mod typed;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct NodeId(pub u64);
@@ -80,6 +84,14 @@ impl DetachedNode {
     pub fn stored_ref(&self) -> Result<Option<NodeHandle>> {
         Ok(self.0.lock().map_err(|_| Error::Invalid("poisoned detached node".into()))?.stored)
     }
+    pub fn label(&self)->Result<String> {Ok(self.0.lock().map_err(|_|Error::Invalid("poisoned detached node".into()))?.label.clone())}
+    pub fn property_input(&self,name:&str)->Result<Option<PropertyInput>> {
+        Ok(self.0.lock().map_err(|_|Error::Invalid("poisoned detached node".into()))?.properties.get(name).cloned())
+    }
+    pub fn copy_unstored(&self)->Result<Self> {
+        let state=self.0.lock().map_err(|_|Error::Invalid("poisoned detached node".into()))?;
+        Ok(Self(Arc::new(Mutex::new(DetachedState {label:state.label.clone(),properties:state.properties.clone(),stored:None}))))
+    }
 }
 
 #[derive(Clone, Debug)]
@@ -131,7 +143,7 @@ struct Field { value_type: ValueType, cardinality: Cardinality }
 pub struct Graph {
     identity: u64, schema: Arc<Schema>, kinds: BTreeMap<String, u16>,
     fields: Vec<BTreeMap<String, Field>>, edge_kinds: BTreeMap<String, u16>,
-    nodes: Vec<Vec<StoredNode>>, edges: BTreeMap<u64, Edge>, next_edge: u64,
+    database: grafeo::Database, next_edge: u64,
     closed: bool, changed: bool,
     storage_path:Option<std::path::PathBuf>,
     adjacency_slots:BTreeSet<(u16,u16,u8)>,
@@ -162,7 +174,7 @@ impl Graph {
         }).collect();
         Ok(Self { identity, kinds: schema.node_types.iter().enumerate().map(|(kind, node)| (node.name.clone(), kind as u16)).collect(),
             edge_kinds: schema.edges.iter().enumerate().map(|(kind, edge)| (edge.name.clone(), kind as u16)).collect(),
-            nodes: schema.node_types.iter().map(|_| Vec::new()).collect(), fields, schema, edges: BTreeMap::new(), next_edge: 0, closed: false, changed: false,
+            database: grafeo::Database::new(schema.clone(),identity)?, fields, schema, next_edge: 0, closed: false, changed: false,
             storage_path:None,adjacency_slots:BTreeSet::new(),edge_property_slots:BTreeSet::new(),property_slots:BTreeSet::new(),
             property_storage_types:BTreeMap::new(),edge_property_storage_types:BTreeMap::new() })
     }
@@ -171,25 +183,51 @@ impl Graph {
     pub fn is_closed(&self) -> bool { self.closed }
     pub fn has_changed(&self) -> bool { self.changed }
     pub fn storage_path(&self)->Option<&std::path::Path> {self.storage_path.as_deref()}
+    fn storage_metadata(&self)->grafeo::Metadata {
+        grafeo::Metadata {next_edge:self.next_edge,adjacency:self.adjacency_slots.iter().copied().collect(),
+            edge_properties:self.edge_property_slots.iter().copied().collect(),properties:self.property_slots.iter().cloned().collect(),
+            property_types:self.property_storage_types.iter().map(|(key,value)|(key.clone(),*value)).collect(),
+            edge_property_types:self.edge_property_storage_types.iter().map(|(key,value)|(*key,*value)).collect()}
+    }
+    /// Opens a Grafeo checkpoint. Mutations use Grafeo's memory engine and are
+    /// durably saved on close when requested, matching the CPG storage lifecycle.
+    pub fn with_storage(schema:Arc<Schema>,path:&std::path::Path,persist_on_close:bool)->Result<Self> {
+        let mut graph=Self::new(schema.clone())?;
+        if path.exists() && std::fs::metadata(path)?.len()>0 {
+            let (database,metadata)=grafeo::Database::open(schema,graph.identity,path)?;
+            graph.database=database;graph.next_edge=metadata.next_edge;
+            graph.adjacency_slots=metadata.adjacency.into_iter().collect();
+            graph.edge_property_slots=metadata.edge_properties.into_iter().collect();
+            graph.property_slots=metadata.properties.into_iter().collect();
+            graph.property_storage_types=metadata.property_types.into_iter().collect();
+            graph.edge_property_storage_types=metadata.edge_property_types.into_iter().collect();
+        }
+        graph.storage_path=persist_on_close.then(||path.to_owned());Ok(graph)
+    }
+    /// Read-only GQL queries execute in Grafeo, including its permission checks.
+    pub fn query_database(&self,query:&str)->Result<::grafeo::QueryResult> {self.database.query(query)}
+    pub fn save_database(&self,path:&std::path::Path)->Result<()> {self.database.save(path,&self.storage_metadata())}
+    pub(crate) fn configure_storage(&mut self,path:&std::path::Path) {self.storage_path=Some(path.to_owned());}
     pub fn close(&mut self)->Result<()> {
+        if self.closed {return Ok(());}
+        if self.changed {if let Some(path)=&self.storage_path {self.database.save(path,&self.storage_metadata())?;}}
         self.closed = true;
-        if self.changed {if let Some(path)=&self.storage_path {storage::write_graph(self,path)?;}}
         Ok(())
     }
     pub fn node(&self, id: NodeId) -> Option<&StoredNode> {
-        self.nodes.get(id.kind() as usize)?.get(id.sequence() as usize).filter(|node| !node.deleted)
+        self.database.view().nodes.get(id.kind() as usize)?.get(id.sequence() as usize).filter(|node| !node.deleted)
     }
     fn check_handle(&self, handle: NodeHandle) -> Result<()> {
         if handle.graph != self.identity { return Err(Error::Invalid("node belongs to a different graph".into())); }
-        if self.nodes.get(handle.id.kind() as usize).and_then(|nodes| nodes.get(handle.id.sequence() as usize)).is_none() {
+        if !self.database.contains_node(handle.id) {
             return Err(Error::Invalid("node does not exist in this graph".into()));
         }
         Ok(())
     }
     pub fn get(&self, handle: NodeHandle) -> Result<Option<&StoredNode>> { self.check_handle(handle)?; Ok(self.node(handle.id)) }
-    pub fn all_nodes(&self) -> impl Iterator<Item = &StoredNode> { self.nodes.iter().flatten().filter(|node| !node.deleted) }
+    pub fn all_nodes(&self) -> impl Iterator<Item = &StoredNode> { self.database.view().nodes.iter().flatten().filter(|node| !node.deleted) }
     pub fn nodes(&self, label: &str) -> impl Iterator<Item = &StoredNode> {
-        self.kinds.get(label).and_then(|kind| self.nodes.get(*kind as usize)).into_iter().flatten().filter(|node| !node.deleted)
+        self.kinds.get(label).and_then(|kind| self.database.view().nodes.get(*kind as usize)).into_iter().flatten().filter(|node| !node.deleted)
     }
     pub fn nodes_of_base(&self, base: &str) -> impl Iterator<Item = &StoredNode> {
         let labels: BTreeSet<_> = self.schema.node_types.iter().filter(|node| node.name == base || node.ancestors.iter().any(|name| name == base))
@@ -202,7 +240,7 @@ impl Graph {
     }
     pub fn property_values(&self, node: NodeHandle, name: &str) -> Result<&[Value]> {
         self.check_handle(node)?;
-        let node = &self.nodes[node.id.kind() as usize][node.id.sequence() as usize];
+        let node = &self.database.view().nodes[node.id.kind() as usize][node.id.sequence() as usize];
         Ok(node.properties.get(name).map(Vec::as_slice).unwrap_or(&[]))
     }
     pub fn property(&self, node: NodeHandle, name: &str) -> Result<Option<Value>> {
@@ -210,7 +248,7 @@ impl Graph {
         let values = self.property_values(node, name)?;
         let Some(field) = field else { return Ok(None); };
         if matches!(field.cardinality, Cardinality::List) { return Ok(Some(Value::List(values.to_vec()))); }
-        if values.len() > 1 { return Err(Error::Invalid(format!("multiple values in single property {name}"))); }
+        if values.len() > 1 { return Err(Error::SourceNotImplemented("multiple values in a single/optional node property")); }
         if let Some(value) = values.first() { return Ok(Some(value.clone())); }
         match &field.cardinality {
             Cardinality::One { default: Some(default), default_wrapper_is_null: false } => Ok(Some(Value::from_scalar(default)?)),
@@ -225,11 +263,11 @@ impl Graph {
     }
     pub fn edge(&self, edge: EdgeHandle) -> Result<Option<&Edge>> {
         if edge.graph != self.identity { return Err(Error::Invalid("edge belongs to a different graph".into())); }
-        Ok(self.edges.get(&edge.id))
+        Ok(self.database.view().edges.get(&edge.id))
     }
     pub fn edges(&self, node: NodeHandle, direction: Direction, label: Option<&str>) -> Result<Vec<&Edge>> {
         self.check_handle(node)?;
-        let mut edges: Vec<_> = self.edges.values().filter(|edge| label.is_none_or(|label| edge.label == label) && match direction {
+        let mut edges: Vec<_> = self.database.view().edges.values().filter(|edge| label.is_none_or(|label| edge.label == label) && match direction {
             Direction::Outgoing => edge.outgoing && edge.source == node,
             Direction::Incoming => edge.incoming && edge.target == node,
         }).collect();
@@ -240,10 +278,10 @@ impl Graph {
         Ok(self.edges(node, direction, label)?.into_iter().map(|edge| match direction { Direction::Outgoing => edge.target, Direction::Incoming => edge.source }).collect())
     }
     pub fn all_edges(&self) -> Vec<&Edge> {
-        let mut edges: Vec<_> = self.edges.values().filter(|edge| edge.outgoing).collect();
+        let mut edges: Vec<_> = self.database.view().edges.values().filter(|edge| edge.outgoing).collect();
         edges.sort_by_key(|edge| (edge.source.id, edge.kind, edge.out_order)); edges
     }
-    pub fn edge_count(&self) -> usize { self.edges.values().filter(|edge| edge.outgoing).count() }
+    pub fn edge_count(&self) -> usize { self.database.view().edges.values().filter(|edge| edge.outgoing).count() }
 
     fn materialize(&mut self, node: NodeReference, deferred: &mut VecDeque<DetachedNode>, created: &mut usize) -> Result<NodeHandle> {
         match node {
@@ -252,10 +290,9 @@ impl Graph {
                 let mut state = node.0.lock().map_err(|_| Error::Invalid("poisoned detached node".into()))?;
                 if let Some(stored) = state.stored { self.check_handle(stored)?; return Ok(stored); }
                 let kind = *self.kinds.get(&state.label).ok_or_else(|| Error::Invalid(format!("unknown node label {}", state.label)))?;
-                let nodes = &mut self.nodes[kind as usize];
-                let sequence = u32::try_from(nodes.len()).map_err(|_| Error::Invalid("node sequence space exhausted".into()))?;
+                let sequence = self.database.next_sequence(kind);
                 let handle = NodeHandle { graph: self.identity, id: NodeId::new(kind, sequence) };
-                nodes.push(StoredNode { handle, label: state.label.clone(), properties: BTreeMap::new(), deleted: false });
+                self.database.insert_node(StoredNode { handle, label: state.label.clone(), properties: BTreeMap::new(), deleted: false })?;
                 state.stored = Some(handle); *created += 1;
                 drop(state); deferred.push_back(node); Ok(handle)
             }
@@ -292,7 +329,7 @@ impl Graph {
             if let Value::Node(reference) = value { self.check_handle(*reference)?; }
         }
         self.property_slots.insert((node.id.kind() as u16,name.clone()));
-        self.nodes[node.id.kind() as usize][node.id.sequence() as usize].properties.insert(name, values);
+        self.database.set_property(node.id,&name,&values)?;
         Ok(())
     }
     fn drain_deferred(&mut self, deferred: &mut VecDeque<DetachedNode>, created: &mut usize) -> Result<()> {
@@ -331,12 +368,10 @@ impl Graph {
         for update in &diff.updates {
             if let Update::RemoveNode(node) = update {
                 self.check_handle(*node)?;
-                let node = &mut self.nodes[node.id.kind() as usize][node.id.sequence() as usize];
-                if !node.deleted { node.deleted = true; node.properties.clear(); changes += 1; }
+                if self.database.remove_node(node.id)? {changes += 1;}
             }
         }
-        self.edges.retain(|_, edge| self.nodes[edge.source.id.kind() as usize][edge.source.id.sequence() as usize].deleted == false &&
-            self.nodes[edge.target.id.kind() as usize][edge.target.id.sequence() as usize].deleted == false);
+        self.database.remove_incident_edges()?;
         let mut deferred = VecDeque::new();
         let mut edge_additions = Vec::new();
         let mut property_sets = Vec::new();
@@ -349,48 +384,49 @@ impl Graph {
                     let source = self.materialize(source, &mut deferred, &mut created)?;
                     let target = self.materialize(target, &mut deferred, &mut created)?;
                     let kind = *self.edge_kinds.get(&label).ok_or_else(|| Error::Invalid(format!("unknown edge label {label}")))?;
-                    if self.node(source.id).is_some() && self.node(target.id).is_some() {
+                    if self.database.is_live(source.id) && self.database.is_live(target.id) {
                         edge_additions.push((source, target, kind, label, property, half)); changes += 1;
                     }
                 }
                 Update::SetNodeProperty { node, name, value } => {
                     self.check_handle(node)?;
                     if !self.fields.iter().any(|fields| fields.contains_key(&name)) { continue; }
-                    if self.node(node.id).is_none() { return Err(Error::SourceMatchFailure { operation: "SetNodeProperty" }); }
+                    if !self.database.is_live(node.id) { return Err(Error::SourceMatchFailure { operation: "SetNodeProperty" }); }
                     let values = self.resolve_input(value, &mut deferred, &mut created)?;
                     property_sets.push((node, name, values)); changes += 1;
                 }
                 Update::SetEdgeProperty { edge, value } => {
-                    if edge.graph == self.identity && !self.edges.contains_key(&edge.id) {
+                    if edge.graph == self.identity && !self.database.contains_edge(edge.id) {
                         return Err(Error::SourceMatchFailure { operation: "SetEdgeProperty on deleted endpoint" });
                     }
-                    if self.edge(edge)?.is_some() { edge_sets.push((edge, value)); changes += 1; }
+                    if edge.graph!=self.identity {self.edge(edge)?;}
+                    if self.database.contains_edge(edge.id) { edge_sets.push((edge, value)); changes += 1; }
                 }
                 Update::RemoveEdge(edge) => {
-                    if self.edge(edge)?.is_some() { edge_deletions.push(edge); changes += 1; }
+                    if edge.graph!=self.identity {self.edge(edge)?;}
+                    if self.database.contains_edge(edge.id) { edge_deletions.push(edge); changes += 1; }
                 }
                 Update::RemoveNode(_) => {}
             }
             self.drain_deferred(&mut deferred, &mut created)?;
         }
         for (handle, value) in edge_sets {
-            let kind = self.edges[&handle.id].kind;
+            let (kind,source,target,outgoing,incoming)=self.database.edge_info(handle.id)?;
             let value = self.edge_property(kind, EdgeProperty::Value(value))?;
-            self.edges.get_mut(&handle.id).expect("edge resolved above").property = value;
-            let edge=&self.edges[&handle.id];
+            self.database.set_edge_property(handle.id,&value)?;
             if self.schema.edges[kind as usize].property.is_some() {
-                if edge.outgoing {self.edge_property_slots.insert((edge.source.id.kind() as u16,kind,1));}
-                if edge.incoming {self.edge_property_slots.insert((edge.target.id.kind() as u16,kind,0));}
+                if outgoing {self.edge_property_slots.insert((source.kind() as u16,kind,1));}
+                if incoming {self.edge_property_slots.insert((target.kind() as u16,kind,0));}
             }
         }
-        for edge in edge_deletions { self.edges.remove(&edge.id); }
+        for edge in edge_deletions { self.database.remove_edge(edge.id)?; }
         for (source, target, kind, label, property, half) in edge_additions {
             let explicit=matches!(&property,EdgeProperty::Value(_)) && self.schema.edges[kind as usize].property.is_some();
             let property = self.edge_property(kind, property)?;
             let id = self.next_edge;
             self.next_edge = self.next_edge.checked_add(1).ok_or_else(|| Error::Invalid("edge identity space exhausted".into()))?;
-            self.edges.insert(id, Edge { handle: EdgeHandle { graph: self.identity, id }, source, target, kind, label, property,
-                outgoing: half != Some(Direction::Incoming), incoming: half != Some(Direction::Outgoing),out_order:id,in_order:id });
+            self.database.insert_edge(Edge { handle: EdgeHandle { graph: self.identity, id }, source, target, kind, label, property,
+                outgoing: half != Some(Direction::Incoming), incoming: half != Some(Direction::Outgoing),out_order:id,in_order:id })?;
             for (node,direction,present) in [(source,1,half!=Some(Direction::Incoming)),(target,0,half!=Some(Direction::Outgoing))] {
                 if present {self.adjacency_slots.insert((node.id.kind() as u16,kind,direction));
                     if explicit {self.edge_property_slots.insert((node.id.kind() as u16,kind,direction));}}
@@ -403,8 +439,17 @@ impl Graph {
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct ApplyReport { pub submitted: usize, pub created_nodes: usize, pub applied_changes: usize }
 
+#[derive(Clone,Debug,PartialEq,Eq)]
+pub struct DocSearchPackages(Vec<String>);
+impl Default for DocSearchPackages {fn default()->Self {Self(vec!["flatgraph".into()])}}
+impl DocSearchPackages {
+    pub fn new(packages:impl IntoIterator<Item=String>)->Self {Self(packages.into_iter().collect())}
+    pub fn packages(&self)->&[String] {&self.0}
+    pub fn with_additional_package(&self,package:impl Into<String>)->Self {let mut packages=self.0.clone();packages.push(package.into());Self(packages)}
+}
 pub struct Cpg { graph: Graph }
 impl Cpg {
+    pub fn default_doc_search_package()->DocSearchPackages {DocSearchPackages::default().with_additional_package("io.shiftleft.codepropertygraph.generated")}
     pub fn from_graph(graph: Graph) -> Self { Self { graph } }
     pub fn graph(&self) -> &Graph { &self.graph }
     pub fn graph_mut(&mut self) -> &mut Graph { &mut self.graph }
@@ -424,6 +469,16 @@ impl<Context> GraphMutator<Context> for ApplyNativeCpgDiff {
 pub trait CanCreateCpg { fn create_cpg(&self) -> Result<Cpg>; }
 #[cgp_component(CpgStorageOpener)]
 pub trait CanOpenCpgStorage {fn open_cpg_storage(&self,path:Option<&std::path::Path>,persist_on_close:bool)->Result<Cpg>;}
+#[cgp_component(CpgDatabaseAccess)]
+pub trait CanAccessCpgDatabase {
+    fn query_cpg_database(&self,graph:&Graph,query:&str)->Result<::grafeo::QueryResult>;
+    fn save_cpg_database(&self,graph:&Graph,path:&std::path::Path)->Result<()>;
+}
+#[cgp_new_provider]
+impl<Context> CpgDatabaseAccess<Context> for AccessGrafeoCpgDatabase {
+    fn query_cpg_database(_context:&Context,graph:&Graph,query:&str)->Result<::grafeo::QueryResult> {graph.query_database(query)}
+    fn save_cpg_database(_context:&Context,graph:&Graph,path:&std::path::Path)->Result<()> {graph.save_database(path)}
+}
 #[cgp_new_provider]
 impl<Context:CanCreateCpg> CpgStorageOpener<Context> for OpenNativeCpgStorage {
     fn open_cpg_storage(context:&Context,path:Option<&std::path::Path>,persist_on_close:bool)->Result<Cpg> {
@@ -442,6 +497,7 @@ pub struct CpgContext;
 delegate_components! {
     CpgContext {
         crate::proto_loading::CpgProtoGraphLoaderComponent: crate::proto_loading::LoadCpgProtosInTwoPasses,
+        crate::cpg_loading::CpgLoaderComponent:crate::cpg_loading::LoadCpgIntoGrafeo,
     }
 }
 #[cfg(feature="native-schema")]
@@ -449,6 +505,8 @@ delegate_and_check_components! {
     CpgContext {
         GraphFactoryComponent: CreateCpgFromNativeSchema,
         CpgStorageOpenerComponent: OpenNativeCpgStorage,
+        CpgDatabaseAccessComponent: AccessGrafeoCpgDatabase,
+        legacy::LegacyCpgImporterComponent: legacy::ImportLegacyCpgIntoGrafeo,
         crate::codegen::BootstrapLoaderComponent:crate::codegen::LoadBootstrapFromFile,
         storage::GraphStorageRewriterComponent:storage::RewriteNativeGraphStorage,
         GraphMutatorComponent: ApplyNativeCpgDiff,

@@ -8,9 +8,19 @@
     "cpg_domain_structure": "verification/agones/first-generation-cpg-domain-structure.json",
     "cpg_generated_domain": "cpg-rs/generated/generation.json",
     "cpg_partial_port_map": "verification/agones/first-generation-cpg-port-map.json",
-    "cpg_rust_controls": "verification/agones/first-generation-cpg-runtime-controls-2.json",
+    "cpg_rust_controls": "verification/agones/first-generation-cpg-runtime-controls-5.json",
     "cpg_rust_workspace": "cpg-rs/Cargo.toml",
+    "flatgraph_reference": "verification/agones/first-generation-flatgraph-reference.json",
+    "flatgraph_reference_receipt": "verification/agones/first-generation-flatgraph-reference-run-1.json",
     "frontend_lexical_tool_build": "verification/agones/first-generation-goastgen-build.json",
+    "grafeo_flatgraph_export_comparison": "verification/agones/first-generation-grafeo-flatgraph-export-comparison.json",
+    "grafeo_source_pin": "verification/agones/first-generation-grafeo-pin.json",
+    "legacy_conversion_reference": "verification/agones/first-generation-legacy-reference.json",
+    "legacy_conversion_reference_receipt": "verification/agones/first-generation-legacy-reference-run-1.json",
+    "legacy_failure_reference": "verification/agones/first-generation-legacy-failures.json",
+    "legacy_metadata_reference": "verification/agones/first-generation-legacy-metadata.json",
+    "legacy_storage_modes_reference": "verification/agones/first-generation-legacy-modes.json",
+    "legacy_storage_sources": "verification/agones/first-generation-legacy-storage-pins.json",
     "native_descriptor_comparison": "verification/agones/first-generation-protoc-descriptor-reference.json",
     "native_graph_reference": "verification/agones/first-generation-graph-reference.json",
     "native_graph_reference_provenance": "verification/agones/first-generation-graph-reference-provenance.json",
@@ -51,7 +61,7 @@
       "verification/agones/first-generation-vendor-better-comprehension.json"
     ],
     "tooling_files_manifest": "verification/agones/first-generation-tooling-files.json",
-    "tooling_files_manifest_sha256": "ce157e7a1f1a1f7179142a415d5fc8592842b8f7eb85ceafd543850b76510438",
+    "tooling_files_manifest_sha256": "7c6628d535f53a42c964bd6f8bf2b8de231305729dcb442e306083a66a11382b",
     "toolkit_source_pins": "verification/agones/first-generation-toolkit-pins.json"
   },
   "baseline": {
@@ -81,15 +91,15 @@
   "contract_sha256": "3c2eeb7c077ce7410b16f609f48ac70dfbb6ddb9daee0005b7979eda003dfbec",
   "cpg_port_progress": {
     "candidate_bodies": 1089,
-    "focused_rust_checks": "52 integration tests passed after regenerating native CPG domain, constructors and protobuf bindings; all current input/output identities verified.",
+    "focused_rust_checks": "70 integration tests passed after source-bound native domain, schema-constructor and protobuf regeneration; Grafeo engine/persistence, native legacy storage import and all-format CPG loading are covered by runtime-controls-5. Full handwritten CPG port remains incomplete.",
     "formal_refinement_credit": 0,
     "full_body_universe": "OPEN:2Bazel helpers,1launcher and implicit placeholder closures require reconciliation",
     "literal_or_default_bodies_mapped": 10,
-    "mapped_candidate_bodies": 357,
-    "native_runtime_bodies_mapped": 162,
+    "mapped_candidate_bodies": 394,
+    "native_runtime_bodies_mapped": 199,
     "parsed_files": 54,
     "proto_id_literal_bodies_mapped": 185,
-    "remaining_candidate_bodies": 732,
+    "remaining_candidate_bodies": 695,
     "whole_cpg_port_complete": false
   },
   "final_artifact_path": "/home/astral/Projects/agones/generated/agones-first-generation",
@@ -110,8 +120,7 @@
     "output": ".git/agones-first-generation-string-ops-bytecode.txt"
   },
   "known_remaining_runtime_limits": [
-    "Native Flatgraph storage/persistence and legacy OverflowDB conversion remain unimplemented; full CpgLoader dispatch and all storage-path overloads still require concrete behavior.",
-    "The two-pass protobuf import and ZIP path operate in memory or in an explicitly supplied graph. The source openOrCreateCpg(storagePath) branch and dependent complete-parent mappings remain open until persistence is implemented.",
+    "Native legacy loading and all-format dispatch are implemented and source-compared on retained fixtures. Exhaustive malformed-store/crash-recovery and failure-side-effect equivalence still require reconciliation.",
     "Generated domain records and wire bindings compile, but complete graph-backed typed accessors/query bindings and typed-detached-node integration remain open.",
     "Full graph error-state side effects, stale/unsafe half-edge handle semantics and builder-time validation need further source reconciliation beyond retained probes.",
     "Full-schema factories execute the original mutation program; individual parameterized schema-module APIs and reference-identity/duplicate-name semantics remain open."
@@ -123,26 +132,32 @@
       "required_followup": "Reconcile reference identity and existing same-named elements before whole-CPG port completion."
     }
   ],
-  "last_goal_turn_outcome": "PROGRESS: native protocol bindings, archives, two-pass import and source-bound comparisons implemented; full Goal remains incomplete.",
+  "last_goal_turn_outcome": "PROGRESS: native legacy storage reader/importer and CGP format loading implemented; original-runtime comparisons cover conversion, compression/page modes, known failures and metadata ordering. 37 more source bodies mapped, 70 focused tests passed. Full first-generation Goal remains incomplete.",
   "native_runtime_progress": {
     "acceptance": "Focused support evidence only. No formal proof, whole-CPG completion or generated-Agones credit.",
     "archives": "Native ZIP traversal, normalized hierarchy, protobuf overlay serialization, counter/overwrite behavior, close/publication and mount ownership implemented.",
+    "cpg_facade": "Native CPG facade, graph ownership, empty graph/schema creation, documentation-search package metadata and Grafeo-backed storage entrypoints implemented.",
+    "flatgraph": "Native Flatgraph v0 compatibility import into Grafeo and export from Grafeo; exact primitive bits, nulls/references, physical columns and independent adjacency order retained.",
+    "format_loading": "CGP composes Grafeo, protobuf ZIP, Flatgraph and legacy OverflowDB format dispatch. Imported inputs use a derived .grafeo checkpoint or explicit destination; overwrite/missing-input order and direct native checkpoint copying are implemented.",
     "format_probes": "Original proto/OverflowDB/Flatgraph and deprecated format probes implemented, including exact buffer/decode/IO-failure behavior.",
-    "graph": "Concrete native create/mutate/query core; detached identity and contained nodes, source numeric/property types, node ids and directional multiedges implemented.",
+    "graph": "Grafeo owns canonical node/edge/property records and mutations. CPG borrowed APIs use disposable read projections, stable source ids and typed scalar envelopes.",
+    "legacy_import": "Native read-only H2 MVStore1.4.200 maps and OverflowDBv2 MessagePack import into Grafeo implemented. Checksummed headers/pages, committed roots, cross-chunk trees, LZF/Deflate/plain pages, large values, string dictionaries, scalar/flattened-reference columns and independent directional edges are supported.",
     "passes": "CGP owns sequential and fork/join lifecycle, accumulators, finish-on-failure/unwind, ordered diff merge and one application.",
-    "proto_loading": "CGP owns two-pass in-memory import and import into an existing graph; original TYPE deduplication/id-alias behavior, lazy unknown-node failure, supported property cases and source exception categories preserved.",
+    "persistence": "Grafeo native single-file checkpoints, schema-bound reopen into its memory engine, deferred save on explicit close, memory-only mutation option, durable atomic replacement, retained tombstones/edge identities and CGP read-only GQL access.",
+    "proto_loading": "CGP owns two-pass import including open/create persistent Grafeo graphs and repeated imports; source TYPE deduplication/id-alias behavior and failure categories retained.",
     "protobuf": "Native schema-derived protobuf bindings and descriptor generated with pinned rust-protobuf 3.7.2. Descriptor equals original protoc 3.20.1 exactly; unknown fields and numeric payloads retained.",
-    "reference_comparisons": "Original CPG codepropertygraph/proto modules built with matching protoc; seven retained loader cases, archive/serialization behavior and source comparator matched. 65536 UTF-16 integer-prefix cases and prior 74994 UTF-8 cases passed.",
+    "reference_comparisons": "Original CPG codepropertygraph/proto modules built with matching protoc; seven retained loader cases, archive/serialization behavior and source comparator matched. 65536 UTF-16 integer-prefix cases and prior 74994 UTF-8 cases passed. Original pinned CPG reader also matched the Flatgraph snapshot exported from Grafeo exactly. Native legacy import matches the original converter on the CPG fixture, 1542 updated/deleted multipage nodes, plain/Deflate/large-value/empty stores, original unsupported-value/version failures and metadata initialization error order.",
     "utilities": "UTF-8/BOM/lines, strong/noop interning, temporary-copy lifecycle, root search, source iterable decoration and current/global parallel execution implemented."
   },
-  "next_action": "Continue stage 3 with native Flatgraph persistence from the retained pinned Manifest/Serialization/Deserialization sources, then wire real storage-path Cpg/ProtoCpgLoader/CpgLoader behavior and legacy OverflowDB conversion. Generate graph-backed domain accessors and finish schema identity/module APIs and all remaining source-body/build/closure mappings. Preserve full independent Agones census/frontend/IR/Go-support/transaction obligations. No Agones emission until those gates are complete.",
+  "next_action": "Continue stage 3 by generating complete graph-backed typed CPG accessors/query and detached-node integration from the schema. Reconcile schema reference identity/duplicate names and individual module APIs, graph/loading error-state and legacy recovery behavior, and all remaining 695 source-body/build/closure mappings. Preserve independent Agones census, frontend closure, normalization/IR/Go-support and terminal generation-transaction obligations. No full Agones emission until the required support is complete.",
   "objective": "CPG_FIRST_COMPLETE_AGONES_RUST_GENERATION",
   "objective_attachment": "/home/astral/.codex/attachments/366fe3bd-b8a4-41ae-8a83-2055a23db195/pasted-text-1.txt",
   "owned_paths": [
+    ".gitignore",
     "build/scripts/agones-first-generation/",
+    "cpg-rs/",
     "third_party/first-generation/",
-    "verification/agones/first-generation-*.json",
-    "cpg-rs/"
+    "verification/agones/first-generation-*.json"
   ],
   "preserved_user_files": {
     "AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
@@ -156,10 +171,10 @@
     "verification_delivery_work": "DEFERRED_BY_NEW_OBJECTIVE"
   },
   "required_unknowns": [
-    "finish all handwritten CPG schema/graph/persistence/loading/pass/utility/build mappings; 732 conservative candidates remain unmapped and the semantic body universe remains open",
+    "finish all handwritten CPG schema/graph/persistence/loading/pass/utility/build mappings; 695 conservative candidates remain unmapped and the semantic body universe remains open",
     "finish two Bazel helpers, one launcher and implicit Scala placeholder-closure accounting",
     "reconcile schema object-reference identity, duplicate names and individual module APIs",
-    "complete generated graph-backed typed accessors, native Flatgraph/legacy storage and complete storage-backed loading lifecycle",
+    "complete generated graph-backed typed accessors/detached integration and reconcile remaining graph/loading error-state and legacy recovery behavior",
     "independent Agones production-body/configuration inventory",
     "pinned Joern frontend runtime closure, extraction and structural bundle reconciliation",
     "normalized CPG, typed IR, Go lowering rules, substantive runtime/provider support and transactional full Agones emission"
@@ -211,7 +226,7 @@
     "source_protobuf_events": 1504
   },
   "schema_version": 1,
-  "source_acquisition_status": "Seven upstream source trees remain vendored. Matching original CPG schema/domain/protobuf/runtime modules built with JDK21, Scala3.9, sbt1.12.5 and pinned protoc3.20.1; native rust-protobuf3.7.2/ZIP2.4.2/Rust dependency closure recorded. Joern frontend runtime closure remains pending.",
+  "source_acquisition_status": "Seven original repository source trees, six Grafeo Rust library source packages and two legacy storage Maven source packages are retained with identities/licenses. Native CPG support uses Grafeo; original CPG/Flatgraph/H2 runtime comparisons remain build-only evidence. Joern frontend runtime closure remains pending.",
   "source_pins": {
     "anchor_departure": "Use CPG v1.7.79 revision301c401... selected by the exact Joern frontend build, rather than assuming the standalone d02d76... inspection anchor is compatible.",
     "compatibility_status": "ORIGINAL_CPG_SCHEMA_DOMAIN_PROTO_RUNTIME_BUILT_AND_NATIVE_PROTOCOL_COMPARED; JOERN_FRONTEND_RUNTIME_AND_FORMAT_RECONCILIATION_PENDING",
@@ -240,6 +255,14 @@
       "tree": "febe1ddde789a69394dbcf1ae63067a314004b45",
       "version": "0.1.2"
     },
+    "grafeo": {
+      "pin": "verification/agones/first-generation-grafeo-pin.json",
+      "revision": "2150b0fe171834bc618ffb8be18864ade7e0fd17",
+      "role": "canonical database and persistence",
+      "source_scope": "Six complete published Rust library packages; upstream root LICENSE and NOTICE; Cargo packaging manifests explicitly retained",
+      "tree": "b681d4cd510c5e687b405a4719d6523b1914d87c",
+      "version": "0.5.44"
+    },
     "joern": {
       "compatibility": "Source dependency declaration resolved; runtime artifacts and storage/schema dependencies still require reconciliation.",
       "declared_cpg": "1.7.79",
@@ -248,20 +271,32 @@
       "scala": "3.9.0",
       "tree": "cbdf9860049ac4b9f12f2ce6b9505861ae64d0b5"
     },
-    "joern_inspection_anchor": "9f2171242e48d7fed3021087d45838a83c1e39da"
+    "joern_inspection_anchor": "9f2171242e48d7fed3021087d45838a83c1e39da",
+    "legacy_storage": {
+      "artifact_pin": "verification/agones/first-generation-legacy-storage-pins.json",
+      "h2_mvstore": "1.4.200",
+      "overflowdb_core": "1.194",
+      "scope": "Complete published Maven source artifacts for the required legacy import dependencies; not full repository checkouts"
+    }
   },
   "source_vendor_summary": {
+    "grafeo_upstream_root_license_notice_files": 2,
+    "published_grafeo_library_files": 583,
+    "published_grafeo_library_packages": 6,
+    "published_legacy_storage_packages": 2,
+    "published_legacy_storage_source_files": 77,
     "repositories": 7,
     "upstream_files": 3413
   },
   "stage": "IMPLEMENT_CPG_RS_AND_SCHEMA",
   "tooling_checkout": {
     "branch": "agones-rs-dev",
-    "head": "f7515dc05fa3e9691f431b157ee7efd47bc5ac6d",
-    "head_change_note": "Observed an intervening cpg-rs commit while working; retained current branch and dirty files without reset or rewrite.",
-    "previous_observed_head": "f5363c28a1f48464f0e620a158800a379f573089",
+    "head": "a2153333803ae1e7ae79da907b698949996849df",
+    "head_change_note": "Observed an intervening user/external commit at recovery; retained branch and working files without reset or rewrite.",
+    "ignored_source_recovery": "Scoped .gitignore exceptions retain cpg-rs/src/bin command sources and vendored Grafeo VCS/fixture metadata that broad inherited rules hid.",
+    "previous_observed_head": "f7515dc05fa3e9691f431b157ee7efd47bc5ac6d",
     "tracked_dirty_patch_scope": "Tracked diff against HEAD excluding the self-indexing checkpoint and tooling manifest. The tooling manifest separately binds current untracked/owned support files.",
-    "tracked_dirty_patch_sha256": "dab456f08991710a0bbe90fd0f86a7c2e7407928f0bd176c27074374f74bcbc9",
+    "tracked_dirty_patch_sha256": "18445d73c03489fd06616c9207fd06508cb31427c4ff57b77a0a6a6f41768a04",
     "user_guidance_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
   },
   "tooling_decisions": [
@@ -284,5 +319,15 @@
       "smallest_gap": "One source census and concrete schema operations; no new compiler framework"
     }
   ],
-  "updated_at": "2026-10-23T12:48:52.081685+00:00"
+  "updated_at": "2026-10-23T14:21:11.170345+00:00",
+  "user_steering": {
+    "database_engine": "Grafeo",
+    "evidence": "verification/agones/first-generation-cpg-runtime-controls-5.json",
+    "flatgraph_role": "compatibility import/export only",
+    "instruction": "use grafeo for as the database engine and persistence for cpg-rs",
+    "persistence_engine": "Grafeo",
+    "source_pin": "2150b0fe171834bc618ffb8be18864ade7e0fd17",
+    "status": "IMPLEMENTED_AND_FOCUSED_TESTED",
+    "tests_passed": 70
+  }
 }

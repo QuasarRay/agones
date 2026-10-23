@@ -1,0 +1,8 @@
+{
+  "library": {
+    "error": "java.lang.NumberFormatException"
+  },
+  "strings": {
+    "error": "java.lang.NumberFormatException"
+  }
+}
