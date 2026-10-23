@@ -11,9 +11,10 @@ members = ["."]
 resolver = "2"
 
 [features]
-default = ["generated-domain", "native-schema"]
+default = ["generated-domain", "native-schema", "protobuf-bindings"]
 generated-domain = []
 native-schema = []
+protobuf-bindings = []
 source-inventory = ["dep:tree-sitter", "dep:tree-sitter-scala", "dep:tree-sitter-java"]
 
 [dependencies]
@@ -28,6 +29,11 @@ sha2 = "=0.11.1"
 rayon = "=1.12.0"
 tempfile = "=3.27.0"
 tracing = "=0.1.44"
+protobuf = "=3.7.2"
+protobuf-codegen = "=3.7.2"
+protobuf-parse = "=3.7.2"
+zip = { version = "=2.4.2", default-features = false, features = ["deflate"] }
+zstd = { version = "=0.13.3", default-features = false }
 tree-sitter = { version = "=0.27.1", optional = true }
 tree-sitter-scala = { version = "=0.26.3", optional = true }
 tree-sitter-java = { version = "=0.23.5", optional = true }
@@ -48,4 +54,14 @@ path = "src/bin/construction.rs"
 [[bin]]
 name = "cpg-schema"
 path = "src/bin/schema.rs"
+required-features = ["native-schema"]
+
+[[bin]]
+name = "cpg-protobuf-bindings"
+path = "src/bin/protobuf_bindings.rs"
+required-features = ["native-schema"]
+
+[[bin]]
+name = "cpg-storage"
+path = "src/bin/storage.rs"
 required-features = ["native-schema"]

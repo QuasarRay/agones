@@ -4,6 +4,7 @@
 use crate::{Error, Result, schema::{Cardinality, Scalar, Schema, ValueType}};
 use cgp::prelude::*;
 use std::{collections::{BTreeMap, BTreeSet, VecDeque}, sync::{Arc, Mutex, atomic::{AtomicU64, Ordering}}};
+pub mod storage;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct NodeId(pub u64);
@@ -123,7 +124,7 @@ impl StoredNode { pub fn explicit_properties(&self) -> &BTreeMap<String, Vec<Val
 #[derive(Clone, Debug)]
 pub struct Edge {
     pub handle: EdgeHandle, pub source: NodeHandle, pub target: NodeHandle, pub kind: u16,
-    pub label: String, pub property: Value, outgoing: bool, incoming: bool,
+    pub label: String, pub property: Value, outgoing: bool, incoming: bool, out_order:u64, in_order:u64,
 }
 #[derive(Clone, Debug)]
 struct Field { value_type: ValueType, cardinality: Cardinality }
@@ -132,6 +133,12 @@ pub struct Graph {
     fields: Vec<BTreeMap<String, Field>>, edge_kinds: BTreeMap<String, u16>,
     nodes: Vec<Vec<StoredNode>>, edges: BTreeMap<u64, Edge>, next_edge: u64,
     closed: bool, changed: bool,
+    storage_path:Option<std::path::PathBuf>,
+    adjacency_slots:BTreeSet<(u16,u16,u8)>,
+    edge_property_slots:BTreeSet<(u16,u16,u8)>,
+    property_slots:BTreeSet<(u16,String)>,
+    property_storage_types:BTreeMap<(u16,String),storage::StorageType>,
+    edge_property_storage_types:BTreeMap<(u16,u16,u8),storage::StorageType>,
 }
 impl Graph {
     pub fn new(schema: Arc<Schema>) -> Result<Self> {
@@ -155,13 +162,20 @@ impl Graph {
         }).collect();
         Ok(Self { identity, kinds: schema.node_types.iter().enumerate().map(|(kind, node)| (node.name.clone(), kind as u16)).collect(),
             edge_kinds: schema.edges.iter().enumerate().map(|(kind, edge)| (edge.name.clone(), kind as u16)).collect(),
-            nodes: schema.node_types.iter().map(|_| Vec::new()).collect(), fields, schema, edges: BTreeMap::new(), next_edge: 0, closed: false, changed: false })
+            nodes: schema.node_types.iter().map(|_| Vec::new()).collect(), fields, schema, edges: BTreeMap::new(), next_edge: 0, closed: false, changed: false,
+            storage_path:None,adjacency_slots:BTreeSet::new(),edge_property_slots:BTreeSet::new(),property_slots:BTreeSet::new(),
+            property_storage_types:BTreeMap::new(),edge_property_storage_types:BTreeMap::new() })
     }
     pub fn schema(&self) -> &Schema { &self.schema }
     pub fn identity(&self) -> u64 { self.identity }
     pub fn is_closed(&self) -> bool { self.closed }
     pub fn has_changed(&self) -> bool { self.changed }
-    pub fn close(&mut self) { self.closed = true; }
+    pub fn storage_path(&self)->Option<&std::path::Path> {self.storage_path.as_deref()}
+    pub fn close(&mut self)->Result<()> {
+        self.closed = true;
+        if self.changed {if let Some(path)=&self.storage_path {storage::write_graph(self,path)?;}}
+        Ok(())
+    }
     pub fn node(&self, id: NodeId) -> Option<&StoredNode> {
         self.nodes.get(id.kind() as usize)?.get(id.sequence() as usize).filter(|node| !node.deleted)
     }
@@ -187,7 +201,8 @@ impl Graph {
         self.kinds.keys().filter_map(|label| { let count = self.nodes(label).count(); (count > 0).then_some((label.as_str(), count)) }).collect()
     }
     pub fn property_values(&self, node: NodeHandle, name: &str) -> Result<&[Value]> {
-        let node = self.get(node)?.ok_or_else(|| Error::Invalid("property read on deleted node".into()))?;
+        self.check_handle(node)?;
+        let node = &self.nodes[node.id.kind() as usize][node.id.sequence() as usize];
         Ok(node.properties.get(name).map(Vec::as_slice).unwrap_or(&[]))
     }
     pub fn property(&self, node: NodeHandle, name: &str) -> Result<Option<Value>> {
@@ -218,7 +233,7 @@ impl Graph {
             Direction::Outgoing => edge.outgoing && edge.source == node,
             Direction::Incoming => edge.incoming && edge.target == node,
         }).collect();
-        edges.sort_by_key(|edge| (edge.kind, edge.handle.id));
+        edges.sort_by_key(|edge| (edge.kind,match direction {Direction::Outgoing=>edge.out_order,Direction::Incoming=>edge.in_order}));
         Ok(edges)
     }
     pub fn neighbors(&self, node: NodeHandle, direction: Direction, label: Option<&str>) -> Result<Vec<NodeHandle>> {
@@ -226,7 +241,7 @@ impl Graph {
     }
     pub fn all_edges(&self) -> Vec<&Edge> {
         let mut edges: Vec<_> = self.edges.values().filter(|edge| edge.outgoing).collect();
-        edges.sort_by_key(|edge| (edge.source.id, edge.kind, edge.handle.id)); edges
+        edges.sort_by_key(|edge| (edge.source.id, edge.kind, edge.out_order)); edges
     }
     pub fn edge_count(&self) -> usize { self.edges.values().filter(|edge| edge.outgoing).count() }
 
@@ -276,6 +291,7 @@ impl Graph {
             if !value.matches(field.value_type) { return Err(Error::Invalid(format!("unsupported property type on {}.{name}", self.schema.node_types[node.id.kind() as usize].name))); }
             if let Value::Node(reference) = value { self.check_handle(*reference)?; }
         }
+        self.property_slots.insert((node.id.kind() as u16,name.clone()));
         self.nodes[node.id.kind() as usize][node.id.sequence() as usize].properties.insert(name, values);
         Ok(())
     }
@@ -306,7 +322,7 @@ impl Graph {
         }
     }
     pub fn apply_diff(&mut self, diff: DiffGraphBuilder) -> Result<ApplyReport> {
-        if self.closed { return Err(Error::Invalid("graph cannot be modified any longer since it is closed".into())); }
+        if self.closed { return Err(Error::GraphClosed); }
         self.changed = true;
         let submitted = diff.size();
         let mut changes = 0;
@@ -339,12 +355,15 @@ impl Graph {
                 }
                 Update::SetNodeProperty { node, name, value } => {
                     self.check_handle(node)?;
-                    if self.node(node.id).is_some() {
-                        let values = self.resolve_input(value, &mut deferred, &mut created)?;
-                        property_sets.push((node, name, values)); changes += 1;
-                    }
+                    if !self.fields.iter().any(|fields| fields.contains_key(&name)) { continue; }
+                    if self.node(node.id).is_none() { return Err(Error::SourceMatchFailure { operation: "SetNodeProperty" }); }
+                    let values = self.resolve_input(value, &mut deferred, &mut created)?;
+                    property_sets.push((node, name, values)); changes += 1;
                 }
                 Update::SetEdgeProperty { edge, value } => {
+                    if edge.graph == self.identity && !self.edges.contains_key(&edge.id) {
+                        return Err(Error::SourceMatchFailure { operation: "SetEdgeProperty on deleted endpoint" });
+                    }
                     if self.edge(edge)?.is_some() { edge_sets.push((edge, value)); changes += 1; }
                 }
                 Update::RemoveEdge(edge) => {
@@ -358,14 +377,24 @@ impl Graph {
             let kind = self.edges[&handle.id].kind;
             let value = self.edge_property(kind, EdgeProperty::Value(value))?;
             self.edges.get_mut(&handle.id).expect("edge resolved above").property = value;
+            let edge=&self.edges[&handle.id];
+            if self.schema.edges[kind as usize].property.is_some() {
+                if edge.outgoing {self.edge_property_slots.insert((edge.source.id.kind() as u16,kind,1));}
+                if edge.incoming {self.edge_property_slots.insert((edge.target.id.kind() as u16,kind,0));}
+            }
         }
         for edge in edge_deletions { self.edges.remove(&edge.id); }
         for (source, target, kind, label, property, half) in edge_additions {
+            let explicit=matches!(&property,EdgeProperty::Value(_)) && self.schema.edges[kind as usize].property.is_some();
             let property = self.edge_property(kind, property)?;
             let id = self.next_edge;
             self.next_edge = self.next_edge.checked_add(1).ok_or_else(|| Error::Invalid("edge identity space exhausted".into()))?;
             self.edges.insert(id, Edge { handle: EdgeHandle { graph: self.identity, id }, source, target, kind, label, property,
-                outgoing: half != Some(Direction::Incoming), incoming: half != Some(Direction::Outgoing) });
+                outgoing: half != Some(Direction::Incoming), incoming: half != Some(Direction::Outgoing),out_order:id,in_order:id });
+            for (node,direction,present) in [(source,1,half!=Some(Direction::Incoming)),(target,0,half!=Some(Direction::Outgoing))] {
+                if present {self.adjacency_slots.insert((node.id.kind() as u16,kind,direction));
+                    if explicit {self.edge_property_slots.insert((node.id.kind() as u16,kind,direction));}}
+            }
         }
         for (node, name, values) in property_sets { self.put_property(node, name, values)?; }
         Ok(ApplyReport { submitted, created_nodes: created, applied_changes: changes + created })
@@ -379,7 +408,7 @@ impl Cpg {
     pub fn from_graph(graph: Graph) -> Self { Self { graph } }
     pub fn graph(&self) -> &Graph { &self.graph }
     pub fn graph_mut(&mut self) -> &mut Graph { &mut self.graph }
-    pub fn close(&mut self) { self.graph.close(); }
+    pub fn close(&mut self)->Result<()> { self.graph.close() }
     pub fn new_diff_graph_builder() -> DiffGraphBuilder { DiffGraphBuilder::new() }
 }
 impl std::fmt::Display for Cpg {
@@ -393,6 +422,15 @@ impl<Context> GraphMutator<Context> for ApplyNativeCpgDiff {
 }
 #[cgp_component(GraphFactory)]
 pub trait CanCreateCpg { fn create_cpg(&self) -> Result<Cpg>; }
+#[cgp_component(CpgStorageOpener)]
+pub trait CanOpenCpgStorage {fn open_cpg_storage(&self,path:Option<&std::path::Path>,persist_on_close:bool)->Result<Cpg>;}
+#[cgp_new_provider]
+impl<Context:CanCreateCpg> CpgStorageOpener<Context> for OpenNativeCpgStorage {
+    fn open_cpg_storage(context:&Context,path:Option<&std::path::Path>,persist_on_close:bool)->Result<Cpg> {
+        let cpg=context.create_cpg()?;
+        match path {None=>Ok(cpg),Some(path)=>Ok(Cpg::from_graph(Graph::with_storage(cpg.graph.schema.clone(),path,persist_on_close)?))}
+    }
+}
 #[cfg(feature="native-schema")]
 #[cgp_new_provider]
 impl<Context> GraphFactory<Context> for CreateCpgFromNativeSchema {
@@ -400,10 +438,19 @@ impl<Context> GraphFactory<Context> for CreateCpgFromNativeSchema {
 }
 #[cfg(feature="native-schema")]
 pub struct CpgContext;
+#[cfg(all(feature="native-schema",feature="protobuf-bindings"))]
+delegate_components! {
+    CpgContext {
+        crate::proto_loading::CpgProtoGraphLoaderComponent: crate::proto_loading::LoadCpgProtosInTwoPasses,
+    }
+}
 #[cfg(feature="native-schema")]
 delegate_and_check_components! {
     CpgContext {
         GraphFactoryComponent: CreateCpgFromNativeSchema,
+        CpgStorageOpenerComponent: OpenNativeCpgStorage,
+        crate::codegen::BootstrapLoaderComponent:crate::codegen::LoadBootstrapFromFile,
+        storage::GraphStorageRewriterComponent:storage::RewriteNativeGraphStorage,
         GraphMutatorComponent: ApplyNativeCpgDiff,
         crate::execution::ExecutionContextRunnerComponent: crate::execution::UseCurrentOrGlobalRayonPool,
         crate::passes::CpgPassRunnerComponent: crate::passes::RunNativeCpgPass,
@@ -412,6 +459,11 @@ delegate_and_check_components! {
 #[cfg(feature="native-schema")]
 impl Cpg {
     pub fn empty() -> Result<Self> { CpgContext.create_cpg() }
+    pub fn empty_graph()->Result<Graph> {Ok(Self::empty()?.graph)}
+    pub fn with_storage(path:impl AsRef<std::path::Path>)->Result<Self> {Self::with_storage_options(path,true)}
+    pub fn with_storage_options(path:impl AsRef<std::path::Path>,persist_on_close:bool)->Result<Self> {
+        CpgContext.open_cpg_storage(Some(path.as_ref()),persist_on_close)
+    }
     pub fn from_initial(initial: impl FnOnce(&mut DiffGraphBuilder) -> Result<()>) -> Result<Self> {
         let mut cpg = Self::empty()?;
         let mut diff = Self::new_diff_graph_builder(); initial(&mut diff)?;

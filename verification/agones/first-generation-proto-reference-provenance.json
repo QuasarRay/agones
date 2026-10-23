@@ -1,0 +1,15 @@
+{
+  "dependency_manifest": "verification/agones/first-generation-proto-reference-maven-lock.json",
+  "dependency_manifest_sha256": "a77a42d4c174e5dfea42855a5341c86086421a6bf504d11de33565e7561c5a4b",
+  "observation_receipt": "verification/agones/first-generation-proto-reference-run-2.json",
+  "observation_receipt_sha256": "addd64eed330b1f37c45fcaef87edab7ac89b34e99486d710f101e56688d154b",
+  "original_compiled_protocol_sha256": "70ca30c8446da9e216f165890dc61c98c5a4daa39bef30a6b356638de1dde6fa",
+  "protoc_licenses": [
+    {
+      "name": "BSD-3-Clause",
+      "url": "https://opensource.org/licenses/BSD-3-Clause"
+    }
+  ],
+  "protoc_pin_sha256": "fd063f0e10ee222b78e6eec239034d2d9565f69169e27fca5d354bbabc8d4820",
+  "schema_version": 1
+}

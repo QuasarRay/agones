@@ -1,0 +1,48 @@
+{
+  "binary_outputs": {
+    "verification/agones/first-generation-flatgraph-primitives.fg": "c5b309d62f82be07caf1efb78cfadeb2dff5675745d9bbe8babac8115a46a198",
+    "verification/agones/first-generation-flatgraph-reference.fg": "8da30a626a9adbfe5e0e509d8b6d1be31635f84ab8b15f44eff8d8a17995fe58"
+  },
+  "command": [
+    "/home/astral/.local/share/agones-rs/tools/temurin-jdk-21.0.13-9-install/jdk-21.0.13+9/bin/java",
+    "-Xmx3g",
+    "-XX:ActiveProcessorCount=4",
+    "-Dsbt.supershell=false",
+    "-Dsbt.log.noformat=true",
+    "-Dsbt.override.build.repos=true",
+    "-Dsbt.repository.config=/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/repositories",
+    "-Dsbt.boot.directory=/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/boot",
+    "-Dsbt.global.base=/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/global",
+    "-Dsbt.ivy.home=/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/ivy",
+    "-jar",
+    "/home/astral/.local/share/agones-rs/tools/sbt-launch-1.12.5.jar",
+    "set schema/libraryDependencies += \"com.lihaoyi\" %% \"ujson\" % \"4.4.3\"",
+    "set codepropertygraph/libraryDependencies += \"com.lihaoyi\" %% \"ujson\" % \"4.4.3\"",
+    "codepropertygraph/Compile/runMain StorageReference generate /home/astral/Projects/agones/verification/agones/first-generation-flatgraph-reference.json"
+  ],
+  "environment": {
+    "COURSIER_CACHE": "/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/coursier",
+    "COURSIER_REPOSITORIES": "https://repo.maven.apache.org/maven2/",
+    "JAVA_HOME": "/home/astral/.local/share/agones-rs/tools/temurin-jdk-21.0.13-9-install/jdk-21.0.13+9",
+    "LANG": "C.UTF-8",
+    "PATH": "/home/astral/.local/share/agones-rs/tools/git-lfs-first-generation-install/git-lfs-3.8.1:/home/astral/.local/share/agones-rs/tools/temurin-jdk-21.0.13-9-install/jdk-21.0.13+9/bin:/home/astral/.elan/bin:/home/astral/.codex/tmp/arg0-linux/codex-arg02wgG6k:/home/astral/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/home/astral/.cabal/bin:/home/astral/.ghcup/bin:/home/astral/.local/bin:/home/astral/.elan/bin:/opt/verus:/home/astral/.cargo/bin:/home/astral/.opam/fstar/bin:/home/astral/.cabal/bin:/home/astral/.ghcup/bin:/home/astral/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin:/home/astral/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/usr/lib/chatgpt/resources",
+    "TZ": "UTC"
+  },
+  "exit_code": 0,
+  "finished_at": "2026-10-23T13:10:09.884157+00:00",
+  "log": ".git/first-generation-flatgraph-reference-1.log",
+  "log_sha256": "abd3b1155f770b32a52d9b5a827ff627c64b8132f4c908ac7fef2fc436605a28",
+  "mode": "generate",
+  "output": "verification/agones/first-generation-flatgraph-reference.json",
+  "output_sha256": "6d11a9cbfe6c285863b4b71cc13221db7d568bacc1bb08cce030f597cc33bed0",
+  "pid": 106951,
+  "process_identity": "106951 (java) R 106949 106949 106949 0 -1 4194304 23 0 0 0 0 0 0 0 12 -8 1 0 2859150 684032 70 18446744073709551615 94190156115968 94190156119752 140735212184928 0 0 0 0 0 0 0 0 0 17 5 0 0 0 0 0 94190156127488 94190156128272 94190618075136 140735212189942 140735212190898 140735212190898 140735212195737 0\n",
+  "purpose": "Original storage comparison only; no generated Agones code",
+  "schema_version": 1,
+  "script_sha256": "a47f75a30387bf54f09d0fed6012264638b5338864ed5c4ae167ccccc5dc09d9",
+  "source_file": "build/scripts/agones-first-generation/StorageReference.scala",
+  "source_sha256": "17dbef7b40a453e3bfc33bc8306b2917be35470b7306a9a17121a5bb9ba8b3d2",
+  "started_at": "2026-10-23T13:09:57.679981+00:00",
+  "status": "OBSERVED",
+  "working_directory": "/home/astral/Projects/agones/.git/agones-first-generation-sources/cpg"
+}

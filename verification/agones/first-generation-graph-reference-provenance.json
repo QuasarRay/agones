@@ -1,0 +1,11 @@
+{
+  "dependency_manifest": "verification/agones/first-generation-graph-reference-maven-lock.json",
+  "dependency_manifest_sha256": "11edddec98383c4ec7eaff2d156a153e24675b0465b367a65c03be2d6fdd9ff5",
+  "observation_receipt": "verification/agones/first-generation-graph-reference-run-3.json",
+  "observation_receipt_sha256": "ef071f4fd7712db0f6f16c78c0d6d4ada7a77e7858826c57d840716b63f0c1ed",
+  "regenerated_domain_comparison": {
+    "files": 250,
+    "status": "ALL_IDENTICAL"
+  },
+  "schema_version": 1
+}

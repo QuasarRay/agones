@@ -1,0 +1,58 @@
+{
+  "build_only_source_overlays": {
+    "domainClasses/src/main/scala/GraphReference.scala": "604efc1572f57fd3fd7f764087006c483df9b16703b6048d0250b6dbc9911b6f",
+    "schema/src/main/scala/CaptureSchemaConstruction.scala": "d350daa0086dd08a7c1b3b68328ed9a13befe59e16eb9caac053596b600ce48c",
+    "schema/src/main/scala/CompleteSchemaExport.scala": "c5fd5a15cb70e9d9311e7395fe465f35be9edee668a37eabc5757511390ca441",
+    "schema/src/main/scala/flatgraph/schema/Schema.scala": "cd373c6d5efefa82ca135fc96c9fb8d68810e9cf1d10c3a498a4dda3b7a6f240",
+    "schema/src/main/scala/flatgraph/schema/SchemaBuilder.scala": "bd00dbfbbfe0800e00b49af30bd10ad3c8550b3d525c2b7990607dda5a8c40cc",
+    "schema/src/main/scala/flatgraph/schema/SchemaConstructionTrace.scala": "4832eac443cf18a8af12865fb19a3e98529c2ff7716b8a573762a30d237bd35e"
+  },
+  "command": [
+    "/home/astral/.local/share/agones-rs/tools/temurin-jdk-21.0.13-9-install/jdk-21.0.13+9/bin/java",
+    "-Xmx3g",
+    "-XX:ActiveProcessorCount=4",
+    "-Dsbt.supershell=false",
+    "-Dsbt.log.noformat=true",
+    "-Dsbt.override.build.repos=true",
+    "-Dsbt.repository.config=/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/repositories",
+    "-Dsbt.boot.directory=/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/boot",
+    "-Dsbt.global.base=/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/global",
+    "-Dsbt.ivy.home=/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/ivy",
+    "-jar",
+    "/home/astral/.local/share/agones-rs/tools/sbt-launch-1.12.5.jar",
+    "set schema/libraryDependencies += \"com.lihaoyi\" %% \"ujson\" % \"4.4.3\"",
+    "set domainClasses/libraryDependencies += \"com.lihaoyi\" %% \"ujson\" % \"4.4.3\"",
+    "domainClasses/Compile/runMain GraphReference /home/astral/Projects/agones/verification/agones/first-generation-graph-reference.json",
+    "show domainClasses/Compile/fullClasspath"
+  ],
+  "environment": {
+    "COURSIER_CACHE": "/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/coursier",
+    "COURSIER_REPOSITORIES": "https://repo.maven.apache.org/maven2/",
+    "JAVA_HOME": "/home/astral/.local/share/agones-rs/tools/temurin-jdk-21.0.13-9-install/jdk-21.0.13+9",
+    "LANG": "C.UTF-8",
+    "PATH": "/home/astral/.local/share/agones-rs/tools/git-lfs-first-generation-install/git-lfs-3.8.1:/home/astral/.local/share/agones-rs/tools/temurin-jdk-21.0.13-9-install/jdk-21.0.13+9/bin:/home/astral/.elan/bin:/home/astral/.codex/tmp/arg0-linux/codex-arg02wgG6k:/home/astral/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/home/astral/.cabal/bin:/home/astral/.ghcup/bin:/home/astral/.local/bin:/home/astral/.elan/bin:/opt/verus:/home/astral/.cargo/bin:/home/astral/.opam/fstar/bin:/home/astral/.cabal/bin:/home/astral/.ghcup/bin:/home/astral/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin:/home/astral/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/usr/lib/chatgpt/resources",
+    "TZ": "UTC"
+  },
+  "exit_code": 0,
+  "finished_at": "2026-10-23T11:41:04.159693+00:00",
+  "flatgraph_version": "0.1.36",
+  "log": ".git/agones-first-generation-graph-reference-3.log",
+  "log_sha256": "90aee06dd71f7fdc3fde480a9b480703f42c3aec4717e5d8ac15995aefc20fc6",
+  "output": "verification/agones/first-generation-graph-reference.json",
+  "output_sha256": "5af1b7828ac2b31e8ddea5bca5011326002a26a4f28076993d9481f83bccbb66",
+  "pid": 81415,
+  "process_identity": "81415 (java) D 81414 81414 81414 0 -1 4194304 2 0 0 0 0 0 0 0 12 -8 1 0 2324398 151552 0 18446744073709551615 0 0 140732271655140 0 0 0 0 0 0 1 0 0 17 6 0 0 0 0 0 0 0 0 140732271655140 0 0 0 0\n",
+  "purpose": "Original CPG graph comparison only; no generated Agones output",
+  "schema_version": 1,
+  "script_sha256": "df592d9051c0d968297bdf41a50288792fac8470ce33aa6a473622be59b40fce",
+  "source_commit": "301c4010d28ecdac05bc2ed44310f56446459465",
+  "source_file": "build/scripts/agones-first-generation/GraphReference.scala",
+  "source_sha256": "604efc1572f57fd3fd7f764087006c483df9b16703b6048d0250b6dbc9911b6f",
+  "source_vendor_manifests": {
+    "verification/agones/first-generation-vendor-cpg.json": "0bb77c41e4e548aab6fa5a4ac9eb74f41e701bf5e69a3453f1b2f14b1d7e693d",
+    "verification/agones/first-generation-vendor-flatgraph.json": "1e231c4ac0130467974597c2231e237423dc0d2d3caa67b7f115e9642d5f4ade"
+  },
+  "started_at": "2026-10-23T11:40:50.153976+00:00",
+  "status": "OBSERVED",
+  "working_directory": "/home/astral/Projects/agones/.git/agones-first-generation-sources/cpg"
+}

@@ -38,5 +38,6 @@ delegate_and_check_components! {
         NativeSchemaFactoryComponent:ConstructPinnedCpgSchema,
         CpgProtobufGeneratorComponent:GenerateCpgProtocol,
         CpgSchemaJsonExporterComponent:ExportCpgSchemaJson,
+        crate::protobuf_bindings::CpgProtocolBindingGeneratorComponent:crate::protobuf_bindings::GenerateCpgProtocolBindings,
     }
 }

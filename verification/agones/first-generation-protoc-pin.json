@@ -1,0 +1,15 @@
+{
+  "artifact_url": "https://repo.maven.apache.org/maven2/com/google/protobuf/protoc/3.20.1/protoc-3.20.1-linux-x86_64.exe",
+  "binary": "/home/astral/.local/share/agones-rs/tools/protoc-3.20.1-maven/protoc",
+  "binary_sha256": "4231ac3fdd77303614df205612445f222fc30ec282002543d9541a2ed75257fe",
+  "pom_path": "/home/astral/.local/share/agones-rs/tools/protoc-3.20.1-maven/protoc-3.20.1.pom",
+  "pom_sha256": "24e4559e08a5aff91daa6285e27e7792df039d5fb819d00cf7e180e0259852cd",
+  "purpose": "Exact original CPG comparison compiler; native Rust binding generation uses the pinned pure Rust generator",
+  "schema_version": 1,
+  "script_sha256": "c220edaf2bcbdaa2292671c9a158fd02e91af0c441fdf92d5cfa5e9afb90a228",
+  "source_build_declaration": "third_party/first-generation/cpg/proto-bindings/build.sbt",
+  "source_build_declaration_sha256": "6e1a5a230d3ac1ec66cc1040d6f096aa77fd020df521ab6090ceb74b3085ca3f",
+  "upstream_sha1": "e76503532564f10b5ab127b14c41d80d166602bc",
+  "version": "3.20.1",
+  "version_output": "libprotoc 3.20.1"
+}

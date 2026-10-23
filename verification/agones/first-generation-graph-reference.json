@@ -1,0 +1,123 @@
+{
+  "firstChanges": 4,
+  "secondChanges": 6,
+  "thirdChanges": 3,
+  "before": {
+    "nodes": [
+      {
+        "id": "68719476736",
+        "label": "IDENTIFIER",
+        "name": [],
+        "order": []
+      },
+      {
+        "id": "107374182400",
+        "label": "METHOD",
+        "name": [],
+        "order": []
+      },
+      {
+        "id": "107374182401",
+        "label": "METHOD",
+        "name": [],
+        "order": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "107374182400",
+        "target": "68719476736",
+        "label": "AST",
+        "property": null
+      }
+    ]
+  },
+  "after": {
+    "nodes": [
+      {
+        "id": "68719476736",
+        "label": "IDENTIFIER",
+        "name": [],
+        "order": []
+      },
+      {
+        "id": "107374182400",
+        "label": "METHOD",
+        "name": [
+          "alpha"
+        ],
+        "order": [
+          7
+        ]
+      },
+      {
+        "id": "107374182401",
+        "label": "METHOD",
+        "name": [],
+        "order": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "107374182400",
+        "target": "68719476736",
+        "label": "AST",
+        "property": null
+      },
+      {
+        "source": "107374182400",
+        "target": "107374182401",
+        "label": "AST",
+        "property": null
+      },
+      {
+        "source": "107374182400",
+        "target": "107374182401",
+        "label": "REACHING_DEF",
+        "property": "<empty>"
+      },
+      {
+        "source": "107374182400",
+        "target": "107374182401",
+        "label": "REACHING_DEF",
+        "property": "x"
+      }
+    ]
+  },
+  "deleted": {
+    "nodes": [
+      {
+        "id": "107374182400",
+        "label": "METHOD",
+        "name": [
+          "alpha"
+        ],
+        "order": [
+          7
+        ]
+      },
+      {
+        "id": "107374182401",
+        "label": "METHOD",
+        "name": [],
+        "order": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "107374182400",
+        "target": "107374182401",
+        "label": "AST",
+        "property": null
+      },
+      {
+        "source": "107374182400",
+        "target": "107374182401",
+        "label": "REACHING_DEF",
+        "property": "updated"
+      }
+    ]
+  },
+  "closedRejected": true,
+  "deletedPropertyFailure": "scala.MatchError"
+}

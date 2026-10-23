@@ -1,0 +1,189 @@
+{
+  "cases": {
+    "duplicate-types": {
+      "nodes": [
+        {
+          "id": "68719476736",
+          "label": "IDENTIFIER",
+          "properties": {
+            "DYNAMIC_TYPE_HINT_FULL_NAME": [
+              "T",
+              "T"
+            ],
+            "NAME": [
+              "shared"
+            ]
+          }
+        },
+        {
+          "id": "107374182400",
+          "label": "METHOD",
+          "properties": {
+            "IS_EXTERNAL": [
+              true
+            ],
+            "NAME": [
+              "shared"
+            ],
+            "ORDER": [
+              -2
+            ]
+          }
+        },
+        {
+          "id": "158913789952",
+          "label": "TYPE",
+          "properties": {
+            "FULL_NAME": [
+              "T"
+            ],
+            "NAME": [
+              "second"
+            ]
+          }
+        }
+      ],
+      "edges": [
+        {
+          "src": "107374182400",
+          "dst": "158913789952",
+          "label": "EVAL_TYPE",
+          "property": null
+        }
+      ]
+    },
+    "unknown-empty": {
+      "nodes": [
+        {
+          "id": "107374182400",
+          "label": "METHOD",
+          "properties": {
+            "IS_EXTERNAL": [
+              true
+            ],
+            "NAME": [
+              "shared"
+            ],
+            "ORDER": [
+              -2
+            ]
+          }
+        }
+      ],
+      "edges": []
+    },
+    "unknown-with-property": {
+      "errorClass": "flatgraph.misc.ConversionException",
+      "errorMessage": "node with proto node id=99 not found in graph"
+    },
+    "unsupported-long": {
+      "errorClass": "java.lang.RuntimeException",
+      "errorMessage": "Error: unsupported property case: LONG_VALUE"
+    },
+    "multiple-edge-properties": {
+      "errorClass": "java.lang.IllegalArgumentException",
+      "errorMessage": "flatgraph only supports zero or one edge properties, but the given edge has 2 properties: Buffer(name: VARIABLE\nvalue {\n  string_value: \"a\"\n}\n, name: VARIABLE\nvalue {\n  string_value: \"b\"\n}\n)"
+    },
+    "null-edge-property": {
+      "nodes": [
+        {
+          "id": "107374182400",
+          "label": "METHOD",
+          "properties": {
+            "IS_EXTERNAL": [
+              true
+            ],
+            "NAME": [
+              "shared"
+            ],
+            "ORDER": [
+              -2
+            ]
+          }
+        }
+      ],
+      "edges": [
+        {
+          "src": "107374182400",
+          "dst": "107374182400",
+          "label": "REACHING_DEF",
+          "property": null
+        }
+      ]
+    },
+    "unknown-enum": {
+      "nodes": [],
+      "edges": []
+    }
+  },
+  "archiveEntries": [
+    "/repeated/slash.txt",
+    "/leading.txt",
+    "/back\\slash",
+    "/zeta",
+    "/nested/new.bin",
+    "/nested/deeper/item",
+    "/nested/old.bin",
+    "/top.txt"
+  ],
+  "archiveContents": {
+    "/nested/old.bin": "6f6c64",
+    "/top.txt": "6f7665727772697474656e",
+    "/back\\slash": "6261636b736c617368",
+    "/nested/deeper/item": "64656570",
+    "/nested/new.bin": "6e6577",
+    "/zeta": "7a",
+    "/leading.txt": "6c656164696e67",
+    "/repeated/slash.txt": "6e6f726d616c697a6564"
+  },
+  "comparisons": [
+    {
+      "left": "/10_a",
+      "right": "/2_b",
+      "comparison": 1
+    },
+    {
+      "left": "/2_a",
+      "right": "/2_b",
+      "comparison": 0
+    },
+    {
+      "left": "/plain",
+      "right": "/7_",
+      "comparison": 1
+    },
+    {
+      "left": "/+2_a",
+      "right": "/2_b",
+      "comparison": 0
+    },
+    {
+      "left": "/٢_a",
+      "right": "/2_b",
+      "comparison": 0
+    },
+    {
+      "left": "/a_b",
+      "right": "/1_c",
+      "errorClass": "java.lang.NumberFormatException"
+    },
+    {
+      "left": "/2147483648_a",
+      "right": "/1_b",
+      "errorClass": "java.lang.NumberFormatException"
+    },
+    {
+      "left": "/-2_a",
+      "right": "/1_b",
+      "comparison": -1
+    },
+    {
+      "left": "/𐀀",
+      "right": "/",
+      "comparison": -1
+    }
+  ],
+  "dummyEmpty": true,
+  "createdAtOpen": true,
+  "emptyAfterClose": false
+}

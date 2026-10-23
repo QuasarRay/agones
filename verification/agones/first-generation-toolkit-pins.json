@@ -35,7 +35,7 @@
     "crate": "derive-deftly",
     "license": "MIT",
     "repository": "https://gitlab.torproject.org/Diziet/rust-derive-deftly",
-    "status": "PIN_ONLY_NOT_YET_INTEGRATED",
+    "status": "INTEGRATED_NATIVE_SCHEMA_ELEMENT_IMPLEMENTATIONS",
     "vcs_info": {
       "git": {
         "sha1": "f9e00febd126be8806e454cb7846fe18c55682f3"
@@ -61,7 +61,12 @@
       "cpg-rs/src/schema.rs: deterministic BTreeMap of graph schema node handles from borrowed iterators"
     ],
     "cgp": [
-      "cpg-rs/src/codegen.rs: CpgToolContext, BootstrapLoader and DomainGenerator providers/lifecycle"
+      "cpg-rs/src/codegen.rs: CpgToolContext, BootstrapLoader and DomainGenerator providers/lifecycle",
+      "cpg-rs/src/schema_tools.rs: native domain/protobuf factories, non-overwriting JSON export and protobuf file effects",
+      "cpg-rs/src/execution.rs: current/global fork-join execution capability and context propagation",
+      "cpg-rs/src/graph.rs and passes.rs: native graph creation/mutation and complete pass scheduling/finalization lifecycle",
+      "cpg-rs/src/protobuf_bindings.rs: native schema-to-protocol binding generation, owned outputs and source mappings",
+      "cpg-rs/src/proto_loading.rs: statically composed two-pass graph import and archive loading"
     ],
     "comprende": [
       "cpg-rs/src/schema.rs: source-ordered node property selection without repeated push loops"

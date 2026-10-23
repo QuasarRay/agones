@@ -40,7 +40,7 @@ object GraphReference {
     val after = snapshot()
     val reaching = Accessors.getEdgesOut(a, GraphSchema.getEdgeKindByLabel("REACHING_DEF"))
     val deletion = Cpg.newDiffGraphBuilder
-    deletion.removeNode(id).addEdge(a, id, "AST").setNodeProperty(id, "NAME", "ignored")
+    deletion.removeNode(id).addEdge(a, id, "AST")
     deletion.setEdgeProperty(reaching.head, "updated").removeEdge(reaching.last)
     val thirdChanges = DiffGraphApplier.applyDiff(graph, deletion)
     val deleted = snapshot()
@@ -49,8 +49,20 @@ object GraphReference {
       DiffGraphApplier.applyDiff(graph, Cpg.newDiffGraphBuilder)
       false
     } catch { case _: flatgraph.GraphClosedException => true }
+    val failingGraph = Cpg.empty.graph
+    val removed = detached("METHOD")
+    val allocate = Cpg.newDiffGraphBuilder
+    allocate.addNode(removed)
+    DiffGraphApplier.applyDiff(failingGraph, allocate)
+    val failure = Cpg.newDiffGraphBuilder
+    failure.setNodeProperty(removed.storedRef.get, "NAME", "deleted").removeNode(removed.storedRef.get)
+    val deletedPropertyFailure = try {
+      DiffGraphApplier.applyDiff(failingGraph, failure)
+      "NO_FAILURE"
+    } catch { case error: scala.MatchError => error.getClass.getName }
     val output = Obj("firstChanges" -> firstChanges, "secondChanges" -> secondChanges, "thirdChanges" -> thirdChanges,
-      "before" -> before, "after" -> after, "deleted" -> deleted, "closedRejected" -> closedRejected)
+      "before" -> before, "after" -> after, "deleted" -> deleted, "closedRejected" -> closedRejected,
+      "deletedPropertyFailure" -> deletedPropertyFailure)
     Files.writeString(Paths.get(args(0)), write(output, indent = 2))
   }
 }

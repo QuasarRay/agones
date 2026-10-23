@@ -24,8 +24,11 @@
     "PATH": "/home/astral/.local/share/agones-rs/tools/git-lfs-first-generation-install/git-lfs-3.8.1:/home/astral/.local/share/agones-rs/tools/temurin-jdk-21.0.13-9-install/jdk-21.0.13+9/bin:/home/astral/.elan/bin:/home/astral/.codex/tmp/arg0-linux/codex-arg02wgG6k:/home/astral/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/home/astral/.cabal/bin:/home/astral/.ghcup/bin:/home/astral/.local/bin:/home/astral/.elan/bin:/opt/verus:/home/astral/.cargo/bin:/home/astral/.opam/fstar/bin:/home/astral/.cabal/bin:/home/astral/.ghcup/bin:/home/astral/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin:/home/astral/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/usr/lib/chatgpt/resources",
     "TZ": "UTC"
   },
+  "exit_code": 1,
+  "finished_at": "2026-10-23T11:36:33.618431+00:00",
   "flatgraph_version": "0.1.36",
   "log": ".git/agones-first-generation-graph-reference.log",
+  "log_sha256": "dae017d73798afe67f9abb2e70dd1a2d5d97508129184ffe05f1c4409f75b1e5",
   "output": "verification/agones/first-generation-graph-reference.json",
   "pid": 78188,
   "process_identity": "78188 (java) R 78187 78187 78187 0 -1 4194304 22 0 0 0 0 0 0 0 12 -8 1 0 2293732 684032 72 18446744073709551615 93949741776896 93949741780680 140734250633664 0 0 0 0 0 0 0 0 0 17 1 0 0 0 0 0 93949741788416 93949741789200 93950366769152 140734250637609 140734250638514 140734250638514 140734250643353 0\n",
@@ -36,6 +39,6 @@
   "source_file": "build/scripts/agones-first-generation/GraphReference.scala",
   "source_sha256": "7a5efd85300bc26b09dc6dd0971410079689d665b327081f456ebfcdc5e056d8",
   "started_at": "2026-10-23T11:35:43.500422+00:00",
-  "status": "RUNNING",
+  "status": "FAILED",
   "working_directory": "/home/astral/Projects/agones/.git/agones-first-generation-sources/cpg"
 }

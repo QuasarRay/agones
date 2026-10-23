@@ -1,0 +1,14 @@
+{
+  "binary_sha256": "4231ac3fdd77303614df205612445f222fc30ec282002543d9541a2ed75257fe",
+  "command": [
+    "/home/astral/.local/share/agones-rs/tools/protoc-3.20.1-maven/protoc",
+    "--proto_path=cpg-rs/generated",
+    "--include_imports",
+    "--descriptor_set_out=verification/agones/first-generation-protoc-reference-descriptor.pb",
+    "cpg.proto"
+  ],
+  "output": "verification/agones/first-generation-protoc-reference-descriptor.pb",
+  "output_sha256": "1677b66ecf9557ddcd186d07fa6a1054ac4dedccb2bbfe2f54185f0cac37a86a",
+  "protocol_sha256": "70ca30c8446da9e216f165890dc61c98c5a4daa39bef30a6b356638de1dde6fa",
+  "schema_version": 1
+}

@@ -157,7 +157,7 @@ pub fn run_with_builder_logged<Context: CanRunCpgPass, P: CpgPassDefinition>(con
 pub fn generate_out_file_name(prefix: &str, out_name: &str, simple_class_name: &str, index: i32) -> String {
     format!("{prefix}_{}_{index}", if out_name.is_empty() { simple_class_name } else { out_name })
 }
-fn wall_clock_millis() -> i128 {
+pub(crate) fn wall_clock_millis() -> i128 {
     match SystemTime::now().duration_since(UNIX_EPOCH) { Ok(time) => time.as_millis() as i128, Err(time) => -(time.duration().as_millis() as i128) }
 }
 pub fn coarsest_duration(milliseconds: i128) -> String {
