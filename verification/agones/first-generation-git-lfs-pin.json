@@ -1,0 +1,12 @@
+{
+  "repository": "https://github.com/git-lfs/git-lfs",
+  "release_id": 420940071,
+  "tag": "v3.8.1",
+  "asset": {
+    "id": 666388433,
+    "name": "git-lfs-linux-amd64-v3.8.1.tar.gz",
+    "size": 5917265,
+    "sha256": "e72cf723a4a660438862282e8aecf3885fc8123e88bfcad534cf6b941a354b75"
+  },
+  "reason": "Unmodified pinned CPG build's onLoad guard executes git lfs ls-files."
+}

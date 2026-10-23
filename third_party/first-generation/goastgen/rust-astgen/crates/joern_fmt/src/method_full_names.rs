@@ -1,0 +1,108 @@
+//! Where we finally build `methodFullName` for each call.
+
+use super::rust_name_formatter::{
+    format_enum_variant_full_name, format_function_full_name, format_generic_module_def_full_name,
+    format_tuple_struct_ctor_full_name,
+};
+use ra_ap_hir::{Adt, CallableKind, ModuleDef, PathResolution, Semantics, StructKind, Variant};
+use ra_ap_ide_db::RootDatabase;
+use ra_ap_syntax::ast;
+
+/// Whether a `CallExpr`'s first argument is a `self` receiver.
+pub fn has_self_receiver(
+    call_expr: &ast::CallExpr,
+    semantics: &Semantics<RootDatabase>,
+) -> Option<bool> {
+    let callee = call_expr.expr()?;
+    match semantics.resolve_expr_as_callable(&callee)?.kind() {
+        CallableKind::Function(function) if function.has_self_param(semantics.db) => Some(true),
+        _ => None,
+    }
+}
+
+pub fn for_method_call(
+    method_call_expr: &ast::MethodCallExpr,
+    semantics: &Semantics<RootDatabase>,
+) -> Option<String> {
+    let function = semantics.resolve_method_call(method_call_expr)?;
+    format_function_full_name(function, semantics)
+}
+
+pub fn for_path_expr(
+    path_expr: &ast::PathExpr,
+    semantics: &Semantics<RootDatabase>,
+) -> Option<String> {
+    let path = path_expr.path()?;
+    match semantics.resolve_path(&path)? {
+        PathResolution::Def(ModuleDef::Function(f)) => format_function_full_name(f, semantics),
+        PathResolution::Def(ModuleDef::Adt(Adt::Struct(struct_)))
+            if struct_.kind(semantics.db) == StructKind::Tuple =>
+        {
+            format_tuple_struct_ctor_full_name(struct_, semantics)
+        }
+        PathResolution::Def(ModuleDef::EnumVariant(variant))
+            if variant.kind(semantics.db) == StructKind::Tuple =>
+        {
+            format_enum_variant_full_name(variant, semantics)
+        }
+        PathResolution::SelfType(impl_) => match impl_.self_ty(semantics.db).as_adt()? {
+            Adt::Struct(struct_) if struct_.kind(semantics.db) == StructKind::Tuple => {
+                format_tuple_struct_ctor_full_name(struct_, semantics)
+            }
+            _ => None,
+        },
+        _ => None,
+    }
+}
+
+pub fn for_call_expr(
+    call_expr: &ast::CallExpr,
+    semantics: &Semantics<RootDatabase>,
+) -> Option<String> {
+    let callee_expr = call_expr.expr()?;
+    if let ast::Expr::PathExpr(path_expr) = &callee_expr
+        && let Some(name) = for_path_expr(path_expr, semantics)
+    {
+        return Some(name);
+    }
+    match semantics.resolve_expr_as_callable(&callee_expr)?.kind() {
+        CallableKind::Function(function) => format_function_full_name(function, semantics),
+        CallableKind::TupleStruct(tuple_struct) => {
+            format_tuple_struct_ctor_full_name(tuple_struct, semantics)
+        }
+        CallableKind::TupleEnumVariant(enum_variant) => {
+            format_enum_variant_full_name(enum_variant, semantics)
+        }
+        // TODO(xavierp): need more time to understand what these should be named as
+        CallableKind::Closure(_) | CallableKind::FnPtr | CallableKind::FnImpl(_) => None,
+    }
+}
+
+pub fn for_record_expr(
+    record_expr: &ast::RecordExpr,
+    semantics: &Semantics<RootDatabase>,
+) -> Option<String> {
+    match semantics.resolve_variant(record_expr.clone())? {
+        Variant::Struct(struct_) => format_generic_module_def_full_name(struct_, semantics),
+        Variant::Union(union) => format_generic_module_def_full_name(union, semantics),
+        Variant::EnumVariant(variant) => format_enum_variant_full_name(variant, semantics),
+    }
+}
+
+pub fn for_struct(struct_: &ast::Struct, semantics: &Semantics<RootDatabase>) -> Option<String> {
+    // We provide a `methodFullName` at struct definition to match its constructor name.
+    // Only tuple structs have a callable constructor. Record/Unit structs have RecordExpr
+    // and IdentExpr at call-site.
+    // So, when we see "MyTuple(...)" (call-site), the `methodFullName` for this call shall
+    // match the `methodFullName` for the struct ctor which we synthesize in Joern.
+    let Some(ast::FieldList::TupleFieldList(_)) = struct_.field_list() else {
+        return None;
+    };
+    let struct_def = semantics.to_def(struct_)?;
+    format_tuple_struct_ctor_full_name(struct_def, semantics)
+}
+
+pub fn for_fn(fn_: &ast::Fn, semantics: &Semantics<RootDatabase>) -> Option<String> {
+    let function = semantics.to_def(fn_)?;
+    format_function_full_name(function, semantics)
+}

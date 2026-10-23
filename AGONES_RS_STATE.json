@@ -122,6 +122,7 @@
   "delivery": {
     "acceptance": "Canonical shared metadata policy adopted with704native tests/zero failures/three ignored, seven generation modes and18parsercontrols. Six complete metadata cases retain21source assertions/12covers; all47earlier whole harness bodies are unchanged. Current protected43selection results are required. Historical native676campaign retains seven scoped passes and30failed source cases; none transfers automatically. Full migration and all8_2cells remain incomplete.",
     "access": "GitHub app authorized as QuasarRay with push/admin; gh CLI unauthenticated; local .git writable",
+    "active_objective": "CPG_FIRST_COMPLETE_AGONES_RUST_GENERATION",
     "actual_integration_head": "1e64a054901658908d0a7a4eecd3010379df9614",
     "actual_review_head": "861f4eb5b3d5a9d47d2364edc83b32a1da3e9c71",
     "artifact_recovery_pending": "verification/agones/ci/39572135297-terminal-retention-pending.json",
@@ -505,6 +506,7 @@
       "workflow_run": 39516368235
     },
     "expected_tested_merge": "6492f41e3ddfe1a75e2889f8fd510b3eb2c5ff2d",
+    "first_generation_checkpoint": "verification/agones/first-generation-checkpoint.json",
     "github_capability_state": "GitHub app read/write operations successful; CLI authentication unavailable",
     "historical_archive_publication": "verification/agones/ci/39528223788-archive-publication-pending.json",
     "historical_artifact_recovery_pending": "verification/agones/ci/39505643334-artifact-recovery-pending.json",
@@ -640,6 +642,7 @@
       "validation_observations": 11
     },
     "isolated_validation_repair": "verification/agones/validation-path-fixture-isolated-recovery.json",
+    "legacy_validator_status": "The broader continuation prompt has preserved user edits relative to its recorded contract hash. Existing gates are historical; no fresh broader migration validation is claimed.",
     "merge_result": {
       "commit": "774abfa9a2a0129074d20453d94d999899cb012b",
       "merged": true,
@@ -654,6 +657,7 @@
       "satisfied_covers": 2,
       "successful_cases": 1
     },
+    "migration_verification_delivery": "DEFERRED_BY_USER_FIRST_GENERATION_CONTRACT",
     "native_recovery_publication": {
       "branch": "codex/agones-native-recovery-675",
       "commit": "35659272d1e6074c0a4d8d02cbfb3a45fc277019",
@@ -752,8 +756,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 319,
-  "previous_sha256": "340ac0d3ecc8f445473ddd86ad7b31cb4e5be507ceb6533c9e66d4ee56b8b3af",
+  "previous_revision": 320,
+  "previous_sha256": "8be9ebe2e2d3dcc58959ad6ff3f3da512a4ba2ff0197bd558ef62d56a8bb865a",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -1457,7 +1461,7 @@
       "timestamp": "2026-10-21T09:42:01.132215+00:00"
     }
   ],
-  "revision": 320,
+  "revision": 321,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [

@@ -1,0 +1,11 @@
+{
+  "authorization": "User standalone CPG first-generation contract",
+  "event": "FIRST_CPG_GENERATION_GOAL_LINKED",
+  "predecessor_revision": 320,
+  "predecessor_sha256": "8be9ebe2e2d3dcc58959ad6ff3f3da512a4ba2ff0197bd558ef62d56a8bb865a",
+  "reason": "Link the one compact checkpoint for the replacement Goal while preserving the broader migration ledger, stale historical gates and locally edited prompt. The old validator cannot validate its changed contract and is outside this objective.",
+  "result_revision": 321,
+  "schema_version": 1,
+  "state_sha256": "fd85b5ee58acdd317c1470c287c47ef402e6a6ed093809719d523d0b71aafaec",
+  "timestamp": "2026-10-23T08:14:06.410344+00:00"
+}

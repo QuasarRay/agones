@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "status": "ARCHIVE_RETAINED_UNVALIDATED",
+  "source_commit": "73ae408dff2994fef8362e34f880ff18c221045c",
+  "tree": "393f2bd1ce6e79691f65621bbf31ee0cf989e4fc",
+  "transport": "GITHUB_TARBALL_API",
+  "url": "https://api.github.com/repos/Natural-selection1/better-comprehension-in-rust/tarball/73ae408dff2994fef8362e34f880ff18c221045c",
+  "archive": "/home/astral/Projects/agones/.git/agones-first-generation-sources/better-comprehension-73ae408dff2994fef8362e34f880ff18c221045c.tar.gz",
+  "started_at": "2026-10-23T09:21:27.170148+00:00",
+  "sha256": "b54c6a08f024151f3c97d5b7451fccb6d4205a7adeaec6c1c2cdbf63253b8445"
+}

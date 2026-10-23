@@ -1,0 +1,22 @@
+{
+  "assurance": "Tooling controls only; no generated Agones compilation, correctness, compatibility or production-readiness credit",
+  "command": [
+    "python3",
+    "build/scripts/agones-first-generation/test_classify_cpg.py"
+  ],
+  "controls": [
+    "Directory name alone grants no generated credit",
+    "Added source cannot escape pinned inventory",
+    "Changed generated body remains unresolved",
+    "Equal counts with different identities rejected",
+    "Changed handwritten source invalidates binding"
+  ],
+  "observed_exit_code": 0,
+  "observed_tool_chunk_id": "3222f1",
+  "result": "5 tests passed",
+  "schema_version": 1,
+  "source_sha256": {
+    "build/scripts/agones-first-generation/classify_cpg.py": "1dab332dbd4725620ffd50a9e44134485465314077914bcdd8b9ad16b88b4c70",
+    "build/scripts/agones-first-generation/test_classify_cpg.py": "3de1f15a9519e268270c09af91f44dd04a80967523b9fd560b29c45a317b4b7d"
+  }
+}

@@ -1,0 +1,285 @@
+name := "flatgraph"
+ThisBuild / organization := "io.joern"
+ThisBuild / scalaVersion := scala3
+
+val scala3 = "3.9.0"
+val scala2_12 = "2.12.20"
+val osLibVersion = "0.11.4"
+val commonsTextVersion = "1.13.0"
+val slf4jVersion = "2.0.17"
+val scalafmtVersion = "3.9.6"
+
+/** Only the below listed projects are included in things like `sbt compile`.
+  * We explicitly want to exclude `benchmarks` which requires qwiet.ai / shiftleft
+  * internal repositories. */
+lazy val root = (project in file(".")).aggregate(
+  core,
+  help,
+  formats,
+  domainClassesGenerator_3,
+  domainClassesGenerator_2_12,
+  sbtPlugin,
+  odbConvert,
+  testSchemas,
+  testSchemasDomainClasses,
+  testSchemasDomainClassesScala3,
+  tests,
+  testsScala3,
+)
+
+lazy val core = project
+  .in(file("core"))
+  .settings(
+    name := "flatgraph-core",
+    libraryDependencies ++= Seq(
+      "com.lihaoyi"     %% "ujson"  % "4.4.1",
+      "com.github.luben" % "zstd-jni" % "1.5.7-11",
+      "org.slf4j" % "slf4j-api" % slf4jVersion,
+    )
+  )
+
+lazy val help = project
+  .in(file("help"))
+  .dependsOn(core)
+  .settings(
+    name := "flatgraph-help",
+    libraryDependencies ++= Seq(
+      "net.oneandone.reflections8" % "reflections8" % "0.11.7",
+    )
+  )
+
+lazy val formats = project
+  .in(file("formats"))
+  .dependsOn(core)
+  .settings(
+    name := "flatgraph-formats",
+    libraryDependencies ++= Seq(
+      "com.github.tototoshi" %% "scala-csv" % "2.0.0",
+      "org.apache.commons" % "commons-text" % commonsTextVersion,
+      "org.scala-lang.modules" %% "scala-xml" % "2.4.0",
+      "io.spray" %% "spray-json" % "1.3.6",
+      "com.fasterxml.jackson.core" % "jackson-core" % "2.17.2",
+      "com.github.scopt" %% "scopt" % "4.1.0",
+    )
+  )
+
+lazy val generateDomainClassesForTestSchemas = taskKey[Unit]("generate domain classes for test schemas")
+lazy val generateDomainClassesForTestSchemasScala3 = taskKey[Unit]("generate domain classes for test schemas (scala3 features)")
+
+/** tests that make use of the sample schemas (and the corresponding generated domain classes) */
+lazy val tests = project
+  .in(file("tests"))
+  .dependsOn(core, formats, help, testSchemasDomainClasses)
+  .settings(
+    name := "flatgraph-tests",
+    publish / skip := true,
+    libraryDependencies ++= Seq(
+      "com.github.pathikrit" %% "better-files" % "3.9.2" % Test,
+      "org.scalamock" %% "scalamock" % "7.3.2" % Test
+    ),
+  )
+
+
+lazy val domainClassesGenerator_3 = project
+  .in(file("domain-classes-generator_3"))
+  .settings(
+    name := "flatgraph-domain-classes-generator",
+    sourceDirectory := baseDirectory.value / "../domain-classes-generator/src",
+    libraryDependencies ++= Seq(
+      "org.slf4j" % "slf4j-simple" % slf4jVersion % Optional,
+      "com.lihaoyi" %% "os-lib" % osLibVersion,
+      "org.apache.commons" % "commons-text" % commonsTextVersion,
+      "com.github.scopt" %% "scopt" % "4.1.0",
+      ("org.scalameta" %% "scalafmt-dynamic" % scalafmtVersion).cross(CrossVersion.for3Use2_13),
+    ),
+  )
+
+lazy val domainClassesGenerator_2_12 = project
+  .in(file("domain-classes-generator_2.12"))
+  .settings(
+    name := "flatgraph-domain-classes-generator",
+    sourceDirectory := baseDirectory.value / "../domain-classes-generator/src",
+    scalaVersion := scala2_12,
+    scalacOptions := scalacOptionsFor2_12,
+    libraryDependencies ++= Seq(
+      "org.slf4j"% "slf4j-simple" % slf4jVersion % Optional,
+      "com.lihaoyi" %% "os-lib" % osLibVersion,
+      "org.apache.commons" % "commons-text" % commonsTextVersion,
+      "com.github.scopt" %% "scopt" % "4.1.0",
+      "org.scalameta" %% "scalafmt-dynamic" % scalafmtVersion,
+    ),
+  )
+
+lazy val sbtPlugin = project
+  .in(file("sbt-flatgraph"))
+  .dependsOn(domainClassesGenerator_2_12)
+  .enablePlugins(SbtPlugin)
+  .settings(
+    name := "sbt-flatgraph",
+    scalaVersion := scala2_12,
+    scalacOptions := scalacOptionsFor2_12,
+    addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.4"),
+    // the default sbt naming convention for plugins does not conform to the
+    // maven specification - see https://github.com/sbt/sbt/issues/3410
+    sbtPluginPublishLegacyMavenStyle := false,
+  )
+
+lazy val odbConvert = project
+  .in(file("odb-convert"))
+  .dependsOn(core)
+  .enablePlugins(JavaAppPackaging)
+  .settings(
+    name := "flatgraph-odb-convert",
+    libraryDependencies ++= Seq(
+      "io.shiftleft" %% "overflowdb-core" % "1.194",
+      "org.slf4j" % "slf4j-simple" % slf4jVersion % Optional
+    )
+  )
+
+lazy val testSchemas = project
+  .in(file("test-schemas"))
+  .dependsOn(domainClassesGenerator_3)
+  .settings(
+    name := "test-schemas",
+    scalaVersion := scala3,
+    publish / skip := true,
+    generateDomainClassesForTestSchemas := Def.taskDyn {
+      /** invoking the codegen and scalafmt is expensive, so we only want to do so if the hashsum of the
+       *  inputs (codegen implementation, build setup, test schemas, scalafmt config) is unknown or different to the
+       *  last known one. We persist the hashsum to preserve it between sbt sessions.
+       */
+      val lastKnownHashsumFile = target.value / "codegen-inputs-hash.md5"
+      def lastKnownHashsum: Option[String] = scala.util.Try(IO.read(lastKnownHashsumFile)).toOption
+      val inputsHashsum = FileUtils.md5(
+        sourceDirectory.value,
+        file("build.sbt"),
+        (ThisBuild / baseDirectory).value / "domain-classes-generator/src",
+      )
+
+      if (lastKnownHashsum == Some(inputsHashsum)) {
+        Def.task {
+          streams.value.log.info("no need to regenerate domain classes for test schemas")
+        }
+      } else {
+        Def.task {
+          (Compile/runMain).toTask(s" flatgraph.testdomains.GenerateDomainClasses").value
+          IO.write(lastKnownHashsumFile, inputsHashsum)
+        }
+      }
+    }.value,
+    generateDomainClassesForTestSchemasScala3 := Def.taskDyn {
+      val lastKnownHashsumFile = target.value / "codegen-inputs-hash-scala3.md5"
+      def lastKnownHashsum: Option[String] = scala.util.Try(IO.read(lastKnownHashsumFile)).toOption
+      val inputsHashsum = FileUtils.md5(
+        sourceDirectory.value,
+        file("build.sbt"),
+        (ThisBuild / baseDirectory).value / "domain-classes-generator/src",
+      )
+
+      if (lastKnownHashsum == Some(inputsHashsum)) {
+        Def.task {
+          streams.value.log.info("no need to regenerate scala3 domain classes for test schemas")
+        }
+      } else {
+        Def.task {
+          (Compile/runMain).toTask(s" flatgraph.testdomains.GenerateDomainClassesScala3").value
+          IO.write(lastKnownHashsumFile, inputsHashsum)
+        }
+      }
+    }.value,
+  )
+
+lazy val testSchemasDomainClasses = project
+  .in(file("test-schemas-domain-classes"))
+  .dependsOn(core, help)
+  .settings(
+    name := "test-schemas-domain-classes",
+    Compile/compile := (Compile/compile).dependsOn(testSchemas/generateDomainClassesForTestSchemas).value,
+    publish / skip := true,
+  )
+
+lazy val testSchemasDomainClassesScala3 = project
+  .in(file("test-schemas-domain-classes-scala3"))
+  .dependsOn(core, help)
+  .settings(
+    name := "test-schemas-domain-classes-scala3",
+    Compile/compile := (Compile/compile).dependsOn(testSchemas/generateDomainClassesForTestSchemasScala3).value,
+    publish / skip := true,
+  )
+
+lazy val testsScala3 = project
+  .in(file("tests-scala3"))
+  .dependsOn(core, testSchemasDomainClassesScala3)
+  .settings(
+    name := "flatgraph-tests-scala3",
+    publish / skip := true,
+  )
+
+// currently relies on a self-published version of codepropertygraph and joern based on the respective `michael/flatgraph` branches
+/*
+lazy val benchmarks = project
+  .in(file("benchmarks"))
+  .enablePlugins(JavaAppPackaging, JmhPlugin)
+  .settings(
+    name := "benchmarks",
+    //Jmh / compile := (Jmh / compile)
+    //Jmh / run     := (Jmh / run).dependsOn(Jmh / compile).evaluated
+    libraryDependencies ++= Seq(
+      // TODO upgrade to released version
+      "io.joern"       %% "semanticcpg"              % "2.0.350+18-f76162b1",
+      "com.jerolba"     % "jmnemohistosyne"          % "0.2.3",
+      "org.openjdk.jol" % "jol-core"                 % "0.17",
+      "org.slf4j"       % "slf4j-simple"             % slf4jVersion % Optional,
+      "org.openjdk.jmh" % "jmh-generator-annprocess" % "1.36",
+      "org.openjdk.jmh" % "jmh-core"                 % "1.36",
+    ),
+    publish / skip := true
+  )
+*/
+
+
+ThisBuild / libraryDependencies ++= Seq(
+  "org.slf4j" % "slf4j-simple" % slf4jVersion % Test,
+  "org.scalatest" %% "scalatest" % "3.2.19" % Test,
+)
+
+ThisBuild / scalacOptions ++= Seq(
+  "-deprecation",
+  "-feature",
+  "--release", "17",
+  "-language:implicitConversions",
+  "-no-indent", // Require classical {...} syntax, indentation is not significant.
+  "-old-syntax", // Require `(...)` around conditions.
+  // This lint doesn't have an ID to suppress it, and we don't want to suppress a whole category. So the message is the only option.
+  // The `repeat(...)(...)` DSL intentionally passes behaviour builders via an implicit parameter list.
+  "-Wconf:msg=Implicit parameters should be provided with a `using` clause:s"
+)
+
+val scalacOptionsFor2_12 = Seq(
+  "-deprecation",
+  "-feature",
+  "-language:implicitConversions"
+)
+
+ThisBuild / compile / javacOptions ++= Seq(
+  "-g", // debug symbols
+  "--release=17"
+)
+
+Global / cancelable           := true
+Global / onChangedBuildSource := ReloadOnSourceChanges
+
+ThisBuild / publishTo := sonatypePublishToBundle.value
+ThisBuild/sonatypeCredentialHost := "central.sonatype.com"
+ThisBuild / scmInfo := Some(
+  ScmInfo(url("https://github.com/joernio/flatgraph"), "scm:git@github.com:joernio/flatgraph.git")
+)
+ThisBuild / homepage := Some(url("https://github.com/joernio/flatgraph/"))
+
+ThisBuild / licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0"))
+ThisBuild / developers := List(
+  Developer("bbrehm", "Bernhard Brehm", "bernhard@shiftleft.io", url("https://github.com/bbrehm")),
+  Developer("mpollmeier", "Michael Pollmeier", "michael@michaelpollmeier.com", url("http://www.michaelpollmeier.com"))
+)
+
+publish / skip := true // don't publish the root project

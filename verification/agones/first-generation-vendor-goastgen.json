@@ -1,0 +1,2338 @@
+{
+  "archive_provenance": {
+    "command": [
+      "git",
+      "archive",
+      "--format=tar.gz",
+      "--prefix=goastgen/",
+      "11b21e395aa6aa39a41ca9216e1d15d08c4ef0b8"
+    ],
+    "transport": "LOCAL_PINNED_GIT_OBJECTS",
+    "validation": "All archived paths, modes and content must match the pinned Git tree."
+  },
+  "archive_sha256": "a102e0c7635fe5791d037347b802d325f9e5f2dedba9e98ee73777c627ebedc7",
+  "archive_url": "https://codeload.github.com/joernio/astgen-monorepo/tar.gz/11b21e395aa6aa39a41ca9216e1d15d08c4ef0b8",
+  "commit": "11b21e395aa6aa39a41ca9216e1d15d08c4ef0b8",
+  "destination": "third_party/first-generation/goastgen",
+  "finished_at": "2026-10-23T08:40:33.146290+00:00",
+  "guidance_overlays": [
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cba5f84e2f414390cc975a1765fc0f4f0f0767068a50d2dfaf2e84af5db0394a"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": ".github/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": ".github/scripts/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": ".github/workflows/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "abap-astgen/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "abap-astgen/scripts/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "abap-astgen/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "abap-astgen/test/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "astgen-regression/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "astgen-regression/docs/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "astgen-regression/docs/examples/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "astgen-regression/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "astgen-regression/src/astgen_regression/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "astgen-regression/src/astgen_regression/commands/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "astgen-regression/src/astgen_regression/templates/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "astgen-regression/tests/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "dotnet-astgen/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "dotnet-astgen/DotNetAstGen/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "dotnet-astgen/DotNetAstGen.Test/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "go-astgen/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "go-astgen/goastgen/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "go-astgen/sample-client/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "javascript-astgen/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "javascript-astgen/scripts/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "javascript-astgen/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "javascript-astgen/test/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "ruby-astgen/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "ruby-astgen/bin/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "ruby-astgen/exe/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "ruby-astgen/lib/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "ruby-astgen/lib/ruby_ast_gen/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "ruby-astgen/sig/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "ruby-astgen/spec/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "ruby-astgen/spec/integration/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/crates/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/crates/joern_fmt/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/crates/joern_fmt/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/crates/joern_fmt/src/tests/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/crates/rust_analyzer_ext/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/crates/rust_analyzer_ext/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/crates/rust_ast_function_fullnames/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/crates/rust_ast_function_fullnames/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/crates/rust_ast_function_fullnames/tests/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/crates/rust_ast_function_fullnames/tests/common/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/crates/scala_bindings_gen/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/crates/scala_bindings_gen/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/crates/scala_bindings_gen/src/grammar/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/crates/scala_bindings_gen/src/scala_gen/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/scala_tests/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/scala_tests/project/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/scala_tests/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/scala_tests/src/main/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/scala_tests/src/main/scala/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/scala_tests/src/main/scala/io/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/scala_tests/src/main/scala/io/joern/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/scala_tests/src/main/scala/io/joern/rust2cpg/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "b8c84595521042db2bbdefc22edb2e7cf8e5489993124072e114331baa624762"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/scala_tests/src/main/scala/io/joern/rust2cpg/parser/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "14e5f77b071a04263b98ea5fdad26204360e7bb8ebd33538ca8a5824353907ce"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/scala_tests/src/test/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/scala_tests/src/test/scala/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/scala_tests/src/test/scala/io/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/scala_tests/src/test/scala/io/joern/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/scala_tests/src/test/scala/io/joern/rust2cpg/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "b8c84595521042db2bbdefc22edb2e7cf8e5489993124072e114331baa624762"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/scala_tests/src/test/scala/io/joern/rust2cpg/parser/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "14e5f77b071a04263b98ea5fdad26204360e7bb8ebd33538ca8a5824353907ce"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/src/bin/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/tests/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "rust-astgen/tests/common/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "swift-astgen/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "swift-astgen/Sources/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "swift-astgen/Sources/CodeGeneration/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "swift-astgen/Sources/CodeGeneration/SyntaxSupport/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "swift-astgen/Sources/SwiftAstGen/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "swift-astgen/Sources/SwiftAstGenLib/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "swift-astgen/Tests/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "swift-astgen/Tests/ScalaSwiftNodeSyntaxTests/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "swift-astgen/Tests/ScalaSwiftNodeSyntaxTests/project/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "swift-astgen/Tests/ScalaSwiftNodeSyntaxTests/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "swift-astgen/Tests/ScalaSwiftNodeSyntaxTests/src/main/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "swift-astgen/Tests/ScalaSwiftNodeSyntaxTests/src/main/scala/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "swift-astgen/Tests/ScalaSwiftNodeSyntaxTests/src/test/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "swift-astgen/Tests/ScalaSwiftNodeSyntaxTests/src/test/scala/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "swift-astgen/Tests/SwiftAstGenTests/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "swift-astgen/scripts/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    }
+  ],
+  "license_files": [
+    "LICENSE",
+    "dotnet-astgen/LICENSE",
+    "javascript-astgen/LICENSE",
+    "ruby-astgen/LICENSE.txt",
+    "swift-astgen/LICENSE"
+  ],
+  "name": "goastgen",
+  "patches": [],
+  "pristine_identity": "Recorded Git commit/tree and every upstream blob are unchanged; separately inventoried guidance additions are not presented as upstream source.",
+  "repository": "https://github.com/joernio/astgen-monorepo",
+  "schema_version": 1,
+  "started_at": "2026-10-23T08:40:33.102489+00:00",
+  "status": "VENDORED",
+  "tree": "febe1ddde789a69394dbcf1ae63067a314004b45",
+  "upstream_bytes": 1592911,
+  "upstream_content_manifest_sha256": "e6daf9e57f0a065c53d29bd052673ab533e554899f7e1a892fb87c556d5e3eec",
+  "upstream_file_count": 299,
+  "upstream_files": {
+    ".github/dependabot.yml": {
+      "bytes": 184,
+      "git_blob": "397ca2cf48b2826a5cc88a2fa969fbda2f1d5a4a",
+      "mode": "100644",
+      "sha256": "33ea927902b55789a710d5ec698a99f09ca3c966c10545334b81002f8d3a940d"
+    },
+    ".github/monorepo-ci-config.yml": {
+      "bytes": 1667,
+      "git_blob": "d143dbb8ef49f0eeb1afe20e77bfccdce8bd577f",
+      "mode": "100644",
+      "sha256": "7e2f20da4c727a7af962ccf2499db6ca0417b9d6bf07286d5484907b4760b254"
+    },
+    ".github/scripts/.gitignore": {
+      "bytes": 14,
+      "git_blob": "c2658d7d1b31848c3b71960543cb0368e56cd4c7",
+      "mode": "100644",
+      "sha256": "4d56952b0fb13bf8f9b6c13a6d4c34a075bac3af447636a1df4335d7576e2f97"
+    },
+    ".github/scripts/detect-changes.js": {
+      "bytes": 3118,
+      "git_blob": "6631b9ac39e46ae2fb07b2ce4ad2f19ca848de8b",
+      "mode": "100755",
+      "sha256": "7d9916666ebc8690411704df1c577c12992577de08178f6310c4403dc2b46119"
+    },
+    ".github/scripts/package-lock.json": {
+      "bytes": 2523,
+      "git_blob": "e0035c858dc16d38a8f7a532aee69f542bdbeff3",
+      "mode": "100644",
+      "sha256": "5a1eeacd041cb63d3124ab2f82abf5e89b016ceaf69d4e8f29a15fdeeaf06138"
+    },
+    ".github/scripts/package.json": {
+      "bytes": 247,
+      "git_blob": "d87e0010c9a04d03705b6fec76fec36e8a150294",
+      "mode": "100644",
+      "sha256": "155a13f506d2a43ced57469517e24ddf3bb8df29b4f5f51dff68337c9dda351b"
+    },
+    ".github/workflows/abap-astgen-ci.yml": {
+      "bytes": 1666,
+      "git_blob": "e5ab7ec60f01dad57c84106316c491e1de3c8f95",
+      "mode": "100644",
+      "sha256": "d880c59e08a245b3f00cc33379c00160b036ea05c114e9471a82a9b51ab8a13d"
+    },
+    ".github/workflows/abap-astgen-release.yml": {
+      "bytes": 5897,
+      "git_blob": "6ceffbedc9ba03f60053101f95d7f9588eafade3",
+      "mode": "100644",
+      "sha256": "935fd278ad24f0411373fe88af8776b725142f11c6b1abb6560c8162bb50f12b"
+    },
+    ".github/workflows/astgen-regression-ci.yml": {
+      "bytes": 1234,
+      "git_blob": "18fea964a31b5a9d3b2368d17f3390a3d4952fd4",
+      "mode": "100644",
+      "sha256": "7c97af024050aad1ed333a90af9df46823e10aa58ca85f787e9e85f3a871b639"
+    },
+    ".github/workflows/astgen-regression-release.yml": {
+      "bytes": 5205,
+      "git_blob": "8fc0cf81d4eca3dc9c6ca50b769ecf737ff3ce51",
+      "mode": "100644",
+      "sha256": "6bac9aaf23337c6bb30f26a5d2038563530728b76927c8452fc6a92c62a50b79"
+    },
+    ".github/workflows/dotnet-astgen-ci.yml": {
+      "bytes": 1301,
+      "git_blob": "d488396a2cb2681406e899f7dc2780f5589d4bd3",
+      "mode": "100644",
+      "sha256": "50314ecaaa6e59543b6e70eea1aa338dd126d91c2684ac40a546b91d37d832f7"
+    },
+    ".github/workflows/dotnet-astgen-release.yml": {
+      "bytes": 4960,
+      "git_blob": "6d75ab08d87a0d09e52246160d69cd0fb14d4eaf",
+      "mode": "100644",
+      "sha256": "6a1b482f66c4ec6752ae7f53ebbb442f65df37c34cef36c6a2c4c6346fbfe394"
+    },
+    ".github/workflows/go-astgen-ci.yml": {
+      "bytes": 726,
+      "git_blob": "46e1b98f9ef81f6fbc234103dd9676675b09424b",
+      "mode": "100644",
+      "sha256": "59dba4f33485f71420ca582fa6dd2c6880fe522457d535a9214dba83d5220b5d"
+    },
+    ".github/workflows/go-astgen-release.yml": {
+      "bytes": 5081,
+      "git_blob": "5de729f1ec682d2089747012595d09cdac7ae458",
+      "mode": "100644",
+      "sha256": "51b6a0ec94497be4be59a5e91856004d98b13c019be732a4d20d70bca3db229c"
+    },
+    ".github/workflows/javascript-astgen-ci.yml": {
+      "bytes": 1646,
+      "git_blob": "453d9b7e952a83b74f2f90ee26eaea417bcc90d4",
+      "mode": "100644",
+      "sha256": "76480043633946b31eb216fc68dcc7bcfdfbb45ea19825f6f0c9802fe32536ca"
+    },
+    ".github/workflows/javascript-astgen-regression.yml": {
+      "bytes": 3797,
+      "git_blob": "a9208c2957fa4f71f2702386cab345577f2d361b",
+      "mode": "100644",
+      "sha256": "24c90bad29c65f4ec5dc09788645ce4111297d9887e9db26e615981d9cd8c428"
+    },
+    ".github/workflows/javascript-astgen-release.yml": {
+      "bytes": 5570,
+      "git_blob": "a1554c46def2eac20d92346ef8d308bbd00a2964",
+      "mode": "100644",
+      "sha256": "af21d98e85a7e565b36b9e7efe95197dd5ed7892a99b6342af575970694c0c7c"
+    },
+    ".github/workflows/monorepo-ci.yml": {
+      "bytes": 5343,
+      "git_blob": "22241f82341fd8748b7b43a505ed326c32d8b78e",
+      "mode": "100644",
+      "sha256": "b4f31aab72a3eea21e99f016cfe8657e3b471ddb755059ea5c543c7f520109fb"
+    },
+    ".github/workflows/ruby-astgen-ci.yml": {
+      "bytes": 4724,
+      "git_blob": "7e7e7b00935dee0cdb1096a7ad840c9e1cd61684",
+      "mode": "100644",
+      "sha256": "4239f9b2a9a2f61e644f5b2217ace9287c93568279ff5541cae88bd658731d1a"
+    },
+    ".github/workflows/ruby-astgen-release.yml": {
+      "bytes": 8352,
+      "git_blob": "427e7ba4424ab6dd35203bf619d5fa1e4c767f6e",
+      "mode": "100644",
+      "sha256": "b76df3ea71124d8f8c3b810950f08c88b09b5ea9280bdcf1cac8ecbc0f187a80"
+    },
+    ".github/workflows/rust-astgen-ci.yml": {
+      "bytes": 2708,
+      "git_blob": "1e7ff0b31bb9106133bc4e7da4e0faa6c19ec26f",
+      "mode": "100644",
+      "sha256": "3b03088167ae997b18892f6689e752ab123a7f92eee57573db3b7f57f269bdd7"
+    },
+    ".github/workflows/rust-astgen-release.yml": {
+      "bytes": 5560,
+      "git_blob": "bd80588c92a6559ae5c8d2ff3fe6f8becb6f221c",
+      "mode": "100644",
+      "sha256": "8bff94c340a020db767f13919830ee08b047ae38650abc63c8404eeab649f60a"
+    },
+    ".github/workflows/swift-astgen-ci.yml": {
+      "bytes": 3211,
+      "git_blob": "77600c91c5a8c02f235447de9cbf4ec5846aeca7",
+      "mode": "100644",
+      "sha256": "efd4d5c6a7a5d860273d31aac5c07721e0192b83781dd7991ac7de8bfcac1290"
+    },
+    ".github/workflows/swift-astgen-regression.yml": {
+      "bytes": 3745,
+      "git_blob": "a212de47c96176c4805129952743940909f7284f",
+      "mode": "100644",
+      "sha256": "e2d316f00d704c2f10ca83fdfd7ec8163665c609280281d24d5ddbce773ce5cd"
+    },
+    ".github/workflows/swift-astgen-release.yml": {
+      "bytes": 6479,
+      "git_blob": "cb90dd25733ef627eb766f6023e76a6a51f3e3f4",
+      "mode": "100644",
+      "sha256": "9cd7d44b4049b29213ddc9d4eecb218d4eaa6ea5c3f7f6cc30448587e96a51c9"
+    },
+    ".gitignore": {
+      "bytes": 30,
+      "git_blob": "f4030a982174b16486b5fa5fdc52fd3760178f14",
+      "mode": "100644",
+      "sha256": "74fb6a2e7a31e027dae45ec9770067336b40eb30558e3a64bad413603c5cbcb5"
+    },
+    "LICENSE": {
+      "bytes": 11357,
+      "git_blob": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64",
+      "mode": "100644",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    "README.md": {
+      "bytes": 5231,
+      "git_blob": "fdb282d75e5855abbefd3336d55f667da560e9ef",
+      "mode": "100644",
+      "sha256": "8bc8661b4ff1dd3b0514304a530dd460eb4aab03064f178d5609ed117869595f"
+    },
+    "abap-astgen/.gitignore": {
+      "bytes": 523,
+      "git_blob": "1416081411775e042a14f8f425fee1af3054360e",
+      "mode": "100644",
+      "sha256": "dbadbb2ef005825f529861fb29eb7b09978e8686e49e01aea179b55539f37246"
+    },
+    "abap-astgen/README.md": {
+      "bytes": 1931,
+      "git_blob": "f8bb6c8141bf67a56ea556a44d757adb3d6ac98d",
+      "mode": "100644",
+      "sha256": "83f62c66a529bfd04c2ca2a5c8c51fd1ce971ec4063f7f348f6862882e1540a8"
+    },
+    "abap-astgen/bun.lock": {
+      "bytes": 3254,
+      "git_blob": "9d3b3c1d1b5c8bd4098aee3d00ff4e13375aa79b",
+      "mode": "100644",
+      "sha256": "c14026470f9b4f03ee0587e332628f3402a6521ef6a4ae4e18ed8b3a41f60467"
+    },
+    "abap-astgen/package.json": {
+      "bytes": 958,
+      "git_blob": "f1701dbf09e5e618c3225330d4241f62134bef81",
+      "mode": "100644",
+      "sha256": "eec6729100ed8bec8d3a5788feabec2225745a6176012c62f74b6521bb68e456"
+    },
+    "abap-astgen/scripts/build-binaries.ts": {
+      "bytes": 2060,
+      "git_blob": "1f79301c438150481bfd3225b37e4a64a47c5069",
+      "mode": "100644",
+      "sha256": "2a662d3a7de7441fa2da5c44bd5c79c99305e81cb4380afed849c1b2387c33da"
+    },
+    "abap-astgen/src/parse-abap.ts": {
+      "bytes": 2725,
+      "git_blob": "44ac33689a53bc285d6bf659413d424c093c7e30",
+      "mode": "100644",
+      "sha256": "8c4cf188c2fa0cc23cc6f4def091d6682f35459611ffec18925a2c47b6e8709f"
+    },
+    "abap-astgen/test/abapgen.test.ts": {
+      "bytes": 12453,
+      "git_blob": "7ed8c1672eed6f469761b08b10097c44936d4611",
+      "mode": "100644",
+      "sha256": "eb9fbcd278898e3b5eddec0c596a2360d848280ea78ca0b80c6423d26d3bd2d3"
+    },
+    "abap-astgen/tsconfig.json": {
+      "bytes": 527,
+      "git_blob": "a3ab4773cfcdf985fde3c966e79a3ca57d04cc6c",
+      "mode": "100644",
+      "sha256": "185e834adb0392ce265f80201c0c55f8460be69afe4cf09f6d97ccf370aa38c3"
+    },
+    "astgen-regression/.gitignore": {
+      "bytes": 422,
+      "git_blob": "b850828c8f6e91d4bef7728f8eefe2d46a87bc44",
+      "mode": "100644",
+      "sha256": "2bb072468516f0aaab559454f56e26d82c4f9006c41124e8edb452484ca66e05"
+    },
+    "astgen-regression/CLAUDE.md": {
+      "bytes": 12934,
+      "git_blob": "64d1d64915ec32629073b50172412e5abbd00eb6",
+      "mode": "100644",
+      "sha256": "34985ac11f526b13e9be81e88ea42b19185da641caab2a99e22e28e01779a3d2"
+    },
+    "astgen-regression/README.md": {
+      "bytes": 12609,
+      "git_blob": "f420ed5fed5117b7f93c8117e66c0df7b2f9765f",
+      "mode": "100644",
+      "sha256": "662b360d50607a5783a73fcca6c9ba9780dd4da3979ea2e84fb3ed2f795be2a8"
+    },
+    "astgen-regression/docs/examples/javascript-example.yaml": {
+      "bytes": 722,
+      "git_blob": "04f0f1aad444a72c3712b93027711231a6af4a57",
+      "mode": "100644",
+      "sha256": "3800a077339083bd8fee0b79bb4edd2221e2b2575e3ab017ee1f0003e6ac3bd8"
+    },
+    "astgen-regression/docs/examples/swift-example.yaml": {
+      "bytes": 658,
+      "git_blob": "68fbebb670d03ab1cd3aeaa59031fbea15cabafa",
+      "mode": "100644",
+      "sha256": "cb57a0942d5ce7ba49abd2ec15777424c8e557e3cfcd2a4f1222cf7e26e2963f"
+    },
+    "astgen-regression/pyproject.toml": {
+      "bytes": 765,
+      "git_blob": "c749fae2c994ea9fde8f98a11ba1ea38b7f17064",
+      "mode": "100644",
+      "sha256": "efdf50f910f0a627cb33bb34fb76fd47602920954e86f2c3ea5d89ddffd582a3"
+    },
+    "astgen-regression/requirements-dev.txt": {
+      "bytes": 99,
+      "git_blob": "4bac3017a8c41d72fc1b5f3e9b6b7b201c4a1b9d",
+      "mode": "100644",
+      "sha256": "7396c95e087476eb0dfcb2c82397068101c3a1e3f7780a9fe10987e542c87b01"
+    },
+    "astgen-regression/requirements.txt": {
+      "bytes": 66,
+      "git_blob": "d3132eb6a03beec5f54584b72f08b595fd56ce6b",
+      "mode": "100644",
+      "sha256": "4df9fed905e96541ceb2b764dc566b3cde7e93df36c0811c94802ded3ae224ec"
+    },
+    "astgen-regression/setup.py": {
+      "bytes": 521,
+      "git_blob": "0aaf13f4306f64c0d6e049f63772405bfaf5ea66",
+      "mode": "100644",
+      "sha256": "41814fd1a42cbf117cb6f722cb3286cb197d026ab882fee3567f4be4bc22adf4"
+    },
+    "astgen-regression/src/astgen_regression/__init__.py": {
+      "bytes": 102,
+      "git_blob": "3fb678c1749c89d3d0abc57e49614646f1d01280",
+      "mode": "100644",
+      "sha256": "ba7fcb1d93d03f0c55530f88be52ff29a3e41cbb34c39ac18434ffac1c9cb63b"
+    },
+    "astgen-regression/src/astgen_regression/__main__.py": {
+      "bytes": 124,
+      "git_blob": "061af3bd715a2ea9c64057ee4a05bab5aa794823",
+      "mode": "100644",
+      "sha256": "070e99e59a6ef2c47549d6b4478268bf744351e8dacb325b335f0f822c6ae32e"
+    },
+    "astgen-regression/src/astgen_regression/cli.py": {
+      "bytes": 3212,
+      "git_blob": "af95a9e12645764401c326d143bcbd491c55b6df",
+      "mode": "100644",
+      "sha256": "9f32549ca7b31c35a81fd2eccb4e923cfd662bb4c30f8d561e06494e8f021594"
+    },
+    "astgen-regression/src/astgen_regression/commands/__init__.py": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "mode": "100644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "astgen-regression/src/astgen_regression/commands/compare.py": {
+      "bytes": 4983,
+      "git_blob": "38da2938ee8b3cd86f41d9a581bfb43484eec895",
+      "mode": "100644",
+      "sha256": "cfcd971d2d4b60dd13252a1a681e8c659b2981f278d3d654a7d121e78ad9a636"
+    },
+    "astgen-regression/src/astgen_regression/commands/init.py": {
+      "bytes": 7568,
+      "git_blob": "9afd289576afbfcdb1eb4d0f70f8d7d56be0585d",
+      "mode": "100644",
+      "sha256": "fb4aaf4aa13458e038607cb1530b7ae1eacc100a53e9b090799fa95f902180c5"
+    },
+    "astgen-regression/src/astgen_regression/commands/local.py": {
+      "bytes": 5483,
+      "git_blob": "4a1a7cff88addc4d19e0a3fbf08190e9acdd40d8",
+      "mode": "100644",
+      "sha256": "ad7b03f3b72e69d8dcc4d7fcad7d50615916708ec8981bcb97b83a44e83e39f8"
+    },
+    "astgen-regression/src/astgen_regression/compare.py": {
+      "bytes": 7843,
+      "git_blob": "9df921b60eb619fb51b88e2da92be24a40ce258d",
+      "mode": "100644",
+      "sha256": "652635da83df642ba44805b315ec5153c315c53b3137435dbfdc9d56d76172c4"
+    },
+    "astgen-regression/src/astgen_regression/config.py": {
+      "bytes": 3463,
+      "git_blob": "fa4041cf166bab12531e8a5f2c04121ea9cdb543",
+      "mode": "100644",
+      "sha256": "fe9fb8aac3cf758c886be248a7ac6a4d9a3f6451904f8008d80dada818afb9ba"
+    },
+    "astgen-regression/src/astgen_regression/corpus.py": {
+      "bytes": 1758,
+      "git_blob": "6cd38b44a65bc90bbac56d97d8060451bff5f358",
+      "mode": "100644",
+      "sha256": "11e5c48713470aa4c50a7b6cda48ae195df49812d36d6dd03bd7c3a0e46a0323"
+    },
+    "astgen-regression/src/astgen_regression/executor.py": {
+      "bytes": 5237,
+      "git_blob": "97aa173ad8dc6d8b77b62b19fee2efcfc07ac0bc",
+      "mode": "100644",
+      "sha256": "81a4a416bff8c9e4caf4cdcb604943404264538023b56d93b07ac4600c0824d8"
+    },
+    "astgen-regression/src/astgen_regression/metrics.py": {
+      "bytes": 1184,
+      "git_blob": "b0883e7dd0b4793f0dba52e2fde03bffd4172f66",
+      "mode": "100644",
+      "sha256": "6ebc6e278ddc9603eb1df2b5fbcb4830bd2129a17e04789aad55b5d64934109c"
+    },
+    "astgen-regression/src/astgen_regression/report.py": {
+      "bytes": 8442,
+      "git_blob": "84cd289f767fd27f444dd42af256eddb9681a84e",
+      "mode": "100644",
+      "sha256": "d90a90966dd7371203f066a33d228ee42033896d84ecf263a4092152d1a08c14"
+    },
+    "astgen-regression/src/astgen_regression/templates/regression.yaml.j2": {
+      "bytes": 1396,
+      "git_blob": "c2ab2a4953d5f4d49dd9fbc7214d5a7433494d5e",
+      "mode": "100644",
+      "sha256": "bd7e9c1a59e8d8431838e9ecd3a2a1df6c11d57683c6f1847cd9914498d6e03d"
+    },
+    "astgen-regression/src/astgen_regression/templates/workflow.yml.j2": {
+      "bytes": 4135,
+      "git_blob": "1411265e7c150718438a711111da5fe3d2a8ed26",
+      "mode": "100644",
+      "sha256": "157f2a9154e7722ad313cb046c1ab77afd3d68cfb36f0523a30d72e2a5557306"
+    },
+    "astgen-regression/src/astgen_regression/worktree.py": {
+      "bytes": 2211,
+      "git_blob": "7c8775048d78a04d02c73d1460640d1a07200999",
+      "mode": "100644",
+      "sha256": "8db7d856d8f2beecee57956f534252af59cfd05ff8bfe17041411e402cf28fdc"
+    },
+    "astgen-regression/tests/test_commands.py": {
+      "bytes": 6043,
+      "git_blob": "42300adf6fe3aa40f5d597909a74fcf0681738b2",
+      "mode": "100644",
+      "sha256": "09d9ba17b4b111a012fd0080f1f753774a3c08e839091e02ca61e2202bd81d11"
+    },
+    "astgen-regression/tests/test_compare.py": {
+      "bytes": 10512,
+      "git_blob": "23c54530f4560c3458fb04ad99d3fc9c1e9789c9",
+      "mode": "100644",
+      "sha256": "ae5431b1f5db6c7df4f6f56948c5bbd235088618cc5c8a0db3d3428fe7a465c0"
+    },
+    "astgen-regression/tests/test_config.py": {
+      "bytes": 4494,
+      "git_blob": "6624ec3b7bf61c449e83bd566503e3c6b7de035c",
+      "mode": "100644",
+      "sha256": "dd6e617bfc6137acefa492f53daa16497172d4262d6ea55edb36eac74d7f0fb9"
+    },
+    "astgen-regression/tests/test_corpus.py": {
+      "bytes": 2972,
+      "git_blob": "82a4afd1cffb95a88e1cda3de9932b4f49e664c4",
+      "mode": "100644",
+      "sha256": "1f5581f076cee58431b4d76682df04455072c93dfce1677fcce352bca35c309b"
+    },
+    "astgen-regression/tests/test_executor.py": {
+      "bytes": 8227,
+      "git_blob": "f9cbf27f594cd86f8ac7c609df42e1425cb4fa33",
+      "mode": "100644",
+      "sha256": "db733399c35c6bddc5de0e58d42930be7d8cb2b353f014636a79fa64787f5849"
+    },
+    "astgen-regression/tests/test_init.py": {
+      "bytes": 7418,
+      "git_blob": "4bf6ee784e6383581fc3e5667c5b1f15eff8592d",
+      "mode": "100644",
+      "sha256": "7ef5753cc8334646ed894533520bd8d836575c714aea1dcbd38cd759fd5ebd4a"
+    },
+    "astgen-regression/tests/test_metrics.py": {
+      "bytes": 2072,
+      "git_blob": "8f67e5522a84bd9baa0e1e09e4e2db97502cdc59",
+      "mode": "100644",
+      "sha256": "02498e73fe8c0f2760c8680df0a540c770f9c1e71dc86e58bae22e4bc4c4e426"
+    },
+    "astgen-regression/tests/test_report.py": {
+      "bytes": 6167,
+      "git_blob": "60322fa5e755615765b4daaf089ddecd013a4207",
+      "mode": "100644",
+      "sha256": "9f8e67edf4c8b046916f8171757cd996b165656ba386cfbe71e11b81637e0b24"
+    },
+    "astgen-regression/tests/test_worktree.py": {
+      "bytes": 2366,
+      "git_blob": "7b0cbadb00cd0bb4b8ffe033b7227ba03ba6d869",
+      "mode": "100644",
+      "sha256": "b0e29d3ca01a408c18c3954389a3b2749908f2bd0aff275849c56e0095941b81"
+    },
+    "dotnet-astgen/.editorconfig": {
+      "bytes": 9578,
+      "git_blob": "d3b07b3928926f5a30e4c62854e4f074004ebe41",
+      "mode": "100644",
+      "sha256": "e8f221e911acba1ce0424c662f7796804786f602e104da0c2d779fec35c7c221"
+    },
+    "dotnet-astgen/.gitattributes": {
+      "bytes": 19,
+      "git_blob": "6313b56c57848efce05faa7aa7e901ccfc2886ea",
+      "mode": "100644",
+      "sha256": "d60f352d0db1404c70afb4bb8b2ca3fd1c610572aa40720e8a0b7baa7885418c"
+    },
+    "dotnet-astgen/.gitignore": {
+      "bytes": 8470,
+      "git_blob": "9914c507f27adfcac81178d46f7e4af1e974a298",
+      "mode": "100644",
+      "sha256": "c31b8adea4f9ad8bcbaff04786ef44fef777f64766c9b79e9979b9ffbb1a846f"
+    },
+    "dotnet-astgen/DotNetAstGen.Test/DotNetAstGen.Test.csproj": {
+      "bytes": 1069,
+      "git_blob": "d8d923b28114dff98c70fff2cfc850716b73e83e",
+      "mode": "100644",
+      "sha256": "916f04728dab1c414d670233ea674e33b7a10b27a312aa904e2807d596e188d1"
+    },
+    "dotnet-astgen/DotNetAstGen.Test/MetaDataTests.cs": {
+      "bytes": 917,
+      "git_blob": "76bf5f0ef7c19c97132d5e89011c78b66c50db75",
+      "mode": "100644",
+      "sha256": "30ba034c1184422a72322432900d92c37892c79fb3c8e394ff8bb07955db6132"
+    },
+    "dotnet-astgen/DotNetAstGen.Test/UnitTest1.cs": {
+      "bytes": 103,
+      "git_blob": "6cdf3d52adab04091c3f0785525f9283fd7892a4",
+      "mode": "100644",
+      "sha256": "05e60d06b0d104287aae05329537ac79fc98a0d1745920ecbbd66baec143710e"
+    },
+    "dotnet-astgen/DotNetAstGen.Test/Usings.cs": {
+      "bytes": 19,
+      "git_blob": "8c927eb747a6a304db265e6753aee6c47504f604",
+      "mode": "100644",
+      "sha256": "e8de9b91579ba661cbfebd3912328c2dc917d2a519cc565b717446c7f39e6d33"
+    },
+    "dotnet-astgen/DotNetAstGen/AstGenWrapper.cs": {
+      "bytes": 413,
+      "git_blob": "48d7d47d25f49e6e10226dab981a5199ed83ad06",
+      "mode": "100644",
+      "sha256": "9493180d270cae2df74bf285bb2545a3ecf7a85aa7ebdd60392a4ac5ae9aa6de"
+    },
+    "dotnet-astgen/DotNetAstGen/DotNetAstGen.csproj": {
+      "bytes": 1288,
+      "git_blob": "fd967eb1e233b6953667a9f31c859f5aed5ad375",
+      "mode": "100644",
+      "sha256": "924571e46597c5af09c5280f3d4e80e5038c4b24fe451f3edffff53812ab4df9"
+    },
+    "dotnet-astgen/DotNetAstGen/PDBGenerator.cs": {
+      "bytes": 2480,
+      "git_blob": "78fa0081e5889a361714ffcb37c7caf89185e003",
+      "mode": "100644",
+      "sha256": "1a212413b8d7fbceb2f2f48f933adb49ecc818918e21aea79c4cbee424b4c34c"
+    },
+    "dotnet-astgen/DotNetAstGen/PDBWriter.cs": {
+      "bytes": 27259,
+      "git_blob": "ddc9f754632ee42b1bad6b4d24bdcb3f85cb8393",
+      "mode": "100644",
+      "sha256": "09b6b7178c8423ccc0612b5db80c9b20b55974d9a9016ad5bb588fb614077c8c"
+    },
+    "dotnet-astgen/DotNetAstGen/Program.cs": {
+      "bytes": 13976,
+      "git_blob": "663ded8ef1575dd6a9258f6bca0b5d42d6195077",
+      "mode": "100644",
+      "sha256": "d982e2ab661d6c245633b8f0fc3c41acff3e51aab8f72c2315b51b0cd5dd3135"
+    },
+    "dotnet-astgen/DotNetAstGen/SyntaxMetaDataProvider.cs": {
+      "bytes": 2406,
+      "git_blob": "a937b5cd075f8532279a0efe5cd65ac6f3749d14",
+      "mode": "100644",
+      "sha256": "9d0122ff0cb54f82774e4b0b538a0a74c5bcaeda32c13676f77cdcc14049742c"
+    },
+    "dotnet-astgen/DotNetAstGen/SyntaxNodePropertiesResolver.cs": {
+      "bytes": 3234,
+      "git_blob": "4e569b64739b482a8629b731a6b1b590675a58ac",
+      "mode": "100644",
+      "sha256": "9165e960eb76cadcd3e84584bd5699eaccd3eaac267b8859e2f86ff1d35d272f"
+    },
+    "dotnet-astgen/DotNetAstGenNew.sln": {
+      "bytes": 1290,
+      "git_blob": "77c76e3f86c2adfbd86e8e1e1f651350791745ec",
+      "mode": "100644",
+      "sha256": "4bc45ab5d041977b70676113370767198cd4557e9e50796a69fd2500e18d239e"
+    },
+    "dotnet-astgen/LICENSE": {
+      "bytes": 11947,
+      "git_blob": "d8b6d3ef081d83bb8f175c1d40da6fb827734dc6",
+      "mode": "100644",
+      "sha256": "4c116249d896718d6708a99022d8fc442289b98c107623df8ea662bd1074be5c"
+    },
+    "dotnet-astgen/README.md": {
+      "bytes": 1465,
+      "git_blob": "572bcea2e58f34bd26e80f96d61c57e3dcad0008",
+      "mode": "100644",
+      "sha256": "0caade58f6a00288099a0adb840ac4eb1496015c771e8672fde62999d9a25733"
+    },
+    "dotnet-astgen/build-with-version.sh": {
+      "bytes": 221,
+      "git_blob": "a091eae492d502bd78578fad441ba186cdd5c4c0",
+      "mode": "100755",
+      "sha256": "a3de587e9b0e3c994667f9fae6b988b8817c4b4258709bb736c2755d471f2d64"
+    },
+    "dotnet-astgen/publish-release.sh": {
+      "bytes": 590,
+      "git_blob": "3182ce72241aa3107f05d1fac8275378d2e1e77f",
+      "mode": "100755",
+      "sha256": "fc7c20ce1973aa69d451786bc7bc9a2676c28833cf847dc3244f80f6ce682dab"
+    },
+    "go-astgen/.gitignore": {
+      "bytes": 83,
+      "git_blob": "67eecdfa0dda023067c6368cfb7a4b971dde455b",
+      "mode": "100644",
+      "sha256": "34e580bf43ceeb4ca740df819a71e389dce2cdda3c4c06f02113f1d6dc70a292"
+    },
+    "go-astgen/README.md": {
+      "bytes": 1771,
+      "git_blob": "f1991b258ddfce2b76cb043cac4ce9b04ccc6b89",
+      "mode": "100644",
+      "sha256": "1e9dbd9eaa95a5da88a69f81f01e3ab23a6112aa545269c5f59afa11988b9c08"
+    },
+    "go-astgen/build.sh": {
+      "bytes": 198,
+      "git_blob": "b2857804e995f48f4e10dac07135fcf141c31212",
+      "mode": "100755",
+      "sha256": "7b128fcc49d30b0694da3ad9c4b3ec47c3858b1829186c10d1e07d904d1ca3a1"
+    },
+    "go-astgen/go.mod": {
+      "bytes": 289,
+      "git_blob": "e425a2999206425ba1c46882f2c00ec0e29b11bd",
+      "mode": "100644",
+      "sha256": "68271acb7d0c311ebba695196f9e6c3663d9767a5a06193da394116ecf29c17b"
+    },
+    "go-astgen/go.sum": {
+      "bytes": 1197,
+      "git_blob": "ec852b48fed8f81f263607a0209603aa2fe6eb92",
+      "mode": "100644",
+      "sha256": "bad7f14aa620b42d0de166fb2f5546ee446c38aeb596750a139fc19e15f08874"
+    },
+    "go-astgen/goastgen/gofileparser.go": {
+      "bytes": 14469,
+      "git_blob": "d0a77f0dea7b1e7aa7448ea266c5d0c1733160a9",
+      "mode": "100644",
+      "sha256": "59d1dd59df544a39936ed426a296ef7d6b8a05c89e715cdf5d3c8e970f1305be"
+    },
+    "go-astgen/goastgen/libgoastgen.go": {
+      "bytes": 538,
+      "git_blob": "764de827702b52582f8e5e216f0a9efe599232d6",
+      "mode": "100644",
+      "sha256": "f407b8c02472879c55b2825fc06a65166d1f48e5e292e2fb31a9367656ac3787"
+    },
+    "go-astgen/goastgen/libgoastgen_array_test.go": {
+      "bytes": 7514,
+      "git_blob": "d3b5cee633cf936966e3bc2a0a574bfac529198e",
+      "mode": "100644",
+      "sha256": "27425b4c9189dbb70438ac956d1a298e19e58d90223d14415008f43a4e5c9cbf"
+    },
+    "go-astgen/goastgen/libgoastgen_ast_test.go": {
+      "bytes": 1284,
+      "git_blob": "a546485bed6fedbc645af97d82e53921d8acb232",
+      "mode": "100644",
+      "sha256": "77d22a5c692b2811ec4ce581c4d5ef06ea28322e2517b2538460f1940ebecaea"
+    },
+    "go-astgen/goastgen/libgoastgen_map_test.go": {
+      "bytes": 10157,
+      "git_blob": "239ea51a44882fed14564ecd97c835bb1cac83c3",
+      "mode": "100644",
+      "sha256": "035c8a3e127df3843758612f5f603f5796ba7a5f7c6f883c2074f0a2ae3540cc"
+    },
+    "go-astgen/goastgen/libgoastgen_test.go": {
+      "bytes": 9111,
+      "git_blob": "ebad7b6b07257dbcbdd83f7df777606fee481729",
+      "mode": "100644",
+      "sha256": "b61b0a7f0ca3eb89ca65a89407e01edf1658aa09efe3827d539554390112ab0d"
+    },
+    "go-astgen/goastgen/modfileparser.go": {
+      "bytes": 2374,
+      "git_blob": "590084634c5c6671ec1d5d4617b4434fb24ad725",
+      "mode": "100644",
+      "sha256": "1e8c7152f01e5b8f8551022eeb572fb48cf2b62f000e389fbdb2a8af3d0c67c4"
+    },
+    "go-astgen/goastgen/modfileparser_test.go": {
+      "bytes": 1202,
+      "git_blob": "d86513b4ecdbe8c4a8fb8f9c629a493f58487181",
+      "mode": "100644",
+      "sha256": "1f9c69b5f09963fbf8128de38b6a3f6fce119f0b7bda096f51d2b2910d19ec22"
+    },
+    "go-astgen/goastgen/utility.go": {
+      "bytes": 760,
+      "git_blob": "41b92fc82bc768fc61a80c77f08a1132f5d53b0e",
+      "mode": "100644",
+      "sha256": "0b24128aca9434a8bf4d87db257c54fb3ac61293e5284677ddbcc2697ff3e377"
+    },
+    "go-astgen/main.go": {
+      "bytes": 6388,
+      "git_blob": "543e3d90f9af5b6942882348438b55121e9cae97",
+      "mode": "100644",
+      "sha256": "1ecc232d70eca8cd115d74f8b5aec6743ab6f8b57425e99cf3fb3bb9a9e288b8"
+    },
+    "go-astgen/main_test.go": {
+      "bytes": 4779,
+      "git_blob": "39f299a0075550f582b340a167062dcac7488344",
+      "mode": "100644",
+      "sha256": "4475ddbcb54ee0beed3ae03ab761c2ef464b59d829c7cb1b8de7e00087f888fb"
+    },
+    "go-astgen/sample-client/Sample.java": {
+      "bytes": 669,
+      "git_blob": "9336353f2b24e170a54bb8851e14848853bd7af6",
+      "mode": "100644",
+      "sha256": "96f6332e27a7e5ffbff1122c5ced66290b7dc79743f9fe0d3801e39ec27e2f7c"
+    },
+    "javascript-astgen/.gitignore": {
+      "bytes": 900,
+      "git_blob": "2344509f5dcd44b286d06227131a07f5627a2649",
+      "mode": "100644",
+      "sha256": "3e2db6c6cb49b88df1480513e914e331319db79ac34b5d309e96468f0b7b83a2"
+    },
+    "javascript-astgen/LICENSE": {
+      "bytes": 11357,
+      "git_blob": "8dada3edaf50dbc082c9a125058f25def75e625a",
+      "mode": "100644",
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1"
+    },
+    "javascript-astgen/README.md": {
+      "bytes": 6583,
+      "git_blob": "e0a97ec5aefb001956ed0fbcfc9c5dc0446dcd08",
+      "mode": "100644",
+      "sha256": "8794cfc069c12028d3383133892eca88e6996162557186df3ec5c6595073a604"
+    },
+    "javascript-astgen/bump-version.sh": {
+      "bytes": 1657,
+      "git_blob": "84afc99c05043f178044955e5b5c8d331b182da3",
+      "mode": "100755",
+      "sha256": "051f2931aed040e4e70cace900439793781b7723aaac369badfa16d7566582af"
+    },
+    "javascript-astgen/bun.lock": {
+      "bytes": 5556,
+      "git_blob": "c6f1f9802cf10d0c8bc7c195cfc9a648cd7c820f",
+      "mode": "100644",
+      "sha256": "32606ca3196b9e6fb6766f3a04d701df717dbe88c9f31334f2c83b858fd3dd64"
+    },
+    "javascript-astgen/package.json": {
+      "bytes": 937,
+      "git_blob": "ede1e9ea9e807377bc748aa023bb5123ac3f099a",
+      "mode": "100644",
+      "sha256": "5f4dffd6f5471ce261716043c7e31ba28914965b920e05f83f45dd9e373406c8"
+    },
+    "javascript-astgen/regression.yaml": {
+      "bytes": 934,
+      "git_blob": "1062087a638247b035783c8bc557ea00979df0b6",
+      "mode": "100644",
+      "sha256": "0f62aae3a785b53fcb793990bbe105d3c747548fe68384e841b64bc39d2bc368"
+    },
+    "javascript-astgen/scripts/build-binaries.ts": {
+      "bytes": 3105,
+      "git_blob": "8682288d72c126aba6c1414cd27ce499073e0b7d",
+      "mode": "100644",
+      "sha256": "da4c0800e2cde13e217b204b91e4763bcf659c70c2a2adc952d87a20be9015c9"
+    },
+    "javascript-astgen/scripts/sync-version.ts": {
+      "bytes": 1437,
+      "git_blob": "7ec86e50a4760b517790c7fb5f402244629a88ee",
+      "mode": "100644",
+      "sha256": "97d0a97f9b02254c64ac82cdd41c1e90bdc5ea790ed49f639506384631848e86"
+    },
+    "javascript-astgen/src/AstWorker.ts": {
+      "bytes": 2776,
+      "git_blob": "64f3592bf1bba8a5be479065dca6efea430f0325",
+      "mode": "100644",
+      "sha256": "dd082fc98cd0b67bdf2f184c71daa2fcd67fc7ae1cbc8ce2936ebd65a04e82ad"
+    },
+    "javascript-astgen/src/Defaults.ts": {
+      "bytes": 7029,
+      "git_blob": "12fdd9c4a873a6b728c0d166671ac940f2106972",
+      "mode": "100644",
+      "sha256": "381edf87ed9909cce4509222c5fe1d43e52eba73d4bbac79894eacd7a4dbd533"
+    },
+    "javascript-astgen/src/Errors.ts": {
+      "bytes": 1110,
+      "git_blob": "6c5cc2cbd5289ac6162b0ac2ae3098f1e01853e1",
+      "mode": "100644",
+      "sha256": "fdff0956c7ed42ce7cb241fd84c6c28cb462ba2d494c8545dbebb1463c0ab6aa"
+    },
+    "javascript-astgen/src/FileUtils.ts": {
+      "bytes": 7930,
+      "git_blob": "1aefd8dc7eb00e56f93db9fe63965ef743467749",
+      "mode": "100644",
+      "sha256": "02319073074fcf711f42d42af06f5e6f54976ae7deeeaeb1956bf49c9f5ecafe"
+    },
+    "javascript-astgen/src/JsonUtils.ts": {
+      "bytes": 5557,
+      "git_blob": "73f8eeac71c2c07d539be32bd5b1852eb9482b3e",
+      "mode": "100644",
+      "sha256": "f1c2cdd01bb85f03d0b68f40e86ea3c0fa413ae9af6c935766d7a43650bee831"
+    },
+    "javascript-astgen/src/Logger.ts": {
+      "bytes": 1815,
+      "git_blob": "4285c094206b83dbe60342e2f34186a68c3276af",
+      "mode": "100644",
+      "sha256": "763100e29cd1cd964a8c56ffd2e9357ad7f7feb8f9486fa65cd7b2e9f3b3151d"
+    },
+    "javascript-astgen/src/Options.ts": {
+      "bytes": 2043,
+      "git_blob": "bfcf39b8c600d8dc66cf312f30a90e24189130a4",
+      "mode": "100644",
+      "sha256": "772df048ac7fc56292ecfd46037b68e87edf2791ede0acf44230a8c5a02e31f2"
+    },
+    "javascript-astgen/src/Parsing.ts": {
+      "bytes": 1858,
+      "git_blob": "3676f00eb4b26a6b63d6c95b45abc4b05c425682",
+      "mode": "100644",
+      "sha256": "a667f6050e93820f5d7872554258ce4323acaa928187897d229ab70b4283bb41"
+    },
+    "javascript-astgen/src/Pipeline.ts": {
+      "bytes": 6887,
+      "git_blob": "2aca9fa3e263bb8e3457fa33e44951e70e617c57",
+      "mode": "100644",
+      "sha256": "2b6227e1575f065afdd224b18008366baa3e06627fea7c3b51fcce4601781619"
+    },
+    "javascript-astgen/src/TscUtils.ts": {
+      "bytes": 7692,
+      "git_blob": "2a960e76a2652002c241418b8daa975673ac622c",
+      "mode": "100644",
+      "sha256": "b202f0e69af590462cc93662081a16d85c7937dcd410b6e38b8342f02836cbaa"
+    },
+    "javascript-astgen/src/VueCodeCleaner.ts": {
+      "bytes": 2722,
+      "git_blob": "9dac2e59735d0447effa45288474bdd7dc1f516f",
+      "mode": "100644",
+      "sha256": "3e7b100a4f58d2b80500fa172ee087309d10a454c3ccc83e248063ef409b1867"
+    },
+    "javascript-astgen/src/WorkerPool.ts": {
+      "bytes": 5384,
+      "git_blob": "e656d50fdc290f45223963f33312bc5ec716da32",
+      "mode": "100644",
+      "sha256": "ddcc11c24495044f6279cf040ef16f441b0fa76ad27f0c16ebec9dfdba5e78a5"
+    },
+    "javascript-astgen/src/WriteSink.ts": {
+      "bytes": 2516,
+      "git_blob": "71f98a107d721a0b6fb5886d14f20d73e0a9693f",
+      "mode": "100644",
+      "sha256": "e4024826c7758eaf88a91454d7086401ae11511dcd44e6c36163a1e8ffa632c3"
+    },
+    "javascript-astgen/src/Writers.ts": {
+      "bytes": 1486,
+      "git_blob": "c4b4c3c6b6e3c16d32463343e5dbe85dbb64c430",
+      "mode": "100644",
+      "sha256": "cbc5d16e442d81fb9cd290b91fbd37b08d36d8fe83d52a3e0c4a896ce8352ce8"
+    },
+    "javascript-astgen/src/astgen.ts": {
+      "bytes": 2640,
+      "git_blob": "d894f74376d2a39e5c3ed0dcad2c6d582ea2a6dc",
+      "mode": "100644",
+      "sha256": "b6e5e96f8ea69d086f9cc995eeee53143f7db2238f58e473876a06f916823db6"
+    },
+    "javascript-astgen/src/version.ts": {
+      "bytes": 125,
+      "git_blob": "d35fccadea680ca6839b3364c0ed711cc8f24eab",
+      "mode": "100644",
+      "sha256": "da723c3413e4be20fbdd2342bd507dd083fe6db4254a766ed4dbc5b3ec2647ff"
+    },
+    "javascript-astgen/test/FileUtils.test.ts": {
+      "bytes": 902,
+      "git_blob": "fd145775828f40bcf05b5f1068ab6b19423f32cd",
+      "mode": "100644",
+      "sha256": "09a617ddb92bf64dc914c547ce8b84e8c8cfc063fb7846c001dac8ae705098f7"
+    },
+    "javascript-astgen/test/JsonUtils.test.ts": {
+      "bytes": 4202,
+      "git_blob": "8a7a294c1a123e920d1b91e56e4296f600a014dc",
+      "mode": "100644",
+      "sha256": "3628a2155e6d6401be37d78bd157898039f4c42cf6240fd49dc78ae3bd4a8bbf"
+    },
+    "javascript-astgen/test/Logger.test.ts": {
+      "bytes": 3266,
+      "git_blob": "f297ce19d0c463ce74c8a02910d400ea7b4934f9",
+      "mode": "100644",
+      "sha256": "ca7eb55b2e68983ca83de532fea69876e500c904e799370beddff80b97e2ee7b"
+    },
+    "javascript-astgen/test/TscUtils.test.ts": {
+      "bytes": 4227,
+      "git_blob": "2072e07153a33eab957f9d8e15adf8d4ef53dd69",
+      "mode": "100644",
+      "sha256": "7dfd5c3ea2da97032c4d381aaee54beef719e7a4e51af13cbadbb46e4924164c"
+    },
+    "javascript-astgen/test/Vue.test.ts": {
+      "bytes": 1657,
+      "git_blob": "a99e20c1ca4a8945b6df159ce9a4399287028664",
+      "mode": "100644",
+      "sha256": "e8629395b23d10e37e6aacc50028de14d576b4ad8507edc32e5c9be5c7e34a3b"
+    },
+    "javascript-astgen/test/VueCodeCleaner.test.ts": {
+      "bytes": 3224,
+      "git_blob": "f824ac92b131ea3e0457f94b3eebb174c3569d18",
+      "mode": "100644",
+      "sha256": "bd1e3d92c0f6e8b4ef44f5cca7ed2c0caa019aa7abba68556c10633a4bdbb5bf"
+    },
+    "javascript-astgen/test/WorkerPool.test.ts": {
+      "bytes": 3007,
+      "git_blob": "87e3d79a8a8abe5b8e4fc9ab0ac7d75dc5c52c97",
+      "mode": "100644",
+      "sha256": "b686cff3674940a2074b686ffc4e34bef2f630780f4eeb6eebf4780ca460e0af"
+    },
+    "javascript-astgen/test/astgen.test.ts": {
+      "bytes": 15230,
+      "git_blob": "a12114525cb9caeb123336e7e3f301c99818b1ce",
+      "mode": "100644",
+      "sha256": "923724c817e6e6683651268c28050bb918149f215a0e8a443309c476b5463ef9"
+    },
+    "javascript-astgen/test/helpers.ts": {
+      "bytes": 5723,
+      "git_blob": "3f00b86b6dfb300fbeb96d74649791ae66dcad59",
+      "mode": "100644",
+      "sha256": "b5c3768e217a774a06f6197c51e5ff803979aef9533669a9bdec32b8d859cac5"
+    },
+    "javascript-astgen/tsconfig.json": {
+      "bytes": 527,
+      "git_blob": "a3ab4773cfcdf985fde3c966e79a3ca57d04cc6c",
+      "mode": "100644",
+      "sha256": "185e834adb0392ce265f80201c0c55f8460be69afe4cf09f6d97ccf370aa38c3"
+    },
+    "ruby-astgen/.gitignore": {
+      "bytes": 180,
+      "git_blob": "b5c6d1573100f2bf30f3a52b59f74ca3249a39ff",
+      "mode": "100644",
+      "sha256": "7aab788bdef4aefe1a6b7660104580e3d3f4015a620ddd0b0281beae93908a5e"
+    },
+    "ruby-astgen/.rspec": {
+      "bytes": 53,
+      "git_blob": "34c5164d9b56c7d528f061c97f2d2fe02c834bdd",
+      "mode": "100644",
+      "sha256": "06245e25d7cf46b4fbde27b5faa0df0d4110e11918eeb5848de4ab2aff897b59"
+    },
+    "ruby-astgen/Gemfile": {
+      "bytes": 205,
+      "git_blob": "e74d1b62117d53067ab52542c23c07dfee8cd94e",
+      "mode": "100644",
+      "sha256": "23d8f7ea20178a0e1ff26c99e6724f286c6753d512c970bcdccd2109616c0c3a"
+    },
+    "ruby-astgen/LICENSE.txt": {
+      "bytes": 11947,
+      "git_blob": "63b13b04c719f415024e1ddaf7bc7dfc7d3dc4e7",
+      "mode": "100644",
+      "sha256": "68c89e37bda30562e5ca873a498bd2bc92c43157528a83cdf44d1ad5e45bdf71"
+    },
+    "ruby-astgen/README.md": {
+      "bytes": 1979,
+      "git_blob": "fb27440eabd654a8b31a5129c4986c6222823aec",
+      "mode": "100644",
+      "sha256": "ad36d9ea6f64ccdedd859dfd5290aea25a505174cbd3898f5faa1a943ca06075"
+    },
+    "ruby-astgen/Rakefile": {
+      "bytes": 145,
+      "git_blob": "b6ae734104e73e30e8f548095fb9b54f4e2cddbb",
+      "mode": "100644",
+      "sha256": "572c94da7052083b39b62a6600785419e314a109efd7a3d8c3a96eb77ad34fd1"
+    },
+    "ruby-astgen/bin/console": {
+      "bytes": 286,
+      "git_blob": "db68467fc1f296eb37bfdd109dd7248790cc6a58",
+      "mode": "100755",
+      "sha256": "297dc6fa514703f456aa0875a7f1467b5f9ca2868decc3a0ac8da664ba810820"
+    },
+    "ruby-astgen/bin/setup": {
+      "bytes": 74,
+      "git_blob": "cf4ad25e1996920ab79d734cc7ceb8dff25f2a4e",
+      "mode": "100755",
+      "sha256": "fd77ebc47e250cf86e1b7c2b7df7392ca8aae7e468b50a4f16a5549cf4bc602b"
+    },
+    "ruby-astgen/exe/ruby_ast_gen": {
+      "bytes": 1287,
+      "git_blob": "5be39075b1f172133a3fc44ee46fa9f5a35e26bb",
+      "mode": "100755",
+      "sha256": "e565fd890eeaf3aa28787b6eea18d8cadc97c2263efcd276927593f4dd31e2b3"
+    },
+    "ruby-astgen/lib/ruby_ast_gen.rb": {
+      "bytes": 6022,
+      "git_blob": "ac0c37d4c3f108d6af46d3737aa758738870c316",
+      "mode": "100644",
+      "sha256": "4f2b3e1316410929573444bdf1222301fcdbf67ea0c59d89590ebf49e1241c9d"
+    },
+    "ruby-astgen/lib/ruby_ast_gen/erb_to_ruby_transformer.rb": {
+      "bytes": 8659,
+      "git_blob": "ef0360b581a6e787dad03040f508ade342303532",
+      "mode": "100644",
+      "sha256": "e8ebf2a0fd94a2803a44f6303448c62d8e4a6eb934671fc55b60265f67f1f0ac"
+    },
+    "ruby-astgen/lib/ruby_ast_gen/node_handling.rb": {
+      "bytes": 7939,
+      "git_blob": "4222238c494d73b4873232a95aa280266053b1a9",
+      "mode": "100644",
+      "sha256": "4d5fe6e4cdfb7ced4152bfa2199052ac2cd08983369be2c4a83a46e601020123"
+    },
+    "ruby-astgen/lib/ruby_ast_gen/parser_provider.rb": {
+      "bytes": 1913,
+      "git_blob": "2a8d8a703e516dbabb6e25e97bfc7bdf080b2cf6",
+      "mode": "100644",
+      "sha256": "1c236dab3e484ab10720107f2d2fdc5b5d282ee080038c639947b9f409469278"
+    },
+    "ruby-astgen/lib/ruby_ast_gen/version.rb": {
+      "bytes": 74,
+      "git_blob": "de8bf6264905ebb620c5e15b985cbcc0ae04be0c",
+      "mode": "100644",
+      "sha256": "0dd5a52d6390e261fd75a1fb461f5b8b8fc3fede407814a3255930401c40a35f"
+    },
+    "ruby-astgen/ruby_ast_gen.gemspec": {
+      "bytes": 1068,
+      "git_blob": "8874c70bed72c7763621db29c5a0e64853bc0a2e",
+      "mode": "100644",
+      "sha256": "eec21ccee7992746f724cdaced088183bb85b739dd639a9d9c0fa3780bf44289"
+    },
+    "ruby-astgen/sig/ruby_ast_gen.rbs": {
+      "bytes": 40,
+      "git_blob": "b5f51515dca03a6ac4664bbcd299febb88b4c945",
+      "mode": "100644",
+      "sha256": "4b61ba00c6c3bdc3b6a92a91c6f4ee44f9722b25ba651a89223f48b1dbdc1d94"
+    },
+    "ruby-astgen/spec/erb_concurrency_spec.rb": {
+      "bytes": 1717,
+      "git_blob": "f352bf89efe060bb711c9bb9bab1fd8a89433c74",
+      "mode": "100644",
+      "sha256": "ab778561fb78b6d81089324ca612001b9148fd71d4af702d64891341f29a0e1c"
+    },
+    "ruby-astgen/spec/erb_unparsable_snippet_spec.rb": {
+      "bytes": 1854,
+      "git_blob": "ec538153863a64a5e5dbfc5964b7c196c68a9da2",
+      "mode": "100644",
+      "sha256": "2d9f70df1052063f2a603936614647dd25d54ab2036403001009e433339245f6"
+    },
+    "ruby-astgen/spec/integration/prism_fallback_smoke.rb": {
+      "bytes": 1603,
+      "git_blob": "2de28bf2c8af642720e9006c4973bef21860fba4",
+      "mode": "100644",
+      "sha256": "1029397ab845d1cea63014b57c8f98d5d3b53b9062be4c3f32361445e3e24d22"
+    },
+    "ruby-astgen/spec/parser_provider_spec.rb": {
+      "bytes": 2754,
+      "git_blob": "d040e8e92c34c73b914ab02b9a35e043ca86d671",
+      "mode": "100644",
+      "sha256": "2423b9fe57aa5e8bfc0a2e41f994258319620a0ad47fc72c9e026fabf2590ba2"
+    },
+    "ruby-astgen/spec/ruby_ast_gen_spec.rb": {
+      "bytes": 5569,
+      "git_blob": "ceca282eaf8df2d015efabd7aef8919e86decef9",
+      "mode": "100644",
+      "sha256": "f7a62e3ee62e977d3d985277e73aa80689d30d280b2fdb2a0577eb066139202c"
+    },
+    "ruby-astgen/spec/spec_helper.rb": {
+      "bytes": 427,
+      "git_blob": "38ca3652e053149a09346191aace3c68368201b9",
+      "mode": "100644",
+      "sha256": "9574d7d50727b9a2bbaa0bf49fed0ce96ff6c6a7c0f64ff0d36bcc53db941195"
+    },
+    "ruby-astgen/update_version.rb": {
+      "bytes": 963,
+      "git_blob": "071f9fb6b901ca4a80a27dfd9d39c195d9c9c25c",
+      "mode": "100755",
+      "sha256": "8bbfe9839fc3c0edccaf8099798d1ab360f216838258c0cddb141aef94be12e0"
+    },
+    "rust-astgen/.gitattributes": {
+      "bytes": 245,
+      "git_blob": "a213678a7439016183e2c505481c4704b55efd2d",
+      "mode": "100644",
+      "sha256": "293078c59f944721197a1002723ebb83881912005652e55c732a8ecd48e21100"
+    },
+    "rust-astgen/.gitignore": {
+      "bytes": 14,
+      "git_blob": "6b39d31a96291e28ad5c033dc1267db1ff1b278d",
+      "mode": "100644",
+      "sha256": "070d83620cf3178ef14976409d0b07588bf0e38bd66ab116683178777fef664f"
+    },
+    "rust-astgen/Cargo.lock": {
+      "bytes": 53623,
+      "git_blob": "8e759bd2db98ac36e301ac9e73605e293281b589",
+      "mode": "100644",
+      "sha256": "12bd2432113ce28e7eb4c93185cabf177de3c21ac40d33983d414bfa30f35757"
+    },
+    "rust-astgen/Cargo.toml": {
+      "bytes": 1428,
+      "git_blob": "83cf7f711aeb05b19581ff014e00921b6fe8a3a9",
+      "mode": "100644",
+      "sha256": "e17922d863d31af613ee861fbdc58cb0efef985982c68af5203541210bdcbffc"
+    },
+    "rust-astgen/README.md": {
+      "bytes": 1908,
+      "git_blob": "fa07d60948a14ffaed2a344e86658e00e0263d0c",
+      "mode": "100644",
+      "sha256": "ecf6aa625cceda5cb0578e8560336dfe1d613310310249ab3afa1705d82207f8"
+    },
+    "rust-astgen/TODO.md": {
+      "bytes": 626,
+      "git_blob": "1a6f15bd07de5e11d6b795cc8a5539c5afe62b25",
+      "mode": "100644",
+      "sha256": "eb21bf579bf659ac5ef55873a1b2ec1f3ef68d96fd4a7b52d8493e7a5a78464e"
+    },
+    "rust-astgen/crates/joern_fmt/Cargo.toml": {
+      "bytes": 315,
+      "git_blob": "5f3cde7ea9f7eb9a3e22837d2c8a8f4c6df4b3ed",
+      "mode": "100644",
+      "sha256": "eb67aeca215890f885b1d56c01d7aed6a4bb5fab595c3391aa3f6426c613d585"
+    },
+    "rust-astgen/crates/joern_fmt/src/ctor_type_full_names.rs": {
+      "bytes": 1181,
+      "git_blob": "a61730055d3c278c2be18d1dada8cbdfe610ac6c",
+      "mode": "100644",
+      "sha256": "9c7d6573467fcfc94a3ff136bb07498d8c8d7ce009bc1c7d9a3a2abeddb46b93"
+    },
+    "rust-astgen/crates/joern_fmt/src/implemented_traits.rs": {
+      "bytes": 1258,
+      "git_blob": "b9e6f7ca46b8afe2312f5696f8c5d35a5ca8e9fd",
+      "mode": "100644",
+      "sha256": "7fb0b6c9b5a806d245d02c279c878a02af93791780f29ed199615e487508dd45"
+    },
+    "rust-astgen/crates/joern_fmt/src/is_path.rs": {
+      "bytes": 263,
+      "git_blob": "bec8c36be03a5f867e98538e5f400fd3534b7b62",
+      "mode": "100644",
+      "sha256": "97e33ba199b3582fafa961608ac502aa385087da15f7a713ef5ce4b742e8d3c8"
+    },
+    "rust-astgen/crates/joern_fmt/src/lib.rs": {
+      "bytes": 226,
+      "git_blob": "c7d731c09710f49a0e0fe44b2ac39abb5ba68aad",
+      "mode": "100644",
+      "sha256": "92111d8927e43f11dd5cb0fd30e68e419a1496b5bb9112616c609bdc6134a08c"
+    },
+    "rust-astgen/crates/joern_fmt/src/method_full_names.rs": {
+      "bytes": 4377,
+      "git_blob": "b765966aebaaee891b6e54cb0d1896efef2b89a4",
+      "mode": "100644",
+      "sha256": "3909e32bc3c65f98a7c1192d30e71448facb61afdfe08f8db5a732df2b85693d"
+    },
+    "rust-astgen/crates/joern_fmt/src/rust_name_formatter.rs": {
+      "bytes": 12248,
+      "git_blob": "f4e6a64b91d3fc63a2d10cb93f697550cfa4e6d8",
+      "mode": "100644",
+      "sha256": "49742f694aa3fcb4eda6e0bba5a8e06084be2381eccfde61dfee230b8d60fd73"
+    },
+    "rust-astgen/crates/joern_fmt/src/supertraits.rs": {
+      "bytes": 1160,
+      "git_blob": "b3b6879a11c0acd992f5f87e629e0041705e418a",
+      "mode": "100644",
+      "sha256": "3d2d1a7902d0d0a5185439c2b4945c5ebb8c5bc48447ed627b5491309e4ef2a4"
+    },
+    "rust-astgen/crates/joern_fmt/src/tests.rs": {
+      "bytes": 6261,
+      "git_blob": "ce239402351d2678bcae1e52a61cea5beade351d",
+      "mode": "100644",
+      "sha256": "063c4e742451cd80ee4442618b838d713058390614fe880b9ce4450b31b89d51"
+    },
+    "rust-astgen/crates/joern_fmt/src/tests/bin_expr.rs": {
+      "bytes": 174,
+      "git_blob": "2eabb0de5995b8905ace83b89b0fa05f15a96652",
+      "mode": "100644",
+      "sha256": "63d063b43b96fbadf48fe155a3055e6a16f894aaed6f58fdff6cffd94fd8b9b7"
+    },
+    "rust-astgen/crates/joern_fmt/src/tests/call_expr.rs": {
+      "bytes": 16318,
+      "git_blob": "ef3ded56c9535c2b74cc908e81fea2340c0c77bf",
+      "mode": "100644",
+      "sha256": "d0b2953d04dc3572d762d33f52d31e179f1a6cbe6bc68cfa897281de3eb5f18d"
+    },
+    "rust-astgen/crates/joern_fmt/src/tests/enum_decl.rs": {
+      "bytes": 1404,
+      "git_blob": "7ca78622e3d7a2aea74351b5c2b750568922bd5c",
+      "mode": "100644",
+      "sha256": "23afae078b2d86430e7aaa65bf0df5f750defec0539ed2f2d554231338790339"
+    },
+    "rust-astgen/crates/joern_fmt/src/tests/fn_decl.rs": {
+      "bytes": 9481,
+      "git_blob": "c3198939054b7735e79087f14cdc305960b910ce",
+      "mode": "100644",
+      "sha256": "932b3606e681b756a78b73bff064185184b9fd94b5088903838ffcec85b17f24"
+    },
+    "rust-astgen/crates/joern_fmt/src/tests/ident_pat.rs": {
+      "bytes": 8298,
+      "git_blob": "a812008b152e4d6b462f91aca8a7522f2ab517ee",
+      "mode": "100644",
+      "sha256": "cf91196987a73ee9ec66dd25520f9a444e4a383ed45a1010a1bf17bce746ea6e"
+    },
+    "rust-astgen/crates/joern_fmt/src/tests/impl_decl.rs": {
+      "bytes": 1940,
+      "git_blob": "e898cf4465cd8eec66ccf05169740e9826c09aa9",
+      "mode": "100644",
+      "sha256": "dfab0a65d9edf4d03707a569b777b177dfc2b447d4a505486b9fc1afbd7d6f8d"
+    },
+    "rust-astgen/crates/joern_fmt/src/tests/literal.rs": {
+      "bytes": 337,
+      "git_blob": "1a29b0a35c2993a4bce8ab82c614ccc9d5128f2f",
+      "mode": "100644",
+      "sha256": "f6c1f70bb70d6a395f7b44195b4bef59ba757ab8d4c4686c89fecf15cf143311"
+    },
+    "rust-astgen/crates/joern_fmt/src/tests/method_call_expr.rs": {
+      "bytes": 12597,
+      "git_blob": "2bae03e06901a5ff5200132a3e55f9c46c9846b1",
+      "mode": "100644",
+      "sha256": "38a6acecdc4855e8c99193ecf99d08995c4063f166b6d28638ab765fa53cd8b1"
+    },
+    "rust-astgen/crates/joern_fmt/src/tests/name_ref.rs": {
+      "bytes": 11586,
+      "git_blob": "1f6f69f947e4abbf9bbd5d76f8ca7f9e5a2d9881",
+      "mode": "100644",
+      "sha256": "fadb0897d592f77fe0d4766723556c5e35235ed3c70f1e0cfd00b5379d334c45"
+    },
+    "rust-astgen/crates/joern_fmt/src/tests/path_expr.rs": {
+      "bytes": 3884,
+      "git_blob": "e264c47e332b80b16ccee221977331e15f7fae8f",
+      "mode": "100644",
+      "sha256": "59a093b6f50701e6dce810c45996be342605ea7c28eebe9593b30ab90579bfe2"
+    },
+    "rust-astgen/crates/joern_fmt/src/tests/record_expr.rs": {
+      "bytes": 3454,
+      "git_blob": "c9c4f2e57c36e48178e7dc0b120ac67dcb3ba3ef",
+      "mode": "100644",
+      "sha256": "ad38ae4f4ce28489e4bb417161e839d2d63107375391f0e72755fbbd1213a39f"
+    },
+    "rust-astgen/crates/joern_fmt/src/tests/self_param.rs": {
+      "bytes": 2767,
+      "git_blob": "48cceb2d214097f55a429a397c217b306eb326c2",
+      "mode": "100644",
+      "sha256": "e3a8ac2c6e7ffd0f4d84d82237ddd0eb2f7d7ef6abedd78e2eb0631c62f5e15f"
+    },
+    "rust-astgen/crates/joern_fmt/src/tests/struct_decl.rs": {
+      "bytes": 7627,
+      "git_blob": "881fdaa69ae89154f8599f088d50e5fed5e693a6",
+      "mode": "100644",
+      "sha256": "7885d9e1fbb19f0f3418a098a3257ac84248b3d69b3af9fb50d0f848264cf0a4"
+    },
+    "rust-astgen/crates/joern_fmt/src/tests/trait_decl.rs": {
+      "bytes": 927,
+      "git_blob": "3b96e834161ca87b495823395a51bec31ef1a8c4",
+      "mode": "100644",
+      "sha256": "4ab4613dcd9a835e661ffaf71f02a43443a352aadbc0d939578ff6c2a013d2aa"
+    },
+    "rust-astgen/crates/joern_fmt/src/type_formatter.rs": {
+      "bytes": 8994,
+      "git_blob": "07d9eb29afdc54dc2c45854530f83932af03e11d",
+      "mode": "100644",
+      "sha256": "6c563e56fca57ba39360fb8fac6cfab8f112f99dd99cc8adaf92631a5d08fba2"
+    },
+    "rust-astgen/crates/joern_fmt/src/type_full_names.rs": {
+      "bytes": 7508,
+      "git_blob": "b08ac2026dc188bc3522d1af501ea5a5cf68f9d5",
+      "mode": "100644",
+      "sha256": "521cc29bfd37eb4cf978913192961e54b0f9b5fa0fc91b50652ff0dedf01de7c"
+    },
+    "rust-astgen/crates/rust_analyzer_ext/Cargo.toml": {
+      "bytes": 282,
+      "git_blob": "a2898b231063241eb092e483c3b483c5fa660082",
+      "mode": "100644",
+      "sha256": "10be970b91e3c8d3683235e9f5b12f90fc609963d419cbfe73fde2f298495714"
+    },
+    "rust-astgen/crates/rust_analyzer_ext/src/lib.rs": {
+      "bytes": 4041,
+      "git_blob": "dc8433d8c2b988759e003c5ae28ca839d64184a8",
+      "mode": "100644",
+      "sha256": "a9a919c24094b7f88c2713c73422f4076da42788f9934ffacb66fadf7738d35c"
+    },
+    "rust-astgen/crates/rust_ast_function_fullnames/Cargo.toml": {
+      "bytes": 599,
+      "git_blob": "dc4a09f0638957d7bad2e08a30473ec268d4f9cd",
+      "mode": "100644",
+      "sha256": "103408e31f32483db28b7854f512ef93c95952ec65d2f84c0816baecfab47dac"
+    },
+    "rust-astgen/crates/rust_ast_function_fullnames/src/lib.rs": {
+      "bytes": 17232,
+      "git_blob": "97f863fcb49c39e735a56ae851682ecf084b1e54",
+      "mode": "100644",
+      "sha256": "55f17e94f9034c839981f5855ac1725381d2d00d00e1118d275fefbfd73d0aa8"
+    },
+    "rust-astgen/crates/rust_ast_function_fullnames/src/main.rs": {
+      "bytes": 2126,
+      "git_blob": "ba376bdd4cd646b57f255ebccf3838279a724b12",
+      "mode": "100644",
+      "sha256": "aa512d46d95225247f172a661ea60777b5a4effa452d60784a2942fd53644d5e"
+    },
+    "rust-astgen/crates/rust_ast_function_fullnames/tests/common/mod.rs": {
+      "bytes": 64,
+      "git_blob": "a3b5404ecde1cc9b8e5aeee7085d346c8b725045",
+      "mode": "100644",
+      "sha256": "01f5ccec259db18538cb1633ee0965fdbd65c3d466fdf47978e24ef6d0d1372d"
+    },
+    "rust-astgen/crates/rust_ast_function_fullnames/tests/dependency_function_fullnames.rs": {
+      "bytes": 11538,
+      "git_blob": "6bb945bd0beb1f38ba7aa820f843fadd41f1c5f0",
+      "mode": "100644",
+      "sha256": "cc665352ba539caab8cb9c69b2f2d375a082134a5b346e0d4d3a021dd4630888"
+    },
+    "rust-astgen/crates/rust_ast_function_fullnames/tests/function_fullnames_features.rs": {
+      "bytes": 4049,
+      "git_blob": "14156cd1e5508933bd4a16af020f0deba6604456",
+      "mode": "100644",
+      "sha256": "35a99e7337b1a594125d731eac248467c54cf2a48dde141b6bd8d2a9fab8cc26"
+    },
+    "rust-astgen/crates/rust_ast_function_fullnames/tests/function_fullnames_target.rs": {
+      "bytes": 2389,
+      "git_blob": "8c1ff6dc49509e4c586d8b45e2157db660d0dfca",
+      "mode": "100644",
+      "sha256": "7c7cbc36548f0f19fa12647eb327584fc358b56214877a03f5659d939fa6c3b0"
+    },
+    "rust-astgen/crates/scala_bindings_gen/Cargo.toml": {
+      "bytes": 565,
+      "git_blob": "c818972439b7a513cff8c7c8332a4c4924a0541a",
+      "mode": "100644",
+      "sha256": "19b90f8a2ffc084e4074755c6805f2565072f87192c2b6e91993740c076cee01"
+    },
+    "rust-astgen/crates/scala_bindings_gen/build.rs": {
+      "bytes": 3368,
+      "git_blob": "6cfc0731b703aedafa10bbce396b85f6f49a79e3",
+      "mode": "100644",
+      "sha256": "fa6b8dadc1dc483fd9d05159cba34021e9bacebf4618b68e4c9d09b03cf5a786"
+    },
+    "rust-astgen/crates/scala_bindings_gen/rust.ungram": {
+      "bytes": 13972,
+      "git_blob": "6bcf8ba743bc84a3db273dfa808811e9c671040b",
+      "mode": "100644",
+      "sha256": "8c7a149d4cd8011ef70d49521f3783011697e864717d1da3d4a87b53708e44b0"
+    },
+    "rust-astgen/crates/scala_bindings_gen/src/grammar.rs": {
+      "bytes": 41,
+      "git_blob": "7b5c3c085b4aaa6dbc3c8ba4f133c40cde1aef5c",
+      "mode": "100644",
+      "sha256": "e468e3b8d3a6147606f8e039a1bc0bb33a09bcd415c89eec8c7a901b0217b37d"
+    },
+    "rust-astgen/crates/scala_bindings_gen/src/grammar/model.rs": {
+      "bytes": 16461,
+      "git_blob": "a4e8348519fbf370db64a7e8950773d007adfe1d",
+      "mode": "100644",
+      "sha256": "ce1fa738328393382acae21d60ac4ad21acb4a10c6d409e7b96b1ee2af6c28e1"
+    },
+    "rust-astgen/crates/scala_bindings_gen/src/grammar/ungrammar.rs": {
+      "bytes": 2568,
+      "git_blob": "1ea4be7998bc34d984fcd5fd3c1420867e23ae39",
+      "mode": "100644",
+      "sha256": "c9965c5c510598e4cce70afc35f5cce1da7a196f6beaed103751d7b35492be13"
+    },
+    "rust-astgen/crates/scala_bindings_gen/src/json_kind.rs": {
+      "bytes": 2560,
+      "git_blob": "2e9539e307543d687d8b89b85a07fc3e1fb2c490",
+      "mode": "100644",
+      "sha256": "349b942e4c4b35fa8cc33f035d969f864ccb477744f991209117b4e221151868"
+    },
+    "rust-astgen/crates/scala_bindings_gen/src/lib.rs": {
+      "bytes": 55,
+      "git_blob": "5fc2fc781bd2024b1bd6d1540848d5cfb9552449",
+      "mode": "100644",
+      "sha256": "62cd4cb28299899eed564f271b29d0376507fbaae9dc697a84dfd7e995092bf8"
+    },
+    "rust-astgen/crates/scala_bindings_gen/src/main.rs": {
+      "bytes": 5231,
+      "git_blob": "3e5eb29508b7bcd103a479e7c8a44a91748af6a3",
+      "mode": "100644",
+      "sha256": "a8c81b0883ef3aa9c5aff78b490c4cb174634c686271813a7073797aa8f614ac"
+    },
+    "rust-astgen/crates/scala_bindings_gen/src/scala_gen.rs": {
+      "bytes": 33,
+      "git_blob": "1dd6cdf170b3df3a5b5f3058131c65abbbcaf72e",
+      "mode": "100644",
+      "sha256": "fc0a5b4376bc053384a479f01522da577ab51eb5a43ebba71dff762a51edc515"
+    },
+    "rust-astgen/crates/scala_bindings_gen/src/scala_gen/config.rs": {
+      "bytes": 1836,
+      "git_blob": "2417325de7636e7cd5e69721d3f5207e2c094a2f",
+      "mode": "100644",
+      "sha256": "30774da216ade064375d31dfeea4352d6e8fe6b2db764462fdc22891b5e08476"
+    },
+    "rust-astgen/crates/scala_bindings_gen/src/scala_gen/emitter.rs": {
+      "bytes": 32322,
+      "git_blob": "59a718a411fe9e21e9e40a700ef0fd8f1cff63eb",
+      "mode": "100644",
+      "sha256": "2082cf293739ca0c3f99d4d1e56fd503dca109fb7352778ffdf07ba347d26a93"
+    },
+    "rust-astgen/scala_tests/.gitignore": {
+      "bytes": 71,
+      "git_blob": "72cd136f26164b80cc9dc1f1a8c81c4e1cff9bc3",
+      "mode": "100644",
+      "sha256": "3e00d42cc2583da5f3310878b55e33454f577fae805157beeb9a950f7d16d0e2"
+    },
+    "rust-astgen/scala_tests/build.sbt": {
+      "bytes": 319,
+      "git_blob": "82070350611a35032f58f30062661507f98c7744",
+      "mode": "100644",
+      "sha256": "9d18126b32b4a97631b37b2e3a134722fd10165e95b27f6acc2253db347cbb38"
+    },
+    "rust-astgen/scala_tests/project/build.properties": {
+      "bytes": 20,
+      "git_blob": "57300c8826387a34318ed7b181db9b3c001b4d36",
+      "mode": "100644",
+      "sha256": "f48b2b07ebe032de15e07d5f7f9f71a86a268135660389623712a92bbf3c5add"
+    },
+    "rust-astgen/scala_tests/src/main/scala/io/joern/rust2cpg/parser/RustNodeSyntax.scala": {
+      "bytes": 142179,
+      "git_blob": "6bbf4a29d500b0b8af632f19f957a31fd6913580",
+      "mode": "100644",
+      "sha256": "ed6a93f62103a6bea134c3053f4fc07deec4e7aa36f2b6e3100fe11560c206c2"
+    },
+    "rust-astgen/scala_tests/src/test/scala/io/joern/rust2cpg/parser/RustAstGenAdjustmentsTests.scala": {
+      "bytes": 2287,
+      "git_blob": "819e72d589b58a74f01f74d7c878ac45e5a28793",
+      "mode": "100644",
+      "sha256": "f15ab7d7aa1552b12f56811e46ed12925c30f279a7b029c8057fb2385e82d81c"
+    },
+    "rust-astgen/scala_tests/src/test/scala/io/joern/rust2cpg/parser/RustAstGenFullNameTests.scala": {
+      "bytes": 1867,
+      "git_blob": "a7a65fb9b0883f69176d196824224b4dbe7721a9",
+      "mode": "100644",
+      "sha256": "eb5baf2db255401103b36799eebda089100f50e68202de139e1478a0d7782dd1"
+    },
+    "rust-astgen/scala_tests/src/test/scala/io/joern/rust2cpg/parser/RustAstGenPrettyPrintTests.scala": {
+      "bytes": 10877,
+      "git_blob": "6edb387dc64b9a20cd4c7239d1f91f513a67703c",
+      "mode": "100644",
+      "sha256": "df93688e7ed0293ecac1f30f41a2db27307edcb0a17da86aaa9fd3f0107bde56"
+    },
+    "rust-astgen/scala_tests/src/test/scala/io/joern/rust2cpg/parser/RustAstGenTestFixture.scala": {
+      "bytes": 3111,
+      "git_blob": "05b5a335cca2270f521143bfc491df04acea48b8",
+      "mode": "100644",
+      "sha256": "0cf3c8b3eb224fbbeb7bbda059b4214f70ff14b9478c8124d61cb68410db5599"
+    },
+    "rust-astgen/scala_tests/src/test/scala/io/joern/rust2cpg/parser/RustAstGenTraversalTests.scala": {
+      "bytes": 725,
+      "git_blob": "6c18ac15e2707b50efc8d2f60c6e24e8640d3649",
+      "mode": "100644",
+      "sha256": "55f5f56fe2d13f714d7fd7a204283f5503b9c704ec08ebb479fc5a76df2e9c6b"
+    },
+    "rust-astgen/src/adjustments.rs": {
+      "bytes": 3958,
+      "git_blob": "45dfc1e67ff85cde7d1c3acb75ad88253bc3e679",
+      "mode": "100644",
+      "sha256": "481baa77c2e6efbf5acfe2a28e1fd2dd7623e7a5ce8fe2a45280139c83f09a28"
+    },
+    "rust-astgen/src/bin/rust_ast_gen.rs": {
+      "bytes": 3812,
+      "git_blob": "5c48dafe3c4f21c95bd200830fb4fea0a69e8e16",
+      "mode": "100644",
+      "sha256": "9b4642a5312663cc6a9da8e4e872534766ca9b5e6361677d32eb34efd1bb2249"
+    },
+    "rust-astgen/src/cargo.rs": {
+      "bytes": 3902,
+      "git_blob": "2649a676ef4b583755ca9b313846e5711b24458e",
+      "mode": "100644",
+      "sha256": "ee48e88519c32935485ea3d130f9c51879b3f5f797de20f88f9a5352fcddfd95"
+    },
+    "rust-astgen/src/config.rs": {
+      "bytes": 7079,
+      "git_blob": "34bb5106c2dee982fd06099ac0065edf32f5f31d",
+      "mode": "100644",
+      "sha256": "b982d5fb8b7ac50b635e82ccd77255fe3babf257acbddb95cf837881ca696f27"
+    },
+    "rust-astgen/src/format_args.rs": {
+      "bytes": 3195,
+      "git_blob": "c442347f58413ba0bf2fc5e5524e18064b821397",
+      "mode": "100644",
+      "sha256": "ab70fad306aca9f72f2d40fc4643801974fcf87971a7c19f7d515b9e543e58ef"
+    },
+    "rust-astgen/src/json_ast.rs": {
+      "bytes": 14946,
+      "git_blob": "927acf48b557b5ec34c3a9adccd83f9320dc6a09",
+      "mode": "100644",
+      "sha256": "0d69230e0c7f187edb6468adc68f486881949c26137c1563886520511fd32355"
+    },
+    "rust-astgen/src/json_gen.rs": {
+      "bytes": 6073,
+      "git_blob": "93511d22a41e2ce1f020312e66dc656dbce9b671",
+      "mode": "100644",
+      "sha256": "f45fe3a64cc2b1e57faed087ab431eb8855c158a8956bf7c414d93459fa41055"
+    },
+    "rust-astgen/src/lib.rs": {
+      "bytes": 97,
+      "git_blob": "53b472d8c12da34d46cadf3ec0d4c49d9c3db001",
+      "mode": "100644",
+      "sha256": "e2ff5684f1b917cacef53d7764031d17ec01ea2aaa35130f157c9daa6a705de3"
+    },
+    "rust-astgen/tests/adjustments.rs": {
+      "bytes": 10911,
+      "git_blob": "202713358e91ae6f98c8357d3b05a6521e846a44",
+      "mode": "100644",
+      "sha256": "8121a6fc70ad1161b2cbae3c903fc2f006f7fea80a2a2354463467f0c1d42384"
+    },
+    "rust-astgen/tests/cfg_resolution.rs": {
+      "bytes": 3579,
+      "git_blob": "951184c8f77a0ac1e1030af51e9d551a0141b604",
+      "mode": "100644",
+      "sha256": "3e64ffed5e05f8224d21100d577ab2e81b76c2ee1a068976851a69da242830f0"
+    },
+    "rust-astgen/tests/common/mod.rs": {
+      "bytes": 8282,
+      "git_blob": "c8157e99f0af2328560daaf4add48be3443b5ddb",
+      "mode": "100644",
+      "sha256": "d53a3b3880b02365a49783e32a521f360e84d5a102d3cf389da68dc2c98e24ef"
+    },
+    "rust-astgen/tests/crate_and_module.rs": {
+      "bytes": 5210,
+      "git_blob": "3515e596ca0220e53b4744916483c965e13e9efb",
+      "mode": "100644",
+      "sha256": "d34f72715ff9b263a60d367e8056ab5d8697624746d49d8e9ef7ede1658aac7a"
+    },
+    "rust-astgen/tests/implicit_format_args.rs": {
+      "bytes": 5219,
+      "git_blob": "12a61ff06bbeb642d8d86f66c4336c569f1d1e87",
+      "mode": "100644",
+      "sha256": "5c72d9393394fe99239e1d8b34923e7cb57519ae9af76c4ec82d5f12045c346d"
+    },
+    "rust-astgen/tests/sysroot_fullnames.rs": {
+      "bytes": 4573,
+      "git_blob": "abaed090c1e96ae2974109fc6ae51c6c15988c98",
+      "mode": "100644",
+      "sha256": "14ce03d7ad7f3d3f169fb4b87288294c2a076b093fc133bbed6cb52a6a90cb8d"
+    },
+    "swift-astgen/.gitattributes": {
+      "bytes": 66,
+      "git_blob": "dfe0770424b2a19faf507a501ebfc23be8f54e7b",
+      "mode": "100644",
+      "sha256": "1a1dbe176bc233b499d35a57db7513f2941c99ab9759f177830c9149be99005b"
+    },
+    "swift-astgen/.gitignore": {
+      "bytes": 262,
+      "git_blob": "12cb055112459063d3d8dd92e00105568dde5a50",
+      "mode": "100644",
+      "sha256": "ca9c02c3672e2ab2a8c2020db6c2f8057a588f1e45b49679decef01bb970483d"
+    },
+    "swift-astgen/.swift-format": {
+      "bytes": 2789,
+      "git_blob": "54d4d4ca91e776c03ec7c92f3cbb3da8ec9c47ad",
+      "mode": "100644",
+      "sha256": "5d9097eefc3771e3a9d4d41489e25d53e3f6731a3b9b37b690b3e01147f3e7a6"
+    },
+    "swift-astgen/LICENSE": {
+      "bytes": 11357,
+      "git_blob": "8dada3edaf50dbc082c9a125058f25def75e625a",
+      "mode": "100644",
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1"
+    },
+    "swift-astgen/Package.resolved": {
+      "bytes": 676,
+      "git_blob": "c54979eb6e46c5de88fc6c0e5320a94b1abbc1a6",
+      "mode": "100644",
+      "sha256": "e9fed012e146ad0090adbdcc24653cba8248a04c54211da3a0f8ec486cf32e27"
+    },
+    "swift-astgen/Package.swift": {
+      "bytes": 1853,
+      "git_blob": "6eca097250093249a3e6449852fcf2922ad72e7d",
+      "mode": "100644",
+      "sha256": "5d58b41757a91784fe74738bdfd62decea3624b0559b26ecdff49e28e20bafb6"
+    },
+    "swift-astgen/README.md": {
+      "bytes": 6041,
+      "git_blob": "c26e6f0b7e6ff594afd28b461e1e7d0033b0012f",
+      "mode": "100644",
+      "sha256": "10c74f7d85add6496e08c3353227f16d597e3596f79a6b94b87bd7004f9c67eb"
+    },
+    "swift-astgen/Sources/CodeGeneration/README.md": {
+      "bytes": 2019,
+      "git_blob": "c2005413fb6075a058f016e9a05fb59b8fcf43e2",
+      "mode": "100644",
+      "sha256": "57594505c87208a8206e0bb848d81faab16dec51f6d056f617b612081d324e1b"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/AttributeNodes.swift": {
+      "bytes": 24010,
+      "git_blob": "cc561d27a49fbf0def12c34f48e937b6e98a2ea3",
+      "mode": "100644",
+      "sha256": "a45440420c5af0339530a15493722ce789a3e7af32bd549ee23d79acc7fd36f0"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/AvailabilityNodes.swift": {
+      "bytes": 5879,
+      "git_blob": "e75439ab6ab2bf94e493766bdd686e684a1409d9",
+      "mode": "100644",
+      "sha256": "74ad863abc7d928ed6c865244c81a60e9da915ec183617e9656dbcbe5f8059b5"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/Child.swift": {
+      "bytes": 16192,
+      "git_blob": "6c9badb33eb726722e84ea98fcd79f07d671aa1d",
+      "mode": "100644",
+      "sha256": "873fbec93a36e851a5a2e1fe489e11ebcba830750b2c4c7aeadd128d317323dd"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/CommonNodes.swift": {
+      "bytes": 11594,
+      "git_blob": "9bd9c760f8fe63a3477ffe35e9d3bfc0b3798d88",
+      "mode": "100644",
+      "sha256": "9bc36c61b85485034132f352a0d38febd9e86b9808e2812b7c8041dfc09ebd96"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/CompatibilityLayer.swift": {
+      "bytes": 13307,
+      "git_blob": "ce70152e6e3086a991b059adfc8ee8040b96ea6c",
+      "mode": "100644",
+      "sha256": "bffcfbcca16a4927c6a16b9a46215b9e4c8d81ff8365168d780b04282ce37460"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/CompilerNodes.swift": {
+      "bytes": 3901,
+      "git_blob": "7052d76d4d48ffdbd8d1ba64ccef1a3078313eed",
+      "mode": "100644",
+      "sha256": "f8dd4cbb2fe312a2ab06fcbbbf2a6d87b7f0b5dfcfb53b802fa98e497b0778a5"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/DeclNodes.swift": {
+      "bytes": 74700,
+      "git_blob": "50daee24036049b886c50d01b72743cdb9383a29",
+      "mode": "100644",
+      "sha256": "451191152aef4664afd2a0dbb9f34eda0c7e8865cdf2794ec419559038a67a35"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/ExperimentalFeatures.swift": {
+      "bytes": 2674,
+      "git_blob": "e6c5a0304ba74372c5886a86347cd67c8ae47c5a",
+      "mode": "100644",
+      "sha256": "04e9bf56084790844803705dff75d300e3813573c367c2b7eb2d39b0686f5cbd"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/ExprNodes.swift": {
+      "bytes": 55616,
+      "git_blob": "4920cc7af9828e6c489dda310bfb5a7b7d6ff3db",
+      "mode": "100644",
+      "sha256": "7d2053447967b03a31731ccdde686700e36790ff9ba7b84e4cd7141cae4641f0"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/GenericNodes.swift": {
+      "bytes": 10140,
+      "git_blob": "c6254e9ebd1c9689028ed5e978491b4417e19f33",
+      "mode": "100644",
+      "sha256": "01eb52b95fafada25a0a13565aad7f5122289e3379c37986a005b872e88fd102"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/GrammarGenerator.swift": {
+      "bytes": 2989,
+      "git_blob": "819cbf0f0826c616b6083d8f8c33304fe37c1caf",
+      "mode": "100644",
+      "sha256": "3e3451342ead86a95b7421fe33612c69fd4f48703ab94ef347f043859a8a0a73"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/IdentifierConvertible.swift": {
+      "bytes": 1896,
+      "git_blob": "2ff5f659dcef229d55eba60f7f252d837e00ad2b",
+      "mode": "100644",
+      "sha256": "aa986de87f5d3b0506ab05c2f23c5b20e42f6a7058972616a8750eb0fe62da66"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/InitSignature.swift": {
+      "bytes": 1828,
+      "git_blob": "799f62b1535818b5f66503aea074dbd147c7e2f8",
+      "mode": "100644",
+      "sha256": "5399f5e53d96f5e231a954bfefeec562c15acce905b9d18a2b39a178d730bc51"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/KeywordSpec.swift": {
+      "bytes": 19537,
+      "git_blob": "2b1809ae634f5f96252061ed0638641d1bc93b89",
+      "mode": "100644",
+      "sha256": "332dbcc792d16e9624f11835d0904e123ed929a06d7e3c0ef78603f74c2f8c5b"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/Node.swift": {
+      "bytes": 12109,
+      "git_blob": "73fa9404835e980e31c19c31ca0ba198f6a524db",
+      "mode": "100644",
+      "sha256": "52cff65d9edf4c77f1d8e40d24244aea07c52ab77e9054140a264ac4290dc51f"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/NodeChoiceConvertible.swift": {
+      "bytes": 2027,
+      "git_blob": "386ac90e804d6d7ceca4c4406e25d13e10245031",
+      "mode": "100644",
+      "sha256": "147d5f0a4ef2134600b4203bd2aa96cd892debcca67455e4bcae911735127a14"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/PatternNodes.swift": {
+      "bytes": 5861,
+      "git_blob": "dbb019dfebb415eba8002be826da1f635b8340e3",
+      "mode": "100644",
+      "sha256": "1f9463f4ff2087db5ec31bca45e78b2024ed8136114352e59aa54ec57cbf099b"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/RawSyntaxNodeKind.swift": {
+      "bytes": 1233,
+      "git_blob": "ded2446914ec80d161abf3eb9cfb97b04862c1ff",
+      "mode": "100644",
+      "sha256": "fd64f9fb4fa1fc9fcae5fe2953b2340325edde0dcfb88aa558b76284d7281e04"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/StmtNodes.swift": {
+      "bytes": 14573,
+      "git_blob": "3ac5bab1109504ee68eba230c21b0802d52baf4d",
+      "mode": "100644",
+      "sha256": "122c4ef89fb1762ba6dac5d2ffa72e66b3488ad82c0b083ca6b44b5cb5154243"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/String+Extensions.swift": {
+      "bytes": 1153,
+      "git_blob": "3737ef876a71a6b2a86878c01fd313b32aac9f25",
+      "mode": "100644",
+      "sha256": "6cde59787781547bdc31e0a02150d33bdd13208a50f2c030a0d38acfd3bc413f"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/SyntaxNodeKind.swift": {
+      "bytes": 15521,
+      "git_blob": "70eae620e70a850c3c8bdb95d80b20308209a338",
+      "mode": "100644",
+      "sha256": "8df5abb22eae6f92f3c264c8be4aac31aefb1ac475897f155af4b72fbca1e627"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/SyntaxNodes.swift": {
+      "bytes": 1400,
+      "git_blob": "d1f42af9300dcddfcc863f09cbeb1243729da35d",
+      "mode": "100644",
+      "sha256": "a9a2aa8b49ab6d71e4f1183801d2faac119b357319585d2caabded92fa6f2e9a"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/TokenSpec.swift": {
+      "bytes": 9734,
+      "git_blob": "b276a7152518b6282593e117aed43dd0c22a7be6",
+      "mode": "100644",
+      "sha256": "c5e20fcbb35357d5ab1191e4b845a4aa7d29f49b688f087a0bbed730e78a072c"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/Traits.swift": {
+      "bytes": 7519,
+      "git_blob": "10169c0a0964e4e1ef6a31f38ec3fa7b86af27ed",
+      "mode": "100644",
+      "sha256": "44b3c7e53904477e43ac015dcd575e540d07f686225a116669c8781e0f59b00b"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/Trivia.swift": {
+      "bytes": 4917,
+      "git_blob": "ee3f8397b33aa966e457858bfdda090a3c5c1260",
+      "mode": "100644",
+      "sha256": "cab34c891bc3e1c91a073043198dbf4b90ec9740af0e12da53b07ba8c2c75f73"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/TypeConvertible.swift": {
+      "bytes": 1545,
+      "git_blob": "d783c77f70535bdca9d7932892ad29198d472e38",
+      "mode": "100644",
+      "sha256": "9363fb025a00eee1836eb09c18ca7ba847da2a29014cc4d620fb0557da9aa73d"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/TypeNodes.swift": {
+      "bytes": 19260,
+      "git_blob": "250450a6e7d4560ca5d16f49cf941268ea261c58",
+      "mode": "100644",
+      "sha256": "b8897f66d4a502be821f90d00e1f2c47d6b28661523cd37e8a63925675f80da0"
+    },
+    "swift-astgen/Sources/CodeGeneration/SyntaxSupport/Utils.swift": {
+      "bytes": 2876,
+      "git_blob": "032192dd235c1ef0afd7e1bd94b63e7d64616a51",
+      "mode": "100644",
+      "sha256": "df04731b6504ed9f092cabb487c5ecc89c0cfcb2478e8e63d1a3654c27011b07"
+    },
+    "swift-astgen/Sources/SwiftAstGen/SwiftAstGen.swift": {
+      "bytes": 3072,
+      "git_blob": "aa0e48e85c2c60db2e10e72a604751c953bef1ec",
+      "mode": "100644",
+      "sha256": "707721fc0b790775a625d34641500a1c2dd39646d0a6e6ae59dfc19f0607add7"
+    },
+    "swift-astgen/Sources/SwiftAstGenLib/Log.swift": {
+      "bytes": 734,
+      "git_blob": "6d1ed4de3133d628a156766bca1ee910f8bed72f",
+      "mode": "100644",
+      "sha256": "18fa7f1f81e5f54361f36908333e197b93c318a88bacfe0e585b726542051212"
+    },
+    "swift-astgen/Sources/SwiftAstGenLib/PackageTestTargetParser.swift": {
+      "bytes": 3672,
+      "git_blob": "ee1a7dcf95143dd5966eb795669239332adca902",
+      "mode": "100644",
+      "sha256": "2d5bda68dd3ccf0dbde55a20fe3c2b304a77e5f5fa12ca1632aeca85c7f9a5fe"
+    },
+    "swift-astgen/Sources/SwiftAstGenLib/RelativePath.swift": {
+      "bytes": 1292,
+      "git_blob": "8982b309adacc34d9ce19d5180ddeec07e0e278d",
+      "mode": "100644",
+      "sha256": "d22fcb87c5aa80c75ee9702971dd4a65f5e424be538d8273bdff495a0aa6fc05"
+    },
+    "swift-astgen/Sources/SwiftAstGenLib/ScalaAstGenerator.swift": {
+      "bytes": 11288,
+      "git_blob": "387247084a2e0cbf3c6b40ff226f541c10d3fd5e",
+      "mode": "100644",
+      "sha256": "61452692c4558b1abc7c3c494a3e1a057f03d7cfc465661cf753e0bfba3f6ca8"
+    },
+    "swift-astgen/Sources/SwiftAstGenLib/SwiftAstGenerator.swift": {
+      "bytes": 5722,
+      "git_blob": "a89edfa71cfa5a8c5e748823f5f791a4780b5506",
+      "mode": "100644",
+      "sha256": "cdd6fca5e920a2f6dff827059c63232d143f035624c67cc7a03e2f0f5493c300"
+    },
+    "swift-astgen/Sources/SwiftAstGenLib/SyntaxParser.swift": {
+      "bytes": 4887,
+      "git_blob": "ffb99bc7f5f15a19a4acdb4738cee725e5d7ad6a",
+      "mode": "100644",
+      "sha256": "37b42f18852f961fd1b2a1a1d84433f8fbfc1c174fbae20ec0d538616b392bab"
+    },
+    "swift-astgen/Sources/SwiftAstGenLib/TreeNode.swift": {
+      "bytes": 3664,
+      "git_blob": "e0b0cd4be969dcadbb2ab81a6b771c7012256403",
+      "mode": "100644",
+      "sha256": "27915d751a64b457dcc649808c9e2928b7410af2ce59a343ad5a478ebb2e9d18"
+    },
+    "swift-astgen/Sources/SwiftAstGenLib/TypeGenerator.swift": {
+      "bytes": 2565,
+      "git_blob": "979fed26dab95136f04f64ce352fe2e30abe94dc",
+      "mode": "100644",
+      "sha256": "9ad1a63ca79400a418d8c562e7f59e831abdbb583c2f9da63d5611af3c16a04f"
+    },
+    "swift-astgen/Sources/SwiftAstGenLib/Version.swift": {
+      "bytes": 125,
+      "git_blob": "5c93a03994edc39ec2a42cebba24dcf1493cfe06",
+      "mode": "100644",
+      "sha256": "f0b761b9ebe495e6f28a41569fa8dfca1122bcea773a4735581d1337a24a4c3f"
+    },
+    "swift-astgen/Tests/ScalaSwiftNodeSyntaxTests/README.md": {
+      "bytes": 1785,
+      "git_blob": "a9ae2e37a320af4daac83d2ec2a0e3f44bd9adc5",
+      "mode": "100644",
+      "sha256": "b9fa747c4709629ff2cf342b75c89ab5914ee8eb4c4238a4e318ed1443b8b00a"
+    },
+    "swift-astgen/Tests/ScalaSwiftNodeSyntaxTests/build.sbt": {
+      "bytes": 656,
+      "git_blob": "f5cfb3837d88bdde93361f716fc4d6c40f99a2f7",
+      "mode": "100644",
+      "sha256": "c836b0b18011fbeba40ba2b6c70a1a7aee1c0f84e6d3c305b82fa8112da421b9"
+    },
+    "swift-astgen/Tests/ScalaSwiftNodeSyntaxTests/project/build.properties": {
+      "bytes": 20,
+      "git_blob": "57300c8826387a34318ed7b181db9b3c001b4d36",
+      "mode": "100644",
+      "sha256": "f48b2b07ebe032de15e07d5f7f9f71a86a268135660389623712a92bbf3c5add"
+    },
+    "swift-astgen/Tests/ScalaSwiftNodeSyntaxTests/src/main/scala/.keep": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "mode": "100644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "swift-astgen/Tests/ScalaSwiftNodeSyntaxTests/src/test/scala/SwiftNodeSyntaxTest.scala": {
+      "bytes": 7311,
+      "git_blob": "e00849286e16d73ba91b106cfa19df59aeb4573d",
+      "mode": "100644",
+      "sha256": "6e45079b7948d604654f3ea9cc902e53767e2857ce4355d211edfd5c3c44fdcf"
+    },
+    "swift-astgen/Tests/SwiftAstGenTests/PackageTestTargetParserTests.swift": {
+      "bytes": 6207,
+      "git_blob": "48373af6cf50d8d10084527064a44383060c202c",
+      "mode": "100644",
+      "sha256": "163efd15008462abcc983c6dbfdc876ff0d349536ece29d28c3cb0db05255fdb"
+    },
+    "swift-astgen/Tests/SwiftAstGenTests/ScalaAstGenTests.swift": {
+      "bytes": 1945,
+      "git_blob": "953ea57feea2d454c13aa6e847f15ac391178d24",
+      "mode": "100644",
+      "sha256": "1427722c700a10da2b39c408f2c32f404f3fffee1b620d867f3cfd60f330b835"
+    },
+    "swift-astgen/Tests/SwiftAstGenTests/SwiftAstGenTests.swift": {
+      "bytes": 10879,
+      "git_blob": "2e9a976d9211b636c9a6bee719a77bd847a3a7e0",
+      "mode": "100644",
+      "sha256": "3f764358edc3dc875c575d59f6a2281ebeb2929971f6317e69b10a84650f9bc9"
+    },
+    "swift-astgen/Tests/SwiftAstGenTests/TestUtils.swift": {
+      "bytes": 3466,
+      "git_blob": "fa0e07298a04f1cdf8767f18c65515c7c191e8d5",
+      "mode": "100644",
+      "sha256": "8a8c7debc5127038f37f7d8173ad7baced9d80f97090cfa4801ad070ded665b4"
+    },
+    "swift-astgen/VERSION": {
+      "bytes": 5,
+      "git_blob": "b300caa32a150146a910b36c742c9782c7bf198b",
+      "mode": "100644",
+      "sha256": "be1ac3a25f813e184f99d75e24337eb700a49f3c7008e823ed9640ce752efa4b"
+    },
+    "swift-astgen/bump-version.sh": {
+      "bytes": 1508,
+      "git_blob": "9b8977764897a7d5f87acadc79557aff368b74b1",
+      "mode": "100755",
+      "sha256": "0529e4dad4317aeddc807bbf4a94f8684e7db6c960842bbe50d3356d3028d35f"
+    },
+    "swift-astgen/regression.yaml": {
+      "bytes": 1187,
+      "git_blob": "79aeb75990acc3cdd66555503f35f66b1ff85d7a",
+      "mode": "100644",
+      "sha256": "7ca069f6049169a630b7805f0cfa2c1261bab9d4cdaf0a47064f471fd90ee1c9"
+    },
+    "swift-astgen/scripts/refresh-codegen.sh": {
+      "bytes": 1747,
+      "git_blob": "19277dab043a77e98fc281fe309768e0e909939e",
+      "mode": "100755",
+      "sha256": "c33e22da6277a0127483cc553aa8f1247f19296b043c65b91da60b078983278c"
+    },
+    "swift-astgen/scripts/sync-version.swift": {
+      "bytes": 1566,
+      "git_blob": "164118e13ccb7a1331e4dd8b471aa22f2b823d32",
+      "mode": "100755",
+      "sha256": "8d6950f7e8c59f071c4ee5ab4e5b30c255d91e2979524442b4391dbc880f8aab"
+    }
+  }
+}

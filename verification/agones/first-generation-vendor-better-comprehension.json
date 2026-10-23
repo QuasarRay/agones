@@ -1,0 +1,185 @@
+{
+  "archive_provenance": {
+    "receipt": "verification/agones/first-generation-better-comprehension-archive-acquisition.json",
+    "receipt_sha256": "66d62026b0798d28bb4225ddb95ba9a6cf0aa5797a1c730f717d59412d162099",
+    "transport": "GITHUB_TARBALL_API",
+    "validation": "All archived paths, modes and content must match the pinned Git tree."
+  },
+  "archive_sha256": "b54c6a08f024151f3c97d5b7451fccb6d4205a7adeaec6c1c2cdbf63253b8445",
+  "archive_url": "https://codeload.github.com/Natural-selection1/better-comprehension-in-rust/tar.gz/73ae408dff2994fef8362e34f880ff18c221045c",
+  "attempts": [],
+  "commit": "73ae408dff2994fef8362e34f880ff18c221045c",
+  "destination": "third_party/first-generation/better-comprehension",
+  "finished_at": "2026-10-23T09:24:14.102082+00:00",
+  "guidance_overlays": [
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cba5f84e2f414390cc975a1765fc0f4f0f0767068a50d2dfaf2e84af5db0394a"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": ".github/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": ".github/workflows/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "src/eager_evaluation/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    }
+  ],
+  "license_declarations": {
+    "Cargo.toml": "MIT"
+  },
+  "license_files": [],
+  "name": "better-comprehension",
+  "patches": [],
+  "pristine_identity": "Recorded Git commit/tree and every upstream blob are unchanged; separately inventoried guidance additions are not presented as upstream source.",
+  "recovery": "Revalidate the retained archive and every staged blob; retain the upstream Cargo SPDX license declaration when no license file exists.",
+  "repository": "https://github.com/Natural-selection1/better-comprehension-in-rust",
+  "schema_version": 1,
+  "started_at": "2026-10-23T09:24:14.095706+00:00",
+  "status": "VENDORED",
+  "tree": "393f2bd1ce6e79691f65621bbf31ee0cf989e4fc",
+  "upstream_bytes": 116268,
+  "upstream_content_manifest_sha256": "1d5fd30de7ffef8698c1cb07c61a29f561b03540d4ae156d57dda349862f5e89",
+  "upstream_file_count": 20,
+  "upstream_files": {
+    ".github/workflows/rust.yml": {
+      "bytes": 410,
+      "git_blob": "ebcef2d70424eec71a9d683edb1b3abbcf10b40a",
+      "mode": "100644",
+      "sha256": "c067105e103d96cc3cd9459e6ca7ccba5126fc2a414c7862c5dcbed664f751ed"
+    },
+    ".gitignore": {
+      "bytes": 17,
+      "git_blob": "81cf465800fb20f4a2483d6c81a0c962d04b2cc1",
+      "mode": "100644",
+      "sha256": "a70ca53ae04f1229e0941068a4bb5a0eb64b27bfe4bf1fb34a14d24df0703395"
+    },
+    "Cargo.lock": {
+      "bytes": 1125,
+      "git_blob": "21a23eab8b6ea2f022793c763f5e51837f608d53",
+      "mode": "100644",
+      "sha256": "1f0c28f60dfcc9ac641d59f711d97190b60fe061b1da5003b822a1fffc8bde12"
+    },
+    "Cargo.toml": {
+      "bytes": 722,
+      "git_blob": "7322f32d464990c611b3784eaaee68f1366cf993",
+      "mode": "100644",
+      "sha256": "a1ce7a835e9ed3e543b7b06487bc941db6182fcc6f2555ac603ca8b4f6284f36"
+    },
+    "README-CN.md": {
+      "bytes": 18280,
+      "git_blob": "05cbc473d6fea49df00fcdd33c7eb81b5faaae78",
+      "mode": "100644",
+      "sha256": "333dad97a6d92ee53f37d53a2241fb1c75ef6a6c2bb35d58db29703d3156e9d5"
+    },
+    "README.md": {
+      "bytes": 19322,
+      "git_blob": "b30e70c6a5c94ceca54bb1a6451d755f69a50274",
+      "mode": "100644",
+      "sha256": "47e4bd8dbd562d5452f801edf563546772220e1664e0708ac8531eb801da863b"
+    },
+    "src/eager_evaluation.rs": {
+      "bytes": 10334,
+      "git_blob": "14efc5220d93644c650a5fa094e05e41d6991a8c",
+      "mode": "100644",
+      "sha256": "883d9f6e205e5e47fa8d8153734a9c6330c079aabf032300e45888f551015a0f"
+    },
+    "src/eager_evaluation/b_tree_map.rs": {
+      "bytes": 2157,
+      "git_blob": "664f75ee8a4f79f8260b3b1f97088e0fc59f576e",
+      "mode": "100644",
+      "sha256": "30d2ddac77610ce52d6750016c09be8ec6934de655224ca25673770b3b3de185"
+    },
+    "src/eager_evaluation/b_tree_set.rs": {
+      "bytes": 2144,
+      "git_blob": "51d29e59eb159d94530af4864feaac632430b57a",
+      "mode": "100644",
+      "sha256": "2a9814144a004243c785572e2784ebecefcf6d9dc4ae621cc6ae93b50415b0fc"
+    },
+    "src/eager_evaluation/binary_heap.rs": {
+      "bytes": 2022,
+      "git_blob": "e6bdb9290801d14fc11ad5f13b44f3bd00928868",
+      "mode": "100644",
+      "sha256": "6924cbb18921116e077228954b5a0bc5d9e59798fb4aa2ae2e3db8850f75cba2"
+    },
+    "src/eager_evaluation/hash_map.rs": {
+      "bytes": 2140,
+      "git_blob": "70e64131b55108dcf77e87b09befdbe1f0e6c625",
+      "mode": "100644",
+      "sha256": "7a175a3a712042770cc7ba3bfa1ba8340e8f96ccf680943b9346a2b1e43d33db"
+    },
+    "src/eager_evaluation/hash_set.rs": {
+      "bytes": 2125,
+      "git_blob": "2cd693d7a3b3cbf6fed45f5f3fba55f9edf7b7ee",
+      "mode": "100644",
+      "sha256": "e01dcd95932646f0efc823432b6ad7ae2aed3b3ace988121d107d2eaddf11853"
+    },
+    "src/eager_evaluation/linked_list.rs": {
+      "bytes": 2176,
+      "git_blob": "bb9ee4ffe16a6a7495e227ac04ec9a6ef95fe85f",
+      "mode": "100644",
+      "sha256": "128d3484bd762584f6b7d63f25fdcbe8cea2d6cee829b6846dcbdd36b25e7dc7"
+    },
+    "src/eager_evaluation/vec_deque.rs": {
+      "bytes": 2148,
+      "git_blob": "28d04bc23db8b01196c4c6d8748da926254718dd",
+      "mode": "100644",
+      "sha256": "4bc69f46605dd6ad5c0802c3b6cd20b62efaec6f3243cd06f7619170fa6e6f75"
+    },
+    "src/eager_evaluation/vector.rs": {
+      "bytes": 2028,
+      "git_blob": "d1911e7b5325d3bd8d837ffa72a6d2f0b9295569",
+      "mode": "100644",
+      "sha256": "61c0c93d100f3b128b8c3acff61e9f007e9f96a6199e99ff47b868ae340347df"
+    },
+    "src/iter_clause.rs": {
+      "bytes": 6148,
+      "git_blob": "32189fff328087369fcd33c69a193a38925c96bc",
+      "mode": "100644",
+      "sha256": "c62cbbf55d768ed923f289ebe3151e881f5f2cd0944d64a3190c8048ab37b20e"
+    },
+    "src/lazy_evaluation.rs": {
+      "bytes": 4725,
+      "git_blob": "38df5361c80e2dffffc36bfff94493b0a07468f3",
+      "mode": "100644",
+      "sha256": "b6bb51adc7dcc2bdf2fa7bc69f15c997c931ee7deb1fc18176fb5646973cc317"
+    },
+    "src/lib.rs": {
+      "bytes": 21531,
+      "git_blob": "971263ceaec1dc4d4c145fd8a3079550ff0a1b63",
+      "mode": "100644",
+      "sha256": "f47ba11ce4cd4d6b7424ba0cffca669018e52e5541fb32f83d655aba2ce364b3"
+    },
+    "src/main.rs": {
+      "bytes": 12982,
+      "git_blob": "7d444529811e16f36275303d8eeebc2e030ad6ad",
+      "mode": "100644",
+      "sha256": "09a29d1c4ee13ab2d530de7129dcf480c72c793ef50e096247c133def75b7402"
+    },
+    "src/mapping.rs": {
+      "bytes": 3732,
+      "git_blob": "7cf7e983c1b496943a4112bfcef3a9597dcc3125",
+      "mode": "100644",
+      "sha256": "1517332b9fa056e3301f254a6c8a05531ab3eb81205017cd048cfdee89e1b391"
+    }
+  },
+  "upstream_license_file_absent": true
+}

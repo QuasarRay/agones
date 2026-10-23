@@ -1,0 +1,3685 @@
+{
+  "archive_provenance": {
+    "receipt": "verification/agones/first-generation-flatgraph-archive-acquisition.json",
+    "receipt_sha256": "1049e5394c2fcea173e6995c47b7b7169c6f30680668376a58e3068c69a1196d",
+    "transport": "GITHUB_TARBALL_API",
+    "validation": "All archived paths, modes and content must match the pinned Git tree."
+  },
+  "archive_sha256": "ad0a056e6b1a298a5fa15a35e635e215b32510547d85d0f6df74bc9a59457400",
+  "archive_url": "https://codeload.github.com/joernio/flatgraph/tar.gz/61aa9de52231f95f9730b3a5aa7a3fb0d23fd128",
+  "commit": "61aa9de52231f95f9730b3a5aa7a3fb0d23fd128",
+  "destination": "third_party/first-generation/flatgraph",
+  "finished_at": "2026-10-23T08:47:10.217246+00:00",
+  "guidance_overlays": [
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cba5f84e2f414390cc975a1765fc0f4f0f0767068a50d2dfaf2e84af5db0394a"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": ".github/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": ".github/workflows/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "bazel/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "bazel/format/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "benchmarks/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "benchmarks/results-history/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "benchmarks/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "benchmarks/src/main/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "benchmarks/src/main/scala/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "benchmarks/src/main/scala/flatgraph/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "benchmarks/src/main/scala/flatgraph/benchmark/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "cdocs/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "core/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "core/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "core/src/main/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "core/src/main/java/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "core/src/main/java/flatgraph/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "core/src/main/java/flatgraph/help/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "core/src/main/java/flatgraph/util/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "core/src/main/scala/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "core/src/main/scala/flatgraph/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "core/src/main/scala/flatgraph/algorithm/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "core/src/main/scala/flatgraph/help/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "core/src/main/scala/flatgraph/misc/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "core/src/main/scala/flatgraph/storage/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "core/src/main/scala/flatgraph/traversal/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "core/src/test/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "core/src/test/scala/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "core/src/test/scala/flatgraph/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "core/src/test/scala/flatgraph/algorithm/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "core/src/test/scala/flatgraph/misc/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "core/src/test/scala/flatgraph/traversal/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "core/src/test/scala/flatgraph/util/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "doc/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "doc/images/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "domain-classes-generator/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "domain-classes-generator/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "domain-classes-generator/src/main/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "domain-classes-generator/src/main/scala/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "domain-classes-generator/src/main/scala/flatgraph/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "domain-classes-generator/src/main/scala/flatgraph/algorithm/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "domain-classes-generator/src/main/scala/flatgraph/codegen/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "domain-classes-generator/src/main/scala/flatgraph/schema/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "formats/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "formats/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "formats/src/main/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "formats/src/main/scala/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "formats/src/main/scala/flatgraph/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "formats/src/main/scala/flatgraph/formats/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "formats/src/main/scala/flatgraph/formats/dot/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "formats/src/main/scala/flatgraph/formats/graphml/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "formats/src/main/scala/flatgraph/formats/graphson/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "formats/src/main/scala/flatgraph/formats/neo4jcsv/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "help/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "help/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "help/src/main/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "help/src/main/scala/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "help/src/main/scala/flatgraph/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "help/src/main/scala/flatgraph/help/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "help/src/test/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "help/src/test/scala/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "help/src/test/scala/flatgraph/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "help/src/test/scala/flatgraph/help/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "odb-convert/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "odb-convert/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "odb-convert/src/main/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "odb-convert/src/main/scala/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "odb-convert/src/main/scala/flatgraph/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "odb-convert/src/main/scala/flatgraph/convert/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "project/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "sbt-flatgraph/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "sbt-flatgraph/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "sbt-flatgraph/src/main/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "sbt-flatgraph/src/main/scala/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "sbt-flatgraph/src/main/scala/flatgraph/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "sbt-flatgraph/src/main/scala/flatgraph/codegen/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "sbt-flatgraph/src/main/scala/flatgraph/codegen/sbt/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas/src/main/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas/src/main/scala/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas/src/main/scala/flatgraph/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas/src/main/scala/flatgraph/testdomains/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/accessors/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/edges/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/neighboraccessors/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/nodes/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/traversals/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/empty/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/empty/accessors/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/empty/neighboraccessors/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/empty/nodes/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/empty/traversals/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/generic/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/generic/accessors/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/generic/edges/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/generic/neighboraccessors/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/generic/nodes/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/generic/traversals/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/accessors/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/edges/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/neighboraccessors/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/nodes/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/traversals/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/accessors/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/edges/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/neighboraccessors/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/nodes/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/traversals/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/accessors/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/edges/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/neighboraccessors/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/nodes/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/traversals/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/empty/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/empty/accessors/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/empty/neighboraccessors/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/empty/nodes/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/empty/traversals/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/accessors/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/edges/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/neighboraccessors/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/nodes/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/traversals/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/accessors/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/edges/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/neighboraccessors/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/nodes/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/traversals/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/accessors/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/edges/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/neighboraccessors/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/nodes/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/traversals/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "tests/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "tests/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "tests/src/test/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "tests/src/test/resources/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "tests/src/test/resources/neo4jcsv/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "tests/src/test/scala/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "tests/src/test/scala/flatgraph/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "tests/src/test/scala/flatgraph/algorithm/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "tests/src/test/scala/flatgraph/formats/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "tests/src/test/scala/flatgraph/formats/dot/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "tests/src/test/scala/flatgraph/formats/graphml/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "tests/src/test/scala/flatgraph/formats/graphson/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "tests/src/test/scala/flatgraph/formats/neo4jcsv/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "645d227d7f55a0c188c3916eff5bdd2493c39af3b073379595502fee62a82ec4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "tests/src/test/scala/flatgraph/testutils/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "tests/src/test/scala/flatgraph/traversal/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "tests-scala3/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "tests-scala3/src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "832f46e01491df94a745e8a2f81b0376e5fe2f75ce697ebe8a377b64250dd161"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "tests-scala3/src/test/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "091cd755d6b73677d8074fea99c1895d97334bc2c23a9e0ff568fde0bf9b2ea4"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "tests-scala3/src/test/scala/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "ddc95313b55a40b5db1b05a2b82036d582a6daf1b55dce963fb55dd4a572f39b"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "tests-scala3/src/test/scala/flatgraph/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "0a1bb42d4f8f4e5c14be37d5a3cdb2dcec10ba9218ccf88ba0b57a751f3eacba"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "tests-scala3/src/test/scala/flatgraph/traversal/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cb5a714b3d544d0aa987a322645c60d8b93a24a7dc6ea48ab345b35b45797828"
+    }
+  ],
+  "license_files": [
+    "LICENSE"
+  ],
+  "name": "flatgraph",
+  "patches": [],
+  "pristine_identity": "Recorded Git commit/tree and every upstream blob are unchanged; separately inventoried guidance additions are not presented as upstream source.",
+  "repository": "https://github.com/joernio/flatgraph",
+  "schema_version": 1,
+  "started_at": "2026-10-23T08:47:10.148311+00:00",
+  "status": "VENDORED",
+  "tree": "0655429cb2b1bf9c396fda64293a54414ecbbf63",
+  "upstream_bytes": 2786563,
+  "upstream_content_manifest_sha256": "e4df538cb93acb296180bc6725a13dce344912cb106e704205019a83644ea230",
+  "upstream_file_count": 436,
+  "upstream_files": {
+    ".bazelrc": {
+      "bytes": 474,
+      "git_blob": "4fa1e6ed0221913b8e90cb4dc481fb87ab9a51ae",
+      "mode": "100644",
+      "sha256": "8d7d20164527fb441886eff570cfbf0a85a074a266e088153d5d8678fba7aeea"
+    },
+    ".bazelversion": {
+      "bytes": 6,
+      "git_blob": "47da986f86fdaed33e15cdc6431a1abf742e8398",
+      "mode": "100644",
+      "sha256": "077ee5b3a3a7fc2622ceff6466fea0c28f3fb08b24653dcc7f4baab29b9aef36"
+    },
+    ".github/workflows/pr.yml": {
+      "bytes": 428,
+      "git_blob": "2ea0f11408e57c427baa8f9b5978fdf44e1c2965",
+      "mode": "100644",
+      "sha256": "e9277f132fadcbd63867b3b92508554735ff263e9800a58986a8efbc3df6361d"
+    },
+    ".github/workflows/release.yml": {
+      "bytes": 1151,
+      "git_blob": "720e27c418c4cce0406b4318214e658a6c92951d",
+      "mode": "100644",
+      "sha256": "1957aa2f047178ae43bf3acea67e5b0654820bc6d3e9e1111cfef04a0b181908"
+    },
+    ".gitignore": {
+      "bytes": 204,
+      "git_blob": "86883cc83a358b21250e1c8977f979190658dfd3",
+      "mode": "100644",
+      "sha256": "57d5cc553b25ae3ee00e53a57c721861bf39f42495a9d9e781e35bab890da58e"
+    },
+    ".scalafmt.conf": {
+      "bytes": 192,
+      "git_blob": "63566097390ef7451b1de28dc1f86f67e91497ad",
+      "mode": "100644",
+      "sha256": "573e1b448477fc07f1cc9c3bfd12ea119b5e8d5c8d1ea4d194d8851b141e58f7"
+    },
+    "BUILD": {
+      "bytes": 176,
+      "git_blob": "b811fe5c90c81ff526d78f14637ab874e8ac48d3",
+      "mode": "100644",
+      "sha256": "d331502f744330fa6c5f1e1dff23186ef98595e29b77b46796ab51482004c64a"
+    },
+    "LICENSE": {
+      "bytes": 11357,
+      "git_blob": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64",
+      "mode": "100644",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    "MODULE.bazel": {
+      "bytes": 3064,
+      "git_blob": "d9515f5e068bd4bb3ef28a115b8632311e1db564",
+      "mode": "100644",
+      "sha256": "8b50ca4e16571e198d5f37cd3e0de396042bb8b119d306d6b3a2651bf9d7d3d4"
+    },
+    "MODULE.bazel.lock": {
+      "bytes": 95153,
+      "git_blob": "79429e5cc323654761fbee81d5d6b2557cf4a3af",
+      "mode": "100644",
+      "sha256": "6d42234d49dd3aa1b1a1f0f872b6b9b3c4e90246b7ec97298d5c0cce829fa3ac"
+    },
+    "README.md": {
+      "bytes": 34785,
+      "git_blob": "d1fbffa913b22dcae43089c81409838ea18f0a17",
+      "mode": "100644",
+      "sha256": "64e1ff27b44bcb8b19c3013a10f7887a8c0ef7177b7a3140d6c92317f62b39d7"
+    },
+    "bazel/BUILD": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "mode": "100644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "bazel/format/BUILD": {
+      "bytes": 491,
+      "git_blob": "63b02cf1429256a4094bf188f3c397dc959a6ec0",
+      "mode": "100644",
+      "sha256": "3b590afde4eff4996aabe75df782873cc170b44bcfcf3bbc0f3ef4dc1dcdd6a4"
+    },
+    "bazel/java.bzl": {
+      "bytes": 516,
+      "git_blob": "1b07754d7effa4f11a238becd0a106c5fc0b4799",
+      "mode": "100644",
+      "sha256": "97432fb991955c01d6cb34159f4bd405bc0d3dd12ca95c74862eb783e3ea8864"
+    },
+    "bazel/scala.bzl": {
+      "bytes": 996,
+      "git_blob": "0856cbd83a83a16e2a179a8357d6bd2d67850d0d",
+      "mode": "100644",
+      "sha256": "20ee4664724c1a8d4b6c4f1acd80392684e5d0ab0bbb51ea2eaf8d2ceca91508"
+    },
+    "benchmarks/results-history/20230929_370f5bc-results.csv": {
+      "bytes": 3840,
+      "git_blob": "19bd086692d2b7c5406a38fed3fa18a7297cf50d",
+      "mode": "100644",
+      "sha256": "fe6ee917668c196929c45a4a43a6b7e9b09ce055506231f1572d9b55f3574a03"
+    },
+    "benchmarks/results-history/20231120_b8e89da-results.csv": {
+      "bytes": 3777,
+      "git_blob": "92aeafffb65854094aaac94a88f04e472e56fabc",
+      "mode": "100644",
+      "sha256": "6850298cb94d8bf6807773ee7018db4d6cc23cfbfa3824cc9a1d839317891bfb"
+    },
+    "benchmarks/results-history/20240503_beaec2d-results.csv": {
+      "bytes": 1932,
+      "git_blob": "c62010bd290e6eee7bc82d15199f4b7b0b24db3d",
+      "mode": "100644",
+      "sha256": "3941b203d840d375c170cabc55d89a74d89f41511f71dd8ba2487b41ca210276"
+    },
+    "benchmarks/src/main/scala/flatgraph/benchmark/EntryPoint.scala": {
+      "bytes": 244,
+      "git_blob": "46de04feb9f1cb917a4126c4075d0e86893daaa7",
+      "mode": "100644",
+      "sha256": "e4c5d693ad4146cb79385451737b70a10539f60e532290c66dc7364a21e8d380"
+    },
+    "benchmarks/src/main/scala/flatgraph/benchmark/JmhBenchmarks.scala": {
+      "bytes": 7214,
+      "git_blob": "c59455f9748b0fc5eeb8516c3244e409ad44fd93",
+      "mode": "100644",
+      "sha256": "291870959d017bebcf7db13e08d87eec7b5b2233a21908368e9a0d7b2700e6bd"
+    },
+    "benchmarks/src/main/scala/flatgraph/benchmark/LoadingAndMemoryBenchmarks.scala": {
+      "bytes": 5351,
+      "git_blob": "a079e3d3eddaad6fe3bfd88b506544b1030497fb",
+      "mode": "100644",
+      "sha256": "e0fa9a14a43e0ed7f58282204296e8f09173d5123db2a4a6a7cecf06ab884e28"
+    },
+    "build.sbt": {
+      "bytes": 10070,
+      "git_blob": "148703ad975bd809e9b73e271ed1c5a3b5b6413a",
+      "mode": "100644",
+      "sha256": "22334cacb9be86f0bff0dc5f99f03dcb5295de8c877efbffdeb488c590935fd6"
+    },
+    "cdocs/2026-06-17-streaming-graphson-export.md": {
+      "bytes": 15877,
+      "git_blob": "81c051de9cd8477b7c3ee2fa9e254a1cf17665d0",
+      "mode": "100644",
+      "sha256": "65c16f7979837131559ff89883ee946c25d3e3641de2cdab98e42a345edd26c1"
+    },
+    "core/BUILD": {
+      "bytes": 862,
+      "git_blob": "42387f0e057681c5b240ca328c2757a151cbfa91",
+      "mode": "100644",
+      "sha256": "a9f4bfa794345de002ab1bfdcd1d8bb45104311387eb2808a444839e99f37ed7"
+    },
+    "core/src/main/java/flatgraph/AccessHelpers.java": {
+      "bytes": 484,
+      "git_blob": "f9e35a32021bf29dc32914057894452666a37819",
+      "mode": "100644",
+      "sha256": "bb281882c966a5e901637ea5195a8b3911a69fc1a5b0938904e301fd02031e11"
+    },
+    "core/src/main/java/flatgraph/GNode.java": {
+      "bytes": 3090,
+      "git_blob": "fbeb1c0b090ab5af1e7f4910e40d7593b7829ad6",
+      "mode": "100644",
+      "sha256": "86afa7bd3b2e4f144e88bf19deede45ab9cd11e929b4a450eb15c2225b3c3c47"
+    },
+    "core/src/main/java/flatgraph/GraphClosedException.java": {
+      "bytes": 268,
+      "git_blob": "69963567587720393e6575e18e1efb2340c0aac0",
+      "mode": "100644",
+      "sha256": "f78364f40e055283862273c6732b789a340f48c5d2b947bed743fc8b6d0cbae5"
+    },
+    "core/src/main/java/flatgraph/SchemaViolationException.java": {
+      "bytes": 280,
+      "git_blob": "3eaa35c73b7166eb62f41445d5bc28b424a7dfc4",
+      "mode": "100644",
+      "sha256": "a01c499bedf02981b8d2c4428f109dad765abe4b2c769fb1c04aa427f3def575"
+    },
+    "core/src/main/java/flatgraph/UnsupportedOperationException.java": {
+      "bytes": 295,
+      "git_blob": "fed487ecc94fd5f614727478cdd8b347ba969026",
+      "mode": "100644",
+      "sha256": "0ff99ef3f1d542551da6ab796a3f1874e4f276ef90706e6fedb68ef5327fd0fb"
+    },
+    "core/src/main/java/flatgraph/help/Doc.java": {
+      "bytes": 711,
+      "git_blob": "dc35cc5360a333516e49e82632856a94749f5b99",
+      "mode": "100644",
+      "sha256": "cee9f924b39456c873c978a603555fbff7ab9a6cd09a48e602c3a95870f9ee4f"
+    },
+    "core/src/main/java/flatgraph/util/DiffTool.java": {
+      "bytes": 8040,
+      "git_blob": "529fbcaf986d75f9d99a74f82c6ff52e0f942fe9",
+      "mode": "100644",
+      "sha256": "3cbb165258f1e4c864607e7863ace2a7a1e45367a5bf94737ef8c3caa126e17e"
+    },
+    "core/src/main/scala/flatgraph/Accessors.scala": {
+      "bytes": 10874,
+      "git_blob": "fcda353baf0c43903402bfc5a759f563f97163ad",
+      "mode": "100644",
+      "sha256": "a99d9050d28b1cb7176e0ec292dcd775033cfc9b43bbd1e942ff1444bee8e24f"
+    },
+    "core/src/main/scala/flatgraph/DNode.scala": {
+      "bytes": 818,
+      "git_blob": "195ad697349410572542b982f8a80a9292ad5b7f",
+      "mode": "100644",
+      "sha256": "4a94af765a22c992bfc02202d73ccdd41cfa8649b96d5645510b86997c4861ef"
+    },
+    "core/src/main/scala/flatgraph/DiffGraphApplier.scala": {
+      "bytes": 36363,
+      "git_blob": "ccd98275eb5688987bc6048369ace2a4f0f974eb",
+      "mode": "100644",
+      "sha256": "50bc48e726fd10363c65875eb1c59d51c80c4f6a4ebd74859dfb3d413c3acedb"
+    },
+    "core/src/main/scala/flatgraph/DiffGraphBuilder.scala": {
+      "bytes": 4216,
+      "git_blob": "60b85e65d5bc6f58188fc4bfda29c62dbf1d0450",
+      "mode": "100644",
+      "sha256": "37a3907579ce04e92181bd32bcc5ae210b52f7db718e07fab7d3da258b89eb5b"
+    },
+    "core/src/main/scala/flatgraph/Edge.scala": {
+      "bytes": 1094,
+      "git_blob": "d30f90f5cca54bb11c2392631bb0577598cb2897",
+      "mode": "100644",
+      "sha256": "79a1fd51388db53707013b1a7e19dcda719ff3149d01a841a73ccef4daf8f24c"
+    },
+    "core/src/main/scala/flatgraph/Graph.scala": {
+      "bytes": 7106,
+      "git_blob": "11421d808c304820f2b663525a395d2e09d0a156",
+      "mode": "100644",
+      "sha256": "50b7dbf3485eb48834aac5d4b8b6547a3c0dc6491e3f73f51d2abcc0e20fdaf2"
+    },
+    "core/src/main/scala/flatgraph/Implicits.scala": {
+      "bytes": 275,
+      "git_blob": "b68f8ec8383ffd3d35696fcf9efe7a13383183d9",
+      "mode": "100644",
+      "sha256": "47eeb49277737748a68b9183adabc9a5753986dcc9f3975fa9b07562e04e3351"
+    },
+    "core/src/main/scala/flatgraph/PropertyKey.scala": {
+      "bytes": 473,
+      "git_blob": "aa0a653ab972de664616b23a8a9ed2799b1d1760",
+      "mode": "100644",
+      "sha256": "d0838e9f4d4b7d009d4e476f42cb95cf6fc148db3b74db1fb034b62c83659d4d"
+    },
+    "core/src/main/scala/flatgraph/Schema.scala": {
+      "bytes": 9879,
+      "git_blob": "4aa8b32965caba550ecc793a3936885d3169292e",
+      "mode": "100644",
+      "sha256": "de489738beadd4779461ebc6ca1ad8c33e4083b5868e3bef74e615cf389f8088"
+    },
+    "core/src/main/scala/flatgraph/algorithm/DependencySequencer.scala": {
+      "bytes": 1487,
+      "git_blob": "c6238e9a59eab146498f6b30a75c5f8bb519d83f",
+      "mode": "100644",
+      "sha256": "c036d58f9faf190b572209cb9fcb733409bea2b1b2e4f956fe8bd8b545ec7cf9"
+    },
+    "core/src/main/scala/flatgraph/algorithm/LowestCommonAncestors.scala": {
+      "bytes": 1081,
+      "git_blob": "82a0c77378afee9b433f9f6e1e3a7d8c59a6df18",
+      "mode": "100644",
+      "sha256": "afc7747e65ef4d174700127a0c9cc90847eaaa32efaaaafc7f067350d99f8022"
+    },
+    "core/src/main/scala/flatgraph/algorithm/PathFinder.scala": {
+      "bytes": 2323,
+      "git_blob": "924edbcef029196d0756058201f00910874b5457",
+      "mode": "100644",
+      "sha256": "c95c918a8a9ac897f6980175f0f22e0f9062530fe012bc31909e19d392e5ad5d"
+    },
+    "core/src/main/scala/flatgraph/algorithm/package.scala": {
+      "bytes": 106,
+      "git_blob": "f5e00cfad812fefd385e01feface21b66d9240e3",
+      "mode": "100644",
+      "sha256": "bd49e52ea6658688d8f0f3ee2d647b20a1147521ab74034e8a242e6f560176e1"
+    },
+    "core/src/main/scala/flatgraph/help/DocFinder.scala": {
+      "bytes": 614,
+      "git_blob": "780fd39472934177045ae50e354e162ad0d05ad3",
+      "mode": "100644",
+      "sha256": "9189e784b31d54675327568846af154b8155c00632ea85e577a6c8c4d943959a"
+    },
+    "core/src/main/scala/flatgraph/help/DocSearchPackages.scala": {
+      "bytes": 549,
+      "git_blob": "c0daadb25e5138ca00d26f870a2900a567bbccb8",
+      "mode": "100644",
+      "sha256": "8ca9b803e3698a2d408e42f34a27646f6c7f5e0f55cd738c7e8900dd047565a6"
+    },
+    "core/src/main/scala/flatgraph/help/Traversal.java": {
+      "bytes": 174,
+      "git_blob": "ab61307687d2a812d79882d668b9fdd9b2784e55",
+      "mode": "100644",
+      "sha256": "7dddc58b7acc948eeeea5d42b3a84f4373ebd6e9b0c454092327bb4d8c3719a9"
+    },
+    "core/src/main/scala/flatgraph/help/TraversalSource.java": {
+      "bytes": 287,
+      "git_blob": "370b99b28e6d9d9f76745cd66e0ef087f083b306",
+      "mode": "100644",
+      "sha256": "d9fceacb4edf75c06cc68dd0b2b59aad192a957c09c50d95859e1d2879ae7945"
+    },
+    "core/src/main/scala/flatgraph/misc/Conversions.scala": {
+      "bytes": 371,
+      "git_blob": "39c20024259f7e05606c51832dcbbdb6d57dc8d3",
+      "mode": "100644",
+      "sha256": "e7525d675680c1b33d04e49875f5c23642315d9a11ae95bd7bf52bcfdf393996"
+    },
+    "core/src/main/scala/flatgraph/misc/DebugDump.scala": {
+      "bytes": 5012,
+      "git_blob": "f9af07699d303f4e3dc25a6297d92df209102968",
+      "mode": "100644",
+      "sha256": "3480737930518f90e2433cb54a93f3b2c6210a60a7952feb02ad33b06411ce38"
+    },
+    "core/src/main/scala/flatgraph/misc/ISeq.scala": {
+      "bytes": 1858,
+      "git_blob": "27093ac34379732c37a2fc77c6b1bc8f2f84b1f0",
+      "mode": "100644",
+      "sha256": "2a7d7d9756eec1fdfc7899d8e120f1fabb3255034cf26cc04e57caec8375fe2c"
+    },
+    "core/src/main/scala/flatgraph/misc/Misc.scala": {
+      "bytes": 1418,
+      "git_blob": "e1eb2842c43a58472e0425177cb6b4e66a9eeabe",
+      "mode": "100644",
+      "sha256": "1c302ba1f447399ccd0f3f2d5b45985de5e9039405a9a3c2f78ca01c8f445bc5"
+    },
+    "core/src/main/scala/flatgraph/misc/MultiDictIndex.scala": {
+      "bytes": 3588,
+      "git_blob": "3918dac0fbf5b871808e2674b14511547ceb89a4",
+      "mode": "100644",
+      "sha256": "1783df724292dc71e0d7943335a408db2a854baf1b4c0495805ce1ec81286f29"
+    },
+    "core/src/main/scala/flatgraph/misc/Regex.scala": {
+      "bytes": 808,
+      "git_blob": "042b9d5b92755d8b03211789e050d8f0c51af4f7",
+      "mode": "100644",
+      "sha256": "6ddd2cb8f4b882d863f3bd72ba689b71971c843761f054c03b86add6397f5d47"
+    },
+    "core/src/main/scala/flatgraph/misc/SchemaViolationReporter.scala": {
+      "bytes": 1499,
+      "git_blob": "f60cb84b3510a7b17f73155051039790413acd35",
+      "mode": "100644",
+      "sha256": "96d432fd772d682ddf3a6019d287482407553bfd3be6badf678fdece9836e47f"
+    },
+    "core/src/main/scala/flatgraph/misc/TestUtils.scala": {
+      "bytes": 2983,
+      "git_blob": "048f1c538a2bc20a65a633a95faa0c6fe0dc34ba",
+      "mode": "100644",
+      "sha256": "9542276cfb03c54b145f159862cd0d6474712f949cdcee81422b3920a65957d4"
+    },
+    "core/src/main/scala/flatgraph/storage/Deserialization.scala": {
+      "bytes": 13046,
+      "git_blob": "b77e5429e90b83c16fea347ce3873ea794ba6f24",
+      "mode": "100644",
+      "sha256": "84f4e76b15e2682565f9775662b938103721ff8f347303a6cce2d9800f2f0e40"
+    },
+    "core/src/main/scala/flatgraph/storage/Manifest.scala": {
+      "bytes": 6349,
+      "git_blob": "b5058f81ffae1e349ad4682717d73ae829193a40",
+      "mode": "100644",
+      "sha256": "04ffd2db1252db7fc4f0d666179a97e46bde55faf51a08b76c5d37d128d624a9"
+    },
+    "core/src/main/scala/flatgraph/storage/Serialization.scala": {
+      "bytes": 12353,
+      "git_blob": "fc9a862d452489ffbde02a833dd61ce9b19ba4be",
+      "mode": "100644",
+      "sha256": "3d0d97b01b77e91b86484fc4d9cee253f17d0bca3f34c8c8b8daa95729a94062"
+    },
+    "core/src/main/scala/flatgraph/storage/ZstdWrapper.scala": {
+      "bytes": 4833,
+      "git_blob": "5def10a64d4c26aafda940870a238d5e13d14140",
+      "mode": "100644",
+      "sha256": "abfda140c2f53a83e311223a0dff951ececd9ae6ee9a2ec8f4ae2a66f4855b4f"
+    },
+    "core/src/main/scala/flatgraph/storage/package.scala": {
+      "bytes": 1439,
+      "git_blob": "a811ccf068a4465a9c0dd881ad56527116c5e732",
+      "mode": "100644",
+      "sha256": "c091392b685236bc7276d1987eaf0552def243d54901510fdb3d5adec155de9e"
+    },
+    "core/src/main/scala/flatgraph/traversal/IterableOnceExtension.scala": {
+      "bytes": 1835,
+      "git_blob": "0b731d3ecd74c69cc8bbe4cc8973ab65d9a89149",
+      "mode": "100644",
+      "sha256": "b51d419d6241cd331b6f99f7739bb13b4ec22f90e7b3b05d62d3cc812348478b"
+    },
+    "core/src/main/scala/flatgraph/traversal/Language.scala": {
+      "bytes": 27621,
+      "git_blob": "a979accfcfe28b620ae03617838b024109f13c8a",
+      "mode": "100644",
+      "sha256": "da3db548fbd0309dbbad6ec3f175438552ec79d36ce6747156b6778a03c9605a"
+    },
+    "core/src/main/scala/flatgraph/traversal/NumericSteps.scala": {
+      "bytes": 1275,
+      "git_blob": "ff0e3b5384f2db4e074351f4a5070b56cacf9e02",
+      "mode": "100644",
+      "sha256": "aa5c720d7099d2eabdeff7f6cfa258f15e7bf0bbb4adeaf6716f97ff279e5aef"
+    },
+    "core/src/main/scala/flatgraph/traversal/PathAwareRepeatStep.scala": {
+      "bytes": 3678,
+      "git_blob": "e24250ce3cbba55376432fc6c4390d10084fd355",
+      "mode": "100644",
+      "sha256": "39d537a556a546a7c959d08decaa089af33e0f4eebe2894127c700e41e8cf3d3"
+    },
+    "core/src/main/scala/flatgraph/traversal/PathAwareTraversal.scala": {
+      "bytes": 3521,
+      "git_blob": "2e9644e828fdfe968458c0d2801ec0d55210cebd",
+      "mode": "100644",
+      "sha256": "094fc50664d64a6823680ca1a0f5282186944e303872590a1297ae542298843d"
+    },
+    "core/src/main/scala/flatgraph/traversal/RepeatBehaviour.scala": {
+      "bytes": 4739,
+      "git_blob": "d3a7fe1cf9aec9fb25ebdd607e3feb19a6c7991b",
+      "mode": "100644",
+      "sha256": "3ef06d9724f7f6a70b24db10ef19cda21b1767e28d2a93ca45d4bf6d18e83eb1"
+    },
+    "core/src/main/scala/flatgraph/traversal/RepeatStep.scala": {
+      "bytes": 4283,
+      "git_blob": "3d808d5169242c8f8f82cc50017357b10842a5cc",
+      "mode": "100644",
+      "sha256": "073e0030b25e753f07c54b2115abb92096cd4db66ce4c036ceedc73b23ee2c7e"
+    },
+    "core/src/test/scala/flatgraph/DiffGraphTests.scala": {
+      "bytes": 1889,
+      "git_blob": "5580dd3d5640c35acd5e22cf36d1a10e0031ec8a",
+      "mode": "100644",
+      "sha256": "221260b5f4f1d5b406065694f4f0e145eb0cad73d8aeb38dd15a38af3e7d212e"
+    },
+    "core/src/test/scala/flatgraph/GraphTests.scala": {
+      "bytes": 48979,
+      "git_blob": "adc390502402dbc08cc939391394cfb98ad87f92",
+      "mode": "100644",
+      "sha256": "a104674a95cbd09c7881dc2d3d2b25c8d3875f740b511e4edf62bebedd81457a"
+    },
+    "core/src/test/scala/flatgraph/SerializationTests.scala": {
+      "bytes": 4628,
+      "git_blob": "5a36f6035603a26bcc41ad52fe12614a27ecfc29",
+      "mode": "100644",
+      "sha256": "1e0dcc912b3788b084c239bfe63dbbec803eb589772cecc6a1e4b38da3908795"
+    },
+    "core/src/test/scala/flatgraph/TestHelpers.scala": {
+      "bytes": 2387,
+      "git_blob": "b88bc394e51ea1fa4867fc6d492f27252d8f2f83",
+      "mode": "100644",
+      "sha256": "b4669578d069f971d5aece85b532838e46827458dde80bb9734260b9bd9aa9bf"
+    },
+    "core/src/test/scala/flatgraph/algorithm/DependencySequencerTests.scala": {
+      "bytes": 2922,
+      "git_blob": "03854a01048de35d91f539bdf3c0698dfad94471",
+      "mode": "100644",
+      "sha256": "7009c13409568f4cb31b6b7417381d33cbf611dac88294f5e295229469c56a0a"
+    },
+    "core/src/test/scala/flatgraph/algorithm/LowestCommonAncestorsTests.scala": {
+      "bytes": 2432,
+      "git_blob": "db8f52a403428f5266f12f1db720f66383187651",
+      "mode": "100644",
+      "sha256": "841beb9ac1fedc83a17ee36042d88b1a301865f0cab3b466dd4bedb6e1d2abe2"
+    },
+    "core/src/test/scala/flatgraph/misc/ISeqTests.scala": {
+      "bytes": 851,
+      "git_blob": "869d3c011c34d09447a4307a96091d28c55675a3",
+      "mode": "100644",
+      "sha256": "be091e7745e573cce4f781f0e9a9462dc77f6cf171268522105599bf95a8be60"
+    },
+    "core/src/test/scala/flatgraph/misc/MultiDictIndexTest.scala": {
+      "bytes": 1162,
+      "git_blob": "ba31effc59a46dd1bc9cc0ee98d8cfa0a6dc5fd0",
+      "mode": "100644",
+      "sha256": "caf3afa17017d47f94a16e996625f7684839f429e1eabb1ff0e4e5dbcf03b45c"
+    },
+    "core/src/test/scala/flatgraph/misc/RegexTests.scala": {
+      "bytes": 553,
+      "git_blob": "b0ffdf70fc188fcf9f9a8967d93c4d01db47e0ef",
+      "mode": "100644",
+      "sha256": "3f7050439a622788db574c567f434b5244ea99430d645665064be396e6da5494"
+    },
+    "core/src/test/scala/flatgraph/traversal/IterableOnceExtensionTests.scala": {
+      "bytes": 2205,
+      "git_blob": "34d8165679fcab87ebcaa132cacdc48f5a9fd570",
+      "mode": "100644",
+      "sha256": "3c156b5117a363291ab297cb4881e9ec216e166a4ca9c1acb8dbd16b6c6193e5"
+    },
+    "core/src/test/scala/flatgraph/util/DiffToolTests.scala": {
+      "bytes": 4504,
+      "git_blob": "db8aaf469864350da408d6d5a8748e8b37650dfe",
+      "mode": "100644",
+      "sha256": "85270c880c7e2edcf6adcef3b0f947cc0b57aef9a8f4e9df9becf95a0d8a354f"
+    },
+    "doc/images/yourkit.png": {
+      "bytes": 3886,
+      "git_blob": "ac284c2134a75f0cfc667da68fcf4d7d10a390a5",
+      "mode": "100644",
+      "sha256": "9bec6fc292bacdc2b362d34936c9f6e0a9cdf63af9417d1635cecb29da456097"
+    },
+    "domain-classes-generator/BUILD": {
+      "bytes": 781,
+      "git_blob": "bba654f5f21451914694b2be3c2d10eba2d2e08f",
+      "mode": "100644",
+      "sha256": "ef16edc5016e049897fc448819ec2ba6262a1376fd8230fbfd3e4b8913270dd0"
+    },
+    "domain-classes-generator/src/main/scala/flatgraph/algorithm/LowestCommonAncestors.scala": {
+      "bytes": 1011,
+      "git_blob": "0cf92dbc0dd3bfd5897091d608f8e895bfaef48e",
+      "mode": "100644",
+      "sha256": "336ecbd276761e3c0ac99ce6c3549b7634dae06b9cae77da01e1408ce0a511f4"
+    },
+    "domain-classes-generator/src/main/scala/flatgraph/codegen/CodeSnippets.scala": {
+      "bytes": 20789,
+      "git_blob": "d6a7afebed368e6a0158b7f43cada55b2c7ae612",
+      "mode": "100644",
+      "sha256": "222c09186846ac72a09b2db504ba65b85d302bbb3a76e54a8b61964a72d866a0"
+    },
+    "domain-classes-generator/src/main/scala/flatgraph/codegen/DomainClassesGenerator.scala": {
+      "bytes": 79640,
+      "git_blob": "dcb7a751c57fce2883347709c767a1841972a2a7",
+      "mode": "100644",
+      "sha256": "8d6aa57312ff3b454c922765ef8304d05706233e22295798533a120cf6ea955b"
+    },
+    "domain-classes-generator/src/main/scala/flatgraph/codegen/Formatter.scala": {
+      "bytes": 1105,
+      "git_blob": "775bb089d1edb7b10c3b16db4d1e330121b6cc92",
+      "mode": "100644",
+      "sha256": "d985390b93d1299aebfe382b0be19db48da73245cc917a7f54c491d58b4f23c4"
+    },
+    "domain-classes-generator/src/main/scala/flatgraph/codegen/Helpers.scala": {
+      "bytes": 9131,
+      "git_blob": "7dcf7da9960a35e2d8f1dfba8d5485e3c7d32138",
+      "mode": "100644",
+      "sha256": "06d83baad3654de0debb79c2861f0329bc67cf847cd274abdfe8b5ed4bca158d"
+    },
+    "domain-classes-generator/src/main/scala/flatgraph/codegen/Main.scala": {
+      "bytes": 2689,
+      "git_blob": "04ee816b27abd576c21daa2a850d579866ac9346",
+      "mode": "100644",
+      "sha256": "112a13fb35f5fc0e1aafeecdd012085d764baeb0863805cb53a7f0b711a7ce6d"
+    },
+    "domain-classes-generator/src/main/scala/flatgraph/codegen/ProtoGen.scala": {
+      "bytes": 8428,
+      "git_blob": "bb74760707c7835362439c38906c27d9f0f1b50a",
+      "mode": "100644",
+      "sha256": "46bcf932f6da7cc98aa4ed6f9245e3378abd60a68a66e50ceee29451eba52a47"
+    },
+    "domain-classes-generator/src/main/scala/flatgraph/schema/Helpers.scala": {
+      "bytes": 1728,
+      "git_blob": "a355108a0c810ec34379699a25b635902e4a5b66",
+      "mode": "100644",
+      "sha256": "1363e3fc25878e18f47845c76fead9d5b2ceba95e3a20d626ebe565187825413"
+    },
+    "domain-classes-generator/src/main/scala/flatgraph/schema/Schema.scala": {
+      "bytes": 13534,
+      "git_blob": "2c4b6a935c3208e91ecf7a48ca2c7514bfec9d42",
+      "mode": "100644",
+      "sha256": "ffcbf5c3e91a986301feacdda61b8624018d9a035c45984df306638d9840d470"
+    },
+    "domain-classes-generator/src/main/scala/flatgraph/schema/SchemaBuilder.scala": {
+      "bytes": 4246,
+      "git_blob": "89ee854f1024cde22680fe481929e6878b74c772",
+      "mode": "100644",
+      "sha256": "9f59f3e86b7dcb0c8807c709673853fd3bce370eb2e29055089851599c7729c1"
+    },
+    "domain-classes-generator/src/main/scala/flatgraph/schema/package.scala": {
+      "bytes": 376,
+      "git_blob": "3b6cf43a45a0013b5dde3f463f0854ed7ec6b94e",
+      "mode": "100644",
+      "sha256": "eb967fcbd18295e003b32bbd9f31a4223ff6d520901d2c58738a2386b33dca75"
+    },
+    "format_maven_install.json": {
+      "bytes": 30273,
+      "git_blob": "062ae59f4ac4a65a506dcbda339ba796daa69cb5",
+      "mode": "100644",
+      "sha256": "5eeefbd9be48a625af3b1c8b6abe9eb7dc39d48d2176c537dc36042a4ef23339"
+    },
+    "formats/BUILD": {
+      "bytes": 518,
+      "git_blob": "c3e33513c47ca9691538e69dd24c7cdd830287dd",
+      "mode": "100644",
+      "sha256": "6aca8f544936a1a64a70d1d35a0922db310aa50a26b38bee1888aa11debb9a4d"
+    },
+    "formats/src/main/scala/flatgraph/formats/Exporter.scala": {
+      "bytes": 639,
+      "git_blob": "b4ada238ce309fe001cdaa2bb793c6e5ede34031",
+      "mode": "100644",
+      "sha256": "297e458fded2aa26011aad88df1cf1977a0454c432fe281aa3cfb4457f42629b"
+    },
+    "formats/src/main/scala/flatgraph/formats/ExporterMain.scala": {
+      "bytes": 2830,
+      "git_blob": "dd6ed749d3d59ba4ea919ee5abd8bdcced29b725",
+      "mode": "100644",
+      "sha256": "65f74c93b9fcbee0ba9747a94d2aad3084ad90f0d66d65ffcb635557c8476d79"
+    },
+    "formats/src/main/scala/flatgraph/formats/Importer.scala": {
+      "bytes": 450,
+      "git_blob": "ed3bc84bdae612644f931c18269ec12bc75fd97a",
+      "mode": "100644",
+      "sha256": "6fada644ed15a321077850f30b716c3f039b6708b0af92a8a9b2b40e0e18f414"
+    },
+    "formats/src/main/scala/flatgraph/formats/ImporterMain.scala": {
+      "bytes": 3490,
+      "git_blob": "a2bc4e0727cc2892e45d2848636be854d9ace1ed",
+      "mode": "100644",
+      "sha256": "5bc5803c6b75bbbbbf9cd4b138c61c4dbd078e112f6e8302f8251974ba223119"
+    },
+    "formats/src/main/scala/flatgraph/formats/dot/DotExporter.scala": {
+      "bytes": 4000,
+      "git_blob": "eece059fe0d6a0538e60c346d3ab6c946208e947",
+      "mode": "100644",
+      "sha256": "c5c1353960a24a933c3fa268b7231bbb3a7ee2ceca4e74f332c2e189393d87e4"
+    },
+    "formats/src/main/scala/flatgraph/formats/graphml/GraphMLExporter.scala": {
+      "bytes": 6504,
+      "git_blob": "6d8d11964053b4120b326ab44f56adb207393c7e",
+      "mode": "100644",
+      "sha256": "95e46400bd7ac6302a5eb5a3b8a6d89561ed2f98e79039b34f293bf55c67a492"
+    },
+    "formats/src/main/scala/flatgraph/formats/graphml/GraphMLImporter.scala": {
+      "bytes": 5716,
+      "git_blob": "2eaa986b20faa402a693a41879774edc0f9487d3",
+      "mode": "100644",
+      "sha256": "46b0f80fdbda0b4c178ae04cac704b66cd93b3ece43c7525a29d07af7cdaf01d"
+    },
+    "formats/src/main/scala/flatgraph/formats/graphml/package.scala": {
+      "bytes": 1219,
+      "git_blob": "2d206e484f4f85396387e94414d600f4f613d2ee",
+      "mode": "100644",
+      "sha256": "4e4339c38adb1170779ca94c8b3ffefd44a6aeda5e23c17d9f5f8ff835a0f301"
+    },
+    "formats/src/main/scala/flatgraph/formats/graphson/GraphSONExporter.scala": {
+      "bytes": 6415,
+      "git_blob": "e56c10c9eedcf1e8357b4f05ee9d3a572816f856",
+      "mode": "100644",
+      "sha256": "917122b65beec426a8ca889bf3f24d22f5c76699fd89c7bb18cc66f7f5b9fe92"
+    },
+    "formats/src/main/scala/flatgraph/formats/graphson/GraphSONImporter.scala": {
+      "bytes": 3757,
+      "git_blob": "931791a4ab4a6e41aa7c515281b0b0c76f84cbc5",
+      "mode": "100644",
+      "sha256": "4d50206ccccc12e2252aa8c6a7cb2abf37d9a9b69b5dc123c6d4d718b466d0c5"
+    },
+    "formats/src/main/scala/flatgraph/formats/graphson/GraphSONProtocol.scala": {
+      "bytes": 3187,
+      "git_blob": "99f79d695ef74096f9ad61c3f26f612724f27b9c",
+      "mode": "100644",
+      "sha256": "072d7cc67f7e30bf0bb2059652700cede1da85914472e54c9fd20979aabe9e22"
+    },
+    "formats/src/main/scala/flatgraph/formats/graphson/package.scala": {
+      "bytes": 3150,
+      "git_blob": "560d37bb5878307a164b606c95865247e8305eac",
+      "mode": "100644",
+      "sha256": "b74fdff595eb6f40ccd105272fbd538f6afb311d44081f91aba9c01d7bab8567"
+    },
+    "formats/src/main/scala/flatgraph/formats/neo4jcsv/ColumnDefinitions.scala": {
+      "bytes": 7504,
+      "git_blob": "de5364c257a3f06dc2859a41c80c7225f463c5f8",
+      "mode": "100644",
+      "sha256": "34e7fd05a2d426d33cac60d9240fa68e2f1c5dc9118e16b67338fa022f19a6d4"
+    },
+    "formats/src/main/scala/flatgraph/formats/neo4jcsv/Neo4jCsvExporter.scala": {
+      "bytes": 8103,
+      "git_blob": "b620ff6f96c36b3ed7ca960c937f0e2b217c827d",
+      "mode": "100644",
+      "sha256": "6fed32d2ff95d11e40c8dc769ea7612acab0752c03c422733d4e362ce343099b"
+    },
+    "formats/src/main/scala/flatgraph/formats/neo4jcsv/Neo4jCsvImporter.scala": {
+      "bytes": 14248,
+      "git_blob": "72484f335b9c7a9e6aa83f0275f62ce25e111990",
+      "mode": "100644",
+      "sha256": "c7f31347c0c1dfe305499d905f8ec4773f63c97aaabc53a242d4b3bfd1ad6054"
+    },
+    "formats/src/main/scala/flatgraph/formats/neo4jcsv/package.scala": {
+      "bytes": 1369,
+      "git_blob": "40bc6a4c60085c3dff7804b03b596738bfc2c68c",
+      "mode": "100644",
+      "sha256": "5504e3dc69fcdf52002ae038ef54cc43133711d2bd41cacf99a6bc0928485286"
+    },
+    "formats/src/main/scala/flatgraph/formats/package.scala": {
+      "bytes": 1759,
+      "git_blob": "33d2b53184130d38369bee921aee0c322c1e0d34",
+      "mode": "100644",
+      "sha256": "6f21a7e1352167eddf5fddaedc9657732f9c2606d1d2098f8ae7053b5e0aa980"
+    },
+    "help/BUILD": {
+      "bytes": 402,
+      "git_blob": "d86577b0b4dfc2efeb2b1183f5762a28ad79ef73",
+      "mode": "100644",
+      "sha256": "d742e6ce6273ebe03a08960f0aa919b1870b90c8be83b2b2db26abf7a6fcf3d6"
+    },
+    "help/src/main/scala/flatgraph/help/Language.scala": {
+      "bytes": 2413,
+      "git_blob": "e043e1820ea8e66da9190b8a70df46497b3dc925",
+      "mode": "100644",
+      "sha256": "03c5766803cb6797a70e55420a19cbd887f20a33a63b0beed8dd2c27c21c5231"
+    },
+    "help/src/main/scala/flatgraph/help/Table.scala": {
+      "bytes": 3623,
+      "git_blob": "5d858906c3709d6dd71b6968d4721cdc19bbc4be",
+      "mode": "100644",
+      "sha256": "5b4b33dde4c1d04f5605a16d2783face5219022d650f2f38e8a25775171bf76e"
+    },
+    "help/src/main/scala/flatgraph/help/TraversalHelp.scala": {
+      "bytes": 4608,
+      "git_blob": "2aca46688c777e2d28a58f33d3060ce91c877318",
+      "mode": "100644",
+      "sha256": "8c28aeaac433c3cb47761939ab10f9d4a626f4bbfa5f1004d0b35bb08b66fcde"
+    },
+    "help/src/test/scala/flatgraph/help/TableTests.scala": {
+      "bytes": 5204,
+      "git_blob": "16ec99191c08be82e340a8f711d3a70587ca9d1c",
+      "mode": "100644",
+      "sha256": "544872817bc6f4de2f0b4fd95f5d2f8c81c606d27d6928fb2a50ca3916e19325"
+    },
+    "maven_install.json": {
+      "bytes": 34816,
+      "git_blob": "bf35be24f3c10b6f5bcbe8cb008434563f2a6265",
+      "mode": "100644",
+      "sha256": "0b144dd844a7c205a41d38b8deec37a8becc0c5766e6a618d29de9cea1e67748"
+    },
+    "odb-convert/BUILD": {
+      "bytes": 459,
+      "git_blob": "2bfec1de24a8fb8eab739adc285c8579afbcc808",
+      "mode": "100644",
+      "sha256": "86a092e10bf40ff7e66c1a2a8c2d1fb85e60be86c35a96f4e62a3c84da6c4df3"
+    },
+    "odb-convert/src/main/scala/flatgraph/convert/Convert.scala": {
+      "bytes": 21237,
+      "git_blob": "d929173e68d064d3f6bc475e6a74e6ac16cc01dc",
+      "mode": "100644",
+      "sha256": "08da1a91f61aa1d54748feb57610a2ece94e4c6fb7dbf34ab57c4d7c5fabfae5"
+    },
+    "project/FileUtils.scala": {
+      "bytes": 597,
+      "git_blob": "411760796734ca9c58c919f07e577e2230d87642",
+      "mode": "100644",
+      "sha256": "9e5c17eae688f8667aecd79ed3051496302a65cfe13eebfe7eaaa47e3e8d85ba"
+    },
+    "project/build.properties": {
+      "bytes": 19,
+      "git_blob": "c9aaa51627c02c620ef9770c5bc1f399c6d5c530",
+      "mode": "100644",
+      "sha256": "6fa96f0d6a5ad86493890056879928e5f86d8c59d4367988395df5f9ce73dc34"
+    },
+    "project/plugins.sbt": {
+      "bytes": 351,
+      "git_blob": "8cf35e02f4a31e3ea40778854631e14dae000247",
+      "mode": "100644",
+      "sha256": "17f768c4c41931a44667c5540f65696b217d23a0cb026e9c723736d3b6be3a5f"
+    },
+    "runBenchmarks.sh": {
+      "bytes": 905,
+      "git_blob": "aaa2b0360d198f06725f259383790be5c57e9078",
+      "mode": "100755",
+      "sha256": "9f8ee6dc23377ce6c61f7be61064752ba331b94c6a318c740218d3e56bc52a2d"
+    },
+    "sbt-flatgraph/src/main/scala/flatgraph/codegen/sbt/FileUtils.scala": {
+      "bytes": 1087,
+      "git_blob": "44dd029d7139e11ba4413ea62249989539975716",
+      "mode": "100644",
+      "sha256": "a90cce7839ead69dbf53e35ee475a9624c729264727713d1feff061faaf0a064"
+    },
+    "sbt-flatgraph/src/main/scala/flatgraph/codegen/sbt/FlatgraphCodegenSbtPlugin.scala": {
+      "bytes": 6340,
+      "git_blob": "7813945ceb923f3b65c892d688f7c46cfa2ad890",
+      "mode": "100644",
+      "sha256": "26e82922daa433ecb7986753baa33d53c3f6f03ab6d1a113840c906c1243e8fa"
+    },
+    "test-schemas-domain-classes-scala3/BUILD": {
+      "bytes": 722,
+      "git_blob": "381d61e872a4095e91683584f32b6d36be1c1853",
+      "mode": "100644",
+      "sha256": "ffbd12289785a65f00d31d5112d4a46694c3865c7cd838eb9572a21cc33ec3bb"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/CpgMinified.scala": {
+      "bytes": 4448,
+      "git_blob": "ef1cfcd46e761ed3e213106aed987fe4faa72f08",
+      "mode": "100644",
+      "sha256": "692bebba7e107687caae2d5603741780538659874226e805bd882dea7a09bc3e"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/EdgeTypes.java": {
+      "bytes": 241,
+      "git_blob": "e5491f4590ccb0e59c4a28568ca93232184a7a54",
+      "mode": "100644",
+      "sha256": "a262706048566de83c19ecbaf25ff25b09e4865bd7ba48b38e633b82ad7a393b"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/GraphSchema.scala": {
+      "bytes": 5074,
+      "git_blob": "34438a370581dad2058f7a68b3ff653b0ea0338e",
+      "mode": "100644",
+      "sha256": "259c9d9aa7df886b02bbfa759a3ac4e9dc6e05633e9e1b70061f4646911ffc71"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/NodeTypes.java": {
+      "bytes": 302,
+      "git_blob": "9ad9cf72b63bc7331bf5d81673f5413d19317a86",
+      "mode": "100644",
+      "sha256": "c5b43c56aac0b1f84e785ae06ea80b20cb3fd5c04459f0681522d6b533433681"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/Properties.scala": {
+      "bytes": 400,
+      "git_blob": "45e399067c493ccca0f58e4f880f66b4392f3636",
+      "mode": "100644",
+      "sha256": "b10e9b57d9b8e242e6c4a1e762bc70c67d21ef6a9f0cc13dae0e19c34aded5cd"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/PropertyDefaults.scala": {
+      "bytes": 166,
+      "git_blob": "b66d9292bfd4b7647bd256da1b4614a4d1e6cb23",
+      "mode": "100644",
+      "sha256": "ceceda8be0e705149f717b0767a78312ecbc58c11a7272eec51380b568891f7e"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/PropertyErrorRegister.scala": {
+      "bytes": 481,
+      "git_blob": "61f8db19d831c8148b3d794f66b6d5727ce830b8",
+      "mode": "100644",
+      "sha256": "ac7a92ee79f68a3809aa1afc3bf373e5b165fd155f020f9992867d193a75868a"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/PropertyNames.scala": {
+      "bytes": 376,
+      "git_blob": "4bfe9f53633262bfa17ded5fed7d9bcc41001add",
+      "mode": "100644",
+      "sha256": "48f5a540f8678156fdc253f5c776e1db12bc194d34f8a9ed4822621cab233e0c"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/accessors/Accessors.scala": {
+      "bytes": 3569,
+      "git_blob": "ef86610cf8b768d2c910ae5a30374f439df523c7",
+      "mode": "100644",
+      "sha256": "5a2312b4158209002e85c49a69d77a23dd4656e43c6bafecea479da34c64863c"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/edges/EdgeTypes.scala": {
+      "bytes": 276,
+      "git_blob": "860c039584ba7569f8f2c1f1af2909db13be888e",
+      "mode": "100644",
+      "sha256": "b31a1d5e3d1ce5c7f11aedbaf8037d77d90b4417e12f6a58627d9269c91421da"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/language.scala": {
+      "bytes": 538,
+      "git_blob": "62d495c070165b34103f4264d3f956db6fd5462d",
+      "mode": "100644",
+      "sha256": "5ff335cfbffe7de58f067a47f125dde4ce0c13247c0bd8271fae17e3094a2933"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/neighboraccessors/Call.scala": {
+      "bytes": 1073,
+      "git_blob": "5672d7e0794644e5abe898bbbec887a04f23f648",
+      "mode": "100644",
+      "sha256": "09e7bb3d5c6802b208760cda8b0a50d44649cea6c4a167da2d3658b1a31c9597"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/neighboraccessors/Method.scala": {
+      "bytes": 746,
+      "git_blob": "15763898d7970b51aa2dd834762ebf1f32d0ab51",
+      "mode": "100644",
+      "sha256": "8aa7f3cf82d6feb99593b1fbfa86cc5799d48236a71af11c0d6b79ebd290f3cc"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/neighboraccessors/package.scala": {
+      "bytes": 866,
+      "git_blob": "bbf26bb95413c79cf3e1f745f3cf26b02d0c9812",
+      "mode": "100644",
+      "sha256": "813ce39eb2e9a99eb3101cd997a98a931676fc61b4882e5840249927d9b7dbe1"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/nodes/BaseTypes.scala": {
+      "bytes": 1796,
+      "git_blob": "e4457c7c2241ae5936c68da8f772f3fea5cd5c65",
+      "mode": "100644",
+      "sha256": "54cad0d1cede8ff529fbf5c0ab0e929545d8c0208a8f9474dae5dc21e4676e54"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/nodes/Call.scala": {
+      "bytes": 2072,
+      "git_blob": "71fa009de137b1e2ade8798383668226f1f36d58",
+      "mode": "100644",
+      "sha256": "258f2cda174ef253411c6f89e0f127435516c2d867a2cc86bdbea12c5edbdcfb"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/nodes/Method.scala": {
+      "bytes": 1582,
+      "git_blob": "b4fc28f27f89a24839c94584c0fc298335bc1627",
+      "mode": "100644",
+      "sha256": "91e2f48b3c217643eb0a101530c70e3d00c5a93db5ea87bfeda2455d3d98a554"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/nodes/NewCall.scala": {
+      "bytes": 4856,
+      "git_blob": "ef54675eefe80eb09423f63ae7b2f1ed65bb4e8e",
+      "mode": "100644",
+      "sha256": "f40d5aac2bda8745c136fd5c9d5fa017d8620eebfecafc2d1187bdf46da2703e"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/nodes/NewMethod.scala": {
+      "bytes": 2625,
+      "git_blob": "b88adfc322c985239de930f230963e59671923b7",
+      "mode": "100644",
+      "sha256": "3d6c414bc9a7bc9bee73535d0fd1e9a702b6c024887909ef69b840ad5e42ad84"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/nodes/RootTypes.scala": {
+      "bytes": 1551,
+      "git_blob": "206c767892813d1cf5177579190ccd74f6987752",
+      "mode": "100644",
+      "sha256": "5db6495e43ae36c90577f3a9aaed727c0e771af3c056aa5a1082f66b213f5e51"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/nodes/RootTypesTraversals.scala": {
+      "bytes": 249,
+      "git_blob": "1145eaeb7d0749c8a904d38556d538429c661ada",
+      "mode": "100644",
+      "sha256": "7b9fcb6a9623c362305f1300b7aa3d400248d9737649d8ed4fe9c672d14ebf39"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/package.scala": {
+      "bytes": 428,
+      "git_blob": "262c16a7ebad25fbd367466e1a3cb7108a6891af",
+      "mode": "100644",
+      "sha256": "a42a62f7cffe82125ec7dd05088bcf33f9ab5f1e434477b51b616063ec8c2441"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/traversals/TraversalCallBase.scala": {
+      "bytes": 3144,
+      "git_blob": "dab38d9bdc9c2de30a69cb6e361004a9e9e5d1be",
+      "mode": "100644",
+      "sha256": "3decdaa4fddb98613c3ab5dd7e16b440e2b316116a50b18e04a032868216728f"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/traversals/TraversalCallreprBase.scala": {
+      "bytes": 4794,
+      "git_blob": "ec2f08cd260644d222b050410db1ab32af30d59c",
+      "mode": "100644",
+      "sha256": "e399c86cb1600a02ad0c3e9e8a588f74612a108f4ab1e03af25cee43d9dc95a3"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/traversals/TraversalDeclarationBase.scala": {
+      "bytes": 2966,
+      "git_blob": "61b0046d3349757ee9f44272a00eea6312f90b1c",
+      "mode": "100644",
+      "sha256": "7a113fa0446fb0d7b9591e0513ea06b4d3605e8455c59a98983a56be3fd8b24a"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/traversals/TraversalMethodBase.scala": {
+      "bytes": 300,
+      "git_blob": "b45d867a85afd053cdd2bec04f54d0881420cfa2",
+      "mode": "100644",
+      "sha256": "4ae870bc57dc63f39936753822ada5c9f0aa877744e66f1195b28c5450cf792f"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/traversals/TraversalPropertyDispatchType.scala": {
+      "bytes": 3207,
+      "git_blob": "cf24c48b8fe35b9494d0da5e32e66f55964dd228",
+      "mode": "100644",
+      "sha256": "f072d9876da3553e1cf5a3e0ee230f30ed00becbcf035fd2d423c1c5b8bc9df3"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/traversals/TraversalPropertyName.scala": {
+      "bytes": 2999,
+      "git_blob": "74a363fd8a0108c88ac2f28784e13409124bcfcf",
+      "mode": "100644",
+      "sha256": "621abc8ed8f6618ce7623f71097635ae8a0f4f08bf19644c55b1050138bdd7aa"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/traversals/TraversalPropertyOrder.scala": {
+      "bytes": 2181,
+      "git_blob": "429d6090ff28e31e816570d814f3b294e073c127",
+      "mode": "100644",
+      "sha256": "87799542a723ccf5e7b8554adc06f3cae678ef2423ba17ea7af7575a107dcb12"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/codepropertygraphminified/traversals/package.scala": {
+      "bytes": 2099,
+      "git_blob": "9e32320373659db5b62952c26f0eda688ce6d869",
+      "mode": "100644",
+      "sha256": "941141d48ad2a42a662dcd1c282788352bb16777e7bc679c609c9dafd3fe5ab2"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/empty/EdgeTypes.java": {
+      "bytes": 168,
+      "git_blob": "f5066d47b3bd4719e4dd56b7d7e51de779481862",
+      "mode": "100644",
+      "sha256": "b36c6ba8d8b295f221e7dc0d1de5e9e7c112bc591340866d4f19d4915eefb216"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/empty/Empty.scala": {
+      "bytes": 3650,
+      "git_blob": "0439ac73bf98309231038dfa73b7efdda04c7da4",
+      "mode": "100644",
+      "sha256": "feb751136b2997db94d262d7b47e4951be548e2cdf77ac46eae300197740aa3d"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/empty/GraphSchema.scala": {
+      "bytes": 4136,
+      "git_blob": "e35f280f517acdedc1ad4d81f9090ba333b6ed09",
+      "mode": "100644",
+      "sha256": "afadc002fb9da239011951b4f211df80d89a9617de1468fab6c5ba596bc92b68"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/empty/NodeTypes.java": {
+      "bytes": 168,
+      "git_blob": "111b237204402ae94acefef28326927ebb2d6989",
+      "mode": "100644",
+      "sha256": "5ce06b38392f56cd0ffbca2eaa822dc0fb3e1449c8a10d14cf9850ca9bef8dd4"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/empty/Properties.scala": {
+      "bytes": 48,
+      "git_blob": "ae3eea528cea3d4f4cba9610ad2b5956c0b8dfe3",
+      "mode": "100644",
+      "sha256": "66ebda9980c613169bb3d9bd52569fdf307568c93549cc310fe07f8e3cc39c65"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/empty/PropertyDefaults.scala": {
+      "bytes": 54,
+      "git_blob": "f219c1a8e2df146505a59c804230b0edf89cf1f0",
+      "mode": "100644",
+      "sha256": "d43f089145441af588c4ddd249dceab71eb583f6568301348dee9ad993752def"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/empty/PropertyErrorRegister.scala": {
+      "bytes": 461,
+      "git_blob": "c67decbe605f2b3539200f4ad24701db7ab50e87",
+      "mode": "100644",
+      "sha256": "2a7da8caad98af81ca5a3a883167c50c3cbf3afd36423e3066b506103363e8ca"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/empty/PropertyNames.scala": {
+      "bytes": 209,
+      "git_blob": "befa7f8bf15406fd672cbbdba40b1f781a7d237c",
+      "mode": "100644",
+      "sha256": "4e3c853b1825d7667ebb6c615e40a9acbe9b582c1cbb47b0051a18708cb657dd"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/empty/accessors/Accessors.scala": {
+      "bytes": 576,
+      "git_blob": "35edf87dce89f06b438087fe0de6b4d024f69cf5",
+      "mode": "100644",
+      "sha256": "6816af9886d510ce2fd3ef006d491a4aa8864b9f09a6402bdb19ecf45512f6e7"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/empty/language.scala": {
+      "bytes": 500,
+      "git_blob": "9048e03f5d2a866fa7219de9f9b01f7c4ce69064",
+      "mode": "100644",
+      "sha256": "9134a44b1e61a52ddf3df0e289fbe76164087ece84983e5aed2e450993b7b770"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/empty/neighboraccessors/package.scala": {
+      "bytes": 192,
+      "git_blob": "f81c6100efa1318bf030c0208e09f018c0acd73f",
+      "mode": "100644",
+      "sha256": "923e9894e0f7f737f620a7cc35ae39bf9c913f61f325722d203595ca911f72e5"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/empty/nodes/BaseTypes.scala": {
+      "bytes": 32,
+      "git_blob": "6f8c93d23b1932a91edafee119103fcb41c74dfd",
+      "mode": "100644",
+      "sha256": "2ef99d54d416b5beff742995b74ff30af31cff58e368863935da3a66db96b69b"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/empty/nodes/RootTypes.scala": {
+      "bytes": 1114,
+      "git_blob": "4be1bb2a1a0fbd52d9e9caa58074908e2e6281bb",
+      "mode": "100644",
+      "sha256": "d8927ad04c24dcad526634d2f6882c5528b056ff39856db82f869cfebf44c086"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/empty/package.scala": {
+      "bytes": 408,
+      "git_blob": "96ef93e4286ada307e4e8db567abafdaff0e49ed",
+      "mode": "100644",
+      "sha256": "433b0aa7fcbf209313a8b85009858934e786c2207d26da08f8fdc470e8f23677"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/empty/traversals/package.scala": {
+      "bytes": 385,
+      "git_blob": "94384c6eff57a9abb81b03795f740bd372c55081",
+      "mode": "100644",
+      "sha256": "3a09ac0586bdda26ad28980a0fce340dee6b2d5bf652a8698c5966c37b1ffac8"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/EdgeTypes.java": {
+      "bytes": 326,
+      "git_blob": "ef74bddbc9e4390bf7a3946b564b7a694e7fb7a5",
+      "mode": "100644",
+      "sha256": "20405a5ea268b171f85f7c95022b79e1a0b91d9b342a7100f4464238b384065c"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/GenericDomain.scala": {
+      "bytes": 4095,
+      "git_blob": "50f10b3dac83b4731ad0328a1d56f230a77fc4c4",
+      "mode": "100644",
+      "sha256": "aab5b6a0427eba336d56da542beb79689fa0dc33cd4b4d3f36fe264473e5128c"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/GraphSchema.scala": {
+      "bytes": 8029,
+      "git_blob": "56b6c6ab6b3bcfc849c28eb18579de964b4e175f",
+      "mode": "100644",
+      "sha256": "2a394c5fa95be8ee548be1eeb61759e680408aa33ddd655f6a2e8a006b47e95b"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/NodeTypes.java": {
+      "bytes": 290,
+      "git_blob": "7e9df0c02c5efdcccdab145d988e128723b5fed2",
+      "mode": "100644",
+      "sha256": "982755d9341a89767bbd4001c84d1cd9ddd74af9d4fd7711790f5e2fe203923d"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/Properties.scala": {
+      "bytes": 1015,
+      "git_blob": "bb1a7a649cc96de2eee650f1f39f3c110ba09f52",
+      "mode": "100644",
+      "sha256": "dd1e1ac6ef4df1c0f7fa671b37e0c54ef7bef17f6aa5db6b886602ae0b778a71"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/PropertyDefaults.scala": {
+      "bytes": 123,
+      "git_blob": "a52b0b650fa47192dbef2b9dc9d120f366f8557f",
+      "mode": "100644",
+      "sha256": "2be2ade50951e07b9742cae00de9616d2cbd9971ff4b5e89e6e0af8d4d0fbac3"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/PropertyErrorRegister.scala": {
+      "bytes": 463,
+      "git_blob": "43b13c05cf6c032d33ef5f123af642f625a67467",
+      "mode": "100644",
+      "sha256": "019432a890310d4da960a9ceb4a0cf06cb81bb887447234c9f2b6701239921a9"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/PropertyNames.scala": {
+      "bytes": 1003,
+      "git_blob": "97509858f20e651fa9e2b5978c9e1fd3baf21b76",
+      "mode": "100644",
+      "sha256": "184d6da5f74c7a47d4747a4cb33771dedebda0d57d72373360f916044d2f7fd4"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/accessors/Accessors.scala": {
+      "bytes": 7699,
+      "git_blob": "bd260079acf47a25082792c365f1169da5671073",
+      "mode": "100644",
+      "sha256": "00960f25ea227ee923ccdf524098fc233ab443223ecae34f0bd8bdf839477fde"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/edges/EdgeTypes.scala": {
+      "bytes": 682,
+      "git_blob": "04328781e28e787da9e4e8c194fce87f4a0b162d",
+      "mode": "100644",
+      "sha256": "f0032885115f1b6afc7093d2580296a0c30a69ad221ba62f1ab4d7aa73152392"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/language.scala": {
+      "bytes": 526,
+      "git_blob": "2af98b24a7987694b2f1c56d4750ed230b4a4770",
+      "mode": "100644",
+      "sha256": "67bbc0920ff8b157e8614eec63bf352ecd74a0a1a52f796de20c1b31602ea1a5"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/neighboraccessors/NodeA.scala": {
+      "bytes": 2198,
+      "git_blob": "de49a116faa03d98d924478df21a93ed66c5e2f0",
+      "mode": "100644",
+      "sha256": "f1dd6e999a3a253e07e609f016f5241a8d00d37247e0cac619edfff4cb64edfc"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/neighboraccessors/NodeB.scala": {
+      "bytes": 789,
+      "git_blob": "bc67c026d78ce1f7f5099890a51299df66ff531c",
+      "mode": "100644",
+      "sha256": "480f970f7666c378ff9622737f665565f27cdf6f854a0c073d265c32f234c706"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/neighboraccessors/package.scala": {
+      "bytes": 830,
+      "git_blob": "693f7f6288ad55680da8c1581c75fa8ad466a4f1",
+      "mode": "100644",
+      "sha256": "42c7427c009000bca2f89810d359dc0e1c8f465b29cf0f5d799282e42e07e1d1"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/nodes/BaseTypes.scala": {
+      "bytes": 2310,
+      "git_blob": "458726c6ffe10d57b2130a437f3b5ed3686f87a7",
+      "mode": "100644",
+      "sha256": "8b3d4b94a3199ade1fcd9342c01c364d083a4972a173d68b2e74593ca6a0da30"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/nodes/NewNodeA.scala": {
+      "bytes": 16589,
+      "git_blob": "94cd4aef3e127d562a0432958129bdac269f83f4",
+      "mode": "100644",
+      "sha256": "c3b1a2eadf24b6465029de4a0d8b78b3bedbb0f55d680ff4cddee42cf8242b85"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/nodes/NewNodeB.scala": {
+      "bytes": 2893,
+      "git_blob": "c45c841b6ed6e0cdd7d3641e9263b49086f101f3",
+      "mode": "100644",
+      "sha256": "687bb93960dcd7a58c21794dcad9c559c62e75df0b6e3faf4402d87c236a83fe"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/nodes/NodeA.scala": {
+      "bytes": 4552,
+      "git_blob": "40a9065f4a60ce2e87a9c9a8595e204194bc0225",
+      "mode": "100644",
+      "sha256": "500f8c5253f1e1829d3a6dcbf4d0ee2d4dbc098229e5fdb81b71e7e46f8ca1b4"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/nodes/NodeB.scala": {
+      "bytes": 1487,
+      "git_blob": "8472e08562af96bb88c2450aba296d2056f3f3ed",
+      "mode": "100644",
+      "sha256": "71c783b768093f37ef89bc2de687a7c3c2085ecd7daf9e4c500716cb97679c84"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/nodes/RootTypes.scala": {
+      "bytes": 1976,
+      "git_blob": "4c32eb2b4fd4865d87e5a962ea36ae45c42fd070",
+      "mode": "100644",
+      "sha256": "9f7c83ae6564e0cb1f1119349c5cc0f8560743076e0f3eb940e97593f067c0d0"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/nodes/RootTypesTraversals.scala": {
+      "bytes": 435,
+      "git_blob": "8f0635b4e594878a2575dfc9996591e985b2edd3",
+      "mode": "100644",
+      "sha256": "6cf8e81347f1c9a406c27a0572223f7e019b57d98dc9f4f07c306ce5b12b62f7"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/package.scala": {
+      "bytes": 410,
+      "git_blob": "256eea45f728cd1e4b6ce29840166ec9cbbe12ee",
+      "mode": "100644",
+      "sha256": "aa097f07a2f3311cff6634b99acdb49d234e2769c56b5bca3fff66efc309773a"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/traversals/TraversalNodeaBase.scala": {
+      "bytes": 15052,
+      "git_blob": "fbb15f5591858aa00aafb50c4359284314a83e59",
+      "mode": "100644",
+      "sha256": "dfc4eee9ecabff039265987f047119f2224f27cb85acbd24f90cac1173998a7b"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/traversals/TraversalNodebBase.scala": {
+      "bytes": 3118,
+      "git_blob": "64fab21df1f447ba564826bcb28716d8d004c81d",
+      "mode": "100644",
+      "sha256": "e031aed3fb610778f406e373bc769fd95e3d8897a49e62539b91eebc72085dcc"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/traversals/TraversalPropertyBooleanOptional.scala": {
+      "bytes": 688,
+      "git_blob": "63353832d2e36918bda514acae06824690134952",
+      "mode": "100644",
+      "sha256": "44461758ebb184f383c8396feacaff580425b86e157c5767553e8adad73f598f"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/traversals/TraversalPropertyDoubleOptional.scala": {
+      "bytes": 1526,
+      "git_blob": "61dd2c7741b2dd13d3ea5c4eea71376e21a7a941",
+      "mode": "100644",
+      "sha256": "cc5fba4b9e931008b3064cdd2b75a9ece46f982b9f2a29f33801b6e4ce9c73d7"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/traversals/TraversalPropertyFloatOptional.scala": {
+      "bytes": 1500,
+      "git_blob": "08fe3d63bbd0550a8a0aa1f8fa699bd1973eea09",
+      "mode": "100644",
+      "sha256": "c6470942a5ca8045992ca8bb6b1e59ee7d986e7e2073576ccecbec147765d6e3"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/traversals/TraversalPropertyIntList.scala": {
+      "bytes": 400,
+      "git_blob": "d230e1072ca094456bffe83a55d13e92d9e2ba17",
+      "mode": "100644",
+      "sha256": "3db3332b7ffdc6c6015e3eba13f8627075385fab54fd29c7df67cb7542bfe964"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/traversals/TraversalPropertyIntMandatory.scala": {
+      "bytes": 2351,
+      "git_blob": "1ce53aacb0c6935dd3a1e5033aa06f7b99080fc6",
+      "mode": "100644",
+      "sha256": "948924d731c470bc01b1c587e5fdb1d68d043721a4a0cf189b94d865fb663773"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/traversals/TraversalPropertyIntOptional.scala": {
+      "bytes": 3111,
+      "git_blob": "d23dac11f9480a242a6a9fba7f335d55ee2b1a04",
+      "mode": "100644",
+      "sha256": "36fab1015a3a8da5049bd5e0a12128cdb25967a53dd8104109e892c3da8d6382"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/traversals/TraversalPropertyLongOptional.scala": {
+      "bytes": 1474,
+      "git_blob": "4dcd36dd16233cf67c7207bd63e90cd63288581a",
+      "mode": "100644",
+      "sha256": "7220874c57abc0b252e5882a1796dfdd91f55d90077e3cfd70e8d21ff03fecdf"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/traversals/TraversalPropertyStringList.scala": {
+      "bytes": 418,
+      "git_blob": "9d2f8645ac1c33e947409a01b4599368e2e7382e",
+      "mode": "100644",
+      "sha256": "2c71554d8bca45c9b44f3306eb6a393bb655bd0c19220eea3cc8f0ba05263b77"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/traversals/TraversalPropertyStringMandatory.scala": {
+      "bytes": 3231,
+      "git_blob": "4f62ac68da37d91cfd31e8a2a64434095c4143dc",
+      "mode": "100644",
+      "sha256": "c2144834624ba0aafec670a67389a391d3c4302138df360440dc81335f19e384"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/traversals/TraversalPropertyStringOptional.scala": {
+      "bytes": 3183,
+      "git_blob": "c0b457967fca1770e9fd23e4561622db53296385",
+      "mode": "100644",
+      "sha256": "2b198d770ecca8c8eca0dcf2f9ad3cd723d7185f31c1193fd7e471c00b3c0340"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/generic/traversals/package.scala": {
+      "bytes": 3489,
+      "git_blob": "cdb4f7c3553d5511b6ab8a50155f6219befb5919",
+      "mode": "100644",
+      "sha256": "367788bc23aeb1924d73e4d4cf5766b040d7d58246aceca399848c94ac78a722"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/EdgeTypes.java": {
+      "bytes": 377,
+      "git_blob": "c92bd4f46eede753ed3ce4245ef0d29f27454a11",
+      "mode": "100644",
+      "sha256": "3922eddb0e71bb4cdb333c5e46d2b867a42d3465836cd57cc4394632e8f84095"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/GraphSchema.scala": {
+      "bytes": 5294,
+      "git_blob": "8ac82609f64f50aca7a869f82bd81aa8d6d21f9d",
+      "mode": "100644",
+      "sha256": "da146e5817d1d4a9a9849d15ae6c4d26f78e74d0cc1a3f7eef8ceb8f716433a6"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/GratefulDead.scala": {
+      "bytes": 4087,
+      "git_blob": "95c380319f61533001704a52c4891c861ed180dd",
+      "mode": "100644",
+      "sha256": "1af8bb97509227829cce5c77c452531e71b386b4218280008ffcb0e4a82703a2"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/NodeTypes.java": {
+      "bytes": 289,
+      "git_blob": "24455fc63f2d9579bc50df7ae5d3c5626d7f554b",
+      "mode": "100644",
+      "sha256": "ba2fc0c386a87de7a78bacf367788dfae0eb90edfb3264f7df08ae3bdcdf418e"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/Properties.scala": {
+      "bytes": 356,
+      "git_blob": "5ce7a176291ec6a563e64f3fa9d39befb636a38a",
+      "mode": "100644",
+      "sha256": "0e316a9f42dafd9e9fcca9b5227ef6eb20b745fd534c148834f1100671690f7c"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/PropertyDefaults.scala": {
+      "bytes": 102,
+      "git_blob": "f5b939619d878176bfee39612b19853c59e18bdf",
+      "mode": "100644",
+      "sha256": "994b030b39ab64ba92316afe2741c1f89a564df0eab95cbafa620d76e1ecd9ee"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/PropertyErrorRegister.scala": {
+      "bytes": 468,
+      "git_blob": "d34bd9d7e9cdd91b056e89afb704c9c4179d0298",
+      "mode": "100644",
+      "sha256": "1d51ed08b7ea2a83ea26efdd8d4e58683c9c70ae7f66a5fdc83064d61dc33f7d"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/PropertyNames.scala": {
+      "bytes": 434,
+      "git_blob": "4af18ee83c9867e7b5644b5b29e2f8c1e1659cec",
+      "mode": "100644",
+      "sha256": "8a5749d590a9b646d1256350dcf291ca06b9e336c0c5e2225e4dcd12d19f50ba"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/accessors/Accessors.scala": {
+      "bytes": 2968,
+      "git_blob": "49b8074a2264a7f1c229e8291ff05e8065a67eb7",
+      "mode": "100644",
+      "sha256": "8869b526fc231a35b1cf4ecad8760725533d5720d6cab9bc0aa7dfa813f914f3"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/edges/EdgeTypes.scala": {
+      "bytes": 895,
+      "git_blob": "1f1a88febb13cce0aec15086186ce36e31ac8991",
+      "mode": "100644",
+      "sha256": "8ea67c1bc13ec777d547d1e5008ea9fbf9d297339156955fb4e26c25b3c0e811"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/language.scala": {
+      "bytes": 528,
+      "git_blob": "5a7d7c9496792ed53a9ec64e142993bb9754d3da",
+      "mode": "100644",
+      "sha256": "1dbbc76348a1e18e7a73c9f8daff60a799e93060a61cc37cf43d79f84c16a903"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/neighboraccessors/Artist.scala": {
+      "bytes": 1747,
+      "git_blob": "8cc080ba434a8b6326e98b2105f6d8e9d8bc7b97",
+      "mode": "100644",
+      "sha256": "b588325b60dd7dbbef3aad523387f74ad96c0ab0fe44bbcb37c8f8c94d8e6aa4"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/neighboraccessors/Song.scala": {
+      "bytes": 3096,
+      "git_blob": "e269c42a271c259d49cfa57e664ac3b1097421ba",
+      "mode": "100644",
+      "sha256": "6d0e68824fbf6ef15e67d99bb7d4071b99fe2aa21c8d86b2c3b8e12ea2e36d7e"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/neighboraccessors/package.scala": {
+      "bytes": 840,
+      "git_blob": "c9f981363db5a654a37c5c588234766aab13c954",
+      "mode": "100644",
+      "sha256": "f7eabe131456471eefc049ebf9d3774bb85b1efef8f595fc7a2871b66cf616a5"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/nodes/Artist.scala": {
+      "bytes": 1489,
+      "git_blob": "2012d449f6d46df2a08126e7b80d74f98e376067",
+      "mode": "100644",
+      "sha256": "ad50c2c49ff8c1aca81445334d73c05aec0266dce6195d9e9c34afd9e1c8f85c"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/nodes/BaseTypes.scala": {
+      "bytes": 693,
+      "git_blob": "e3d7bc260c1fdf4782c51be33ac0d6128b587b73",
+      "mode": "100644",
+      "sha256": "97fac00cf60c97fafe7cf7df4b59d6ef3b026818776b44eac4089988fd45d320"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/nodes/NewArtist.scala": {
+      "bytes": 2602,
+      "git_blob": "59c65bcf1f8a8319c55b84559fea775382909651",
+      "mode": "100644",
+      "sha256": "b6c5c175040f9c9f9b1bfcd95d721fc9c7114cf372ba5626328dbaf55f024e70"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/nodes/NewSong.scala": {
+      "bytes": 5342,
+      "git_blob": "4d5c65112c398b7703637d0ff5cfa79725e2fe5d",
+      "mode": "100644",
+      "sha256": "bd80348814650941dca4236d4889c7112af5babf4b4238134c73de11eebf918d"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/nodes/RootTypes.scala": {
+      "bytes": 2394,
+      "git_blob": "5d96543642a0bcc071b6187ae4fbf1958b1b3a28",
+      "mode": "100644",
+      "sha256": "42363f2b085ce19b153b8ef099e616c7366c8bf1426e91442e716276050c0c49"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/nodes/RootTypesTraversals.scala": {
+      "bytes": 584,
+      "git_blob": "f00b02307bb353f0dd38eb6b71369c169c12aaa4",
+      "mode": "100644",
+      "sha256": "49ce98a5a512268a4840e63f98de83e33902764b2c7054c0ac373bda60e9cb7e"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/nodes/Song.scala": {
+      "bytes": 1936,
+      "git_blob": "ba1e91672be8b8c943d04b345b9570aa7be82c0e",
+      "mode": "100644",
+      "sha256": "27d770dae5c38d131c0c40d0e60aee1995c74e773c95c080bb74c9b33d87422e"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/package.scala": {
+      "bytes": 415,
+      "git_blob": "392c5d7692350c34e93c6269f8cc14f658c79d97",
+      "mode": "100644",
+      "sha256": "5aed577cb9eca9590da5a85426eceb90af4dd28bbac6d5a805daf6802ad441b3"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/traversals/TraversalArtistBase.scala": {
+      "bytes": 2917,
+      "git_blob": "6757f6cf0800d36e4408cba560e1e97e9685460a",
+      "mode": "100644",
+      "sha256": "63a9b7fc2118fbaa3334e4c9ea192be1c4a90fc837faf9acb1ec6443479715b7"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/traversals/TraversalPropertyName.scala": {
+      "bytes": 2960,
+      "git_blob": "38e05042d1c898bc1527addbcfcfe3e42423f382",
+      "mode": "100644",
+      "sha256": "8d01e2a5eb2ed530099a111f1f5140c7b52d9d367f1c78107a5480b675e88e0f"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/traversals/TraversalPropertyPerformances.scala": {
+      "bytes": 3163,
+      "git_blob": "2cd6611f49b2f5fbbadee146e35de8bf607cc678",
+      "mode": "100644",
+      "sha256": "0d8b871da3870b0bcde59a15ca60bc3f61ad854ad423c403c23c71ce0d41be1b"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/traversals/TraversalPropertySongtype.scala": {
+      "bytes": 3036,
+      "git_blob": "c0466f9808615662c08f5dbdc997881455c969fc",
+      "mode": "100644",
+      "sha256": "7300425aed83403b24ea274f226cf4d1b59e7b47b48734d112021d62dbfe0a91"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/traversals/TraversalSongBase.scala": {
+      "bytes": 8476,
+      "git_blob": "ec62d880b32fbf2525302b2eeeb1af27d6c8d1b5",
+      "mode": "100644",
+      "sha256": "ebe895b65d51ab62963b8ad57eafca5e5e54e7422d1a4d7000e546d2b69cf275"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/gratefuldead/traversals/package.scala": {
+      "bytes": 1535,
+      "git_blob": "679d168fc479b8f5a46dac3124a62a01f4c7e489",
+      "mode": "100644",
+      "sha256": "886232bfa2919014540f4d558c785c40a3af3d72df60c97592f37fc10ab95527"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/EdgeTypes.java": {
+      "bytes": 252,
+      "git_blob": "90f655b2306f5f6732ef9d755db95c2134d863c8",
+      "mode": "100644",
+      "sha256": "65493b3e1e14f0a00bdb1a23fd3987e6ebb171d9594e8b000fe472ccad6a613c"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/GraphSchema.scala": {
+      "bytes": 4540,
+      "git_blob": "2c472206e081471f637fafeb51473785a4415b4e",
+      "mode": "100644",
+      "sha256": "5e7b7397906cb6c9851f2e0ca46c95f8e677a80c6161a5e71e21a9ab6c965851"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/Hierarchical.scala": {
+      "bytes": 4291,
+      "git_blob": "a2e2fae31af8e0158eb336d78f9d0f19684e614d",
+      "mode": "100644",
+      "sha256": "aa65e02858e68a927c65a440710ba52850ad4ccca1da1fcf46b8fcf6771c8b72"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/NodeTypes.java": {
+      "bytes": 295,
+      "git_blob": "47bcd62dc6286eef64bead8423a19b84e175edb2",
+      "mode": "100644",
+      "sha256": "99b2bf55ac69b70b8c8012613f00f56a07fc6c67f16c2151288544e5651730ea"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/Properties.scala": {
+      "bytes": 151,
+      "git_blob": "16bde2ab221edfd05d78555565ef7bcca0d23ee1",
+      "mode": "100644",
+      "sha256": "d0597ce6704f38f32ad348a4ef327a80cffe678e173f02baf90c6704dd328ab8"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/PropertyDefaults.scala": {
+      "bytes": 85,
+      "git_blob": "9d4f0656556931d57f375dc3e98866f401079624",
+      "mode": "100644",
+      "sha256": "be450b63c9caf57fb7793e8c5af77e47585928dafbd6c58154f43ed709323b23"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/PropertyErrorRegister.scala": {
+      "bytes": 468,
+      "git_blob": "4be8c43336c1dc4b07aa50b51542c218b45b93cc",
+      "mode": "100644",
+      "sha256": "b70d3442d7de7e604cb66073bce9086a17022169f8898b89af2af1e5bee8d392"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/PropertyNames.scala": {
+      "bytes": 235,
+      "git_blob": "cc5726381210d55cd92cefab30a8cd69b9b75f5d",
+      "mode": "100644",
+      "sha256": "f08464249061fb29b6133f8c9b7711758fd8af9a999dbae93412ee5a2ca2c5d1"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/accessors/Accessors.scala": {
+      "bytes": 1815,
+      "git_blob": "777d8d4ab944a7688b3eee8b355b4dbcab95909d",
+      "mode": "100644",
+      "sha256": "40f1c79414c6597455ae5ede16fb9137b3ccc6c5a81d011f8d66040e89a5a5e1"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/edges/EdgeTypes.scala": {
+      "bytes": 285,
+      "git_blob": "398ce1c758fdb4d5892fc21837a2301b9d468d2d",
+      "mode": "100644",
+      "sha256": "1695a590ec92c5e157e137f8aaa4d7c9eed147e9de66c0a7f54724a54c4b20a3"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/language.scala": {
+      "bytes": 528,
+      "git_blob": "af97c836149c5f380410103f9d81c54959778cf7",
+      "mode": "100644",
+      "sha256": "d1b13ffcd83eccbdbd8e2b1f8ee216201698a8b721c56642ad78dbca1b157c25"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/neighboraccessors/BaseNode.scala": {
+      "bytes": 1708,
+      "git_blob": "f15784e20f7b9d980a0733d8c2b7cf069ece041a",
+      "mode": "100644",
+      "sha256": "46a36ec4ab5879e52be96b73ea5b3fd36ad4e579b048debf4b8eb5eb83125441"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/neighboraccessors/package.scala": {
+      "bytes": 548,
+      "git_blob": "dca4ef1337d6071055f687ea7a38c92de3ed2580",
+      "mode": "100644",
+      "sha256": "74d3d010754fd86394ceece06fbbe5e61aad75b1aac201dd5a2b829c60eeaeec"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/nodes/BaseTypes.scala": {
+      "bytes": 738,
+      "git_blob": "fb31cd2ad69b79ee67e901237ccd2eea9142dd29",
+      "mode": "100644",
+      "sha256": "eb9330fb01c56615c9c6f3f3a9ee6c683052ac082121b133e1b6635d0b2a9cfb"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/nodes/NewNodeX.scala": {
+      "bytes": 2563,
+      "git_blob": "5b43d512cfa28253d646ed58759612f5d6909e7d",
+      "mode": "100644",
+      "sha256": "061f32d7ee68705156b34e83865cddf1aa7c7e1abbcccf8e7780dc483dfeb218"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/nodes/NewNodeY.scala": {
+      "bytes": 2563,
+      "git_blob": "292daa1694bcae91721ab0eed62711d4ba941bb2",
+      "mode": "100644",
+      "sha256": "366d8a113fba4f586630b021c1510854bcb89daeee75a33d0d214ddf5b7b7972"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/nodes/NodeX.scala": {
+      "bytes": 1501,
+      "git_blob": "1bbf3ab71ead120ea1edac788be15c1ca9f9b954",
+      "mode": "100644",
+      "sha256": "8df274400e46a43249ad53d0956213fcb78d2d83f2edf2833dabc900b65a9be9"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/nodes/NodeY.scala": {
+      "bytes": 1501,
+      "git_blob": "1bf23a402198314f2860fde248c11e7332a46b1e",
+      "mode": "100644",
+      "sha256": "02de3d14885e402bd410f9ed95c3fcf0773f683733977b34865b48445accc2ce"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/nodes/RootTypes.scala": {
+      "bytes": 1552,
+      "git_blob": "0ed1ef6f2fbcb2b5f01945bc2296cb7aef9e5b80",
+      "mode": "100644",
+      "sha256": "00f04ff233224a203801dd9e0fac917933970e11bc50f77ec1ffe66a4440d17a"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/nodes/RootTypesTraversals.scala": {
+      "bytes": 264,
+      "git_blob": "58009f26665f982c5df1c1d72a7bbb0b889b3a40",
+      "mode": "100644",
+      "sha256": "51b02e0d14c137d55a8d6fa94194c608a41c39464eda58898c7c8313a1ffc4a1"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/package.scala": {
+      "bytes": 415,
+      "git_blob": "918f04c575219cdf801514ae179efb4b82c5f68e",
+      "mode": "100644",
+      "sha256": "7c5f7dec83846e81146e39ff81f981245cf5be077663f63367fcd3e1ec8bbb7c"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/traversals/TraversalBasenodeBase.scala": {
+      "bytes": 2921,
+      "git_blob": "67e334876e9ad8ac32ec024889f6839b5e3f0612",
+      "mode": "100644",
+      "sha256": "f0ead8d098e7c700937dea5c1ff963761928b3b3f80aee151f008916a9917fdc"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/traversals/TraversalNodexBase.scala": {
+      "bytes": 259,
+      "git_blob": "375941c364adbf16cdb9c52294f0a3e3831e6412",
+      "mode": "100644",
+      "sha256": "5b3a1ba4506ba07e43a162b0d12b655331205696785316c6bacbd23732d2ce9b"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/traversals/TraversalNodeyBase.scala": {
+      "bytes": 259,
+      "git_blob": "6a9f6b6ff4c89125d15ac0716e40e8d303f52e4a",
+      "mode": "100644",
+      "sha256": "6b29e0da7ac7bbc4ce36d08b17fcbb1c6e897500a761150f3068e41b1c7275b0"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/traversals/TraversalPropertyName.scala": {
+      "bytes": 2960,
+      "git_blob": "8b7910d9ec02bca30311df2af244313035339cf7",
+      "mode": "100644",
+      "sha256": "5f552dbd69ce3b9de14a78d249e5298c22494154a1a70b1d7187312208e53002"
+    },
+    "test-schemas-domain-classes-scala3/src/main/scala/testdomains/hierarchical/traversals/package.scala": {
+      "bytes": 1273,
+      "git_blob": "ae10c509aa2731217018b9b6f2d4c44204a67a30",
+      "mode": "100644",
+      "sha256": "d2f694fbd7366eae10344a52127bb319481b5e5977a7cbca5b49087e9911820a"
+    },
+    "test-schemas-domain-classes/BUILD": {
+      "bytes": 632,
+      "git_blob": "41dcde69d13fde1123cb60c03e5a4e9c8806cea7",
+      "mode": "100644",
+      "sha256": "9dc96f43de05d967575ef3e18a932409c43e4cb4121e32c4fe6e44ba68e8e927"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/CpgMinified.scala": {
+      "bytes": 4448,
+      "git_blob": "ef1cfcd46e761ed3e213106aed987fe4faa72f08",
+      "mode": "100644",
+      "sha256": "692bebba7e107687caae2d5603741780538659874226e805bd882dea7a09bc3e"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/EdgeTypes.java": {
+      "bytes": 241,
+      "git_blob": "e5491f4590ccb0e59c4a28568ca93232184a7a54",
+      "mode": "100644",
+      "sha256": "a262706048566de83c19ecbaf25ff25b09e4865bd7ba48b38e633b82ad7a393b"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/GraphSchema.scala": {
+      "bytes": 5074,
+      "git_blob": "34438a370581dad2058f7a68b3ff653b0ea0338e",
+      "mode": "100644",
+      "sha256": "259c9d9aa7df886b02bbfa759a3ac4e9dc6e05633e9e1b70061f4646911ffc71"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/NodeTypes.java": {
+      "bytes": 302,
+      "git_blob": "9ad9cf72b63bc7331bf5d81673f5413d19317a86",
+      "mode": "100644",
+      "sha256": "c5b43c56aac0b1f84e785ae06ea80b20cb3fd5c04459f0681522d6b533433681"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/Properties.scala": {
+      "bytes": 400,
+      "git_blob": "45e399067c493ccca0f58e4f880f66b4392f3636",
+      "mode": "100644",
+      "sha256": "b10e9b57d9b8e242e6c4a1e762bc70c67d21ef6a9f0cc13dae0e19c34aded5cd"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/PropertyDefaults.scala": {
+      "bytes": 166,
+      "git_blob": "b66d9292bfd4b7647bd256da1b4614a4d1e6cb23",
+      "mode": "100644",
+      "sha256": "ceceda8be0e705149f717b0767a78312ecbc58c11a7272eec51380b568891f7e"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/PropertyErrorRegister.scala": {
+      "bytes": 481,
+      "git_blob": "61f8db19d831c8148b3d794f66b6d5727ce830b8",
+      "mode": "100644",
+      "sha256": "ac7a92ee79f68a3809aa1afc3bf373e5b165fd155f020f9992867d193a75868a"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/PropertyNames.scala": {
+      "bytes": 376,
+      "git_blob": "4bfe9f53633262bfa17ded5fed7d9bcc41001add",
+      "mode": "100644",
+      "sha256": "48f5a540f8678156fdc253f5c776e1db12bc194d34f8a9ed4822621cab233e0c"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/accessors/Accessors.scala": {
+      "bytes": 3569,
+      "git_blob": "ef86610cf8b768d2c910ae5a30374f439df523c7",
+      "mode": "100644",
+      "sha256": "5a2312b4158209002e85c49a69d77a23dd4656e43c6bafecea479da34c64863c"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/edges/EdgeTypes.scala": {
+      "bytes": 276,
+      "git_blob": "860c039584ba7569f8f2c1f1af2909db13be888e",
+      "mode": "100644",
+      "sha256": "b31a1d5e3d1ce5c7f11aedbaf8037d77d90b4417e12f6a58627d9269c91421da"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/language.scala": {
+      "bytes": 538,
+      "git_blob": "62d495c070165b34103f4264d3f956db6fd5462d",
+      "mode": "100644",
+      "sha256": "5ff335cfbffe7de58f067a47f125dde4ce0c13247c0bd8271fae17e3094a2933"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/neighboraccessors/Call.scala": {
+      "bytes": 1073,
+      "git_blob": "5672d7e0794644e5abe898bbbec887a04f23f648",
+      "mode": "100644",
+      "sha256": "09e7bb3d5c6802b208760cda8b0a50d44649cea6c4a167da2d3658b1a31c9597"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/neighboraccessors/Method.scala": {
+      "bytes": 746,
+      "git_blob": "15763898d7970b51aa2dd834762ebf1f32d0ab51",
+      "mode": "100644",
+      "sha256": "8aa7f3cf82d6feb99593b1fbfa86cc5799d48236a71af11c0d6b79ebd290f3cc"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/neighboraccessors/package.scala": {
+      "bytes": 866,
+      "git_blob": "bbf26bb95413c79cf3e1f745f3cf26b02d0c9812",
+      "mode": "100644",
+      "sha256": "813ce39eb2e9a99eb3101cd997a98a931676fc61b4882e5840249927d9b7dbe1"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/nodes/BaseTypes.scala": {
+      "bytes": 1796,
+      "git_blob": "e4457c7c2241ae5936c68da8f772f3fea5cd5c65",
+      "mode": "100644",
+      "sha256": "54cad0d1cede8ff529fbf5c0ab0e929545d8c0208a8f9474dae5dc21e4676e54"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/nodes/Call.scala": {
+      "bytes": 1950,
+      "git_blob": "47c5382bbbeacf856b2d9df17a1ba40b1255bea4",
+      "mode": "100644",
+      "sha256": "3b082ae5bc6a397944b469ae3fceefbd68817b302f645c842c2f32f60a5e5f61"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/nodes/Method.scala": {
+      "bytes": 1510,
+      "git_blob": "4bc10a793a646af2f6efb6e91aa4db9a367ca3d5",
+      "mode": "100644",
+      "sha256": "74a30cf882c88da52db772bcc3b0951459e9ec4eb6c42ea7f1ded1fe09cbf5ee"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/nodes/NewCall.scala": {
+      "bytes": 4856,
+      "git_blob": "ef54675eefe80eb09423f63ae7b2f1ed65bb4e8e",
+      "mode": "100644",
+      "sha256": "f40d5aac2bda8745c136fd5c9d5fa017d8620eebfecafc2d1187bdf46da2703e"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/nodes/NewMethod.scala": {
+      "bytes": 2625,
+      "git_blob": "b88adfc322c985239de930f230963e59671923b7",
+      "mode": "100644",
+      "sha256": "3d6c414bc9a7bc9bee73535d0fd1e9a702b6c024887909ef69b840ad5e42ad84"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/nodes/RootTypes.scala": {
+      "bytes": 1551,
+      "git_blob": "206c767892813d1cf5177579190ccd74f6987752",
+      "mode": "100644",
+      "sha256": "5db6495e43ae36c90577f3a9aaed727c0e771af3c056aa5a1082f66b213f5e51"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/nodes/RootTypesTraversals.scala": {
+      "bytes": 249,
+      "git_blob": "1145eaeb7d0749c8a904d38556d538429c661ada",
+      "mode": "100644",
+      "sha256": "7b9fcb6a9623c362305f1300b7aa3d400248d9737649d8ed4fe9c672d14ebf39"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/package.scala": {
+      "bytes": 428,
+      "git_blob": "262c16a7ebad25fbd367466e1a3cb7108a6891af",
+      "mode": "100644",
+      "sha256": "a42a62f7cffe82125ec7dd05088bcf33f9ab5f1e434477b51b616063ec8c2441"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/traversals/TraversalCallBase.scala": {
+      "bytes": 3144,
+      "git_blob": "dab38d9bdc9c2de30a69cb6e361004a9e9e5d1be",
+      "mode": "100644",
+      "sha256": "3decdaa4fddb98613c3ab5dd7e16b440e2b316116a50b18e04a032868216728f"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/traversals/TraversalCallreprBase.scala": {
+      "bytes": 4794,
+      "git_blob": "ec2f08cd260644d222b050410db1ab32af30d59c",
+      "mode": "100644",
+      "sha256": "e399c86cb1600a02ad0c3e9e8a588f74612a108f4ab1e03af25cee43d9dc95a3"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/traversals/TraversalDeclarationBase.scala": {
+      "bytes": 2966,
+      "git_blob": "61b0046d3349757ee9f44272a00eea6312f90b1c",
+      "mode": "100644",
+      "sha256": "7a113fa0446fb0d7b9591e0513ea06b4d3605e8455c59a98983a56be3fd8b24a"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/traversals/TraversalMethodBase.scala": {
+      "bytes": 300,
+      "git_blob": "b45d867a85afd053cdd2bec04f54d0881420cfa2",
+      "mode": "100644",
+      "sha256": "4ae870bc57dc63f39936753822ada5c9f0aa877744e66f1195b28c5450cf792f"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/traversals/TraversalPropertyDispatchType.scala": {
+      "bytes": 3207,
+      "git_blob": "cf24c48b8fe35b9494d0da5e32e66f55964dd228",
+      "mode": "100644",
+      "sha256": "f072d9876da3553e1cf5a3e0ee230f30ed00becbcf035fd2d423c1c5b8bc9df3"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/traversals/TraversalPropertyName.scala": {
+      "bytes": 2999,
+      "git_blob": "74a363fd8a0108c88ac2f28784e13409124bcfcf",
+      "mode": "100644",
+      "sha256": "621abc8ed8f6618ce7623f71097635ae8a0f4f08bf19644c55b1050138bdd7aa"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/traversals/TraversalPropertyOrder.scala": {
+      "bytes": 2181,
+      "git_blob": "429d6090ff28e31e816570d814f3b294e073c127",
+      "mode": "100644",
+      "sha256": "87799542a723ccf5e7b8554adc06f3cae678ef2423ba17ea7af7575a107dcb12"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/codepropertygraphminified/traversals/package.scala": {
+      "bytes": 2099,
+      "git_blob": "9e32320373659db5b62952c26f0eda688ce6d869",
+      "mode": "100644",
+      "sha256": "941141d48ad2a42a662dcd1c282788352bb16777e7bc679c609c9dafd3fe5ab2"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/empty/EdgeTypes.java": {
+      "bytes": 168,
+      "git_blob": "f5066d47b3bd4719e4dd56b7d7e51de779481862",
+      "mode": "100644",
+      "sha256": "b36c6ba8d8b295f221e7dc0d1de5e9e7c112bc591340866d4f19d4915eefb216"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/empty/Empty.scala": {
+      "bytes": 3650,
+      "git_blob": "0439ac73bf98309231038dfa73b7efdda04c7da4",
+      "mode": "100644",
+      "sha256": "feb751136b2997db94d262d7b47e4951be548e2cdf77ac46eae300197740aa3d"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/empty/GraphSchema.scala": {
+      "bytes": 4136,
+      "git_blob": "e35f280f517acdedc1ad4d81f9090ba333b6ed09",
+      "mode": "100644",
+      "sha256": "afadc002fb9da239011951b4f211df80d89a9617de1468fab6c5ba596bc92b68"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/empty/NodeTypes.java": {
+      "bytes": 168,
+      "git_blob": "111b237204402ae94acefef28326927ebb2d6989",
+      "mode": "100644",
+      "sha256": "5ce06b38392f56cd0ffbca2eaa822dc0fb3e1449c8a10d14cf9850ca9bef8dd4"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/empty/Properties.scala": {
+      "bytes": 48,
+      "git_blob": "ae3eea528cea3d4f4cba9610ad2b5956c0b8dfe3",
+      "mode": "100644",
+      "sha256": "66ebda9980c613169bb3d9bd52569fdf307568c93549cc310fe07f8e3cc39c65"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/empty/PropertyDefaults.scala": {
+      "bytes": 54,
+      "git_blob": "f219c1a8e2df146505a59c804230b0edf89cf1f0",
+      "mode": "100644",
+      "sha256": "d43f089145441af588c4ddd249dceab71eb583f6568301348dee9ad993752def"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/empty/PropertyErrorRegister.scala": {
+      "bytes": 461,
+      "git_blob": "c67decbe605f2b3539200f4ad24701db7ab50e87",
+      "mode": "100644",
+      "sha256": "2a7da8caad98af81ca5a3a883167c50c3cbf3afd36423e3066b506103363e8ca"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/empty/PropertyNames.scala": {
+      "bytes": 209,
+      "git_blob": "befa7f8bf15406fd672cbbdba40b1f781a7d237c",
+      "mode": "100644",
+      "sha256": "4e3c853b1825d7667ebb6c615e40a9acbe9b582c1cbb47b0051a18708cb657dd"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/empty/accessors/Accessors.scala": {
+      "bytes": 576,
+      "git_blob": "35edf87dce89f06b438087fe0de6b4d024f69cf5",
+      "mode": "100644",
+      "sha256": "6816af9886d510ce2fd3ef006d491a4aa8864b9f09a6402bdb19ecf45512f6e7"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/empty/language.scala": {
+      "bytes": 500,
+      "git_blob": "9048e03f5d2a866fa7219de9f9b01f7c4ce69064",
+      "mode": "100644",
+      "sha256": "9134a44b1e61a52ddf3df0e289fbe76164087ece84983e5aed2e450993b7b770"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/empty/neighboraccessors/package.scala": {
+      "bytes": 192,
+      "git_blob": "f81c6100efa1318bf030c0208e09f018c0acd73f",
+      "mode": "100644",
+      "sha256": "923e9894e0f7f737f620a7cc35ae39bf9c913f61f325722d203595ca911f72e5"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/empty/nodes/BaseTypes.scala": {
+      "bytes": 32,
+      "git_blob": "6f8c93d23b1932a91edafee119103fcb41c74dfd",
+      "mode": "100644",
+      "sha256": "2ef99d54d416b5beff742995b74ff30af31cff58e368863935da3a66db96b69b"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/empty/nodes/RootTypes.scala": {
+      "bytes": 1114,
+      "git_blob": "4be1bb2a1a0fbd52d9e9caa58074908e2e6281bb",
+      "mode": "100644",
+      "sha256": "d8927ad04c24dcad526634d2f6882c5528b056ff39856db82f869cfebf44c086"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/empty/package.scala": {
+      "bytes": 408,
+      "git_blob": "96ef93e4286ada307e4e8db567abafdaff0e49ed",
+      "mode": "100644",
+      "sha256": "433b0aa7fcbf209313a8b85009858934e786c2207d26da08f8fdc470e8f23677"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/empty/traversals/package.scala": {
+      "bytes": 385,
+      "git_blob": "94384c6eff57a9abb81b03795f740bd372c55081",
+      "mode": "100644",
+      "sha256": "3a09ac0586bdda26ad28980a0fce340dee6b2d5bf652a8698c5966c37b1ffac8"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/EdgeTypes.java": {
+      "bytes": 326,
+      "git_blob": "ef74bddbc9e4390bf7a3946b564b7a694e7fb7a5",
+      "mode": "100644",
+      "sha256": "20405a5ea268b171f85f7c95022b79e1a0b91d9b342a7100f4464238b384065c"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/GenericDomain.scala": {
+      "bytes": 4095,
+      "git_blob": "50f10b3dac83b4731ad0328a1d56f230a77fc4c4",
+      "mode": "100644",
+      "sha256": "aab5b6a0427eba336d56da542beb79689fa0dc33cd4b4d3f36fe264473e5128c"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/GraphSchema.scala": {
+      "bytes": 8029,
+      "git_blob": "56b6c6ab6b3bcfc849c28eb18579de964b4e175f",
+      "mode": "100644",
+      "sha256": "2a394c5fa95be8ee548be1eeb61759e680408aa33ddd655f6a2e8a006b47e95b"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/NodeTypes.java": {
+      "bytes": 290,
+      "git_blob": "7e9df0c02c5efdcccdab145d988e128723b5fed2",
+      "mode": "100644",
+      "sha256": "982755d9341a89767bbd4001c84d1cd9ddd74af9d4fd7711790f5e2fe203923d"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/Properties.scala": {
+      "bytes": 1015,
+      "git_blob": "bb1a7a649cc96de2eee650f1f39f3c110ba09f52",
+      "mode": "100644",
+      "sha256": "dd1e1ac6ef4df1c0f7fa671b37e0c54ef7bef17f6aa5db6b886602ae0b778a71"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/PropertyDefaults.scala": {
+      "bytes": 123,
+      "git_blob": "a52b0b650fa47192dbef2b9dc9d120f366f8557f",
+      "mode": "100644",
+      "sha256": "2be2ade50951e07b9742cae00de9616d2cbd9971ff4b5e89e6e0af8d4d0fbac3"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/PropertyErrorRegister.scala": {
+      "bytes": 463,
+      "git_blob": "43b13c05cf6c032d33ef5f123af642f625a67467",
+      "mode": "100644",
+      "sha256": "019432a890310d4da960a9ceb4a0cf06cb81bb887447234c9f2b6701239921a9"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/PropertyNames.scala": {
+      "bytes": 1003,
+      "git_blob": "97509858f20e651fa9e2b5978c9e1fd3baf21b76",
+      "mode": "100644",
+      "sha256": "184d6da5f74c7a47d4747a4cb33771dedebda0d57d72373360f916044d2f7fd4"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/accessors/Accessors.scala": {
+      "bytes": 7699,
+      "git_blob": "bd260079acf47a25082792c365f1169da5671073",
+      "mode": "100644",
+      "sha256": "00960f25ea227ee923ccdf524098fc233ab443223ecae34f0bd8bdf839477fde"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/edges/EdgeTypes.scala": {
+      "bytes": 682,
+      "git_blob": "04328781e28e787da9e4e8c194fce87f4a0b162d",
+      "mode": "100644",
+      "sha256": "f0032885115f1b6afc7093d2580296a0c30a69ad221ba62f1ab4d7aa73152392"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/language.scala": {
+      "bytes": 526,
+      "git_blob": "2af98b24a7987694b2f1c56d4750ed230b4a4770",
+      "mode": "100644",
+      "sha256": "67bbc0920ff8b157e8614eec63bf352ecd74a0a1a52f796de20c1b31602ea1a5"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/neighboraccessors/NodeA.scala": {
+      "bytes": 2198,
+      "git_blob": "de49a116faa03d98d924478df21a93ed66c5e2f0",
+      "mode": "100644",
+      "sha256": "f1dd6e999a3a253e07e609f016f5241a8d00d37247e0cac619edfff4cb64edfc"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/neighboraccessors/NodeB.scala": {
+      "bytes": 789,
+      "git_blob": "bc67c026d78ce1f7f5099890a51299df66ff531c",
+      "mode": "100644",
+      "sha256": "480f970f7666c378ff9622737f665565f27cdf6f854a0c073d265c32f234c706"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/neighboraccessors/package.scala": {
+      "bytes": 830,
+      "git_blob": "693f7f6288ad55680da8c1581c75fa8ad466a4f1",
+      "mode": "100644",
+      "sha256": "42c7427c009000bca2f89810d359dc0e1c8f465b29cf0f5d799282e42e07e1d1"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/nodes/BaseTypes.scala": {
+      "bytes": 2310,
+      "git_blob": "458726c6ffe10d57b2130a437f3b5ed3686f87a7",
+      "mode": "100644",
+      "sha256": "8b3d4b94a3199ade1fcd9342c01c364d083a4972a173d68b2e74593ca6a0da30"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/nodes/NewNodeA.scala": {
+      "bytes": 16589,
+      "git_blob": "94cd4aef3e127d562a0432958129bdac269f83f4",
+      "mode": "100644",
+      "sha256": "c3b1a2eadf24b6465029de4a0d8b78b3bedbb0f55d680ff4cddee42cf8242b85"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/nodes/NewNodeB.scala": {
+      "bytes": 2893,
+      "git_blob": "c45c841b6ed6e0cdd7d3641e9263b49086f101f3",
+      "mode": "100644",
+      "sha256": "687bb93960dcd7a58c21794dcad9c559c62e75df0b6e3faf4402d87c236a83fe"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/nodes/NodeA.scala": {
+      "bytes": 4083,
+      "git_blob": "9e8ee846b33cfe2aa4bcaca89a82077eed0945e1",
+      "mode": "100644",
+      "sha256": "26ea1f0b88c2514032316a54d1d4ca2fc8f8b10a1ed6f24d40652fdda6ad5162"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/nodes/NodeB.scala": {
+      "bytes": 1397,
+      "git_blob": "6b58c045c221b6af959b5ec7d0461eb080547697",
+      "mode": "100644",
+      "sha256": "1ee2d23c4a8d15e22a8421768ab32b164dd4d9178ab0f85b645fd934f7475f31"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/nodes/RootTypes.scala": {
+      "bytes": 1976,
+      "git_blob": "4c32eb2b4fd4865d87e5a962ea36ae45c42fd070",
+      "mode": "100644",
+      "sha256": "9f7c83ae6564e0cb1f1119349c5cc0f8560743076e0f3eb940e97593f067c0d0"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/nodes/RootTypesTraversals.scala": {
+      "bytes": 435,
+      "git_blob": "8f0635b4e594878a2575dfc9996591e985b2edd3",
+      "mode": "100644",
+      "sha256": "6cf8e81347f1c9a406c27a0572223f7e019b57d98dc9f4f07c306ce5b12b62f7"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/package.scala": {
+      "bytes": 410,
+      "git_blob": "256eea45f728cd1e4b6ce29840166ec9cbbe12ee",
+      "mode": "100644",
+      "sha256": "aa097f07a2f3311cff6634b99acdb49d234e2769c56b5bca3fff66efc309773a"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/traversals/TraversalNodeaBase.scala": {
+      "bytes": 15052,
+      "git_blob": "fbb15f5591858aa00aafb50c4359284314a83e59",
+      "mode": "100644",
+      "sha256": "dfc4eee9ecabff039265987f047119f2224f27cb85acbd24f90cac1173998a7b"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/traversals/TraversalNodebBase.scala": {
+      "bytes": 3118,
+      "git_blob": "64fab21df1f447ba564826bcb28716d8d004c81d",
+      "mode": "100644",
+      "sha256": "e031aed3fb610778f406e373bc769fd95e3d8897a49e62539b91eebc72085dcc"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/traversals/TraversalPropertyBooleanOptional.scala": {
+      "bytes": 688,
+      "git_blob": "63353832d2e36918bda514acae06824690134952",
+      "mode": "100644",
+      "sha256": "44461758ebb184f383c8396feacaff580425b86e157c5767553e8adad73f598f"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/traversals/TraversalPropertyDoubleOptional.scala": {
+      "bytes": 1526,
+      "git_blob": "61dd2c7741b2dd13d3ea5c4eea71376e21a7a941",
+      "mode": "100644",
+      "sha256": "cc5fba4b9e931008b3064cdd2b75a9ece46f982b9f2a29f33801b6e4ce9c73d7"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/traversals/TraversalPropertyFloatOptional.scala": {
+      "bytes": 1500,
+      "git_blob": "08fe3d63bbd0550a8a0aa1f8fa699bd1973eea09",
+      "mode": "100644",
+      "sha256": "c6470942a5ca8045992ca8bb6b1e59ee7d986e7e2073576ccecbec147765d6e3"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/traversals/TraversalPropertyIntList.scala": {
+      "bytes": 400,
+      "git_blob": "d230e1072ca094456bffe83a55d13e92d9e2ba17",
+      "mode": "100644",
+      "sha256": "3db3332b7ffdc6c6015e3eba13f8627075385fab54fd29c7df67cb7542bfe964"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/traversals/TraversalPropertyIntMandatory.scala": {
+      "bytes": 2351,
+      "git_blob": "1ce53aacb0c6935dd3a1e5033aa06f7b99080fc6",
+      "mode": "100644",
+      "sha256": "948924d731c470bc01b1c587e5fdb1d68d043721a4a0cf189b94d865fb663773"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/traversals/TraversalPropertyIntOptional.scala": {
+      "bytes": 3111,
+      "git_blob": "d23dac11f9480a242a6a9fba7f335d55ee2b1a04",
+      "mode": "100644",
+      "sha256": "36fab1015a3a8da5049bd5e0a12128cdb25967a53dd8104109e892c3da8d6382"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/traversals/TraversalPropertyLongOptional.scala": {
+      "bytes": 1474,
+      "git_blob": "4dcd36dd16233cf67c7207bd63e90cd63288581a",
+      "mode": "100644",
+      "sha256": "7220874c57abc0b252e5882a1796dfdd91f55d90077e3cfd70e8d21ff03fecdf"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/traversals/TraversalPropertyStringList.scala": {
+      "bytes": 418,
+      "git_blob": "9d2f8645ac1c33e947409a01b4599368e2e7382e",
+      "mode": "100644",
+      "sha256": "2c71554d8bca45c9b44f3306eb6a393bb655bd0c19220eea3cc8f0ba05263b77"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/traversals/TraversalPropertyStringMandatory.scala": {
+      "bytes": 3231,
+      "git_blob": "4f62ac68da37d91cfd31e8a2a64434095c4143dc",
+      "mode": "100644",
+      "sha256": "c2144834624ba0aafec670a67389a391d3c4302138df360440dc81335f19e384"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/traversals/TraversalPropertyStringOptional.scala": {
+      "bytes": 3183,
+      "git_blob": "c0b457967fca1770e9fd23e4561622db53296385",
+      "mode": "100644",
+      "sha256": "2b198d770ecca8c8eca0dcf2f9ad3cd723d7185f31c1193fd7e471c00b3c0340"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/generic/traversals/package.scala": {
+      "bytes": 3489,
+      "git_blob": "cdb4f7c3553d5511b6ab8a50155f6219befb5919",
+      "mode": "100644",
+      "sha256": "367788bc23aeb1924d73e4d4cf5766b040d7d58246aceca399848c94ac78a722"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/EdgeTypes.java": {
+      "bytes": 377,
+      "git_blob": "c92bd4f46eede753ed3ce4245ef0d29f27454a11",
+      "mode": "100644",
+      "sha256": "3922eddb0e71bb4cdb333c5e46d2b867a42d3465836cd57cc4394632e8f84095"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/GraphSchema.scala": {
+      "bytes": 5294,
+      "git_blob": "8ac82609f64f50aca7a869f82bd81aa8d6d21f9d",
+      "mode": "100644",
+      "sha256": "da146e5817d1d4a9a9849d15ae6c4d26f78e74d0cc1a3f7eef8ceb8f716433a6"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/GratefulDead.scala": {
+      "bytes": 4087,
+      "git_blob": "95c380319f61533001704a52c4891c861ed180dd",
+      "mode": "100644",
+      "sha256": "1af8bb97509227829cce5c77c452531e71b386b4218280008ffcb0e4a82703a2"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/NodeTypes.java": {
+      "bytes": 289,
+      "git_blob": "24455fc63f2d9579bc50df7ae5d3c5626d7f554b",
+      "mode": "100644",
+      "sha256": "ba2fc0c386a87de7a78bacf367788dfae0eb90edfb3264f7df08ae3bdcdf418e"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/Properties.scala": {
+      "bytes": 356,
+      "git_blob": "5ce7a176291ec6a563e64f3fa9d39befb636a38a",
+      "mode": "100644",
+      "sha256": "0e316a9f42dafd9e9fcca9b5227ef6eb20b745fd534c148834f1100671690f7c"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/PropertyDefaults.scala": {
+      "bytes": 102,
+      "git_blob": "f5b939619d878176bfee39612b19853c59e18bdf",
+      "mode": "100644",
+      "sha256": "994b030b39ab64ba92316afe2741c1f89a564df0eab95cbafa620d76e1ecd9ee"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/PropertyErrorRegister.scala": {
+      "bytes": 468,
+      "git_blob": "d34bd9d7e9cdd91b056e89afb704c9c4179d0298",
+      "mode": "100644",
+      "sha256": "1d51ed08b7ea2a83ea26efdd8d4e58683c9c70ae7f66a5fdc83064d61dc33f7d"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/PropertyNames.scala": {
+      "bytes": 434,
+      "git_blob": "4af18ee83c9867e7b5644b5b29e2f8c1e1659cec",
+      "mode": "100644",
+      "sha256": "8a5749d590a9b646d1256350dcf291ca06b9e336c0c5e2225e4dcd12d19f50ba"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/accessors/Accessors.scala": {
+      "bytes": 2968,
+      "git_blob": "49b8074a2264a7f1c229e8291ff05e8065a67eb7",
+      "mode": "100644",
+      "sha256": "8869b526fc231a35b1cf4ecad8760725533d5720d6cab9bc0aa7dfa813f914f3"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/edges/EdgeTypes.scala": {
+      "bytes": 895,
+      "git_blob": "1f1a88febb13cce0aec15086186ce36e31ac8991",
+      "mode": "100644",
+      "sha256": "8ea67c1bc13ec777d547d1e5008ea9fbf9d297339156955fb4e26c25b3c0e811"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/language.scala": {
+      "bytes": 528,
+      "git_blob": "5a7d7c9496792ed53a9ec64e142993bb9754d3da",
+      "mode": "100644",
+      "sha256": "1dbbc76348a1e18e7a73c9f8daff60a799e93060a61cc37cf43d79f84c16a903"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/neighboraccessors/Artist.scala": {
+      "bytes": 1747,
+      "git_blob": "8cc080ba434a8b6326e98b2105f6d8e9d8bc7b97",
+      "mode": "100644",
+      "sha256": "b588325b60dd7dbbef3aad523387f74ad96c0ab0fe44bbcb37c8f8c94d8e6aa4"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/neighboraccessors/Song.scala": {
+      "bytes": 3096,
+      "git_blob": "e269c42a271c259d49cfa57e664ac3b1097421ba",
+      "mode": "100644",
+      "sha256": "6d0e68824fbf6ef15e67d99bb7d4071b99fe2aa21c8d86b2c3b8e12ea2e36d7e"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/neighboraccessors/package.scala": {
+      "bytes": 840,
+      "git_blob": "c9f981363db5a654a37c5c588234766aab13c954",
+      "mode": "100644",
+      "sha256": "f7eabe131456471eefc049ebf9d3774bb85b1efef8f595fc7a2871b66cf616a5"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/nodes/Artist.scala": {
+      "bytes": 1417,
+      "git_blob": "c31973137d6c4bf23c45ce0558066c6ac193d910",
+      "mode": "100644",
+      "sha256": "d7a4e6138235ae43aa73511bc516fb94d5eafdde9c8f4e5255be3ae027e623ab"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/nodes/BaseTypes.scala": {
+      "bytes": 693,
+      "git_blob": "e3d7bc260c1fdf4782c51be33ac0d6128b587b73",
+      "mode": "100644",
+      "sha256": "97fac00cf60c97fafe7cf7df4b59d6ef3b026818776b44eac4089988fd45d320"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/nodes/NewArtist.scala": {
+      "bytes": 2602,
+      "git_blob": "59c65bcf1f8a8319c55b84559fea775382909651",
+      "mode": "100644",
+      "sha256": "b6c5c175040f9c9f9b1bfcd95d721fc9c7114cf372ba5626328dbaf55f024e70"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/nodes/NewSong.scala": {
+      "bytes": 5342,
+      "git_blob": "4d5c65112c398b7703637d0ff5cfa79725e2fe5d",
+      "mode": "100644",
+      "sha256": "bd80348814650941dca4236d4889c7112af5babf4b4238134c73de11eebf918d"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/nodes/RootTypes.scala": {
+      "bytes": 2394,
+      "git_blob": "5d96543642a0bcc071b6187ae4fbf1958b1b3a28",
+      "mode": "100644",
+      "sha256": "42363f2b085ce19b153b8ef099e616c7366c8bf1426e91442e716276050c0c49"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/nodes/RootTypesTraversals.scala": {
+      "bytes": 584,
+      "git_blob": "f00b02307bb353f0dd38eb6b71369c169c12aaa4",
+      "mode": "100644",
+      "sha256": "49ce98a5a512268a4840e63f98de83e33902764b2c7054c0ac373bda60e9cb7e"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/nodes/Song.scala": {
+      "bytes": 1808,
+      "git_blob": "3a2de89e232bc8ceb17b4e63e123ca8e2743378f",
+      "mode": "100644",
+      "sha256": "bbe334daef0d528b2ecc54befb54c433cb613b180bb9bf42a5953a1f7f44a98d"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/package.scala": {
+      "bytes": 415,
+      "git_blob": "392c5d7692350c34e93c6269f8cc14f658c79d97",
+      "mode": "100644",
+      "sha256": "5aed577cb9eca9590da5a85426eceb90af4dd28bbac6d5a805daf6802ad441b3"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/traversals/TraversalArtistBase.scala": {
+      "bytes": 2917,
+      "git_blob": "6757f6cf0800d36e4408cba560e1e97e9685460a",
+      "mode": "100644",
+      "sha256": "63a9b7fc2118fbaa3334e4c9ea192be1c4a90fc837faf9acb1ec6443479715b7"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/traversals/TraversalPropertyName.scala": {
+      "bytes": 2960,
+      "git_blob": "38e05042d1c898bc1527addbcfcfe3e42423f382",
+      "mode": "100644",
+      "sha256": "8d01e2a5eb2ed530099a111f1f5140c7b52d9d367f1c78107a5480b675e88e0f"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/traversals/TraversalPropertyPerformances.scala": {
+      "bytes": 3163,
+      "git_blob": "2cd6611f49b2f5fbbadee146e35de8bf607cc678",
+      "mode": "100644",
+      "sha256": "0d8b871da3870b0bcde59a15ca60bc3f61ad854ad423c403c23c71ce0d41be1b"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/traversals/TraversalPropertySongtype.scala": {
+      "bytes": 3036,
+      "git_blob": "c0466f9808615662c08f5dbdc997881455c969fc",
+      "mode": "100644",
+      "sha256": "7300425aed83403b24ea274f226cf4d1b59e7b47b48734d112021d62dbfe0a91"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/traversals/TraversalSongBase.scala": {
+      "bytes": 8476,
+      "git_blob": "ec62d880b32fbf2525302b2eeeb1af27d6c8d1b5",
+      "mode": "100644",
+      "sha256": "ebe895b65d51ab62963b8ad57eafca5e5e54e7422d1a4d7000e546d2b69cf275"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/gratefuldead/traversals/package.scala": {
+      "bytes": 1535,
+      "git_blob": "679d168fc479b8f5a46dac3124a62a01f4c7e489",
+      "mode": "100644",
+      "sha256": "886232bfa2919014540f4d558c785c40a3af3d72df60c97592f37fc10ab95527"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/EdgeTypes.java": {
+      "bytes": 252,
+      "git_blob": "90f655b2306f5f6732ef9d755db95c2134d863c8",
+      "mode": "100644",
+      "sha256": "65493b3e1e14f0a00bdb1a23fd3987e6ebb171d9594e8b000fe472ccad6a613c"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/GraphSchema.scala": {
+      "bytes": 4540,
+      "git_blob": "2c472206e081471f637fafeb51473785a4415b4e",
+      "mode": "100644",
+      "sha256": "5e7b7397906cb6c9851f2e0ca46c95f8e677a80c6161a5e71e21a9ab6c965851"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/Hierarchical.scala": {
+      "bytes": 4291,
+      "git_blob": "a2e2fae31af8e0158eb336d78f9d0f19684e614d",
+      "mode": "100644",
+      "sha256": "aa65e02858e68a927c65a440710ba52850ad4ccca1da1fcf46b8fcf6771c8b72"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/NodeTypes.java": {
+      "bytes": 295,
+      "git_blob": "47bcd62dc6286eef64bead8423a19b84e175edb2",
+      "mode": "100644",
+      "sha256": "99b2bf55ac69b70b8c8012613f00f56a07fc6c67f16c2151288544e5651730ea"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/Properties.scala": {
+      "bytes": 151,
+      "git_blob": "16bde2ab221edfd05d78555565ef7bcca0d23ee1",
+      "mode": "100644",
+      "sha256": "d0597ce6704f38f32ad348a4ef327a80cffe678e173f02baf90c6704dd328ab8"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/PropertyDefaults.scala": {
+      "bytes": 85,
+      "git_blob": "9d4f0656556931d57f375dc3e98866f401079624",
+      "mode": "100644",
+      "sha256": "be450b63c9caf57fb7793e8c5af77e47585928dafbd6c58154f43ed709323b23"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/PropertyErrorRegister.scala": {
+      "bytes": 468,
+      "git_blob": "4be8c43336c1dc4b07aa50b51542c218b45b93cc",
+      "mode": "100644",
+      "sha256": "b70d3442d7de7e604cb66073bce9086a17022169f8898b89af2af1e5bee8d392"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/PropertyNames.scala": {
+      "bytes": 235,
+      "git_blob": "cc5726381210d55cd92cefab30a8cd69b9b75f5d",
+      "mode": "100644",
+      "sha256": "f08464249061fb29b6133f8c9b7711758fd8af9a999dbae93412ee5a2ca2c5d1"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/accessors/Accessors.scala": {
+      "bytes": 1815,
+      "git_blob": "777d8d4ab944a7688b3eee8b355b4dbcab95909d",
+      "mode": "100644",
+      "sha256": "40f1c79414c6597455ae5ede16fb9137b3ccc6c5a81d011f8d66040e89a5a5e1"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/edges/EdgeTypes.scala": {
+      "bytes": 285,
+      "git_blob": "398ce1c758fdb4d5892fc21837a2301b9d468d2d",
+      "mode": "100644",
+      "sha256": "1695a590ec92c5e157e137f8aaa4d7c9eed147e9de66c0a7f54724a54c4b20a3"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/language.scala": {
+      "bytes": 528,
+      "git_blob": "af97c836149c5f380410103f9d81c54959778cf7",
+      "mode": "100644",
+      "sha256": "d1b13ffcd83eccbdbd8e2b1f8ee216201698a8b721c56642ad78dbca1b157c25"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/neighboraccessors/BaseNode.scala": {
+      "bytes": 1708,
+      "git_blob": "f15784e20f7b9d980a0733d8c2b7cf069ece041a",
+      "mode": "100644",
+      "sha256": "46a36ec4ab5879e52be96b73ea5b3fd36ad4e579b048debf4b8eb5eb83125441"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/neighboraccessors/package.scala": {
+      "bytes": 548,
+      "git_blob": "dca4ef1337d6071055f687ea7a38c92de3ed2580",
+      "mode": "100644",
+      "sha256": "74d3d010754fd86394ceece06fbbe5e61aad75b1aac201dd5a2b829c60eeaeec"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/nodes/BaseTypes.scala": {
+      "bytes": 738,
+      "git_blob": "fb31cd2ad69b79ee67e901237ccd2eea9142dd29",
+      "mode": "100644",
+      "sha256": "eb9330fb01c56615c9c6f3f3a9ee6c683052ac082121b133e1b6635d0b2a9cfb"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/nodes/NewNodeX.scala": {
+      "bytes": 2563,
+      "git_blob": "5b43d512cfa28253d646ed58759612f5d6909e7d",
+      "mode": "100644",
+      "sha256": "061f32d7ee68705156b34e83865cddf1aa7c7e1abbcccf8e7780dc483dfeb218"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/nodes/NewNodeY.scala": {
+      "bytes": 2563,
+      "git_blob": "292daa1694bcae91721ab0eed62711d4ba941bb2",
+      "mode": "100644",
+      "sha256": "366d8a113fba4f586630b021c1510854bcb89daeee75a33d0d214ddf5b7b7972"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/nodes/NodeX.scala": {
+      "bytes": 1431,
+      "git_blob": "634853e7be74256c33fca7713b36d83c254570a3",
+      "mode": "100644",
+      "sha256": "e84a41c5ad3d4ac84cca55d12eda1861f039c7ded0608d9d1202db06e716c9eb"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/nodes/NodeY.scala": {
+      "bytes": 1431,
+      "git_blob": "57b2388b566a21aa5c35e03e1950ddc1744d980a",
+      "mode": "100644",
+      "sha256": "261138c035cb823b0c6a9a3a09133ebc3003c8f7e81ea162d27c1a00f6bf58a2"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/nodes/RootTypes.scala": {
+      "bytes": 1552,
+      "git_blob": "0ed1ef6f2fbcb2b5f01945bc2296cb7aef9e5b80",
+      "mode": "100644",
+      "sha256": "00f04ff233224a203801dd9e0fac917933970e11bc50f77ec1ffe66a4440d17a"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/nodes/RootTypesTraversals.scala": {
+      "bytes": 264,
+      "git_blob": "58009f26665f982c5df1c1d72a7bbb0b889b3a40",
+      "mode": "100644",
+      "sha256": "51b02e0d14c137d55a8d6fa94194c608a41c39464eda58898c7c8313a1ffc4a1"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/package.scala": {
+      "bytes": 415,
+      "git_blob": "918f04c575219cdf801514ae179efb4b82c5f68e",
+      "mode": "100644",
+      "sha256": "7c5f7dec83846e81146e39ff81f981245cf5be077663f63367fcd3e1ec8bbb7c"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/traversals/TraversalBasenodeBase.scala": {
+      "bytes": 2921,
+      "git_blob": "67e334876e9ad8ac32ec024889f6839b5e3f0612",
+      "mode": "100644",
+      "sha256": "f0ead8d098e7c700937dea5c1ff963761928b3b3f80aee151f008916a9917fdc"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/traversals/TraversalNodexBase.scala": {
+      "bytes": 259,
+      "git_blob": "375941c364adbf16cdb9c52294f0a3e3831e6412",
+      "mode": "100644",
+      "sha256": "5b3a1ba4506ba07e43a162b0d12b655331205696785316c6bacbd23732d2ce9b"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/traversals/TraversalNodeyBase.scala": {
+      "bytes": 259,
+      "git_blob": "6a9f6b6ff4c89125d15ac0716e40e8d303f52e4a",
+      "mode": "100644",
+      "sha256": "6b29e0da7ac7bbc4ce36d08b17fcbb1c6e897500a761150f3068e41b1c7275b0"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/traversals/TraversalPropertyName.scala": {
+      "bytes": 2960,
+      "git_blob": "8b7910d9ec02bca30311df2af244313035339cf7",
+      "mode": "100644",
+      "sha256": "5f552dbd69ce3b9de14a78d249e5298c22494154a1a70b1d7187312208e53002"
+    },
+    "test-schemas-domain-classes/src/main/scala/testdomains/hierarchical/traversals/package.scala": {
+      "bytes": 1273,
+      "git_blob": "ae10c509aa2731217018b9b6f2d4c44204a67a30",
+      "mode": "100644",
+      "sha256": "d2f694fbd7366eae10344a52127bb319481b5e5977a7cbca5b49087e9911820a"
+    },
+    "test-schemas/BUILD": {
+      "bytes": 1142,
+      "git_blob": "2d3531334b574aae39390b2f74d8cb4d2905a5d8",
+      "mode": "100644",
+      "sha256": "dd661f568111d223cd37cb3146e5622428645d8cace0b95b6d9b26e18450ca60"
+    },
+    "test-schemas/src/main/scala/flatgraph/testdomains/CodePropertyGraphMinified.scala": {
+      "bytes": 1291,
+      "git_blob": "9d8ad7df562ceb659e88f0ec9fec275881b46ded",
+      "mode": "100644",
+      "sha256": "bf392009083d2a6be0afac6f69ef637d1fa22d47b02d2438b6506a14cd5a1ce6"
+    },
+    "test-schemas/src/main/scala/flatgraph/testdomains/Empty.scala": {
+      "bytes": 356,
+      "git_blob": "4f8fbdb30686197a03b36f07d0b66a3ff95189ef",
+      "mode": "100644",
+      "sha256": "0df15bf2310018aca90b71b78f4a6e342a9c3550b59bb7716fc9e9249b2e2817"
+    },
+    "test-schemas/src/main/scala/flatgraph/testdomains/GenerateDomainClasses.scala": {
+      "bytes": 799,
+      "git_blob": "f033a4950e0a2d15b8a9d5079a5047024be35d10",
+      "mode": "100644",
+      "sha256": "7510339ec4fb32730786aa0b02ff02f6f4517bad29d190c82ed731b52d42751b"
+    },
+    "test-schemas/src/main/scala/flatgraph/testdomains/Generic.scala": {
+      "bytes": 2161,
+      "git_blob": "3c5ce0f9c5bddcfbeea9dde47e91bbe65f99bc92",
+      "mode": "100644",
+      "sha256": "e1b0cbac358d9fb77b02afae32e3a6c292173240e685be84a2600881278a9eaf"
+    },
+    "test-schemas/src/main/scala/flatgraph/testdomains/GratefulDead.scala": {
+      "bytes": 1527,
+      "git_blob": "11d1be1d7f42caded64493973f1c3dbef57e258f",
+      "mode": "100644",
+      "sha256": "60fde4026cd505e7c315d7cffb5f2c4d5007258bca02a82927897dda7aaea547"
+    },
+    "test-schemas/src/main/scala/flatgraph/testdomains/Hierarchical.scala": {
+      "bytes": 691,
+      "git_blob": "05d747aa43a3b7c05b4308e3b17374a99a90c485",
+      "mode": "100644",
+      "sha256": "0369c116688ad0eaf97fbda56e88e9ee6418b85704cb1eead3b80c32fc69d369"
+    },
+    "tests-scala3/BUILD": {
+      "bytes": 209,
+      "git_blob": "21f216a40c033ec73b33b0d4ea6da1b48c632b52",
+      "mode": "100644",
+      "sha256": "633858c9dc3a05d27984df7e74d35a3efb6f4b124d772852d8fed05d95802b22"
+    },
+    "tests-scala3/src/test/scala/flatgraph/traversal/NamedTupleUnapplyTests.scala": {
+      "bytes": 1250,
+      "git_blob": "3407ceb0c0ef4c51751c409b3f4b42727d448524",
+      "mode": "100644",
+      "sha256": "e0b5e00b777356edd585a28fa3394bf0472f552c73fadbfd971dd15cdd66c0d2"
+    },
+    "tests/BUILD": {
+      "bytes": 560,
+      "git_blob": "f54e6ae06afb21b08d9eda2aba209849583508fe",
+      "mode": "100644",
+      "sha256": "3e9841e56f6607e14cc188db246a60c34967cb554991f0a73d102edc9f18bace"
+    },
+    "tests/src/test/resources/graphml-small.xml": {
+      "bytes": 1289,
+      "git_blob": "6f82c4fdc2cc3452ce646a5db10675a672189fdd",
+      "mode": "100644",
+      "sha256": "5dd9973ce07e4d5a555505485c4031e8fda9229dc0f22fa1a5205efab9a5991a"
+    },
+    "tests/src/test/resources/graphson-small.json": {
+      "bytes": 2045,
+      "git_blob": "387b2df99ce4e45690429614a6b0e741479b2b51",
+      "mode": "100644",
+      "sha256": "74720a9409f878a56799dbbdd8bc89ef28cc39b7861d7e977440dd3536a504bd"
+    },
+    "tests/src/test/resources/grateful-dead.xml": {
+      "bytes": 1367880,
+      "git_blob": "e956496c504ed0e5cab6f6eb63a9f121339c1958",
+      "mode": "100644",
+      "sha256": "a325892cbc2c2c50801285ab087ca204a5dd5a8f30d9f02893fd0360716149d9"
+    },
+    "tests/src/test/resources/neo4jcsv/edges_connected_to_cypher.csv": {
+      "bytes": 197,
+      "git_blob": "e555c54a35a4736987bcd16234257962562b5a5c",
+      "mode": "100644",
+      "sha256": "83fc1f1899c3dc3737b5a9ea78f46d4cb9458b6b471cdbf0b08ffaccbf07ea9c"
+    },
+    "tests/src/test/resources/neo4jcsv/edges_connected_to_data.csv": {
+      "bytes": 32,
+      "git_blob": "9d903cc200b6e40e6667117053ed2d36f20a9737",
+      "mode": "100644",
+      "sha256": "992c07657b7dee6d84fcd8c0a6507d001c5ff56a1d5866c9cf7d8ae896570a66"
+    },
+    "tests/src/test/resources/neo4jcsv/edges_connected_to_header.csv": {
+      "bytes": 49,
+      "git_blob": "8db7ca7070e94713b9b28a2ad54a1e64eafa3bd2",
+      "mode": "100644",
+      "sha256": "4f3e62fb9d4b7c64a8a360d1ee7d8cb8b1be56e8c40db7b436678b7ef4922d31"
+    },
+    "tests/src/test/resources/neo4jcsv/invalid_column_content_data.csv": {
+      "bytes": 120,
+      "git_blob": "3d33c96a56de2c1de97a9a2dae8729c49efc7dc8",
+      "mode": "100644",
+      "sha256": "b0814b32228a2a398fc1e70fddce687955abf542371879f78d832b23a5ec5741"
+    },
+    "tests/src/test/resources/neo4jcsv/invalid_column_content_header.csv": {
+      "bytes": 93,
+      "git_blob": "96f0e308d77764ad421e816bc05c96d3fa32cdbe",
+      "mode": "100644",
+      "sha256": "5af1f5d8e14adfcb7b1f0b029d9877c5ce19849b0d9c6b542ad380c6a936815e"
+    },
+    "tests/src/test/resources/neo4jcsv/nodes_node_a_cypher.csv": {
+      "bytes": 313,
+      "git_blob": "702ecdc28666c1979bbe497dbc5965c4ab6179cf",
+      "mode": "100644",
+      "sha256": "b900bbf4ce10057bb20ed325696ecb5393c9a94d357f53f6320e5d75fcd2be22"
+    },
+    "tests/src/test/resources/neo4jcsv/nodes_node_a_data.csv": {
+      "bytes": 92,
+      "git_blob": "70486e7f59fa21fdff3c41bbbce729380fdc245b",
+      "mode": "100644",
+      "sha256": "00e4612b6f38974e85485d61964526d9d581dbc63b9969a2d2065f4ada7380de"
+    },
+    "tests/src/test/resources/neo4jcsv/nodes_node_a_header.csv": {
+      "bytes": 191,
+      "git_blob": "3737186b1af18d622fb77367c2654502cdc9e03d",
+      "mode": "100644",
+      "sha256": "28c437e73d77455176fe35016efa3fabf3193129597a55bf3263f5386b6bda79"
+    },
+    "tests/src/test/resources/neo4jcsv/unsupported_multiple_labels_data.csv": {
+      "bytes": 18,
+      "git_blob": "3c3369e0a2a93c51fcb8e1d71edea8562f4c0046",
+      "mode": "100644",
+      "sha256": "f58cf79dd5090cf8ad0170783aa86f0f06290d0682bca26d5617ad3b2bec5e94"
+    },
+    "tests/src/test/resources/neo4jcsv/unsupported_multiple_labels_header.csv": {
+      "bytes": 35,
+      "git_blob": "9639be214cd590f777cb135e5c4a936885248d6e",
+      "mode": "100644",
+      "sha256": "b5ad15dd443932a37114bb5335bd718fccf98cd88f7ed0d2b4a228e8ad52ff51"
+    },
+    "tests/src/test/scala/flatgraph/CompileTests.scala": {
+      "bytes": 5411,
+      "git_blob": "fe09cad5c163ed814d6058803c05b6a75ac4e6fc",
+      "mode": "100644",
+      "sha256": "9d9d1e32ce37b4a8102790d852bd8a6bf69e209c1c071e54318ced68fe837bf2"
+    },
+    "tests/src/test/scala/flatgraph/GraphTestsWithSchema.scala": {
+      "bytes": 3417,
+      "git_blob": "c5e72e928c942d03247d9e69f2eb2b2e0be397ba",
+      "mode": "100644",
+      "sha256": "b3c9805e2fbb9a54ade90896ccfd6aa3281de3e9dfdce4547c6611a3ba17f40f"
+    },
+    "tests/src/test/scala/flatgraph/TestGraphs.scala": {
+      "bytes": 3705,
+      "git_blob": "3c77790b8ee976bb816dcc82c6a0840470f159b5",
+      "mode": "100644",
+      "sha256": "43f611d808b31fa6c2a65cbb8c7bd1240fa8f4729699e2515b5b858b0a8c265f"
+    },
+    "tests/src/test/scala/flatgraph/algorithm/DependencySequencerTests.scala": {
+      "bytes": 2922,
+      "git_blob": "e8780916755376fa1f38aee557aaf8ee0f6ba38d",
+      "mode": "100644",
+      "sha256": "02704810d586554b5e078a45847db1f50abc8716b72e41f469e8cd68059660af"
+    },
+    "tests/src/test/scala/flatgraph/algorithm/LowestCommonAncestorsTests.scala": {
+      "bytes": 2432,
+      "git_blob": "c55773ffa5ec2247035b441a02c9eed9aaf167d2",
+      "mode": "100644",
+      "sha256": "2e651b74ce7e3a8bdea671bff387eb39164741d99cdfcc0074ab7eb137742bbe"
+    },
+    "tests/src/test/scala/flatgraph/algorithm/PathFinderTests.scala": {
+      "bytes": 2370,
+      "git_blob": "8c99d1660849715a30d9479b6b97efc48e712e8f",
+      "mode": "100644",
+      "sha256": "1a68e72f02fe4f1f1f5a6b5b54698395763131b1b30fd3baa6b24b1e9cdf9ea0"
+    },
+    "tests/src/test/scala/flatgraph/formats/dot/DotExporterTests.scala": {
+      "bytes": 2631,
+      "git_blob": "7be8e411405749181c165f0e3a2fded535b7ac21",
+      "mode": "100644",
+      "sha256": "5ffdc377928e49fd657cc14c25eb7bee4c179b6daf47722c0fec798343430f79"
+    },
+    "tests/src/test/scala/flatgraph/formats/graphml/GraphMLTests.scala": {
+      "bytes": 4481,
+      "git_blob": "3478c0805e87acc5899a13d19044c87885f42474",
+      "mode": "100644",
+      "sha256": "3dc6857de96eed0389ab9650b5fe0903978e8ddc600c009c5977e90d7921c01e"
+    },
+    "tests/src/test/scala/flatgraph/formats/graphson/GraphSONTests.scala": {
+      "bytes": 3813,
+      "git_blob": "4af9d9419ed54f252f8664ea43dcf0804850b292",
+      "mode": "100644",
+      "sha256": "c1e8944e04760effd06320c822ef9855f82d3bdfd945b5a0c4f406d59cb8cbbb"
+    },
+    "tests/src/test/scala/flatgraph/formats/neo4jcsv/Neo4jCsvTests.scala": {
+      "bytes": 8207,
+      "git_blob": "ef3bf4bea25f4a78626cb19ee7fd9993339ef5e8",
+      "mode": "100644",
+      "sha256": "f60036bd373bd156734a732344cc3db7c017c0d3d9a479fa965b634a33c688d4"
+    },
+    "tests/src/test/scala/flatgraph/testutils/ProjectRoot.scala": {
+      "bytes": 1639,
+      "git_blob": "b671b5341e8dcbeebaf47303d1d27251be66a890",
+      "mode": "100644",
+      "sha256": "89d40a2b14b1f2ee25e50374acd55ea8fc4469b57ad5c8c6529915a087b8d3f8"
+    },
+    "tests/src/test/scala/flatgraph/testutils/TestHelpers.scala": {
+      "bytes": 619,
+      "git_blob": "7e67d94a594bbcb5010d693595107cc2844d8714",
+      "mode": "100644",
+      "sha256": "5f79d2483b79801ac8cbd1a4a918976221514bd162f930ca4c11395d56430250"
+    },
+    "tests/src/test/scala/flatgraph/traversal/GenericGraphTraversalTests.scala": {
+      "bytes": 5249,
+      "git_blob": "843e32c19c34e2554f7f6302a1bf437f4cebd61d",
+      "mode": "100644",
+      "sha256": "09277dd29fadd623a83a2e41b626f71621d789d31eaff17bd71996a790b67ac1"
+    },
+    "tests/src/test/scala/flatgraph/traversal/GratefulDeadTests.scala": {
+      "bytes": 5839,
+      "git_blob": "3a865c5f3f781c503dc7699d71a6448dfe19aaa6",
+      "mode": "100644",
+      "sha256": "aab37120dac5c1d3c816904180403c0aaa32417d9090c537ba2811cd2198dd68"
+    },
+    "tests/src/test/scala/flatgraph/traversal/LogicalStepsTests.scala": {
+      "bytes": 3952,
+      "git_blob": "f65a45d57129acd4dc226a4003be68725eec463e",
+      "mode": "100644",
+      "sha256": "316d41d8a67fb98da46e3cc4ae77c7adb8c5b7f861ecdc7524803026f52509c0"
+    },
+    "tests/src/test/scala/flatgraph/traversal/PathTraversalTests.scala": {
+      "bytes": 6907,
+      "git_blob": "d5cc12557529e3ace08a61cbcb94ba171bafd9e5",
+      "mode": "100644",
+      "sha256": "f6b90e4db7b18d0b71fc94323d568460f85715b506fb62cf085de25ed3627ca0"
+    },
+    "tests/src/test/scala/flatgraph/traversal/RepeatTraversalTests.scala": {
+      "bytes": 17154,
+      "git_blob": "2ea57459e18992b06d433fa856b9d1e42f7393f5",
+      "mode": "100644",
+      "sha256": "43066b48e9ab1c37327a12a4e3bd4c29199069998c27941238577007afe22bcb"
+    },
+    "tests/src/test/scala/flatgraph/traversal/TraversalTests.scala": {
+      "bytes": 7090,
+      "git_blob": "a62c68ae1c392cf0c20dfec78c31e33f82a6ffc2",
+      "mode": "100644",
+      "sha256": "15a0d6efa59c0f6913c6720cc8cd063683e61e1a8a4a34d511eec6efdf52355f"
+    }
+  }
+}

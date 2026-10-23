@@ -1,0 +1,713 @@
+--- /dev/null
++++ b/schema/src/main/scala/flatgraph/schema/Schema.scala
+@@ -0,0 +1,424 @@
++package flatgraph.schema
++
++import flatgraph.schema.Helpers._
++import flatgraph.schema.Property.Default
++
++import scala.collection.mutable
++
++/** @param basePackage:
++  *   specific for your domain, e.g. `com.example.mydomain`
++  * @param additionalTraversalsPackages:
++  *   additional packages that contain your traversals - used for `.help` to find @Doc annotations via reflection
++  */
++class Schema(
++  val domainShortName: String,
++  val basePackage: String,
++  val additionalTraversalsPackages: Seq[String],
++  val properties: Seq[Property[?]],
++  val anyNode: AnyNodeType,
++  val nodeBaseTypes: Seq[NodeBaseType],
++  val nodeTypes: Seq[NodeType],
++  val edgeTypes: Seq[EdgeType],
++  val constantsByCategory: Map[String, Seq[Constant[?]]],
++  val protoOptions: Option[ProtoOptions],
++  val noWarnList: Set[(AbstractNodeType, Property[?])]
++) {
++
++  /** nodeTypes and nodeBaseTypes combined */
++  lazy val allNodeTypes: Seq[AbstractNodeType] =
++    nodeTypes ++ nodeBaseTypes
++
++  /** properties that are used in node types */
++  def nodeProperties: Seq[Property[?]] =
++    properties.filter(property => (nodeTypes ++ nodeBaseTypes).exists(_.properties.contains(property)))
++
++  /** properties that are used in edge types */
++  def edgeProperties: Seq[Property[?]] =
++    properties.filter(property => edgeTypes.exists(_.property == Option(property)))
++}
++
++abstract class AbstractNodeType(val name: String, val comment: Option[String], val schemaInfo: SchemaInfo)
++    extends HasClassName
++    with HasSchemaInfo {
++  protected val _extendz: mutable.Set[NodeBaseType]     = mutable.Set.empty
++  protected val _outEdges: mutable.Set[AdjacentNode]    = mutable.Set.empty
++  protected val _inEdges: mutable.Set[AdjacentNode]     = mutable.Set.empty
++  protected val _markerTraits: mutable.Set[MarkerTrait] = mutable.Set.empty
++  protected val _properties: mutable.Set[Property[?]]   = mutable.Set.empty
++
++  /** all node types that extend this node */
++  def subtypes(allNodes: Set[AbstractNodeType]): Set[AbstractNodeType]
++
++  private var _starterName: Option[String] = Some(camelCase(name))
++
++  /** the name for the generated node starter. Custom names can be assigned to prevent compile errors for e.g. `type`. Generation of
++    * node-starter can be suppressed by passing null, or by calling `withoutStarter()`.
++    */
++  def starterName: Option[String]          = _starterName
++  def starterName(name: String): this.type = { SchemaConstructionTrace.starter(this, name); this._starterName = Option(name); this }
++  def withoutStarter(): this.type          = starterName(null)
++
++  def addProperty(additional: Property[?]): this.type = {
++    SchemaConstructionTrace.addProperty(this, additional)
++    _properties.add(additional)
++    this
++  }
++
++  def addProperties(additional: Property[?]*): this.type = {
++    additional.foreach(addProperty)
++    this
++  }
++
++  /** properties (including potentially inherited properties) */
++  def properties: Seq[Property[?]] = {
++    val entireClassHierarchy = this +: extendzRecursively
++    entireClassHierarchy.flatMap(_.propertiesWithoutInheritance).distinct.sortBy(_.name.toLowerCase)
++  }
++
++  def propertiesWithoutInheritance: Seq[Property[?]] =
++    _properties.toSeq.sortBy(_.name.toLowerCase)
++
++  def extendz(additional: NodeBaseType*): this.type = {
++    SchemaConstructionTrace.extend(this, additional)
++    additional.foreach(_extendz.add)
++    this
++  }
++
++  def extendz: Seq[NodeBaseType] =
++    _extendz.toSeq.sortBy(_.name)
++
++  def extendzRecursively: Seq[NodeBaseType] = {
++    val results       = Seq.newBuilder[NodeBaseType]
++    val extendsLevel1 = extendz
++    results ++= extendsLevel1
++    results ++= extendsLevel1.flatMap(_.extendzRecursively)
++    results.result().distinct
++  }
++
++  /** note: allowing to define one outEdge for ONE inNode only - if you are looking for Union Types, please use NodeBaseTypes
++    */
++  def addOutEdge(
++    edge: EdgeType,
++    inNode: AbstractNodeType,
++    cardinalityOut: EdgeType.Cardinality = EdgeType.Cardinality.List,
++    cardinalityIn: EdgeType.Cardinality = EdgeType.Cardinality.List,
++    stepNameOut: String = "",
++    stepNameOutDoc: String = "",
++    stepNameIn: String = "",
++    stepNameInDoc: String = ""
++  ): this.type = {
++    SchemaConstructionTrace.connect(this, edge, inNode, cardinalityOut, cardinalityIn, stepNameOut, stepNameOutDoc, stepNameIn, stepNameInDoc)
++    _outEdges.add(AdjacentNode(edge, inNode, cardinalityOut, stringToOption(stepNameOut), stringToOption(stepNameOutDoc)))
++    inNode._inEdges.add(AdjacentNode(edge, this, cardinalityIn, stringToOption(stepNameIn), stringToOption(stepNameInDoc)))
++    this
++  }
++
++  def addInEdge(
++    edge: EdgeType,
++    outNode: AbstractNodeType,
++    cardinalityIn: EdgeType.Cardinality = EdgeType.Cardinality.List,
++    cardinalityOut: EdgeType.Cardinality = EdgeType.Cardinality.List,
++    stepNameIn: String = "",
++    stepNameInDoc: String = "",
++    stepNameOut: String = "",
++    stepNameOutDoc: String = ""
++  ): this.type = {
++    SchemaConstructionTrace.connect(outNode, edge, this, cardinalityOut, cardinalityIn, stepNameOut, stepNameOutDoc, stepNameIn, stepNameInDoc)
++    _inEdges.add(AdjacentNode(edge, outNode, cardinalityIn, stringToOption(stepNameIn), stringToOption(stepNameInDoc)))
++    outNode._outEdges.add(AdjacentNode(edge, this, cardinalityOut, stringToOption(stepNameOut), stringToOption(stepNameOutDoc)))
++    this
++  }
++
++  def outEdges: Seq[AdjacentNode] =
++    _outEdges.toSeq
++
++  def inEdges: Seq[AdjacentNode] =
++    _inEdges.toSeq
++
++  def edges(direction: Direction.Value): Seq[AdjacentNode] =
++    direction match {
++      case Direction.IN  => inEdges
++      case Direction.OUT => outEdges
++    }
++
++  def edges: Seq[AdjacentNode] =
++    outEdges ++ inEdges
++
++  def addMarkerTrait(name: String): this.type = {
++    SchemaConstructionTrace.marker(this, name)
++    _markerTraits.add(MarkerTrait(name))
++    this
++  }
++
++  def markerTraits: Seq[MarkerTrait] =
++    _markerTraits.toSeq
++}
++
++class NodeType(name: String, comment: Option[String], schemaInfo: SchemaInfo)
++    extends AbstractNodeType(name, comment, schemaInfo)
++    with HasOptionalProtoId {
++  protected val _containedNodes: mutable.Set[ContainedNode] = mutable.Set.empty
++
++  private var _primaryKey: Option[Property[?]] = None
++
++  def primaryKey(p: Property[?]): this.type = {
++    SchemaConstructionTrace.primaryKey(this, p)
++    this._primaryKey = Option(p)
++    this
++  }
++
++  def primaryKey: Option[Property[?]] = this._primaryKey
++
++  lazy val classNameDb = s"${className}Db"
++
++  /** all node types that extend this node */
++  override def subtypes(allNodes: Set[AbstractNodeType]) = Set.empty
++
++  def containedNodes: Seq[ContainedNode] =
++    _containedNodes.toSeq.sortBy(_.localName.toLowerCase)
++
++  def addContainedNode(node: AbstractNodeType, localName: String, cardinality: Property.Cardinality, comment: String = ""): NodeType = {
++    SchemaConstructionTrace.contained(this, node, localName, cardinality, comment)
++    _containedNodes.add(ContainedNode(node, localName, cardinality, stringToOption(comment)))
++    this
++  }
++
++  override def toString = s"NodeType($name)"
++}
++
++/** root node trait for all nodes - use if you want to be explicitly unspecific */
++class AnyNodeType
++    extends NodeBaseType(
++      name = "AnyNode",
++      comment = Some("generic node base trait - use if you want to be explicitly unspecific"),
++      SchemaInfo.Unknown
++    ) {
++  override val className = DefaultNodeTypes.StoredNodeClassname
++
++  /** all node types extend this node */
++  override def subtypes(allNodes: Set[AbstractNodeType]): Set[AbstractNodeType] =
++    allNodes
++
++  override def toString: String = name
++}
++
++class NodeBaseType(name: String, comment: Option[String], schemaInfo: SchemaInfo) extends AbstractNodeType(name, comment, schemaInfo) {
++
++  /** all node types that extend this node */
++  override def subtypes(allNodes: Set[AbstractNodeType]) =
++    allNodes.filter { candidate =>
++      candidate.extendzRecursively.contains(this)
++    }
++
++  override def toString = s"NodeBaseType($name)"
++}
++
++case class AdjacentNode(
++  viaEdge: EdgeType,
++  neighbor: AbstractNodeType,
++  cardinality: EdgeType.Cardinality,
++  customStepName: Option[String] = None,
++  customStepDoc: Option[String] = None
++)
++
++case class ContainedNode(nodeType: AbstractNodeType, localName: String, cardinality: Property.Cardinality, comment: Option[String]) {
++  lazy val classNameForStoredNode = nodeType.className
++}
++
++/** An empty trait without any implementation, e.g. to mark a semantic relationship between certain types */
++case class MarkerTrait(name: String)
++
++class EdgeType(val name: String, val comment: Option[String], val schemaInfo: SchemaInfo)
++    extends HasClassName
++    with HasOptionalProtoId
++    with HasSchemaInfo {
++  protected var _property: Option[Property[?]]       = None
++  protected var _defaultAccessorName: Option[String] = None
++
++  override def toString = s"EdgeType($name)"
++
++  def property: Option[Property[?]]       = _property
++  def defaultAccessorName: Option[String] = _defaultAccessorName
++
++  def withProperty(property: Property[?]): this.type = {
++    SchemaConstructionTrace.edgeProperty(this, property)
++    _property = Option(property)
++    this
++  }
++
++  def withDefaultAccessorName(value: String): this.type = {
++    SchemaConstructionTrace.edgeAccessor(this, value)
++    _defaultAccessorName = Option(value)
++    this
++  }
++}
++
++object EdgeType {
++  sealed abstract class Cardinality
++  object Cardinality {
++    case object One       extends Cardinality
++    case object ZeroOrOne extends Cardinality
++    case object List      extends Cardinality
++  }
++}
++
++case class Property[A](name: String, valueType: Property.ValueType[A], comment: Option[String] = None, schemaInfo: SchemaInfo)
++    extends HasClassName
++    with HasOptionalProtoId
++    with HasSchemaInfo {
++  import Property.Cardinality
++  protected var _cardinality: Cardinality = Cardinality.ZeroOrOne
++  def cardinality: Cardinality            = _cardinality
++
++  /** make this a mandatory property, which allows us to use primitives (better memory footprint, no GC, ...) */
++  def mandatory(default: A): Property[A] = {
++    SchemaConstructionTrace.mandatory(this, default)
++    _cardinality = Cardinality.One(Property.Default(default))
++    this
++  }
++
++  def isMandatory: Boolean =
++    cardinality.isInstanceOf[Cardinality.One[?]]
++
++  def hasDefault: Boolean =
++    default.isDefined
++
++  def default: Option[Default[A]] =
++    _cardinality match {
++      case c: Cardinality.One[_] =>
++        // casting is safe here because only `mandatory(A)` can set the value
++        Option(c.default).map(_.asInstanceOf[Default[A]])
++      case _ =>
++        None
++    }
++
++  /** make this a list property, using a regular Sequence, with linear (slow) random access */
++  def asList(): Property[A] = {
++    SchemaConstructionTrace.asList(this)
++    _cardinality = Cardinality.List
++    this
++  }
++}
++
++object Property {
++
++  sealed trait ValueType[A]
++  object ValueType {
++    object Boolean extends ValueType[Boolean]
++    object String  extends ValueType[String]
++    object Byte    extends ValueType[Byte]
++    object Short   extends ValueType[Short]
++    object Int     extends ValueType[Int]
++    object Long    extends ValueType[Long]
++    object Float   extends ValueType[Float]
++    object Double  extends ValueType[Double]
++    object List    extends ValueType[Seq[?]]
++    object Char    extends ValueType[Char]
++    object NodeRef extends ValueType[Any]
++    object Unknown extends ValueType[Any]
++  }
++
++  sealed trait Cardinality
++  object Cardinality {
++    case object ZeroOrOne                  extends Cardinality
++    case object List                       extends Cardinality
++    case class One[A](default: Default[A]) extends Cardinality
++  }
++
++  case class Default[A](value: A)
++}
++
++class Constant[A](
++  val name: String,
++  val value: String,
++  val valueType: Property.ValueType[A],
++  val comment: Option[String],
++  val schemaInfo: SchemaInfo
++) extends HasOptionalProtoId
++    with HasSchemaInfo {
++  override def toString = s"Constant($name)"
++}
++
++object Constant {
++  def apply[A](name: String, value: String, valueType: Property.ValueType[A], comment: String = "")(implicit
++    schemaInfo: SchemaInfo = SchemaInfo.Unknown
++  ): Constant[A] =
++    new Constant[A](name, value, valueType, stringToOption(comment), schemaInfo)
++}
++
++case class NeighborInfoForEdge(edge: EdgeType, nodeInfos: Seq[NeighborInfoForNode], offsetPosition: Int)
++
++case class NeighborInfoForNode(
++  neighborNode: AbstractNodeType,
++  edge: EdgeType,
++  direction: Direction.Value,
++  cardinality: EdgeType.Cardinality,
++  isInherited: Boolean,
++  customStepName: Option[String] = None,
++  customStepDoc: Option[String] = None
++) {
++
++  /** handling some accidental complexity within the schema: if a relationship is defined on a base node and separately on a concrete node,
++    * with different cardinalities, we need to use the highest cardinality
++    */
++  lazy val consolidatedCardinality: EdgeType.Cardinality = {
++    val inheritedCardinalities = neighborNode.extendzRecursively.flatMap(_.inEdges).collect {
++      case AdjacentNode(viaEdge, neighbor, cardinality, _, _) if viaEdge == edge && neighbor == neighborNode => cardinality
++    }
++    val allCardinalities = cardinality +: inheritedCardinalities
++    allCardinalities.distinct.sortBy {
++      case EdgeType.Cardinality.List      => 0
++      case EdgeType.Cardinality.ZeroOrOne => 1
++      case EdgeType.Cardinality.One       => 2
++    }.head
++  }
++
++}
++
++object Direction extends Enumeration {
++  val IN, OUT = Value
++  val all     = List(IN, OUT)
++}
++
++case class ProductElement(name: String, accessorSrc: String, index: Int)
++
++case class ProtoOptions(
++  pkg: String,
++  javaOuterClassname: String,
++  javaPackage: String,
++  goPackage: String,
++  csharpNamespace: String,
++  uncommonProtoEnumNameMappings: Map[String, String] = Map.empty
++)
++
++trait HasClassName {
++  def name: String
++  def className = camelCaseCaps(name)
++}
++
++trait HasOptionalProtoId {
++  protected var _protoId: Option[Int] = None
++
++  def protoId(id: Int): this.type = {
++    SchemaConstructionTrace.protoId(this.asInstanceOf[AnyRef], id)
++    _protoId = Some(id)
++    this
++  }
++
++  def protoId: Option[Int] = _protoId
++}
++
++trait HasSchemaInfo {
++  def schemaInfo: SchemaInfo
++}
++
++/** carry extra information on where a schema element is being defined, e.g. when we want to be able to refer back that `node XYZ` was
++  * defined in `BaseSchema`, e.g. for documentation
++  */
++case class SchemaInfo(definedIn: Option[Class[?]])
++object SchemaInfo {
++  val Unknown = SchemaInfo(None)
++
++  def forClass(schemaClass: Class[?]): SchemaInfo =
++    SchemaInfo(Option(schemaClass))
++}
+--- /dev/null
++++ b/schema/src/main/scala/flatgraph/schema/SchemaBuilder.scala
+@@ -0,0 +1,105 @@
++package flatgraph.schema
++
++import flatgraph.schema.Helpers._
++import flatgraph.schema.Property.ValueType
++
++import scala.collection.mutable
++
++class SchemaBuilder(domainShortName: String, basePackage: String, additionalTraversalsPackages: Seq[String] = Seq.empty) {
++  SchemaConstructionTrace.builder(this, domainShortName, basePackage, additionalTraversalsPackages)
++  val properties                                               = mutable.ListBuffer.empty[Property[?]]
++  val nodeBaseTypes                                            = mutable.ListBuffer.empty[NodeBaseType]
++  val nodeTypes                                                = mutable.ListBuffer.empty[NodeType]
++  val edgeTypes                                                = mutable.ListBuffer.empty[EdgeType]
++  val constantsByCategory                                      = mutable.Map.empty[String, Seq[Constant[?]]]
++  var protoOptions: Option[ProtoOptions]                       = None
++  val noWarnList: mutable.Set[(AbstractNodeType, Property[?])] = mutable.Set.empty
++
++  /** root node trait for all nodes - use if you want to be explicitly unspecific */
++  lazy val anyNode: AnyNodeType = { val node = new AnyNodeType; SchemaConstructionTrace.node(node); node }
++
++  def addProperty[A](name: String, valueType: ValueType[A], comment: String = "")(implicit
++    schemaInfo: SchemaInfo = SchemaInfo.Unknown
++  ): Property[A] = {
++    val property = new Property[A](name, valueType, stringToOption(comment), schemaInfo)
++    properties.append(property)
++    SchemaConstructionTrace.property(this, property)
++    property
++  }
++
++  def addNodeBaseType(name: String, comment: String = "")(implicit schemaInfo: SchemaInfo = SchemaInfo.Unknown): NodeBaseType =
++    addAndReturn(nodeBaseTypes, new NodeBaseType(name, stringToOption(comment), schemaInfo))
++
++  def addEdgeType(name: String, comment: String = "")(implicit schemaInfo: SchemaInfo = SchemaInfo.Unknown): EdgeType =
++    addAndReturn(edgeTypes, new EdgeType(name, stringToOption(comment), schemaInfo))
++
++  def addNodeType(name: String, comment: String = "")(implicit schemaInfo: SchemaInfo = SchemaInfo.Unknown): NodeType =
++    addAndReturn(nodeTypes, new NodeType(name, stringToOption(comment), schemaInfo))
++
++  def addConstants(category: String, constants: Constant[?]*): Seq[Constant[?]] = {
++    SchemaConstructionTrace.constants(this, category, constants)
++    val previousEntries = constantsByCategory.getOrElse(category, Seq.empty)
++    constantsByCategory.put(category, previousEntries ++ constants)
++    constants
++  }
++
++  def protoOptions(value: ProtoOptions): SchemaBuilder = {
++    SchemaConstructionTrace.protoOptions(this, value)
++    this.protoOptions = Option(value)
++    this
++  }
++
++  def dontWarnForDuplicateProperty(nodeType: AbstractNodeType, property: Property[?]): SchemaBuilder = {
++    SchemaConstructionTrace.noWarn(this, nodeType, property)
++    noWarnList.add((nodeType, property))
++    this
++  }
++
++  def build: Schema = {
++    val schema = new Schema(
++      domainShortName,
++      basePackage,
++      additionalTraversalsPackages,
++      properties.sortBy(_.name.toLowerCase).toSeq,
++      anyNode,
++      nodeBaseTypes.sortBy(_.name.toLowerCase).toSeq,
++      nodeTypes.sortBy(_.name.toLowerCase).toSeq,
++      edgeTypes.sortBy(_.name.toLowerCase).toSeq,
++      constantsByCategory.toMap,
++      protoOptions,
++      noWarnList.toSet
++    )
++    verifyProtoIdsUnique(schema)
++    SchemaConstructionTrace.built(this, schema)
++    schema
++  }
++
++  /** proto ids must be unique (if used) */
++  def verifyProtoIdsUnique(schema: Schema): Unit = {
++    def ensureNoDuplicateProtoIds(categoryName: String, elements: Iterable[HasOptionalProtoId]): Unit = {
++      val elementsWithProtoId = elements.filter(_.protoId.isDefined)
++      val duplicates          = elementsWithProtoId.groupBy(_.protoId.get).filter(_._2.size > 1)
++      if (duplicates.nonEmpty) {
++        throw new AssertionError(
++          s"proto ids must be unique across all schema elements, however we found the following " +
++            s"duplicates in $categoryName:\n" +
++            duplicates.map { case (protoId, elements) => s"$protoId -> ${elements.mkString(",")}" }.mkString
++        )
++      }
++    }
++
++    ensureNoDuplicateProtoIds("node properties", schema.nodeProperties)
++    ensureNoDuplicateProtoIds("edge properties", schema.edgeProperties)
++    ensureNoDuplicateProtoIds("node types", schema.nodeTypes)
++    ensureNoDuplicateProtoIds("edge types", schema.edgeTypes)
++    schema.constantsByCategory.foreach { case (categoryName, constants) =>
++      ensureNoDuplicateProtoIds(s"constants $categoryName", constants)
++    }
++  }
++
++  private def addAndReturn[A](buffer: mutable.Buffer[A], a: A): A = {
++    buffer.append(a)
++    SchemaConstructionTrace.element(a.asInstanceOf[AnyRef])
++    a
++  }
++}
+--- /dev/null
++++ b/schema/src/main/scala/flatgraph/schema/SchemaConstructionTrace.scala
+@@ -0,0 +1,150 @@
++// Owned build-time instrumentation. This is not a native runtime dependency.
++package flatgraph.schema
++
++import java.util.IdentityHashMap
++import scala.collection.mutable.ArrayBuffer
++
++object SchemaConstructionTrace {
++  private var enabled = false
++  private val ids = new IdentityHashMap[AnyRef, String]()
++  private val events = ArrayBuffer.empty[ujson.Value]
++  private var lastBuilt: Option[Schema] = None
++
++  def start(): Unit = {
++    enabled = true
++    ids.clear()
++    events.clear()
++    lastBuilt = None
++  }
++  def stop(): Seq[ujson.Value] = { enabled = false; events.toSeq }
++  def lastSchema: Schema = lastBuilt.getOrElse(throw new IllegalStateException("no schema build was recorded"))
++
++  private lazy val exporterClass = Class.forName("CompleteSchemaExport$")
++  private lazy val exporter = exporterClass.getField("MODULE$").get(null)
++  private def export(name: String, value: Any): ujson.Value = {
++    val method = exporterClass.getDeclaredMethods.find(m => m.getName == name && m.getParameterCount == 1)
++      .getOrElse(throw new IllegalStateException("missing pinned exporter method: " + name))
++    method.setAccessible(true)
++    method.invoke(exporter, value.asInstanceOf[AnyRef]).asInstanceOf[ujson.Value]
++  }
++  def model(schema: Schema): ujson.Value = export("schema", schema)
++  private def info(value: SchemaInfo): ujson.Value = export("info", value)
++  private def scalar(value: Any): ujson.Value = export("scalar", value)
++  private def cardinality(value: Property.Cardinality): ujson.Value = export("cardinality", value)
++  private def optional(value: String): ujson.Value = Option(value).map(ujson.Str(_)).getOrElse(ujson.Null)
++  private def comment(value: Option[String]): ujson.Value = value.map(ujson.Str(_)).getOrElse(ujson.Null)
++  private def valueType(value: Property.ValueType[?]): String = value.getClass.getSimpleName.stripSuffix("$")
++  private def edgeCard(value: EdgeType.Cardinality): String = value.getClass.getSimpleName.stripSuffix("$")
++
++  private def append(op: String, data: ujson.Obj): Unit = {
++    val frames = Thread.currentThread().getStackTrace.toSeq.filter(frame =>
++      frame.getClassName.startsWith("io.shiftleft.codepropertygraph.schema.") &&
++      frame.getFileName != null && frame.getLineNumber > 0)
++    data("op") = op
++    data("index") = events.size
++    data("sourceFrames") = ujson.Arr.from(frames.map(frame =>
++      ujson.Obj("class" -> frame.getClassName, "method" -> frame.getMethodName,
++                "file" -> frame.getFileName, "line" -> frame.getLineNumber)))
++    events.append(data)
++  }
++  private def define(value: AnyRef, op: String, data: ujson.Obj): String = {
++    require(!ids.containsKey(value), "schema element registered twice")
++    val id = "r" + ids.size
++    ids.put(value, id)
++    data("id") = id
++    append(op, data)
++    id
++  }
++  private def ref(value: AnyRef): String = {
++    if (ids.containsKey(value)) ids.get(value)
++    else value match {
++      case constant: Constant[?] =>
++        define(value, "constant", ujson.Obj("name" -> constant.name, "value" -> constant.value,
++          "valueType" -> valueType(constant.valueType), "comment" -> comment(constant.comment),
++          "schemaInfo" -> info(constant.schemaInfo)))
++      case _ => throw new IllegalStateException("unregistered schema operand: " + value.getClass.getName)
++    }
++  }
++  private def nullableRef(value: AnyRef): ujson.Value =
++    if (value == null) ujson.Null else ujson.Str(ref(value))
++
++  def builder(value: SchemaBuilder, domain: String, pkg: String, traversals: Seq[String]): Unit = if (enabled) {
++    define(value, "builder", ujson.Obj("domainShortName" -> domain, "basePackage" -> pkg,
++      "additionalTraversalsPackages" -> ujson.Arr.from(traversals)))
++  }
++  def property(builder: SchemaBuilder, value: Property[?]): Unit = if (enabled) {
++    define(value, "property", ujson.Obj("builder" -> ref(builder), "name" -> value.name,
++      "valueType" -> valueType(value.valueType), "comment" -> comment(value.comment), "schemaInfo" -> info(value.schemaInfo)))
++  }
++  def node(value: AbstractNodeType): Unit = if (enabled) {
++    val kind = value match { case _: AnyNodeType => "Any"; case _: NodeType => "Concrete"; case _ => "Base" }
++    define(value, "node", ujson.Obj("name" -> value.name, "kind" -> kind,
++      "comment" -> comment(value.comment), "schemaInfo" -> info(value.schemaInfo)))
++  }
++  def element(value: AnyRef): Unit = if (enabled) {
++    value match {
++      case nodeValue: AbstractNodeType => node(nodeValue)
++      case edge: EdgeType => define(value, "edge", ujson.Obj("name" -> edge.name,
++        "comment" -> comment(edge.comment), "schemaInfo" -> info(edge.schemaInfo)))
++      case _ => throw new IllegalStateException("unknown schema element appended to builder")
++    }
++  }
++  def protoId(value: AnyRef, id: Int): Unit = if (enabled) {
++    val target = ref(value)
++    append("protoId", ujson.Obj("target" -> target, "value" -> id))
++  }
++  def mandatory(value: Property[?], default: Any): Unit = if (enabled) {
++    append("mandatory", ujson.Obj("target" -> ref(value), "value" -> scalar(default)))
++  }
++  def asList(value: Property[?]): Unit = if (enabled) { append("asList", ujson.Obj("target" -> ref(value))) }
++  def starter(value: AbstractNodeType, name: String): Unit = if (enabled) {
++    append("starter", ujson.Obj("target" -> ref(value), "value" -> optional(name)))
++  }
++  def addProperty(value: AbstractNodeType, property: Property[?]): Unit = if (enabled) {
++    append("addProperty", ujson.Obj("target" -> ref(value), "property" -> ref(property)))
++  }
++  def extend(value: AbstractNodeType, bases: Seq[NodeBaseType]): Unit = if (enabled) {
++    append("extend", ujson.Obj("target" -> ref(value), "bases" -> ujson.Arr.from(bases.map(base => ref(base)))))
++  }
++  def marker(value: AbstractNodeType, name: String): Unit = if (enabled) {
++    append("marker", ujson.Obj("target" -> ref(value), "name" -> name))
++  }
++  def primaryKey(value: NodeType, property: Property[?]): Unit = if (enabled) {
++    append("primaryKey", ujson.Obj("target" -> ref(value), "property" -> nullableRef(property)))
++  }
++  def contained(value: NodeType, child: AbstractNodeType, name: String, card: Property.Cardinality, text: String): Unit = if (enabled) {
++    append("contained", ujson.Obj("target" -> ref(value), "node" -> ref(child), "name" -> name,
++      "cardinality" -> cardinality(card), "comment" -> comment(Helpers.stringToOption(text))))
++  }
++  def connect(out: AbstractNodeType, edge: EdgeType, in: AbstractNodeType,
++    outCard: EdgeType.Cardinality, inCard: EdgeType.Cardinality,
++    outStep: String, outDoc: String, inStep: String, inDoc: String): Unit = if (enabled) {
++    append("connect", ujson.Obj("out" -> ref(out), "edge" -> ref(edge), "in" -> ref(in),
++      "outCardinality" -> edgeCard(outCard), "inCardinality" -> edgeCard(inCard),
++      "outStep" -> outStep, "outDoc" -> outDoc, "inStep" -> inStep, "inDoc" -> inDoc))
++  }
++  def edgeProperty(value: EdgeType, property: Property[?]): Unit = if (enabled) {
++    append("edgeProperty", ujson.Obj("target" -> ref(value), "property" -> nullableRef(property)))
++  }
++  def edgeAccessor(value: EdgeType, name: String): Unit = if (enabled) {
++    append("edgeAccessor", ujson.Obj("target" -> ref(value), "value" -> optional(name)))
++  }
++  def constants(builder: SchemaBuilder, category: String, values: Seq[Constant[?]]): Unit = if (enabled) {
++    val references = values.map(value => ref(value))
++    append("constants", ujson.Obj("builder" -> ref(builder), "category" -> category, "values" -> ujson.Arr.from(references)))
++  }
++  def noWarn(builder: SchemaBuilder, node: AbstractNodeType, property: Property[?]): Unit = if (enabled) {
++    append("noWarn", ujson.Obj("builder" -> ref(builder), "node" -> ref(node), "property" -> ref(property)))
++  }
++  def protoOptions(builder: SchemaBuilder, value: ProtoOptions): Unit = if (enabled) {
++    val options = if (value == null) ujson.Null else ujson.Obj("package" -> value.pkg,
++      "javaOuterClassname" -> value.javaOuterClassname, "javaPackage" -> value.javaPackage,
++      "goPackage" -> value.goPackage, "csharpNamespace" -> value.csharpNamespace,
++      "uncommonProtoEnumNameMappings" -> ujson.Obj.from(value.uncommonProtoEnumNameMappings.toSeq.sortBy(_._1)))
++    append("protoOptions", ujson.Obj("builder" -> ref(builder), "options" -> options))
++  }
++  def built(builder: SchemaBuilder, schema: Schema): Unit = if (enabled) {
++    lastBuilt = Some(schema)
++    append("build", ujson.Obj("builder" -> ref(builder)))
++  }
++}
+--- /dev/null
++++ b/schema/src/main/scala/CaptureSchemaConstruction.scala
+@@ -0,0 +1,22 @@
++// Owned bootstrap observation. Captures original CpgSchema.instance and Protogen.main.
++import flatgraph.schema.SchemaConstructionTrace
++import io.shiftleft.codepropertygraph.schema.{CpgSchema, Protogen}
++import java.nio.file.{Files, Paths}
++
++object CaptureSchemaConstruction {
++  def main(args: Array[String]): Unit = {
++    require(args.length == 2, "pass trace output and isolated protobuf output directory")
++    SchemaConstructionTrace.start()
++    val domain = CpgSchema.instance
++    val domainEvents = SchemaConstructionTrace.stop()
++    val domainModel = SchemaConstructionTrace.model(domain)
++    SchemaConstructionTrace.start()
++    Protogen.main(Array(args(1)))
++    val protobuf = SchemaConstructionTrace.lastSchema
++    val protobufEvents = SchemaConstructionTrace.stop()
++    val result = ujson.Obj("formatVersion" -> 1,
++      "domain" -> ujson.Obj("events" -> ujson.Arr.from(domainEvents), "schema" -> domainModel),
++      "protobuf" -> ujson.Obj("events" -> ujson.Arr.from(protobufEvents), "schema" -> SchemaConstructionTrace.model(protobuf)))
++    Files.writeString(Paths.get(args(0)), ujson.write(result, indent = 2) + "\n")
++  }
++}

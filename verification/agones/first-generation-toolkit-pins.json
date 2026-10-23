@@ -1,0 +1,78 @@
+{
+  "arcane": {
+    "delegation": {
+      "repository": "https://github.com/arcane-rs/delegation",
+      "revision": "8403af63ef7f4be8b4963732f5037962c109d1d5",
+      "tree": "6fe62ed1f8caf2f10c072f445a2bf555061111e0"
+    },
+    "expansion_patterns": {
+      "repository": "https://github.com/arcane-rs/arcane",
+      "revision": "93f9910b84fc4c9bd779503a3cebaa3a41d7eff1",
+      "tree": "4ac74bf7f3791131c4eefc4e83ac539eac2dc472"
+    },
+    "synthez": {
+      "repository": "https://github.com/arcane-rs/synthez",
+      "revision": "94ac06587eeebbb90f4ba2bc742de67c6302ace7",
+      "tree": "e9dbe2d9915521158c76ec5ab97fe29444b9ba2c"
+    }
+  },
+  "better_comprehension": {
+    "repository": "https://github.com/Natural-selection1/better-comprehension-in-rust",
+    "revision": "73ae408dff2994fef8362e34f880ff18c221045c",
+    "tree": "393f2bd1ce6e79691f65621bbf31ee0cf989e4fc"
+  },
+  "cgp": {
+    "evidence": "Existing workspace dependency and Cargo.lock; retain existing CGP composition API.",
+    "version": "=0.8.0-alpha"
+  },
+  "comprende": {
+    "repository": "https://github.com/QuasarRay/comprende",
+    "revision": "ef5066819c56e4f6390044e935b4912212871e58",
+    "tree": "4add225b9b5d77860ce67b88b7d09b30b7dd1b2e"
+  },
+  "derive_deftly": {
+    "checksum": "724949bdda5310709ca2f97bf69c2b01e3362f44fef1fb47913445db4c1debb5",
+    "crate": "derive-deftly",
+    "license": "MIT",
+    "repository": "https://gitlab.torproject.org/Diziet/rust-derive-deftly",
+    "status": "PIN_ONLY_NOT_YET_INTEGRATED",
+    "vcs_info": {
+      "git": {
+        "sha1": "f9e00febd126be8806e454cb7846fe18c55682f3"
+      },
+      "path_in_vcs": ""
+    },
+    "version": "1.14.0"
+  },
+  "macro_ast_compatibility": {
+    "boundary": "Macro implementations keep their private AST versions. No syn AST values cross library boundaries. proc_macro2 token streams compose and all focused CPG checks pass.",
+    "syn_versions": [
+      "1.0.109",
+      "2.0.119",
+      "3.0.9"
+    ]
+  },
+  "notes": [
+    "The comprende source is the exact QuasarRay fork requested by the user. Its Cargo repository field is inherited upstream metadata and does not change source selection.",
+    "Source pins and API inspection alone are not practical reuse credit. Record actual Rust consumers when implemented."
+  ],
+  "practical_reuse": {
+    "better_comprehension": [
+      "cpg-rs/src/schema.rs: deterministic BTreeMap of graph schema node handles from borrowed iterators"
+    ],
+    "cgp": [
+      "cpg-rs/src/codegen.rs: CpgToolContext, BootstrapLoader and DomainGenerator providers/lifecycle"
+    ],
+    "comprende": [
+      "cpg-rs/src/schema.rs: source-ordered node property selection without repeated push loops"
+    ],
+    "derive_deftly": [
+      "cpg-rs/src/schema.rs: one SchemaElement template applied to Property, NodeType, EdgeType and Constant"
+    ],
+    "genco": [
+      "cpg-rs/src/codegen.rs: Rust domain/edge/ref types, defaults, inherited accessors, constants and mappings"
+    ]
+  },
+  "schema_version": 1,
+  "status": "CGP_DERIVE_DEFTLY_COMPREHENSIONS_GENCO_INTEGRATED_ARCANE_PENDING"
+}

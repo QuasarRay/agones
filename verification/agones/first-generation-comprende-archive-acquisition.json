@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "status": "ARCHIVE_RETAINED_UNVALIDATED",
+  "source_commit": "ef5066819c56e4f6390044e935b4912212871e58",
+  "tree": "4add225b9b5d77860ce67b88b7d09b30b7dd1b2e",
+  "transport": "GITHUB_TARBALL_API",
+  "url": "https://api.github.com/repos/QuasarRay/comprende/tarball/ef5066819c56e4f6390044e935b4912212871e58",
+  "archive": "/home/astral/Projects/agones/.git/agones-first-generation-sources/comprende-ef5066819c56e4f6390044e935b4912212871e58.tar.gz",
+  "started_at": "2026-10-23T09:21:27.170261+00:00",
+  "sha256": "48b7106da77bb74d814efc67e531fabfde9bc4619782d099a5d89974b4b14ae2"
+}

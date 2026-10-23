@@ -1,0 +1,1828 @@
+{
+  "formatVersion": 2,
+  "schemaSha256": "13a0477326eaf3606b0edaeb6147046189e5d0622245588cc5eb1c26f61f9d89",
+  "generatorSha256": "ec3fb3dad1afdeff32320582590c2e3841c761f3324f85f84ed3096a7c9fc81e",
+  "schemaImplementationSha256": "babf6e69f2f3ef53da71dd793aa07419cf1c21ebc19f6ae110b78a7ee6a63251",
+  "runtimeModuleSha256": "7b72d36c2bcf3840fe2dd2d139e8bbe06010468f8ab34cfd573397ad0c4fa318",
+  "vendoredSourceManifests": {
+    "better-comprehension": "ef34694cfa9dc98a25742483fd015d8c3d1a6c8e969f7cb2fdb2c2d1693d2be7",
+    "comprende": "1e6735a80573895af9e480f655e0956aa3192c34898af37883a14a8f484d4f46",
+    "genco": "8d70094122266c6424ca1d10bf604a2a3e4a98bd46d0d9208e10211a875b172e"
+  },
+  "cargoLockSha256": "ca681be508837e710d43bb01c2671ec2e18f113194bbe460d961160cea21a186",
+  "cargoManifestSha256": "d2167352c3c8e3797fdae9bd4b802a106d49261268b2282bfd787f34503c385d",
+  "outputSha256": "fa0322958d0f37e64f73ab02ecb311e73f1d7fee080d99ef4521110906bbbde3",
+  "concreteTypes": 43,
+  "abstractTraits": 5,
+  "edgeTypes": 34,
+  "properties": 55,
+  "mappings": [
+    {
+      "containedNodes": [],
+      "endByteExclusive": 9750,
+      "path": "domain.rs",
+      "properties": [
+        "ARGUMENT_INDEX",
+        "ARGUMENT_LABEL",
+        "ARGUMENT_NAME",
+        "CODE",
+        "COLUMN_NUMBER",
+        "FULL_NAME",
+        "LINE_NUMBER",
+        "NAME",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Annotation$Schema",
+        "description": "\nJava Annotation related CPG definitions.\n",
+        "docIndex": 20,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Annotation",
+        "schemaName": "Annotation"
+      },
+      "schemaNode": "ANNOTATION",
+      "sha256": "6cb273012154c8a9a0db284d181a23d2d7ce328a9fc4680656461cd8cd4f2ccb",
+      "startByte": 7249,
+      "symbol": "Annotation"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 12222,
+      "path": "domain.rs",
+      "properties": [
+        "ARGUMENT_INDEX",
+        "ARGUMENT_LABEL",
+        "ARGUMENT_NAME",
+        "CODE",
+        "COLUMN_NUMBER",
+        "LINE_NUMBER",
+        "NAME",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Annotation$Schema",
+        "description": "\nJava Annotation related CPG definitions.\n",
+        "docIndex": 20,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Annotation",
+        "schemaName": "Annotation"
+      },
+      "schemaNode": "ANNOTATION_LITERAL",
+      "sha256": "7097c65c0838c92de3f1e44337e043dc1caf158a00324c802a2595875c189610",
+      "startByte": 9750,
+      "symbol": "AnnotationLiteral"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 13447,
+      "path": "domain.rs",
+      "properties": [
+        "CODE",
+        "COLUMN_NUMBER",
+        "LINE_NUMBER",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Annotation$Schema",
+        "description": "\nJava Annotation related CPG definitions.\n",
+        "docIndex": 20,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Annotation",
+        "schemaName": "Annotation"
+      },
+      "schemaNode": "ANNOTATION_PARAMETER",
+      "sha256": "80e1714a78a0a730e296278a2c9a805ec8b91cb1269933316ef9b618e4bd867d",
+      "startByte": 12222,
+      "symbol": "AnnotationParameter"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 14710,
+      "path": "domain.rs",
+      "properties": [
+        "CODE",
+        "COLUMN_NUMBER",
+        "LINE_NUMBER",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Annotation$Schema",
+        "description": "\nJava Annotation related CPG definitions.\n",
+        "docIndex": 20,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Annotation",
+        "schemaName": "Annotation"
+      },
+      "schemaNode": "ANNOTATION_PARAMETER_ASSIGN",
+      "sha256": "f344788f3a863f6de772ebe1b9f2aa86bc1189bddb9773d641032ab014e647a9",
+      "startByte": 13447,
+      "symbol": "AnnotationParameterAssign"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 17102,
+      "path": "domain.rs",
+      "properties": [
+        "ARGUMENT_INDEX",
+        "ARGUMENT_LABEL",
+        "ARGUMENT_NAME",
+        "CODE",
+        "COLUMN_NUMBER",
+        "LINE_NUMBER",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Annotation$Schema",
+        "description": "\nJava Annotation related CPG definitions.\n",
+        "docIndex": 20,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Annotation",
+        "schemaName": "Annotation"
+      },
+      "schemaNode": "ARRAY_INITIALIZER",
+      "sha256": "d0b2107d993657124d0cf77b50d9727aec105f93383ee674bffe2b97043de866",
+      "startByte": 14710,
+      "symbol": "ArrayInitializer"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 17719,
+      "path": "domain.rs",
+      "properties": [
+        "METHOD_FULL_NAME",
+        "NAME",
+        "SIGNATURE"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Binding$Schema",
+        "description": "\nWe use the concept of \"bindings\" to support resolving of\n(method-name, signature) pairs at type declarations (`TYPE_DECL`). For each\npair that we can resolve, we create a `BINDING` node that is connected the\nthe type declaration via an incoming `BINDS` edge. The `BINDING` node is\nconnected to the method it resolves to via an outgoing `REF` edge.\n",
+        "docIndex": 19,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Binding",
+        "schemaName": "Binding"
+      },
+      "schemaNode": "BINDING",
+      "sha256": "07b884417770eea68dec7b41f81c1868e6ab95c5c0da2ef270c1c3fb54232ccd",
+      "startByte": 17102,
+      "symbol": "Binding"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 20356,
+      "path": "domain.rs",
+      "properties": [
+        "ARGUMENT_INDEX",
+        "ARGUMENT_LABEL",
+        "ARGUMENT_NAME",
+        "CODE",
+        "COLUMN_NUMBER",
+        "DYNAMIC_TYPE_HINT_FULL_NAME",
+        "LINE_NUMBER",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER",
+        "POSSIBLE_TYPES",
+        "TYPE_FULL_NAME"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "schemaNode": "BLOCK",
+      "sha256": "0462d87da8b3384aee72e8a1ae491a7757a4382b8abafa2425ff1ac556209181",
+      "startByte": 17719,
+      "symbol": "Block"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 23883,
+      "path": "domain.rs",
+      "properties": [
+        "ARGUMENT_INDEX",
+        "ARGUMENT_LABEL",
+        "ARGUMENT_NAME",
+        "CODE",
+        "COLUMN_NUMBER",
+        "DISPATCH_TYPE",
+        "DYNAMIC_TYPE_HINT_FULL_NAME",
+        "LINE_NUMBER",
+        "METHOD_FULL_NAME",
+        "NAME",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER",
+        "POSSIBLE_TYPES",
+        "SIGNATURE",
+        "STATIC_RECEIVER",
+        "TYPE_FULL_NAME"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "schemaNode": "CALL",
+      "sha256": "fa38c9ef4735b8dce206dad23b481d98827bfcd2a51febebf3f88984e7e0a712",
+      "startByte": 20356,
+      "symbol": "Call"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 24500,
+      "path": "domain.rs",
+      "properties": [
+        "CLOSURE_BINDING_ID",
+        "EVALUATION_STRATEGY"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Hidden$Schema",
+        "description": "\nThe schema elements defined here are NOT included on the schema website.\nThese are schema elements that we are using but would like to rework\nin the future and not make part of the standard.\n",
+        "docIndex": -1,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Hidden",
+        "schemaName": "Hidden"
+      },
+      "schemaNode": "CLOSURE_BINDING",
+      "sha256": "681bb3930e619a2d5e8435a6b57b523dc091540fc9ae1d3a23382f00929f082d",
+      "startByte": 23883,
+      "symbol": "ClosureBinding"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 25735,
+      "path": "domain.rs",
+      "properties": [
+        "CODE",
+        "COLUMN_NUMBER",
+        "FILENAME",
+        "LINE_NUMBER",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Comment$Schema",
+        "description": "",
+        "docIndex": 12,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Comment",
+        "schemaName": "Comment"
+      },
+      "schemaNode": "COMMENT",
+      "sha256": "d86a4a92aafcb63f93dda574843ae2eca0e898cafcc9689c75579f7369829708",
+      "startByte": 24500,
+      "symbol": "Comment"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 26263,
+      "path": "domain.rs",
+      "properties": [
+        "CONTENT",
+        "NAME"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Configuration$Schema",
+        "description": "\nThe code property graph specification currently does not contain\nschema elements for the representation of configuration files in\na structured format, however, it does allow configuration files\nto be included verbatim in the graph to enable language-/framework-\nspecific passes to access them. This layer provides the necessary\nschema elements for this basic support of configuration files.\n",
+        "docIndex": 18,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Configuration",
+        "schemaName": "Configuration"
+      },
+      "schemaNode": "CONFIG_FILE",
+      "sha256": "a4e3003b48c726bdfaf94d08edd2f1ad35727b5482266fb8f21e6682ca31f82e",
+      "startByte": 25735,
+      "symbol": "ConfigFile"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 28890,
+      "path": "domain.rs",
+      "properties": [
+        "ARGUMENT_INDEX",
+        "ARGUMENT_LABEL",
+        "ARGUMENT_NAME",
+        "CODE",
+        "COLUMN_NUMBER",
+        "CONTROL_STRUCTURE_TYPE",
+        "LINE_NUMBER",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER",
+        "PARSER_TYPE_NAME"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "schemaNode": "CONTROL_STRUCTURE",
+      "sha256": "a7d1c117b077b602350c02d4f3c65d1bdf8e1a7e058702b593408eabfa50e3a5",
+      "startByte": 26263,
+      "symbol": "ControlStructure"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 29525,
+      "path": "domain.rs",
+      "properties": [
+        "DEPENDENCY_GROUP_ID",
+        "NAME",
+        "VERSION"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Hidden$Schema",
+        "description": "\nThe schema elements defined here are NOT included on the schema website.\nThese are schema elements that we are using but would like to rework\nin the future and not make part of the standard.\n",
+        "docIndex": -1,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Hidden",
+        "schemaName": "Hidden"
+      },
+      "schemaNode": "DEPENDENCY",
+      "sha256": "1caf48a5595d8e9c2bc15de6febf6b75838031561491ab86bd2b5af6c67d5020",
+      "startByte": 28890,
+      "symbol": "Dependency"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 32012,
+      "path": "domain.rs",
+      "properties": [
+        "ARGUMENT_INDEX",
+        "ARGUMENT_LABEL",
+        "ARGUMENT_NAME",
+        "CANONICAL_NAME",
+        "CODE",
+        "COLUMN_NUMBER",
+        "LINE_NUMBER",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "schemaNode": "FIELD_IDENTIFIER",
+      "sha256": "8ffe64f72a1035194f5b1cb464f5e1afd515d42de36325a2ea05583fd1c07075",
+      "startByte": 29525,
+      "symbol": "FieldIdentifier"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 33363,
+      "path": "domain.rs",
+      "properties": [
+        "CODE",
+        "COLUMN_NUMBER",
+        "CONTENT",
+        "HASH",
+        "LINE_NUMBER",
+        "NAME",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.FileSystem$Schema",
+        "description": "\nCPGs are created from sets of files and the File System Layer describes the layout of\nthese files, that is, it provides information about source files\nand shared objects for source-based and machine-code-based frontends\nrespectively. The purpose of including this information in the CPG\nis to allow nodes of the graph to be mapped back to file system locations.\n",
+        "docIndex": 3,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.FileSystem",
+        "schemaName": "FileSystem"
+      },
+      "schemaNode": "FILE",
+      "sha256": "1c7990a9c7b73223367213bd4e85eb92b64dcd673975eb667c1eb345d020581f",
+      "startByte": 32012,
+      "symbol": "File"
+    },
+    {
+      "containedNodes": [
+        {
+          "cardinality": {
+            "kind": "List"
+          },
+          "comment": null,
+          "localName": "evidence",
+          "type": "AnyNode"
+        },
+        {
+          "cardinality": {
+            "kind": "List"
+          },
+          "comment": null,
+          "localName": "keyValuePairs",
+          "type": "KEY_VALUE_PAIR"
+        }
+      ],
+      "endByteExclusive": 34031,
+      "path": "domain.rs",
+      "properties": [
+        "EVIDENCE_DESCRIPTION"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Finding$Schema",
+        "description": "\nWe allow findings (e.g., potential vulnerabilities, notes on dangerous practices) to\nbe stored in the Findings Layer.\n",
+        "docIndex": 15,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Finding",
+        "schemaName": "Finding"
+      },
+      "schemaNode": "FINDING",
+      "sha256": "c015dddece22c01d5d9a1a7c2db8417425923482876a5a0218a4c3b5ff5c74ce",
+      "startByte": 33363,
+      "symbol": "Finding"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 36781,
+      "path": "domain.rs",
+      "properties": [
+        "ARGUMENT_INDEX",
+        "ARGUMENT_LABEL",
+        "ARGUMENT_NAME",
+        "CODE",
+        "COLUMN_NUMBER",
+        "DYNAMIC_TYPE_HINT_FULL_NAME",
+        "LINE_NUMBER",
+        "NAME",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER",
+        "POSSIBLE_TYPES",
+        "TYPE_FULL_NAME"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "schemaNode": "IDENTIFIER",
+      "sha256": "d92893c395fca83c52f5d06de36261b0f379c4783a1cb46a880b8401d10cba30",
+      "startByte": 34031,
+      "symbol": "Identifier"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 38456,
+      "path": "domain.rs",
+      "properties": [
+        "CODE",
+        "COLUMN_NUMBER",
+        "EXPLICIT_AS",
+        "IMPORTED_AS",
+        "IMPORTED_ENTITY",
+        "IS_EXPLICIT",
+        "IS_MODULE_IMPORT",
+        "IS_WILDCARD",
+        "LINE_NUMBER",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Hidden$Schema",
+        "description": "\nThe schema elements defined here are NOT included on the schema website.\nThese are schema elements that we are using but would like to rework\nin the future and not make part of the standard.\n",
+        "docIndex": -1,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Hidden",
+        "schemaName": "Hidden"
+      },
+      "schemaNode": "IMPORT",
+      "sha256": "8ca17450b5b06032cfc8c167b7dc8ef13143e0439c11fed34174f492e9804d2e",
+      "startByte": 36781,
+      "symbol": "Import"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 39802,
+      "path": "domain.rs",
+      "properties": [
+        "CODE",
+        "COLUMN_NUMBER",
+        "LINE_NUMBER",
+        "NAME",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER",
+        "PARSER_TYPE_NAME"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "schemaNode": "JUMP_LABEL",
+      "sha256": "46e6166bdc60409e49890639a88e67c98558da04ae70b7d03ced43a702a217f5",
+      "startByte": 38456,
+      "symbol": "JumpLabel"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 41590,
+      "path": "domain.rs",
+      "properties": [
+        "ARGUMENT_INDEX",
+        "CODE",
+        "COLUMN_NUMBER",
+        "LINE_NUMBER",
+        "NAME",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER",
+        "PARSER_TYPE_NAME"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "schemaNode": "JUMP_TARGET",
+      "sha256": "aafeacb5a4823a84f432235202c87aa753467116c01eb10fd18169894a2fc462",
+      "startByte": 39802,
+      "symbol": "JumpTarget"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 42114,
+      "path": "domain.rs",
+      "properties": [
+        "KEY",
+        "VALUE"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Finding$Schema",
+        "description": "\nWe allow findings (e.g., potential vulnerabilities, notes on dangerous practices) to\nbe stored in the Findings Layer.\n",
+        "docIndex": 15,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Finding",
+        "schemaName": "Finding"
+      },
+      "schemaNode": "KEY_VALUE_PAIR",
+      "sha256": "b97e38109724e21421e5a41712f4c0bcc30b4f04b20bdad830700b8f11ac2b56",
+      "startByte": 41590,
+      "symbol": "KeyValuePair"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 44768,
+      "path": "domain.rs",
+      "properties": [
+        "ARGUMENT_INDEX",
+        "ARGUMENT_LABEL",
+        "ARGUMENT_NAME",
+        "CODE",
+        "COLUMN_NUMBER",
+        "DYNAMIC_TYPE_HINT_FULL_NAME",
+        "LINE_NUMBER",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER",
+        "POSSIBLE_TYPES",
+        "TYPE_FULL_NAME"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "schemaNode": "LITERAL",
+      "sha256": "8f6cebaebd9808d3d36b73a5a9ee673dbb840dee3a57f786ef122275e5560f67",
+      "startByte": 42114,
+      "symbol": "Literal"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 46614,
+      "path": "domain.rs",
+      "properties": [
+        "CLOSURE_BINDING_ID",
+        "CODE",
+        "COLUMN_NUMBER",
+        "DYNAMIC_TYPE_HINT_FULL_NAME",
+        "GENERIC_SIGNATURE",
+        "LINE_NUMBER",
+        "NAME",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER",
+        "POSSIBLE_TYPES",
+        "TYPE_FULL_NAME"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "schemaNode": "LOCAL",
+      "sha256": "fb07ab88e13d922ece2aaab416614ed5da9a31c31d3dc3f2c75f73add150c989",
+      "startByte": 44768,
+      "symbol": "Local"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 48586,
+      "path": "domain.rs",
+      "properties": [
+        "AST_PARENT_FULL_NAME",
+        "AST_PARENT_TYPE",
+        "CODE",
+        "COLUMN_NUMBER",
+        "DYNAMIC_TYPE_HINT_FULL_NAME",
+        "GENERIC_SIGNATURE",
+        "LINE_NUMBER",
+        "NAME",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER",
+        "POSSIBLE_TYPES",
+        "TYPE_FULL_NAME"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Type$Schema",
+        "description": "\nThe Type Layer contains information about type declarations, relations between\ntypes, and type instantiation and usage. In its current form, it allows modelling of\nparametrized types, type hierarchies and aliases.\n",
+        "docIndex": 6,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Type",
+        "schemaName": "Type"
+      },
+      "schemaNode": "MEMBER",
+      "sha256": "b7d6a86f393d97b2bb4b45a449eeffa28c6714ee65b11504aa8e497472fe56bb",
+      "startByte": 46614,
+      "symbol": "Member"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 49331,
+      "path": "domain.rs",
+      "properties": [
+        "HASH",
+        "LANGUAGE",
+        "OVERLAYS",
+        "ROOT",
+        "VERSION"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.MetaData$Schema",
+        "description": "\nThe Meta Data Layer contains information about CPG creation. In particular,\nit indicates which language frontend generated the CPG and which overlays\nhave been applied. The layer consists of a single node - the Meta Data node -\nand language frontends MUST create this node. Overlay creators MUST edit\nthis node to indicate that a layer has been successfully applied in all\ncases where applying the layer more than once is prohibitive.\n",
+        "docIndex": 2,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.MetaData",
+        "schemaName": "MetaData"
+      },
+      "schemaNode": "META_DATA",
+      "sha256": "ea55c28a2c69c5b9bd0b631789cbccd11aeaf4aa4fd468e24579c2771d725384",
+      "startByte": 48586,
+      "symbol": "MetaData"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 51904,
+      "path": "domain.rs",
+      "properties": [
+        "AST_PARENT_FULL_NAME",
+        "AST_PARENT_TYPE",
+        "CODE",
+        "COLUMN_NUMBER",
+        "COLUMN_NUMBER_END",
+        "FILENAME",
+        "FULL_NAME",
+        "GENERIC_SIGNATURE",
+        "HASH",
+        "IS_EXTERNAL",
+        "LINE_NUMBER",
+        "LINE_NUMBER_END",
+        "NAME",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER",
+        "SIGNATURE"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Method$Schema",
+        "description": "\nThe Method Layer contains declarations of methods, functions, and procedures.\nInput parameters and output parameters (including return parameters) are\nrepresented, however, method contents is not present in this layer.\n",
+        "docIndex": 5,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Method",
+        "schemaName": "Method"
+      },
+      "schemaNode": "METHOD",
+      "sha256": "442fdb52befcda6654fd7598f40d4b838fa661989d5873ef7ece4cdc0f171284",
+      "startByte": 49331,
+      "symbol": "Method"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 54336,
+      "path": "domain.rs",
+      "properties": [
+        "CLOSURE_BINDING_ID",
+        "CODE",
+        "COLUMN_NUMBER",
+        "DYNAMIC_TYPE_HINT_FULL_NAME",
+        "EVALUATION_STRATEGY",
+        "INDEX",
+        "IS_VARIADIC",
+        "LINE_NUMBER",
+        "NAME",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER",
+        "POSSIBLE_TYPES",
+        "TYPE_FULL_NAME"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Method$Schema",
+        "description": "\nThe Method Layer contains declarations of methods, functions, and procedures.\nInput parameters and output parameters (including return parameters) are\nrepresented, however, method contents is not present in this layer.\n",
+        "docIndex": 5,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Method",
+        "schemaName": "Method"
+      },
+      "schemaNode": "METHOD_PARAMETER_IN",
+      "sha256": "428fc35bfa700cefccace40ee7fd60c77a370178fbc36ad5cdbf038616ad31a0",
+      "startByte": 51904,
+      "symbol": "MethodParameterIn"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 56437,
+      "path": "domain.rs",
+      "properties": [
+        "CODE",
+        "COLUMN_NUMBER",
+        "EVALUATION_STRATEGY",
+        "INDEX",
+        "IS_VARIADIC",
+        "LINE_NUMBER",
+        "NAME",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER",
+        "TYPE_FULL_NAME"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Method$Schema",
+        "description": "\nThe Method Layer contains declarations of methods, functions, and procedures.\nInput parameters and output parameters (including return parameters) are\nrepresented, however, method contents is not present in this layer.\n",
+        "docIndex": 5,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Method",
+        "schemaName": "Method"
+      },
+      "schemaNode": "METHOD_PARAMETER_OUT",
+      "sha256": "46795f8d613a850b5ec54e2c9b8d8b3bc9514c5985a47bfe4e76fe0408e25f2c",
+      "startByte": 54336,
+      "symbol": "MethodParameterOut"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 59217,
+      "path": "domain.rs",
+      "properties": [
+        "ARGUMENT_INDEX",
+        "ARGUMENT_LABEL",
+        "ARGUMENT_NAME",
+        "CODE",
+        "COLUMN_NUMBER",
+        "DYNAMIC_TYPE_HINT_FULL_NAME",
+        "LINE_NUMBER",
+        "METHOD_FULL_NAME",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER",
+        "POSSIBLE_TYPES",
+        "TYPE_FULL_NAME"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "schemaNode": "METHOD_REF",
+      "sha256": "aa96304088b6b11abf9d94411d95979d058b377cd66ba72020ab62ef1d7241ef",
+      "startByte": 56437,
+      "symbol": "MethodRef"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 61210,
+      "path": "domain.rs",
+      "properties": [
+        "CODE",
+        "COLUMN_NUMBER",
+        "DYNAMIC_TYPE_HINT_FULL_NAME",
+        "EVALUATION_STRATEGY",
+        "LINE_NUMBER",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER",
+        "POSSIBLE_TYPES",
+        "TYPE_FULL_NAME"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Method$Schema",
+        "description": "\nThe Method Layer contains declarations of methods, functions, and procedures.\nInput parameters and output parameters (including return parameters) are\nrepresented, however, method contents is not present in this layer.\n",
+        "docIndex": 5,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Method",
+        "schemaName": "Method"
+      },
+      "schemaNode": "METHOD_RETURN",
+      "sha256": "09292ec18ae7407896ff5018d0be33b91369c2e0ffdb0806db573a351b5ac8c1",
+      "startByte": 59217,
+      "symbol": "MethodReturn"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 62467,
+      "path": "domain.rs",
+      "properties": [
+        "CODE",
+        "COLUMN_NUMBER",
+        "LINE_NUMBER",
+        "MODIFIER_TYPE",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "schemaNode": "MODIFIER",
+      "sha256": "b2f1b1a7f2f7626ce3723b059826a295bb536230930b6925afebfa7faeb788b7",
+      "startByte": 61210,
+      "symbol": "Modifier"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 63703,
+      "path": "domain.rs",
+      "properties": [
+        "CODE",
+        "COLUMN_NUMBER",
+        "LINE_NUMBER",
+        "NAME",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Namespace$Schema",
+        "description": "\nMany programming languages allow code to be structured into namespaces. The Namespace\nLayer makes these namespaces explicit and associates program constructs with the\nnamespaces they are defined in.\n",
+        "docIndex": 4,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Namespace",
+        "schemaName": "Namespace"
+      },
+      "schemaNode": "NAMESPACE",
+      "sha256": "bea9e260e8bb6efdfe8fe5bb1fc4ce2ffd43321417ed009228de3542261a4f5b",
+      "startByte": 62467,
+      "symbol": "Namespace"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 65142,
+      "path": "domain.rs",
+      "properties": [
+        "CODE",
+        "COLUMN_NUMBER",
+        "FILENAME",
+        "FULL_NAME",
+        "LINE_NUMBER",
+        "NAME",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Namespace$Schema",
+        "description": "\nMany programming languages allow code to be structured into namespaces. The Namespace\nLayer makes these namespaces explicit and associates program constructs with the\nnamespaces they are defined in.\n",
+        "docIndex": 4,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Namespace",
+        "schemaName": "Namespace"
+      },
+      "schemaNode": "NAMESPACE_BLOCK",
+      "sha256": "61029bead6d0b6268c2724aa652e09d72509ade21e41aadc6cea696842509124",
+      "startByte": 63703,
+      "symbol": "NamespaceBlock"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 67453,
+      "path": "domain.rs",
+      "properties": [
+        "ARGUMENT_INDEX",
+        "ARGUMENT_LABEL",
+        "ARGUMENT_NAME",
+        "CODE",
+        "COLUMN_NUMBER",
+        "LINE_NUMBER",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "schemaNode": "RETURN",
+      "sha256": "63eb4e024ea9373cbbd114585e12d16b01c94fe590646121334244c339ed9124",
+      "startByte": 65142,
+      "symbol": "Return"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 67931,
+      "path": "domain.rs",
+      "properties": [
+        "NAME",
+        "VALUE"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Tags$Schema",
+        "description": "\nThe Code Property Graph specification allows for tags to be attached\nto arbitrary nodes. Conceptually, this is similar to the creation of\nFinding nodes, however, tags are to be used for intermediate results\nrather than end-results that are to be reported to the user.\n",
+        "docIndex": 17,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Tags",
+        "schemaName": "Tags"
+      },
+      "schemaNode": "TAG",
+      "sha256": "4c61b230a3cb95ccb7ac250b82070c33772ada807b1c9de60b52eb8958b496a9",
+      "startByte": 67453,
+      "symbol": "Tag"
+    },
+    {
+      "containedNodes": [
+        {
+          "cardinality": {
+            "default": {
+              "kind": "Null"
+            },
+            "defaultWrapperIsNull": false,
+            "kind": "One"
+          },
+          "comment": null,
+          "localName": "node",
+          "type": "AnyNode"
+        },
+        {
+          "cardinality": {
+            "default": {
+              "kind": "Null"
+            },
+            "defaultWrapperIsNull": false,
+            "kind": "One"
+          },
+          "comment": null,
+          "localName": "tag",
+          "type": "TAG"
+        }
+      ],
+      "endByteExclusive": 68447,
+      "path": "domain.rs",
+      "properties": [],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Tags$Schema",
+        "description": "\nThe Code Property Graph specification allows for tags to be attached\nto arbitrary nodes. Conceptually, this is similar to the creation of\nFinding nodes, however, tags are to be used for intermediate results\nrather than end-results that are to be reported to the user.\n",
+        "docIndex": 17,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Tags",
+        "schemaName": "Tags"
+      },
+      "schemaNode": "TAG_NODE_PAIR",
+      "sha256": "2e8537b0feea4ffb88624d8ef4d93183e9faf70038d692c8c1f85a0f1688d9bd",
+      "startByte": 67931,
+      "symbol": "TagNodePair"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 70872,
+      "path": "domain.rs",
+      "properties": [
+        "ARGUMENT_INDEX",
+        "ARGUMENT_LABEL",
+        "ARGUMENT_NAME",
+        "CODE",
+        "COLUMN_NUMBER",
+        "LINE_NUMBER",
+        "NAME",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Hidden$Schema",
+        "description": "\nThe schema elements defined here are NOT included on the schema website.\nThese are schema elements that we are using but would like to rework\nin the future and not make part of the standard.\n",
+        "docIndex": -1,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Hidden",
+        "schemaName": "Hidden"
+      },
+      "schemaNode": "TEMPLATE_DOM",
+      "sha256": "b7b54ccbf5710254e3627adf66139201b7b08a974bb3620b92c0c0c07667f95a",
+      "startByte": 68447,
+      "symbol": "TemplateDom"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 71491,
+      "path": "domain.rs",
+      "properties": [
+        "FULL_NAME",
+        "NAME",
+        "TYPE_DECL_FULL_NAME"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Type$Schema",
+        "description": "\nThe Type Layer contains information about type declarations, relations between\ntypes, and type instantiation and usage. In its current form, it allows modelling of\nparametrized types, type hierarchies and aliases.\n",
+        "docIndex": 6,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Type",
+        "schemaName": "Type"
+      },
+      "schemaNode": "TYPE",
+      "sha256": "b1420df66900dde1b393e9745bcc492b9d85417c99ff67a06eca6544d39aa7bf",
+      "startByte": 70872,
+      "symbol": "Type"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 72675,
+      "path": "domain.rs",
+      "properties": [
+        "CODE",
+        "COLUMN_NUMBER",
+        "LINE_NUMBER",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Type$Schema",
+        "description": "\nThe Type Layer contains information about type declarations, relations between\ntypes, and type instantiation and usage. In its current form, it allows modelling of\nparametrized types, type hierarchies and aliases.\n",
+        "docIndex": 6,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Type",
+        "schemaName": "Type"
+      },
+      "schemaNode": "TYPE_ARGUMENT",
+      "sha256": "89e8914e492595c420ce85c425289aa30ad3797e8a846bb72298342d8150ef20",
+      "startByte": 71491,
+      "symbol": "TypeArgument"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 74741,
+      "path": "domain.rs",
+      "properties": [
+        "ALIAS_TYPE_FULL_NAME",
+        "AST_PARENT_FULL_NAME",
+        "AST_PARENT_TYPE",
+        "CODE",
+        "COLUMN_NUMBER",
+        "FILENAME",
+        "FULL_NAME",
+        "GENERIC_SIGNATURE",
+        "INHERITS_FROM_TYPE_FULL_NAME",
+        "IS_EXTERNAL",
+        "LINE_NUMBER",
+        "NAME",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Type$Schema",
+        "description": "\nThe Type Layer contains information about type declarations, relations between\ntypes, and type instantiation and usage. In its current form, it allows modelling of\nparametrized types, type hierarchies and aliases.\n",
+        "docIndex": 6,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Type",
+        "schemaName": "Type"
+      },
+      "schemaNode": "TYPE_DECL",
+      "sha256": "52fc9eedb840ffb242254d2fbbdb57b29956d5c17342e80f562a40f0bf7d107a",
+      "startByte": 72675,
+      "symbol": "TypeDecl"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 76003,
+      "path": "domain.rs",
+      "properties": [
+        "CODE",
+        "COLUMN_NUMBER",
+        "LINE_NUMBER",
+        "NAME",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Type$Schema",
+        "description": "\nThe Type Layer contains information about type declarations, relations between\ntypes, and type instantiation and usage. In its current form, it allows modelling of\nparametrized types, type hierarchies and aliases.\n",
+        "docIndex": 6,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Type",
+        "schemaName": "Type"
+      },
+      "schemaNode": "TYPE_PARAMETER",
+      "sha256": "e48bc8e02c78570b7c04f1bc810d49b21d5885e6ed8c3ae3460cda105d11a99b",
+      "startByte": 74741,
+      "symbol": "TypeParameter"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 78659,
+      "path": "domain.rs",
+      "properties": [
+        "ARGUMENT_INDEX",
+        "ARGUMENT_LABEL",
+        "ARGUMENT_NAME",
+        "CODE",
+        "COLUMN_NUMBER",
+        "DYNAMIC_TYPE_HINT_FULL_NAME",
+        "LINE_NUMBER",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER",
+        "POSSIBLE_TYPES",
+        "TYPE_FULL_NAME"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "schemaNode": "TYPE_REF",
+      "sha256": "14f251db1ed609a2ed8e85b3641f8c2c97eb95b98dd44f075bc6fc3a6e00d8cf",
+      "startByte": 76003,
+      "symbol": "TypeRef"
+    },
+    {
+      "containedNodes": [],
+      "endByteExclusive": 81520,
+      "path": "domain.rs",
+      "properties": [
+        "ARGUMENT_INDEX",
+        "ARGUMENT_LABEL",
+        "ARGUMENT_NAME",
+        "CODE",
+        "COLUMN_NUMBER",
+        "CONTAINED_REF",
+        "DYNAMIC_TYPE_HINT_FULL_NAME",
+        "LINE_NUMBER",
+        "OFFSET",
+        "OFFSET_END",
+        "ORDER",
+        "PARSER_TYPE_NAME",
+        "POSSIBLE_TYPES",
+        "TYPE_FULL_NAME"
+      ],
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "schemaNode": "UNKNOWN",
+      "sha256": "7671a7ff5388c23792ad6059e50e9b4e8a514b5ff39584f856026cf6b72aad9c",
+      "startByte": 78659,
+      "symbol": "Unknown"
+    },
+    {
+      "endByteExclusive": 81840,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "ALIAS_OF",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Type$Schema",
+        "description": "\nThe Type Layer contains information about type declarations, relations between\ntypes, and type instantiation and usage. In its current form, it allows modelling of\nparametrized types, type hierarchies and aliases.\n",
+        "docIndex": 6,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Type",
+        "schemaName": "Type"
+      },
+      "sha256": "0f353f266b42a8947f9a67f15b7dcb51eaedadd5c8254415a960d267b3146406",
+      "startByte": 81520,
+      "symbol": "AliasOfEdge"
+    },
+    {
+      "endByteExclusive": 82162,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "ARGUMENT",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.CallGraph$Schema",
+        "description": "\nThe Call Graph Layer represents call relations between methods.\n",
+        "docIndex": 8,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.CallGraph",
+        "schemaName": "CallGraph"
+      },
+      "sha256": "e69d223d53e40e316538e7d833183a453977f43f13d95c80c111b804b145f5a7",
+      "startByte": 81840,
+      "symbol": "ArgumentEdge"
+    },
+    {
+      "endByteExclusive": 82464,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "AST",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "sha256": "d1243f819e7de2b96a79ca4bdf6e0886c3c57c568e578103f7ee988765fcd2a0",
+      "startByte": 82162,
+      "symbol": "AstEdge"
+    },
+    {
+      "endByteExclusive": 82774,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "BINDS",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Binding$Schema",
+        "description": "\nWe use the concept of \"bindings\" to support resolving of\n(method-name, signature) pairs at type declarations (`TYPE_DECL`). For each\npair that we can resolve, we create a `BINDING` node that is connected the\nthe type declaration via an incoming `BINDS` edge. The `BINDING` node is\nconnected to the method it resolves to via an outgoing `REF` edge.\n",
+        "docIndex": 19,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Binding",
+        "schemaName": "Binding"
+      },
+      "sha256": "7cc574a0de98f1bb4fe448b41e00ec354b6ffec0486eb9d2a920add47f732e2f",
+      "startByte": 82464,
+      "symbol": "BindsEdge"
+    },
+    {
+      "endByteExclusive": 83094,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "BINDS_TO",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Type$Schema",
+        "description": "\nThe Type Layer contains information about type declarations, relations between\ntypes, and type instantiation and usage. In its current form, it allows modelling of\nparametrized types, type hierarchies and aliases.\n",
+        "docIndex": 6,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Type",
+        "schemaName": "Type"
+      },
+      "sha256": "4c635ec74f07f7b794a9af56da488a143da558512b210138c39ee311ff51d528",
+      "startByte": 82774,
+      "symbol": "BindsToEdge"
+    },
+    {
+      "endByteExclusive": 83400,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "CALL",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.CallGraph$Schema",
+        "description": "\nThe Call Graph Layer represents call relations between methods.\n",
+        "docIndex": 8,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.CallGraph",
+        "schemaName": "CallGraph"
+      },
+      "sha256": "04b033add2128839beecbf6ea5ff22e7195e2433038bb4d539c307d9633cec50",
+      "startByte": 83094,
+      "symbol": "CallEdge"
+    },
+    {
+      "endByteExclusive": 83718,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "CAPTURE",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Hidden$Schema",
+        "description": "\nThe schema elements defined here are NOT included on the schema website.\nThese are schema elements that we are using but would like to rework\nin the future and not make part of the standard.\n",
+        "docIndex": -1,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Hidden",
+        "schemaName": "Hidden"
+      },
+      "sha256": "20c537e61aa92f6132424ad937971fcbd503f0b36bd599c379c8d5f324981c1b",
+      "startByte": 83400,
+      "symbol": "CaptureEdge"
+    },
+    {
+      "endByteExclusive": 84050,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "CAPTURED_BY",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Hidden$Schema",
+        "description": "\nThe schema elements defined here are NOT included on the schema website.\nThese are schema elements that we are using but would like to rework\nin the future and not make part of the standard.\n",
+        "docIndex": -1,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Hidden",
+        "schemaName": "Hidden"
+      },
+      "sha256": "012c8225f7c92399a201b818fbd58a84dfeacc282ce7ffdbb53e4dcd775626a2",
+      "startByte": 83718,
+      "symbol": "CapturedByEdge"
+    },
+    {
+      "endByteExclusive": 84378,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "CATCH_BODY",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "sha256": "b5f5009846e2a86c2eda27b3fdbf7b6f78e8ceb0623676de6ed73921ae8f2fe8",
+      "startByte": 84050,
+      "symbol": "CatchBodyEdge"
+    },
+    {
+      "endByteExclusive": 84680,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "CDG",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Pdg$Schema",
+        "description": "\n      The Program Dependence Graph Layer contains a program dependence graph for\neach method of the source program. A program dependence graph consists\nof a data dependence graph (DDG) and a control dependence graph (CDG),\ncreated by connecting nodes of the control flow graph via `REACHING_DEF`\nand `CDG` edges respectively.\n",
+        "docIndex": 11,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Pdg",
+        "schemaName": "Pdg"
+      },
+      "sha256": "c214a709e2b1b3a774b77e89306c47f189e4adbd5db2cf91c29471b08f02a51c",
+      "startByte": 84378,
+      "symbol": "CdgEdge"
+    },
+    {
+      "endByteExclusive": 84983,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "CFG",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Cfg$Schema",
+        "description": "\nThe Control Flow Graph Layer provides control flow graphs for each method. Control\nflow graphs are constructed by marking a sub set of the abstract syntax tree nodes\nas control flow nodes (`CFG_NODE`) and connecting these nodes via `CFG` edges.\nThe control flow graph models both the control flow within the calculation of an\nexpression as well as from expression to expression. The layer can be automatically\ngenerated from the syntax tree layer if only control structure types supported by\nthis specification are employed.\n",
+        "docIndex": 9,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Cfg",
+        "schemaName": "Cfg"
+      },
+      "sha256": "8b07039609867bb930c73d31b954758136e821013ec0e6f7f0ad2c9037166c80",
+      "startByte": 84680,
+      "symbol": "CfgEdge"
+    },
+    {
+      "endByteExclusive": 85310,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "CONDITION",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "sha256": "9f8411962ebf0951c4c7f7d0792753450a9c156d72c8fdc2c7055334d3ca57db",
+      "startByte": 84983,
+      "symbol": "ConditionEdge"
+    },
+    {
+      "endByteExclusive": 85633,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "CONTAINS",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Shortcuts$Schema",
+        "description": "\nThe Shortcuts Layer provides shortcut edges calculated to speed up\nsubsequent queries. Language frontends MUST NOT create shortcut edges.\n",
+        "docIndex": 16,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Shortcuts",
+        "schemaName": "Shortcuts"
+      },
+      "sha256": "bbf29de511703786cdc9468d8bfc6456c1f46cb80fa4ca8e8905d1d018c4ca1b",
+      "startByte": 85310,
+      "symbol": "ContainsEdge"
+    },
+    {
+      "endByteExclusive": 85950,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "DO_BODY",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "sha256": "2ccd88ce80cb4c61b11fa499d64f271a30295ee31630094179432e0fa80fd995",
+      "startByte": 85633,
+      "symbol": "DoBodyEdge"
+    },
+    {
+      "endByteExclusive": 86273,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "DOMINATE",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Dominators$Schema",
+        "description": "\nThe Dominators Layer provides dominator- and post-dominator trees for all methods.\nIt is constructed automatically from the control flow graph layer and is in turn\nused to automatically construct control dependence relations of the PDG layer.\n",
+        "docIndex": 10,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Dominators",
+        "schemaName": "Dominators"
+      },
+      "sha256": "bf2fbcfb6f2183624eabcbd178bc1fb45dd2bc0b94b975826e0677cc5dd9846f",
+      "startByte": 85950,
+      "symbol": "DominateEdge"
+    },
+    {
+      "endByteExclusive": 86598,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "EVAL_TYPE",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Shortcuts$Schema",
+        "description": "\nThe Shortcuts Layer provides shortcut edges calculated to speed up\nsubsequent queries. Language frontends MUST NOT create shortcut edges.\n",
+        "docIndex": 16,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Shortcuts",
+        "schemaName": "Shortcuts"
+      },
+      "sha256": "8a9e0b66d8e9c4ca932ef63b5a5f708d51396b943597b4e37efab8c9101be154",
+      "startByte": 86273,
+      "symbol": "EvalTypeEdge"
+    },
+    {
+      "endByteExclusive": 86927,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "FALSE_BODY",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "sha256": "fd50174f5cdeb512c5a5f8b2a8e621c0f1ba0ac80376f97a97b3c256fa30d41d",
+      "startByte": 86598,
+      "symbol": "FalseBodyEdge"
+    },
+    {
+      "endByteExclusive": 87264,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "FINALLY_BODY",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "sha256": "ff6deb6d61543b324bf3ac9b273abbf899e918d4c65d9dff7942bcf09a2690f8",
+      "startByte": 86927,
+      "symbol": "FinallyBodyEdge"
+    },
+    {
+      "endByteExclusive": 87585,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "FOR_BODY",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "sha256": "6f97bbe8ba348413b82d36f5c9979cf399b7b262dc61a8b8d3baffe82b02b209",
+      "startByte": 87264,
+      "symbol": "ForBodyEdge"
+    },
+    {
+      "endByteExclusive": 87906,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "FOR_INIT",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "sha256": "fa186c58898a30705e70b1bdb37147d7a0f8bcfc5c78fb660292740314b25615",
+      "startByte": 87585,
+      "symbol": "ForInitEdge"
+    },
+    {
+      "endByteExclusive": 88235,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "FOR_UPDATE",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "sha256": "0df6fcbb551d6281303605cdf0895f8fe5da0cff7226e61cc53dda1369c0a677",
+      "startByte": 87906,
+      "symbol": "ForUpdateEdge"
+    },
+    {
+      "endByteExclusive": 88554,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "IMPORTS",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Hidden$Schema",
+        "description": "\nThe schema elements defined here are NOT included on the schema website.\nThese are schema elements that we are using but would like to rework\nin the future and not make part of the standard.\n",
+        "docIndex": -1,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Hidden",
+        "schemaName": "Hidden"
+      },
+      "sha256": "518dfc102226f174b6daeb9e36569afd50ffc504ab4b05f0cf2c35870be46eeb",
+      "startByte": 88235,
+      "symbol": "ImportsEdge"
+    },
+    {
+      "endByteExclusive": 88895,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "INHERITS_FROM",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Type$Schema",
+        "description": "\nThe Type Layer contains information about type declarations, relations between\ntypes, and type instantiation and usage. In its current form, it allows modelling of\nparametrized types, type hierarchies and aliases.\n",
+        "docIndex": 6,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Type",
+        "schemaName": "Type"
+      },
+      "sha256": "3c90fe86513daa025c757d140dd00e4914619ccdf7529b68fd2910b8a1f4b336",
+      "startByte": 88554,
+      "symbol": "InheritsFromEdge"
+    },
+    {
+      "endByteExclusive": 89252,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "IS_CALL_FOR_IMPORT",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Hidden$Schema",
+        "description": "\nThe schema elements defined here are NOT included on the schema website.\nThese are schema elements that we are using but would like to rework\nin the future and not make part of the standard.\n",
+        "docIndex": -1,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Hidden",
+        "schemaName": "Hidden"
+      },
+      "sha256": "45e2c0c4474104f160494004aaaeb397c154be871e13e0d30547f57397b44c06",
+      "startByte": 88895,
+      "symbol": "IsCallForImportEdge"
+    },
+    {
+      "endByteExclusive": 89593,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "JUMP_ARGUMENT",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "sha256": "719a025ecb7c94f9260ef87c7ea88ec8966bd2d93ed040ca3392c9b0a642f51f",
+      "startByte": 89252,
+      "symbol": "JumpArgumentEdge"
+    },
+    {
+      "endByteExclusive": 89938,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "PARAMETER_LINK",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Shortcuts$Schema",
+        "description": "\nThe Shortcuts Layer provides shortcut edges calculated to speed up\nsubsequent queries. Language frontends MUST NOT create shortcut edges.\n",
+        "docIndex": 16,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Shortcuts",
+        "schemaName": "Shortcuts"
+      },
+      "sha256": "9d93ea5055897d6ec240c6680623288a1480d48eebb434da0f807f6b4892d193",
+      "startByte": 89593,
+      "symbol": "ParameterLinkEdge"
+    },
+    {
+      "endByteExclusive": 90279,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "POST_DOMINATE",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Dominators$Schema",
+        "description": "\nThe Dominators Layer provides dominator- and post-dominator trees for all methods.\nIt is constructed automatically from the control flow graph layer and is in turn\nused to automatically construct control dependence relations of the PDG layer.\n",
+        "docIndex": 10,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Dominators",
+        "schemaName": "Dominators"
+      },
+      "sha256": "ebcd3ad530a18ef589eae0e508cc76f1ed122841201c971c883010f23379d3fc",
+      "startByte": 89938,
+      "symbol": "PostDominateEdge"
+    },
+    {
+      "endByteExclusive": 90668,
+      "path": "domain.rs",
+      "property": "VARIABLE",
+      "schemaEdge": "REACHING_DEF",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Pdg$Schema",
+        "description": "\n      The Program Dependence Graph Layer contains a program dependence graph for\neach method of the source program. A program dependence graph consists\nof a data dependence graph (DDG) and a control dependence graph (CDG),\ncreated by connecting nodes of the control flow graph via `REACHING_DEF`\nand `CDG` edges respectively.\n",
+        "docIndex": 11,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Pdg",
+        "schemaName": "Pdg"
+      },
+      "sha256": "a8e9e886cc50af6f79de649963f685f280a48cf555b0434639c236ae2cd1d4e4",
+      "startByte": 90279,
+      "symbol": "ReachingDefEdge"
+    },
+    {
+      "endByteExclusive": 90991,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "RECEIVER",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.CallGraph$Schema",
+        "description": "\nThe Call Graph Layer represents call relations between methods.\n",
+        "docIndex": 8,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.CallGraph",
+        "schemaName": "CallGraph"
+      },
+      "sha256": "9b911f9c0af280230a8a512eb7d0c57554ed32b37cff9556d09039105314b5c2",
+      "startByte": 90668,
+      "symbol": "ReceiverEdge"
+    },
+    {
+      "endByteExclusive": 91294,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "REF",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Base$Schema",
+        "description": "\n",
+        "docIndex": 2147483647,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Base",
+        "schemaName": "Base"
+      },
+      "sha256": "cb76d6a07babfc5614cba7d6a73f48e0334a69dbbcab1050765c6fb73b7c7a74",
+      "startByte": 90991,
+      "symbol": "RefEdge"
+    },
+    {
+      "endByteExclusive": 91627,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "SOURCE_FILE",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.FileSystem$Schema",
+        "description": "\nCPGs are created from sets of files and the File System Layer describes the layout of\nthese files, that is, it provides information about source files\nand shared objects for source-based and machine-code-based frontends\nrespectively. The purpose of including this information in the CPG\nis to allow nodes of the graph to be mapped back to file system locations.\n",
+        "docIndex": 3,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.FileSystem",
+        "schemaName": "FileSystem"
+      },
+      "sha256": "f12ad6d95d94bd0dba2b65f2f80fd356a4b099f3911ca92fa505cc3365f7f7d9",
+      "startByte": 91294,
+      "symbol": "SourceFileEdge"
+    },
+    {
+      "endByteExclusive": 91952,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "TAGGED_BY",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Tags$Schema",
+        "description": "\nThe Code Property Graph specification allows for tags to be attached\nto arbitrary nodes. Conceptually, this is similar to the creation of\nFinding nodes, however, tags are to be used for intermediate results\nrather than end-results that are to be reported to the user.\n",
+        "docIndex": 17,
+        "providedByFrontend": false,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Tags",
+        "schemaName": "Tags"
+      },
+      "sha256": "3049d77790267419e8d51e14cdde5ec3ef680aba3d91cd1a78f4dd22e32e95ea",
+      "startByte": 91627,
+      "symbol": "TaggedByEdge"
+    },
+    {
+      "endByteExclusive": 92277,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "TRUE_BODY",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "sha256": "c4be6c5f3efa1cd5944477d894a4c0e5b9d1ca45c3f2d223c0ff36325ab32761",
+      "startByte": 91952,
+      "symbol": "TrueBodyEdge"
+    },
+    {
+      "endByteExclusive": 92598,
+      "path": "domain.rs",
+      "property": null,
+      "schemaEdge": "TRY_BODY",
+      "schemaInfo": {
+        "definitionClass": "io.shiftleft.codepropertygraph.schema.Ast$Schema",
+        "description": "\nThe Abstract Syntax Tree (AST) Layer provides syntax trees for all compilation units.\nAll nodes of the tree inherit from the same base class (`AST_NODE`) and are connected\nto their child nodes via outgoing `AST` edges.\n\nSyntax trees are typed, that is, when possible, types for all expressions are stored\nin the tree. Moreover, common control structure types are defined in the specification,\nmaking it possible to translate trees into corresponding control flow graphs if only\nthese common control structure types are used, possibly by desugaring on the side of\nthe language frontend. For cases where this is not an option,\nthe AST specification provides means of storing language-dependent information in the\nAST that can be interpreted by language-dependent control flow construction passes.\n\nThis layer MUST be created by the frontend.\n\n",
+        "docIndex": 7,
+        "providedByFrontend": true,
+        "schemaClass": "io.shiftleft.codepropertygraph.schema.Ast",
+        "schemaName": "Ast"
+      },
+      "sha256": "932653a8d0c5ca1a8550bf2215b0f8a4e8d9256589fe31b5f791b7c7368987dc",
+      "startByte": 92277,
+      "symbol": "TryBodyEdge"
+    }
+  ]
+}

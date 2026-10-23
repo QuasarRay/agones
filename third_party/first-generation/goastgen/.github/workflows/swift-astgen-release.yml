@@ -1,0 +1,184 @@
+name: Swift AST Generator Release
+
+on:
+  push:
+    tags:
+      - 'swift-astgen/v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+defaults:
+  run:
+    working-directory: swift-astgen
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      release_tag: ${{ steps.set-tag.outputs.release_tag }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: '0'
+
+      - name: Discover latest tag (manual run)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          LATEST_TAG=$(git tag --list 'swift-astgen/v*' --sort=-v:refname | head -n 1)
+          echo "RELEASE_TAG=$LATEST_TAG" >> $GITHUB_ENV
+          echo "Using latest tag: $LATEST_TAG"
+
+      - name: Set tag from push event
+        if: github.event_name == 'push'
+        run: |
+          echo "RELEASE_TAG=${{ github.ref_name }}" >> $GITHUB_ENV
+
+      - name: Set tag output
+        id: set-tag
+        run: echo "release_tag=${{ env.RELEASE_TAG }}" >> $GITHUB_OUTPUT
+
+  build:
+    needs: prepare
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: '0'
+
+      - name: Install Swift (macos-latest)
+        if: matrix.os == 'macos-latest'
+        uses: SwiftyLab/setup-swift@9014d4136569075c696d4151c7810ecde8712907 # v1.14.1
+        with:
+          swift-version: "6.3"
+
+      - name: Install Swift
+        if: matrix.os != 'macos-latest'
+        uses: SwiftyLab/setup-swift@9014d4136569075c696d4151c7810ecde8712907 # v1.14.1
+        with:
+          swift-version: "6.1"
+
+      - name: Run Linux Build
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          swift sdk install https://download.swift.org/swift-6.1-release/static-sdk/swift-6.1-RELEASE/swift-6.1-RELEASE_static-linux-0.0.1.artifactbundle.tar.gz --checksum 111c6f7d280a651208b8c74c0521dd99365d785c1976a6e23162f55f65379ac6
+          swift build --swift-sdk x86_64-swift-linux-musl -c release --static-swift-stdlib
+          mv ./.build/release/SwiftAstGen SwiftAstGen-linux
+          swift build --swift-sdk aarch64-swift-linux-musl -c release --static-swift-stdlib
+          mv ./.build/release/SwiftAstGen SwiftAstGen-linux-arm64
+          ./SwiftAstGen-linux -s
+
+      - name: Run Mac Build
+        if: matrix.os == 'macos-latest'
+        # Plain `swift build`: setup-swift puts the requested toolchain on PATH. Do NOT use
+        # `xcrun --toolchain $TOOLCHAINS` here: setup-swift only sets TOOLCHAINS when it installs
+        # an OSS toolchain, but with prefer-oss-toolchain=false it defers to the Xcode-bundled
+        # toolchain whenever it satisfies swift-version (macos-latest now ships one), leaving
+        # TOOLCHAINS empty and the xcrun invocation broken.
+        run: |
+          swift build -c release --arch arm64 --arch x86_64
+          mv ./.build/apple/Products/Release/SwiftAstGen SwiftAstGen-mac
+
+      - name: Run Windows Build
+        if: matrix.os == 'windows-latest'
+        run: |
+          swift build -c release --arch x86_64 --static-swift-stdlib
+          mv .\.build\release\SwiftAstGen.exe SwiftAstGen-win.exe
+
+      - name: Upload Linux binary
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: asset-SwiftAstGen-linux
+          path: swift-astgen/SwiftAstGen-linux
+          if-no-files-found: error
+
+      - name: Upload Linux ARM64 binary
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: asset-SwiftAstGen-linux-arm64
+          path: swift-astgen/SwiftAstGen-linux-arm64
+          if-no-files-found: error
+
+      - name: Upload Mac binary
+        if: matrix.os == 'macos-latest'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: asset-SwiftAstGen-mac
+          path: swift-astgen/SwiftAstGen-mac
+          if-no-files-found: error
+
+      - name: Upload Windows binary
+        if: matrix.os == 'windows-latest'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: asset-SwiftAstGen-win.exe
+          path: swift-astgen/SwiftAstGen-win.exe
+          if-no-files-found: error
+
+      - name: Upload Swift Scala bindings
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: asset-SwiftNodeSyntax.scala
+          path: swift-astgen/SwiftNodeSyntax.scala
+          if-no-files-found: error
+
+  checksums:
+    needs: [prepare, build]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - name: Download release artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          path: release-artifacts
+          pattern: asset-*
+          merge-multiple: true
+
+      - name: Generate checksums
+        run: |
+          cd release-artifacts
+          sha256sum * 2>/dev/null | grep -v "Is a directory" > SHA256SUMS || true
+          sha512sum * 2>/dev/null | grep -v "Is a directory" > SHA512SUMS || true
+          mkdir -p checksums
+          mv SHA256SUMS SHA512SUMS checksums/
+
+      - name: Upload checksum files
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: asset-checksums
+          path: release-artifacts/checksums/
+
+  release:
+    needs: [prepare, build, checksums]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    concurrency: swift-astgen-release
+    permissions:
+      contents: write
+    steps:
+      - name: Download release artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          path: release-artifacts
+          pattern: asset-*
+          merge-multiple: true
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
+        with:
+          draft: true
+          tag_name: ${{ needs.prepare.outputs.release_tag }}
+          files: release-artifacts/*

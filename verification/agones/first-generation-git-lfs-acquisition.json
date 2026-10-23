@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "pin": "verification/agones/first-generation-git-lfs-pin.json",
+  "status": "INSTALLED",
+  "started_at": "2026-10-23T09:03:07.492786+00:00",
+  "command": [
+    "curl",
+    "--fail",
+    "--location",
+    "--connect-timeout",
+    "10",
+    "--max-time",
+    "60",
+    "--silent",
+    "--show-error",
+    "--continue-at",
+    "-",
+    "--header",
+    "Accept: application/octet-stream",
+    "--output",
+    "/home/astral/.local/share/agones-rs/tools/git-lfs-linux-amd64-v3.8.1.tar.gz.download",
+    "https://api.github.com/repos/git-lfs/git-lfs/releases/assets/666388433"
+  ],
+  "pid": 44900,
+  "process_identity": "44900 (curl) R 44899 44898 44898 0 -1 4194304 31 0 0 0 0 0 0 0 12 -8 1 0 1378131 1990656 125 18446744073709551615 94649464664064 94649464796313 140737432333440 0 0 0 0 0 0 0 0 0 17 13 0 0 0 0 0 94649464853936 94649464873120 94649836830720 140737432341890 140737432342193 140737432342193 140737432346602 0\n",
+  "exit_code": 0,
+  "finished_at": "2026-10-23T09:03:14.662789+00:00",
+  "attempts": [
+    {
+      "schema_version": 1,
+      "pin": "verification/agones/first-generation-git-lfs-pin.json",
+      "status": "FAILED",
+      "started_at": "2026-10-23T08:54:42.645622+00:00",
+      "command": [
+        "curl",
+        "--fail",
+        "--location",
+        "--connect-timeout",
+        "10",
+        "--max-time",
+        "90",
+        "--silent",
+        "--show-error",
+        "--header",
+        "Accept: application/octet-stream",
+        "--output",
+        "/home/astral/.local/share/agones-rs/tools/git-lfs-linux-amd64-v3.8.1.tar.gz.download",
+        "https://api.github.com/repos/git-lfs/git-lfs/releases/assets/666388433"
+      ],
+      "pid": 43357,
+      "process_identity": "43357 (curl) R 43356 43355 43355 0 -1 4194304 2 0 0 0 0 0 0 0 12 -8 1 0 1327647 364544 0 18446744073709551615 0 0 140721005022610 0 0 0 0 0 0 0 0 0 17 7 0 0 0 0 0 0 0 0 140721005022610 0 0 0 0\n",
+      "exit_code": 28,
+      "finished_at": "2026-10-23T08:56:13.325450+00:00"
+    },
+    {
+      "schema_version": 1,
+      "pin": "verification/agones/first-generation-git-lfs-pin.json",
+      "status": "FAILED",
+      "started_at": "2026-10-23T08:59:22.926291+00:00",
+      "command": [
+        "curl",
+        "--fail",
+        "--location",
+        "--connect-timeout",
+        "10",
+        "--max-time",
+        "90",
+        "--silent",
+        "--show-error",
+        "--continue-at",
+        "-",
+        "--header",
+        "Accept: application/octet-stream",
+        "--output",
+        "/home/astral/.local/share/agones-rs/tools/git-lfs-linux-amd64-v3.8.1.tar.gz.download",
+        "https://api.github.com/repos/git-lfs/git-lfs/releases/assets/666388433"
+      ],
+      "pid": 44482,
+      "process_identity": "44482 (curl) R 44481 44480 44480 0 -1 4194304 4 0 0 0 0 0 0 0 12 -8 1 0 1355675 655360 0 18446744073709551615 0 0 140735731203458 0 0 0 0 0 0 0 0 0 17 3 0 0 0 0 0 0 0 0 140735731203458 0 0 0 0\n",
+      "exit_code": 28,
+      "finished_at": "2026-10-23T09:00:52.954371+00:00",
+      "retained_prefix_bytes": 1209619
+    }
+  ],
+  "retained_prefix_bytes": 5592046,
+  "archive": "/home/astral/.local/share/agones-rs/tools/git-lfs-linux-amd64-v3.8.1.tar.gz",
+  "binary": {
+    "path": "/home/astral/.local/share/agones-rs/tools/git-lfs-first-generation-install/git-lfs-3.8.1/git-lfs",
+    "sha256": "8bf08ae98ff83773430ce8f45b9156dcf7699ee1de65ae4a388e746e9dd7597c"
+  },
+  "reported_version": "git-lfs/3.8.1 (GitHub; linux amd64; go 1.27.3; git a662a6db)"
+}

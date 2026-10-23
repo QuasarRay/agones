@@ -1,0 +1,66 @@
+{
+  "cargo": "cargo 1.98.1 (797e8a9bc 2026-08-05)",
+  "environment": {
+    "CARGO_TARGET_DIR": "/home/astral/.cache/agones-first-generation/cpg-rs-target"
+  },
+  "finished_at": "2026-10-23T10:04:58.578530+00:00",
+  "generated_domain_receipt_sha256": "f3908c3a3114787f7e851151015d1534a1f5a28db5a37ca62c34d115bdad6571",
+  "purpose": "Focused CPG port/schema/domain machinery checks only; no Agones workspace generation or verification.",
+  "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+  "schema_version": 1,
+  "source_sha256": {
+    "cpg-rs/Cargo.lock": "ca681be508837e710d43bb01c2671ec2e18f113194bbe460d961160cea21a186",
+    "cpg-rs/Cargo.toml": "4a33eed4d5c5e1e00aaa67b2db6910c0e4ab1316fb0b15de08df80168266099d",
+    "cpg-rs/src/AGENTS.MD": "466927c7407599ad6a490be88f0ffe724693f9def061775381d5a8fd944f4c73",
+    "cpg-rs/src/bin/AGENTS.MD": "451261a6503a70570a968ed4251ba97e1d07477cc7c4fbb4f06e62cec6ba0f77",
+    "cpg-rs/src/bin/domain.rs": "678982afad5649ca8ff7d1872e246c147d464a002ddc127f3103f4b55919bf21",
+    "cpg-rs/src/bin/source_inventory.rs": "64313ac6d95305f4540a96ada621e6c374a56d97a37915399e10af292c58f25d",
+    "cpg-rs/src/codegen.rs": "035c7e783480dce1fc141c8a8d5ea0b5f55f09339dd5f6cb91b2e0351a390d89",
+    "cpg-rs/src/lib.rs": "582623fe8a5507ceff17516fb34f22fe6bf4ba19d5ca15c9b229a5f75e6a41a5",
+    "cpg-rs/src/schema.rs": "71d50176d3148050a1efed78c3d7e309f7754e2b848b3f54e202afe6f69b831b",
+    "cpg-rs/tests/AGENTS.MD": "1002e476bda74fa13747988db21e857b36fc3bb05e313f46c76ef149b5453bce",
+    "cpg-rs/tests/domain.rs": "a7d767fbb7eb2297819fd2e8f740b7308c72192100090362570a4a89a228bb58",
+    "cpg-rs/tests/schema.rs": "1512dbe2abfc0f91b734aec5615a59cec1f83e8eb57d217115aafab9ff225e6a"
+  },
+  "started_at": "2026-10-23T10:04:50.370712+00:00",
+  "status": "PASSED",
+  "steps": [
+    {
+      "command": [
+        "cargo",
+        "run",
+        "--manifest-path",
+        "cpg-rs/Cargo.toml",
+        "--locked",
+        "--no-default-features",
+        "--bin",
+        "cpg-domain",
+        "--",
+        "verification/agones/first-generation-complete-schema-bootstrap.json",
+        "cpg-rs/generated"
+      ],
+      "exit_code": 0,
+      "log": ".git/agones-first-generation-cpg-rust-control-0.log",
+      "log_sha256": "0c0af8a1977b6c0aa977c4db1bb80b77cf2452d6bc06c5d8af896bbd07d2778f",
+      "pid": 57779,
+      "process_identity": "57779 (cargo) R 57759 57758 57758 0 -1 4194304 13 0 0 0 0 0 0 0 12 -8 1 0 1748428 11849728 33 18446744073709551615 94639187142336 94639195771008 140722872209440 0 0 0 0 0 0 0 0 0 17 5 0 0 0 0 0 94639196276536 94639196293796 94639350898688 140722872217009 140722872217189 140722872217189 140722872221673 0\n",
+      "status": "PASSED"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "cpg-rs/Cargo.toml",
+        "--locked",
+        "--all-features"
+      ],
+      "exit_code": 0,
+      "log": ".git/agones-first-generation-cpg-rust-control-1.log",
+      "log_sha256": "0ae14c1175075bfcb89891818c64ac4f56f353cc0b45735e46348aba2485e98d",
+      "pid": 58067,
+      "process_identity": "58067 (cargo) R 57759 57758 57758 0 -1 4194304 10 0 0 0 0 0 0 0 12 -8 1 0 1748733 11849728 0 18446744073709551615 93958763861696 93958772490368 140726949903312 0 0 0 0 0 0 0 0 0 17 13 0 0 0 0 0 93958772995896 93958773013156 93959056945152 140726949908000 140726949908069 140726949908069 140726949912553 0\n",
+      "status": "PASSED"
+    }
+  ]
+}

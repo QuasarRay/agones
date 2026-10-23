@@ -1,0 +1,131 @@
+{
+  "archive": "/home/astral/.local/share/agones-rs/tools/OpenJDK21U-jdk_x64_linux_hotspot_21.0.13_9.tar.gz",
+  "attempts": [
+    {
+      "archive": "/home/astral/.local/share/agones-rs/tools/OpenJDK21U-jdk_x64_linux_hotspot_21.0.13_9.tar.gz",
+      "command": [
+        "curl",
+        "--fail",
+        "--location",
+        "--connect-timeout",
+        "15",
+        "--max-time",
+        "180",
+        "--silent",
+        "--show-error",
+        "--output",
+        "/home/astral/.local/share/agones-rs/tools/OpenJDK21U-jdk_x64_linux_hotspot_21.0.13_9.tar.gz.download",
+        "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.13%2B9/OpenJDK21U-jdk_x64_linux_hotspot_21.0.13_9.tar.gz"
+      ],
+      "exit_code": 28,
+      "finished_at": "2026-10-23T08:40:48.290904+00:00",
+      "pid": 39589,
+      "pin": "verification/agones/first-generation-jdk-pin.json",
+      "process_identity": "39589 (curl) D 39588 39587 39587 0 -1 4194304 2 0 0 0 0 0 0 0 12 -8 1 0 1242710 364544 0 18446744073709551615 0 0 140733290433903 0 0 0 0 0 0 1 0 0 17 2 0 0 0 0 0 0 0 0 140733290433903 0 0 0 0\n",
+      "schema_version": 1,
+      "started_at": "2026-10-23T08:40:33.275973+00:00",
+      "status": "DOWNLOAD_FAILED"
+    },
+    {
+      "archive": "/home/astral/.local/share/agones-rs/tools/OpenJDK21U-jdk_x64_linux_hotspot_21.0.13_9.tar.gz",
+      "command": [
+        "curl",
+        "--fail",
+        "--location",
+        "--http1.1",
+        "--connect-timeout",
+        "15",
+        "--max-time",
+        "180",
+        "--silent",
+        "--show-error",
+        "--header",
+        "Accept: application/octet-stream",
+        "--output",
+        "/home/astral/.local/share/agones-rs/tools/OpenJDK21U-jdk_x64_linux_hotspot_21.0.13_9.tar.gz.download",
+        "https://api.github.com/repos/adoptium/temurin21-binaries/releases/assets/665757550"
+      ],
+      "exit_code": 28,
+      "finished_at": "2026-10-23T08:47:36.658024+00:00",
+      "pid": 42255,
+      "pin": "verification/agones/first-generation-jdk-pin.json",
+      "process_identity": "42255 (curl) R 42254 42253 42253 0 -1 4194304 22 0 0 0 0 0 0 0 12 -8 1 0 1267045 897024 80 18446744073709551615 94601862135808 94601862268057 140720733169376 0 0 0 0 0 0 0 0 0 17 0 0 0 0 0 0 94601862325680 94601862344864 94602791383040 140720733171051 140720733171377 140720733171377 140720733175786 0\n",
+      "reason": "Public release-asset API successfully redirects to the first-party release-assets host; direct github.com connection timed out.",
+      "schema_version": 1,
+      "started_at": "2026-10-23T08:44:36.622557+00:00",
+      "status": "DOWNLOAD_FAILED",
+      "transport": "GITHUB_RELEASE_ASSET_API"
+    }
+  ],
+  "command": [
+    "curl",
+    "--fail",
+    "--location",
+    "--http1.1",
+    "--connect-timeout",
+    "15",
+    "--max-time",
+    "180",
+    "--silent",
+    "--show-error",
+    "--header",
+    "Accept: application/octet-stream",
+    "--output",
+    "/home/astral/.local/share/agones-rs/tools/OpenJDK21U-jdk_x64_linux_hotspot_21.0.13_9.tar.gz.download",
+    "https://api.github.com/repos/adoptium/temurin21-binaries/releases/assets/665757550"
+  ],
+  "exit_code": 28,
+  "finished_at": "2026-10-23T09:01:39.173823+00:00",
+  "installed_at": "2026-10-23T09:02:41.926484+00:00",
+  "java": {
+    "path": "/home/astral/.local/share/agones-rs/tools/temurin-jdk-21.0.13-9-install/jdk-21.0.13+9/bin/java",
+    "sha256": "9cad3f2620d3ef2ed10b26f922af7e773d54fdaa05f615d6d6df014f3fec4155"
+  },
+  "observed_sha256": "d7f5d5cf865a2902b70ff549b97586a7d3f234e016f041ab447ea740c7d66d1c",
+  "pid": 42831,
+  "pin": "verification/agones/first-generation-jdk-pin.json",
+  "process_identity": "42831 (python3) R 4270 42831 42831 0 -1 4194304 5994 0 0 0 4 0 0 0 12 -8 1 0 1296374 39735296 6106 18446744073709551615 94790539694080 94790539694393 140731790160672 0 0 0 0 16781312 2 0 0 0 17 6 0 0 0 0 0 94790539705784 94790539706384 94790647054336 140731790163569 140731790163630 140731790163630 140731790168039 0\n",
+  "ranges": [
+    [
+      32500736,
+      54420437
+    ],
+    [
+      54420438,
+      76340139
+    ],
+    [
+      76340140,
+      98259841
+    ],
+    [
+      98259842,
+      120179543
+    ],
+    [
+      120179544,
+      142099245
+    ],
+    [
+      142099246,
+      164018947
+    ],
+    [
+      164018948,
+      185938649
+    ],
+    [
+      185938650,
+      207858351
+    ]
+  ],
+  "reason": "Retain partial bytes after the bounded transfer timeout; use eight independent checked ranges.",
+  "reported_version": "openjdk version \"21.0.13\" 2026-10-20 LTS\nOpenJDK Runtime Environment Temurin-21.0.13+9 (build 21.0.13+9-LTS)\nOpenJDK 64-Bit Server VM Temurin-21.0.13+9 (build 21.0.13+9-LTS, mixed mode, sharing)\n",
+  "retained_prefix_bytes": 32500736,
+  "schema_version": 1,
+  "script": "build/scripts/agones-first-generation/acquire_jdk.py",
+  "script_sha256": "29ab8f555e41368245e56dfa6e9e915a5ca17ede961463ae47480ed71a2efe17",
+  "started_at": "2026-10-23T08:49:29.977322+00:00",
+  "status": "INSTALLED",
+  "transport": "GITHUB_RELEASE_ASSET_API"
+}

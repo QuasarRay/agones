@@ -1,0 +1,57 @@
+{
+  "command": [
+    "/home/astral/.local/share/agones-rs/tools/temurin-jdk-21.0.13-9-install/jdk-21.0.13+9/bin/java",
+    "-Xmx3g",
+    "-XX:ActiveProcessorCount=4",
+    "-Dsbt.supershell=false",
+    "-Dsbt.log.noformat=true",
+    "-Dsbt.override.build.repos=true",
+    "-Dsbt.repository.config=/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/repositories",
+    "-Dsbt.boot.directory=/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/boot",
+    "-Dsbt.global.base=/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/global",
+    "-Dsbt.ivy.home=/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/ivy",
+    "-jar",
+    "/home/astral/.local/share/agones-rs/tools/sbt-launch-1.12.5.jar",
+    "set schema/libraryDependencies += \"com.lihaoyi\" %% \"ujson\" % \"4.4.3\"",
+    "schema/Compile/runMain CompleteSchemaExport /home/astral/Projects/agones/verification/agones/first-generation-complete-schema-bootstrap.json",
+    "show schema/Compile/fullClasspath"
+  ],
+  "counts": {
+    "domainSchema": {
+      "edges": 34,
+      "nodeBaseTypes": 5,
+      "nodeTypes": 43,
+      "properties": 55
+    },
+    "protobufSchema": {
+      "edges": 34,
+      "nodeBaseTypes": 5,
+      "nodeTypes": 43,
+      "properties": 55
+    }
+  },
+  "dependency_manifest": "verification/agones/first-generation-schema-bootstrap-maven-lock.json",
+  "dependency_manifest_sha256": "38c4ab24c99021c8a0aed628415f234b04492b432c2d6ee382acb2fa7248e246",
+  "exit_code": 0,
+  "finished_at": "2026-10-23T09:13:26.097286+00:00",
+  "generator_manifest_sha256": "1e231c4ac0130467974597c2231e237423dc0d2d3caa67b7f115e9642d5f4ade",
+  "log": ".git/agones-first-generation-cpg-build/schema-bootstrap.log",
+  "log_sha256": "81f73e37bb75d348fc80945f98f3dedb13c00121f132f3dc549c8058740bf05c",
+  "output": "verification/agones/first-generation-complete-schema-bootstrap.json",
+  "output_sha256": "13a0477326eaf3606b0edaeb6147046189e5d0622245588cc5eb1c26f61f9d89",
+  "pid": 46138,
+  "process_identity": "46138 (java) D 46137 46136 46136 0 -1 4456448 2 0 0 0 0 0 0 0 12 -8 1 0 1438313 151552 0 18446744073709551615 0 0 140726828898606 0 0 0 0 0 0 1 0 0 17 6 0 0 0 0 0 0 0 0 140726828898606 0 0 0 0\n",
+  "purpose": "Build-time full schema observation. Does not establish Rust schema construction or behavior coverage.",
+  "schema_version": 1,
+  "source_commit": "301c4010d28ecdac05bc2ed44310f56446459465",
+  "source_patch_receipt": "verification/agones/first-generation-schema-export-patch.json",
+  "source_patch_receipt_sha256": "0709020a3f461f7a7ecf22490fe61c97e1dabdbb829656edb71dee5b7fb148c4",
+  "started_at": "2026-10-23T09:13:09.310433+00:00",
+  "status": "EXPORTED",
+  "tool_receipts": {
+    "verification/agones/first-generation-git-lfs-acquisition.json": "49fbc45d642c343d3fe9e9e95d629875ced97587a2fdbd9c4a5af06582fa9413",
+    "verification/agones/first-generation-jdk-acquisition.json": "9bd89755662df0e0df48bf36d447118912859d26131bda6747b15b1691d43aaa",
+    "verification/agones/first-generation-sbt-pins.json": "4db59ab6bdb4fe49ad3ed2c55ef810c08c546a6698df8d877e702778d7e9b958"
+  },
+  "vendor_manifest_sha256": "0bb77c41e4e548aab6fa5a4ac9eb74f41e701bf5e69a3453f1b2f14b1d7e693d"
+}

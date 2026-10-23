@@ -1,0 +1,152 @@
+--- /dev/null
++++ b/schema/src/main/scala/CompleteSchemaExport.scala
+@@ -0,0 +1,149 @@
++// Owned build-time observation tool. Core schema behavior will be implemented in Rust.
++import flatgraph.schema.*
++import flatgraph.schema.Property.Cardinality
++import io.shiftleft.codepropertygraph.schema.CpgSchema
++import java.nio.file.{Files, Paths}
++
++object CompleteSchemaExport {
++  private def optional[A](value: Option[A])(encode: A => ujson.Value): ujson.Value =
++    value.map(encode).getOrElse(ujson.Null)
++
++  private def strings(values: Iterable[String]): ujson.Arr =
++    ujson.Arr.from(values.map(ujson.Str(_)))
++
++  private def info(value: SchemaInfo): ujson.Value = {
++    optional(value.definedIn) { definition =>
++      val owner = Option(definition.getDeclaringClass).getOrElse(definition)
++      def attribute(name: String): Any = owner.getDeclaredMethod(name).invoke(null)
++      ujson.Obj(
++        "definitionClass" -> definition.getName,
++        "schemaClass" -> owner.getName,
++        "schemaName" -> owner.getSimpleName,
++        "docIndex" -> attribute("docIndex").asInstanceOf[Int],
++        "description" -> attribute("description").asInstanceOf[String],
++        "providedByFrontend" -> attribute("providedByFrontend").asInstanceOf[Boolean]
++      )
++    }
++  }
++
++  private def valueType(value: Property.ValueType[?]): String =
++    value.getClass.getSimpleName.stripSuffix("$")
++
++  private def scalar(value: Any): ujson.Value = value match {
++    case null       => ujson.Obj("kind" -> "Null")
++    case x: String  => ujson.Obj("kind" -> "String", "value" -> x)
++    case x: Boolean => ujson.Obj("kind" -> "Boolean", "value" -> x)
++    case x: Byte    => ujson.Obj("kind" -> "Byte", "decimal" -> x.toString)
++    case x: Short   => ujson.Obj("kind" -> "Short", "decimal" -> x.toString)
++    case x: Int     => ujson.Obj("kind" -> "Int", "decimal" -> x.toString)
++    case x: Long    => ujson.Obj("kind" -> "Long", "decimal" -> x.toString)
++    case x: Float   => ujson.Obj("kind" -> "Float", "bits" -> java.lang.Integer.toUnsignedString(java.lang.Float.floatToRawIntBits(x), 16))
++    case x: Double  => ujson.Obj("kind" -> "Double", "bits" -> java.lang.Long.toUnsignedString(java.lang.Double.doubleToRawLongBits(x), 16))
++    case x: Char    => ujson.Obj("kind" -> "Char", "utf16CodeUnit" -> x.toInt)
++    case x: Seq[?]  => ujson.Obj("kind" -> "List", "values" -> ujson.Arr.from(x.map(scalar)))
++    case other     => throw new IllegalArgumentException("Unrepresented schema scalar: " + other.getClass.getName)
++  }
++
++  private def cardinality(value: Property.Cardinality): ujson.Value = value match {
++    case Cardinality.ZeroOrOne => ujson.Obj("kind" -> "ZeroOrOne")
++    case Cardinality.List      => ujson.Obj("kind" -> "List")
++    case Cardinality.One(default) => ujson.Obj("kind" -> "One", "defaultWrapperIsNull" -> (default == null),
++                                             "default" -> (if (default == null) ujson.Null else scalar(default.value)))
++  }
++
++  private def protoId(value: Any): ujson.Value = value match {
++    case identified: HasOptionalProtoId => optional(identified.protoId)(id => ujson.Num(id))
++    case _ => ujson.Null
++  }
++
++  private def property(value: Property[?]): ujson.Value = ujson.Obj(
++    "name" -> value.name, "className" -> value.className,
++    "valueType" -> valueType(value.valueType), "comment" -> optional(value.comment)(ujson.Str(_)),
++    "schemaInfo" -> info(value.schemaInfo), "protoId" -> protoId(value),
++    "cardinality" -> cardinality(value.cardinality), "mandatory" -> value.isMandatory,
++    "hasDefault" -> value.hasDefault, "default" -> optional(value.default)(d => scalar(d.value))
++  )
++
++  private def adjacent(value: AdjacentNode): ujson.Value = ujson.Obj(
++    "edge" -> value.viaEdge.name, "neighbor" -> value.neighbor.name,
++    "cardinality" -> value.cardinality.getClass.getSimpleName.stripSuffix("$"),
++    "customStepName" -> optional(value.customStepName)(ujson.Str(_)),
++    "customStepDoc" -> optional(value.customStepDoc)(ujson.Str(_))
++  )
++
++  private def sorted(values: Iterable[ujson.Value]): ujson.Arr =
++    ujson.Arr.from(values.toSeq.sortBy(_.render()))
++
++  private def node(value: AbstractNodeType): ujson.Value = {
++    val result = ujson.Obj(
++      "name" -> value.name, "className" -> value.className,
++      "kind" -> (value match { case _: AnyNodeType => "Any"; case _: NodeType => "Concrete"; case _ => "Base" }),
++      "comment" -> optional(value.comment)(ujson.Str(_)), "schemaInfo" -> info(value.schemaInfo),
++      "protoId" -> protoId(value), "starterName" -> optional(value.starterName)(ujson.Str(_)),
++      "extends" -> strings(value.extendz.map(_.name)),
++      "ancestors" -> strings(value.extendzRecursively.map(_.name)),
++      "declaredProperties" -> strings(value.propertiesWithoutInheritance.map(_.name)),
++      "allProperties" -> strings(value.properties.map(_.name)),
++      "outEdges" -> sorted(value.outEdges.map(adjacent)), "inEdges" -> sorted(value.inEdges.map(adjacent)),
++      "markerTraits" -> strings(value.markerTraits.map(_.name).sorted)
++    )
++    value match {
++      case concrete: NodeType =>
++        result("primaryKey") = optional(concrete.primaryKey)(p => ujson.Str(p.name))
++        result("containedNodes") = ujson.Arr.from(concrete.containedNodes.map { child =>
++          ujson.Obj("type" -> child.nodeType.name, "localName" -> child.localName,
++                    "cardinality" -> cardinality(child.cardinality), "comment" -> optional(child.comment)(ujson.Str(_)))
++        })
++      case _ =>
++        result("primaryKey") = ujson.Null
++        result("containedNodes") = ujson.Arr()
++    }
++    result
++  }
++
++  private def schema(value: Schema): ujson.Value = {
++    ujson.Obj(
++      "domainShortName" -> value.domainShortName, "basePackage" -> value.basePackage,
++      "additionalTraversalsPackages" -> strings(value.additionalTraversalsPackages),
++      "properties" -> ujson.Arr.from(value.properties.map(property)),
++      "nodePropertyKinds" -> ujson.Arr.from(value.nodeProperties.zipWithIndex.map { case (p, index) => ujson.Obj("name" -> p.name, "index" -> index) }),
++      "edgePropertyNames" -> strings(value.edgeProperties.map(_.name)),
++      "anyNode" -> node(value.anyNode),
++      "nodeBaseTypes" -> ujson.Arr.from(value.nodeBaseTypes.map(node)),
++      "nodeTypes" -> ujson.Arr.from(value.nodeTypes.map(node)),
++      "edges" -> ujson.Arr.from(value.edgeTypes.map { edge =>
++        ujson.Obj("name" -> edge.name, "className" -> edge.className, "protoId" -> protoId(edge),
++                  "comment" -> optional(edge.comment)(ujson.Str(_)), "schemaInfo" -> info(edge.schemaInfo),
++                  "property" -> optional(edge.property)(p => ujson.Str(p.name)),
++                  "defaultAccessorName" -> optional(edge.defaultAccessorName)(ujson.Str(_)))
++      }),
++      "constantsByCategory" -> ujson.Obj.from(value.constantsByCategory.toSeq.sortBy(_._1).map { case (category, constants) =>
++        category -> ujson.Arr.from(constants.map { constant =>
++          ujson.Obj("name" -> constant.name, "value" -> constant.value, "valueType" -> valueType(constant.valueType),
++                    "protoId" -> protoId(constant), "comment" -> optional(constant.comment)(ujson.Str(_)),
++                    "schemaInfo" -> info(constant.schemaInfo))
++        })
++      }),
++      "protoOptions" -> optional(value.protoOptions) { options =>
++        ujson.Obj("package" -> options.pkg, "javaOuterClassname" -> options.javaOuterClassname,
++                  "javaPackage" -> options.javaPackage, "goPackage" -> options.goPackage,
++                  "csharpNamespace" -> options.csharpNamespace,
++                  "uncommonProtoEnumNameMappings" -> ujson.Obj.from(options.uncommonProtoEnumNameMappings.toSeq.sortBy(_._1).map { case (k, v) => k -> ujson.Str(v) }))
++      },
++      "duplicatePropertyWarningExceptions" -> sorted(value.noWarnList.map { case (n, p) => ujson.Obj("node" -> n.name, "property" -> p.name) })
++    )
++  }
++
++  def main(args: Array[String]): Unit = {
++    require(args.length == 1, "pass one isolated output file")
++    val protoBuilder = new SchemaBuilder("Cpg", "io.shiftleft.codepropertygraph.generated")
++    // Exact options from pinned schema/Protogen.scala; the domain instance uses a different traversal configuration.
++    protoBuilder.protoOptions(ProtoOptions("cpg", "Cpg", "io.shiftleft.proto.cpg",
++      "github.com/ShiftLeftSecurity/proto/cpg", "io.shiftleft.proto.cpg",
++      Map("Languages" -> "LANGUAGES", "ControlStructureTypes" -> "CONTROL_STRUCTURE_TYPES", "Frameworks" -> "FRAMEWORKS")))
++    new CpgSchema(protoBuilder)
++    val result = ujson.Obj("formatVersion" -> 1, "domainSchema" -> schema(CpgSchema.instance),
++                          "protobufSchema" -> schema(protoBuilder.build))
++    Files.writeString(Paths.get(args(0)), ujson.write(result, indent = 2) + "\n")
++  }
++}

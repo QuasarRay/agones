@@ -1,0 +1,178 @@
+name: Rust AST Generator Release
+
+on:
+  push:
+    tags:
+      - 'rust-astgen/v*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: rust-astgen
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    outputs:
+      release_tag: ${{ steps.set-tag.outputs.release_tag }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: '0'
+
+      - name: Discover latest tag (manual run)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          LATEST_TAG=$(git tag --list 'rust-astgen/v*' --sort=-v:refname | head -n 1)
+          echo "RELEASE_TAG=$LATEST_TAG" >> $GITHUB_ENV
+          echo "Using latest tag: $LATEST_TAG"
+
+      - name: Set tag from push event
+        if: github.event_name == 'push'
+        run: |
+          echo "RELEASE_TAG=${{ github.ref_name }}" >> $GITHUB_ENV
+
+      - name: Set tag output
+        id: set-tag
+        run: echo "release_tag=${{ env.RELEASE_TAG }}" >> $GITHUB_OUTPUT
+
+      - name: Extract version from tag
+        run: |
+          TAG_VERSION=${RELEASE_TAG#rust-astgen/v}
+          echo "TAG_VERSION=$TAG_VERSION" >> $GITHUB_ENV
+          echo "Tag version: $TAG_VERSION"
+
+      - name: Verify tag matches Cargo.toml
+        run: |
+          CARGO_VERSION=$(grep '^version = ' Cargo.toml | head -1 | sed 's/version = "\(.*\)"/\1/')
+          echo "Cargo.toml version: $CARGO_VERSION"
+          if [ "$CARGO_VERSION" != "$TAG_VERSION" ]; then
+            echo "Error: Tag version ($TAG_VERSION) does not match Cargo.toml version ($CARGO_VERSION)"
+            exit 1
+          fi
+
+  build:
+    needs: verify
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            asset_name: rust_ast_gen-linux
+            binary_extension: ""
+          - os: ubuntu-24.04-arm
+            asset_name: rust_ast_gen-linux-arm
+            binary_extension: ""
+          - os: macos-15-intel
+            asset_name: rust_ast_gen-macos
+            binary_extension: ""
+          - os: macos-15
+            asset_name: rust_ast_gen-macos-arm
+            binary_extension: ""
+          - os: windows-2025
+            asset_name: rust_ast_gen-win.exe
+            binary_extension: ".exe"
+          - os: windows-11-arm
+            asset_name: rust_ast_gen-win-arm.exe
+            binary_extension: ".exe"
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@7e38f4b43b4db5c8dd498af069a4f6196df1d067 # v1
+        with:
+          toolchain: stable
+
+      - name: Build release binary
+        working-directory: rust-astgen
+        run: cargo build --release --locked -p rust_ast_gen
+
+      - name: Rename release binary
+        shell: bash
+        working-directory: rust-astgen
+        run: |
+          mkdir -p dist
+          cp "target/release/rust_ast_gen${{ matrix.binary_extension }}" "dist/${{ matrix.asset_name }}"
+
+      - name: Generate RustNodeSyntax.scala
+        if: matrix.os == 'ubuntu-24.04'
+        working-directory: rust-astgen
+        run: cargo run --release --locked -p scala_bindings_gen -- --output dist/RustNodeSyntax.scala
+
+      - name: Upload release binary
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: asset-${{ matrix.asset_name }}
+          path: rust-astgen/dist/${{ matrix.asset_name }}
+          if-no-files-found: error
+
+      - name: Upload RustNodeSyntax.scala
+        if: matrix.os == 'ubuntu-24.04'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: asset-RustNodeSyntax.scala
+          path: rust-astgen/dist/RustNodeSyntax.scala
+          if-no-files-found: error
+
+  checksums:
+    needs:
+      - verify
+      - build
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - name: Download release artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          path: release-artifacts
+          pattern: asset-*
+          merge-multiple: true
+
+      - name: Generate checksums
+        run: |
+          cd release-artifacts
+          sha256sum * 2>/dev/null | grep -v "Is a directory" > SHA256SUMS || true
+          sha512sum * 2>/dev/null | grep -v "Is a directory" > SHA512SUMS || true
+          mkdir -p checksums
+          mv SHA256SUMS SHA512SUMS checksums/
+
+      - name: Upload checksum files
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: asset-checksums
+          path: release-artifacts/checksums/
+
+  release:
+    needs:
+      - verify
+      - build
+      - checksums
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: .
+    concurrency: rust-astgen-release
+    permissions:
+      contents: write
+    steps:
+      - name: Download release artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          path: release-artifacts
+          pattern: asset-*
+          merge-multiple: true
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
+        with:
+          draft: true
+          tag_name: ${{ needs.verify.outputs.release_tag }}
+          files: release-artifacts/*

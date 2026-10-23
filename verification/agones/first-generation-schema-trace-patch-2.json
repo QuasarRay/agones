@@ -1,0 +1,39 @@
+{
+  "flatgraph_revision": "61aa9de52231f95f9730b3a5aa7a3fb0d23fd128",
+  "flatgraph_vendor_manifest_sha256": "1e231c4ac0130467974597c2231e237423dc0d2d3caa67b7f115e9642d5f4ade",
+  "native_runtime_scala_dependency": false,
+  "patch_file": "build/scripts/agones-first-generation/schema-construction-trace-v2.patch",
+  "patch_sha256": "4ba3d85dbf69258f9b825ae32f3d8033da1157c71b3c9a455cb45f21d8ad441c",
+  "pristine_upstream_modified": false,
+  "reason": "Observe all fixed CPG schema constructor mutations in order with original source frames, then compile them to native Rust calls.",
+  "repair": "Use a non-keyword Scala helper name and explicit ujson string values. Original failed receipt/log/patch are preserved.",
+  "schema_version": 1,
+  "source_patches": [
+    {
+      "added_cpg_build_source": ".git/agones-first-generation-sources/cpg/schema/src/main/scala/flatgraph/schema/Schema.scala",
+      "flatgraph_pristine_sha256": "ffcbf5c3e91a986301feacdda61b8624018d9a035c45984df306638d9840d470",
+      "license": "Apache-2.0; original Flatgraph license retained in its vendor tree.",
+      "result_sha256": "cd373c6d5efefa82ca135fc96c9fb8d68810e9cf1d10c3a498a4dda3b7a6f240"
+    },
+    {
+      "added_cpg_build_source": ".git/agones-first-generation-sources/cpg/schema/src/main/scala/flatgraph/schema/SchemaBuilder.scala",
+      "flatgraph_pristine_sha256": "9f59f3e86b7dcb0c8807c709673853fd3bce370eb2e29055089851599c7729c1",
+      "license": "Apache-2.0; original Flatgraph license retained in its vendor tree.",
+      "result_sha256": "bd00dbfbbfe0800e00b49af30bd10ad3c8550b3d525c2b7990607dda5a8c40cc"
+    },
+    {
+      "added_cpg_build_source": ".git/agones-first-generation-sources/cpg/schema/src/main/scala/flatgraph/schema/SchemaConstructionTrace.scala",
+      "flatgraph_pristine_sha256": null,
+      "license": "Apache-2.0; original Flatgraph license retained in its vendor tree.",
+      "result_sha256": "4832eac443cf18a8af12865fb19a3e98529c2ff7716b8a573762a30d237bd35e"
+    },
+    {
+      "added_cpg_build_source": ".git/agones-first-generation-sources/cpg/schema/src/main/scala/CaptureSchemaConstruction.scala",
+      "flatgraph_pristine_sha256": null,
+      "license": "Apache-2.0; original Flatgraph license retained in its vendor tree.",
+      "result_sha256": "d350daa0086dd08a7c1b3b68328ed9a13befe59e16eb9caac053596b600ce48c"
+    }
+  ],
+  "status": "PREPARED",
+  "supersedes": "verification/agones/first-generation-schema-trace-patch.json"
+}

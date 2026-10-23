@@ -1,0 +1,73 @@
+{
+  "archive_provenance": {
+    "receipt": "verification/agones/first-generation-comprende-archive-acquisition.json",
+    "receipt_sha256": "ccf67a8aa4187fb150f5ead1eba34bd23f12cc30048ed6c87fab03f227499c17",
+    "transport": "GITHUB_TARBALL_API",
+    "validation": "All archived paths, modes and content must match the pinned Git tree."
+  },
+  "archive_sha256": "48b7106da77bb74d814efc67e531fabfde9bc4619782d099a5d89974b4b14ae2",
+  "archive_url": "https://codeload.github.com/QuasarRay/comprende/tar.gz/ef5066819c56e4f6390044e935b4912212871e58",
+  "commit": "ef5066819c56e4f6390044e935b4912212871e58",
+  "destination": "third_party/first-generation/comprende",
+  "finished_at": "2026-10-23T09:23:19.046062+00:00",
+  "guidance_overlays": [
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "cba5f84e2f414390cc975a1765fc0f4f0f0767068a50d2dfaf2e84af5db0394a"
+    },
+    {
+      "classification": "OWNED_GUIDANCE_OVERLAY",
+      "path": "src/AGENTS.MD",
+      "reason": "User requires AGENTS.MD in every project directory.",
+      "sha256": "5480be4a9063ca60c34c724ebc56ab4c8e17cb02d18ebd21fde4710c416b9b05"
+    }
+  ],
+  "license_files": [
+    "LICENSE.txt"
+  ],
+  "name": "comprende",
+  "patches": [],
+  "pristine_identity": "Recorded Git commit/tree and every upstream blob are unchanged; separately inventoried guidance additions are not presented as upstream source.",
+  "repository": "https://github.com/QuasarRay/comprende",
+  "schema_version": 1,
+  "started_at": "2026-10-23T09:23:19.040402+00:00",
+  "status": "VENDORED",
+  "tree": "4add225b9b5d77860ce67b88b7d09b30b7dd1b2e",
+  "upstream_bytes": 14462,
+  "upstream_content_manifest_sha256": "6caf0c09fa211a554f0c93d44e924c7e288db2ecd50a5852df1bd2be2919d5c4",
+  "upstream_file_count": 5,
+  "upstream_files": {
+    ".gitignore": {
+      "bytes": 32,
+      "git_blob": "09f23e24dafd1d4a0f610b6c2f06a13077221af9",
+      "mode": "100644",
+      "sha256": "3d00bfe4568e2ec738748f284c69a621978903c82e563229c49ed8241b830988"
+    },
+    "Cargo.toml": {
+      "bytes": 291,
+      "git_blob": "0600259cfa9b8900f201833dc40e805142bc0a70",
+      "mode": "100644",
+      "sha256": "01f7068b9cd9ec5b27b7df77709117e37dc991cd32597dbf24cbde9074f5ceab"
+    },
+    "LICENSE.txt": {
+      "bytes": 1069,
+      "git_blob": "041d2e317d428c28c6aeee01452f10586a74107c",
+      "mode": "100644",
+      "sha256": "dd2d841ac2bb999c1b9f0e6ecb0298c559939fd2931f5fe16229f91a6fa32591"
+    },
+    "README.md": {
+      "bytes": 2113,
+      "git_blob": "815908c134762a034d891d786baa463f473ff1cd",
+      "mode": "100644",
+      "sha256": "248e63e8f748efe78442c56907225e1795d85dfc1fdbaa942aeaf27e06bbf6c4"
+    },
+    "src/lib.rs": {
+      "bytes": 10957,
+      "git_blob": "00cf9ead0179d5e6f86a04e2ce20fa9fd65c5103",
+      "mode": "100644",
+      "sha256": "e8d8da04ca3048bdd7275b1ca77b5a78c4abfd999ecb763d82a615f4aeb0fb96"
+    }
+  }
+}

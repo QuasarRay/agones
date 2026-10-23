@@ -1,3 +1,5 @@
+Active standalone objective: [first complete CPG generation](AGONES_CPG_FIRST_GENERATION_GOAL_PROMPT.md), tracked in [its compact checkpoint](verification/agones/first-generation-checkpoint.json). The prior migration handoff below is preserved historical context; its verification/delivery loop is deferred by the current user objective.
+
 # Agones-rs handoff
 
 Generated from AGONES_RS_STATE.json revision 320.

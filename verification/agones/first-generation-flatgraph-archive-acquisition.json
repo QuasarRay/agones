@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "source_commit": "61aa9de52231f95f9730b3a5aa7a3fb0d23fd128",
+  "tree": "0655429cb2b1bf9c396fda64293a54414ecbbf63",
+  "status": "ARCHIVE_RETAINED_UNVALIDATED",
+  "transport": "GITHUB_TARBALL_API",
+  "prior_git_checkout": "Timed out after55seconds without publishing a checkout",
+  "archive": "/home/astral/Projects/agones/.git/agones-first-generation-sources/flatgraph-61aa9de52231f95f9730b3a5aa7a3fb0d23fd128.tar.gz",
+  "started_at": "2026-10-23T08:45:41.919543+00:00",
+  "command": [
+    "curl",
+    "--fail",
+    "--location",
+    "--connect-timeout",
+    "10",
+    "--max-time",
+    "40",
+    "--silent",
+    "--show-error",
+    "--output",
+    "/home/astral/Projects/agones/.git/agones-first-generation-sources/flatgraph-61aa9de52231f95f9730b3a5aa7a3fb0d23fd128.tar.gz.download",
+    "https://api.github.com/repos/joernio/flatgraph/tarball/61aa9de52231f95f9730b3a5aa7a3fb0d23fd128"
+  ],
+  "pid": 42338,
+  "process_identity": "42338 (curl) R 42337 42336 42336 0 -1 4194304 8 0 0 0 0 0 0 0 12 -8 1 0 1273574 688128 0 18446744073709551615 94715646095360 94715646227609 140720316341200 0 0 0 0 0 0 0 0 0 17 3 0 0 0 0 0 94715646285232 94715646304416 94716079030272 140720316345715 140720316346033 140720316346033 140720316350442 0\n",
+  "exit_code": 0,
+  "finished_at": "2026-10-23T08:45:44.445246+00:00",
+  "sha256": "ad0a056e6b1a298a5fa15a35e635e215b32510547d85d0f6df74bc9a59457400"
+}

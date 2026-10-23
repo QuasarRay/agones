@@ -1,0 +1,51 @@
+[package]
+name = "cpg-rs"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.98.1"
+license = "Apache-2.0"
+repository = "https://github.com/QuasarRay/agones"
+
+[workspace]
+members = ["."]
+resolver = "2"
+
+[features]
+default = ["generated-domain", "native-schema"]
+generated-domain = []
+native-schema = []
+source-inventory = ["dep:tree-sitter", "dep:tree-sitter-scala", "dep:tree-sitter-java"]
+
+[dependencies]
+cgp = "=0.8.0-alpha"
+derive-deftly = "=1.14.0"
+comprende = { path = "../third_party/first-generation/comprende" }
+better_comprehension = { path = "../third_party/first-generation/better-comprehension" }
+genco = { path = "../third_party/first-generation/genco" }
+serde = { version = "=1.0.229", features = ["derive"] }
+serde_json = { version = "=1.0.154", features = ["arbitrary_precision"] }
+sha2 = "=0.11.1"
+rayon = "=1.12.0"
+tempfile = "=3.27.0"
+tracing = "=0.1.44"
+tree-sitter = { version = "=0.27.1", optional = true }
+tree-sitter-scala = { version = "=0.26.3", optional = true }
+tree-sitter-java = { version = "=0.23.5", optional = true }
+
+[[bin]]
+name = "cpg-source-inventory"
+path = "src/bin/source_inventory.rs"
+required-features = ["source-inventory"]
+
+[[bin]]
+name = "cpg-domain"
+path = "src/bin/domain.rs"
+
+[[bin]]
+name = "cpg-schema-constructors"
+path = "src/bin/construction.rs"
+
+[[bin]]
+name = "cpg-schema"
+path = "src/bin/schema.rs"
+required-features = ["native-schema"]

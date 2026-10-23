@@ -1,0 +1,33 @@
+{
+  "name": "@joernio/astgen",
+  "version": "3.50.1",
+  "description": "Generate JavaScript/TypeScript AST in JSON format with Babel. CLI-only — invoke via the `astgen` binary; programmatic imports are not supported.",
+  "keywords": [
+    "AST",
+    "Static Analysis"
+  ],
+  "bin": {
+    "astgen": "./src/astgen.ts"
+  },
+  "repository": "https://github.com/joernio/astgen",
+  "author": "Max Leuthaeuser",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@babel/parser": "^7.29.3",
+    "readdirp": "^5.0.0",
+    "typescript": "^6.0.3",
+    "yargs": "^17.7.2"
+  },
+  "scripts": {
+    "test": "bun test --parallel",
+    "typecheck": "tsc --noEmit",
+    "sync-version": "bun scripts/sync-version.ts",
+    "prebinary": "bun scripts/sync-version.ts",
+    "binary": "bun run scripts/build-binaries.ts",
+    "regression": "astgen-regression local"
+  },
+  "devDependencies": {
+    "@types/yargs": "^17.0.33",
+    "bun-types": "latest"
+  }
+}

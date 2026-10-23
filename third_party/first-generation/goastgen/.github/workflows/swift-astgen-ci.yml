@@ -1,0 +1,94 @@
+name: Swift AST Generator CI
+
+on:
+  workflow_call:  # Called by monorepo-ci.yml
+  workflow_dispatch:  # Manual runs for testing
+
+defaults:
+  run:
+    working-directory: swift-astgen
+
+jobs:
+  swift-ci:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: '0'
+
+      - name: Install sbt
+        uses: sbt/setup-sbt@6158cb0903b8ceeae04f830055f3155e1b6a5ad7 # v1.5.11
+
+      - name: Install Swift (macos-latest)
+        if: matrix.os == 'macos-latest'
+        uses: SwiftyLab/setup-swift@9014d4136569075c696d4151c7810ecde8712907 # v1.14.1
+        with:
+          swift-version: "6.3"
+
+      - name: Install Swift
+        if: matrix.os != 'macos-latest'
+        uses: SwiftyLab/setup-swift@9014d4136569075c696d4151c7810ecde8712907 # v1.14.1
+        with:
+          swift-version: "6.1"
+
+      - name: Install swift-format (macos-latest)
+        if: matrix.os == 'macos-latest'
+        run: command -v swift-format &>/dev/null || brew install swift-format
+
+      - name: Run swift-format lint
+        if: matrix.os == 'macos-latest'
+        run: |
+          swift-format lint --strict --recursive \
+            Sources/SwiftAstGen \
+            Sources/SwiftAstGenLib \
+            Tests/SwiftAstGenTests
+
+      - name: Run Linux Build
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          swift sdk install https://download.swift.org/swift-6.1-release/static-sdk/swift-6.1-RELEASE/swift-6.1-RELEASE_static-linux-0.0.1.artifactbundle.tar.gz --checksum 111c6f7d280a651208b8c74c0521dd99365d785c1976a6e23162f55f65379ac6
+          swift build --swift-sdk x86_64-swift-linux-musl
+          mv ./.build/debug/SwiftAstGen SwiftAstGen-linux
+          swift build --swift-sdk aarch64-swift-linux-musl
+          mv ./.build/debug/SwiftAstGen SwiftAstGen-linux-arm64
+          ./SwiftAstGen-linux -s
+
+      - name: Run Mac Build
+        if: matrix.os == 'macos-latest'
+        run: |
+          swift build
+          mv ./.build/debug/SwiftAstGen SwiftAstGen-mac
+          ./SwiftAstGen-mac -s
+
+      - name: Run Windows Build
+        if: matrix.os == 'windows-latest'
+        run: |
+          swift build
+          mv .\.build\debug\SwiftAstGen.exe SwiftAstGen-win.exe
+          .\SwiftAstGen-win.exe -s
+
+      - name: Run Swift Tests
+        run: swift test
+
+      - name: Set up JDK
+        if: matrix.os != 'windows-latest'
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: sbt
+          cache-dependency-path: |
+            swift-astgen/Tests/ScalaSwiftNodeSyntaxTests/build.sbt
+            swift-astgen/Tests/ScalaSwiftNodeSyntaxTests/project/build.properties
+
+      - name: Copy SwiftNodeSyntax.scala to sbt source tree
+        shell: bash
+        run: cp SwiftNodeSyntax.scala Tests/ScalaSwiftNodeSyntaxTests/src/main/scala/SwiftNodeSyntax.scala
+
+      - name: Run Scala Tests
+        run: sbt test
+        working-directory: swift-astgen/Tests/ScalaSwiftNodeSyntaxTests

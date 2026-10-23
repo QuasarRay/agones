@@ -1,0 +1,39 @@
+{
+  "command": [
+    "/home/astral/.local/share/agones-rs/tools/temurin-jdk-21.0.13-9-install/jdk-21.0.13+9/bin/java",
+    "-Xmx3g",
+    "-XX:ActiveProcessorCount=4",
+    "-Dsbt.supershell=false",
+    "-Dsbt.log.noformat=true",
+    "-Dsbt.override.build.repos=true",
+    "-Dsbt.repository.config=/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/repositories",
+    "-Dsbt.boot.directory=/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/boot",
+    "-Dsbt.global.base=/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/global",
+    "-Dsbt.ivy.home=/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/ivy",
+    "-jar",
+    "/home/astral/.local/share/agones-rs/tools/sbt-launch-1.12.5.jar",
+    "set schema/libraryDependencies += \"com.lihaoyi\" %% \"ujson\" % \"4.4.3\"",
+    "schema/Compile/runMain CaptureSchemaConstruction /home/astral/Projects/agones/verification/agones/first-generation-schema-construction-trace.json /home/astral/Projects/agones/.git/agones-first-generation-cpg-build/trace-protos",
+    "show schema/Compile/fullClasspath"
+  ],
+  "exit_code": 1,
+  "finished_at": "2026-10-23T10:32:51.028212+00:00",
+  "flatgraph_revision": "61aa9de52231f95f9730b3a5aa7a3fb0d23fd128",
+  "log": ".git/agones-first-generation-cpg-build/schema-construction-trace.log",
+  "log_sha256": "b3c074546701edf1dc4665ec32666ff4561bc59fdeb2ba1f3368c9193c2be1dc",
+  "original_export_helper_sha256": "c5fd5a15cb70e9d9311e7395fe465f35be9edee668a37eabc5757511390ca441",
+  "output": "verification/agones/first-generation-schema-construction-trace.json",
+  "patch_receipt": "verification/agones/first-generation-schema-trace-patch.json",
+  "patch_receipt_sha256": "3e278e425a75a490b6c6867350c64e65882bf782e1c44405b15390852b39e9d6",
+  "pid": 61353,
+  "process_identity": "61353 (java) R 61352 61351 61351 0 -1 4194304 23 0 0 0 0 0 0 0 12 -8 1 0 1915456 684032 65 18446744073709551615 94071184252928 94071184256712 140730946753232 0 0 0 0 0 0 0 0 0 17 2 0 0 0 0 0 94071184264448 94071184265232 94071854477312 140730946758872 140730946759858 140730946759858 140730946764697 0\n",
+  "schema_version": 1,
+  "source_commit": "301c4010d28ecdac05bc2ed44310f56446459465",
+  "started_at": "2026-10-23T10:32:40.735524+00:00",
+  "status": "FAILED",
+  "tool_receipts": {
+    "verification/agones/first-generation-git-lfs-acquisition.json": "49fbc45d642c343d3fe9e9e95d629875ced97587a2fdbd9c4a5af06582fa9413",
+    "verification/agones/first-generation-jdk-acquisition.json": "9bd89755662df0e0df48bf36d447118912859d26131bda6747b15b1691d43aaa",
+    "verification/agones/first-generation-sbt-pins.json": "4db59ab6bdb4fe49ad3ed2c55ef810c08c546a6698df8d877e702778d7e9b958"
+  }
+}

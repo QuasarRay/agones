@@ -1,0 +1,35 @@
+name: Release
+on:
+  workflow_dispatch:  # manually trigger this workflow
+jobs:
+  release:
+    concurrency: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: sbt
+      - uses: sbt/setup-sbt@v1
+      - name: apt-get update
+        run: sudo apt-get update
+      - name: Install gnupg
+        run: sudo apt update && sudo apt install -y gnupg
+      - name: Import GPG key
+        run: echo $PGP_SECRET | base64 --decode | gpg --batch --import
+        env:
+          PGP_SECRET: ${{ secrets.PGP_SECRET }}
+      - name: Build, test and tag
+        run: sbt -v clean test ciReleaseTagNextVersion
+      - name: Deploy to sonatype and release to maven central
+        run: sbt -v ciReleaseSonatype
+        env:
+          PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
+          PGP_SECRET: ${{ secrets.PGP_SECRET }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}

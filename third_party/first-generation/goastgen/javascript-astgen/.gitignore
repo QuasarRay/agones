@@ -1,0 +1,73 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Diagnostic reports
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage
+coverage
+*.lcov
+.nyc_output
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# dotenv
+.env
+.env.test
+
+# Build output
+dist
+build/
+
+# Staged TS lib assets used by scripts/build-binaries.ts
+.tslib-assets/
+
+# Compiled binaries (pre-rename)
+astgen-linux-x64
+astgen-linux-arm64
+astgen-macos-x64
+astgen-macos-arm64
+astgen-win-x64.exe
+astgen-win-arm64.exe
+
+# Compiled binaries (post-rename)
+astgen-linux
+astgen-linux-arm
+astgen-macos
+astgen-macos-arm
+astgen-win.exe
+astgen-win-arm.exe
+
+# gzexe backup files
+astgen-linux~
+astgen-linux-arm~
+
+# Debug / local test builds
+astgen-debug*
+
+# Git worktrees
+.worktrees/
+
+# Misc
+.tool-versions
+.idea/
+test/obj

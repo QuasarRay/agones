@@ -1,0 +1,218 @@
+//! Where we finally build `typeFullName` for each (relevant) SyntaxNode.
+
+use super::{
+    rust_name_formatter::{
+        format_enum_variant_full_name, format_generic_module_def_full_name, format_impl_full_name,
+        format_item_name, format_module_def_full_name, format_name_with_generic_args,
+        format_type_alias_full_name,
+    },
+    type_formatter,
+};
+use ra_ap_hir::{Module, ModuleDef, PathResolution, Semantics, Type, TypeAlias};
+use ra_ap_ide_db::RootDatabase;
+use ra_ap_syntax::{AstNode, SyntaxNode, ast, ast::HasGenericArgs};
+
+pub fn for_enum(enum_: &ast::Enum, semantics: &Semantics<RootDatabase>) -> Option<String> {
+    let enum_def = semantics.to_def(enum_)?;
+    format_generic_module_def_full_name(enum_def, semantics)
+}
+
+pub fn for_struct(struct_: &ast::Struct, semantics: &Semantics<RootDatabase>) -> Option<String> {
+    let struct_def = semantics.to_def(struct_)?;
+    format_generic_module_def_full_name(struct_def, semantics)
+}
+
+pub fn for_impl(impl_: &ast::Impl, semantics: &Semantics<RootDatabase>) -> Option<String> {
+    format_impl_full_name(semantics.to_def(impl_)?, semantics)
+}
+
+pub fn for_expr(expr: &ast::Expr, semantics: &Semantics<RootDatabase>) -> Option<String> {
+    let typ = semantics.type_of_expr(expr)?.original();
+    format_node_type_full_name(typ, expr.syntax(), semantics)
+}
+
+pub fn for_ident_pat(
+    ident_pat: &ast::IdentPat,
+    semantics: &Semantics<RootDatabase>,
+) -> Option<String> {
+    let typ = semantics.type_of_binding_in_pat(ident_pat)?;
+    format_node_type_full_name(typ, ident_pat.syntax(), semantics)
+}
+
+pub fn for_self_param(
+    self_param: &ast::SelfParam,
+    semantics: &Semantics<RootDatabase>,
+) -> Option<String> {
+    let typ = semantics.type_of_self(self_param)?;
+    format_node_type_full_name(typ, self_param.syntax(), semantics)
+}
+
+pub fn for_name_ref(
+    name_ref: &ast::NameRef,
+    semantics: &Semantics<RootDatabase>,
+) -> Option<String> {
+    let path = path_for_name_ref(name_ref)?;
+    if let Some(path_expr) = terminal_path_expr(&path) {
+        // if it's the rightmost (whole/terminal expression), resolve the type
+        for_expr(&ast::Expr::PathExpr(path_expr), semantics)
+    } else {
+        // otherwise, resolve the path instead.
+        let resolution = semantics.resolve_path(&path)?;
+        format_path_resolution_type_full_name(resolution, &path, semantics)
+    }
+}
+
+fn path_for_name_ref(name_ref: &ast::NameRef) -> Option<ast::Path> {
+    let path_segment = name_ref
+        .syntax()
+        .parent()
+        .and_then(ast::PathSegment::cast)?;
+    path_segment.syntax().parent().and_then(ast::Path::cast)
+}
+
+fn terminal_path_expr(path: &ast::Path) -> Option<ast::PathExpr> {
+    path.syntax().parent().and_then(ast::PathExpr::cast)
+}
+
+pub(super) fn format_path_resolution_type_full_name(
+    resolution: PathResolution,
+    path: &ast::Path,
+    semantics: &Semantics<RootDatabase>,
+) -> Option<String> {
+    let module = semantics.scope(path.syntax())?.module();
+    match resolution {
+        PathResolution::Def(ModuleDef::Adt(adt)) => {
+            format_module_def_type_full_name(ModuleDef::from(adt), path, module, semantics)
+        }
+        PathResolution::Def(ModuleDef::EnumVariant(enum_variant)) => {
+            format_enum_variant_full_name(enum_variant, semantics)
+        }
+        PathResolution::Def(ModuleDef::TypeAlias(type_alias)) => {
+            format_type_alias_type_full_name(type_alias, path, module, semantics)
+        }
+        PathResolution::Def(ModuleDef::Trait(trait_)) => {
+            format_module_def_type_full_name(ModuleDef::from(trait_), path, module, semantics)
+        }
+        PathResolution::Def(ModuleDef::BuiltinType(builtin)) => {
+            type_formatter::format_type(&builtin.ty(semantics.db), module, semantics)
+        }
+        PathResolution::TypeParam(type_param) => {
+            type_formatter::format_type(&type_param.ty(semantics.db), module, semantics)
+        }
+        PathResolution::SelfType(impl_) => {
+            type_formatter::format_impl_self_ty(impl_, module, semantics)
+        }
+        _ => None,
+    }
+}
+
+fn format_type_alias_type_full_name(
+    type_alias: TypeAlias,
+    path: &ast::Path,
+    module: Module,
+    semantics: &Semantics<RootDatabase>,
+) -> Option<String> {
+    if let Some(normalized) = rust_analyzer_ext::normalize_assoc_type(path, type_alias, semantics) {
+        return type_formatter::format_type(&normalized, module, semantics);
+    }
+    let base = format_type_alias_full_name(type_alias, semantics)?;
+    let generic_args = generic_args_for_path(path, module, semantics);
+    Some(format_name_with_generic_args(base, generic_args))
+}
+
+fn format_module_def_type_full_name(
+    def: ModuleDef,
+    path: &ast::Path,
+    module: Module,
+    semantics: &Semantics<RootDatabase>,
+) -> Option<String> {
+    let base = format_module_def_full_name(def, semantics)?;
+    let generic_args = generic_args_for_path(path, module, semantics);
+    Some(format_name_with_generic_args(base, generic_args))
+}
+
+fn generic_args_for_path(
+    path: &ast::Path,
+    module: Module,
+    semantics: &Semantics<RootDatabase>,
+) -> Vec<String> {
+    let Some(arg_list) = path
+        .segment()
+        .and_then(|segment| segment.generic_arg_list())
+    else {
+        return Vec::new();
+    };
+    arg_list
+        .generic_args()
+        .map(|arg| format_generic_arg(&arg, module, semantics))
+        .collect()
+}
+
+fn format_generic_arg(
+    arg: &ast::GenericArg,
+    module: Module,
+    semantics: &Semantics<RootDatabase>,
+) -> String {
+    match arg {
+        ast::GenericArg::TypeArg(type_arg) => type_arg
+            .ty()
+            .and_then(|ty| resolve_type_full_name(&ty, module, semantics))
+            .unwrap_or_else(|| type_arg.to_string()),
+        ast::GenericArg::AssocTypeArg(assoc_type_arg) => {
+            format_assoc_type_arg(assoc_type_arg, module, semantics)
+                .unwrap_or_else(|| assoc_type_arg.to_string())
+        }
+        ast::GenericArg::LifetimeArg(lifetime_arg) => lifetime_arg.to_string(),
+        ast::GenericArg::ConstArg(const_arg) => const_arg.to_string(),
+    }
+}
+
+fn format_assoc_type_arg(
+    assoc_type_arg: &ast::AssocTypeArg,
+    module: Module,
+    semantics: &Semantics<RootDatabase>,
+) -> Option<String> {
+    let name = assoc_type_arg.name_ref()?;
+    let typ = resolve_type_full_name(&assoc_type_arg.ty()?, module, semantics)?;
+    Some(format!("{name} = {typ}"))
+}
+
+fn resolve_type_full_name(
+    ty: &ast::Type,
+    module: Module,
+    semantics: &Semantics<RootDatabase>,
+) -> Option<String> {
+    if let Some(resolved) = semantics.resolve_type(ty)
+        && let Some(formatted) = type_formatter::format_type(&resolved, module, semantics)
+    {
+        return Some(formatted);
+    }
+    resolve_const_param_name(ty, module, semantics)
+}
+
+fn resolve_const_param_name(
+    ty: &ast::Type,
+    module: Module,
+    semantics: &Semantics<RootDatabase>,
+) -> Option<String> {
+    let ast::Type::PathType(path_type) = ty else {
+        return None;
+    };
+    match semantics.resolve_path(&path_type.path()?)? {
+        PathResolution::ConstParam(const_param) => Some(format_item_name(
+            const_param.name(semantics.db),
+            module,
+            semantics,
+        )),
+        _ => None,
+    }
+}
+
+fn format_node_type_full_name(
+    typ: Type,
+    node: &SyntaxNode,
+    semantics: &Semantics<RootDatabase>,
+) -> Option<String> {
+    let module = semantics.scope(node)?.module();
+    type_formatter::format_type(&typ, module, semantics)
+}

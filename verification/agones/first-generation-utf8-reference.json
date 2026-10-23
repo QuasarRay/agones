@@ -1,0 +1,26 @@
+{
+  "cases": 74994,
+  "input_file": "verification/agones/first-generation-utf8-inputs.bin",
+  "input_sha256": "52632b76ddb9f02b4507ddc10f3168808da064318917f0535bcaf0ea5357c2a3",
+  "java_binary_sha256": "9cad3f2620d3ef2ed10b26f922af7e773d54fdaa05f615d6d6df014f3fec4155",
+  "java_command": [
+    "/home/astral/.local/share/agones-rs/tools/temurin-jdk-21.0.13-9-install/jdk-21.0.13+9/bin/java",
+    "-cp",
+    "/home/astral/Projects/agones/.git/agones-first-generation-utility-probe",
+    "UtilityUtf8Reference",
+    "/home/astral/Projects/agones/verification/agones/first-generation-utf8-inputs.bin"
+  ],
+  "javac_command": [
+    "/home/astral/.local/share/agones-rs/tools/temurin-jdk-21.0.13-9-install/jdk-21.0.13+9/bin/javac",
+    "-d",
+    "/home/astral/Projects/agones/.git/agones-first-generation-utility-probe",
+    "/home/astral/Projects/agones/build/scripts/agones-first-generation/UtilityUtf8Reference.java"
+  ],
+  "jdk_release_sha256": "f83f6dcc966043c93cd498ac8e7ee7c310852074970d62c702e4ad2710002898",
+  "probe_source": "build/scripts/agones-first-generation/UtilityUtf8Reference.java",
+  "probe_source_sha256": "142f525fa4a688414cc005aef07cf93d2a4f2384342b766c956c72fe6124b13c",
+  "purpose": "Focused native CPG utility comparison; no generated Agones output",
+  "schema_version": 1,
+  "script_sha256": "ab6895777980a7ed8af7560484fa59289b9e31dbbefde82a059ccba18917f71b",
+  "utf16_output_sha256": "c7007da7c52948ab65e9b5a3f8ef46c9333e76e708ce00ed28c67911002fed07"
+}

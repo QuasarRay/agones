@@ -1,0 +1,249 @@
+name: Ruby AST Generator Release
+
+on:
+  push:
+    tags:
+      - 'ruby-astgen/v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+defaults:
+  run:
+    working-directory: ruby-astgen
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    outputs:
+      release_tag: ${{ steps.set-release-tag.outputs.release_tag }}
+      new_tag: ${{ steps.set-new-tag.outputs.new_tag }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: '0'
+
+      - name: Discover latest tag (manual run)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          LATEST_TAG=$(git tag --list 'ruby-astgen/v*' --sort=-v:refname | head -n 1)
+          echo "RELEASE_TAG=$LATEST_TAG" >> $GITHUB_ENV
+          echo "Using latest tag: $LATEST_TAG"
+        working-directory: .
+
+      - name: Set tag from push event
+        if: github.event_name == 'push'
+        run: |
+          echo "RELEASE_TAG=${{ github.ref_name }}" >> $GITHUB_ENV
+        working-directory: .
+
+      - name: Set release tag output
+        id: set-release-tag
+        run: echo "release_tag=${{ env.RELEASE_TAG }}" >> $GITHUB_OUTPUT
+
+      - name: Extract version from tag
+        run: |
+          TAG_VERSION=${RELEASE_TAG#ruby-astgen/v}
+          echo "TAG_VERSION=$TAG_VERSION" >> $GITHUB_ENV
+          echo "NEW_TAG=v$TAG_VERSION" >> $GITHUB_ENV
+          echo "The tag version is: v$TAG_VERSION"
+
+      - name: Verify tag matches version.rb
+        run: |
+          GEM_VERSION=$(grep 'VERSION = ' lib/ruby_ast_gen/version.rb | sed 's/.*VERSION = "\(.*\)"/\1/')
+          echo "version.rb version: $GEM_VERSION"
+          if [ "$GEM_VERSION" != "$TAG_VERSION" ]; then
+            echo "Error: Tag version ($TAG_VERSION) does not match version.rb ($GEM_VERSION)"
+            exit 1
+          fi
+
+      - name: Set new tag output
+        id: set-new-tag
+        run: echo "new_tag=${{ env.NEW_TAG }}" >> $GITHUB_OUTPUT
+
+  build:
+    needs: verify
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            asset_name: ruby_ast_gen-linux
+          - os: ubuntu-24.04-arm
+            asset_name: ruby_ast_gen-linux-arm
+          - os: macos-15-intel
+            asset_name: ruby_ast_gen-macos
+          - os: macos-15
+            asset_name: ruby_ast_gen-macos-arm
+          - os: windows-2025
+            asset_name: ruby_ast_gen-win
+          - os: windows-11-arm
+            asset_name: ruby_ast_gen-win-arm
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Update version file
+        shell: bash
+        working-directory: ruby-astgen
+        run: ./update_version.rb ${{ needs.verify.outputs.new_tag }}
+
+      - name: Set up JDK
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Set up JRuby
+        uses: ruby/setup-ruby@14594264cd68ce8a2345dd349bc3d138a4ef85c8 # v1.327.0
+        with:
+          ruby-version: jruby-9.4.15.0
+          bundler-cache: false
+          working-directory: ruby-astgen
+
+      - name: Set up JRuby environment
+        shell: bash
+        working-directory: ruby-astgen
+        run: |
+          RUBY_ABI=$(ruby -e 'print Gem.ruby_api_version')
+          BUNDLE_BASE="${PWD}/vendor/bundle/jruby/${RUBY_ABI}"
+          mkdir -p "${BUNDLE_BASE}"
+          echo "GEM_HOME=${BUNDLE_BASE}" >> "$GITHUB_ENV"
+          echo "GEM_PATH=${BUNDLE_BASE}" >> "$GITHUB_ENV"
+          echo "${BUNDLE_BASE}/bin" >> "$GITHUB_PATH"
+          echo "RUBY_ABI=${RUBY_ABI}" >> "$GITHUB_ENV"
+
+      - name: Install dependencies
+        shell: bash
+        working-directory: ruby-astgen
+        run: |
+          gem install bundler -v 2.5.21 --install-dir ${GEM_HOME}
+          bundle install
+
+      - name: Build prism native library (Windows)
+        if: runner.os == 'Windows'
+        shell: bash
+        working-directory: ruby-astgen
+        run: |
+          PRISM_DIR=$(ls -d vendor/bundle/jruby/${RUBY_ABI}/gems/prism-*)
+          echo "Building libprism.dll in: ${PRISM_DIR}"
+          make -C "${PRISM_DIR}" shared CFLAGS="-O2 -Wno-array-bounds"
+
+      - name: Build release
+        shell: bash
+        working-directory: ruby-astgen
+        run: |
+          find vendor/bundle/jruby/${RUBY_ABI} -mindepth 1 -maxdepth 1 -type \
+            d ! -name "gems" ! -name "bin" ! -name "specifications" ! -name "extensions" \
+            -exec rm -rf {} +
+          zip -r ${{ matrix.asset_name }}_${{ needs.verify.outputs.new_tag }}.zip \
+            lib exe vendor Gemfile ruby_ast_gen.gemspec
+
+      - name: Upload release artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: asset-${{ matrix.asset_name }}.zip
+          path: ruby-astgen/${{ matrix.asset_name }}_*.zip
+          if-no-files-found: error
+
+  smoke-test:
+    needs: [verify, build]
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout: ruby-astgen/spec/integration
+
+      - name: Download linux release artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: asset-ruby_ast_gen-linux.zip
+          path: release-artifact
+
+      - name: Extract release artifact
+        shell: bash
+        run: |
+          cd release-artifact
+          unzip ruby_ast_gen-linux_${{ needs.verify.outputs.new_tag }}.zip -d extracted
+
+      - name: Set up JDK 25 (deliberately different from build-time JDK 21)
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: temurin
+          java-version: "25"
+
+      - name: Set up JRuby
+        uses: ruby/setup-ruby@14594264cd68ce8a2345dd349bc3d138a4ef85c8 # v1.327.0
+        with:
+          ruby-version: jruby-9.4.15.0
+          bundler-cache: false
+
+      - name: Verify prism loads from release artifact under mismatched JDK
+        shell: bash
+        env:
+          EXPECT_PRISM: "true"
+        run: |
+          ARTIFACT_DIR="${PWD}/release-artifact/extracted"
+          RUBY_ABI=$(jruby -e 'print Gem.ruby_api_version')
+          export GEM_HOME="${ARTIFACT_DIR}/vendor/bundle/jruby/${RUBY_ABI}"
+          export GEM_PATH="${GEM_HOME}"
+          jruby -I"${ARTIFACT_DIR}/lib" ruby-astgen/spec/integration/prism_fallback_smoke.rb
+
+  checksums:
+    needs: [verify, build, smoke-test]
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - name: Download release artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          path: release-artifacts
+          pattern: asset-*
+          merge-multiple: true
+
+      - name: Generate checksums
+        run: |
+          cd release-artifacts
+          sha256sum * 2>/dev/null | grep -v "Is a directory" > SHA256SUMS || true
+          sha512sum * 2>/dev/null | grep -v "Is a directory" > SHA512SUMS || true
+          mkdir -p checksums
+          mv SHA256SUMS SHA512SUMS checksums/
+
+      - name: Upload checksum files
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: asset-checksums
+          path: release-artifacts/checksums/
+
+  release:
+    needs: [verify, build, smoke-test, checksums]
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: .
+    concurrency: ruby-astgen-release
+    permissions:
+      contents: write
+    steps:
+      - name: Download release artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          path: release-artifacts
+          pattern: asset-*
+          merge-multiple: true
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
+        with:
+          draft: true
+          tag_name: ${{ needs.verify.outputs.release_tag }}
+          files: release-artifacts/*

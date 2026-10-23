@@ -1,0 +1,34 @@
+[package]
+name = "better_comprehension"
+authors = ["Hegui Dai <natural_selection_@outlook.com>"]
+description = "collection and iterator comprehensions for Rust"
+license = "MIT"
+keywords = [
+    "macro",
+    "procedural",
+    "procedural-macro",
+    "list-comprehension",
+    "comprehension",
+]
+repository = "https://github.com/Natural-selection1/better-comprehension-in-rust"
+readme = "README.md"
+version = "3.0.3"
+edition = "2024"
+exclude = [
+    "src/main.rs",
+    "target",
+    ".vscode",
+    "README-CN.md",
+    "README.md",
+    ".gitignore",
+    ".github",
+]
+
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = { version = "2.0.100", features = ["full", "visit", "extra-traits"] }
+quote = "1.0.40"
+proc-macro2 = "1.0.94"

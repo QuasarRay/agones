@@ -1,0 +1,21 @@
+{
+  "build_settings_override": {
+    "reason": "Bootstrap JSON export dependency; not a runtime Rust schema dependency.",
+    "setting": "schema/libraryDependencies += \"com.lihaoyi\" %% \"ujson\" % \"4.4.3\"",
+    "version_source": "Pinned CPG project/Versions.scala"
+  },
+  "patch_order": [
+    {
+      "added_file": "/home/astral/Projects/agones/.git/agones-first-generation-sources/cpg/schema/src/main/scala/CompleteSchemaExport.scala",
+      "license": "Apache-2.0 (owned repository tooling)",
+      "path": "build/scripts/agones-first-generation/complete-schema-export.patch",
+      "reason": "Build-time full schema observation, retaining hidden metadata, types, defaults, inheritance, edges and protobuf options; no runtime Scala delegation.",
+      "result_sha256": "c5fd5a15cb70e9d9311e7395fe465f35be9edee668a37eabc5757511390ca441",
+      "sha256": "3c0bcf4df71bf0a0b5f2ecad80a19dfbda90b1c2f5c1181740856646a6c68442"
+    }
+  ],
+  "pristine_vendor_unchanged": true,
+  "schema_version": 1,
+  "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+  "upstream_files_changed": []
+}

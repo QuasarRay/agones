@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+NON_INTERACTIVE_OPTION=$1
+DEPENDENCY=$2
+
+# Check if Bash version is 4 or higher
+if (( BASH_VERSINFO[0] < 4 )); then
+  echo "Error: Bash version 4 or higher is required." >&2
+  echo "If you are on a mac, you can switch to a modern bash e.g. with 'brew install bash' and ensure it's in your PATH." >&2
+  # n.b. if it's not in your PATH, you can do so e.g. by defining "export PATH="/opt/homebrew/bin:$PATH" in your ~/.zshrc
+  exit 1
+fi
+
+check_installed() {
+  if ! type "$1" > /dev/null; then
+    echo "Please ensure you have $1 installed."
+    exit 1
+  fi
+}
+
+function sedi() {
+  if sed --version 2> /dev/null | grep -q 'GNU' ; then
+    # GNU sed does not like a second argument for -i
+    sed -i "$@"
+  else
+    # but macOS (FreeBSD) sed needs it
+    sed -i '' "$@"
+  fi
+}
+
+check_installed curl
+
+# check if xmllint is installed
+if type xmllint > /dev/null; then
+  USE_XMLLINT=1 #true
+else
+  echo "warning: xmllint is not installed - will try with 'grep' as a fallback..."
+  USE_XMLLINT=0 #false
+fi
+
+declare -A repos=(
+  [flatgraph]=https://repo1.maven.org/maven2/io/joern/flatgraph-core_3
+)
+
+function latest_version {
+  local NAME=$1
+  local REPO_URL=${repos[$NAME]}
+  local MVN_META_URL=$REPO_URL/maven-metadata.xml
+  local CURL_PARAMS="--silent --show-error $MVN_META_URL"
+
+  if (( $USE_XMLLINT ))
+  then
+    curl $CURL_PARAMS | xmllint --xpath "/metadata/versioning/latest/text()" -
+  else
+    curl $CURL_PARAMS | grep '<latest>' | sed 's/[ ]*<latest>\([0-9.]*\)<\/latest>/\1/'
+  fi
+}
+
+function update {
+  local NAME=$1
+  if [[ -z "${repos[$NAME]}" ]]; then
+    echo "error: no repo url defined for $NAME"
+    exit 1;
+  fi
+
+  local VERSION=$(latest_version $NAME)
+  local SEARCH="val ${NAME}Version\([ ]*\)= .*"
+  local OLD_VERSION=$(grep "$SEARCH" build.sbt | sed 's/.*"\(.*\)"/\1/')
+
+  if [ "$VERSION" == "$OLD_VERSION" ]
+  then
+    echo "$NAME: unchanged ($VERSION)"
+  else
+    local REPLACE="val ${NAME}Version\1= \"$VERSION\""
+
+    if [ "$NON_INTERACTIVE_OPTION" == "--non-interactive" ]
+    then
+      echo "non-interactive mode, auto-updating $NAME: $OLD_VERSION -> $VERSION"
+      sedi "s/$SEARCH/$REPLACE/" build.sbt
+    else
+      echo "update $NAME: $OLD_VERSION -> $VERSION? [Y/n]"
+      read ANSWER
+      if [ -z $ANSWER ] || [ "y" == $ANSWER ] || [ "Y" == $ANSWER ]
+      then
+        sedi "s/$SEARCH/$REPLACE/" build.sbt
+      fi
+    fi
+  fi
+}
+
+if [ "$DEPENDENCY" == "" ]; then
+  update flatgraph
+else
+  DEPENDENCY="${DEPENDENCY#--only=}"
+  update $DEPENDENCY
+fi

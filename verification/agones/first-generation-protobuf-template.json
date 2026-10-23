@@ -1,0 +1,22 @@
+{
+  "category_order_source": "Observed original Protogen.main output, pinned CPG1.7.79/Flatgraph0.1.36/Scala3.9.0",
+  "derivation": "Extract the actual interpolated protoDef literal and apply Scala stripMargin; preserve every fixed message/oneof/tag/reservation.",
+  "extraction_script": "build/scripts/agones-first-generation/prepare_proto_template.py",
+  "extraction_script_sha256": "026470fbaad6ef319cc41fd17200e99e529e4e90f24724f03ff8d05325595a0f",
+  "observed_pinned_category_order": [
+    "ModifierTypes",
+    "Languages",
+    "EvaluationStrategies",
+    "DispatchTypes",
+    "ControlStructureTypes"
+  ],
+  "reference_generator_run": "verification/agones/first-generation-schema-trace-run-2.json",
+  "reference_proto_path": ".git/agones-first-generation-cpg-build/trace-protos/cpg.proto",
+  "reference_proto_retained": "verification/agones/first-generation-cpg-reference.proto",
+  "reference_proto_sha256": "70ca30c8446da9e216f165890dc61c98c5a4daa39bef30a6b356638de1dde6fa",
+  "schema_version": 1,
+  "source_file": "third_party/first-generation/flatgraph/domain-classes-generator/src/main/scala/flatgraph/codegen/ProtoGen.scala",
+  "source_sha256": "46bcf932f6da7cc98aa4ed6f9245e3378abd60a68a66e50ceee29451eba52a47",
+  "template_file": "cpg-rs/templates/cpg.proto.template",
+  "template_sha256": "78b9a930d637050fa595252ba904572fe2167078cf1939afb1ed317c8ac8275a"
+}

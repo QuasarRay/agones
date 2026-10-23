@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "source_receipt": "verification/agones/first-generation-vendor-goastgen.json",
+  "source_revision": "11b21e395aa6aa39a41ca9216e1d15d08c4ef0b8",
+  "command": [
+    "/home/astral/.local/share/agones-rs/tools/go1.27.1-actions/bin/go",
+    "build",
+    "-mod=readonly",
+    "-trimpath",
+    "-buildvcs=false",
+    "-ldflags",
+    "-X main.Version=v0.1.2",
+    "-o",
+    "/home/astral/.local/share/agones-rs/tools/goastgen-0.1.2/goastgen",
+    "."
+  ],
+  "working_directory": "/home/astral/Projects/agones/.git/agones-first-generation-sources/goastgen/go-astgen",
+  "go_runtime_manifest": "verification/agones/go-runtime-restoration-table.json",
+  "GOEXPERIMENT": "nodwarf5",
+  "status": "BUILT",
+  "started_at": "2026-10-23T08:43:27.544299+00:00",
+  "pid": 40790,
+  "process_identity": "40790 (go) R 40789 40788 40788 0 -1 4456448 2 0 0 0 0 0 0 0 12 -8 1 0 1260137 16015360 0 18446744073709551615 0 0 140736684252493 0 0 0 0 0 0 0 0 0 17 3 0 0 0 0 0 0 0 0 140736684252493 0 0 0 0\n",
+  "exit_code": 0,
+  "finished_at": "2026-10-23T08:43:33.974234+00:00",
+  "binary": {
+    "path": "/home/astral/.local/share/agones-rs/tools/goastgen-0.1.2/goastgen",
+    "sha256": "19ed0db904ccac18e17c1f714d415183a3a460907dd40b04bf7ff8a73ab44c70"
+  },
+  "reported_version": "v0.1.2",
+  "build_info": "/home/astral/.local/share/agones-rs/tools/goastgen-0.1.2/goastgen: go1.27.1-X:nodwarf5\n\tpath\tprivado.ai/goastgen\n\tmod\tprivado.ai/goastgen\t(devel)\t\n\tdep\tgolang.org/x/mod\tv0.11.0\th1:bUO06HqtnRcc/7l71XBe4WcqTZ+3AH1J59zWDDwLKgU=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-trimpath=true\n\tbuild\tDefaultGODEBUG=containermaxprocs=0,cryptocustomrand=1,decoratemappings=0,gotestjsonbuildtext=1,httpcookiemaxnum=0,httplaxcontentlength=1,httpmuxgo121=1,httpservecontentkeepheaders=1,multipathtcp=0,netedns0=0,panicnil=1,randseednop=0,rsa1024min=0,tlsmlkem=0,tlssecpmlkem=0,tlssha1=1,tracebacklabels=0,updatemaxprocs=0,urlmaxqueryparams=0,urlstrictcolons=0,winreadlinkvolume=0,winsymlink=0,x509negativeserial=1,x509rsacrt=0,x509sha256skid=0,x509sslcertoverrideplatform=0,x509usepolicies=0\n\tbuild\tCGO_ENABLED=1\n\tbuild\tGOARCH=amd64\n\tbuild\tGOEXPERIMENT=nodwarf5\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n"
+}

@@ -1,0 +1,18 @@
+name: PR
+on: pull_request
+jobs:
+  pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: sbt
+      - uses: sbt/setup-sbt@v1
+      - name: scalafmtCheck and tests
+        run: sbt scalafmtCheck Test/scalafmtCheck test

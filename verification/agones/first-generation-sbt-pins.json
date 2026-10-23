@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "launchers": [
+    {
+      "version": "1.12.5",
+      "url": "https://repo.maven.apache.org/maven2/org/scala-sbt/sbt-launch/1.12.5/sbt-launch-1.12.5.jar",
+      "published_sha1_url": "https://repo.maven.apache.org/maven2/org/scala-sbt/sbt-launch/1.12.5/sbt-launch-1.12.5.jar.sha1",
+      "published_sha1": "0638e5766974a9e615c418b16c01959d6b4d16db",
+      "sha256": "a58b3ab4b741f79df0cc07764a6d605263a81af9a34294f1ced2daa37ea54054",
+      "bytes": 3823000,
+      "path": "/home/astral/.local/share/agones-rs/tools/sbt-launch-1.12.5.jar"
+    },
+    {
+      "version": "2.0.11",
+      "url": "https://repo.maven.apache.org/maven2/org/scala-sbt/sbt-launch/2.0.11/sbt-launch-2.0.11.jar",
+      "published_sha1_url": "https://repo.maven.apache.org/maven2/org/scala-sbt/sbt-launch/2.0.11/sbt-launch-2.0.11.jar.sha1",
+      "published_sha1": "09114e081584343bcd871c7dfba9cc848ad08aaf",
+      "sha256": "2069338b22ed795a3b65615da0858e5b8733fe3f9a3f73b2fcfd559421e11374",
+      "bytes": 3827119,
+      "path": "/home/astral/.local/share/agones-rs/tools/sbt-launch-2.0.11.jar"
+    }
+  ],
+  "selection": "CPG build.properties selects1.12.5; Joern build.properties selects2.0.11. Exact Maven Central artifacts match their published SHA-1 checksums; SHA-256 recorded locally."
+}

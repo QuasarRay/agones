@@ -1,0 +1,27 @@
+{
+  "cargo_lock_sha256": "ca681be508837e710d43bb01c2671ec2e18f113194bbe460d961160cea21a186",
+  "packages": [
+    {
+      "checksum": "a5129de2ccc97808c4583d48f1fb44576d015cf241e432800572bda11ef30c3b",
+      "license": "MIT",
+      "name": "tree-sitter",
+      "repository": "https://github.com/tree-sitter/tree-sitter",
+      "version": "0.27.1"
+    },
+    {
+      "checksum": "c554730d29306d9c7cdd26912638d2401378c26961e12d161a071df43f49b81b",
+      "license": "MIT",
+      "name": "tree-sitter-scala",
+      "repository": "https://github.com/tree-sitter/tree-sitter-scala",
+      "version": "0.26.3"
+    },
+    {
+      "checksum": "0aa6cbcdc8c679b214e616fd3300da67da0e492e066df01bcf5a5921a71e90d6",
+      "license": "MIT",
+      "name": "tree-sitter-java",
+      "repository": "https://github.com/tree-sitter/tree-sitter-java",
+      "version": "0.23.5"
+    }
+  ],
+  "schema_version": 1
+}

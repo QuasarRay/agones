@@ -1,0 +1,16 @@
+target
+/project/project/
+
+##############
+# Bazel      #
+##############
+user.bazelrc
+bazel-*
+/cpg.bin
+/cpg.bin.tmp
+/cpg.fg
+/out.json
+/jmhResults.txt
+/odb1Results.txt
+/odb2Results.txt
+/flatgraphResults.txt

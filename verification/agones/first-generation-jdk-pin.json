@@ -1,0 +1,13 @@
+{
+  "repository": "https://github.com/adoptium/temurin21-binaries",
+  "release_id": 420500038,
+  "tag": "jdk-21.0.13+9",
+  "asset": {
+    "id": 665757550,
+    "name": "OpenJDK21U-jdk_x64_linux_hotspot_21.0.13_9.tar.gz",
+    "url": "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.13%2B9/OpenJDK21U-jdk_x64_linux_hotspot_21.0.13_9.tar.gz",
+    "size": 207858352,
+    "sha256": "d7f5d5cf865a2902b70ff549b97586a7d3f234e016f041ab447ea740c7d66d1c"
+  },
+  "reason": "Pinned Joern README and both CPG/Joern CI configurations use JDK 21."
+}

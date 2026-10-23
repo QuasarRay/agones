@@ -1,0 +1,41 @@
+{
+  "command": [
+    "/home/astral/.local/share/agones-rs/tools/temurin-jdk-21.0.13-9-install/jdk-21.0.13+9/bin/java",
+    "-Xmx3g",
+    "-XX:ActiveProcessorCount=4",
+    "-Dsbt.supershell=false",
+    "-Dsbt.log.noformat=true",
+    "-Dsbt.override.build.repos=true",
+    "-Dsbt.repository.config=/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/repositories",
+    "-Dsbt.boot.directory=/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/boot",
+    "-Dsbt.global.base=/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/global",
+    "-Dsbt.ivy.home=/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/ivy",
+    "-jar",
+    "/home/astral/.local/share/agones-rs/tools/sbt-launch-1.12.5.jar",
+    "set domainClasses/libraryDependencies += \"com.lihaoyi\" %% \"ujson\" % \"4.4.3\"",
+    "domainClasses/Compile/runMain GraphReference /home/astral/Projects/agones/verification/agones/first-generation-graph-reference.json",
+    "show domainClasses/Compile/fullClasspath"
+  ],
+  "environment": {
+    "COURSIER_CACHE": "/home/astral/Projects/agones/.git/agones-first-generation-cpg-build/coursier",
+    "COURSIER_REPOSITORIES": "https://repo.maven.apache.org/maven2/",
+    "JAVA_HOME": "/home/astral/.local/share/agones-rs/tools/temurin-jdk-21.0.13-9-install/jdk-21.0.13+9",
+    "LANG": "C.UTF-8",
+    "PATH": "/home/astral/.local/share/agones-rs/tools/git-lfs-first-generation-install/git-lfs-3.8.1:/home/astral/.local/share/agones-rs/tools/temurin-jdk-21.0.13-9-install/jdk-21.0.13+9/bin:/home/astral/.elan/bin:/home/astral/.codex/tmp/arg0-linux/codex-arg02wgG6k:/home/astral/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/home/astral/.cabal/bin:/home/astral/.ghcup/bin:/home/astral/.local/bin:/home/astral/.elan/bin:/opt/verus:/home/astral/.cargo/bin:/home/astral/.opam/fstar/bin:/home/astral/.cabal/bin:/home/astral/.ghcup/bin:/home/astral/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin:/home/astral/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/usr/lib/chatgpt/resources",
+    "TZ": "UTC"
+  },
+  "flatgraph_version": "0.1.36",
+  "log": ".git/agones-first-generation-graph-reference.log",
+  "output": "verification/agones/first-generation-graph-reference.json",
+  "pid": 78188,
+  "process_identity": "78188 (java) R 78187 78187 78187 0 -1 4194304 22 0 0 0 0 0 0 0 12 -8 1 0 2293732 684032 72 18446744073709551615 93949741776896 93949741780680 140734250633664 0 0 0 0 0 0 0 0 0 17 1 0 0 0 0 0 93949741788416 93949741789200 93950366769152 140734250637609 140734250638514 140734250638514 140734250643353 0\n",
+  "purpose": "Original CPG graph comparison only; no generated Agones output",
+  "schema_version": 1,
+  "script_sha256": "b9608a03bc4418dde80a8ab8cbc8a88f690cebbd157b6f311a4f09396a05b668",
+  "source_commit": "301c4010d28ecdac05bc2ed44310f56446459465",
+  "source_file": "build/scripts/agones-first-generation/GraphReference.scala",
+  "source_sha256": "7a5efd85300bc26b09dc6dd0971410079689d665b327081f456ebfcdc5e056d8",
+  "started_at": "2026-10-23T11:35:43.500422+00:00",
+  "status": "RUNNING",
+  "working_directory": "/home/astral/Projects/agones/.git/agones-first-generation-sources/cpg"
+}
