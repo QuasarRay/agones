@@ -8,6 +8,7 @@ use std::{collections::BTreeMap, path::Path};
 use crate::construction::{SchemaConstructorGeneratorComponent,CompileSchemaConstructors};
 #[path="codegen_graph.rs"]
 mod graph_domain;
+pub use graph_domain::GraphApiReport;
 
 #[cgp_component(BootstrapLoader)]
 pub trait CanLoadBootstrap { fn load_bootstrap(&self, path: &Path) -> Result<Bootstrap>; }
@@ -58,7 +59,7 @@ pub struct DomainReport {
     #[serde(default)] pub graph_output_sha256:String,
     #[serde(default)] pub graph_generator_sha256:String,
     #[serde(default)] pub graph_runtime_sha256:BTreeMap<String,String>,
-    #[serde(default)] pub graph_api:graph_domain::GraphApiReport,
+    #[serde(default)] pub graph_api:GraphApiReport,
 }
 fn field_name(name: &str) -> String {
     let name = snake_case(name);
@@ -132,6 +133,11 @@ pub fn generate(schema: &Schema, input: &Path, output: &Path) -> Result<DomainRe
     let lock_digest = content_digest(include_bytes!("../Cargo.lock"));
     let manifest_digest = content_digest(include_bytes!("../Cargo.toml"));
     let repository = Path::new(env!("CARGO_MANIFEST_DIR")).parent().ok_or_else(||Error::Invalid("missing repository parent".into()))?;
+    let graph_generator_digest=content_digest(include_bytes!("codegen_graph.rs"));
+    let mut graph_runtime_bindings=BTreeMap::new();
+    for file in ["graph.rs","graph/typed.rs","graph/grafeo.rs","graph/storage.rs","graph/legacy.rs","graph/mvstore.rs"] {
+        graph_runtime_bindings.insert(file.to_owned(),content_digest(&std::fs::read(Path::new(env!("CARGO_MANIFEST_DIR")).join("src").join(file))?));
+    }
     let mut vendor_bindings = BTreeMap::new();
     for name in ["genco","comprende","better-comprehension"] {
         let manifest_path = repository.join(format!("verification/agones/first-generation-vendor-{name}.json"));
@@ -156,7 +162,8 @@ pub fn generate(schema: &Schema, input: &Path, output: &Path) -> Result<DomainRe
         if prior.schema_sha256 == schema_digest && prior.generator_sha256 == generator_digest &&
            prior.schema_implementation_sha256 == implementation_digest && prior.runtime_module_sha256 == runtime_digest &&
            prior.vendored_source_manifests == vendor_bindings && prior.cargo_lock_sha256 == lock_digest &&
-           prior.cargo_manifest_sha256 == manifest_digest { return Ok(prior); }
+           prior.cargo_manifest_sha256 == manifest_digest && prior.graph_generator_sha256==graph_generator_digest &&
+           prior.graph_runtime_sha256==graph_runtime_bindings { return Ok(prior); }
     } else if domain_path.exists() {
         return Err(Error::Invalid("unowned domain output already exists".into()));
     }
@@ -279,7 +286,14 @@ pub fn generate(schema: &Schema, input: &Path, output: &Path) -> Result<DomainRe
         }
         quote_in! { tokens => pub mod $module { $constants } };
     }
+    let (graph_tokens,graph_api)=graph_domain::generate(schema)?;
+    header(&mut tokens,"// CPG_GRAPH_DOMAIN".into());
+    quote_in! {tokens=>pub mod graph {$graph_tokens} pub use graph::{stored,new_nodes,edges,CpgStarters};}
+    header(&mut tokens,"// CPG_GRAPH_DOMAIN_END".into());
     let rendered = tokens.to_string().map_err(|error| Error::Invalid(error.to_string()))?;
+    let graph_start=rendered.find("// CPG_GRAPH_DOMAIN").ok_or_else(||Error::Invalid("missing graph module start".into()))?;
+    let graph_end=rendered.find("// CPG_GRAPH_DOMAIN_END").ok_or_else(||Error::Invalid("missing graph module end".into()))?;
+    let graph_output_digest=content_digest(&rendered.as_bytes()[graph_start..graph_end]);
     let mut mappings = Vec::new();
     for (position,node) in schema.node_types.iter().enumerate() {
         let marker = format!("// CPG_SCHEMA_NODE:{}",node.name);
@@ -304,12 +318,14 @@ pub fn generate(schema: &Schema, input: &Path, output: &Path) -> Result<DomainRe
             "startByte":start,"endByteExclusive":end,"sha256":content_digest(&rendered.as_bytes()[start..end]),
             "property":edge.property,"schemaInfo":edge.schema_info}));
     }
-    let report = DomainReport { format_version:2,schema_sha256:schema_digest,generator_sha256:generator_digest,
+    let report = DomainReport { format_version:3,schema_sha256:schema_digest,generator_sha256:generator_digest,
         schema_implementation_sha256:implementation_digest,cargo_lock_sha256:lock_digest,
         runtime_module_sha256:runtime_digest,vendored_source_manifests:vendor_bindings,
         cargo_manifest_sha256:manifest_digest,
         output_sha256:content_digest(rendered.as_bytes()),concrete_types:schema.node_types.len(),
-        abstract_traits:schema.node_base_types.len(),edge_types:schema.edges.len(),properties:schema.properties.len(),mappings };
+        abstract_traits:schema.node_base_types.len(),edge_types:schema.edges.len(),properties:schema.properties.len(),mappings,
+        graph_output_sha256:graph_output_digest,graph_generator_sha256:graph_generator_digest,
+        graph_runtime_sha256:graph_runtime_bindings,graph_api };
     std::fs::create_dir_all(output)?;
     let temporary = output.join("domain.rs.tmp");
     if temporary.exists() { return Err(Error::Invalid("recover existing incomplete CPG domain output".into())); }
