@@ -8,7 +8,7 @@
     "cpg_domain_structure": "verification/agones/first-generation-cpg-domain-structure.json",
     "cpg_generated_domain": "cpg-rs/generated/generation.json",
     "cpg_partial_port_map": "verification/agones/first-generation-cpg-port-map.json",
-    "cpg_rust_controls": "verification/agones/first-generation-cpg-runtime-controls-5.json",
+    "cpg_rust_controls": "verification/agones/first-generation-cpg-runtime-controls-7.json",
     "cpg_rust_workspace": "cpg-rs/Cargo.toml",
     "flatgraph_reference": "verification/agones/first-generation-flatgraph-reference.json",
     "flatgraph_reference_receipt": "verification/agones/first-generation-flatgraph-reference-run-1.json",
@@ -43,6 +43,8 @@
     "schema_bootstrap_patch": "verification/agones/first-generation-schema-export-patch.json",
     "schema_bootstrap_receipt": "verification/agones/first-generation-schema-bootstrap.json",
     "schema_construction_trace": "verification/agones/first-generation-schema-construction-trace.json",
+    "schema_objects_reference": "verification/agones/first-generation-schema-objects-reference.json",
+    "schema_objects_reference_receipt": "verification/agones/first-generation-schema-objects-reference-run-3.json",
     "schema_trace_patch": "verification/agones/first-generation-schema-trace-patch-2.json",
     "schema_trace_run": "verification/agones/first-generation-schema-trace-run-2.json",
     "source_body_parser_pins": "verification/agones/first-generation-parser-pins.json",
@@ -61,8 +63,10 @@
       "verification/agones/first-generation-vendor-better-comprehension.json"
     ],
     "tooling_files_manifest": "verification/agones/first-generation-tooling-files.json",
-    "tooling_files_manifest_sha256": "7c6628d535f53a42c964bd6f8bf2b8de231305729dcb442e306083a66a11382b",
-    "toolkit_source_pins": "verification/agones/first-generation-toolkit-pins.json"
+    "tooling_files_manifest_sha256": "70521a89a01f4faaecf2fd5c010fd5528663dfaba8adee6f4c17cd8c13b6a0fc",
+    "toolkit_source_pins": "verification/agones/first-generation-toolkit-pins.json",
+    "typed_domain_reference": "verification/agones/first-generation-typed-domain-reference.json",
+    "typed_domain_reference_receipt": "verification/agones/first-generation-typed-domain-reference-run-1.json"
   },
   "baseline": {
     "commit": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
@@ -91,7 +95,7 @@
   "contract_sha256": "3c2eeb7c077ce7410b16f609f48ac70dfbb6ddb9daee0005b7979eda003dfbec",
   "cpg_port_progress": {
     "candidate_bodies": 1089,
-    "focused_rust_checks": "70 integration tests passed after source-bound native domain, schema-constructor and protobuf regeneration; Grafeo engine/persistence, native legacy storage import and all-format CPG loading are covered by runtime-controls-5. Full handwritten CPG port remains incomplete.",
+    "focused_rust_checks": "77 integration tests passed after source-bound domain, schema-constructor and protobuf regeneration. Schema object identity, duplicate declarations, mutable aliases, structural property equality and cross-builder references match the original runtime comparison. Full handwritten CPG port remains incomplete.",
     "formal_refinement_credit": 0,
     "full_body_universe": "OPEN:2Bazel helpers,1launcher and implicit placeholder closures require reconciliation",
     "literal_or_default_bodies_mapped": 10,
@@ -121,18 +125,17 @@
   },
   "known_remaining_runtime_limits": [
     "Native legacy loading and all-format dispatch are implemented and source-compared on retained fixtures. Exhaustive malformed-store/crash-recovery and failure-side-effect equivalence still require reconciliation.",
-    "Generated domain records and wire bindings compile, but complete graph-backed typed accessors/query bindings and typed-detached-node integration remain open.",
     "Full graph error-state side effects, stale/unsafe half-edge handle semantics and builder-time validation need further source reconciliation beyond retained probes.",
-    "Full-schema factories execute the original mutation program; individual parameterized schema-module APIs and reference-identity/duplicate-name semantics remain open."
+    "Full-schema factories execute the original mutation program with live typed object handles, including unused duplicate caller declarations. Individual parameterized module APIs remain open."
   ],
   "known_remaining_schema_limits": [
     {
-      "behavior": "Rust rejects ambiguous duplicate element names; the upstream builder uses object references and may retain unused duplicate declarations.",
-      "facility": "SchemaBuilder name handles",
-      "required_followup": "Reconcile reference identity and existing same-named elements before whole-CPG port completion."
+      "behavior": "ObjectSchema retains duplicate declarations and references; to_model explicitly rejects ambiguous names rather than collapsing distinct references. Individual parameterized module APIs remain open.",
+      "facility": "Name-addressed schema export",
+      "required_followup": "Generate parameterized module APIs and reconcile remaining schema/build mappings before whole-CPG completion."
     }
   ],
-  "last_goal_turn_outcome": "PROGRESS: native legacy storage reader/importer and CGP format loading implemented; original-runtime comparisons cover conversion, compression/page modes, known failures and metadata ordering. 37 more source bodies mapped, 70 focused tests passed. Full first-generation Goal remains incomplete.",
+  "last_goal_turn_outcome": "PROGRESS: source schema identity and aliasing implemented and compared with pinned Scala, all 77 focused tests pass. Grafeo remains canonical CPG engine/persistence. Full first-generation Goal remains incomplete.",
   "native_runtime_progress": {
     "acceptance": "Focused support evidence only. No formal proof, whole-CPG completion or generated-Agones credit.",
     "archives": "Native ZIP traversal, normalized hierarchy, protobuf overlay serialization, counter/overwrite behavior, close/publication and mount ownership implemented.",
@@ -147,9 +150,11 @@
     "proto_loading": "CGP owns two-pass import including open/create persistent Grafeo graphs and repeated imports; source TYPE deduplication/id-alias behavior and failure categories retained.",
     "protobuf": "Native schema-derived protobuf bindings and descriptor generated with pinned rust-protobuf 3.7.2. Descriptor equals original protoc 3.20.1 exactly; unknown fields and numeric payloads retained.",
     "reference_comparisons": "Original CPG codepropertygraph/proto modules built with matching protoc; seven retained loader cases, archive/serialization behavior and source comparator matched. 65536 UTF-16 integer-prefix cases and prior 74994 UTF-8 cases passed. Original pinned CPG reader also matched the Flatgraph snapshot exported from Grafeo exactly. Native legacy import matches the original converter on the CPG fixture, 1542 updated/deleted multipage nodes, plain/Deflate/large-value/empty stores, original unsupported-value/version failures and metadata initialization error order.",
+    "schema_objects": "Source schema builder uses typed property/node/edge/constant handles and a shared object arena. It preserves duplicate names, case-class property equality versus object identity, cross-builder relationships, lazy AnyNode, post-build mutation and fixed schema membership. Full CPG factories retain operands by reference and expose reference schemas alongside explicit name-resolved exports.",
+    "typed_domain": "Complete schema-derived 43 concrete and 6 abstract graph classes, 401 stored and reference property accessors, 371 detached property accessors, 4 contained-node fields, 4218 neighbor steps, 34 edge classes and 49 starters. Original typed fixture comparison covers defaults/copy/null maps/contained references/query/mandatory-neighbor failures; generated ranges bind 224 typed classes to schema identities.",
     "utilities": "UTF-8/BOM/lines, strong/noop interning, temporary-copy lifecycle, root search, source iterable decoration and current/global parallel execution implemented."
   },
-  "next_action": "Continue stage 3 by generating complete graph-backed typed CPG accessors/query and detached-node integration from the schema. Reconcile schema reference identity/duplicate names and individual module APIs, graph/loading error-state and legacy recovery behavior, and all remaining 695 source-body/build/closure mappings. Preserve independent Agones census, frontend closure, normalization/IR/Go-support and terminal generation-transaction obligations. No full Agones emission until the required support is complete.",
+  "next_action": "Generate all 21 individual parameterized CPG schema module APIs from current source inventory and constructor instructions. Retain shared object handles supplied by caller dependencies. Reconcile remaining schema/graph/loading/build/closure mappings, then complete independent Agones census, frontend extraction, normalized CPG, typed IR, Go lowering/support and terminal emission.",
   "objective": "CPG_FIRST_COMPLETE_AGONES_RUST_GENERATION",
   "objective_attachment": "/home/astral/.codex/attachments/366fe3bd-b8a4-41ae-8a83-2055a23db195/pasted-text-1.txt",
   "owned_paths": [
@@ -173,8 +178,8 @@
   "required_unknowns": [
     "finish all handwritten CPG schema/graph/persistence/loading/pass/utility/build mappings; 695 conservative candidates remain unmapped and the semantic body universe remains open",
     "finish two Bazel helpers, one launcher and implicit Scala placeholder-closure accounting",
-    "reconcile schema object-reference identity, duplicate names and individual module APIs",
-    "complete generated graph-backed typed accessors/detached integration and reconcile remaining graph/loading error-state and legacy recovery behavior",
+    "finish parameterized schema module APIs and reconcile name-addressed export limits",
+    "reconcile remaining graph/loading error-state and legacy recovery behavior",
     "independent Agones production-body/configuration inventory",
     "pinned Joern frontend runtime closure, extraction and structural bundle reconciliation",
     "normalized CPG, typed IR, Go lowering rules, substantive runtime/provider support and transactional full Agones emission"
@@ -291,12 +296,12 @@
   "stage": "IMPLEMENT_CPG_RS_AND_SCHEMA",
   "tooling_checkout": {
     "branch": "agones-rs-dev",
-    "head": "a2153333803ae1e7ae79da907b698949996849df",
+    "head": "26b2b293ebd983328548b19c07a8fc87b9eb0fe6",
     "head_change_note": "Observed an intervening user/external commit at recovery; retained branch and working files without reset or rewrite.",
     "ignored_source_recovery": "Scoped .gitignore exceptions retain cpg-rs/src/bin command sources and vendored Grafeo VCS/fixture metadata that broad inherited rules hid.",
-    "previous_observed_head": "f7515dc05fa3e9691f431b157ee7efd47bc5ac6d",
+    "previous_observed_head": "26b2b293ebd983328548b19c07a8fc87b9eb0fe6",
     "tracked_dirty_patch_scope": "Tracked diff against HEAD excluding the self-indexing checkpoint and tooling manifest. The tooling manifest separately binds current untracked/owned support files.",
-    "tracked_dirty_patch_sha256": "18445d73c03489fd06616c9207fd06508cb31427c4ff57b77a0a6a6f41768a04",
+    "tracked_dirty_patch_sha256": "2109465899167fdbfcf9995faca07c08b47c5468107355d446fbb912c711b22a",
     "user_guidance_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
   },
   "tooling_decisions": [
@@ -319,7 +324,7 @@
       "smallest_gap": "One source census and concrete schema operations; no new compiler framework"
     }
   ],
-  "updated_at": "2026-10-23T14:21:11.170345+00:00",
+  "updated_at": "2026-10-23T16:07:07.687531+00:00",
   "user_steering": {
     "database_engine": "Grafeo",
     "evidence": "verification/agones/first-generation-cpg-runtime-controls-5.json",

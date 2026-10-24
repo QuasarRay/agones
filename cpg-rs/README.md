@@ -44,6 +44,58 @@ and order, and a tagged `cpg:value` property. A separate metadata node binds the
 identity, format version, next edge id, and Flatgraph physical-column compatibility
 metadata. Internal metadata labels are not returned by the CPG node API.
 
+The complete schema also generates borrowed graph views, detached builders, typed
+references, inheritance markers, property projections and filters, contained-node
+accessors, directional neighbor steps, cardinality checks, and edge-property views.
+They are available through `domain::stored`, `domain::new_nodes`,
+`domain::graph::references`, and `domain::edges`. Import `domain::CpgStarters` for
+typed graph and CPG entry points:
+
+```rust
+use cpg_rs::domain::{CpgStarters, new_nodes::NewMethod};
+use cpg_rs::graph::{Cpg, CpgContext, CanApplyCpgDiff};
+
+let method = NewMethod::new();
+method.name("ready")?.full_name("server.ready")?;
+let mut cpg = Cpg::empty()?;
+let mut diff = Cpg::new_diff_graph_builder();
+diff.add_node(method.as_detached());
+CpgContext.apply_cpg_diff(cpg.graph_mut(), diff)?;
+let names = cpg.method().name_exact(["ready".to_owned()])?.name()
+    .collect::<cpg_rs::Result<Vec<_>>>()?;
+# Ok::<(), cpg_rs::Error>(())
+```
+
+Stored views borrow the graph. Their setters queue mutations into a diff; apply
+the diff through CGP after those borrows end. A builder clone shares the same
+detached identity. `copy()` creates a new unpersisted node with copied properties
+and shared contained references, matching the source copy operation. Typed
+references read new-node properties directly and take a graph argument when reading
+stored nodes. String accessors include nullable variants so explicit nulls and null
+list elements remain accessible. Neighbor steps retain direction and encounter
+order; mandatory custom steps return a schema violation when no target exists.
+
+The generation receipt binds the graph runtime and Genco generator sources and
+records byte ranges for every generated graph class. Original-runtime comparison
+fixtures exercise typed construction, copies, defaults, property maps, inheritance,
+nullable/contained values, projections, filters, and neighbor-cardinality failures.
+
+Schema composition uses `schema::ObjectSchemaBuilder`. Its property, node, edge,
+and constant handles retain identity and mutable aliases, including relationships
+passed between builders. `build()` snapshots declaration membership and ordering;
+later handle mutations remain visible through the built `ObjectSchema`. Properties
+follow the upstream case-class equality rule, which excludes mutable cardinality
+and protobuf ids. Nodes, edges, and constants compare by identity. Duplicate names
+are permitted, and only properties actually used by nodes or edges participate in
+their corresponding protobuf-id checks.
+
+The generated `cpg_schema::populate` accepts this builder and retains its caller's
+declarations and configuration. `domain_schema_objects()` and
+`protobuf_schema_objects()` expose the reference model. Their `to_model()` operation
+produces the immutable, name-addressed `Schema` used by domain and graph generation;
+it reports ambiguous names instead of collapsing distinct references. The older
+`SchemaBuilder` normalizes and validates that name-addressed model.
+
 Flatgraph v0 is a compatibility format for the pinned Joern frontend. Use
 `graph::storage::read_graph(schema, path)` to import it into Grafeo and
 `graph::storage::write_graph(graph, path)` to export it. `Cpg::with_storage` expects

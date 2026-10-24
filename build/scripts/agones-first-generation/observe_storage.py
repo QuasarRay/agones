@@ -18,7 +18,7 @@ def sha(path):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--attempt', type=int, default=1)
-    parser.add_argument('--mode', choices=['generate', 'generate-legacy', 'generate-legacy-failures', 'generate-legacy-modes', 'generate-legacy-metadata', 'inspect', 'inspect-free'], default='generate')
+    parser.add_argument('--mode', choices=['generate', 'generate-typed', 'generate-schema-objects', 'generate-schema-modules', 'generate-legacy', 'generate-legacy-failures', 'generate-legacy-modes', 'generate-legacy-metadata', 'inspect', 'inspect-free'], default='generate')
     parser.add_argument('--input')
     parser.add_argument('--name', default='first-generation-flatgraph-reference')
     args = parser.parse_args()
@@ -31,7 +31,7 @@ def main():
     cache = ROOT / '.git/agones-first-generation-sources/cpg'
     target = cache / 'codepropertygraph/src/main/scala/StorageReference.scala'
     if target.exists() and target.read_bytes() != source.read_bytes():
-        previous = [json.loads(path.read_text()) for pattern in ('*flatgraph*-run-*.json','*legacy*-run-*.json') for path in evidence.glob(pattern)]
+        previous = [json.loads(path.read_text()) for pattern in ('*flatgraph*-run-*.json','*legacy*-run-*.json','*typed*-run-*.json','*schema-objects*-run-*.json','*schema-modules*-run-*.json') for path in evidence.glob(pattern)]
         assert any(row.get('source_sha256') == sha(target) for row in previous)
         (ROOT / '.git' / f'storage-reference-source-{sha(target)}.scala').write_bytes(target.read_bytes())
     target.write_bytes(source.read_bytes())
@@ -44,8 +44,14 @@ def main():
     if args.input:
         main_args += ' ' + str((ROOT / args.input).resolve())
     command += ['set schema/libraryDependencies += "com.lihaoyi" %% "ujson" % "4.4.3"',
-                'set codepropertygraph/libraryDependencies += "com.lihaoyi" %% "ujson" % "4.4.3"',
-                f'codepropertygraph/Compile/runMain StorageReference {main_args}']
+                'set codepropertygraph/libraryDependencies += "com.lihaoyi" %% "ujson" % "4.4.3"']
+    # Schema construction is build-time machinery, absent from the runtime CPG
+    # classpath. Add the actual pinned schema/generator closure for this probe.
+    if args.mode in ('generate-schema-objects', 'generate-schema-modules'):
+        command += ['set codepropertygraph/Compile/unmanagedClasspath ++= (schema/Compile/fullClasspath).value',
+                    'set codepropertygraph/Runtime/unmanagedClasspath ++= (schema/Compile/fullClasspath).value',
+                    'set codepropertygraph/Compile/fork := true']
+    command += [f'codepropertygraph/Compile/runMain StorageReference {main_args}']
     log = ROOT / f'.git/{args.name}-{args.attempt}.log'
     record = dict(schema_version=1, status='INTENT_RECORDED', mode=args.mode, source_file=str(source.relative_to(ROOT)),
                   source_sha256=sha(source), script_sha256=sha(Path(__file__)), command=command,
@@ -73,6 +79,8 @@ def main():
             record['binary_outputs'] = {str(path.relative_to(ROOT)): sha(path) for path in evidence.glob('first-generation-flatgraph-*.fg')}
             if args.mode.startswith('generate-legacy'):
                 record['binary_outputs'].update({str(path.relative_to(ROOT)):sha(path) for path in evidence.glob('first-generation-legacy-*') if path.suffix in ('.fg','.odb')})
+        if code == 0 and args.mode=='generate-typed':
+            record['binary_outputs']={str(path.relative_to(ROOT)):sha(path) for path in evidence.glob('first-generation-typed-*.fg')}
         return code
     finally:
         record.update(finished_at=datetime.now(timezone.utc).isoformat(), log_sha256=sha(log))

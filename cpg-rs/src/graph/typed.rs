@@ -81,7 +81,39 @@ impl<C:NodeClass> TypedReference<C> {
     }
     pub(crate) fn checked(reference:NodeReference)->Self {Self {reference,class:PhantomData}}
     pub fn raw(&self)->NodeReference {self.reference.clone()}
+    pub fn cast<T:NodeClass>(&self,graph:Option<&Graph>)->Result<TypedReference<T>> {TypedReference::validate(self.raw(),graph)}
     pub fn stored_ref(&self)->Result<Option<NodeHandle>> {match &self.reference {NodeReference::Stored(v)=>Ok(Some(*v)),NodeReference::Detached(v)=>v.stored_ref()}}
+    fn stored<'a>(&self,graph:Option<&'a Graph>,handle:NodeHandle)->Result<TypedNode<'a,C>> {
+        TypedNode::new(graph.ok_or_else(||Error::Invalid("stored reference access requires its graph".into()))?,handle)
+    }
+    fn values(&self,node:&DetachedNode,name:&str)->Result<Vec<Value>> {
+        let mut values=input_values(node.property_input(name)?)?;
+        if values.is_empty() {if let Some(default)=C::fields_for(&node.label()?).iter().find(|rule|rule.name==name).and_then(|rule|rule.default.clone()) {values.push(default);}}
+        Ok(values)
+    }
+    pub fn required<T:GraphValue>(&self,graph:Option<&Graph>,name:&str)->Result<T> {match &self.reference {
+        NodeReference::Stored(handle)=>self.stored(graph,*handle)?.required(name),NodeReference::Detached(node)=>{
+            let values=self.values(node,name)?;if values.len()>1 {return Err(Error::SourceNotImplemented("multiple values in a single reference property"));}
+            T::from_value(values.first().ok_or(Error::NoSuchElement("mandatory reference property is absent"))?)
+        }
+    }}
+    pub fn optional<T:GraphValue>(&self,graph:Option<&Graph>,name:&str)->Result<Option<T>> {match &self.reference {
+        NodeReference::Stored(handle)=>self.stored(graph,*handle)?.optional(name),NodeReference::Detached(node)=>{
+            let values=self.values(node,name)?;if values.len()>1 {return Err(Error::SourceNotImplemented("multiple values in an optional reference property"));}
+            match values.first() {None|Some(Value::Null)=>Ok(None),Some(value)=>Ok(Some(T::from_value(value)?))}
+        }
+    }}
+    pub fn list<T:GraphValue>(&self,graph:Option<&Graph>,name:&str)->Result<Vec<T>> {match &self.reference {
+        NodeReference::Stored(handle)=>self.stored(graph,*handle)?.list(name),NodeReference::Detached(node)=>input_values(node.property_input(name)?)?.iter().map(T::from_value).collect(),
+    }}
+    pub fn list_nullable<T:GraphValue>(&self,graph:Option<&Graph>,name:&str)->Result<Vec<Option<T>>> {match &self.reference {
+        NodeReference::Stored(handle)=>self.stored(graph,*handle)?.list_nullable(name),NodeReference::Detached(node)=>input_values(node.property_input(name)?)?.iter()
+            .map(|value|if matches!(value,Value::Null) {Ok(None)}else{Ok(Some(T::from_value(value)?))}).collect(),
+    }}
+    pub fn contained<T:NodeClass>(&self,graph:Option<&Graph>,name:&str)->Result<Vec<Option<TypedReference<T>>>> {match &self.reference {
+        NodeReference::Stored(handle)=>self.stored(graph,*handle)?.contained::<T>(name)?.into_iter().map(|node|Ok(node.map(|node|node.reference()))).collect(),
+        NodeReference::Detached(node)=>input_references(node,name,graph),
+    }}
 }
 impl<C:NodeClass> From<TypedReference<C>> for NodeReference {fn from(value:TypedReference<C>)->Self {value.reference}}
 impl<C:NodeClass> From<TypedReference<C>> for PropertyInput {fn from(value:TypedReference<C>)->Self {Self::Node(value.reference)}}
@@ -122,6 +154,16 @@ impl<'a,C:NodeClass> TypedNode<'a,C> {
             .map(move |handle|Ok(TypedNode::known(graph,handle)));
         Ok(NodeTraversal::from_iter(graph,iter))
     }
+    pub fn neighbors_cast<T:NodeClass>(&self,edge:&str,direction:Direction)->Result<NodeTraversal<'a,T>> {
+        let graph=self.graph;Ok(NodeTraversal::from_iter(graph,graph.neighbors(self.handle,direction,Some(edge))?.into_iter().map(move |handle|TypedNode::new(graph,handle))))
+    }
+    pub fn neighbors_via<V:NodeClass,T:NodeClass>(&self,edge:&str,direction:Direction)->Result<NodeTraversal<'a,T>> {Ok(self.neighbors_cast::<V>(edge,direction)?.of_type())}
+    pub fn neighbor_one_via<V:NodeClass,T:NodeClass>(&self,edge:&str,direction:Direction)->Result<TypedNode<'a,T>> {
+        self.neighbors_via::<V,T>(edge,direction)?.next().transpose()?.ok_or_else(||Error::SchemaViolation(format!(
+            "{} edge with label {edge} to an adjacent {} is mandatory, but not defined for this {} node with id={}, (seq={})",
+            if direction==Direction::Outgoing {"OUT"}else{"IN"},T::LABEL,self.label(),self.handle.id.0,self.handle.id.sequence())))
+    }
+    pub fn neighbor_optional_via<V:NodeClass,T:NodeClass>(&self,edge:&str,direction:Direction)->Result<Option<TypedNode<'a,T>>> {self.neighbors_via::<V,T>(edge,direction)?.next().transpose()}
     pub fn neighbor_one<T:NodeClass>(&self,edge:&str,direction:Direction)->Result<TypedNode<'a,T>> {
         self.neighbors(edge,direction)?.next().transpose()?.ok_or_else(||Error::SchemaViolation(format!(
             "{} edge with label {edge} to an adjacent {} is mandatory, but not defined for this {} node with id={}, (seq={})",
@@ -157,6 +199,14 @@ fn input_values(input:Option<PropertyInput>)->Result<Vec<Value>> {
         Some(PropertyInput::List(values))=>values.into_iter().map(element).collect(),Some(value)=>Ok(vec![element(value)?]),
     }
 }
+fn input_references<T:NodeClass>(node:&DetachedNode,name:&str,graph:Option<&Graph>)->Result<Vec<Option<TypedReference<T>>>> {
+    let values=match node.property_input(name)? {None=>Vec::new(),Some(PropertyInput::List(values))=>values,
+        Some(PropertyInput::Value(Value::List(values)))=>values.into_iter().map(PropertyInput::Value).collect(),Some(value)=>vec![value]};
+    values.into_iter().map(|value|match value {
+        PropertyInput::Value(Value::Null)=>Ok(None),PropertyInput::Node(reference)=>Ok(Some(TypedReference::validate(reference,graph)?)),
+        PropertyInput::Value(Value::Node(handle))=>Ok(Some(TypedReference::validate(handle.into(),graph)?)),_=>Err(wrong_value()),
+    }).collect()
+}
 impl<C:ConcreteNodeClass> TypedNew<C> {
     pub fn new()->Self {Self::default()}
     pub fn as_detached(&self)->DetachedNode {self.node.clone()}
@@ -178,12 +228,7 @@ impl<C:ConcreteNodeClass> TypedNew<C> {
     pub fn list_nullable<T:GraphValue>(&self,name:&str)->Result<Vec<Option<T>>> {input_values(self.node.property_input(name)?)?.iter()
         .map(|value|if matches!(value,Value::Null) {Ok(None)}else{Ok(Some(T::from_value(value)?))}).collect()}
     pub fn contained<T:NodeClass>(&self,name:&str,graph:Option<&Graph>)->Result<Vec<Option<TypedReference<T>>>> {
-        let values=match self.node.property_input(name)? {None=>Vec::new(),Some(PropertyInput::List(values))=>values,
-            Some(PropertyInput::Value(Value::List(values)))=>values.into_iter().map(PropertyInput::Value).collect(),Some(value)=>vec![value]};
-        values.into_iter().map(|value|match value {
-            PropertyInput::Value(Value::Null)=>Ok(None),PropertyInput::Node(reference)=>Ok(Some(TypedReference::validate(reference,graph)?)),
-            PropertyInput::Value(Value::Node(handle))=>Ok(Some(TypedReference::validate(handle.into(),graph)?)),_=>Err(wrong_value()),
-        }).collect()
+        input_references(&self.node,name,graph)
     }
     pub fn is_valid_neighbor<T:ConcreteNodeClass>(&self,other:&TypedNew<T>,edge:&str,direction:Direction)->bool {
         let _=other;C::allowed_neighbors(edge,direction).contains(&T::LABEL)
@@ -246,15 +291,40 @@ impl<'a,C:NodeClass> NodeTraversal<'a,C> {
         let matches=match property {Some(Value::List(elements))=>elements.iter().any(|element|values.iter().any(|value|semantic_eq(element,value))),
             Some(element)=>values.iter().any(|value|semantic_eq(&element,value)),None=>false};Ok(matches!=negate)
     })}
-    pub fn cast<T:NodeClass>(self)->NodeTraversal<'a,T> {
+    pub fn of_type<T:NodeClass>(self)->NodeTraversal<'a,T> {
         NodeTraversal::from_iter(self.graph,self.iter.filter_map(|item|match item {Err(error)=>Some(Err(error)),
             Ok(node) if T::accepts(node.label())=>Some(Ok(TypedNode::known(node.graph,node.handle))),_=>None}))
     }
+    pub fn cast<T:NodeClass>(self)->NodeTraversal<'a,T> {NodeTraversal::from_iter(self.graph,self.iter.map(|item|item.and_then(|node|node.cast())))}
+    pub fn adjacent_cast<T:NodeClass>(self,edge:&'static str,direction:Direction)->NodeTraversal<'a,T> {
+        let graph=self.graph;NodeTraversal::from_iter(graph,self.iter.flat_map(move |item|match item {
+            Err(error)=>NodeTraversal::from_iter(graph,std::iter::once(Err(error))),Ok(node)=>match node.neighbors_cast(edge,direction) {
+                Ok(traversal)=>traversal,Err(error)=>NodeTraversal::from_iter(graph,std::iter::once(Err(error))),
+            }
+        }))
+    }
+    pub fn adjacent_via<V:NodeClass,T:NodeClass>(self,edge:&'static str,direction:Direction)->NodeTraversal<'a,T> {self.adjacent_cast::<V>(edge,direction).of_type()}
     pub fn adjacent<T:NodeClass>(self,edge:&'static str,direction:Direction)->NodeTraversal<'a,T> {
         let graph=self.graph;NodeTraversal::from_iter(graph,self.iter.flat_map(move |item|match item {
             Err(error)=>NodeTraversal::from_iter(graph,std::iter::once(Err(error))),Ok(node)=>match node.neighbors(edge,direction) {
                 Ok(traversal)=>traversal,Err(error)=>NodeTraversal::from_iter(graph,std::iter::once(Err(error))),
             }
+        }))
+    }
+    pub fn one_step<T:NodeClass>(self,edge:&'static str,direction:Direction)->NodeTraversal<'a,T> {
+        let graph=self.graph;NodeTraversal::from_iter(graph,self.iter.map(move |item|item.and_then(|node|node.neighbor_one(edge,direction))))
+    }
+    pub fn optional_step<T:NodeClass>(self,edge:&'static str,direction:Direction)->NodeTraversal<'a,T> {
+        let graph=self.graph;NodeTraversal::from_iter(graph,self.iter.filter_map(move |item|match item {
+            Err(error)=>Some(Err(error)),Ok(node)=>match node.neighbor_optional(edge,direction) {Ok(Some(node))=>Some(Ok(node)),Ok(None)=>None,Err(error)=>Some(Err(error))},
+        }))
+    }
+    pub fn one_step_via<V:NodeClass,T:NodeClass>(self,edge:&'static str,direction:Direction)->NodeTraversal<'a,T> {
+        let graph=self.graph;NodeTraversal::from_iter(graph,self.iter.map(move |item|item.and_then(|node|node.neighbor_one_via::<V,T>(edge,direction))))
+    }
+    pub fn optional_step_via<V:NodeClass,T:NodeClass>(self,edge:&'static str,direction:Direction)->NodeTraversal<'a,T> {
+        let graph=self.graph;NodeTraversal::from_iter(graph,self.iter.filter_map(move |item|match item {
+            Err(error)=>Some(Err(error)),Ok(node)=>match node.neighbor_optional_via::<V,T>(edge,direction) {Ok(Some(node))=>Some(Ok(node)),Ok(None)=>None,Err(error)=>Some(Err(error))},
         }))
     }
 }

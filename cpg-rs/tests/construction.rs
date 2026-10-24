@@ -13,11 +13,11 @@ fn native_factories_reproduce_both_uninstrumented_complete_schemas() {
 }
 #[test]
 fn constructor_population_preserves_callers_builder_configuration_and_extra_data() {
-    let mut builder=SchemaBuilder::new("Custom".into(),"custom.domain".into(),vec!["custom.traversals".into()]);
+    let mut builder=ObjectSchemaBuilder::new("Custom".into(),"custom.domain".into(),vec!["custom.traversals".into()]);
     builder.add_property("CUSTOM_PROPERTY".into(),ValueType::Long,"extra",None)
         .mandatory(Scalar::Long{decimal:"9223372036854775807".into()}).unwrap();
     cpg_schema::populate(&mut builder).unwrap();
-    let schema=builder.build().unwrap();
+    let schema=builder.build().unwrap().to_model().unwrap();
     assert_eq!(schema.domain_short_name,"Custom");
     assert_eq!(schema.base_package,"custom.domain");
     assert_eq!(schema.additional_traversals_packages,["custom.traversals"]);

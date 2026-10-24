@@ -4,13 +4,13 @@
   "inputs": {
     "Cargo.lock": "8be7a4707eaa6a5e6e47043192bbf5de68ce407dd300949387112cdc4bef815d",
     "Cargo.toml": "89d0296c256019afd77f31750974cc9df87f6dbd97d0908238c218f9e3aac32f",
-    "generated/schema_constructors.rs": "6fbe7d7c7d74296bdd85a02e3579debc2d4233f37a3c96abb28bd15d2ad864e6",
+    "generated/schema_constructors.rs": "09d8f12bc140a9379ce5872b44e56350e90762909faa4fef8995c6f0b5b64b32",
     "nativeCompleteSchemaModel": "9a2af0efb823236a2fcb2b4e0e520a80d292f675e525615af7706fc87ec7ff63",
     "nativeProtocol": "70ca30c8446da9e216f165890dc61c98c5a4daa39bef30a6b356638de1dde6fa",
-    "src/lib.rs": "9d4df5cfabc8c4ecf199f554117750df4bfe16d47b522170e507d44cd1a8dfc3",
+    "src/lib.rs": "3e8c774f16218c8e611eea48d3eb097e71332a9c14c6c98aeb7275b5fcaedb56",
     "src/protobuf_bindings.rs": "a1b8079da7ecd382dd6fb037af0864e42200c0b059f5e3c4f3f291fa83f28040",
     "src/protobuf_schema.rs": "4acc326df22e928f69c58e3c02ac31f71aa08ac1566ec04c512348f1d81ad337",
-    "src/schema.rs": "babf6e69f2f3ef53da71dd793aa07419cf1c21ebc19f6ae110b78a7ee6a63251",
+    "src/schema.rs": "28854c087898463a9aa7d9cdac86a5fbb27c1a0eb6bd7aba37f161a8ff7e9676",
     "src/schema_tools.rs": "811df09c742d6a5885458dc00833932df345585d53dee3a350c0a9ceded38525",
     "templates/cpg.proto.template": "78b9a930d637050fa595252ba904572fe2167078cf1939afb1ed317c8ac8275a",
     "templates/pinned-category-order.json": "0d053c64eb54138f894a27f6103423ddbe399049a621f7be3cf8de7da279b3ff"

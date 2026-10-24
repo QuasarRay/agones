@@ -1,0 +1,594 @@
+{
+  "before": {
+    "method": {
+      "COLUMN_NUMBER": 4,
+      "FULL_NAME": "example.alpha",
+      "NAME": "alpha"
+    },
+    "copy": {
+      "FULL_NAME": "example.alpha",
+      "NAME": "copy"
+    },
+    "emptyPair": {
+      "node": null,
+      "tag": null
+    },
+    "pair": {
+      "node": {
+        "new": "METHOD",
+        "stored": null
+      },
+      "tag": {
+        "new": "TAG",
+        "stored": null
+      }
+    },
+    "finding": {
+      "evidence": [
+        {
+          "new": "METHOD",
+          "stored": null
+        },
+        {
+          "new": "METHOD",
+          "stored": null
+        },
+        null
+      ],
+      "keyValuePairs": [
+        {
+          "new": "KEY_VALUE_PAIR",
+          "stored": null
+        }
+      ]
+    },
+    "call": {
+      "POSSIBLE_TYPES": [
+        "A",
+        null,
+        "A"
+      ],
+      "NAME": "target"
+    },
+    "validNeighbors": [
+      true,
+      false,
+      true
+    ]
+  },
+  "after": {
+    "raw": {
+      "nodes": [
+        {
+          "id": "25769803776",
+          "label": "BLOCK",
+          "properties": {
+            "ARGUMENT_INDEX": [
+              {
+                "kind": "Int",
+                "decimal": "-1"
+              }
+            ],
+            "CODE": [
+              {
+                "kind": "String",
+                "value": "first"
+              }
+            ],
+            "ORDER": [
+              {
+                "kind": "Int",
+                "decimal": "-1"
+              }
+            ],
+            "TYPE_FULL_NAME": [
+              {
+                "kind": "String",
+                "value": "<empty>"
+              }
+            ]
+          },
+          "out": [],
+          "in": [
+            {
+              "src": "107374182400",
+              "dst": "25769803776",
+              "label": "AST",
+              "property": {
+                "kind": "Null"
+              }
+            }
+          ]
+        },
+        {
+          "id": "25769803777",
+          "label": "BLOCK",
+          "properties": {
+            "ARGUMENT_INDEX": [
+              {
+                "kind": "Int",
+                "decimal": "-1"
+              }
+            ],
+            "CODE": [
+              {
+                "kind": "String",
+                "value": "second"
+              }
+            ],
+            "ORDER": [
+              {
+                "kind": "Int",
+                "decimal": "-1"
+              }
+            ],
+            "TYPE_FULL_NAME": [
+              {
+                "kind": "String",
+                "value": "<empty>"
+              }
+            ]
+          },
+          "out": [],
+          "in": [
+            {
+              "src": "107374182400",
+              "dst": "25769803777",
+              "label": "AST",
+              "property": {
+                "kind": "Null"
+              }
+            }
+          ]
+        },
+        {
+          "id": "30064771072",
+          "label": "CALL",
+          "properties": {
+            "ARGUMENT_INDEX": [
+              {
+                "kind": "Int",
+                "decimal": "-1"
+              }
+            ],
+            "CODE": [
+              {
+                "kind": "String",
+                "value": "<empty>"
+              }
+            ],
+            "DISPATCH_TYPE": [
+              {
+                "kind": "String",
+                "value": "<empty>"
+              }
+            ],
+            "METHOD_FULL_NAME": [
+              {
+                "kind": "String",
+                "value": "<empty>"
+              }
+            ],
+            "NAME": [
+              {
+                "kind": "String",
+                "value": "target"
+              }
+            ],
+            "ORDER": [
+              {
+                "kind": "Int",
+                "decimal": "-1"
+              }
+            ],
+            "POSSIBLE_TYPES": [
+              {
+                "kind": "String",
+                "value": "A"
+              },
+              {
+                "kind": "Null"
+              },
+              {
+                "kind": "String",
+                "value": "A"
+              }
+            ],
+            "SIGNATURE": [
+              {
+                "kind": "String",
+                "value": ""
+              }
+            ],
+            "TYPE_FULL_NAME": [
+              {
+                "kind": "String",
+                "value": "<empty>"
+              }
+            ]
+          },
+          "out": [],
+          "in": []
+        },
+        {
+          "id": "64424509440",
+          "label": "FINDING",
+          "properties": {
+            "evidence": [
+              {
+                "kind": "Ref",
+                "id": "107374182400"
+              },
+              {
+                "kind": "Ref",
+                "id": "107374182401"
+              },
+              {
+                "kind": "Null"
+              }
+            ],
+            "keyValuePairs": [
+              {
+                "kind": "Ref",
+                "id": "85899345920"
+              }
+            ]
+          },
+          "out": [],
+          "in": []
+        },
+        {
+          "id": "85899345920",
+          "label": "KEY_VALUE_PAIR",
+          "properties": {
+            "KEY": [
+              {
+                "kind": "String",
+                "value": "x"
+              }
+            ],
+            "VALUE": [
+              {
+                "kind": "String",
+                "value": "y"
+              }
+            ]
+          },
+          "out": [],
+          "in": []
+        },
+        {
+          "id": "107374182400",
+          "label": "METHOD",
+          "properties": {
+            "AST_PARENT_FULL_NAME": [
+              {
+                "kind": "String",
+                "value": "<empty>"
+              }
+            ],
+            "AST_PARENT_TYPE": [
+              {
+                "kind": "String",
+                "value": "<empty>"
+              }
+            ],
+            "CODE": [
+              {
+                "kind": "String",
+                "value": "<empty>"
+              }
+            ],
+            "COLUMN_NUMBER": [
+              {
+                "kind": "Int",
+                "decimal": "4"
+              }
+            ],
+            "FILENAME": [
+              {
+                "kind": "String",
+                "value": "<empty>"
+              }
+            ],
+            "FULL_NAME": [
+              {
+                "kind": "String",
+                "value": "example.alpha"
+              }
+            ],
+            "GENERIC_SIGNATURE": [
+              {
+                "kind": "String",
+                "value": "<empty>"
+              }
+            ],
+            "IS_EXTERNAL": [
+              {
+                "kind": "Boolean",
+                "value": false
+              }
+            ],
+            "NAME": [
+              {
+                "kind": "String",
+                "value": "alpha"
+              }
+            ],
+            "ORDER": [
+              {
+                "kind": "Int",
+                "decimal": "-1"
+              }
+            ],
+            "SIGNATURE": [
+              {
+                "kind": "String",
+                "value": ""
+              }
+            ]
+          },
+          "out": [
+            {
+              "src": "107374182400",
+              "dst": "25769803776",
+              "label": "AST",
+              "property": {
+                "kind": "Null"
+              }
+            },
+            {
+              "src": "107374182400",
+              "dst": "25769803777",
+              "label": "AST",
+              "property": {
+                "kind": "Null"
+              }
+            },
+            {
+              "src": "107374182400",
+              "dst": "124554051584",
+              "label": "AST",
+              "property": {
+                "kind": "Null"
+              }
+            },
+            {
+              "src": "107374182400",
+              "dst": "107374182401",
+              "label": "REACHING_DEF",
+              "property": {
+                "kind": "Null"
+              }
+            }
+          ],
+          "in": []
+        },
+        {
+          "id": "107374182401",
+          "label": "METHOD",
+          "properties": {
+            "AST_PARENT_FULL_NAME": [
+              {
+                "kind": "String",
+                "value": "<empty>"
+              }
+            ],
+            "AST_PARENT_TYPE": [
+              {
+                "kind": "String",
+                "value": "<empty>"
+              }
+            ],
+            "CODE": [
+              {
+                "kind": "String",
+                "value": "<empty>"
+              }
+            ],
+            "FILENAME": [
+              {
+                "kind": "String",
+                "value": "<empty>"
+              }
+            ],
+            "FULL_NAME": [
+              {
+                "kind": "String",
+                "value": "example.alpha"
+              }
+            ],
+            "GENERIC_SIGNATURE": [
+              {
+                "kind": "String",
+                "value": "<empty>"
+              }
+            ],
+            "IS_EXTERNAL": [
+              {
+                "kind": "Boolean",
+                "value": false
+              }
+            ],
+            "NAME": [
+              {
+                "kind": "String",
+                "value": "copy"
+              }
+            ],
+            "ORDER": [
+              {
+                "kind": "Int",
+                "decimal": "-1"
+              }
+            ],
+            "SIGNATURE": [
+              {
+                "kind": "String",
+                "value": ""
+              }
+            ]
+          },
+          "out": [],
+          "in": [
+            {
+              "src": "107374182400",
+              "dst": "107374182401",
+              "label": "REACHING_DEF",
+              "property": {
+                "kind": "Null"
+              }
+            }
+          ]
+        },
+        {
+          "id": "124554051584",
+          "label": "METHOD_RETURN",
+          "properties": {
+            "CODE": [
+              {
+                "kind": "String",
+                "value": "<empty>"
+              }
+            ],
+            "EVALUATION_STRATEGY": [
+              {
+                "kind": "String",
+                "value": "<empty>"
+              }
+            ],
+            "ORDER": [
+              {
+                "kind": "Int",
+                "decimal": "-1"
+              }
+            ],
+            "TYPE_FULL_NAME": [
+              {
+                "kind": "String",
+                "value": "<empty>"
+              }
+            ]
+          },
+          "out": [],
+          "in": [
+            {
+              "src": "107374182400",
+              "dst": "124554051584",
+              "label": "AST",
+              "property": {
+                "kind": "Null"
+              }
+            }
+          ]
+        },
+        {
+          "id": "146028888064",
+          "label": "TAG",
+          "properties": {
+            "NAME": [
+              {
+                "kind": "String",
+                "value": "label"
+              }
+            ],
+            "VALUE": [
+              {
+                "kind": "String",
+                "value": "display"
+              }
+            ]
+          },
+          "out": [],
+          "in": []
+        },
+        {
+          "id": "150323855360",
+          "label": "TAG_NODE_PAIR",
+          "properties": {
+            "node": [
+              {
+                "kind": "Ref",
+                "id": "107374182400"
+              }
+            ],
+            "tag": [
+              {
+                "kind": "Ref",
+                "id": "146028888064"
+              }
+            ]
+          },
+          "out": [],
+          "in": []
+        }
+      ]
+    },
+    "method": {
+      "COLUMN_NUMBER": 4,
+      "FULL_NAME": "example.alpha",
+      "NAME": "alpha"
+    },
+    "pair": {
+      "node": {
+        "stored": "107374182400",
+        "label": "METHOD"
+      },
+      "tag": {
+        "stored": "146028888064",
+        "label": "TAG"
+      }
+    },
+    "finding": {
+      "evidence": [
+        {
+          "stored": "107374182400",
+          "label": "METHOD"
+        },
+        {
+          "stored": "107374182401",
+          "label": "METHOD"
+        },
+        null
+      ],
+      "keyValuePairs": [
+        {
+          "stored": "85899345920",
+          "label": "KEY_VALUE_PAIR"
+        }
+      ]
+    },
+    "newPair": {
+      "node": {
+        "new": "METHOD",
+        "stored": "107374182400"
+      },
+      "tag": {
+        "new": "TAG",
+        "stored": "146028888064"
+      }
+    },
+    "names": [
+      "alpha",
+      "copy"
+    ],
+    "namesExact": [
+      "107374182400"
+    ],
+    "columns": [
+      4
+    ],
+    "ordersGt": [
+      "107374182400",
+      "107374182401"
+    ],
+    "possibleTypes": [
+      "A",
+      null,
+      "A"
+    ],
+    "block": "25769803776",
+    "missingBlockError": "flatgraph.SchemaViolationException"
+  },
+  "multipleSinglePropertyError": "scala.NotImplementedError"
+}

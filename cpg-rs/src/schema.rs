@@ -336,8 +336,13 @@ fn capitalize(value: &str) -> String {
     chars.next().map(|c| c.to_uppercase().collect::<String>() + chars.as_str()).unwrap_or_default()
 }
 
-/// Mutable construction state. Every mutation affects the single shared schema definition.
+/// Name-resolved model construction and normalization. Source schema composition
+/// uses ObjectSchemaBuilder, whose typed handles preserve aliases and duplicate names.
 pub struct SchemaBuilder { schema: Schema }
+
+#[path="schema_objects.rs"]
+pub mod objects;
+pub use objects::{ObjectSchemaBuilder, ObjectSchema, SchemaObjectId, PropertyRef, NodeRef, EdgeRef, ConstantRef, AdjacentNodeRef, ContainedNodeRef};
 
 impl SchemaBuilder {
     pub fn new(domain_short_name: String, base_package: String, additional_traversals_packages: Vec<String>) -> Self {

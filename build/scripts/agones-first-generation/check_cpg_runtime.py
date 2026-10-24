@@ -41,6 +41,10 @@ def main():
         'first-generation-legacy-failures-run-1.json','first-generation-legacy-modes.json',
         'first-generation-legacy-modes-run-1.json','first-generation-legacy-metadata.json',
         'first-generation-legacy-metadata-run-1.json')]
+    inputs += [ROOT/'verification/agones'/name for name in (
+        'first-generation-typed-domain-reference.json','first-generation-typed-domain-reference-run-1.json')]
+    inputs += [ROOT/'verification/agones'/name for name in (
+        'first-generation-schema-objects-reference.json','first-generation-schema-objects-reference-run-3.json')]
     inputs += [path for pattern in ('first-generation-*.pb','first-generation-*.zip','first-generation-*.fg') for path in (ROOT/'verification/agones').glob(pattern)]
     inputs += [path for path in (ROOT/'third_party/first-generation/grafeo').rglob('*') if path.is_file()]
     inputs += list((ROOT/'verification/agones').glob('first-generation-legacy-*.odb'))

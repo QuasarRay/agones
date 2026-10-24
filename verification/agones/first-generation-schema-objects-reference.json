@@ -1,0 +1,214 @@
+{
+  "before": {
+    "properties": [
+      {
+        "ref": "first",
+        "protoId": 1,
+        "mandatory": true,
+        "default": {
+          "kind": "String",
+          "value": "first"
+        }
+      },
+      {
+        "ref": "equal",
+        "protoId": 2,
+        "mandatory": true,
+        "default": {
+          "kind": "String",
+          "value": "equal"
+        }
+      },
+      {
+        "ref": "different",
+        "protoId": 3,
+        "mandatory": true,
+        "default": {
+          "kind": "Long",
+          "decimal": "3"
+        }
+      },
+      {
+        "ref": "unused",
+        "protoId": 1,
+        "mandatory": false,
+        "default": null
+      }
+    ],
+    "nodeProperties": [
+      "first",
+      "equal",
+      "different"
+    ],
+    "edgeProperties": [
+      "first",
+      "equal",
+      "different"
+    ],
+    "leftProperties": [
+      "first"
+    ],
+    "leftDeclared": [
+      "first"
+    ],
+    "rightProperties": [
+      "different"
+    ],
+    "diamondProperties": [
+      "different",
+      "first"
+    ],
+    "diamondAncestors": [
+      "base",
+      "otherBase"
+    ],
+    "leftEdges": [
+      {
+        "edge": "edge",
+        "node": "right"
+      },
+      {
+        "edge": "otherEdge",
+        "node": "right"
+      }
+    ],
+    "rightEdges": [
+      {
+        "edge": "edge",
+        "node": "left"
+      },
+      {
+        "edge": "otherEdge",
+        "node": "left"
+      }
+    ],
+    "contained": [
+      "right"
+    ],
+    "baseSubtypes": [
+      "diamond",
+      "left"
+    ],
+    "anySubtypes": 5,
+    "noWarn": 1,
+    "constantProtoId": null,
+    "accessor": null
+  },
+  "after": {
+    "properties": [
+      {
+        "ref": "first",
+        "protoId": 41,
+        "mandatory": true,
+        "default": {
+          "kind": "String",
+          "value": "changed"
+        }
+      },
+      {
+        "ref": "equal",
+        "protoId": 2,
+        "mandatory": true,
+        "default": {
+          "kind": "String",
+          "value": "equal"
+        }
+      },
+      {
+        "ref": "different",
+        "protoId": 3,
+        "mandatory": true,
+        "default": {
+          "kind": "Long",
+          "decimal": "3"
+        }
+      },
+      {
+        "ref": "unused",
+        "protoId": 1,
+        "mandatory": false,
+        "default": null
+      }
+    ],
+    "nodeProperties": [
+      "first",
+      "equal",
+      "different"
+    ],
+    "edgeProperties": [
+      "first",
+      "equal",
+      "different"
+    ],
+    "leftProperties": [
+      "first",
+      "external"
+    ],
+    "leftDeclared": [
+      "first",
+      "external"
+    ],
+    "rightProperties": [
+      "first",
+      "different"
+    ],
+    "diamondProperties": [
+      "different",
+      "first"
+    ],
+    "diamondAncestors": [
+      "base",
+      "otherBase"
+    ],
+    "leftEdges": [
+      {
+        "edge": "edge",
+        "node": "right"
+      },
+      {
+        "edge": "external",
+        "node": "external"
+      },
+      {
+        "edge": "otherEdge",
+        "node": "right"
+      }
+    ],
+    "rightEdges": [
+      {
+        "edge": "edge",
+        "node": "left"
+      },
+      {
+        "edge": "otherEdge",
+        "node": "left"
+      }
+    ],
+    "contained": [
+      "right"
+    ],
+    "baseSubtypes": [
+      "diamond",
+      "left"
+    ],
+    "anySubtypes": 5,
+    "noWarn": 1,
+    "constantProtoId": 99,
+    "accessor": "changedAccessor"
+  },
+  "propertyEquals": true,
+  "samePropertyObject": false,
+  "sameNodeObject": false,
+  "duplicateEqualProto": "java.lang.AssertionError",
+  "customCpg": {
+    "allNameProperties": 2,
+    "usedCaller": false,
+    "callerDefault": {
+      "kind": "String",
+      "value": "caller"
+    },
+    "domain": "Custom",
+    "package": "custom.package",
+    "nodeTypes": 43
+  }
+}

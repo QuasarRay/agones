@@ -61,7 +61,7 @@ pub struct DomainReport {
     #[serde(default)] pub graph_runtime_sha256:BTreeMap<String,String>,
     #[serde(default)] pub graph_api:GraphApiReport,
 }
-fn field_name(name: &str) -> String {
+pub(crate) fn field_name(name: &str) -> String {
     let name = snake_case(name);
     match name.as_str() {
         "self"|"super"|"crate" => format!("{name}_value"),
@@ -318,6 +318,7 @@ pub fn generate(schema: &Schema, input: &Path, output: &Path) -> Result<DomainRe
             "startByte":start,"endByteExclusive":end,"sha256":content_digest(&rendered.as_bytes()[start..end]),
             "property":edge.property,"schemaInfo":edge.schema_info}));
     }
+    mappings.extend(graph_domain::mappings(schema,&rendered)?);
     let report = DomainReport { format_version:3,schema_sha256:schema_digest,generator_sha256:generator_digest,
         schema_implementation_sha256:implementation_digest,cargo_lock_sha256:lock_digest,
         runtime_module_sha256:runtime_digest,vendored_source_manifests:vendor_bindings,

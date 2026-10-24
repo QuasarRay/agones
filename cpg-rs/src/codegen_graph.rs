@@ -1,13 +1,16 @@
 //! Schema-driven typed graph domain emitted by Genco as part of domain.rs.
 use super::*;
 use std::collections::BTreeSet;
+use comprende::c;
+use better_comprehension::b_tree_map;
 
 #[derive(Clone,Debug,Default,Serialize,Deserialize)]
-#[serde(rename_all="camelCase",deny_unknown_fields)]
+#[serde(default,rename_all="camelCase",deny_unknown_fields)]
 pub struct GraphApiReport {
     pub concrete_node_classes:usize,pub abstract_node_classes:usize,pub stored_property_accessors:usize,
     pub detached_property_accessors:usize,pub contained_accessors:usize,pub neighbor_steps:usize,
     pub edge_classes:usize,pub starters:usize,
+    pub reference_property_accessors:usize,pub reference_contained_accessors:usize,
 }
 fn runtime_scalar(value:&Scalar)->Result<rust::Tokens> {
     Ok(match value {
@@ -32,8 +35,8 @@ fn graph_property_type(property:&Property)->rust::Tokens {
 }
 fn classes(schema:&Schema)->Vec<&NodeType> {std::iter::once(&schema.any_node).chain(&schema.node_base_types).chain(&schema.node_types).collect()}
 fn labels_for(schema:&Schema,node:&NodeType)->BTreeSet<String> {
-    schema.node_types.iter().filter(|candidate|node.kind==NodeKind::Any || candidate.name==node.name || candidate.ancestors.contains(&node.name))
-        .map(|node|node.name.clone()).collect()
+    c![candidate.name.clone() for candidate in &schema.node_types
+        if node.kind==NodeKind::Any || candidate.name==node.name || candidate.ancestors.contains(&node.name)].into_iter().collect()
 }
 fn adjacency<'a>(schema:&'a Schema,node:&NodeType,direction:bool)->Vec<&'a AdjacentNode> {
     let nodes=schema.named_nodes();let mut owners=vec![nodes[node.name.as_str()]];
@@ -67,11 +70,11 @@ fn marker_specs(schema:&Schema,node:&NodeType,properties:&BTreeMap<&str,&Propert
 }
 fn property_methods(property:&Property,new:bool)->rust::Tokens {
     let mut methods=rust::Tokens::new();let field=field_name(&property.name);let name=quoted(property.name.as_str());
-    let getter=if new {format!("get_{}",field.trim_start_matches("r#"))}else{field.clone()};
-    let ty=graph_value_type(property.value_type);let result_ty=graph_property_type(property);
+    let getter=if new {format!("get_{}",field.trim_start_matches("r#"))}else{field.clone()};let getter=getter.as_str();
+    let ty=&graph_value_type(property.value_type);let result_ty=&graph_property_type(property);
     let get=match property.cardinality {Cardinality::List=>quote! {self.list::<$ty>($name)},Cardinality::ZeroOrOne=>quote! {self.optional::<$ty>($name)},_=>quote! {self.required::<$ty>($name)}};
     quote_in! {methods=>pub fn $getter(&self)->crate::Result<$result_ty> {$get} }
-    let setter=if new {field.clone()}else{format!("set_{}",field.trim_start_matches("r#"))};
+    let setter=if new {field.clone()}else{format!("set_{}",field.trim_start_matches("r#"))};let setter=setter.as_str();
     let arg=if property.value_type==ValueType::String && matches!(property.cardinality,Cardinality::One {..}) {quote! {impl Into<String>}}
         else if matches!(property.cardinality,Cardinality::List) && property.value_type==ValueType::String {quote! {impl IntoIterator<Item=impl Into<String>>}}
         else if matches!(property.cardinality,Cardinality::List) {quote! {impl IntoIterator<Item=$ty>}}else{result_ty.clone()};
@@ -94,6 +97,7 @@ fn property_methods(property:&Property,new:bool)->rust::Tokens {
                 else{quote! {crate::graph::PropertyInput::List(value.into_iter().map(|v|crate::graph::PropertyInput::Value(crate::graph::Value::string(v))).collect())}};
             (quote! {Option<String>},quote! {self.optional::<String>($name)},encoder)
         };
+        let nullable_ty=&nullable_ty;
         quote_in! {methods=>pub fn $null_getter(&self)->crate::Result<$nullable_ty> {$getter_body} }
         if new {quote_in! {methods=>pub fn $null_setter(&self,value:$nullable_ty)->crate::Result<&Self> {self.set($name,$encoder)} }}
         else {quote_in! {methods=>pub fn $null_setter(&self,diff:&mut crate::graph::DiffGraphBuilder,value:$nullable_ty)->crate::Result<&Self> {self.set(diff,$name,$encoder);Ok(self)} }}
@@ -110,8 +114,8 @@ fn contained_methods(schema:&Schema,field:&ContainedNode,new:bool)->Result<rust:
     let body=if matches!(field.cardinality,Cardinality::List) {quote! {Ok($get)}}else{quote! {let mut values=$get;if values.len()>1 {return Err(crate::Error::SourceNotImplemented("multiple values in a single contained property"));}Ok(values.pop().flatten())}};
     if new {quote_in! {methods=>pub fn $getter(&self,graph:Option<&crate::graph::Graph>)->crate::Result<$result_type> {$body} }}
     else {quote_in! {methods=>pub fn $getter(&self)->crate::Result<$result_type> {$body} }}
-    let set=if new {setter.clone()}else{format!("set_{}",setter.trim_start_matches("r#"))};
-    let reference=quote! {crate::graph::typed::TypedReference<super::markers::$target>};
+    let set=if new {setter.clone()}else{format!("set_{}",setter.trim_start_matches("r#"))};let set=set.as_str();
+    let reference=&quote! {crate::graph::typed::TypedReference<super::markers::$target>};
     let arg=if matches!(field.cardinality,Cardinality::List) {quote! {impl IntoIterator<Item=impl Into<$reference>>}}else{quote! {impl Into<$reference>}};
     let input=if matches!(field.cardinality,Cardinality::List) {quote! {crate::graph::PropertyInput::List(value.into_iter().map(|v|crate::graph::PropertyInput::Node(Into::<$reference>::into(v).raw())).collect())}}
         else{quote! {crate::graph::PropertyInput::Node(Into::<$reference>::into(value).raw())}};
@@ -130,44 +134,89 @@ fn contained_methods(schema:&Schema,field:&ContainedNode,new:bool)->Result<rust:
     Ok(methods)
 }
 fn traversal_property(property:&Property)->rust::Tokens {
-    let field=field_name(&property.name);let exact=format!("{}_exact",field.trim_start_matches("r#"));let not=format!("{}_not_exact",field.trim_start_matches("r#"));
-    let predicate=format!("{}_where",field.trim_start_matches("r#"));let name=quoted(property.name.as_str());let ty=graph_value_type(property.value_type);let result_ty=graph_property_type(property);
+    let field=field_name(&property.name);let field=field.as_str();let exact=format!("{}_exact",field.trim_start_matches("r#"));let not=format!("{}_not_exact",field.trim_start_matches("r#"));
+    let predicate=format!("{}_where",field.trim_start_matches("r#"));let name=quoted(property.name.as_str());let ty=&graph_value_type(property.value_type);let result_ty=&graph_property_type(property);
     let mut tokens=rust::Tokens::new();
+    if matches!(property.cardinality,Cardinality::One {..}) {
+        quote_in! {tokens=>pub fn $field(self)->impl Iterator<Item=crate::Result<$ty>>+'a {self.map(|node|node.and_then(|node|node.$field()))} }
+    }else{
+        quote_in! {tokens=>pub fn $field(self)->impl Iterator<Item=crate::Result<$ty>>+'a {self.flat_map(|node|match node.and_then(|node|node.$field()) {
+            Ok(values)=>values.into_iter().map(Ok).collect::<Vec<_>>(),Err(error)=>vec![Err(error)]
+        })} }
+    }
     quote_in! {tokens=>
-        pub fn $field(self)->impl Iterator<Item=crate::Result<$result_ty>>+'a {self.map(|node|node.and_then(|node|node.$field()))}
         pub fn $exact(self,values:impl IntoIterator<Item=$ty>)->crate::Result<Self> {let values=values.into_iter().map(crate::graph::typed::GraphValue::into_value).collect::<crate::Result<Vec<_>>>()?;Ok(self.exact($name,values,false))}
         pub fn $not(self,values:impl IntoIterator<Item=$ty>)->crate::Result<Self> {let values=values.into_iter().map(crate::graph::typed::GraphValue::into_value).collect::<crate::Result<Vec<_>>>()?;Ok(self.exact($name,values,true))}
         pub fn $predicate(self,mut predicate:impl FnMut($result_ty)->bool+'a)->Self {self.try_filter(move |node|Ok(predicate(node.$field()?)))}
     };
+    if property.value_type==ValueType::String {
+        let nullable=format!("{}_nullable",field.trim_start_matches("r#"));let nullable=nullable.as_str();
+        if matches!(property.cardinality,Cardinality::List) {quote_in! {tokens=>pub fn $nullable(self)->impl Iterator<Item=crate::Result<Option<String>>>+'a {
+            self.flat_map(|node|match node.and_then(|node|node.$nullable()) {Ok(values)=>values.into_iter().map(Ok).collect::<Vec<_>>(),Err(error)=>vec![Err(error)]})
+        } }}else if matches!(property.cardinality,Cardinality::One {..}) {quote_in! {tokens=>pub fn $nullable(self)->impl Iterator<Item=crate::Result<Option<String>>>+'a {self.map(|node|node.and_then(|node|node.$nullable()))} }}
+    }
+    if matches!(property.value_type,ValueType::Byte|ValueType::Short|ValueType::Int|ValueType::Long|ValueType::Float|ValueType::Double|ValueType::Char) {
+        for (suffix,operator) in [("gt",">"),("gte",">="),("lt","<"),("lte","<=")] {
+            let method=format!("{}_{}",field.trim_start_matches("r#"),suffix);
+            let predicate=match property.cardinality {Cardinality::One {..}=>quote! {node.$field()? $operator value},
+                Cardinality::ZeroOrOne=>quote! {node.$field()?.is_some_and(|v|v $operator value)},Cardinality::List=>quote! {node.$field()?.into_iter().any(|v|v $operator value)}};
+            quote_in! {tokens=>pub fn $method(self,value:$ty)->Self {self.try_filter(move |node|Ok($predicate))} }
+        }
+    }
     tokens
 }
-fn neighbors(schema:&Schema,node:&NodeType,methods:&mut rust::Tokens,traversal:&mut rust::Tokens)->Result<usize> {
+fn reference_property(property:&Property)->rust::Tokens {
+    let field=field_name(&property.name);let field=field.as_str();let ty=&graph_value_type(property.value_type);let result=&graph_property_type(property);let name=quoted(property.name.as_str());
+    let get=match property.cardinality {Cardinality::List=>quote! {self.list::<$ty>(graph,$name)},Cardinality::ZeroOrOne=>quote! {self.optional::<$ty>(graph,$name)},_=>quote! {self.required::<$ty>(graph,$name)}};
+    let mut methods=quote! {pub fn $field(&self,graph:Option<&crate::graph::Graph>)->crate::Result<$result> {$get}};
+    if property.value_type==ValueType::String {
+        let nullable=format!("{}_nullable",field.trim_start_matches("r#"));
+        if matches!(property.cardinality,Cardinality::List) {quote_in! {methods=>pub fn $nullable(&self,graph:Option<&crate::graph::Graph>)->crate::Result<Vec<Option<String>>> {self.list_nullable::<String>(graph,$name)} }}
+        else {quote_in! {methods=>pub fn $nullable(&self,graph:Option<&crate::graph::Graph>)->crate::Result<Option<String>> {self.optional::<String>(graph,$name)} }}
+    }
+    methods
+}
+fn reference_contained(schema:&Schema,field:&ContainedNode)->Result<rust::Tokens> {
+    let target=&schema.nodes().find(|node|node.name==field.node_type).ok_or_else(||Error::Invalid("contained reference target missing".into()))?.class_name;
+    let method=field_name(&field.local_name);let name=quoted(field.local_name.as_str());
+    let reference=quote! {crate::graph::typed::TypedReference<super::markers::$target>};
+    let (ty,body)=if matches!(field.cardinality,Cardinality::List) {(quote! {Vec<Option<$reference>>},quote! {self.contained::<super::markers::$target>(graph,$name)})}
+        else{(quote! {Option<$reference>},quote! {let mut values=self.contained::<super::markers::$target>(graph,$name)?;if values.len()>1 {return Err(crate::Error::SourceNotImplemented("multiple values in contained reference property"));}Ok(values.pop().flatten())})};
+    Ok(quote! {pub fn $method(&self,graph:Option<&crate::graph::Graph>)->crate::Result<$ty> {$body}})
+}
+fn neighbors(schema:&Schema,node:&NodeType,mut methods:&mut rust::Tokens,mut traversal:&mut rust::Tokens)->Result<usize> {
     let mut count=0;let mut used=BTreeSet::new();
     for (outgoing,direction) in [(true,quote! {crate::graph::Direction::Outgoing}),(false,quote! {crate::graph::Direction::Incoming})] {
+        let direction=&direction;
         let mut groups:BTreeMap<&str,Vec<&AdjacentNode>>=BTreeMap::new();for edge in adjacency(schema,node,outgoing) {groups.entry(&edge.edge).or_default().push(edge);}
         for (edge,rows) in groups {
             let edge_name=quoted(edge);let mut labels=BTreeSet::new();let nodes=schema.named_nodes();
             for row in &rows {labels.extend(labels_for(schema,nodes[row.neighbor.as_str()]));}
-            let target=&common_class(schema,&labels).class_name;let suffix=if outgoing {"out"}else{"in"};
-            let step=format!("{}_{}",snake_case(edge),suffix);
-            quote_in! {methods=>pub fn $step(&self)->crate::Result<crate::graph::typed::NodeTraversal<'a,super::markers::$target>> {self.neighbors($edge_name,$direction)} }
-            quote_in! {traversal=>pub fn $step(self)->crate::graph::typed::NodeTraversal<'a,super::markers::$target> {self.adjacent($edge_name,$direction)} }
+            let target=&common_class(schema,&labels).class_name;let via=target;let suffix=if outgoing {"out"}else{"in"};
+            let accessor=schema.edges.iter().find(|item|item.name==edge).and_then(|edge|edge.default_accessor_name.as_deref()).unwrap_or(edge);
+            let step=format!("{}_{}",snake_case(accessor),suffix);let step_name=step.as_str();
+            quote_in! {methods=>pub fn $step_name(&self)->crate::Result<crate::graph::typed::NodeTraversal<'a,super::markers::$target>> {self.neighbors_cast($edge_name,$direction)} }
+            quote_in! {traversal=>pub fn $step_name(self)->crate::graph::typed::NodeTraversal<'a,super::markers::$target> {self.adjacent_cast($edge_name,$direction)} }
             used.insert(step);count+=1;
             for row in rows {
                 let target=&nodes[row.neighbor.as_str()].class_name;
                 let specific=format!("{}_via_{}_{}",snake_case(target),snake_case(edge),suffix);
-                if used.insert(specific.clone()) {
-                    quote_in! {methods=>pub fn $specific(&self)->crate::Result<crate::graph::typed::NodeTraversal<'a,super::markers::$target>> {self.neighbors($edge_name,$direction)} }
-                    quote_in! {traversal=>pub fn $specific(self)->crate::graph::typed::NodeTraversal<'a,super::markers::$target> {self.adjacent($edge_name,$direction)} }count+=1;
+                if used.insert(specific.clone()) {let specific_name=specific.as_str();
+                    quote_in! {methods=>pub fn $specific_name(&self)->crate::Result<crate::graph::typed::NodeTraversal<'a,super::markers::$target>> {self.neighbors_via::<super::markers::$via,super::markers::$target>($edge_name,$direction)} }
+                    quote_in! {traversal=>pub fn $specific_name(self)->crate::graph::typed::NodeTraversal<'a,super::markers::$target> {self.adjacent_via::<super::markers::$via,super::markers::$target>($edge_name,$direction)} }count+=1;
                 }
                 if let Some(custom)=&row.custom_step_name {let custom=field_name(custom);
                     if !used.insert(custom.clone()) {continue;}
+                    let custom=custom.as_str();
                     let (ty,body)=match row.cardinality {
-                        EdgeCardinality::One=>(quote! {crate::graph::typed::TypedNode<'a,super::markers::$target>},quote! {self.neighbor_one($edge_name,$direction)}),
-                        EdgeCardinality::ZeroOrOne=>(quote! {Option<crate::graph::typed::TypedNode<'a,super::markers::$target>>},quote! {self.neighbor_optional($edge_name,$direction)}),
-                        EdgeCardinality::List=>(quote! {crate::graph::typed::NodeTraversal<'a,super::markers::$target>},quote! {self.neighbors($edge_name,$direction)}),
+                        EdgeCardinality::One=>(quote! {crate::graph::typed::TypedNode<'a,super::markers::$target>},quote! {self.neighbor_one_via::<super::markers::$via,super::markers::$target>($edge_name,$direction)}),
+                        EdgeCardinality::ZeroOrOne=>(quote! {Option<crate::graph::typed::TypedNode<'a,super::markers::$target>>},quote! {self.neighbor_optional_via::<super::markers::$via,super::markers::$target>($edge_name,$direction)}),
+                        EdgeCardinality::List=>(quote! {crate::graph::typed::NodeTraversal<'a,super::markers::$target>},quote! {self.neighbors_via::<super::markers::$via,super::markers::$target>($edge_name,$direction)}),
                     };
-                    quote_in! {methods=>pub fn $custom(&self)->crate::Result<$ty> {$body} }count+=1;
+                    quote_in! {methods=>pub fn $custom(&self)->crate::Result<$ty> {$body} }
+                    let step=match row.cardinality {EdgeCardinality::One=>quote! {self.one_step_via::<super::markers::$via,super::markers::$target>($edge_name,$direction)},
+                        EdgeCardinality::ZeroOrOne=>quote! {self.optional_step_via::<super::markers::$via,super::markers::$target>($edge_name,$direction)},EdgeCardinality::List=>quote! {self.adjacent_via::<super::markers::$via,super::markers::$target>($edge_name,$direction)}};
+                    quote_in! {traversal=>pub fn $custom(self)->crate::graph::typed::NodeTraversal<'a,super::markers::$target> {$step} }count+=1;
                 }
             }
         }
@@ -175,15 +224,16 @@ fn neighbors(schema:&Schema,node:&NodeType,methods:&mut rust::Tokens,traversal:&
     Ok(count)
 }
 pub fn generate(schema:&Schema)->Result<(rust::Tokens,GraphApiReport)> {
-    let properties:BTreeMap<_,_>=schema.properties.iter().map(|p|(p.name.as_str(),p)).collect();let mut result=GraphApiReport::default();
-    let mut markers=rust::Tokens::new();let mut stored=rust::Tokens::new();let mut new_nodes=rust::Tokens::new();let mut upcasts=rust::Tokens::new();
+    let properties:BTreeMap<_,_>=b_tree_map! {p.name.as_str()=>p for p in &schema.properties};let mut result=GraphApiReport::default();
+    let mut markers=rust::Tokens::new();let mut stored=rust::Tokens::new();let mut new_nodes=rust::Tokens::new();let mut upcasts=rust::Tokens::new();let mut references=rust::Tokens::new();
     let mut class_fields=rust::Tokens::new();let mut starter_methods=rust::Tokens::new();let mut edge_markers=rust::Tokens::new();let mut edge_types=rust::Tokens::new();
     for node in classes(schema) {
         let class=&node.class_name;let label=quoted(node.name.as_str());let labels=labels_for(schema,node);let mut accepted=rust::Tokens::new();
         for name in &labels {let name=quoted(name.as_str());quote_in! {accepted=>$name,};}
         let rules=marker_specs(schema,node,&properties)?;let mut allowed=rust::Tokens::new();
         for (outgoing,direction) in [(true,quote! {crate::graph::Direction::Outgoing}),(false,quote! {crate::graph::Direction::Incoming})] {
-            let mut groups:BTreeMap<&str,BTreeSet<String>>=BTreeMap::new();let nodes=schema.named_nodes();
+            let direction=&direction;
+        let mut groups:BTreeMap<&str,BTreeSet<String>>=BTreeMap::new();let nodes=schema.named_nodes();
             for edge in adjacency(schema,node,outgoing) {groups.entry(&edge.edge).or_default().extend(labels_for(schema,nodes[edge.neighbor.as_str()]));}
             for (edge,labels) in groups {let edge=quoted(edge);let mut targets=rust::Tokens::new();for label in labels {let label=quoted(label);quote_in! {targets=>$label,};}
                 quote_in! {allowed=>($direction,$edge)=>&[$targets],};}
@@ -201,13 +251,18 @@ pub fn generate(schema:&Schema)->Result<(rust::Tokens,GraphApiReport)> {
                 fn allowed_neighbors(edge:&str,direction:crate::graph::Direction)->&'static [&'static str] {match (direction,edge) {$allowed _=>&[]}}
             }
         };
-        let mut getters=rust::Tokens::new();let mut setters=rust::Tokens::new();let mut traversal=rust::Tokens::new();
+        let mut getters=rust::Tokens::new();let mut setters=rust::Tokens::new();let mut traversal=rust::Tokens::new();let mut reference_getters=rust::Tokens::new();
         for name in &node.all_properties {let property=properties[name.as_str()];let get=property_methods(property,false);let set=property_methods(property,true);let query=traversal_property(property);
+            let reference=reference_property(property);quote_in! {reference_getters=>$reference};result.reference_property_accessors+=1;
             quote_in! {getters=>$get};quote_in! {setters=>$set};quote_in! {traversal=>$query};result.stored_property_accessors+=1;
             if node.kind==NodeKind::Concrete {result.detached_property_accessors+=1;}
         }
         for field in &node.contained_nodes {let get=contained_methods(schema,field,false)?;let set=contained_methods(schema,field,true)?;
+            let reference=reference_contained(schema,field)?;quote_in! {reference_getters=>$reference};result.reference_contained_accessors+=1;
             quote_in! {getters=>$get};quote_in! {setters=>$set};result.contained_accessors+=1;}
+        header(&mut references,format!("// CPG_REFERENCE_CLASS:{}",node.name));let reference_name=format!("{class}Reference");
+        quote_in! {references=>pub type $reference_name=crate::graph::typed::TypedReference<super::markers::$class>;impl crate::graph::typed::TypedReference<super::markers::$class> {$reference_getters} }
+        header(&mut references,format!("// CPG_REFERENCE_CLASS_END:{}",node.name));
         result.neighbor_steps+=neighbors(schema,node,&mut getters,&mut traversal)?;
         header(&mut stored,format!("// CPG_STORED_CLASS:{}",node.name));
         quote_in! {stored=>
@@ -215,11 +270,13 @@ pub fn generate(schema:&Schema)->Result<(rust::Tokens,GraphApiReport)> {
             impl<'a> crate::graph::typed::TypedNode<'a,super::markers::$class> {$getters}
             impl<'a> crate::graph::typed::NodeTraversal<'a,super::markers::$class> {$traversal}
         };
+        header(&mut stored,format!("// CPG_STORED_CLASS_END:{}",node.name));
         if node.kind==NodeKind::Concrete {
             let kind=schema.node_types.iter().position(|n|n.name==node.name).expect("concrete class comes from schema").to_string();
             quote_in! {markers=>impl crate::graph::typed::ConcreteNodeClass for $class {const NODE_KIND:u16=$kind;} }
             let name=format!("New{class}");header(&mut new_nodes,format!("// CPG_NEW_CLASS:{}",node.name));
             quote_in! {new_nodes=>pub type $name=crate::graph::typed::TypedNew<super::markers::$class>;impl crate::graph::typed::TypedNew<super::markers::$class> {$setters} }
+            header(&mut new_nodes,format!("// CPG_NEW_CLASS_END:{}",node.name));
             quote_in! {class_fields=>$label=><markers::$class as crate::graph::typed::NodeClass>::fields(),};result.concrete_node_classes+=1;
         }else{result.abstract_node_classes+=1;}
         let mut ancestors=node.ancestors.clone();if node.kind!=NodeKind::Any {ancestors.push(schema.any_node.name.clone());}
@@ -245,11 +302,12 @@ pub fn generate(schema:&Schema)->Result<(rust::Tokens,GraphApiReport)> {
             quote_in! {starter_methods=>fn $name(&self)->crate::graph::typed::NodeTraversal<'_,markers::$class> {crate::graph::typed::NodeTraversal::all(self.cpg_graph())} }
             result.starters+=1;
         }
+        header(&mut markers,format!("// CPG_TYPED_CLASS_END:{}",node.name));
     }
     for (kind,edge) in schema.edges.iter().enumerate() {
-        let class=&edge.class_name;let alias=format!("{class}Edge");let label=quoted(edge.name.as_str());let kind=kind.to_string();let mut methods=rust::Tokens::new();
+        let class=&edge.class_name;let alias=format!("{class}Edge");let alias_name=alias.as_str();let label=quoted(edge.name.as_str());let kind=kind.to_string();let mut methods=rust::Tokens::new();
         if let Some(property)=edge.property.as_deref().map(|name|properties[name]) {
-            let field=field_name(&property.name);let set=format!("set_{}",field.trim_start_matches("r#"));let ty=graph_value_type(property.value_type);
+            let field=field_name(&property.name);let set=format!("set_{}",field.trim_start_matches("r#"));let ty=&graph_value_type(property.value_type);
             let nullable=matches!(property.value_type,ValueType::String|ValueType::NodeRef|ValueType::Unknown);
             if nullable {quote_in! {methods=>pub fn $field(&self)->crate::Result<Option<$ty>> {self.optional_property()}
                 pub fn $set(&self,diff:&mut crate::graph::DiffGraphBuilder,value:Option<$ty>)->crate::Result<&Self> {self.set(diff,value.map(crate::graph::typed::GraphValue::into_value).transpose()?.unwrap_or(crate::graph::Value::Null));Ok(self)} }}
@@ -258,13 +316,14 @@ pub fn generate(schema:&Schema)->Result<(rust::Tokens,GraphApiReport)> {
         }
         quote_in! {edge_markers=>#[derive(Clone,Copy,Debug)]pub struct $class;impl crate::graph::typed::EdgeClass for $class {const LABEL:&'static str=$label;const EDGE_KIND:u16=$kind;} }
         header(&mut edge_types,format!("// CPG_TYPED_EDGE:{}",edge.name));
-        quote_in! {edge_types=>pub type $alias<'a>=crate::graph::typed::TypedEdge<'a,super::edge_markers::$class>;impl crate::graph::typed::TypedEdge<'_,super::edge_markers::$class> {$methods} }
-        let starter=format!("{}_edges",snake_case(&edge.name));quote_in! {starter_methods=>fn $starter(&self)->impl Iterator<Item=crate::Result<edges::$alias<'_>>> {edges::$alias::all(self.cpg_graph())} }
+        quote_in! {edge_types=>pub type $alias_name<'a>=crate::graph::typed::TypedEdge<'a,super::edge_markers::$class>;impl crate::graph::typed::TypedEdge<'_,super::edge_markers::$class> {$methods} }
+        header(&mut edge_types,format!("// CPG_TYPED_EDGE_END:{}",edge.name));
+        let starter=format!("{}_edges",snake_case(&edge.name));quote_in! {starter_methods=>fn $starter(&self)->impl Iterator<Item=crate::Result<edges::$alias_name<'_>>> {edges::$alias_name::all(self.cpg_graph())} }
         result.edge_classes+=1;
     }
     let any=&schema.any_node.class_name;let mut output=rust::Tokens::new();
     quote_in! {output=>
-        pub mod markers {$markers} pub mod stored {$stored} pub mod new_nodes {$new_nodes}
+        pub mod markers {$markers} pub mod stored {$stored} pub mod new_nodes {$new_nodes} pub mod references {$references}
         pub mod edge_markers {$edge_markers} pub mod edges {$edge_types}
         fn class_fields(label:&str)->&'static [crate::graph::typed::FieldRule] {match label {$class_fields _=>&[]}}
         $upcasts
@@ -274,10 +333,33 @@ pub fn generate(schema:&Schema)->Result<(rust::Tokens,GraphApiReport)> {
             fn ids<I:IntoIterator<Item=crate::graph::NodeId>>(&self,ids:I)->crate::graph::typed::NodeTraversal<'_,markers::$any> {
                 crate::graph::typed::NodeTraversal::from_ids(self.cpg_graph(),ids.into_iter().collect::<Vec<_>>())
             }
+            fn id(&self,id:crate::graph::NodeId)->crate::graph::typed::NodeTraversal<'_,markers::$any> {self.ids([id])}
             $starter_methods
         }
         impl CpgStarters for crate::graph::Graph {fn cpg_graph(&self)->&crate::graph::Graph {self}}
         impl CpgStarters for crate::graph::Cpg {fn cpg_graph(&self)->&crate::graph::Graph {self.graph()}}
     };
     Ok((output,result))
+}
+
+pub fn mappings(schema:&Schema,rendered:&str)->Result<Vec<Value>> {
+    let mut result=Vec::new();
+    let mut record=|role:&str,name:&str,symbol:String,info:Value|->Result<()> {
+        let begin=format!("// CPG_{role}:{name}\n");let end=format!("// CPG_{role}_END:{name}\n");
+        if rendered.matches(&begin).count()!=1 || rendered.matches(&end).count()!=1 {return Err(Error::Invalid(format!("missing/ambiguous graph binding markers for {role}:{name}")));}
+        let start=rendered.find(&begin).expect("checked marker");let finish=rendered.find(&end).expect("checked end marker");
+        if finish<=start {return Err(Error::Invalid("graph binding marker order is reversed".into()));}
+        result.push(json!({"graphApiRole":role,"schemaIdentity":name,"symbol":symbol,"path":"domain.rs", "startByte":start,
+            "endByteExclusive":finish,"sha256":content_digest(&rendered.as_bytes()[start..finish]),"schemaInfo":info}));Ok(())
+    };
+    for node in classes(schema) {
+        let info=json!({"definition":node.schema_info,"properties":node.all_properties,"containedNodes":node.contained_nodes,"ancestors":node.ancestors,
+            "outEdges":adjacency(schema,node,true),"inEdges":adjacency(schema,node,false)});
+        record("TYPED_CLASS",&node.name,format!("graph::markers::{}",node.class_name),info.clone())?;
+        record("STORED_CLASS",&node.name,format!("graph::stored::{}",node.class_name),info.clone())?;
+        record("REFERENCE_CLASS",&node.name,format!("graph::references::{}Reference",node.class_name),info.clone())?;
+        if node.kind==NodeKind::Concrete {record("NEW_CLASS",&node.name,format!("graph::new_nodes::New{}",node.class_name),info)?;}
+    }
+    for edge in &schema.edges {record("TYPED_EDGE",&edge.name,format!("graph::edges::{}Edge",edge.class_name),json!({"definition":edge.schema_info,"property":edge.property}))?;}
+    Ok(result)
 }
