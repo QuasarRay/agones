@@ -3,7 +3,7 @@ resolver = "2"
 members = [
     "crates/agones-core",
     "crates/agones-macros",
-    "crates/agones-rusternetes",
+    "crates/agones-rusternetes", "crates/util",
 ]
 
 [workspace.package]
