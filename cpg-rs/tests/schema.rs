@@ -5,6 +5,48 @@ fn bootstrap() -> Bootstrap {
 }
 
 #[test]
+fn schema_base_preserves_scala_default_and_validates_dynamic_json() {
+    struct MinimalSchema;
+
+    impl SchemaBase for MinimalSchema {
+        fn doc_index(&self) -> i32 { 7 }
+        fn description(&self) -> &str { "minimal" }
+    }
+
+    let minimal = MinimalSchema;
+    assert_eq!(minimal.doc_index(), 7);
+    assert_eq!(minimal.description(), "minimal");
+    assert!(!minimal.provided_by_frontend());
+
+    let value = serde_json::json!({
+        "definitionClass": "fixture.Definition",
+        "schemaClass": "fixture.Schema",
+        "schemaName": "Fixture",
+        "docIndex": 3,
+        "description": "fixture schema"
+    });
+    validate_schema_base_json(&value).unwrap();
+
+    let info: SchemaInfo = serde_json::from_value(value).unwrap();
+    assert_eq!(info.doc_index(), 3);
+    assert_eq!(info.description(), "fixture schema");
+    assert!(!info.provided_by_frontend());
+
+    let out_of_range = serde_json::json!({
+        "docIndex": i64::from(i32::MAX) + 1,
+        "description": "invalid"
+    });
+    assert!(validate_schema_base_json(&out_of_range).is_err());
+
+    let wrong_type = serde_json::json!({
+        "docIndex": 1,
+        "description": "invalid",
+        "providedByFrontend": "false"
+    });
+    assert!(validate_schema_base_json(&wrong_type).is_err());
+}
+
+#[test]
 fn both_upstream_schema_configurations_rebuild_without_losing_metadata() {
     let model = bootstrap();
     for schema in [model.domain_schema, model.protobuf_schema] {
