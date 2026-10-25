@@ -27,6 +27,8 @@ pub mod domain;
 #[path = "../generated/schema_constructors.rs"]
 #[cfg(feature = "native-schema")]
 pub mod cpg_schema;
+#[cfg(feature = "native-schema")]
+pub mod cpg_schema_definition;
 
 #[derive(Debug)]
 pub enum Error {
