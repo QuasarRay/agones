@@ -1,9 +1,9 @@
 name: cpg-schema-base-branch-check
 
 on:
-  push:
+  pull_request:
     branches:
-      - cpg-schema-base-jsonschema
+      - agones-rs-dev
 
 permissions:
   contents: write
