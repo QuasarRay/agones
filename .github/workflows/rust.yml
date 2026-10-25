@@ -285,24 +285,3 @@ jobs:
           test "$COMMON_RESULT" = success
           test "$VALIDATION_RESULT" = success
           test "$CONTRACT_RESULT" = success
-
-  cpg-schema-base-jsonschema-check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install pinned Rust toolchain
-        run: rustup toolchain install 1.98.1 --profile minimal
-      - name: Generate cpg-rs lockfile
-        working-directory: cpg-rs
-        run: cargo +1.98.1 generate-lockfile
-      - name: Run SchemaBase contract test
-        working-directory: cpg-rs
-        run: cargo +1.98.1 test --test schema schema_base_preserves_scala_default_and_validates_dynamic_json
-      - name: Emit generated lockfile
-        shell: bash
-        run: |
-          echo "CPG_LOCK_BASE64_BEGIN"
-          base64 -w0 cpg-rs/Cargo.lock
-          echo
-          echo "CPG_LOCK_BASE64_END"
-
