@@ -7,8 +7,27 @@ use derive_deftly::{Deftly, define_derive_deftly};
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet};
 
-#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase", deny_unknown_fields)]
+#[jsonschema::validator(
+    schema = r#"{
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+            "docIndex": {
+                "type": "integer",
+                "minimum": -2147483648,
+                "maximum": 2147483647
+            },
+            "description": { "type": "string" },
+            "providedByFrontend": { "type": "boolean", "default": false }
+        },
+        "required": ["docIndex", "description"]
+    }"#,
+    draft = Draft202012
+)]
+struct SchemaBaseJsonSchema;
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct SchemaInfo {
     pub definition_class: String,
     pub schema_class: String,
@@ -16,6 +35,53 @@ pub struct SchemaInfo {
     pub doc_index: i32,
     pub description: String,
     pub provided_by_frontend: bool,
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct SchemaInfoRepr {
+    definition_class: String,
+    schema_class: String,
+    schema_name: String,
+    doc_index: i32,
+    description: String,
+    #[serde(default)]
+    provided_by_frontend: bool,
+}
+
+/// Validate the dynamically-typed JSON representation of the Scala `SchemaBase` contract.
+///
+/// Extra fields are intentionally allowed because concrete schema descriptors such as
+/// `SchemaInfo` carry metadata in addition to the three `SchemaBase` members.
+pub fn validate_schema_base_json(value: &serde_json::Value) -> Result<()> {
+    SchemaBaseJsonSchema::validate(value).map_err(|error| {
+        Error::Invalid(format!(
+            "invalid SchemaBase JSON at {}: {error}",
+            error.instance_path()
+        ))
+    })
+}
+
+impl<'de> Deserialize<'de> for SchemaInfo {
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        use serde::de::Error as _;
+
+        let value = serde_json::Value::deserialize(deserializer)?;
+        validate_schema_base_json(&value).map_err(D::Error::custom)?;
+        let value: SchemaInfoRepr = serde_json::from_value(value).map_err(D::Error::custom)?;
+
+        Ok(Self {
+            definition_class: value.definition_class,
+            schema_class: value.schema_class,
+            schema_name: value.schema_name,
+            doc_index: value.doc_index,
+            description: value.description,
+            provided_by_frontend: value.provided_by_frontend,
+        })
+    }
 }
 
 /// All defaults in handwritten CpgSchema.PropertyDefaults, including types absent from today's CPG fields.
