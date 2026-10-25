@@ -2,6 +2,7 @@
 //! Upstream source and per-body port mappings are retained in verification/agones.
 
 pub mod schema;
+pub mod schema_base;
 pub mod codegen;
 pub mod construction;
 pub mod protobuf_schema;

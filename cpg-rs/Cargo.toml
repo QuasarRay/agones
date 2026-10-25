@@ -23,6 +23,7 @@ derive-deftly = "=1.14.0"
 comprende = { path = "../third_party/first-generation/comprende" }
 better_comprehension = { path = "../third_party/first-generation/better-comprehension" }
 genco = { path = "../third_party/first-generation/genco" }
+jsonschema = { version = "=0.60.1", default-features = false, features = ["macros"] }
 serde = { version = "=1.0.229", features = ["derive"] }
 serde_json = { version = "=1.0.154", features = ["arbitrary_precision"] }
 sha2 = "=0.11.1"
