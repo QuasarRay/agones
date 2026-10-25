@@ -277,6 +277,6 @@ mod tests {
             schema.base_package,
             "io.shiftleft.codepropertygraph.generated"
         );
-        assert_eq!(schema.additional_traversals_packages, ["io.shiftleft"]);
+        assert_eq!(schema.additional_traversals_packages, vec!["io.shiftleft".to_owned()]);
     }
 }
