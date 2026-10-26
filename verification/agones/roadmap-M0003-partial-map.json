@@ -1,38 +1,70 @@
 {
   "composition": {
     "application_composition": "Utility APIs and lifecycle consumers are authored; full source command/controller/server parent composition remains required by this milestone and later lifecycle owners.",
+    "callback_owner": "WebHook and APIServer source data own ordered handler/delegate collections. Closures retain only shared source data, avoiding mux -> bound owner -> mux Arc cycles.",
     "crd_owner": "RusternetesCrdContext owns HTTP client/base URL. The synchronous parent future owns each GET and poll timer and drops them on failure/timeout; no detached task or alternate orchestrator adapter.",
     "derive_deftly_templates": [
       "UtilityFeatureProviders",
       "UtilityCrdProviders",
+      "UtilityRuntimeProviders",
       "SourceErrorOrigin"
     ],
     "feature_owner": "UtilityFeatureContext::feature_state owns one RwLock<FeatureGates>; M0001 state moves through into_parts/from_initialized. Existing core parser is reused, not duplicated.",
-    "logging_scope": "LogEntry currently carries immutable field projections. Shared logging formatter/level/error-handler/output resource remains an explicit runtime.go gap.",
+    "http_tls_owner": "SourceMux is the source HTTP route table, not an effect-provider registry. Listeners/connection tasks/handshake timers/response channels belong to native CGP effects. Cert reload shares one certServer store; source fallback files and hardcoded reload files retain distinct roles.",
+    "logging_scope": "UtilityRuntimeOwner owns shared SourceLogger and SourceErrorBackoff. UtilityRuntimeContext and derived LogEntry values share those resources; CRD logging delegates to the same runtime.",
     "production_package": "Existing util workspace package; Cargo lib entrypoint is rust-support/agones/src/utility_lib.rs",
+    "task_owner": "UtilityRuntimeOwner retains one strong UtilityTaskScope; contexts carry Weak references. Root shutdown cancels and joins owned tasks. HTTP request scopes and connection JoinSets transfer a drain future to the parent; rejection returns the live future for inline cancel/join. Drop abort is an emergency cleanup path, not async-join evidence.",
     "typed_declarations": [
       "UtilityFeatureContext",
       "RusternetesCrdContext",
+      "UtilityRuntimeOwner",
+      "UtilityRuntimeContext",
+      "UtilityTaskScope",
+      "SourceLogger",
+      "SourceErrorBackoff",
       "Errors",
-      "ResourceType"
+      "ResourceType",
+      "SourceMux",
+      "ResponseWriter",
+      "NativeWatch",
+      "certServer",
+      "https::Server",
+      "httpserver::Server",
+      "WebHook",
+      "AdmissionReview",
+      "APIServer",
+      "APIResourceList",
+      "MetaObject"
     ]
   },
-  "dependency_adoption": "Only existing root lock package identities were added to util dependencies; Tokio sync feature is explicit. No Cargo resolver/build/probe was run.",
+  "dependency_adoption": "Native backend declarations retain existing root-lock HTTP/TLS/Tokio/JSON/YAML/base64/libc identities. comprende and better_comprehension reuse the already vendored first-generation sources; five exact package blocks (including clean-macro-docs/if_chain/syn 1) were adopted from the existing isolated CPG lock. Direct util dependency bookkeeping was authored manually, including base64 0.22.1 disambiguation. No resolver, compiler, formatter, macro/API probe or package execution ran.",
   "disposition": "READY",
-  "entries_not_authored_in_mirror": 9,
-  "entries_with_authored_source": 5,
+  "entries_not_authored_in_mirror": 2,
+  "entries_with_authored_source": 12,
   "files": [
     {
+      "authored_sha256": "c5a08b1672ad8449312cf6ce700ff6dbda254d05dadccd09c21aa36321cf06bd",
+      "authored_symbols_or_groups": [
+        "NewAPIServer OpenAPI-v2/v3/root discovery registration and startup log",
+        "AddAPIResource shared discovery list, namespace prefix and delegate overwrite",
+        "resourceHandler split/delegate/404 callbacks",
+        "addSerializedHandler GET/serializer/shallow-copy/target-kind/encoding-error policy",
+        "Scheme/Codecs source two-kind initializer and real JSON/YAML/Kubernetes protobuf encoders",
+        "AcceptedSerializer/negotiation and splitNameSpaceResource",
+        "API resource slice sharing and independent target TypeMeta"
+      ],
       "destination": "agones-rs/pkg/util/apiserver/apiserver.rs",
       "remaining": [
-        "Complete source body/initializer/callback/effect implementation and ownership adoption. No placeholder .rs file is counted as progress."
+        "Complete Go unstable-sort/ParseFloat media negotiation boundary; current parser retains the source comparator and q=0 behavior but insertion order is not claimed equal for all clauses.",
+        "Exact Go YAML scalar/format profile and public source scheme/codec caller profiles need reconciliation. Native encoders are authored, not run.",
+        "Complete HTTP request/mux/response boundary and actual extension-controller/CRD-handler adoption; existing implementations remain preserved."
       ],
       "source_git_blob": "84f47785c726ae04765999b31ad710413963a199",
       "source_id": "agones:pkg/util/apiserver/apiserver.go",
       "source_owner_milestone": "M0003",
       "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
       "source_sha256": "67e4b15b16088940677a899b870053ee32f7aaea40819bb5c8d059820b9f2a68",
-      "status": "REQUIRED_NOT_AUTHORED_IN_LITERAL_MIRROR"
+      "status": "AUTHORED_UNVERIFIED_PARTIAL"
     },
     {
       "authored_sha256": "86d59b98438b2a1e905fed4fa30f5990048c35c90ffe49e86ae40adaac3144f5",
@@ -41,11 +73,12 @@
         "CrdPollClock owned timer and deadline",
         "CrdReader/CrdEstablishmentWaiter/CrdEstablishmentLogger capabilities",
         "RusternetesCrdContext typed CGP/derive-deftly composition",
-        "actual HTTP GET native transport and source resource-name validation"
+        "actual HTTP GET native transport and source resource-name validation",
+        "shared UtilityRuntimeContext JSON logger integration instead of separate tracing event"
       ],
       "destination": "agones-rs/pkg/util/crd/crd.rs",
       "remaining": [
-        "Complete shared source logging/formatter integration and source client error/status/encoding boundary accounting. Current native transport preserves its actual errors without asserting Go-client equivalence.",
+        "Complete source client error/status/encoding boundary accounting. Shared source logging is connected; its general Go formatter/interface profiles remain partial.",
         "Existing Rusternetes controller stack CRD/cache barrier bypass remains untouched. Exact source-controller adoption must replace it in the later lifecycle work."
       ],
       "source_git_blob": "33c0fd1919e4383387842e9d8ea834fbda4e75a4",
@@ -90,55 +123,90 @@
       "status": "AUTHORED_UNVERIFIED_PARTIAL"
     },
     {
+      "authored_sha256": "b190b19ca16dc78085ae4bee81c4deb3ebb512b6f58201df3ee0364db32ab3a9",
+      "authored_symbols_or_groups": [
+        "Watch logger/path, captured successful NewWatcher nil error callback and owned batch task",
+        "batchWatch nil initial timer channel, first-event batching, callback-before-clear, error and closed-channel selection",
+        "Native Linux/Android inotify fd, real readiness/read, event/error rendezvous, overflow/ignored/missing-path handling",
+        "explicit close panic, fd-close completion, parent cancellation and join ownership"
+      ],
       "destination": "agones-rs/pkg/util/fswatch/fswatch.rs",
       "remaining": [
-        "Complete source body/initializer/callback/effect implementation and ownership adoption. No placeholder .rs file is counted as progress."
+        "Non-Linux/Android native watcher providers remain absent; macOS/BSD/Windows/Solaris source profiles are not complete.",
+        "Reconcile exact startup/read/Add/Close ordering, errno/path byte formatting, channel/cancellation races and source path/operation profiles.",
+        "Application owner must explicitly await shutdown; WatchHandle Drop requests cleanup but cannot itself await the reader."
       ],
       "source_git_blob": "7c46058c214f79361f457461f2b57df9a4b89cf1",
       "source_id": "agones:pkg/util/fswatch/fswatch.go",
       "source_owner_milestone": "M0003",
       "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
       "source_sha256": "23ac1767229cb4699c1e7e1bd41c4be17de45088573a3a8f00bfc9ff9de33d95",
-      "status": "REQUIRED_NOT_AUTHORED_IN_LITERAL_MIRROR"
+      "status": "AUTHORED_UNVERIFIED_PARTIAL"
     },
     {
+      "authored_sha256": "08d7c53722a3e81065dc906ed910fb22bab34164e70d71e2d55c08512cda106f",
+      "authored_symbols_or_groups": [
+        "sensitiveHeaders and redactSensitiveHeaders key-preserving projection with shared non-sensitive values",
+        "LogRequest method/URL/host/redacted headers/requestURI",
+        "ErrorHTTPHandler runtime double error handling and actual HTTP 500 write",
+        "FourZeroFour actual streaming body read, success-only close, warning/404 and read-error 500"
+      ],
       "destination": "agones-rs/pkg/util/https/https.rs",
       "remaining": [
-        "Complete source body/initializer/callback/effect implementation and ownership adoption. No placeholder .rs file is counted as progress."
+        "Complete source Header slice alias/mutation and deferred log-field projection behavior. Native header storage currently shares immutable Arc vectors.",
+        "Complete raw-byte Go string/URL/error/JSON field projections and HTTP sniff/framing/mux profiles; no full HTTP parity claim."
       ],
       "source_git_blob": "f5ca0c6c16c5c5a24fdac6a0b6373a390e9f385f",
       "source_id": "agones:pkg/util/https/https.go",
       "source_owner_milestone": "M0003",
       "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
       "source_sha256": "feaf1a8c1d5f3d8933a5752142bc574a6d28f15430ecf1f87a3e657e59223a65",
-      "status": "REQUIRED_NOT_AUTHORED_IN_LITERAL_MIRROR"
+      "status": "AUTHORED_UNVERIFIED_PARTIAL"
     },
     {
+      "authored_sha256": "af7895fd9cc9724ea1a7f7ff4ae251a4b832a0e22153a65737d0254362404dd5",
+      "authored_symbols_or_groups": [
+        "certServer single mutex-protected dynamic certificate owner and getCertificate",
+        "NewServer/setupServer hardcoded initial /certs/server.crt and server.key, retained previous cert on failure and root/default handler",
+        "WatchForCertificateChanges one-second owned watcher/reload, log while lock held, source Fatal/Exit branch",
+        "Run real bind/fallback certificate load, source error wrapping and ServerClosed distinction",
+        "Rustls dynamic certificate resolver, SNI/fallback selection, negotiated HTTP1/HTTP2, owned TLS handshake/deadline and parent connection drain"
+      ],
       "destination": "agones-rs/pkg/util/https/server.rs",
       "remaining": [
-        "Complete source body/initializer/callback/effect implementation and ownership adoption. No placeholder .rs file is counted as progress."
+        "Complete Go PEM/key/crypto/default-TLS/error/handshake/shutdown profile reconciliation; native rustls behavior is not asserted equivalent.",
+        "Exact listener bind/service-name/accept retry errors, repeated Run/concurrent Shutdown and log-field projections still require source reconciliation.",
+        "Cert watcher depends on the incomplete cross-platform filesystem effect; actual controller/entrypoint ownership remains open."
       ],
       "source_git_blob": "ddaa46a85d70a4109835dd9fd41302de36599709",
       "source_id": "agones:pkg/util/https/server.go",
       "source_owner_milestone": "M0003",
       "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
       "source_sha256": "ba57ba27151f223eabc321c83e295449be5d8d15ba6d0ccf53472cd405e6b951",
-      "status": "REQUIRED_NOT_AUTHORED_IN_LITERAL_MIRROR"
+      "status": "AUTHORED_UNVERIFIED_PARTIAL"
     },
     {
+      "authored_sha256": "8ad187943f0959110391d22330a931065557dea048891949509de22c43d7788d",
+      "authored_symbols_or_groups": [
+        "Server Mux/Port/Logger source declarations and typed source origin",
+        "Run default port 8080, start log, real HTTP1 listener, 60-second header timeout",
+        "ServerClosed info path, package-wrapped runtime errors and source always-nil return",
+        "Owned connection drain transferred to parent on listener return without cancelling the caller token"
+      ],
       "destination": "agones-rs/pkg/util/httpserver/server.rs",
       "remaining": [
-        "Complete source body/initializer/callback/effect implementation and ownership adoption. No placeholder .rs file is counted as progress."
+        "Complete Go listener service-name/bind/temporary-accept retry/error profiles and response/mux behavior.",
+        "Full production parent lifecycle must own Run, cancel its source context and await the independent graceful drain."
       ],
       "source_git_blob": "72b790615ed7744904062fe3f0bc62d468c253c6",
       "source_id": "agones:pkg/util/httpserver/server.go",
       "source_owner_milestone": "M0003",
       "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
       "source_sha256": "0f9b972fc678b0f33c7531a8b19c08a9ffb54ab745014ed800eff19b4157102b",
-      "status": "REQUIRED_NOT_AUTHORED_IN_LITERAL_MIRROR"
+      "status": "AUTHORED_UNVERIFIED_PARTIAL"
     },
     {
-      "authored_sha256": "cb2acf5f46594b3397eb1d59ce73732b6fa82a88c3b9899ccf5b18313da6dcd6",
+      "authored_sha256": "26e637e2ac9243143c529941c0a41eb7634d760c6d5f76fba02fe678e186c22b",
       "authored_symbols_or_groups": [
         "ResourceType and five original typed keys",
         "NilGameServer",
@@ -180,16 +248,27 @@
       "status": "AUTHORED_UNVERIFIED_PARTIAL"
     },
     {
+      "authored_sha256": "1797cd8b46d72ba41e29e25112b4faed208b58a7e093eed2d2feda1ff5ffed43",
+      "authored_symbols_or_groups": [
+        "init JSON field map/time formatting and source standard error handler replacement with inherited 1ms backoff",
+        "SetLevel, HandleError optional entry then standard error log and backoff",
+        "Must nil/panic, NewLoggerWithSource, typed and nil-interface NewLoggerWithType metadata",
+        "UtilityRuntimeOwner/Context shared logger/backoff, weak task-scope references and static derive-deftly/CGP effects",
+        "UtilityTaskScope owned JoinSet, close/cancel/join, request reaping, spawn-or-return resource transfer and Drop abort policy"
+      ],
       "destination": "agones-rs/pkg/util/runtime/runtime.rs",
       "remaining": [
-        "Complete source body/initializer/callback/effect implementation and ownership adoption. No placeholder .rs file is counted as progress."
+        "NewServerMux grpc-gateway HTTPBody/UseProtoNames/EmitUnpopulated/DiscardUnknown behavior is still not authored.",
+        "InClusterBuildConfig actual in-cluster then deferred explicit/default config fallback and exact source warning/error behavior through Rusternetes only is still not authored.",
+        "Complete Go logging field/interface/numeric/string/type/serialization/panic/Fatal profiles and full source call-site metadata.",
+        "Child errors/panics are retained for reap/shutdown; immediate parent failure notification/policy and full production parent adoption remain open."
       ],
       "source_git_blob": "7581ddc41945340b97d4561a275bf969a32e4f8f",
       "source_id": "agones:pkg/util/runtime/runtime.go",
       "source_owner_milestone": "M0003",
       "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
       "source_sha256": "d1683d9c5931891d59ae46cbfdbce13b45d2836355097e7e1bd24fd30200271a",
-      "status": "REQUIRED_NOT_AUTHORED_IN_LITERAL_MIRROR"
+      "status": "AUTHORED_UNVERIFIED_PARTIAL"
     },
     {
       "destination": "agones-rs/pkg/util/signals/signals.rs",
@@ -204,16 +283,28 @@
       "status": "REQUIRED_NOT_AUTHORED_IN_LITERAL_MIRROR"
     },
     {
+      "authored_sha256": "8001eb8de0c4a8dfcb18e91f725ea02acd747f39d6a46f73f3009a1cdd87b8e7",
+      "authored_symbols_or_groups": [
+        "WebHook/operationHandler/Handler typed declarations and one shared ordered handler owner",
+        "NewWebHook logger/error initialization and mux ownership",
+        "AddHandler first-path closure registration, append order and source debug fields",
+        "handle one JSON decode, nil-root zero review, missing-response Allowed true, Request UID and nil dereference panic",
+        "ordered current-review operation/group/kind matching, returned review preserved on error, Failure/InternalError details and continuation",
+        "whole-review encoding with source misspelled decode/encode prefixes and HTTP late 500",
+        "Admission-v1 TypeMeta/request/response/user/status wire projections, raw JSON extensions and base64 patch bytes, CGP handler invocation"
+      ],
       "destination": "agones-rs/pkg/util/webhooks/webhooks.rs",
       "remaining": [
-        "Complete source body/initializer/callback/effect implementation and ownership adoption. No placeholder .rs file is counted as progress."
+        "Complete Go encoding/json case/duplicate-key/null/byte-string/error/stream/raw-extension numeric and formatting profiles; current serde transport is not whole Go decoder equivalence.",
+        "Reconcile callback mutation/sharing/panic/order boundary details and actual production admission-controller adapter adoption.",
+        "Common HTTP request/response/mux and shared logging/type/format profiles remain partial."
       ],
       "source_git_blob": "1995f206ca2d186af3988703fbe9abda8ef86fe7",
       "source_id": "agones:pkg/util/webhooks/webhooks.go",
       "source_owner_milestone": "M0003",
       "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
       "source_sha256": "b3a2c84309dae0dab131cac8bb3a1e8798824333ba063f6bb1a388bbeba54673",
-      "status": "REQUIRED_NOT_AUTHORED_IN_LITERAL_MIRROR"
+      "status": "AUTHORED_UNVERIFIED_PARTIAL"
     },
     {
       "destination": "agones-rs/pkg/util/workerqueue/workerqueue.rs",
@@ -234,17 +325,33 @@
   "known_remaining": [
     {
       "id": "M0003-APISERVER",
-      "required": "Discovery, serializer negotiation, namespace/resource parsing, shallow object views, resource handlers, source callback/error/header behavior and concrete HTTP adoption.",
+      "required": [
+        "Complete Go unstable-sort/ParseFloat media negotiation boundary; current parser retains the source comparator and q=0 behavior but insertion order is not claimed equal for all clauses.",
+        "Exact Go YAML scalar/format profile and public source scheme/codec caller profiles need reconciliation. Native encoders are authored, not run.",
+        "Complete HTTP request/mux/response boundary and actual extension-controller/CRD-handler adoption; existing implementations remain preserved."
+      ],
       "source": "pkg/util/apiserver/apiserver.go"
     },
     {
       "id": "M0003-FSWATCH",
-      "required": "Actual watcher backend, batch timer/callback/closed-channel/error behavior, source captured-error logging and owned cancellation/join cleanup.",
+      "required": [
+        "Non-Linux/Android native watcher providers remain absent; macOS/BSD/Windows/Solaris source profiles are not complete.",
+        "Reconcile exact startup/read/Add/Close ordering, errno/path byte formatting, channel/cancellation races and source path/operation profiles.",
+        "Application owner must explicitly await shutdown; WatchHandle Drop requests cleanup but cannot itself await the reader."
+      ],
       "source": "pkg/util/fswatch/fswatch.go"
     },
     {
       "id": "M0003-HTTP-HTTPS",
-      "required": "Actual HTTP/TLS effects, sensitive-header redaction, request/error/404 helpers, dynamic certificate storage/reload, 60-second header timeout, source error distinctions and graceful independent-context drain. No facade or server probe.",
+      "required": [
+        "Complete source Header slice alias/mutation and deferred log-field projection behavior. Native header storage currently shares immutable Arc vectors.",
+        "Complete raw-byte Go string/URL/error/JSON field projections and HTTP sniff/framing/mux profiles; no full HTTP parity claim.",
+        "Complete Go PEM/key/crypto/default-TLS/error/handshake/shutdown profile reconciliation; native rustls behavior is not asserted equivalent.",
+        "Exact listener bind/service-name/accept retry errors, repeated Run/concurrent Shutdown and log-field projections still require source reconciliation.",
+        "Cert watcher depends on the incomplete cross-platform filesystem effect; actual controller/entrypoint ownership remains open.",
+        "Complete Go listener service-name/bind/temporary-accept retry/error profiles and response/mux behavior.",
+        "Full production parent lifecycle must own Run, cancel its source context and await the independent graceful drain."
+      ],
       "source": [
         "pkg/util/https/https.go",
         "pkg/util/https/server.go",
@@ -253,7 +360,12 @@
     },
     {
       "id": "M0003-RUNTIME",
-      "required": "JSON logger initialization/field names/level, error handler replacement and double logging, Must, source logger identities, grpc-gateway JSON policy and source configuration fallback through Rusternetes only.",
+      "required": [
+        "NewServerMux grpc-gateway HTTPBody/UseProtoNames/EmitUnpopulated/DiscardUnknown behavior is still not authored.",
+        "InClusterBuildConfig actual in-cluster then deferred explicit/default config fallback and exact source warning/error behavior through Rusternetes only is still not authored.",
+        "Complete Go logging field/interface/numeric/string/type/serialization/panic/Fatal profiles and full source call-site metadata.",
+        "Child errors/panics are retained for reap/shutdown; immediate parent failure notification/policy and full production parent adoption remain open."
+      ],
       "source": "pkg/util/runtime/runtime.go"
     },
     {
@@ -263,7 +375,11 @@
     },
     {
       "id": "M0003-WEBHOOKS",
-      "required": "Admission wire objects, ordered matching/handler callbacks, UID propagation, missing response/default allow, error response details, encode/decode and HTTP failure behavior.",
+      "required": [
+        "Complete Go encoding/json case/duplicate-key/null/byte-string/error/stream/raw-extension numeric and formatting profiles; current serde transport is not whole Go decoder equivalence.",
+        "Reconcile callback mutation/sharing/panic/order boundary details and actual production admission-controller adapter adoption.",
+        "Common HTTP request/response/mux and shared logging/type/format profiles remain partial."
+      ],
       "source": "pkg/util/webhooks/webhooks.go"
     },
     {
@@ -289,7 +405,7 @@
     {
       "id": "M0003-CRD-ADOPTION",
       "required": [
-        "Complete shared source logging/formatter integration and source client error/status/encoding boundary accounting. Current native transport preserves its actual errors without asserting Go-client equivalence.",
+        "Complete source client error/status/encoding boundary accounting. Shared source logging is connected; its general Go formatter/interface profiles remain partial.",
         "Existing Rusternetes controller stack CRD/cache barrier bypass remains untouched. Exact source-controller adoption must replace it in the later lifecycle work."
       ],
       "source": "pkg/util/crd/crd.go"
@@ -297,6 +413,14 @@
     {
       "id": "M0003-WHOLE-BODY-RECONCILIATION",
       "required": "Close all source initializers/closures, resource owners, imports and support/output paths for all 14 entries before IMPLEMENTED_UNVERIFIED. Retain exact source-qualified identities; no source existence/body marker or stale proof credit."
+    },
+    {
+      "id": "M0003-HTTP-BOUNDARY-PROFILES",
+      "required": [
+        "Complete Go ServeMux method/host/wildcard/clean-path/trailing-slash redirects; current resolver has exact and longest-prefix routing only.",
+        "Complete URL/RawPath/CONNECT/invalid escaping, informational 1xx headers, content-type detection, default date/framing/error/flush and header alias profiles. Native streaming writer is concrete but does not establish Go transport equivalence.",
+        "Permanent listener failure now retains active connections under the parent until source or owner shutdown; source temporary accept-error backoff and full independent Shutdown profile still need reconciliation."
+      ]
     }
   ],
   "legacy_adoption": "verification/agones/roadmap-M0003-reuse-adoption.json",
@@ -304,30 +428,63 @@
   "milestone_id": "M0003",
   "owned_entry_count": 14,
   "payload_sha256": {
-    "Cargo.lock": "b47492bb76c726a0fcee3f9d2b35472caa222ef28c4cc49e6b5285e3776d4219",
+    "Cargo.lock": "1f490ef5f3757f6fb09cf11c81d78fd7500b6d9e43f9d343e6d74f3ba5d7f483",
     "agones-rs/pkg/util/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "agones-rs/pkg/util/apiserver/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "agones-rs/pkg/util/apiserver/apiserver.rs": "c5a08b1672ad8449312cf6ce700ff6dbda254d05dadccd09c21aa36321cf06bd",
     "agones-rs/pkg/util/crd/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/crd/crd.rs": "86d59b98438b2a1e905fed4fa30f5990048c35c90ffe49e86ae40adaac3144f5",
     "agones-rs/pkg/util/doc.rs": "ce08fe982c04e9f77c87ec3c43886a6c88e95693e19b893289c77d7902b5edfa",
     "agones-rs/pkg/util/errors/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/errors/errors.rs": "7140c905c75311032f3ca6e4ad020caf6c61dec105a427878b270272df68af9a",
+    "agones-rs/pkg/util/fswatch/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "agones-rs/pkg/util/fswatch/fswatch.rs": "b190b19ca16dc78085ae4bee81c4deb3ebb512b6f58201df3ee0364db32ab3a9",
+    "agones-rs/pkg/util/https/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "agones-rs/pkg/util/https/https.rs": "08d7c53722a3e81065dc906ed910fb22bab34164e70d71e2d55c08512cda106f",
+    "agones-rs/pkg/util/https/server.rs": "af7895fd9cc9724ea1a7f7ff4ae251a4b832a0e22153a65737d0254362404dd5",
+    "agones-rs/pkg/util/httpserver/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "agones-rs/pkg/util/httpserver/server.rs": "8ad187943f0959110391d22330a931065557dea048891949509de22c43d7788d",
     "agones-rs/pkg/util/logfields/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
-    "agones-rs/pkg/util/logfields/logfields.rs": "cb2acf5f46594b3397eb1d59ce73732b6fa82a88c3b9899ccf5b18313da6dcd6",
+    "agones-rs/pkg/util/logfields/logfields.rs": "26e637e2ac9243143c529941c0a41eb7634d760c6d5f76fba02fe678e186c22b",
     "agones-rs/pkg/util/runtime/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/runtime/features.rs": "b1e42035bd6912c5ce2b397610f24df6b7f3b1d902e6a710546c41ee5d3a036a",
+    "agones-rs/pkg/util/runtime/runtime.rs": "1797cd8b46d72ba41e29e25112b4faed208b58a7e093eed2d2feda1ff5ffed43",
+    "agones-rs/pkg/util/webhooks/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "agones-rs/pkg/util/webhooks/webhooks.rs": "8001eb8de0c4a8dfcb18e91f725ea02acd747f39d6a46f73f3009a1cdd87b8e7",
     "crates/util/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
-    "crates/util/Cargo.toml": "3652a2a858d19218dfe88835fbd0586f3e30c959e884b06caf81c2a334855051",
+    "crates/util/Cargo.toml": "7094dbd650b29afee18195bd2d5024b5b182460b6b78955d3240bc4c85a0871f",
     "crates/util/src/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "crates/util/src/errors.rs": "f8c313758bb23103a6ed7f2ff2188d9589fca0b1adc87ee5214bef16434e45e2",
     "rust-support/agones/src/lifecycle.rs": "cf19ade05a469d4424f401574af0eabab520657cc0d9977563bdbf4bf9fdef1d",
-    "rust-support/agones/src/utility_crd.rs": "4bea381af725109ff8c56106f8c232f1fd25e8c5c77de0c607ed8fbeb77fab43",
-    "rust-support/agones/src/utility_declarations.rs": "5aa19bd46144a437fbd2d1fb2cb0ee9059404623cdfd1c49fb50daddc7b03880",
-    "rust-support/agones/src/utility_lib.rs": "e8ce3a4d4c49b54ac4cc6874c64dba607b836a98ff071bf79e40afd8ec8f87d3",
+    "rust-support/agones/src/utility_admission.rs": "a17ed7e9f3c3ffdaf9d42e39ab372be4f107ff4bd50eec371f48824a4b7a5807",
+    "rust-support/agones/src/utility_crd.rs": "de93657e926a3498249173e564ccc7798ffd081ba2583c8c9dd490b239195cde",
+    "rust-support/agones/src/utility_declarations.rs": "83ec8b3feb4bac5419e347a9108fc894cc2b16ace8cf451c1981ac30e82991d0",
+    "rust-support/agones/src/utility_discovery.rs": "8151e804ce4354fef226b0cd915c6e868936c2806089143e4c212ee99e1a32ed",
+    "rust-support/agones/src/utility_fswatch.rs": "48525e75ffed6aade3bd7c6af0da693c1bc7ea399e45b741cc5588ea86258205",
+    "rust-support/agones/src/utility_http.rs": "eb1b83b02c1046901bc02ed6c172f80aa21ba8b27722eed781997033e3c6ddcc",
+    "rust-support/agones/src/utility_https_module.rs": "3b1fc4bf94a5b016cce0c661c3f51d037b36e0718eefd1c17a55e309c878fc2a",
+    "rust-support/agones/src/utility_lib.rs": "ba24c810b825fe38e9a473cffb140441db305ff472f5ac3b32d40651c783b890",
     "rust-support/agones/src/utility_lifecycle.rs": "5d2fdc2fc65f04f3fcc581edb0203b54cb8314717f6976c3d7404f018a0a26af",
-    "rust-support/agones/src/utility_modules.rs": "d283621675d02a09975470bbbfee0c7ce710b5111c9193fc0a8d1356a2bde2ac",
+    "rust-support/agones/src/utility_logging.rs": "2b8ab42c91085c83838b14958b8666c7246f79b1559c4db20d8c819e1cef55c2",
+    "rust-support/agones/src/utility_modules.rs": "74731348ecb0d9f7c716275ba1d761068f85f43115d0df366760279671a40498",
+    "rust-support/agones/src/utility_runtime.rs": "ae2d173e224ead779ff083fcd4e1087bee72ba5f28c7f7c9240d195caa34eec6",
+    "rust-support/agones/src/utility_runtime_module.rs": "7d98ced3f9d120239b0c87247347018a35e2af5770977612e16223a1e65fb3fe",
+    "rust-support/agones/src/utility_scope.rs": "ab9100073953e36ebc4132f59ab64325509aad40ffd00b39d7f3e88bce1b24b4",
+    "rust-support/agones/src/utility_tls.rs": "1c370d59ccee7a6d093616428525a1d90b1edb2dde56f6b22e9cff0405356e4f",
+    "rust-support/cpg/Cargo.lock": "1a130b4d4ebc181f394f5c0d24130e2a9123ea42888e041564b958a73dce0ccf",
+    "third_party/first-generation/better-comprehension/Cargo.toml": "a1ce7a835e9ed3e543b7b06487bc941db6182fcc6f2555ac603ca8b4f6284f36",
+    "third_party/first-generation/better-comprehension/src/lib.rs": "f47ba11ce4cd4d6b7424ba0cffca669018e52e5541fb32f83d655aba2ce364b3",
+    "third_party/first-generation/comprende/Cargo.toml": "01f7068b9cd9ec5b27b7df77709117e37dc991cd32597dbf24cbde9074f5ceab",
+    "third_party/first-generation/comprende/src/lib.rs": "e8d8da04ca3048bdd7275b1ca77b5a78c4abfd999ecb763d82a615f4aeb0fb96",
     "verification/agones/roadmap-M0003-reuse-adoption.json": "487e81ea18ff7a4eb3e0a12f8c0a56bfc5416e5d6aefd872b0158e02dd779468"
   },
-  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-1.json",
+  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-4.json",
+  "progress_usage_observations": [
+    "verification/agones/roadmap-M0003-progress-usage-1.json",
+    "verification/agones/roadmap-M0003-progress-usage-2.json",
+    "verification/agones/roadmap-M0003-progress-usage-3.json",
+    "verification/agones/roadmap-M0003-progress-usage-4.json"
+  ],
   "project_executable_invocations": 0,
   "record_kind": "PARTIAL_SOURCE_OWNERSHIP_ADOPTION",
   "route": "MANUAL",
@@ -374,10 +531,155 @@
       "purpose": "Read source fixed-ticker selection/Stop/Next ownership for CRD polling; no execution.",
       "sha256": "1f0b9ae3270618c1f277e94789ec93f7fbc0a7285ba266403ff4db714ded123d",
       "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/k8s.io/apimachinery/pkg/util/runtime/runtime.go",
+      "purpose": "Source behavior/API reading for the M0003 runtime, transport, callback and wire implementation. Identity bookkeeping only; no source replay or port execution.",
+      "sha256": "91e8434f9a57ad2d32ebb53831f22bb596dded043777d1b93ef50acb8fd69200",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/github.com/sirupsen/logrus/json_formatter.go",
+      "purpose": "Source behavior/API reading for the M0003 runtime, transport, callback and wire implementation. Identity bookkeeping only; no source replay or port execution.",
+      "sha256": "d4ed7a055258a58e07fc708dc6a43123b3db7a32c5a82c50160f63660beeaae1",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/github.com/sirupsen/logrus/formatter.go",
+      "purpose": "Source behavior/API reading for the M0003 runtime, transport, callback and wire implementation. Identity bookkeeping only; no source replay or port execution.",
+      "sha256": "a5946d1302067a39ee0420ebdd28edc361846ffbbd9d19b812ca4e53426eb3bd",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/github.com/sirupsen/logrus/entry.go",
+      "purpose": "Source behavior/API reading for the M0003 runtime, transport, callback and wire implementation. Identity bookkeeping only; no source replay or port execution.",
+      "sha256": "78587f4d76d00db5a96d5104e849fde06e25be66184d616bdeff03f0ae3a8b55",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/github.com/sirupsen/logrus/logrus.go",
+      "purpose": "Source behavior/API reading for the M0003 runtime, transport, callback and wire implementation. Identity bookkeeping only; no source replay or port execution.",
+      "sha256": "ad71f316ed190a3dcdd32b53efcaaff06201b37ef6c7527df31a4aa687f1c2a9",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/github.com/fsnotify/fsnotify/fsnotify.go",
+      "purpose": "Source behavior/API reading for the M0003 runtime, transport, callback and wire implementation. Identity bookkeeping only; no source replay or port execution.",
+      "sha256": "c721c84f2a2c6734ec0e82c0c9f4133ba3f62761457b52cc2a26aaf511e2c78a",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/k8s.io/api/admission/v1/types.go",
+      "purpose": "Source behavior/API reading for the M0003 runtime, transport, callback and wire implementation. Identity bookkeeping only; no source replay or port execution.",
+      "sha256": "4f572ef67945db0557d14ab09c7b3e76a8dbd11f6d2f65303c4ae2ca66c58ef2",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/k8s.io/api/authentication/v1/types.go",
+      "purpose": "Source behavior/API reading for the M0003 runtime, transport, callback and wire implementation. Identity bookkeeping only; no source replay or port execution.",
+      "sha256": "d4df2a615df545ea4fde358129fae8dfb2e26774772a7689ea5a21f74882f920",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/k8s.io/apimachinery/pkg/apis/meta/v1/types.go",
+      "purpose": "Source behavior/API reading for the M0003 runtime, transport, callback and wire implementation. Identity bookkeeping only; no source replay or port execution.",
+      "sha256": "110ef0b67dda6c349a5c8abae421360ba0aa15702f2f0e04d320bfb2687785f2",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/k8s.io/apimachinery/pkg/apis/meta/v1/group_version.go",
+      "purpose": "Source behavior/API reading for the M0003 runtime, transport, callback and wire implementation. Identity bookkeeping only; no source replay or port execution.",
+      "sha256": "ba37179999eb022b3a66e8b421a7803c8c609596e3d8d7fe52970867150d91d3",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/k8s.io/apimachinery/pkg/runtime/extension.go",
+      "purpose": "Source behavior/API reading for the M0003 runtime, transport, callback and wire implementation. Identity bookkeeping only; no source replay or port execution.",
+      "sha256": "18e7f7e6ab76709beb192fb6caea3a53e88d9b77eb89e4c73f25ffaa58f06ab3",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/k8s.io/apimachinery/pkg/runtime/generated.pb.go",
+      "purpose": "Source behavior/API reading for the M0003 runtime, transport, callback and wire implementation. Identity bookkeeping only; no source replay or port execution.",
+      "sha256": "02547f29796691848b89502de593c2e3e1c29547e35713fe448400f2471811ee",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/k8s.io/apimachinery/pkg/apis/meta/v1/generated.pb.go",
+      "purpose": "Source behavior/API reading for the M0003 runtime, transport, callback and wire implementation. Identity bookkeeping only; no source replay or port execution.",
+      "sha256": "39963e4ef268d6c6a289e59e29b95d8a31529b40a1024adbcd178e737e78a412",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/k8s.io/apimachinery/pkg/runtime/serializer/codec_factory.go",
+      "purpose": "Source behavior/API reading for the M0003 runtime, transport, callback and wire implementation. Identity bookkeeping only; no source replay or port execution.",
+      "sha256": "017d544a7acf4d9fc2869a3b4ceab9fb66aee9fe84f6884b7ac32ec00c3ecd16",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/k8s.io/apimachinery/pkg/runtime/serializer/json/json.go",
+      "purpose": "Source behavior/API reading for the M0003 runtime, transport, callback and wire implementation. Identity bookkeeping only; no source replay or port execution.",
+      "sha256": "0eddddedfa1e4ae226a13713b6d6b83163e09bff8ebb6e741bf3b7b2128173bb",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/k8s.io/apimachinery/pkg/runtime/serializer/protobuf/protobuf.go",
+      "purpose": "Source behavior/API reading for the M0003 runtime, transport, callback and wire implementation. Identity bookkeeping only; no source replay or port execution.",
+      "sha256": "93450c76773225eef0fd7bcb1f5dd538b966e7fba64349bdb9286f3ac9f91fab",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/github.com/munnerz/goautoneg/autoneg.go",
+      "purpose": "Source behavior/API reading for the M0003 runtime, transport, callback and wire implementation. Identity bookkeeping only; no source replay or port execution.",
+      "sha256": "6c25c3a9d9699281748b8ae867b8ffc4a4d5e5d1f77d692edb23150f8c50c838",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/github.com/go-openapi/spec/swagger.go",
+      "purpose": "Source behavior/API reading for the M0003 runtime, transport, callback and wire implementation. Identity bookkeeping only; no source replay or port execution.",
+      "sha256": "077f91564943423acb67552f8b4d86b27b0504fda24e2c37dcbff5d57a812bd1",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/github.com/go-openapi/spec/info.go",
+      "purpose": "Source behavior/API reading for the M0003 runtime, transport, callback and wire implementation. Identity bookkeeping only; no source replay or port execution.",
+      "sha256": "2358d88980bb405bf27d663668138e0962b688db9f637b67957baaa8a6a14435",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/k8s.io/kube-openapi/pkg/handler3/handler.go",
+      "purpose": "Source behavior/API reading for the M0003 runtime, transport, callback and wire implementation. Identity bookkeeping only; no source replay or port execution.",
+      "sha256": "bc071f2e56d0dfa2b965b77dd42d6b88227ed0d71e53f6caf40b287bed329530",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/hyper-util-0.1.21/src/server/conn/auto/mod.rs",
+      "purpose": "Read-only pinned native dependency API/ownership input. signal-hook-registry was inspected for source Stop behavior and was not adopted as a signal backend.",
+      "sha256": "0f28859d1e7f2b6dd9bb255a07cd6e11d5acc0caf87159ea9217ae5e1b3d67d0"
+    },
+    {
+      "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-rustls-0.26.6/Cargo.toml",
+      "purpose": "Read-only pinned native dependency API/ownership input. signal-hook-registry was inspected for source Stop behavior and was not adopted as a signal backend.",
+      "sha256": "ad124b109caa4315c0a45dabb5211f272bf913462914ddeedb4c9aa9f6e19e41"
+    },
+    {
+      "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.53.3/src/sync/notify.rs",
+      "purpose": "Read-only pinned native dependency API/ownership input. signal-hook-registry was inspected for source Stop behavior and was not adopted as a signal backend.",
+      "sha256": "7903a5d0e9b266cbb31e9e0b7386956e248831a30ea92ca1656a3682e4de6dbe"
+    },
+    {
+      "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/signal-hook-registry-1.4.8/src/lib.rs",
+      "purpose": "Read-only pinned native dependency API/ownership input. signal-hook-registry was inspected for source Stop behavior and was not adopted as a signal backend.",
+      "sha256": "71c67afdcaab442cc75955a6a17e5eb4e17fb725e0db7f8d1930023c680a7204"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/notify-8.2.0.crate",
+      "purpose": "Read-only candidate source acquisition; rejected as the watcher backend because its Drop requests internal-thread shutdown without an exposed join. No notify dependency was added.",
+      "sha256": "4d3d07927151ff8575b7087f245456e549fea62edf0ec4e565a5ee50c8402bc3"
     }
   ],
   "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
-  "source_snapshot": "95161696e9ad90f9eab2ec7ae978bcafdcbb3483",
+  "source_snapshot": "96df88bd9a26d665dafd2fddb98106b3df317c99",
   "source_snapshot_kind": "BASE_COMMIT_PLUS_AUTHORED_PAYLOAD_DIGESTS",
   "stage": "IMPLEMENTING",
   "usage_attribution_note": "M0003 entry bookkeeping, including the follow-up append of the finalized M0002 shared-boundary paragraph, is allocated once to M0003 entry overhead. It is not included a second time in the prior 20030-token shared segment.",

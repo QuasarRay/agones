@@ -6,6 +6,7 @@ use derive_deftly::Deftly;
 use futures::future::BoxFuture;
 use serde_json::Value;
 use crate::{crd::{self, CrdView, CanWaitForEstablishedCrd}, errors::BoxError, logfields::LogEntry,
+    utility_logging::{CanEmitSourceLog, LogLevel}, utility_runtime::UtilityRuntimeContext,
     utility_declarations::derive_deftly_template_UtilityCrdProviders};
 
 pub struct RusternetesCrdConnection { pub client: reqwest::Client, pub api_root: url::Url }
@@ -66,18 +67,23 @@ fn validate_resource_name(name: &str) -> Result<(), BoxError> {
 }
 
 #[cgp_new_provider]
-impl<Context> crd::CrdEstablishmentLogger<Context> for LogEstablishedCrd {
-    fn log_crd_established(_context: &Context, logger: &LogEntry, name: &str) {
-        tracing::debug!(crd = name, source_fields = ?logger.fields, "custom resource definition established");
+impl<Context: HasCrdRuntime> crd::CrdEstablishmentLogger<Context> for LogEstablishedCrd {
+    fn log_crd_established(context: &Context, logger: &LogEntry, name: &str) {
+        context.crd_runtime().emit_source_log(&logger.with_field("crd", name), LogLevel::Debug, "custom resource definition established");
     }
 }
 
 #[derive(HasField, Deftly)]
 #[derive_deftly(UtilityCrdProviders)]
-pub struct RusternetesCrdContext { pub rusternetes_crd_connection: RusternetesCrdConnection }
+pub struct RusternetesCrdContext {
+    pub rusternetes_crd_connection: RusternetesCrdConnection,
+    pub crd_runtime: UtilityRuntimeContext,
+}
+#[cgp_getter]
+pub trait HasCrdRuntime { fn crd_runtime(&self) -> &UtilityRuntimeContext; }
 impl RusternetesCrdContext {
-    pub fn new(client: reqwest::Client, api_root: url::Url) -> Self {
-        Self { rusternetes_crd_connection: RusternetesCrdConnection { client, api_root } }
+    pub fn new(client: reqwest::Client, api_root: url::Url, runtime: UtilityRuntimeContext) -> Self {
+        Self { rusternetes_crd_connection: RusternetesCrdConnection { client, api_root }, crd_runtime: runtime }
     }
     pub async fn wait(&self, name: &str, logger: &LogEntry) -> Result<(), BoxError> {
         self.wait_for_established_crd(name, logger).await

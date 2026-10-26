@@ -9,7 +9,16 @@ pub mod logfields;
 pub mod features;
 #[path = "../../../agones-rs/pkg/util/crd/crd.rs"]
 pub mod crd;
+#[path = "utility_https_module.rs"]
+pub mod https;
+#[path = "../../../agones-rs/pkg/util/httpserver/server.rs"]
+pub mod httpserver;
+#[path = "../../../agones-rs/pkg/util/fswatch/fswatch.rs"]
+pub mod fswatch;
 
-// These source names share one Go package. Runtime effects are added from
-// runtime/runtime.rs when their concrete lifecycle/effect adoption is authored.
-pub mod runtime { pub use super::features::*; }
+#[path = "utility_runtime_module.rs"]
+pub mod runtime;
+#[path = "../../../agones-rs/pkg/util/webhooks/webhooks.rs"]
+pub mod webhooks;
+#[path = "../../../agones-rs/pkg/util/apiserver/apiserver.rs"]
+pub mod apiserver;

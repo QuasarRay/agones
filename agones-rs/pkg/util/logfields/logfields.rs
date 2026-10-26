@@ -2,7 +2,7 @@
 // pkg/util/logfields/logfields.go. Copyright Contributors to Agones a Series
 // of LF Projects, LLC. Apache-2.0.
 #![allow(non_snake_case, non_upper_case_globals)]
-use std::{borrow::Cow, collections::BTreeMap, fmt};
+use std::{borrow::Cow, collections::BTreeMap, fmt, sync::Arc};
 use cgp::prelude::*;
 use derive_deftly::Deftly;
 use serde_json::Value;
@@ -26,12 +26,28 @@ impl fmt::Display for ResourceType {
 
 /// Immutable field projection. The application's CGP logging capability owns
 /// the shared formatter, level and output resource, not each derived entry.
-#[derive(Clone, Debug, Default, PartialEq)]
-pub struct LogEntry { pub fields: BTreeMap<String, Value> }
+#[derive(Clone, Debug, Default)]
+pub struct LogEntry {
+    pub fields: BTreeMap<String, Value>,
+    pub(crate) logger: Option<Arc<crate::utility_logging::SourceLogger>>,
+    pub(crate) serialization_error: Option<String>,
+}
+impl PartialEq for LogEntry {
+    fn eq(&self, other: &Self) -> bool { self.fields == other.fields && self.serialization_error == other.serialization_error }
+}
 impl LogEntry {
+    pub fn from_logger(logger: Arc<crate::utility_logging::SourceLogger>) -> Self { Self { logger: Some(logger), ..Self::default() } }
     pub fn with_field(&self, name: impl Into<String>, value: impl Into<Value>) -> Self {
         let mut entry = self.clone();
         entry.fields.insert(name.into(), value.into());
+        entry
+    }
+    pub fn with_error(&self, error: Option<&(dyn std::error::Error + Send + Sync)>) -> Self {
+        self.with_field("error", error.map_or(Value::Null, |error| Value::String(error.to_string())))
+    }
+    pub fn with_unserializable_field(&self, source_type: &str) -> Self {
+        let mut entry = self.clone();
+        entry.serialization_error = Some(format!("json: unsupported type: {source_type}"));
         entry
     }
 }

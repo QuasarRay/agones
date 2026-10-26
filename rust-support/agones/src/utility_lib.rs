@@ -3,11 +3,20 @@
 pub mod utility_declarations;
 #[path = "utility_modules.rs"]
 pub mod source;
-pub use source::{crd, errors, features, logfields, runtime};
+pub use source::{apiserver, crd, errors, features, fswatch, https, httpserver, logfields, runtime, webhooks};
 pub mod utility_lifecycle;
 pub use utility_lifecycle::UtilityFeatureContext;
 pub mod utility_crd;
 pub use utility_crd::RusternetesCrdContext;
+pub mod utility_logging;
+pub mod utility_scope;
+pub mod utility_runtime;
+pub use utility_runtime::{UtilityRuntimeContext, UtilityRuntimeOwner};
+pub mod utility_http;
+pub mod utility_fswatch;
+pub mod utility_tls;
+pub mod utility_admission;
+pub mod utility_discovery;
 
 /// Original module path retained as an alias of the literal source hierarchy.
 pub mod pkg { pub use crate::source as util; }

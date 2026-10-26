@@ -1,0 +1,18 @@
+{
+  "authorization": "Explicit combined /goal invocation",
+  "event": "ROADMAP_M0003_OWNED_UTILITY_EFFECTS_PROGRESS",
+  "global_gate": "CLOSED",
+  "milestone_stage": "IMPLEMENTING",
+  "native_goal_status": "active",
+  "partial_adoption": "verification/agones/roadmap-M0003-partial-map.json",
+  "predecessor_handoff_sha256": "bfa2bfbdc2a8be8efb333633c14f05b7d47af79714cd676025da9990d6c183a1",
+  "predecessor_revision": 327,
+  "predecessor_sha256": "b8c747eecd017bb86e708b491477d6c653bab2b783867afd37d4b3a8dcde126e",
+  "project_executable_invocations": 0,
+  "result_revision": 328,
+  "route_switch": false,
+  "state_sha256": "a7505bc0e651e65d69f2358eeeaeeeedbffba8caa8cf7ae31f3b40c4050b06e4",
+  "timestamp": "2026-10-26T22:09:35.643163+00:00",
+  "usage_progress_observation": "verification/agones/roadmap-M0003-progress-usage-4.json",
+  "verification": "NOT_STARTED"
+}
