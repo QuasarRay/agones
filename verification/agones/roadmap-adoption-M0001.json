@@ -1,0 +1,337 @@
+{
+  "baseline": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "build_inputs": {
+    "go_version": "1.26.5",
+    "module": "agones.dev/agones",
+    "module_replacement": "github.com/tmc/grpc-websocket-proxy v0.0.0-20220101234140-673ab2c3ae75 => github.com/swermin/grpc-websocket-proxy v0.1.0",
+    "resources": "Retained by exact source bytes. Executable CI/build consumer equivalents remain explicitly required in M0031. No cloudbuild workflow was run or enabled.",
+    "tools_profile": "Go tools build tag -> agones-source/source-tools feature; all five import/consumer identities retained. External generators and consumers remain M0031 outputs."
+  },
+  "composition": {
+    "configuration_initialization": "AgonesConfigurationContext::initialize -> LoadAgonesFeatureGates -> existing source parser/environment capability",
+    "declaration": "AgonesConfigurationContext and AgonesBuildVersionContext",
+    "mutable_owner": "InitializedAgonesConfiguration owns one FeatureGates; replacement parses before assignment",
+    "production_context": "agones-core::AgonesConfigurationContext",
+    "production_path": "Fleet::apply_defaults -> shared context -> EncodeAgonesVersionAnnotation",
+    "providers": [
+      "AgonesBuildVersionGetterComponent",
+      "AgonesVersionAnnotationGetterComponent",
+      "FeatureGateDefaultsGetterComponent",
+      "FeatureGateInputOptionsGetterComponent",
+      "FeatureGateEnvironmentReaderComponent",
+      "FeatureGateParserComponent",
+      "FeatureGateConfigurationLoaderComponent"
+    ],
+    "resources": "This configuration phase creates no tasks or open handles. Runtime child ownership, cancellation/drain/cleanup remain M0027 requirements.",
+    "reuse_benefit": "One derive-deftly declaration template supplies two concrete CGP context delegations. Existing raw-string encoding and feature parsing remain the only behavior implementations.",
+    "template": "rust-support/agones/src/declarations.rs::AgonesConfigurationProviders"
+  },
+  "correctness": "UNVERIFIED",
+  "deferred_evidence": [
+    "compilation",
+    "macro expansion/API acceptance",
+    "source compatibility",
+    "behavioral assurance",
+    "Bolero/Kani",
+    "full lifecycle integration",
+    "delivery"
+  ],
+  "dependency_adoption": {
+    "method": "Copied exact pinned missing package entries; preserved existing root package identities and disambiguated dependency versions. No Cargo resolution/build/verification run.",
+    "package": "derive-deftly =1.14.0",
+    "source_lock": "cpg-rs/Cargo.lock",
+    "source_lock_sha256": "6ac515ef0b67d2435cb862a18b623eec360af0bf7d8ab2c5b9b43512d8217f65"
+  },
+  "files": [
+    {
+      "adoption_status": "AUTHORED_UNVERIFIED",
+      "authored_sha256": "0260e96bb8c3493a2fd601dbe14c311177e8816888e1f28005102cab426934ec",
+      "destination": "agones-rs/.dockerignore",
+      "runtime_role": "RETAINED_BUILD_OR_COMPATIBILITY_INPUT",
+      "source_git_blob": "6425692cdcc343e7875dd51e72ba6d726671cc97",
+      "source_id": "agones:.dockerignore",
+      "source_owner_milestone": "M0001",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "source_sha256": "0260e96bb8c3493a2fd601dbe14c311177e8816888e1f28005102cab426934ec"
+    },
+    {
+      "adoption_status": "AUTHORED_UNVERIFIED",
+      "authored_sha256": "fb60eb6eaafc6a96f11314955c7adec949e9c230f6db8a7f296bbf8d5a78decc",
+      "destination": "agones-rs/.gcloudignore",
+      "runtime_role": "RETAINED_BUILD_OR_COMPATIBILITY_INPUT",
+      "source_git_blob": "5b7d71875ab296af45b65c2ff8da127d4b62ccdd",
+      "source_id": "agones:.gcloudignore",
+      "source_owner_milestone": "M0001",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "source_sha256": "fb60eb6eaafc6a96f11314955c7adec949e9c230f6db8a7f296bbf8d5a78decc"
+    },
+    {
+      "adoption_status": "AUTHORED_UNVERIFIED",
+      "authored_sha256": "b304d428389464393146d710abcc414301b2d1ce42257bb92515a74ba574e47c",
+      "destination": "agones-rs/.gitattributes",
+      "runtime_role": "RETAINED_BUILD_OR_COMPATIBILITY_INPUT",
+      "source_git_blob": "17ca80dab7d3fdfaecb954c867543a07b9004358",
+      "source_id": "agones:.gitattributes",
+      "source_owner_milestone": "M0001",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "source_sha256": "b304d428389464393146d710abcc414301b2d1ce42257bb92515a74ba574e47c"
+    },
+    {
+      "adoption_status": "AUTHORED_UNVERIFIED",
+      "authored_sha256": "5844af2b0a94dcc1dcd01da2c7ce973618b85b46632a1ad94093fdf21fbebdac",
+      "destination": "agones-rs/.gitignore",
+      "runtime_role": "RETAINED_BUILD_OR_COMPATIBILITY_INPUT",
+      "source_git_blob": "c41f44426266513edc2b868f5af0f260ddaf2a66",
+      "source_id": "agones:.gitignore",
+      "source_owner_milestone": "M0001",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "source_sha256": "5844af2b0a94dcc1dcd01da2c7ce973618b85b46632a1ad94093fdf21fbebdac"
+    },
+    {
+      "adoption_status": "AUTHORED_UNVERIFIED",
+      "authored_sha256": "7f287008b6b8e59f78ce17c9d8b5944d5324ec12d886941daa78101e7773bbad",
+      "destination": "agones-rs/.golangci.yml",
+      "runtime_role": "RETAINED_BUILD_OR_COMPATIBILITY_INPUT",
+      "source_git_blob": "70f52c49bd881eac7ceca23d793e35738ed6f7e1",
+      "source_id": "agones:.golangci.yml",
+      "source_owner_milestone": "M0001",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "source_sha256": "7f287008b6b8e59f78ce17c9d8b5944d5324ec12d886941daa78101e7773bbad"
+    },
+    {
+      "adoption_status": "AUTHORED_UNVERIFIED",
+      "authored_sha256": "c7d7dbfc231e8aeb5a4f57a5eb41210744c0a3ba2f74f08de8b48a5bf7f890df",
+      "destination": "agones-rs/.yamllint",
+      "runtime_role": "RETAINED_BUILD_OR_COMPATIBILITY_INPUT",
+      "source_git_blob": "2a378735be45893f9fb6d04742de428019ccbc0e",
+      "source_id": "agones:.yamllint",
+      "source_owner_milestone": "M0001",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "source_sha256": "c7d7dbfc231e8aeb5a4f57a5eb41210744c0a3ba2f74f08de8b48a5bf7f890df"
+    },
+    {
+      "adoption_status": "AUTHORED_UNVERIFIED",
+      "authored_sha256": "4e96524a76e676fac09067afc2887101c3e90349a22c58bba82a5dde55a4cf43",
+      "destination": "agones-rs/cloudbuild.yaml",
+      "runtime_role": "RETAINED_BUILD_OR_COMPATIBILITY_INPUT",
+      "source_git_blob": "43266340256faa1e496bb9f07262d033498b0678",
+      "source_id": "agones:cloudbuild.yaml",
+      "source_owner_milestone": "M0001",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "source_sha256": "4e96524a76e676fac09067afc2887101c3e90349a22c58bba82a5dde55a4cf43"
+    },
+    {
+      "adoption_status": "AUTHORED_UNVERIFIED",
+      "authored_sha256": "62f2c2f6a88dd38433524949735d5b1b140e9e2bb8a306f0283599a8e49d667c",
+      "destination": "agones-rs/doc.rs",
+      "runtime_role": "PACKAGE_DOCUMENTATION",
+      "source_git_blob": "c484855dcec6d49a015e83d2368f7fb741daa42f",
+      "source_id": "agones:doc.go",
+      "source_owner_milestone": "M0001",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "source_sha256": "229d717f33b79eaeb525284403fbbe77e3885c505e4d82fe36539bbf915f6739"
+    },
+    {
+      "adoption_status": "AUTHORED_UNVERIFIED",
+      "authored_sha256": "01df333891a331341e77aab737c24dc722fab26abc8439b9c2036c71a477215a",
+      "destination": "agones-rs/go.mod",
+      "runtime_role": "RETAINED_BUILD_OR_COMPATIBILITY_INPUT",
+      "source_git_blob": "961c851d1a7a08fe5d513ff2cc8390a38fa03f0e",
+      "source_id": "agones:go.mod",
+      "source_owner_milestone": "M0001",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "source_sha256": "01df333891a331341e77aab737c24dc722fab26abc8439b9c2036c71a477215a"
+    },
+    {
+      "adoption_status": "AUTHORED_UNVERIFIED",
+      "authored_sha256": "d890978bc12d9c9958b2a87f99a87d8478b007208e44c5d859e973ba89adcbf7",
+      "destination": "agones-rs/go.sum",
+      "runtime_role": "RETAINED_BUILD_OR_COMPATIBILITY_INPUT",
+      "source_git_blob": "b4e647fc9baa68d85a935cc6f3a0d036c4b8c7c6",
+      "source_id": "agones:go.sum",
+      "source_owner_milestone": "M0001",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "source_sha256": "d890978bc12d9c9958b2a87f99a87d8478b007208e44c5d859e973ba89adcbf7"
+    },
+    {
+      "adoption_status": "AUTHORED_UNVERIFIED",
+      "authored_sha256": "1a375f44c7a2607b9c9a434ed66145d0746b6f25b4931bbb330d2c257c4197c9",
+      "destination": "agones-rs/pkg/doc.rs",
+      "runtime_role": "PACKAGE_DOCUMENTATION",
+      "source_git_blob": "4eba8a4995d61f218bc1b3bff4da945ab9fb9cbb",
+      "source_id": "agones:pkg/doc.go",
+      "source_owner_milestone": "M0001",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "source_sha256": "69d341f39551d06ea8d60501b9ff57aeb1303abfe331df7c22cf650acf0f9901"
+    },
+    {
+      "adoption_status": "AUTHORED_UNVERIFIED",
+      "authored_sha256": "b9cafefaf7813f18c1f6865cd01bcb394c62ef8b62f463df1f29ee5889dacba4",
+      "destination": "agones-rs/pkg/version.rs",
+      "runtime_role": "SOURCE_VERSION_OWNER",
+      "source_git_blob": "4d9e7bc4d0d3271e06c80734f77690bdd8f22002",
+      "source_id": "agones:pkg/version.go",
+      "source_owner_milestone": "M0001",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "source_sha256": "18a321dd868bdf897742490dde06040a35be996dbef93f4aae7ebd855c85842d"
+    },
+    {
+      "adoption_status": "AUTHORED_UNVERIFIED",
+      "authored_sha256": "8c35286a3fe14a10ba61300a4d7b6915e4f0d234be052149b22ed3af620cdc6b",
+      "destination": "agones-rs/tools.rs",
+      "runtime_role": "TOOLS_PROFILE_DECLARATIONS",
+      "source_git_blob": "58453f115b9c70607738182386b0216f1381bfd1",
+      "source_id": "agones:tools.go",
+      "source_owner_milestone": "M0001",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "source_sha256": "c916e834507e2e31ca61016345f25d89980191b0f27ce3846e616de705e9f600"
+    },
+    {
+      "adoption_status": "SHARED_DECLARATION_AUTHORED_FOR_M0005",
+      "authored_sha256": "654629325acdc71bfc4d149b84d236f6378bd72979449715c7e0fa6ecfeb93da",
+      "destination": "agones-rs/pkg/apis/agones/register.rs",
+      "runtime_role": "API_GROUP_CONSTANT",
+      "source_git_blob": "b26b5864b3ef848a1f28a17f031aa6e7aea557d3",
+      "source_id": "agones:pkg/apis/agones/register.go",
+      "source_owner_milestone": "M0005",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "source_sha256": "1076f846227fdad5ad8d52f0b4b26da71948373487cd43e6aecb72e2da1d851d"
+    },
+    {
+      "adoption_status": "SHARED_DECLARATION_AUTHORED_FOR_M0005",
+      "authored_sha256": "1ffe322d6409151d96f136d8a5774fcf4edbb50d12299923aaae1b880fb41806",
+      "destination": "agones-rs/pkg/apis/allocation/register.rs",
+      "runtime_role": "API_GROUP_CONSTANT",
+      "source_git_blob": "3c26c331714a7a5e6266d6f45e356751859527df",
+      "source_id": "agones:pkg/apis/allocation/register.go",
+      "source_owner_milestone": "M0005",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "source_sha256": "b7bd85a7e02b92ffbcbbeed3d8e843b1fd4081f1e4f9c41627d14db4bd776aaa"
+    },
+    {
+      "adoption_status": "SHARED_DECLARATION_AUTHORED_FOR_M0005",
+      "authored_sha256": "a75d9febae477a268cf990554894dc7080b7e47d9b1dda86c44fa8e75481fc08",
+      "destination": "agones-rs/pkg/apis/autoscaling/register.rs",
+      "runtime_role": "API_GROUP_CONSTANT",
+      "source_git_blob": "5f40ecc42ce3c9924b990b5b86c31234f904fa11",
+      "source_id": "agones:pkg/apis/autoscaling/register.go",
+      "source_owner_milestone": "M0005",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "source_sha256": "dcd249cf71f6a6ad981a3f4dd93b59c18da9846f5f6fbb51fc22466ec9c1d340"
+    },
+    {
+      "adoption_status": "SHARED_DECLARATION_AUTHORED_FOR_M0005",
+      "authored_sha256": "6f2f44f77bd6db4f50149ebf96024e0c7f90051ba752741efe509497ae2ecd86",
+      "destination": "agones-rs/pkg/apis/multicluster/register.rs",
+      "runtime_role": "API_GROUP_CONSTANT",
+      "source_git_blob": "250a244a608a0c0fc1f9f92bfe8b89468701c14d",
+      "source_id": "agones:pkg/apis/multicluster/register.go",
+      "source_owner_milestone": "M0005",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "source_sha256": "8b9e9fd3cf05733bb5c73e33bae0a05030d650592d3e744ac98dd7a7a3c83571"
+    }
+  ],
+  "global_remaining": "All later milestones, whole production/configuration/body reconciliation and generated Agones output remain required. M0001 source authoring does not open the global gate.",
+  "implementation_status": "IMPLEMENTED_UNVERIFIED",
+  "known_missing_M0001_owned_source_implementation": [],
+  "milestone_id": "M0001",
+  "output_identities": {
+    "agones-rs/.dockerignore": "0260e96bb8c3493a2fd601dbe14c311177e8816888e1f28005102cab426934ec",
+    "agones-rs/.gcloudignore": "fb60eb6eaafc6a96f11314955c7adec949e9c230f6db8a7f296bbf8d5a78decc",
+    "agones-rs/.gitattributes": "b304d428389464393146d710abcc414301b2d1ce42257bb92515a74ba574e47c",
+    "agones-rs/.gitignore": "5844af2b0a94dcc1dcd01da2c7ce973618b85b46632a1ad94093fdf21fbebdac",
+    "agones-rs/.golangci.yml": "7f287008b6b8e59f78ce17c9d8b5944d5324ec12d886941daa78101e7773bbad",
+    "agones-rs/.yamllint": "c7d7dbfc231e8aeb5a4f57a5eb41210744c0a3ba2f74f08de8b48a5bf7f890df",
+    "agones-rs/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "agones-rs/LICENSE-LEGACY.MD": "2849704bbb18d3cebb15ec40b45421475b17111451093df71c5fcef69bfb386d",
+    "agones-rs/LICENSE.MD": "6f954aa3706fc91f4c8f46d531165051fe647d6515b47c0d6b23e8d8dc8616ea",
+    "agones-rs/cloudbuild.yaml": "4e96524a76e676fac09067afc2887101c3e90349a22c58bba82a5dde55a4cf43",
+    "agones-rs/doc.rs": "62f2c2f6a88dd38433524949735d5b1b140e9e2bb8a306f0283599a8e49d667c",
+    "agones-rs/go.mod": "01df333891a331341e77aab737c24dc722fab26abc8439b9c2036c71a477215a",
+    "agones-rs/go.sum": "d890978bc12d9c9958b2a87f99a87d8478b007208e44c5d859e973ba89adcbf7",
+    "agones-rs/pkg/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "agones-rs/pkg/apis/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "agones-rs/pkg/apis/agones/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "agones-rs/pkg/apis/agones/register.rs": "654629325acdc71bfc4d149b84d236f6378bd72979449715c7e0fa6ecfeb93da",
+    "agones-rs/pkg/apis/allocation/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "agones-rs/pkg/apis/allocation/register.rs": "1ffe322d6409151d96f136d8a5774fcf4edbb50d12299923aaae1b880fb41806",
+    "agones-rs/pkg/apis/autoscaling/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "agones-rs/pkg/apis/autoscaling/register.rs": "a75d9febae477a268cf990554894dc7080b7e47d9b1dda86c44fa8e75481fc08",
+    "agones-rs/pkg/apis/multicluster/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "agones-rs/pkg/apis/multicluster/register.rs": "6f2f44f77bd6db4f50149ebf96024e0c7f90051ba752741efe509497ae2ecd86",
+    "agones-rs/pkg/doc.rs": "1a375f44c7a2607b9c9a434ed66145d0746b6f25b4931bbb330d2c257c4197c9",
+    "agones-rs/pkg/version.rs": "b9cafefaf7813f18c1f6865cd01bcb394c62ef8b62f463df1f29ee5889dacba4",
+    "agones-rs/tools.rs": "8c35286a3fe14a10ba61300a4d7b6915e4f0d234be052149b22ed3af620cdc6b",
+    "rust-support/agones/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "rust-support/agones/Cargo.toml": "040c51eca84973baafc7485c7480f3fc689c3b807497831adfdc3659badc8a30",
+    "rust-support/agones/build.rs": "e14c1a061cb9dd01441f072170e1983b806490d85f524408491c1d9bd5e33d14",
+    "rust-support/agones/src/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "rust-support/agones/src/api_groups.rs": "d5c0637541eac2589a1aa278d12794564641abcad7416a64bb2cdec1c06577a2",
+    "rust-support/agones/src/configuration.rs": "c1e1874fc9ebd8ab715054f900403eab4796d21c034cf872adbe12e7c572bf00",
+    "rust-support/agones/src/declarations.rs": "7bffa46a5268ece680736711c3390bd925a67f40bdc7a0c28b27e6b3ae9960db",
+    "rust-support/agones/src/lib.rs": "d580f65cc7db4cd99eee0a0550c78a905133394efb1a013cbaba3779fa779f2b",
+    "rust-support/agones/src/lifecycle.rs": "7bc9f61637b3293b2b1c518fab81f954fe9344db4998764b86b03649ca78414d",
+    "rust-support/agones/src/pkg.rs": "0187f82fe15d8ea266797490ef20a6503f830534acb28d5ec6e982f5749dce4d"
+  },
+  "record_kind": "source_ownership_adoption",
+  "reused_shared_contracts": [
+    {
+      "binding": "AGONES_FEATURE_DEFAULTS and ParseAgonesFeatureGates",
+      "followup": "M0003 retains full utility behavior and source-mirror adoption; no M0003 completion credited.",
+      "owner": "crates/agones-core/src/features.rs",
+      "source": "pkg/util/runtime/features.go"
+    },
+    {
+      "binding": "FeatureGateInputOptions / LoadAgonesFeatureGates / select_feature_gate_input",
+      "followup": "Complete utility/error/environment scope remains M0003.",
+      "owner": "crates/agones-core/src/feature_inputs.rs",
+      "precedence": "explicit override -> changed flag (including empty) -> nonempty environment -> empty default",
+      "source": "pkg/util/runtime/features.go + source pflag/Viper key resolution"
+    }
+  ],
+  "route": "MANUAL",
+  "scope_inventory": {
+    "path": "verification/agones/roadmap/source-inventory.json",
+    "sha256": "922a34fdb31d040f01d588285f9f6d438e198d8edf917d40df09513732a1a58d"
+  },
+  "source_snapshot": "ea56d060a0f817ba6d077436a869b7a858dd0436",
+  "transfers": [
+    {
+      "callers": [
+        "Fleet::apply_defaults",
+        "Fleet::apply_defaults_with_version_context",
+        "GameServer::DEFAULT_SDK_VERSION",
+        "rusternetes fleet/defaulting admission paths",
+        "existing version examples and harnesses (execution deferred)"
+      ],
+      "canonical_owner": "agones-rs/pkg/version.rs",
+      "compatibility": "crates/agones-core/src/build_version.rs re-exports agones_source::pkg::version::*",
+      "previous_blob": "35f6a3059ae33298903be8413a3d05fe51c933b6",
+      "previous_owner": "crates/agones-core/src/build_version.rs",
+      "rust_symbols": [
+        "AgonesBuildVersion",
+        "AgonesBuildVersion::default",
+        "AgonesBuildVersion::new",
+        "EncodeAgonesVersionAnnotation",
+        "AgonesBuildVersionContext"
+      ],
+      "source_symbol": "pkg.Version"
+    },
+    {
+      "canonical_owner": "rust-support/agones/build.rs",
+      "entrypoint": "Cargo agones-source build script",
+      "execution": "NOT_RUN",
+      "input": "AGONES_BUILD_VERSION: absent => dev; present empty preserved; raw OS bytes retained",
+      "outputs": [
+        "OUT_DIR/agones-build-version.bin",
+        "OUT_DIR/agones-build-version.rs"
+      ],
+      "previous_blob": "9ecdc3a8317c0b7309432e0093b63341eb4a3714",
+      "previous_owner": "crates/agones-core/build.rs",
+      "symbols": [
+        "main",
+        "write_changed"
+      ]
+    }
+  ]
+}

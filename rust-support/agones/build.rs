@@ -2,9 +2,9 @@ use std::{env, fs, path::Path};
 
 use genco::{lang::rust, prelude::*, tokens::quoted};
 
-#[path = "src/go_utf8.rs"]
+#[path = "../../crates/agones-core/src/go_utf8.rs"]
 mod go_utf8;
-#[path = "src/version_annotation.rs"]
+#[path = "../../crates/agones-core/src/version_annotation.rs"]
 mod version_annotation;
 
 fn write_changed(path: &Path, bytes: &[u8]) {
@@ -16,8 +16,8 @@ fn write_changed(path: &Path, bytes: &[u8]) {
 fn main() {
     println!("cargo:rerun-if-env-changed=AGONES_BUILD_VERSION");
     println!("cargo:rerun-if-changed=build.rs");
-    println!("cargo:rerun-if-changed=src/version_annotation.rs");
-    println!("cargo:rerun-if-changed=src/go_utf8.rs");
+    println!("cargo:rerun-if-changed=../../crates/agones-core/src/version_annotation.rs");
+    println!("cargo:rerun-if-changed=../../crates/agones-core/src/go_utf8.rs");
     // Equivalent to the source build's -X agones.dev/agones/pkg.Version=... .
     // Preserve explicit empty values and raw OS bytes on the pinned Linux host.
     let configured = env::var_os("AGONES_BUILD_VERSION");

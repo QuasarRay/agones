@@ -30,6 +30,8 @@ pub mod multicluster;
 pub mod features;
 pub mod feature_inputs;
 pub mod build_version;
+#[path = "../../../rust-support/agones/src/configuration.rs"]
+pub mod configuration;
 pub mod gameserver_defaulting;
 pub mod gameserver_validation;
 pub mod resource_quantity;
@@ -48,6 +50,7 @@ pub use multicluster::*;
 pub use features::*;
 pub use feature_inputs::*;
 pub use build_version::*;
+pub use configuration::*;
 pub use gameserver_defaulting::*;
 pub use gameserver_validation::*;
 pub use resource_quantity::*;

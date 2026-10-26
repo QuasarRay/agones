@@ -89,6 +89,14 @@
     "regeneration": "250identical files; no added/missing/different outputs",
     "required_unresolved": 0
   },
+  "combined_roadmap_authority": {
+    "canonical_ledger": "AGONES_RS_STATE.json",
+    "contract": "roadmap/0000-contract.md",
+    "prior_snapshot": "verification/agones/states/7bf7b34d48f069da38f4b104c3867d8faffa47aa1390415d5862c4b547faabc1.json",
+    "strict_global_gate": "CLOSED",
+    "terminal_rule": "FIRST_FULL_GENERATION_COMPLETE is an intermediate artifact milestone; continue combined roadmap.",
+    "thread_id": "01a17928-8551-7701-8497-5333c680f283"
+  },
   "completion_record_found": false,
   "completion_record_path": "/home/astral/Projects/agones/generated/agones-first-generation/evidence/FIRST_FULL_GENERATION_COMPLETE.json",
   "contract": "AGONES_CPG_FIRST_GENERATION_GOAL_PROMPT.md",
@@ -154,7 +162,7 @@
     "typed_domain": "Complete schema-derived 43 concrete and 6 abstract graph classes, 401 stored and reference property accessors, 371 detached property accessors, 4 contained-node fields, 4218 neighbor steps, 34 edge classes and 49 starters. Original typed fixture comparison covers defaults/copy/null maps/contained references/query/mandatory-neighbor failures; generated ranges bind 224 typed classes to schema identities.",
     "utilities": "UTF-8/BOM/lines, strong/noop interning, temporary-copy lifecycle, root search, source iterable decoration and current/global parallel execution implemented."
   },
-  "next_action": "Generate all 21 individual parameterized CPG schema module APIs from current source inventory and constructor instructions. Retain shared object handles supplied by caller dependencies. Reconcile remaining schema/graph/loading/build/closure mappings, then complete independent Agones census, frontend extraction, normalized CPG, typed IR, Go lowering/support and terminal emission.",
+  "next_action": "Implement M0002 pinned CPG source/build/support boundaries. Read only M0002 affected sections. No compiler, generator validation, tests or CI.",
   "objective": "CPG_FIRST_COMPLETE_AGONES_RUST_GENERATION",
   "objective_attachment": "/home/astral/.codex/attachments/366fe3bd-b8a4-41ae-8a83-2055a23db195/pasted-text-1.txt",
   "owned_paths": [
@@ -168,6 +176,7 @@
     "AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "AGONES_RS_CONTINUATION_PROMPT.md": "44f3d82ca654789f9dc2553c4dd68c1b4877bb9c2ede654372d7a8087aaca146"
   },
+  "prior_standalone_next_action": "Generate all 21 individual parameterized CPG schema module APIs from current source inventory and constructor instructions. Retain shared object handles supplied by caller dependencies. Reconcile remaining schema/graph/loading/build/closure mappings, then complete independent Agones census, frontend extraction, normalized CPG, typed IR, Go lowering/support and terminal emission.",
   "prior_work": {
     "fleet_property_worktree": "/home/astral/.codex/worktrees/agones-fleet-replica-helpers/agones",
     "last_native_implementation_commit": "af574b37efa798d10f90ec17463e9b2f3b5b39c4",

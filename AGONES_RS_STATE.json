@@ -118,11 +118,11 @@
       "status": "RESOLVED"
     }
   ],
-  "contract_sha256": "45ca591cea7071878e54b035fd5eb3d076f2ef94a9245077f9a1500d04cb5bf1",
+  "contract_sha256": "be40524b791ab4c5b381d97d36742ef5b976a2aae7ed3ad24140a3689dc05791",
   "delivery": {
     "acceptance": "Canonical shared metadata policy adopted with704native tests/zero failures/three ignored, seven generation modes and18parsercontrols. Six complete metadata cases retain21source assertions/12covers; all47earlier whole harness bodies are unchanged. Current protected43selection results are required. Historical native676campaign retains seven scoped passes and30failed source cases; none transfers automatically. Full migration and all8_2cells remain incomplete.",
     "access": "GitHub app authorized as QuasarRay with push/admin; gh CLI unauthenticated; local .git writable",
-    "active_objective": "CPG_FIRST_COMPLETE_AGONES_RUST_GENERATION",
+    "active_objective": "AGONES_AND_CPG_COMBINED_ROADMAP",
     "actual_integration_head": "1e64a054901658908d0a7a4eecd3010379df9614",
     "actual_review_head": "861f4eb5b3d5a9d47d2364edc83b32a1da3e9c71",
     "artifact_recovery_pending": "verification/agones/ci/39572135297-terminal-retention-pending.json",
@@ -643,6 +643,7 @@
     },
     "isolated_validation_repair": "verification/agones/validation-path-fixture-isolated-recovery.json",
     "legacy_validator_status": "The broader continuation prompt has preserved user edits relative to its recorded contract hash. Existing gates are historical; no fresh broader migration validation is claimed.",
+    "legacy_verification_phase": "HELD_BY_COMBINED_IMPLEMENTATION_GATE",
     "merge_result": {
       "commit": "774abfa9a2a0129074d20453d94d999899cb012b",
       "merged": true,
@@ -664,7 +665,7 @@
       "receipt": "verification/agones/ci/native675-recovery-published.json",
       "status": "PUBLISHED_NATIVE_RECOVERY_ONLY_FORMAL_ACCEPTANCE_PENDING"
     },
-    "next_action": "Continue post-gate typed source properties for the complete Fleet helper feature in its pinned native705source worktree. Recover ten remaining current43ZIPs and metadata diagnostic artifact12335235875 when authenticated access is available; both CI runs are terminal failures and no missing result receives credit. Canonical adoption/publication and all required proofs remain open.",
+    "next_action": "Implement M0002 pinned CPG source/build/support boundaries. Read only M0002 affected sections. No compiler, generator validation, tests or CI.",
     "pending_checkpoint": {
       "current_formal_credit": 0,
       "generation_modes": 7,
@@ -727,6 +728,60 @@
       "feature-bool-model-check"
     ],
     "review_branch": "codex/agones-player-tracking-validation",
+    "roadmap_execution": {
+      "alternation_policy": "roadmap/alternation-policy.md",
+      "alternation_policy_sha256": "ce35ab9c47399c4e1621a2ae08e1d8e9841fc11918b3edc3127be77c15ae3e6e",
+      "combined_roadmap": "roadmap.md",
+      "combined_roadmap_sha256": "a9b797fc624be04548c62e63a634bcc2cacab25c4d9f45af346148ba32c1baea",
+      "contract": "roadmap/0000-contract.md",
+      "contract_sha256": "be40524b791ab4c5b381d97d36742ef5b976a2aae7ed3ad24140a3689dc05791",
+      "cursor": {
+        "disposition": "READY",
+        "milestone_id": "M0002",
+        "route": "CPG",
+        "stage": "PLANNED"
+      },
+      "forecast_baseline": "verification/agones/roadmap/forecast-baseline-v1.json",
+      "forecast_baseline_sha256": "ee1cc5bb26dd418bb87348e4b22bf6b41ba03626484c5b373a7ef717fd8d7d69",
+      "global_gate": {
+        "reason": "Remaining required production, generation and whole-scope reconciliation across both routes.",
+        "record": null,
+        "status": "CLOSED"
+      },
+      "historical_ledger": {
+        "evidence_policy": "Prior checks and proof counters are historical; no current combined-contract acceptance or proof credit is inferred.",
+        "first_generation_checkpoint": "verification/agones/first-generation-checkpoint.json",
+        "handoff": "verification/agones/states/dc51017d5e2b1c305780abd7679829c0779b129600a71f50a900e8448c33ddc7.md",
+        "revision": 321,
+        "snapshot": "verification/agones/states/fd85b5ee58acdd317c1470c287c47ef402e6a6ed093809719d523d0b71aafaec.json"
+      },
+      "implementation_status": "IN_PROGRESS",
+      "migration_status": "IN_PROGRESS",
+      "milestones": {
+        "M0001": {
+          "adoption_record": "verification/agones/roadmap-adoption-M0001.json",
+          "cost_comparison": "cost-analysis-comparison/0001-M0001.md",
+          "delivery": "LOCAL_CHECKPOINT_PENDING; remote delivery deferred by strict gate",
+          "disposition": "COMPLETE",
+          "owned_file_count": 13,
+          "stage": "IMPLEMENTED_UNVERIFIED",
+          "usage_end": "verification/agones/roadmap-M0001-end-usage.json",
+          "usage_start": "verification/agones/roadmap-M0001-entry-usage.json"
+        }
+      },
+      "next_action": "Implement M0002 pinned CPG source/build/support boundaries. Read only M0002 affected sections. No compiler, generator validation, tests or CI.",
+      "objective": "AGONES_AND_CPG_COMBINED_ROADMAP",
+      "objective_attachment": "/home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt",
+      "objective_attachment_sha256": "a9b797fc624be04548c62e63a634bcc2cacab25c4d9f45af346148ba32c1baea",
+      "project_phase": "IMPLEMENTATION_ONLY",
+      "shared_setup_usage": {
+        "attribution": "Shared contract/attachment/ledger recovery including initial M0001 source reconnaissance; excluded from route comparison. No credits exposed.",
+        "end_observation": "verification/agones/roadmap-M0001-entry-usage.json",
+        "tokens_before_first_milestone": 79348
+      },
+      "usage_accounting_status": "M0001 observed segment recorded; closing accounting and route setup will be attributed once at the next milestone boundary.",
+      "verification_status": "NOT_STARTED"
+    },
     "streaming_direct_paths_expected_tested_merge": "e3010b88e98025e11d41f272126e8b39a171c913",
     "streaming_direct_paths_terminal_receipt": "verification/agones/ci/39505643334-terminal-retained.json",
     "streaming_direct_paths_workflow_run": 39505643334,
@@ -744,20 +799,20 @@
     }
   },
   "goal": {
-    "objective_attachment": "/home/astral/.codex/attachments/5cf63dab-e5a8-49be-a2f1-ae51f5edd993/pasted-text-1.txt",
+    "objective_attachment": "/home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt",
     "reported_usage": {
-      "observed_at": 1792576037,
-      "time_seconds": 98443,
-      "tokens": 9834797
+      "observed_at": 1793034866,
+      "time_seconds": 803,
+      "tokens": 137099
     },
     "status": "active",
-    "thread_id": "01a14ebe-10fa-7c41-9f85-256874fb4c1f",
+    "thread_id": "01a17928-8551-7701-8497-5333c680f283",
     "token_budget": null
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 320,
-  "previous_sha256": "8be9ebe2e2d3dcc58959ad6ff3f3da512a4ba2ff0197bd558ef62d56a8bb865a",
+  "previous_revision": 321,
+  "previous_sha256": "fd85b5ee58acdd317c1470c287c47ef402e6a6ed093809719d523d0b71aafaec",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -1461,7 +1516,7 @@
       "timestamp": "2026-10-21T09:42:01.132215+00:00"
     }
   ],
-  "revision": 321,
+  "revision": 322,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [
@@ -1469,7 +1524,7 @@
       "dependencies": [
         "existing-Fleet-and-GameServerSet-canonical-types"
       ],
-      "disposition": "READY",
+      "disposition": "STALE",
       "evidence_refs": [
         "verification/agones/fleet-replica-helpers-isolated-recovery.json"
       ],
@@ -1533,7 +1588,7 @@
         "existing-object-meta-representation",
         "existing-CGP-validation-composition"
       ],
-      "disposition": "READY",
+      "disposition": "STALE",
       "evidence_refs": [
         "verification/agones/object-metadata-isolated-recovery.json",
         "verification/agones/object-metadata-source-published.json",
@@ -1599,7 +1654,7 @@
       "dependencies": [
         "FG-CONFIG-001 implementation gate; formal prerequisite debt remains explicit"
       ],
-      "disposition": "READY",
+      "disposition": "STALE",
       "evidence_refs": [
         "verification/agones/gameserver-feature-validation-evidence.json",
         "verification/agones/ci/protected-model-execution-plan.json",
@@ -1675,7 +1730,7 @@
       "dependencies": [
         "RESOURCE-QUANTITY-001"
       ],
-      "disposition": "READY",
+      "disposition": "STALE",
       "evidence_refs": [
         "verification/agones/validation-error-data-isolated-recovery.json",
         "verification/agones/canonical-complete-validation-adoption-evidence.json"
@@ -1716,7 +1771,7 @@
     },
     {
       "dependencies": [],
-      "disposition": "READY",
+      "disposition": "STALE",
       "evidence_refs": [
         "verification/agones/resource-quantity-isolated-recovery.json",
         "verification/agones/canonical-complete-validation-adoption-evidence.json"
@@ -1764,7 +1819,7 @@
     },
     {
       "dependencies": [],
-      "disposition": "READY",
+      "disposition": "STALE",
       "evidence_refs": [
         "verification/agones/resource-quantity-isolated-recovery.json",
         "verification/agones/canonical-complete-validation-adoption-evidence.json"
@@ -1809,7 +1864,7 @@
         "SDK-VERSION-001",
         "FG-CONFIG-001"
       ],
-      "disposition": "READY",
+      "disposition": "STALE",
       "evidence_refs": [
         "verification/agones/gameserver-defaulting-evidence.json",
         "verification/agones/ci/39166043228-success.json",
@@ -1858,7 +1913,7 @@
       "dependencies": [
         "Existing canonical GameServer/Fleet types and Rusternetes Pod builder; independent of retained feature-gate formal debt"
       ],
-      "disposition": "READY",
+      "disposition": "STALE",
       "evidence_refs": [
         "verification/agones/sdk-version-evidence.json",
         "verification/agones/ci/39190924053-success.json"
@@ -1901,7 +1956,7 @@
         "FG-CONFIG-001 query policy",
         "FG-INPUT-001 production configuration"
       ],
-      "disposition": "READY",
+      "disposition": "STALE",
       "evidence_refs": [
         "verification/agones/feature-error-evidence.json",
         "verification/agones/ci/39190924053-success.json"
@@ -1942,7 +1997,7 @@
       "dependencies": [
         "FG-CONFIG-001 implementation gate"
       ],
-      "disposition": "READY",
+      "disposition": "STALE",
       "evidence_refs": [
         "verification/agones/feature-input-evidence.json",
         "verification/agones/ci/39190924053-success.json"
@@ -1979,7 +2034,7 @@
       "dependencies": [
         "baseline-census-v1"
       ],
-      "disposition": "READY",
+      "disposition": "STALE",
       "evidence_refs": [
         "verification/agones/feature-config-evidence.json",
         "verification/agones/ci/39190924053-success.json"
@@ -2016,9 +2071,10 @@
   ],
   "workspace": {
     "branch": "agones-rs-dev",
-    "dirty_patch_sha256": "39c07e9cb812c1433d5059ac388e63cdbe739d97262220e4684f0acfe4ec393b",
-    "head": "4d433085206c0c77fd16024c64c120b9e2cebe4e",
+    "dirty_patch_sha256": "810ba58459c3e8854374384fb59dc4db9c4f62e699e697bb75d710c46c1eb428",
+    "head": "ea56d060a0f817ba6d077436a869b7a858dd0436",
     "last_validated_implementation": "verification/agones/gates/fa682f3bc2dded24a213b49d3337fb7a5a711fb02321ddac5057353491b48f72.json",
+    "last_validated_implementation_status": "HISTORICAL_STALE; not a combined-contract gate",
     "path": "/home/astral/Projects/agones",
     "source_binding_receipt": "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-010.json",
     "untracked_inputs": [

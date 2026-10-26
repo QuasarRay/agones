@@ -7,7 +7,9 @@ repository.workspace = true
 rust-version.workspace = true
 
 [dependencies]
+agones-source.workspace = true
 cgp.workspace = true
+derive-deftly.workspace = true
 num-bigint.workspace = true
 base64.workspace = true
 chrono.workspace = true
@@ -19,9 +21,6 @@ serde.workspace = true
 serde_json.workspace = true
 url.workspace = true
 x509-parser.workspace = true
-
-[build-dependencies]
-genco.workspace = true
 
 [dev-dependencies]
 bolero = "0.13"

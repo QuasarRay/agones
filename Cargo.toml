@@ -1,6 +1,7 @@
 [workspace]
 resolver = "2"
 members = [
+    "rust-support/agones",
     "crates/agones-core",
     "crates/agones-macros",
     "crates/agones-rusternetes", "crates/util",
@@ -19,6 +20,8 @@ base64 = "0.22"
 chrono = "0.4.38"
 chrono-tz = "0.10.0"
 cgp = "=0.8.0-alpha"
+derive-deftly = "=1.14.0"
+agones-source = { path = "rust-support/agones" }
 cron = "0.12.1"
 genco = "0.17.10"
 num-bigint = "=0.4.8"

@@ -1,0 +1,14 @@
+{
+  "authorization": "Explicit /goal invocation of combined attachment",
+  "event": "ROADMAP_M0001_AUTHORED_UNVERIFIED",
+  "global_gate": "CLOSED",
+  "next_milestone": "M0002",
+  "predecessor_revision": 321,
+  "predecessor_sha256": "fd85b5ee58acdd317c1470c287c47ef402e6a6ed093809719d523d0b71aafaec",
+  "result_revision": 322,
+  "route_switch": "MANUAL -> CPG",
+  "schema_version": 1,
+  "source_adoption": "verification/agones/roadmap-adoption-M0001.json",
+  "state_sha256": "0db74771ca359fd9390a4e2225881dd36a16c629b05138f4d7f8c345dfd06030",
+  "timestamp": "2026-10-26T17:17:40.323285+00:00"
+}

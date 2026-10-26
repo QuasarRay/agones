@@ -233,7 +233,7 @@ impl Fleet {
     }
 
     pub fn apply_defaults(&mut self) {
-        self.apply_defaults_with_version_context(&crate::AgonesBuildVersionContext::default());
+        self.apply_defaults_with_version_context(&crate::AgonesConfigurationContext::default());
     }
 
     pub fn apply_defaults_with_version_context<C: crate::CanGetAgonesVersionAnnotation>(

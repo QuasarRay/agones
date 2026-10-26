@@ -1,0 +1,18 @@
+[package]
+name = "agones-source"
+version.workspace = true
+edition.workspace = true
+license = "Apache-2.0"
+repository.workspace = true
+rust-version.workspace = true
+
+[features]
+# The source's tools.go participates only in the `tools` Go build profile.
+source-tools = []
+
+[dependencies]
+cgp.workspace = true
+derive-deftly.workspace = true
+
+[build-dependencies]
+genco.workspace = true

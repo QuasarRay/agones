@@ -4,7 +4,7 @@ use std::net::IpAddr;
 use agones_macros::{AgonesStringEnum, agones_invariant};
 use serde::{Deserialize, Serialize};
 
-pub const GROUP_NAME: &str = "agones.dev";
+pub use agones_source::pkg::apis::agones::GroupName as GROUP_NAME;
 pub const DEFAULT_PORT_RANGE: &str = "default";
 pub const VERSION_ANNOTATION: &str = "agones.dev/sdk-version";
 pub const FINALIZER_NAME: &str = "agones.dev/controller";
