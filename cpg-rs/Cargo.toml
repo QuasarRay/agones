@@ -7,7 +7,7 @@ license = "Apache-2.0 AND (MPL-2.0 OR EPL-1.0)"
 repository = "https://github.com/QuasarRay/agones"
 
 [workspace]
-members = ["."]
+members = [".", "schema"]
 resolver = "2"
 
 [features]
@@ -40,6 +40,7 @@ grafeo = { path = "../third_party/first-generation/grafeo/grafeo", version = "=0
 tree-sitter = { version = "=0.27.1", optional = true }
 tree-sitter-scala = { version = "=0.26.3", optional = true }
 tree-sitter-java = { version = "=0.23.5", optional = true }
+jsonschema = "0.60.1"
 
 [patch.crates-io]
 grafeo-common = { path = "../third_party/first-generation/grafeo/grafeo-common" }
