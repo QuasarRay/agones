@@ -29,9 +29,21 @@
     },
     {
       "disposition": "RETAINED_EXISTING_IMPLEMENTATION_NO_SOURCE_COMPLETION_CREDIT",
+      "new_source_owner": "agones-rs/pkg/util/workerqueue/workerqueue.rs",
       "old_path": "crates/util/src/workerqueue.rs",
+      "old_sha256": "de0f0b58239fd031da83be01ebc9386532e79b84752ce070fb56ccaaee5414e9",
       "registration": "rust-support/agones/src/utility_lib.rs",
-      "required_followup": "M0003: exact source-owned queue policy, item types/key failures, native delaying queue semantics, scoped clock, logging/error paths, CGP child ownership and body/caller transfer. Existing Rusternetes controller_work_queue remains preserved until its adoption map is authored."
+      "required_followup": "New source queue is authored with separate exact policy/backend ownership. Old native queue remains registered at util::workerqueue; no body or caller transfer and no new source credit is claimed for it. Explicitly adopt or retain each old consumer through its source-owner milestone.",
+      "source_registration": "util::pkg::util::workerqueue via utility_modules.rs"
+    },
+    {
+      "disposition": "RETAINED_EXISTING_IMPLEMENTATION_NO_SOURCE_COMPLETION_CREDIT",
+      "native_core": "rust-support/agones/src/utility_queue.rs",
+      "new_source_owner": "agones-rs/pkg/util/workerqueue/workerqueue.rs",
+      "old_path": "crates/agones-rusternetes/src/controller_work_queue.rs",
+      "old_sha256": "d8a5ec2ecbae9c1f9e38297a262311e6b4b52baf2a294bc4c5405c9ccf4fce4a",
+      "required_followup": "Existing controller runtimes still use their old queue. Its saturating retry counts, approximate bucket and caller-owned delayed futures are not the new source queue. Transfer actual controller consumers during their source/lifecycle ownership work; do not silently replace or credit the old bodies.",
+      "work_base_commit": "e2c1202f1de868a89dc7a444ce4700d7a771ee92"
     }
   ],
   "milestone_id": "M0003",

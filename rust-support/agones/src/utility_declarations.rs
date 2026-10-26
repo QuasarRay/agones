@@ -72,6 +72,7 @@ define_derive_deftly! {
             crate::utility_scope::UtilityTaskScopeGetterComponent:
                 ::cgp::prelude::UseField<::cgp::prelude::Symbol!("utility_task_scope")>,
             crate::utility_scope::UtilityTaskSpawnerComponent: crate::utility_scope::SpawnOwnedUtilityTask,
+            crate::utility_scope::UtilityTaskFailureObserverComponent: crate::utility_scope::ObserveOwnedUtilityTaskFailure,
             crate::utility_http::HttpServerRunnerComponent: crate::utility_http::RunNativeHttpServer,
             crate::utility_fswatch::FileWatcherOpenerComponent: crate::utility_fswatch::OpenNativeFileWatcher,
             crate::utility_tls::SourceCertificateLoaderComponent: crate::utility_tls::LoadRustlsCertificate,
@@ -79,7 +80,30 @@ define_derive_deftly! {
             crate::utility_tls::SourceProcessExitComponent: crate::utility_tls::ExitNativeSourceProcess,
             crate::utility_admission::AdmissionHandlerCallerComponent: crate::utility_admission::CallSourceAdmissionHandler,
             crate::utility_discovery::ApiObjectEncoderComponent: crate::utility_discovery::EncodeSourceMetaObject,
+            crate::utility_signals::SourceSignalStateGetterComponent:
+                ::cgp::prelude::UseField<::cgp::prelude::Symbol!("source_signal_state")>,
+            crate::utility_signals::SourceSignalSubscriberComponent: crate::utility_signals::SubscribeNativeSourceSignals,
+            crate::utility_client_config::SourceClientConfigurationReaderComponent: crate::utility_client_config::ReadRusternetesSourceConfiguration,
         }
     }
 }
 pub(crate) use derive_deftly_template_UtilityRuntimeProviders;
+
+define_derive_deftly! {
+    UtilityQueueProviders:
+    ::cgp::prelude::delegate_and_check_components! {
+        <$tgens> $ttype {
+            crate::utility_queue::SourceQueueStateGetterComponent:
+                ::cgp::prelude::UseField<::cgp::prelude::Symbol!("source_queue_state")>,
+            crate::utility_queue::SourceQueueRuntimeGetterComponent:
+                ::cgp::prelude::UseField<::cgp::prelude::Symbol!("source_queue_runtime")>,
+            crate::utility_queue::SourceQueueClockComponent: crate::utility_queue::ReadTokioSourceQueueClock,
+            crate::utility_queue::SourceQueueDelayDeciderComponent: crate::utility_queue::UseOwnedSourceQueueLimiter,
+            crate::utility_queue::SourceQueueKeyReaderComponent: crate::utility_queue::ReadSourceMetadataKey,
+            crate::utility_queue::SourceQueueOperationsComponent: crate::utility_queue::UseOwnedSourceQueue,
+            crate::utility_queue::SourceQueueHandlerCallerComponent: crate::utility_queue::CallSourceQueueHandler,
+            crate::utility_queue::SourceQueueErrorClassifierComponent: crate::utility_queue::ClassifySourceQueueError,
+        }
+    }
+}
+pub(crate) use derive_deftly_template_UtilityQueueProviders;

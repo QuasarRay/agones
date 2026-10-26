@@ -117,7 +117,7 @@ where Context: CanEmitSourceLog + HasSourceLogger + HasSourceErrorBackoff + Sync
                 // The source starts its timestamp before locking and sleeps
                 // after unlocking, so other callers do not hold this lock.
                 let delay = context.source_error_backoff().next_delay(Instant::now());
-                tokio::time::sleep(delay).await;
+                if !delay.is_zero() { tokio::time::sleep(delay).await; }
             }
         })
     }

@@ -220,11 +220,18 @@ impl Error for FormattedError {
 /// Source errors.As/errors.Is can traverse both Unwrap() error and
 /// Unwrap() []error. Rust's standard source() represents only the first form.
 pub fn contains_error<T: Error + 'static>(error: &(dyn Error + 'static)) -> bool {
-    if error.is::<T>() { return true; }
+    find_error::<T>(error).is_some()
+}
+pub fn find_error<'a, T: Error + 'static>(error: &'a (dyn Error + 'static)) -> Option<&'a T> {
+    first_error_view(error, &|error| error.downcast_ref::<T>().or_else(||
+        error.downcast_ref::<crate::utility_error_view::ApiStatusEnvelope>()?.original_any().downcast_ref::<T>()))
+}
+pub fn first_error_view<'a, Value>(error: &'a (dyn Error + 'static), view: &impl Fn(&'a (dyn Error + 'static)) -> Option<Value>) -> Option<Value> {
+    if let Some(value) = view(error) { return Some(value); }
     if let Some(formatted) = error.downcast_ref::<FormattedError>() {
-        return formatted.wrapped.iter().any(|source| contains_error::<T>(source.as_ref()));
+        return formatted.wrapped.iter().find_map(|source| first_error_view(source.as_ref(), view));
     }
-    error.source().is_some_and(contains_error::<T>)
+    error.source().and_then(|source| first_error_view(source, view))
 }
 
 #[derive(Debug)]

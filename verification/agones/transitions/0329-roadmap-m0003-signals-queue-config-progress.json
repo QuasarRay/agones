@@ -1,0 +1,18 @@
+{
+  "authorization": "Explicit combined /goal invocation",
+  "event": "ROADMAP_M0003_SIGNALS_QUEUE_CONFIG_PROGRESS",
+  "global_gate": "CLOSED",
+  "milestone_stage": "IMPLEMENTING",
+  "native_goal_status": "active",
+  "partial_adoption": "verification/agones/roadmap-M0003-partial-map.json",
+  "predecessor_handoff_sha256": "e1169a48ee0dfa1e10ab26c9d0f2937b0b0fe410b7174ac5b8b42702f8c4d4ec",
+  "predecessor_revision": 328,
+  "predecessor_sha256": "a7505bc0e651e65d69f2358eeeaeeeedbffba8caa8cf7ae31f3b40c4050b06e4",
+  "project_executable_invocations": 0,
+  "result_revision": 329,
+  "route_switch": false,
+  "state_sha256": "6151d1f517d56cdffa5d8b91503d33532a19864561b81257a95a9aa31fd68e2e",
+  "timestamp": "2026-10-26T23:25:12.550321+00:00",
+  "usage_progress_observation": "verification/agones/roadmap-M0003-progress-usage-6.json",
+  "verification": "NOT_STARTED"
+}

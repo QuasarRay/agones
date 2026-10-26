@@ -11,6 +11,7 @@ pub struct UtilityRuntimeContext {
     pub source_logger: Arc<SourceLogger>,
     pub source_error_backoff: Arc<SourceErrorBackoff>,
     pub utility_task_scope: Weak<UtilityTaskScope>,
+    pub source_signal_state: Arc<crate::utility_signals::SourceSignalState>,
 }
 
 /// The parent lifecycle owns this resource phase and awaits shutdown. Children
@@ -18,12 +19,23 @@ pub struct UtilityRuntimeContext {
 pub struct UtilityRuntimeOwner { pub context: UtilityRuntimeContext, tasks: Arc<UtilityTaskScope> }
 impl UtilityRuntimeOwner {
     pub fn new(output: impl Write + Send + 'static) -> Self {
-        let tasks = Arc::new(UtilityTaskScope::default());
+        let tasks = Arc::new(UtilityTaskScope::reporting());
         Self { context: UtilityRuntimeContext {
             source_logger: Arc::new(SourceLogger::new(output)), source_error_backoff: Arc::default(),
             utility_task_scope: Arc::downgrade(&tasks),
+            source_signal_state: Arc::default(),
         }, tasks }
     }
     pub fn stderr() -> Self { Self::new(std::io::stderr()) }
-    pub async fn shutdown(self) -> Vec<(String, BoxError)> { self.tasks.cancel_and_join().await }
+    pub async fn shutdown(self) -> Vec<(String, BoxError)> {
+        let signal_error = self.context.source_signal_state.close().err();
+        let mut errors = self.tasks.cancel_and_join().await;
+        if let Some(error) = signal_error { errors.push(("process signal cleanup".into(), error)); }
+        errors
+    }
+}
+impl Drop for UtilityRuntimeOwner {
+    fn drop(&mut self) {
+        if let Err(error) = self.context.source_signal_state.close() { eprintln!("process signal cleanup: {error}"); }
+    }
 }

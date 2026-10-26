@@ -138,6 +138,7 @@ pub struct ResponseWriter {
     written: u64,
     buffered: Vec<u8>,
     flushed: bool,
+    finished: bool,
 }
 impl ResponseWriter {
     pub async fn write_header(&mut self, status: u16) -> Result<(), BoxError> {
@@ -223,10 +224,15 @@ impl ResponseWriter {
             }
         }
         let _ = self.flush().await;
+        self.finished = true;
     }
 }
 impl Drop for ResponseWriter {
-    fn drop(&mut self) { if std::thread::panicking() { self.panicked.store(true, Ordering::Release); } }
+    fn drop(&mut self) {
+        // Async supervisors can drop a caught future after unwinding ended.
+        // Cancellation is also an aborted response, even without a panic.
+        if !self.finished { self.panicked.store(true, Ordering::Release); }
+    }
 }
 fn sniff_content_type(bytes: &[u8]) -> &'static str {
     // The source utility responses set JSON explicitly or emit text. Retain
@@ -286,7 +292,7 @@ async fn request_service(context: UtilityRuntimeContext, mux: SourceMux, tasks: 
     let (data, receiver) = mpsc::channel(2);
     let panicked = Arc::new(AtomicBool::new(false));
     let mut writer = ResponseWriter { headers: BTreeMap::new(), committed: None, committed_headers: None, head: Some(head_tx), data,
-        panicked: Arc::clone(&panicked), head_request: request.method == "HEAD", written: 0, buffered: Vec::new(), flushed: false };
+        panicked: Arc::clone(&panicked), head_request: request.method == "HEAD", written: 0, buffered: Vec::new(), flushed: false, finished: false };
     tasks.spawn("HTTP request", Box::pin(async move {
         mux.dispatch(&context, &mut writer, &mut request).await;
         writer.finish().await;

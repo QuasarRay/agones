@@ -22,3 +22,7 @@ pub mod runtime;
 pub mod webhooks;
 #[path = "../../../agones-rs/pkg/util/apiserver/apiserver.rs"]
 pub mod apiserver;
+#[path = "../../../agones-rs/pkg/util/signals/signals.rs"]
+pub mod signals;
+#[path = "../../../agones-rs/pkg/util/workerqueue/workerqueue.rs"]
+pub mod workerqueue;
