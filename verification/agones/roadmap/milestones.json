@@ -1,0 +1,1067 @@
+{
+  "status": "PLANNED_NOT_EXECUTED",
+  "policy": "roadmap/alternation-policy.md",
+  "one_native_goal": true,
+  "dependency_method": "Actual Go imports grouped into cohesive families; the CpgSchema/PropertyDefaults cycle collapsed into one milestone; pinned constructor sequence and explicit schema/pipeline/runtime prerequisites",
+  "family_aliases": {
+    "a-protocol": "a-api",
+    "a-apply": "a-observation",
+    "a-client": "a-observation",
+    "a-gameserversets": "a-gameservers",
+    "a-tooling": "a-examples",
+    "c-schema-base": "c-schema-all",
+    "c-schema-identity": "c-schema-all",
+    "c-schema-program": "c-schema-all",
+    "c-schema-flow": "c-schema-all",
+    "c-schema-enrichment": "c-schema-all",
+    "c-schema-compose": "c-schema-all"
+  },
+  "milestones": [
+    {
+      "id": "M0001",
+      "number": 1,
+      "key": "a-foundation",
+      "route": "MANUAL",
+      "title": "Source mirror, version and shared contracts",
+      "filename": "0001-source-mirror-version-and-shared-contracts.md",
+      "dependencies_keys": [],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": []
+    },
+    {
+      "id": "M0002",
+      "number": 2,
+      "key": "c-build",
+      "route": "CPG",
+      "title": "Pinned CPG source, build machinery and Rust support boundaries",
+      "filename": "0002-pinned-cpg-source-build-machinery-and-rust-support-boundaries.md",
+      "dependencies_keys": [],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": []
+    },
+    {
+      "id": "M0003",
+      "number": 3,
+      "key": "a-utilities",
+      "route": "MANUAL",
+      "title": "Errors, queues, clocks, webhooks and utility effects",
+      "filename": "0003-errors-queues-clocks-webhooks-and-utility-effects.md",
+      "dependencies_keys": [],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": []
+    },
+    {
+      "id": "M0004",
+      "number": 4,
+      "key": "c-utilities",
+      "route": "CPG",
+      "title": "Native CPG utilities and effect ownership",
+      "filename": "0004-native-cpg-utilities-and-effect-ownership.md",
+      "dependencies_keys": [
+        "c-build"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0002"
+      ]
+    },
+    {
+      "id": "M0005",
+      "number": 5,
+      "key": "a-api",
+      "route": "MANUAL",
+      "title": "Resource and wire contracts, defaults and validation",
+      "filename": "0005-resource-and-wire-contracts-defaults-and-validation.md",
+      "dependencies_keys": [
+        "a-foundation",
+        "a-utilities"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0001",
+        "M0003"
+      ]
+    },
+    {
+      "id": "M0006",
+      "number": 6,
+      "key": "c-schema-all",
+      "route": "CPG",
+      "title": "Complete schema construction and mutually dependent declarations",
+      "filename": "0006-complete-schema-construction-and-mutually-dependent-declarations.md",
+      "dependencies_keys": [
+        "c-build"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0002"
+      ]
+    },
+    {
+      "id": "M0007",
+      "number": 7,
+      "key": "a-observation",
+      "route": "MANUAL",
+      "title": "Apply, clients, informers and listers",
+      "filename": "0007-apply-clients-informers-and-listers.md",
+      "dependencies_keys": [
+        "a-api"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0005"
+      ]
+    },
+    {
+      "id": "M0008",
+      "number": 8,
+      "key": "c-schema-tools",
+      "route": "CPG",
+      "title": "Schema export, protobuf tool inputs and launcher behavior",
+      "filename": "0008-schema-export-protobuf-tool-inputs-and-launcher-behavior.md",
+      "dependencies_keys": [
+        "c-schema-all"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0006"
+      ]
+    },
+    {
+      "id": "M0009",
+      "number": 9,
+      "key": "a-sdkclients",
+      "route": "MANUAL",
+      "title": "Source-compatible clients and existing Rust SDK reuse",
+      "filename": "0009-source-compatible-clients-and-existing-rust-sdk-reuse.md",
+      "dependencies_keys": [
+        "a-api",
+        "a-utilities"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0005",
+        "M0003"
+      ]
+    },
+    {
+      "id": "M0010",
+      "number": 10,
+      "key": "c-domain",
+      "route": "CPG",
+      "title": "Complete schema-derived domain hierarchy",
+      "filename": "0010-complete-schema-derived-domain-hierarchy.md",
+      "dependencies_keys": [
+        "c-schema-all",
+        "c-utilities"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0006",
+        "M0004"
+      ]
+    },
+    {
+      "id": "M0011",
+      "number": 11,
+      "key": "a-ports",
+      "route": "MANUAL",
+      "title": "Port ownership and allocation policy",
+      "filename": "0011-port-ownership-and-allocation-policy.md",
+      "dependencies_keys": [
+        "a-api",
+        "a-observation",
+        "a-utilities"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0005",
+        "M0007",
+        "M0003"
+      ]
+    },
+    {
+      "id": "M0012",
+      "number": 12,
+      "key": "c-graph",
+      "route": "CPG",
+      "title": "Native CPG facade and graph ownership",
+      "filename": "0012-native-cpg-facade-and-graph-ownership.md",
+      "dependencies_keys": [
+        "c-domain"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0010"
+      ]
+    },
+    {
+      "id": "M0013",
+      "number": 13,
+      "key": "a-cloud",
+      "route": "MANUAL",
+      "title": "Cloud hooks through the permitted Rusternetes boundary",
+      "filename": "0013-cloud-hooks-through-the-permitted-rusternetes-boundary.md",
+      "dependencies_keys": [
+        "a-api",
+        "a-observation",
+        "a-ports",
+        "a-utilities"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0005",
+        "M0007",
+        "M0011",
+        "M0003"
+      ]
+    },
+    {
+      "id": "M0014",
+      "number": 14,
+      "key": "c-serialization",
+      "route": "CPG",
+      "title": "Serialized graph and overlay behavior",
+      "filename": "0014-serialized-graph-and-overlay-behavior.md",
+      "dependencies_keys": [
+        "c-graph"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0012"
+      ]
+    },
+    {
+      "id": "M0015",
+      "number": 15,
+      "key": "a-fleets",
+      "route": "MANUAL",
+      "title": "Fleet reconciliation and rollout policy",
+      "filename": "0015-fleet-reconciliation-and-rollout-policy.md",
+      "dependencies_keys": [
+        "a-api",
+        "a-observation",
+        "a-utilities"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0005",
+        "M0007",
+        "M0003"
+      ]
+    },
+    {
+      "id": "M0016",
+      "number": 16,
+      "key": "c-protobuf-loading",
+      "route": "CPG",
+      "title": "Protobuf loading, archive ownership and node mapping",
+      "filename": "0016-protobuf-loading-archive-ownership-and-node-mapping.md",
+      "dependencies_keys": [
+        "c-schema-tools",
+        "c-serialization"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0008",
+        "M0014"
+      ]
+    },
+    {
+      "id": "M0017",
+      "number": 17,
+      "key": "a-metrics",
+      "route": "MANUAL",
+      "title": "Telemetry and metric semantics",
+      "filename": "0017-telemetry-and-metric-semantics.md",
+      "dependencies_keys": [
+        "a-api",
+        "a-fleets",
+        "a-observation",
+        "a-utilities"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0005",
+        "M0015",
+        "M0007",
+        "M0003"
+      ]
+    },
+    {
+      "id": "M0018",
+      "number": 18,
+      "key": "c-storage-loading",
+      "route": "CPG",
+      "title": "Format detection and native storage compatibility",
+      "filename": "0018-format-detection-and-native-storage-compatibility.md",
+      "dependencies_keys": [
+        "c-protobuf-loading"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0016"
+      ]
+    },
+    {
+      "id": "M0019",
+      "number": 19,
+      "key": "a-gameservers",
+      "route": "MANUAL",
+      "title": "GameServer and GameServerSet lifecycle",
+      "filename": "0019-gameserver-and-gameserverset-lifecycle.md",
+      "dependencies_keys": [
+        "a-api",
+        "a-cloud",
+        "a-metrics",
+        "a-observation",
+        "a-ports",
+        "a-utilities"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0005",
+        "M0013",
+        "M0017",
+        "M0007",
+        "M0011",
+        "M0003"
+      ]
+    },
+    {
+      "id": "M0020",
+      "number": 20,
+      "key": "c-passes",
+      "route": "CPG",
+      "title": "Pass, diff and execution lifecycle",
+      "filename": "0020-pass-diff-and-execution-lifecycle.md",
+      "dependencies_keys": [
+        "c-graph",
+        "c-serialization",
+        "c-utilities"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0012",
+        "M0014",
+        "M0004"
+      ]
+    },
+    {
+      "id": "M0021",
+      "number": 21,
+      "key": "a-fleetautoscalers",
+      "route": "MANUAL",
+      "title": "FleetAutoscaler policies and external decisions",
+      "filename": "0021-fleetautoscaler-policies-and-external-decisions.md",
+      "dependencies_keys": [
+        "a-api",
+        "a-fleets",
+        "a-gameservers",
+        "a-observation",
+        "a-utilities"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0005",
+        "M0015",
+        "M0019",
+        "M0007",
+        "M0003"
+      ]
+    },
+    {
+      "id": "M0022",
+      "number": 22,
+      "key": "c-bundle",
+      "route": "CPG",
+      "title": "Pinned frontend and self-contained CPG input bundle",
+      "filename": "0022-pinned-frontend-and-self-contained-cpg-input-bundle.md",
+      "dependencies_keys": [
+        "c-passes",
+        "c-storage-loading"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0020",
+        "M0018"
+      ]
+    },
+    {
+      "id": "M0023",
+      "number": 23,
+      "key": "a-allocation",
+      "route": "MANUAL",
+      "title": "Allocation processing and multi-cluster contracts",
+      "filename": "0023-allocation-processing-and-multi-cluster-contracts.md",
+      "dependencies_keys": [
+        "a-api",
+        "a-gameservers",
+        "a-metrics",
+        "a-observation",
+        "a-utilities"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0005",
+        "M0019",
+        "M0017",
+        "M0007",
+        "M0003"
+      ]
+    },
+    {
+      "id": "M0024",
+      "number": 24,
+      "key": "c-normalization",
+      "route": "CPG",
+      "title": "Normalized CPG with source identity preservation",
+      "filename": "0024-normalized-cpg-with-source-identity-preservation.md",
+      "dependencies_keys": [
+        "c-bundle"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0022"
+      ]
+    },
+    {
+      "id": "M0025",
+      "number": 25,
+      "key": "a-sdkserver",
+      "route": "MANUAL",
+      "title": "SDK server streaming, health and mutation behavior",
+      "filename": "0025-sdk-server-streaming-health-and-mutation-behavior.md",
+      "dependencies_keys": [
+        "a-allocation",
+        "a-api",
+        "a-observation",
+        "a-utilities"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0023",
+        "M0005",
+        "M0007",
+        "M0003"
+      ]
+    },
+    {
+      "id": "M0026",
+      "number": 26,
+      "key": "c-ir",
+      "route": "CPG",
+      "title": "Typed translation IR and ownership/effect interfaces",
+      "filename": "0026-typed-translation-ir-and-ownership-effect-interfaces.md",
+      "dependencies_keys": [
+        "a-api",
+        "c-normalization"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0005",
+        "M0024"
+      ]
+    },
+    {
+      "id": "M0027",
+      "number": 27,
+      "key": "a-entrypoints",
+      "route": "MANUAL",
+      "title": "Production entrypoints and complete lifecycle composition",
+      "filename": "0027-production-entrypoints-and-complete-lifecycle-composition.md",
+      "dependencies_keys": [
+        "a-allocation",
+        "a-api",
+        "a-cloud",
+        "a-fleetautoscalers",
+        "a-fleets",
+        "a-foundation",
+        "a-gameservers",
+        "a-metrics",
+        "a-observation",
+        "a-ports",
+        "a-sdkserver",
+        "a-utilities"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0023",
+        "M0005",
+        "M0013",
+        "M0021",
+        "M0015",
+        "M0001",
+        "M0019",
+        "M0017",
+        "M0007",
+        "M0011",
+        "M0025",
+        "M0003"
+      ]
+    },
+    {
+      "id": "M0028",
+      "number": 28,
+      "key": "c-lowering-data",
+      "route": "CPG",
+      "title": "Go value, type and initialization lowering",
+      "filename": "0028-go-value-type-and-initialization-lowering.md",
+      "dependencies_keys": [
+        "c-ir"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0026"
+      ]
+    },
+    {
+      "id": "M0029",
+      "number": 29,
+      "key": "a-examples",
+      "route": "MANUAL",
+      "title": "Examples, source tooling and compatibility inputs",
+      "filename": "0029-examples-source-tooling-and-compatibility-inputs.md",
+      "dependencies_keys": [
+        "a-api",
+        "a-observation",
+        "a-sdkclients",
+        "a-utilities"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0005",
+        "M0007",
+        "M0009",
+        "M0003"
+      ]
+    },
+    {
+      "id": "M0030",
+      "number": 30,
+      "key": "c-lowering-control",
+      "route": "CPG",
+      "title": "Go control, errors, concurrency and runtime lowering",
+      "filename": "0030-go-control-errors-concurrency-and-runtime-lowering.md",
+      "dependencies_keys": [
+        "a-utilities",
+        "c-lowering-data"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0003",
+        "M0028"
+      ]
+    },
+    {
+      "id": "M0031",
+      "number": 31,
+      "key": "a-delivery-inputs",
+      "route": "MANUAL",
+      "title": "Build, deployment and configuration implementation",
+      "filename": "0031-build-deployment-and-configuration-implementation.md",
+      "dependencies_keys": [],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": []
+    },
+    {
+      "id": "M0032",
+      "number": 32,
+      "key": "c-emission",
+      "route": "CPG",
+      "title": "Genco emission into the exact Rust source mirror",
+      "filename": "0032-genco-emission-into-the-exact-rust-source-mirror.md",
+      "dependencies_keys": [
+        "c-lowering-control"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0030"
+      ]
+    },
+    {
+      "id": "M0033",
+      "number": 33,
+      "key": "a-macros",
+      "route": "MANUAL",
+      "title": "Complete the required metaprogramming authoring family",
+      "filename": "0033-complete-the-required-metaprogramming-authoring-family.md",
+      "dependencies_keys": [
+        "a-allocation",
+        "a-api",
+        "a-cloud",
+        "a-delivery-inputs",
+        "a-entrypoints",
+        "a-examples",
+        "a-fleetautoscalers",
+        "a-fleets",
+        "a-foundation",
+        "a-gameservers",
+        "a-metrics",
+        "a-observation",
+        "a-ports",
+        "a-sdkclients",
+        "a-sdkserver",
+        "a-utilities"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0023",
+        "M0005",
+        "M0013",
+        "M0031",
+        "M0027",
+        "M0029",
+        "M0021",
+        "M0015",
+        "M0001",
+        "M0019",
+        "M0017",
+        "M0007",
+        "M0011",
+        "M0009",
+        "M0025",
+        "M0003"
+      ]
+    },
+    {
+      "id": "M0034",
+      "number": 34,
+      "key": "c-publication",
+      "route": "CPG",
+      "title": "Full generation, coverage receipts and recoverable publication",
+      "filename": "0034-full-generation-coverage-receipts-and-recoverable-publication.md",
+      "dependencies_keys": [
+        "a-allocation",
+        "a-api",
+        "a-cloud",
+        "a-delivery-inputs",
+        "a-entrypoints",
+        "a-examples",
+        "a-fleetautoscalers",
+        "a-fleets",
+        "a-foundation",
+        "a-gameservers",
+        "a-macros",
+        "a-metrics",
+        "a-observation",
+        "a-ports",
+        "a-sdkclients",
+        "a-sdkserver",
+        "a-utilities",
+        "c-emission"
+      ],
+      "phase": "IMPLEMENTATION_ONLY",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0023",
+        "M0005",
+        "M0013",
+        "M0031",
+        "M0027",
+        "M0029",
+        "M0021",
+        "M0015",
+        "M0001",
+        "M0019",
+        "M0033",
+        "M0017",
+        "M0007",
+        "M0011",
+        "M0009",
+        "M0025",
+        "M0003",
+        "M0032"
+      ]
+    },
+    {
+      "id": "M0035",
+      "number": 35,
+      "key": "a-assurance",
+      "route": "MANUAL",
+      "title": "Agones harnesses and final behavioral assurance",
+      "filename": "0035-agones-harnesses-and-final-behavioral-assurance.md",
+      "dependencies_keys": [
+        "a-allocation",
+        "a-api",
+        "a-cloud",
+        "a-delivery-inputs",
+        "a-entrypoints",
+        "a-examples",
+        "a-fleetautoscalers",
+        "a-fleets",
+        "a-foundation",
+        "a-gameservers",
+        "a-macros",
+        "a-metrics",
+        "a-observation",
+        "a-ports",
+        "a-sdkclients",
+        "a-sdkserver",
+        "a-utilities",
+        "c-build",
+        "c-bundle",
+        "c-domain",
+        "c-emission",
+        "c-graph",
+        "c-ir",
+        "c-lowering-control",
+        "c-lowering-data",
+        "c-normalization",
+        "c-passes",
+        "c-protobuf-loading",
+        "c-publication",
+        "c-schema-all",
+        "c-schema-tools",
+        "c-serialization",
+        "c-storage-loading",
+        "c-utilities"
+      ],
+      "phase": "POST_IMPLEMENTATION_VERIFICATION",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0023",
+        "M0005",
+        "M0013",
+        "M0031",
+        "M0027",
+        "M0029",
+        "M0021",
+        "M0015",
+        "M0001",
+        "M0019",
+        "M0033",
+        "M0017",
+        "M0007",
+        "M0011",
+        "M0009",
+        "M0025",
+        "M0003",
+        "M0002",
+        "M0022",
+        "M0010",
+        "M0032",
+        "M0012",
+        "M0026",
+        "M0030",
+        "M0028",
+        "M0024",
+        "M0020",
+        "M0016",
+        "M0034",
+        "M0006",
+        "M0008",
+        "M0014",
+        "M0018",
+        "M0004"
+      ]
+    },
+    {
+      "id": "M0036",
+      "number": 36,
+      "key": "c-assurance",
+      "route": "CPG",
+      "title": "CPG, schema, lowering and generation assurance",
+      "filename": "0036-cpg-schema-lowering-and-generation-assurance.md",
+      "dependencies_keys": [
+        "a-allocation",
+        "a-api",
+        "a-cloud",
+        "a-delivery-inputs",
+        "a-entrypoints",
+        "a-examples",
+        "a-fleetautoscalers",
+        "a-fleets",
+        "a-foundation",
+        "a-gameservers",
+        "a-macros",
+        "a-metrics",
+        "a-observation",
+        "a-ports",
+        "a-sdkclients",
+        "a-sdkserver",
+        "a-utilities",
+        "c-build",
+        "c-bundle",
+        "c-domain",
+        "c-emission",
+        "c-graph",
+        "c-ir",
+        "c-lowering-control",
+        "c-lowering-data",
+        "c-normalization",
+        "c-passes",
+        "c-protobuf-loading",
+        "c-publication",
+        "c-schema-all",
+        "c-schema-tools",
+        "c-serialization",
+        "c-storage-loading",
+        "c-utilities"
+      ],
+      "phase": "POST_IMPLEMENTATION_VERIFICATION",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0023",
+        "M0005",
+        "M0013",
+        "M0031",
+        "M0027",
+        "M0029",
+        "M0021",
+        "M0015",
+        "M0001",
+        "M0019",
+        "M0033",
+        "M0017",
+        "M0007",
+        "M0011",
+        "M0009",
+        "M0025",
+        "M0003",
+        "M0002",
+        "M0022",
+        "M0010",
+        "M0032",
+        "M0012",
+        "M0026",
+        "M0030",
+        "M0028",
+        "M0024",
+        "M0020",
+        "M0016",
+        "M0034",
+        "M0006",
+        "M0008",
+        "M0014",
+        "M0018",
+        "M0004"
+      ]
+    },
+    {
+      "id": "M0037",
+      "number": 37,
+      "key": "a-delivery",
+      "route": "MANUAL",
+      "title": "Agones acceptance and delivery preparation",
+      "filename": "0037-agones-acceptance-and-delivery-preparation.md",
+      "dependencies_keys": [
+        "a-assurance",
+        "c-assurance"
+      ],
+      "phase": "POST_IMPLEMENTATION_VERIFICATION",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0035",
+        "M0036"
+      ]
+    },
+    {
+      "id": "M0038",
+      "number": 38,
+      "key": "c-delivery",
+      "route": "CPG",
+      "title": "Generated Agones integration and shared objective closure",
+      "filename": "0038-generated-agones-integration-and-shared-objective-closure.md",
+      "dependencies_keys": [
+        "a-assurance",
+        "a-delivery",
+        "c-assurance"
+      ],
+      "phase": "POST_IMPLEMENTATION_VERIFICATION",
+      "status": "PLANNED_NOT_EXECUTED",
+      "dependencies": [
+        "M0035",
+        "M0037",
+        "M0036"
+      ]
+    }
+  ],
+  "planned_new_outputs": {
+    "a-foundation": [
+      [
+        "rust-support/agones/Cargo.toml",
+        "Cargo package and pinned dependency ownership outside the source mirror"
+      ],
+      [
+        "rust-support/agones/src/lib.rs",
+        "Explicit source-module registration and public contract wiring"
+      ],
+      [
+        "rust-support/agones/src/lifecycle.rs",
+        "CGP startup, cancellation, supervision, drain and cleanup capabilities"
+      ],
+      [
+        "rust-support/agones/src/declarations.rs",
+        "derive-deftly ownership and repeated wiring declarations"
+      ]
+    ],
+    "a-macros": [
+      [
+        "rust-support/agones/metaprogramming/Cargo.toml",
+        "Normal Cargo facade with internal compiler-shim units"
+      ],
+      [
+        "rust-support/agones/metaprogramming/src/lib.rs",
+        "All four required _2 forms and same-logical-crate/cross-crate composition"
+      ],
+      [
+        "rust-support/agones/metaprogramming/src/templates.rs",
+        "Shared typed expansion and derive-deftly templates with CGP consumers"
+      ]
+    ],
+    "c-build": [
+      [
+        "rust-support/cpg/Cargo.toml",
+        "Pinned native CPG dependencies and external source-module paths"
+      ],
+      [
+        "rust-support/cpg/src/lib.rs",
+        "Exact-case Scala module registration without moving src/main/scala"
+      ],
+      [
+        "rust-support/cpg/src/build_contracts.rs",
+        "Native Rust equivalents of SBT/Bazel/launcher behavior with exact task/source mappings"
+      ],
+      [
+        "rust-support/cpg/src/declarations.rs",
+        "Native builder identity, typed metadata and derive-deftly wiring"
+      ],
+      [
+        "rust-support/cpg/src/lifecycle.rs",
+        "CGP stage resources, failure, cancellation and cleanup ownership"
+      ]
+    ],
+    "c-bundle": [
+      [
+        "rust-support/cpg/src/bundle.rs",
+        "Versioned complete frontend bundle reader and source/configuration identities"
+      ],
+      [
+        "rust-support/cpg/src/frontend.rs",
+        "Pinned gosrc2cpg/goastgen invocation and export/enrichment contracts"
+      ]
+    ],
+    "c-normalization": [
+      [
+        "rust-support/cpg/src/normalized.rs",
+        "Lossless normalized nodes/edges/properties and conflict/unknown facts"
+      ],
+      [
+        "rust-support/cpg/src/provenance.rs",
+        "Source-file/body/configuration/rule identity propagation"
+      ]
+    ],
+    "c-ir": [
+      [
+        "rust-support/cpg/src/translation_ir.rs",
+        "Typed values, ownership, effects, control flow and observation contracts"
+      ],
+      [
+        "rust-support/cpg/src/interfaces.rs",
+        "Public Agones/Rusternetes types and explicit external-call bindings"
+      ]
+    ],
+    "c-lowering-data": [
+      [
+        "rust-support/cpg/src/lower_values.rs",
+        "Value/type/numeric/container/aliasing rules"
+      ],
+      [
+        "rust-support/cpg/src/lower_initialization.rs",
+        "Declarations, package initialization and ordered evaluation"
+      ]
+    ],
+    "c-lowering-control": [
+      [
+        "rust-support/cpg/src/lower_control.rs",
+        "Branches, loops, closures, defer/panic/recover"
+      ],
+      [
+        "rust-support/cpg/src/lower_concurrency.rs",
+        "Goroutine/channel/select/context/timer rules"
+      ],
+      [
+        "rust-support/cpg/src/runtime_support.rs",
+        "Source-required runtime behavior under CGP ownership"
+      ]
+    ],
+    "c-emission": [
+      [
+        "rust-support/cpg/src/emit_rust.rs",
+        "Typed-IR-to-Genco source and import emission"
+      ],
+      [
+        "rust-support/cpg/src/output_layout.rs",
+        "Literal path mapping, collision rejection and external module wiring"
+      ],
+      [
+        "rust-support/cpg/src/emit_templates.rs",
+        "Central CGP/derive-deftly output architecture and readable transformations"
+      ]
+    ],
+    "c-publication": [
+      [
+        "rust-support/cpg/src/publication.rs",
+        "Staging, non-circular digests, flush and atomic publication"
+      ],
+      [
+        "rust-support/cpg/src/recovery.rs",
+        "Content-bound interrupted-operation recovery"
+      ],
+      [
+        "rust-support/cpg/src/adoption.rs",
+        "Explicit production ownership transfer and preservation of manual meaning"
+      ],
+      [
+        "generated/agones-first-generation/evidence/completion.json",
+        "Transactional complete source-derived artifact record with UNVERIFIED assurances"
+      ]
+    ],
+    "a-delivery": [
+      [
+        "verification/agones/delivery/agones-acceptance.json",
+        "Post-gate source-qualified evidence and delivery preparation record"
+      ]
+    ],
+    "c-delivery": [
+      [
+        "verification/agones/delivery/combined-completion.json",
+        "Final both-route evidence, delivered revision and native Goal completion eligibility"
+      ]
+    ]
+  }
+}

@@ -1,0 +1,211 @@
+{
+  "order": [
+    {
+      "path": "roadmap/0000-contract.md",
+      "sha256": "be40524b791ab4c5b381d97d36742ef5b976a2aae7ed3ad24140a3689dc05791",
+      "anchor": "shared-contract"
+    },
+    {
+      "path": "roadmap/0001-source-mirror-version-and-shared-contracts.md",
+      "sha256": "efa65a50295e27d5c551296377dc4e0328d16e42d64d9cdcf132b720d06e4eed",
+      "anchor": "m0001"
+    },
+    {
+      "path": "roadmap/0002-pinned-cpg-source-build-machinery-and-rust-support-boundaries.md",
+      "sha256": "07952f5c4370a9176779c703dac02d35a777497734f28b99392f43aa9c49aeb7",
+      "anchor": "m0002"
+    },
+    {
+      "path": "roadmap/0003-errors-queues-clocks-webhooks-and-utility-effects.md",
+      "sha256": "191a55f6852ecb4c97cd6efd0555207668d0d07483b13e0d1b2dc2997258b3ae",
+      "anchor": "m0003"
+    },
+    {
+      "path": "roadmap/0004-native-cpg-utilities-and-effect-ownership.md",
+      "sha256": "3cafe7ca67f66f288baf58cdde46f229249d3e90a5a3b978595a7e2bd39022c3",
+      "anchor": "m0004"
+    },
+    {
+      "path": "roadmap/0005-resource-and-wire-contracts-defaults-and-validation.md",
+      "sha256": "24b55bf7458f8c5c5317808a680779cf841ff5193ac88a0816333cb1b97d84f6",
+      "anchor": "m0005"
+    },
+    {
+      "path": "roadmap/0006-complete-schema-construction-and-mutually-dependent-declarations.md",
+      "sha256": "a0ee1a5212b92575454a5e79439c0469cfdab8d5ac652b5252774068e1d7dc6c",
+      "anchor": "m0006"
+    },
+    {
+      "path": "roadmap/0007-apply-clients-informers-and-listers.md",
+      "sha256": "9624203943448300adce9fcaaf92e7940e7494804f5b81c4070d6d1c3c8cb683",
+      "anchor": "m0007"
+    },
+    {
+      "path": "roadmap/0008-schema-export-protobuf-tool-inputs-and-launcher-behavior.md",
+      "sha256": "fdb4d1cd9b6499a1124af7c4d442a44112b2b6a2e0e6fc6a84d70238d7dfbd2b",
+      "anchor": "m0008"
+    },
+    {
+      "path": "roadmap/0009-source-compatible-clients-and-existing-rust-sdk-reuse.md",
+      "sha256": "cd9eaa6b29abc675248fb3227990b4e4dc94a504d85152b66ca35031ce965916",
+      "anchor": "m0009"
+    },
+    {
+      "path": "roadmap/0010-complete-schema-derived-domain-hierarchy.md",
+      "sha256": "9e700b9430ac916c17ee5c634b8b9a5a7f5a622fdcec7700b48c403951558119",
+      "anchor": "m0010"
+    },
+    {
+      "path": "roadmap/0011-port-ownership-and-allocation-policy.md",
+      "sha256": "564c31a498df7e15fe0eeb5be533869dae20ef4388e59686204fd1d275502de0",
+      "anchor": "m0011"
+    },
+    {
+      "path": "roadmap/0012-native-cpg-facade-and-graph-ownership.md",
+      "sha256": "e1127da5d5bca018e19d22627f2ec48b2ffbe645e0adf284a3212a3828e96adc",
+      "anchor": "m0012"
+    },
+    {
+      "path": "roadmap/0013-cloud-hooks-through-the-permitted-rusternetes-boundary.md",
+      "sha256": "f9f27a7cdc30a1eeaeb255f88ae8677f95a8629095c6d7f82664ffd201f37470",
+      "anchor": "m0013"
+    },
+    {
+      "path": "roadmap/0014-serialized-graph-and-overlay-behavior.md",
+      "sha256": "25a95cf824ef49ef28d56168ba2e24207b4f9af58f905a212928495ca8b33a46",
+      "anchor": "m0014"
+    },
+    {
+      "path": "roadmap/0015-fleet-reconciliation-and-rollout-policy.md",
+      "sha256": "c936b2a6b350d31d3db5cd5587891ebc20a9bb1aa3012bf67cca23ebd71b2a68",
+      "anchor": "m0015"
+    },
+    {
+      "path": "roadmap/0016-protobuf-loading-archive-ownership-and-node-mapping.md",
+      "sha256": "2de97f729f9db9d015421f0d3b761f4bad9bc1ea8691c086e020e21f622c513f",
+      "anchor": "m0016"
+    },
+    {
+      "path": "roadmap/0017-telemetry-and-metric-semantics.md",
+      "sha256": "615a833ecf0369e6f6a0e9afe1d6e35299826f2c7c081d115e2d93cd29626b5c",
+      "anchor": "m0017"
+    },
+    {
+      "path": "roadmap/0018-format-detection-and-native-storage-compatibility.md",
+      "sha256": "e771fc89c33fe3b660fa790b18a2861f810f45493ff1db38cd0402dd1bd37432",
+      "anchor": "m0018"
+    },
+    {
+      "path": "roadmap/0019-gameserver-and-gameserverset-lifecycle.md",
+      "sha256": "5fa7a0fe88335c30ff9a909beb78c935c102d0f6165e3bb7b3cb13f1e4cdc419",
+      "anchor": "m0019"
+    },
+    {
+      "path": "roadmap/0020-pass-diff-and-execution-lifecycle.md",
+      "sha256": "a6d40c06eecd15a47b88657d49e5f2993f5d207bb5bb005c5e404181967d17e3",
+      "anchor": "m0020"
+    },
+    {
+      "path": "roadmap/0021-fleetautoscaler-policies-and-external-decisions.md",
+      "sha256": "bb9f80f4e93cf329ab88867a38c0d237a3456bedf9ae97b7ac4946b29e536be3",
+      "anchor": "m0021"
+    },
+    {
+      "path": "roadmap/0022-pinned-frontend-and-self-contained-cpg-input-bundle.md",
+      "sha256": "e11133eead05bec50742f804f6820d5180ce03259547471ef45e78d42f1d7fa7",
+      "anchor": "m0022"
+    },
+    {
+      "path": "roadmap/0023-allocation-processing-and-multi-cluster-contracts.md",
+      "sha256": "649990975204327de0dd31081648221e4b20432e83c4b7800eb283437fa89ce6",
+      "anchor": "m0023"
+    },
+    {
+      "path": "roadmap/0024-normalized-cpg-with-source-identity-preservation.md",
+      "sha256": "0727418738eda381317343421ebec55272380df0d9eb9b78a65a3ef86805dfbf",
+      "anchor": "m0024"
+    },
+    {
+      "path": "roadmap/0025-sdk-server-streaming-health-and-mutation-behavior.md",
+      "sha256": "bb247b95e0045a99a71cb32017908aefaa4b145eebb680a57db23e3efa199ef8",
+      "anchor": "m0025"
+    },
+    {
+      "path": "roadmap/0026-typed-translation-ir-and-ownership-effect-interfaces.md",
+      "sha256": "80cfddd1f4f3bfdd4aa6a8c300bda8fbb37c4e82a0500c322b42ea25f982bc05",
+      "anchor": "m0026"
+    },
+    {
+      "path": "roadmap/0027-production-entrypoints-and-complete-lifecycle-composition.md",
+      "sha256": "9afa6c24323eaf1349e77aa480404be6c0f70ffde17e124d1d826631096ed073",
+      "anchor": "m0027"
+    },
+    {
+      "path": "roadmap/0028-go-value-type-and-initialization-lowering.md",
+      "sha256": "77f4d6aca680525f44278062837d3a0a48dbb4e911417defdedfce772b4004bf",
+      "anchor": "m0028"
+    },
+    {
+      "path": "roadmap/0029-examples-source-tooling-and-compatibility-inputs.md",
+      "sha256": "8da43dc901df6d90b768ca6fd1e430f54a6e91d5e2e0b344ab709c48da715871",
+      "anchor": "m0029"
+    },
+    {
+      "path": "roadmap/0030-go-control-errors-concurrency-and-runtime-lowering.md",
+      "sha256": "a60915b108eb91bcc5bf72c2deef5dc764cb6118f2867fa5b1697b4dd66e81e6",
+      "anchor": "m0030"
+    },
+    {
+      "path": "roadmap/0031-build-deployment-and-configuration-implementation.md",
+      "sha256": "38e25a134272d3e4ae9c46e364fe9aee15ec8791e8f2fcc277b953b536e7cc8d",
+      "anchor": "m0031"
+    },
+    {
+      "path": "roadmap/0032-genco-emission-into-the-exact-rust-source-mirror.md",
+      "sha256": "1c6ab89e99d4e2461dd0551e9366cb3e4bd961240115e90617f747992ffc46c1",
+      "anchor": "m0032"
+    },
+    {
+      "path": "roadmap/0033-complete-the-required-metaprogramming-authoring-family.md",
+      "sha256": "fd7886b97e180d6e48be68de35d2ad7d2f6353f2ac1ee639d2b1b3a8b139c68f",
+      "anchor": "m0033"
+    },
+    {
+      "path": "roadmap/0034-full-generation-coverage-receipts-and-recoverable-publication.md",
+      "sha256": "05a49454757fd43f869d2303e283a399efae442cfb766c0ffb2c58c4e3b830e6",
+      "anchor": "m0034"
+    },
+    {
+      "path": "roadmap/0035-agones-harnesses-and-final-behavioral-assurance.md",
+      "sha256": "960fe5565dc482909089842a1f27eaadcb052fc32cf603ad03313b7cd3cf32d7",
+      "anchor": "m0035"
+    },
+    {
+      "path": "roadmap/0036-cpg-schema-lowering-and-generation-assurance.md",
+      "sha256": "eff83d3ebbfb0e94241343a754449bbb8f7e14dc062d9bdc0d85723b381d9018",
+      "anchor": "m0036"
+    },
+    {
+      "path": "roadmap/0037-agones-acceptance-and-delivery-preparation.md",
+      "sha256": "a45a149cc22e218f4cd9da16e423dd81f1e4fb2066159b9a2fd48f4f1fc3b98c",
+      "anchor": "m0037"
+    },
+    {
+      "path": "roadmap/0038-generated-agones-integration-and-shared-objective-closure.md",
+      "sha256": "2695145da968f1bf639f3bb7cb34bf1151594e689cc74f4e92bb0ca943f93fb1",
+      "anchor": "m0038"
+    },
+    {
+      "path": "roadmap/alternation-policy.md",
+      "sha256": "ce35ab9c47399c4e1621a2ae08e1d8e9841fc11918b3edc3127be77c15ae3e6e",
+      "anchor": "alternation-policy"
+    },
+    {
+      "path": "roadmap/AGENTS.MD",
+      "sha256": "a7d85134bbda6ad16d9abba572a8ada37d0ad3bea5001b04fad30f3253fae76d",
+      "anchor": "roadmap-guidance"
+    }
+  ],
+  "combined_sha256": "a9b797fc624be04548c62e63a634bcc2cacab25c4d9f45af346148ba32c1baea",
+  "transform": "Rebase non-quoted relative Markdown links only; preserve all canonical text otherwise."
+}

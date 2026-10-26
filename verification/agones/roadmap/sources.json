@@ -1,0 +1,147 @@
+{
+  "date": "2026-10-27",
+  "repositories": {
+    "project-guidance": {
+      "repository_url": "https://github.com/QuasarRay/agones",
+      "revision": "3f63491cf41068fe34d18ce1a20c576ba1a2a0d7",
+      "local_root": "/home/astral/Projects/agones",
+      "role": "CURRENT_REFERENCE_CHECKOUT_NOT_AUTOMATIC_DEPENDENCY_UPGRADE",
+      "tree": "9af3274864beab36a2cccc9346bbc823824b98d9",
+      "license_paths": [
+        "LICENSE-LEGACY.MD",
+        "LICENSE.MD"
+      ]
+    },
+    "agones": {
+      "repository_url": "https://github.com/QuasarRay/agones",
+      "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "local_root": "/home/astral/Projects/agones",
+      "role": "PINNED_SEMANTIC_BASELINE",
+      "tree": "f50ac1ccf92be912e9475833b17deaebc5a6622f",
+      "license_paths": [
+        "LICENSE-LEGACY.MD",
+        "LICENSE.MD"
+      ]
+    },
+    "cpg": {
+      "repository_url": "https://github.com/ShiftLeftSecurity/codepropertygraph",
+      "revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "local_root": "/home/astral/Projects/agones/third_party/first-generation/cpg",
+      "role": "PINNED_SEMANTIC_BASELINE",
+      "tree": "cf69fb6c40133b506ff582cabd2c795f069cb3e7",
+      "license_paths": [
+        "LICENSE"
+      ]
+    },
+    "codepropertygraph-reference": {
+      "repository_url": "https://github.com/ShiftLeftSecurity/codepropertygraph",
+      "revision": "64797782c6b1335b4047b5173eea924c846eafc4",
+      "local_root": "/home/astral/Projects/agones/codepropertygraph",
+      "role": "CURRENT_REFERENCE_CHECKOUT_NOT_AUTOMATIC_DEPENDENCY_UPGRADE",
+      "tree": "07ee9d5145bb6d0e364e98bda715421d6b551f05",
+      "license_paths": [
+        "LICENSE"
+      ]
+    },
+    "CPGSchema": {
+      "repository_url": "https://github.com/QuasarRay/CPGSchema",
+      "revision": "18bdf6122a887bf3dd8afa196235f3cf378a14e7",
+      "local_root": "/home/astral/Projects/agones/CPGSchema",
+      "role": "CURRENT_REFERENCE_CHECKOUT_NOT_AUTOMATIC_DEPENDENCY_UPGRADE",
+      "tree": "489a5a9c0cb43aedabbe9d1697df30487590e77a",
+      "license_paths": [
+        "LICENSE.MD"
+      ]
+    },
+    "cgp": {
+      "repository_url": "https://github.com/contextgeneric/cgp",
+      "revision": "eca0c5fda60d87cf048460f5abdd3b6e82da5e0f",
+      "local_root": "/home/astral/Projects/agones/cgp",
+      "role": "CURRENT_REFERENCE_CHECKOUT_NOT_AUTOMATIC_DEPENDENCY_UPGRADE",
+      "tree": "ed8a65f7e82a0dd9b5ee53310d627c2ebae37c08",
+      "license_paths": [
+        "LICENSE"
+      ]
+    },
+    "derive-deftly": {
+      "repository_url": "https://gitlab.torproject.org/Diziet/rust-derive-deftly",
+      "revision": "cd9968f755c1fe8b5fba1a6d805bb79b941ed489",
+      "local_root": "/home/astral/Projects/agones/derive-deftly",
+      "role": "CURRENT_REFERENCE_CHECKOUT_NOT_AUTOMATIC_DEPENDENCY_UPGRADE",
+      "tree": "cb6a218222b8a7ff3fb8c500743f755442e91676",
+      "license_paths": []
+    },
+    "comprende": {
+      "repository_url": "https://github.com/QuasarRay/comprende",
+      "revision": "6ce005cda120f3e5ba10079f40b90dc89470b938",
+      "local_root": "/home/astral/Projects/agones/comprende",
+      "role": "CURRENT_REFERENCE_CHECKOUT_NOT_AUTOMATIC_DEPENDENCY_UPGRADE",
+      "tree": "fc3c96ff19c65b6f5e415715dd2fb2f17346fa3f",
+      "license_paths": [
+        "LICENSE.txt"
+      ]
+    },
+    "better-comprehension-in-rust": {
+      "repository_url": "https://github.com/Natural-selection1/better-comprehension-in-rust",
+      "revision": "73ae408dff2994fef8362e34f880ff18c221045c",
+      "local_root": "/home/astral/Projects/agones/better-comprehension-in-rust",
+      "role": "CURRENT_REFERENCE_CHECKOUT_NOT_AUTOMATIC_DEPENDENCY_UPGRADE",
+      "tree": "393f2bd1ce6e79691f65621bbf31ee0cf989e4fc",
+      "license_paths": []
+    },
+    "genco": {
+      "repository_url": "https://github.com/udoprog/genco",
+      "revision": "98d9226f57f6d3e721ab77cfc21fff28d9b5c9cb",
+      "local_root": "/home/astral/Projects/agones/genco",
+      "role": "CURRENT_REFERENCE_CHECKOUT_NOT_AUTOMATIC_DEPENDENCY_UPGRADE",
+      "tree": "6f7f45c64b1c888ce8dfbee848d98bd35ff3421d",
+      "license_paths": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT"
+      ]
+    },
+    "kubernetes-website": {
+      "repository_url": "https://github.com/kubernetes/website",
+      "revision": "77904cb3ec33988ae7416fbf4b5f35baba407dc9",
+      "local_root": "/home/astral/Projects/agones/kubernetes-website",
+      "role": "CURRENT_REFERENCE_CHECKOUT_NOT_AUTOMATIC_DEPENDENCY_UPGRADE",
+      "tree": "459a4ee82faa97b4cc69844b5aacebfd1e7f50b6",
+      "license_paths": [
+        "LICENSE"
+      ]
+    }
+  },
+  "pipeline_pins": {
+    "cpg": "301c4010d28ecdac05bc2ed44310f56446459465",
+    "joern": "9f2171242e48d7fed3021087d45838a83c1e39da",
+    "goastgen": "11b21e395aa6aa39a41ca9216e1d15d08c4ef0b8",
+    "flatgraph": "61aa9de52231f95f9730b3a5aa7a3fb0d23fd128",
+    "genco": "c762252daa409545d08bf5aed27d63b801cb8f5c",
+    "grafeo_version": "0.5.44",
+    "rusternetes": "125c0f4a2b6fb888102606493c5e3cf7a126dd58"
+  },
+  "style_priority": [
+    "AGENTS.MD",
+    "Tao: definitions and worked examples",
+    "Rustonomicon: explicit ownership and safety explanations",
+    "Too Many Linked Lists: progressive concrete explanation"
+  ],
+  "style_sources": [
+    {
+      "path": "/home/astral/Documents/Terrence-Tao-Analysis-I.pdf",
+      "sha256": "92d2e4a549a244b7cdb7527032dc8d6d841be670db07a3473cfd130d7e5c1051",
+      "role": "PRESENTATION_REFERENCE_ONLY; no semantic or execution authority"
+    },
+    {
+      "path": "/home/astral/Documents/Rustonomicon.pdf",
+      "sha256": "8d30a9ce7bfe6aa4125767477ed84a7301b87cc13331d217b212282ff219791f",
+      "role": "PRESENTATION_REFERENCE_ONLY; no semantic or execution authority"
+    },
+    {
+      "path": "/home/astral/Documents/Learning Rust With Entirely Too Many Linked Lists.pdf",
+      "sha256": "7ce4af314ff85e6572c944bcdccd0c39501d072e8fd5549db26b03b87b31d033",
+      "role": "PRESENTATION_REFERENCE_ONLY; no semantic or execution authority"
+    }
+  ],
+  "quote_policy": "Preserve excerpts and license/NOTICE attribution; document source/comment fallback gaps; never execute quoted commands"
+}

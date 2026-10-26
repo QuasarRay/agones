@@ -1,0 +1,1125 @@
+{
+  "collisions": [],
+  "identifier_hazards": [
+    {
+      "source": "agones:pkg/allocation/go/allocation.pb.go",
+      "destination": "agones-rs/pkg/allocation/go/allocation.pb.rs",
+      "hazards": [
+        "allocation.pb.rs"
+      ]
+    },
+    {
+      "source": "agones:pkg/allocation/go/allocation.pb.gw.go",
+      "destination": "agones-rs/pkg/allocation/go/allocation.pb.gw.rs",
+      "hazards": [
+        "allocation.pb.gw.rs"
+      ]
+    },
+    {
+      "source": "agones:pkg/allocation/go/allocation_grpc.pb.go",
+      "destination": "agones-rs/pkg/allocation/go/allocation_grpc.pb.rs",
+      "hazards": [
+        "allocation_grpc.pb.rs"
+      ]
+    },
+    {
+      "source": "agones:pkg/allocation/go/processor.pb.go",
+      "destination": "agones-rs/pkg/allocation/go/processor.pb.rs",
+      "hazards": [
+        "processor.pb.rs"
+      ]
+    },
+    {
+      "source": "agones:pkg/allocation/go/processor_grpc.pb.go",
+      "destination": "agones-rs/pkg/allocation/go/processor_grpc.pb.rs",
+      "hazards": [
+        "processor_grpc.pb.rs"
+      ]
+    },
+    {
+      "source": "agones:pkg/apis/agones/v1/zz_generated.deepcopy.go",
+      "destination": "agones-rs/pkg/apis/agones/v1/zz_generated.deepcopy.rs",
+      "hazards": [
+        "zz_generated.deepcopy.rs"
+      ]
+    },
+    {
+      "source": "agones:pkg/apis/allocation/v1/zz_generated.deepcopy.go",
+      "destination": "agones-rs/pkg/apis/allocation/v1/zz_generated.deepcopy.rs",
+      "hazards": [
+        "zz_generated.deepcopy.rs"
+      ]
+    },
+    {
+      "source": "agones:pkg/apis/autoscaling/v1/zz_generated.deepcopy.go",
+      "destination": "agones-rs/pkg/apis/autoscaling/v1/zz_generated.deepcopy.rs",
+      "hazards": [
+        "zz_generated.deepcopy.rs"
+      ]
+    },
+    {
+      "source": "agones:pkg/apis/multicluster/v1/zz_generated.deepcopy.go",
+      "destination": "agones-rs/pkg/apis/multicluster/v1/zz_generated.deepcopy.rs",
+      "hazards": [
+        "zz_generated.deepcopy.rs"
+      ]
+    },
+    {
+      "source": "agones:pkg/sdk/alpha/alpha.pb.go",
+      "destination": "agones-rs/pkg/sdk/alpha/alpha.pb.rs",
+      "hazards": [
+        "alpha.pb.rs"
+      ]
+    },
+    {
+      "source": "agones:pkg/sdk/alpha/alpha.pb.gw.go",
+      "destination": "agones-rs/pkg/sdk/alpha/alpha.pb.gw.rs",
+      "hazards": [
+        "alpha.pb.gw.rs"
+      ]
+    },
+    {
+      "source": "agones:pkg/sdk/alpha/alpha_grpc.pb.go",
+      "destination": "agones-rs/pkg/sdk/alpha/alpha_grpc.pb.rs",
+      "hazards": [
+        "alpha_grpc.pb.rs"
+      ]
+    },
+    {
+      "source": "agones:pkg/sdk/beta/beta.pb.go",
+      "destination": "agones-rs/pkg/sdk/beta/beta.pb.rs",
+      "hazards": [
+        "beta.pb.rs"
+      ]
+    },
+    {
+      "source": "agones:pkg/sdk/beta/beta.pb.gw.go",
+      "destination": "agones-rs/pkg/sdk/beta/beta.pb.gw.rs",
+      "hazards": [
+        "beta.pb.gw.rs"
+      ]
+    },
+    {
+      "source": "agones:pkg/sdk/beta/beta_grpc.pb.go",
+      "destination": "agones-rs/pkg/sdk/beta/beta_grpc.pb.rs",
+      "hazards": [
+        "beta_grpc.pb.rs"
+      ]
+    },
+    {
+      "source": "agones:pkg/sdk/sdk.pb.go",
+      "destination": "agones-rs/pkg/sdk/sdk.pb.rs",
+      "hazards": [
+        "sdk.pb.rs"
+      ]
+    },
+    {
+      "source": "agones:pkg/sdk/sdk.pb.gw.go",
+      "destination": "agones-rs/pkg/sdk/sdk.pb.gw.rs",
+      "hazards": [
+        "sdk.pb.gw.rs"
+      ]
+    },
+    {
+      "source": "agones:pkg/sdk/sdk_grpc.pb.go",
+      "destination": "agones-rs/pkg/sdk/sdk_grpc.pb.rs",
+      "hazards": [
+        "sdk_grpc.pb.rs"
+      ]
+    },
+    {
+      "source": "agones:site/static/agones.cast",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/agones.cast",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/css/asciinema-player.css",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/css/asciinema-player.css",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/diagrams/allocation-player-capacity-list.puml",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/diagrams/allocation-player-capacity-list.puml",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/diagrams/allocation-player-capacity-list.puml.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/diagrams/allocation-player-capacity-list.puml.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/diagrams/canary-testing.puml",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/diagrams/canary-testing.puml",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/diagrams/canary-testing.puml.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/diagrams/canary-testing.puml.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/diagrams/eviction-decision.dot",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/diagrams/eviction-decision.dot",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/diagrams/eviction-decision.dot.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/diagrams/eviction-decision.dot.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/diagrams/gameserver-lifecycle.puml",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/diagrams/gameserver-lifecycle.puml",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/diagrams/gameserver-lifecycle.puml.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/diagrams/gameserver-lifecycle.puml.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/diagrams/gameserver-reserved.puml",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/diagrams/gameserver-reserved.puml",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/diagrams/gameserver-reserved.puml.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/diagrams/gameserver-reserved.puml.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/diagrams/gameserver-states.dot",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/diagrams/gameserver-states.dot",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/diagrams/gameserver-states.dot.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/diagrams/gameserver-states.dot.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/diagrams/high-density-counters.puml",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/diagrams/high-density-counters.puml",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/diagrams/high-density-counters.puml.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/diagrams/high-density-counters.puml.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/diagrams/high-density-label-lock.puml",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/diagrams/high-density-label-lock.puml",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/diagrams/high-density-label-lock.puml.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/diagrams/high-density-label-lock.puml.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/diagrams/reusing-gameservers.puml",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/diagrams/reusing-gameservers.puml",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/diagrams/reusing-gameservers.puml.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/diagrams/reusing-gameservers.puml.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/diagrams/system-diagram.dot",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/diagrams/system-diagram.dot",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/diagrams/system-diagram.dot.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/diagrams/system-diagram.dot.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/favicons/apple-touch-icon-180x180.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/favicons/apple-touch-icon-180x180.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/favicons/favicon-16x16.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/favicons/favicon-16x16.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/favicons/favicon-32x32.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/favicons/favicon-32x32.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/favicons/favicon.ico",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/favicons/favicon.ico",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/favicons/pwa-192x192.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/favicons/pwa-192x192.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/favicons/pwa-512x512.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/favicons/pwa-512x512.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/favicons/tile150x150.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/favicons/tile150x150.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/favicons/tile310x150.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/favicons/tile310x150.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/favicons/tile310x310.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/favicons/tile310x310.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/favicons/tile70x70.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/favicons/tile70x70.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/accelbyte.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/accelbyte.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/acceleratxr.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/acceleratxr.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/afterverse.svg",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/afterverse.svg",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/altavr-logo.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/altavr-logo.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/cloud-shell.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/cloud-shell.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/cncf-logo.svg",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/cncf-logo.svg",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/demo.gif",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/demo.gif",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/devcom-mhw-thumb.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/devcom-mhw-thumb.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/embark.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/embark.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/gamefabric-nitrado.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/gamefabric-nitrado.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/grafana-dashboard-autoscalers.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/grafana-dashboard-autoscalers.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/grafana-dashboard-controller.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/grafana-dashboard-controller.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/logo.svg",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/logo.svg",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/mcmahangames.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/mcmahangames.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/netspeakgames.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/netspeakgames.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/rolltable.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/rolltable.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/snapser.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/snapser.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/stackdriver-metrics-dashboard.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/stackdriver-metrics-dashboard.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/supersolid.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/supersolid.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/supertuxkart-AI-players.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/supertuxkart-AI-players.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/supertuxkart-enter-ip-port.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/supertuxkart-enter-ip-port.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/supertuxkart-race-start.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/supertuxkart-race-start.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/ubisoft.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/ubisoft.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/unreal5_bp_actions.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/unreal5_bp_actions.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/unreal5_bp_component.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/unreal5_bp_component.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/unreal_bp_actions.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/unreal_bp_actions.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/unreal_bp_component.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/unreal_bp_component.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/unreal_bp_usage.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/unreal_bp_usage.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/velagames.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/velagames.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/vizor-games.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/vizor-games.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/winterpixel.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/winterpixel.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/xonotic-front-page.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/xonotic-front-page.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/xonotic-ip-port.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/xonotic-ip-port.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/xonotic-join-game.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/xonotic-join-game.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/images/yagerdevelopment.png",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/images/yagerdevelopment.png",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:site/static/js/asciinema-player.js",
+      "destination": "RETAIN_SOURCE_REFERENCE:site/static/js/asciinema-player.js",
+      "hazards": [
+        "static"
+      ]
+    },
+    {
+      "source": "agones:test/sdk/go/sdk-client-test.go",
+      "destination": "agones-rs/test/sdk/go/sdk-client-test.rs",
+      "hazards": [
+        "sdk-client-test.rs"
+      ]
+    },
+    {
+      "source": "agones:test/sdk/restapi/http-api-test.go",
+      "destination": "agones-rs/test/sdk/restapi/http-api-test.rs",
+      "hazards": [
+        "http-api-test.rs"
+      ]
+    },
+    {
+      "source": "agones:test/sdk/websocket-watch/ws-watch-test.go",
+      "destination": "agones-rs/test/sdk/websocket-watch/ws-watch-test.rs",
+      "hazards": [
+        "ws-watch-test.rs"
+      ]
+    },
+    {
+      "source": "agones:vendor/github.com/gobwas/glob/match/any.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/github.com/gobwas/glob/match/any.go",
+      "hazards": [
+        "match"
+      ]
+    },
+    {
+      "source": "agones:vendor/github.com/gobwas/glob/match/any_of.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/github.com/gobwas/glob/match/any_of.go",
+      "hazards": [
+        "match"
+      ]
+    },
+    {
+      "source": "agones:vendor/github.com/gobwas/glob/match/btree.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/github.com/gobwas/glob/match/btree.go",
+      "hazards": [
+        "match"
+      ]
+    },
+    {
+      "source": "agones:vendor/github.com/gobwas/glob/match/contains.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/github.com/gobwas/glob/match/contains.go",
+      "hazards": [
+        "match"
+      ]
+    },
+    {
+      "source": "agones:vendor/github.com/gobwas/glob/match/every_of.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/github.com/gobwas/glob/match/every_of.go",
+      "hazards": [
+        "match"
+      ]
+    },
+    {
+      "source": "agones:vendor/github.com/gobwas/glob/match/list.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/github.com/gobwas/glob/match/list.go",
+      "hazards": [
+        "match"
+      ]
+    },
+    {
+      "source": "agones:vendor/github.com/gobwas/glob/match/match.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/github.com/gobwas/glob/match/match.go",
+      "hazards": [
+        "match"
+      ]
+    },
+    {
+      "source": "agones:vendor/github.com/gobwas/glob/match/max.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/github.com/gobwas/glob/match/max.go",
+      "hazards": [
+        "match"
+      ]
+    },
+    {
+      "source": "agones:vendor/github.com/gobwas/glob/match/min.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/github.com/gobwas/glob/match/min.go",
+      "hazards": [
+        "match"
+      ]
+    },
+    {
+      "source": "agones:vendor/github.com/gobwas/glob/match/nothing.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/github.com/gobwas/glob/match/nothing.go",
+      "hazards": [
+        "match"
+      ]
+    },
+    {
+      "source": "agones:vendor/github.com/gobwas/glob/match/prefix.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/github.com/gobwas/glob/match/prefix.go",
+      "hazards": [
+        "match"
+      ]
+    },
+    {
+      "source": "agones:vendor/github.com/gobwas/glob/match/prefix_any.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/github.com/gobwas/glob/match/prefix_any.go",
+      "hazards": [
+        "match"
+      ]
+    },
+    {
+      "source": "agones:vendor/github.com/gobwas/glob/match/prefix_suffix.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/github.com/gobwas/glob/match/prefix_suffix.go",
+      "hazards": [
+        "match"
+      ]
+    },
+    {
+      "source": "agones:vendor/github.com/gobwas/glob/match/range.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/github.com/gobwas/glob/match/range.go",
+      "hazards": [
+        "match"
+      ]
+    },
+    {
+      "source": "agones:vendor/github.com/gobwas/glob/match/row.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/github.com/gobwas/glob/match/row.go",
+      "hazards": [
+        "match"
+      ]
+    },
+    {
+      "source": "agones:vendor/github.com/gobwas/glob/match/segments.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/github.com/gobwas/glob/match/segments.go",
+      "hazards": [
+        "match"
+      ]
+    },
+    {
+      "source": "agones:vendor/github.com/gobwas/glob/match/single.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/github.com/gobwas/glob/match/single.go",
+      "hazards": [
+        "match"
+      ]
+    },
+    {
+      "source": "agones:vendor/github.com/gobwas/glob/match/suffix.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/github.com/gobwas/glob/match/suffix.go",
+      "hazards": [
+        "match"
+      ]
+    },
+    {
+      "source": "agones:vendor/github.com/gobwas/glob/match/suffix_any.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/github.com/gobwas/glob/match/suffix_any.go",
+      "hazards": [
+        "match"
+      ]
+    },
+    {
+      "source": "agones:vendor/github.com/gobwas/glob/match/super.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/github.com/gobwas/glob/match/super.go",
+      "hazards": [
+        "match"
+      ]
+    },
+    {
+      "source": "agones:vendor/github.com/gobwas/glob/match/text.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/github.com/gobwas/glob/match/text.go",
+      "hazards": [
+        "match"
+      ]
+    },
+    {
+      "source": "agones:vendor/golang.org/x/mod/LICENSE",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/golang.org/x/mod/LICENSE",
+      "hazards": [
+        "mod"
+      ]
+    },
+    {
+      "source": "agones:vendor/golang.org/x/mod/PATENTS",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/golang.org/x/mod/PATENTS",
+      "hazards": [
+        "mod"
+      ]
+    },
+    {
+      "source": "agones:vendor/golang.org/x/mod/internal/lazyregexp/lazyre.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/golang.org/x/mod/internal/lazyregexp/lazyre.go",
+      "hazards": [
+        "mod"
+      ]
+    },
+    {
+      "source": "agones:vendor/golang.org/x/mod/module/module.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/golang.org/x/mod/module/module.go",
+      "hazards": [
+        "mod"
+      ]
+    },
+    {
+      "source": "agones:vendor/golang.org/x/mod/module/pseudo.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/golang.org/x/mod/module/pseudo.go",
+      "hazards": [
+        "mod"
+      ]
+    },
+    {
+      "source": "agones:vendor/golang.org/x/mod/semver/semver.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/golang.org/x/mod/semver/semver.go",
+      "hazards": [
+        "mod"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/genproto/googleapis/type/calendarperiod/calendar_period.pb.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/genproto/googleapis/type/calendarperiod/calendar_period.pb.go",
+      "hazards": [
+        "type"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/genproto/googleapis/type/timeofday/timeofday.pb.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/genproto/googleapis/type/timeofday/timeofday.pb.go",
+      "hazards": [
+        "type"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/api_export.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/api_export.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/api_export_opaque.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/api_export_opaque.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/bitmap.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/bitmap.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/bitmap_race.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/bitmap_race.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/checkinit.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/checkinit.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/codec_extension.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/codec_extension.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/codec_field.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/codec_field.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/codec_field_opaque.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/codec_field_opaque.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/codec_gen.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/codec_gen.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/codec_map.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/codec_map.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/codec_message.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/codec_message.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/codec_message_opaque.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/codec_message_opaque.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/codec_messageset.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/codec_messageset.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/codec_tables.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/codec_tables.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/codec_unsafe.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/codec_unsafe.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/convert.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/convert.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/convert_list.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/convert_list.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/convert_map.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/convert_map.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/decode.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/decode.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/encode.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/encode.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/enum.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/enum.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/equal.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/equal.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/extension.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/extension.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/lazy.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/lazy.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/legacy_enum.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/legacy_enum.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/legacy_export.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/legacy_export.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/legacy_extension.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/legacy_extension.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/legacy_file.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/legacy_file.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/legacy_message.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/legacy_message.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/merge.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/merge.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/merge_gen.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/merge_gen.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/message.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/message.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/message_opaque.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/message_opaque.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/message_opaque_gen.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/message_opaque_gen.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/message_reflect.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/message_reflect.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/message_reflect_field.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/message_reflect_field.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/message_reflect_field_gen.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/message_reflect_field_gen.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/message_reflect_gen.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/message_reflect_gen.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/pointer_unsafe.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/pointer_unsafe.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/pointer_unsafe_opaque.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/pointer_unsafe_opaque.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/presence.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/presence.go",
+      "hazards": [
+        "impl"
+      ]
+    },
+    {
+      "source": "agones:vendor/google.golang.org/protobuf/internal/impl/validate.go",
+      "destination": "RETAIN_SOURCE_REFERENCE:vendor/google.golang.org/protobuf/internal/impl/validate.go",
+      "hazards": [
+        "impl"
+      ]
+    }
+  ]
+}

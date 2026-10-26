@@ -1,0 +1,2455 @@
+{
+  "purpose": "Preserve current implementation and assign adoption-review ownership without moving code",
+  "files": [
+    {
+      "path": "crates/agones-core/build.rs",
+      "sha256": "1deebfccd6024e6567573612d320770591de232f04f7b98291b0b5fa0fc78882",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/examples/build_version_snapshot.rs",
+      "sha256": "b4a36d6ffb9834a6454eeda12b304f1461fdc0f80b0499115dca751bf6d59bc3",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/examples/feature_error_replay.rs",
+      "sha256": "6cac3a9ce292f29f045496c0ce497392c25b8452ba0ac4f3d8f58e9dd17e6ff5",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/examples/feature_query_replay.rs",
+      "sha256": "10d260d187ce77aae7955ecd50649ca8e87b8c0493d7079299807760c9d57f1c",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/examples/gameserver_defaults_replay.rs",
+      "sha256": "100bb635308586a2cf155058c4541779c87fca58797847b26bf92e0851b47906",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/examples/gameserver_source_defaulting_replay.rs",
+      "sha256": "56eaedd374512785c295191d6739b047c5464f676a85a35163d2dffa5ab61ba5",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/examples/resource_quantity_replay.rs",
+      "sha256": "febf94eb341e912b100d316aba6cc26f4bdc75cb2a412757ae91362655d2da36",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/examples/sdk_version_source_replay.rs",
+      "sha256": "e8a34b2247ceb8ecd702ff4265b577d688ed556746308e3514a2c920df379dab",
+      "milestone_id": "M0025",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/allocation/allocation.rs",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "milestone_id": "M0023",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/allocation/converters/converter.rs",
+      "sha256": "73d849cfdb4f06cee9fbe9a105bbd4f8855d2cc7f0b26191164645946eb05e4c",
+      "milestone_id": "M0023",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/allocation/processor.rs",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "milestone_id": "M0023",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/allocation.rs",
+      "sha256": "7025e48bdde5da5cbfd45c7cf57086c768a18b9347991dbf46361b7cd9c54f08",
+      "milestone_id": "M0023",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/apis/common.rs",
+      "sha256": "1f752019c4819e7b6ca1a0fc0860583c7f84d0327551734aab3a9284e9576272",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/apis/common_harness.rs",
+      "sha256": "1efef092faac1e8807d3d433e63668c809f5e02d108d4232295b67556d49ad2e",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/autoscaling.rs",
+      "sha256": "7d4d7fd44d52556a1874ccc018c6bdd03e01982e283471cb3472715b6b7adc24",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/build_version.rs",
+      "sha256": "e6560758de4332abe27a97a3f3b5794068f20e0b4092380658b1cfdc4ce7e1f7",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/feature_inputs.rs",
+      "sha256": "9cfaf42de485874339a58895991ad15adff787f363d9821a3ab7f0f4c36222d4",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/features.rs",
+      "sha256": "72c9a28ba3697ac99d733a7bea5b1933ce0d3c055e813a361290bb6135b4bc98",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/fleet.rs",
+      "sha256": "24148ed9c20f4e0f1cf46b6cc0be35bd3316aec01a4b39d51efa7fc910ceddba",
+      "milestone_id": "M0015",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/gameserver.rs",
+      "sha256": "bdbf85ad795e439f4ba0d9f9030876805ec09e05c4715e6a0b95deb2eff67eb8",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/gameserver_defaulting.rs",
+      "sha256": "7ced36d2a7109e1363574d0ac8c29ef4dae08c7408d271da0f415a94d6a9ace6",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/gameserver_validation.rs",
+      "sha256": "be120c2892ed50c3bb6002175d7b7c08c5215197a3f07cbddc16daffb7daf1de",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/gameserverallocations/allocation_cache.rs",
+      "sha256": "e51fd029740a4b96bc8efb88476d526972f128a47b0ceb5bbbd23f417b3b22da",
+      "milestone_id": "M0023",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/gameserverallocations/allocator.rs",
+      "sha256": "2972cc605f0649f57645cbd411d6e555307a23e7b164813ad4bc54bf3448c621",
+      "milestone_id": "M0023",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/gameserverallocations/cache.rs",
+      "sha256": "29bbe281a13eb67d1fea94233d1c6f6b0ffea752ba9ac94b549d08e79942b537",
+      "milestone_id": "M0023",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/gameserverallocations/controller.rs",
+      "sha256": "761c8246694c639eff08e5d66b272a52d12f65a94b55998b982a877042f90ebc",
+      "milestone_id": "M0023",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/gameserverallocations/find.rs",
+      "sha256": "542e1573a6f29d8ff8827acd7632d17d7a3c6b8520d470dc795a46d085198359",
+      "milestone_id": "M0023",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/gameserverallocations/metrics.rs",
+      "sha256": "b7bea5155b01df2d9e8438601a5ce387243f7efaa6c8dacae4b5ae3ca9679d5f",
+      "milestone_id": "M0023",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/gameserverallocations/processor/client.rs",
+      "sha256": "976480f2f672f98a09d4e86fd6055388bad37c1e8ebeab43bd4a9f6aa8948a12",
+      "milestone_id": "M0023",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/gameserverallocations/processor/grpc.rs",
+      "sha256": "b7419664677e8f2dc67ed316f74d60fcd4a1acd3e317b96c6d36708f50c323dc",
+      "milestone_id": "M0023",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/gameserverallocations/processor/handler.rs",
+      "sha256": "27b8932a49745d1dfdf207f6bb658a0b6cbefd21210e714feae3a45836e56c82",
+      "milestone_id": "M0023",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/gameserverset.rs",
+      "sha256": "5544e6da50d4263fd2797bf165e22e21d57ffc471a459c66ff1f1ee0cdc869a9",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/generated/go_print_ranges.rs",
+      "sha256": "0b0dc1a240c33ca0e01d718f5120a0d5bd894e15740b4cf3888824a0a7e84a0b",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/go_quote.rs",
+      "sha256": "c0e5d196bb6089dd5c138e8c880964cabcf333a96d124377b370c61609c128b9",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/go_slice.rs",
+      "sha256": "1524bae25a2bf0c382c88c9afb870d43fef02b06f3edb6fdb0a846701444ada3",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/go_utf8.rs",
+      "sha256": "1178cb0dcc44e1369fa7576701d39e2b7a339343262197d2f6d891bc984158ba",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/go_value.rs",
+      "sha256": "ea849e221b593654e7049594fdcaebb4a61042e068381af5e96dd5fd017f0e25",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/lib.rs",
+      "sha256": "1cc349ea6c273c23932e4f6797ada73629393b16ea7fbe37eeb467c8cbaae955",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/metrics/controller.rs",
+      "sha256": "5b3fa96e7aee79e9c87dc888d24a65f0c3bde55823b58429f93699866e8cd822",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/metrics/controller_metrics.rs",
+      "sha256": "3210217322a36215210e3b2a590d2724969e9c53a59fa62772eb4b045828f08c",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/metrics/exporter.rs",
+      "sha256": "f2770c8d9223748f38197f9c699265d2d36a63ea74ed8042ad89421578bd8bcd",
+      "milestone_id": "M0011",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/metrics/gameservers_count.rs",
+      "sha256": "b3697ed5d074d1157a11edcdb6e9792b494e9118f8fea4de70c3999d56185376",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/metrics/kubernetes_client.rs",
+      "sha256": "e651059647cb0653b04a660dfd49550f59209ac2bc023bc95dd17b351b3eb2e9",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/metrics/util.rs",
+      "sha256": "570b2b608613e18520e746e1b6256a72d865bd3b73675856245f0fb01f8345ec",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/multicluster.rs",
+      "sha256": "675703c308c5e181a1fabfc75e07c4629a77f06b5da7ac9abacce843a28387cd",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/object_metadata_validation.rs",
+      "sha256": "e5e6246551da636d56b2a9604cb3e87a6c49e5afe2a2e7b2ee873effa91f39df",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/resource_quantity.rs",
+      "sha256": "a8f7ae7eda83f7f6f546af4700cdc562003437bd92fd6ecbed7f76e1009d8006",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/src/version_annotation.rs",
+      "sha256": "9c7d5b402f759b0731d4957fe9732135f589054ed3b38a16839224b0c4b45493",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/build_version.rs",
+      "sha256": "58c1277fd42a9f8d560bcce1692a5937a3b0c9078b869cbb00406271ad6c11e4",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/feature_bool_domain.rs",
+      "sha256": "f36542866193c88f464139f86d9d12fb6159276be8102e294754b00054a36f0a",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/feature_error_ascii_domain.rs",
+      "sha256": "fe2e7ef12d49b569fdf8987133c05b1d4c24a77bbd928c09b1330f0c9a2b6859",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/feature_error_rendering.rs",
+      "sha256": "24f207b0ff948ca6c206c98416771d014f86daaf4f3444826dbb2311f3b892cd",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/feature_input_domain.rs",
+      "sha256": "a041cfd5c7f4b54220abf5ed6964214a150c95df59e5de601ffb89f21478f124",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/feature_inputs.rs",
+      "sha256": "6e5f7300ba064abc620c960d106461726a0735e8cfe636e5a9d7ac2bbcf9d01d",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/feature_source_query_domain.rs",
+      "sha256": "8f43613b189e10afa87e74f9832962cc0889f8652876b7c463b6b759636727db",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/gameserver_defaulting.rs",
+      "sha256": "7a16a02c906336c0e2bddb16629dfce4506d7b6f6f3543d920683732c86aa289",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/gameserver_feature_validation.rs",
+      "sha256": "eb8d732fde8d5204bbf3f09e1e96753d316602ac3e6e841479216dbb9124a6b1",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/gameserver_feature_validation_domain.rs",
+      "sha256": "875e7e5460a8724f2f403da6d485e597e461d789132562110712dda58eeb6aa9",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/gameserver_type_meta.rs",
+      "sha256": "f908ba06cfafec8ea2dcaa3ecf53a8ccf663a9d8b5aaaa1098b68c34d52de780",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/generated/feature_gate_cases.rs",
+      "sha256": "46f05e90380d2c292b4e888294e1dae11239b66e9a9e6c42f2bbfdd2c69a2b00",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/generated/gameserver_defaulting_cases.rs",
+      "sha256": "febe3bc908d057de1d63fa6fb5d6acfef587369ad5cdbba2cfc2d2dd2c098f16",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/generated/gameserver_feature_validation_cases.rs",
+      "sha256": "f539dbb911f2ecc352228f1046176ea86ed896fc335035884c92c363ce6f5a40",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/generated/gameserver_validation_cases.rs",
+      "sha256": "aa7d7682b7b62ed5d1ecaf98362cf9c5731180ea24657ed674cddcb843f6fea1",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/generated/object_metadata_cases.rs",
+      "sha256": "93ef972a52c59db53a164ca204cdc3a60a676ce68952adc08c72f5145177c9a2",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/generated/sdk_version_cases.rs",
+      "sha256": "d4c8ca2e0afa0a987972c8df44c4b87db573b76ae84c8fc81eb656d1efbb53a9",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/go_status_slices.rs",
+      "sha256": "ef88d645f289686d46ae90544a53e13d9accb864aba6e696826b738f9f31f1b7",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/health_defaulting_domain.rs",
+      "sha256": "196276511451a28c0e732775f16a8cec793176af2077a78479422709b205cb11",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/object_metadata_validation.rs",
+      "sha256": "d75bdb091a235e7e32e93a2bdbfca17c5c87420e72f5d28dd62853f9d6d64d1c",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/resource_derive_paths.rs",
+      "sha256": "79fb4b1e423568b97bbecd576d607e2badfd00362a61bd8ece11694a2f088635",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/resource_quantity.rs",
+      "sha256": "183c6f001ed7f46f7ff7e684b6fda2970c8ad6c90e9599fd443f60f6d95e3a24",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/sdk_version_domain.rs",
+      "sha256": "6d238f2d6588ce4d328ca25c83ba0a010781edabac80f7400b6a2e658b4bc084",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/source_gameserver_defaulting.rs",
+      "sha256": "559cce6fa5a56f60b59c803bf36090003412ffb54f0dab8cbde5ceab6765fd3b",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/source_gameserver_feature_validation.rs",
+      "sha256": "c59a1ad7652512f8f49040bf8493855595c5e4d498513a922cf87c14b3355955",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/source_gameserver_validation.rs",
+      "sha256": "ec394726b3d92bbde99524ab23c23c432fb5468399adf9ac232e5c942a21d1ae",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/source_object_metadata_validation.rs",
+      "sha256": "7a5a315623da55deaf724a65d25bde211b4f384e4ebbc39e3ad0cf84cf2ec578",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-core/tests/source_sdk_version.rs",
+      "sha256": "5a9bed505dd162728513479b41f2d09591db54ba55e00606c2a8773a012e5ae3",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-macros/src/lib.rs",
+      "sha256": "60909ed25990ea455cb8ed753548aadc87fb866d1839f7e4a7d1c293dd15a39f",
+      "milestone_id": "M0033",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/build.rs",
+      "sha256": "771c622e8313012a8a026dc28d0b416d11e56cbedf8a9304beb46ab342a44946",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/examples/codegen/gameserver_features.rs",
+      "sha256": "44335a77ca34abe5d3bbbfa7d05836ecdc5ea65a59cd7520652a213e48dca848",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/examples/codegen/gameserver_validation.rs",
+      "sha256": "9b57e988a9237055d3a76b1dbb29495804d9ed3e752638edcbbf18989bfa79c1",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/examples/codegen/object_metadata.rs",
+      "sha256": "e8b22f0e46c00f2d1f996ad4afee85ffd62c9cc9ec3c5ae86602e0205e92204b",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/examples/feature_case_codegen.rs",
+      "sha256": "b9610a3ed5837fdc1ec5d47acf10d282400a3ea95042cf59ec95e7e1304ef412",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/examples/sdk_version_replay.rs",
+      "sha256": "f1793a61027c326fa842790c69edfaf5840f1ebabbecfdaa84590e34bfb360d7",
+      "milestone_id": "M0025",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/agones_resource_deletion.rs",
+      "sha256": "2613971f726afc864af047be6cd50a37c5e9bf153967e03887309ce17bb404e8",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/allocation_overflow_controller.rs",
+      "sha256": "6fb0414c1b084e83875c5a9c643f9b376a90220aa8c253e2d7510871f07ef2ba",
+      "milestone_id": "M0023",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/controller_work_queue.rs",
+      "sha256": "d8a5ec2ecbae9c1f9e38297a262311e6b4b52baf2a294bc4c5405c9ccf4fce4a",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/creating_gameserver_controller.rs",
+      "sha256": "76c0253879ba8a1cc86df63723452f37232bec1fc9343b1e56293389481c8ff3",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/deleting_gameserver_controller.rs",
+      "sha256": "7425788a657706f3f49f3aa9d7254c7262a468bd81ece3fbb51f7e9dfd1850b0",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/development_gameserver_controller.rs",
+      "sha256": "4032f564558a9e58c6d819117fa83d1224e6d74f14afed00cd8513c8f9bd4bbf",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/fleet_admission.rs",
+      "sha256": "491bd846a0ef06bc3ef5ec8b9619701b77a205deaa01ed75dea35a093af76067",
+      "milestone_id": "M0015",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/fleet_allocation_tracker.rs",
+      "sha256": "462e2ecee7a72360fe183430dcee55dcf339d78ed81f8877118b96ccea61c3b9",
+      "milestone_id": "M0015",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/fleet_controller.rs",
+      "sha256": "0cd4dbaa22b31beeee9c6946c85c9fbf9f161fe95635d67f3154e1722d9cb0d9",
+      "milestone_id": "M0015",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/fleet_controller_runtime.rs",
+      "sha256": "872fdefb055d8e883a23815dacfa2e4de7f4d674498de6d534dbb62a588935ba",
+      "milestone_id": "M0015",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/fleetautoscaler_admission.rs",
+      "sha256": "10bd2bfcfc8c1542cd5f02e504a55667fac25f277a96b0ac667edd28175ecfe6",
+      "milestone_id": "M0021",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/fleetautoscaler_controller.rs",
+      "sha256": "9878f9e36b0aeb9c4180e69070af9f57717a5cedfdfa16413fe1ab6086750547",
+      "milestone_id": "M0021",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/fleetautoscaler_controller_runtime.rs",
+      "sha256": "aef44d19df3f333b5a548e99db650e556a603197e675dee528441ae8d99299a4",
+      "milestone_id": "M0021",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/fleetautoscaler_wasm.rs",
+      "sha256": "11aece8a2023c48a1cc358315346ff1c35c0d0c8a3abde6573bdd9e4d9dc1877",
+      "milestone_id": "M0021",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/game_server_event.rs",
+      "sha256": "3267a3f6a08dd1bec9ed2ace28328bb8ec0d4d3cdd0cc5d1ba42b63fdb0b0a5b",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/game_server_pod.rs",
+      "sha256": "66605486dcd398f77917e192a1fb93212bee0d449328a2b15548084f22b4042c",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/gameserver_admission.rs",
+      "sha256": "d14437c315ed9d2fb690878868ea7047baf722e9484b7d99d43ccca686ff0348",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/gameserver_controller_pipeline.rs",
+      "sha256": "ede343ec5b2c1eb3b7b9889b655235bc0858c51fcd5f519d1263c541c1a82806",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/gameserver_controller_runtime.rs",
+      "sha256": "de2862a06dd28dc300095707f069944709f8ebb670a07db0781bc924052f8b45",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/gameserver_controller_stack_runtime.rs",
+      "sha256": "8a9e2c7fcb9c20aa0e9c8968216e6d11d41d3366ecfe71c75b2cf671e4f208b2",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/gameserver_controller_watch.rs",
+      "sha256": "7b8f36156f5c5154f5b8a3ceb7c3cb97d31c3e936ad9469db393df5f9332481c",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/gameserver_pod_augmentation.rs",
+      "sha256": "27db106948ade1393b62a0f261cd1bdce5fda560218c35667d6997ee3000f313",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/gameserverset_admission.rs",
+      "sha256": "493f024c4984206c857130dd8fd039de29f2605ee83f1e424546f90e15019194",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/gameserverset_controller.rs",
+      "sha256": "ebf39b9f2b6ec5a1549c44dee4d785373f618b71dcdcf6946a3bde7d913b86c4",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/gameserverset_controller_runtime.rs",
+      "sha256": "7b950087b7f8d1c58cb256cf5d3650a88d7f0f3f232c278e190c08528ce4542e",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/gameserverset_controller_stack_runtime.rs",
+      "sha256": "9eebf3993c8bfa52529072d8f9b7df1d54891f7bcda569e97276355114632db0",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/gameserverset_state_cache.rs",
+      "sha256": "448c0831ee74779d962f94064ee9d9ab9f64a6c098294871d0be2ed5261bb5bb",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/health_controller_runtime.rs",
+      "sha256": "1731f2cf0f93d86372cb7ba1922b40f0746602c163b7720c26c26846965431ed",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/health_gameserver_controller.rs",
+      "sha256": "61759fe00faa979f77f64fb8260992409fb19bcf505d47027652218db4540fcc",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/lib.rs",
+      "sha256": "3b9294cc000fa7b92e2cbcd9b088e7862a11151163aa51c0d92e5ffea1ac0e64",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/migration_controller_runtime.rs",
+      "sha256": "beaa96c511aa33028be8744df46f198857ed7cda7addb24accc9a5ae531bc2cf",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/migration_gameserver_controller.rs",
+      "sha256": "7ce486face42f032fd3b8699385f2716ffba1c717dbc4726dbeb2ff02f224b9c",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/missing_pod_controller_runtime.rs",
+      "sha256": "f8ca594d1c65301d8492f95ae61d0e303527045140f985e9c1fda1e4d4f62e98",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/missing_pod_gameserver_controller.rs",
+      "sha256": "1109eae48f330b7da6e89a3dd5c88f5a88e98b0f5e7767b1bd101eb418760a33",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/per_node_counter.rs",
+      "sha256": "cb8983ef1134fd67d0350ac4256268b622f14ffc986421613f319e5a0a335328",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/pod_deletion.rs",
+      "sha256": "21168ca1af3dd68eab72b6946b4da7b855f1fa658d2f2fb2af75540fe9c9b822",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/port_allocation_gameserver_controller.rs",
+      "sha256": "15ccdd03ee35fb4e1e7f9aa5ed04eebb31e73b2b293350c32d560aea4da857ab",
+      "milestone_id": "M0023",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/port_allocator.rs",
+      "sha256": "02f3b5c3d33c7f257bd0fb33ddaab0370bbbf89d1523901fc40a1c0af8124b11",
+      "milestone_id": "M0011",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/request_ready_gameserver_controller.rs",
+      "sha256": "c04c56625c23c0ec5136a02d8160277f803cfc04d76caaa960a16a577fd38dd1",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/sdk_sidecar.rs",
+      "sha256": "304724f7b6ea39c325c35f34d433a51df6527d3d1981c00d7badcc1aba818733",
+      "milestone_id": "M0025",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/shutdown_gameserver_controller.rs",
+      "sha256": "5a5d6e035f0e557217c39c9e7880262cdcfce986b2bf0ec9cfc9d8fd85ca271e",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/stable_gameserver_pod_ip_controller.rs",
+      "sha256": "902c879730cacb0befd49a6f2eabf756b95c95e5c875a8e5a2676d0ef4eb7e48",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/starting_gameserver_controller.rs",
+      "sha256": "233e8449bd795cfee8f92ed08c52953ae088740cb50d083eeb648b8de5733ebc",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/state_update_limiter.rs",
+      "sha256": "b4a96b7c7c27a194a85fbce071be503dfc48a48c75bed37d9647ccfb93109cbf",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/succeeded_controller_runtime.rs",
+      "sha256": "200df3f3bfe6166edba711d3fd74547238ecc788af4ee32554477cda1390d1a5",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/src/succeeded_gameserver_controller.rs",
+      "sha256": "97d9eb58feef55468a6754b6fc51263053be58382cfaf5d2c104fc78a5f6aa5e",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/tests/feature_configuration.rs",
+      "sha256": "179117bb2d9757184c8d8a275e03b11923e7f8f90f201116ebcdeaf78ad2d39c",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/tests/feature_input_consumers.rs",
+      "sha256": "d4b84bd8ef12c3bf46c1611f0277f02dce68f37addaa98d86a3f73d6b7550208",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/tests/feature_source_obligations.rs",
+      "sha256": "48b6cfd6192a20bd957529cc7dcfda586ca42fabe34fb02e4d544339e57c36a7",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/tests/gameserver_defaulting.rs",
+      "sha256": "dcadfe54178e638367bc534c6fb51ef0b75293c1304674eb0aa56ff5f75877d1",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/tests/gameserver_feature_validation.rs",
+      "sha256": "9e3252ad5836e808eb5d201514dc6969cd2a6a381b665768bba4aa2409769318",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/tests/gameserver_type_meta.rs",
+      "sha256": "16bb4d2c9f5b92199e258fe7643d2108b6144a1cc56ff21d4406f7858b47619e",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/tests/generated/object_metadata_cases.rs",
+      "sha256": "35e6c99e2d3b81253e89df99a6e093ee0e398cddd61559289151ce892e6b13e5",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/tests/object_metadata_validation.rs",
+      "sha256": "7dae0836ede33cc5625ac1865afbca8f7fef0b38841a4b2a53c1dd8c48452710",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/tests/resource_quantity.rs",
+      "sha256": "1f835a24993ce4dae0131163b524d254f82291584a3d76f455f409a86590643c",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/tests/sdk_version_policy.rs",
+      "sha256": "bd3215cb035f25c81be97a072ffd692c5a35b23d6886ab778f6014a86b2a8982",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/tests/source_gameserver_feature_validation.rs",
+      "sha256": "d266bed2597c35cb918ea36ac45eada42c7be7dcc2cb237a3905172b3e7aa3b1",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/agones-rusternetes/tests/source_object_metadata_validation.rs",
+      "sha256": "7e4084114d2e81c7045090d6c11ea335b85b48a4afbdf67bba407675011df11a",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/util/src/errors.rs",
+      "sha256": "50c8a687adcaf7cead8b4bf724a6a589c876724abbba0054622a12d80935107e",
+      "milestone_id": "M0003",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/util/src/lib.rs",
+      "sha256": "71d104ee8045ddaf23b142f7a506e114f4b297b41bba7cd3f77fdb24c462bc4f",
+      "milestone_id": "M0003",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "crates/util/src/workerqueue.rs",
+      "sha256": "de0f0b58239fd031da83be01ebc9386532e79b84752ce070fb56ccaaee5414e9",
+      "milestone_id": "M0003",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/archive.rs",
+      "sha256": "8fb1a70a53dce569005fd0ecd8863fd89a37fe6adc0b87d72d4b4f3f66500cc9",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/bin/construction.rs",
+      "sha256": "5ee43cff73b71a4ca36fc9d99cdd0f3860630e67c647cf0d4aa86ad473ca56e0",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/bin/domain.rs",
+      "sha256": "678982afad5649ca8ff7d1872e246c147d464a002ddc127f3103f4b55919bf21",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/bin/protobuf_bindings.rs",
+      "sha256": "d177d5098775309c56950dd8224f970cc3fca4fef4ee692f06636965d335037b",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/bin/schema.rs",
+      "sha256": "6df52aeb25588086059fabef4919df58009ec2c51955b2381cba4dfd40aad564",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/bin/source_inventory.rs",
+      "sha256": "64313ac6d95305f4540a96ada621e6c374a56d97a37915399e10af292c58f25d",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/bin/storage.rs",
+      "sha256": "eceb344a93032afe7ea97c7a7d56dac73f0f04a0f533cebbaf58728db70fa48f",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/codegen.rs",
+      "sha256": "b66e0063f40db4512cf0918b9cada07f8f3dcf80102d25b5a3bf716ce4485643",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/codegen_graph.rs",
+      "sha256": "320c66c06e9e5bcbee3df14238bd1d89a079b27f575bc6bcc4d7d70bae4c1f59",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/construction.rs",
+      "sha256": "efd6b8e2a92e7e37d0f771445550dbfc635a2086f6a48cdca1146e98b43b90db",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/construction_modules.rs",
+      "sha256": "358eff6ed119e0afe3821e48d83fd1d0cd6eb4d0574912b125e4012e0a4fc07e",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/cpg_loading.rs",
+      "sha256": "c287b8e0753680d95f41dbc2c13deeb3f04642c4fdb0985e0bb2549860637b4f",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/execution.rs",
+      "sha256": "cec1f7080817e0090f5e14f810f720636fa94a7836b8c0fc3e823c88df701b03",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/graph/grafeo.rs",
+      "sha256": "e8718ee7d37568397197c505221324535d3d4ad4d968171ca147d9a2fb55338c",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/graph/legacy.rs",
+      "sha256": "1a6915290ce3321098a9a86dfd88bcb72bce23fb91b8fcf6cefc544b8ba0413c",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/graph/mvstore.rs",
+      "sha256": "ebe7f5b144ca60622922d2ecfc1fcc069139ca4aff095f7f93223cf9c10d38a5",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/graph/storage.rs",
+      "sha256": "993018a0378a42712f3ddc2bc8d2b19201f7fcd35740e0a3246c50b7fff29272",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/graph/typed.rs",
+      "sha256": "a1842aa092d0bdc2d91706ed74091f73ea1801a083f8aed11261bd0453dbe5c3",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/graph.rs",
+      "sha256": "bd1ca97026cbcf68514f3e5e23ff8f73dd7ea291cf17719f31d22218c8b72419",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/lib.rs",
+      "sha256": "3e8c774f16218c8e611eea48d3eb097e71332a9c14c6c98aeb7275b5fcaedb56",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/passes.rs",
+      "sha256": "2bbffe339d9174ef6a696dac4e6c3e6b15f545b85828d414a528b85722a50c80",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/proto_loading.rs",
+      "sha256": "757bceac67358baa2fce32be09c17947012c15f80966fe4d0df539c58582ea73",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/protobuf_bindings.rs",
+      "sha256": "a1b8079da7ecd382dd6fb037af0864e42200c0b059f5e3c4f3f291fa83f28040",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/protobuf_schema.rs",
+      "sha256": "4acc326df22e928f69c58e3c02ac31f71aa08ac1566ec04c512348f1d81ad337",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/schema.rs",
+      "sha256": "28854c087898463a9aa7d9cdac86a5fbb27c1a0eb6bd7aba37f161a8ff7e9676",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/schema_objects.rs",
+      "sha256": "6be921ed4f690f896b7844e61432ca84eb62fe4dea88dad9d3f843234a6f010d",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/schema_tools.rs",
+      "sha256": "811df09c742d6a5885458dc00833932df345585d53dee3a350c0a9ceded38525",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "cpg-rs/src/utilities.rs",
+      "sha256": "b21c5947920b01c9c1f98f7a20c82d94d3cee0afa5c6fc8a6863e8ba1838e670",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Annotation/mod.rs",
+      "sha256": "f39a4d41d76726c32516b5d27832e5e5f214df308c96dae1b439e2342f2b4f18",
+      "milestone_id": "M0010",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Ast/build/validate_ast_schema.rs",
+      "sha256": "74e23e97336fb2349b40812375fc38f968b156df8758a341fdfd8eb58f4273c1",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Ast/lib.rs.additions.rs",
+      "sha256": "de07fca3f60312ce5fcfcbe75315e633dcd7116e9ea1c428458899189132cbcf",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Ast/mod.rs",
+      "sha256": "ce94595c3cc82f9cc65b5c6b6b31dcaf1c5165a1d98aa3253538c97df213e2db",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Ast/src/ast_jsonschema.rs",
+      "sha256": "3b30e368adb6931f5267ba6ef980f8368fbd2cf0f64cc122bad86a44c2a17a6c",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Ast/src/ast_vocabulary.rs",
+      "sha256": "a27e1fd72d32a299b9a70a8e0e7260d8a094fc9754215e4d0908c350eccf3b11",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Base/mod.rs",
+      "sha256": "91ba76417869b84f2ef2ecbc47bffdbbda02139369a581d2f99672c559d94e3f",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Base/src/Base.rs",
+      "sha256": "4195ba400852da1f5e0358c4be0e11f74d0b206e2b68f3e8f530ea61e28c7eb8",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Base/src/CpgVocabulary.rs",
+      "sha256": "dcecec20fc51c71b4c27dfbffb1f276b4ca6d40311f506f60ffc52e06725801a",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Binding/mod.rs",
+      "sha256": "c947c6e22c282bcc7fc92a6b50a9cb746e65de7afcb8a71a7891b98df5656557",
+      "milestone_id": "M0010",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/CallGraph/mod.rs",
+      "sha256": "19c525f1a211ed49584572c6b324dd2593fdc40df14c5bcf4c3d5f49e5a11633",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Cfg/mod.rs",
+      "sha256": "82e2690acfda7e7e01c2699757c478bb8ce0ecdc6aa4bb9b19fa8f95c98feb9d",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Comment/mod.rs",
+      "sha256": "7f9d0ec5b8a83a692721e0119a6b05141daec1b46d3bda3c119ed214a2895eaa",
+      "milestone_id": "M0010",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Configuration/mod.rs",
+      "sha256": "987272f59e11a11e08e210381f3248f662f6f6143b6e988fc854fd441272b727",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/CpgSchema/build.rs",
+      "sha256": "9aeec5ccbd493eb88922d07cda694c40e5889027ac5482dd660d9aee43f756d0",
+      "milestone_id": "M0002",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/CpgSchema/mod.rs",
+      "sha256": "09ebc3afcb29d2b2df0fed8e4f54f929526e3f7e786911a6aa5cf5bb2306e67d",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/CpgSchema/reference/CpgSchema.previous.rs",
+      "sha256": "5e3ef1fa017f5327f1d9241e5cdaa5b9b21f6f4d57c86893d355e52516ed0999",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/CpgSchema/src/contracts.rs",
+      "sha256": "53598a7d94f1e293dea3e3532985d324f39b45654e8775bb22d7c7d2a55e193e",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/CpgSchema/src/json_binding.rs",
+      "sha256": "20cb9d589c36d5d5951de59f9260feb80c66ab74a8e7eee5174ac243c5a4c68f",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/CpgSchema/src/json_vocabulary.rs",
+      "sha256": "5c328cd8e1eef2f01b7f8ae1a00d57055252aa7a4909fb4dfcbf476eaae30c4d",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/CpgSchema/src/native.rs",
+      "sha256": "d57a7993eec80d832c7e6b46cba12daed381862f7919bdc9c01bf77abcda1101",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Dominators/mod.rs",
+      "sha256": "c195d6d74adac50cf8503a1e4690d9ae8f89370507775da2322e3f42e5e78628",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/FileSystem/build.rs",
+      "sha256": "b5473304de384df127e1d089170e28597b5fa84ef17a4acf3e2f47e3b61e64c7",
+      "milestone_id": "M0002",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/FileSystem/mod.rs",
+      "sha256": "3a61a722188284714e0a39e13b3c70f575530913796c2415dca8cb8cf8c6ec61",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/FileSystem/src/lib.rs",
+      "sha256": "9f9ede4c39584c61970e31f4a3be0afee3fa55f424abd5fe0a73b3718acb2947",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/FileSystem/src/semantic.rs",
+      "sha256": "ec8a7ffbed7a18a53a0f6269f7b19c4dd9236bf4d594073e222fc3714e31c1db",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/FileSystem/src/vocabulary.rs",
+      "sha256": "24328f7eebf064e2d5859ab3ed52d4fbeda2dd2b733b9e8a8408371eb432e015",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Finding/mod.rs",
+      "sha256": "ebe75b95540783fb225bd241821d9cb1c4c88e92ee67b4993c489343bddd7f4e",
+      "milestone_id": "M0010",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Hidden/mod.rs",
+      "sha256": "db9d855bd7a06ede00d96f2ea52590f110c9a5307b1967feff97a2ae9cd208df",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/MetaData/build.rs",
+      "sha256": "bd1a96bcd9b0f7179099d4092df3ded2b595b2d37d46c5f58778c04d7dafe46d",
+      "milestone_id": "M0002",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/MetaData/mod.rs",
+      "sha256": "92f843ecdb812c964e16c9a37ffd317aff8da404e857c29ed87029fa9185c341",
+      "milestone_id": "M0010",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/MetaData/src/CpgVocabulary.rs",
+      "sha256": "fcfa5c86693deba95a1aad7ed3debc0c8b933a4aca39a1f911c396deb79c5767",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/MetaData/src/MetaData.rs",
+      "sha256": "e6dc2778b77da5a72e5cd6ca776a9b58422f006970c3531983571c0854d9b27d",
+      "milestone_id": "M0010",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Method/mod.rs",
+      "sha256": "9b87e01333e6be23190a2cc5c62a99862151ad4ca73a55f5609fb654cf1d37dd",
+      "milestone_id": "M0010",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Namespace/mod.rs",
+      "sha256": "f0ea1cfabcd92b7b90a75086f0dbe0900a9d17131243f1fb675f3b4b80f79b9a",
+      "milestone_id": "M0010",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Operators/mod.rs",
+      "sha256": "04312d3ac89e71e098ba6646de164817b035ce4c2027123df9c9e58ba670447b",
+      "milestone_id": "M0010",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Pdg/mod.rs",
+      "sha256": "36627caa7389f557ef90387d47b8664886bfedb8197f5a133f14f81f6e3487b7",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/ProtoIds/mod.rs",
+      "sha256": "4f0bf4aba1dec9248a25f6541df41c196ccff0fea8e80aa8d22590bc7fe2a3e2",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/ProtoSerialize/mod.rs",
+      "sha256": "97925c5099b79d1736e1a92db1e15aa4904b2399458a7547a67da579480844b6",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Protogen/mod.rs",
+      "sha256": "8f18059f7dda72dc18a7fc68b481ea5ea93fc023c07aa9702e7349bb25d00695",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/SchemaBase/contract/mod.rs",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/SchemaBase/mod.rs",
+      "sha256": "c7d87a5e44093cb6d280094e0326b3aa5bf3f25d4e99a39f81c188232f15eec6",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/SchemaBase/reference/SchemaBase.previous.rs",
+      "sha256": "bb63829fa82c54f47332a5e510ddb4695cd06f7ffc8c9b7ef9b7d37dbfbc1bd0",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/SchemaBase/schemas/mod.rs",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/SchemaBase/src/SchemaBase.rs",
+      "sha256": "fbf1836e5ec8c38f453e52ee0a2d96c4d37fb9eb86c4dd8d48499c63a9a9a576",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/SchemaBase/src/bridge.rs",
+      "sha256": "01010091d5fddae37bb9fa72151afab1f63880d0303e2f79a5df063dc95d5721",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/SchemaBase/src/cpg_vocabulary.rs",
+      "sha256": "2828266a54dcce83641a8bee5c075383856f856a6be775b016fcf1bf84ad2b62",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/SchemaBase/src/json_dialect.rs",
+      "sha256": "238f8bc1e4ac2c5d64836edfbfa42e67af7def927bf3fcbc7f8cd0974b320299",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/SchemaBase/src/mod.rs",
+      "sha256": "1d77629d3cbdd4b83152eb0b000bfe5bb8b34dedbb501870bbc1c65c0b9678ab",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Shortcuts/mod.rs",
+      "sha256": "c2c135fce57b350be7f36adab331f0eeaef5b61a4f14ec9b5a027a05e08b7c42",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Tags/mod.rs",
+      "sha256": "becd310359cd45c2e4d1f65d3f9422beb18bbf92d51287484e4a3a8f66ce169b",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Type/build.rs",
+      "sha256": "b0537ecf105e804ef23a63fb2a20a15ae414661b152c8bd0a0f6fb39e94f0f4c",
+      "milestone_id": "M0002",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Type/mod.rs",
+      "sha256": "e656a68816837a2bfe137f9e806b6852f9a7e7e5ece700b16b174e9e240a02ed",
+      "milestone_id": "M0010",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Type/src/lib.rs",
+      "sha256": "b9a381ef1d2663a958f4db14982e2cfe52f86aad306d89f535eb0a1461eca4ef",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Type/src/semantic.rs",
+      "sha256": "0e0814e3d205d52de23cd2472e354b015a288c62cb87488ade241a10bb96044c",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/Type/src/vocabulary.rs",
+      "sha256": "01d48a9562238213f34a308818f8fb33c7f97ab933cb48abd836649b72fe2179",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/bin/Protogen.rs",
+      "sha256": "ccb40bb417656bf28cacc3ef6d0e46d96a382507d0d81cd371455a75c8606be3",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/codec.rs",
+      "sha256": "2c5c366855b256e749995da7a3f8527c6a141f5f49329b71079f8dff6bf7ef21",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/components.rs",
+      "sha256": "b39ad26e03363ecda641bfdc674a8873389185473d28939b483b9b3b540b0c49",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/graph.rs",
+      "sha256": "3affe03b9a6527c88f9a775e8d930f2c95af873374b371b301c1c42d80795bf2",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/lib.rs",
+      "sha256": "5f0654d81500adb3fdf3ace8a103bd26eb6ae3c79a0f7e5d23bec5872cbec93b",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/model.rs",
+      "sha256": "c772e5deea1387c8aba9347c3177d32e9a4121536d654cc0fa6bf2e744b525a7",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "CPGSchema/src/value.rs",
+      "sha256": "fd4b45b83fe159d752c9fb158d2a84f422dc1e974b6fcb332a29b654e41a8165",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "verification/agones/gameserver-borrowed-feature-candidate.rs",
+      "sha256": "6bd5a96b38d74c6b975133f8d7115a9eb766bc78e02885f22178c3873f6d2bb7",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "verification/agones/gameserver-feature-validation-domain-first.rs",
+      "sha256": "bdf808073f19646b786a88b9b0a55505c3f698c7ed77bb9893aa258551345e70",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "verification/agones/gameserver-feature-validation-domain-second.rs",
+      "sha256": "1f7c7e648729ce28f8cfa74ed3bd8b98e49621fa890a9a4118afd2887c3a8f2d",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "verification/agones/gameserver-lifetime1-generated.rs",
+      "sha256": "8258650ffeb4d29b43d0e81e92532cae5332c05543069b8e607404d3629391bf",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "verification/agones/gameserver-lifetime1-generator.rs",
+      "sha256": "51fbab7c75ac5227eda136cf74c63c2e6ef34f54966129538b9616a3ee88dd19",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "verification/agones/gameserver-map-literal1-generated.rs",
+      "sha256": "6b78c4a2e4bf7b13b0cc80db8a1d49d145d0736b7639b2fd01bd31955501685f",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "verification/agones/gameserver-map-literal1-generator.rs",
+      "sha256": "723e28df1fd5ec935e2ba5c880f07d1a0de512843ad35c2706a2f79cf76ae793",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "verification/agones/gameserver-restored-proof-control.py",
+      "sha256": "6dd7de6ca2130faa259751e6faa0fc2ca33343f99e9c933364124283e67a063c",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "verification/agones/health-defaulting-domain-initial.rs",
+      "sha256": "8e7740136ea4f1de2b417f6c75d88ce2da19b2df9dfc43f7a5cf8c4c35d674bb",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    },
+    {
+      "path": "verification/agones/sdk-version-domain-initial.rs",
+      "sha256": "4dba42233573adccc1e4566afce31fe6919bf0679062393751e5d7f90fb5f750",
+      "milestone_id": "M0025",
+      "route": "MANUAL",
+      "owner_status": "PROVISIONAL_ADOPTION_OWNER_REQUIRES_SYMBOL_RECONCILIATION",
+      "destination": "PRESERVE_IN_PLACE_UNTIL_SOURCE_MAPPING_AND_ALL_REFERENCES_ACCOUNTED",
+      "replacement_status": "NOT_AUTHORIZED_BY_FILE_EXISTENCE",
+      "notes": "Preserve original; inspect source mappings and consumers before relocating. This path-based index does not establish source behavior or completeness."
+    }
+  ]
+}

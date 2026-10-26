@@ -1,0 +1,732 @@
+{
+  "version": 1,
+  "date": "2026-10-27",
+  "status": "PLANNING_NOT_MEASURED",
+  "immutable_when_execution_begins": true,
+  "source_snapshots": {
+    "agones": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "cpg": "301c4010d28ecdac05bc2ed44310f56446459465"
+  },
+  "milestones": [
+    {
+      "id": "F-M0001-v1",
+      "milestone_id": "M0001",
+      "route": "MANUAL",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 13,
+      "planning_units": 1.512,
+      "tokens": {
+        "low": 14000,
+        "base": 35000,
+        "high": 103000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0002-v1",
+      "milestone_id": "M0002",
+      "route": "CPG",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 49,
+      "planning_units": 1.767,
+      "tokens": {
+        "low": 16000,
+        "base": 40000,
+        "high": 120000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0003-v1",
+      "milestone_id": "M0003",
+      "route": "MANUAL",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 14,
+      "planning_units": 6.492,
+      "tokens": {
+        "low": 44000,
+        "base": 135000,
+        "high": 427000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0004-v1",
+      "milestone_id": "M0004",
+      "route": "CPG",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 6,
+      "planning_units": 1.155,
+      "tokens": {
+        "low": 12000,
+        "base": 28000,
+        "high": 80000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0005-v1",
+      "milestone_id": "M0005",
+      "route": "MANUAL",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 57,
+      "planning_units": 18.035,
+      "tokens": {
+        "low": 113000,
+        "base": 366000,
+        "high": 1177000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0006-v1",
+      "milestone_id": "M0006",
+      "route": "CPG",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 25,
+      "planning_units": 9.999,
+      "tokens": {
+        "low": 65000,
+        "base": 205000,
+        "high": 655000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0007-v1",
+      "milestone_id": "M0007",
+      "route": "MANUAL",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 88,
+      "planning_units": 1.578,
+      "tokens": {
+        "low": 14000,
+        "base": 37000,
+        "high": 108000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0008-v1",
+      "milestone_id": "M0008",
+      "route": "CPG",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 6,
+      "planning_units": 0.578,
+      "tokens": {
+        "low": 8000,
+        "base": 17000,
+        "high": 43000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0009-v1",
+      "milestone_id": "M0009",
+      "route": "MANUAL",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 27,
+      "planning_units": 6.241,
+      "tokens": {
+        "low": 42000,
+        "base": 130000,
+        "high": 411000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0010-v1",
+      "milestone_id": "M0010",
+      "route": "CPG",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 251,
+      "planning_units": 24.28,
+      "tokens": {
+        "low": 151000,
+        "base": 491000,
+        "high": 1583000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0011-v1",
+      "milestone_id": "M0011",
+      "route": "MANUAL",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 2,
+      "planning_units": 1.753,
+      "tokens": {
+        "low": 16000,
+        "base": 40000,
+        "high": 119000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0012-v1",
+      "milestone_id": "M0012",
+      "route": "CPG",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 2,
+      "planning_units": 0.35,
+      "tokens": {
+        "low": 7000,
+        "base": 12000,
+        "high": 28000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0013-v1",
+      "milestone_id": "M0013",
+      "route": "MANUAL",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 7,
+      "planning_units": 2.439,
+      "tokens": {
+        "low": 20000,
+        "base": 54000,
+        "high": 164000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0014-v1",
+      "milestone_id": "M0014",
+      "route": "CPG",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 1,
+      "planning_units": 0.227,
+      "tokens": {
+        "low": 6000,
+        "base": 10000,
+        "high": 20000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0015-v1",
+      "milestone_id": "M0015",
+      "route": "MANUAL",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 4,
+      "planning_units": 3.738,
+      "tokens": {
+        "low": 27000,
+        "base": 80000,
+        "high": 248000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0016-v1",
+      "milestone_id": "M0016",
+      "route": "CPG",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 3,
+      "planning_units": 0.969,
+      "tokens": {
+        "low": 11000,
+        "base": 24000,
+        "high": 68000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0017-v1",
+      "milestone_id": "M0017",
+      "route": "MANUAL",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 8,
+      "planning_units": 5.82,
+      "tokens": {
+        "low": 40000,
+        "base": 121000,
+        "high": 383000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0018-v1",
+      "milestone_id": "M0018",
+      "route": "CPG",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 1,
+      "planning_units": 0.409,
+      "tokens": {
+        "low": 7000,
+        "base": 13000,
+        "high": 32000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0019-v1",
+      "milestone_id": "M0019",
+      "route": "MANUAL",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 14,
+      "planning_units": 14.459,
+      "tokens": {
+        "low": 92000,
+        "base": 294000,
+        "high": 945000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0020-v1",
+      "milestone_id": "M0020",
+      "route": "CPG",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 4,
+      "planning_units": 1.508,
+      "tokens": {
+        "low": 14000,
+        "base": 35000,
+        "high": 103000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0021-v1",
+      "milestone_id": "M0021",
+      "route": "MANUAL",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 3,
+      "planning_units": 5.467,
+      "tokens": {
+        "low": 38000,
+        "base": 114000,
+        "high": 360000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0022-v1",
+      "milestone_id": "M0022",
+      "route": "CPG",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 0,
+      "planning_units": 0,
+      "tokens": {
+        "low": 125000,
+        "base": 405000,
+        "high": 1305000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0023-v1",
+      "milestone_id": "M0023",
+      "route": "MANUAL",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 13,
+      "planning_units": 12.481,
+      "tokens": {
+        "low": 80000,
+        "base": 255000,
+        "high": 816000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0024-v1",
+      "milestone_id": "M0024",
+      "route": "CPG",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 0,
+      "planning_units": 0,
+      "tokens": {
+        "low": 105000,
+        "base": 325000,
+        "high": 1105000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0025-v1",
+      "milestone_id": "M0025",
+      "route": "MANUAL",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 4,
+      "planning_units": 9.149,
+      "tokens": {
+        "low": 60000,
+        "base": 188000,
+        "high": 600000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0026-v1",
+      "milestone_id": "M0026",
+      "route": "CPG",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 0,
+      "planning_units": 0,
+      "tokens": {
+        "low": 185000,
+        "base": 605000,
+        "high": 2005000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0027-v1",
+      "milestone_id": "M0027",
+      "route": "MANUAL",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 10,
+      "planning_units": 11.109,
+      "tokens": {
+        "low": 72000,
+        "base": 227000,
+        "high": 727000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0028-v1",
+      "milestone_id": "M0028",
+      "route": "CPG",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 0,
+      "planning_units": 0,
+      "tokens": {
+        "low": 285000,
+        "base": 1005000,
+        "high": 3605000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0029-v1",
+      "milestone_id": "M0029",
+      "route": "MANUAL",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 89,
+      "planning_units": 20.716,
+      "tokens": {
+        "low": 129000,
+        "base": 419000,
+        "high": 1352000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0030-v1",
+      "milestone_id": "M0030",
+      "route": "CPG",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 0,
+      "planning_units": 0,
+      "tokens": {
+        "low": 455000,
+        "base": 1605000,
+        "high": 5505000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0031-v1",
+      "milestone_id": "M0031",
+      "route": "MANUAL",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 219,
+      "planning_units": 22.853,
+      "tokens": {
+        "low": 142000,
+        "base": 462000,
+        "high": 1490000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0032-v1",
+      "milestone_id": "M0032",
+      "route": "CPG",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 0,
+      "planning_units": 0,
+      "tokens": {
+        "low": 125000,
+        "base": 425000,
+        "high": 1405000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0033-v1",
+      "milestone_id": "M0033",
+      "route": "MANUAL",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 0,
+      "planning_units": 0,
+      "tokens": {
+        "low": 155000,
+        "base": 505000,
+        "high": 1705000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0034-v1",
+      "milestone_id": "M0034",
+      "route": "CPG",
+      "phase": "IMPLEMENTATION_ONLY",
+      "file_count": 0,
+      "planning_units": 0,
+      "tokens": {
+        "low": 65000,
+        "base": 185000,
+        "high": 605000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0035-v1",
+      "milestone_id": "M0035",
+      "route": "MANUAL",
+      "phase": "POST_IMPLEMENTATION_VERIFICATION",
+      "file_count": 220,
+      "planning_units": 126.128,
+      "tokens": {
+        "low": 1219000,
+        "base": 4045000,
+        "high": 13125000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0036-v1",
+      "milestone_id": "M0036",
+      "route": "CPG",
+      "phase": "POST_IMPLEMENTATION_VERIFICATION",
+      "file_count": 7,
+      "planning_units": 1.148,
+      "tokens": {
+        "low": 19000,
+        "base": 45000,
+        "high": 128000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0037-v1",
+      "milestone_id": "M0037",
+      "route": "MANUAL",
+      "phase": "POST_IMPLEMENTATION_VERIFICATION",
+      "file_count": 0,
+      "planning_units": 0,
+      "tokens": {
+        "low": 88000,
+        "base": 296000,
+        "high": 1048000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    },
+    {
+      "id": "F-M0038-v1",
+      "milestone_id": "M0038",
+      "route": "CPG",
+      "phase": "POST_IMPLEMENTATION_VERIFICATION",
+      "file_count": 0,
+      "planning_units": 0,
+      "tokens": {
+        "low": 296000,
+        "base": 1048000,
+        "high": 3528000
+      },
+      "credits": "unknown",
+      "calibration": "UNVALIDATED_PLANNING_ASSUMPTIONS",
+      "forecast_version": 1
+    }
+  ],
+  "aggregate_model": {
+    "unit": "tokens; unvalidated planning assumption, not measured usage",
+    "manual_production": {
+      "low": 1098000,
+      "base": 3462000,
+      "high": 11135000
+    },
+    "manual_assurance": {
+      "low": 1307000,
+      "base": 4341000,
+      "high": 14173000
+    },
+    "cpg_production": {
+      "low": 1642000,
+      "base": 5430000,
+      "high": 18267000
+    },
+    "cpg_assurance": {
+      "low": 315000,
+      "base": 1093000,
+      "high": 3656000
+    },
+    "rework_reserve_rates": {
+      "low": 0.1,
+      "base": 0.25,
+      "high": 0.6
+    },
+    "manual_fraction_required_in_cpg_route": {
+      "low": 0.35,
+      "base": 0.55,
+      "high": 0.85
+    },
+    "switch_boundary_tokens": {
+      "low": 2000,
+      "base": 10000,
+      "high": 40000
+    },
+    "scenarios": {
+      "direct_agones_only": {
+        "low": {
+          "production": 1098000,
+          "assurance_and_delivery": 1307000,
+          "delayed_rework_reserve": 109800,
+          "switching_and_recovery": 0,
+          "total": 2514800
+        },
+        "base": {
+          "production": 3462000,
+          "assurance_and_delivery": 4341000,
+          "delayed_rework_reserve": 865500,
+          "switching_and_recovery": 0,
+          "total": 8668500
+        },
+        "high": {
+          "production": 11135000,
+          "assurance_and_delivery": 14173000,
+          "delayed_rework_reserve": 6681000,
+          "switching_and_recovery": 0,
+          "total": 31989000
+        }
+      },
+      "cpg_to_finished_agones": {
+        "low": {
+          "production": 2026300,
+          "assurance_and_delivery": 1622000,
+          "delayed_rework_reserve": 202630,
+          "switching_and_recovery": 0,
+          "total": 3850930
+        },
+        "base": {
+          "production": 7334100,
+          "assurance_and_delivery": 5434000,
+          "delayed_rework_reserve": 1833525,
+          "switching_and_recovery": 0,
+          "total": 14601625
+        },
+        "high": {
+          "production": 27731750,
+          "assurance_and_delivery": 17829000,
+          "delayed_rework_reserve": 16639050,
+          "switching_and_recovery": 0,
+          "total": 62199800
+        }
+      },
+      "both_mandatory_alternation": {
+        "low": {
+          "production": 2740000,
+          "assurance_and_delivery": 1622000,
+          "delayed_rework_reserve": 274000,
+          "switching_and_recovery": 74000,
+          "total": 4710000
+        },
+        "base": {
+          "production": 8892000,
+          "assurance_and_delivery": 5434000,
+          "delayed_rework_reserve": 2223000,
+          "switching_and_recovery": 370000,
+          "total": 16919000
+        },
+        "high": {
+          "production": 29402000,
+          "assurance_and_delivery": 17829000,
+          "delayed_rework_reserve": 17641200,
+          "switching_and_recovery": 1480000,
+          "total": 66352200
+        }
+      }
+    },
+    "credits": "unknown"
+  },
+  "credit_forecast": "unknown",
+  "no_goal_budget_authorized": true
+}

@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-27",
+  "purpose": "Documentation authoring only; not a project implementation or verification receipt",
+  "head": "3f63491cf41068fe34d18ce1a20c576ba1a2a0d7",
+  "branch": "agones-rs-dev",
+  "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "protected_files": {
+    "AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "AGONES_RS_STATE.json": "fd85b5ee58acdd317c1470c287c47ef402e6a6ed093809719d523d0b71aafaec",
+    "AGONES_RS_HANDOFF.md": "dc51017d5e2b1c305780abd7679829c0779b129600a71f50a900e8448c33ddc7",
+    "AGONES_RS_CONTINUATION_PROMPT.md": "44f3d82ca654789f9dc2553c4dd68c1b4877bb9c2ede654372d7a8087aaca146",
+    "AGONES_CPG_FIRST_GENERATION_GOAL_PROMPT.md": "3c2eeb7c077ce7410b16f609f48ac70dfbb6ddb9daee0005b7979eda003dfbec",
+    "Cargo.toml": "525d65d3cf4ae98c4cf8f29deb16fda220ef748c651bf659ed74fe0e14fcba00",
+    "verification/agones/first-generation-checkpoint.json": "7bf7b34d48f069da38f4b104c3867d8faffa47aa1390415d5862c4b547faabc1"
+  },
+  "source_prompts": {
+    "agones-rs-prompt-v3.md": "d3552bd4439bdf519faf36b76ff17c4e035713549616bb855308295692475658",
+    "agones-rs-cpg-prompt-v1.md": "3c2eeb7c077ce7410b16f609f48ac70dfbb6ddb9daee0005b7979eda003dfbec"
+  }
+}

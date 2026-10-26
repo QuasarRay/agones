@@ -1,0 +1,50 @@
+{
+  "purpose": "Explicit outstanding implementation/accounting obligations, not documentation defects or permission to execute",
+  "items": [
+    {
+      "id": "U-SOURCE-BODIES",
+      "status": "OPEN_IMPLEMENTATION_ACCOUNTING",
+      "owner": "M0034",
+      "gate": "IMPLEMENTATION",
+      "detail": "All paths have dispositions; lexical declarations do not exhaust nested closures, initializers, callbacks and configuration-qualified bodies. Each source owner must close these identities before production completion."
+    },
+    {
+      "id": "U-BUILD-VARIANTS",
+      "status": "OPEN_IMPLEMENTATION_ACCOUNTING",
+      "owner": "M0001",
+      "gate": "IMPLEMENTATION",
+      "detail": "Resolve Go build tags, platform/cgo variants, module/replacement/vendor configuration and corresponding body/resource scope from pinned source. No compiler probe is authorized."
+    },
+    {
+      "id": "U-REUSE-MAPPINGS",
+      "status": "OPEN_IMPLEMENTATION_ACCOUNTING",
+      "owner": "PER_FILE_IN_REUSE_INVENTORY",
+      "gate": "IMPLEMENTATION",
+      "detail": "245 current files have preservation/adoption-review owners. Exact source-to-Rust symbols, consumers and replacements remain to be reconciled; source/schema blob identity alone is not behavioral reuse credit."
+    },
+    {
+      "id": "U-EMITTER-AVAILABILITY",
+      "status": "UNRESOLVED_EXECUTION_PREREQUISITE",
+      "owner": "M0002",
+      "gate": "IMPLEMENTATION",
+      "detail": "No permitted already runnable complete emitter path was established by document authoring. If required emission needs a prohibited build, record the concrete dependency blocker; never bypass the gate."
+    },
+    {
+      "id": "U-ASSURANCE-INSTANCES",
+      "status": "DEFERRED_UNTIL_GLOBAL_GATE",
+      "owner": [
+        "M0035",
+        "M0036"
+      ],
+      "gate": "FINAL_ASSURANCE",
+      "detail": "Dynamic table/fixture-qualified assertions, model domains and actual Bolero/Kani/compatibility results remain unmeasured. Source path accounting is not assurance completion."
+    },
+    {
+      "id": "U-ACTUAL-COST",
+      "status": "NO_IMPLEMENTATION_MILESTONES_EXECUTED",
+      "owner": "roadmap/alternation-policy.md",
+      "gate": "ACCOUNTING_NOT_EXECUTION_PERMISSION",
+      "detail": "No attributable new milestone boundary pairs or credit charges exist. Preserve unknowns and provisional measurements; do not fabricate totals."
+    }
+  ]
+}

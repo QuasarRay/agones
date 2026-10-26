@@ -1,0 +1,26 @@
+{
+  "agones-rs-prompt-v3.md": {
+    "path": "/home/astral/Projects/Fenris-Creations-Prompts/Agones-rs-Prompts/agones-rs-prompt-v3.md",
+    "original_sha256": "d3552bd4439bdf519faf36b76ff17c4e035713549616bb855308295692475658",
+    "revised_sha256": "62a608290cbefb9d5cb8db9abc6aff40cb9cdb3593473975562454c1f188b4b2",
+    "original_bytes": 80851,
+    "revised_bytes": 81061
+  },
+  "agones-rs-cpg-prompt-v1.md": {
+    "path": "/home/astral/Projects/Fenris-Creations-Prompts/Agones-rs-Prompts/agones-rs-cpg-prompt-v1.md",
+    "original_sha256": "3c2eeb7c077ce7410b16f609f48ac70dfbb6ddb9daee0005b7979eda003dfbec",
+    "revised_sha256": "a9e1762c4555c39e5a820cba60c607cbeebe7122c02190745206abd8f8bb94c9",
+    "original_bytes": 45900,
+    "revised_bytes": 42237
+  },
+  "reconciliation": {
+    "scope": "Both full objectives; no first-generation-only terminal stop",
+    "manual_retained": "Core requirements and A-F/C0-C8/D/E architecture, source, property, evidence, recovery and delivery appendices retained; obsolete G5 selection replaced",
+    "cpg_retained": "A/B source classification, complete schema, bundle, lowering, source-body coverage and receipt contract retained and reconciled; C/D recovery and transaction semantics retained in combined form",
+    "priority": "Shared roadmap plus separate policy supersede obsolete cheaper-route selection and pre-generation support checks",
+    "implementation_gate": "All production implementation on both routes before any project assurance",
+    "naming": "Exact source mirrors, Go harness exception, literal Scala chain/case, external Rust-only glue",
+    "measurement": "Actual attributable observations only; credits unknown when unavailable",
+    "originals": "Inactive reference snapshots preserved; protected root prompts unchanged"
+  }
+}

@@ -1,0 +1,12075 @@
+<a id="m0035"></a>
+
+
+# M0035 — Agones harnesses and final behavioral assurance
+
+
+**Route:** `MANUAL`. **Phase:** `POST_IMPLEMENTATION_VERIFICATION`. **State:** `PLANNED_NOT_EXECUTED`. **Forecast:** `F-M0035-v1` in [cost-analysis.md](../cost-analysis.md).
+
+
+**Prerequisites:** [M0023](0023-allocation-processing-and-multi-cluster-contracts.md), [M0005](0005-resource-and-wire-contracts-defaults-and-validation.md), [M0013](0013-cloud-hooks-through-the-permitted-rusternetes-boundary.md), [M0031](0031-build-deployment-and-configuration-implementation.md), [M0027](0027-production-entrypoints-and-complete-lifecycle-composition.md), [M0029](0029-examples-source-tooling-and-compatibility-inputs.md), [M0021](0021-fleetautoscaler-policies-and-external-decisions.md), [M0015](0015-fleet-reconciliation-and-rollout-policy.md), [M0001](0001-source-mirror-version-and-shared-contracts.md), [M0019](0019-gameserver-and-gameserverset-lifecycle.md), [M0033](0033-complete-the-required-metaprogramming-authoring-family.md), [M0017](0017-telemetry-and-metric-semantics.md), [M0007](0007-apply-clients-informers-and-listers.md), [M0011](0011-port-ownership-and-allocation-policy.md), [M0009](0009-source-compatible-clients-and-existing-rust-sdk-reuse.md), [M0025](0025-sdk-server-streaming-health-and-mutation-behavior.md), [M0003](0003-errors-queues-clocks-webhooks-and-utility-effects.md), [M0002](0002-pinned-cpg-source-build-machinery-and-rust-support-boundaries.md), [M0022](0022-pinned-frontend-and-self-contained-cpg-input-bundle.md), [M0010](0010-complete-schema-derived-domain-hierarchy.md), [M0032](0032-genco-emission-into-the-exact-rust-source-mirror.md), [M0012](0012-native-cpg-facade-and-graph-ownership.md), [M0026](0026-typed-translation-ir-and-ownership-effect-interfaces.md), [M0030](0030-go-control-errors-concurrency-and-runtime-lowering.md), [M0028](0028-go-value-type-and-initialization-lowering.md), [M0024](0024-normalized-cpg-with-source-identity-preservation.md), [M0020](0020-pass-diff-and-execution-lifecycle.md), [M0016](0016-protobuf-loading-archive-ownership-and-node-mapping.md), [M0034](0034-full-generation-coverage-receipts-and-recoverable-publication.md), [M0006](0006-complete-schema-construction-and-mutually-dependent-declarations.md), [M0008](0008-schema-export-protobuf-tool-inputs-and-launcher-behavior.md), [M0014](0014-serialized-graph-and-overlay-behavior.md), [M0018](0018-format-detection-and-native-storage-compatibility.md), [M0004](0004-native-cpg-utilities-and-effect-ownership.md)
+
+
+## Source contract and interpretation
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived instruction.** Implement the source obligations below through the shared CGP AND derive-deftly architecture. Direct quotations are reference data; this roadmap’s user-authorized phase and integration constraints govern execution.
+
+
+## Implementation sequence
+
+
+1. POST-GATE ONLY. Map every source test and helper to exact source::fixture::test identities, preserving cases, tables, setup/cleanup, helper closure, errors, actions and observations. Map every name_test.go to name_harness.rs.
+
+2. Use package-aware typed extraction, independent invariants, declared common domains and non-vacuity witnesses. Generate Bolero properties with Kani as the required backend; keep sampling, direct Kani, reference proofs, production-symbol proofs, replay and integration evidence separate.
+
+3. Connect assertions to actual production symbols and Rusternetes behavior. Keep numeric semantics, bounds, coverage outcomes, asynchronous assumptions, exact selections and stale/unsupported obligations explicit. Reopen implementation when production defects are found.
+
+
+## Architecture, readability and authored outputs
+
+
+1. Own 220 inventoried file entries in this milestone. Every required file below has a unique milestone owner.
+
+2. Record typed declarations -> derive-deftly templates -> CGP provider implementations/delegation -> production context -> lifecycle consumer. Identify each mutable state/resource owner and effect boundary.
+
+3. Apply Pythonic readability and idiomatic Rust as equal design criteria. Comprehensions simplify mapping/filtering; explicit small functions clarify effects. Do not add a Python interpreter, dynamic object layer, reflection registry or competing manager.
+
+4. Preserve source-relative directories, exact case/stems and singular/plural forms. Map Go `_test.go` only to `_harness.rs`; keep Scala Test/Tests stems unchanged. Register unconventional names outside the mirror.
+
+
+**Python-familiar valid Rust example (schematic; not executed):**
+
+
+```rust
+use comprende::c;
+use better_comprehension::vector;
+
+let ready_names = c![server.name().to_owned()
+                    for server in &servers if server.is_ready()];
+let selected_ids = vector![node.id() for node in nodes.iter()
+                          if node.has_required_label()];
+```
+
+
+These examples explain reading order and borrowing. Actual APIs must come from the selected pinned dependencies. The owning CGP provider supplies the collections; derive-deftly supplies repeated declarations/projections. Preserve source ordering and avoid redundant clones or a comprehension around complicated effects.
+
+
+## Package/module and file instructions
+
+
+## Package `agones:build/report` -> module `build::report`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-cfe28cc7c441b1fd"></a>
+
+
+### File `build/report/report_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `771e812d20c089b432a15350df29f49c888ba2d3`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/build/report/report_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-8160463d7e8e9212de.** [agones/build/report/report_test.go, lines 23–35](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/build/report/report_test.go#L23-L35). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `ac59213e848dc80f4d2662a808f06f9aa5c40fc2a8873e3af5e1ca059695f4d8`.
+
+> 
+> func TestTemplateRendering(t *testing.T) {
+> 	require.NoError(t, newReportTemplate().Execute(io.Discard, report{
+> 		WindowStart: "2014-09-01",
+> 		WindowEnd:   "2100-09-01",
+> 		BuildCount:  1000,
+> 		FlakeCount:  10000,
+> 		FlakeRatio:  0.12,
+> 		Flakes:      []flake{{ID: "awesome-id", CreateTime: "1978-04-28"}},
+> 	}))
+> 
+> 	require.NoError(t, newRedirectTemplate().Execute(io.Discard, redirect{"2014-09-01"}))
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `TestTemplateRendering` (L24). The full declaration list is recorded under `agones:build/report/report_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:build/scripts/example-version-checker` -> module `build::scripts::example-version-checker`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-9e8093700e1766cf"></a>
+
+
+### File `build/scripts/example-version-checker/version_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `158ce2f8c4447a3b53bc1dd8286ca3e347f3ed55`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/build/scripts/example-version-checker/version_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-61e3c2fb89fad33f99.** [agones/build/scripts/example-version-checker/version_test.go, lines 7–21](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/build/scripts/example-version-checker/version_test.go#L7-L21). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `c2768893c22a8ff8b9a520742a2fae15b66e1e84c637d581ae31cad1ff296bc6`.
+
+> 
+> func TestFilenameIsIrrelevant(t *testing.T) {
+> 	exampleNames := []string{"inner", "first"}
+> 
+> 	irrelevantMap := map[string]bool{
+> 		// in deny-list
+> 		"README.md":       true,
+> 		"cloudbuild.yaml": true,
+> 		// in deny-list and inside an example
+> 		"examples/inner/outer/EXAMPLE.md":      true,
+> 		"examples/first/second/third/test.yml": true,
+> 		// not in deny list, but outside examples
+> 		"outside/test.txt": true,
+> 		"1/2/3/4/5.go":     true,
+> 		// in examples and relevant
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `TestFilenameIsIrrelevant` (L8). The full declaration list is recorded under `agones:build/scripts/example-version-checker/version_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:build/scripts/k8s-export-openapi` -> module `build::scripts::k8s-export-openapi`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-28346e38fe9c5de9"></a>
+
+
+### File `build/scripts/k8s-export-openapi/main_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `e17a110096cf7e9fa743436bd28f538fcce3ed1b`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/build/scripts/k8s-export-openapi/main_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-285e043dc9192034b7.** [agones/build/scripts/k8s-export-openapi/main_test.go, lines 23–37](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/build/scripts/k8s-export-openapi/main_test.go#L23-L37). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `4813b56f426d3d9cb4d38661530eedf1cd0d4a98caee941cfeed5e98cd64f66d`.
+
+> 
+> func TestRemoveFieldsKeepsPatchKeys(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	input := map[string]any{
+> 		"definitions": map[string]any{
+> 			"io.k8s.api.core.v1.Container": map[string]any{
+> 				"properties": map[string]any{
+> 					"env": map[string]any{
+> 						"type":                         "array",
+> 						"x-kubernetes-patch-strategy":  "merge",
+> 						"x-kubernetes-patch-merge-key": "name",
+> 						"x-kubernetes-list-type":       "map",
+> 						"x-kubernetes-list-map-keys":   []any{"name"},
+> 					},
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 2 lexically identified declarations, including `TestRemoveFieldsKeepsPatchKeys` (L24), `TestWrapPatchKeys` (L96). The full declaration list is recorded under `agones:build/scripts/k8s-export-openapi/main_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+5. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:build/scripts/previousversion` -> module `build::scripts::previousversion`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-fe703feccef3c521"></a>
+
+
+### File `build/scripts/previousversion/main_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `f7765511cfd0a81bf03b4bbc78e23a711657bce3`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/build/scripts/previousversion/main_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-1fa0e1a9fd12d89a60.** [agones/build/scripts/previousversion/main_test.go, lines 23–37](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/build/scripts/previousversion/main_test.go#L23-L37). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `b2dd2dfcd594af0cda74358c83433d1255831febbcbf860bd397687b615e0d86`.
+
+> 
+> // mockLister is a mock implementation of the gcsLister interface for testing.
+> type mockLister struct {
+> 	output string
+> 	err    error
+> }
+> 
+> func (m mockLister) List(prefix string) (string, error) {
+> 	return m.output, m.err
+> }
+> 
+> func TestGetPreviousVersion(t *testing.T) {
+> 	testCases := []struct {
+> 		name         string
+> 		version      string
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 4 lexically identified declarations, including `mockLister` (L25), `List` (L30), `TestGetPreviousVersion` (L34), `TestGetLatestVersionFromGsutil` (L97). The full declaration list is recorded under `agones:build/scripts/previousversion/main_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:build/scripts/sdk-update-version` -> module `build::scripts::sdk-update-version`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-ae20f93bd4a925d3"></a>
+
+
+### File `build/scripts/sdk-update-version/main_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `211d1951d4cc2c71064e103e6dc31e177a51ea7f`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/build/scripts/sdk-update-version/main_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-0fd70214ab59405b95.** [agones/build/scripts/sdk-update-version/main_test.go, lines 22–36](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/build/scripts/sdk-update-version/main_test.go#L22-L36). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `e4ba51d74d806b8df7cb72511ca363b227f7faeb9256e8ee29b63fc3a0f7b054`.
+
+> 
+> func TestIncrementVersionAfterRelease(t *testing.T) {
+> 	testCases := []struct {
+> 		name     string
+> 		input    string
+> 		expected string
+> 	}{
+> 		{"Standard case", "1.2.3", "1.3.3"},
+> 		{"Zero case", "1.0.0", "1.1.0"},
+> 		{"Double digit", "1.10.10", "1.11.10"},
+> 	}
+> 
+> 	for _, tc := range testCases {
+> 		t.Run(tc.name, func(t *testing.T) {
+> 			result := incrementVersionAfterRelease(tc.input)
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 3 lexically identified declarations, including `TestIncrementVersionAfterRelease` (L23), `TestIncrementPatchVersion` (L44), `TestUpdateFile` (L65). The full declaration list is recorded under `agones:build/scripts/sdk-update-version/main_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+5. Preserve source floating width, narrowing, exceptional values and relevant bits.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:build/scripts/site-config-update-version` -> module `build::scripts::site-config-update-version`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-2ef865967a32a58f"></a>
+
+
+### File `build/scripts/site-config-update-version/main_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `cae055d1566c5a034956873baafd386604cdd24f`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/build/scripts/site-config-update-version/main_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-e6e70ee0ebec4c1d54.** [agones/build/scripts/site-config-update-version/main_test.go, lines 23–37](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/build/scripts/site-config-update-version/main_test.go#L23-L37). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `db57471f24e165758361137927f1742901752978783e867323573d29c1e4f8f7`.
+
+> 
+> func TestIncrementMinorVersion(t *testing.T) {
+> 	testCases := []struct {
+> 		name     string
+> 		input    string
+> 		expected string
+> 	}{
+> 		{"Standard minor increment",`release_version = "1.52.0"`, `release_version = "1.53.0"`},
+> 		{"Increment with existing patch", `release_version = "1.52.1"`, `release_version = "1.53.0"`},
+> 		{"Double digit minor", `release_version = "1.9.5"`, `release_version = "1.10.0"`},
+> 	}
+> 
+> 	for _, tc := range testCases {
+> 		t.Run(tc.name, func(t *testing.T) {
+> 			result := incrementMinorVersion(tc.input)
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 5 lexically identified declarations, including `TestIncrementMinorVersion` (L24), `TestIncrementPatchVersion` (L45), `TestUpdateReleaseValues` (L65), `TestTomlArray` (L101), `TestUpdateSiteConfig` (L110). The full declaration list is recorded under `agones:build/scripts/site-config-update-version/main_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Preserve source floating width, narrowing, exceptional values and relevant bits.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:cmd/allocator` -> module `cmd::allocator`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-740ce0de1ba9c83c"></a>
+
+
+### File `cmd/allocator/main_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `e2181c81eec440bd1f277de819f9dd115ab3d0b2`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/cmd/allocator/main_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-9e2fb82d78cac55c9b.** [agones/cmd/allocator/main_test.go, lines 36–50](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/cmd/allocator/main_test.go#L36-L50). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `ff378e50a5578e9bf0ae02ee1db875b601a69684d7fe6230829b5f8e721729f2`.
+
+> 
+> func TestAllocateHandler(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	h := serviceHandler{
+> 		allocationCallback: func(_ context.Context, _ *allocationv1.GameServerAllocation) (k8sruntime.Object, error) {
+> 			return &allocationv1.GameServerAllocation{
+> 				ObjectMeta: metav1.ObjectMeta{
+> 					Namespace: "default",
+> 				},
+> 				Status: allocationv1.GameServerAllocationStatus{
+> 					State: allocationv1.GameServerAllocationContention,
+> 				},
+> 			}, nil
+> 		},
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 13 lexically identified declarations, including `TestAllocateHandler` (L37), `TestAllocateHandlerReturnsError` (L71), `TestGetTlsCert` (L87), `TestHandlingStatus` (L109), `TestBadReturnType` (L142), `TestVerifyClientCertificateSucceeds` (L165), `TestVerifyClientCertificateFails` (L182), `TestGettingCaCert` (L198), `clientCert` (L217), `serverCert1` (L241), `serverCert2` (L272), `serverKey1` (L304), `serverKey2` (L356). The full declaration list is recorded under `agones:cmd/allocator/main_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/allocation/go`, `agones.dev/agones/pkg/apis/allocation/v1`, `agones.dev/agones/pkg/util/errors`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:cmd/controller` -> module `cmd::controller`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-36c0a46f342e5e03"></a>
+
+
+### File `cmd/controller/main_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `7dd20faffce316b41f00726fb98c9ea2bcfb8939`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/cmd/controller/main_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-b593f5849a8edbc6e0.** [agones/cmd/controller/main_test.go, lines 30–44](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/cmd/controller/main_test.go#L30-L44). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `a8bc2e4dae38164fd2ce785242522ab76aaa6024d1e50e086b53ffe27bbcf03c`.
+
+> 
+> func TestParseSidecarSecurityContext(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	t.Run("empty or null falls back to the default", func(t *testing.T) {
+> 		sc, err := parseSidecarSecurityContext("", 1000)
+> 		require.NoError(t, err)
+> 		assert.Equal(t, gameservers.DefaultSidecarSecurityContext(1000), sc)
+> 
+> 		sc, err = parseSidecarSecurityContext("  ", 2000)
+> 		require.NoError(t, err)
+> 		assert.Equal(t, int64(2000), *sc.RunAsUser)
+> 
+> 		sc, err = parseSidecarSecurityContext("null", 3000)
+> 		require.NoError(t, err)
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 5 lexically identified declarations, including `TestParseSidecarSecurityContext` (L31), `TestControllerConfigValidation` (L66), `TestControllerConfigValidation_PortRangeOverlap` (L105), `TestControllerConfigValidationMaxListItems` (L124), `errorsContainString` (L149). The full declaration list is recorded under `agones:cmd/controller/main_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/gameservers`, `agones.dev/agones/pkg/portallocator`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:cmd/ping` -> module `cmd::ping`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-c4dfcaf4ea55cc55"></a>
+
+
+### File `cmd/ping/udp_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `9d620e03c1ff8a0fb5069fa07bad5a2acf702488`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/cmd/ping/udp_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-59bcd71e8019391825.** [agones/cmd/ping/udp_test.go, lines 28–42](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/cmd/ping/udp_test.go#L28-L42). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `70718123cc84deb638ef05e3abfd269f63ed0be7dac96a94f377d09d991ea408`.
+
+> 
+> type mockAddr struct {
+> 	addr string
+> }
+> 
+> func (m *mockAddr) Network() string {
+> 	return m.addr
+> }
+> 
+> func (m *mockAddr) String() string {
+> 	return m.addr
+> }
+> 
+> func TestUDPServerVisit(t *testing.T) {
+> 	t.Parallel()
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 7 lexically identified declarations, including `mockAddr` (L29), `Network` (L33), `String` (L37), `TestUDPServerVisit` (L41), `TestUDPServerCleanup` (L73), `TestUDPServerHealth` (L100), `defaultFixture` (L124). The full declaration list is recorded under `agones:cmd/ping/udp_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:cmd/sdk-server` -> module `cmd::sdk-server`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-07f02cdd58736dd4"></a>
+
+
+### File `cmd/sdk-server/main_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `817badd737befaffc79d4aa769298924bba499ce`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/cmd/sdk-server/main_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-4732936c309d55e600.** [agones/cmd/sdk-server/main_test.go, lines 27–41](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/cmd/sdk-server/main_test.go#L27-L41). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `4d1ea18e1263fc0eea54d9dcb320fc1949784c53fe77b0ac14c92c52553bb150`.
+
+> 
+> // TestRegisterTestSdkServer - test to verify
+> func TestRegisterTestSdkServer(t *testing.T) {
+> 	t.Parallel()
+> 	ctlConf := parseEnvFlags()
+> 	grpcServer := grpc.NewServer()
+> 	_, err := registerTestSdkServer(grpcServer, ctlConf)
+> 	assert.NoError(t, err)
+> 	ctx := t.Context()
+> 	ctx.Done()
+> 	ctlConf.LocalFile = "@@"
+> 	_, err = registerLocal(grpcServer, ctlConf)
+> 	assert.Error(t, err, "Wrong file name should produce an error")
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 2 lexically identified declarations, including `TestRegisterTestSdkServer` (L29), `TestHealthCheckWrapper` (L42). The full declaration list is recorded under `agones:cmd/sdk-server/main_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:examples/supertuxkart` -> module `examples::supertuxkart`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-49ccc72e58a93fa3"></a>
+
+
+### File `examples/supertuxkart/main_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `245a4a7accbf6f7e2e9479dafc2a22a0f8993cfc`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/examples/supertuxkart/main_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-e1962f5a0208deac80.** [agones/examples/supertuxkart/main_test.go, lines 22–36](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/examples/supertuxkart/main_test.go#L22-L36). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `a22e56417fee462606b1b9a24b00cc041609ec5c435f7110a5c20aa7df8f2b1f`.
+
+> 
+> func Test_handleLogLine(t *testing.T) {
+> 	tests := []struct {
+> 		name string
+> 		line string
+> 		want string
+> 	}{
+> 		{
+> 			name: "start",
+> 			line: `Fri Sep 18 16:22:11 2020 [info   ] STKHost: Listening has been started.`,
+> 			want: "READY",
+> 		},
+> 		{
+> 			name: "player join",
+> 			line: `Fri Sep 18 01:54:59 2020 [info   ] ServerLobby: New player sudermanjr with online id 0 from 64.40.3.124:15009 with SuperTuxKart/1.1 (Macintosh).`,
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `Test_handleLogLine` (L23). The full declaration list is recorded under `agones:examples/supertuxkart/main_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/allocation/converters` -> module `pkg::allocation::converters`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-3c5caab6ed6889f3"></a>
+
+
+### File `pkg/allocation/converters/converter_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `aef37c45c600ed8b1d69cdaf9fbbc7cb2f1cafd0`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/allocation/converters/converter_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-f86d78b54a70f44465.** [agones/pkg/allocation/converters/converter_test.go, lines 34–48](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/allocation/converters/converter_test.go#L34-L48). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `e69d2a494e94dfc66028b96c6b53ad9036acfd83640d1a4b97955437b4e3aa51`.
+
+> 
+> func TestConvertAllocationRequestToGameServerAllocation(t *testing.T) {
+> 	allocated := agonesv1.GameServerStateAllocated
+> 	ready := agonesv1.GameServerStateReady
+> 	increment := agonesv1.GameServerPriorityIncrement
+> 	decrement := agonesv1.GameServerPriorityDecrement
+> 	one := int64(1)
+> 	ten := int64(10)
+> 
+> 	tests := []struct {
+> 		name     string
+> 		features string
+> 		in       *pb.AllocationRequest
+> 		want     *allocationv1.GameServerAllocation
+> 	}{
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 4 lexically identified declarations, including `TestConvertAllocationRequestToGameServerAllocation` (L35), `TestConvertGSAToAllocationRequest` (L660), `TestConvertGSAToAllocationResponse` (L914), `TestConvertAllocationResponseToGSA` (L1468). The full declaration list is recorded under `agones:pkg/allocation/converters/converter_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/allocation/go`, `agones.dev/agones/pkg/apis`, `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/allocation/v1`, `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/apis/agones/v1` -> module `pkg::apis::agones::v1`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-f42598721a64d3ae7d.** [agones/pkg/apis/agones/v1/doc.go, lines 17–19](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/apis/agones/v1/doc.go#L17-L19). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `cea07da3169f9c776298009e0bd27c606bcd804f23c8f91c0d7c01de6d0ae50d`.
+
+> // Package v1 is the v1 version of the API.
+> // +groupName=agones.dev
+> package v1
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-e9fd58441d43c8f6"></a>
+
+
+### File `pkg/apis/agones/v1/common_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `efda40b8a9dc05bd944b8d060e5e391df9b33b24`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/apis/agones/v1/common_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-55832740ac1cac6722.** [agones/pkg/apis/agones/v1/common_test.go, lines 25–39](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/apis/agones/v1/common_test.go#L25-L39). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `fb35dcbcea5cba021159ca9e84bb282eb80568390442f3da51d3cf933e73de04`.
+
+> 
+> func TestAllocationOverflowValidate(t *testing.T) {
+> 	// valid
+> 	type expected struct {
+> 		fields []string
+> 	}
+> 
+> 	fixtures := map[string]struct {
+> 		ao AllocationOverflow
+> 		expected
+> 	}{
+> 		"empty": {
+> 			ao: AllocationOverflow{},
+> 			expected: expected{
+> 				fields: nil,
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 3 lexically identified declarations, including `TestAllocationOverflowValidate` (L26), `TestAllocationOverflowCountMatches` (L91), `TestAllocationOverflowApply` (L174). The full declaration list is recorded under `agones:pkg/apis/agones/v1/common_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+5. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-8195766300748ffa"></a>
+
+
+### File `pkg/apis/agones/v1/fleet_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `745415d6bb5d64c398f2bef317a776e9910b49c4`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/apis/agones/v1/fleet_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-d4022b36f716757bb8.** [agones/pkg/apis/agones/v1/fleet_test.go, lines 35–49](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/apis/agones/v1/fleet_test.go#L35-L49). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `7fed497a874406e224cc29359568418d90200739bb2e9b5887ed4712994bb600`.
+
+> 
+> func TestFleetGameServerSetGameServer(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	f := Fleet{
+> 		ObjectMeta: metav1.ObjectMeta{
+> 			Name:      "test",
+> 			Namespace: "namespace",
+> 			UID:       "1234",
+> 		},
+> 		Spec: FleetSpec{
+> 			Replicas:   10,
+> 			Scheduling: apis.Packed,
+> 			Template: GameServerTemplateSpec{
+> 				Spec: GameServerSpec{
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 13 lexically identified declarations, including `TestFleetGameServerSetGameServer` (L36), `TestFleetApplyDefaults` (L98), `TestFleetUpperBoundReplicas` (L124), `TestFleetLowerBoundReplicas` (L132), `TestSumStatusAllocatedReplicas` (L140), `TestFleetGameserverSpec` (L153), `TestFleetAllocationOverflow` (L229), `TestFleetName` (L249), `TestSumStatusReplicas` (L265), `TestSumSpecReplicas` (L277), `TestGetReadyReplicaCountForGameServerSets` (L290), `TestSumGameServerSets` (L303), `defaultFleet` (L320). The full declaration list is recorded under `agones:pkg/apis/agones/v1/fleet_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg`, `agones.dev/agones/pkg/apis`, `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-f4914a9f97b5c754"></a>
+
+
+### File `pkg/apis/agones/v1/gameserver_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `bff9a5b0eaa23c1f7f0239c0ba50593478b97df5`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/apis/agones/v1/gameserver_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-5a6c6993f80d0252e7.** [agones/pkg/apis/agones/v1/gameserver_test.go, lines 39–53](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/apis/agones/v1/gameserver_test.go#L39-L53). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `468502ff9cbedb3a37f7ff2b5ef1207f09b770aa3fc36b5e87432b6a62068cfa`.
+
+> 
+> func TestStatus(t *testing.T) {
+> 	testCases := map[string]struct {
+> 		hostPort      int32
+> 		containerPort int32
+> 		portPolicy    PortPolicy
+> 		expected      GameServerStatusPort
+> 	}{
+> 		"PortPolicy Dynamic, should use hostPort": {
+> 			hostPort:      7788,
+> 			containerPort: 7777,
+> 			portPolicy:    Dynamic,
+> 			expected:      GameServerStatusPort{Name: "test-name", Port: 7788},
+> 		},
+> 		"PortPolicy Static - should use hostPort": {
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 30 lexically identified declarations, including `TestStatus` (L40), `TestIsBeingDeleted` (L83), `TestGameServerApplyDefaults` (L140), `TestGameServerValidate` (L453), `TestGameServerValidateFeatures` (L1360), `TestGameServerPodNoErrors` (L1487), `TestGameServerPodHostName` (L1507), `TestGameServerPodContainerNotFoundErrReturned` (L1526), `TestGameServerPodWithSidecarNoErrors` (L1556), `TestGameServerPodWithInitSidecarNoErrors` (L1577), `TestGameServerPodWithInitSidecarPrependsToExistingInitContainers` (L1600), `TestGameServerPodWithMultiplePortAllocations` (L1630), `TestGameServerPodObjectMeta` (L1663), `TestGameServerPodScheduling` (L1699), `TestGameServerDisableServiceAccount` (L1722), `TestGameServerPassthroughPortAnnotation` (L1746), `TestGameServerCountPorts` (L1795), `TestGameServerCountPortsForRange` (L1811), `TestGameServerPatch` (L1827), `TestGameServerGetDevAddress` (L1843), `TestGameServerIsDeletable` (L1871), `TestGameServerIsBeforeReady` (L1892), `TestGameServerApplyToPodContainer` (L1918), `defaultGameServer` (L1990). The full declaration list is recorded under `agones:pkg/apis/agones/v1/gameserver_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg`, `agones.dev/agones/pkg/apis`, `agones.dev/agones/pkg/apis/agones`, `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+7. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-d1d5d474baa2435d"></a>
+
+
+### File `pkg/apis/agones/v1/gameserverset_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `4ad2110b7d2320e6eff410dbcdb4f02c463708c0`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/apis/agones/v1/gameserverset_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-8e47e8c0173471b417.** [agones/pkg/apis/agones/v1/gameserverset_test.go, lines 26–40](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/apis/agones/v1/gameserverset_test.go#L26-L40). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `09f5554bedfe73bc83b705d0c8e54738df62197022a26cbf2bab64cc35eb568f`.
+
+> 
+> func TestGameServerSetGameServer(t *testing.T) {
+> 	gsSet := GameServerSet{
+> 		ObjectMeta: metav1.ObjectMeta{
+> 			Name:      "test",
+> 			Namespace: "namespace",
+> 			UID:       "1234",
+> 			Labels: map[string]string{
+> 				FleetNameLabel: "fleetname",
+> 			},
+> 		},
+> 		Spec: GameServerSetSpec{
+> 			Replicas: 10,
+> 			Template: GameServerTemplateSpec{
+> 				Spec: GameServerSpec{
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 2 lexically identified declarations, including `TestGameServerSetGameServer` (L27), `TestGameServerSetValidateUpdate` (L64). The full declaration list is recorded under `agones:pkg/apis/agones/v1/gameserverset_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/apis/agones/v1/fuzz_test` -> module `pkg::apis::agones::v1::fuzz_test`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-2ad76d891d27e340"></a>
+
+
+### File `pkg/apis/agones/v1/fuzz_test/roundtrip_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `93e6477c5237c653c5e2cc792cd98b0074f79c4d`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/apis/agones/v1/fuzz_test/roundtrip_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-b961c3cac2a0f7ce67.** [agones/pkg/apis/agones/v1/fuzz_test/roundtrip_test.go, lines 19–33](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/apis/agones/v1/fuzz_test/roundtrip_test.go#L19-L33). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `4955329d2b1eeba6702374acddd240e79582b2c3583a8af64430a8146f4a658d`.
+
+> 
+> func TestRoundTripTypes(t *testing.T) {
+> 	scheme := runtime.NewScheme()
+> 	codecs := serializer.NewCodecFactory(scheme)
+> 
+> 	localSchemeBuilder := runtime.SchemeBuilder{
+> 		agonesv1.AddToScheme,
+> 		allocationv1.AddToScheme,
+> 		autoscalingv1.AddToScheme,
+> 		multiclusterv1.AddToScheme,
+> 	}
+> 	seed := rand.Int63()
+> 	localFuzzer := fuzzer.FuzzerFor(genericfuzzer.Funcs, rand.NewSource(seed), codecs)
+> 	assert.NoError(t, localSchemeBuilder.AddToScheme(scheme))
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `TestRoundTripTypes` (L20). The full declaration list is recorded under `agones:pkg/apis/agones/v1/fuzz_test/roundtrip_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/allocation/v1`, `agones.dev/agones/pkg/apis/autoscaling/v1`, `agones.dev/agones/pkg/apis/multicluster/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/apis/allocation/v1` -> module `pkg::apis::allocation::v1`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-8bb49f8c5387e02fbd.** [agones/pkg/apis/allocation/v1/doc.go, lines 17–19](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/apis/allocation/v1/doc.go#L17-L19). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `ec03634336c94d423d361275827498e32b2da863a3ecdd1d1669976f2afd4c42`.
+
+> // Package v1 is the v1 version of the API.
+> // +groupName=allocation.agones.dev
+> package v1
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-4d7f902c204c3607"></a>
+
+
+### File `pkg/apis/allocation/v1/gameserverallocation_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `25e509d16864f9666099e69cba07a863dcafe459`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/apis/allocation/v1/gameserverallocation_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-803316d213bc49cb3c.** [agones/pkg/apis/allocation/v1/gameserverallocation_test.go, lines 29–43](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/apis/allocation/v1/gameserverallocation_test.go#L29-L43). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `ab1863f03d50dd3d64e35b4820e1d8e83da4f0b48373ac99a8e5770f6c207d99`.
+
+> 
+> func TestGameServerAllocationApplyDefaults(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	gsa := &GameServerAllocation{}
+> 	gsa.ApplyDefaults()
+> 
+> 	assert.Equal(t, apis.Packed, gsa.Spec.Scheduling)
+> 
+> 	priorities := []agonesv1.Priority{
+> 		{Type: agonesv1.GameServerPriorityList},
+> 		{Type: agonesv1.GameServerPriorityCounter},
+> 	}
+> 	expectedPrioritiesWithDefault := []agonesv1.Priority{
+> 		{Type: agonesv1.GameServerPriorityList, Order: agonesv1.GameServerPriorityAscending},
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 16 lexically identified declarations, including `TestGameServerAllocationApplyDefaults` (L30), `TestGameServerAllocationSpecPreferredSelectors` (L65), `TestGameServerAllocationSpecSelectors` (L93), `TestGameServerSelectorApplyDefaults` (L120), `TestGameServerSelectorValidate` (L170), `TestMetaPatchValidate` (L305), `TestGameServerSelectorMatches` (L350), `int64Pointer` (L719), `TestGameServerCounterActions` (L723), `defaultTestListMaxCapacity` (L839), `TestGameServerListActions` (L841), `TestValidatePriorities` (L976), `TestValidateCounterActions` (L1065), `TestValidateListActions` (L1144), `TestGameServerAllocationValidate` (L1195), `TestSortKey` (L1232). The full declaration list is recorded under `agones:pkg/apis/allocation/v1/gameserverallocation_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis`, `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/apis/autoscaling/v1` -> module `pkg::apis::autoscaling::v1`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-ae80ccea0676a922ee.** [agones/pkg/apis/autoscaling/v1/doc.go, lines 17–19](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/apis/autoscaling/v1/doc.go#L17-L19). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `894dc2fa1f087ef5b0ae5fc53b4c56b50b0bf56abb3018cdd15c39e3927b63a3`.
+
+> // Package v1 is the v1 version of the API.
+> // +groupName=autoscaling.agones.dev
+> package v1
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-d1be7446adfb4993"></a>
+
+
+### File `pkg/apis/autoscaling/v1/fleetautoscaler_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `d129797b62958d7d14045ee5c131f8aea55c721b`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/apis/autoscaling/v1/fleetautoscaler_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-620d49f99edcc6cd54.** [agones/pkg/apis/autoscaling/v1/fleetautoscaler_test.go, lines 27–41](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/apis/autoscaling/v1/fleetautoscaler_test.go#L27-L41). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `e286eb82f95f2211e0b5c17b6ffffe978f7ce87d1358e78b9dd806a68a235108`.
+
+> 
+> func TestFleetAutoscalerValidateUpdate(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	t.Run("bad buffer size", func(t *testing.T) {
+> 		fas := defaultFixture()
+> 		fas.Spec.Policy.Buffer.BufferSize = intstr.FromInt(0)
+> 		causes := fas.Validate()
+> 
+> 		assert.Len(t, causes, 1)
+> 		assert.Equal(t, "spec.policy.buffer.bufferSize", causes[0].Field)
+> 	})
+> 
+> 	t.Run("bad min replicas", func(t *testing.T) {
+> 		fas := defaultFixture()
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 17 lexically identified declarations, including `TestFleetAutoscalerValidateUpdate` (L28), `TestFleetAutoscalerWebhookValidateUpdate` (L128), `TestFleetAutoscalerCounterValidateUpdate` (L220), `TestFleetAutoscalerListValidateUpdate` (L337), `TestFleetAutoscalerScheduleValidateUpdate` (L453), `TestFleetAutoscalerChainValidateUpdate` (L527), `TestFleetAutoscalerWasmValidateUpdate` (L613), `TestFleetAutoscalerApplyDefaults` (L684), `mustParseDate` (L702), `defaultFixture` (L707), `webhookFixture` (L711), `counterFixture` (L715), `listFixture` (L719), `scheduleFixture` (L723), `chainFixture` (L727), `wasmFixture` (L731), `customFixture` (L735). The full declaration list is recorded under `agones:pkg/apis/autoscaling/v1/fleetautoscaler_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/apis/multicluster/v1` -> module `pkg::apis::multicluster::v1`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-6d8f6b8031f860f581.** [agones/pkg/apis/multicluster/v1/doc.go, lines 17–19](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/apis/multicluster/v1/doc.go#L17-L19). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `b997183746caead1411a1e7314535eefa76e37d658d58da65e8ba1f5bde00183`.
+
+> // Package v1 is the v1 version of the API.
+> // +groupName=multicluster.agones.dev
+> package v1
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-addbf21d1fe5a25c"></a>
+
+
+### File `pkg/apis/multicluster/v1/gameserverallocationpolicy_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `e9c3b89c0e6cffc1c16b7094ef385335f04c5b75`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/apis/multicluster/v1/gameserverallocationpolicy_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-892bd5afe9ebb7620a.** [agones/pkg/apis/multicluster/v1/gameserverallocationpolicy_test.go, lines 22–36](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/apis/multicluster/v1/gameserverallocationpolicy_test.go#L22-L36). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `21a99d864673a721f52eda6373d49c419948dd5b5e9c33ee72093672480043a0`.
+
+> 
+> func TestConnectionInfoIterator(t *testing.T) {
+> 	testCases := []struct {
+> 		name      string
+> 		in        []*GameServerAllocationPolicy
+> 		want      []ClusterConnectionInfo
+> 		unordered bool
+> 	}{
+> 		{
+> 			name: "Simple test",
+> 			in: []*GameServerAllocationPolicy{
+> 				{
+> 					Spec: GameServerAllocationPolicySpec{
+> 						Priority: 1,
+> 						Weight:   100,
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 2 lexically identified declarations, including `TestConnectionInfoIterator` (L23), `TestConnectionInfoIterator_SameClustersAndPriorities` (L313). The full declaration list is recorded under `agones:pkg/apis/multicluster/v1/gameserverallocationpolicy_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/client/clientset/versioned/fake` -> module `pkg::client::clientset::versioned::fake`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-6aad87bb4365728a24.** [agones/pkg/client/clientset/versioned/fake/doc.go, lines 19–20](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/fake/doc.go#L19-L20). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `f83319a5aaedb8dc607e440b507cd937db10c495f3073115b17cb69073b62015`.
+
+> // This package has the automatically generated fake clientset.
+> package fake
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-1f140791cef2900f"></a>
+
+
+### File `pkg/client/clientset/versioned/fake/clientset_generated.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `e61f99603d9910ccae49c6c904e34fd09a636864`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/pkg/client/clientset/versioned/fake/clientset_generated.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-c2cb32a6cf062d0915.** [agones/pkg/client/clientset/versioned/fake/clientset_generated.go, lines 39–53](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/fake/clientset_generated.go#L39-L53). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `9aa61a01bb18ce8529c0fed21e67bdf80abbf0492ed09a6873b01b089c3894d8`.
+
+> 
+> // NewSimpleClientset returns a clientset that will respond with the provided objects.
+> // It's backed by a very simple object tracker that processes creates, updates and deletions as-is,
+> // without applying any field management, validations and/or defaults. It shouldn't be considered a replacement
+> // for a real clientset and is mostly useful in simple unit tests.
+> func NewSimpleClientset(objects ...runtime.Object) *Clientset {
+> 	o := testing.NewObjectTracker(scheme, codecs.UniversalDecoder())
+> 	for _, obj := range objects {
+> 		if err := o.Add(obj); err != nil {
+> 			panic(err)
+> 		}
+> 	}
+> 
+> 	cs := &Clientset{tracker: o}
+> 	cs.discovery = &fakediscovery.FakeDiscovery{Fake: &cs.Fake}
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 10 lexically identified declarations, including `NewSimpleClientset` (L44), `Clientset` (L75), `Discovery` (L81), `Tracker` (L85), `IsWatchListSemanticsUnSupported` (L96), `NewClientset` (L108), `AgonesV1` (L146), `AllocationV1` (L151), `AutoscalingV1` (L156), `MulticlusterV1` (L161). The full declaration list is recorded under `agones:pkg/client/clientset/versioned/fake/clientset_generated.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/client/applyconfiguration`, `agones.dev/agones/pkg/client/clientset/versioned`, `agones.dev/agones/pkg/client/clientset/versioned/typed/agones/v1`, `agones.dev/agones/pkg/client/clientset/versioned/typed/agones/v1/fake`, `agones.dev/agones/pkg/client/clientset/versioned/typed/allocation/v1`, `agones.dev/agones/pkg/client/clientset/versioned/typed/allocation/v1/fake`, `agones.dev/agones/pkg/client/clientset/versioned/typed/autoscaling/v1`, `agones.dev/agones/pkg/client/clientset/versioned/typed/autoscaling/v1/fake`, `agones.dev/agones/pkg/client/clientset/versioned/typed/multicluster/v1`, `agones.dev/agones/pkg/client/clientset/versioned/typed/multicluster/v1/fake`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Preserve source panic/recover boundaries; do not use an unsupported panic as a translation placeholder.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-1f66567a468e49a1"></a>
+
+
+### File `pkg/client/clientset/versioned/fake/doc.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `c9a4a04754ba923875f7b15dd77527292746910e`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/pkg/client/clientset/versioned/fake/doc.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-ed613a5826a4b0f7ec.** [agones/pkg/client/clientset/versioned/fake/doc.go, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/fake/doc.go#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `f83319a5aaedb8dc607e440b507cd937db10c495f3073115b17cb69073b62015`.
+
+> // Copyright Contributors to Agones a Series of LF Projects, LLC.
+> //
+> // Licensed under the Apache License, Version 2.0 (the "License");
+> // you may not use this file except in compliance with the License.
+> // You may obtain a copy of the License at
+> //
+> //     http://www.apache.org/licenses/LICENSE-2.0
+> //
+> // Unless required by applicable law or agreed to in writing, software
+> // distributed under the License is distributed on an "AS IS" BASIS,
+> // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+> // See the License for the specific language governing permissions and
+> // limitations under the License.
+> 
+> // This code was autogenerated. Do not edit directly.
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-c7957146c165cc3e"></a>
+
+
+### File `pkg/client/clientset/versioned/fake/register.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `f93a602b7486078b8271e436103d2eee6f1b4d3f`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/pkg/client/clientset/versioned/fake/register.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-b5ef50e2056dcb10c8.** [agones/pkg/client/clientset/versioned/fake/register.go, lines 58–62](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/fake/register.go#L58-L62). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `4ec29b443b66779a04d66717cbd9f461faf722963666355de7fc364c995a7dd1`.
+
+> 
+> func init() {
+> 	v1.AddToGroupVersion(scheme, schema.GroupVersion{Version: "v1"})
+> 	utilruntime.Must(AddToScheme(scheme))
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 5 lexically identified declarations, including `scheme` (L33), `codecs` (L34), `localSchemeBuilder` (L36), `AddToScheme` (L57), `init` (L59). The full declaration list is recorded under `agones:pkg/client/clientset/versioned/fake/register.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/allocation/v1`, `agones.dev/agones/pkg/apis/autoscaling/v1`, `agones.dev/agones/pkg/apis/multicluster/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/client/clientset/versioned/typed/agones/v1/fake` -> module `pkg::client::clientset::versioned::typed::agones::v1::fake`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-f375783d8058779a87.** [agones/pkg/client/clientset/versioned/typed/agones/v1/fake/doc.go, lines 19–20](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/typed/agones/v1/fake/doc.go#L19-L20). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `478061b3792b0d7be50fac39565167529397f47e1638420360191116811d6eef`.
+
+> // Package fake has the automatically generated clients.
+> package fake
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-6127913109bbb039"></a>
+
+
+### File `pkg/client/clientset/versioned/typed/agones/v1/fake/doc.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `a65d67348f9cc225fb6630dc869e17b38a41f7e5`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/pkg/client/clientset/versioned/typed/agones/v1/fake/doc.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-792f1dc7d931b1fa62.** [agones/pkg/client/clientset/versioned/typed/agones/v1/fake/doc.go, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/typed/agones/v1/fake/doc.go#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `478061b3792b0d7be50fac39565167529397f47e1638420360191116811d6eef`.
+
+> // Copyright Contributors to Agones a Series of LF Projects, LLC.
+> //
+> // Licensed under the Apache License, Version 2.0 (the "License");
+> // you may not use this file except in compliance with the License.
+> // You may obtain a copy of the License at
+> //
+> //     http://www.apache.org/licenses/LICENSE-2.0
+> //
+> // Unless required by applicable law or agreed to in writing, software
+> // distributed under the License is distributed on an "AS IS" BASIS,
+> // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+> // See the License for the specific language governing permissions and
+> // limitations under the License.
+> 
+> // This code was autogenerated. Do not edit directly.
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-80489ca31491b155"></a>
+
+
+### File `pkg/client/clientset/versioned/typed/agones/v1/fake/fake_agones_client.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `85ed2227a392b6e8c18ae787db68833340362fcf`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/pkg/client/clientset/versioned/typed/agones/v1/fake/fake_agones_client.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-564bea44571044aedf.** [agones/pkg/client/clientset/versioned/typed/agones/v1/fake/fake_agones_client.go, lines 26–40](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/typed/agones/v1/fake/fake_agones_client.go#L26-L40). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `6e15ab50d8de85fe67788bf2d589cc1268639f5b258667da10735c819cf1c152`.
+
+> 
+> type FakeAgonesV1 struct {
+> 	*testing.Fake
+> }
+> 
+> func (c *FakeAgonesV1) Fleets(namespace string) v1.FleetInterface {
+> 	return newFakeFleets(c, namespace)
+> }
+> 
+> func (c *FakeAgonesV1) GameServers(namespace string) v1.GameServerInterface {
+> 	return newFakeGameServers(c, namespace)
+> }
+> 
+> func (c *FakeAgonesV1) GameServerSets(namespace string) v1.GameServerSetInterface {
+> 	return newFakeGameServerSets(c, namespace)
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 5 lexically identified declarations, including `FakeAgonesV1` (L27), `Fleets` (L31), `GameServers` (L35), `GameServerSets` (L39), `RESTClient` (L45). The full declaration list is recorded under `agones:pkg/client/clientset/versioned/typed/agones/v1/fake/fake_agones_client.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/client/clientset/versioned/typed/agones/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-83a6525684bed123"></a>
+
+
+### File `pkg/client/clientset/versioned/typed/agones/v1/fake/fake_fleet.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `273857a88c9e731f97518034c30fbe95430fda16`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/pkg/client/clientset/versioned/typed/agones/v1/fake/fake_fleet.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-ac542432b4c839d64c.** [agones/pkg/client/clientset/versioned/typed/agones/v1/fake/fake_fleet.go, lines 32–46](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/typed/agones/v1/fake/fake_fleet.go#L32-L46). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `1ce96fa26c2c4f50888fddc7b23cc9d11e0db17a79839d9d915f2ee63bf674ca`.
+
+> 
+> // fakeFleets implements FleetInterface
+> type fakeFleets struct {
+> 	*gentype.FakeClientWithListAndApply[*v1.Fleet, *v1.FleetList, *agonesv1.FleetApplyConfiguration]
+> 	Fake *FakeAgonesV1
+> }
+> 
+> func newFakeFleets(fake *FakeAgonesV1, namespace string) typedagonesv1.FleetInterface {
+> 	return &fakeFleets{
+> 		gentype.NewFakeClientWithListAndApply[*v1.Fleet, *v1.FleetList, *agonesv1.FleetApplyConfiguration](
+> 			fake.Fake,
+> 			namespace,
+> 			v1.SchemeGroupVersion.WithResource("fleets"),
+> 			v1.SchemeGroupVersion.WithKind("Fleet"),
+> 			func() *v1.Fleet { return &v1.Fleet{} },
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 4 lexically identified declarations, including `fakeFleets` (L34), `newFakeFleets` (L39), `GetScale` (L57), `UpdateScale` (L69). The full declaration list is recorded under `agones:pkg/client/clientset/versioned/typed/agones/v1/fake/fake_fleet.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/client/applyconfiguration/agones/v1`, `agones.dev/agones/pkg/client/clientset/versioned/typed/agones/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+5. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-8cc8b4f108f23f23"></a>
+
+
+### File `pkg/client/clientset/versioned/typed/agones/v1/fake/fake_gameserver.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `4f257e99c9fa6dc317eec0137ef494d1d2609fcc`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/pkg/client/clientset/versioned/typed/agones/v1/fake/fake_gameserver.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-c41dae61721ebcbd28.** [agones/pkg/client/clientset/versioned/typed/agones/v1/fake/fake_gameserver.go, lines 27–41](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/typed/agones/v1/fake/fake_gameserver.go#L27-L41). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `792d78793c253cb99a3646c231e9e22a7e3b026d64f6df860c3777cebc6c8d53`.
+
+> 
+> // fakeGameServers implements GameServerInterface
+> type fakeGameServers struct {
+> 	*gentype.FakeClientWithListAndApply[*v1.GameServer, *v1.GameServerList, *agonesv1.GameServerApplyConfiguration]
+> 	Fake *FakeAgonesV1
+> }
+> 
+> func newFakeGameServers(fake *FakeAgonesV1, namespace string) typedagonesv1.GameServerInterface {
+> 	return &fakeGameServers{
+> 		gentype.NewFakeClientWithListAndApply[*v1.GameServer, *v1.GameServerList, *agonesv1.GameServerApplyConfiguration](
+> 			fake.Fake,
+> 			namespace,
+> 			v1.SchemeGroupVersion.WithResource("gameservers"),
+> 			v1.SchemeGroupVersion.WithKind("GameServer"),
+> 			func() *v1.GameServer { return &v1.GameServer{} },
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 2 lexically identified declarations, including `fakeGameServers` (L29), `newFakeGameServers` (L34). The full declaration list is recorded under `agones:pkg/client/clientset/versioned/typed/agones/v1/fake/fake_gameserver.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/client/applyconfiguration/agones/v1`, `agones.dev/agones/pkg/client/clientset/versioned/typed/agones/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-4302583d3e939aac"></a>
+
+
+### File `pkg/client/clientset/versioned/typed/agones/v1/fake/fake_gameserverset.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `d04430a9f05a701c76190c4f7c465aa817be4f7d`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/pkg/client/clientset/versioned/typed/agones/v1/fake/fake_gameserverset.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-bf47f27dda03441cca.** [agones/pkg/client/clientset/versioned/typed/agones/v1/fake/fake_gameserverset.go, lines 32–46](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/typed/agones/v1/fake/fake_gameserverset.go#L32-L46). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `745cf078b55c82db27c46db75b833d1b5a6ff790e8afa8a4201cc7ab8ff8405b`.
+
+> 
+> // fakeGameServerSets implements GameServerSetInterface
+> type fakeGameServerSets struct {
+> 	*gentype.FakeClientWithListAndApply[*v1.GameServerSet, *v1.GameServerSetList, *agonesv1.GameServerSetApplyConfiguration]
+> 	Fake *FakeAgonesV1
+> }
+> 
+> func newFakeGameServerSets(fake *FakeAgonesV1, namespace string) typedagonesv1.GameServerSetInterface {
+> 	return &fakeGameServerSets{
+> 		gentype.NewFakeClientWithListAndApply[*v1.GameServerSet, *v1.GameServerSetList, *agonesv1.GameServerSetApplyConfiguration](
+> 			fake.Fake,
+> 			namespace,
+> 			v1.SchemeGroupVersion.WithResource("gameserversets"),
+> 			v1.SchemeGroupVersion.WithKind("GameServerSet"),
+> 			func() *v1.GameServerSet { return &v1.GameServerSet{} },
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 4 lexically identified declarations, including `fakeGameServerSets` (L34), `newFakeGameServerSets` (L39), `GetScale` (L59), `UpdateScale` (L71). The full declaration list is recorded under `agones:pkg/client/clientset/versioned/typed/agones/v1/fake/fake_gameserverset.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/client/applyconfiguration/agones/v1`, `agones.dev/agones/pkg/client/clientset/versioned/typed/agones/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+5. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/client/clientset/versioned/typed/allocation/v1/fake` -> module `pkg::client::clientset::versioned::typed::allocation::v1::fake`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-aa3e6c4f49625b3919.** [agones/pkg/client/clientset/versioned/typed/allocation/v1/fake/doc.go, lines 19–20](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/typed/allocation/v1/fake/doc.go#L19-L20). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `478061b3792b0d7be50fac39565167529397f47e1638420360191116811d6eef`.
+
+> // Package fake has the automatically generated clients.
+> package fake
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-87c6385fd2b51c1a"></a>
+
+
+### File `pkg/client/clientset/versioned/typed/allocation/v1/fake/doc.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `a65d67348f9cc225fb6630dc869e17b38a41f7e5`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/pkg/client/clientset/versioned/typed/allocation/v1/fake/doc.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-d3ad4f73ccd8f5d7c5.** [agones/pkg/client/clientset/versioned/typed/allocation/v1/fake/doc.go, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/typed/allocation/v1/fake/doc.go#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `478061b3792b0d7be50fac39565167529397f47e1638420360191116811d6eef`.
+
+> // Copyright Contributors to Agones a Series of LF Projects, LLC.
+> //
+> // Licensed under the Apache License, Version 2.0 (the "License");
+> // you may not use this file except in compliance with the License.
+> // You may obtain a copy of the License at
+> //
+> //     http://www.apache.org/licenses/LICENSE-2.0
+> //
+> // Unless required by applicable law or agreed to in writing, software
+> // distributed under the License is distributed on an "AS IS" BASIS,
+> // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+> // See the License for the specific language governing permissions and
+> // limitations under the License.
+> 
+> // This code was autogenerated. Do not edit directly.
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-159d140effca210a"></a>
+
+
+### File `pkg/client/clientset/versioned/typed/allocation/v1/fake/fake_allocation_client.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `55206c1f6ed8e5392e596face35555b9a0b90b96`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/pkg/client/clientset/versioned/typed/allocation/v1/fake/fake_allocation_client.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-a390316c3c572e0c7d.** [agones/pkg/client/clientset/versioned/typed/allocation/v1/fake/fake_allocation_client.go, lines 26–40](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/typed/allocation/v1/fake/fake_allocation_client.go#L26-L40). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `64f1c0723d64c14cc39baaeaa0712b4d1d1b44466bb01b4b455408193fbadd6d`.
+
+> 
+> type FakeAllocationV1 struct {
+> 	*testing.Fake
+> }
+> 
+> func (c *FakeAllocationV1) GameServerAllocations(namespace string) v1.GameServerAllocationInterface {
+> 	return newFakeGameServerAllocations(c, namespace)
+> }
+> 
+> // RESTClient returns a RESTClient that is used to communicate
+> // with API server by this client implementation.
+> func (c *FakeAllocationV1) RESTClient() rest.Interface {
+> 	var ret *rest.RESTClient
+> 	return ret
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 3 lexically identified declarations, including `FakeAllocationV1` (L27), `GameServerAllocations` (L31), `RESTClient` (L37). The full declaration list is recorded under `agones:pkg/client/clientset/versioned/typed/allocation/v1/fake/fake_allocation_client.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/client/clientset/versioned/typed/allocation/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-61384a0540179618"></a>
+
+
+### File `pkg/client/clientset/versioned/typed/allocation/v1/fake/fake_gameserverallocation.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `fc8a61a4d4a079e1973300fecac4618d66f64822`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/pkg/client/clientset/versioned/typed/allocation/v1/fake/fake_gameserverallocation.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-eef7bd378295f5fec5.** [agones/pkg/client/clientset/versioned/typed/allocation/v1/fake/fake_gameserverallocation.go, lines 26–40](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/typed/allocation/v1/fake/fake_gameserverallocation.go#L26-L40). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `f4c7e7af9fab9cee8f4fdc6a05464094d43b24d5b163ed513680e693a83ea3cf`.
+
+> 
+> // fakeGameServerAllocations implements GameServerAllocationInterface
+> type fakeGameServerAllocations struct {
+> 	*gentype.FakeClient[*v1.GameServerAllocation]
+> 	Fake *FakeAllocationV1
+> }
+> 
+> func newFakeGameServerAllocations(fake *FakeAllocationV1, namespace string) allocationv1.GameServerAllocationInterface {
+> 	return &fakeGameServerAllocations{
+> 		gentype.NewFakeClient[*v1.GameServerAllocation](
+> 			fake.Fake,
+> 			namespace,
+> 			v1.SchemeGroupVersion.WithResource("gameserverallocations"),
+> 			v1.SchemeGroupVersion.WithKind("GameServerAllocation"),
+> 			func() *v1.GameServerAllocation { return &v1.GameServerAllocation{} },
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 2 lexically identified declarations, including `fakeGameServerAllocations` (L28), `newFakeGameServerAllocations` (L33). The full declaration list is recorded under `agones:pkg/client/clientset/versioned/typed/allocation/v1/fake/fake_gameserverallocation.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/allocation/v1`, `agones.dev/agones/pkg/client/clientset/versioned/typed/allocation/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/client/clientset/versioned/typed/autoscaling/v1/fake` -> module `pkg::client::clientset::versioned::typed::autoscaling::v1::fake`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-9b3684e7d1cc854211.** [agones/pkg/client/clientset/versioned/typed/autoscaling/v1/fake/doc.go, lines 19–20](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/typed/autoscaling/v1/fake/doc.go#L19-L20). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `478061b3792b0d7be50fac39565167529397f47e1638420360191116811d6eef`.
+
+> // Package fake has the automatically generated clients.
+> package fake
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-cc39b9b35341ca31"></a>
+
+
+### File `pkg/client/clientset/versioned/typed/autoscaling/v1/fake/doc.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `a65d67348f9cc225fb6630dc869e17b38a41f7e5`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/pkg/client/clientset/versioned/typed/autoscaling/v1/fake/doc.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-88b84ead5cd1d01da0.** [agones/pkg/client/clientset/versioned/typed/autoscaling/v1/fake/doc.go, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/typed/autoscaling/v1/fake/doc.go#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `478061b3792b0d7be50fac39565167529397f47e1638420360191116811d6eef`.
+
+> // Copyright Contributors to Agones a Series of LF Projects, LLC.
+> //
+> // Licensed under the Apache License, Version 2.0 (the "License");
+> // you may not use this file except in compliance with the License.
+> // You may obtain a copy of the License at
+> //
+> //     http://www.apache.org/licenses/LICENSE-2.0
+> //
+> // Unless required by applicable law or agreed to in writing, software
+> // distributed under the License is distributed on an "AS IS" BASIS,
+> // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+> // See the License for the specific language governing permissions and
+> // limitations under the License.
+> 
+> // This code was autogenerated. Do not edit directly.
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-921ab81585a80de1"></a>
+
+
+### File `pkg/client/clientset/versioned/typed/autoscaling/v1/fake/fake_autoscaling_client.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `44db6a25cff9e224eebfd9d3c1c8d26de05b6723`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/pkg/client/clientset/versioned/typed/autoscaling/v1/fake/fake_autoscaling_client.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-92c95d2f1ca61fdcd8.** [agones/pkg/client/clientset/versioned/typed/autoscaling/v1/fake/fake_autoscaling_client.go, lines 26–40](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/typed/autoscaling/v1/fake/fake_autoscaling_client.go#L26-L40). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `a37d2cb422414a8e4d49e734fbbef61ece98600e5020aac7791fb1332fd46a46`.
+
+> 
+> type FakeAutoscalingV1 struct {
+> 	*testing.Fake
+> }
+> 
+> func (c *FakeAutoscalingV1) FleetAutoscalers(namespace string) v1.FleetAutoscalerInterface {
+> 	return newFakeFleetAutoscalers(c, namespace)
+> }
+> 
+> // RESTClient returns a RESTClient that is used to communicate
+> // with API server by this client implementation.
+> func (c *FakeAutoscalingV1) RESTClient() rest.Interface {
+> 	var ret *rest.RESTClient
+> 	return ret
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 3 lexically identified declarations, including `FakeAutoscalingV1` (L27), `FleetAutoscalers` (L31), `RESTClient` (L37). The full declaration list is recorded under `agones:pkg/client/clientset/versioned/typed/autoscaling/v1/fake/fake_autoscaling_client.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/client/clientset/versioned/typed/autoscaling/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-e880fca04440487a"></a>
+
+
+### File `pkg/client/clientset/versioned/typed/autoscaling/v1/fake/fake_fleetautoscaler.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `302792665cf8ca65e32d1f9b825d571470c419e9`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/pkg/client/clientset/versioned/typed/autoscaling/v1/fake/fake_fleetautoscaler.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-5e601c2ce3c1f994dc.** [agones/pkg/client/clientset/versioned/typed/autoscaling/v1/fake/fake_fleetautoscaler.go, lines 27–41](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/typed/autoscaling/v1/fake/fake_fleetautoscaler.go#L27-L41). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `601763e5a5eedf024327e48cf118a6ea32c2841a5099d53ba9c34fb78b51401f`.
+
+> 
+> // fakeFleetAutoscalers implements FleetAutoscalerInterface
+> type fakeFleetAutoscalers struct {
+> 	*gentype.FakeClientWithListAndApply[*v1.FleetAutoscaler, *v1.FleetAutoscalerList, *autoscalingv1.FleetAutoscalerApplyConfiguration]
+> 	Fake *FakeAutoscalingV1
+> }
+> 
+> func newFakeFleetAutoscalers(fake *FakeAutoscalingV1, namespace string) typedautoscalingv1.FleetAutoscalerInterface {
+> 	return &fakeFleetAutoscalers{
+> 		gentype.NewFakeClientWithListAndApply[*v1.FleetAutoscaler, *v1.FleetAutoscalerList, *autoscalingv1.FleetAutoscalerApplyConfiguration](
+> 			fake.Fake,
+> 			namespace,
+> 			v1.SchemeGroupVersion.WithResource("fleetautoscalers"),
+> 			v1.SchemeGroupVersion.WithKind("FleetAutoscaler"),
+> 			func() *v1.FleetAutoscaler { return &v1.FleetAutoscaler{} },
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 2 lexically identified declarations, including `fakeFleetAutoscalers` (L29), `newFakeFleetAutoscalers` (L34). The full declaration list is recorded under `agones:pkg/client/clientset/versioned/typed/autoscaling/v1/fake/fake_fleetautoscaler.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/autoscaling/v1`, `agones.dev/agones/pkg/client/applyconfiguration/autoscaling/v1`, `agones.dev/agones/pkg/client/clientset/versioned/typed/autoscaling/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/client/clientset/versioned/typed/multicluster/v1/fake` -> module `pkg::client::clientset::versioned::typed::multicluster::v1::fake`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-5a25f794139047307c.** [agones/pkg/client/clientset/versioned/typed/multicluster/v1/fake/doc.go, lines 19–20](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/typed/multicluster/v1/fake/doc.go#L19-L20). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `478061b3792b0d7be50fac39565167529397f47e1638420360191116811d6eef`.
+
+> // Package fake has the automatically generated clients.
+> package fake
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-e1c3a5a700d3a25f"></a>
+
+
+### File `pkg/client/clientset/versioned/typed/multicluster/v1/fake/doc.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `a65d67348f9cc225fb6630dc869e17b38a41f7e5`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/pkg/client/clientset/versioned/typed/multicluster/v1/fake/doc.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-14cf5afa91ed9213dc.** [agones/pkg/client/clientset/versioned/typed/multicluster/v1/fake/doc.go, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/typed/multicluster/v1/fake/doc.go#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `478061b3792b0d7be50fac39565167529397f47e1638420360191116811d6eef`.
+
+> // Copyright Contributors to Agones a Series of LF Projects, LLC.
+> //
+> // Licensed under the Apache License, Version 2.0 (the "License");
+> // you may not use this file except in compliance with the License.
+> // You may obtain a copy of the License at
+> //
+> //     http://www.apache.org/licenses/LICENSE-2.0
+> //
+> // Unless required by applicable law or agreed to in writing, software
+> // distributed under the License is distributed on an "AS IS" BASIS,
+> // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+> // See the License for the specific language governing permissions and
+> // limitations under the License.
+> 
+> // This code was autogenerated. Do not edit directly.
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-2c515c16d9330ece"></a>
+
+
+### File `pkg/client/clientset/versioned/typed/multicluster/v1/fake/fake_gameserverallocationpolicy.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `dc0f61fc1686ab2f0eaea66b239ff7166c5990c6`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/pkg/client/clientset/versioned/typed/multicluster/v1/fake/fake_gameserverallocationpolicy.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-8c0bf2ee97e84e6fdf.** [agones/pkg/client/clientset/versioned/typed/multicluster/v1/fake/fake_gameserverallocationpolicy.go, lines 27–41](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/typed/multicluster/v1/fake/fake_gameserverallocationpolicy.go#L27-L41). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `cff67ccf4be2f12952353f9536f8b0d39a15081e618907ac9567dc48429ebaf8`.
+
+> 
+> // fakeGameServerAllocationPolicies implements GameServerAllocationPolicyInterface
+> type fakeGameServerAllocationPolicies struct {
+> 	*gentype.FakeClientWithListAndApply[*v1.GameServerAllocationPolicy, *v1.GameServerAllocationPolicyList, *multiclusterv1.GameServerAllocationPolicyApplyConfiguration]
+> 	Fake *FakeMulticlusterV1
+> }
+> 
+> func newFakeGameServerAllocationPolicies(fake *FakeMulticlusterV1, namespace string) typedmulticlusterv1.GameServerAllocationPolicyInterface {
+> 	return &fakeGameServerAllocationPolicies{
+> 		gentype.NewFakeClientWithListAndApply[*v1.GameServerAllocationPolicy, *v1.GameServerAllocationPolicyList, *multiclusterv1.GameServerAllocationPolicyApplyConfiguration](
+> 			fake.Fake,
+> 			namespace,
+> 			v1.SchemeGroupVersion.WithResource("gameserverallocationpolicies"),
+> 			v1.SchemeGroupVersion.WithKind("GameServerAllocationPolicy"),
+> 			func() *v1.GameServerAllocationPolicy { return &v1.GameServerAllocationPolicy{} },
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 2 lexically identified declarations, including `fakeGameServerAllocationPolicies` (L29), `newFakeGameServerAllocationPolicies` (L34). The full declaration list is recorded under `agones:pkg/client/clientset/versioned/typed/multicluster/v1/fake/fake_gameserverallocationpolicy.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/multicluster/v1`, `agones.dev/agones/pkg/client/applyconfiguration/multicluster/v1`, `agones.dev/agones/pkg/client/clientset/versioned/typed/multicluster/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-959d79060b3ef67a"></a>
+
+
+### File `pkg/client/clientset/versioned/typed/multicluster/v1/fake/fake_multicluster_client.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `68da7875eb2300087d35eb9308479667bc46ae19`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/pkg/client/clientset/versioned/typed/multicluster/v1/fake/fake_multicluster_client.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-3ad3e7f92014f23ae9.** [agones/pkg/client/clientset/versioned/typed/multicluster/v1/fake/fake_multicluster_client.go, lines 26–40](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/client/clientset/versioned/typed/multicluster/v1/fake/fake_multicluster_client.go#L26-L40). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `1e2b74dc3889542ca516c4624cdab132513432a15da29e54de2f6ce0e838bff0`.
+
+> 
+> type FakeMulticlusterV1 struct {
+> 	*testing.Fake
+> }
+> 
+> func (c *FakeMulticlusterV1) GameServerAllocationPolicies(namespace string) v1.GameServerAllocationPolicyInterface {
+> 	return newFakeGameServerAllocationPolicies(c, namespace)
+> }
+> 
+> // RESTClient returns a RESTClient that is used to communicate
+> // with API server by this client implementation.
+> func (c *FakeMulticlusterV1) RESTClient() rest.Interface {
+> 	var ret *rest.RESTClient
+> 	return ret
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 3 lexically identified declarations, including `FakeMulticlusterV1` (L27), `GameServerAllocationPolicies` (L31), `RESTClient` (L37). The full declaration list is recorded under `agones:pkg/client/clientset/versioned/typed/multicluster/v1/fake/fake_multicluster_client.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/client/clientset/versioned/typed/multicluster/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/cloudproduct/eviction` -> module `pkg::cloudproduct::eviction`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-8d1cb13ecbf4130d"></a>
+
+
+### File `pkg/cloudproduct/eviction/eviction_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `3d081eaa96c0813d38d4bc8f0a61dc31bc30f278`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/cloudproduct/eviction/eviction_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-c393bc237b000736c1.** [agones/pkg/cloudproduct/eviction/eviction_test.go, lines 25–39](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/cloudproduct/eviction/eviction_test.go#L25-L39). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `9681e86b7137b9d08d981361c8c034f00d3b18fbd780927c6870df9ab361d926`.
+
+> 
+> func TestSetEviction(t *testing.T) {
+> 	emptyPodAnd := func(f func(*corev1.Pod)) *corev1.Pod {
+> 		pod := &corev1.Pod{
+> 			ObjectMeta: metav1.ObjectMeta{
+> 				Annotations: map[string]string{},
+> 				Labels:      map[string]string{},
+> 			},
+> 		}
+> 		f(pod)
+> 		return pod
+> 	}
+> 	for desc, tc := range map[string]struct {
+> 		eviction *agonesv1.Eviction
+> 		pod      *corev1.Pod
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `TestSetEviction` (L26). The full declaration list is recorded under `agones:pkg/cloudproduct/eviction/eviction_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/cloudproduct/generic` -> module `pkg::cloudproduct::generic`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-0c84a486bf1e867dba.** [agones/pkg/cloudproduct/generic/doc.go, lines 15–17](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/cloudproduct/generic/doc.go#L15-L17). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `e59ec8a3e3d51804c5307c8f932595f9447ac31855b4dcfe9f6d20173ad6bd0d`.
+
+> // Package generic provides the generic cloud provider. The generic cloud provider
+> // should be usable on all clouds, but provides no special functionality.
+> package generic
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-c12b77354f8c6f42"></a>
+
+
+### File `pkg/cloudproduct/generic/generic_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `7c433d1be78c1f284e4ee745e41ed910daf7d7b6`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/cloudproduct/generic/generic_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-f893df17ed71fdb70b.** [agones/pkg/cloudproduct/generic/generic_test.go, lines 27–41](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/cloudproduct/generic/generic_test.go#L27-L41). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `698cc3aa966ef80878062acc12e2b942c98f6e6e435d20b6cc0d741320b87d4f`.
+
+> 
+> func TestGameServerPodAutoscalerAnnotations(t *testing.T) {
+> 	testCases := []struct {
+> 		description        string
+> 		scheduling         apis.SchedulingStrategy
+> 		setAnnotation      bool
+> 		expectedAnnotation string
+> 	}{
+> 		{
+> 			description:        "Packed",
+> 			scheduling:         apis.Packed,
+> 			expectedAnnotation: "false",
+> 		},
+> 		{
+> 			description:        "Distributed",
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `TestGameServerPodAutoscalerAnnotations` (L28). The full declaration list is recorded under `agones:pkg/cloudproduct/generic/generic_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis`, `agones.dev/agones/pkg/apis/agones`, `agones.dev/agones/pkg/apis/agones/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/cloudproduct/gke` -> module `pkg::cloudproduct::gke`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-81f0e0d9c1b92c54ad.** [agones/pkg/cloudproduct/gke/doc.go, lines 15–16](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/cloudproduct/gke/doc.go#L15-L16). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `00ac7513e690ffb3529c55b1ac125673411cf6953903283cf3d368b87e8fbe38`.
+
+> // Package gke provides the GKE cloud product interfaces for GKE Standard and Autopilot
+> package gke
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-14c272d55e20978f"></a>
+
+
+### File `pkg/cloudproduct/gke/gke_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `3bec3c7b77cedfd963f128e376552dffe5dbf8ea`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/cloudproduct/gke/gke_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-1b8fcfb88d68d6b3b8.** [agones/pkg/cloudproduct/gke/gke_test.go, lines 28–42](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/cloudproduct/gke/gke_test.go#L28-L42). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `e42f8bbf2e470f23bef5988267b3054080c9da051bfe1a7e4b141f7e8668daef`.
+
+> 
+> func TestSyncPodPortsToGameServer(t *testing.T) {
+> 	assignmentAnnotation := map[string]string{hostPortAssignmentAnnotation: `{"min":7000,"max":8000,"portsAssigned":{"7001":7737,"7002":7738}}`}
+> 	badAnnotation := map[string]string{hostPortAssignmentAnnotation: `good luck parsing this as JSON`}
+> 	for name, tc := range map[string]struct {
+> 		gs      *agonesv1.GameServer
+> 		pod     *corev1.Pod
+> 		wantGS  *agonesv1.GameServer
+> 		wantErr bool
+> 	}{
+> 		"no ports => no change": {
+> 			gs:     &agonesv1.GameServer{},
+> 			pod:    testPod(nil),
+> 			wantGS: &agonesv1.GameServer{},
+> 		},
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 8 lexically identified declarations, including `TestSyncPodPortsToGameServer` (L29), `TestValidateGameServer` (L79), `TestPodSeccompUnconfined` (L267), `TestSetPassthroughLabel` (L309), `TestSetEvictionNoExtended` (L379), `TestAutopilotPortAllocator` (L459), `testPod` (L635), `testGameServer` (L646). The full declaration list is recorded under `agones:pkg/cloudproduct/gke/gke_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis`, `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/fleetautoscalers` -> module `pkg::fleetautoscalers`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-bb8d485bbcbfdcd163.** [agones/pkg/fleetautoscalers/doc.go, lines 15–17](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/fleetautoscalers/doc.go#L15-L17). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `4d740ad1b39f9f41efa232895b02fd73b93c7af8724476c068c49d0dd4309ab8`.
+
+> // Package fleetautoscalers handles management of the
+> // Fleet Custom Resource Definition
+> package fleetautoscalers
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-74d0794d691c2025"></a>
+
+
+### File `pkg/fleetautoscalers/controller_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `8cb78812260290c38dd84449fff250bc6ef296b0`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/fleetautoscalers/controller_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-1cbc714c3553682783.** [agones/pkg/fleetautoscalers/controller_test.go, lines 53–67](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/fleetautoscalers/controller_test.go#L53-L67). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `7edf6048aa05ec9a162c8f5e1e5a9974fd04047464ebaa5a7315b9d9c91dc5ff`.
+
+> 
+> func TestControllerCreationMutationHandler(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	type expected struct {
+> 		responseAllowed bool
+> 		patches         []jsonpatch.JsonPatchOperation
+> 		nilPatch        bool
+> 	}
+> 
+> 	var testCases = []struct {
+> 		description string
+> 		fixture     any
+> 		expected    expected
+> 	}{
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 17 lexically identified declarations, including `TestControllerCreationMutationHandler` (L54), `TestControllerCreationValidationHandler` (L187), `TestWebhookControllerCreationValidationHandler` (L240), `TestControllerSyncFleetAutoscaler` (L281), `fleetAutoscalerThreadEventually` (L790), `TestControllerScaleFleet` (L800), `TestControllerUpdateStatus` (L858), `TestControllerUpdateStatusUnableToScale` (L959), `TestControllerEvents` (L1035), `TestControllerAddUpdateDeleteFasThread` (L1077), `TestControllerCleanFasThreads` (L1168), `defaultFixtures` (L1195), `defaultWebhookFixtures` (L1243), `newFakeController` (L1259), `newFakeExtensions` (L1268), `newAdmissionReview` (L1272), `newInvalidAdmissionReview` (L1291). The full declaration list is recorded under `agones:pkg/fleetautoscalers/controller_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis`, `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/autoscaling/v1`, `agones.dev/agones/pkg/gameservers`, `agones.dev/agones/pkg/testing`, `agones.dev/agones/pkg/util/webhooks`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+7. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+8. Preserve source floating width, narrowing, exceptional values and relevant bits.
+
+9. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-31896a1caf94942d"></a>
+
+
+### File `pkg/fleetautoscalers/fleetautoscalers_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `67ac4fa5ebc69eefcbe915b5433db9b1a8bdc315`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/fleetautoscalers/fleetautoscalers_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-55c79f4fea173efdc6.** [agones/pkg/fleetautoscalers/fleetautoscalers_test.go, lines 50–64](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/fleetautoscalers/fleetautoscalers_test.go#L50-L64). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `259980856c5e0f8936f69e2bc3d7d7976b31ef3fe4f970225e5242e9e63aa42a`.
+
+> 
+> type testServer struct{}
+> 
+> func (t testServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+> 	w.Header().Set("Content-Type", "application/json")
+> 	if r == nil {
+> 		http.Error(w, "Empty request", http.StatusInternalServerError)
+> 		return
+> 	}
+> 
+> 	var faRequest autoscalingv1.FleetAutoscaleReview
+> 
+> 	res, err := io.ReadAll(r.Body)
+> 	if err != nil {
+> 		http.Error(w, err.Error(), http.StatusInternalServerError)
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 17 lexically identified declarations, including `testServer` (L51), `ServeHTTP` (L53), `TestComputeDesiredFleetSize` (L137), `TestApplyBufferPolicy` (L237), `TestApplyWebhookPolicy` (L387), `TestApplyWebhookPolicyWithMetadata` (L646), `TestApplyWebhookPolicyNilFleet` (L683), `TestCreateURL` (L713), `TestBuildURLFromConfiguration` (L772), `TestApplyCounterPolicy` (L962), `TestApplyListPolicy` (L1699), `TestApplyListPolicyFlapping` (L2383), `TestApplySchedulePolicy` (L2527), `TestApplyChainPolicy` (L2747), `mustParseMetav1Time` (L2937), `mustParseTime` (L2943), `newTestLogger` (L2949). The full declaration list is recorded under `agones:pkg/fleetautoscalers/fleetautoscalers_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/autoscaling/v1`, `agones.dev/agones/pkg/gameservers`, `agones.dev/agones/pkg/testing`, `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+7. Preserve source floating width, narrowing, exceptional values and relevant bits.
+
+8. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-5c103fb65a999cea"></a>
+
+
+### File `pkg/fleetautoscalers/fleetautoscalerwasm_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `e62cda1d099142ce3556d3902b020755fcc6cc36`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/fleetautoscalers/fleetautoscalerwasm_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-1a83ef28bf7922ec24.** [agones/pkg/fleetautoscalers/fleetautoscalerwasm_test.go, lines 35–49](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/fleetautoscalers/fleetautoscalerwasm_test.go#L35-L49). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `fb27aef3107f23038b7f89e74037f7f978717af101f56680a05ab15f7dcfdce1`.
+
+> 
+> // defaultWasmFixtures creates default fixtures for testing WasmPolicy
+> func defaultWasmFixtures() (*autoscalingv1.FleetAutoscaler, *agonesv1.Fleet) {
+> 	fas, f := defaultFixtures()
+> 	fas.Spec.Policy.Type = autoscalingv1.WasmPolicyType
+> 	fas.Spec.Policy.Buffer = nil
+> 
+> 	// Set up WasmPolicy
+> 	url := "plugin.wasm"
+> 	fas.Spec.Policy.Wasm = &autoscalingv1.WasmPolicy{
+> 		Function: "scale",
+> 		Config: map[string]string{
+> 			"buffer_size": "5",
+> 		},
+> 		From: autoscalingv1.WasmFrom{
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 2 lexically identified declarations, including `defaultWasmFixtures` (L37), `TestApplyWasmPolicy` (L59). The full declaration list is recorded under `agones:pkg/fleetautoscalers/fleetautoscalerwasm_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/autoscaling/v1`, `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+7. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/fleets` -> module `pkg::fleets`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-e52912bf54a3c4a5fc.** [agones/pkg/fleets/doc.go, lines 15–17](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/fleets/doc.go#L15-L17). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `60faf5290a33b2d57177ddce349d06d59a0ff4f650405486605b2bb2995eebb0`.
+
+> // Package fleets handles management of the
+> // Fleet Custom Resource Definition
+> package fleets
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-7db1ba9f8d37bfc1"></a>
+
+
+### File `pkg/fleets/controller_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `2b3675727fe16d5af6e5abcdc3c89760d78a477f`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/fleets/controller_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-a15091f87234c585b7.** [agones/pkg/fleets/controller_test.go, lines 54–68](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/fleets/controller_test.go#L54-L68). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3f5ae8ff2cb330ea39fec1cadc2ef9a518be0cfbf9d9745476b1cf0ccb8c32a2`.
+
+> 
+> func TestControllerSyncFleet(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	t.Run("no gameserverset, create it", func(t *testing.T) {
+> 		f := defaultFixture()
+> 		c, m := newFakeController()
+> 
+> 		created := false
+> 		m.AgonesClient.AddReactor("list", "fleets", func(_ k8stesting.Action) (bool, runtime.Object, error) {
+> 			return true, &agonesv1.FleetList{Items: []agonesv1.Fleet{*f}}, nil
+> 		})
+> 
+> 		m.AgonesClient.AddReactor("create", "gameserversets", func(action k8stesting.Action) (bool, runtime.Object, error) {
+> 			ca := action.(k8stesting.CreateAction)
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 50 lexically identified declarations, including `TestControllerSyncFleet` (L55), `TestControllerCreationValidationHandler` (L347), `TestControllerCreationMutationHandler` (L389), `TestControllerRun` (L435), `TestControllerUpdateFleetStatus` (L501), `TestControllerUpdateFleetCounterStatus` (L572), `TestControllerUpdateFleetListStatus` (L657), `TestControllerFilterGameServerSetByActive` (L741), `TestControllerFilterGameServerSetByActiveDuplicates` (L766), `TestControllerRecreateDeployment` (L821), `TestControllerApplyDeploymentStrategy` (L868), `TestControllerUpsertGameServerSet` (L902), `TestResourcesRequestsAndLimits` (L1031), `TestControllerDeleteEmptyGameServerSets` (L1061), `TestControllerRollingUpdateDeploymentNoInactiveGSSNoErrors` (L1089), `TestControllerRollingUpdateDeploymentNegativeReplica` (L1107), `TestControllerRollingUpdateDeploymentAllocatedExceedsFleetReplicas` (L1171), `TestControllerRollingUpdateDeploymentGSSUpdateFailedErrExpected` (L1222), `TestRollingUpdateOnReady` (L1253), `TestControllerRollingUpdateDeployment` (L1357), `newFakeController` (L1584), `newFakeExtensions` (L1592), `defaultFixture` (L1596), `defaultGSSpec` (L1613). The full declaration list is recorded under `agones:pkg/fleets/controller_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis`, `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/client/applyconfiguration/agones/v1`, `agones.dev/agones/pkg/client/clientset/versioned/typed/agones/v1`, `agones.dev/agones/pkg/client/listers/agones/v1`, `agones.dev/agones/pkg/cloudproduct/generic`, `agones.dev/agones/pkg/testing`, `agones.dev/agones/pkg/util/runtime`, `agones.dev/agones/pkg/util/webhooks`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+7. Preserve source panic/recover boundaries; do not use an unsupported panic as a translation placeholder.
+
+8. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+9. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-b8a79628f117803c"></a>
+
+
+### File `pkg/fleets/fleets_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `2847d48d33764194043994bf60402359bac82720`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/fleets/fleets_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-7da47108bc905e3d01.** [agones/pkg/fleets/fleets_test.go, lines 32–46](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/fleets/fleets_test.go#L32-L46). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `4850da2355272a1c08e4272db7857f08419b6556a118889c342b2079b154909f`.
+
+> 
+> func TestListGameServerSetsByFleetOwner(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	f := &agonesv1.Fleet{
+> 		ObjectMeta: metav1.ObjectMeta{
+> 			Name:      "fleet-1",
+> 			Namespace: "default",
+> 			UID:       "1234",
+> 		},
+> 		Spec: agonesv1.FleetSpec{
+> 			Replicas: 5,
+> 			Template: agonesv1.GameServerTemplateSpec{},
+> 		},
+> 	}
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 2 lexically identified declarations, including `TestListGameServerSetsByFleetOwner` (L33), `TestListGameServersByFleetOwner` (L78). The full declaration list is recorded under `agones:pkg/fleets/fleets_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/testing`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/gameserverallocations` -> module `pkg::gameserverallocations`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-23de89694ab2272646.** [agones/pkg/gameserverallocations/doc.go, lines 15–17](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameserverallocations/doc.go#L15-L17). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `65fa1df337567438c1d03a3d642487567b03f0e96e18ca9e14f8bf8f17a720d2`.
+
+> // Package gameserverallocations handles management of
+> // allocating Ready GameServers via selectors
+> package gameserverallocations
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-f3dfafc077b3aa45"></a>
+
+
+### File `pkg/gameserverallocations/allocation_cache_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `3a33d001fe570371196e34ebf1ded439fd0b6a1f`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/gameserverallocations/allocation_cache_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-d25b8567a18cdc04b9.** [agones/pkg/gameserverallocations/allocation_cache_test.go, lines 37–51](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameserverallocations/allocation_cache_test.go#L37-L51). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `7cc1363a9617fdcddc492d5b44192dea3a23c714f91c4cfdb69086c8dd1ef853`.
+
+> 
+> func TestAllocationCacheListSortedGameServers(t *testing.T) {
+> 	t.Parallel()
+> 	runtime.FeatureTestMutex.Lock()
+> 	defer runtime.FeatureTestMutex.Unlock()
+> 
+> 	gs1 := agonesv1.GameServer{ObjectMeta: metav1.ObjectMeta{Name: "gs1", Namespace: defaultNs, UID: "1"},
+> 		Status: agonesv1.GameServerStatus{NodeName: "node1", State: agonesv1.GameServerStateReady}}
+> 	gs2 := agonesv1.GameServer{ObjectMeta: metav1.ObjectMeta{Name: "gs2", Namespace: defaultNs, UID: "2"},
+> 		Status: agonesv1.GameServerStatus{NodeName: "node2", State: agonesv1.GameServerStateReady}}
+> 	gs3 := agonesv1.GameServer{ObjectMeta: metav1.ObjectMeta{Name: "gs3", Namespace: defaultNs, UID: "3"},
+> 		Status: agonesv1.GameServerStatus{NodeName: "node1", State: agonesv1.GameServerStateAllocated}}
+> 	gs4 := agonesv1.GameServer{ObjectMeta: metav1.ObjectMeta{Name: "gs4", Namespace: defaultNs, UID: "4"},
+> 		Status: agonesv1.GameServerStatus{NodeName: "node2", State: agonesv1.GameServerStateReady}}
+> 	gs5 := agonesv1.GameServer{ObjectMeta: metav1.ObjectMeta{Name: "gs5", Namespace: defaultNs, UID: "5"},
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 4 lexically identified declarations, including `TestAllocationCacheListSortedGameServers` (L38), `TestListSortedGameServersPriorities` (L189), `TestAllocatorRunCacheSync` (L480), `newFakeAllocationCache` (L582). The full declaration list is recorded under `agones:pkg/gameserverallocations/allocation_cache_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/allocation/v1`, `agones.dev/agones/pkg/gameservers`, `agones.dev/agones/pkg/testing`, `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+7. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+8. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-afba411ea5a81e9a"></a>
+
+
+### File `pkg/gameserverallocations/allocator_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `f6a059fd8929178c18ee73382c369a91cf3b98c4`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/gameserverallocations/allocator_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-73e45c8a9fa4d18b26.** [agones/pkg/gameserverallocations/allocator_test.go, lines 45–59](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameserverallocations/allocator_test.go#L45-L59). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `ae861ac90529054eb67f3ff39660204677d676f13af6e3e15f69f5a5ace5933d`.
+
+> 
+> func TestAllocatorAllocate(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	f, gsList := defaultFixtures(4)
+> 	a, m := newFakeAllocator()
+> 	n := metav1.Now()
+> 	labels := map[string]string{"mode": "deathmatch"}
+> 	annotations := map[string]string{"map": "searide"}
+> 	fam := allocationv1.MetaPatch{Labels: labels, Annotations: annotations}
+> 
+> 	gsList[3].ObjectMeta.DeletionTimestamp = &n
+> 
+> 	m.AgonesClient.AddReactor("list", "gameservers", func(_ k8stesting.Action) (bool, k8sruntime.Object, error) {
+> 		return true, &agonesv1.GameServerList{Items: gsList}, nil
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 12 lexically identified declarations, including `defaultTestListMaxCapacity` (L44), `TestAllocatorAllocate` (L46), `TestAllocatorAllocatePriority` (L129), `TestAllocatorApplyAllocationToGameServer` (L234), `TestAllocatorApplyAllocationToGameServerCountsListsActions` (L276), `TestAllocationApplyAllocationError` (L417), `TestAllocatorAllocateOnGameServerUpdateError` (L439), `TestAllocatorRunLocalAllocations` (L500), `TestAllocatorRunLocalAllocationsCountsAndLists` (L647), `TestControllerAllocationUpdateWorkers` (L863), `TestAllocatorCreateRestClientError` (L994), `newFakeAllocator` (L1100). The full declaration list is recorded under `agones:pkg/gameserverallocations/allocator_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis`, `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/allocation/v1`, `agones.dev/agones/pkg/apis/multicluster/v1`, `agones.dev/agones/pkg/gameservers`, `agones.dev/agones/pkg/testing`, `agones.dev/agones/test/e2e/framework`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+7. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+8. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+9. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-844e7d23d5a73212"></a>
+
+
+### File `pkg/gameserverallocations/cache_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `b02babc82a9f13c79a19b53dba5bf0e3006ba543`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/gameserverallocations/cache_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-56187546cc32944b2c.** [agones/pkg/gameserverallocations/cache_test.go, lines 24–38](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameserverallocations/cache_test.go#L24-L38). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3834ab9cb90acf40926975fbacc2e4aedbccba3e777c4b55123bfb43319b3583`.
+
+> 
+> func TestGameServerCacheEntry(t *testing.T) {
+> 	gs1 := &agonesv1.GameServer{ObjectMeta: metav1.ObjectMeta{Name: "gs1"}}
+> 	gs2 := &agonesv1.GameServer{ObjectMeta: metav1.ObjectMeta{Name: "gs2"}}
+> 	gs3 := &agonesv1.GameServer{ObjectMeta: metav1.ObjectMeta{Name: "gs3"}}
+> 
+> 	cache := gameServerCache{}
+> 
+> 	gs, ok := cache.Load("gs1")
+> 	assert.Nil(t, gs)
+> 	assert.False(t, ok)
+> 
+> 	cache.Store("gs1", gs1)
+> 	gs, ok = cache.Load("gs1")
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 2 lexically identified declarations, including `TestGameServerCacheEntry` (L25), `TestGameServerCacheEntryGeneration` (L59). The full declaration list is recorded under `agones:pkg/gameserverallocations/cache_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-cc8f00209a0f96b1"></a>
+
+
+### File `pkg/gameserverallocations/controller_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `43116bb97f09dc58ef8b7706db7e1f888705b2ea`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/gameserverallocations/controller_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-65ca74788a4e6d9a46.** [agones/pkg/gameserverallocations/controller_test.go, lines 59–73](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameserverallocations/controller_test.go#L59-L73). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `42a0dcdbdb36d9ee1212d0725dd7de8c512f4ba4254c35e4d931d001c9b24e5f`.
+
+> 
+> func TestControllerAllocator(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	runtime.FeatureTestMutex.Lock()
+> 	defer runtime.FeatureTestMutex.Unlock()
+> 
+> 	t.Run("successful allocation", func(t *testing.T) {
+> 		f, gsList := defaultFixtures(4)
+> 
+> 		gsaSelectors := &allocationv1.GameServerAllocation{
+> 			Spec: allocationv1.GameServerAllocationSpec{
+> 				Selectors: []allocationv1.GameServerSelector{{LabelSelector: metav1.LabelSelector{MatchLabels: map[string]string{agonesv1.FleetNameLabel: f.ObjectMeta.Name}}}},
+> 			}}
+> 		gsaRequired := &allocationv1.GameServerAllocation{
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 13 lexically identified declarations, including `TestControllerAllocator` (L60), `TestAllocationApiResource` (L181), `TestMultiClusterAllocationFromLocal` (L207), `TestMultiClusterAllocationFromRemote` (L387), `executeAllocation` (L778), `addReactorForGameServer` (L797), `createRequest` (L813), `defaultFixtures` (L830), `newFakeController` (L856), `newFakeControllerWithTimeout` (L861), `getTestSecret` (L872), `clientCert` (L890), `clientKey` (L913). The full declaration list is recorded under `agones:pkg/gameserverallocations/controller_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/allocation/go`, `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/allocation/v1`, `agones.dev/agones/pkg/apis/multicluster/v1`, `agones.dev/agones/pkg/gameservers`, `agones.dev/agones/pkg/testing`, `agones.dev/agones/pkg/util/apiserver`, `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+7. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-b8aa1344b7eb04f0"></a>
+
+
+### File `pkg/gameserverallocations/find_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `49a6064f0b7fe4fb17520df6b9b1a2eeff59a259`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/gameserverallocations/find_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-368f80373907df90d2.** [agones/pkg/gameserverallocations/find_test.go, lines 31–45](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameserverallocations/find_test.go#L31-L45). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `9bba4fc9f398ee5aa7fa195d481e3c81e5b905d4d63fa4a0d832bb13ace35264`.
+
+> 
+> func TestFindGameServerForAllocationPacked(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	oneLabel := map[string]string{"role": "gameserver"}
+> 	twoLabels := map[string]string{"role": "gameserver", "preferred": "true"}
+> 
+> 	gsa := &allocationv1.GameServerAllocation{
+> 		ObjectMeta: metav1.ObjectMeta{Namespace: defaultNs},
+> 		Spec: allocationv1.GameServerAllocationSpec{
+> 			Selectors: []allocationv1.GameServerSelector{{LabelSelector: metav1.LabelSelector{
+> 				MatchLabels: oneLabel,
+> 			}}},
+> 			Scheduling: apis.Packed,
+> 		},
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 2 lexically identified declarations, including `TestFindGameServerForAllocationPacked` (L32), `TestFindGameServerForAllocationDistributed` (L238). The full declaration list is recorded under `agones:pkg/gameserverallocations/find_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis`, `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/allocation/v1`, `agones.dev/agones/pkg/testing`, `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+7. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-5e64520aec801a39"></a>
+
+
+### File `pkg/gameserverallocations/metrics_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `341aae20fb465a8e74071dd13ad09807c8b02495`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/gameserverallocations/metrics_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-c7a02973799e0e1aa0.** [agones/pkg/gameserverallocations/metrics_test.go, lines 46–60](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameserverallocations/metrics_test.go#L46-L60). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `448f80235ce28dc435decae6ca66fda12d7b3ecc73e8a1aa61096b047cdb5971`.
+
+> 
+> type mockGameServerLister struct {
+> 	gameServerNamespaceLister mockGameServerNamespaceLister
+> 	gameServersCalled         bool
+> }
+> 
+> type mockGameServerNamespaceLister struct {
+> 	gameServer *agonesv1.GameServer
+> }
+> 
+> func (s *mockGameServerLister) List(_ labels.Selector) (ret []*agonesv1.GameServer, err error) {
+> 	return ret, nil
+> }
+> 
+> func (s *mockGameServerLister) GameServers(_ string) gameserverv1.GameServerNamespaceLister {
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 13 lexically identified declarations, including `mockGameServerLister` (L47), `mockGameServerNamespaceLister` (L52), `List` (L56), `GameServers` (L60), `Get` (L65), `List` (L69), `resetMetrics` (L73), `TestSetResponse` (L78), `TestAllocationMetrics` (L142), `TestStartMetricsServer` (L228), `startMetricsServerForTest` (L250), `getMetricNames` (L281), `collectMetricNames` (L302). The full declaration list is recorded under `agones:pkg/gameserverallocations/metrics_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/allocation/v1`, `agones.dev/agones/pkg/client/listers/agones/v1`, `agones.dev/agones/pkg/metrics`, `agones.dev/agones/pkg/testing`, `agones.dev/agones/pkg/util/httpserver`, `agones.dev/agones/pkg/util/runtime`, `agones.dev/agones/test/e2e/framework`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+7. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+8. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+9. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/gameserverallocations/processor` -> module `pkg::gameserverallocations::processor`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-0be8162c0b7761757c.** [agones/pkg/gameserverallocations/processor/doc.go, lines 15–26](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameserverallocations/processor/doc.go#L15-L26). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `4dcde4035723da2ada0dd43ccf6c7b2abb456dfca56514bd71b0ff8ca3de2373`.
+
+> // Package processor provides client functionality for the Agones allocation processor system
+> //
+> // The allocation processor system enables batched game server allocation requests
+> // This package contains the client implementation that connects to the processor service
+> // batches allocation requests, and handles the stream-based communication protocol
+> //
+> // Key components:
+> // - Client: Manages connection lifecycle and request batching
+> // - Config: Configuration for processor client behavior
+> // - Batch handling: Accumulates requests and sends them in batches to the processor
+> //
+> // The client establishes a bidirectional gRPC stream with the processor service,
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-846ccd66a5415e79"></a>
+
+
+### File `pkg/gameserverallocations/processor/client_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `854ea15a9fff5ea976dbd3db4be280655899adb6`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/gameserverallocations/processor/client_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-9dbc4a94038fe9609e.** [agones/pkg/gameserverallocations/processor/client_test.go, lines 29–43](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameserverallocations/processor/client_test.go#L29-L43). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `56da602c97db4bd3bfee634732e3108fe7f3ca103f9c33bdd83a1e2d3d467e50`.
+
+> 
+> // Mock for Processor_StreamBatchesClient
+> type mockStream struct {
+> 	recvChan chan *allocationpb.ProcessorMessage
+> 	sendChan chan *allocationpb.ProcessorMessage
+> }
+> 
+> func (m *mockStream) Send(msg *allocationpb.ProcessorMessage) error {
+> 	m.sendChan <- msg
+> 	return nil
+> }
+> func (m *mockStream) Recv() (*allocationpb.ProcessorMessage, error) {
+> 	msg, ok := <-m.recvChan
+> 	if !ok {
+> 		return nil, errors.New("stream closed")
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 10 lexically identified declarations, including `mockStream` (L31), `Send` (L36), `Recv` (L40), `CloseSend` (L47), `Context` (L48), `Header` (L49), `Trailer` (L50), `SendMsg` (L51), `RecvMsg` (L52), `TestProcessorClient_Allocate` (L54). The full declaration list is recorded under `agones:pkg/gameserverallocations/processor/client_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/allocation/go`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+7. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+8. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+9. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-953b167f39b94403"></a>
+
+
+### File `pkg/gameserverallocations/processor/handler_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `145fd1876f7e47119eb886ec3ca8be6393eb6b6f`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/gameserverallocations/processor/handler_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-e56256dc756e88db0b.** [agones/pkg/gameserverallocations/processor/handler_test.go, lines 40–54](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameserverallocations/processor/handler_test.go#L40-L54). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `abb47c1b5632ce0fc094687776c85882023fe0cf4f9030e85f34eb7df0dc7133`.
+
+> 
+> // newTestHandler creates a Handler with a mock allocator.
+> func newTestHandler(_ context.Context, allocFunc func(context.Context, *allocationv1.GameServerAllocation) (k8sruntime.Object, error)) *Handler {
+> 	return &Handler{
+> 		allocator:                 &mockAllocator{allocateFunc: allocFunc},
+> 		clients:                   make(map[string]allocationpb.Processor_StreamBatchesServer),
+> 		grpcUnallocatedStatusCode: codes.ResourceExhausted,
+> 		pullInterval:              100 * time.Millisecond,
+> 		clock:                     clock.RealClock{},
+> 	}
+> }
+> 
+> func TestAddClient(t *testing.T) {
+> 	t.Parallel()
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 23 lexically identified declarations, including `newTestHandler` (L42), `TestAddClient` (L52), `TestRemoveClient` (L96), `TestProcessAllocation` (L146), `TestProcessAllocationsConcurrently` (L259), `TestSubmitBatch` (L373), `TestStreamBatches` (L494), `TestStartPullRequestTicker` (L636), `TestStartPullRequestTickerRemovesFailingClient` (L695), `mockAllocator` (L712), `Allocate` (L716), `mockServerStream` (L720), `newMockServerStream` (L726), `Send` (L734), `Recv` (L743), `SetHeader` (L755), `SendHeader` (L756), `SetTrailer` (L757), `Context` (L758), `SendMsg` (L759), `RecvMsg` (L760), `failingSendStream` (L762), `Send` (L766). The full declaration list is recorded under `agones:pkg/gameserverallocations/processor/handler_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/allocation/go`, `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/allocation/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+7. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+8. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+9. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/gameservers` -> module `pkg::gameservers`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-284bab084a422498d3.** [agones/pkg/gameservers/doc.go, lines 15–17](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameservers/doc.go#L15-L17). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `7bc39bff8f4e47d718f688d4bb9cd6ff78b36abdeb14002dc734fe0a01f5063d`.
+
+> // Package gameservers handles management of the
+> // GameServer Custom Resource Definition
+> package gameservers
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-7ac68582acb1c8b6"></a>
+
+
+### File `pkg/gameservers/controller_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `06872f644248ffe4fb104c0f76f9fc7a656cec01`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/gameservers/controller_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-f0c230bcdad6eace2d.** [agones/pkg/gameservers/controller_test.go, lines 65–79](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameservers/controller_test.go#L65-L79). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `61bcc28f87e020afd5a98ef1c3103b414db4f8b57c8d8cd13c74457a12f912a7`.
+
+> 
+> func TestControllerSyncGameServer(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	t.Run("Creating a new GameServer", func(t *testing.T) {
+> 		c, mocks := newFakeController()
+> 		updateCount := 0
+> 		podCreated := false
+> 		fixture := &agonesv1.GameServer{ObjectMeta: metav1.ObjectMeta{Name: "test", Namespace: "default"},
+> 			Spec: agonesv1.GameServerSpec{
+> 				Ports: []agonesv1.GameServerPort{{ContainerPort: 7777}},
+> 				Template: corev1.PodTemplateSpec{Spec: corev1.PodSpec{
+> 					Containers: []corev1.Container{{Name: "container", Image: "container/image"}},
+> 				},
+> 				},
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 30 lexically identified declarations, including `GameServerKind` (L63), `PodKind` (L64), `TestControllerSyncGameServer` (L66), `TestControllerSyncGameServerWithInitSidecar` (L160), `runReconcileDeleteGameServer` (L259), `TestControllerSyncGameServerWithDevIP` (L283), `TestControllerWatchGameServers` (L419), `TestControllerCreationMutationHandler` (L522), `TestControllerCreationValidationHandler` (L600), `TestControllerCreationMutationHandlerPod` (L686), `TestControllerSyncGameServerDeletionTimestamp` (L738), `TestControllerSyncGameServerPortAllocationState` (L855), `TestControllerSyncGameServerCreatingState` (L953), `TestControllerSyncGameServerStartingState` (L1232), `TestControllerSyncGameServerPodIPs` (L1364), `TestControllerCreateGameServerPod` (L1558), `TestControllerSyncGameServerRequestReadyState` (L1743), `TestMoveToErrorState` (L2059), `TestControllerSyncGameServerShutdownState` (L2111), `TestControllerGameServerPod` (L2173), `TestControllerAddGameServerHealthCheck` (L2270), `TestControllerAddSDKServerEnvVars` (L2292), `testNoChange` (L2521), `testWithNonZeroDeletionTimestamp` (L2541). The full declaration list is recorded under `agones:pkg/gameservers/controller_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones`, `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/cloudproduct/generic`, `agones.dev/agones/pkg/portallocator`, `agones.dev/agones/pkg/testing`, `agones.dev/agones/pkg/util/runtime`, `agones.dev/agones/pkg/util/webhooks`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+7. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+8. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+9. Preserve source floating width, narrowing, exceptional values and relevant bits.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-db0afb297713e06e"></a>
+
+
+### File `pkg/gameservers/gameservers_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `0c0c46cbe5ac8ac4b9513e9e89ac73d1f2e68d99`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/gameservers/gameservers_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-ae412d29ee595775a5.** [agones/pkg/gameservers/gameservers_test.go, lines 28–42](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameservers/gameservers_test.go#L28-L42). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `32a115670593ea0a8966523144f9db1943d240530a1bbe954fc4e4a65b8768e8`.
+
+> 
+> func TestIsGameServerPod(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	t.Run("it is a game server pod", func(t *testing.T) {
+> 		gs := &agonesv1.GameServer{ObjectMeta: metav1.ObjectMeta{Name: "gameserver", UID: "1234"}, Spec: newSingleContainerSpec()}
+> 		gs.ApplyDefaults()
+> 		pod, err := gs.Pod(agtesting.FakeAPIHooks{})
+> 		require.NoError(t, err)
+> 		assert.True(t, isGameServerPod(pod))
+> 	})
+> 
+> 	t.Run("it is not a game server pod", func(t *testing.T) {
+> 		pod := &corev1.Pod{}
+> 		assert.False(t, isGameServerPod(pod))
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 5 lexically identified declarations, including `TestIsGameServerPod` (L29), `TestAddress` (L46), `TestApplyGameServerAddressAndPort` (L114), `TestApplyGameServerPodIPs` (L200), `TestIsBeforePodCreated` (L254). The full declaration list is recorded under `agones:pkg/gameservers/gameservers_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/testing`, `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-9151ff8e6a945035"></a>
+
+
+### File `pkg/gameservers/health_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `fe0300c3380273414464e2f313d25a9bd13502fd`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/gameservers/health_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-98c948860eef59ab3a.** [agones/pkg/gameservers/health_test.go, lines 37–51](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameservers/health_test.go#L37-L51). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `eca7d4b839f24846428ec508a1c155711cdc560d655d9bfaea752ca67e0117b2`.
+
+> 
+> func TestHealthControllerFailedContainer(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	agruntime.FeatureTestMutex.Lock()
+> 	defer agruntime.FeatureTestMutex.Unlock()
+> 	require.NoError(t, agruntime.ParseFeatures(string(agruntime.FeatureSidecarContainers)+"=false"))
+> 
+> 	m := agtesting.NewMocks()
+> 	hc := NewHealthController(healthcheck.NewHandler(), m.KubeClient, m.AgonesClient, m.KubeInformerFactory, m.AgonesInformerFactory, false)
+> 
+> 	gs := agonesv1.GameServer{ObjectMeta: metav1.ObjectMeta{Name: "test"}, Spec: newSingleContainerSpec()}
+> 	gs.ApplyDefaults()
+> 
+> 	pod, err := gs.Pod(agtesting.FakeAPIHooks{})
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 10 lexically identified declarations, including `TestHealthControllerFailedContainer` (L38), `TestHealthControllerFailedContainerSidecarContainers` (L69), `TestHealthControllerFailedPod` (L125), `TestHealthUnschedulableWithNoFreePorts` (L149), `TestHealthControllerSkipUnhealthyGameContainer` (L193), `TestHealthControllerSyncGameServer` (L319), `TestHealthControllerSyncGameServerUpdateFailed` (L466), `TestHealthControllerSyncGameServerUnhealthyLimiter` (L499), `TestHealthControllerRunNoSideCar` (L572), `TestHealthControllerRunWithSideCar` (L663). The full declaration list is recorded under `agones:pkg/gameservers/health_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/testing`, `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+7. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+8. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+9. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-a8493030d33c7220"></a>
+
+
+### File `pkg/gameservers/migration_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `a1d811591771799a8042396fafb8f9642e8a1ed7`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/gameservers/migration_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-101b1d987c16e32f5d.** [agones/pkg/gameservers/migration_test.go, lines 35–49](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameservers/migration_test.go#L35-L49). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `e4900c3139053ffb38f5b0763e455bf335c2b8f88eca0248271262d852b2f99e`.
+
+> 
+> func TestMigrationControllerSyncGameServer(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	ipChangeFixture := "99.99.99.99"
+> 	nodeNameChangeFixture := "nodeChange"
+> 
+> 	type expected struct {
+> 		updated     bool
+> 		updateTests func(t *testing.T, gs *agonesv1.GameServer)
+> 		postTests   func(t *testing.T, mocks agtesting.Mocks)
+> 	}
+> 	fixtures := map[string]struct {
+> 		setup    func(*agonesv1.GameServer, *corev1.Pod, *corev1.Node) (*agonesv1.GameServer, *corev1.Pod, *corev1.Node)
+> 		expected expected
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 4 lexically identified declarations, including `TestMigrationControllerSyncGameServer` (L36), `TestMigrationControllerRun` (L195), `TestMigrationControllerAnyAddressMatch` (L335), `nilSyncPodPortsToGameServer` (L417). The full declaration list is recorded under `agones:pkg/gameservers/migration_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/testing`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+7. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+8. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+9. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-29015b90814fd260"></a>
+
+
+### File `pkg/gameservers/missing_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `652b96646855820440f9e58298c54b57d76cba78`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/gameservers/missing_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-b5ba399dc8fed2629f.** [agones/pkg/gameservers/missing_test.go, lines 36–50](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameservers/missing_test.go#L36-L50). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `9d21531c3efb45c3dcde6a817fcc919072c51ac0b6427a27cc27d133fde1093a`.
+
+> 
+> func TestMissingPodControllerSyncGameServer(t *testing.T) {
+> 	type expected struct {
+> 		updated     bool
+> 		updateTests func(t *testing.T, gs *agonesv1.GameServer)
+> 		postTests   func(t *testing.T, mocks agtesting.Mocks)
+> 	}
+> 	fixtures := map[string]struct {
+> 		setup    func(*agonesv1.GameServer, *corev1.Pod) (*agonesv1.GameServer, *corev1.Pod)
+> 		expected expected
+> 	}{
+> 		"pod exists": {
+> 			setup: func(gs *agonesv1.GameServer, pod *corev1.Pod) (*agonesv1.GameServer, *corev1.Pod) {
+> 				return gs, pod
+> 			},
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 3 lexically identified declarations, including `TestMissingPodControllerSyncGameServer` (L37), `TestMissingPodControllerSyncGameServerUnhealthyLimiter` (L181), `TestMissingPodControllerRun` (L235). The full declaration list is recorded under `agones:pkg/gameservers/missing_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/testing`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+7. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+8. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+9. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-e78b58b38d74b24e"></a>
+
+
+### File `pkg/gameservers/pernodecounter_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `e1228e55a6bc8069041312e34ade58ff0b340223`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/gameservers/pernodecounter_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-9557bc2f075c3a6ef1.** [agones/pkg/gameservers/pernodecounter_test.go, lines 39–53](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameservers/pernodecounter_test.go#L39-L53). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `b79c14402be9bf6aa2bbef7c0008ed3fb7023c31043931459f592d0ff6a7bb88`.
+
+> 
+> func TestPerNodeCounterMapLeak(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	pnc, m := newFakePerNodeCounter()
+> 
+> 	processedLen := func() int {
+> 		pnc.countMutex.RLock()
+> 		defer pnc.countMutex.RUnlock()
+> 		return len(pnc.processed)
+> 	}
+> 
+> 	fakeWatch := watch.NewFake()
+> 	m.AgonesClient.AddWatchReactor("gameservers", k8stesting.DefaultWatchReactor(fakeWatch, nil))
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 6 lexically identified declarations, including `TestPerNodeCounterMapLeak` (L40), `TestPerNodeCounterGameServerEvents` (L92), `TestPerNodeCounterNodeEvents` (L181), `TestPerNodeCounterRun` (L214), `TestPerNodeCounterDuplicateEvents` (L260), `newFakePerNodeCounter` (L335). The full declaration list is recorded under `agones:pkg/gameservers/pernodecounter_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/testing`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+7. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-be6b3b2503ef1a02"></a>
+
+
+### File `pkg/gameservers/succeeded_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `af460733c5b438723128e5eb946ca2f2fc2f9d61`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/gameservers/succeeded_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-010665daa17039a381.** [agones/pkg/gameservers/succeeded_test.go, lines 36–50](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameservers/succeeded_test.go#L36-L50). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `190c483693c24f66516aa43ca570e800e9c18f4dc08e5967ddd7a087be992473`.
+
+> 
+> func TestSucceededControllerSyncGameServer(t *testing.T) {
+> 	type expected struct {
+> 		updated     bool
+> 		updateTests func(t *testing.T, gs *agonesv1.GameServer)
+> 		postTests   func(t *testing.T, mocks agtesting.Mocks)
+> 	}
+> 	fixtures := map[string]struct {
+> 		setup    func(*agonesv1.GameServer, *corev1.Pod) (*agonesv1.GameServer, *corev1.Pod)
+> 		expected expected
+> 	}{
+> 		"pod exists but not in Succeeded state": {
+> 			setup: func(gs *agonesv1.GameServer, pod *corev1.Pod) (*agonesv1.GameServer, *corev1.Pod) {
+> 				return gs, pod
+> 			},
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 7 lexically identified declarations, including `TestSucceededControllerSyncGameServer` (L37), `newLongLivedContainerSpec` (L218), `TestSucceededControllerGameServerContainerCompleted` (L226), `TestSucceededControllerSyncGameServerContainerCompleted` (L316), `TestSucceededControllerSyncGameServerShutdownLimiter` (L366), `TestSucceededControllerRun` (L424), `TestSucceededControllerRunGameServerResync` (L469). The full declaration list is recorded under `agones:pkg/gameservers/succeeded_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/testing`, `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+7. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+8. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+9. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/gameserversets` -> module `pkg::gameserversets`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-fe00d1af2be4ae213e.** [agones/pkg/gameserversets/doc.go, lines 15–17](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameserversets/doc.go#L15-L17). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `7ea0a88012e8214650aaad13c96144559c5f96c8994762c52f270cf00f2414a5`.
+
+> // Package gameserversets handles management of the
+> // GameServerSet Custom Resource Definition
+> package gameserversets
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-38a1ebe9669cf1c0"></a>
+
+
+### File `pkg/gameserversets/allocation_overflow_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `5babfeefea060187a7cbdd89031a0b392ae502a2`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/gameserversets/allocation_overflow_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-d42a1e35da386e535f.** [agones/pkg/gameserversets/allocation_overflow_test.go, lines 33–47](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameserversets/allocation_overflow_test.go#L33-L47). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `b13736148e7e4420c915ad6425b50f2d2f677f1ca8e974da092e8e066f304e85`.
+
+> 
+> func TestAllocationOverflowControllerWatchGameServers(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	gsSet := defaultFixture()
+> 	gsSet.Status.Replicas = gsSet.Spec.Replicas
+> 	gsSet.Status.ReadyReplicas = gsSet.Spec.Replicas
+> 	c, m := newFakeAllocationOverflowController()
+> 
+> 	received := make(chan string, 10)
+> 	defer close(received)
+> 
+> 	gsSetWatch := watch.NewFake()
+> 	m.AgonesClient.AddWatchReactor("gameserversets", k8stesting.DefaultWatchReactor(gsSetWatch, nil))
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 3 lexically identified declarations, including `TestAllocationOverflowControllerWatchGameServers` (L34), `TestAllocationOverflowSyncGameServerSet` (L110), `newFakeAllocationOverflowController` (L198). The full declaration list is recorded under `agones:pkg/gameserversets/allocation_overflow_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/gameservers`, `agones.dev/agones/pkg/testing`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+7. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+8. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+9. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-25d2db80259018e2"></a>
+
+
+### File `pkg/gameserversets/controller_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `88cd3342622b04d3c0fdbf6217b85a5a98a2e5b6`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/gameserversets/controller_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-9c401f931a606e9cb4.** [agones/pkg/gameserversets/controller_test.go, lines 47–61](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameserversets/controller_test.go#L47-L61). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `8c10378af6aa0c3213ef41caa1afbb4c7ffe8c242bad4ac4f373a1c64259fbfc`.
+
+> 
+> func gsWithState(st agonesv1.GameServerState) *agonesv1.GameServer {
+> 	return &agonesv1.GameServer{Status: agonesv1.GameServerStatus{State: st}}
+> }
+> 
+> func gsPendingDeletionWithState(st agonesv1.GameServerState) *agonesv1.GameServer {
+> 	return &agonesv1.GameServer{
+> 		ObjectMeta: metav1.ObjectMeta{
+> 			DeletionTimestamp: &deletionTime,
+> 		},
+> 		Status: agonesv1.GameServerStatus{State: st},
+> 	}
+> }
+> 
+> const (
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 15 lexically identified declarations, including `gsWithState` (L48), `gsPendingDeletionWithState` (L52), `TestComputeReconciliationAction` (L67), `TestComputeStatus` (L278), `TestControllerWatchGameServers` (L503), `TestSyncGameServerSet` (L591), `TestControllerSyncUnhealthyGameServers` (L828), `TestSyncMoreGameServers` (L889), `TestControllerSyncGameServerSetStatus` (L940), `TestControllerUpdateValidationHandler` (L999), `TestCreationValidationHandler` (L1124), `defaultFixture` (L1228), `createGameServers` (L1241), `newFakeController` (L1253), `newFakeExtensions` (L1262). The full declaration list is recorded under `agones:pkg/gameserversets/controller_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis`, `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/cloudproduct/generic`, `agones.dev/agones/pkg/gameservers`, `agones.dev/agones/pkg/testing`, `agones.dev/agones/pkg/util/runtime`, `agones.dev/agones/pkg/util/webhooks`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+7. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+8. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+9. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-35980fe6fc9b2363"></a>
+
+
+### File `pkg/gameserversets/gameserver_state_cache_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `6a22a4a471e77754d6ebf144f9167c2f54b9adde`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/gameserversets/gameserver_state_cache_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-90b790be40b4073e88.** [agones/pkg/gameserversets/gameserver_state_cache_test.go, lines 27–41](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameserversets/gameserver_state_cache_test.go#L27-L41). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `37ad0b79e30ee7269643c4f5ae6ce8ef3cb0d7a3e87ba7e10b1959e265aa4f3a`.
+
+> 
+> func TestGameServerStateCache(t *testing.T) {
+> 	var cache gameServerStateCache
+> 	gsSet1 := &agonesv1.GameServerSet{
+> 		ObjectMeta: metav1.ObjectMeta{
+> 			Name:      "set-1",
+> 			Namespace: "ns1",
+> 		},
+> 	}
+> 	gsSet1b := &agonesv1.GameServerSet{
+> 		ObjectMeta: metav1.ObjectMeta{
+> 			Name:      "set-1",
+> 			Namespace: "ns2",
+> 		},
+> 	}
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 7 lexically identified declarations, including `deletionTime` (L26), `TestGameServerStateCache` (L28), `TestGameServerSetCacheEntry` (L68), `makeGameServer` (L178), `deleted` (L186), `gameServerStatusInfo` (L192), `sortedStatusInfo` (L198). The full declaration list is recorded under `agones:pkg/gameserversets/gameserver_state_cache_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-859eb98ec557c241"></a>
+
+
+### File `pkg/gameserversets/gameserversets_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `0110fcd2d822622e7c6569fc87fb80a71565709a`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/gameserversets/gameserversets_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-8d463563e28d0d7973.** [agones/pkg/gameserversets/gameserversets_test.go, lines 31–45](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameserversets/gameserversets_test.go#L31-L45). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `51819e16d05d570c48b8e03e5db37c789c7813a0b6f8f47e75dbdc23549eb6ca`.
+
+> 
+> func TestSortGameServersByPackedStrategy(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	nc := map[string]gameservers.NodeCount{
+> 		"n1": {Ready: 1, Allocated: 0},
+> 		"n2": {Ready: 0, Allocated: 2},
+> 		"n3": {Ready: 2, Allocated: 2},
+> 		"n4": {Ready: 2, Allocated: 2},
+> 	}
+> 
+> 	list := []*agonesv1.GameServer{
+> 		{ObjectMeta: metav1.ObjectMeta{Name: "g1"}, Status: agonesv1.GameServerStatus{NodeName: "n2", State: agonesv1.GameServerStateReady}},
+> 		{ObjectMeta: metav1.ObjectMeta{Name: "g2"}, Status: agonesv1.GameServerStatus{NodeName: "", State: agonesv1.GameServerStateReady}},
+> 		{ObjectMeta: metav1.ObjectMeta{Name: "g3"}, Status: agonesv1.GameServerStatus{NodeName: "n1", State: agonesv1.GameServerStateReady}},
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 3 lexically identified declarations, including `TestSortGameServersByPackedStrategy` (L32), `TestSortGameServersByDistributedStrategy` (L130), `TestListGameServersByGameServerSetOwner` (L199). The full declaration list is recorded under `agones:pkg/gameserversets/gameserversets_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/gameservers`, `agones.dev/agones/pkg/testing`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+7. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-2af50ff03a70b1fb"></a>
+
+
+### File `pkg/gameserversets/metrics_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `fa2ec660a169cdf044dd795c2f43fc1008233003`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/gameserversets/metrics_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-6028a2d379b4b62e33.** [agones/pkg/gameserversets/metrics_test.go, lines 37–51](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/gameserversets/metrics_test.go#L37-L51). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `138ba2999bc3d599ff52b899fc60752f1b25d97b0696baa2744d3da9c267bdb5`.
+
+> 
+> func resetMetrics() {
+> 	unRegisterViews()
+> 	registerViews()
+> }
+> 
+> func TestGSSMetrics(t *testing.T) {
+> 	resetMetrics()
+> 
+> 	utilruntime.FeatureTestMutex.Lock()
+> 	defer utilruntime.FeatureTestMutex.Unlock()
+> 
+> 	conf := mt.Config{
+> 		PrometheusMetrics: true,
+> 	}
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 4 lexically identified declarations, including `resetMetrics` (L38), `TestGSSMetrics` (L43), `getMetricNames` (L111), `collectMetricNames` (L132). The full declaration list is recorded under `agones:pkg/gameserversets/metrics_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/metrics`, `agones.dev/agones/pkg/testing`, `agones.dev/agones/pkg/util/httpserver`, `agones.dev/agones/pkg/util/runtime`, `agones.dev/agones/test/e2e/framework`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+7. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+8. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/metrics` -> module `pkg::metrics`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-e568fc8794b952f7ae.** [agones/pkg/metrics/doc.go, lines 15–16](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/metrics/doc.go#L15-L16). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `c3d4d2623cc0c8ecda1165c2af0b47a82ec402bdbe258d6d95c30d21993343de`.
+
+> // Package metrics records stats of agones controllers
+> package metrics
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-7beb66721ebc0bfc"></a>
+
+
+### File `pkg/metrics/controller_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `8dae3d22f50b9c9fb443d78bf0116d16777e3488`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/metrics/controller_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-08efd44d06af94d94e.** [agones/pkg/metrics/controller_test.go, lines 42–56](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/metrics/controller_test.go#L42-L56). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `77343d7e64d10ad91585d1a2da204cd2cdfa7510ea80b6eb4bd18ae8c63de187`.
+
+> 
+> type metricExporter struct {
+> 	metrics []*metricdata.Metric
+> }
+> 
+> func (e *metricExporter) ExportMetrics(_ context.Context, metrics []*metricdata.Metric) error {
+> 	e.metrics = metrics
+> 	return nil
+> }
+> 
+> func serialize(args []string) string {
+> 	return strings.Join(args, "|")
+> }
+> 
+> type expectedMetricData struct {
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 21 lexically identified declarations, including `defaultNs` (L41), `metricExporter` (L43), `ExportMetrics` (L47), `serialize` (L52), `expectedMetricData` (L56), `assertMetricData` (L64), `resetMetrics` (L142), `mu` (L147), `TestControllerFleetReplicasCount_ResetMetricsOnDelete` (L149), `TestControllerFleetAutoScalerState_ResetMetricsOnDelete` (L182), `TestControllerGameServerCount` (L237), `TestControllerGameServerPlayerConnectedCount` (L292), `TestControllerGameServerPlayerCapacityCount` (L345), `TestControllerGameServersTotal` (L381), `TestControllerGameServerAllocationsTotal` (L431), `TestControllerFleetOnDeleting` (L466), `TestControllerFleetAutoScalerOnDeleting` (L505), `TestControllerGameServersNodeState` (L539), `TestFleetCountersAndListsMetrics` (L577), `TestCalcDuration` (L646), `TestIsSystemNode` (L756). The full declaration list is recorded under `agones:pkg/metrics/controller_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/testing`, `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+7. Preserve source floating width, narrowing, exceptional values and relevant bits.
+
+8. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-d94716cbda70bed7"></a>
+
+
+### File `pkg/metrics/exporter_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `1bc7524218792c48165b3c88a0b2b1bd84230597`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/metrics/exporter_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-4a5acd3190f146bca7.** [agones/pkg/metrics/exporter_test.go, lines 42–56](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/metrics/exporter_test.go#L42-L56). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `1d135922d721fd2c9c0a627664438cb8f83f423e039fa504b7358a25d77b4dc1`.
+
+> 
+> func TestRegisterPrometheusExporter(t *testing.T) {
+> 	resetMetrics()
+> 	registry := prometheus.NewRegistry()
+> 
+> 	handler, err := RegisterPrometheusExporter(registry)
+> 	assert.NoError(t, err, "RegisterPrometheusExporter should not return an error")
+> 	assert.NotNil(t, handler, "Handler should not be nil")
+> 
+> 	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, "/metrics", nil)
+> 	require.NoError(t, err, "Creating request to /metrics should not fail")
+> 
+> 	rr := httptest.NewRecorder()
+> 	handler.ServeHTTP(rr, req)
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 13 lexically identified declarations, including `TestRegisterPrometheusExporter` (L43), `TestMetrics_Endpoint_ExposesAllMetrics` (L72), `TestSetupMetrics_StackdriverOnly_NoPanic` (L142), `newMockWithReactorNodesAndGameServers` (L181), `setupGameServer` (L201), `setupFleet` (L217), `setupFleetAutoScalers` (L227), `setupFleetWithCountersAndLists` (L232), `setupGameServerPlayerConnect` (L256), `setupGameServerAllocation` (L278), `setupGameServerStateDuration` (L294), `getMetricNames` (L312), `collectMetricNames` (L333). The full declaration list is recorded under `agones:pkg/metrics/exporter_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/testing`, `agones.dev/agones/pkg/util/httpserver`, `agones.dev/agones/pkg/util/runtime`, `agones.dev/agones/test/e2e/framework`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+7. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+8. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-fe278a7b038a29d4"></a>
+
+
+### File `pkg/metrics/util_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `6e2300802cd78d9d358f393b1752d550067d7d57`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/metrics/util_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-d73698f4306ff32a2c.** [agones/pkg/metrics/util_test.go, lines 42–56](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/metrics/util_test.go#L42-L56). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `2968c72c871a0eec9e5ba91a2d0503a433dcd39634a7c5186f1e898ef89329d3`.
+
+> 
+> // newFakeController returns a controller, backed by the fake Clientset
+> func newFakeController() *fakeController {
+> 	m := agtesting.NewMocks()
+> 	return newFakeControllerWithMock(m)
+> }
+> 
+> // newFakeControllerWithMock returns a Controller with a pre-populated mock.
+> // This is useful if you want to populate a data set before the informer starts.
+> func newFakeControllerWithMock(m agtesting.Mocks) *fakeController {
+> 	c := NewController(m.KubeClient, m.AgonesClient, m.KubeInformerFactory, m.AgonesInformerFactory)
+> 	gsWatch := watch.NewFake()
+> 	fasWatch := watch.NewFake()
+> 	fleetWatch := watch.NewFake()
+> 	nodeWatch := watch.NewFake()
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 14 lexically identified declarations, including `newFakeController` (L44), `newFakeControllerWithMock` (L51), `close` (L78), `run` (L84), `sync` (L93), `fakeController` (L97), `nodeWithName` (L107), `gameServerWithNode` (L116), `gameServerWithFleetStateCreationTimestamp` (L122), `gameServerWithFleetAndState` (L129), `generateGsEvents` (L150), `fleet` (L162), `fleetAutoScaler` (L181), `TestParseLabels` (L215). The full declaration list is recorded under `agones:pkg/metrics/util_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/autoscaling/v1`, `agones.dev/agones/pkg/testing`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+7. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/portallocator` -> module `pkg::portallocator`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-73867c84eefa22952e.** [agones/pkg/portallocator/doc.go, lines 15–16](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/portallocator/doc.go#L15-L16). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3d8224b216a5a27bc5cae182c6949b4a1546d89f4b645d5c27e841d3c36e2391`.
+
+> // Package portallocator defines a generic port allocator for game servers
+> package portallocator
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-5f2815e6edce3595"></a>
+
+
+### File `pkg/portallocator/portallocator_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `0604926e5603a0dee95f890d7c1d7adf1370c41d`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/portallocator/portallocator_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-edb786e1b861d0f027.** [agones/pkg/portallocator/portallocator_test.go, lines 44–58](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/portallocator/portallocator_test.go#L44-L58). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `79edaecbc151fc74835c9e5e0ecfea4202aa4fb3ae4d7de77e1d22a92887908c`.
+
+> 
+> func TestPortAllocatorAllocate(t *testing.T) {
+> 	t.Parallel()
+> 	utilruntime.FeatureTestMutex.Lock()
+> 	defer utilruntime.FeatureTestMutex.Unlock()
+> 
+> 	m := agtesting.NewMocks()
+> 	pr := map[string]PortRange{
+> 		agonesv1.DefaultPortRange: {MinPort: 10, MaxPort: 50},
+> 		"test":                    {MinPort: 51, MaxPort: 100},
+> 	}
+> 	pa := newAllocator(pr, m.KubeInformerFactory, m.AgonesInformerFactory)
+> 	nodeWatch := watch.NewFake()
+> 	m.KubeClient.AddWatchReactor("nodes", k8stesting.DefaultWatchReactor(nodeWatch, nil))
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 14 lexically identified declarations, including `TestPortAllocatorAllocate` (L45), `TestPortRangeAllocatorAllocate` (L90), `TestPortRangeAllocatorAllocate_NamedRange` (L337), `TestPortRangeAllocatorMultithreadAllocate` (L374), `TestPortRangeAllocatorDeAllocate` (L413), `TestPortRangeAllocatorSyncPortAllocations` (L455), `TestPortRangeAllocatorSyncDeleteGameServer` (L527), `TestNodePortAllocation` (L625), `TestTakePortAllocation` (L647), `TestPortRangeAllocatorRegisterExistingGameServerPorts` (L663), `dynamicGameServerFixture` (L700), `countAllocatedPorts` (L710), `countTotalAllocatedPorts` (L721), `countTotalPorts` (L733). The full declaration list is recorded under `agones:pkg/portallocator/portallocator_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/testing`, `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+7. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+8. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/sdkserver` -> module `pkg::sdkserver`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-e0226f2ed2685859a4.** [agones/pkg/sdkserver/doc.go, lines 15–16](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/sdkserver/doc.go#L15-L16). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `78e101f92b67663b1725a78a147735aebc40b8f6bb48fa90e04d7f261352073f`.
+
+> // Package sdkserver implements Agones SDK server (sidecar).
+> package sdkserver
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-7647678a05a66d07"></a>
+
+
+### File `pkg/sdkserver/helper_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `a7befe48bb9e5200450ac982b9a238eee9e7beda`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/sdkserver/helper_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-7d90005a8725282fd7.** [agones/pkg/sdkserver/helper_test.go, lines 30–44](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/sdkserver/helper_test.go#L30-L44). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `a76eb24d5e740d596d1173324a4307b3dc5432dda7ad177ee68d4fa65b4a7a2e`.
+
+> 
+> func testHTTPHealth(t *testing.T, url string, expectedResponse string, expectedStatus int) {
+> 	t.Helper()
+> 	// do a poll, because this code could run before the health check becomes live
+> 	err := wait.PollUntilContextTimeout(context.Background(), time.Second, 20*time.Second, true, func(_ context.Context) (done bool, err error) {
+> 		resp, err := http.Get(url)
+> 		if err != nil {
+> 			logrus.WithError(err).Error("Error connecting to ", url)
+> 			return false, nil
+> 		}
+> 
+> 		assert.NotNil(t, resp)
+> 		if resp != nil {
+> 			defer resp.Body.Close() //nolint:errcheck
+> 			body, err := io.ReadAll(resp.Body)
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 20 lexically identified declarations, including `testHTTPHealth` (L31), `emptyMockStream` (L56), `newEmptyMockStream` (L60), `SendAndClose` (L64), `Recv` (L68), `SetHeader` (L76), `SendHeader` (L80), `SetTrailer` (L84), `Context` (L88), `SendMsg` (L92), `RecvMsg` (L96), `gameServerMockStream` (L100), `newGameServerMockStream` (L106), `Send` (L113), `SetHeader` (L118), `SendHeader` (L122), `SetTrailer` (L126), `Context` (L130), `SendMsg` (L134), `RecvMsg` (L138). The full declaration list is recorded under `agones:pkg/sdkserver/helper_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/sdk`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+6. Preserve source panic/recover boundaries; do not use an unsupported panic as a translation placeholder.
+
+7. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+8. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-61972ffcce6d4597"></a>
+
+
+### File `pkg/sdkserver/localsdk_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `4e6c25e6e500d0a2ca3a9edd6da5fb0a8b779748`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/sdkserver/localsdk_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-e37ec33328f62d91b0.** [agones/pkg/sdkserver/localsdk_test.go, lines 41–55](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/sdkserver/localsdk_test.go#L41-L55). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `56c0794a25aca0eea3f5d6de153779143caaf998d549444fd366eb2d9c86e576`.
+
+> 
+> func TestLocal(t *testing.T) {
+> 	ctx := context.Background()
+> 	e := &sdk.Empty{}
+> 	l, err := NewLocalSDKServer("", "", defaultTestListMaxCapacity)
+> 	assert.NoError(t, err)
+> 
+> 	_, err = l.Ready(ctx, e)
+> 	assert.NoError(t, err, "Ready should not error")
+> 
+> 	_, err = l.Shutdown(ctx, e)
+> 	assert.NoError(t, err, "Shutdown should not error")
+> 
+> 	wg := sync.WaitGroup{}
+> 	wg.Add(1)
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 20 lexically identified declarations, including `TestLocal` (L42), `TestLocalSDKWithTestMode` (L84), `TestLocalSDKWithGameServer` (L102), `TestLocalSDKWithLogLevel` (L119), `TestLocalSDKServerSetLabel` (L143), `TestLocalSDKServerSetAnnotation` (L209), `TestLocalSDKServerWatchGameServer` (L275), `TestLocalSDKServerGetCounter` (L317), `TestLocalSDKServerUpdateCounter` (L385), `TestLocalSDKServerGetList` (L533), `TestLocalSDKServerUpdateList` (L601), `TestLocalSDKServerAddListValue` (L797), `TestLocalSDKServerRemoveListValue` (L885), `TestLocalSDKServerStateUpdates` (L968), `TestSDKConformanceFunctionality` (L1006), `gsToTmpFile` (L1041), `assertWatchUpdate` (L1052), `assertNoWatchUpdate` (L1063), `assertInitialWatchUpdate` (L1073), `TestLocalSDKServerUpdateListMaxCapacity` (L1085). The full declaration list is recorded under `agones:pkg/sdkserver/localsdk_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/sdk`, `agones.dev/agones/pkg/sdk/beta`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+5. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+6. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+7. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+8. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-f7581b0f21667951"></a>
+
+
+### File `pkg/sdkserver/sdk_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `661fa9e7f29a2943ce11c9abe41b5d00bf706abd`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/sdkserver/sdk_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-5949d44ce95ba0451e.** [agones/pkg/sdkserver/sdk_test.go, lines 26–40](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/sdkserver/sdk_test.go#L26-L40). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `ce963300502f7f7b08cdc95cd42cc74aea32c7fdd43dd77c8601eed37b057a6c`.
+
+> 
+> func TestConvert(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	fixture := &agonesv1.GameServer{
+> 		ObjectMeta: metav1.ObjectMeta{
+> 			CreationTimestamp: metav1.Now(),
+> 			Namespace:         "default",
+> 			Name:              "test",
+> 			Labels:            map[string]string{"foo": "bar"},
+> 			Annotations:       map[string]string{"stuff": "things"},
+> 			UID:               "1234",
+> 		},
+> 		Spec: agonesv1.GameServerSpec{
+> 			Health: agonesv1.Health{
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `TestConvert` (L27). The full declaration list is recorded under `agones:pkg/sdkserver/sdk_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/sdk`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-221fafe2dbcfff20"></a>
+
+
+### File `pkg/sdkserver/sdkserver_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `0f9b5a0955343d4fb3f519ddda43a4ce2433ffcd`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/sdkserver/sdkserver_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-1ca72fbdee098bdc0b.** [agones/pkg/sdkserver/sdkserver_test.go, lines 55–69](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/sdkserver/sdkserver_test.go#L55-L69). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `79667c9ee3441bf5d9f9a7060fd73c1f870577d76584c5861d07e1e38e312e4a`.
+
+> 
+> // patchGameServer is a helper function for the AddReactor "patch" that creates and applies a patch
+> // to a gameserver. Returns a patched copy and does not modify the original game server.
+> func patchGameServer(t *testing.T, action k8stesting.Action, gs *agonesv1.GameServer) *agonesv1.GameServer {
+> 	t.Helper()
+> 	pa := action.(k8stesting.PatchAction)
+> 	patchJSON := pa.GetPatch()
+> 	patch, err := jsonpatch.DecodePatch(patchJSON)
+> 	assert.NoError(t, err)
+> 	gsCopy := gs.DeepCopy()
+> 	gsJSON, err := json.Marshal(gsCopy)
+> 	assert.NoError(t, err)
+> 	patchedGs, err := patch.Apply(gsJSON)
+> 	assert.NoError(t, err)
+> 	err = json.Unmarshal(patchedGs, &gsCopy)
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 31 lexically identified declarations, including `defaultTestListMaxCapacity` (L54), `patchGameServer` (L58), `TestSidecarRun` (L75), `TestSDKServerSyncGameServer` (L256), `TestSidecarUpdateState` (L354), `TestSidecarHealthLastUpdated` (L415), `TestSidecarUnhealthyMessage` (L462), `TestSidecarHealthy` (L516), `TestSidecarHTTPHealthCheck` (L612), `TestSDKServerGetGameServer` (L661), `TestSDKServerWatchGameServer` (L696), `TestSDKServerSendGameServerUpdate` (L770), `TestSDKServer_SendGameServerUpdateRemovesDisconnectedStream` (L819), `TestSDKServerUpdateEventHandler` (L878), `TestSDKServerReserveTimeoutOnRun` (L929), `TestSDKServerReserveTimeout` (L988), `TestSDKServerUpdateCounter` (L1104), `TestSDKServerAddListValue` (L1362), `TestSDKServerRemoveListValue` (L1512), `TestSDKServerUpdateList` (L1655), `TestDeleteValues` (L1854), `TestSDKServerGracefulTerminationInterrupt` (L1881), `TestSDKServerGracefulTerminationShutdown` (L1944), `TestSDKServerGracefulTerminationGameServerStateChannel` (L2007). The full declaration list is recorded under `agones:pkg/sdkserver/sdkserver_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/gameserverallocations`, `agones.dev/agones/pkg/sdk`, `agones.dev/agones/pkg/sdk/beta`, `agones.dev/agones/pkg/testing`, `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+7. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+8. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+9. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/testing` -> module `pkg::testing`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-375dc5566a1c653aa6.** [agones/pkg/testing/doc.go, lines 15–16](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/testing/doc.go#L15-L16). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3ad5519b50f8ed2a053a106d06efecba91fc320ad2ae1474130e4056ade21a0a`.
+
+> // Package testing is for project wide testing utilities.
+> package testing
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-6d63529ad4ed1756"></a>
+
+
+### File `pkg/testing/apihooks.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `ba7f4aa2587105df8ac3021037367b6e57c5964a`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/pkg/testing/apihooks.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-4186b688d299ea284d.** [agones/pkg/testing/apihooks.go, lines 23–37](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/testing/apihooks.go#L23-L37). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `badd6a4f0fd687539a205677c985e9e00fde557e5cd39325501e853f7bd9fa0c`.
+
+> 
+> // FakeAPIHooks is a no-op, fake implementation of APIHooks
+> type FakeAPIHooks struct {
+> }
+> 
+> var _ agonesv1.APIHooks = FakeAPIHooks{}
+> 
+> // ValidateGameServerSpec is called by GameServer.Validate to allow for product specific validation.
+> func (f FakeAPIHooks) ValidateGameServerSpec(_ *agonesv1.GameServerSpec, _ *field.Path) field.ErrorList {
+> 	return nil
+> }
+> 
+> // ValidateScheduling is called by Fleet and GameServerSet Validate() to allow for product specific validation of scheduling strategy.
+> func (f FakeAPIHooks) ValidateScheduling(_ apis.SchedulingStrategy, _ *field.Path) field.ErrorList {
+> 	return nil
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 6 lexically identified declarations, including `FakeAPIHooks` (L25), `_` (L28), `ValidateGameServerSpec` (L31), `ValidateScheduling` (L36), `MutateGameServerPod` (L41), `SetEviction` (L46). The full declaration list is recorded under `agones:pkg/testing/apihooks.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis`, `agones.dev/agones/pkg/apis/agones/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-d543fa34c1fc809c"></a>
+
+
+### File `pkg/testing/controller.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `530ad0b9dc3e75fac1b117c1484c32af89b50f46`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/pkg/testing/controller.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-90976b547954e3535f.** [agones/pkg/testing/controller.go, lines 34–48](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/testing/controller.go#L34-L48). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `06b77a0d81efabcc5dadd5c96723eac50de1b0950862b109241c49e0983c3342`.
+
+> 
+> // Handy tools for testing controllers
+> 
+> // Mocks is a holder for all my fakes and Mocks
+> type Mocks struct {
+> 	KubeClient            *kubefake.Clientset
+> 	KubeInformerFactory   informers.SharedInformerFactory
+> 	ExtClient             *extfake.Clientset
+> 	AgonesClient          *agonesfake.Clientset
+> 	AgonesInformerFactory externalversions.SharedInformerFactory
+> 	FakeRecorder          *record.FakeRecorder
+> 	Mux                   *http.ServeMux
+> }
+> 
+> // NewMocks creates a new set of fakes and mocks.
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 6 lexically identified declarations, including `Mocks` (L38), `NewMocks` (L49), `StartInformers` (L65), `NewEstablishedCRD` (L80), `AssertEventContains` (L93), `AssertNoEvent` (L105). The full declaration list is recorded under `agones:pkg/testing/controller.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/client/clientset/versioned/fake`, `agones.dev/agones/pkg/client/informers/externalversions`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+5. Preserve source panic/recover boundaries; do not use an unsupported panic as a translation placeholder.
+
+6. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-8363c13a69457afa"></a>
+
+
+### File `pkg/testing/doc.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `4bf2e36086e71bf47e6eac8f70455ed85c8c7eb2`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/pkg/testing/doc.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-40b375498405f5bcc9.** [agones/pkg/testing/doc.go, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/testing/doc.go#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3ad5519b50f8ed2a053a106d06efecba91fc320ad2ae1474130e4056ade21a0a`.
+
+> // Copyright Contributors to Agones a Series of LF Projects, LLC.
+> //
+> // Licensed under the Apache License, Version 2.0 (the "License");
+> // you may not use this file except in compliance with the License.
+> // You may obtain a copy of the License at
+> //
+> //     http://www.apache.org/licenses/LICENSE-2.0
+> //
+> // Unless required by applicable law or agreed to in writing, software
+> // distributed under the License is distributed on an "AS IS" BASIS,
+> // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+> // See the License for the specific language governing permissions and
+> // limitations under the License.
+> 
+> // Package testing is for project wide testing utilities.
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/util/apiserver` -> module `pkg::util::apiserver`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-6396063043160e49"></a>
+
+
+### File `pkg/util/apiserver/apiserver_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `86b0b267038979b5cb629182ff263ed876ecc000`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/util/apiserver/apiserver_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-88c7d4d2c61e810a13.** [agones/pkg/util/apiserver/apiserver_test.go, lines 45–59](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/util/apiserver/apiserver_test.go#L45-L59). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `f744d7164ebfe4cb4f07d881b74f9d98a025876c611c97646a791303910a4087`.
+
+> 
+> func TestApiServerStubs(t *testing.T) {
+> 	t.Parallel()
+> 	// testing API endpoints that don't do a whole lot, but are needed for APIService endpoints.
+> 	mux := http.NewServeMux()
+> 	ts := httptest.NewUnstartedServer(mux)
+> 	_ = NewAPIServer(mux)
+> 
+> 	ts.Start()
+> 	defer ts.Close()
+> 	client := ts.Client()
+> 
+> 	resp, err := client.Get(ts.URL + "/openapi/v2")
+> 	require.NoError(t, err)
+> 	assert.Equal(t, k8sruntime.ContentTypeJSON, resp.Header.Get(ContentTypeHeader))
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 5 lexically identified declarations, including `TestApiServerStubs` (L46), `TestAPIServerAddAPIResourceCRDHandler` (L77), `TestAPIServerAddAPIResourceDiscovery` (L112), `TestAPIServerAddAPIResourceDiscoveryParallel` (L202), `TestSplitNameSpaceResource` (L246). The full declaration list is recorded under `agones:pkg/util/apiserver/apiserver_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/util/crd` -> module `pkg::util::crd`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-55b12ee19997ac6a"></a>
+
+
+### File `pkg/util/crd/crd_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `786328f1c40d4dd99f3955c360072c3b01426832`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/util/crd/crd_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-8a0f557cb28ed8bbba.** [agones/pkg/util/crd/crd_test.go, lines 30–44](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/util/crd/crd_test.go#L30-L44). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `70ee2ff848215035544f2fdbe6861207f7f13c8ab92ae31223abe6e4d9b21c50`.
+
+> 
+> func TestWaitForEstablishedCRD(t *testing.T) {
+> 	t.Parallel()
+> 	crd := &apiextv1.CustomResourceDefinition{
+> 		Status: apiextv1.CustomResourceDefinitionStatus{
+> 			Conditions: []apiextv1.CustomResourceDefinitionCondition{{
+> 				Type:   apiextv1.Established,
+> 				Status: apiextv1.ConditionTrue,
+> 			}},
+> 		},
+> 	}
+> 
+> 	t.Run("CRD already established", func(t *testing.T) {
+> 		extClient := &extfake.Clientset{}
+> 		extClient.AddReactor("get", "customresourcedefinitions", func(_ k8stesting.Action) (bool, runtime.Object, error) {
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `TestWaitForEstablishedCRD` (L31). The full declaration list is recorded under `agones:pkg/util/crd/crd_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+7. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/util/errors` -> module `pkg::util::errors`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-44e7012b216e0bac"></a>
+
+
+### File `pkg/util/errors/errors_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `cd7ecf905ee4fe538a87a208fcac38bc8ff89292`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/util/errors/errors_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-df1a9767848f54c079.** [agones/pkg/util/errors/errors_test.go, lines 29–43](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/util/errors/errors_test.go#L29-L43). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `2a3190af25854a45983534dd7953063f10d7cdd8dd496c2dd6fb362174f19431`.
+
+> 
+> type testStruct struct{}
+> 
+> func TestFromPackage(t *testing.T) {
+> 	errs := FromPackage()
+> 
+> 	assert.Equal(t, thisPkg, errs.pkg)
+> 	assert.Empty(t, errs.structName)
+> }
+> 
+> func TestFromPackageAtVarInit(t *testing.T) {
+> 	assert.Equal(t, thisPkg, pkgErrs.pkg)
+> 	assert.Empty(t, pkgErrs.structName)
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 12 lexically identified declarations, including `thisPkg` (L24), `pkgErrs` (L28), `testStruct` (L30), `TestFromPackage` (L32), `TestFromPackageAtVarInit` (L39), `TestFromStruct` (L44), `TestFromStructDegradation` (L63), `TestPackageFromFunc` (L81), `TestNew` (L98), `TestErrorf` (L113), `TestWrap` (L127), `TestWrapf` (L144). The full declaration list is recorded under `agones:pkg/util/errors/errors_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+5. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/util/fswatch` -> module `pkg::util::fswatch`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-5a4332acb14e4a30"></a>
+
+
+### File `pkg/util/fswatch/fswatch_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `8ff482df5b4bb7932faf4ac670a948c8eb3b0253`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/util/fswatch/fswatch_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-a1685b90d94530877c.** [agones/pkg/util/fswatch/fswatch_test.go, lines 25–39](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/util/fswatch/fswatch_test.go#L25-L39). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `d039cfecc98d294a5710cce5fc914b32632c255b47f033a4bc8a5110f6a05505`.
+
+> 
+> func TestBatchWatch(t *testing.T) {
+> 	eventChan := make(chan fsnotify.Event)
+> 	errorChan := make(chan error)
+> 	cancelChan := make(chan struct{})
+> 	defer close(cancelChan)
+> 
+> 	eventOut := make(chan struct{}, 1) // only allow one event
+> 	errorCount := 0
+> 
+> 	go batchWatch(time.Second, eventChan, errorChan, cancelChan, func() {
+> 		select {
+> 		case eventOut <- struct{}{}:
+> 			// capacity
+> 		default:
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `TestBatchWatch` (L26). The full declaration list is recorded under `agones:pkg/util/fswatch/fswatch_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+7. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/util/https` -> module `pkg::util::https`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-475169b6b2e2f046"></a>
+
+
+### File `pkg/util/https/https_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `959d1eaf10ae060b95a35744e78559d348516384`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/util/https/https_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-b99a6a833f64be338c.** [agones/pkg/util/https/https_test.go, lines 26–40](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/util/https/https_test.go#L26-L40). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `aee1f54ff4927fd558183f70e7163f82b0e9f92b2608e1c7bda5f252f027acd2`.
+
+> 
+> func TestLogRequestRedactsSensitiveHeaders(t *testing.T) {
+> 	r, err := http.NewRequest(http.MethodPost, "/apis/allocation.agones.dev/v1/namespaces/default/gameserverallocations", nil)
+> 	assert.NoError(t, err)
+> 	r.Header.Set("Authorization", "Bearer super-secret-token")
+> 	r.Header.Set("X-Api-Key", "another-secret-value")
+> 	r.Header.Set("Content-Type", "application/json")
+> 
+> 	entry := LogRequest(logrus.WithField("source", "test"), r)
+> 
+> 	headers, ok := entry.Data["headers"].(http.Header)
+> 	assert.True(t, ok)
+> 	assert.Equal(t, []string{"REDACTED"}, headers.Values("Authorization"))
+> 	assert.Equal(t, []string{"REDACTED"}, headers.Values("X-Api-Key"))
+> 	assert.Equal(t, []string{"application/json"}, headers.Values("Content-Type"))
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 2 lexically identified declarations, including `TestLogRequestRedactsSensitiveHeaders` (L27), `TestFourZeroFour` (L43). The full declaration list is recorded under `agones:pkg/util/https/https_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-17abdef57bd0c48c"></a>
+
+
+### File `pkg/util/https/server_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `bd86038a5014d6dc2b78f0d829520b734d14dfc2`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/util/https/server_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-06bee96a08e08772e7.** [agones/pkg/util/https/server_test.go, lines 25–39](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/util/https/server_test.go#L25-L39). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `9ab2a82162c7ba33014d12dfad7d18f298d8e2fcb7f134dced92a4a7dac981b5`.
+
+> 
+> type testServer struct {
+> 	server *httptest.Server
+> }
+> 
+> func (ts *testServer) Shutdown(_ context.Context) error {
+> 	ts.server.Close()
+> 	return nil
+> }
+> 
+> // ListenAndServeTLS(certFile, keyFile string) error
+> func (ts *testServer) ListenAndServeTLS(_, _ string) error {
+> 	ts.server.StartTLS()
+> 	return nil
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 4 lexically identified declarations, including `testServer` (L26), `Shutdown` (L30), `ListenAndServeTLS` (L36), `TestServerRun` (L41). The full declaration list is recorded under `agones:pkg/util/https/server_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/util/runtime` -> module `pkg::util::runtime`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-f77f812d1052a2af"></a>
+
+
+### File `pkg/util/runtime/features_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `63c12089fedb683d87174ec15cc67d1137994e7e`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/util/runtime/features_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-7bad31b48f4be2086f.** [agones/pkg/util/runtime/features_test.go, lines 26–40](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/util/runtime/features_test.go#L26-L40). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `6bd14c7faa40a6dd4efb434caf59063c14195993ce4cdaad87104ac4ba8d87ec`.
+
+> 
+> func TestFeatures(t *testing.T) {
+> 	t.Parallel()
+> 	FeatureTestMutex.Lock()
+> 	defer FeatureTestMutex.Unlock()
+> 
+> 	orig := featureDefaults
+> 	// stable feature flag state
+> 	featureDefaults = map[Feature]bool{
+> 		FeatureExample:  true,
+> 		Feature("Test"): false,
+> 	}
+> 
+> 	t.Run("invalid Feature gate", func(t *testing.T) {
+> 		err := ParseFeatures("Foo")
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 2 lexically identified declarations, including `TestFeatures` (L27), `TestEnableAllFeatures` (L89). The full declaration list is recorded under `agones:pkg/util/runtime/features_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-b05ba9894e427259"></a>
+
+
+### File `pkg/util/runtime/runtime_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `9b8e9fe557273281df061bd50eccbe69e58c8457`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/util/runtime/runtime_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-f810f1acaa89fe745b.** [agones/pkg/util/runtime/runtime_test.go, lines 27–41](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/util/runtime/runtime_test.go#L27-L41). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `ee1f170e5779f7fabc4ba8334ec0f938e0ba2d9ec20445c055b7e59c5e474fa1`.
+
+> 
+> func TestHandleError(t *testing.T) {
+> 	// apimachinery's ErrorHandlers is a package-level slice and the only seam
+> 	// for observing what HandleError forwards, so swap it out and restore it.
+> 	old := runtime.ErrorHandlers
+> 	defer func() { runtime.ErrorHandlers = old }() //nolint:reassign // restoring the swap below.
+> 	var result error
+> 	//nolint:reassign // deliberate test seam, restored by the defer above.
+> 	runtime.ErrorHandlers = []runtime.ErrorHandler{
+> 		func(_ context.Context, err error, _ string, _ ...any) {
+> 			result = err
+> 		},
+> 	}
+> 	HandleError(nil, nil)
+> 	assert.NoError(t, result, "No Errors for now")
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `TestHandleError` (L28). The full declaration list is recorded under `agones:pkg/util/runtime/runtime_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/util/webhooks` -> module `pkg::util::webhooks`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-ff75263c806a8daa"></a>
+
+
+### File `pkg/util/webhooks/webhooks_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `0c6687819c23f3006ba13a362c01822e023c2c15`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/util/webhooks/webhooks_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-801e652a56d5e3e565.** [agones/pkg/util/webhooks/webhooks_test.go, lines 34–48](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/util/webhooks/webhooks_test.go#L34-L48). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `969452576f66927dd17b8811fc571446c5fd19e5436f6295dfc4bda50266e91e`.
+
+> 
+> func TestWebHookAddHandler(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	type testHandler struct {
+> 		gk schema.GroupKind
+> 		op admissionv1.Operation
+> 	}
+> 	type expected struct {
+> 		count int
+> 	}
+> 	fixtures := map[string]struct {
+> 		handlers []testHandler
+> 		expected expected
+> 	}{
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 2 lexically identified declarations, including `TestWebHookAddHandler` (L35), `TestWebHookFleetValidationHandler` (L131). The full declaration list is recorded under `agones:pkg/util/webhooks/webhooks_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+6. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+7. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+8. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:pkg/util/workerqueue` -> module `pkg::util::workerqueue`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-3cafe18a9700ef4f"></a>
+
+
+### File `pkg/util/workerqueue/workerqueue_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `ef36e26465c4fa6e08bba912c0c9b275bbaa69f9`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/pkg/util/workerqueue/workerqueue_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-e18996b7151b4156c4.** [agones/pkg/util/workerqueue/workerqueue_test.go, lines 32–46](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/util/workerqueue/workerqueue_test.go#L32-L46). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `f14b4df8d4934b73a5997b18b7c95aca0830050b9f8f6436efeffa1362043156`.
+
+> 
+> func TestWorkerQueueRun(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	received := make(chan string)
+> 	defer close(received)
+> 
+> 	syncHandler := func(_ context.Context, name string) error {
+> 		assert.Equal(t, "default/test", name)
+> 		received <- name
+> 		return nil
+> 	}
+> 
+> 	wq := NewWorkerQueue(syncHandler, logrus.WithField("source", "test"), "testKey", "test")
+> 	stop := make(chan struct{})
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 5 lexically identified declarations, including `TestWorkerQueueRun` (L33), `TestWorkerQueueHealthy` (L67), `TestWorkQueueHealthCheck` (L106), `TestWorkerQueueEnqueueAfter` (L170), `TestDebugError` (L199). The full declaration list is recorded under `agones:pkg/util/workerqueue/workerqueue_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+7. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+8. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:sdks/go` -> module `sdks::go`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-a4cdc6ad85441557"></a>
+
+
+### File `sdks/go/alpha_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `57879f8da94322fa6b9686b561988a6c5f3e8861`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/sdks/go/alpha_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-0af3ba74fadf089921.** [agones/sdks/go/alpha_test.go, lines 26–40](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/sdks/go/alpha_test.go#L26-L40). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `f63c84c6483989c97e2688798030db5208e683c4a53704425bf9c2ea863299fd`.
+
+> 
+> func TestAlphaGetAndSetPlayerCapacity(t *testing.T) {
+> 	mock := &alphaMock{}
+> 	a := Alpha{
+> 		client: mock,
+> 	}
+> 
+> 	err := a.SetPlayerCapacity(15)
+> 	assert.NoError(t, err)
+> 	assert.Equal(t, int64(15), mock.capacity)
+> 
+> 	capacity, err := a.GetPlayerCapacity()
+> 	assert.NoError(t, err)
+> 	assert.Equal(t, int64(15), capacity)
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 9 lexically identified declarations, including `TestAlphaGetAndSetPlayerCapacity` (L27), `alphaMock` (L75), `PlayerConnect` (L82), `PlayerDisconnect` (L88), `IsPlayerConnected` (L94), `GetConnectedPlayers` (L98), `SetPlayerCapacity` (L102), `GetPlayerCapacity` (L107), `GetPlayerCount` (L111). The full declaration list is recorded under `agones:sdks/go/alpha_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/sdk/alpha`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+5. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-3284479bcf5566c2"></a>
+
+
+### File `sdks/go/beta_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `081362769127eb579bd7733652dc522dd05f179b`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/sdks/go/beta_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-912815b0b9a3a53f5a.** [agones/sdks/go/beta_test.go, lines 30–44](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/sdks/go/beta_test.go#L30-L44). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `a977e5551298e6bc497a973d8acd0cf49b86f50a040fc570734dfdf82e49b39e`.
+
+> 
+> func TestBetaGetAndUpdateCounter(t *testing.T) {
+> 	mock := &betaMock{}
+> 	// Counters must be predefined in the GameServer resource on creation.
+> 	mock.counters = make(map[string]*beta.Counter)
+> 
+> 	sessions := beta.Counter{
+> 		Name:     "sessions",
+> 		Count:    21,
+> 		Capacity: 42,
+> 	}
+> 	games := beta.Counter{
+> 		Name:     "games",
+> 		Count:    12,
+> 		Capacity: 24,
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 9 lexically identified declarations, including `TestBetaGetAndUpdateCounter` (L31), `TestBetaGetAndUpdateList` (L173), `betaMock` (L285), `GetCounter` (L290), `UpdateCounter` (L297), `GetList` (L333), `UpdateList` (L345), `AddListValue` (L366), `RemoveListValue` (L387). The full declaration list is recorded under `agones:sdks/go/beta_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/sdk/beta`, `agones.dev/agones/pkg/util/errors`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+5. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+6. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-b3c6228563026a01"></a>
+
+
+### File `sdks/go/sdk_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `4f5236293042b2a6a2c3ff669f5b5602feffcaa3`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/sdks/go/sdk_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-7488a4b4d9ff587f27.** [agones/sdks/go/sdk_test.go, lines 29–43](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/sdks/go/sdk_test.go#L29-L43). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `41e95907b7202c75a46f8b3d444e06f8cdbd1ef8312e0d79121d9cd16181ece7`.
+
+> 
+> func TestSDK(t *testing.T) {
+> 	sm := &sdkMock{
+> 		hm: &healthMock{},
+> 	}
+> 	s := SDK{
+> 		ctx:    context.Background(),
+> 		client: sm,
+> 		health: sm.hm,
+> 	}
+> 
+> 	assert.False(t, sm.ready)
+> 	assert.False(t, sm.shutdown)
+> 	assert.False(t, sm.hm.healthy)
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 34 lexically identified declarations, including `TestSDK` (L30), `TestSDKWatchGameServer` (L71), `TestSDKSetLabel` (L99), `TestSDKSetAnnotation` (L115), `_` (L131), `_` (L132), `_` (L133), `sdkMock` (L135), `SetLabel` (L146), `SetAnnotation` (L151), `WatchGameServer` (L156), `GetGameServer` (L160), `Ready` (L164), `Allocate` (L169), `Shutdown` (L174), `Health` (L179), `Reserve` (L183), `healthMock` (L188), `Send` (L192), `CloseAndRecv` (L197), `Header` (L201), `Trailer` (L205), `CloseSend` (L209), `Context` (L213). The full declaration list is recorded under `agones:sdks/go/sdk_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/sdk`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+5. Preserve source panic/recover boundaries; do not use an unsupported panic as a translation placeholder.
+
+6. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+7. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+8. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:site` -> module `site`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-2a8784d7b66d2e92"></a>
+
+
+### File `site/handler_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `af7c7fcfe8fdda38c79187a1c15ed1625036bbe3`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/site/handler_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-a396fc48483716e94d.** [agones/site/handler_test.go, lines 25–39](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/site/handler_test.go#L25-L39). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `9d3f7adcf39b60bfe29e402fdf1a8306175f733f01485028ddc64067b82c66d4`.
+
+> 
+> func TestHandler(t *testing.T) {
+> 	tests := []struct {
+> 		name   string
+> 		config string
+> 		path   string
+> 
+> 		goImport string
+> 		goSource string
+> 	}{
+> 		{
+> 			name: "explicit display",
+> 			config: "host: example.com\n" +
+> 				"paths:\n" +
+> 				"  /portmidi:\n" +
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 5 lexically identified declarations, including `TestHandler` (L26), `TestBadConfigs` (L137), `findMeta` (L159), `TestPathConfigSetFind` (L176), `TestCacheHeader` (L239). The full declaration list is recorded under `agones:site/handler_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+5. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/e2e` -> module `test::e2e`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-b6e517d6dcec01e6"></a>
+
+
+### File `test/e2e/README.md`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `0a18742c7529bf5397ce296caab62ec36a07a391`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/e2e/README.md`.
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-c2c20e4fd5111a1fed.** [agones/test/e2e/README.md, lines 2–16](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/e2e/README.md#L2-L16). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `a97d97d7373e37b1d3eb51edf760fc16523df9d18500b9d17fed2a9994f86b04`.
+
+> 
+> End-to-end (e2e) testing is automated testing for real user scenarios.
+> 
+> ## Build and run test
+> 
+> Prerequisites:
+> - a running k8s cluster (kube config is passed as arguments).
+> - Have kubeconfig file ready.
+> - (optional) set the `IMAGE_PULL_SECRET` env var to the secret name needed to pull the gameserver and/or Agones SDK images, if needed
+> 
+> e2e tests are written as Go test. All go test techniques apply, e.g. picking
+> what to run, timeout length.
+> 
+> To run e2e tests on your kubectl configured cluster:
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+4. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-376f1eb5dc190d91"></a>
+
+
+### File `test/e2e/allocator_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `830caf664c41dee4d1eda3c0a4ac0240d08e3815`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/test/e2e/allocator_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-a7d44815423315e733.** [agones/test/e2e/allocator_test.go, lines 56–70](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/e2e/allocator_test.go#L56-L70). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `4e67852e9a95559c33b1156dccf3bcc8dd5aaae44e3798597601eb1212b5be75`.
+
+> 
+> func TestAllocatorWithDeprecatedRequired(t *testing.T) {
+> 	ctx := context.Background()
+> 
+> 	ip, port := helper.GetAllocatorEndpoint(ctx, t, framework)
+> 	requestURL := fmt.Sprintf(allocatorReqURLFmt, ip, port)
+> 	tlsCA := helper.RefreshAllocatorTLSCerts(ctx, t, ip, framework)
+> 
+> 	var flt *agonesv1.Fleet
+> 	var err error
+> 
+> 	flt, err = helper.CreateFleet(ctx, framework.Namespace, framework)
+> 	require.NoError(t, err)
+> 	defer framework.AgonesClient.AgonesV1().Fleets(framework.Namespace).Delete(ctx, flt.Name, metav1.DeleteOptions{}) //nolint:errcheck
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 8 lexically identified declarations, including `TestAllocatorWithDeprecatedRequired` (L57), `TestAllocatorWithSelectors` (L108), `TestAllocatorWithMatchExpressions` (L159), `TestRestAllocatorWithDeprecatedRequired` (L224), `TestAllocatorWithCountersAndLists` (L290), `TestRestAllocatorWithCountersAndLists` (L369), `TestRestAllocatorWithSelectors` (L475), `TestAllocatorCrossNamespace` (L546). The full declaration list is recorded under `agones:test/e2e/allocator_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/allocation/go`, `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/multicluster/v1`, `agones.dev/agones/pkg/util/runtime`, `agones.dev/agones/test/e2e/allochelper`, `agones.dev/agones/test/e2e/framework`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+7. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-9c10eaf2c34009e7"></a>
+
+
+### File `test/e2e/examples_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `c98115f878c1073b1dff32360c710b84d66aaa21`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/test/e2e/examples_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-7f1881298c8ff1902a.** [agones/test/e2e/examples_test.go, lines 30–44](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/e2e/examples_test.go#L30-L44). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `96953d39dc9d10b48043e96eeb587477b0a95ff8a7adeab11d072856f0eefcd7`.
+
+> 
+> func TestSuperTuxKartGameServerReady(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	log := e2eframework.TestLogger(t)
+> 
+> 	gs := &agonesv1.GameServer{
+> 		ObjectMeta: metav1.ObjectMeta{
+> 			GenerateName: "supertuxkart-",
+> 		},
+> 		Spec: agonesv1.GameServerSpec{
+> 			Container: "supertuxkart",
+> 			Ports: []agonesv1.GameServerPort{{
+> 				ContainerPort: 8080,
+> 				Name:          "default",
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 5 lexically identified declarations, including `TestSuperTuxKartGameServerReady` (L31), `TestRustGameServerReady` (L102), `TestCppSimpleGameServerReady` (L136), `TestNodeJSGameServerReady` (L170), `TestXonoticGameServerReady` (L214). The full declaration list is recorded under `agones:test/e2e/examples_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/test/e2e/framework`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-9a414e8c7d08feaf"></a>
+
+
+### File `test/e2e/fleet_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `d030035882bdbd6b4a90b12c9ad507e642963bad`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/test/e2e/fleet_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-d41cfc5d1d44538c1e.** [agones/test/e2e/fleet_test.go, lines 59–73](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/e2e/fleet_test.go#L59-L73). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `489d9b4ed2fe3ec1d92f8e70a3d7d895557499f847fa0b4cae50a55e0465987d`.
+
+> 
+> // TestFleetRequestsLimits reproduces an issue when 1000m and 1 CPU is not equal, but should be equal
+> // Every fleet should create no more than 2 GameServerSet at once on a simple fleet patch
+> func TestFleetRequestsLimits(t *testing.T) {
+> 	t.Parallel()
+> 	ctx := context.Background()
+> 
+> 	flt := defaultFleet(framework.Namespace)
+> 	flt.Spec.Template.Spec.Template.Spec.Containers[0].Resources.Limits[corev1.ResourceCPU] = *resource.NewScaledQuantity(1000, -3)
+> 
+> 	client := framework.AgonesClient.AgonesV1()
+> 	flt, err := client.Fleets(framework.Namespace).Create(ctx, flt, metav1.CreateOptions{})
+> 	if assert.NoError(t, err) {
+> 		defer client.Fleets(framework.Namespace).Delete(ctx, flt.ObjectMeta.Name, metav1.DeleteOptions{}) //nolint:errcheck
+> 	}
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 38 lexically identified declarations, including `TestFleetRequestsLimits` (L62), `TestFleetStrategyValidation` (L90), `TestFleetScaleWithDualAllocations` (L129), `TestFleetScaleUpAllocateEditAndScaleDownToZero` (L210), `TestFleetScaleUpEditAndScaleDown` (L299), `TestFleetRollingUpdate` (L393), `TestUpdateFleetReplicaAndSpec` (L582), `TestScaleFleetUpAndDownWithGameServerAllocation` (L629), `TestFleetUpdates` (L697), `TestFleetCountsAllocations` (L765), `TestUpdateGameServerConfigurationInFleet` (L785), `TestReservedGameServerInFleet` (L841), `TestFleetGSSpecValidation` (L902), `TestFleetNameValidation` (L967), `assertSuccessOrUpdateConflict` (L988), `TestGameServerAllocationDuringGameServerDeletion` (L1000), `TestCreateFleetAndUpdateScaleSubresource` (L1119), `TestScaleUpAndDownInParallelStressTest` (L1147), `TestUpdateFleetScheduling` (L1264), `TestFleetWithZeroReplicas` (L1304), `TestFleetWithLongLabelsAnnotations` (L1324), `TestFleetRecreateGameServers` (L1392), `TestFleetResourceValidation` (L1491), `TestFleetAggregatedCounterStatus` (L1562). The full declaration list is recorded under `agones:test/e2e/fleet_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis`, `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/allocation/v1`, `agones.dev/agones/pkg/client/clientset/versioned/typed/agones/v1`, `agones.dev/agones/pkg/util/runtime`, `agones.dev/agones/test/e2e/framework`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+7. Preserve source panic/recover boundaries; do not use an unsupported panic as a translation placeholder.
+
+8. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+9. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-9f0478bde4fcdb05"></a>
+
+
+### File `test/e2e/fleetautoscaler_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `07e18e7f0fb28d37b2fa2757540f56990c6aa22e`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/test/e2e/fleetautoscaler_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-b28b83cdba91443b20.** [agones/test/e2e/fleetautoscaler_test.go, lines 66–80](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/e2e/fleetautoscaler_test.go#L66-L80). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `9f922da1ac621ba396c290c34f2153aeaadeb2429bac4cc3e50845a81b9e9e9f`.
+
+> 
+> func TestAutoscalerBasicFunctions(t *testing.T) {
+> 	t.Parallel()
+> 	ctx := context.Background()
+> 
+> 	stable := framework.AgonesClient.AgonesV1()
+> 	fleets := stable.Fleets(framework.Namespace)
+> 	flt, err := fleets.Create(ctx, defaultFleet(framework.Namespace), metav1.CreateOptions{})
+> 	if assert.NoError(t, err) {
+> 		defer fleets.Delete(ctx, flt.ObjectMeta.Name, metav1.DeleteOptions{}) //nolint:errcheck
+> 	}
+> 
+> 	framework.AssertFleetCondition(t, flt, e2e.FleetReadyCount(flt.Spec.Replicas))
+> 
+> 	fleetautoscalers := framework.AgonesClient.AutoscalingV1().FleetAutoscalers(framework.Namespace)
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 33 lexically identified declarations, including `deletePropagationForeground` (L61), `waitForDeletion` (L63), `TestAutoscalerBasicFunctions` (L67), `TestFleetAutoscalerDefaultSyncInterval` (L149), `TestFleetAutoScalerRollingUpdate` (L197), `TestAutoscalerStressCreate` (L282), `patchFleetAutoscaler` (L339), `defaultFleetAutoscaler` (L367), `TestAutoscalerWebhook` (L391), `TestFleetAutoscalerTLSWebhook` (L497), `TestAutoscalerWebhookWithMetadata` (L619), `defaultAutoscalerWebhook` (L692), `generateRootCA` (L747), `generateLocalCert` (L802), `TestCounterAutoscaler` (L856), `TestCounterAutoscalerWithNoReplicas` (L1015), `TestCounterAutoscalerAllocated` (L1096), `TestCounterAutoscalerAllocatedMultipleNamespaces` (L1195), `TestListAutoscaler` (L1392), `TestListAutoscalerWithNoReplicas` (L1559), `TestListAutoscalerAllocated` (L1640), `TestListAutoscalerWithSDKMethods` (L1756), `TestScheduleAutoscaler` (L1875), `TestChainAutoscaler` (L1916). The full declaration list is recorded under `agones:test/e2e/fleetautoscaler_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/allocation/v1`, `agones.dev/agones/pkg/apis/autoscaling/v1`, `agones.dev/agones/pkg/util/runtime`, `agones.dev/agones/test/e2e/allochelper`, `agones.dev/agones/test/e2e/framework`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+7. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+8. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-367f847636dce325"></a>
+
+
+### File `test/e2e/gameserver_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `3a61f2abd47be14fb51d9bb444de5029cba5731a`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/test/e2e/gameserver_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-5fd97503ea067879c1.** [agones/test/e2e/gameserver_test.go, lines 57–71](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/e2e/gameserver_test.go#L57-L71). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `295e7b26fa9ed7f07d4b4f55afe9f34abbdd88e291dba14eae041ff31f70b5fe`.
+
+> 
+> func TestCreateConnect(t *testing.T) {
+> 	t.Parallel()
+> 	ctx := context.Background()
+> 	gs := framework.DefaultGameServer(framework.Namespace)
+> 	readyGs, err := framework.CreateGameServerAndWaitUntilReady(t, framework.Namespace, gs)
+> 	if err != nil {
+> 		t.Fatalf("Could not get a GameServer ready: %v", err)
+> 	}
+> 	assert.Len(t, readyGs.Status.Ports, 1)
+> 	assert.NotEmpty(t, readyGs.Status.Ports[0].Port)
+> 	assert.NotEmpty(t, readyGs.Status.Address)
+> 	assert.NotEmpty(t, readyGs.Status.Addresses)
+> 
+> 	require.NotEmpty(t, readyGs.Status.NodeName)
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 39 lexically identified declarations, including `TestCreateConnect` (L58), `TestHostName` (L91), `TestSDKSetLabel` (L142), `TestHealthCheckDisable` (L173), `TestSDKSetAnnotation` (L204), `TestUnhealthyGameServerAfterHealthCheckFail` (L243), `TestUnhealthyGameServersWithoutFreePorts` (L263), `TestGameServerUnhealthyAfterDeletingPod` (L302), `TestGameServerRestartBeforeReadyCrash` (L329), `TestGameServerUnhealthyBeforeReadyCrash` (L444), `TestGameServerUnhealthyAfterReadyCrash` (L490), `TestGameServerUnhealthyAfterReadyCrashWithGenericContainer` (L545), `TestGameServerRestrictedPodSecurity` (L583), `TestGameServerPodCompletedAfterCleanExit` (L634), `TestGameServerShutdownAfterCleanExitWithLongLivedContainer` (L706), `TestDevelopmentGameServerLifecycle` (L762), `TestGameServerSelfAllocate` (L860), `TestGameServerReadyAllocateReady` (L883), `TestGameServerWithPortsMappedToMultipleContainers` (L917), `TestGameServerWithPortsMappedToInitSidecarContainers` (L995), `TestGameServerReserve` (L1069), `TestGameServerShutdown` (L1125), `TestGameServerEvicted` (L1157), `TestGameServerPassthroughPort` (L1189). The full declaration list is recorded under `agones:test/e2e/gameserver_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/allocation/v1`, `agones.dev/agones/pkg/testing`, `agones.dev/agones/pkg/util/runtime`, `agones.dev/agones/test/e2e/framework`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+7. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+8. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+9. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-e95c18de54d147c1"></a>
+
+
+### File `test/e2e/gameserverallocation_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `f68164d3d07a9c32cbf7a77800e31687952f1c4a`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/test/e2e/gameserverallocation_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-a8eb41f58bec521727.** [agones/test/e2e/gameserverallocation_test.go, lines 40–54](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/e2e/gameserverallocation_test.go#L40-L54). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `d2b614309917837d248b8b9790df8bed6ba82f702688264de3b534a6d6fc1034`.
+
+> 
+> func TestCreateFleetAndGameServerAllocate(t *testing.T) {
+> 	t.Parallel()
+> 
+> 	fixtures := []apis.SchedulingStrategy{apis.Packed, apis.Distributed}
+> 
+> 	for _, strategy := range fixtures {
+> 		t.Run(string(strategy), func(t *testing.T) {
+> 			t.Parallel()
+> 			ctx := context.Background()
+> 
+> 			fleets := framework.AgonesClient.AgonesV1().Fleets(framework.Namespace)
+> 			fleet := defaultFleet(framework.Namespace)
+> 			fleet.Spec.Scheduling = strategy
+> 			flt, err := fleets.Create(ctx, fleet, metav1.CreateOptions{})
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 13 lexically identified declarations, including `TestCreateFleetAndGameServerAllocate` (L41), `TestCreateFleetAndGameServerStateFilterAllocation` (L87), `TestHighDensityGameServerFlow` (L135), `TestCounterAndListGameServerAllocation` (L205), `TestCounterGameServerAllocationActions` (L585), `TestListGameServerAllocationActions` (L807), `TestMultiClusterAllocationOnLocalCluster` (L937), `TestCreateFullFleetAndCantGameServerAllocate` (L1074), `TestGameServerAllocationMetaDataPatch` (L1123), `TestGameServerAllocationPreferredSelection` (L1184), `TestGameServerAllocationReturnLabels` (L1276), `TestGameServerAllocationDeletionOnUnAllocate` (L1330), `TestGameServerAllocationDuringMultipleAllocationClients` (L1347). The full declaration list is recorded under `agones:test/e2e/gameserverallocation_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis`, `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/allocation/v1`, `agones.dev/agones/pkg/apis/multicluster/v1`, `agones.dev/agones/pkg/util/runtime`, `agones.dev/agones/test/e2e/framework`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+7. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-875d69fef8513377"></a>
+
+
+### File `test/e2e/main_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `331cef091256e0495f2bfaf51ba5056c16d95b2b`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/test/e2e/main_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-fbccbd1e384f10162d.** [agones/test/e2e/main_test.go, lines 32–46](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/e2e/main_test.go#L32-L46). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `c0bd7a7cc0df71aef8b57f58bb39d7b192d27bf83ba26db1dac051a253dd6d92`.
+
+> 
+> func TestMain(m *testing.M) {
+> 	log.SetFormatter(&log.TextFormatter{
+> 		EnvironmentOverrideColors: true,
+> 		FullTimestamp:             true,
+> 		TimestampFormat:           "2006-01-02 15:04:05.000",
+> 	})
+> 
+> 	var (
+> 		err      error
+> 		exitCode int
+> 	)
+> 
+> 	if err = e2eframework.ParseTestFlags(); err != nil {
+> 		log.WithError(err).Error("failed to parse go test flags")
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 3 lexically identified declarations, including `framework` (L31), `TestMain` (L33), `cleanupNamespaces` (L96). The full declaration list is recorded under `agones:test/e2e/main_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/test/e2e/framework`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+7. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-bd6f9de744738ab1"></a>
+
+
+### File `test/e2e/ping_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `d85637ebd0a6500578df04f671b9aa1f1a6d3226`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/test/e2e/ping_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-d052e5ec00b3e20f35.** [agones/test/e2e/ping_test.go, lines 34–48](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/e2e/ping_test.go#L34-L48). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3900059ee4033ee5c51dd2125df82834889ec872b49da8d5bdc5f7522a78ae7c`.
+
+> 
+> func TestPingHTTP(t *testing.T) {
+> 	t.Parallel()
+> 	ctx := context.Background()
+> 
+> 	kubeCore := framework.KubeClient.CoreV1()
+> 	svc, err := kubeCore.Services("agones-system").Get(ctx, "agones-ping-http-service", metav1.GetOptions{})
+> 	require.NoError(t, err)
+> 
+> 	ip, err := externalIP(t, kubeCore, svc)
+> 	require.NoError(t, err)
+> 
+> 	port := svc.Spec.Ports[0]
+> 	// gate
+> 	assert.Equal(t, "http", port.Name)
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 5 lexically identified declarations, including `errs` (L33), `TestPingHTTP` (L35), `externalPort` (L63), `TestPingUDP` (L75), `externalIP` (L99). The full declaration list is recorded under `agones:test/e2e/ping_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/util/errors`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+7. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/e2e/allocator` -> module `test::e2e::allocator`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-6e585a261f18da64"></a>
+
+
+### File `test/e2e/allocator/main_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `3c44ff060ff7e4aebf2b5b4a72708fadb1402b4a`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/test/e2e/allocator/main_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-6068a6516dd4d66119.** [agones/test/e2e/allocator/main_test.go, lines 30–44](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/e2e/allocator/main_test.go#L30-L44). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `5d6cfaf7424127d407c48eea8ebd3aaa52bb2be3f07934258799fb1677546f49`.
+
+> 
+> func TestMain(m *testing.M) {
+> 	log.SetFormatter(&log.TextFormatter{
+> 		EnvironmentOverrideColors: true,
+> 		FullTimestamp:             true,
+> 		TimestampFormat:           "2006-01-02 15:04:05.000",
+> 	})
+> 
+> 	var (
+> 		err      error
+> 		exitCode int
+> 	)
+> 
+> 	if err = e2eframework.ParseTestFlags(); err != nil {
+> 		log.WithError(err).Error("failed to parse go test flags")
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 2 lexically identified declarations, including `framework` (L29), `TestMain` (L31). The full declaration list is recorded under `agones:test/e2e/allocator/main_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/test/e2e/allochelper`, `agones.dev/agones/test/e2e/framework`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+7. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-131fc3503bb6d746"></a>
+
+
+### File `test/e2e/allocator/pod_termination_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `724faf05a5d99d4ee1f75d655ef2a1a090b72aa8`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/test/e2e/allocator/pod_termination_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-3c04c3a17ad22b69a8.** [agones/test/e2e/allocator/pod_termination_test.go, lines 39–53](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/e2e/allocator/pod_termination_test.go#L39-L53). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `0307796f565a351595f06d56986d7c149fa5ec0a1189592245d2bfc150994118`.
+
+> 
+> func TestAllocatorAfterDeleteReplica(t *testing.T) {
+> 	ctx := context.Background()
+> 	logger := e2e.TestLogger(t)
+> 
+> 	// initialize gRPC client, which tests the connection
+> 	grpcClient, err := helper.GetAllocatorClient(ctx, t, framework)
+> 	require.NoError(t, err, "Could not initialize rpc client")
+> 
+> 	// poll and wait until all allocator pods are available
+> 	err = wait.PollUntilContextTimeout(context.Background(), retryInterval, retryTimeout, true, func(ctx context.Context) (done bool, err error) {
+> 		deployment, err := framework.KubeClient.AppsV1().Deployments("agones-system").Get(ctx, "agones-allocator", metav1.GetOptions{})
+> 		if err != nil {
+> 			return true, err
+> 		}
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `TestAllocatorAfterDeleteReplica` (L40). The full declaration list is recorded under `agones:test/e2e/allocator/pod_termination_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/allocation/go`, `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/test/e2e/allochelper`, `agones.dev/agones/test/e2e/framework`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+7. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/e2e/allochelper` -> module `test::e2e::allochelper`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-408d48c98d275d76"></a>
+
+
+### File `test/e2e/allochelper/helper_func.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `b500fbcf60e5666a2e16be2d4c9f828f676b1efd`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/e2e/allochelper/helper_func.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-c2fd1fb7efc725fbaf.** [agones/test/e2e/allochelper/helper_func.go, lines 77–91](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/e2e/allochelper/helper_func.go#L77-L91). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `8ef7eaf9201130650c6021dc92f05066bc242ec12a2607f74fc3cff902bf896c`.
+
+> 
+> // CopyDefaultAllocatorClientSecret copys the allocator client secret
+> func CopyDefaultAllocatorClientSecret(ctx context.Context, t *testing.T, toNamespace string, framework *e2e.Framework) {
+> 	t.Helper()
+> 	kubeCore := framework.KubeClient.CoreV1()
+> 	clientSecret, err := kubeCore.Secrets(allocatorClientSecretNamespace).Get(ctx, allocatorClientSecretName, metav1.GetOptions{})
+> 	if err != nil {
+> 		t.Fatalf("Could not retrieve default allocator client secret %s/%s: %v", allocatorClientSecretNamespace, allocatorClientSecretName, err)
+> 	}
+> 	clientSecret.ObjectMeta.Namespace = toNamespace
+> 	clientSecret.ResourceVersion = ""
+> 	_, err = kubeCore.Secrets(toNamespace).Create(ctx, clientSecret, metav1.CreateOptions{})
+> 	if err != nil && !k8serrors.IsAlreadyExists(err) {
+> 		t.Fatalf("Could not copy default allocator client %s/%s secret to namespace %s: %v", allocatorClientSecretNamespace, allocatorClientSecretName, toNamespace, err)
+> 	}
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 16 lexically identified declarations, including `errs` (L49), `CopyDefaultAllocatorClientSecret` (L79), `CreateAllocationPolicy` (L95), `GetAllocatorEndpoint` (L107), `CreateRemoteClusterDialOptions` (L129), `GetTLSConfig` (L151), `CreateFleet` (L183), `CreateFleetWithOpts` (L188), `RefreshAllocatorTLSCerts` (L196), `generateTLSCertPair` (L228), `ValidateAllocatorResponse` (L278), `DeleteAgonesPod` (L293), `GetAllocatorClient` (L303), `CleanupNamespaces` (L363), `defaultFleet` (L389), `fleetWithGameServerSpec` (L395). The full declaration list is recorded under `agones:test/e2e/allochelper/helper_func.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/allocation/go`, `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/multicluster/v1`, `agones.dev/agones/pkg/util/errors`, `agones.dev/agones/test/e2e/framework`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+7. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/e2e/controller` -> module `test::e2e::controller`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION_COMMENT; Q-45a127468f099e502b.** [agones/test/e2e/controller/doc.go, lines 15–17](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/e2e/controller/doc.go#L15-L17). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `b7bf29dbffb8b268a662b5be88fa26ace4bdeda4b16d4ce3ce1115dfe793b3e8`.
+
+> // Package controller is for testing controller failures.
+> // *** Under no circumstance should these tests be made t.Parallel()! ***
+> package controller
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-4ffe991f124f25f8"></a>
+
+
+### File `test/e2e/controller/crash_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `25b6e3d6f030be23dbdc85fd2c66e7e1200f755b`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/test/e2e/controller/crash_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-5c7fabc30c1fa43f2c.** [agones/test/e2e/controller/crash_test.go, lines 31–45](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/e2e/controller/crash_test.go#L31-L45). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `95ae9b8619aabef2eba916b574dbee090c02520e419f0dfe055878fd219331cd`.
+
+> 
+> func TestGameServerUnhealthyAfterDeletingPodWhileControllerDown(t *testing.T) {
+> 	logger := e2eframework.TestLogger(t)
+> 	gs := framework.DefaultGameServer(defaultNs)
+> 	ctx := context.Background()
+> 
+> 	readyGs, err := framework.CreateGameServerAndWaitUntilReady(t, defaultNs, gs)
+> 	if err != nil {
+> 		t.Fatalf("Could not get a GameServer ready: %v", err)
+> 	}
+> 	logger.WithField("gsKey", readyGs.ObjectMeta.Name).Info("GameServer Ready")
+> 
+> 	gsClient := framework.AgonesClient.AgonesV1().GameServers(defaultNs)
+> 	podClient := framework.KubeClient.CoreV1().Pods(defaultNs)
+> 	defer gsClient.Delete(ctx, readyGs.ObjectMeta.Name, metav1.DeleteOptions{}) //nolint:errcheck
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 6 lexically identified declarations, including `TestGameServerUnhealthyAfterDeletingPodWhileControllerDown` (L32), `TestLeaderElectionAfterDeletingLeader` (L62), `deleteAgonesControllerPods` (L100), `waitForAgonesControllerRunning` (L115), `getAgonesControllerPods` (L139), `deleteAgonesControllerPod` (L145). The full declaration list is recorded under `agones:test/e2e/controller/crash_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/test/e2e/framework`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-fd3f2104a87660ad"></a>
+
+
+### File `test/e2e/controller/doc.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `7ad814b2e11380d7a46f6e1ff2df5b5374c8e749`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/e2e/controller/doc.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-b50701b067cbb19c88.** [agones/test/e2e/controller/doc.go, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/e2e/controller/doc.go#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `b7bf29dbffb8b268a662b5be88fa26ace4bdeda4b16d4ce3ce1115dfe793b3e8`.
+
+> // Copyright Contributors to Agones a Series of LF Projects, LLC.
+> //
+> // Licensed under the Apache License, Version 2.0 (the "License");
+> // you may not use this file except in compliance with the License.
+> // You may obtain a copy of the License at
+> //
+> //     http://www.apache.org/licenses/LICENSE-2.0
+> //
+> // Unless required by applicable law or agreed to in writing, software
+> // distributed under the License is distributed on an "AS IS" BASIS,
+> // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+> // See the License for the specific language governing permissions and
+> // limitations under the License.
+> 
+> // Package controller is for testing controller failures.
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-dc6e604e7ac8625d"></a>
+
+
+### File `test/e2e/controller/main_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `031cfcb2847fcd3aa94d8ac9e362bb30759c39cf`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/test/e2e/controller/main_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-c6c5e664cf4a385fcb.** [agones/test/e2e/controller/main_test.go, lines 28–42](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/e2e/controller/main_test.go#L28-L42). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `ee009ccbd72e837afc7480bbf93ccefecbf35ac055078048a34d2ab6100e81aa`.
+
+> 
+> func TestMain(m *testing.M) {
+> 	logrus.SetFormatter(&logrus.TextFormatter{
+> 		EnvironmentOverrideColors: true,
+> 		FullTimestamp:             true,
+> 		TimestampFormat:           "2006-01-02 15:04:05.000",
+> 	})
+> 
+> 	var (
+> 		err      error
+> 		exitCode int
+> 	)
+> 
+> 	if err = e2eframework.ParseTestFlags(); err != nil {
+> 		logrus.WithError(err).Error("failed to parse go test flags")
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 3 lexically identified declarations, including `defaultNs` (L25), `framework` (L27), `TestMain` (L29). The full declaration list is recorded under `agones:test/e2e/controller/main_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/test/e2e/framework`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/e2e/extensions` -> module `test::e2e::extensions`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-75ad896031c7dc4c"></a>
+
+
+### File `test/e2e/extensions/high_availability_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `4465c379c1c39a466c6d5e8258fd079d4b9bb442`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/test/e2e/extensions/high_availability_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-8d20b12eab0cdb65ae.** [agones/test/e2e/extensions/high_availability_test.go, lines 30–44](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/e2e/extensions/high_availability_test.go#L30-L44). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `5edcf51a6ed0af22f0d0c059d46c96d1078d8c6912a11eacfc2e3c29808b0c31`.
+
+> 
+> // Test creating a gameserver when one of the extensions pods is down/deleted
+> func TestGameServerCreationAfterDeletingOneExtensionsPod(t *testing.T) {
+> 	logger := e2eframework.TestLogger(t)
+> 	ctx := context.Background()
+> 
+> 	assert.NoError(t, waitForAgonesExtensionsRunning(ctx))
+> 
+> 	list, err := getAgonesExtensionsPods(ctx)
+> 	logger.Infof("Length of pod list is %v", len(list.Items))
+> 	if len(list.Items) > 2 {
+> 		logger.WithField("podCount", len(list.Items)).Info("Logging events for the Deployment due to pod count > 2 before deleting extensions pod")
+> 		for i := range list.Items {
+> 			logger.Infof("Name of extensions pod %v: %v", i, list.Items[i].ObjectMeta.Name)
+> 			logger.Infof("Status of extensions pod %v", list.Items[i].Status)
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 5 lexically identified declarations, including `TestGameServerCreationAfterDeletingOneExtensionsPod` (L32), `TestGameServerCreationRightAfterDeletingOneExtensionsPod` (L71), `deleteAgonesExtensionsPod` (L99), `waitForAgonesExtensionsRunning` (L117), `getAgonesExtensionsPods` (L137). The full declaration list is recorded under `agones:test/e2e/extensions/high_availability_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/test/e2e/framework`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+5. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-156170052cf6eb71"></a>
+
+
+### File `test/e2e/extensions/main_test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `5bbe3d881af350958c37ea69bc891a6efd5dbb8b`. **Disposition:** `DEFERRED_HARNESS`. **Destination:** `agones-rs/test/e2e/extensions/main_harness.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-4e7e5a02f955c52b78.** [agones/test/e2e/extensions/main_test.go, lines 28–42](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/e2e/extensions/main_test.go#L28-L42). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `7b360be6becaf022d888778757b07d3b1fc6e7f2e4b657d837f96a4a91fd81e1`.
+
+> 
+> func TestMain(m *testing.M) {
+> 	log.SetFormatter(&log.TextFormatter{
+> 		EnvironmentOverrideColors: true,
+> 		FullTimestamp:             true,
+> 		TimestampFormat:           "2006-01-02 15:04:05.000",
+> 	})
+> 
+> 	var (
+> 		err      error
+> 		exitCode int
+> 	)
+> 
+> 	if err = e2eframework.ParseTestFlags(); err != nil {
+> 		log.WithError(err).Error("failed to parse go test flags")
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 3 lexically identified declarations, including `defaultNs` (L25), `framework` (L27), `TestMain` (L29). The full declaration list is recorded under `agones:test/e2e/extensions/main_test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/test/e2e/framework`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/e2e/framework` -> module `test::e2e::framework`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-1e3e77846628edcd"></a>
+
+
+### File `test/e2e/framework/framework.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `d0af6fb8039ee458d37b3a3cfb0f5d4e4488da3e`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/e2e/framework/framework.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-fea21ff3357f707491.** [agones/test/e2e/framework/framework.go, lines 78–92](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/e2e/framework/framework.go#L78-L92). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `c8135f1118be393d2bc1794ff909ff3e6d812d1c74cc6fc6cf4e2d1a75ffb97f`.
+
+> 
+> // Framework is a testing framework
+> type Framework struct {
+> 	KubeClient      kubernetes.Interface
+> 	AgonesClient    versioned.Interface
+> 	GameServerImage string
+> 	PullSecret      string
+> 	StressTestLevel int
+> 	PerfOutputDir   string
+> 	Version         string
+> 	Namespace       string
+> 	CloudProduct    string
+> 	WaitForState    time.Duration // default time to wait for state changes, may change based on cloud product.
+> 	errs            *errors.Errors
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 34 lexically identified declarations, including `NamespaceLabel` (L77), `Framework` (L80), `newFramework` (L94), `ParseTestFlags` (L141), `NewFromFlags` (L159), `CreateGameServerAndWaitUntilReady` (L231), `WaitForGameServerState` (L270), `CycleAllocations` (L313), `ScaleFleet` (L339), `AssertFleetCondition` (L364), `WaitForFleetCondition` (L371), `WaitForFleetAutoScalerCondition` (L407), `ListGameServersFromFleet` (L423), `FleetReadyCount` (L447), `WaitForFleetGameServersCondition` (L456), `WaitForFleetGameServerListCondition` (L472), `NewStatsCollector` (L488), `CleanUp` (L496), `CreateAndApplyAllocation` (L535), `SendGameServerUDP` (L547), `SendGameServerUDPToPort` (L564), `SendUDP` (L589), `SendGameServerTCP` (L636), `SendGameServerTCPToPort` (L652). The full declaration list is recorded under `agones:test/e2e/framework/framework.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/allocation/v1`, `agones.dev/agones/pkg/apis/autoscaling/v1`, `agones.dev/agones/pkg/client/clientset/versioned`, `agones.dev/agones/pkg/cloudproduct`, `agones.dev/agones/pkg/util/errors`, `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+7. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+8. Preserve source floating width, narrowing, exceptional values and relevant bits.
+
+9. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-a80861866769b8e3"></a>
+
+
+### File `test/e2e/framework/perf.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `5adb218e950e4c12179a26907ecfb74563ae45df`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/e2e/framework/perf.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-3a79970c5beea6c430.** [agones/test/e2e/framework/perf.go, lines 18–32](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/e2e/framework/perf.go#L18-L32). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `c533a04be2dcf049e8bf82871713228845896b9e221b1b9afa23a9e0acd72915`.
+
+> 
+> // StatsCollector collects latency and throughput counters.
+> // The ReportDuration() method is safe for concurrent use by multiple goroutines.
+> type StatsCollector struct {
+> 	name      string
+> 	outputDir string
+> 	version   string
+> 
+> 	mu              sync.Mutex
+> 	samples         []time.Duration
+> 	statusCounts    map[int]int64
+> 	firstSampleTime time.Time
+> 	lastSampleTime  time.Time
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 4 lexically identified declarations, including `StatsCollector` (L21), `ReportDuration` (L34), `errToHTTPStatusCode` (L50), `Report` (L69). The full declaration list is recorded under `agones:test/e2e/framework/perf.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+7. Preserve source floating width, narrowing, exceptional values and relevant bits.
+
+8. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/eviction` -> module `test::eviction`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-b7e71346be84e9c2"></a>
+
+
+### File `test/eviction/evictpod.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `cba3d068c7f74ec189c55996f25a224d277d4908`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/eviction/evictpod.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-f836caa8edf0f22c34.** [agones/test/eviction/evictpod.go, lines 31–45](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/eviction/evictpod.go#L31-L45). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `1d90618ebd7b45eee8038cb2eb3b504b9c5d662f8c12dd19e43a47e6a2aceced`.
+
+> 
+> // Borrowed from https://stackoverflow.com/questions/62803041/how-to-evict-or-delete-pods-from-kubernetes-using-golang-client
+> func evictPod(ctx context.Context, client *kubernetes.Clientset, name, namespace string) error {
+> 	return client.PolicyV1().Evictions(namespace).Evict(ctx, &policy.Eviction{
+> 		ObjectMeta: meta_v1.ObjectMeta{
+> 			Name:      name,
+> 			Namespace: namespace,
+> 		}})
+> }
+> 
+> func main() {
+> 	ctx := context.Background()
+> 
+> 	kubeconfig := flag.String("kubeconfig", filepath.Join(homedir.HomeDir(), ".kube", "config"), "(optional) absolute path to the kubeconfig file")
+> 	namespace := flag.String("namespace", "default", "Namespace (defaults to `default`)")
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 2 lexically identified declarations, including `evictPod` (L33), `main` (L41). The full declaration list is recorded under `agones:test/eviction/evictpod.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+5. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/load` -> module `test::load`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-b77ca5c9159d74d1"></a>
+
+
+### File `test/load/README.md`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `6d32158222c14648e6bc300ebaaaa18f1f2545fe`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/load/README.md`.
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-d88351d62db7c1e5c5.** [agones/test/load/README.md, lines 2–7](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/load/README.md#L2-L7). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `87ae7e69ad553b47c6487e9a0d66dd4b80bc9323afa2283e1991624fc508db10`.
+
+> 
+> Load tests aim to test the performance of the system under heavy load. For Agones, game server allocation is an example where heavy load and multiple parallel operations can be envisioned.
+> 
+> The goal of performance tests is to provide metrics on various operations. For
+> Agones, fleet scaling is a good example where performance metrics are useful.
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/load/allocation` -> module `test::load::allocation`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-d9c96045b5449632"></a>
+
+
+### File `test/load/allocation/.gitignore`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `de6ba62c5df5e7599fb58d7012ea8cf894cb71a5`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/load/allocation/.gitignore`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-49fcc629aa63e49294.** [agones/test/load/allocation/.gitignore, lines 1–6](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/load/allocation/.gitignore#L1-L6). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `f96f7a64c369dc229ca65bbbed8a2bc94d6fec340d5bd22f19181bbef0257ee7`.
+
+> *.key
+> *.crt
+> *.txt
+> !fixed.txt
+> !variable.txt
+> !performance-test-variable-template.txt
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-da3571b4c0822f2c"></a>
+
+
+### File `test/load/allocation/README.md`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `a20b080e27d86bea65f7f18641645ecf2dbdb94a`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/load/allocation/README.md`.
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-ccdae37b5a315828b1.** [agones/test/load/allocation/README.md, lines 2–16](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/load/allocation/README.md#L2-L16). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `aed122a746c1ed4a598c3b9a530689b1c0509356a19544f4e1e648833d3b9db3`.
+
+> 
+> [Allocation Load Test](#allocation-load-test) and [Scenario Tests](#scenario-tests)
+> for testing the performance of the gRPC allocation service.
+> 
+> ## Prerequisites
+> 
+> 1. A [Kubernetes cluster](https://agones.dev/site/docs/installation/creating-cluster/) with [Agones](https://agones.dev/site/docs/installation/install-agones/)
+>     - We recommend installing Agones using the [Helm](https://agones.dev/site/docs/installation/install-agones/helm/) package manager.
+>     - If you are running in GCP, use a regional cluster instead of a zonal cluster to ensure high availability of the cluster control plane.
+>     - Use a dedicated node pool for the Agones controllers with multiple CPUs per node, e.g. 'e2-standard-4'.
+>     - For Allocation Load Test:
+>       - In the default node pool (where the Game Server pods are created), 75 nodes are required to make sure there are enough nodes available for all game servers to move into the ready state. When using a regional GKE cluster with three zones that will require a configuration of 25 nodes per zone.
+>     - For Scenario Tests:
+>       - See [Kubernetes Cluster Setup for Scenario Tests](#kubernetes-cluster-setup-for-scenario-tests)
+> 2. A configured [Allocator Service](https://agones.dev/site/docs/advanced/allocator-service/)
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+4. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-4b2abfe1d0f3eb3d"></a>
+
+
+### File `test/load/allocation/autoscaler.yaml`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `6d04f49227cbff16986a71ab00ea13efc0ef75d6`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/load/allocation/autoscaler.yaml`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-0251eb33402131b4fb.** [agones/test/load/allocation/autoscaler.yaml, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/load/allocation/autoscaler.yaml#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `8e33462e6fbb560825894ca88ccbe0c490a608a22a5079d518a7dcbe34db2c5b`.
+
+> ---
+> # Copyright Contributors to Agones a Series of LF Projects, LLC.
+> #
+> # Licensed under the Apache License, Version 2.0 (the "License");
+> # you may not use this file except in compliance with the License.
+> # You may obtain a copy of the License at
+> #
+> #     http://www.apache.org/licenses/LICENSE-2.0
+> #
+> # Unless required by applicable law or agreed to in writing, software
+> # distributed under the License is distributed on an "AS IS" BASIS,
+> # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+> # See the License for the specific language governing permissions and
+> # limitations under the License.
+> apiVersion: autoscaling.agones.dev/v1
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-e8ac33009317fa91"></a>
+
+
+### File `test/load/allocation/configure-agones.sh`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `1e8bc32809cae7bc71684f659562011b14568439`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/load/allocation/configure-agones.sh`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-d440c9042d240aa484.** [agones/test/load/allocation/configure-agones.sh, lines 16–30](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/load/allocation/configure-agones.sh#L16-L30). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `d38f8af9b7b806393dc057d0d432c3d8a083abef5be8c6a282916af95391a823`.
+
+> 
+> set -e
+> 
+> 
+> function main() {
+>   echo "Make sure you have kubectl pointed at the right cluster"
+>   tmp_dir=$(mktemp -d)
+> 
+>   patch_controller="${tmp_dir}/patch-controller.yaml"
+>   cat << EOF > "${patch_controller}"
+> spec:
+>   template:
+>     spec:
+>       affinity:
+>         nodeAffinity:
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-e7197b1db7edc10c"></a>
+
+
+### File `test/load/allocation/fixed.txt`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `edd22b923ddd477e7de9e13d2df380d31f73f156`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/load/allocation/fixed.txt`.
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-e9579b9819b0618fda.** [agones/test/load/allocation/fixed.txt, lines 17–23](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/load/allocation/fixed.txt#L17-L23). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `30ed0a83d129755ff48178dd15b0cb43d1938bd30bdd0a6aeae2156c7efe018d`.
+
+> 10m,10,500
+> 10m,10,500
+> 10m,10,500
+> 10m,10,500
+> 10m,10,500
+> 10m,10,500
+> 10m,10,500
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-a0c90776f02ac4d1"></a>
+
+
+### File `test/load/allocation/fleet.yaml`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `69917208da6d56ec13942bd5fd0f77673e2dbf76`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/load/allocation/fleet.yaml`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-be8e72bf4d8da49c29.** [agones/test/load/allocation/fleet.yaml, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/load/allocation/fleet.yaml#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `cd780668c3629efb257c3bc8613ec7b33e010b2eea596e118f316a8f2d2417ea`.
+
+> ---
+> # Copyright Contributors to Agones a Series of LF Projects, LLC.
+> #
+> # Licensed under the Apache License, Version 2.0 (the "License");
+> # you may not use this file except in compliance with the License.
+> # You may obtain a copy of the License at
+> #
+> #     http://www.apache.org/licenses/LICENSE-2.0
+> #
+> # Unless required by applicable law or agreed to in writing, software
+> # distributed under the License is distributed on an "AS IS" BASIS,
+> # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+> # See the License for the specific language governing permissions and
+> # limitations under the License.
+> apiVersion: agones.dev/v1
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+4. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-f2276f189942715a"></a>
+
+
+### File `test/load/allocation/performance-test-autoscaler-template.yaml`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `ed9d6546c04228a544f489217ba5bd20891662ce`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/load/allocation/performance-test-autoscaler-template.yaml`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-4667e9b51d04dd40d9.** [agones/test/load/allocation/performance-test-autoscaler-template.yaml, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/load/allocation/performance-test-autoscaler-template.yaml#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `c9650d0d152d15ec56e1df26bcf2df2e04dee628b7a5401e372f320d4fe22725`.
+
+> ---
+> # Copyright Contributors to Agones a Series of LF Projects, LLC.
+> #
+> # Licensed under the Apache License, Version 2.0 (the "License");
+> # you may not use this file except in compliance with the License.
+> # You may obtain a copy of the License at
+> #
+> #     http://www.apache.org/licenses/LICENSE-2.0
+> #
+> # Unless required by applicable law or agreed to in writing, software
+> # distributed under the License is distributed on an "AS IS" BASIS,
+> # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+> # See the License for the specific language governing permissions and
+> # limitations under the License.
+> apiVersion: autoscaling.agones.dev/v1
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-a01258005766a646"></a>
+
+
+### File `test/load/allocation/performance-test-fleet-template.yaml`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `abb303982ed2bc547cce9b3470570c249f9c1ec8`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/load/allocation/performance-test-fleet-template.yaml`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-a59c845414beb0ba05.** [agones/test/load/allocation/performance-test-fleet-template.yaml, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/load/allocation/performance-test-fleet-template.yaml#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `f5e60fba6ab0ab8d2396623d860ce7d2edb7f714ace8deb31fa52f651837d7ca`.
+
+> ---
+> # Copyright Contributors to Agones a Series of LF Projects, LLC.
+> #
+> # Licensed under the Apache License, Version 2.0 (the "License");
+> # you may not use this file except in compliance with the License.
+> # You may obtain a copy of the License at
+> #
+> #     http://www.apache.org/licenses/LICENSE-2.0
+> #
+> # Unless required by applicable law or agreed to in writing, software
+> # distributed under the License is distributed on an "AS IS" BASIS,
+> # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+> # See the License for the specific language governing permissions and
+> # limitations under the License.
+> apiVersion: agones.dev/v1
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+4. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-4e603423626f8941"></a>
+
+
+### File `test/load/allocation/performance-test-variable-template.txt`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `1c20d5d74213dd1c12af4294d331bb9e6d965204`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/load/allocation/performance-test-variable-template.txt`.
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-e6b9d6347171f48f30.** [agones/test/load/allocation/performance-test-variable-template.txt, lines 1–1](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/load/allocation/performance-test-variable-template.txt#L1-L1). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `cf127735039e134cabe9ee2dd9a9e19af976da97e3fd902bbdc3d9ef1298f41d`.
+
+> DURATION_REPLACEMENT,CLIENTS_REPLACEMENT,INTERVAL_REPLACEMENT
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-163da2edc0b0f7fd"></a>
+
+
+### File `test/load/allocation/runAllocation.sh`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `c2471e3321f2c528591a9e64a5c9dca431242915`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/load/allocation/runAllocation.sh`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-ba26cfc39cf2860b80.** [agones/test/load/allocation/runAllocation.sh, lines 16–30](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/load/allocation/runAllocation.sh#L16-L30). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `2a700753a59346f4838bf4dbea0165a6efebf64b04cf8385c7b90912fcc8d10f`.
+
+> 
+> NAMESPACE=${NAMESPACE:-default}
+> # extract the required TLS and mTLS files
+> kubectl get secret allocator-client.default -n ${NAMESPACE} -ojsonpath="{.data.tls\.crt}" | base64 -d > client.crt
+> kubectl get secret allocator-client.default -n ${NAMESPACE} -ojsonpath="{.data.tls\.key}" | base64 -d > client.key
+> kubectl get secret allocator-tls-ca -n agones-system -ojsonpath='{.data.tls-ca\.crt}' | base64 -d > ca.crt
+> 
+> # The number of times you want allocation test to be run
+> TESTRUNSCOUNT=${TESTRUNSCOUNT:-3}
+> EXTERNAL_IP=$(kubectl get services agones-allocator -n agones-system -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+> KEY_FILE=${KEY_FILE:-client.key}
+> CERT_FILE=${CERT_FILE:-client.crt}
+> TLS_CA_FILE=${TLS_CA_FILE:-ca.crt}
+> 
+> counter=1
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+4. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-928d9f76cce08a64"></a>
+
+
+### File `test/load/allocation/runScenario.sh`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `50297ab6d3c327635c17e2b2b90725864ba024d6`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/load/allocation/runScenario.sh`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-b5e156dd6c3c95c95b.** [agones/test/load/allocation/runScenario.sh, lines 16–30](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/load/allocation/runScenario.sh#L16-L30). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `32e5d314231db7dbd64f89baacee4fa8e6221b006141e5e8667bf0479dfb594a`.
+
+> 
+> if [ "$#" -ne 1 ]; then
+>   echo "Must pass exactly one argument"
+>   exit 2
+> fi
+> 
+> NAMESPACE=${NAMESPACE:-default}
+> # extract the required TLS and mTLS files
+> kubectl get secret allocator-client.default -n ${NAMESPACE} -ojsonpath="{.data.tls\.crt}" | base64 -d > client.crt
+> kubectl get secret allocator-client.default -n ${NAMESPACE} -ojsonpath="{.data.tls\.key}" | base64 -d > client.key
+> kubectl get secret allocator-tls-ca -n agones-system -ojsonpath='{.data.tls-ca\.crt}' | base64 -d > ca.crt
+> 
+> EXTERNAL_IP=$(kubectl get services agones-allocator -n agones-system -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+> KEY_FILE=${KEY_FILE:-client.key}
+> CERT_FILE=${CERT_FILE:-client.crt}
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+4. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-418075c8ca061acd"></a>
+
+
+### File `test/load/allocation/scenario-fleet.yaml`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `2bb340ef0aa32deeafd092222f936cdbc8221ffb`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/load/allocation/scenario-fleet.yaml`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-5d49d402fe50868d45.** [agones/test/load/allocation/scenario-fleet.yaml, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/load/allocation/scenario-fleet.yaml#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `f039ce755e65266550dda117d623e87ce9cebf016d66991ee5903e497f293c31`.
+
+> ---
+> # Copyright Contributors to Agones a Series of LF Projects, LLC.
+> #
+> # Licensed under the Apache License, Version 2.0 (the "License");
+> # you may not use this file except in compliance with the License.
+> # You may obtain a copy of the License at
+> #
+> #     http://www.apache.org/licenses/LICENSE-2.0
+> #
+> # Unless required by applicable law or agreed to in writing, software
+> # distributed under the License is distributed on an "AS IS" BASIS,
+> # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+> # See the License for the specific language governing permissions and
+> # limitations under the License.
+> apiVersion: agones.dev/v1
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+4. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-72870e088d9e3967"></a>
+
+
+### File `test/load/allocation/scenario-values.yaml`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `a6ac53dbb2d10fd257d28fd8ba1815ea2d62bf7f`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/load/allocation/scenario-values.yaml`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-06bb09bf5ae1ec20f9.** [agones/test/load/allocation/scenario-values.yaml, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/load/allocation/scenario-values.yaml#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `f189b0b1808238c1e5aed13bfd030e3597e4aa75089ac567b075454baa629896`.
+
+> ---
+> # Copyright Contributors to Agones a Series of LF Projects, LLC.
+> #
+> # Licensed under the Apache License, Version 2.0 (the "License");
+> # you may not use this file except in compliance with the License.
+> # You may obtain a copy of the License at
+> #
+> #     http://www.apache.org/licenses/LICENSE-2.0
+> #
+> # Unless required by applicable law or agreed to in writing, software
+> # distributed under the License is distributed on an "AS IS" BASIS,
+> # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+> # See the License for the specific language governing permissions and
+> # limitations under the License.
+> agones:
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-c31681a2170361a2"></a>
+
+
+### File `test/load/allocation/variable.txt`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `0fc2729116b060977f091c3c08e40389f3a6a9bd`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/load/allocation/variable.txt`.
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-ee53d4539e35d18ccb.** [agones/test/load/allocation/variable.txt, lines 18–32](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/load/allocation/variable.txt#L18-L32). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `abbc7210bdaed648790243fe083574e172c96e54394daa2229ad65b1a43c89ac`.
+
+> 10m,10,500
+> 10m,10,500
+> # run for 30 mins with 30 clients and 500ms interval
+> 10m,30,500
+> 10m,30,500
+> 10m,30,500
+> # run for 30 mins with 20 clients and 500ms interval
+> 10m,20,500
+> 10m,20,500
+> 10m,20,500
+> # run for 30 mins with 30 clients and 500ms interval
+> 10m,30,500
+> 10m,30,500
+> 10m,30,500
+> # run for 30 mins with 20 clients and 500ms interval
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/load/allocation/allocationload` -> module `test::load::allocation::allocationload`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-c7cd77181e9c516f"></a>
+
+
+### File `test/load/allocation/allocationload/allocationload.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `537fc8a8d99644256f21e394bef03240959f9cd9`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/load/allocation/allocationload/allocationload.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-3fd29251a65e128def.** [agones/test/load/allocation/allocationload/allocationload.go, lines 36–50](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/load/allocation/allocationload/allocationload.go#L36-L50). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `ad84f990bfddf887e579e34ba87e071471c252f61bb2ae3f11c7facaae8d8bf5`.
+
+> 
+> func main() {
+> 	keyFile := flag.String("key", "missing key", "the private key file for the client certificate in PEM format")
+> 	certFile := flag.String("cert", "missing cert", "the public key file for the client certificate in PEM format")
+> 	cacertFile := flag.String("cacert", "missing cacert", "the CA cert file for server signing certificate in PEM format")
+> 	externalIP := flag.String("ip", "missing external IP", "the external IP for allocator server")
+> 	port := flag.String("port", "443", "the port for allocator server")
+> 	namespace := flag.String("namespace", "default", "the game server kubernetes namespace")
+> 	multicluster := flag.Bool("multicluster", false, "set to true to enable the multi-cluster allocation")
+> 	numOfClients := flag.Int("numberofclients", 1, "number of clients to do allocations in parallel")
+> 	perClientAllocs := flag.Int("perclientallocations", 1, "number of allocations to be done per client")
+> 
+> 	flag.Parse()
+> 
+> 	endpoint := *externalIP + ":" + *port
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 3 lexically identified declarations, including `errs` (L35), `main` (L37), `createRemoteClusterDialOption` (L119). The full declaration list is recorded under `agones:test/load/allocation/allocationload/allocationload.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/allocation/go`, `agones.dev/agones/pkg/util/errors`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve source panic/recover boundaries; do not use an unsupported panic as a translation placeholder.
+
+7. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+8. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/load/allocation/runscenario` -> module `test::load::allocation::runscenario`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-df88caa44d5b457e"></a>
+
+
+### File `test/load/allocation/runscenario/runscenario.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `86f40f4cc32b7ca6de358521ddae01e743452a49`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/load/allocation/runscenario/runscenario.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-e06ad8c1e57061bdde.** [agones/test/load/allocation/runscenario/runscenario.go, lines 38–52](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/load/allocation/runscenario/runscenario.go#L38-L52). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `ca007b824b71309c54b745e2a86bbf221aa8662821dab9f46b5ab53130c55be5`.
+
+> 
+> type allocErrorCode string
+> 
+> const (
+> 	noerror                   allocErrorCode = "Noerror"
+> 	unknown                   allocErrorCode = "Unknown"
+> 	objectHasBeenModified     allocErrorCode = "ObjectHasBeenModified"
+> 	tooManyConcurrentRequests allocErrorCode = "TooManyConcurrentRequests"
+> 	noAvailableGameServer     allocErrorCode = "NoAvailableGameServer"
+> 	storageError              allocErrorCode = "StorageError"
+> 	deadLineExceeded          allocErrorCode = "DeadLineExceeded"
+> 	connectionTimedOut        allocErrorCode = "ConnectionTimedOut"
+> 	connectionRefused         allocErrorCode = "ConnectionRefused"
+> 	errReadingFromServer      allocErrorCode = "ErrReadingFromServer"
+> )
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 8 lexically identified declarations, including `allocErrorCode` (L39), `scenario` (L81), `main` (L87), `dialOptions` (L173), `allocate` (L206), `readScenarios` (L231), `errorType` (L269), `allocErrorCodeCntMap` (L278). The full declaration list is recorded under `agones:test/load/allocation/runscenario/runscenario.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/allocation/go`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+7. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+8. Preserve source floating width, narrowing, exceptional values and relevant bits.
+
+9. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/sdk/cpp` -> module `test::sdk::cpp`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-a3cae59d37aef860"></a>
+
+
+### File `test/sdk/cpp/CMakeLists.txt`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `565e27bbc5bde9a493e3c4098d7be8ff4ff5dc93`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/cpp/CMakeLists.txt`.
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-bd46fa1e268f642520.** [agones/test/sdk/cpp/CMakeLists.txt, lines 14–28](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/cpp/CMakeLists.txt#L14-L28). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `99d31d96e837702b22cb65bdbe471d4b4aad9dff293c62b248a49b7f63df777e`.
+
+> 
+> cmake_minimum_required(VERSION 3.15)
+> 
+> project(cpp-simple CXX)
+> 
+> # Settings
+> set(CMAKE_CXX_STANDARD 17)
+> set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+> set(CMAKE_CXX_EXTENSIONS OFF)
+> set(CMAKE_INCLUDE_CURRENT_DIR ON)
+> set(CMAKE_INCLUDE_CURRENT_DIR_IN_INTERFACE ON)
+> set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+> set(CMAKE_DEBUG_POSTFIX "d")
+> 
+> find_package(Threads REQUIRED)
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-7b4eb91371e3a122"></a>
+
+
+### File `test/sdk/cpp/server.cc`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `a4833dd9b07582ef73a39d6430631cfae953eb50`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/cpp/server.cc`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-b82aab293d11531621.** [agones/test/sdk/cpp/server.cc, lines 23–37](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/cpp/server.cc#L23-L37). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `049514db472477140153677203ddcf0d96aa6b8b53136818d7e21c981873afc1`.
+
+> 
+> // send health check pings
+> void DoHealth(std::shared_ptr<agones::SDK> sdk) {
+>   bool ok = sdk->Health();
+>   std::cout << "Health ping " << (ok ? "sent" : "failed") << "\n" << std::flush;
+> }
+> 
+> // watch GameServer Updates
+> void WatchUpdates(std::shared_ptr<agones::SDK> sdk) {
+>   std::cout << "Starting to watch GameServer updates...\n" << std::flush;
+>   sdk->WatchGameServer([](const agones::dev::sdk::GameServer& gameserver) {
+>     std::cout << "GameServer Update:\n"                                 //
+>               << "\tname: " << gameserver.object_meta().name() << "\n"  //
+>               << "\tstate: " << gameserver.status().state() << "\n"
+>               << std::flush;
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+4. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/sdk/csharp` -> module `test::sdk::csharp`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-f37fa3659b284a22"></a>
+
+
+### File `test/sdk/csharp/Program.cs`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `76b23029a663b61198c5ca7a0771027d1d408d0b`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/csharp/Program.cs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-2c840d532c1390f1de.** [agones/test/sdk/csharp/Program.cs, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/csharp/Program.cs#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `db16810023dcf09dc385cbbb851424dd4546b76f57aea4ff01d48c883c3b240b`.
+
+> ﻿// Copyright Contributors to Agones a Series of LF Projects, LLC.
+> //
+> // Licensed under the Apache License, Version 2.0 (the "License");
+> // you may not use this file except in compliance with the License.
+> // You may obtain a copy of the License at
+> //
+> //     http://www.apache.org/licenses/LICENSE-2.0
+> //
+> // Unless required by applicable law or agreed to in writing, software
+> // distributed under the License is distributed on an "AS IS" BASIS,
+> // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+> // See the License for the specific language governing permissions and
+> // limitations under the License.
+> using Agones;
+> using Grpc.Core;
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+4. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-1733bc89f901127f"></a>
+
+
+### File `test/sdk/csharp/csharp.csproj`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `7062111a2a559dfa1366588a27e082210889c817`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/csharp/csharp.csproj`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-ddc267c7a61697d429.** [agones/test/sdk/csharp/csharp.csproj, lines 1–13](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/csharp/csharp.csproj#L1-L13). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `be522bf1e6f6a095c23af8edcfef56fabaa5f514eacdd38d7b41547069ce2fe5`.
+
+> <Project Sdk="Microsoft.NET.Sdk">
+> 
+>   <PropertyGroup>
+>     <OutputType>Exe</OutputType>
+>     <TargetFramework>net8.0</TargetFramework>
+>     <ImplicitUsings>enable</ImplicitUsings>
+>     <Nullable>enable</Nullable>
+>   </PropertyGroup>
+> 
+>   <ItemGroup>
+>     <ProjectReference Include="../../../sdks/csharp/sdk/csharp-sdk.csproj" />
+>   </ItemGroup>
+> </Project>
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/sdk/go` -> module `test::sdk::go`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-67b07410eb91e0b3"></a>
+
+
+### File `test/sdk/go/Dockerfile`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `fbf7c5acb0ea8b78bd089c6da0c516e311124e18`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/go/Dockerfile`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-6458f748409f4aed93.** [agones/test/sdk/go/Dockerfile, lines 16–30](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/go/Dockerfile#L16-L30). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3fcbbebd93830b7fff71266c74037acc9d5cd64a9782cec429598a2f18f69b6d`.
+
+> FROM golang:1.26.5 AS build-stage
+> 
+> WORKDIR /agones.dev
+> 
+> COPY *.go ./
+> 
+> # Note: because this installs the most recently released version of Agones, this will need to be
+> # built and pushed post-release.
+> RUN go mod init agones.dev/agones/test/sdk/go/sdk-client-test
+> RUN go mod tidy
+> RUN go mod download
+> 
+> RUN CGO_ENABLED=0 GOOS=linux go build -o /sdk-client-test
+> 
+> # Copy the above binary into a lean image
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+4. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-ef910d1a4c452869"></a>
+
+
+### File `test/sdk/go/Makefile`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `29c004dfa3e83eb3779d38ba7bc59d8a5a428882`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/go/Makefile`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-28632b3b85784156fc.** [agones/test/sdk/go/Makefile, lines 25–39](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/go/Makefile#L25-L39). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `26be07e977001844236d8e7070ac514a28c84e072d0972da1d7ad083833cfa13`.
+
+> 
+> REGISTRY ?=
+> mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
+> project_path := $(dir $(mkfile_path))
+> root_path = $(realpath $(project_path)/)
+> # Because go mod init in the Dockerfile installs the most recently released version of Agones, this
+> # will need to be built and pushed post-release. During DEV it will be built at DEV - 1.
+> release_version = 1.61.0
+> server_tag := $(REGISTRY)/sdk-client-test:$(release_version)
+> 
+> #   _____                    _
+> #  |_   _|_ _ _ __ __ _  ___| |_ ___
+> #    | |/ _` | '__/ _` |/ _ \ __/ __|
+> #    | | (_| | | | (_| |  __/ |_\__ \
+> #    |_|\__,_|_|  \__, |\___|\__|___/
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+4. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-d7d75b51b738a701"></a>
+
+
+### File `test/sdk/go/cloudbuild.yaml`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `fcbf42717bd3fd072fc11fc7d523bdb5ec2d488f`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/go/cloudbuild.yaml`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-c98c06558c4a78374b.** [agones/test/sdk/go/cloudbuild.yaml, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/go/cloudbuild.yaml#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `e016ac024766c2b915b8a8eff04b888023a1651730218020734f977e57da35f6`.
+
+> ---
+> # Copyright Contributors to Agones a Series of LF Projects, LLC.
+> #
+> # Licensed under the Apache License, Version 2.0 (the "License");
+> # you may not use this file except in compliance with the License.
+> # You may obtain a copy of the License at
+> #
+> #     http://www.apache.org/licenses/LICENSE-2.0
+> #
+> # Unless required by applicable law or agreed to in writing, software
+> # distributed under the License is distributed on an "AS IS" BASIS,
+> # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+> # See the License for the specific language governing permissions and
+> # limitations under the License.
+> steps:
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-77bc994ed85667c5"></a>
+
+
+### File `test/sdk/go/sdk-client-test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `98d7ed82a3207b6e0fecdb2fbe9030e5d69e26ea`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/go/sdk-client-test.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-ecc43e56fb87946222.** [agones/test/sdk/go/sdk-client-test.go, lines 33–47](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/go/sdk-client-test.go#L33-L47). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `68297407ffa74e72466ac1fb3cb072ac4484890b4d3da4f40f0284e206d6d986`.
+
+> 
+> func main() {
+> 	viper.AllowEmptyEnv(true)
+> 	runtime.FeaturesBindFlags()
+> 	pflag.Parse()
+> 	viper.SetEnvKeyReplacer(strings.NewReplacer("-", "_"))
+> 	runtime.Must(runtime.FeaturesBindEnv())
+> 	runtime.Must(runtime.ParseFeaturesFromEnv())
+> 
+> 	// Use to delays to prevent Game Servers from churning too quickly on a running cluster.
+> 	shutdownDelaySec := 0
+> 	gracefulTerminationDelaySec := 0
+> 	if sds := os.Getenv("SHUTDOWN_DELAY_SECONDS"); sds != "" {
+> 		sec, err := strconv.Atoi(sds)
+> 		if err != nil {
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 4 lexically identified declarations, including `main` (L34), `testPlayerTracking` (L136), `testCounts` (L182), `testLists` (L220). The full declaration list is recorded under `agones:test/sdk/go/sdk-client-test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/sdk`, `agones.dev/agones/pkg/util/runtime`, `agones.dev/agones/sdks/go`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/sdk/nodejs` -> module `test::sdk::nodejs`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-da76ddf0da96d77e"></a>
+
+
+### File `test/sdk/nodejs/.gitignore`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `df9d01c785ea16c989dba5e89b2e08d7620c060c`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/nodejs/.gitignore`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-3b5a547a551215ed4f.** [agones/test/sdk/nodejs/.gitignore, lines 14–16](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/nodejs/.gitignore#L14-L16). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `e1d40c2c041fb38f1e7fc25fcb3080b52050f705b52df768540192fe8a7caa2e`.
+
+> 
+> node_modules/
+> package-lock.json
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-b01cd155e8c7cc0c"></a>
+
+
+### File `test/sdk/nodejs/package.json`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `ca79657e34f3513ceb581e2a2d2d9f2bce0454bd`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/nodejs/package.json`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-6179a1f08cacf6f639.** [agones/test/sdk/nodejs/package.json, lines 1–8](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/nodejs/package.json#L1-L8). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `a5c372801236ea17a762e1a5ca03f0890d20b5d948eb89919b333a552445d7e4`.
+
+> {
+>     "dependencies": {
+>         "@google-cloud/agones-sdk": "../../../sdks/nodejs"
+>     },
+>     "scripts": {
+>         "testSDK": "node ./testSDKClient.js"
+>     }
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-d2d5a881c988df68"></a>
+
+
+### File `test/sdk/nodejs/testSDKClient.js`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `a8b29838ae2091bc26ac8b67e3335a5b357c21ee`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/nodejs/testSDKClient.js`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-4570383124b1ffe94f.** [agones/test/sdk/nodejs/testSDKClient.js, lines 3–22](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/nodejs/testSDKClient.js#L3-L22). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `7111dc494c8d7da2ba3c56e4f96bc236e525062d387870feed8a52895093a5eb`.
+
+> // Licensed under the Apache License, Version 2.0 (the "License");
+> // you may not use this file except in compliance with the License.
+> // You may obtain a copy of the License at
+> //
+> //     http://www.apache.org/licenses/LICENSE-2.0
+> //
+> // Unless required by applicable law or agreed to in writing, software
+> // distributed under the License is distributed on an "AS IS" BASIS,
+> // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+> // See the License for the specific language governing permissions and
+> // limitations under the License.
+> 
+> const AgonesSDK = require('@google-cloud/agones-sdk');
+> const {setTimeout} = require('timers/promises');
+> 
+> const agonesSDK = new AgonesSDK();
+> 
+> const connect = async () => {
+> 	let UID = '';
+> 	try {
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+4. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/sdk/python` -> module `test::sdk::python`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-425feeaa429c5449"></a>
+
+
+### File `test/sdk/python/testSDKClient.py`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `686d6f43baf2fb37ee4f367aea524d51f31f408d`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/python/testSDKClient.py`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-df20ed024b04ffa1db.** [agones/test/sdk/python/testSDKClient.py, lines 21–35](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/python/testSDKClient.py#L21-L35). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `da5a011df10688176df5c01f7999262672c2048968ee8f260d63f3fcf14ed5ab`.
+
+> 
+> sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../..', 'sdks/python'))
+> 
+> from agones import AgonesSDK
+> 
+> def run_counts_and_lists(beta):
+>     counter = "rooms"
+>     print("python: Getting Counter count...")
+>     count = beta.get_counter_count(counter)
+>     if count != 1:
+>         raise RuntimeError(f"Counter count should be 1, but is {count}")
+> 
+>     print("python: Incrementing Counter...")
+>     beta.increment_counter(counter, 9)
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+4. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/sdk/restapi` -> module `test::sdk::restapi`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-28369330ef5168ce"></a>
+
+
+### File `test/sdk/restapi/http-api-test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `25fa909e8979f9353e1fb05c62a66ef633e8ebad`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/http-api-test.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-2d612ef574fe87d717.** [agones/test/sdk/restapi/http-api-test.go, lines 30–44](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/http-api-test.go#L30-L44). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `2eecd723097eb3fff225aa8550c4a060c3b80814c325d69fc47f8a5ad12254a5`.
+
+> 
+> func main() {
+> 	log.Println("Client is starting")
+> 	conf := swagger.NewConfiguration()
+> 	portStr := os.Getenv("AGONES_SDK_HTTP_PORT")
+> 	conf.BasePath = "http://localhost:" + portStr
+> 	cli := swagger.NewAPIClient(conf)
+> 
+> 	log.Println("Alpha Client is starting")
+> 	alphaConf := alpha.NewConfiguration()
+> 	alphaConf.BasePath = "http://localhost:" + portStr
+> 	alphaCli := alpha.NewAPIClient(alphaConf)
+> 
+> 	log.Println("Beta Client is starting")
+> 	betaConf := beta.NewConfiguration()
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 4 lexically identified declarations, including `main` (L31), `testPlayers` (L144), `testCounters` (L190), `testLists` (L224). The full declaration list is recorded under `agones:test/sdk/restapi/http-api-test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/test/sdk/restapi/alpha/swagger`, `agones.dev/agones/test/sdk/restapi/beta/swagger`, `agones.dev/agones/test/sdk/restapi/swagger`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+5. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+6. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+7. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/sdk/restapi/alpha/swagger` -> module `test::sdk::restapi::alpha::swagger`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-32e1a686773ea5e1"></a>
+
+
+### File `test/sdk/restapi/alpha/swagger/api_sdk.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `2cb40d8a015cfc31c0fa232227a5ebef839e9aad`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/alpha/swagger/api_sdk.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-8b5129984ed7aa49f5.** [agones/test/sdk/restapi/alpha/swagger/api_sdk.go, lines 40–54](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/alpha/swagger/api_sdk.go#L40-L54). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `25a57e90c2f8023bebd1ed6f56ffe523a5fd1e1077a83ff195adafa7f31d50ab`.
+
+> 
+> type SDKApiService service
+> /*
+> SDKApiService Returns the list of the currently connected player ids. This is always accurate from what has been set through this SDK, even if the value has yet to be updated on the GameServer status resource.
+> If GameServer.Status.Players.IDs is set manually through the Kubernetes API, use SDK.GameServer() or SDK.WatchGameServer() instead to view this value.
+>  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+> @return AlphaPlayerIdList
+> */
+> func (a *SDKApiService) GetConnectedPlayers(ctx context.Context) (AlphaPlayerIdList, *http.Response, error) {
+> 	var (
+> 		localVarHttpMethod = strings.ToUpper("Get")
+> 		localVarPostBody   interface{}
+> 		localVarFileName   string
+> 		localVarFileBytes  []byte
+> 		localVarReturnValue AlphaPlayerIdList
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 8 lexically identified declarations, including `SDKApiService` (L41), `GetConnectedPlayers` (L48), `GetPlayerCapacity` (L131), `GetPlayerCount` (L214), `IsPlayerConnected` (L298), `PlayerConnect` (L383), `PlayerDisconnect` (L469), `SetPlayerCapacity` (L554). The full declaration list is recorded under `agones:test/sdk/restapi/alpha/swagger/api_sdk.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+5. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+6. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-1c7794688fcd93d4"></a>
+
+
+### File `test/sdk/restapi/alpha/swagger/client.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `a1f46cb0fea534dc66669fe395921186b3ea80e5`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/alpha/swagger/client.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-9d50106b41c7ed7f8a.** [agones/test/sdk/restapi/alpha/swagger/client.go, lines 53–67](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/alpha/swagger/client.go#L53-L67). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `87a04a4968e9b18ea5c0ae3c21ec4f0ef5ee9ccc39ce1ddeb1f469b165f3b88f`.
+
+> 
+> // APIClient manages communication with the alpha.proto API vversion not set
+> // In most cases there should be only one, shared, APIClient.
+> type APIClient struct {
+> 	cfg    *Configuration
+> 	common service // Reuse a single struct instead of allocating one for each service on the heap.
+> 
+> 	// API Services
+> 
+> 	SDKApi *SDKApiService
+> }
+> 
+> type service struct {
+> 	client *APIClient
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 25 lexically identified declarations, including `APIClient` (L56), `service` (L65), `NewAPIClient` (L71), `atoi` (L86), `selectHeaderContentType` (L91), `selectHeaderAccept` (L102), `contains` (L115), `typeCheckParameter` (L125), `parameterToString` (L139), `callAPI` (L161), `ChangeBasePath` (L166), `prepareRequest` (L171), `decode` (L326), `addFile` (L342), `reportError` (L359), `setBody` (L364), `detectContentType` (L395), `cacheControl` (L416), `parseCacheControl` (L418), `CacheExpires` (L437), `strlen` (L464), `GenericSwaggerError` (L469), `Error` (L476), `Body` (L481). The full declaration list is recorded under `agones:test/sdk/restapi/alpha/swagger/client.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+7. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+8. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-2650c0dfa69efd37"></a>
+
+
+### File `test/sdk/restapi/alpha/swagger/configuration.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `5f5c4771169266ae0c70e6785bef0a417dc25072`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/alpha/swagger/configuration.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-05503bfb3c6a2ba382.** [agones/test/sdk/restapi/alpha/swagger/configuration.go, lines 29–43](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/alpha/swagger/configuration.go#L29-L43). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `a8cc842ef21e399036f07624b78f858ce743772121415e4fae23c33e269a87e1`.
+
+> 
+> // contextKeys are used to identify the type of value in the context.
+> // Since these are string, it is possible to get a short description of the
+> // context key for logging and debugging using key.String().
+> 
+> type contextKey string
+> 
+> func (c contextKey) String() string {
+> 	return "auth " + string(c)
+> }
+> 
+> var (
+> 	// ContextOAuth2 takes a oauth2.TokenSource as authentication for the request.
+> 	ContextOAuth2 = contextKey("token")
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 7 lexically identified declarations, including `contextKey` (L34), `String` (L36), `BasicAuth` (L55), `APIKey` (L61), `Configuration` (L66), `NewConfiguration` (L75), `AddDefaultHeader` (L84). The full declaration list is recorded under `agones:test/sdk/restapi/alpha/swagger/configuration.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+5. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+6. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-4bb5bbb6c2e0587f"></a>
+
+
+### File `test/sdk/restapi/alpha/swagger/model_alpha_bool.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `9ab131c5948d9c9f507e430e14799d3fb19fb905`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/alpha/swagger/model_alpha_bool.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-3936a626e6f814e476.** [agones/test/sdk/restapi/alpha/swagger/model_alpha_bool.go, lines 25–28](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/alpha/swagger/model_alpha_bool.go#L25-L28). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `1a2538195ef11acfb1c18108c4ecbf02a8e40dadb9baa9c80b93b3c5e9d9754e`.
+
+> 
+> type AlphaBool struct {
+> 	Bool_ bool `json:"bool,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `AlphaBool` (L26). The full declaration list is recorded under `agones:test/sdk/restapi/alpha/swagger/model_alpha_bool.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-655263d73f672f2d"></a>
+
+
+### File `test/sdk/restapi/alpha/swagger/model_alpha_count.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `3ac7d6f3338e895fbaa4d2f8e19b3e42d4a39191`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/alpha/swagger/model_alpha_count.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-8d993ad62631d8f49e.** [agones/test/sdk/restapi/alpha/swagger/model_alpha_count.go, lines 25–29](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/alpha/swagger/model_alpha_count.go#L25-L29). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `229099d02c6f82968aca3f9c2aafe5db46fda467d8d7a0e7b2abd72a68ae9150`.
+
+> 
+> // Store a count variable.
+> type AlphaCount struct {
+> 	Count string `json:"count,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `AlphaCount` (L27). The full declaration list is recorded under `agones:test/sdk/restapi/alpha/swagger/model_alpha_count.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-20df0265f7b1daac"></a>
+
+
+### File `test/sdk/restapi/alpha/swagger/model_alpha_empty.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `ff00e746dd41cc5cf4a368e17a9ac47e46f0a3d3`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/alpha/swagger/model_alpha_empty.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-12e8a9990f91c48d81.** [agones/test/sdk/restapi/alpha/swagger/model_alpha_empty.go, lines 25–27](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/alpha/swagger/model_alpha_empty.go#L25-L27). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `b65d3898b28d1fc0dfe1360a130b0d4cdb39f04e223a3f9abfa70df4430d55da`.
+
+> 
+> type AlphaEmpty struct {
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `AlphaEmpty` (L26). The full declaration list is recorded under `agones:test/sdk/restapi/alpha/swagger/model_alpha_empty.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-613af89c04df7c75"></a>
+
+
+### File `test/sdk/restapi/alpha/swagger/model_alpha_player_id.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `016ee10c7fd6f321e46a90d7a9766c5cc7c9d7f4`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/alpha/swagger/model_alpha_player_id.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-9932515ef78f750573.** [agones/test/sdk/restapi/alpha/swagger/model_alpha_player_id.go, lines 25–29](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/alpha/swagger/model_alpha_player_id.go#L25-L29). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `7cabe1b7d4ad724b6534ffe7f61a76897343bf1c3e713ed26d7a3785f26d2bae`.
+
+> 
+> // The unique identifier for a given player.
+> type AlphaPlayerId struct {
+> 	PlayerID string `json:"playerID,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `AlphaPlayerId` (L27). The full declaration list is recorded under `agones:test/sdk/restapi/alpha/swagger/model_alpha_player_id.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-95964158ae96da9d"></a>
+
+
+### File `test/sdk/restapi/alpha/swagger/model_alpha_player_id_list.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `3566d84cf64f53ed11866468db67e4dfb279bf6b`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/alpha/swagger/model_alpha_player_id_list.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-103be8022afbab35f9.** [agones/test/sdk/restapi/alpha/swagger/model_alpha_player_id_list.go, lines 25–28](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/alpha/swagger/model_alpha_player_id_list.go#L25-L28). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `4ed4686b3b03440b29909feadbccbe7d0d6724a05ac017ccf2ef0432fffadb20`.
+
+> 
+> type AlphaPlayerIdList struct {
+> 	List []string `json:"list,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `AlphaPlayerIdList` (L26). The full declaration list is recorded under `agones:test/sdk/restapi/alpha/swagger/model_alpha_player_id_list.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-089a33d9962a32da"></a>
+
+
+### File `test/sdk/restapi/alpha/swagger/response.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `73bb16b53d76a3953db6a9f8f61c3b91c99be06a`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/alpha/swagger/response.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-dc592cc23435a76df7.** [agones/test/sdk/restapi/alpha/swagger/response.go, lines 29–43](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/alpha/swagger/response.go#L29-L43). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `f7412b70ce8def789b8079b184faa92053738bded2edb1a09a83cd106f97ffbc`.
+
+> 
+> type APIResponse struct {
+> 	*http.Response `json:"-"`
+> 	Message        string `json:"message,omitempty"`
+> 	// Operation is the name of the swagger operation.
+> 	Operation string `json:"operation,omitempty"`
+> 	// RequestURL is the request URL. This value is always available, even if the
+> 	// embedded *http.Response is nil.
+> 	RequestURL string `json:"url,omitempty"`
+> 	// Method is the HTTP method used for the request.  This value is always
+> 	// available, even if the embedded *http.Response is nil.
+> 	Method string `json:"method,omitempty"`
+> 	// Payload holds the contents of the response body (which may be nil or empty).
+> 	// This is provided here as the raw response.Body() reader will have already
+> 	// been drained.
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 3 lexically identified declarations, including `APIResponse` (L30), `NewAPIResponse` (L47), `NewAPIResponseWithError` (L53). The full declaration list is recorded under `agones:test/sdk/restapi/alpha/swagger/response.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/sdk/restapi/beta/swagger` -> module `test::sdk::restapi::beta::swagger`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-18c1ba82365d2371"></a>
+
+
+### File `test/sdk/restapi/beta/swagger/api_sdk.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `ddf98f224a7b7ec1a186ad0335b6540d6709e434`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/beta/swagger/api_sdk.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-4dff8179ab38177aae.** [agones/test/sdk/restapi/beta/swagger/api_sdk.go, lines 40–54](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/beta/swagger/api_sdk.go#L40-L54). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `0b7d027d2634d2ac78baa885f7f90391772fe4f54cf227b46736d171b020ba74`.
+
+> 
+> type SDKApiService service
+> /*
+> SDKApiService Adds a value to a List and returns updated List. Returns NOT_FOUND if the List does not exist. Returns ALREADY_EXISTS if the value is already in the List. Returns OUT_OF_RANGE if the List is already at Capacity.
+>  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+>  * @param body
+>  * @param name The name of the List to add a value to.
+> @return BetaList
+> */
+> func (a *SDKApiService) AddListValue(ctx context.Context, body SdkAddListValueBody, name string) (BetaList, *http.Response, error) {
+> 	var (
+> 		localVarHttpMethod = strings.ToUpper("Post")
+> 		localVarPostBody   interface{}
+> 		localVarFileName   string
+> 		localVarFileBytes  []byte
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 7 lexically identified declarations, including `SDKApiService` (L41), `AddListValue` (L49), `GetCounter` (L135), `GetList` (L219), `RemoveListValue` (L304), `UpdateCounter` (L391), `UpdateList` (L478). The full declaration list is recorded under `agones:test/sdk/restapi/beta/swagger/api_sdk.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+5. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+6. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-529c3da4f256808c"></a>
+
+
+### File `test/sdk/restapi/beta/swagger/client.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `36352ebb648482ba895193ebbffd123aee4f3180`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/beta/swagger/client.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-45828722763f4db409.** [agones/test/sdk/restapi/beta/swagger/client.go, lines 53–67](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/beta/swagger/client.go#L53-L67). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `39327983d8de4b735d57d81d129aab8176deacfc6472510284fb38586d5ff166`.
+
+> 
+> // APIClient manages communication with the beta.proto API vversion not set
+> // In most cases there should be only one, shared, APIClient.
+> type APIClient struct {
+> 	cfg    *Configuration
+> 	common service // Reuse a single struct instead of allocating one for each service on the heap.
+> 
+> 	// API Services
+> 
+> 	SDKApi *SDKApiService
+> }
+> 
+> type service struct {
+> 	client *APIClient
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 25 lexically identified declarations, including `APIClient` (L56), `service` (L65), `NewAPIClient` (L71), `atoi` (L86), `selectHeaderContentType` (L91), `selectHeaderAccept` (L102), `contains` (L115), `typeCheckParameter` (L125), `parameterToString` (L139), `callAPI` (L161), `ChangeBasePath` (L166), `prepareRequest` (L171), `decode` (L326), `addFile` (L342), `reportError` (L359), `setBody` (L364), `detectContentType` (L395), `cacheControl` (L416), `parseCacheControl` (L418), `CacheExpires` (L437), `strlen` (L464), `GenericSwaggerError` (L469), `Error` (L476), `Body` (L481). The full declaration list is recorded under `agones:test/sdk/restapi/beta/swagger/client.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+7. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+8. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-5461149a2809d861"></a>
+
+
+### File `test/sdk/restapi/beta/swagger/configuration.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `e3b7437e30c21ac3063104ab06b852eaca41f986`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/beta/swagger/configuration.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-4ca1ccd0d4af6cff3c.** [agones/test/sdk/restapi/beta/swagger/configuration.go, lines 29–43](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/beta/swagger/configuration.go#L29-L43). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `fe6cbb395531c6acee0b0d727dfe0394703909adcea58d7c1ad488903e90574d`.
+
+> 
+> // contextKeys are used to identify the type of value in the context.
+> // Since these are string, it is possible to get a short description of the
+> // context key for logging and debugging using key.String().
+> 
+> type contextKey string
+> 
+> func (c contextKey) String() string {
+> 	return "auth " + string(c)
+> }
+> 
+> var (
+> 	// ContextOAuth2 takes a oauth2.TokenSource as authentication for the request.
+> 	ContextOAuth2 = contextKey("token")
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 7 lexically identified declarations, including `contextKey` (L34), `String` (L36), `BasicAuth` (L55), `APIKey` (L61), `Configuration` (L66), `NewConfiguration` (L75), `AddDefaultHeader` (L84). The full declaration list is recorded under `agones:test/sdk/restapi/beta/swagger/configuration.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+5. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+6. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-71c15b836b0d4a69"></a>
+
+
+### File `test/sdk/restapi/beta/swagger/model_beta_counter.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `3cb2ae0cc6c8418194baa16b4ce82fb937adcd1e`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/beta/swagger/model_beta_counter.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-f6cf64852baba88ced.** [agones/test/sdk/restapi/beta/swagger/model_beta_counter.go, lines 25–31](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/beta/swagger/model_beta_counter.go#L25-L31). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `ef193dfb089ab7490a8c1237c34de1e7e9d4217eb8ddc72e12408d0c6bd225ce`.
+
+> 
+> // A representation of a Counter.
+> type BetaCounter struct {
+> 	Name string `json:"name,omitempty"`
+> 	Count string `json:"count,omitempty"`
+> 	Capacity string `json:"capacity,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `BetaCounter` (L27). The full declaration list is recorded under `agones:test/sdk/restapi/beta/swagger/model_beta_counter.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-1f7e9ecc2978ec30"></a>
+
+
+### File `test/sdk/restapi/beta/swagger/model_beta_counter_update_request.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `11acee0bbe4499bb9292b368bf3578207e1e5c4a`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/beta/swagger/model_beta_counter_update_request.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-ca0092878ac0999688.** [agones/test/sdk/restapi/beta/swagger/model_beta_counter_update_request.go, lines 25–32](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/beta/swagger/model_beta_counter_update_request.go#L25-L32). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `b8a10c336b90a3d2208d2761fbe37869504f77bdbb8d97ee2951e4d9fed7c2b1`.
+
+> 
+> // A representation of a Counter Update Request.
+> type BetaCounterUpdateRequest struct {
+> 	Name string `json:"name,omitempty"`
+> 	Count string `json:"count,omitempty"`
+> 	Capacity string `json:"capacity,omitempty"`
+> 	CountDiff string `json:"countDiff,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `BetaCounterUpdateRequest` (L27). The full declaration list is recorded under `agones:test/sdk/restapi/beta/swagger/model_beta_counter_update_request.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-6fda2e1de5dad21c"></a>
+
+
+### File `test/sdk/restapi/beta/swagger/model_beta_list.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `6ac983eca2782f8f8f25e6b39fe6c8b6fd670415`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/beta/swagger/model_beta_list.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-c6c84549a6639f64b8.** [agones/test/sdk/restapi/beta/swagger/model_beta_list.go, lines 25–31](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/beta/swagger/model_beta_list.go#L25-L31). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `f2732a2d25d95573985db4c9d9bc6a5e090b599b7effa33cf06381161c619fa7`.
+
+> 
+> // A representation of a List.
+> type BetaList struct {
+> 	Name string `json:"name,omitempty"`
+> 	Capacity string `json:"capacity,omitempty"`
+> 	Values []string `json:"values,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `BetaList` (L27). The full declaration list is recorded under `agones:test/sdk/restapi/beta/swagger/model_beta_list.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-03f4ca7dc97a9643"></a>
+
+
+### File `test/sdk/restapi/beta/swagger/model_sdk_add_list_value_body.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `bd538febf9467ac21443b02cc8970f935689dbeb`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/beta/swagger/model_sdk_add_list_value_body.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-91e646d3dabfa4dd0e.** [agones/test/sdk/restapi/beta/swagger/model_sdk_add_list_value_body.go, lines 25–28](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/beta/swagger/model_sdk_add_list_value_body.go#L25-L28). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `0ca78a1010eef96d0b6718901a94d01b863f8c7cf2bb58ae5e8cc224579b60ae`.
+
+> 
+> type SdkAddListValueBody struct {
+> 	Value string `json:"value"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `SdkAddListValueBody` (L26). The full declaration list is recorded under `agones:test/sdk/restapi/beta/swagger/model_sdk_add_list_value_body.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-40332ac23a30a57f"></a>
+
+
+### File `test/sdk/restapi/beta/swagger/model_sdk_remove_list_value_body.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `f559416b69d551779627cbd34e8e3ad3c31dbf17`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/beta/swagger/model_sdk_remove_list_value_body.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-647a14452575be3cea.** [agones/test/sdk/restapi/beta/swagger/model_sdk_remove_list_value_body.go, lines 25–28](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/beta/swagger/model_sdk_remove_list_value_body.go#L25-L28). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `b3eb0b03cfdf9b9562690aa1c136c93946b1ef4911afd1a8ad294d330358aaac`.
+
+> 
+> type SdkRemoveListValueBody struct {
+> 	Value string `json:"value"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `SdkRemoveListValueBody` (L26). The full declaration list is recorded under `agones:test/sdk/restapi/beta/swagger/model_sdk_remove_list_value_body.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-6fa4960d25447462"></a>
+
+
+### File `test/sdk/restapi/beta/swagger/model_the_list_to_update.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `64c32116729ac8b25c36cd579db8d687d8d9baa5`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/beta/swagger/model_the_list_to_update.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-c914a64bee7c4290e3.** [agones/test/sdk/restapi/beta/swagger/model_the_list_to_update.go, lines 25–29](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/beta/swagger/model_the_list_to_update.go#L25-L29). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `f961b97be36b1a6799a14d2c32446987b5ded67052217b95243057f638f0245a`.
+
+> 
+> type TheListToUpdate struct {
+> 	Capacity string `json:"capacity,omitempty"`
+> 	Values []string `json:"values,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `TheListToUpdate` (L26). The full declaration list is recorded under `agones:test/sdk/restapi/beta/swagger/model_the_list_to_update.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-bb231becf658a274"></a>
+
+
+### File `test/sdk/restapi/beta/swagger/model_the_requested_update_to_make_to_the_counter.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `fac9911154114ec87d8d39288b802b5f96cef629`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/beta/swagger/model_the_requested_update_to_make_to_the_counter.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-32e83f8a71d434b52d.** [agones/test/sdk/restapi/beta/swagger/model_the_requested_update_to_make_to_the_counter.go, lines 25–30](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/beta/swagger/model_the_requested_update_to_make_to_the_counter.go#L25-L30). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `0683400c4318e8f1671183a72a3be4a69ca19b49cebc977250abb431564fb356`.
+
+> 
+> type TheRequestedUpdateToMakeToTheCounter struct {
+> 	Count string `json:"count,omitempty"`
+> 	Capacity string `json:"capacity,omitempty"`
+> 	CountDiff string `json:"countDiff,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `TheRequestedUpdateToMakeToTheCounter` (L26). The full declaration list is recorded under `agones:test/sdk/restapi/beta/swagger/model_the_requested_update_to_make_to_the_counter.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-2ccd46f3fbc657ee"></a>
+
+
+### File `test/sdk/restapi/beta/swagger/response.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `9e2cf56be6ebea532afc020a15ba004f3cf46cc3`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/beta/swagger/response.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-f3bf39592c2560ea25.** [agones/test/sdk/restapi/beta/swagger/response.go, lines 29–43](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/beta/swagger/response.go#L29-L43). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `e0baf9bcab93d77a58da1b81ea21037380233c893f4c9298c7a06554a613d792`.
+
+> 
+> type APIResponse struct {
+> 	*http.Response `json:"-"`
+> 	Message        string `json:"message,omitempty"`
+> 	// Operation is the name of the swagger operation.
+> 	Operation string `json:"operation,omitempty"`
+> 	// RequestURL is the request URL. This value is always available, even if the
+> 	// embedded *http.Response is nil.
+> 	RequestURL string `json:"url,omitempty"`
+> 	// Method is the HTTP method used for the request.  This value is always
+> 	// available, even if the embedded *http.Response is nil.
+> 	Method string `json:"method,omitempty"`
+> 	// Payload holds the contents of the response body (which may be nil or empty).
+> 	// This is provided here as the raw response.Body() reader will have already
+> 	// been drained.
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 3 lexically identified declarations, including `APIResponse` (L30), `NewAPIResponse` (L47), `NewAPIResponseWithError` (L53). The full declaration list is recorded under `agones:test/sdk/restapi/beta/swagger/response.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/sdk/restapi/swagger` -> module `test::sdk::restapi::swagger`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-fbec11c708a24970"></a>
+
+
+### File `test/sdk/restapi/swagger/api_sdk.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `2cf97494c2be74df1a30603f6ebe6c93d76ed3d6`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/swagger/api_sdk.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-3ed0fc8ca7c96745ef.** [agones/test/sdk/restapi/swagger/api_sdk.go, lines 39–53](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/swagger/api_sdk.go#L39-L53). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `1dfbcf3d32c18bde82e5faa4a601b4539b6d62070adf9956e4fd382b8291f442`.
+
+> 
+> type SDKApiService service
+> /*
+> SDKApiService Call to self Allocation the GameServer
+>  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+>  * @param body
+> @return SdkEmpty
+> */
+> func (a *SDKApiService) Allocate(ctx context.Context, body SdkEmpty) (SdkEmpty, *http.Response, error) {
+> 	var (
+> 		localVarHttpMethod = strings.ToUpper("Post")
+> 		localVarPostBody   interface{}
+> 		localVarFileName   string
+> 		localVarFileBytes  []byte
+> 		localVarReturnValue SdkEmpty
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 10 lexically identified declarations, including `SDKApiService` (L40), `Allocate` (L47), `GetGameServer` (L131), `Health` (L214), `Ready` (L299), `Reserve` (L384), `SetAnnotation` (L469), `SetLabel` (L554), `Shutdown` (L639), `WatchGameServer` (L723). The full declaration list is recorded under `agones:test/sdk/restapi/swagger/api_sdk.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+5. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+6. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-f42f1cdc492e8511"></a>
+
+
+### File `test/sdk/restapi/swagger/client.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `512e33d8fa9924ab030988c94930f4922e245a9a`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/swagger/client.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-51ee8039a73e71a854.** [agones/test/sdk/restapi/swagger/client.go, lines 53–67](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/swagger/client.go#L53-L67). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `7b854344d91b290f712d0de05d8e57906104e4f328872c446760b411fbb1534b`.
+
+> 
+> // APIClient manages communication with the sdk.proto API vversion not set
+> // In most cases there should be only one, shared, APIClient.
+> type APIClient struct {
+> 	cfg    *Configuration
+> 	common service // Reuse a single struct instead of allocating one for each service on the heap.
+> 
+> 	// API Services
+> 
+> 	SDKApi *SDKApiService
+> }
+> 
+> type service struct {
+> 	client *APIClient
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 25 lexically identified declarations, including `APIClient` (L56), `service` (L65), `NewAPIClient` (L71), `atoi` (L86), `selectHeaderContentType` (L91), `selectHeaderAccept` (L102), `contains` (L115), `typeCheckParameter` (L125), `parameterToString` (L139), `callAPI` (L161), `ChangeBasePath` (L166), `prepareRequest` (L171), `decode` (L326), `addFile` (L342), `reportError` (L359), `setBody` (L364), `detectContentType` (L395), `cacheControl` (L416), `parseCacheControl` (L418), `CacheExpires` (L437), `strlen` (L464), `GenericSwaggerError` (L469), `Error` (L476), `Body` (L481). The full declaration list is recorded under `agones:test/sdk/restapi/swagger/client.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+7. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+8. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-dc62ad83c2579f10"></a>
+
+
+### File `test/sdk/restapi/swagger/configuration.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `c3eea7c586ba8990ad25e1a7fc621726941607bd`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/swagger/configuration.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-30931f5abbad36042f.** [agones/test/sdk/restapi/swagger/configuration.go, lines 29–43](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/swagger/configuration.go#L29-L43). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `c49a832c9f0274559cfe355657c647b5254819af28aed7e0d7f017f539e674ed`.
+
+> 
+> // contextKeys are used to identify the type of value in the context.
+> // Since these are string, it is possible to get a short description of the
+> // context key for logging and debugging using key.String().
+> 
+> type contextKey string
+> 
+> func (c contextKey) String() string {
+> 	return "auth " + string(c)
+> }
+> 
+> var (
+> 	// ContextOAuth2 takes a oauth2.TokenSource as authentication for the request.
+> 	ContextOAuth2 = contextKey("token")
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 7 lexically identified declarations, including `contextKey` (L34), `String` (L36), `BasicAuth` (L55), `APIKey` (L61), `Configuration` (L66), `NewConfiguration` (L75), `AddDefaultHeader` (L84). The full declaration list is recorded under `agones:test/sdk/restapi/swagger/configuration.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+5. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+6. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-448082735ec375fe"></a>
+
+
+### File `test/sdk/restapi/swagger/model_game_server_object_meta.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `c6c745e49b42969d406c23134547839008e6441c`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/swagger/model_game_server_object_meta.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-c05aea19a411984a04.** [agones/test/sdk/restapi/swagger/model_game_server_object_meta.go, lines 25–36](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/swagger/model_game_server_object_meta.go#L25-L36). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `14a0418a6bbaff9cffa3c872e26a307b735ff2d85a6a4e38278a8dfd20282534`.
+
+> 
+> type GameServerObjectMeta struct {
+> 	Name string `json:"name,omitempty"`
+> 	Namespace string `json:"namespace,omitempty"`
+> 	Uid string `json:"uid,omitempty"`
+> 	ResourceVersion string `json:"resource_version,omitempty"`
+> 	Generation string `json:"generation,omitempty"`
+> 	CreationTimestamp string `json:"creation_timestamp,omitempty"`
+> 	DeletionTimestamp string `json:"deletion_timestamp,omitempty"`
+> 	Annotations map[string]string `json:"annotations,omitempty"`
+> 	Labels map[string]string `json:"labels,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `GameServerObjectMeta` (L26). The full declaration list is recorded under `agones:test/sdk/restapi/swagger/model_game_server_object_meta.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+5. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-a4234537aec3b5df"></a>
+
+
+### File `test/sdk/restapi/swagger/model_game_server_spec.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `c8c195de97d07a6bb4155ad5de18da44f07c812c`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/swagger/model_game_server_spec.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-ec05cd4b9f149a5e56.** [agones/test/sdk/restapi/swagger/model_game_server_spec.go, lines 25–28](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/swagger/model_game_server_spec.go#L25-L28). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `f58242ca2c7f6db9b8a67f796db07f3e5f9c476f0260b3a2e268122e574b2c1a`.
+
+> 
+> type GameServerSpec struct {
+> 	Health *GameServerSpecHealth `json:"health,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `GameServerSpec` (L26). The full declaration list is recorded under `agones:test/sdk/restapi/swagger/model_game_server_spec.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-47aed3cc92aa71d5"></a>
+
+
+### File `test/sdk/restapi/swagger/model_game_server_spec_health.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `6fee7f9e49ab2592f1ac42480660b6bea4375b0f`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/swagger/model_game_server_spec_health.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-f96705f9174fc73121.** [agones/test/sdk/restapi/swagger/model_game_server_spec_health.go, lines 25–31](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/swagger/model_game_server_spec_health.go#L25-L31). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `26463b9a4e979d07a1a17940fe49e75b58f208cfd0294b3eaa3e75279e93bc70`.
+
+> 
+> type GameServerSpecHealth struct {
+> 	Disabled bool `json:"disabled,omitempty"`
+> 	PeriodSeconds int32 `json:"period_seconds,omitempty"`
+> 	FailureThreshold int32 `json:"failure_threshold,omitempty"`
+> 	InitialDelaySeconds int32 `json:"initial_delay_seconds,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `GameServerSpecHealth` (L26). The full declaration list is recorded under `agones:test/sdk/restapi/swagger/model_game_server_spec_health.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-a08a8d97a329d295"></a>
+
+
+### File `test/sdk/restapi/swagger/model_googlerpc_status.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `e4e77be4ee2fa535683f0ed5445b6ec9fc4b285a`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/swagger/model_googlerpc_status.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-b351b3c40ce965d86a.** [agones/test/sdk/restapi/swagger/model_googlerpc_status.go, lines 25–30](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/swagger/model_googlerpc_status.go#L25-L30). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `4c3161ba66f30ebd29342ca5ccb9142a6f9e367a58a20b7fc8e9a39fbfc6efa5`.
+
+> 
+> type GooglerpcStatus struct {
+> 	Code int32 `json:"code,omitempty"`
+> 	Message string `json:"message,omitempty"`
+> 	Details []map[string]interface{} `json:"details,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `GooglerpcStatus` (L26). The full declaration list is recorded under `agones:test/sdk/restapi/swagger/model_googlerpc_status.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+5. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-56023df64358f624"></a>
+
+
+### File `test/sdk/restapi/swagger/model_sdk_duration.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `143766417acb65df430c7a72996fcb545ef062e5`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/swagger/model_sdk_duration.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-6ceec1fbbec73805be.** [agones/test/sdk/restapi/swagger/model_sdk_duration.go, lines 25–28](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/swagger/model_sdk_duration.go#L25-L28). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `cd68cbcb5766c38c0ed5872207bfda7f841a111776a5f05217c5ff6dc2b36a52`.
+
+> 
+> type SdkDuration struct {
+> 	Seconds string `json:"seconds,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `SdkDuration` (L26). The full declaration list is recorded under `agones:test/sdk/restapi/swagger/model_sdk_duration.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-d9f80b8f5f9f41e0"></a>
+
+
+### File `test/sdk/restapi/swagger/model_sdk_empty.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `fd24ddef1d4e2659760ef31829fe1252a8fca625`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/swagger/model_sdk_empty.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-75c863848689a484d9.** [agones/test/sdk/restapi/swagger/model_sdk_empty.go, lines 25–27](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/swagger/model_sdk_empty.go#L25-L27). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `c73d2e3ec76f054928e8bdcb2395d5439b739f23c8f288c2332165c395b454fd`.
+
+> 
+> type SdkEmpty struct {
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `SdkEmpty` (L26). The full declaration list is recorded under `agones:test/sdk/restapi/swagger/model_sdk_empty.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-6c86ac79d9f3a569"></a>
+
+
+### File `test/sdk/restapi/swagger/model_sdk_game_server.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `370404cbafd0406fdc786456f9be3760576f7968`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/swagger/model_sdk_game_server.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-bf7cecfda480e599fa.** [agones/test/sdk/restapi/swagger/model_sdk_game_server.go, lines 25–31](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/swagger/model_sdk_game_server.go#L25-L31). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `cdd5f6fb32a3764031a84e14ac2f35b0f1955c00b8481599eff86ca9336d5606`.
+
+> 
+> // A GameServer Custom Resource Definition object We will only export those resources that make the most sense. Can always expand to more as needed.
+> type SdkGameServer struct {
+> 	ObjectMeta *GameServerObjectMeta `json:"object_meta,omitempty"`
+> 	Spec *GameServerSpec `json:"spec,omitempty"`
+> 	Status *SdkGameServerStatus `json:"status,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `SdkGameServer` (L27). The full declaration list is recorded under `agones:test/sdk/restapi/swagger/model_sdk_game_server.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-491ce02a4d55cb45"></a>
+
+
+### File `test/sdk/restapi/swagger/model_sdk_game_server_status.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `bbc5c41215d5110ba68de3480cdc4eea68b5a50c`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/swagger/model_sdk_game_server_status.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-b98e47cb651f5394e9.** [agones/test/sdk/restapi/swagger/model_sdk_game_server_status.go, lines 25–34](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/swagger/model_sdk_game_server_status.go#L25-L34). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `e004ebed128d484fef80cedccdecb2f90e4f3ba95bb3da7d97386537f87276dc`.
+
+> 
+> type SdkGameServerStatus struct {
+> 	State string `json:"state,omitempty"`
+> 	Address string `json:"address,omitempty"`
+> 	Addresses []StatusAddress `json:"addresses,omitempty"`
+> 	Ports []StatusPort `json:"ports,omitempty"`
+> 	Players *StatusPlayerStatus `json:"players,omitempty"`
+> 	Counters map[string]StatusCounterStatus `json:"counters,omitempty"`
+> 	Lists map[string]StatusListStatus `json:"lists,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `SdkGameServerStatus` (L26). The full declaration list is recorded under `agones:test/sdk/restapi/swagger/model_sdk_game_server_status.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+5. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-2629e706ae8ba575"></a>
+
+
+### File `test/sdk/restapi/swagger/model_sdk_key_value.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `4a82980296dbe24d55fc922321c53a965dd654db`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/swagger/model_sdk_key_value.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-06d513e1319ec2361e.** [agones/test/sdk/restapi/swagger/model_sdk_key_value.go, lines 25–29](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/swagger/model_sdk_key_value.go#L25-L29). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `b0a8afe73a69605ad3650b07da0e09f8c34a3f558d09306647da065a759f84ca`.
+
+> 
+> type SdkKeyValue struct {
+> 	Key string `json:"key,omitempty"`
+> 	Value string `json:"value,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `SdkKeyValue` (L26). The full declaration list is recorded under `agones:test/sdk/restapi/swagger/model_sdk_key_value.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-224c12cc56e334f9"></a>
+
+
+### File `test/sdk/restapi/swagger/model_status_address.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `70ff9fe455a18b6610dd958818ca2a3887c06cc1`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/swagger/model_status_address.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-5ba5ead936ba4aacdc.** [agones/test/sdk/restapi/swagger/model_status_address.go, lines 25–29](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/swagger/model_status_address.go#L25-L29). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `1f9b15b5831a77034b23000f10269d0e9483b95c30e99e290cced21d3aa04cb2`.
+
+> 
+> type StatusAddress struct {
+> 	Type_ string `json:"type,omitempty"`
+> 	Address string `json:"address,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `StatusAddress` (L26). The full declaration list is recorded under `agones:test/sdk/restapi/swagger/model_status_address.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-299609d6fb1b0088"></a>
+
+
+### File `test/sdk/restapi/swagger/model_status_counter_status.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `e10a5739220d0073fecdebfb725b1e9465360ac2`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/swagger/model_status_counter_status.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-6823385dde54999b24.** [agones/test/sdk/restapi/swagger/model_status_counter_status.go, lines 25–29](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/swagger/model_status_counter_status.go#L25-L29). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `4b646b3cec2e421153eb21965a40334024491b8e1cd85a0a650c35ccbac35a8b`.
+
+> 
+> type StatusCounterStatus struct {
+> 	Count string `json:"count,omitempty"`
+> 	Capacity string `json:"capacity,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `StatusCounterStatus` (L26). The full declaration list is recorded under `agones:test/sdk/restapi/swagger/model_status_counter_status.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-110824581da724b9"></a>
+
+
+### File `test/sdk/restapi/swagger/model_status_list_status.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `97d49935093cb77896568a6b2221827a0ace267b`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/swagger/model_status_list_status.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-654e7f6c93622b65c8.** [agones/test/sdk/restapi/swagger/model_status_list_status.go, lines 25–29](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/swagger/model_status_list_status.go#L25-L29). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `ab843d53875e2a6c414daaef020adcfcd90a0f4cedd2c1ab1a9ee2c288c39a74`.
+
+> 
+> type StatusListStatus struct {
+> 	Capacity string `json:"capacity,omitempty"`
+> 	Values []string `json:"values,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `StatusListStatus` (L26). The full declaration list is recorded under `agones:test/sdk/restapi/swagger/model_status_list_status.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-c8e9d6b6b1407688"></a>
+
+
+### File `test/sdk/restapi/swagger/model_status_player_status.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `2dec3772e9de8c32e00f6f0cfa040972fb1c4a45`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/swagger/model_status_player_status.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-1cc8968576a483bc55.** [agones/test/sdk/restapi/swagger/model_status_player_status.go, lines 25–30](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/swagger/model_status_player_status.go#L25-L30). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `8faebc9d11ccdf7e9bbc14817d075e30b7c53044b4a834f32bf42e5ccb6f241a`.
+
+> 
+> type StatusPlayerStatus struct {
+> 	Count string `json:"count,omitempty"`
+> 	Capacity string `json:"capacity,omitempty"`
+> 	Ids []string `json:"ids,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `StatusPlayerStatus` (L26). The full declaration list is recorded under `agones:test/sdk/restapi/swagger/model_status_player_status.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-38d284835d68c846"></a>
+
+
+### File `test/sdk/restapi/swagger/model_status_port.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `f8e476a66c16b7eb94c8d118ca394b12f986e201`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/swagger/model_status_port.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-667d9f502ce844056b.** [agones/test/sdk/restapi/swagger/model_status_port.go, lines 25–29](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/swagger/model_status_port.go#L25-L29). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `8ca10c328eb017e205b3c71b9a00402625fa177f1a3fab4f88e0158a170890fc`.
+
+> 
+> type StatusPort struct {
+> 	Name string `json:"name,omitempty"`
+> 	Port int32 `json:"port,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `StatusPort` (L26). The full declaration list is recorded under `agones:test/sdk/restapi/swagger/model_status_port.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-651b9c034d3f27c2"></a>
+
+
+### File `test/sdk/restapi/swagger/model_stream_result_of_sdk_game_server.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `32b31f783c7ca3a5ea54558729f1230bb5160e4f`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/swagger/model_stream_result_of_sdk_game_server.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-e61c8398316e49b365.** [agones/test/sdk/restapi/swagger/model_stream_result_of_sdk_game_server.go, lines 25–28](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/swagger/model_stream_result_of_sdk_game_server.go#L25-L28). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `54c4131f8d2fd643aff146d627257611f4f581d9c66cf04b63bb77be817ac0fc`.
+
+> 
+> type StreamResultOfSdkGameServer struct {
+> 	Result *SdkGameServer `json:"result,omitempty"`
+> }
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `StreamResultOfSdkGameServer` (L26). The full declaration list is recorded under `agones:test/sdk/restapi/swagger/model_stream_result_of_sdk_game_server.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-d3b7017b46aabbbf"></a>
+
+
+### File `test/sdk/restapi/swagger/response.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `17a3296fa22fee6fac8631cb76a5916bf5c5d8f8`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/restapi/swagger/response.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-99c2f78cfc9930841e.** [agones/test/sdk/restapi/swagger/response.go, lines 29–43](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/restapi/swagger/response.go#L29-L43). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `eb0a5a224e232d5c748f8c79dd59d83d3ebdfafa244a597682c584a0cc57bcac`.
+
+> 
+> type APIResponse struct {
+> 	*http.Response `json:"-"`
+> 	Message        string `json:"message,omitempty"`
+> 	// Operation is the name of the swagger operation.
+> 	Operation string `json:"operation,omitempty"`
+> 	// RequestURL is the request URL. This value is always available, even if the
+> 	// embedded *http.Response is nil.
+> 	RequestURL string `json:"url,omitempty"`
+> 	// Method is the HTTP method used for the request.  This value is always
+> 	// available, even if the embedded *http.Response is nil.
+> 	Method string `json:"method,omitempty"`
+> 	// Payload holds the contents of the response body (which may be nil or empty).
+> 	// This is provided here as the raw response.Body() reader will have already
+> 	// been drained.
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 3 lexically identified declarations, including `APIResponse` (L30), `NewAPIResponse` (L47), `NewAPIResponseWithError` (L53). The full declaration list is recorded under `agones:test/sdk/restapi/swagger/response.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/sdk/rust` -> module `test::sdk::rust`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-24fd33bebd2885d2"></a>
+
+
+### File `test/sdk/rust/.gitignore`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `855bb2f5c4e83b24e5300d09c5b807736ef91d9b`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/rust/.gitignore`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-50e87bcf91e9624180.** [agones/test/sdk/rust/.gitignore, lines 14–16](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/rust/.gitignore#L14-L16). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `6afb8190af4c1bf8d8dfb8b79ecbe44ab760487793aa2d8378736fc954347b3a`.
+
+> 
+> Cargo.lock
+> /target
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-b239394234578fcf"></a>
+
+
+### File `test/sdk/rust/Cargo.toml`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `f561ed99535557c8b193e9304f2846e5f258cc40`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/rust/Cargo.toml`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-50d990fe45d8916e51.** [agones/test/sdk/rust/Cargo.toml, lines 18–32](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/rust/Cargo.toml#L18-L32). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `a7cdf7fcd2bbc336dc29da5ffb5846369e3c1d0b81fbcbd8f260989636bd9d88`.
+
+> [package]
+> name = "rust-simple"
+> version = "0.2.0"
+> edition = "2021"
+> 
+> [dependencies]
+> agones = { path = "../../../sdks/rust" }
+> 
+> [dependencies.tokio]
+> version = "1.6"
+> default-features = false
+> features = [
+>     "macros",
+>     "rt-multi-thread",
+>     "sync",
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/sdk/rust/src` -> module `test::sdk::rust::src`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-837f1031c135cff5"></a>
+
+
+### File `test/sdk/rust/src/main.rs`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `0b40d4056d283e84f7a0243c5c5a80150fba0fbc`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/rust/src/main.rs`.
+
+
+**Direct quotation — UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT; Q-a6d13fb260a6212c96.** [agones/test/sdk/rust/src/main.rs, lines 3–22](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/rust/src/main.rs#L3-L22). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `180bfd4c219cbd8726b6197822e44500a72be6a2d9553e7e5fee41de6cd15220`.
+
+> // Licensed under the Apache License, Version 2.0 (the "License");
+> // you may not use this file except in compliance with the License.
+> // You may obtain a copy of the License at
+> //
+> //     http://www.apache.org/licenses/LICENSE-2.0
+> //
+> // Unless required by applicable law or agreed to in writing, software
+> // distributed under the License is distributed on an "AS IS" BASIS,
+> // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+> // See the License for the specific language governing permissions and
+> // limitations under the License.
+> 
+> use std::{env, thread, time::Duration};
+> 
+> #[tokio::main(flavor = "multi_thread", worker_threads = 4)]
+> async fn main() {
+>     println!("Rust Game Server has started!");
+> 
+>     ::std::process::exit(match run().await {
+>         Ok(_) => {
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+4. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/sdk/unity` -> module `test::sdk::unity`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-29cec33b7a835747"></a>
+
+
+### File `test/sdk/unity/.gitignore`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `58cbc8256e87c2d9c81893bdde79c0c781a011d0`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/.gitignore`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-e5d55cc13385a0dc4a.** [agones/test/sdk/unity/.gitignore, lines 5–19](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/.gitignore#L5-L19). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `c735b75517ecf18563ce4bf269eb4fe158a5539f7d554823578a85eaec795f45`.
+
+> /[Ll]ibrary/
+> /[Tt]emp/
+> /[Oo]bj/
+> /[Bb]uild/
+> /[Bb]uilds/
+> /[Ll]ogs/
+> /[Uu]ser[Ss]ettings/
+> 
+> # MemoryCaptures can get excessive in size.
+> # They also could contain extremely sensitive data
+> /[Mm]emoryCaptures/
+> 
+> # Recordings can get excessive in size
+> /[Rr]ecordings/
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-9fde2a4c4343703c"></a>
+
+
+### File `test/sdk/unity/README.md`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `92b108bbb0ab218739626794837e1a49ae14732c`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/README.md`.
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-7d392035a095dc0828.** [agones/test/sdk/unity/README.md, lines 2–16](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/README.md#L2-L16). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `b91c5e2bedd2b9a5b0d15808776a43c10ac3090924a09cec80ca2e34a61c1944`.
+
+> 
+> This project is intended to be used for developing the Agones Unity SDK.
+> 
+> ## Add Agones Unity Test Project to Unity Hub
+> 
+> Contained within this folder is a Unity project. After opening the Unity Hub application find the "Add" button. In the file path dialog, select this directory. You will then be able to use the Unity Editor to run Agones Unity SDK tests!
+> 
+> # Running Tests
+> 
+> This project implements basic tests for the Unity SDK using the [Unity Test Framework](https://docs.unity3d.com/Packages/com.unity.test-framework@1.1/manual/index.html). These tests are PlayMode tests.
+> 
+> To run these tests, open the Test Framework window in the Unity editor using Window > General > Test Framwork. More information [in the Unity guide](https://docs.unity3d.com/Packages/com.unity.test-framework@1.1/manual/workflow-run-test.html).
+> 
+> # Connecting to the Agones SDK Server
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/sdk/unity/Assets` -> module `test::sdk::unity::Assets`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-c534b37055dac3f4"></a>
+
+
+### File `test/sdk/unity/Assets/Main.unity`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `23c6357dee70f259d9a86494ad4d88732e6004e1`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/Assets/Main.unity`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-c2f2453355aff77f71.** [agones/test/sdk/unity/Assets/Main.unity, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/Assets/Main.unity#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `26ef47027cd02ec9452062106ca2a0174c460cdf5d398bd89bce0b1a6a80786e`.
+
+> %YAML 1.1
+> %TAG !u! tag:unity3d.com,2011:
+> --- !u!29 &1
+> OcclusionCullingSettings:
+>   m_ObjectHideFlags: 0
+>   serializedVersion: 2
+>   m_OcclusionBakeSettings:
+>     smallestOccluder: 5
+>     smallestHole: 0.25
+>     backfaceThreshold: 100
+>   m_SceneGUID: 00000000000000000000000000000000
+>   m_OcclusionCullingData: {fileID: 0}
+> --- !u!104 &2
+> RenderSettings:
+>   m_ObjectHideFlags: 0
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-f7570b577a9fdccb"></a>
+
+
+### File `test/sdk/unity/Assets/Main.unity.meta`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `78b6fafb6f24c1bdec803b53397db836132f5025`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/Assets/Main.unity.meta`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-d8cf14e2d958bff5ec.** [agones/test/sdk/unity/Assets/Main.unity.meta, lines 1–7](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/Assets/Main.unity.meta#L1-L7). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `bad12a40222378b5a85b47dffb231f9526e72d314bd54fcd50f4ac07ec2dbd8f`.
+
+> fileFormatVersion: 2
+> guid: 4183825fcb07d412297ff13c74755d46
+> DefaultImporter:
+>   externalObjects: {}
+>   userData: 
+>   assetBundleName: 
+>   assetBundleVariant: 
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/sdk/unity/Packages` -> module `test::sdk::unity::Packages`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-d1fcba844cd1d3be"></a>
+
+
+### File `test/sdk/unity/Packages/manifest.json`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `b02183c81375c65ed6d050e81758f6542ce8ecfc`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/Packages/manifest.json`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-241b5e7b23a716d747.** [agones/test/sdk/unity/Packages/manifest.json, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/Packages/manifest.json#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `b9b6a9fce28656290f614f519635cf5e95d4e1de2ecd049f7e9388cb3c2c4e02`.
+
+> {
+>   "dependencies": {
+>     "com.googleforgames.agones": "file:../../../../sdks/unity",
+>     "com.unity.ide.rider": "3.0.31",
+>     "com.unity.ide.visualstudio": "2.0.22",
+>     "com.unity.ide.vscode": "1.2.5",
+>     "com.unity.test-framework": "1.1.33",
+>     "com.unity.toolchain.macos-arm64-linux-x86_64": "2.0.3",
+>     "com.unity.ugui": "1.0.0",
+>     "com.unity.modules.ai": "1.0.0",
+>     "com.unity.modules.androidjni": "1.0.0",
+>     "com.unity.modules.animation": "1.0.0",
+>     "com.unity.modules.assetbundle": "1.0.0",
+>     "com.unity.modules.audio": "1.0.0",
+>     "com.unity.modules.cloth": "1.0.0",
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-377aef1d993f2f21"></a>
+
+
+### File `test/sdk/unity/Packages/packages-lock.json`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `7a8f91bfe639dc29142ef66b40c602e1b6d202ec`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/Packages/packages-lock.json`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-177df99c1a1ac636c8.** [agones/test/sdk/unity/Packages/packages-lock.json, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/Packages/packages-lock.json#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3fe4bb59b00d1785822f3c14071e74fd3dba3a9b8661c48dc362c806900aba8f`.
+
+> {
+>   "dependencies": {
+>     "com.googleforgames.agones": {
+>       "version": "file:../../../../sdks/unity",
+>       "depth": 0,
+>       "source": "local",
+>       "dependencies": {}
+>     },
+>     "com.unity.ext.nunit": {
+>       "version": "1.0.6",
+>       "depth": 1,
+>       "source": "registry",
+>       "dependencies": {},
+>       "url": "https://packages.unity.com"
+>     },
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/sdk/unity/ProjectSettings` -> module `test::sdk::unity::ProjectSettings`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-0ea8049b1de8315d"></a>
+
+
+### File `test/sdk/unity/ProjectSettings/AudioManager.asset`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `df1e8090a2e78c7b20cd5f10777df77422c780b9`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/ProjectSettings/AudioManager.asset`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-c5685d016f41b427fb.** [agones/test/sdk/unity/ProjectSettings/AudioManager.asset, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/ProjectSettings/AudioManager.asset#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `9a554916fe138ebcad8443ee9b079363ecc72795c39d0e80f5f7ca99e2c6f5e7`.
+
+> %YAML 1.1
+> %TAG !u! tag:unity3d.com,2011:
+> --- !u!11 &1
+> AudioManager:
+>   m_ObjectHideFlags: 0
+>   serializedVersion: 2
+>   m_Volume: 1
+>   Rolloff Scale: 1
+>   Doppler Factor: 1
+>   Default Speaker Mode: 2
+>   m_SampleRate: 0
+>   m_DSPBufferSize: 1024
+>   m_VirtualVoiceCount: 512
+>   m_RealVoiceCount: 32
+>   m_EnableOutputSuspension: 1
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-50a11b3e69f4645f"></a>
+
+
+### File `test/sdk/unity/ProjectSettings/ClusterInputManager.asset`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `e7886b266a005f4d9d80f2fef8d1649dcfd3ed2b`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/ProjectSettings/ClusterInputManager.asset`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-71c96bc89e253d3fde.** [agones/test/sdk/unity/ProjectSettings/ClusterInputManager.asset, lines 1–6](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/ProjectSettings/ClusterInputManager.asset#L1-L6). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `40e65dd214bf254955d2c8829ca8ce2130fd3510485560ce012e9a1ddd93e623`.
+
+> %YAML 1.1
+> %TAG !u! tag:unity3d.com,2011:
+> --- !u!236 &1
+> ClusterInputManager:
+>   m_ObjectHideFlags: 0
+>   m_Inputs: []
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-d2c1e89bf4f170ba"></a>
+
+
+### File `test/sdk/unity/ProjectSettings/DynamicsManager.asset`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `3e5f55bcc4d65b952a259c3f0168d033cc272ff3`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/ProjectSettings/DynamicsManager.asset`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-af99e42f69ddfeb9cc.** [agones/test/sdk/unity/ProjectSettings/DynamicsManager.asset, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/ProjectSettings/DynamicsManager.asset#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `62fd35da36080a098d3e9f90cf4af6c655fe582091c33e505b812cf9aa36fee1`.
+
+> %YAML 1.1
+> %TAG !u! tag:unity3d.com,2011:
+> --- !u!55 &1
+> PhysicsManager:
+>   m_ObjectHideFlags: 0
+>   serializedVersion: 14
+>   m_Gravity: {x: 0, y: -9.81, z: 0}
+>   m_DefaultMaterial: {fileID: 0}
+>   m_BounceThreshold: 2
+>   m_DefaultMaxDepenetrationVelocity: 10
+>   m_SleepThreshold: 0.005
+>   m_DefaultContactOffset: 0.01
+>   m_DefaultSolverIterations: 6
+>   m_DefaultSolverVelocityIterations: 1
+>   m_QueriesHitBackfaces: 0
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-707e30635e82c107"></a>
+
+
+### File `test/sdk/unity/ProjectSettings/EditorBuildSettings.asset`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `0147887ef4b113c3a3b8da44ef30e3208f1e9120`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/ProjectSettings/EditorBuildSettings.asset`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-688e22294ed8a6638a.** [agones/test/sdk/unity/ProjectSettings/EditorBuildSettings.asset, lines 1–8](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/ProjectSettings/EditorBuildSettings.asset#L1-L8). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `1942c088ddfeeef348fdf12390e2a2d6da51056e197458d67969d44e7b2cbbd3`.
+
+> %YAML 1.1
+> %TAG !u! tag:unity3d.com,2011:
+> --- !u!1045 &1
+> EditorBuildSettings:
+>   m_ObjectHideFlags: 0
+>   serializedVersion: 2
+>   m_Scenes: []
+>   m_configObjects: {}
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-edb9815a8a975ada"></a>
+
+
+### File `test/sdk/unity/ProjectSettings/EditorSettings.asset`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `a5f77b098907bfd0a0e109c2cfb7a3189b072359`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/ProjectSettings/EditorSettings.asset`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-20f6df5c68edfd17de.** [agones/test/sdk/unity/ProjectSettings/EditorSettings.asset, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/ProjectSettings/EditorSettings.asset#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `d853eebd40ee532398333bac1bf7ac668eca3b831b6fc7d0887d7602f04e881a`.
+
+> %YAML 1.1
+> %TAG !u! tag:unity3d.com,2011:
+> --- !u!159 &1
+> EditorSettings:
+>   m_ObjectHideFlags: 0
+>   serializedVersion: 12
+>   m_SerializationMode: 2
+>   m_LineEndingsForNewScripts: 1
+>   m_DefaultBehaviorMode: 0
+>   m_PrefabRegularEnvironment: {fileID: 0}
+>   m_PrefabUIEnvironment: {fileID: 0}
+>   m_SpritePackerMode: 0
+>   m_SpritePackerCacheSize: 10
+>   m_SpritePackerPaddingPower: 1
+>   m_Bc7TextureCompressor: 0
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-3d27ef4b1c360c75"></a>
+
+
+### File `test/sdk/unity/ProjectSettings/GraphicsSettings.asset`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `2d513492352046d9984e3ccd2b39e4cb6627ebf3`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/ProjectSettings/GraphicsSettings.asset`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-91a3abdce50c485caa.** [agones/test/sdk/unity/ProjectSettings/GraphicsSettings.asset, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/ProjectSettings/GraphicsSettings.asset#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `96fbec3a726513347293fb201477836277ade290a0bd7bd473cea90ffe896820`.
+
+> %YAML 1.1
+> %TAG !u! tag:unity3d.com,2011:
+> --- !u!30 &1
+> GraphicsSettings:
+>   m_ObjectHideFlags: 0
+>   serializedVersion: 15
+>   m_Deferred:
+>     m_Mode: 1
+>     m_Shader: {fileID: 69, guid: 0000000000000000f000000000000000, type: 0}
+>   m_DeferredReflections:
+>     m_Mode: 1
+>     m_Shader: {fileID: 74, guid: 0000000000000000f000000000000000, type: 0}
+>   m_ScreenSpaceShadows:
+>     m_Mode: 1
+>     m_Shader: {fileID: 64, guid: 0000000000000000f000000000000000, type: 0}
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-054ef81e58e20de5"></a>
+
+
+### File `test/sdk/unity/ProjectSettings/InputManager.asset`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `8068b2058b089f9973b15f83648e58cd238688f0`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/ProjectSettings/InputManager.asset`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-b584f7766f0dbd2221.** [agones/test/sdk/unity/ProjectSettings/InputManager.asset, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/ProjectSettings/InputManager.asset#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `d0f454ddb880912abcae92e3e12957a7446786ba89e24937e019ff3bbc0d4300`.
+
+> %YAML 1.1
+> %TAG !u! tag:unity3d.com,2011:
+> --- !u!13 &1
+> InputManager:
+>   m_ObjectHideFlags: 0
+>   serializedVersion: 2
+>   m_Axes:
+>   - serializedVersion: 3
+>     m_Name: Horizontal
+>     descriptiveName: 
+>     descriptiveNegativeName: 
+>     negativeButton: left
+>     positiveButton: right
+>     altNegativeButton: a
+>     altPositiveButton: d
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-8eccae446718991d"></a>
+
+
+### File `test/sdk/unity/ProjectSettings/MemorySettings.asset`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `5b5facecace9276319b6e497953ab0429de65b61`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/ProjectSettings/MemorySettings.asset`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-5b5409dd13109f5b22.** [agones/test/sdk/unity/ProjectSettings/MemorySettings.asset, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/ProjectSettings/MemorySettings.asset#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `1e8379a461b10ae09f3f696911088c16875d63e87ed5f2d95df9e1892703f9fd`.
+
+> %YAML 1.1
+> %TAG !u! tag:unity3d.com,2011:
+> --- !u!387306366 &1
+> MemorySettings:
+>   m_ObjectHideFlags: 0
+>   m_EditorMemorySettings:
+>     m_MainAllocatorBlockSize: -1
+>     m_ThreadAllocatorBlockSize: -1
+>     m_MainGfxBlockSize: -1
+>     m_ThreadGfxBlockSize: -1
+>     m_CacheBlockSize: -1
+>     m_TypetreeBlockSize: -1
+>     m_ProfilerBlockSize: -1
+>     m_ProfilerEditorBlockSize: -1
+>     m_BucketAllocatorGranularity: -1
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-cae41319c9297fab"></a>
+
+
+### File `test/sdk/unity/ProjectSettings/NavMeshAreas.asset`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `2e2e36968e36401ed2c4cf0f4d545e3d38ad25e9`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/ProjectSettings/NavMeshAreas.asset`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-0ca526f188daa25245.** [agones/test/sdk/unity/ProjectSettings/NavMeshAreas.asset, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/ProjectSettings/NavMeshAreas.asset#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `7ebbf8f53b8033104e1878b95ca07a28d0954092d81c220f14196a42f651e658`.
+
+> %YAML 1.1
+> %TAG !u! tag:unity3d.com,2011:
+> --- !u!126 &1
+> NavMeshProjectSettings:
+>   m_ObjectHideFlags: 0
+>   serializedVersion: 2
+>   areas:
+>   - name: Walkable
+>     cost: 1
+>   - name: Not Walkable
+>     cost: 1
+>   - name: Jump
+>     cost: 2
+>   - name: 
+>     cost: 1
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-7dda22c4b55dc6ef"></a>
+
+
+### File `test/sdk/unity/ProjectSettings/PackageManagerSettings.asset`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `616c44f1f60ce000635fecf613caf73189e98533`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/ProjectSettings/PackageManagerSettings.asset`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-aa798c4a64218d1fc2.** [agones/test/sdk/unity/ProjectSettings/PackageManagerSettings.asset, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/ProjectSettings/PackageManagerSettings.asset#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `132a17d8cd183549427833ba21109a755fa3bebe61a4897d7b329e4d54659302`.
+
+> %YAML 1.1
+> %TAG !u! tag:unity3d.com,2011:
+> --- !u!114 &1
+> MonoBehaviour:
+>   m_ObjectHideFlags: 53
+>   m_CorrespondingSourceObject: {fileID: 0}
+>   m_PrefabInstance: {fileID: 0}
+>   m_PrefabAsset: {fileID: 0}
+>   m_GameObject: {fileID: 0}
+>   m_Enabled: 1
+>   m_EditorHideFlags: 0
+>   m_Script: {fileID: 13964, guid: 0000000000000000e000000000000000, type: 0}
+>   m_Name: 
+>   m_EditorClassIdentifier: 
+>   m_EnablePreReleasePackages: 0
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-ea5bb75479b407af"></a>
+
+
+### File `test/sdk/unity/ProjectSettings/Physics2DSettings.asset`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `b71b65c420eb2573d02e702618889d202040ae50`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/ProjectSettings/Physics2DSettings.asset`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-3b331b519d0b911f9e.** [agones/test/sdk/unity/ProjectSettings/Physics2DSettings.asset, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/ProjectSettings/Physics2DSettings.asset#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `531861618163b01648a075414f6e864506ad8fe0a0d4d0096aa1fbbfcd3937dc`.
+
+> %YAML 1.1
+> %TAG !u! tag:unity3d.com,2011:
+> --- !u!19 &1
+> Physics2DSettings:
+>   m_ObjectHideFlags: 0
+>   serializedVersion: 6
+>   m_Gravity: {x: 0, y: -9.81}
+>   m_DefaultMaterial: {fileID: 0}
+>   m_VelocityIterations: 8
+>   m_PositionIterations: 3
+>   m_VelocityThreshold: 1
+>   m_MaxLinearCorrection: 0.2
+>   m_MaxAngularCorrection: 8
+>   m_MaxTranslationSpeed: 100
+>   m_MaxRotationSpeed: 360
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-4636aad8357e6b12"></a>
+
+
+### File `test/sdk/unity/ProjectSettings/PresetManager.asset`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `67a94daefe2e6bce3ec73546ad7cda94f702ad22`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/ProjectSettings/PresetManager.asset`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-ff968bac48f481886d.** [agones/test/sdk/unity/ProjectSettings/PresetManager.asset, lines 1–7](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/ProjectSettings/PresetManager.asset#L1-L7). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `29c125923fe6e29f90190d4fce1c82d660e7051546e2c9d02908d18c9cf2436c`.
+
+> %YAML 1.1
+> %TAG !u! tag:unity3d.com,2011:
+> --- !u!1386491679 &1
+> PresetManager:
+>   m_ObjectHideFlags: 0
+>   serializedVersion: 2
+>   m_DefaultPresets: {}
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-d0a0d5fe1048cb9b"></a>
+
+
+### File `test/sdk/unity/ProjectSettings/ProjectSettings.asset`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `5e8e4e1b00647fdd384fc38d6ee21a595041a972`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/ProjectSettings/ProjectSettings.asset`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-edcb472011307036ce.** [agones/test/sdk/unity/ProjectSettings/ProjectSettings.asset, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/ProjectSettings/ProjectSettings.asset#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `576aa5a00c41ee0eef67dae90b0569318514b8e643e5b9ab03862d04fb9bf1e8`.
+
+> %YAML 1.1
+> %TAG !u! tag:unity3d.com,2011:
+> --- !u!129 &1
+> PlayerSettings:
+>   m_ObjectHideFlags: 0
+>   serializedVersion: 26
+>   productGUID: c490ddcae0a69438aa42751f55711ed9
+>   AndroidProfiler: 0
+>   AndroidFilterTouchesWhenObscured: 0
+>   AndroidEnableSustainedPerformanceMode: 0
+>   defaultScreenOrientation: 4
+>   targetDevice: 2
+>   useOnDemandResources: 0
+>   accelerometerFrequency: 60
+>   companyName: DefaultCompany
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-9baf16bcb460bc82"></a>
+
+
+### File `test/sdk/unity/ProjectSettings/ProjectVersion.txt`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `e08682fecd09896ee5da7a6caf049d419510cb37`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/ProjectSettings/ProjectVersion.txt`.
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-e5791b0f7a328cc52f.** [agones/test/sdk/unity/ProjectSettings/ProjectVersion.txt, lines 1–2](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/ProjectSettings/ProjectVersion.txt#L1-L2). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `2b18d5d90cbaff5de7cce1948ad0ef02f04810325d2b46e00ba189e9262c4d03`.
+
+> m_EditorVersion: 2022.3.32f1
+> m_EditorVersionWithRevision: 2022.3.32f1 (c8300dc0a3fa)
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-e2b00fd1cacefd3d"></a>
+
+
+### File `test/sdk/unity/ProjectSettings/QualitySettings.asset`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `bb69fbfb57471f32a2eac2d650615790daae3449`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/ProjectSettings/QualitySettings.asset`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-48659df47f2bc0964b.** [agones/test/sdk/unity/ProjectSettings/QualitySettings.asset, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/ProjectSettings/QualitySettings.asset#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `944b52d523bcb15b945bc80924b9289f59185ab19bce8a00e99eec345bde6440`.
+
+> %YAML 1.1
+> %TAG !u! tag:unity3d.com,2011:
+> --- !u!47 &1
+> QualitySettings:
+>   m_ObjectHideFlags: 0
+>   serializedVersion: 5
+>   m_CurrentQuality: 5
+>   m_QualitySettings:
+>   - serializedVersion: 3
+>     name: Very Low
+>     pixelLightCount: 0
+>     shadows: 0
+>     shadowResolution: 0
+>     shadowProjection: 1
+>     shadowCascades: 1
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-6081c9dcdd86b618"></a>
+
+
+### File `test/sdk/unity/ProjectSettings/SceneTemplateSettings.json`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `5e97f8393ecf2f43993e48c5099ca1d47aca011b`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/ProjectSettings/SceneTemplateSettings.json`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-03c1676de1f056bc24.** [agones/test/sdk/unity/ProjectSettings/SceneTemplateSettings.json, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/ProjectSettings/SceneTemplateSettings.json#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `5baf593374ad67246277a435d8d0ded7167696eef6e05d2d245670e490625d8c`.
+
+> {
+>     "templatePinStates": [],
+>     "dependencyTypeInfos": [
+>         {
+>             "userAdded": false,
+>             "type": "UnityEngine.AnimationClip",
+>             "defaultInstantiationMode": 0
+>         },
+>         {
+>             "userAdded": false,
+>             "type": "UnityEditor.Animations.AnimatorController",
+>             "defaultInstantiationMode": 0
+>         },
+>         {
+>             "userAdded": false,
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-0386ccc143a0c880"></a>
+
+
+### File `test/sdk/unity/ProjectSettings/TagManager.asset`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `1c92a7840ec11895c76785f65d949a3d20d53355`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/ProjectSettings/TagManager.asset`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-7fe73d7e23ff5315aa.** [agones/test/sdk/unity/ProjectSettings/TagManager.asset, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/ProjectSettings/TagManager.asset#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `8e18b1c820e9c09e16bbd1f1b7842e9fb3b0158a0921b0964e0b8fa12c6e2c01`.
+
+> %YAML 1.1
+> %TAG !u! tag:unity3d.com,2011:
+> --- !u!78 &1
+> TagManager:
+>   serializedVersion: 2
+>   tags: []
+>   layers:
+>   - Default
+>   - TransparentFX
+>   - Ignore Raycast
+>   - 
+>   - Water
+>   - UI
+>   - 
+>   - 
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-40523db15830f141"></a>
+
+
+### File `test/sdk/unity/ProjectSettings/TimeManager.asset`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `558a017e1f50b2db73414a1abad3c033922774f8`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/ProjectSettings/TimeManager.asset`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-4442c422e181379ca8.** [agones/test/sdk/unity/ProjectSettings/TimeManager.asset, lines 1–9](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/ProjectSettings/TimeManager.asset#L1-L9). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `1a83e54adbbda7c9f4851103a0c6ab7f6448a3343d4ea5b7620452fa08416ecd`.
+
+> %YAML 1.1
+> %TAG !u! tag:unity3d.com,2011:
+> --- !u!5 &1
+> TimeManager:
+>   m_ObjectHideFlags: 0
+>   Fixed Timestep: 0.02
+>   Maximum Allowed Timestep: 0.33333334
+>   m_TimeScale: 1
+>   Maximum Particle Timestep: 0.03
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-8c557a955538b2f3"></a>
+
+
+### File `test/sdk/unity/ProjectSettings/UnityConnectSettings.asset`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `a88bee0f153ae30ff0dff032a1bea11f363ce4b0`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/ProjectSettings/UnityConnectSettings.asset`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-86c8901d327d796a65.** [agones/test/sdk/unity/ProjectSettings/UnityConnectSettings.asset, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/ProjectSettings/UnityConnectSettings.asset#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `d6034acbef6c9e3179866486c31eab81fcbe5e7ed350ce71e0fa2b1449b77109`.
+
+> %YAML 1.1
+> %TAG !u! tag:unity3d.com,2011:
+> --- !u!310 &1
+> UnityConnectSettings:
+>   m_ObjectHideFlags: 0
+>   serializedVersion: 1
+>   m_Enabled: 0
+>   m_TestMode: 0
+>   m_EventOldUrl: https://api.uca.cloud.unity3d.com/v1/events
+>   m_EventUrl: https://cdp.cloud.unity3d.com/v1/events
+>   m_ConfigUrl: https://config.uca.cloud.unity3d.com
+>   m_DashboardUrl: https://dashboard.unity3d.com
+>   m_TestInitMode: 0
+>   CrashReportingSettings:
+>     m_EventUrl: https://perf-events.cloud.unity3d.com
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-a26c1382523d0144"></a>
+
+
+### File `test/sdk/unity/ProjectSettings/VFXManager.asset`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `852348bcbdefc6ca66eed4c68cf7c2a6d22a0f22`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/ProjectSettings/VFXManager.asset`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-f07db1987fa1d64457.** [agones/test/sdk/unity/ProjectSettings/VFXManager.asset, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/ProjectSettings/VFXManager.asset#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3f31266c7c1910447586e71b041dabd58d8371715ac3142d3e38ace46121f4ab`.
+
+> %YAML 1.1
+> %TAG !u! tag:unity3d.com,2011:
+> --- !u!937362698 &1
+> VFXManager:
+>   m_ObjectHideFlags: 0
+>   m_IndirectShader: {fileID: 0}
+>   m_CopyBufferShader: {fileID: 0}
+>   m_SortShader: {fileID: 0}
+>   m_StripUpdateShader: {fileID: 0}
+>   m_EmptyShader: {fileID: 0}
+>   m_RenderPipeSettingsPath: 
+>   m_FixedTimeStep: 0.016666668
+>   m_MaxDeltaTime: 0.05
+>   m_MaxScrubTime: 30
+>   m_CompiledVersion: 0
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-e09aabb88e0965ad"></a>
+
+
+### File `test/sdk/unity/ProjectSettings/VersionControlSettings.asset`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `dca288142fc043d5a749e9058fe625505008834f`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/sdk/unity/ProjectSettings/VersionControlSettings.asset`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-cd4bfbf6dbffcd32aa.** [agones/test/sdk/unity/ProjectSettings/VersionControlSettings.asset, lines 1–8](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/unity/ProjectSettings/VersionControlSettings.asset#L1-L8). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `e7bda45bf7a394745fee1316e6c71fa676004d591ad1f3aa247fd3e4ceb86071`.
+
+> %YAML 1.1
+> %TAG !u! tag:unity3d.com,2011:
+> --- !u!890905787 &1
+> VersionControlSettings:
+>   m_ObjectHideFlags: 0
+>   m_Mode: Visible Meta Files
+>   m_CollabEditorSettings:
+>     inProgressEnabled: 1
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/sdk/websocket-watch` -> module `test::sdk::websocket-watch`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-dbf6d06635d186ba"></a>
+
+
+### File `test/sdk/websocket-watch/ws-watch-test.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `1969d2f1a4b482213a92a222c59785b47599e4e4`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/sdk/websocket-watch/ws-watch-test.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-9f7209f6c8d22f812c.** [agones/test/sdk/websocket-watch/ws-watch-test.go, lines 29–43](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/sdk/websocket-watch/ws-watch-test.go#L29-L43). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `407fe4f9263b0bce80ea1fdfa7d1ebf34535221209e35a9078006b5302896e22`.
+
+> 
+> func main() {
+> 	portStr := os.Getenv("AGONES_SDK_HTTP_PORT")
+> 	watchURL := url.URL{Scheme: "ws", Host: "localhost:" + portStr, Path: "/watch/gameserver"}
+> 	reserveURL := url.URL{Scheme: "http", Host: "localhost:" + portStr, Path: "/reserve"}
+> 	gameServerURL := url.URL{Scheme: "http", Host: "localhost:" + portStr, Path: "/gameserver"}
+> 
+> 	// Connect watchGameserver API with websocket
+> 	log.Printf("Connecting to %s", watchURL.String())
+> 	websocketClient, connectResponse, dialErr := websocket.DefaultDialer.Dial(watchURL.String(), nil)
+> 	if dialErr != nil {
+> 		log.Fatalf("Could not dial watch websocket: %v", dialErr)
+> 	}
+> 	defer connectResponse.Body.Close() //nolint:errcheck
+> 	defer websocketClient.Close()      //nolint:errcheck
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 1 lexically identified declarations, including `main` (L30). The full declaration list is recorded under `agones:test/sdk/websocket-watch/ws-watch-test.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+6. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+## Package `agones:test/upgrade` -> module `test::upgrade`
+
+
+**Direct quotation — UPSTREAM_DOCUMENTATION; Q-05cf777d9cd2947e20.** [agones/CONTRIBUTING.md, lines 3–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/CONTRIBUTING.md#L3-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `3dff06cce1e198764ba9532959c4094bd6c6943e7969cae02994840ce835ea3b`.
+
+> We'd love to accept your patches and contributions to this project. There are
+> just a few small guidelines you need to follow.
+> 
+> ## Contributor License Agreement
+> 
+> Contributions to this project must be accompanied by a Contributor License
+> Agreement. You (or your employer) retain the copyright to your contribution,
+> this simply gives us permission to use and redistribute your contributions as
+> part of the project. Head over to <https://cla.developers.google.com/> to see
+> your current agreements on file or to sign a new one.
+> 
+> You generally only need to submit a CLA once, so if you've already submitted one
+> (even if it was for a different project), you probably don't need to do it
+
+
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+
+
+<a id="file-e4a6107ce39b77c5"></a>
+
+
+### File `test/upgrade/Dockerfile`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `bc07bb8163a682646e92487c3aa8b5809ad40bbe`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/upgrade/Dockerfile`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-b6de3ec7b039e58348.** [agones/test/upgrade/Dockerfile, lines 14–28](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/upgrade/Dockerfile#L14-L28). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `36cfbc00c75ce228c6a88e80d853a83e0a771f8c3460161716f7b7d92dbfffa3`.
+
+> 
+> FROM golang:1.26.5-alpine AS builder
+> 
+> # install curl
+> RUN apk update && \
+>     apk upgrade && \
+>     apk --no-cache add curl
+> 
+> WORKDIR /usr/local
+> 
+> # install kubectl
+> ENV KUBECTL_VER=1.35.6
+> RUN curl -LO https://dl.k8s.io/release/v${KUBECTL_VER}/bin/linux/amd64/kubectl && \
+>     chmod go+rx ./kubectl && \
+>     mv ./kubectl /usr/local/bin/kubectl
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+4. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-6e0ddf075413d6b8"></a>
+
+
+### File `test/upgrade/Makefile`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `d0299b4e09d690b0960e0ec96e5b80a34e58a2ea`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/upgrade/Makefile`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-aa9b4bcb44a349918c.** [agones/test/upgrade/Makefile, lines 25–39](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/upgrade/Makefile#L25-L39). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `86664c5f6f7f7e21e76842943f885c3040d92eecff0651876fde639500d82de9`.
+
+> 
+> REGISTRY ?=
+> base_version = 1.62.0
+> # Version defaults to the short hash of the latest commit
+> VERSION ?= $(base_version)-dev-$(shell git rev-parse --short=7 HEAD)
+> server_tag := $(REGISTRY)/upgrade-test-controller:$(VERSION)
+> cwd:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+> #   _____                    _
+> #  |_   _|_ _ _ __ __ _  ___| |_ ___
+> #    | |/ _` | '__/ _` |/ _ \ __/ __|
+> #    | | (_| | | | (_| |  __/ |_\__ \
+> #    |_|\__,_|_|  \__, |\___|\__|___/
+> #                 |___/
+> 
+> # Using .ONESHELL allows us to `cd` to the parent directory agones. This gives the Dockerfile the
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-dcd81a3276284c4b"></a>
+
+
+### File `test/upgrade/evictablePods.yaml`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `77b10bda199aa722c556e9d208f4efda279edfe2`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/upgrade/evictablePods.yaml`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-4f9982b308da28325f.** [agones/test/upgrade/evictablePods.yaml, lines 17–31](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/upgrade/evictablePods.yaml#L17-L31). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `7155417049d59fff29079347cb59f7462ee2a483c434946d0185eaf8f3df47ed`.
+
+> ---
+> apiVersion: scheduling.k8s.io/v1
+> kind: PriorityClass
+> metadata:
+>   name: low-priority
+> value: -10
+> preemptionPolicy: Never
+> globalDefault: false
+> description: "Low priority workloads"
+> ---
+> apiVersion: apps/v1
+> kind: Deployment
+> metadata:
+>   name: evictable-pods-deployment
+> spec:
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-23388842ad36326f"></a>
+
+
+### File `test/upgrade/gameserverTemplate.yaml`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `ac9d3ada650aab0a43fca6f79998d023bafb75eb`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/upgrade/gameserverTemplate.yaml`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-0a546b15cde1872cad.** [agones/test/upgrade/gameserverTemplate.yaml, lines 14–28](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/upgrade/gameserverTemplate.yaml#L14-L28). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `fd638a98ac5a6466a569ae49bd6d3a7d054b622e3c6b9eb380d3eda353cb1a85`.
+
+> 
+> ---
+> apiVersion: v1
+> kind: ConfigMap
+> metadata:
+>   name: gameserver-template
+> data:
+>   gameserver.yaml: |
+>     ---
+>     apiVersion: agones.dev/v1
+>     kind: GameServer
+>     metadata:
+>       generateName: sdk-client-test-
+>       labels:
+>         agonesVersion: {{ .AgonesVersion }}
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-82c438149f313839"></a>
+
+
+### File `test/upgrade/go.mod`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `58a9c0f398e73d74d33c7ecbcdffbcfd76dbd44a`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/upgrade/go.mod`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-09529513d7b546f577.** [agones/test/upgrade/go.mod, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/upgrade/go.mod#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `ee02fa0e6cbf927a2fd63e7fa1968ffd0a77c31ac1f8e54e64a24aac416e1ae2`.
+
+> module agones.dev/agones/test/upgrade/testContainer
+> 
+> go 1.26.5
+> 
+> require (
+> 	agones.dev/agones v1.54.0
+> 	golang.org/x/sync v0.22.0
+> 	k8s.io/api v0.34.2
+> 	k8s.io/apimachinery v0.34.2
+> 	k8s.io/client-go v0.34.2
+> )
+> 
+> require (
+> 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
+> 	github.com/emicklei/go-restful/v3 v3.13.0 // indirect
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+4. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-8fe90b03a46bb041"></a>
+
+
+### File `test/upgrade/go.sum`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `1b8f530d5f2dd71d88d634fc601f24a5e09fc1c0`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/upgrade/go.sum`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-c57de38ba412e28b4e.** [agones/test/upgrade/go.sum, lines 1–15](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/upgrade/go.sum#L1-L15). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `1250c5313ed35fd67429e1a510179c7898730489e7b7fa4f7e21e0ea84b7dbaf`.
+
+> agones.dev/agones v1.54.0 h1:D3fRxQY2o1TWXZ6ko9moUeZ+8EnL00cFzHFgIaZLobA=
+> agones.dev/agones v1.54.0/go.mod h1:Gj05TIPWT+eezKsSoVbnI0HPgg9tEkx6K1i/uRv5dhw=
+> github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=
+> github.com/cespare/xxhash/v2 v2.3.0/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
+> github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+> github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+> github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc h1:U9qPSI2PIWSS1VwoXQT9A3Wy9MM3WgvqSxFWenqJduM=
+> github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+> github.com/emicklei/go-restful/v3 v3.13.0 h1:C4Bl2xDndpU6nJ4bc1jXd+uTmYPVUwkD6bFY/oTyCes=
+> github.com/emicklei/go-restful/v3 v3.13.0/go.mod h1:6n3XBCmQQb25CM2LCACGz8ukIrRry+4bhvbpWn3mrbc=
+> github.com/evanphx/json-patch v4.12.0+incompatible h1:4onqiflcdA9EOZ4RxV643DvftH5pOlLGNtQ5lPWQu84=
+> github.com/evanphx/json-patch v4.12.0+incompatible/go.mod h1:50XU6AFN0ol/bzJsmQLiYLvXMP4fmwYFNcr97nuDLSk=
+> github.com/frankban/quicktest v1.14.6 h1:7Xjx+VpznH+oBnejlPUj8oUpdxnVs4f8XU8WnHkI4W8=
+> github.com/frankban/quicktest v1.14.6/go.mod h1:4ptaffx2x8+WTWXmUCuVU6aPUX1/Mz7zb5vbUoiM6w0=
+> github.com/fsnotify/fsnotify v1.9.0 h1:2Ml+OJNzbYCTzsxtv8vKSFD9PbJjmhYF14k/jKC7S9k=
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+4. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-de34ffd3fa63ce8d"></a>
+
+
+### File `test/upgrade/main.go`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `f5ef7986c273f54f007188b8721327ea80258f46`. **Disposition:** `DEFERRED_ASSURANCE_SUPPORT`. **Destination:** `agones-rs/test/upgrade/main.rs`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-4d07afb275743c1417.** [agones/test/upgrade/main.go, lines 85–99](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/upgrade/main.go#L85-L99). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `faeda349fd80b3c5721fb44f623dcece4a42346a1d39f5fcfe756bb5d716660d`.
+
+> 
+> func main() {
+> 	if err := run(); err != nil {
+> 		// Write the final error to the termination log before exiting.
+> 		msg := err.Error()
+> 		if writeErr := os.WriteFile("/dev/termination-log", []byte(msg), 0644); writeErr != nil {
+> 			log.Printf("Error writing to termination log: %v", writeErr)
+> 		}
+> 		log.Fatal(msg)
+> 	}
+> }
+> 
+> func run() error {
+> 	ctx, cancel := context.WithCancel(context.Background())
+> 	// Defer the primary cancel and cleanup to ensure they always run at the very end.
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Account for 22 lexically identified declarations, including `main` (L86), `run` (L97), `versionMappings` (L147), `featureGates` (L152), `configTest` (L157), `gameServerTemplate` (L164), `gsLog` (L170), `helmStatuses` (L176), `configTestSetup` (L187), `containsCountsAndLists` (L232), `findK8sVersion` (L250), `runExecCommand` (L290), `addAgonesRepo` (L306), `installAgonesRelease` (L319), `runConfigWalker` (L352), `checkHelmStatus` (L411), `createGameServerFile` (L445), `createGameServers` (L483), `checkFirstGameServerReady` (L517), `watchGameServers` (L555), `watchGameServerEvents` (L602), `cleanUpResources` (L663). The full declaration list is recorded under `agones:test/upgrade/main.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
+
+3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/client/clientset/versioned`, `agones.dev/agones/pkg/client/informers/externalversions`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+
+4. Retain deferred cleanup order and its interaction with returns/errors.
+
+5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+
+6. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
+
+7. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+
+8. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+
+9. Preserve source floating width, narrowing, exceptional values and relevant bits.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-440ae419093e43e1"></a>
+
+
+### File `test/upgrade/permissions.yaml`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `c6626ffc3f0e4daf7a06e3eabba38dcf4a5ab0ba`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/upgrade/permissions.yaml`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-ccb668f6439ed65c3c.** [agones/test/upgrade/permissions.yaml, lines 14–28](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/upgrade/permissions.yaml#L14-L28). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `6fa0b8b200e848c49ded07e56cb651a5e46b5398e045b6ed238efefb6a69bde0`.
+
+> 
+> ---
+> apiVersion: v1
+> kind: ServiceAccount
+> metadata:
+>   name: agones-sa
+>   namespace: default
+> ---
+> # Based off of https://kubernetes.io/docs/reference/access-authn-authz/rbac/#role-example
+> apiVersion: rbac.authorization.k8s.io/v1
+> kind: Role
+> metadata:
+>   namespace: default
+>   name: pod-manager
+> rules:
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-ff4b0cbe250f2b88"></a>
+
+
+### File `test/upgrade/upgradeTest.yaml`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `9f55eea191f588aa4ac3c19052e28bf83b9a6cb0`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/upgrade/upgradeTest.yaml`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-4d264464d888231809.** [agones/test/upgrade/upgradeTest.yaml, lines 14–28](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/upgrade/upgradeTest.yaml#L14-L28). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `2b9bb8dbcdcf3881915aec85a82cec0dcdf7b7e97304b659494dfc417ee99edd`.
+
+> 
+> ---
+> apiVersion: batch/v1
+> kind: Job
+> metadata:
+>   name: upgrade-test-runner
+>   labels:
+>     app: upgrade-test-runner
+> spec:
+>   backoffLimit: 0
+>   ttlSecondsAfterFinished: 240
+>   template:
+>     spec:
+>       containers:
+>         - name: upgrade-test-controller
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+<a id="file-9c83b458d4b25480"></a>
+
+
+### File `test/upgrade/versionMap.yaml`
+
+
+**Source:** `agones` at `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; Git blob `cdd717b30a06fa020ba6b90f0e41442a7bb382ca`. **Disposition:** `DEFERRED_ASSURANCE_ASSET`. **Destination:** `agones-rs/test/upgrade/versionMap.yaml`.
+
+
+**Direct quotation — UPSTREAM_IMPLEMENTATION_EXCERPT; Q-9d5e07bd5410c31fe0.** [agones/test/upgrade/versionMap.yaml, lines 14–28](https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/test/upgrade/versionMap.yaml#L14-L28). Revision `6eb4a02588d8e7b581de187f3bc849733a78dcb2`; source SHA-256 `e87c9e621fdcca7c9769321e303da687f48cfd09079d71f2ebd9cd008cfd8f1e`.
+
+> 
+> ---
+> apiVersion: v1
+> kind: ConfigMap
+> metadata:
+>   name: version-map
+> data:
+>   DevVersion: ${DevVersion}
+>   ReleaseVersion: "1.61.0"
+>   version-mappings.json: |
+>     {
+>       "k8sToAgonesVersions": {
+>         "1.34": [
+>           "1.54.0",
+>           "1.55.0",
+
+
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+
+
+**Derived implementation instructions.**
+
+
+1. Author this harness/helper/fixture only after the global implementation gate. Preserve the source case/helper identity, setup/actions/observations and independent invariants; never substitute production-derived expectations.
+
+2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
+
+10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+
+13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+
+
+
+
+## Completion and deferred assurance
+
+
+1. Record complete authored production paths, source mappings, CGP/derive-deftly ownership and remaining gaps in the existing canonical state. A local checkpoint is not a passing test or verified milestone.
+
+2. During `IMPLEMENTATION_ONLY`, make ZERO attempts at Cargo check/build/test/clippy/doc, formatting campaigns, compiler/IDE/macro probes, fixtures, application runs, benchmarks, replay, Bolero/Kani, generator validation or CI. Only an already runnable generator may emit required implementation without validation hooks. A needed forbidden build is an explicit blocker.
+
+3. Post-gate milestones require the whole-project `IMPLEMENTATION_COMPLETE_UNVERIFIED` record. Run only their required assurance; if production defects reopen implementation, close and renew the gate before further checks.
+
+4. Record the milestone outcome and actual usage observations under the separate execution/accounting policy. Follow [alternation-policy.md](alternation-policy.md); this file does not define route-switch rules. Do not complete or replace the native Goal at this milestone boundary.

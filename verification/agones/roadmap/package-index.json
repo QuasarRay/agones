@@ -1,0 +1,3495 @@
+{
+  "packages": [
+    {
+      "repository": "agones",
+      "package": ".",
+      "milestone_id": "M0001",
+      "files": [
+        "agones:.dockerignore",
+        "agones:.gcloudignore",
+        "agones:.gitattributes",
+        "agones:.gitignore",
+        "agones:.golangci.yml",
+        "agones:.yamllint",
+        "agones:cloudbuild.yaml",
+        "agones:doc.go",
+        "agones:go.mod",
+        "agones:go.sum",
+        "agones:tools.go"
+      ],
+      "module": "<crate root>"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg",
+      "milestone_id": "M0001",
+      "files": [
+        "agones:pkg/doc.go",
+        "agones:pkg/version.go"
+      ],
+      "module": "pkg"
+    },
+    {
+      "repository": "cpg",
+      "package": ".",
+      "milestone_id": "M0002",
+      "files": [
+        "cpg:.bazelrc",
+        "cpg:.bazelversion",
+        "cpg:.gitattributes",
+        "cpg:.gitignore",
+        "cpg:.gitmodules",
+        "cpg:.installation_root",
+        "cpg:.scalafmt.conf",
+        "cpg:BUILD",
+        "cpg:LICENSE",
+        "cpg:MODULE.bazel",
+        "cpg:MODULE.bazel.lock",
+        "cpg:README.md",
+        "cpg:build.sbt",
+        "cpg:format_maven_install.json",
+        "cpg:maven_install.json",
+        "cpg:private-key.pem.enc",
+        "cpg:updateDependencies.sh"
+      ],
+      "module": "<crate root>"
+    },
+    {
+      "repository": "cpg",
+      "package": ".github/workflows",
+      "milestone_id": "M0002",
+      "files": [
+        "cpg:.github/workflows/pr.yml",
+        "cpg:.github/workflows/release.yml"
+      ],
+      "module": ".github::workflows"
+    },
+    {
+      "repository": "cpg",
+      "package": "bazel",
+      "milestone_id": "M0002",
+      "files": [
+        "cpg:bazel/BUILD",
+        "cpg:bazel/java.bzl",
+        "cpg:bazel/scala.bzl"
+      ],
+      "module": "bazel"
+    },
+    {
+      "repository": "cpg",
+      "package": "bazel/format",
+      "milestone_id": "M0002",
+      "files": [
+        "cpg:bazel/format/BUILD"
+      ],
+      "module": "bazel::format"
+    },
+    {
+      "repository": "cpg",
+      "package": "codepropertygraph",
+      "milestone_id": "M0002",
+      "files": [
+        "cpg:codepropertygraph/BUILD",
+        "cpg:codepropertygraph/build.sbt"
+      ],
+      "module": "codepropertygraph"
+    },
+    {
+      "repository": "cpg",
+      "package": "img",
+      "milestone_id": "M0002",
+      "files": [
+        "cpg:img/call-site.jpg",
+        "cpg:img/call-site.odg",
+        "cpg:img/program-structure.jpg",
+        "cpg:img/program-structure.odg",
+        "cpg:img/type-declaration.jpg",
+        "cpg:img/type-declaration.odg"
+      ],
+      "module": "img"
+    },
+    {
+      "repository": "cpg",
+      "package": "project",
+      "milestone_id": "M0002",
+      "files": [
+        "cpg:project/FileUtils.scala",
+        "cpg:project/Projects.scala",
+        "cpg:project/Utils.scala",
+        "cpg:project/Versions.scala",
+        "cpg:project/build.properties",
+        "cpg:project/plugins.sbt"
+      ],
+      "module": "project"
+    },
+    {
+      "repository": "cpg",
+      "package": "project/project",
+      "milestone_id": "M0002",
+      "files": [
+        "cpg:project/project/Versions.scala"
+      ],
+      "module": "project::project"
+    },
+    {
+      "repository": "cpg",
+      "package": "resources",
+      "milestone_id": "M0002",
+      "files": [
+        "cpg:resources/log4j2-test.xml"
+      ],
+      "module": "resources"
+    },
+    {
+      "repository": "cpg",
+      "package": "samples/customcpg",
+      "milestone_id": "M0002",
+      "files": [
+        "cpg:samples/customcpg/README.md",
+        "cpg:samples/customcpg/local-m2-publish.sh"
+      ],
+      "module": "samples::customcpg"
+    },
+    {
+      "repository": "cpg",
+      "package": "samples/customcpg/schemas",
+      "milestone_id": "M0002",
+      "files": [
+        "cpg:samples/customcpg/schemas/myschema.json"
+      ],
+      "module": "samples::customcpg::schemas"
+    },
+    {
+      "repository": "cpg",
+      "package": "samples/pass",
+      "milestone_id": "M0002",
+      "files": [
+        "cpg:samples/pass/README.md",
+        "cpg:samples/pass/build.sbt",
+        "cpg:samples/pass/samplepass.sh",
+        "cpg:samples/pass/src_cpg.bin.zip"
+      ],
+      "module": "samples::pass"
+    },
+    {
+      "repository": "cpg",
+      "package": "samples/pass/project",
+      "milestone_id": "M0002",
+      "files": [
+        "cpg:samples/pass/project/plugins.sbt"
+      ],
+      "module": "samples::pass::project"
+    },
+    {
+      "repository": "cpg",
+      "package": "schema",
+      "milestone_id": "M0002",
+      "files": [
+        "cpg:schema/BUILD",
+        "cpg:schema/build.sbt"
+      ],
+      "module": "schema"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/util",
+      "milestone_id": "M0003",
+      "files": [
+        "agones:pkg/util/doc.go"
+      ],
+      "module": "pkg::util"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/util/apiserver",
+      "milestone_id": "M0003",
+      "files": [
+        "agones:pkg/util/apiserver/apiserver.go"
+      ],
+      "module": "pkg::util::apiserver"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/util/crd",
+      "milestone_id": "M0003",
+      "files": [
+        "agones:pkg/util/crd/crd.go"
+      ],
+      "module": "pkg::util::crd"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/util/errors",
+      "milestone_id": "M0003",
+      "files": [
+        "agones:pkg/util/errors/errors.go"
+      ],
+      "module": "pkg::util::errors"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/util/fswatch",
+      "milestone_id": "M0003",
+      "files": [
+        "agones:pkg/util/fswatch/fswatch.go"
+      ],
+      "module": "pkg::util::fswatch"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/util/https",
+      "milestone_id": "M0003",
+      "files": [
+        "agones:pkg/util/https/https.go",
+        "agones:pkg/util/https/server.go"
+      ],
+      "module": "pkg::util::https"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/util/httpserver",
+      "milestone_id": "M0003",
+      "files": [
+        "agones:pkg/util/httpserver/server.go"
+      ],
+      "module": "pkg::util::httpserver"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/util/logfields",
+      "milestone_id": "M0003",
+      "files": [
+        "agones:pkg/util/logfields/logfields.go"
+      ],
+      "module": "pkg::util::logfields"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/util/runtime",
+      "milestone_id": "M0003",
+      "files": [
+        "agones:pkg/util/runtime/features.go",
+        "agones:pkg/util/runtime/runtime.go"
+      ],
+      "module": "pkg::util::runtime"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/util/signals",
+      "milestone_id": "M0003",
+      "files": [
+        "agones:pkg/util/signals/signals.go"
+      ],
+      "module": "pkg::util::signals"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/util/webhooks",
+      "milestone_id": "M0003",
+      "files": [
+        "agones:pkg/util/webhooks/webhooks.go"
+      ],
+      "module": "pkg::util::webhooks"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/util/workerqueue",
+      "milestone_id": "M0003",
+      "files": [
+        "agones:pkg/util/workerqueue/workerqueue.go"
+      ],
+      "module": "pkg::util::workerqueue"
+    },
+    {
+      "repository": "cpg",
+      "package": "codepropertygraph/src/main/scala/io/shiftleft",
+      "milestone_id": "M0004",
+      "files": [
+        "cpg:codepropertygraph/src/main/scala/io/shiftleft/Implicits.scala"
+      ],
+      "module": "codepropertygraph::src::main::scala::io::shiftleft"
+    },
+    {
+      "repository": "cpg",
+      "package": "codepropertygraph/src/main/scala/io/shiftleft/utils",
+      "milestone_id": "M0004",
+      "files": [
+        "cpg:codepropertygraph/src/main/scala/io/shiftleft/utils/ExecutionContextProvider.scala",
+        "cpg:codepropertygraph/src/main/scala/io/shiftleft/utils/IOUtils.scala",
+        "cpg:codepropertygraph/src/main/scala/io/shiftleft/utils/ProjectRoot.scala",
+        "cpg:codepropertygraph/src/main/scala/io/shiftleft/utils/StringInterner.scala",
+        "cpg:codepropertygraph/src/main/scala/io/shiftleft/utils/TempFileCopy.scala"
+      ],
+      "module": "codepropertygraph::src::main::scala::io::shiftleft::utils"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/allocation/go",
+      "milestone_id": "M0005",
+      "files": [
+        "agones:pkg/allocation/go/allocation.pb.go",
+        "agones:pkg/allocation/go/allocation.pb.gw.go",
+        "agones:pkg/allocation/go/allocation_grpc.pb.go",
+        "agones:pkg/allocation/go/processor.pb.go",
+        "agones:pkg/allocation/go/processor_grpc.pb.go"
+      ],
+      "module": "pkg::allocation::go"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/apis",
+      "milestone_id": "M0005",
+      "files": [
+        "agones:pkg/apis/doc.go",
+        "agones:pkg/apis/scheduling.go"
+      ],
+      "module": "pkg::apis"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/apis/agones",
+      "milestone_id": "M0005",
+      "files": [
+        "agones:pkg/apis/agones/register.go"
+      ],
+      "module": "pkg::apis::agones"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/apis/agones/v1",
+      "milestone_id": "M0005",
+      "files": [
+        "agones:pkg/apis/agones/v1/apihooks.go",
+        "agones:pkg/apis/agones/v1/apihooksfake.go",
+        "agones:pkg/apis/agones/v1/common.go",
+        "agones:pkg/apis/agones/v1/doc.go",
+        "agones:pkg/apis/agones/v1/fleet.go",
+        "agones:pkg/apis/agones/v1/gameserver.go",
+        "agones:pkg/apis/agones/v1/gameserverset.go",
+        "agones:pkg/apis/agones/v1/register.go",
+        "agones:pkg/apis/agones/v1/v1.go",
+        "agones:pkg/apis/agones/v1/zz_generated.deepcopy.go"
+      ],
+      "module": "pkg::apis::agones::v1"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/apis/allocation",
+      "milestone_id": "M0005",
+      "files": [
+        "agones:pkg/apis/allocation/register.go"
+      ],
+      "module": "pkg::apis::allocation"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/apis/allocation/v1",
+      "milestone_id": "M0005",
+      "files": [
+        "agones:pkg/apis/allocation/v1/doc.go",
+        "agones:pkg/apis/allocation/v1/gameserverallocation.go",
+        "agones:pkg/apis/allocation/v1/register.go",
+        "agones:pkg/apis/allocation/v1/zz_generated.deepcopy.go"
+      ],
+      "module": "pkg::apis::allocation::v1"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/apis/autoscaling",
+      "milestone_id": "M0005",
+      "files": [
+        "agones:pkg/apis/autoscaling/register.go"
+      ],
+      "module": "pkg::apis::autoscaling"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/apis/autoscaling/v1",
+      "milestone_id": "M0005",
+      "files": [
+        "agones:pkg/apis/autoscaling/v1/doc.go",
+        "agones:pkg/apis/autoscaling/v1/fleetautoscaler.go",
+        "agones:pkg/apis/autoscaling/v1/register.go",
+        "agones:pkg/apis/autoscaling/v1/zz_generated.deepcopy.go"
+      ],
+      "module": "pkg::apis::autoscaling::v1"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/apis/multicluster",
+      "milestone_id": "M0005",
+      "files": [
+        "agones:pkg/apis/multicluster/register.go"
+      ],
+      "module": "pkg::apis::multicluster"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/apis/multicluster/v1",
+      "milestone_id": "M0005",
+      "files": [
+        "agones:pkg/apis/multicluster/v1/doc.go",
+        "agones:pkg/apis/multicluster/v1/gameserverallocationpolicy.go",
+        "agones:pkg/apis/multicluster/v1/register.go",
+        "agones:pkg/apis/multicluster/v1/zz_generated.deepcopy.go"
+      ],
+      "module": "pkg::apis::multicluster::v1"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/sdk",
+      "milestone_id": "M0005",
+      "files": [
+        "agones:pkg/sdk/sdk.pb.go",
+        "agones:pkg/sdk/sdk.pb.gw.go",
+        "agones:pkg/sdk/sdk_grpc.pb.go"
+      ],
+      "module": "pkg::sdk"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/sdk/alpha",
+      "milestone_id": "M0005",
+      "files": [
+        "agones:pkg/sdk/alpha/alpha.pb.go",
+        "agones:pkg/sdk/alpha/alpha.pb.gw.go",
+        "agones:pkg/sdk/alpha/alpha_grpc.pb.go"
+      ],
+      "module": "pkg::sdk::alpha"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/sdk/beta",
+      "milestone_id": "M0005",
+      "files": [
+        "agones:pkg/sdk/beta/beta.pb.go",
+        "agones:pkg/sdk/beta/beta.pb.gw.go",
+        "agones:pkg/sdk/beta/beta_grpc.pb.go"
+      ],
+      "module": "pkg::sdk::beta"
+    },
+    {
+      "repository": "agones",
+      "package": "proto/allocation",
+      "milestone_id": "M0005",
+      "files": [
+        "agones:proto/allocation/allocation.proto",
+        "agones:proto/allocation/processor.proto"
+      ],
+      "module": "proto::allocation"
+    },
+    {
+      "repository": "agones",
+      "package": "proto/googleapis/google/api",
+      "milestone_id": "M0005",
+      "files": [
+        "agones:proto/googleapis/google/api/annotations.proto",
+        "agones:proto/googleapis/google/api/client.proto",
+        "agones:proto/googleapis/google/api/field_behavior.proto",
+        "agones:proto/googleapis/google/api/http.proto",
+        "agones:proto/googleapis/google/api/launch_stage.proto",
+        "agones:proto/googleapis/google/api/resource.proto"
+      ],
+      "module": "proto::googleapis::google::api"
+    },
+    {
+      "repository": "agones",
+      "package": "proto/googleapis/google/rpc",
+      "milestone_id": "M0005",
+      "files": [
+        "agones:proto/googleapis/google/rpc/status.proto"
+      ],
+      "module": "proto::googleapis::google::rpc"
+    },
+    {
+      "repository": "agones",
+      "package": "proto/grpc-gateway",
+      "milestone_id": "M0005",
+      "files": [
+        "agones:proto/grpc-gateway/LICENSE.txt"
+      ],
+      "module": "proto::grpc-gateway"
+    },
+    {
+      "repository": "agones",
+      "package": "proto/grpc-gateway/protoc-gen-openapiv2/options",
+      "milestone_id": "M0005",
+      "files": [
+        "agones:proto/grpc-gateway/protoc-gen-openapiv2/options/annotations.proto",
+        "agones:proto/grpc-gateway/protoc-gen-openapiv2/options/openapiv2.proto"
+      ],
+      "module": "proto::grpc-gateway::protoc-gen-openapiv2::options"
+    },
+    {
+      "repository": "agones",
+      "package": "proto/sdk",
+      "milestone_id": "M0005",
+      "files": [
+        "agones:proto/sdk/sdk.proto"
+      ],
+      "module": "proto::sdk"
+    },
+    {
+      "repository": "agones",
+      "package": "proto/sdk/alpha",
+      "milestone_id": "M0005",
+      "files": [
+        "agones:proto/sdk/alpha/alpha.proto"
+      ],
+      "module": "proto::sdk::alpha"
+    },
+    {
+      "repository": "agones",
+      "package": "proto/sdk/beta",
+      "milestone_id": "M0005",
+      "files": [
+        "agones:proto/sdk/beta/beta.proto"
+      ],
+      "module": "proto::sdk::beta"
+    },
+    {
+      "repository": "cpg",
+      "package": "schema/src/main/scala/io/shiftleft/codepropertygraph/schema",
+      "milestone_id": "M0006",
+      "files": [
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Annotation.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Ast.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Base.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Binding.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/CallGraph.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Cfg.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Comment.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Configuration.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/CpgSchema.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Dominators.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/FileSystem.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Finding.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Hidden.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/MetaData.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Method.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Namespace.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Operators.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Pdg.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/ProtoIds.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/ProtoSerialize.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Protogen.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/SchemaBase.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Shortcuts.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Tags.scala",
+        "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Type.scala"
+      ],
+      "module": "schema::src::main::scala::io::shiftleft::codepropertygraph::schema"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/applyconfiguration",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/applyconfiguration/utils.go"
+      ],
+      "module": "pkg::client::applyconfiguration"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/applyconfiguration/agones/v1",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/applyconfiguration/agones/v1/aggregatedcounterstatus.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/aggregatedliststatus.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/aggregatedplayerstatus.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/allocationoverflow.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/counterstatus.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/eviction.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/fleet.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/fleetspec.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/fleetstatus.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/gameserver.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/gameserverport.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/gameserverset.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/gameserversetspec.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/gameserversetstatus.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/gameserverspec.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/gameserverstatus.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/gameserverstatusport.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/gameservertemplatespec.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/health.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/liststatus.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/playersspec.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/playerstatus.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/priority.go",
+        "agones:pkg/client/applyconfiguration/agones/v1/sdkserver.go"
+      ],
+      "module": "pkg::client::applyconfiguration::agones::v1"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/applyconfiguration/autoscaling/v1",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/applyconfiguration/autoscaling/v1/activeperiod.go",
+        "agones:pkg/client/applyconfiguration/autoscaling/v1/between.go",
+        "agones:pkg/client/applyconfiguration/autoscaling/v1/bufferpolicy.go",
+        "agones:pkg/client/applyconfiguration/autoscaling/v1/chainentry.go",
+        "agones:pkg/client/applyconfiguration/autoscaling/v1/counterpolicy.go",
+        "agones:pkg/client/applyconfiguration/autoscaling/v1/fixedintervalsync.go",
+        "agones:pkg/client/applyconfiguration/autoscaling/v1/fleetautoscaler.go",
+        "agones:pkg/client/applyconfiguration/autoscaling/v1/fleetautoscalerpolicy.go",
+        "agones:pkg/client/applyconfiguration/autoscaling/v1/fleetautoscalerspec.go",
+        "agones:pkg/client/applyconfiguration/autoscaling/v1/fleetautoscalerstatus.go",
+        "agones:pkg/client/applyconfiguration/autoscaling/v1/fleetautoscalersync.go",
+        "agones:pkg/client/applyconfiguration/autoscaling/v1/listpolicy.go",
+        "agones:pkg/client/applyconfiguration/autoscaling/v1/schedulepolicy.go",
+        "agones:pkg/client/applyconfiguration/autoscaling/v1/urlconfiguration.go",
+        "agones:pkg/client/applyconfiguration/autoscaling/v1/wasmfrom.go",
+        "agones:pkg/client/applyconfiguration/autoscaling/v1/wasmpolicy.go"
+      ],
+      "module": "pkg::client::applyconfiguration::autoscaling::v1"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/applyconfiguration/internal",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/applyconfiguration/internal/internal.go"
+      ],
+      "module": "pkg::client::applyconfiguration::internal"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/applyconfiguration/multicluster/v1",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/applyconfiguration/multicluster/v1/clusterconnectioninfo.go",
+        "agones:pkg/client/applyconfiguration/multicluster/v1/gameserverallocationpolicy.go",
+        "agones:pkg/client/applyconfiguration/multicluster/v1/gameserverallocationpolicyspec.go"
+      ],
+      "module": "pkg::client::applyconfiguration::multicluster::v1"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/clientset/versioned",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/clientset/versioned/clientset.go"
+      ],
+      "module": "pkg::client::clientset::versioned"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/clientset/versioned/scheme",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/clientset/versioned/scheme/doc.go",
+        "agones:pkg/client/clientset/versioned/scheme/register.go"
+      ],
+      "module": "pkg::client::clientset::versioned::scheme"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/clientset/versioned/typed/agones/v1",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/clientset/versioned/typed/agones/v1/agones_client.go",
+        "agones:pkg/client/clientset/versioned/typed/agones/v1/doc.go",
+        "agones:pkg/client/clientset/versioned/typed/agones/v1/fleet.go",
+        "agones:pkg/client/clientset/versioned/typed/agones/v1/gameserver.go",
+        "agones:pkg/client/clientset/versioned/typed/agones/v1/gameserverset.go",
+        "agones:pkg/client/clientset/versioned/typed/agones/v1/generated_expansion.go"
+      ],
+      "module": "pkg::client::clientset::versioned::typed::agones::v1"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/clientset/versioned/typed/allocation/v1",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/clientset/versioned/typed/allocation/v1/allocation_client.go",
+        "agones:pkg/client/clientset/versioned/typed/allocation/v1/doc.go",
+        "agones:pkg/client/clientset/versioned/typed/allocation/v1/gameserverallocation.go",
+        "agones:pkg/client/clientset/versioned/typed/allocation/v1/generated_expansion.go"
+      ],
+      "module": "pkg::client::clientset::versioned::typed::allocation::v1"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/clientset/versioned/typed/autoscaling/v1",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/clientset/versioned/typed/autoscaling/v1/autoscaling_client.go",
+        "agones:pkg/client/clientset/versioned/typed/autoscaling/v1/doc.go",
+        "agones:pkg/client/clientset/versioned/typed/autoscaling/v1/fleetautoscaler.go",
+        "agones:pkg/client/clientset/versioned/typed/autoscaling/v1/generated_expansion.go"
+      ],
+      "module": "pkg::client::clientset::versioned::typed::autoscaling::v1"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/clientset/versioned/typed/multicluster/v1",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/clientset/versioned/typed/multicluster/v1/doc.go",
+        "agones:pkg/client/clientset/versioned/typed/multicluster/v1/gameserverallocationpolicy.go",
+        "agones:pkg/client/clientset/versioned/typed/multicluster/v1/generated_expansion.go",
+        "agones:pkg/client/clientset/versioned/typed/multicluster/v1/multicluster_client.go"
+      ],
+      "module": "pkg::client::clientset::versioned::typed::multicluster::v1"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/informers/externalversions",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/informers/externalversions/factory.go",
+        "agones:pkg/client/informers/externalversions/generic.go"
+      ],
+      "module": "pkg::client::informers::externalversions"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/informers/externalversions/agones",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/informers/externalversions/agones/interface.go"
+      ],
+      "module": "pkg::client::informers::externalversions::agones"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/informers/externalversions/agones/v1",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/informers/externalversions/agones/v1/fleet.go",
+        "agones:pkg/client/informers/externalversions/agones/v1/gameserver.go",
+        "agones:pkg/client/informers/externalversions/agones/v1/gameserverset.go",
+        "agones:pkg/client/informers/externalversions/agones/v1/interface.go"
+      ],
+      "module": "pkg::client::informers::externalversions::agones::v1"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/informers/externalversions/autoscaling",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/informers/externalversions/autoscaling/interface.go"
+      ],
+      "module": "pkg::client::informers::externalversions::autoscaling"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/informers/externalversions/autoscaling/v1",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/informers/externalversions/autoscaling/v1/fleetautoscaler.go",
+        "agones:pkg/client/informers/externalversions/autoscaling/v1/interface.go"
+      ],
+      "module": "pkg::client::informers::externalversions::autoscaling::v1"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/informers/externalversions/internalinterfaces",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/informers/externalversions/internalinterfaces/factory_interfaces.go"
+      ],
+      "module": "pkg::client::informers::externalversions::internalinterfaces"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/informers/externalversions/multicluster",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/informers/externalversions/multicluster/interface.go"
+      ],
+      "module": "pkg::client::informers::externalversions::multicluster"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/informers/externalversions/multicluster/v1",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/informers/externalversions/multicluster/v1/gameserverallocationpolicy.go",
+        "agones:pkg/client/informers/externalversions/multicluster/v1/interface.go"
+      ],
+      "module": "pkg::client::informers::externalversions::multicluster::v1"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/listers/agones/v1",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/listers/agones/v1/expansion_generated.go",
+        "agones:pkg/client/listers/agones/v1/fleet.go",
+        "agones:pkg/client/listers/agones/v1/gameserver.go",
+        "agones:pkg/client/listers/agones/v1/gameserverset.go"
+      ],
+      "module": "pkg::client::listers::agones::v1"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/listers/autoscaling/v1",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/listers/autoscaling/v1/expansion_generated.go",
+        "agones:pkg/client/listers/autoscaling/v1/fleetautoscaler.go"
+      ],
+      "module": "pkg::client::listers::autoscaling::v1"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/listers/multicluster/v1",
+      "milestone_id": "M0007",
+      "files": [
+        "agones:pkg/client/listers/multicluster/v1/expansion_generated.go",
+        "agones:pkg/client/listers/multicluster/v1/gameserverallocationpolicy.go"
+      ],
+      "module": "pkg::client::listers::multicluster::v1"
+    },
+    {
+      "repository": "cpg",
+      "package": ".",
+      "milestone_id": "M0008",
+      "files": [
+        "cpg:schema2json.sh"
+      ],
+      "module": "<crate root>"
+    },
+    {
+      "repository": "cpg",
+      "package": "proto-bindings",
+      "milestone_id": "M0008",
+      "files": [
+        "cpg:proto-bindings/build.sbt"
+      ],
+      "module": "proto-bindings"
+    },
+    {
+      "repository": "cpg",
+      "package": "proto-bindings/src/main/protobuf",
+      "milestone_id": "M0008",
+      "files": [
+        "cpg:proto-bindings/src/main/protobuf/empty-to-avoid-warnings"
+      ],
+      "module": "proto-bindings::src::main::protobuf"
+    },
+    {
+      "repository": "cpg",
+      "package": "schema2json",
+      "milestone_id": "M0008",
+      "files": [
+        "cpg:schema2json/BUILD",
+        "cpg:schema2json/build.sbt"
+      ],
+      "module": "schema2json"
+    },
+    {
+      "repository": "cpg",
+      "package": "schema2json/src/main/scala",
+      "milestone_id": "M0008",
+      "files": [
+        "cpg:schema2json/src/main/scala/Schema2Json.scala"
+      ],
+      "module": "schema2json::src::main::scala"
+    },
+    {
+      "repository": "agones",
+      "package": "sdks/go",
+      "milestone_id": "M0009",
+      "files": [
+        "agones:sdks/go/alpha.go",
+        "agones:sdks/go/beta.go",
+        "agones:sdks/go/sdk.go"
+      ],
+      "module": "sdks::go"
+    },
+    {
+      "repository": "agones",
+      "package": "sdks/rust",
+      "milestone_id": "M0009",
+      "files": [
+        "agones:sdks/rust/.gitignore",
+        "agones:sdks/rust/Cargo.toml",
+        "agones:sdks/rust/README.md",
+        "agones:sdks/rust/build.rs"
+      ],
+      "module": "sdks::rust"
+    },
+    {
+      "repository": "agones",
+      "package": "sdks/rust/proto/allocation",
+      "milestone_id": "M0009",
+      "files": [
+        "agones:sdks/rust/proto/allocation/allocation.proto",
+        "agones:sdks/rust/proto/allocation/processor.proto"
+      ],
+      "module": "sdks::rust::proto::allocation"
+    },
+    {
+      "repository": "agones",
+      "package": "sdks/rust/proto/googleapis/google/api",
+      "milestone_id": "M0009",
+      "files": [
+        "agones:sdks/rust/proto/googleapis/google/api/annotations.proto",
+        "agones:sdks/rust/proto/googleapis/google/api/client.proto",
+        "agones:sdks/rust/proto/googleapis/google/api/field_behavior.proto",
+        "agones:sdks/rust/proto/googleapis/google/api/http.proto",
+        "agones:sdks/rust/proto/googleapis/google/api/launch_stage.proto",
+        "agones:sdks/rust/proto/googleapis/google/api/resource.proto"
+      ],
+      "module": "sdks::rust::proto::googleapis::google::api"
+    },
+    {
+      "repository": "agones",
+      "package": "sdks/rust/proto/googleapis/google/rpc",
+      "milestone_id": "M0009",
+      "files": [
+        "agones:sdks/rust/proto/googleapis/google/rpc/status.proto"
+      ],
+      "module": "sdks::rust::proto::googleapis::google::rpc"
+    },
+    {
+      "repository": "agones",
+      "package": "sdks/rust/proto/grpc-gateway",
+      "milestone_id": "M0009",
+      "files": [
+        "agones:sdks/rust/proto/grpc-gateway/LICENSE.txt"
+      ],
+      "module": "sdks::rust::proto::grpc-gateway"
+    },
+    {
+      "repository": "agones",
+      "package": "sdks/rust/proto/grpc-gateway/protoc-gen-openapiv2/options",
+      "milestone_id": "M0009",
+      "files": [
+        "agones:sdks/rust/proto/grpc-gateway/protoc-gen-openapiv2/options/annotations.proto",
+        "agones:sdks/rust/proto/grpc-gateway/protoc-gen-openapiv2/options/openapiv2.proto"
+      ],
+      "module": "sdks::rust::proto::grpc-gateway::protoc-gen-openapiv2::options"
+    },
+    {
+      "repository": "agones",
+      "package": "sdks/rust/proto/sdk",
+      "milestone_id": "M0009",
+      "files": [
+        "agones:sdks/rust/proto/sdk/sdk.proto"
+      ],
+      "module": "sdks::rust::proto::sdk"
+    },
+    {
+      "repository": "agones",
+      "package": "sdks/rust/proto/sdk/alpha",
+      "milestone_id": "M0009",
+      "files": [
+        "agones:sdks/rust/proto/sdk/alpha/alpha.proto"
+      ],
+      "module": "sdks::rust::proto::sdk::alpha"
+    },
+    {
+      "repository": "agones",
+      "package": "sdks/rust/proto/sdk/beta",
+      "milestone_id": "M0009",
+      "files": [
+        "agones:sdks/rust/proto/sdk/beta/beta.proto"
+      ],
+      "module": "sdks::rust::proto::sdk::beta"
+    },
+    {
+      "repository": "agones",
+      "package": "sdks/rust/src",
+      "milestone_id": "M0009",
+      "files": [
+        "agones:sdks/rust/src/alpha.rs",
+        "agones:sdks/rust/src/beta.rs",
+        "agones:sdks/rust/src/errors.rs",
+        "agones:sdks/rust/src/lib.rs",
+        "agones:sdks/rust/src/sdk.rs"
+      ],
+      "module": "sdks::rust::src"
+    },
+    {
+      "repository": "cpg",
+      "package": "domainClasses",
+      "milestone_id": "M0010",
+      "files": [
+        "cpg:domainClasses/build.sbt"
+      ],
+      "module": "domainClasses"
+    },
+    {
+      "repository": "cpg",
+      "package": "domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated",
+      "milestone_id": "M0010",
+      "files": [
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/ControlStructureTypes.java",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/Cpg.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/DispatchTypes.java",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/EdgeTypes.java",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/EvaluationStrategies.java",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/GraphSchema.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/Languages.java",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/ModifierTypes.java",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/NodeTypes.java",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/Operators.java",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/Properties.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/PropertyDefaults.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/PropertyErrorRegister.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/PropertyNames.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/language.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/package.scala"
+      ],
+      "module": "domainClasses::src::main::generated::io::shiftleft::codepropertygraph::generated"
+    },
+    {
+      "repository": "cpg",
+      "package": "domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/accessors",
+      "milestone_id": "M0010",
+      "files": [
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/accessors/Accessors.scala"
+      ],
+      "module": "domainClasses::src::main::generated::io::shiftleft::codepropertygraph::generated::accessors"
+    },
+    {
+      "repository": "cpg",
+      "package": "domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/edges",
+      "milestone_id": "M0010",
+      "files": [
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/edges/EdgeTypes.scala"
+      ],
+      "module": "domainClasses::src::main::generated::io::shiftleft::codepropertygraph::generated::edges"
+    },
+    {
+      "repository": "cpg",
+      "package": "domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors",
+      "milestone_id": "M0010",
+      "files": [
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Annotation.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/AnnotationLiteral.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/AnnotationParameter.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/AnnotationParameterAssign.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/ArrayInitializer.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Binding.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Block.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Call.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/CfgNode.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/ClosureBinding.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Comment.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/ControlStructure.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Dependency.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Expression.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/FieldIdentifier.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/File.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Identifier.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Import.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/JumpLabel.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/JumpTarget.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Literal.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Local.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Member.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Method.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/MethodParameterIn.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/MethodParameterOut.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/MethodRef.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/MethodReturn.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Modifier.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Namespace.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/NamespaceBlock.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Return.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Tag.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/TemplateDom.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Type.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/TypeArgument.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/TypeDecl.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/TypeParameter.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/TypeRef.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Unknown.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/package.scala"
+      ],
+      "module": "domainClasses::src::main::generated::io::shiftleft::codepropertygraph::generated::neighboraccessors"
+    },
+    {
+      "repository": "cpg",
+      "package": "domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes",
+      "milestone_id": "M0010",
+      "files": [
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Annotation.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/AnnotationLiteral.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/AnnotationParameter.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/AnnotationParameterAssign.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/ArrayInitializer.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/BaseTypes.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Binding.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Block.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Call.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/ClosureBinding.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Comment.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/ConfigFile.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/ControlStructure.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Dependency.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/FieldIdentifier.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/File.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Finding.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Identifier.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Import.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/JumpLabel.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/JumpTarget.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/KeyValuePair.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Literal.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Local.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Member.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/MetaData.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Method.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/MethodParameterIn.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/MethodParameterOut.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/MethodRef.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/MethodReturn.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Modifier.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Namespace.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NamespaceBlock.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewAnnotation.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewAnnotationLiteral.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewAnnotationParameter.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewAnnotationParameterAssign.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewArrayInitializer.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewBinding.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewBlock.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewCall.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewClosureBinding.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewComment.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewConfigFile.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewControlStructure.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewDependency.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewFieldIdentifier.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewFile.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewFinding.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewIdentifier.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewImport.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewJumpLabel.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewJumpTarget.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewKeyValuePair.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewLiteral.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewLocal.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewMember.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewMetaData.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewMethod.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewMethodParameterIn.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewMethodParameterOut.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewMethodRef.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewMethodReturn.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewModifier.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewNamespace.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewNamespaceBlock.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewReturn.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewTag.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewTagNodePair.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewTemplateDom.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewType.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewTypeArgument.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewTypeDecl.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewTypeParameter.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewTypeRef.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewUnknown.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Return.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/RootTypes.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/RootTypesTraversals.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Tag.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/TagNodePair.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/TemplateDom.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Type.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/TypeArgument.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/TypeDecl.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/TypeParameter.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/TypeRef.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Unknown.scala"
+      ],
+      "module": "domainClasses::src::main::generated::io::shiftleft::codepropertygraph::generated::nodes"
+    },
+    {
+      "repository": "cpg",
+      "package": "domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals",
+      "milestone_id": "M0010",
+      "files": [
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalAnnotationBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalAnnotationliteralBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalAnnotationparameterBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalAnnotationparameterassignBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalArrayinitializerBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalAstnodeBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalBindingBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalBlockBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalCallBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalCallreprBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalCfgnodeBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalClosurebindingBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalCommentBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalConfigfileBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalControlstructureBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalDeclarationBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalDependencyBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalExpressionBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalFieldidentifierBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalFileBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalFindingBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalIdentifierBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalImportBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalJumplabelBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalJumptargetBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalKeyvaluepairBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalLiteralBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalLocalBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalMemberBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalMetadataBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalMethodBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalMethodparameterinBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalMethodparameteroutBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalMethodrefBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalMethodreturnBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalModifierBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalNamespaceBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalNamespaceblockBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyAliasTypeFullName.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyArgumentIndex.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyArgumentLabel.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyArgumentName.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyAstParentFullName.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyAstParentType.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyCanonicalName.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyClosureBindingId.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyCode.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyColumnNumber.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyColumnNumberEnd.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyContainedRef.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyContent.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyControlStructureType.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyDependencyGroupId.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyDispatchType.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyDynamicTypeHintFullName.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyEvaluationStrategy.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyEvidenceDescription.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyExplicitAs.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyFilename.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyFullName.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyGenericSignature.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyHash.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyImportedAs.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyImportedEntity.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyIndex.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyInheritsFromTypeFullName.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyIsExplicit.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyIsExternal.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyIsModuleImport.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyIsVariadic.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyIsWildcard.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyKey.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyLanguage.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyLineNumber.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyLineNumberEnd.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyMethodFullName.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyModifierType.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyName.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyOffset.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyOffsetEnd.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyOrder.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyOverlays.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyParserTypeName.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyPossibleTypes.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyRoot.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertySignature.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyStaticReceiver.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyTypeDeclFullName.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyTypeFullName.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyValue.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyVersion.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalReturnBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTagBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTagnodepairBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTemplatedomBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTypeBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTypeargumentBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTypedeclBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTypeparameterBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTyperefBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalUnknownBase.scala",
+        "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/package.scala"
+      ],
+      "module": "domainClasses::src::main::generated::io::shiftleft::codepropertygraph::generated::traversals"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/portallocator",
+      "milestone_id": "M0011",
+      "files": [
+        "agones:pkg/portallocator/doc.go",
+        "agones:pkg/portallocator/portallocator.go"
+      ],
+      "module": "pkg::portallocator"
+    },
+    {
+      "repository": "cpg",
+      "package": "codepropertygraph/src/main/scala/io/shiftleft/codepropertygraph",
+      "milestone_id": "M0012",
+      "files": [
+        "cpg:codepropertygraph/src/main/scala/io/shiftleft/codepropertygraph/Cpg.scala",
+        "cpg:codepropertygraph/src/main/scala/io/shiftleft/codepropertygraph/package.scala"
+      ],
+      "module": "codepropertygraph::src::main::scala::io::shiftleft::codepropertygraph"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/cloudproduct",
+      "milestone_id": "M0013",
+      "files": [
+        "agones:pkg/cloudproduct/cloudproduct.go",
+        "agones:pkg/cloudproduct/doc.go"
+      ],
+      "module": "pkg::cloudproduct"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/cloudproduct/eviction",
+      "milestone_id": "M0013",
+      "files": [
+        "agones:pkg/cloudproduct/eviction/eviction.go"
+      ],
+      "module": "pkg::cloudproduct::eviction"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/cloudproduct/generic",
+      "milestone_id": "M0013",
+      "files": [
+        "agones:pkg/cloudproduct/generic/doc.go",
+        "agones:pkg/cloudproduct/generic/generic.go"
+      ],
+      "module": "pkg::cloudproduct::generic"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/cloudproduct/gke",
+      "milestone_id": "M0013",
+      "files": [
+        "agones:pkg/cloudproduct/gke/doc.go",
+        "agones:pkg/cloudproduct/gke/gke.go"
+      ],
+      "module": "pkg::cloudproduct::gke"
+    },
+    {
+      "repository": "cpg",
+      "package": "codepropertygraph/src/main/scala/io/shiftleft",
+      "milestone_id": "M0014",
+      "files": [
+        "cpg:codepropertygraph/src/main/scala/io/shiftleft/SerializedCpg.scala"
+      ],
+      "module": "codepropertygraph::src::main::scala::io::shiftleft"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/fleets",
+      "milestone_id": "M0015",
+      "files": [
+        "agones:pkg/fleets/controller.go",
+        "agones:pkg/fleets/controller_rollingupdatefix.go",
+        "agones:pkg/fleets/doc.go",
+        "agones:pkg/fleets/fleets.go"
+      ],
+      "module": "pkg::fleets"
+    },
+    {
+      "repository": "cpg",
+      "package": "codepropertygraph/src/main/scala/io/shiftleft/codepropertygraph/cpgloading",
+      "milestone_id": "M0016",
+      "files": [
+        "cpg:codepropertygraph/src/main/scala/io/shiftleft/codepropertygraph/cpgloading/ProtoCpgLoader.scala",
+        "cpg:codepropertygraph/src/main/scala/io/shiftleft/codepropertygraph/cpgloading/ProtoToGraphNodeMappings.scala",
+        "cpg:codepropertygraph/src/main/scala/io/shiftleft/codepropertygraph/cpgloading/ZipArchive.scala"
+      ],
+      "module": "codepropertygraph::src::main::scala::io::shiftleft::codepropertygraph::cpgloading"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/metrics",
+      "milestone_id": "M0017",
+      "files": [
+        "agones:pkg/metrics/controller.go",
+        "agones:pkg/metrics/controller_metrics.go",
+        "agones:pkg/metrics/doc.go",
+        "agones:pkg/metrics/exporter.go",
+        "agones:pkg/metrics/gameservers_count.go",
+        "agones:pkg/metrics/kubernetes_client.go",
+        "agones:pkg/metrics/metrics.go",
+        "agones:pkg/metrics/util.go"
+      ],
+      "module": "pkg::metrics"
+    },
+    {
+      "repository": "cpg",
+      "package": "codepropertygraph/src/main/scala/io/shiftleft/codepropertygraph/cpgloading",
+      "milestone_id": "M0018",
+      "files": [
+        "cpg:codepropertygraph/src/main/scala/io/shiftleft/codepropertygraph/cpgloading/CpgLoader.scala"
+      ],
+      "module": "codepropertygraph::src::main::scala::io::shiftleft::codepropertygraph::cpgloading"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/gameservers",
+      "milestone_id": "M0019",
+      "files": [
+        "agones:pkg/gameservers/controller.go",
+        "agones:pkg/gameservers/doc.go",
+        "agones:pkg/gameservers/gameservers.go",
+        "agones:pkg/gameservers/health.go",
+        "agones:pkg/gameservers/migration.go",
+        "agones:pkg/gameservers/missing.go",
+        "agones:pkg/gameservers/pernodecounter.go",
+        "agones:pkg/gameservers/succeeded.go"
+      ],
+      "module": "pkg::gameservers"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/gameserversets",
+      "milestone_id": "M0019",
+      "files": [
+        "agones:pkg/gameserversets/allocation_overflow.go",
+        "agones:pkg/gameserversets/controller.go",
+        "agones:pkg/gameserversets/doc.go",
+        "agones:pkg/gameserversets/gameserver_state_cache.go",
+        "agones:pkg/gameserversets/gameserversets.go",
+        "agones:pkg/gameserversets/metrics.go"
+      ],
+      "module": "pkg::gameserversets"
+    },
+    {
+      "repository": "cpg",
+      "package": "codepropertygraph/src/main/scala/io/shiftleft/passes",
+      "milestone_id": "M0020",
+      "files": [
+        "cpg:codepropertygraph/src/main/scala/io/shiftleft/passes/Converters.java",
+        "cpg:codepropertygraph/src/main/scala/io/shiftleft/passes/CpgPass.scala",
+        "cpg:codepropertygraph/src/main/scala/io/shiftleft/passes/ParallelIteratorExecutor.scala"
+      ],
+      "module": "codepropertygraph::src::main::scala::io::shiftleft::passes"
+    },
+    {
+      "repository": "cpg",
+      "package": "samples/pass/src/main/scala/io/shiftleft/passes/mypass",
+      "milestone_id": "M0020",
+      "files": [
+        "cpg:samples/pass/src/main/scala/io/shiftleft/passes/mypass/SamplePass.scala"
+      ],
+      "module": "samples::pass::src::main::scala::io::shiftleft::passes::mypass"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/fleetautoscalers",
+      "milestone_id": "M0021",
+      "files": [
+        "agones:pkg/fleetautoscalers/controller.go",
+        "agones:pkg/fleetautoscalers/doc.go",
+        "agones:pkg/fleetautoscalers/fleetautoscalers.go"
+      ],
+      "module": "pkg::fleetautoscalers"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/allocation/converters",
+      "milestone_id": "M0023",
+      "files": [
+        "agones:pkg/allocation/converters/converter.go"
+      ],
+      "module": "pkg::allocation::converters"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/gameserverallocations",
+      "milestone_id": "M0023",
+      "files": [
+        "agones:pkg/gameserverallocations/allocation_cache.go",
+        "agones:pkg/gameserverallocations/allocator.go",
+        "agones:pkg/gameserverallocations/cache.go",
+        "agones:pkg/gameserverallocations/controller.go",
+        "agones:pkg/gameserverallocations/doc.go",
+        "agones:pkg/gameserverallocations/find.go",
+        "agones:pkg/gameserverallocations/gameserverallocations.go",
+        "agones:pkg/gameserverallocations/metrics.go"
+      ],
+      "module": "pkg::gameserverallocations"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/gameserverallocations/processor",
+      "milestone_id": "M0023",
+      "files": [
+        "agones:pkg/gameserverallocations/processor/client.go",
+        "agones:pkg/gameserverallocations/processor/doc.go",
+        "agones:pkg/gameserverallocations/processor/grpc.go",
+        "agones:pkg/gameserverallocations/processor/handler.go"
+      ],
+      "module": "pkg::gameserverallocations::processor"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/sdkserver",
+      "milestone_id": "M0025",
+      "files": [
+        "agones:pkg/sdkserver/doc.go",
+        "agones:pkg/sdkserver/localsdk.go",
+        "agones:pkg/sdkserver/sdk.go",
+        "agones:pkg/sdkserver/sdkserver.go"
+      ],
+      "module": "pkg::sdkserver"
+    },
+    {
+      "repository": "agones",
+      "package": "cmd/allocator",
+      "milestone_id": "M0027",
+      "files": [
+        "agones:cmd/allocator/main.go",
+        "agones:cmd/allocator/metrics.go"
+      ],
+      "module": "cmd::allocator"
+    },
+    {
+      "repository": "agones",
+      "package": "cmd/controller",
+      "milestone_id": "M0027",
+      "files": [
+        "agones:cmd/controller/main.go",
+        "agones:cmd/controller/pprof.go"
+      ],
+      "module": "cmd::controller"
+    },
+    {
+      "repository": "agones",
+      "package": "cmd/extensions",
+      "milestone_id": "M0027",
+      "files": [
+        "agones:cmd/extensions/main.go",
+        "agones:cmd/extensions/pprof.go"
+      ],
+      "module": "cmd::extensions"
+    },
+    {
+      "repository": "agones",
+      "package": "cmd/ping",
+      "milestone_id": "M0027",
+      "files": [
+        "agones:cmd/ping/main.go",
+        "agones:cmd/ping/udp.go"
+      ],
+      "module": "cmd::ping"
+    },
+    {
+      "repository": "agones",
+      "package": "cmd/processor",
+      "milestone_id": "M0027",
+      "files": [
+        "agones:cmd/processor/main.go"
+      ],
+      "module": "cmd::processor"
+    },
+    {
+      "repository": "agones",
+      "package": "cmd/sdk-server",
+      "milestone_id": "M0027",
+      "files": [
+        "agones:cmd/sdk-server/main.go"
+      ],
+      "module": "cmd::sdk-server"
+    },
+    {
+      "repository": "agones",
+      "package": "build/agones-bot",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:build/agones-bot/main.go"
+      ],
+      "module": "build::agones-bot"
+    },
+    {
+      "repository": "agones",
+      "package": "build/report",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:build/report/report.go"
+      ],
+      "module": "build::report"
+    },
+    {
+      "repository": "agones",
+      "package": "build/scripts/bump-image",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:build/scripts/bump-image/main.go"
+      ],
+      "module": "build::scripts::bump-image"
+    },
+    {
+      "repository": "agones",
+      "package": "build/scripts/example-version-checker",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:build/scripts/example-version-checker/git.go",
+        "agones:build/scripts/example-version-checker/main.go",
+        "agones:build/scripts/example-version-checker/report.go",
+        "agones:build/scripts/example-version-checker/version.go"
+      ],
+      "module": "build::scripts::example-version-checker"
+    },
+    {
+      "repository": "agones",
+      "package": "build/scripts/feature-shortcode-update",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:build/scripts/feature-shortcode-update/main.go"
+      ],
+      "module": "build::scripts::feature-shortcode-update"
+    },
+    {
+      "repository": "agones",
+      "package": "build/scripts/k8s-export-openapi",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:build/scripts/k8s-export-openapi/main.go"
+      ],
+      "module": "build::scripts::k8s-export-openapi"
+    },
+    {
+      "repository": "agones",
+      "package": "build/scripts/previousversion",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:build/scripts/previousversion/main.go"
+      ],
+      "module": "build::scripts::previousversion"
+    },
+    {
+      "repository": "agones",
+      "package": "build/scripts/remove-data-proofer-ignore",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:build/scripts/remove-data-proofer-ignore/main.go"
+      ],
+      "module": "build::scripts::remove-data-proofer-ignore"
+    },
+    {
+      "repository": "agones",
+      "package": "build/scripts/sdk-update-version",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:build/scripts/sdk-update-version/main.go"
+      ],
+      "module": "build::scripts::sdk-update-version"
+    },
+    {
+      "repository": "agones",
+      "package": "build/scripts/site-config-update-version",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:build/scripts/site-config-update-version/main.go"
+      ],
+      "module": "build::scripts::site-config-update-version"
+    },
+    {
+      "repository": "agones",
+      "package": "build/scripts/update-navbar-version",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:build/scripts/update-navbar-version/main.go"
+      ],
+      "module": "build::scripts::update-navbar-version"
+    },
+    {
+      "repository": "agones",
+      "package": "examples",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:examples/chainfleetautoscaler.yaml",
+        "agones:examples/counterfleetautoscaler.yaml",
+        "agones:examples/fleet.yaml",
+        "agones:examples/fleetautoscaler.yaml",
+        "agones:examples/gameserver.yaml",
+        "agones:examples/gameserverallocation-deprecated.yaml",
+        "agones:examples/gameserverallocation.yaml",
+        "agones:examples/listfleetautoscaler.yaml",
+        "agones:examples/schedulefleetautoscaler.yaml",
+        "agones:examples/wasmfleetautoscaler.yaml",
+        "agones:examples/webhookfleetautoscaler.yaml",
+        "agones:examples/webhookfleetautoscalertls.yaml"
+      ],
+      "module": "examples"
+    },
+    {
+      "repository": "agones",
+      "package": "examples/allocation-endpoint",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:examples/allocation-endpoint/cloudbuild.yaml",
+        "agones:examples/allocation-endpoint/patch-agones-allocator.yaml"
+      ],
+      "module": "examples::allocation-endpoint"
+    },
+    {
+      "repository": "agones",
+      "package": "examples/allocation-endpoint/client",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:examples/allocation-endpoint/client/main.go",
+        "agones:examples/allocation-endpoint/client/sa_key.json"
+      ],
+      "module": "examples::allocation-endpoint::client"
+    },
+    {
+      "repository": "agones",
+      "package": "examples/allocation-endpoint/server",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:examples/allocation-endpoint/server/clusterselector.go",
+        "agones:examples/allocation-endpoint/server/main.go"
+      ],
+      "module": "examples::allocation-endpoint::server"
+    },
+    {
+      "repository": "agones",
+      "package": "examples/allocator-client",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:examples/allocator-client/main.go"
+      ],
+      "module": "examples::allocator-client"
+    },
+    {
+      "repository": "agones",
+      "package": "examples/autoscaler-wasm",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:examples/autoscaler-wasm/autoscaler.yaml",
+        "agones:examples/autoscaler-wasm/main.go",
+        "agones:examples/autoscaler-wasm/model.go"
+      ],
+      "module": "examples::autoscaler-wasm"
+    },
+    {
+      "repository": "agones",
+      "package": "examples/autoscaler-webhook",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:examples/autoscaler-webhook/autoscaler-service-tls.yaml",
+        "agones:examples/autoscaler-webhook/autoscaler-service.yaml",
+        "agones:examples/autoscaler-webhook/cloudbuild.yaml",
+        "agones:examples/autoscaler-webhook/main.go"
+      ],
+      "module": "examples::autoscaler-webhook"
+    },
+    {
+      "repository": "agones",
+      "package": "examples/cpp-simple",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:examples/cpp-simple/cloudbuild.yaml",
+        "agones:examples/cpp-simple/fleet.yaml",
+        "agones:examples/cpp-simple/gameserver.yaml"
+      ],
+      "module": "examples::cpp-simple"
+    },
+    {
+      "repository": "agones",
+      "package": "examples/crd-client",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:examples/crd-client/cloudbuild.yaml",
+        "agones:examples/crd-client/create-gs.yaml",
+        "agones:examples/crd-client/main.go"
+      ],
+      "module": "examples::crd-client"
+    },
+    {
+      "repository": "agones",
+      "package": "examples/custom-controller",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:examples/custom-controller/cloudbuild.yaml",
+        "agones:examples/custom-controller/deployment.yaml",
+        "agones:examples/custom-controller/main.go"
+      ],
+      "module": "examples::custom-controller"
+    },
+    {
+      "repository": "agones",
+      "package": "examples/nodejs-simple",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:examples/nodejs-simple/cloudbuild.yaml",
+        "agones:examples/nodejs-simple/gameserver.yaml",
+        "agones:examples/nodejs-simple/package-lock.json",
+        "agones:examples/nodejs-simple/package.json"
+      ],
+      "module": "examples::nodejs-simple"
+    },
+    {
+      "repository": "agones",
+      "package": "examples/rust-simple",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:examples/rust-simple/cloudbuild.yaml",
+        "agones:examples/rust-simple/gameserver.yaml"
+      ],
+      "module": "examples::rust-simple"
+    },
+    {
+      "repository": "agones",
+      "package": "examples/simple-game-server",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:examples/simple-game-server/cloudbuild.yaml",
+        "agones:examples/simple-game-server/dev-gameserver.yaml",
+        "agones:examples/simple-game-server/fleet-distributed.yaml",
+        "agones:examples/simple-game-server/fleet-tcp.yaml",
+        "agones:examples/simple-game-server/fleet.yaml",
+        "agones:examples/simple-game-server/fleetautoscaler.yaml",
+        "agones:examples/simple-game-server/gameserver-none.yaml",
+        "agones:examples/simple-game-server/gameserver-passthrough.yaml",
+        "agones:examples/simple-game-server/gameserver-windows.yaml",
+        "agones:examples/simple-game-server/gameserver.yaml",
+        "agones:examples/simple-game-server/gameserverallocation.yaml",
+        "agones:examples/simple-game-server/handlers.go",
+        "agones:examples/simple-game-server/main.go"
+      ],
+      "module": "examples::simple-game-server"
+    },
+    {
+      "repository": "agones",
+      "package": "examples/simple-genai-server",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:examples/simple-genai-server/cloudbuild.yaml",
+        "agones:examples/simple-genai-server/gameserver_autochat.yaml",
+        "agones:examples/simple-genai-server/gameserver_manualchat.yaml",
+        "agones:examples/simple-genai-server/gameserver_npcchat.yaml",
+        "agones:examples/simple-genai-server/main.go"
+      ],
+      "module": "examples::simple-genai-server"
+    },
+    {
+      "repository": "agones",
+      "package": "examples/supertuxkart",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:examples/supertuxkart/cloudbuild.yaml",
+        "agones:examples/supertuxkart/fleet.yaml",
+        "agones:examples/supertuxkart/gameserver.yaml",
+        "agones:examples/supertuxkart/gameserverallocation.yaml",
+        "agones:examples/supertuxkart/main.go"
+      ],
+      "module": "examples::supertuxkart"
+    },
+    {
+      "repository": "agones",
+      "package": "examples/unity-simple",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:examples/unity-simple/gameserver.yaml"
+      ],
+      "module": "examples::unity-simple"
+    },
+    {
+      "repository": "agones",
+      "package": "examples/unity-simple/Packages",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:examples/unity-simple/Packages/manifest.json"
+      ],
+      "module": "examples::unity-simple::Packages"
+    },
+    {
+      "repository": "agones",
+      "package": "examples/xonotic",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:examples/xonotic/cloudbuild.yaml",
+        "agones:examples/xonotic/fleet.yaml",
+        "agones:examples/xonotic/fleetautoscaler.yaml",
+        "agones:examples/xonotic/gameserver.yaml",
+        "agones:examples/xonotic/gameserverallocation.yaml",
+        "agones:examples/xonotic/main.go"
+      ],
+      "module": "examples::xonotic"
+    },
+    {
+      "repository": "agones",
+      "package": "site",
+      "milestone_id": "M0029",
+      "files": [
+        "agones:site/handler.go",
+        "agones:site/main.go",
+        "agones:site/tools.go"
+      ],
+      "module": "site"
+    },
+    {
+      "repository": "agones",
+      "package": ".github",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:.github/SECURITY.md",
+        "agones:.github/dependabot.yml",
+        "agones:.github/pull_request_template.md",
+        "agones:.github/release.yml"
+      ],
+      "module": ".github"
+    },
+    {
+      "repository": "agones",
+      "package": ".github/ISSUE_TEMPLATE",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:.github/ISSUE_TEMPLATE/become-a-repo-collaborator.md",
+        "agones:.github/ISSUE_TEMPLATE/bug_report.md",
+        "agones:.github/ISSUE_TEMPLATE/feature_request.md",
+        "agones:.github/ISSUE_TEMPLATE/golang_version_upgrade.md",
+        "agones:.github/ISSUE_TEMPLATE/kubernetes_update.md"
+      ],
+      "module": ".github::ISSUE_TEMPLATE"
+    },
+    {
+      "repository": "agones",
+      "package": ".github/workflows",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:.github/workflows/close.yaml",
+        "agones:.github/workflows/fossa.yml",
+        "agones:.github/workflows/label-pr.yml",
+        "agones:.github/workflows/labeler.yml",
+        "agones:.github/workflows/obsolete.yaml",
+        "agones:.github/workflows/pr_update.yml",
+        "agones:.github/workflows/rust.yml",
+        "agones:.github/workflows/stale.yaml",
+        "agones:.github/workflows/update_dependencies.yaml"
+      ],
+      "module": ".github::workflows"
+    },
+    {
+      "repository": "agones",
+      "package": "build",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/Makefile",
+        "agones:build/README.md",
+        "agones:build/boilerplate.go.txt",
+        "agones:build/boilerplate.yaml.txt",
+        "agones:build/build-required-src-dist.sh",
+        "agones:build/e2e_upgrade_test.sh",
+        "agones:build/extract-licenses.sh",
+        "agones:build/grafana-frontend.yaml",
+        "agones:build/grafana.yaml",
+        "agones:build/install-release.sh",
+        "agones:build/metallb-config.yaml.tpl",
+        "agones:build/performance-test.sh",
+        "agones:build/prometheus-google-managed.yaml",
+        "agones:build/prometheus-stack.yaml",
+        "agones:build/prometheus.yaml"
+      ],
+      "module": "build"
+    },
+    {
+      "repository": "agones",
+      "package": "build/agones-bot",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/agones-bot/Dockerfile",
+        "agones:build/agones-bot/Makefile",
+        "agones:build/agones-bot/README.md",
+        "agones:build/agones-bot/agones-bot-pr-commenter.yaml",
+        "agones:build/agones-bot/cloudbuild.yaml",
+        "agones:build/agones-bot/go.mod",
+        "agones:build/agones-bot/go.sum"
+      ],
+      "module": "build::agones-bot"
+    },
+    {
+      "repository": "agones",
+      "package": "build/always",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/always/always-be-building.yaml"
+      ],
+      "module": "build::always"
+    },
+    {
+      "repository": "agones",
+      "package": "build/build-allocation-images/go",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/build-allocation-images/go/gen.sh"
+      ],
+      "module": "build::build-allocation-images::go"
+    },
+    {
+      "repository": "agones",
+      "package": "build/build-image",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/build-image/Dockerfile",
+        "agones:build/build-image/gen-crd-code.sh"
+      ],
+      "module": "build::build-image"
+    },
+    {
+      "repository": "agones",
+      "package": "build/build-image/cache",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/build-image/cache/Dockerfile-base",
+        "agones:build/build-image/cache/Dockerfile-restore",
+        "agones:build/build-image/cache/Dockerfile-save",
+        "agones:build/build-image/cache/README.md",
+        "agones:build/build-image/cache/checksum",
+        "agones:build/build-image/cache/cloudbuild.yaml",
+        "agones:build/build-image/cache/restore_cache",
+        "agones:build/build-image/cache/save_cache"
+      ],
+      "module": "build::build-image::cache"
+    },
+    {
+      "repository": "agones",
+      "package": "build/build-sdk-images",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/build-sdk-images/README.md"
+      ],
+      "module": "build::build-sdk-images"
+    },
+    {
+      "repository": "agones",
+      "package": "build/build-sdk-images/cpp",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/build-sdk-images/cpp/Dockerfile",
+        "agones:build/build-sdk-images/cpp/build-sdk-test.sh",
+        "agones:build/build-sdk-images/cpp/build.sh",
+        "agones:build/build-sdk-images/cpp/clean.sh",
+        "agones:build/build-sdk-images/cpp/gen.sh",
+        "agones:build/build-sdk-images/cpp/sdktest.sh",
+        "agones:build/build-sdk-images/cpp/shell.sh"
+      ],
+      "module": "build::build-sdk-images::cpp"
+    },
+    {
+      "repository": "agones",
+      "package": "build/build-sdk-images/csharp",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/build-sdk-images/csharp/Dockerfile",
+        "agones:build/build-sdk-images/csharp/build.sh",
+        "agones:build/build-sdk-images/csharp/gen.sh",
+        "agones:build/build-sdk-images/csharp/publish.sh",
+        "agones:build/build-sdk-images/csharp/sdktest.sh",
+        "agones:build/build-sdk-images/csharp/shell.sh",
+        "agones:build/build-sdk-images/csharp/test.sh"
+      ],
+      "module": "build::build-sdk-images::csharp"
+    },
+    {
+      "repository": "agones",
+      "package": "build/build-sdk-images/go",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/build-sdk-images/go/Dockerfile",
+        "agones:build/build-sdk-images/go/gen.sh",
+        "agones:build/build-sdk-images/go/sdktest.sh",
+        "agones:build/build-sdk-images/go/test.sh"
+      ],
+      "module": "build::build-sdk-images::go"
+    },
+    {
+      "repository": "agones",
+      "package": "build/build-sdk-images/node",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/build-sdk-images/node/Dockerfile",
+        "agones:build/build-sdk-images/node/build-sdk-test.sh",
+        "agones:build/build-sdk-images/node/clean.sh",
+        "agones:build/build-sdk-images/node/gen.sh",
+        "agones:build/build-sdk-images/node/sdktest.sh",
+        "agones:build/build-sdk-images/node/shell.sh",
+        "agones:build/build-sdk-images/node/test.sh"
+      ],
+      "module": "build::build-sdk-images::node"
+    },
+    {
+      "repository": "agones",
+      "package": "build/build-sdk-images/python",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/build-sdk-images/python/Dockerfile",
+        "agones:build/build-sdk-images/python/gen.sh",
+        "agones:build/build-sdk-images/python/sdktest.sh",
+        "agones:build/build-sdk-images/python/test.sh"
+      ],
+      "module": "build::build-sdk-images::python"
+    },
+    {
+      "repository": "agones",
+      "package": "build/build-sdk-images/restapi",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/build-sdk-images/restapi/Dockerfile",
+        "agones:build/build-sdk-images/restapi/gen.sh",
+        "agones:build/build-sdk-images/restapi/sdktest.sh"
+      ],
+      "module": "build::build-sdk-images::restapi"
+    },
+    {
+      "repository": "agones",
+      "package": "build/build-sdk-images/rust",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/build-sdk-images/rust/Dockerfile",
+        "agones:build/build-sdk-images/rust/build-sdk-test.sh",
+        "agones:build/build-sdk-images/rust/clean.sh",
+        "agones:build/build-sdk-images/rust/gen.sh",
+        "agones:build/build-sdk-images/rust/publish.sh",
+        "agones:build/build-sdk-images/rust/sdktest.sh",
+        "agones:build/build-sdk-images/rust/test.sh"
+      ],
+      "module": "build::build-sdk-images::rust"
+    },
+    {
+      "repository": "agones",
+      "package": "build/build-sdk-images/tool/base",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/build-sdk-images/tool/base/Dockerfile",
+        "agones:build/build-sdk-images/tool/base/entrypoint.sh"
+      ],
+      "module": "build::build-sdk-images::tool::base"
+    },
+    {
+      "repository": "agones",
+      "package": "build/build-sdk-images/tool/template",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/build-sdk-images/tool/template/Dockerfile",
+        "agones:build/build-sdk-images/tool/template/build.sh",
+        "agones:build/build-sdk-images/tool/template/gen.sh",
+        "agones:build/build-sdk-images/tool/template/test.sh"
+      ],
+      "module": "build::build-sdk-images::tool::template"
+    },
+    {
+      "repository": "agones",
+      "package": "build/docs",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/docs/building-testing.md",
+        "agones:build/docs/cluster-setup.md",
+        "agones:build/docs/dependencies.md",
+        "agones:build/docs/development-workflow.md",
+        "agones:build/docs/make-reference.md",
+        "agones:build/docs/performance-testing.md",
+        "agones:build/docs/platform-setup.md",
+        "agones:build/docs/troubleshooting.md"
+      ],
+      "module": "build::docs"
+    },
+    {
+      "repository": "agones",
+      "package": "build/e2e-image",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/e2e-image/Dockerfile",
+        "agones:build/e2e-image/e2e.sh",
+        "agones:build/e2e-image/entrypoint.sh"
+      ],
+      "module": "build::e2e-image"
+    },
+    {
+      "repository": "agones",
+      "package": "build/grafana",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/grafana/dashboard-allocations.yaml",
+        "agones:build/grafana/dashboard-allocator-usage.yaml",
+        "agones:build/grafana/dashboard-apiserver-requests.yaml",
+        "agones:build/grafana/dashboard-autoscalers.yaml",
+        "agones:build/grafana/dashboard-controller-usage.yaml",
+        "agones:build/grafana/dashboard-extensions-status.yaml",
+        "agones:build/grafana/dashboard-extensions-usage.yaml",
+        "agones:build/grafana/dashboard-gameservers.yaml",
+        "agones:build/grafana/dashboard-goclient-requests.yaml",
+        "agones:build/grafana/dashboard-goclient-workqueues.yaml",
+        "agones:build/grafana/dashboard-status.yaml"
+      ],
+      "module": "build::grafana"
+    },
+    {
+      "repository": "agones",
+      "package": "build/includes",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/includes/allocation.mk",
+        "agones:build/includes/build-image.mk",
+        "agones:build/includes/examples.mk",
+        "agones:build/includes/google-cloud.mk",
+        "agones:build/includes/kind.mk",
+        "agones:build/includes/linux.mk",
+        "agones:build/includes/macos.mk",
+        "agones:build/includes/minikube.mk",
+        "agones:build/includes/release.mk",
+        "agones:build/includes/sdk.mk",
+        "agones:build/includes/website.mk",
+        "agones:build/includes/windows.mk"
+      ],
+      "module": "build::includes"
+    },
+    {
+      "repository": "agones",
+      "package": "build/local-includes",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/local-includes/README.md"
+      ],
+      "module": "build::local-includes"
+    },
+    {
+      "repository": "agones",
+      "package": "build/release",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/release/post_cloudbuild.yaml",
+        "agones:build/release/pre_cloudbuild.yaml"
+      ],
+      "module": "build::release"
+    },
+    {
+      "repository": "agones",
+      "package": "build/report",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/report/cloudbuild.yaml"
+      ],
+      "module": "build::report"
+    },
+    {
+      "repository": "agones",
+      "package": "build/scripts/example-version-checker",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/scripts/example-version-checker/go.mod",
+        "agones:build/scripts/example-version-checker/go.sum"
+      ],
+      "module": "build::scripts::example-version-checker"
+    },
+    {
+      "repository": "agones",
+      "package": "build/scripts/k8s-export-openapi",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/scripts/k8s-export-openapi/go.mod",
+        "agones:build/scripts/k8s-export-openapi/go.sum"
+      ],
+      "module": "build::scripts::k8s-export-openapi"
+    },
+    {
+      "repository": "agones",
+      "package": "build/scripts/previousversion",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/scripts/previousversion/go.mod",
+        "agones:build/scripts/previousversion/go.sum"
+      ],
+      "module": "build::scripts::previousversion"
+    },
+    {
+      "repository": "agones",
+      "package": "build/scripts/site-config-update-version",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/scripts/site-config-update-version/go.mod",
+        "agones:build/scripts/site-config-update-version/go.sum"
+      ],
+      "module": "build::scripts::site-config-update-version"
+    },
+    {
+      "repository": "agones",
+      "package": "build/terraform/e2e",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/terraform/e2e/module.tf"
+      ],
+      "module": "build::terraform::e2e"
+    },
+    {
+      "repository": "agones",
+      "package": "build/terraform/e2e/gke-autopilot",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/terraform/e2e/gke-autopilot/module.tf"
+      ],
+      "module": "build::terraform::e2e::gke-autopilot"
+    },
+    {
+      "repository": "agones",
+      "package": "build/terraform/e2e/gke-standard",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/terraform/e2e/gke-standard/module.tf"
+      ],
+      "module": "build::terraform::e2e::gke-standard"
+    },
+    {
+      "repository": "agones",
+      "package": "build/terraform/e2e/state-bucket",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/terraform/e2e/state-bucket/main.tf"
+      ],
+      "module": "build::terraform::e2e::state-bucket"
+    },
+    {
+      "repository": "agones",
+      "package": "build/terraform/gke",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/terraform/gke/module.tf"
+      ],
+      "module": "build::terraform::gke"
+    },
+    {
+      "repository": "agones",
+      "package": "build/terraform/gke-autopilot",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/terraform/gke-autopilot/module.tf"
+      ],
+      "module": "build::terraform::gke-autopilot"
+    },
+    {
+      "repository": "agones",
+      "package": "build/terraform/performance",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/terraform/performance/module.tf"
+      ],
+      "module": "build::terraform::performance"
+    },
+    {
+      "repository": "agones",
+      "package": "build/terraform/performance/state-bucket",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/terraform/performance/state-bucket/main.tf"
+      ],
+      "module": "build::terraform::performance::state-bucket"
+    },
+    {
+      "repository": "agones",
+      "package": "build/terraform/upgrade",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/terraform/upgrade/module.tf"
+      ],
+      "module": "build::terraform::upgrade"
+    },
+    {
+      "repository": "agones",
+      "package": "build/terraform/upgrade/gke-autopilot",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/terraform/upgrade/gke-autopilot/module.tf"
+      ],
+      "module": "build::terraform::upgrade::gke-autopilot"
+    },
+    {
+      "repository": "agones",
+      "package": "build/terraform/upgrade/gke-standard",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/terraform/upgrade/gke-standard/module.tf"
+      ],
+      "module": "build::terraform::upgrade::gke-standard"
+    },
+    {
+      "repository": "agones",
+      "package": "build/terraform/upgrade/state-bucket",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:build/terraform/upgrade/state-bucket/main.tf"
+      ],
+      "module": "build::terraform::upgrade::state-bucket"
+    },
+    {
+      "repository": "agones",
+      "package": "ci",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:ci/cancelot.sh",
+        "agones:ci/e2e-test-cloudbuild.yaml",
+        "agones:ci/perf-test-cloudbuild.yaml"
+      ],
+      "module": "ci"
+    },
+    {
+      "repository": "agones",
+      "package": "install/helm/agones",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:install/helm/agones/.helmignore",
+        "agones:install/helm/agones/Chart.yaml",
+        "agones:install/helm/agones/README.md",
+        "agones:install/helm/agones/defaultfeaturegates.yaml",
+        "agones:install/helm/agones/values.schema.json",
+        "agones:install/helm/agones/values.yaml"
+      ],
+      "module": "install::helm::agones"
+    },
+    {
+      "repository": "agones",
+      "package": "install/helm/agones/certs",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:install/helm/agones/certs/cert.sh",
+        "agones:install/helm/agones/certs/server.crt",
+        "agones:install/helm/agones/certs/server.key"
+      ],
+      "module": "install::helm::agones::certs"
+    },
+    {
+      "repository": "agones",
+      "package": "install/helm/agones/certs/allocator",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:install/helm/agones/certs/allocator/server.crt",
+        "agones:install/helm/agones/certs/allocator/server.key"
+      ],
+      "module": "install::helm::agones::certs::allocator"
+    },
+    {
+      "repository": "agones",
+      "package": "install/helm/agones/certs/allocator/client-ca",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:install/helm/agones/certs/allocator/client-ca/ca.crt"
+      ],
+      "module": "install::helm::agones::certs::allocator::client-ca"
+    },
+    {
+      "repository": "agones",
+      "package": "install/helm/agones/scripts",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:install/helm/agones/scripts/delete_agones_resources.sh"
+      ],
+      "module": "install::helm::agones::scripts"
+    },
+    {
+      "repository": "agones",
+      "package": "install/helm/agones/templates",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:install/helm/agones/templates/NOTES.txt",
+        "agones:install/helm/agones/templates/_helpers.tpl",
+        "agones:install/helm/agones/templates/controller-metrics-service.yaml",
+        "agones:install/helm/agones/templates/controller.yaml",
+        "agones:install/helm/agones/templates/extensions-deployment.yaml",
+        "agones:install/helm/agones/templates/extensions-metrics-service.yaml",
+        "agones:install/helm/agones/templates/extensions.yaml",
+        "agones:install/helm/agones/templates/pdb.yaml",
+        "agones:install/helm/agones/templates/ping.yaml",
+        "agones:install/helm/agones/templates/priority-class.yaml",
+        "agones:install/helm/agones/templates/processor.yaml",
+        "agones:install/helm/agones/templates/service-monitor.yaml",
+        "agones:install/helm/agones/templates/service.yaml"
+      ],
+      "module": "install::helm::agones::templates"
+    },
+    {
+      "repository": "agones",
+      "package": "install/helm/agones/templates/crds",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:install/helm/agones/templates/crds/_fleetautoscalerpolicy.yaml",
+        "agones:install/helm/agones/templates/crds/_gameserverspecschema.yaml",
+        "agones:install/helm/agones/templates/crds/_gameserverstatus.yaml",
+        "agones:install/helm/agones/templates/crds/fleet.yaml",
+        "agones:install/helm/agones/templates/crds/fleetautoscaler.yaml",
+        "agones:install/helm/agones/templates/crds/gameserver.yaml",
+        "agones:install/helm/agones/templates/crds/gameserverallocationpolicy.yaml",
+        "agones:install/helm/agones/templates/crds/gameserverset.yaml"
+      ],
+      "module": "install::helm::agones::templates::crds"
+    },
+    {
+      "repository": "agones",
+      "package": "install/helm/agones/templates/crds/k8s",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:install/helm/agones/templates/crds/k8s/_io.k8s.api.core.v1.PodTemplateSpec.yaml",
+        "agones:install/helm/agones/templates/crds/k8s/_io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta.yaml"
+      ],
+      "module": "install::helm::agones::templates::crds::k8s"
+    },
+    {
+      "repository": "agones",
+      "package": "install/helm/agones/templates/hooks",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:install/helm/agones/templates/hooks/pre_delete_hook.yaml",
+        "agones:install/helm/agones/templates/hooks/sa.yaml",
+        "agones:install/helm/agones/templates/hooks/scripts.yaml"
+      ],
+      "module": "install::helm::agones::templates::hooks"
+    },
+    {
+      "repository": "agones",
+      "package": "install/helm/agones/templates/service",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:install/helm/agones/templates/service/allocation.yaml"
+      ],
+      "module": "install::helm::agones::templates::service"
+    },
+    {
+      "repository": "agones",
+      "package": "install/helm/agones/templates/serviceaccounts",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:install/helm/agones/templates/serviceaccounts/controller.yaml",
+        "agones:install/helm/agones/templates/serviceaccounts/sdk.yaml"
+      ],
+      "module": "install::helm::agones::templates::serviceaccounts"
+    },
+    {
+      "repository": "agones",
+      "package": "install/helm/agones/templates/tests",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:install/helm/agones/templates/tests/test-runner.yaml"
+      ],
+      "module": "install::helm::agones::templates::tests"
+    },
+    {
+      "repository": "agones",
+      "package": "install/terraform/modules/aks",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:install/terraform/modules/aks/aks.tf",
+        "agones:install/terraform/modules/aks/outputs.tf",
+        "agones:install/terraform/modules/aks/variables.tf"
+      ],
+      "module": "install::terraform::modules::aks"
+    },
+    {
+      "repository": "agones",
+      "package": "install/terraform/modules/eks",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:install/terraform/modules/eks/eks.tf",
+        "agones:install/terraform/modules/eks/outputs.tf",
+        "agones:install/terraform/modules/eks/variables.tf"
+      ],
+      "module": "install::terraform::modules::eks"
+    },
+    {
+      "repository": "agones",
+      "package": "install/terraform/modules/gke",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:install/terraform/modules/gke/cluster.tf",
+        "agones:install/terraform/modules/gke/outputs.tf",
+        "agones:install/terraform/modules/gke/variables.tf"
+      ],
+      "module": "install::terraform::modules::gke"
+    },
+    {
+      "repository": "agones",
+      "package": "install/terraform/modules/gke-autopilot",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:install/terraform/modules/gke-autopilot/cluster.tf",
+        "agones:install/terraform/modules/gke-autopilot/outputs.tf",
+        "agones:install/terraform/modules/gke-autopilot/variables.tf"
+      ],
+      "module": "install::terraform::modules::gke-autopilot"
+    },
+    {
+      "repository": "agones",
+      "package": "install/terraform/modules/helm3",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:install/terraform/modules/helm3/helm.tf",
+        "agones:install/terraform/modules/helm3/variables.tf"
+      ],
+      "module": "install::terraform::modules::helm3"
+    },
+    {
+      "repository": "agones",
+      "package": "install/terraform/modules/oke-helm3",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:install/terraform/modules/oke-helm3/helm.tf",
+        "agones:install/terraform/modules/oke-helm3/variables.tf"
+      ],
+      "module": "install::terraform::modules::oke-helm3"
+    },
+    {
+      "repository": "agones",
+      "package": "install/yaml",
+      "milestone_id": "M0031",
+      "files": [
+        "agones:install/yaml/install.yaml"
+      ],
+      "module": "install::yaml"
+    },
+    {
+      "repository": "agones",
+      "package": "build/report",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:build/report/report_test.go"
+      ],
+      "module": "build::report"
+    },
+    {
+      "repository": "agones",
+      "package": "build/scripts/example-version-checker",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:build/scripts/example-version-checker/version_test.go"
+      ],
+      "module": "build::scripts::example-version-checker"
+    },
+    {
+      "repository": "agones",
+      "package": "build/scripts/k8s-export-openapi",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:build/scripts/k8s-export-openapi/main_test.go"
+      ],
+      "module": "build::scripts::k8s-export-openapi"
+    },
+    {
+      "repository": "agones",
+      "package": "build/scripts/previousversion",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:build/scripts/previousversion/main_test.go"
+      ],
+      "module": "build::scripts::previousversion"
+    },
+    {
+      "repository": "agones",
+      "package": "build/scripts/sdk-update-version",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:build/scripts/sdk-update-version/main_test.go"
+      ],
+      "module": "build::scripts::sdk-update-version"
+    },
+    {
+      "repository": "agones",
+      "package": "build/scripts/site-config-update-version",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:build/scripts/site-config-update-version/main_test.go"
+      ],
+      "module": "build::scripts::site-config-update-version"
+    },
+    {
+      "repository": "agones",
+      "package": "cmd/allocator",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:cmd/allocator/main_test.go"
+      ],
+      "module": "cmd::allocator"
+    },
+    {
+      "repository": "agones",
+      "package": "cmd/controller",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:cmd/controller/main_test.go"
+      ],
+      "module": "cmd::controller"
+    },
+    {
+      "repository": "agones",
+      "package": "cmd/ping",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:cmd/ping/udp_test.go"
+      ],
+      "module": "cmd::ping"
+    },
+    {
+      "repository": "agones",
+      "package": "cmd/sdk-server",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:cmd/sdk-server/main_test.go"
+      ],
+      "module": "cmd::sdk-server"
+    },
+    {
+      "repository": "agones",
+      "package": "examples/supertuxkart",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:examples/supertuxkart/main_test.go"
+      ],
+      "module": "examples::supertuxkart"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/allocation/converters",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/allocation/converters/converter_test.go"
+      ],
+      "module": "pkg::allocation::converters"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/apis/agones/v1",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/apis/agones/v1/common_test.go",
+        "agones:pkg/apis/agones/v1/fleet_test.go",
+        "agones:pkg/apis/agones/v1/gameserver_test.go",
+        "agones:pkg/apis/agones/v1/gameserverset_test.go"
+      ],
+      "module": "pkg::apis::agones::v1"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/apis/agones/v1/fuzz_test",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/apis/agones/v1/fuzz_test/roundtrip_test.go"
+      ],
+      "module": "pkg::apis::agones::v1::fuzz_test"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/apis/allocation/v1",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/apis/allocation/v1/gameserverallocation_test.go"
+      ],
+      "module": "pkg::apis::allocation::v1"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/apis/autoscaling/v1",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/apis/autoscaling/v1/fleetautoscaler_test.go"
+      ],
+      "module": "pkg::apis::autoscaling::v1"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/apis/multicluster/v1",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/apis/multicluster/v1/gameserverallocationpolicy_test.go"
+      ],
+      "module": "pkg::apis::multicluster::v1"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/clientset/versioned/fake",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/client/clientset/versioned/fake/clientset_generated.go",
+        "agones:pkg/client/clientset/versioned/fake/doc.go",
+        "agones:pkg/client/clientset/versioned/fake/register.go"
+      ],
+      "module": "pkg::client::clientset::versioned::fake"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/clientset/versioned/typed/agones/v1/fake",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/client/clientset/versioned/typed/agones/v1/fake/doc.go",
+        "agones:pkg/client/clientset/versioned/typed/agones/v1/fake/fake_agones_client.go",
+        "agones:pkg/client/clientset/versioned/typed/agones/v1/fake/fake_fleet.go",
+        "agones:pkg/client/clientset/versioned/typed/agones/v1/fake/fake_gameserver.go",
+        "agones:pkg/client/clientset/versioned/typed/agones/v1/fake/fake_gameserverset.go"
+      ],
+      "module": "pkg::client::clientset::versioned::typed::agones::v1::fake"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/clientset/versioned/typed/allocation/v1/fake",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/client/clientset/versioned/typed/allocation/v1/fake/doc.go",
+        "agones:pkg/client/clientset/versioned/typed/allocation/v1/fake/fake_allocation_client.go",
+        "agones:pkg/client/clientset/versioned/typed/allocation/v1/fake/fake_gameserverallocation.go"
+      ],
+      "module": "pkg::client::clientset::versioned::typed::allocation::v1::fake"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/clientset/versioned/typed/autoscaling/v1/fake",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/client/clientset/versioned/typed/autoscaling/v1/fake/doc.go",
+        "agones:pkg/client/clientset/versioned/typed/autoscaling/v1/fake/fake_autoscaling_client.go",
+        "agones:pkg/client/clientset/versioned/typed/autoscaling/v1/fake/fake_fleetautoscaler.go"
+      ],
+      "module": "pkg::client::clientset::versioned::typed::autoscaling::v1::fake"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/client/clientset/versioned/typed/multicluster/v1/fake",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/client/clientset/versioned/typed/multicluster/v1/fake/doc.go",
+        "agones:pkg/client/clientset/versioned/typed/multicluster/v1/fake/fake_gameserverallocationpolicy.go",
+        "agones:pkg/client/clientset/versioned/typed/multicluster/v1/fake/fake_multicluster_client.go"
+      ],
+      "module": "pkg::client::clientset::versioned::typed::multicluster::v1::fake"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/cloudproduct/eviction",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/cloudproduct/eviction/eviction_test.go"
+      ],
+      "module": "pkg::cloudproduct::eviction"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/cloudproduct/generic",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/cloudproduct/generic/generic_test.go"
+      ],
+      "module": "pkg::cloudproduct::generic"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/cloudproduct/gke",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/cloudproduct/gke/gke_test.go"
+      ],
+      "module": "pkg::cloudproduct::gke"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/fleetautoscalers",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/fleetautoscalers/controller_test.go",
+        "agones:pkg/fleetautoscalers/fleetautoscalers_test.go",
+        "agones:pkg/fleetautoscalers/fleetautoscalerwasm_test.go"
+      ],
+      "module": "pkg::fleetautoscalers"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/fleets",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/fleets/controller_test.go",
+        "agones:pkg/fleets/fleets_test.go"
+      ],
+      "module": "pkg::fleets"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/gameserverallocations",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/gameserverallocations/allocation_cache_test.go",
+        "agones:pkg/gameserverallocations/allocator_test.go",
+        "agones:pkg/gameserverallocations/cache_test.go",
+        "agones:pkg/gameserverallocations/controller_test.go",
+        "agones:pkg/gameserverallocations/find_test.go",
+        "agones:pkg/gameserverallocations/metrics_test.go"
+      ],
+      "module": "pkg::gameserverallocations"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/gameserverallocations/processor",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/gameserverallocations/processor/client_test.go",
+        "agones:pkg/gameserverallocations/processor/handler_test.go"
+      ],
+      "module": "pkg::gameserverallocations::processor"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/gameservers",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/gameservers/controller_test.go",
+        "agones:pkg/gameservers/gameservers_test.go",
+        "agones:pkg/gameservers/health_test.go",
+        "agones:pkg/gameservers/migration_test.go",
+        "agones:pkg/gameservers/missing_test.go",
+        "agones:pkg/gameservers/pernodecounter_test.go",
+        "agones:pkg/gameservers/succeeded_test.go"
+      ],
+      "module": "pkg::gameservers"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/gameserversets",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/gameserversets/allocation_overflow_test.go",
+        "agones:pkg/gameserversets/controller_test.go",
+        "agones:pkg/gameserversets/gameserver_state_cache_test.go",
+        "agones:pkg/gameserversets/gameserversets_test.go",
+        "agones:pkg/gameserversets/metrics_test.go"
+      ],
+      "module": "pkg::gameserversets"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/metrics",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/metrics/controller_test.go",
+        "agones:pkg/metrics/exporter_test.go",
+        "agones:pkg/metrics/util_test.go"
+      ],
+      "module": "pkg::metrics"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/portallocator",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/portallocator/portallocator_test.go"
+      ],
+      "module": "pkg::portallocator"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/sdkserver",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/sdkserver/helper_test.go",
+        "agones:pkg/sdkserver/localsdk_test.go",
+        "agones:pkg/sdkserver/sdk_test.go",
+        "agones:pkg/sdkserver/sdkserver_test.go"
+      ],
+      "module": "pkg::sdkserver"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/testing",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/testing/apihooks.go",
+        "agones:pkg/testing/controller.go",
+        "agones:pkg/testing/doc.go"
+      ],
+      "module": "pkg::testing"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/util/apiserver",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/util/apiserver/apiserver_test.go"
+      ],
+      "module": "pkg::util::apiserver"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/util/crd",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/util/crd/crd_test.go"
+      ],
+      "module": "pkg::util::crd"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/util/errors",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/util/errors/errors_test.go"
+      ],
+      "module": "pkg::util::errors"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/util/fswatch",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/util/fswatch/fswatch_test.go"
+      ],
+      "module": "pkg::util::fswatch"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/util/https",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/util/https/https_test.go",
+        "agones:pkg/util/https/server_test.go"
+      ],
+      "module": "pkg::util::https"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/util/runtime",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/util/runtime/features_test.go",
+        "agones:pkg/util/runtime/runtime_test.go"
+      ],
+      "module": "pkg::util::runtime"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/util/webhooks",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/util/webhooks/webhooks_test.go"
+      ],
+      "module": "pkg::util::webhooks"
+    },
+    {
+      "repository": "agones",
+      "package": "pkg/util/workerqueue",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:pkg/util/workerqueue/workerqueue_test.go"
+      ],
+      "module": "pkg::util::workerqueue"
+    },
+    {
+      "repository": "agones",
+      "package": "sdks/go",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:sdks/go/alpha_test.go",
+        "agones:sdks/go/beta_test.go",
+        "agones:sdks/go/sdk_test.go"
+      ],
+      "module": "sdks::go"
+    },
+    {
+      "repository": "agones",
+      "package": "site",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:site/handler_test.go"
+      ],
+      "module": "site"
+    },
+    {
+      "repository": "agones",
+      "package": "test/e2e",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/e2e/README.md",
+        "agones:test/e2e/allocator_test.go",
+        "agones:test/e2e/examples_test.go",
+        "agones:test/e2e/fleet_test.go",
+        "agones:test/e2e/fleetautoscaler_test.go",
+        "agones:test/e2e/gameserver_test.go",
+        "agones:test/e2e/gameserverallocation_test.go",
+        "agones:test/e2e/main_test.go",
+        "agones:test/e2e/ping_test.go"
+      ],
+      "module": "test::e2e"
+    },
+    {
+      "repository": "agones",
+      "package": "test/e2e/allocator",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/e2e/allocator/main_test.go",
+        "agones:test/e2e/allocator/pod_termination_test.go"
+      ],
+      "module": "test::e2e::allocator"
+    },
+    {
+      "repository": "agones",
+      "package": "test/e2e/allochelper",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/e2e/allochelper/helper_func.go"
+      ],
+      "module": "test::e2e::allochelper"
+    },
+    {
+      "repository": "agones",
+      "package": "test/e2e/controller",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/e2e/controller/crash_test.go",
+        "agones:test/e2e/controller/doc.go",
+        "agones:test/e2e/controller/main_test.go"
+      ],
+      "module": "test::e2e::controller"
+    },
+    {
+      "repository": "agones",
+      "package": "test/e2e/extensions",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/e2e/extensions/high_availability_test.go",
+        "agones:test/e2e/extensions/main_test.go"
+      ],
+      "module": "test::e2e::extensions"
+    },
+    {
+      "repository": "agones",
+      "package": "test/e2e/framework",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/e2e/framework/framework.go",
+        "agones:test/e2e/framework/perf.go"
+      ],
+      "module": "test::e2e::framework"
+    },
+    {
+      "repository": "agones",
+      "package": "test/eviction",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/eviction/evictpod.go"
+      ],
+      "module": "test::eviction"
+    },
+    {
+      "repository": "agones",
+      "package": "test/load",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/load/README.md"
+      ],
+      "module": "test::load"
+    },
+    {
+      "repository": "agones",
+      "package": "test/load/allocation",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/load/allocation/.gitignore",
+        "agones:test/load/allocation/README.md",
+        "agones:test/load/allocation/autoscaler.yaml",
+        "agones:test/load/allocation/configure-agones.sh",
+        "agones:test/load/allocation/fixed.txt",
+        "agones:test/load/allocation/fleet.yaml",
+        "agones:test/load/allocation/performance-test-autoscaler-template.yaml",
+        "agones:test/load/allocation/performance-test-fleet-template.yaml",
+        "agones:test/load/allocation/performance-test-variable-template.txt",
+        "agones:test/load/allocation/runAllocation.sh",
+        "agones:test/load/allocation/runScenario.sh",
+        "agones:test/load/allocation/scenario-fleet.yaml",
+        "agones:test/load/allocation/scenario-values.yaml",
+        "agones:test/load/allocation/variable.txt"
+      ],
+      "module": "test::load::allocation"
+    },
+    {
+      "repository": "agones",
+      "package": "test/load/allocation/allocationload",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/load/allocation/allocationload/allocationload.go"
+      ],
+      "module": "test::load::allocation::allocationload"
+    },
+    {
+      "repository": "agones",
+      "package": "test/load/allocation/runscenario",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/load/allocation/runscenario/runscenario.go"
+      ],
+      "module": "test::load::allocation::runscenario"
+    },
+    {
+      "repository": "agones",
+      "package": "test/sdk/cpp",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/sdk/cpp/CMakeLists.txt",
+        "agones:test/sdk/cpp/server.cc"
+      ],
+      "module": "test::sdk::cpp"
+    },
+    {
+      "repository": "agones",
+      "package": "test/sdk/csharp",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/sdk/csharp/Program.cs",
+        "agones:test/sdk/csharp/csharp.csproj"
+      ],
+      "module": "test::sdk::csharp"
+    },
+    {
+      "repository": "agones",
+      "package": "test/sdk/go",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/sdk/go/Dockerfile",
+        "agones:test/sdk/go/Makefile",
+        "agones:test/sdk/go/cloudbuild.yaml",
+        "agones:test/sdk/go/sdk-client-test.go"
+      ],
+      "module": "test::sdk::go"
+    },
+    {
+      "repository": "agones",
+      "package": "test/sdk/nodejs",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/sdk/nodejs/.gitignore",
+        "agones:test/sdk/nodejs/package.json",
+        "agones:test/sdk/nodejs/testSDKClient.js"
+      ],
+      "module": "test::sdk::nodejs"
+    },
+    {
+      "repository": "agones",
+      "package": "test/sdk/python",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/sdk/python/testSDKClient.py"
+      ],
+      "module": "test::sdk::python"
+    },
+    {
+      "repository": "agones",
+      "package": "test/sdk/restapi",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/sdk/restapi/http-api-test.go"
+      ],
+      "module": "test::sdk::restapi"
+    },
+    {
+      "repository": "agones",
+      "package": "test/sdk/restapi/alpha/swagger",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/sdk/restapi/alpha/swagger/api_sdk.go",
+        "agones:test/sdk/restapi/alpha/swagger/client.go",
+        "agones:test/sdk/restapi/alpha/swagger/configuration.go",
+        "agones:test/sdk/restapi/alpha/swagger/model_alpha_bool.go",
+        "agones:test/sdk/restapi/alpha/swagger/model_alpha_count.go",
+        "agones:test/sdk/restapi/alpha/swagger/model_alpha_empty.go",
+        "agones:test/sdk/restapi/alpha/swagger/model_alpha_player_id.go",
+        "agones:test/sdk/restapi/alpha/swagger/model_alpha_player_id_list.go",
+        "agones:test/sdk/restapi/alpha/swagger/response.go"
+      ],
+      "module": "test::sdk::restapi::alpha::swagger"
+    },
+    {
+      "repository": "agones",
+      "package": "test/sdk/restapi/beta/swagger",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/sdk/restapi/beta/swagger/api_sdk.go",
+        "agones:test/sdk/restapi/beta/swagger/client.go",
+        "agones:test/sdk/restapi/beta/swagger/configuration.go",
+        "agones:test/sdk/restapi/beta/swagger/model_beta_counter.go",
+        "agones:test/sdk/restapi/beta/swagger/model_beta_counter_update_request.go",
+        "agones:test/sdk/restapi/beta/swagger/model_beta_list.go",
+        "agones:test/sdk/restapi/beta/swagger/model_sdk_add_list_value_body.go",
+        "agones:test/sdk/restapi/beta/swagger/model_sdk_remove_list_value_body.go",
+        "agones:test/sdk/restapi/beta/swagger/model_the_list_to_update.go",
+        "agones:test/sdk/restapi/beta/swagger/model_the_requested_update_to_make_to_the_counter.go",
+        "agones:test/sdk/restapi/beta/swagger/response.go"
+      ],
+      "module": "test::sdk::restapi::beta::swagger"
+    },
+    {
+      "repository": "agones",
+      "package": "test/sdk/restapi/swagger",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/sdk/restapi/swagger/api_sdk.go",
+        "agones:test/sdk/restapi/swagger/client.go",
+        "agones:test/sdk/restapi/swagger/configuration.go",
+        "agones:test/sdk/restapi/swagger/model_game_server_object_meta.go",
+        "agones:test/sdk/restapi/swagger/model_game_server_spec.go",
+        "agones:test/sdk/restapi/swagger/model_game_server_spec_health.go",
+        "agones:test/sdk/restapi/swagger/model_googlerpc_status.go",
+        "agones:test/sdk/restapi/swagger/model_sdk_duration.go",
+        "agones:test/sdk/restapi/swagger/model_sdk_empty.go",
+        "agones:test/sdk/restapi/swagger/model_sdk_game_server.go",
+        "agones:test/sdk/restapi/swagger/model_sdk_game_server_status.go",
+        "agones:test/sdk/restapi/swagger/model_sdk_key_value.go",
+        "agones:test/sdk/restapi/swagger/model_status_address.go",
+        "agones:test/sdk/restapi/swagger/model_status_counter_status.go",
+        "agones:test/sdk/restapi/swagger/model_status_list_status.go",
+        "agones:test/sdk/restapi/swagger/model_status_player_status.go",
+        "agones:test/sdk/restapi/swagger/model_status_port.go",
+        "agones:test/sdk/restapi/swagger/model_stream_result_of_sdk_game_server.go",
+        "agones:test/sdk/restapi/swagger/response.go"
+      ],
+      "module": "test::sdk::restapi::swagger"
+    },
+    {
+      "repository": "agones",
+      "package": "test/sdk/rust",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/sdk/rust/.gitignore",
+        "agones:test/sdk/rust/Cargo.toml"
+      ],
+      "module": "test::sdk::rust"
+    },
+    {
+      "repository": "agones",
+      "package": "test/sdk/rust/src",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/sdk/rust/src/main.rs"
+      ],
+      "module": "test::sdk::rust::src"
+    },
+    {
+      "repository": "agones",
+      "package": "test/sdk/unity",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/sdk/unity/.gitignore",
+        "agones:test/sdk/unity/README.md"
+      ],
+      "module": "test::sdk::unity"
+    },
+    {
+      "repository": "agones",
+      "package": "test/sdk/unity/Assets",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/sdk/unity/Assets/Main.unity",
+        "agones:test/sdk/unity/Assets/Main.unity.meta"
+      ],
+      "module": "test::sdk::unity::Assets"
+    },
+    {
+      "repository": "agones",
+      "package": "test/sdk/unity/Packages",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/sdk/unity/Packages/manifest.json",
+        "agones:test/sdk/unity/Packages/packages-lock.json"
+      ],
+      "module": "test::sdk::unity::Packages"
+    },
+    {
+      "repository": "agones",
+      "package": "test/sdk/unity/ProjectSettings",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/sdk/unity/ProjectSettings/AudioManager.asset",
+        "agones:test/sdk/unity/ProjectSettings/ClusterInputManager.asset",
+        "agones:test/sdk/unity/ProjectSettings/DynamicsManager.asset",
+        "agones:test/sdk/unity/ProjectSettings/EditorBuildSettings.asset",
+        "agones:test/sdk/unity/ProjectSettings/EditorSettings.asset",
+        "agones:test/sdk/unity/ProjectSettings/GraphicsSettings.asset",
+        "agones:test/sdk/unity/ProjectSettings/InputManager.asset",
+        "agones:test/sdk/unity/ProjectSettings/MemorySettings.asset",
+        "agones:test/sdk/unity/ProjectSettings/NavMeshAreas.asset",
+        "agones:test/sdk/unity/ProjectSettings/PackageManagerSettings.asset",
+        "agones:test/sdk/unity/ProjectSettings/Physics2DSettings.asset",
+        "agones:test/sdk/unity/ProjectSettings/PresetManager.asset",
+        "agones:test/sdk/unity/ProjectSettings/ProjectSettings.asset",
+        "agones:test/sdk/unity/ProjectSettings/ProjectVersion.txt",
+        "agones:test/sdk/unity/ProjectSettings/QualitySettings.asset",
+        "agones:test/sdk/unity/ProjectSettings/SceneTemplateSettings.json",
+        "agones:test/sdk/unity/ProjectSettings/TagManager.asset",
+        "agones:test/sdk/unity/ProjectSettings/TimeManager.asset",
+        "agones:test/sdk/unity/ProjectSettings/UnityConnectSettings.asset",
+        "agones:test/sdk/unity/ProjectSettings/VFXManager.asset",
+        "agones:test/sdk/unity/ProjectSettings/VersionControlSettings.asset"
+      ],
+      "module": "test::sdk::unity::ProjectSettings"
+    },
+    {
+      "repository": "agones",
+      "package": "test/sdk/websocket-watch",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/sdk/websocket-watch/ws-watch-test.go"
+      ],
+      "module": "test::sdk::websocket-watch"
+    },
+    {
+      "repository": "agones",
+      "package": "test/upgrade",
+      "milestone_id": "M0035",
+      "files": [
+        "agones:test/upgrade/Dockerfile",
+        "agones:test/upgrade/Makefile",
+        "agones:test/upgrade/evictablePods.yaml",
+        "agones:test/upgrade/gameserverTemplate.yaml",
+        "agones:test/upgrade/go.mod",
+        "agones:test/upgrade/go.sum",
+        "agones:test/upgrade/main.go",
+        "agones:test/upgrade/permissions.yaml",
+        "agones:test/upgrade/upgradeTest.yaml",
+        "agones:test/upgrade/versionMap.yaml"
+      ],
+      "module": "test::upgrade"
+    },
+    {
+      "repository": "cpg",
+      "package": "codepropertygraph/src/test/resources",
+      "milestone_id": "M0036",
+      "files": [
+        "cpg:codepropertygraph/src/test/resources/cpg.fg",
+        "cpg:codepropertygraph/src/test/resources/cpg.odb"
+      ],
+      "module": "codepropertygraph::src::test::resources"
+    },
+    {
+      "repository": "cpg",
+      "package": "codepropertygraph/src/test/scala/io/shiftleft/codepropertygraph",
+      "milestone_id": "M0036",
+      "files": [
+        "cpg:codepropertygraph/src/test/scala/io/shiftleft/codepropertygraph/StepsTest.scala"
+      ],
+      "module": "codepropertygraph::src::test::scala::io::shiftleft::codepropertygraph"
+    },
+    {
+      "repository": "cpg",
+      "package": "codepropertygraph/src/test/scala/io/shiftleft/codepropertygraph/cpgloading",
+      "milestone_id": "M0036",
+      "files": [
+        "cpg:codepropertygraph/src/test/scala/io/shiftleft/codepropertygraph/cpgloading/CpgLoaderTests.scala",
+        "cpg:codepropertygraph/src/test/scala/io/shiftleft/codepropertygraph/cpgloading/TestProtoCpg.scala"
+      ],
+      "module": "codepropertygraph::src::test::scala::io::shiftleft::codepropertygraph::cpgloading"
+    },
+    {
+      "repository": "cpg",
+      "package": "codepropertygraph/src/test/scala/io/shiftleft/passes",
+      "milestone_id": "M0036",
+      "files": [
+        "cpg:codepropertygraph/src/test/scala/io/shiftleft/passes/CpgPassNewTests.scala"
+      ],
+      "module": "codepropertygraph::src::test::scala::io::shiftleft::passes"
+    },
+    {
+      "repository": "cpg",
+      "package": "codepropertygraph/src/test/scala/io/shiftleft/utils",
+      "milestone_id": "M0036",
+      "files": [
+        "cpg:codepropertygraph/src/test/scala/io/shiftleft/utils/IOUtilsTest.scala"
+      ],
+      "module": "codepropertygraph::src::test::scala::io::shiftleft::utils"
+    }
+  ]
+}

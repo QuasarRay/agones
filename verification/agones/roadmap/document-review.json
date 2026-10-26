@@ -1,0 +1,162 @@
+{
+  "review_kind": "DOCUMENT_ONLY",
+  "project_builds_tests_probes_proofs_or_verification_executed": false,
+  "status": "PASS",
+  "counts": {
+    "source_paths": 8595,
+    "detailed_file_entries": 1147,
+    "package_entries": 293,
+    "milestones": 38,
+    "unique_exact_quotes": 1205,
+    "roadmap_markdown_components": 41,
+    "resolved_local_link_occurrences": 422
+  },
+  "checks": [
+    {
+      "check": "agones: complete unique pinned-tree path inventory",
+      "result": "PASS",
+      "detail": 8240
+    },
+    {
+      "check": "cpg: complete unique pinned-tree path inventory",
+      "result": "PASS",
+      "detail": 355
+    },
+    {
+      "check": "Agones initial census reconciled with pinned tree",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "Each required source file has one explicit owned roadmap entry",
+      "result": "PASS",
+      "detail": []
+    },
+    {
+      "check": "Every first-party Go file has a detailed entry",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "Every CPG path has a detailed entry",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "Exact path/case/stem mappings including Go harness exception",
+      "result": "PASS",
+      "detail": []
+    },
+    {
+      "check": "No exact destination collisions in frozen map",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "Topological milestone ordering and prescribed route alternation",
+      "result": "PASS",
+      "detail": []
+    },
+    {
+      "check": "Both assurance milestones depend on all production milestones",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "Every detailed file is also owned by a package/module entry",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "Every quote matches exact recorded source bytes and line interval",
+      "result": "PASS",
+      "detail": []
+    },
+    {
+      "check": "Current-reference quoted files match their permalink commit",
+      "result": "PASS",
+      "detail": []
+    },
+    {
+      "check": "Every roadmap Markdown file contains attributed direct source quotation",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "Joint architectural ownership and Pythonic readability in every milestone",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "No unexpanded document template placeholders",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "One immutable forecast ID for each milestone",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "Combined roadmap equals deterministic assembly of every roadmap Markdown file",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "Assembly includes all canonical Markdown components exactly once",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "No implementation milestone is falsely recorded as executed",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "No fabricated historical actual-cost comparison reports",
+      "result": "PASS",
+      "detail": []
+    },
+    {
+      "check": "Authored local Markdown references resolve; quoted source links remain verbatim",
+      "result": "PASS",
+      "detail": []
+    },
+    {
+      "check": "Original source, state, root prompts, Cargo manifest and checkpoint preserved",
+      "result": "PASS",
+      "detail": []
+    },
+    {
+      "check": "No tracked implementation changes in Agones",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "agones-rs-prompt-v3.md: shared roadmap/policy entrypoint",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "agones-rs-prompt-v3.md: obsolete selection, pre-check and terminal-stop clauses removed",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "agones-rs-cpg-prompt-v1.md: shared roadmap/policy entrypoint",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "agones-rs-cpg-prompt-v1.md: obsolete selection, pre-check and terminal-stop clauses removed",
+      "result": "PASS",
+      "detail": null
+    }
+  ],
+  "limits": [
+    "Static documentation review does not prove semantic completeness, code correctness or executable tool availability.",
+    "External URL reachability was not exhaustively requested; permalink repository/revision/path identities were checked against local Git/source bytes.",
+    "Existing implementation adoption owners are provisional until exact source-to-symbol/consumer mappings are authored.",
+    "Implicit bodies, build/platform/configuration variants and dynamic test instances remain explicit source-accounting obligations."
+  ]
+}
