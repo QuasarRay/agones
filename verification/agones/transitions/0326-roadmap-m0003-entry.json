@@ -1,0 +1,12 @@
+{
+  "event": "ROADMAP_M0003_MANUAL_ENTRY",
+  "global_gate": "CLOSED",
+  "predecessor_revision": 325,
+  "predecessor_sha256": "1110b627a6065899b91f793e4c939a707b5be403ee8f0115fbc17dbad8846f5e",
+  "result_revision": 326,
+  "route": "MANUAL",
+  "state_sha256": "1a51e22eaa556d86200b64885d45395268c8cb38e2db2f7be5691dd2464487e6",
+  "timestamp": "2026-10-26T20:17:04.204382+00:00",
+  "usage_start": "verification/agones/roadmap-M0003-entry-usage.json",
+  "verification": "NOT_STARTED"
+}

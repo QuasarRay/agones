@@ -23,6 +23,11 @@ impl AgonesConfigurationContext {
 }
 
 impl InitializedAgonesConfiguration {
+    /// Transfer the canonical parsed state into its runtime owner.
+    pub fn into_parts(self) -> (AgonesConfigurationContext, FeatureGates) {
+        (self.context, self.feature_gates)
+    }
+
     pub fn context(&self) -> &AgonesConfigurationContext {
         &self.context
     }

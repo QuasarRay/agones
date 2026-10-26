@@ -739,7 +739,7 @@
         "disposition": "READY",
         "milestone_id": "M0003",
         "route": "MANUAL",
-        "stage": "PLANNED"
+        "stage": "IMPLEMENTING"
       },
       "forecast_baseline": "verification/agones/roadmap/forecast-baseline-v1.json",
       "forecast_baseline_sha256": "ee1cc5bb26dd418bb87348e4b22bf6b41ba03626484c5b373a7ef717fd8d7d69",
@@ -778,6 +778,7 @@
           "forecast_id": "F-M0002-v1",
           "gaps": [],
           "historical_partial_record": "verification/agones/roadmap-M0002-partial-map.json",
+          "local_checkpoint": "95161696e9ad90f9eab2ec7ae978bcafdcbb3483",
           "owned_entry_count": 49,
           "partial_adoption_record": "verification/agones/roadmap-M0002-partial-map.json",
           "progress_usage_observations": [
@@ -793,14 +794,34 @@
         },
         "M0003": {
           "disposition": "READY",
+          "entries_with_authored_source": 5,
+          "entry_accounting_allocation": "M0003 entry bookkeeping, including the follow-up append of the finalized M0002 shared-boundary paragraph, is allocated once to M0003 entry overhead. It is not included a second time in the prior 20030-token shared segment.",
           "forecast_id": "F-M0003-v1",
+          "gaps": [
+            "M0003-APISERVER",
+            "M0003-FSWATCH",
+            "M0003-HTTP-HTTPS",
+            "M0003-RUNTIME",
+            "M0003-SIGNALS",
+            "M0003-WEBHOOKS",
+            "M0003-WORKQUEUE",
+            "M0003-ERROR-METADATA-FORMATTING",
+            "M0003-FEATURE-INPUT-CONSUMERS",
+            "M0003-CRD-ADOPTION",
+            "M0003-WHOLE-BODY-RECONCILIATION"
+          ],
+          "owned_entry_count": 14,
+          "partial_adoption_record": "verification/agones/roadmap-M0003-partial-map.json",
           "prerequisites": "M0001/M0002 authored implementation complete; global phase remains IMPLEMENTATION_ONLY",
+          "progress_usage_observation": "verification/agones/roadmap-M0003-progress-usage-1.json",
+          "reuse_adoption_record": "verification/agones/roadmap-M0003-reuse-adoption.json",
           "route": "MANUAL",
-          "stage": "PLANNED",
-          "usage_start": null
+          "source_snapshot": "95161696e9ad90f9eab2ec7ae978bcafdcbb3483",
+          "stage": "IMPLEMENTING",
+          "usage_start": "verification/agones/roadmap-M0003-entry-usage.json"
         }
       },
-      "next_action": "Capture M0003 entry usage after the M0002 local checkpoint, then read M0003 overview and affected source entries via entry-index.tsv. Implement errors, queues, clocks, webhooks and utility effects in exact mirror paths with CGP/derive-deftly ownership. Global gate remains CLOSED; do not build, test, probe or run generators.",
+      "next_action": "Continue M0003 MANUAL without a route switch. Finish runtime logger/configuration effects and concrete HTTP/TLS/FS watcher/signal/webhook/worker queue bodies; reconcile source error/type/format and feature input profiles, CRD logging/client boundary and all 14 source entries. Preserve existing queue/controller implementations until exact caller/body transfers. Do not run any project executable or verification while global gate is CLOSED.",
       "objective": "AGONES_AND_CPG_COMBINED_ROADMAP",
       "objective_attachment": "/home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt",
       "objective_attachment_sha256": "a9b797fc624be04548c62e63a634bcc2cacab25c4d9f45af346148ba32c1baea",
@@ -814,10 +835,10 @@
           "start": "verification/agones/roadmap-M0001-end-usage.json"
         },
         {
-          "attribution": "M0002 completion bookkeeping/local checkpoint and route-switch overhead; charge once when the M0003 entry observation is persisted. No full M0002-only cost or credits inferred.",
-          "end": null,
+          "attribution": "M0002 completion/accounting/local checkpoint and route switch charged once here. Full M0002-only attribution remains unknown; this segment is excluded from both implementation comparisons.",
+          "end": "verification/agones/roadmap-M0003-entry-usage.json",
           "id": "M0002_to_M0003",
-          "observed_tokens": null,
+          "observed_tokens": 20030,
           "start": "verification/agones/roadmap-M0002-end-usage.json"
         }
       ],
@@ -848,9 +869,9 @@
   "goal": {
     "objective_attachment": "/home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt",
     "reported_usage": {
-      "observed_at": 1793045563,
-      "time_seconds": 11501,
-      "tokens": 635978
+      "observed_at": 1793047440,
+      "time_seconds": 13378,
+      "tokens": 752278
     },
     "status": "active",
     "thread_id": "01a17928-8551-7701-8497-5333c680f283",
@@ -858,8 +879,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 324,
-  "previous_sha256": "2cef5839a2a929323977ed78166def94c54d78638f29079ba5d88206c0982905",
+  "previous_revision": 326,
+  "previous_sha256": "1a51e22eaa556d86200b64885d45395268c8cb38e2db2f7be5691dd2464487e6",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -1563,7 +1584,7 @@
       "timestamp": "2026-10-21T09:42:01.132215+00:00"
     }
   ],
-  "revision": 325,
+  "revision": 327,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [
@@ -2118,33 +2139,41 @@
   ],
   "workspace": {
     "branch": "agones-rs-dev",
-    "dirty_patch_scope": "Tracked diff excluding canonical state/handoff; added source/support files are bound by roadmap-adoption-M0002.json payload digests.",
-    "dirty_patch_sha256": "7acc87e799b7983e8d57f7e7545e748479d38fd9e9bf9f0ce9a76c3851a59f34",
-    "head": "5b0edac4c1416d71577f28c937dccd15ca33dc48",
+    "dirty_patch_scope": "Tracked diff excluding canonical state/handoff; added source/support inputs are bound by roadmap-M0003-partial-map.json.",
+    "dirty_patch_sha256": "91ad02f41c65f041cc8a94e672b105dc6267f6142ef1f9055331171c78c850e9",
+    "head": "95161696e9ad90f9eab2ec7ae978bcafdcbb3483",
     "last_validated_implementation": "verification/agones/gates/fa682f3bc2dded24a213b49d3337fb7a5a711fb02321ddac5057353491b48f72.json",
     "last_validated_implementation_status": "HISTORICAL_STALE; not a combined-contract gate",
     "path": "/home/astral/Projects/agones",
-    "snapshot_kind": "BASE_COMMIT_PLUS_M0002_AUTHORED_ADOPTION_PAYLOAD_DIGESTS",
+    "snapshot_kind": "BASE_COMMIT_PLUS_M0003_PARTIAL_ADOPTION_PAYLOAD_DIGESTS",
     "source_binding_receipt": "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-010.json",
     "untracked_inputs": [
-      "cost-analysis-comparison/0002-M0002.md",
-      "rust-support/cpg/README.md",
-      "rust-support/cpg/src/codec.rs",
-      "rust-support/cpg/src/error.rs",
-      "rust-support/cpg/src/packaging.rs",
-      "rust-support/cpg/src/process.rs",
-      "rust-support/cpg/src/singletons.rs",
-      "rust-support/cpg/src/source_tasks.rs",
-      "rust-support/cpg/src/stages.rs",
-      "verification/agones/roadmap-M0002-body-ownership.json",
-      "verification/agones/roadmap-M0002-end-usage.json",
-      "verification/agones/roadmap-M0002-library-source-inputs.json",
-      "verification/agones/roadmap-M0002-progress-usage-2.json",
-      "verification/agones/roadmap-M0002-progress-usage-3.json",
-      "verification/agones/roadmap-adoption-M0002.json",
-      "verification/agones/states/2cef5839a2a929323977ed78166def94c54d78638f29079ba5d88206c0982905.json",
-      "verification/agones/states/50e40ba57a749b0458c953836199046fa14394fb1dc6fd1295343ba3891d7ba9.md"
+      "agones-rs/pkg/util/AGENTS.MD",
+      "agones-rs/pkg/util/crd/AGENTS.MD",
+      "agones-rs/pkg/util/crd/crd.rs",
+      "agones-rs/pkg/util/doc.rs",
+      "agones-rs/pkg/util/errors/AGENTS.MD",
+      "agones-rs/pkg/util/errors/errors.rs",
+      "agones-rs/pkg/util/logfields/AGENTS.MD",
+      "agones-rs/pkg/util/logfields/logfields.rs",
+      "agones-rs/pkg/util/runtime/AGENTS.MD",
+      "agones-rs/pkg/util/runtime/features.rs",
+      "crates/util/AGENTS.MD",
+      "crates/util/src/AGENTS.MD",
+      "rust-support/agones/src/utility_crd.rs",
+      "rust-support/agones/src/utility_declarations.rs",
+      "rust-support/agones/src/utility_lib.rs",
+      "rust-support/agones/src/utility_lifecycle.rs",
+      "rust-support/agones/src/utility_modules.rs",
+      "verification/agones/roadmap-M0003-entry-usage.json",
+      "verification/agones/roadmap-M0003-partial-map.json",
+      "verification/agones/roadmap-M0003-progress-usage-1.json",
+      "verification/agones/roadmap-M0003-reuse-adoption.json",
+      "verification/agones/states/1110b627a6065899b91f793e4c939a707b5be403ee8f0115fbc17dbad8846f5e.json",
+      "verification/agones/states/1a51e22eaa556d86200b64885d45395268c8cb38e2db2f7be5691dd2464487e6.json",
+      "verification/agones/states/f97254846441ae88e0dc45f5c7710fb4c8276f683c290fec0efa687f4f1cd964.md",
+      "verification/agones/transitions/0326-roadmap-m0003-entry.json"
     ],
-    "untracked_source_binding_sha256": "b6a885f2b1cf7d52cd1351baeb5b2a75921dfaa7a95be976f35d5e7dd20208a1"
+    "untracked_source_binding_sha256": "257448252999607addd0f9aff55a36818754771839b549050c5ee723ecf9b54d"
   }
 }

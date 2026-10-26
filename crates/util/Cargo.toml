@@ -7,4 +7,16 @@ rust-version.workspace = true
 version.workspace = true
 
 [dependencies]
-tokio.workspace = true
+tokio = { workspace = true, features = ["sync"] }
+futures.workspace = true
+agones-core = { path = "../agones-core" }
+cgp.workspace = true
+derive-deftly.workspace = true
+serde_json.workspace = true
+serde.workspace = true
+reqwest.workspace = true
+url.workspace = true
+tracing = "=0.1.44"
+
+[lib]
+path = "../../rust-support/agones/src/utility_lib.rs"

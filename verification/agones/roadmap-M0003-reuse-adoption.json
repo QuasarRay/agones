@@ -1,0 +1,41 @@
+{
+  "global_gate": "CLOSED",
+  "mappings": [
+    {
+      "caller_inventory": "Read-only rg over crates/rust-support/agones-rs finds only the declaration and macro documentation before transfer; no external caller in the current repository was replaced. Public legacy method/macro spelling, Copy/Clone and prefix/wrap behavior are retained.",
+      "canonical_owner": "agones-rs/pkg/util/errors/errors.rs",
+      "extensions": "Add separate source metadata origin, literal source-function package parsing, nil-preserving source wrappers, deferred typed formatting inputs and multiple-source traversal. Do not claim complete arbitrary Go fmt lowering from SourceFormat.",
+      "old_path": "crates/util/src/errors.rs",
+      "old_sha256": "50c8a687adcaf7cead8b4bf724a6a589c876724abbba0054622a12d80935107e",
+      "registered_by": "rust-support/agones/src/utility_modules.rs in existing util package",
+      "transferred_entities": [
+        "BoxError",
+        "Errors::{from_package,from_struct,new,errorf,wrap,wrapf,wrap_opt,wrapf_opt,prefix}",
+        "MessageError and its Display/Error impls",
+        "WrappedError and its Display/Error impls",
+        "errors_from_package!",
+        "errors_from_struct!"
+      ]
+    },
+    {
+      "canonical_pure_owner": "crates/agones-core/src/features.rs::ParseAgonesFeatureGates and FeatureGates",
+      "canonical_runtime_owner": "UtilityFeatureContext::feature_state",
+      "mirrored_source_entrypoint": "agones-rs/pkg/util/runtime/features.rs",
+      "parser_reimplementation": "NONE",
+      "registration": "rust-support/agones/src/utility_declarations.rs::UtilityFeatureProviders",
+      "source_id": "agones:pkg/util/runtime/features.go",
+      "source_scope_remaining": "Complete Viper/pflag input-profile accounting, all M0003 I/O/runtime/server and worker queue integration remain open.",
+      "state_transfer": "InitializedAgonesConfiguration::into_parts consumes the M0001 map; UtilityFeatureContext::from_initialized moves it into FeatureState. No old-phase map is retained or cloned."
+    },
+    {
+      "disposition": "RETAINED_EXISTING_IMPLEMENTATION_NO_SOURCE_COMPLETION_CREDIT",
+      "old_path": "crates/util/src/workerqueue.rs",
+      "registration": "rust-support/agones/src/utility_lib.rs",
+      "required_followup": "M0003: exact source-owned queue policy, item types/key failures, native delaying queue semantics, scoped clock, logging/error paths, CGP child ownership and body/caller transfer. Existing Rusternetes controller_work_queue remains preserved until its adoption map is authored."
+    }
+  ],
+  "milestone_id": "M0003",
+  "record_kind": "PARTIAL_BODY_OWNERSHIP_TRANSFER",
+  "source_snapshot": "95161696e9ad90f9eab2ec7ae978bcafdcbb3483",
+  "verification": "NOT_STARTED"
+}
