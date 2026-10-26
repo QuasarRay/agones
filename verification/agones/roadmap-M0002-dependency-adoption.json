@@ -1,0 +1,34 @@
+{
+  "additional_pinned_closure": [
+    {
+      "name": "digest",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.10.7"
+    },
+    {
+      "name": "block-buffer",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.10.4"
+    },
+    {
+      "name": "generic-array",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.14.7"
+    },
+    {
+      "name": "crypto-common",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.1.7"
+    }
+  ],
+  "base_lock": "cpg-rs/Cargo.lock",
+  "base_lock_sha256": "6ac515ef0b67d2435cb862a18b623eec360af0bf7d8ab2c5b9b43512d8217f65",
+  "cargo_resolution": "NOT_RUN",
+  "md5_api_source": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/md-5-0.10.6/src/lib.rs",
+  "md5_registry_checksum": "d89e7ee0cfbedfc4da3340218492196241d89eefb6dab27de5df917a6d2e78cf",
+  "new_lock": "rust-support/cpg/Cargo.lock",
+  "record_kind": "DEPENDENCY_IDENTITY_ADOPTION_ONLY",
+  "retained_md5_archive_sha256": "d89e7ee0cfbedfc4da3340218492196241d89eefb6dab27de5df917a6d2e78cf",
+  "reused_lock": "Cargo.lock",
+  "reused_lock_sha256": "82884c650fc934e92982d10ec059a9a7a6f2d6652c0a1cf6728b4614a0ccff40"
+}

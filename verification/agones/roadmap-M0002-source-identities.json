@@ -1,0 +1,2139 @@
+{
+  "content_differences": [],
+  "files": [
+    {
+      "expected_sha256": "3ec7099aba9da5cad13fe9fb255b5d5f09da95bd094d9823a070fd05aa0b06d9",
+      "path": "third_party/first-generation/cpg/.bazelrc",
+      "retained_sha256": "3ec7099aba9da5cad13fe9fb255b5d5f09da95bd094d9823a070fd05aa0b06d9",
+      "source_id": "cpg:.bazelrc"
+    },
+    {
+      "expected_sha256": "077ee5b3a3a7fc2622ceff6466fea0c28f3fb08b24653dcc7f4baab29b9aef36",
+      "path": "third_party/first-generation/cpg/.bazelversion",
+      "retained_sha256": "077ee5b3a3a7fc2622ceff6466fea0c28f3fb08b24653dcc7f4baab29b9aef36",
+      "source_id": "cpg:.bazelversion"
+    },
+    {
+      "expected_sha256": "f3e10a699c2f80ab395aede3bdca2c7ece8baf157b3fc7384e1db8bbc1805de4",
+      "path": "third_party/first-generation/cpg/.gitattributes",
+      "retained_sha256": "f3e10a699c2f80ab395aede3bdca2c7ece8baf157b3fc7384e1db8bbc1805de4",
+      "source_id": "cpg:.gitattributes"
+    },
+    {
+      "expected_sha256": "62c40fea699b71a31b9ef71be3a7f9b7e4a8534770a09f89dd45a0c03aaee4da",
+      "path": "third_party/first-generation/cpg/.github/workflows/pr.yml",
+      "retained_sha256": "62c40fea699b71a31b9ef71be3a7f9b7e4a8534770a09f89dd45a0c03aaee4da",
+      "source_id": "cpg:.github/workflows/pr.yml"
+    },
+    {
+      "expected_sha256": "edba9a11be5e6a909cd2d9eadd7c8638dec4519b322f1e7dac27b83dca23968f",
+      "path": "third_party/first-generation/cpg/.github/workflows/release.yml",
+      "retained_sha256": "edba9a11be5e6a909cd2d9eadd7c8638dec4519b322f1e7dac27b83dca23968f",
+      "source_id": "cpg:.github/workflows/release.yml"
+    },
+    {
+      "expected_sha256": "9e091a95ae7edc12c30803b4aef85e1f51f24d230d4f7c98cf3f80f4280a4f52",
+      "path": "third_party/first-generation/cpg/.gitignore",
+      "retained_sha256": "9e091a95ae7edc12c30803b4aef85e1f51f24d230d4f7c98cf3f80f4280a4f52",
+      "source_id": "cpg:.gitignore"
+    },
+    {
+      "expected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "third_party/first-generation/cpg/.gitmodules",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_id": "cpg:.gitmodules"
+    },
+    {
+      "expected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "third_party/first-generation/cpg/.installation_root",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_id": "cpg:.installation_root"
+    },
+    {
+      "expected_sha256": "7638763ddf518ed7ad58fe359e717675dbe8c2f503f28f0d576ab0e82fbc6133",
+      "path": "third_party/first-generation/cpg/.scalafmt.conf",
+      "retained_sha256": "7638763ddf518ed7ad58fe359e717675dbe8c2f503f28f0d576ab0e82fbc6133",
+      "source_id": "cpg:.scalafmt.conf"
+    },
+    {
+      "expected_sha256": "d331502f744330fa6c5f1e1dff23186ef98595e29b77b46796ab51482004c64a",
+      "path": "third_party/first-generation/cpg/BUILD",
+      "retained_sha256": "d331502f744330fa6c5f1e1dff23186ef98595e29b77b46796ab51482004c64a",
+      "source_id": "cpg:BUILD"
+    },
+    {
+      "expected_sha256": "10907e9c71b78937d48915c5d78cb3bf18e7a37f9fe5c38eac7388ebf13a2491",
+      "path": "third_party/first-generation/cpg/LICENSE",
+      "retained_sha256": "10907e9c71b78937d48915c5d78cb3bf18e7a37f9fe5c38eac7388ebf13a2491",
+      "source_id": "cpg:LICENSE"
+    },
+    {
+      "expected_sha256": "6349b2a361cada1ac1a8e720d5f529f342ee1de0977f90f16c58dbae7ae433a9",
+      "path": "third_party/first-generation/cpg/MODULE.bazel",
+      "retained_sha256": "6349b2a361cada1ac1a8e720d5f529f342ee1de0977f90f16c58dbae7ae433a9",
+      "source_id": "cpg:MODULE.bazel"
+    },
+    {
+      "expected_sha256": "e8e53205ae6f5c0e2c20511a158e405245566edef8f420bfe1c2e90809de5f12",
+      "path": "third_party/first-generation/cpg/MODULE.bazel.lock",
+      "retained_sha256": "e8e53205ae6f5c0e2c20511a158e405245566edef8f420bfe1c2e90809de5f12",
+      "source_id": "cpg:MODULE.bazel.lock"
+    },
+    {
+      "expected_sha256": "cc3385daade4ca02a306944b7055d3c8219ed8b1a7b25f895c816647523b3d6e",
+      "path": "third_party/first-generation/cpg/README.md",
+      "retained_sha256": "cc3385daade4ca02a306944b7055d3c8219ed8b1a7b25f895c816647523b3d6e",
+      "source_id": "cpg:README.md"
+    },
+    {
+      "expected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "third_party/first-generation/cpg/bazel/BUILD",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_id": "cpg:bazel/BUILD"
+    },
+    {
+      "expected_sha256": "3b590afde4eff4996aabe75df782873cc170b44bcfcf3bbc0f3ef4dc1dcdd6a4",
+      "path": "third_party/first-generation/cpg/bazel/format/BUILD",
+      "retained_sha256": "3b590afde4eff4996aabe75df782873cc170b44bcfcf3bbc0f3ef4dc1dcdd6a4",
+      "source_id": "cpg:bazel/format/BUILD"
+    },
+    {
+      "expected_sha256": "e85315666436e96c1a21d293615cf3fb3bbd8f1b7dba20d3c012cbd5ea6619f0",
+      "path": "third_party/first-generation/cpg/bazel/java.bzl",
+      "retained_sha256": "e85315666436e96c1a21d293615cf3fb3bbd8f1b7dba20d3c012cbd5ea6619f0",
+      "source_id": "cpg:bazel/java.bzl"
+    },
+    {
+      "expected_sha256": "a39ce37d0ec68e2fa26a5f9a53646a959bafdac8ff1f724286e7af89a8a0dce2",
+      "path": "third_party/first-generation/cpg/bazel/scala.bzl",
+      "retained_sha256": "a39ce37d0ec68e2fa26a5f9a53646a959bafdac8ff1f724286e7af89a8a0dce2",
+      "source_id": "cpg:bazel/scala.bzl"
+    },
+    {
+      "expected_sha256": "d49e3c43e754f0654869585324f26046db57cc38a4d6084fb2b07d0e20f3914e",
+      "path": "third_party/first-generation/cpg/build.sbt",
+      "retained_sha256": "d49e3c43e754f0654869585324f26046db57cc38a4d6084fb2b07d0e20f3914e",
+      "source_id": "cpg:build.sbt"
+    },
+    {
+      "expected_sha256": "16da69bdbfbafa74b53d77f915f25b53b6e1a3874dab72e9cc25a07a47cc0a94",
+      "path": "third_party/first-generation/cpg/codepropertygraph/BUILD",
+      "retained_sha256": "16da69bdbfbafa74b53d77f915f25b53b6e1a3874dab72e9cc25a07a47cc0a94",
+      "source_id": "cpg:codepropertygraph/BUILD"
+    },
+    {
+      "expected_sha256": "56d098b9e21a5362c692086639b27bcfa04182a3c20b098a5030b021a2009c99",
+      "path": "third_party/first-generation/cpg/codepropertygraph/build.sbt",
+      "retained_sha256": "56d098b9e21a5362c692086639b27bcfa04182a3c20b098a5030b021a2009c99",
+      "source_id": "cpg:codepropertygraph/build.sbt"
+    },
+    {
+      "expected_sha256": "533f97a97cfe4b7e9b7a1c962ff9178f35a33ac5d0b09973c25bd74ef3ba6441",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/main/scala/io/shiftleft/Implicits.scala",
+      "retained_sha256": "533f97a97cfe4b7e9b7a1c962ff9178f35a33ac5d0b09973c25bd74ef3ba6441",
+      "source_id": "cpg:codepropertygraph/src/main/scala/io/shiftleft/Implicits.scala"
+    },
+    {
+      "expected_sha256": "ecdf78f57053a357711d0efe56f0f7be60448de84a4bbcb421eddfd3d0393cb1",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/main/scala/io/shiftleft/SerializedCpg.scala",
+      "retained_sha256": "ecdf78f57053a357711d0efe56f0f7be60448de84a4bbcb421eddfd3d0393cb1",
+      "source_id": "cpg:codepropertygraph/src/main/scala/io/shiftleft/SerializedCpg.scala"
+    },
+    {
+      "expected_sha256": "f97456c01af22ffa61ce2fafdda324ec164d98316752f2913978f4720f10530e",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/main/scala/io/shiftleft/codepropertygraph/Cpg.scala",
+      "retained_sha256": "f97456c01af22ffa61ce2fafdda324ec164d98316752f2913978f4720f10530e",
+      "source_id": "cpg:codepropertygraph/src/main/scala/io/shiftleft/codepropertygraph/Cpg.scala"
+    },
+    {
+      "expected_sha256": "dc71090886ff899c3319bbbcd64758abd98d6c7e3193a02d558568d6676ec742",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/main/scala/io/shiftleft/codepropertygraph/cpgloading/CpgLoader.scala",
+      "retained_sha256": "dc71090886ff899c3319bbbcd64758abd98d6c7e3193a02d558568d6676ec742",
+      "source_id": "cpg:codepropertygraph/src/main/scala/io/shiftleft/codepropertygraph/cpgloading/CpgLoader.scala"
+    },
+    {
+      "expected_sha256": "9ef6c33a088d477ff0fdc000684497531403f98a0210effaa8cde51a6724c30b",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/main/scala/io/shiftleft/codepropertygraph/cpgloading/ProtoCpgLoader.scala",
+      "retained_sha256": "9ef6c33a088d477ff0fdc000684497531403f98a0210effaa8cde51a6724c30b",
+      "source_id": "cpg:codepropertygraph/src/main/scala/io/shiftleft/codepropertygraph/cpgloading/ProtoCpgLoader.scala"
+    },
+    {
+      "expected_sha256": "5f9ba534522d10e33193c0b4ce1807345901721a8876d1ce0e299509bd422657",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/main/scala/io/shiftleft/codepropertygraph/cpgloading/ProtoToGraphNodeMappings.scala",
+      "retained_sha256": "5f9ba534522d10e33193c0b4ce1807345901721a8876d1ce0e299509bd422657",
+      "source_id": "cpg:codepropertygraph/src/main/scala/io/shiftleft/codepropertygraph/cpgloading/ProtoToGraphNodeMappings.scala"
+    },
+    {
+      "expected_sha256": "b919fb9113d24fe51a08764ebeb738f984a29db56ba362e5b5df3d3abcdf482c",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/main/scala/io/shiftleft/codepropertygraph/cpgloading/ZipArchive.scala",
+      "retained_sha256": "b919fb9113d24fe51a08764ebeb738f984a29db56ba362e5b5df3d3abcdf482c",
+      "source_id": "cpg:codepropertygraph/src/main/scala/io/shiftleft/codepropertygraph/cpgloading/ZipArchive.scala"
+    },
+    {
+      "expected_sha256": "f13a8b0acf24a165b5bba1da23f2a03078ee00fddb2734639d891b471ee49988",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/main/scala/io/shiftleft/codepropertygraph/package.scala",
+      "retained_sha256": "f13a8b0acf24a165b5bba1da23f2a03078ee00fddb2734639d891b471ee49988",
+      "source_id": "cpg:codepropertygraph/src/main/scala/io/shiftleft/codepropertygraph/package.scala"
+    },
+    {
+      "expected_sha256": "acfcfe527534ba22e3e7a477afc5006d892be94e8d98d3d2fd75add7e104300c",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/main/scala/io/shiftleft/passes/Converters.java",
+      "retained_sha256": "acfcfe527534ba22e3e7a477afc5006d892be94e8d98d3d2fd75add7e104300c",
+      "source_id": "cpg:codepropertygraph/src/main/scala/io/shiftleft/passes/Converters.java"
+    },
+    {
+      "expected_sha256": "d82244ee209701e9c93bc7c135e6b355f1207d8ba430325d3111f59d28eb9d0a",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/main/scala/io/shiftleft/passes/CpgPass.scala",
+      "retained_sha256": "d82244ee209701e9c93bc7c135e6b355f1207d8ba430325d3111f59d28eb9d0a",
+      "source_id": "cpg:codepropertygraph/src/main/scala/io/shiftleft/passes/CpgPass.scala"
+    },
+    {
+      "expected_sha256": "cf98dcbf645c9304a1c75328965371a3e28f9c8a3be38e0e9818b5842cd7c9ba",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/main/scala/io/shiftleft/passes/ParallelIteratorExecutor.scala",
+      "retained_sha256": "cf98dcbf645c9304a1c75328965371a3e28f9c8a3be38e0e9818b5842cd7c9ba",
+      "source_id": "cpg:codepropertygraph/src/main/scala/io/shiftleft/passes/ParallelIteratorExecutor.scala"
+    },
+    {
+      "expected_sha256": "0c2252a49b7492c41ab8de32601b39a0b131f5e2a41166831698a8a568b4d4fa",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/main/scala/io/shiftleft/utils/ExecutionContextProvider.scala",
+      "retained_sha256": "0c2252a49b7492c41ab8de32601b39a0b131f5e2a41166831698a8a568b4d4fa",
+      "source_id": "cpg:codepropertygraph/src/main/scala/io/shiftleft/utils/ExecutionContextProvider.scala"
+    },
+    {
+      "expected_sha256": "227764718f09e1ae1e697982cc9957d50d36eb7f120c799c1fe66791f1e69658",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/main/scala/io/shiftleft/utils/IOUtils.scala",
+      "retained_sha256": "227764718f09e1ae1e697982cc9957d50d36eb7f120c799c1fe66791f1e69658",
+      "source_id": "cpg:codepropertygraph/src/main/scala/io/shiftleft/utils/IOUtils.scala"
+    },
+    {
+      "expected_sha256": "c02119b19375b7638e5ccf5fb85044874cb92126163e5a2a5cba4f67397fa11d",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/main/scala/io/shiftleft/utils/ProjectRoot.scala",
+      "retained_sha256": "c02119b19375b7638e5ccf5fb85044874cb92126163e5a2a5cba4f67397fa11d",
+      "source_id": "cpg:codepropertygraph/src/main/scala/io/shiftleft/utils/ProjectRoot.scala"
+    },
+    {
+      "expected_sha256": "c313f2dc460417a74156f81340eba8fe42f0d411b65390a632c851b928fb3118",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/main/scala/io/shiftleft/utils/StringInterner.scala",
+      "retained_sha256": "c313f2dc460417a74156f81340eba8fe42f0d411b65390a632c851b928fb3118",
+      "source_id": "cpg:codepropertygraph/src/main/scala/io/shiftleft/utils/StringInterner.scala"
+    },
+    {
+      "expected_sha256": "6e3348840b7a2bddf1c9cd734d711b3886fc88f2c8b75495ce70e722e7baabba",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/main/scala/io/shiftleft/utils/TempFileCopy.scala",
+      "retained_sha256": "6e3348840b7a2bddf1c9cd734d711b3886fc88f2c8b75495ce70e722e7baabba",
+      "source_id": "cpg:codepropertygraph/src/main/scala/io/shiftleft/utils/TempFileCopy.scala"
+    },
+    {
+      "expected_sha256": "2e54ef9182bb4c47e5b818b8fc9a00e63b069964c36a14ec056e2c27efe78811",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/test/resources/cpg.fg",
+      "retained_sha256": "2e54ef9182bb4c47e5b818b8fc9a00e63b069964c36a14ec056e2c27efe78811",
+      "source_id": "cpg:codepropertygraph/src/test/resources/cpg.fg"
+    },
+    {
+      "expected_sha256": "f6f3cc273257bc8df2a4cadbbd64a8d5c8903b04e2ba5c84bf621ad9bcf1f34e",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/test/resources/cpg.odb",
+      "retained_sha256": "f6f3cc273257bc8df2a4cadbbd64a8d5c8903b04e2ba5c84bf621ad9bcf1f34e",
+      "source_id": "cpg:codepropertygraph/src/test/resources/cpg.odb"
+    },
+    {
+      "expected_sha256": "0b8fdde378c94bba5b7f42201c0812db485a86dd89e3f2af4b54e5734aa7211b",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/test/scala/io/shiftleft/codepropertygraph/StepsTest.scala",
+      "retained_sha256": "0b8fdde378c94bba5b7f42201c0812db485a86dd89e3f2af4b54e5734aa7211b",
+      "source_id": "cpg:codepropertygraph/src/test/scala/io/shiftleft/codepropertygraph/StepsTest.scala"
+    },
+    {
+      "expected_sha256": "def299dfb28fe6f0e90d74597ca6742f7059c50c5a9e5c34ca27591046dcb92d",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/test/scala/io/shiftleft/codepropertygraph/cpgloading/CpgLoaderTests.scala",
+      "retained_sha256": "def299dfb28fe6f0e90d74597ca6742f7059c50c5a9e5c34ca27591046dcb92d",
+      "source_id": "cpg:codepropertygraph/src/test/scala/io/shiftleft/codepropertygraph/cpgloading/CpgLoaderTests.scala"
+    },
+    {
+      "expected_sha256": "dc2d78fe0b6462872e2f56507b0b874afabb2e0a3defc42ed2e1786d8143d1c5",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/test/scala/io/shiftleft/codepropertygraph/cpgloading/TestProtoCpg.scala",
+      "retained_sha256": "dc2d78fe0b6462872e2f56507b0b874afabb2e0a3defc42ed2e1786d8143d1c5",
+      "source_id": "cpg:codepropertygraph/src/test/scala/io/shiftleft/codepropertygraph/cpgloading/TestProtoCpg.scala"
+    },
+    {
+      "expected_sha256": "daa6b826490fd6a9a61560a1aa6e99af25768e07c1b20f2e107034a414948e6e",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/test/scala/io/shiftleft/passes/CpgPassNewTests.scala",
+      "retained_sha256": "daa6b826490fd6a9a61560a1aa6e99af25768e07c1b20f2e107034a414948e6e",
+      "source_id": "cpg:codepropertygraph/src/test/scala/io/shiftleft/passes/CpgPassNewTests.scala"
+    },
+    {
+      "expected_sha256": "affec19a0785e5cb097e0657892e0399af8fb689bc71905afaf0f9cf1c6bf62e",
+      "path": "third_party/first-generation/cpg/codepropertygraph/src/test/scala/io/shiftleft/utils/IOUtilsTest.scala",
+      "retained_sha256": "affec19a0785e5cb097e0657892e0399af8fb689bc71905afaf0f9cf1c6bf62e",
+      "source_id": "cpg:codepropertygraph/src/test/scala/io/shiftleft/utils/IOUtilsTest.scala"
+    },
+    {
+      "expected_sha256": "189f0ec2f2b65f496feb62c128cd7792a5f78c034d793f865681082c3365c1e2",
+      "path": "third_party/first-generation/cpg/domainClasses/build.sbt",
+      "retained_sha256": "189f0ec2f2b65f496feb62c128cd7792a5f78c034d793f865681082c3365c1e2",
+      "source_id": "cpg:domainClasses/build.sbt"
+    },
+    {
+      "expected_sha256": "aa0f0e708948a4b2eae363aedd9c80e8df78819aecc1fe3b00bd31df6280134f",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/ControlStructureTypes.java",
+      "retained_sha256": "aa0f0e708948a4b2eae363aedd9c80e8df78819aecc1fe3b00bd31df6280134f",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/ControlStructureTypes.java"
+    },
+    {
+      "expected_sha256": "79e1564da878d07fea3e839993454c168eb31ce6786ca2250d7c2052f44005c0",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/Cpg.scala",
+      "retained_sha256": "79e1564da878d07fea3e839993454c168eb31ce6786ca2250d7c2052f44005c0",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/Cpg.scala"
+    },
+    {
+      "expected_sha256": "de169dcc29a5f0b700365b5dac740666e31a857bc22f912796dd6c236ecb23c0",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/DispatchTypes.java",
+      "retained_sha256": "de169dcc29a5f0b700365b5dac740666e31a857bc22f912796dd6c236ecb23c0",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/DispatchTypes.java"
+    },
+    {
+      "expected_sha256": "15b8ab58f3e996cdc175460c1ec48ddcbfd5fdc1ad435c162f722964a5d77b08",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/EdgeTypes.java",
+      "retained_sha256": "15b8ab58f3e996cdc175460c1ec48ddcbfd5fdc1ad435c162f722964a5d77b08",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/EdgeTypes.java"
+    },
+    {
+      "expected_sha256": "0b87371ebf43ed9787b66738861fddf179217775e43f594f34acae9ba63b39f6",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/EvaluationStrategies.java",
+      "retained_sha256": "0b87371ebf43ed9787b66738861fddf179217775e43f594f34acae9ba63b39f6",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/EvaluationStrategies.java"
+    },
+    {
+      "expected_sha256": "4c293f0bdfbb2b1f657f57347996d1f291028b80db69c4ec1d87ca0eeb5d501f",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/GraphSchema.scala",
+      "retained_sha256": "4c293f0bdfbb2b1f657f57347996d1f291028b80db69c4ec1d87ca0eeb5d501f",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/GraphSchema.scala"
+    },
+    {
+      "expected_sha256": "a9cf7cc62fbc0abe05166a95d4fe105607b09500ae47c78d587175b7306fc7f9",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/Languages.java",
+      "retained_sha256": "a9cf7cc62fbc0abe05166a95d4fe105607b09500ae47c78d587175b7306fc7f9",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/Languages.java"
+    },
+    {
+      "expected_sha256": "63523ac4e2753c95b91fc4fd2be9ca401a3e432c2df6bf7af85f503d4a4b15a8",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/ModifierTypes.java",
+      "retained_sha256": "63523ac4e2753c95b91fc4fd2be9ca401a3e432c2df6bf7af85f503d4a4b15a8",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/ModifierTypes.java"
+    },
+    {
+      "expected_sha256": "8a5b77b40dbe9a7169e238dcebef4d7d1085fdd5b36d3a7a2da02eaefc17fb50",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/NodeTypes.java",
+      "retained_sha256": "8a5b77b40dbe9a7169e238dcebef4d7d1085fdd5b36d3a7a2da02eaefc17fb50",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/NodeTypes.java"
+    },
+    {
+      "expected_sha256": "5610f7a11c167dee75031a02439cb9103571a424ea59902f26a8910bf4dea76c",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/Operators.java",
+      "retained_sha256": "5610f7a11c167dee75031a02439cb9103571a424ea59902f26a8910bf4dea76c",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/Operators.java"
+    },
+    {
+      "expected_sha256": "d920348e88a39aac87e97de092aa57f8e52d7437c1139cf85646f656ec4f3388",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/Properties.scala",
+      "retained_sha256": "d920348e88a39aac87e97de092aa57f8e52d7437c1139cf85646f656ec4f3388",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/Properties.scala"
+    },
+    {
+      "expected_sha256": "6ecab6c27dc91b164d75035da9ec4293e8fc710dfe19681da8a13509dbd18b2d",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/PropertyDefaults.scala",
+      "retained_sha256": "6ecab6c27dc91b164d75035da9ec4293e8fc710dfe19681da8a13509dbd18b2d",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/PropertyDefaults.scala"
+    },
+    {
+      "expected_sha256": "cc6918b1fa5bedd81ada832cd126ce36da49041ffc80758be5927a2b9eb56401",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/PropertyErrorRegister.scala",
+      "retained_sha256": "cc6918b1fa5bedd81ada832cd126ce36da49041ffc80758be5927a2b9eb56401",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/PropertyErrorRegister.scala"
+    },
+    {
+      "expected_sha256": "9e178496fb2e22b0bb47caa4c45114c1a0aa74e8717e021ce827e12b4f3663c5",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/PropertyNames.scala",
+      "retained_sha256": "9e178496fb2e22b0bb47caa4c45114c1a0aa74e8717e021ce827e12b4f3663c5",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/PropertyNames.scala"
+    },
+    {
+      "expected_sha256": "dd28ced5574b5ee82a059db0bfff6d4abf6eea01da549184b526d087a712fcc1",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/accessors/Accessors.scala",
+      "retained_sha256": "dd28ced5574b5ee82a059db0bfff6d4abf6eea01da549184b526d087a712fcc1",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/accessors/Accessors.scala"
+    },
+    {
+      "expected_sha256": "86a02ebb7c275103a1d22fd4e0f8984b070c9f7bb106eda14d451ee001b03a0c",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/edges/EdgeTypes.scala",
+      "retained_sha256": "86a02ebb7c275103a1d22fd4e0f8984b070c9f7bb106eda14d451ee001b03a0c",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/edges/EdgeTypes.scala"
+    },
+    {
+      "expected_sha256": "dd7268f55448e22081925c9c8a29326b2b47c91d7f71b28fc722c55fc7298abb",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/language.scala",
+      "retained_sha256": "dd7268f55448e22081925c9c8a29326b2b47c91d7f71b28fc722c55fc7298abb",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/language.scala"
+    },
+    {
+      "expected_sha256": "0d02a64cb67365567792e3d5f2393a3ba304d642c69aba6441cbfe78a24925cc",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Annotation.scala",
+      "retained_sha256": "0d02a64cb67365567792e3d5f2393a3ba304d642c69aba6441cbfe78a24925cc",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Annotation.scala"
+    },
+    {
+      "expected_sha256": "dbc95ce4aa34a6fc8e868d4fe54c47cd03db3b8be84207da7cdbbaf2e2877920",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/AnnotationLiteral.scala",
+      "retained_sha256": "dbc95ce4aa34a6fc8e868d4fe54c47cd03db3b8be84207da7cdbbaf2e2877920",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/AnnotationLiteral.scala"
+    },
+    {
+      "expected_sha256": "0ee06ab8f2976edd49fb4790ddecc7b712f0135d632143bd2094abb3139fcc4a",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/AnnotationParameter.scala",
+      "retained_sha256": "0ee06ab8f2976edd49fb4790ddecc7b712f0135d632143bd2094abb3139fcc4a",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/AnnotationParameter.scala"
+    },
+    {
+      "expected_sha256": "14c9bee50e21e15d311c0544196705887cbe3c3eb204aa11d8736d7095cb5d8a",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/AnnotationParameterAssign.scala",
+      "retained_sha256": "14c9bee50e21e15d311c0544196705887cbe3c3eb204aa11d8736d7095cb5d8a",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/AnnotationParameterAssign.scala"
+    },
+    {
+      "expected_sha256": "0ebf02b3c74d8c0158e77317120a64c50bdabdeb359093212bc4e102fa75abf4",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/ArrayInitializer.scala",
+      "retained_sha256": "0ebf02b3c74d8c0158e77317120a64c50bdabdeb359093212bc4e102fa75abf4",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/ArrayInitializer.scala"
+    },
+    {
+      "expected_sha256": "831441d9f133ac2f041fe46b2eb5da6a0b4b05f1ca267cd535f5cd32823ece50",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Binding.scala",
+      "retained_sha256": "831441d9f133ac2f041fe46b2eb5da6a0b4b05f1ca267cd535f5cd32823ece50",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Binding.scala"
+    },
+    {
+      "expected_sha256": "77749cf6d28f0448beadf9844cb9c14a7bd262586ac3380172893e0f31bfd792",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Block.scala",
+      "retained_sha256": "77749cf6d28f0448beadf9844cb9c14a7bd262586ac3380172893e0f31bfd792",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Block.scala"
+    },
+    {
+      "expected_sha256": "e33133960f9abbed3b76e069903b1573ea7363abf2bd340b0ad829173f7ab9a3",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Call.scala",
+      "retained_sha256": "e33133960f9abbed3b76e069903b1573ea7363abf2bd340b0ad829173f7ab9a3",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Call.scala"
+    },
+    {
+      "expected_sha256": "4f185271acb32ba457c89d95e5d73d50debc0b9eaf69cc42f35c5f6e27a50569",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/CfgNode.scala",
+      "retained_sha256": "4f185271acb32ba457c89d95e5d73d50debc0b9eaf69cc42f35c5f6e27a50569",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/CfgNode.scala"
+    },
+    {
+      "expected_sha256": "b6014ad6b18cde19550542469f25d8f2140c3c1d901d80f8f001b379078c69a2",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/ClosureBinding.scala",
+      "retained_sha256": "b6014ad6b18cde19550542469f25d8f2140c3c1d901d80f8f001b379078c69a2",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/ClosureBinding.scala"
+    },
+    {
+      "expected_sha256": "c62cdc6592981754dc06733e2652b6dd4ace966002dc270697d6d5563ac06334",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Comment.scala",
+      "retained_sha256": "c62cdc6592981754dc06733e2652b6dd4ace966002dc270697d6d5563ac06334",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Comment.scala"
+    },
+    {
+      "expected_sha256": "655330e22a6bfd40d5425823922416d39ddd38b9fe27aaa55d9cff583dd9a343",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/ControlStructure.scala",
+      "retained_sha256": "655330e22a6bfd40d5425823922416d39ddd38b9fe27aaa55d9cff583dd9a343",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/ControlStructure.scala"
+    },
+    {
+      "expected_sha256": "dc2866fbeef9907e2442d46c0db7c6adcd438e18f294021b295165733494a62a",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Dependency.scala",
+      "retained_sha256": "dc2866fbeef9907e2442d46c0db7c6adcd438e18f294021b295165733494a62a",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Dependency.scala"
+    },
+    {
+      "expected_sha256": "53fe0b481cde96b02da79fedf3530a59a49ad5f94b2884527daa21b2b66e4308",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Expression.scala",
+      "retained_sha256": "53fe0b481cde96b02da79fedf3530a59a49ad5f94b2884527daa21b2b66e4308",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Expression.scala"
+    },
+    {
+      "expected_sha256": "6d5d5de21fad9752f202cc6843f9603a812f8bfed4311e20a03db53ba6bdbdb0",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/FieldIdentifier.scala",
+      "retained_sha256": "6d5d5de21fad9752f202cc6843f9603a812f8bfed4311e20a03db53ba6bdbdb0",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/FieldIdentifier.scala"
+    },
+    {
+      "expected_sha256": "bcb4f7b2cedbe7943c597e4ed79e3c698a8c6a1d7f483c25d9f18d8461bf2656",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/File.scala",
+      "retained_sha256": "bcb4f7b2cedbe7943c597e4ed79e3c698a8c6a1d7f483c25d9f18d8461bf2656",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/File.scala"
+    },
+    {
+      "expected_sha256": "460dd19530afe1aa928b369cc4715e0fef4b8b7b585a1e8cfe5242987da4091a",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Identifier.scala",
+      "retained_sha256": "460dd19530afe1aa928b369cc4715e0fef4b8b7b585a1e8cfe5242987da4091a",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Identifier.scala"
+    },
+    {
+      "expected_sha256": "3925830a4dec1572ce7838abcd49ba3ee2867fa4247e8538517383bec483304e",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Import.scala",
+      "retained_sha256": "3925830a4dec1572ce7838abcd49ba3ee2867fa4247e8538517383bec483304e",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Import.scala"
+    },
+    {
+      "expected_sha256": "7ddb29b105a18c0024d554fb68e15b8608d845dd3516a1a140ce5879b7e20bb2",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/JumpLabel.scala",
+      "retained_sha256": "7ddb29b105a18c0024d554fb68e15b8608d845dd3516a1a140ce5879b7e20bb2",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/JumpLabel.scala"
+    },
+    {
+      "expected_sha256": "a8378609c55c7534c3ec656d14cb9e7899815e1a8ea747953b5d59aa07250dc2",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/JumpTarget.scala",
+      "retained_sha256": "a8378609c55c7534c3ec656d14cb9e7899815e1a8ea747953b5d59aa07250dc2",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/JumpTarget.scala"
+    },
+    {
+      "expected_sha256": "c274a552c31946ad6fbb215cc88e53ec283c943bf4ed564919e5cc5953d0c061",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Literal.scala",
+      "retained_sha256": "c274a552c31946ad6fbb215cc88e53ec283c943bf4ed564919e5cc5953d0c061",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Literal.scala"
+    },
+    {
+      "expected_sha256": "34ad1fa8894a036e96d80f96dbf283281827e523918e6f0ee6bdbfc1142b14b0",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Local.scala",
+      "retained_sha256": "34ad1fa8894a036e96d80f96dbf283281827e523918e6f0ee6bdbfc1142b14b0",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Local.scala"
+    },
+    {
+      "expected_sha256": "8aac695ed18a2448fc7a6e5eeb5a6a56418809168f34d1233e489d5b58219c51",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Member.scala",
+      "retained_sha256": "8aac695ed18a2448fc7a6e5eeb5a6a56418809168f34d1233e489d5b58219c51",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Member.scala"
+    },
+    {
+      "expected_sha256": "7c9dde6dafa38b0de781ceca203f1da90fd1b10f52283eb7b74fc2a98ff3315f",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Method.scala",
+      "retained_sha256": "7c9dde6dafa38b0de781ceca203f1da90fd1b10f52283eb7b74fc2a98ff3315f",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Method.scala"
+    },
+    {
+      "expected_sha256": "b0e17742e1ceddf6b56aa0a19b2cbf5d5c0d2ddd29e48f03cdefd5531b4af135",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/MethodParameterIn.scala",
+      "retained_sha256": "b0e17742e1ceddf6b56aa0a19b2cbf5d5c0d2ddd29e48f03cdefd5531b4af135",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/MethodParameterIn.scala"
+    },
+    {
+      "expected_sha256": "68e689e679fa40042e54f399a2530caf9bcb13eed3d3a5bb48cef5b8d2c616dc",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/MethodParameterOut.scala",
+      "retained_sha256": "68e689e679fa40042e54f399a2530caf9bcb13eed3d3a5bb48cef5b8d2c616dc",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/MethodParameterOut.scala"
+    },
+    {
+      "expected_sha256": "0fe3c6e78f664a8997cf6ee70ec81ace289ecfff0c29635b2f68cbe8464021a1",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/MethodRef.scala",
+      "retained_sha256": "0fe3c6e78f664a8997cf6ee70ec81ace289ecfff0c29635b2f68cbe8464021a1",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/MethodRef.scala"
+    },
+    {
+      "expected_sha256": "e1932ec3f58e4bbde14490640b58459e16b98e45a1e14f72a56f52f5c78c6ead",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/MethodReturn.scala",
+      "retained_sha256": "e1932ec3f58e4bbde14490640b58459e16b98e45a1e14f72a56f52f5c78c6ead",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/MethodReturn.scala"
+    },
+    {
+      "expected_sha256": "bc10f5e7d6af3949a65fdefbc33b78ee7a0295e68502319435db865757f388e5",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Modifier.scala",
+      "retained_sha256": "bc10f5e7d6af3949a65fdefbc33b78ee7a0295e68502319435db865757f388e5",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Modifier.scala"
+    },
+    {
+      "expected_sha256": "c4e31adddf52302c7b077bb23fa0d4f1344fc171bff001fbab62a8909d8d0ea5",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Namespace.scala",
+      "retained_sha256": "c4e31adddf52302c7b077bb23fa0d4f1344fc171bff001fbab62a8909d8d0ea5",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Namespace.scala"
+    },
+    {
+      "expected_sha256": "ebbf3afdaf6d7e68cddcdcb4bf7b439dc87266ec8ef20eb633f3fadfd9107b1d",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/NamespaceBlock.scala",
+      "retained_sha256": "ebbf3afdaf6d7e68cddcdcb4bf7b439dc87266ec8ef20eb633f3fadfd9107b1d",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/NamespaceBlock.scala"
+    },
+    {
+      "expected_sha256": "f21d09f87b3cb063e95e07d7f7f2fef2b6e346198057f5ce547e5c9bdb1fbc9b",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Return.scala",
+      "retained_sha256": "f21d09f87b3cb063e95e07d7f7f2fef2b6e346198057f5ce547e5c9bdb1fbc9b",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Return.scala"
+    },
+    {
+      "expected_sha256": "797342e481f84d70b42beaf69aa141832c1b1b2bab086a7bbece3dedff711c13",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Tag.scala",
+      "retained_sha256": "797342e481f84d70b42beaf69aa141832c1b1b2bab086a7bbece3dedff711c13",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Tag.scala"
+    },
+    {
+      "expected_sha256": "49036d83bbe743fe4197166dc05a890a299656b295e0a8ebe636d59f898ef656",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/TemplateDom.scala",
+      "retained_sha256": "49036d83bbe743fe4197166dc05a890a299656b295e0a8ebe636d59f898ef656",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/TemplateDom.scala"
+    },
+    {
+      "expected_sha256": "1aabe9047cb6ebeff4de39c266f5cd1ebb28ed4b9ec104239484c6c90f4f2a06",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Type.scala",
+      "retained_sha256": "1aabe9047cb6ebeff4de39c266f5cd1ebb28ed4b9ec104239484c6c90f4f2a06",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Type.scala"
+    },
+    {
+      "expected_sha256": "fd6b6411338c6441df565980a1b9da78942b628be430f68ba04d40ddade7ff90",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/TypeArgument.scala",
+      "retained_sha256": "fd6b6411338c6441df565980a1b9da78942b628be430f68ba04d40ddade7ff90",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/TypeArgument.scala"
+    },
+    {
+      "expected_sha256": "2bc6a0e954a65dbdfcae6843484822250a2a1b0cc3940a68af68a2b0968df9b4",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/TypeDecl.scala",
+      "retained_sha256": "2bc6a0e954a65dbdfcae6843484822250a2a1b0cc3940a68af68a2b0968df9b4",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/TypeDecl.scala"
+    },
+    {
+      "expected_sha256": "0cfeefa845290d31ff563b5538805f8df52baa8a1c53ae14d0ae58cfd3d7160a",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/TypeParameter.scala",
+      "retained_sha256": "0cfeefa845290d31ff563b5538805f8df52baa8a1c53ae14d0ae58cfd3d7160a",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/TypeParameter.scala"
+    },
+    {
+      "expected_sha256": "05f0904233ab17d298b573c5b678e67073ad262b0f8fdcb1e38898adc8799cc2",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/TypeRef.scala",
+      "retained_sha256": "05f0904233ab17d298b573c5b678e67073ad262b0f8fdcb1e38898adc8799cc2",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/TypeRef.scala"
+    },
+    {
+      "expected_sha256": "3d72130ae6e328cbf2ebbe61523b56bb41378b5e16345cfe5382710087bba08b",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Unknown.scala",
+      "retained_sha256": "3d72130ae6e328cbf2ebbe61523b56bb41378b5e16345cfe5382710087bba08b",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/Unknown.scala"
+    },
+    {
+      "expected_sha256": "25e419186fd6bb1374db1277998fc5dcb510ca670c380c40620bd5e9a80ce23c",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/package.scala",
+      "retained_sha256": "25e419186fd6bb1374db1277998fc5dcb510ca670c380c40620bd5e9a80ce23c",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/neighboraccessors/package.scala"
+    },
+    {
+      "expected_sha256": "440f833636a55069784fc2e8dcf777bcda2eec90a762a0550a87b08de48ea81d",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Annotation.scala",
+      "retained_sha256": "440f833636a55069784fc2e8dcf777bcda2eec90a762a0550a87b08de48ea81d",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Annotation.scala"
+    },
+    {
+      "expected_sha256": "1d6bbf48adc754a798a6f1514d380b5c88a902bcfba5a472bba5824afeb1ac25",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/AnnotationLiteral.scala",
+      "retained_sha256": "1d6bbf48adc754a798a6f1514d380b5c88a902bcfba5a472bba5824afeb1ac25",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/AnnotationLiteral.scala"
+    },
+    {
+      "expected_sha256": "9c1e962391e2fa00c0981c926e421c95304b8e27d71caaf13826aad6aa6de82d",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/AnnotationParameter.scala",
+      "retained_sha256": "9c1e962391e2fa00c0981c926e421c95304b8e27d71caaf13826aad6aa6de82d",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/AnnotationParameter.scala"
+    },
+    {
+      "expected_sha256": "02a5b57cad8e6767572d39863cea152a216eee300b9fe5f83b9a282f8faecbff",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/AnnotationParameterAssign.scala",
+      "retained_sha256": "02a5b57cad8e6767572d39863cea152a216eee300b9fe5f83b9a282f8faecbff",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/AnnotationParameterAssign.scala"
+    },
+    {
+      "expected_sha256": "42821004187903f70a59d7917796272b30443462d0e8e4c658c937b51410dfc8",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/ArrayInitializer.scala",
+      "retained_sha256": "42821004187903f70a59d7917796272b30443462d0e8e4c658c937b51410dfc8",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/ArrayInitializer.scala"
+    },
+    {
+      "expected_sha256": "af35d193146d5b76e80576b9dd5ed7c467774b0edc3d2d705ddddc19b07392de",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/BaseTypes.scala",
+      "retained_sha256": "af35d193146d5b76e80576b9dd5ed7c467774b0edc3d2d705ddddc19b07392de",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/BaseTypes.scala"
+    },
+    {
+      "expected_sha256": "4dc4a8fe7fea720a291fd40081dc6c841926616964f0018bb8211ebce0758f10",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Binding.scala",
+      "retained_sha256": "4dc4a8fe7fea720a291fd40081dc6c841926616964f0018bb8211ebce0758f10",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Binding.scala"
+    },
+    {
+      "expected_sha256": "1eb13a0a615a818028c2b20f5ad476c9c1fcac21109718d0b8b54a123941e1bd",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Block.scala",
+      "retained_sha256": "1eb13a0a615a818028c2b20f5ad476c9c1fcac21109718d0b8b54a123941e1bd",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Block.scala"
+    },
+    {
+      "expected_sha256": "582c05734e36b646b0ab343343c96ac198983b36b2835bb3e271f648ce946bfb",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Call.scala",
+      "retained_sha256": "582c05734e36b646b0ab343343c96ac198983b36b2835bb3e271f648ce946bfb",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Call.scala"
+    },
+    {
+      "expected_sha256": "4cc15a203cae4c233c254083e3ef065a8e539183746f2e3e69561c84385234e4",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/ClosureBinding.scala",
+      "retained_sha256": "4cc15a203cae4c233c254083e3ef065a8e539183746f2e3e69561c84385234e4",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/ClosureBinding.scala"
+    },
+    {
+      "expected_sha256": "277b35b923bfb1a5781b207638d568852d3585fd1bcb787303c72066e66d68f9",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Comment.scala",
+      "retained_sha256": "277b35b923bfb1a5781b207638d568852d3585fd1bcb787303c72066e66d68f9",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Comment.scala"
+    },
+    {
+      "expected_sha256": "dba31944e7c17411eb444379a7829f0cad7fe25500dc37df6b854a32cfab05be",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/ConfigFile.scala",
+      "retained_sha256": "dba31944e7c17411eb444379a7829f0cad7fe25500dc37df6b854a32cfab05be",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/ConfigFile.scala"
+    },
+    {
+      "expected_sha256": "7dbc86f165311cbc5e9d84033ec118c7b71d08aeb65f14e8c161a9351bfc0c96",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/ControlStructure.scala",
+      "retained_sha256": "7dbc86f165311cbc5e9d84033ec118c7b71d08aeb65f14e8c161a9351bfc0c96",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/ControlStructure.scala"
+    },
+    {
+      "expected_sha256": "9f1612d9310105e7e857036f9f434ba8bc954afaffd378af10f279f4d396dae5",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Dependency.scala",
+      "retained_sha256": "9f1612d9310105e7e857036f9f434ba8bc954afaffd378af10f279f4d396dae5",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Dependency.scala"
+    },
+    {
+      "expected_sha256": "964690b90357eceecdfd7e7d72496ea18a71999c64f38c8d6d63488bd726c627",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/FieldIdentifier.scala",
+      "retained_sha256": "964690b90357eceecdfd7e7d72496ea18a71999c64f38c8d6d63488bd726c627",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/FieldIdentifier.scala"
+    },
+    {
+      "expected_sha256": "1c987a57c9deba3639807cee689104bdea97e22034784242762b15dabeb5deeb",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/File.scala",
+      "retained_sha256": "1c987a57c9deba3639807cee689104bdea97e22034784242762b15dabeb5deeb",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/File.scala"
+    },
+    {
+      "expected_sha256": "4247d9f0bd37542c3ffe032f257c46c1acb4081a49b2a9017b713818a33f2cb8",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Finding.scala",
+      "retained_sha256": "4247d9f0bd37542c3ffe032f257c46c1acb4081a49b2a9017b713818a33f2cb8",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Finding.scala"
+    },
+    {
+      "expected_sha256": "62e83777734e1b538bd4bbf93a2c850aebe788bb2f6ff88069340f82a8217214",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Identifier.scala",
+      "retained_sha256": "62e83777734e1b538bd4bbf93a2c850aebe788bb2f6ff88069340f82a8217214",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Identifier.scala"
+    },
+    {
+      "expected_sha256": "6c5be19f2ba1a65fe1d0ea1f129d664df503b712c9a2d19317323b921c9690d8",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Import.scala",
+      "retained_sha256": "6c5be19f2ba1a65fe1d0ea1f129d664df503b712c9a2d19317323b921c9690d8",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Import.scala"
+    },
+    {
+      "expected_sha256": "b6e8bbf432089b65450b3fd4a8f92410d48f089a8fa219fe0b68ebf9e4179163",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/JumpLabel.scala",
+      "retained_sha256": "b6e8bbf432089b65450b3fd4a8f92410d48f089a8fa219fe0b68ebf9e4179163",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/JumpLabel.scala"
+    },
+    {
+      "expected_sha256": "5678e1fbe2d15c706868713b9b44a71263af41f86ef166dc201a08602fb28a5d",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/JumpTarget.scala",
+      "retained_sha256": "5678e1fbe2d15c706868713b9b44a71263af41f86ef166dc201a08602fb28a5d",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/JumpTarget.scala"
+    },
+    {
+      "expected_sha256": "7b5d4e3dc4affa8c23f4b2e940928d50605e2d0574471fc9dd4eaf316e647018",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/KeyValuePair.scala",
+      "retained_sha256": "7b5d4e3dc4affa8c23f4b2e940928d50605e2d0574471fc9dd4eaf316e647018",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/KeyValuePair.scala"
+    },
+    {
+      "expected_sha256": "f54c44fb737364d11d6e67f1dab65732982e2d7eba06d9641e728200aba32242",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Literal.scala",
+      "retained_sha256": "f54c44fb737364d11d6e67f1dab65732982e2d7eba06d9641e728200aba32242",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Literal.scala"
+    },
+    {
+      "expected_sha256": "0b20c11bcf9022769ddddbd407330fcc92edd4cf60e68a7b4da9f277ddafd0b6",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Local.scala",
+      "retained_sha256": "0b20c11bcf9022769ddddbd407330fcc92edd4cf60e68a7b4da9f277ddafd0b6",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Local.scala"
+    },
+    {
+      "expected_sha256": "acbade94cdfb60da24c98bfdcbc23e0710ee5f77fb8e109fd3e56dee63fd4857",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Member.scala",
+      "retained_sha256": "acbade94cdfb60da24c98bfdcbc23e0710ee5f77fb8e109fd3e56dee63fd4857",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Member.scala"
+    },
+    {
+      "expected_sha256": "735ae7f34fabfbfb300dfdd511b946f8a6eb35831b569bc05b47fb887db88a50",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/MetaData.scala",
+      "retained_sha256": "735ae7f34fabfbfb300dfdd511b946f8a6eb35831b569bc05b47fb887db88a50",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/MetaData.scala"
+    },
+    {
+      "expected_sha256": "59f028bf7744ef0afc20b6c8e0326babcb254e5139d3f489399551075144e3ed",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Method.scala",
+      "retained_sha256": "59f028bf7744ef0afc20b6c8e0326babcb254e5139d3f489399551075144e3ed",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Method.scala"
+    },
+    {
+      "expected_sha256": "62b5b7b8cd1939777d1becb339b833ec8cd4c862ab1efdf77cfafa7c358f2836",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/MethodParameterIn.scala",
+      "retained_sha256": "62b5b7b8cd1939777d1becb339b833ec8cd4c862ab1efdf77cfafa7c358f2836",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/MethodParameterIn.scala"
+    },
+    {
+      "expected_sha256": "60292ae244f84ebf0c65fb1f16bd7459e520f81f60ba5c497f6d3204339c7430",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/MethodParameterOut.scala",
+      "retained_sha256": "60292ae244f84ebf0c65fb1f16bd7459e520f81f60ba5c497f6d3204339c7430",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/MethodParameterOut.scala"
+    },
+    {
+      "expected_sha256": "611890f10d7167ca5a02d27e9e3b6734aafc630229ecf09c451eb7ed212e2151",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/MethodRef.scala",
+      "retained_sha256": "611890f10d7167ca5a02d27e9e3b6734aafc630229ecf09c451eb7ed212e2151",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/MethodRef.scala"
+    },
+    {
+      "expected_sha256": "00577854bfea44415b2cd201a9a5a04a911c229642793d884f2e6d3b48bc4108",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/MethodReturn.scala",
+      "retained_sha256": "00577854bfea44415b2cd201a9a5a04a911c229642793d884f2e6d3b48bc4108",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/MethodReturn.scala"
+    },
+    {
+      "expected_sha256": "597ec1043bbc5c4c6b68d5c4dce6e821b2a421f8229ca0694a1d756cb65aeb61",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Modifier.scala",
+      "retained_sha256": "597ec1043bbc5c4c6b68d5c4dce6e821b2a421f8229ca0694a1d756cb65aeb61",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Modifier.scala"
+    },
+    {
+      "expected_sha256": "539057c4e67772797ba1047df89dcd23a08c568e0fd4b3345ee8ecf5c77aa1a9",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Namespace.scala",
+      "retained_sha256": "539057c4e67772797ba1047df89dcd23a08c568e0fd4b3345ee8ecf5c77aa1a9",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Namespace.scala"
+    },
+    {
+      "expected_sha256": "a56325dafaa4494654e0e2bf7a62aefdef349a85941a8bc2b92dcec76d7ff02e",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NamespaceBlock.scala",
+      "retained_sha256": "a56325dafaa4494654e0e2bf7a62aefdef349a85941a8bc2b92dcec76d7ff02e",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NamespaceBlock.scala"
+    },
+    {
+      "expected_sha256": "3664242811d6ccef98ca3b68feaecf0c0304903ba16ba6341030c34617439667",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewAnnotation.scala",
+      "retained_sha256": "3664242811d6ccef98ca3b68feaecf0c0304903ba16ba6341030c34617439667",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewAnnotation.scala"
+    },
+    {
+      "expected_sha256": "c680c5d025d79778d87eaaf8882efbb2eb118eb1a9752effd53f738f3e7894c5",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewAnnotationLiteral.scala",
+      "retained_sha256": "c680c5d025d79778d87eaaf8882efbb2eb118eb1a9752effd53f738f3e7894c5",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewAnnotationLiteral.scala"
+    },
+    {
+      "expected_sha256": "129d49bd59f650db49717c6210775de4dd4ea3b53f2b906441cfd46bb4edd188",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewAnnotationParameter.scala",
+      "retained_sha256": "129d49bd59f650db49717c6210775de4dd4ea3b53f2b906441cfd46bb4edd188",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewAnnotationParameter.scala"
+    },
+    {
+      "expected_sha256": "101c98cc5977cb20494246db63f499bf6276dbe52c7626c96e95e27c4e0087cf",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewAnnotationParameterAssign.scala",
+      "retained_sha256": "101c98cc5977cb20494246db63f499bf6276dbe52c7626c96e95e27c4e0087cf",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewAnnotationParameterAssign.scala"
+    },
+    {
+      "expected_sha256": "69e874bf1b1f34aa07b98ea27acaace4bd83855c18bce0f4c12687f53a80d049",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewArrayInitializer.scala",
+      "retained_sha256": "69e874bf1b1f34aa07b98ea27acaace4bd83855c18bce0f4c12687f53a80d049",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewArrayInitializer.scala"
+    },
+    {
+      "expected_sha256": "67dd6caeebe6ef829eb3d168bc5f9aa528d94dda2fe6bb747bcf9f5c8379bf70",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewBinding.scala",
+      "retained_sha256": "67dd6caeebe6ef829eb3d168bc5f9aa528d94dda2fe6bb747bcf9f5c8379bf70",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewBinding.scala"
+    },
+    {
+      "expected_sha256": "7ee9161829fd2d011e40161162ad565abe115e0f70fb777413a55241ebce1a08",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewBlock.scala",
+      "retained_sha256": "7ee9161829fd2d011e40161162ad565abe115e0f70fb777413a55241ebce1a08",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewBlock.scala"
+    },
+    {
+      "expected_sha256": "31b893263418458bfbbc62bae635c5061ca9a593fcb45f0c0611547a36c82989",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewCall.scala",
+      "retained_sha256": "31b893263418458bfbbc62bae635c5061ca9a593fcb45f0c0611547a36c82989",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewCall.scala"
+    },
+    {
+      "expected_sha256": "ea7e309aefdc4af74b4a95f7b75d44f83d8a4adb5856b1e8f645e2c13b3d72ee",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewClosureBinding.scala",
+      "retained_sha256": "ea7e309aefdc4af74b4a95f7b75d44f83d8a4adb5856b1e8f645e2c13b3d72ee",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewClosureBinding.scala"
+    },
+    {
+      "expected_sha256": "d79797260a356febd603b9b8b00c7ff6818d2067b611cab4a35aa3b5d702b4ce",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewComment.scala",
+      "retained_sha256": "d79797260a356febd603b9b8b00c7ff6818d2067b611cab4a35aa3b5d702b4ce",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewComment.scala"
+    },
+    {
+      "expected_sha256": "08689cde574db361eddcc40c31093aa890b2aa55f2dbf08287d2f8e57fa1a4bd",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewConfigFile.scala",
+      "retained_sha256": "08689cde574db361eddcc40c31093aa890b2aa55f2dbf08287d2f8e57fa1a4bd",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewConfigFile.scala"
+    },
+    {
+      "expected_sha256": "cca42343574627dbdbcf9e004c5e1653aad6b92c420ad86a14835119ff757497",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewControlStructure.scala",
+      "retained_sha256": "cca42343574627dbdbcf9e004c5e1653aad6b92c420ad86a14835119ff757497",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewControlStructure.scala"
+    },
+    {
+      "expected_sha256": "b5e1efa7e0eb89ace83349be0b68c314a69f7881008466ec0eb0abb2b443dbd3",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewDependency.scala",
+      "retained_sha256": "b5e1efa7e0eb89ace83349be0b68c314a69f7881008466ec0eb0abb2b443dbd3",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewDependency.scala"
+    },
+    {
+      "expected_sha256": "79f43948fa45269dea72894a2b6559e19805266acb1d538a2cd5c8ce956452e2",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewFieldIdentifier.scala",
+      "retained_sha256": "79f43948fa45269dea72894a2b6559e19805266acb1d538a2cd5c8ce956452e2",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewFieldIdentifier.scala"
+    },
+    {
+      "expected_sha256": "9556fa37e467f0f8cb081b1bf18bd22cec2d9d0ebd97c0f5e61f3f85b67c8789",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewFile.scala",
+      "retained_sha256": "9556fa37e467f0f8cb081b1bf18bd22cec2d9d0ebd97c0f5e61f3f85b67c8789",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewFile.scala"
+    },
+    {
+      "expected_sha256": "83b494b3a11fb3b0e859fb6a5f7ec81acb6b4503524617e9ce82d518d0117c3e",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewFinding.scala",
+      "retained_sha256": "83b494b3a11fb3b0e859fb6a5f7ec81acb6b4503524617e9ce82d518d0117c3e",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewFinding.scala"
+    },
+    {
+      "expected_sha256": "fe05dfa7c23c8249d04b9c5e36214b966fc130131d0a4f1afd7c1d2f6a3b2ea7",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewIdentifier.scala",
+      "retained_sha256": "fe05dfa7c23c8249d04b9c5e36214b966fc130131d0a4f1afd7c1d2f6a3b2ea7",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewIdentifier.scala"
+    },
+    {
+      "expected_sha256": "56621bdd32ac585bf96265d3908616c93cbd28a6d23fcb2df4aab8b6c1ba4308",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewImport.scala",
+      "retained_sha256": "56621bdd32ac585bf96265d3908616c93cbd28a6d23fcb2df4aab8b6c1ba4308",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewImport.scala"
+    },
+    {
+      "expected_sha256": "8b5c5986db2c67d4f36fe9b831306baf20e5426bc7bdbcc3a72c7e1db8fc4c72",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewJumpLabel.scala",
+      "retained_sha256": "8b5c5986db2c67d4f36fe9b831306baf20e5426bc7bdbcc3a72c7e1db8fc4c72",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewJumpLabel.scala"
+    },
+    {
+      "expected_sha256": "4df7858b4d8522af14e96e13cbe74b460644a6e62dc20025ff3a6a9c588745ba",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewJumpTarget.scala",
+      "retained_sha256": "4df7858b4d8522af14e96e13cbe74b460644a6e62dc20025ff3a6a9c588745ba",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewJumpTarget.scala"
+    },
+    {
+      "expected_sha256": "f1237357a25878d7934eeea95de5a4fdc7443ee4c91218bc12c11b6af647cbb2",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewKeyValuePair.scala",
+      "retained_sha256": "f1237357a25878d7934eeea95de5a4fdc7443ee4c91218bc12c11b6af647cbb2",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewKeyValuePair.scala"
+    },
+    {
+      "expected_sha256": "c778eb8a009f7d835e61f9b447bd1de9d42a6dc89a67abc7b7ac8ed59385736c",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewLiteral.scala",
+      "retained_sha256": "c778eb8a009f7d835e61f9b447bd1de9d42a6dc89a67abc7b7ac8ed59385736c",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewLiteral.scala"
+    },
+    {
+      "expected_sha256": "737657f69a70819abddbc729f7bbd8cb330e30e47273595d8f4579b184578515",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewLocal.scala",
+      "retained_sha256": "737657f69a70819abddbc729f7bbd8cb330e30e47273595d8f4579b184578515",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewLocal.scala"
+    },
+    {
+      "expected_sha256": "458a05b2140335f8de524d644a9d28824491d044a2d84fcf924c777604976e52",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewMember.scala",
+      "retained_sha256": "458a05b2140335f8de524d644a9d28824491d044a2d84fcf924c777604976e52",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewMember.scala"
+    },
+    {
+      "expected_sha256": "5c97f98a953db269f7ef031aa815e0222677d61eca754dfb1d29e6522fc509a9",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewMetaData.scala",
+      "retained_sha256": "5c97f98a953db269f7ef031aa815e0222677d61eca754dfb1d29e6522fc509a9",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewMetaData.scala"
+    },
+    {
+      "expected_sha256": "61a85829d2d1b52b93d915255138ab21c1d8815f2ae65ebbfaa3ff7837d1db25",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewMethod.scala",
+      "retained_sha256": "61a85829d2d1b52b93d915255138ab21c1d8815f2ae65ebbfaa3ff7837d1db25",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewMethod.scala"
+    },
+    {
+      "expected_sha256": "560eb016712ee81ab8d86fd33a8d526bfc2f4340cee97be460f798e0c215495e",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewMethodParameterIn.scala",
+      "retained_sha256": "560eb016712ee81ab8d86fd33a8d526bfc2f4340cee97be460f798e0c215495e",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewMethodParameterIn.scala"
+    },
+    {
+      "expected_sha256": "17365a3f714e137e2b016acdb9d9e5ffce52301cbfea2d0e4aaeababdec28728",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewMethodParameterOut.scala",
+      "retained_sha256": "17365a3f714e137e2b016acdb9d9e5ffce52301cbfea2d0e4aaeababdec28728",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewMethodParameterOut.scala"
+    },
+    {
+      "expected_sha256": "26fbf24b9ca23b7dcab6e913c2704bebe7a9247ba5b8d4e2842a03e5c3b29d70",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewMethodRef.scala",
+      "retained_sha256": "26fbf24b9ca23b7dcab6e913c2704bebe7a9247ba5b8d4e2842a03e5c3b29d70",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewMethodRef.scala"
+    },
+    {
+      "expected_sha256": "d252e28a5a29aac6c34917b3e0006b8eb6686117d0ad05ff24e95641b3de089f",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewMethodReturn.scala",
+      "retained_sha256": "d252e28a5a29aac6c34917b3e0006b8eb6686117d0ad05ff24e95641b3de089f",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewMethodReturn.scala"
+    },
+    {
+      "expected_sha256": "8ad9a99e1086d6da10e55ae9840ae1bcfd37fd37a261f4e676f6dba39f27e130",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewModifier.scala",
+      "retained_sha256": "8ad9a99e1086d6da10e55ae9840ae1bcfd37fd37a261f4e676f6dba39f27e130",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewModifier.scala"
+    },
+    {
+      "expected_sha256": "e6a4a91c702146d2e992b001753d432adf2bbfbc9c6e6ac33ea260d6a2e226a5",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewNamespace.scala",
+      "retained_sha256": "e6a4a91c702146d2e992b001753d432adf2bbfbc9c6e6ac33ea260d6a2e226a5",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewNamespace.scala"
+    },
+    {
+      "expected_sha256": "39f03e37c439f270ae3636626bbf47a32d26f5a9fae15a099180e4fe54b52f7b",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewNamespaceBlock.scala",
+      "retained_sha256": "39f03e37c439f270ae3636626bbf47a32d26f5a9fae15a099180e4fe54b52f7b",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewNamespaceBlock.scala"
+    },
+    {
+      "expected_sha256": "b7878db284ec1419dc1aec54ee2bbc3353f1e49bc18bd77bfc083b64e58dc5ba",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewReturn.scala",
+      "retained_sha256": "b7878db284ec1419dc1aec54ee2bbc3353f1e49bc18bd77bfc083b64e58dc5ba",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewReturn.scala"
+    },
+    {
+      "expected_sha256": "dcbc3173da91240ea59a11a5eb099c93763fd34b511f1bd165660ca623c29344",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewTag.scala",
+      "retained_sha256": "dcbc3173da91240ea59a11a5eb099c93763fd34b511f1bd165660ca623c29344",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewTag.scala"
+    },
+    {
+      "expected_sha256": "7620769a6bcbe087bcd651098acaead78bea21093048f8697855c1be324e9b59",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewTagNodePair.scala",
+      "retained_sha256": "7620769a6bcbe087bcd651098acaead78bea21093048f8697855c1be324e9b59",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewTagNodePair.scala"
+    },
+    {
+      "expected_sha256": "3cdd09ee4f2050198eb356ed60ed954344b79b16da74464f79c41034c983f5a8",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewTemplateDom.scala",
+      "retained_sha256": "3cdd09ee4f2050198eb356ed60ed954344b79b16da74464f79c41034c983f5a8",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewTemplateDom.scala"
+    },
+    {
+      "expected_sha256": "5b0c2aaaed7c2041ca56a86fda0f5fa609f486f9ba1a53872ac4475bd77c56ba",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewType.scala",
+      "retained_sha256": "5b0c2aaaed7c2041ca56a86fda0f5fa609f486f9ba1a53872ac4475bd77c56ba",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewType.scala"
+    },
+    {
+      "expected_sha256": "e667ab558be4cef6037fab262d91ef0891ad385b04c9ac90dc993fc2c6b22a83",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewTypeArgument.scala",
+      "retained_sha256": "e667ab558be4cef6037fab262d91ef0891ad385b04c9ac90dc993fc2c6b22a83",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewTypeArgument.scala"
+    },
+    {
+      "expected_sha256": "65a44c97615dcb7b91005d22b4bc7ba0d5b53eda47789a548eef33fe6daa6b41",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewTypeDecl.scala",
+      "retained_sha256": "65a44c97615dcb7b91005d22b4bc7ba0d5b53eda47789a548eef33fe6daa6b41",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewTypeDecl.scala"
+    },
+    {
+      "expected_sha256": "a20d2fee58be9b33d72dae8319f20708bcf41d6dd49abb894427b8479ddaed25",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewTypeParameter.scala",
+      "retained_sha256": "a20d2fee58be9b33d72dae8319f20708bcf41d6dd49abb894427b8479ddaed25",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewTypeParameter.scala"
+    },
+    {
+      "expected_sha256": "4305216d2a630deba30066758b229378289f4ede6b4b3065fe18728f2f7a3093",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewTypeRef.scala",
+      "retained_sha256": "4305216d2a630deba30066758b229378289f4ede6b4b3065fe18728f2f7a3093",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewTypeRef.scala"
+    },
+    {
+      "expected_sha256": "c6a88ae0905a044adabf33437c982dd039bed575018a5a66d6c9188a1345ddf7",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewUnknown.scala",
+      "retained_sha256": "c6a88ae0905a044adabf33437c982dd039bed575018a5a66d6c9188a1345ddf7",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/NewUnknown.scala"
+    },
+    {
+      "expected_sha256": "070b3dcc1217745ecbc97a3dfe720b57d555354bd4cebd6f991922f29986daf7",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Return.scala",
+      "retained_sha256": "070b3dcc1217745ecbc97a3dfe720b57d555354bd4cebd6f991922f29986daf7",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Return.scala"
+    },
+    {
+      "expected_sha256": "2e43b52766a7d57a15448c2ef42873798d525903cb01b3cb4e39ba26949c2ae4",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/RootTypes.scala",
+      "retained_sha256": "2e43b52766a7d57a15448c2ef42873798d525903cb01b3cb4e39ba26949c2ae4",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/RootTypes.scala"
+    },
+    {
+      "expected_sha256": "8f0562a8d615ffebb23b0175860cd0958525a473ad070d42f372395e00262ba3",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/RootTypesTraversals.scala",
+      "retained_sha256": "8f0562a8d615ffebb23b0175860cd0958525a473ad070d42f372395e00262ba3",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/RootTypesTraversals.scala"
+    },
+    {
+      "expected_sha256": "22478cdddc3a8312e20fad52ae9976ac52f1b10aa0c7c30eafb02aa3476c0929",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Tag.scala",
+      "retained_sha256": "22478cdddc3a8312e20fad52ae9976ac52f1b10aa0c7c30eafb02aa3476c0929",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Tag.scala"
+    },
+    {
+      "expected_sha256": "f1d8a40b462aad6616f731d1941509088758f869f8c612e92771c6e2523cc4f1",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/TagNodePair.scala",
+      "retained_sha256": "f1d8a40b462aad6616f731d1941509088758f869f8c612e92771c6e2523cc4f1",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/TagNodePair.scala"
+    },
+    {
+      "expected_sha256": "cef60c46d2ba69554cc40c5f6e4c621912756f416ced799a59472b1656049e87",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/TemplateDom.scala",
+      "retained_sha256": "cef60c46d2ba69554cc40c5f6e4c621912756f416ced799a59472b1656049e87",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/TemplateDom.scala"
+    },
+    {
+      "expected_sha256": "68c0162b82cdd3c90f810d8c48a0ba7637c1c75b9fc85a5c6e43e514a1d76e74",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Type.scala",
+      "retained_sha256": "68c0162b82cdd3c90f810d8c48a0ba7637c1c75b9fc85a5c6e43e514a1d76e74",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Type.scala"
+    },
+    {
+      "expected_sha256": "1add6fe7d1e61c3db75e8c88af3730785a82a8af0e39fb794b31220d4477867f",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/TypeArgument.scala",
+      "retained_sha256": "1add6fe7d1e61c3db75e8c88af3730785a82a8af0e39fb794b31220d4477867f",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/TypeArgument.scala"
+    },
+    {
+      "expected_sha256": "93eedd6c3681a34fa1f7ce4c951f11cf8bf189af0bbfb2384b28b5db3d39c71f",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/TypeDecl.scala",
+      "retained_sha256": "93eedd6c3681a34fa1f7ce4c951f11cf8bf189af0bbfb2384b28b5db3d39c71f",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/TypeDecl.scala"
+    },
+    {
+      "expected_sha256": "807d881b2dcd28e521f29de27cd7f54bff87c8345aa90cad66c1cd727a538167",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/TypeParameter.scala",
+      "retained_sha256": "807d881b2dcd28e521f29de27cd7f54bff87c8345aa90cad66c1cd727a538167",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/TypeParameter.scala"
+    },
+    {
+      "expected_sha256": "361e82e3e094987c745bcdafa89b5870f469d7eab711110c96eecce1f2e55f0d",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/TypeRef.scala",
+      "retained_sha256": "361e82e3e094987c745bcdafa89b5870f469d7eab711110c96eecce1f2e55f0d",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/TypeRef.scala"
+    },
+    {
+      "expected_sha256": "b376b82164baaa6de2adb4656f0cef8a019fce8f2af1099184b0c3cffbee10e0",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Unknown.scala",
+      "retained_sha256": "b376b82164baaa6de2adb4656f0cef8a019fce8f2af1099184b0c3cffbee10e0",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/nodes/Unknown.scala"
+    },
+    {
+      "expected_sha256": "7416b4d4c34bee0f6db8b3ef078c7abcef94f0f70838f502de283ba6dbb5bbc7",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/package.scala",
+      "retained_sha256": "7416b4d4c34bee0f6db8b3ef078c7abcef94f0f70838f502de283ba6dbb5bbc7",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/package.scala"
+    },
+    {
+      "expected_sha256": "4c607c9dbde9c9be381c2a16b468a7894a80647546eb1f4f9d4f93ec7af5ac7a",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalAnnotationBase.scala",
+      "retained_sha256": "4c607c9dbde9c9be381c2a16b468a7894a80647546eb1f4f9d4f93ec7af5ac7a",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalAnnotationBase.scala"
+    },
+    {
+      "expected_sha256": "9018adbb975e3d747333e76870940a31b1772e28cf05d0ba587ee5ffe0127ea8",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalAnnotationliteralBase.scala",
+      "retained_sha256": "9018adbb975e3d747333e76870940a31b1772e28cf05d0ba587ee5ffe0127ea8",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalAnnotationliteralBase.scala"
+    },
+    {
+      "expected_sha256": "c7986d1f488d6460c39187347137a01da41ebf6d483acfb125415ea8fad6b3b6",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalAnnotationparameterBase.scala",
+      "retained_sha256": "c7986d1f488d6460c39187347137a01da41ebf6d483acfb125415ea8fad6b3b6",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalAnnotationparameterBase.scala"
+    },
+    {
+      "expected_sha256": "d339e796492495f4bb5ea8d948c21fef606bc67a3bb3512f291328c60856eed7",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalAnnotationparameterassignBase.scala",
+      "retained_sha256": "d339e796492495f4bb5ea8d948c21fef606bc67a3bb3512f291328c60856eed7",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalAnnotationparameterassignBase.scala"
+    },
+    {
+      "expected_sha256": "c32298e7e2f4cf3414a2df63cc620c9841e9b755d1e91b761a3cb6245db6d0d8",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalArrayinitializerBase.scala",
+      "retained_sha256": "c32298e7e2f4cf3414a2df63cc620c9841e9b755d1e91b761a3cb6245db6d0d8",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalArrayinitializerBase.scala"
+    },
+    {
+      "expected_sha256": "9d96caf165798b2a49cac071aeb283e625e09c8f1cabe1a9539dc10e4ce74823",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalAstnodeBase.scala",
+      "retained_sha256": "9d96caf165798b2a49cac071aeb283e625e09c8f1cabe1a9539dc10e4ce74823",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalAstnodeBase.scala"
+    },
+    {
+      "expected_sha256": "67b5f2614541b24d69429ba47c196c29e7ee379cdb75f5ded0b6d5198003e9ca",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalBindingBase.scala",
+      "retained_sha256": "67b5f2614541b24d69429ba47c196c29e7ee379cdb75f5ded0b6d5198003e9ca",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalBindingBase.scala"
+    },
+    {
+      "expected_sha256": "92ae9fb2fc2f559c1bf78f56701e7a521629503b5dffcb19bfd708469ea82cf4",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalBlockBase.scala",
+      "retained_sha256": "92ae9fb2fc2f559c1bf78f56701e7a521629503b5dffcb19bfd708469ea82cf4",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalBlockBase.scala"
+    },
+    {
+      "expected_sha256": "f27a8acaecf6e1cb58da751eb4cf9f10e87546a86fbed8a8ff870c975937b889",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalCallBase.scala",
+      "retained_sha256": "f27a8acaecf6e1cb58da751eb4cf9f10e87546a86fbed8a8ff870c975937b889",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalCallBase.scala"
+    },
+    {
+      "expected_sha256": "91ac17aeab0cede3b832d7723289e5d9b9156a608fd266573859a7e174a091a9",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalCallreprBase.scala",
+      "retained_sha256": "91ac17aeab0cede3b832d7723289e5d9b9156a608fd266573859a7e174a091a9",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalCallreprBase.scala"
+    },
+    {
+      "expected_sha256": "0fc7acc3ee46cf95372deae26261ed4bdcaac0238514b4d6631927c5cbd10a3a",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalCfgnodeBase.scala",
+      "retained_sha256": "0fc7acc3ee46cf95372deae26261ed4bdcaac0238514b4d6631927c5cbd10a3a",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalCfgnodeBase.scala"
+    },
+    {
+      "expected_sha256": "f70c7081bcb31f8cd99fcbaae9a8e46a33fcf64bba787f2c7a456ca96ff6528b",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalClosurebindingBase.scala",
+      "retained_sha256": "f70c7081bcb31f8cd99fcbaae9a8e46a33fcf64bba787f2c7a456ca96ff6528b",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalClosurebindingBase.scala"
+    },
+    {
+      "expected_sha256": "0643e43ebb0354e35e617791db41247c0cd273ec11ee7efe1171ff7896e3bf42",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalCommentBase.scala",
+      "retained_sha256": "0643e43ebb0354e35e617791db41247c0cd273ec11ee7efe1171ff7896e3bf42",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalCommentBase.scala"
+    },
+    {
+      "expected_sha256": "3a3c9547862c54ac04ac563244f9f6d44063c9bf82df53c822a4f818e028c6ef",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalConfigfileBase.scala",
+      "retained_sha256": "3a3c9547862c54ac04ac563244f9f6d44063c9bf82df53c822a4f818e028c6ef",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalConfigfileBase.scala"
+    },
+    {
+      "expected_sha256": "fbeca86ce1b82f549b2dd3ded858f194138c090696913bd919fad632975a0433",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalControlstructureBase.scala",
+      "retained_sha256": "fbeca86ce1b82f549b2dd3ded858f194138c090696913bd919fad632975a0433",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalControlstructureBase.scala"
+    },
+    {
+      "expected_sha256": "27364868908ae56dd73a68160cdce814392f1ca7c6dcee556d1cd73299d6e1d6",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalDeclarationBase.scala",
+      "retained_sha256": "27364868908ae56dd73a68160cdce814392f1ca7c6dcee556d1cd73299d6e1d6",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalDeclarationBase.scala"
+    },
+    {
+      "expected_sha256": "dd94f574c15e3a59da5485e84a00704b625485cacd3b0ee76cc08edbcb717b9e",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalDependencyBase.scala",
+      "retained_sha256": "dd94f574c15e3a59da5485e84a00704b625485cacd3b0ee76cc08edbcb717b9e",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalDependencyBase.scala"
+    },
+    {
+      "expected_sha256": "69cd0e12927a1ad97d85c2f12378c1465b206f02cccecde53963a170130c8bae",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalExpressionBase.scala",
+      "retained_sha256": "69cd0e12927a1ad97d85c2f12378c1465b206f02cccecde53963a170130c8bae",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalExpressionBase.scala"
+    },
+    {
+      "expected_sha256": "7a8dec1dbc46b9ab38aa7f85eeeb295a6e4567e905a28daf8612ef7181a5b32b",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalFieldidentifierBase.scala",
+      "retained_sha256": "7a8dec1dbc46b9ab38aa7f85eeeb295a6e4567e905a28daf8612ef7181a5b32b",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalFieldidentifierBase.scala"
+    },
+    {
+      "expected_sha256": "1632b6ec49a4d6600606fa443a323abd45f8852844aecceb531c3c69ebfcf853",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalFileBase.scala",
+      "retained_sha256": "1632b6ec49a4d6600606fa443a323abd45f8852844aecceb531c3c69ebfcf853",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalFileBase.scala"
+    },
+    {
+      "expected_sha256": "4917b439ec6f6876f80559b7023e340cc5ae73240485be300fff356ff9cdfebb",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalFindingBase.scala",
+      "retained_sha256": "4917b439ec6f6876f80559b7023e340cc5ae73240485be300fff356ff9cdfebb",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalFindingBase.scala"
+    },
+    {
+      "expected_sha256": "31ee6e0ba484f9e959b6565d9b882c19a02ad112c234422939bde31179ad4bbb",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalIdentifierBase.scala",
+      "retained_sha256": "31ee6e0ba484f9e959b6565d9b882c19a02ad112c234422939bde31179ad4bbb",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalIdentifierBase.scala"
+    },
+    {
+      "expected_sha256": "99d4b9ef6302214afbac4cf89002ba210ac16c5477971313ac5307c5ef595161",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalImportBase.scala",
+      "retained_sha256": "99d4b9ef6302214afbac4cf89002ba210ac16c5477971313ac5307c5ef595161",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalImportBase.scala"
+    },
+    {
+      "expected_sha256": "26e527918baa6433d604d1e37fafc1b7f657002ba6906831e76e25189a4896a8",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalJumplabelBase.scala",
+      "retained_sha256": "26e527918baa6433d604d1e37fafc1b7f657002ba6906831e76e25189a4896a8",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalJumplabelBase.scala"
+    },
+    {
+      "expected_sha256": "3eb95e381e3b340903ccb281a98ef9598cb3ff57d8b1421ceb6d0b5a00785c1f",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalJumptargetBase.scala",
+      "retained_sha256": "3eb95e381e3b340903ccb281a98ef9598cb3ff57d8b1421ceb6d0b5a00785c1f",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalJumptargetBase.scala"
+    },
+    {
+      "expected_sha256": "f7dbe0f644f7d8396503b45ba6c37cc5b26b5b9b361276b61ec011bd2c77fc51",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalKeyvaluepairBase.scala",
+      "retained_sha256": "f7dbe0f644f7d8396503b45ba6c37cc5b26b5b9b361276b61ec011bd2c77fc51",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalKeyvaluepairBase.scala"
+    },
+    {
+      "expected_sha256": "9ad563062882ae9edde818634a025c9d29e47791277fe4af1eab39ad04eb7972",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalLiteralBase.scala",
+      "retained_sha256": "9ad563062882ae9edde818634a025c9d29e47791277fe4af1eab39ad04eb7972",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalLiteralBase.scala"
+    },
+    {
+      "expected_sha256": "43f99323bd50eda196c57cc3c61480c6acd88e78c07b3aab9bfc1dcb213c03dc",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalLocalBase.scala",
+      "retained_sha256": "43f99323bd50eda196c57cc3c61480c6acd88e78c07b3aab9bfc1dcb213c03dc",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalLocalBase.scala"
+    },
+    {
+      "expected_sha256": "668af7da83c7b901b50789e34991388db8bae2cc5e53e6a334846d5a0c56d3b5",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalMemberBase.scala",
+      "retained_sha256": "668af7da83c7b901b50789e34991388db8bae2cc5e53e6a334846d5a0c56d3b5",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalMemberBase.scala"
+    },
+    {
+      "expected_sha256": "307edd6d7f56a34c047c1437dd063e6edef21a1ed805f3a8bc818e8e72e1deb3",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalMetadataBase.scala",
+      "retained_sha256": "307edd6d7f56a34c047c1437dd063e6edef21a1ed805f3a8bc818e8e72e1deb3",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalMetadataBase.scala"
+    },
+    {
+      "expected_sha256": "2a515eb29505ef26ec47916acfbdba7e8559d87dbb86fc063687f9b0656a57bb",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalMethodBase.scala",
+      "retained_sha256": "2a515eb29505ef26ec47916acfbdba7e8559d87dbb86fc063687f9b0656a57bb",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalMethodBase.scala"
+    },
+    {
+      "expected_sha256": "3a18f07abd2b5a1c3edd2efac854009a10b5ea7e44f2c638b7a21e068a42e89b",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalMethodparameterinBase.scala",
+      "retained_sha256": "3a18f07abd2b5a1c3edd2efac854009a10b5ea7e44f2c638b7a21e068a42e89b",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalMethodparameterinBase.scala"
+    },
+    {
+      "expected_sha256": "1146faa586d1446379a69aeeaac3140c4cc26a2edf90b886d5ee3e83e738b487",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalMethodparameteroutBase.scala",
+      "retained_sha256": "1146faa586d1446379a69aeeaac3140c4cc26a2edf90b886d5ee3e83e738b487",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalMethodparameteroutBase.scala"
+    },
+    {
+      "expected_sha256": "fbc1cf71ffc3ce55c80267180925c9b3fda8b9ca3e0f850fc58fbbd5e3ec9b61",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalMethodrefBase.scala",
+      "retained_sha256": "fbc1cf71ffc3ce55c80267180925c9b3fda8b9ca3e0f850fc58fbbd5e3ec9b61",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalMethodrefBase.scala"
+    },
+    {
+      "expected_sha256": "1924962f24d1bded585356bae1068cc99facce35fc4aa19222b97722907130c5",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalMethodreturnBase.scala",
+      "retained_sha256": "1924962f24d1bded585356bae1068cc99facce35fc4aa19222b97722907130c5",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalMethodreturnBase.scala"
+    },
+    {
+      "expected_sha256": "a81ef33dcbd9267d993481ad779113040a4a592d1f37bb6cd4e9e946f54e2438",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalModifierBase.scala",
+      "retained_sha256": "a81ef33dcbd9267d993481ad779113040a4a592d1f37bb6cd4e9e946f54e2438",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalModifierBase.scala"
+    },
+    {
+      "expected_sha256": "fe2b5f7b5d2160199371e5c3e388a9521016123d43b2501e229f333b6fa162b4",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalNamespaceBase.scala",
+      "retained_sha256": "fe2b5f7b5d2160199371e5c3e388a9521016123d43b2501e229f333b6fa162b4",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalNamespaceBase.scala"
+    },
+    {
+      "expected_sha256": "37345a2d2b48ea673217c376e457c13e5c24f177a080fe5c9d229f2d31615244",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalNamespaceblockBase.scala",
+      "retained_sha256": "37345a2d2b48ea673217c376e457c13e5c24f177a080fe5c9d229f2d31615244",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalNamespaceblockBase.scala"
+    },
+    {
+      "expected_sha256": "600e6828c9bcd24eb040770516802e4c4d2865b2a380467a8b210f6329e39830",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyAliasTypeFullName.scala",
+      "retained_sha256": "600e6828c9bcd24eb040770516802e4c4d2865b2a380467a8b210f6329e39830",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyAliasTypeFullName.scala"
+    },
+    {
+      "expected_sha256": "2d6b043b6e5df7c589cb3c4ac1d0155f2ca9dbfc2bbfc6dedf75ee2c585454e6",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyArgumentIndex.scala",
+      "retained_sha256": "2d6b043b6e5df7c589cb3c4ac1d0155f2ca9dbfc2bbfc6dedf75ee2c585454e6",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyArgumentIndex.scala"
+    },
+    {
+      "expected_sha256": "0b4909a9951a3a39ced44a8ae06bdc7da52b6bf6725cdf7081e7af071117c3ae",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyArgumentLabel.scala",
+      "retained_sha256": "0b4909a9951a3a39ced44a8ae06bdc7da52b6bf6725cdf7081e7af071117c3ae",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyArgumentLabel.scala"
+    },
+    {
+      "expected_sha256": "7053bb94a8f7b89d035f6b977359f1adfd2d9550307ec4dcdc441f1c3b71097f",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyArgumentName.scala",
+      "retained_sha256": "7053bb94a8f7b89d035f6b977359f1adfd2d9550307ec4dcdc441f1c3b71097f",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyArgumentName.scala"
+    },
+    {
+      "expected_sha256": "a7f906c15d77776ccde15537f5f67831ee29b7006dc9bb276aed8a87abd6adf0",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyAstParentFullName.scala",
+      "retained_sha256": "a7f906c15d77776ccde15537f5f67831ee29b7006dc9bb276aed8a87abd6adf0",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyAstParentFullName.scala"
+    },
+    {
+      "expected_sha256": "cef4478a6a3d8349a66c012aa8f11bf9f4aebb373c74dfaae10aa7fc530097ca",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyAstParentType.scala",
+      "retained_sha256": "cef4478a6a3d8349a66c012aa8f11bf9f4aebb373c74dfaae10aa7fc530097ca",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyAstParentType.scala"
+    },
+    {
+      "expected_sha256": "e0af79f9b07962acf1ea163cf3fb74d3a222b1c4ecb35aed93a3a96b1b3a762f",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyCanonicalName.scala",
+      "retained_sha256": "e0af79f9b07962acf1ea163cf3fb74d3a222b1c4ecb35aed93a3a96b1b3a762f",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyCanonicalName.scala"
+    },
+    {
+      "expected_sha256": "e6f0897c1c5a61fa276e17d24fa7d16fe4fc41a02e6ce6924bd41934a6955a09",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyClosureBindingId.scala",
+      "retained_sha256": "e6f0897c1c5a61fa276e17d24fa7d16fe4fc41a02e6ce6924bd41934a6955a09",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyClosureBindingId.scala"
+    },
+    {
+      "expected_sha256": "863fbcb31df5bba458ca632443f4b956db627161a445d32bf173d16632244e6e",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyCode.scala",
+      "retained_sha256": "863fbcb31df5bba458ca632443f4b956db627161a445d32bf173d16632244e6e",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyCode.scala"
+    },
+    {
+      "expected_sha256": "ca27ba7196512dda470cda9a8bf9afb5e04fdb95473cf271615d64844303295e",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyColumnNumber.scala",
+      "retained_sha256": "ca27ba7196512dda470cda9a8bf9afb5e04fdb95473cf271615d64844303295e",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyColumnNumber.scala"
+    },
+    {
+      "expected_sha256": "88e02264e17b5826d0f1bdf2e361a89d65c41e71a4b33bc6344e15d73560908e",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyColumnNumberEnd.scala",
+      "retained_sha256": "88e02264e17b5826d0f1bdf2e361a89d65c41e71a4b33bc6344e15d73560908e",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyColumnNumberEnd.scala"
+    },
+    {
+      "expected_sha256": "7c7e9ea72aa9756a30a5d1b9e5c8ee4b296b6b32e932de177a81bc503bccabc3",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyContainedRef.scala",
+      "retained_sha256": "7c7e9ea72aa9756a30a5d1b9e5c8ee4b296b6b32e932de177a81bc503bccabc3",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyContainedRef.scala"
+    },
+    {
+      "expected_sha256": "d150d14a18a07466b2cebf556de83be36c6c65402b31e8a9223d26117ee20613",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyContent.scala",
+      "retained_sha256": "d150d14a18a07466b2cebf556de83be36c6c65402b31e8a9223d26117ee20613",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyContent.scala"
+    },
+    {
+      "expected_sha256": "aa8f0768f46b0df8b88b555ae8411d03a1a4e76652c94fc43cadb284abd9a001",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyControlStructureType.scala",
+      "retained_sha256": "aa8f0768f46b0df8b88b555ae8411d03a1a4e76652c94fc43cadb284abd9a001",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyControlStructureType.scala"
+    },
+    {
+      "expected_sha256": "dcef9af8ae50c24c11807e44deb4ad6bf6e65301f1db1dfc00f2009ed6f27b35",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyDependencyGroupId.scala",
+      "retained_sha256": "dcef9af8ae50c24c11807e44deb4ad6bf6e65301f1db1dfc00f2009ed6f27b35",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyDependencyGroupId.scala"
+    },
+    {
+      "expected_sha256": "a4f688d152e1a62978eb5f9dcb897f9d57e2ad92bb43e13591a7122a26dd7229",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyDispatchType.scala",
+      "retained_sha256": "a4f688d152e1a62978eb5f9dcb897f9d57e2ad92bb43e13591a7122a26dd7229",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyDispatchType.scala"
+    },
+    {
+      "expected_sha256": "90b97e694d24c8129a22031b4ee48a3701614646c892ed6f22b3d2d976801fef",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyDynamicTypeHintFullName.scala",
+      "retained_sha256": "90b97e694d24c8129a22031b4ee48a3701614646c892ed6f22b3d2d976801fef",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyDynamicTypeHintFullName.scala"
+    },
+    {
+      "expected_sha256": "0d89b1284606c0c405297dd14ca5dce81844c8757e0dd4feb55ceafa2660e7b0",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyEvaluationStrategy.scala",
+      "retained_sha256": "0d89b1284606c0c405297dd14ca5dce81844c8757e0dd4feb55ceafa2660e7b0",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyEvaluationStrategy.scala"
+    },
+    {
+      "expected_sha256": "9cbfffd0158b76d0f0128092efe9bbe2c75dd3a357446f1f762bfe8452590a5c",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyEvidenceDescription.scala",
+      "retained_sha256": "9cbfffd0158b76d0f0128092efe9bbe2c75dd3a357446f1f762bfe8452590a5c",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyEvidenceDescription.scala"
+    },
+    {
+      "expected_sha256": "47e302688ffa9142e3944f14e697d12f9adbe4dfd2012b48dcc033103065bc42",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyExplicitAs.scala",
+      "retained_sha256": "47e302688ffa9142e3944f14e697d12f9adbe4dfd2012b48dcc033103065bc42",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyExplicitAs.scala"
+    },
+    {
+      "expected_sha256": "724ddb0db0e7796b36f657d4357ce69bbdeaf77377e85d88fed8989370bbfb05",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyFilename.scala",
+      "retained_sha256": "724ddb0db0e7796b36f657d4357ce69bbdeaf77377e85d88fed8989370bbfb05",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyFilename.scala"
+    },
+    {
+      "expected_sha256": "2c749f2203f77f575ca8ca97e0e21daf7a4fe47a55d30deaa819ce83f79e1707",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyFullName.scala",
+      "retained_sha256": "2c749f2203f77f575ca8ca97e0e21daf7a4fe47a55d30deaa819ce83f79e1707",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyFullName.scala"
+    },
+    {
+      "expected_sha256": "6f2d0fd2254cbae2c57731cd225fd74d7fa6b419563b31e03d921c6c71c9c2db",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyGenericSignature.scala",
+      "retained_sha256": "6f2d0fd2254cbae2c57731cd225fd74d7fa6b419563b31e03d921c6c71c9c2db",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyGenericSignature.scala"
+    },
+    {
+      "expected_sha256": "324e8f3a73769facb6c78701bbf81f6d3e8b636782605a30f8ca5e81822fd304",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyHash.scala",
+      "retained_sha256": "324e8f3a73769facb6c78701bbf81f6d3e8b636782605a30f8ca5e81822fd304",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyHash.scala"
+    },
+    {
+      "expected_sha256": "2395b983d3887721246333664d405b6fc8da3153eda19424fcd087521f8e6e59",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyImportedAs.scala",
+      "retained_sha256": "2395b983d3887721246333664d405b6fc8da3153eda19424fcd087521f8e6e59",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyImportedAs.scala"
+    },
+    {
+      "expected_sha256": "d18a7899b1704efd3a6804d7520257af1d5cdef47b5e379c49f9125c6632a65d",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyImportedEntity.scala",
+      "retained_sha256": "d18a7899b1704efd3a6804d7520257af1d5cdef47b5e379c49f9125c6632a65d",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyImportedEntity.scala"
+    },
+    {
+      "expected_sha256": "2511b3d628219a7df019255a2442295913031b915c6cab6458435e1a70fe6007",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyIndex.scala",
+      "retained_sha256": "2511b3d628219a7df019255a2442295913031b915c6cab6458435e1a70fe6007",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyIndex.scala"
+    },
+    {
+      "expected_sha256": "3583da5611003dde63e1fd1e587228d85794ee668bac8abec6f264e3e100f0a1",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyInheritsFromTypeFullName.scala",
+      "retained_sha256": "3583da5611003dde63e1fd1e587228d85794ee668bac8abec6f264e3e100f0a1",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyInheritsFromTypeFullName.scala"
+    },
+    {
+      "expected_sha256": "b0e9a3b737459f9e251f824aed7f5f95ec530875023cd44efd40fd571d0c216f",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyIsExplicit.scala",
+      "retained_sha256": "b0e9a3b737459f9e251f824aed7f5f95ec530875023cd44efd40fd571d0c216f",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyIsExplicit.scala"
+    },
+    {
+      "expected_sha256": "db6024f3ec114dd32b45bbddb8d25065f25c0208908da2d81cc9c70d835e986a",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyIsExternal.scala",
+      "retained_sha256": "db6024f3ec114dd32b45bbddb8d25065f25c0208908da2d81cc9c70d835e986a",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyIsExternal.scala"
+    },
+    {
+      "expected_sha256": "b5f88aa2dab924984b0b208685a2408abdcd11406f5ad5fff8fc1319310d5aea",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyIsModuleImport.scala",
+      "retained_sha256": "b5f88aa2dab924984b0b208685a2408abdcd11406f5ad5fff8fc1319310d5aea",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyIsModuleImport.scala"
+    },
+    {
+      "expected_sha256": "2aed1f3fe96e4b5828dccdb05ca08b64b842ab2764f5cdc6f000ebf871369d39",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyIsVariadic.scala",
+      "retained_sha256": "2aed1f3fe96e4b5828dccdb05ca08b64b842ab2764f5cdc6f000ebf871369d39",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyIsVariadic.scala"
+    },
+    {
+      "expected_sha256": "6fec4630d55b61b4558e2d51b3ece5021e8c82ab59a89a1109b8bc24648bc8ec",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyIsWildcard.scala",
+      "retained_sha256": "6fec4630d55b61b4558e2d51b3ece5021e8c82ab59a89a1109b8bc24648bc8ec",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyIsWildcard.scala"
+    },
+    {
+      "expected_sha256": "f0d3709ff0af0d32e56f956095f80ceb53938e04efaabde83ed8015a3006e627",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyKey.scala",
+      "retained_sha256": "f0d3709ff0af0d32e56f956095f80ceb53938e04efaabde83ed8015a3006e627",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyKey.scala"
+    },
+    {
+      "expected_sha256": "efbd34d4b88b75f665df010f3ec31262b5a31e618cce67db8b95c904635ffcf9",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyLanguage.scala",
+      "retained_sha256": "efbd34d4b88b75f665df010f3ec31262b5a31e618cce67db8b95c904635ffcf9",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyLanguage.scala"
+    },
+    {
+      "expected_sha256": "e423c05a62d01b950c0fff73db0cbb2b2ebe81e5ee00425da37820cb81c73e66",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyLineNumber.scala",
+      "retained_sha256": "e423c05a62d01b950c0fff73db0cbb2b2ebe81e5ee00425da37820cb81c73e66",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyLineNumber.scala"
+    },
+    {
+      "expected_sha256": "994bb5e3d6a130729d8006727ca8fbf677a4b4dba9c6a55d6c5cb2e61a471843",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyLineNumberEnd.scala",
+      "retained_sha256": "994bb5e3d6a130729d8006727ca8fbf677a4b4dba9c6a55d6c5cb2e61a471843",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyLineNumberEnd.scala"
+    },
+    {
+      "expected_sha256": "cd39e83129d0370c9b071439d947f1ad2f9506b44c3ed1fb8f9adfcfe8e475be",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyMethodFullName.scala",
+      "retained_sha256": "cd39e83129d0370c9b071439d947f1ad2f9506b44c3ed1fb8f9adfcfe8e475be",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyMethodFullName.scala"
+    },
+    {
+      "expected_sha256": "0be5bbb2528ae94d3c59696939775df258b430ffac4615d3ef8769f0757477bc",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyModifierType.scala",
+      "retained_sha256": "0be5bbb2528ae94d3c59696939775df258b430ffac4615d3ef8769f0757477bc",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyModifierType.scala"
+    },
+    {
+      "expected_sha256": "127426b202918617a7d0ce5e3501aa191319a05f3edb4193b551bee263f617c8",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyName.scala",
+      "retained_sha256": "127426b202918617a7d0ce5e3501aa191319a05f3edb4193b551bee263f617c8",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyName.scala"
+    },
+    {
+      "expected_sha256": "34507f48307b1b3e374c0bb2ecf60322d180ed7c4a0ac0ec0df8568bbb06667f",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyOffset.scala",
+      "retained_sha256": "34507f48307b1b3e374c0bb2ecf60322d180ed7c4a0ac0ec0df8568bbb06667f",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyOffset.scala"
+    },
+    {
+      "expected_sha256": "a6c1d41ea1670ff744fce4ed15e76fbd602e3cb7164c7865d2fee9ec4bdb9e49",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyOffsetEnd.scala",
+      "retained_sha256": "a6c1d41ea1670ff744fce4ed15e76fbd602e3cb7164c7865d2fee9ec4bdb9e49",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyOffsetEnd.scala"
+    },
+    {
+      "expected_sha256": "26f54837527e686a0a4fe76125c58133ffbd199a401e8631e5801f3c424dec38",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyOrder.scala",
+      "retained_sha256": "26f54837527e686a0a4fe76125c58133ffbd199a401e8631e5801f3c424dec38",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyOrder.scala"
+    },
+    {
+      "expected_sha256": "86e2318581c5842fd1636f1bd5511634930191d96cff76b18686cb5d53774e5e",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyOverlays.scala",
+      "retained_sha256": "86e2318581c5842fd1636f1bd5511634930191d96cff76b18686cb5d53774e5e",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyOverlays.scala"
+    },
+    {
+      "expected_sha256": "8dcf238f5742db95811f1d82d2536b22f497e46409178721bc8d460aec4e62b0",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyParserTypeName.scala",
+      "retained_sha256": "8dcf238f5742db95811f1d82d2536b22f497e46409178721bc8d460aec4e62b0",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyParserTypeName.scala"
+    },
+    {
+      "expected_sha256": "dea11670bf7b1d90d0ef7de7dcdfd00b6518a03363c6c3c2c468fa9d8299925a",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyPossibleTypes.scala",
+      "retained_sha256": "dea11670bf7b1d90d0ef7de7dcdfd00b6518a03363c6c3c2c468fa9d8299925a",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyPossibleTypes.scala"
+    },
+    {
+      "expected_sha256": "2adfb3a521ed36233b9567d2f3612909caba5216ea4c3b148dfc721af7a1ed66",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyRoot.scala",
+      "retained_sha256": "2adfb3a521ed36233b9567d2f3612909caba5216ea4c3b148dfc721af7a1ed66",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyRoot.scala"
+    },
+    {
+      "expected_sha256": "e38efb86bb4ede1e0a4ac3240b41ee16d599a32e4011e3edf57fe5c002686347",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertySignature.scala",
+      "retained_sha256": "e38efb86bb4ede1e0a4ac3240b41ee16d599a32e4011e3edf57fe5c002686347",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertySignature.scala"
+    },
+    {
+      "expected_sha256": "3b780978a37068c7a2efb8a6c484021646809035c76eb66428c48c5803bd1b40",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyStaticReceiver.scala",
+      "retained_sha256": "3b780978a37068c7a2efb8a6c484021646809035c76eb66428c48c5803bd1b40",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyStaticReceiver.scala"
+    },
+    {
+      "expected_sha256": "47276b6fafbca902be8a34bd6b439d8dc2f5e0f449215d10b0c274124efd092b",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyTypeDeclFullName.scala",
+      "retained_sha256": "47276b6fafbca902be8a34bd6b439d8dc2f5e0f449215d10b0c274124efd092b",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyTypeDeclFullName.scala"
+    },
+    {
+      "expected_sha256": "e9c272a42e6501897a3165cc3d0a53236b63331268433844fd7e5e6942268931",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyTypeFullName.scala",
+      "retained_sha256": "e9c272a42e6501897a3165cc3d0a53236b63331268433844fd7e5e6942268931",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyTypeFullName.scala"
+    },
+    {
+      "expected_sha256": "1455c4118a6595d20da8abbbb690dae600f80e0416faeb2af50db1ce9f6b7440",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyValue.scala",
+      "retained_sha256": "1455c4118a6595d20da8abbbb690dae600f80e0416faeb2af50db1ce9f6b7440",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyValue.scala"
+    },
+    {
+      "expected_sha256": "e8ddbaa363a14fe77ba0ef6d906ef3d30592ecadf490c63f0003d3e6e589c8d4",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyVersion.scala",
+      "retained_sha256": "e8ddbaa363a14fe77ba0ef6d906ef3d30592ecadf490c63f0003d3e6e589c8d4",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalPropertyVersion.scala"
+    },
+    {
+      "expected_sha256": "849fd3c825f809244bf170f8f1f7287a891f6235bc8c331b665b4365794c87a7",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalReturnBase.scala",
+      "retained_sha256": "849fd3c825f809244bf170f8f1f7287a891f6235bc8c331b665b4365794c87a7",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalReturnBase.scala"
+    },
+    {
+      "expected_sha256": "1355a57d5941251c95dfa3ec097036eb624fa6f49a8a6a2d8334066f4a56829d",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTagBase.scala",
+      "retained_sha256": "1355a57d5941251c95dfa3ec097036eb624fa6f49a8a6a2d8334066f4a56829d",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTagBase.scala"
+    },
+    {
+      "expected_sha256": "7d83268a799239b30a22db1c222838858acdbd8545201f6da8a0e70a550caf97",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTagnodepairBase.scala",
+      "retained_sha256": "7d83268a799239b30a22db1c222838858acdbd8545201f6da8a0e70a550caf97",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTagnodepairBase.scala"
+    },
+    {
+      "expected_sha256": "3d427ce009776908e3d431feb7b15bf8651444c78ecb76acbf62efede11d40f5",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTemplatedomBase.scala",
+      "retained_sha256": "3d427ce009776908e3d431feb7b15bf8651444c78ecb76acbf62efede11d40f5",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTemplatedomBase.scala"
+    },
+    {
+      "expected_sha256": "b55b07ec0cb7b935d70acb34d46f37433d4b0be4f69a9c4c3063dd7a2bce7116",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTypeBase.scala",
+      "retained_sha256": "b55b07ec0cb7b935d70acb34d46f37433d4b0be4f69a9c4c3063dd7a2bce7116",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTypeBase.scala"
+    },
+    {
+      "expected_sha256": "5dc008f94d86df19a17e26c2f7d760c2a7732c356981133ec914430346de519d",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTypeargumentBase.scala",
+      "retained_sha256": "5dc008f94d86df19a17e26c2f7d760c2a7732c356981133ec914430346de519d",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTypeargumentBase.scala"
+    },
+    {
+      "expected_sha256": "1e93d7f7e6c79ff0c9cd8a5219ff40d758ea1e63596bb1473af8fca3193e6046",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTypedeclBase.scala",
+      "retained_sha256": "1e93d7f7e6c79ff0c9cd8a5219ff40d758ea1e63596bb1473af8fca3193e6046",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTypedeclBase.scala"
+    },
+    {
+      "expected_sha256": "fb4d85142f08966842b25e96030c6ce653e59f04b409a68f03102f0be50647f3",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTypeparameterBase.scala",
+      "retained_sha256": "fb4d85142f08966842b25e96030c6ce653e59f04b409a68f03102f0be50647f3",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTypeparameterBase.scala"
+    },
+    {
+      "expected_sha256": "cc712f1210c258a5ca2d4edd28e198f631228baccf145b0b70aa32f8e796aa7c",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTyperefBase.scala",
+      "retained_sha256": "cc712f1210c258a5ca2d4edd28e198f631228baccf145b0b70aa32f8e796aa7c",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalTyperefBase.scala"
+    },
+    {
+      "expected_sha256": "5e5769e4f7f83d6c2eecb42501c4634dc75ed585fa56f4fd0493764671f6920f",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalUnknownBase.scala",
+      "retained_sha256": "5e5769e4f7f83d6c2eecb42501c4634dc75ed585fa56f4fd0493764671f6920f",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/TraversalUnknownBase.scala"
+    },
+    {
+      "expected_sha256": "44bae4bb943c301067a4dda77d80f47d19072bb0b190e1974b6899d0eb153bff",
+      "path": "third_party/first-generation/cpg/domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/package.scala",
+      "retained_sha256": "44bae4bb943c301067a4dda77d80f47d19072bb0b190e1974b6899d0eb153bff",
+      "source_id": "cpg:domainClasses/src/main/generated/io/shiftleft/codepropertygraph/generated/traversals/package.scala"
+    },
+    {
+      "expected_sha256": "5eeefbd9be48a625af3b1c8b6abe9eb7dc39d48d2176c537dc36042a4ef23339",
+      "path": "third_party/first-generation/cpg/format_maven_install.json",
+      "retained_sha256": "5eeefbd9be48a625af3b1c8b6abe9eb7dc39d48d2176c537dc36042a4ef23339",
+      "source_id": "cpg:format_maven_install.json"
+    },
+    {
+      "expected_sha256": "ea671d4a89ec002cd53f46d500de19735517f662aa694bead10d37e3f751ac02",
+      "path": "third_party/first-generation/cpg/img/call-site.jpg",
+      "retained_sha256": "ea671d4a89ec002cd53f46d500de19735517f662aa694bead10d37e3f751ac02",
+      "source_id": "cpg:img/call-site.jpg"
+    },
+    {
+      "expected_sha256": "7040f13af03f392bee5567ea961016fd06adcee042f73a6f0ed33731472a498e",
+      "path": "third_party/first-generation/cpg/img/call-site.odg",
+      "retained_sha256": "7040f13af03f392bee5567ea961016fd06adcee042f73a6f0ed33731472a498e",
+      "source_id": "cpg:img/call-site.odg"
+    },
+    {
+      "expected_sha256": "d3ac6281a201a333f78fd523df2cbb668acff004f5fe6aea0ea6280149d99ef2",
+      "path": "third_party/first-generation/cpg/img/program-structure.jpg",
+      "retained_sha256": "d3ac6281a201a333f78fd523df2cbb668acff004f5fe6aea0ea6280149d99ef2",
+      "source_id": "cpg:img/program-structure.jpg"
+    },
+    {
+      "expected_sha256": "769dab4633cdada8a7d4edc491636b2178bb56b5e9f6e6425d983752615bfb15",
+      "path": "third_party/first-generation/cpg/img/program-structure.odg",
+      "retained_sha256": "769dab4633cdada8a7d4edc491636b2178bb56b5e9f6e6425d983752615bfb15",
+      "source_id": "cpg:img/program-structure.odg"
+    },
+    {
+      "expected_sha256": "d54dc85e757a023445ccb4ae3296c8cf5c177fb117c6f5ae17cba790edb3187e",
+      "path": "third_party/first-generation/cpg/img/type-declaration.jpg",
+      "retained_sha256": "d54dc85e757a023445ccb4ae3296c8cf5c177fb117c6f5ae17cba790edb3187e",
+      "source_id": "cpg:img/type-declaration.jpg"
+    },
+    {
+      "expected_sha256": "338f9a77e92c68b19a531833c1abb8171a60181203ef67b846fc4b682cf91c7c",
+      "path": "third_party/first-generation/cpg/img/type-declaration.odg",
+      "retained_sha256": "338f9a77e92c68b19a531833c1abb8171a60181203ef67b846fc4b682cf91c7c",
+      "source_id": "cpg:img/type-declaration.odg"
+    },
+    {
+      "expected_sha256": "91a48f70ff111d9e8bad372efe6412b7ede70c8d6456926c7fa0c04547699804",
+      "path": "third_party/first-generation/cpg/maven_install.json",
+      "retained_sha256": "91a48f70ff111d9e8bad372efe6412b7ede70c8d6456926c7fa0c04547699804",
+      "source_id": "cpg:maven_install.json"
+    },
+    {
+      "expected_sha256": "3a4619496053f86c1bafdb14c971a2c1829ddce7d296ca0373d7dd97736c600c",
+      "path": "third_party/first-generation/cpg/private-key.pem.enc",
+      "retained_sha256": "3a4619496053f86c1bafdb14c971a2c1829ddce7d296ca0373d7dd97736c600c",
+      "source_id": "cpg:private-key.pem.enc"
+    },
+    {
+      "expected_sha256": "082131c77b6771cca6c1661275e21bc4272b73d5f97869fa3025312445fa187d",
+      "path": "third_party/first-generation/cpg/project/FileUtils.scala",
+      "retained_sha256": "082131c77b6771cca6c1661275e21bc4272b73d5f97869fa3025312445fa187d",
+      "source_id": "cpg:project/FileUtils.scala"
+    },
+    {
+      "expected_sha256": "b661b8be7db0cfe87b8f23f65f1b2fb8d0848e62801d04ad73c40936d8cf10a3",
+      "path": "third_party/first-generation/cpg/project/Projects.scala",
+      "retained_sha256": "b661b8be7db0cfe87b8f23f65f1b2fb8d0848e62801d04ad73c40936d8cf10a3",
+      "source_id": "cpg:project/Projects.scala"
+    },
+    {
+      "expected_sha256": "7a71074e1c14695ef1f46061d929465bae9dc842e0483eb42aee130c418d8b21",
+      "path": "third_party/first-generation/cpg/project/Utils.scala",
+      "retained_sha256": "7a71074e1c14695ef1f46061d929465bae9dc842e0483eb42aee130c418d8b21",
+      "source_id": "cpg:project/Utils.scala"
+    },
+    {
+      "expected_sha256": "916cb600759bfc824c99c566d18394adfb6f201621575890ef264cef7941ce49",
+      "path": "third_party/first-generation/cpg/project/Versions.scala",
+      "retained_sha256": "916cb600759bfc824c99c566d18394adfb6f201621575890ef264cef7941ce49",
+      "source_id": "cpg:project/Versions.scala"
+    },
+    {
+      "expected_sha256": "e72872dd14ba73acb3ffb113fb4bbf10ea4b150f31297437a0b76454ca75bcf6",
+      "path": "third_party/first-generation/cpg/project/build.properties",
+      "retained_sha256": "e72872dd14ba73acb3ffb113fb4bbf10ea4b150f31297437a0b76454ca75bcf6",
+      "source_id": "cpg:project/build.properties"
+    },
+    {
+      "expected_sha256": "85db9e5c3baa5b4f89a2bbacc7006121e9bee6c27880d5424d3276ea857aed00",
+      "path": "third_party/first-generation/cpg/project/plugins.sbt",
+      "retained_sha256": "85db9e5c3baa5b4f89a2bbacc7006121e9bee6c27880d5424d3276ea857aed00",
+      "source_id": "cpg:project/plugins.sbt"
+    },
+    {
+      "expected_sha256": "edcd3da5305a13edbf4ce682003c5b5f62245e84ce410fe50c0027f3da5296c3",
+      "path": "third_party/first-generation/cpg/project/project/Versions.scala",
+      "retained_sha256": "edcd3da5305a13edbf4ce682003c5b5f62245e84ce410fe50c0027f3da5296c3",
+      "source_id": "cpg:project/project/Versions.scala"
+    },
+    {
+      "expected_sha256": "6e1a5a230d3ac1ec66cc1040d6f096aa77fd020df521ab6090ceb74b3085ca3f",
+      "path": "third_party/first-generation/cpg/proto-bindings/build.sbt",
+      "retained_sha256": "6e1a5a230d3ac1ec66cc1040d6f096aa77fd020df521ab6090ceb74b3085ca3f",
+      "source_id": "cpg:proto-bindings/build.sbt"
+    },
+    {
+      "expected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "third_party/first-generation/cpg/proto-bindings/src/main/protobuf/empty-to-avoid-warnings",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_id": "cpg:proto-bindings/src/main/protobuf/empty-to-avoid-warnings"
+    },
+    {
+      "expected_sha256": "6d56d5acfc914cdc5596b75b094ade7bbbfe64edcb474962a06a54c89f659ca2",
+      "path": "third_party/first-generation/cpg/resources/log4j2-test.xml",
+      "retained_sha256": "6d56d5acfc914cdc5596b75b094ade7bbbfe64edcb474962a06a54c89f659ca2",
+      "source_id": "cpg:resources/log4j2-test.xml"
+    },
+    {
+      "expected_sha256": "06aa2f53fbe2a2bba3ef707e98070da98c4b8e435940f57095beb198ba58e7dc",
+      "path": "third_party/first-generation/cpg/samples/customcpg/README.md",
+      "retained_sha256": "06aa2f53fbe2a2bba3ef707e98070da98c4b8e435940f57095beb198ba58e7dc",
+      "source_id": "cpg:samples/customcpg/README.md"
+    },
+    {
+      "expected_sha256": "21faeac266c4f37060a253c6f77b99f867df372ad719659c6b6886c6584dedde",
+      "path": "third_party/first-generation/cpg/samples/customcpg/local-m2-publish.sh",
+      "retained_sha256": "21faeac266c4f37060a253c6f77b99f867df372ad719659c6b6886c6584dedde",
+      "source_id": "cpg:samples/customcpg/local-m2-publish.sh"
+    },
+    {
+      "expected_sha256": "555f48a5a1245b649c18030877bdf43ac86c444cf63d2b8db4028ad974301a19",
+      "path": "third_party/first-generation/cpg/samples/customcpg/schemas/myschema.json",
+      "retained_sha256": "555f48a5a1245b649c18030877bdf43ac86c444cf63d2b8db4028ad974301a19",
+      "source_id": "cpg:samples/customcpg/schemas/myschema.json"
+    },
+    {
+      "expected_sha256": "1d860f5d3b0a131f979b2108a5b844e43278948f4eed2ebe1821de9af0da34bd",
+      "path": "third_party/first-generation/cpg/samples/pass/README.md",
+      "retained_sha256": "1d860f5d3b0a131f979b2108a5b844e43278948f4eed2ebe1821de9af0da34bd",
+      "source_id": "cpg:samples/pass/README.md"
+    },
+    {
+      "expected_sha256": "64892a83c1925d18c82d9b0b7a270b51e0d84fc6383a763045bbd13acc63673b",
+      "path": "third_party/first-generation/cpg/samples/pass/build.sbt",
+      "retained_sha256": "64892a83c1925d18c82d9b0b7a270b51e0d84fc6383a763045bbd13acc63673b",
+      "source_id": "cpg:samples/pass/build.sbt"
+    },
+    {
+      "expected_sha256": "d83a16e5dbc04dc58942017f08616b9b7d84eb90dfc65e254162b401d913e039",
+      "path": "third_party/first-generation/cpg/samples/pass/project/plugins.sbt",
+      "retained_sha256": "d83a16e5dbc04dc58942017f08616b9b7d84eb90dfc65e254162b401d913e039",
+      "source_id": "cpg:samples/pass/project/plugins.sbt"
+    },
+    {
+      "expected_sha256": "116d2b51c486ec4f6ec7011d31aa491e4082af98ac83140672e3293e1c811e07",
+      "path": "third_party/first-generation/cpg/samples/pass/samplepass.sh",
+      "retained_sha256": "116d2b51c486ec4f6ec7011d31aa491e4082af98ac83140672e3293e1c811e07",
+      "source_id": "cpg:samples/pass/samplepass.sh"
+    },
+    {
+      "expected_sha256": "665808a4161e8a4149e78b49fb9a365e7a4f67c59841083b3b162c61fc2e4522",
+      "path": "third_party/first-generation/cpg/samples/pass/src/main/scala/io/shiftleft/passes/mypass/SamplePass.scala",
+      "retained_sha256": "665808a4161e8a4149e78b49fb9a365e7a4f67c59841083b3b162c61fc2e4522",
+      "source_id": "cpg:samples/pass/src/main/scala/io/shiftleft/passes/mypass/SamplePass.scala"
+    },
+    {
+      "expected_sha256": "75c818248879cb3ac3c100729d6267902b169f13fa2e5bb48cceb9fe9f814bad",
+      "path": "third_party/first-generation/cpg/samples/pass/src_cpg.bin.zip",
+      "retained_sha256": "75c818248879cb3ac3c100729d6267902b169f13fa2e5bb48cceb9fe9f814bad",
+      "source_id": "cpg:samples/pass/src_cpg.bin.zip"
+    },
+    {
+      "expected_sha256": "dc73e6a5eb0def31449846c80146696965f002c305240415b8e460a798407a5f",
+      "path": "third_party/first-generation/cpg/schema/BUILD",
+      "retained_sha256": "dc73e6a5eb0def31449846c80146696965f002c305240415b8e460a798407a5f",
+      "source_id": "cpg:schema/BUILD"
+    },
+    {
+      "expected_sha256": "2b4e293e99233a4adf64538bac5a2480db47dea3be759fbce6dc5f29ed8adc4d",
+      "path": "third_party/first-generation/cpg/schema/build.sbt",
+      "retained_sha256": "2b4e293e99233a4adf64538bac5a2480db47dea3be759fbce6dc5f29ed8adc4d",
+      "source_id": "cpg:schema/build.sbt"
+    },
+    {
+      "expected_sha256": "94c0771278a0e942ade8c3eaed04d2a27daa9d46f4594977a49168cb22bd800c",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Annotation.scala",
+      "retained_sha256": "94c0771278a0e942ade8c3eaed04d2a27daa9d46f4594977a49168cb22bd800c",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Annotation.scala"
+    },
+    {
+      "expected_sha256": "dd3fe0ad05f427e94fedcaff66234a64014f868e1fd203fafd9519fe4886fb93",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Ast.scala",
+      "retained_sha256": "dd3fe0ad05f427e94fedcaff66234a64014f868e1fd203fafd9519fe4886fb93",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Ast.scala"
+    },
+    {
+      "expected_sha256": "1553bf86adb331409c8f7123f3a91320c854aabe2990203d17d38d32ea5607ab",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Base.scala",
+      "retained_sha256": "1553bf86adb331409c8f7123f3a91320c854aabe2990203d17d38d32ea5607ab",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Base.scala"
+    },
+    {
+      "expected_sha256": "b57e1de1f66f1789e17bb15d6fca1d75295831ddbdfc4e9735e3f0abb4faea3e",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Binding.scala",
+      "retained_sha256": "b57e1de1f66f1789e17bb15d6fca1d75295831ddbdfc4e9735e3f0abb4faea3e",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Binding.scala"
+    },
+    {
+      "expected_sha256": "897c6a46ae6861a9d15df61953e63b35d24bdba03e73ff1322abb258a15d0c9a",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/CallGraph.scala",
+      "retained_sha256": "897c6a46ae6861a9d15df61953e63b35d24bdba03e73ff1322abb258a15d0c9a",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/CallGraph.scala"
+    },
+    {
+      "expected_sha256": "6425a2578b20fc8c0c9283fc74e47f3aac22b471fff2904b710c51998d2be7b6",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Cfg.scala",
+      "retained_sha256": "6425a2578b20fc8c0c9283fc74e47f3aac22b471fff2904b710c51998d2be7b6",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Cfg.scala"
+    },
+    {
+      "expected_sha256": "b556ac97cabc9b3360b196dcb2354c193ac37f2d1369813da047e0cee81c6505",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Comment.scala",
+      "retained_sha256": "b556ac97cabc9b3360b196dcb2354c193ac37f2d1369813da047e0cee81c6505",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Comment.scala"
+    },
+    {
+      "expected_sha256": "45c5b4773db3afcf1ad7d23d2f78f174802f88f87a7e704ba3a236588af2889a",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Configuration.scala",
+      "retained_sha256": "45c5b4773db3afcf1ad7d23d2f78f174802f88f87a7e704ba3a236588af2889a",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Configuration.scala"
+    },
+    {
+      "expected_sha256": "92a8940dc1aee7df51aa23acb818446a612c4f59bb6f72ee981342315c5743bd",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/CpgSchema.scala",
+      "retained_sha256": "92a8940dc1aee7df51aa23acb818446a612c4f59bb6f72ee981342315c5743bd",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/CpgSchema.scala"
+    },
+    {
+      "expected_sha256": "1e1c134a2f62e4b6c991aea5ef6088ebc6d4b0cfb696d984171d328989c84d02",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Dominators.scala",
+      "retained_sha256": "1e1c134a2f62e4b6c991aea5ef6088ebc6d4b0cfb696d984171d328989c84d02",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Dominators.scala"
+    },
+    {
+      "expected_sha256": "0eb2998831e1cf4bfc51b29581efdf9e2a6f0ce7328cbc72c68a633d45181ded",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/FileSystem.scala",
+      "retained_sha256": "0eb2998831e1cf4bfc51b29581efdf9e2a6f0ce7328cbc72c68a633d45181ded",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/FileSystem.scala"
+    },
+    {
+      "expected_sha256": "cbef629f08ebd07dd16354e11038481b62c4017b09ca498d01b51b75d98f8f92",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Finding.scala",
+      "retained_sha256": "cbef629f08ebd07dd16354e11038481b62c4017b09ca498d01b51b75d98f8f92",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Finding.scala"
+    },
+    {
+      "expected_sha256": "0ce3c8b931302e730eb5d998b1242b922cd3c7716d19c182046fe4315db014a9",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Hidden.scala",
+      "retained_sha256": "0ce3c8b931302e730eb5d998b1242b922cd3c7716d19c182046fe4315db014a9",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Hidden.scala"
+    },
+    {
+      "expected_sha256": "b393a9ae6de5dc5f730be1078bbf950f4673ed796eba2e3d111c0c3c7aceefda",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/MetaData.scala",
+      "retained_sha256": "b393a9ae6de5dc5f730be1078bbf950f4673ed796eba2e3d111c0c3c7aceefda",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/MetaData.scala"
+    },
+    {
+      "expected_sha256": "7643ca415b9218aa0d30d49dca34ee9613ef71c755f5f607994a482d26bf90b6",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Method.scala",
+      "retained_sha256": "7643ca415b9218aa0d30d49dca34ee9613ef71c755f5f607994a482d26bf90b6",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Method.scala"
+    },
+    {
+      "expected_sha256": "3dcceb8a131da28890c34077788fd27a841b11fb29130027539846c897698444",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Namespace.scala",
+      "retained_sha256": "3dcceb8a131da28890c34077788fd27a841b11fb29130027539846c897698444",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Namespace.scala"
+    },
+    {
+      "expected_sha256": "5a5f67dec4cdc847939c1f083e5b64e4eb053e6b4f4dc153b5e7ee00009b5511",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Operators.scala",
+      "retained_sha256": "5a5f67dec4cdc847939c1f083e5b64e4eb053e6b4f4dc153b5e7ee00009b5511",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Operators.scala"
+    },
+    {
+      "expected_sha256": "43c6e82d23f36c029e77f5d6a4f9fe977f8f8df10356eb3a6ca99dab159401e8",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Pdg.scala",
+      "retained_sha256": "43c6e82d23f36c029e77f5d6a4f9fe977f8f8df10356eb3a6ca99dab159401e8",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Pdg.scala"
+    },
+    {
+      "expected_sha256": "0251b6a362c4ea92e37e94280c1f67c5bc19e343ce77c903d27fa784177ad8fe",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/ProtoIds.scala",
+      "retained_sha256": "0251b6a362c4ea92e37e94280c1f67c5bc19e343ce77c903d27fa784177ad8fe",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/ProtoIds.scala"
+    },
+    {
+      "expected_sha256": "cb820e96a6a03c0ec82747b7fc18e216f36ec40a9726cf03aba57334612cd94a",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/ProtoSerialize.scala",
+      "retained_sha256": "cb820e96a6a03c0ec82747b7fc18e216f36ec40a9726cf03aba57334612cd94a",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/ProtoSerialize.scala"
+    },
+    {
+      "expected_sha256": "f1e5763c43c7a96e6fe28c744afaae03c78bfc22ef52079da9979360e7753363",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Protogen.scala",
+      "retained_sha256": "f1e5763c43c7a96e6fe28c744afaae03c78bfc22ef52079da9979360e7753363",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Protogen.scala"
+    },
+    {
+      "expected_sha256": "8c14ae004fd3baba83259b4dc261956a3215f629fc064615e0c492278ce4425e",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/SchemaBase.scala",
+      "retained_sha256": "8c14ae004fd3baba83259b4dc261956a3215f629fc064615e0c492278ce4425e",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/SchemaBase.scala"
+    },
+    {
+      "expected_sha256": "9cdda8755ede9c1862f47009e6aa5fd4be4153a378742ea18c115e81cd5bcb8a",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Shortcuts.scala",
+      "retained_sha256": "9cdda8755ede9c1862f47009e6aa5fd4be4153a378742ea18c115e81cd5bcb8a",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Shortcuts.scala"
+    },
+    {
+      "expected_sha256": "226143a2fc86d2b10fea5690529cfba4d35bc637a34965f3aaa5509f35bb8c65",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Tags.scala",
+      "retained_sha256": "226143a2fc86d2b10fea5690529cfba4d35bc637a34965f3aaa5509f35bb8c65",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Tags.scala"
+    },
+    {
+      "expected_sha256": "30f4930c1fff1f3031441ff7a0c506bae4ced145321ce4f3eb1001dcc1e518fe",
+      "path": "third_party/first-generation/cpg/schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Type.scala",
+      "retained_sha256": "30f4930c1fff1f3031441ff7a0c506bae4ced145321ce4f3eb1001dcc1e518fe",
+      "source_id": "cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Type.scala"
+    },
+    {
+      "expected_sha256": "5e4280f651bd496fecc801b9eb9f3735aaffcf9d8e1fee31d5e4a09ea9895586",
+      "git_object_kind": "SYMLINK_TARGET_TEXT",
+      "path": "third_party/first-generation/cpg/schema2json.sh",
+      "retained_sha256": "5e4280f651bd496fecc801b9eb9f3735aaffcf9d8e1fee31d5e4a09ea9895586",
+      "source_id": "cpg:schema2json.sh"
+    },
+    {
+      "expected_sha256": "0d77b62bac063d5b466ee694daa066914981313741b94e402a83613c0e235caf",
+      "path": "third_party/first-generation/cpg/schema2json/BUILD",
+      "retained_sha256": "0d77b62bac063d5b466ee694daa066914981313741b94e402a83613c0e235caf",
+      "source_id": "cpg:schema2json/BUILD"
+    },
+    {
+      "expected_sha256": "a0dfabf15e901bc406818fa155e188a9f46bf75e4cfeaaba13f90cb05514f667",
+      "path": "third_party/first-generation/cpg/schema2json/build.sbt",
+      "retained_sha256": "a0dfabf15e901bc406818fa155e188a9f46bf75e4cfeaaba13f90cb05514f667",
+      "source_id": "cpg:schema2json/build.sbt"
+    },
+    {
+      "expected_sha256": "c1de15147a0cd742815450fdf7a0f1c3c47d90ed9e542d2c51d347c300fa76eb",
+      "path": "third_party/first-generation/cpg/schema2json/src/main/scala/Schema2Json.scala",
+      "retained_sha256": "c1de15147a0cd742815450fdf7a0f1c3c47d90ed9e542d2c51d347c300fa76eb",
+      "source_id": "cpg:schema2json/src/main/scala/Schema2Json.scala"
+    },
+    {
+      "expected_sha256": "97440df9a38072a0763a9b44274a71fd3c008c5800cb24e8e70e8df345363c7c",
+      "path": "third_party/first-generation/cpg/updateDependencies.sh",
+      "retained_sha256": "97440df9a38072a0763a9b44274a71fd3c008c5800cb24e8e70e8df345363c7c",
+      "source_id": "cpg:updateDependencies.sh"
+    }
+  ],
+  "record_kind": "SOURCE_CONTENT_IDENTITY_ONLY",
+  "semantic_verification": "NOT_RUN",
+  "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465"
+}

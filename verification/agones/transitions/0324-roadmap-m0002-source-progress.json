@@ -1,0 +1,13 @@
+{
+  "authorization": "Explicit combined /goal invocation",
+  "event": "ROADMAP_M0002_SOURCE_PROGRESS",
+  "global_gate": "CLOSED",
+  "milestone_stage": "IMPLEMENTING",
+  "partial_adoption": "verification/agones/roadmap-M0002-partial-map.json",
+  "predecessor_revision": 323,
+  "predecessor_sha256": "86ac8859f74d34b0bb7e0030234b6b60a5265f5d3eb9b2ae9bb84de8e7b30843",
+  "result_revision": 324,
+  "route_switch": false,
+  "state_sha256": "2cef5839a2a929323977ed78166def94c54d78638f29079ba5d88206c0982905",
+  "timestamp": "2026-10-26T17:56:02.591725+00:00"
+}

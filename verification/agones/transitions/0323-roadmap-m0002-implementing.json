@@ -1,0 +1,11 @@
+{
+  "authorization": "Combined /goal attachment",
+  "event": "ROADMAP_M0002_IMPLEMENTING",
+  "global_gate": "CLOSED",
+  "milestone": "M0002",
+  "predecessor_revision": 322,
+  "predecessor_sha256": "0db74771ca359fd9390a4e2225881dd36a16c629b05138f4d7f8c345dfd06030",
+  "result_revision": 323,
+  "route": "CPG",
+  "state_sha256": "86ac8859f74d34b0bb7e0030234b6b60a5265f5d3eb9b2ae9bb84de8e7b30843"
+}

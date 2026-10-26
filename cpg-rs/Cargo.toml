@@ -7,7 +7,9 @@ license = "Apache-2.0 AND (MPL-2.0 OR EPL-1.0)"
 repository = "https://github.com/QuasarRay/agones"
 
 [workspace]
-members = [".", "schema"]
+# schema/ is the literal upstream source mirror. The separately retained
+# CPGSchema workspace is adopted through the source map in M0006.
+members = ["."]
 resolver = "2"
 
 [features]

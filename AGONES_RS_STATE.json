@@ -665,7 +665,7 @@
       "receipt": "verification/agones/ci/native675-recovery-published.json",
       "status": "PUBLISHED_NATIVE_RECOVERY_ONLY_FORMAL_ACCEPTANCE_PENDING"
     },
-    "next_action": "Implement M0002 pinned CPG source/build/support boundaries. Read only M0002 affected sections. No compiler, generator validation, tests or CI.",
+    "next_action": "Continue M0002 CPG: close target/plugin/task adoption and version/codec/I/O exception ownership from the partial map. Keep this route until the full M0002 implementation is authored. Do not compile/probe/test/validate generators or start M0003.",
     "pending_checkpoint": {
       "current_formal_credit": 0,
       "generation_modes": 7,
@@ -739,7 +739,7 @@
         "disposition": "READY",
         "milestone_id": "M0002",
         "route": "CPG",
-        "stage": "PLANNED"
+        "stage": "IMPLEMENTING"
       },
       "forecast_baseline": "verification/agones/roadmap/forecast-baseline-v1.json",
       "forecast_baseline_sha256": "ee1cc5bb26dd418bb87348e4b22bf6b41ba03626484c5b373a7ef717fd8d7d69",
@@ -761,25 +761,51 @@
         "M0001": {
           "adoption_record": "verification/agones/roadmap-adoption-M0001.json",
           "cost_comparison": "cost-analysis-comparison/0001-M0001.md",
-          "delivery": "LOCAL_CHECKPOINT_PENDING; remote delivery deferred by strict gate",
+          "delivery": "LOCAL_COMMIT_ONLY; remote deferred by gate",
           "disposition": "COMPLETE",
+          "local_checkpoint": "53a958f76",
           "owned_file_count": 13,
           "stage": "IMPLEMENTED_UNVERIFIED",
           "usage_end": "verification/agones/roadmap-M0001-end-usage.json",
           "usage_start": "verification/agones/roadmap-M0001-entry-usage.json"
+        },
+        "M0002": {
+          "disposition": "READY",
+          "forecast_id": "F-M0002-v1",
+          "gaps": [
+            "M0002-TARGET-ADOPTION",
+            "M0002-PLUGIN-TASK-CLOSURE",
+            "M0002-SCHEMA-BUILD-OWNERSHIP",
+            "M0002-VERSION-INITIALIZATION",
+            "M0002-IO-ERROR-BOUNDARY",
+            "M0002-BODY-AND-SUPPORT-RECONCILIATION"
+          ],
+          "owned_entry_count": 49,
+          "partial_adoption_record": "verification/agones/roadmap-M0002-partial-map.json",
+          "progress_usage_observation": "verification/agones/roadmap-M0002-progress-usage-1.json",
+          "source_identity_receipt": "verification/agones/roadmap-M0002-source-identities.json",
+          "source_pin": "301c4010d28ecdac05bc2ed44310f56446459465",
+          "stage": "IMPLEMENTING",
+          "usage_start": "verification/agones/roadmap-M0002-entry-usage.json"
         }
       },
-      "next_action": "Implement M0002 pinned CPG source/build/support boundaries. Read only M0002 affected sections. No compiler, generator validation, tests or CI.",
+      "next_action": "Continue M0002 CPG: close target/plugin/task adoption and version/codec/I/O exception ownership from the partial map. Keep this route until the full M0002 implementation is authored. Do not compile/probe/test/validate generators or start M0003.",
       "objective": "AGONES_AND_CPG_COMBINED_ROADMAP",
       "objective_attachment": "/home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt",
       "objective_attachment_sha256": "a9b797fc624be04548c62e63a634bcc2cacab25c4d9f45af346148ba32c1baea",
       "project_phase": "IMPLEMENTATION_ONLY",
+      "shared_completion_and_switch_usage": {
+        "attribution": "Shared canonical ledger/adoption/cost record, checkpoint and route-switch reading. M0001-only full accounting is unknown; this segment is charged once here.",
+        "end": "verification/agones/roadmap-M0002-entry-usage.json",
+        "observed_tokens": 16573,
+        "start": "verification/agones/roadmap-M0001-end-usage.json"
+      },
       "shared_setup_usage": {
         "attribution": "Shared contract/attachment/ledger recovery including initial M0001 source reconnaissance; excluded from route comparison. No credits exposed.",
         "end_observation": "verification/agones/roadmap-M0001-entry-usage.json",
         "tokens_before_first_milestone": 79348
       },
-      "usage_accounting_status": "M0001 observed segment recorded; closing accounting and route setup will be attributed once at the next milestone boundary.",
+      "usage_accounting_status": "M0001 complete-work observed segment retained; shared completion/route-switch cost separately charged, exact standalone full milestone attribution UNKNOWN.",
       "verification_status": "NOT_STARTED"
     },
     "streaming_direct_paths_expected_tested_merge": "e3010b88e98025e11d41f272126e8b39a171c913",
@@ -801,9 +827,9 @@
   "goal": {
     "objective_attachment": "/home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt",
     "reported_usage": {
-      "observed_at": 1793034866,
-      "time_seconds": 803,
-      "tokens": 137099
+      "observed_at": 1793037189,
+      "time_seconds": 3127,
+      "tokens": 243143
     },
     "status": "active",
     "thread_id": "01a17928-8551-7701-8497-5333c680f283",
@@ -811,8 +837,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 321,
-  "previous_sha256": "fd85b5ee58acdd317c1470c287c47ef402e6a6ed093809719d523d0b71aafaec",
+  "previous_revision": 323,
+  "previous_sha256": "86ac8859f74d34b0bb7e0030234b6b60a5265f5d3eb9b2ae9bb84de8e7b30843",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -1516,7 +1542,7 @@
       "timestamp": "2026-10-21T09:42:01.132215+00:00"
     }
   ],
-  "revision": 322,
+  "revision": 324,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [
@@ -2071,11 +2097,13 @@
   ],
   "workspace": {
     "branch": "agones-rs-dev",
-    "dirty_patch_sha256": "810ba58459c3e8854374384fb59dc4db9c4f62e699e697bb75d710c46c1eb428",
-    "head": "ea56d060a0f817ba6d077436a869b7a858dd0436",
+    "dirty_patch_scope": "Tracked diff at capture excluding canonical state/handoff; newly authored source payloads are bound by the partial adoption manifest.",
+    "dirty_patch_sha256": "cab986f50e0fd8bee24c2f743416eee8ffaa4d12cd46f9fa9dc5bddaa507aa99",
+    "head": "53a958f76044ed3784dfcfec4908685673839b4d",
     "last_validated_implementation": "verification/agones/gates/fa682f3bc2dded24a213b49d3337fb7a5a711fb02321ddac5057353491b48f72.json",
     "last_validated_implementation_status": "HISTORICAL_STALE; not a combined-contract gate",
     "path": "/home/astral/Projects/agones",
+    "snapshot_kind": "BASE_COMMIT_PLUS_M0002_PAYLOAD_DIGESTS",
     "source_binding_receipt": "verification/agones/runs/gameserver-general-validation-bolero-kani-ci-39572135297-1-case-010.json",
     "untracked_inputs": [
       "AGONES_RS_CONTINUATION_PROMPT.md",
