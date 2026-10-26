@@ -14,19 +14,26 @@ pub fn listFilesRecursively<Context: HasBuildIo>(
     for root in roots {
         for path in context.build_io().walk(root)? {
             let path = path?;
-            if !path.is_dir() { files.push(path); }
+            if !context.build_io().file_is_directory(&path) { files.push(path); }
         }
     }
     Ok(files)
 }
 
 pub fn deleteRecursively<Context: HasBuildIo>(context: &Context, root: &Path) -> Result<()> {
-    if root.exists() {
-        // The source calls Iterator.collect and discards the lazy iterator in
-        // a Unit method. It never evaluates either deletion branch. Preserve
-        // opening Files.walk, but do not turn that expression into eager rm.
-        // The CGP resource owner retains the unconsumed walk until teardown.
-        let _unconsumed_walk = context.build_io().walk(root)?;
+    if context.build_io().file_exists(root) {
+        // The source discards its lazy collect. Retain both source branch
+        // bodies in the unconsumed iterator rather than executing eager rm.
+        // Its walk remains owned by the CGP context after this view is dropped.
+        let _unconsumed_deletions = context.build_io().walk(root)?.map(|entry| -> Result<()> {
+            let file = entry?;
+            if context.build_io().file_is_directory(&file) {
+                deleteRecursively(context, &file)
+            } else {
+                let _deleted = context.build_io().file_delete(&file);
+                Ok(())
+            }
+        });
     }
     Ok(())
 }
@@ -36,7 +43,7 @@ pub fn md5<Context: HasBuildIo>(context: &Context, roots: &[PathBuf]) -> Result<
     for root in roots {
         for path in context.build_io().walk(root)? {
             let path = path?;
-            if path.is_dir() { continue; }
+            if context.build_io().file_is_directory(&path) { continue; }
             let reader = context.build_io().open_reader(&path)?;
             // Match the source available/read loop, including files for which
             // available is zero before EOF. Failures retain the owned reader.

@@ -4,6 +4,13 @@ pub mod build_contracts;
 pub mod declarations;
 pub mod lifecycle;
 pub mod source_io;
+pub mod error;
+pub mod codec;
+pub mod singletons;
+pub mod process;
+pub mod packaging;
+pub mod stages;
+pub mod source_tasks;
 
 #[path = "../../../cpg-rs/project/FileUtils.rs"]
 #[allow(non_snake_case)]
@@ -21,5 +28,5 @@ pub mod Versions;
 #[allow(non_snake_case)]
 pub mod ProjectVersions;
 
-pub use cpg_rs::{Error, Result};
+pub use error::{Error, Result};
 pub use lifecycle::NativeBuildContext;

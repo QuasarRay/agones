@@ -1,0 +1,18 @@
+{
+  "adoption": "verification/agones/roadmap-adoption-M0002.json",
+  "authorization": "Explicit combined /goal invocation and mandatory alternation policy",
+  "event": "ROADMAP_M0002_IMPLEMENTED_UNVERIFIED_AND_ROUTE_SWITCH",
+  "global_gate": "CLOSED",
+  "milestone_stage": "IMPLEMENTED_UNVERIFIED",
+  "native_goal_status": "active",
+  "predecessor_revision": 324,
+  "predecessor_sha256": "2cef5839a2a929323977ed78166def94c54d78638f29079ba5d88206c0982905",
+  "result_revision": 325,
+  "route_switch": {
+    "from": "CPG M0002",
+    "to": "MANUAL M0003"
+  },
+  "state_sha256": "1110b627a6065899b91f793e4c939a707b5be403ee8f0115fbc17dbad8846f5e",
+  "timestamp": "2026-10-26T20:16:00.898421+00:00",
+  "verification": "NOT_STARTED"
+}

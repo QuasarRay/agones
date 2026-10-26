@@ -1,0 +1,943 @@
+{
+  "behavior": "UNVERIFIED",
+  "body_accounting_rows": 62,
+  "body_ownership": "verification/agones/roadmap-M0002-body-ownership.json",
+  "compilation": "UNVERIFIED",
+  "composition": {
+    "capabilities": [
+      "HasBuildIo",
+      "HasBuildProjectRoot",
+      "HasBuildSingletons",
+      "CanLoadBuildConfiguration",
+      "CanExecuteNativeTarget",
+      "CanRunProtobufBuildTask",
+      "CanRunNativeBuildStage",
+      "CanRunSourceBuildTask",
+      "CanBuildCpgSchema",
+      "CanGenerateCpgProto",
+      "CanExportCpgSchemaJson",
+      "CanGenerateCpgBindings"
+    ],
+    "declaration": "NativeBuildContext",
+    "graph_owner": "Existing cpg-rs Grafeo graph/persistence runtime; dependency reuse only, with no broad replacement/deletion of existing implementations.",
+    "lifecycle": "NativeBuildContext::{new,load_with_previous,run_source_task_with_previous,reloaded}",
+    "mutable_owners": "One BuildIo owns source root, walks/readers and directory retry policy; BuildSingletons owns two distinct defining-scope cells. No duplicated root field. Synchronous process guards own children; logger workers join. No detached task, runtime provider registry or second graph.",
+    "production_entrypoint": "rust-support/cpg/src/main.rs",
+    "template": "NativeBuildProviders"
+  },
+  "cost_comparison": "cost-analysis-comparison/0002-M0002.md",
+  "delivery": "LOCAL_CHECKPOINT_ONLY; remote checks remain deferred by the absolute gate",
+  "dependency_adoption": "verification/agones/roadmap-M0002-dependency-adoption.json",
+  "disposition": "COMPLETE",
+  "downstream_required_implementation": [
+    {
+      "milestone": "M0006",
+      "scope": "Full schema builder/module/body adoption; retain CPGSchema and existing native implementation until exact ownership transfers."
+    },
+    {
+      "milestone": "M0008",
+      "scope": "Complete schema export/Protogen/Schema2Json/protobuf tool input, native launchers and all source CLI/platform/error behavior."
+    },
+    {
+      "milestone": "M0010",
+      "scope": "Complete schema-derived domain hierarchy and output registration in literal domainClasses source-relative paths."
+    },
+    {
+      "milestone": "M0036",
+      "scope": "Source-qualified CPG harnesses and generation/build compatibility assurance, only after global gate."
+    },
+    {
+      "milestone": "M0038",
+      "scope": "Final scope-complete generated/manual artifact integration, release assembly and authorized delivery."
+    }
+  ],
+  "files": [
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "5b7bd5de9977bd878856b6f5914757aca632eabe",
+      "retained_path": "third_party/first-generation/cpg/.bazelrc",
+      "source_id": "cpg:.bazelrc",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "3ec7099aba9da5cad13fe9fb255b5d5f09da95bd094d9823a070fd05aa0b06d9",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "47da986f86fdaed33e15cdc6431a1abf742e8398",
+      "retained_path": "third_party/first-generation/cpg/.bazelversion",
+      "source_id": "cpg:.bazelversion",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "077ee5b3a3a7fc2622ceff6466fea0c28f3fb08b24653dcc7f4baab29b9aef36",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "56204512e1d95307e28f992e8da281cbb887fbfa",
+      "retained_path": "third_party/first-generation/cpg/.gitattributes",
+      "source_id": "cpg:.gitattributes",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "f3e10a699c2f80ab395aede3bdca2c7ece8baf157b3fc7384e1db8bbc1805de4",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "d473739a11aa2412ce05a76627e694ec1a777b04",
+      "retained_path": "third_party/first-generation/cpg/.github/workflows/pr.yml",
+      "source_id": "cpg:.github/workflows/pr.yml",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "62c40fea699b71a31b9ef71be3a7f9b7e4a8534770a09f89dd45a0c03aaee4da",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "c0dd93d5c39ae16ab375cc8e3b6bb0c1ebb615e3",
+      "retained_path": "third_party/first-generation/cpg/.github/workflows/release.yml",
+      "source_id": "cpg:.github/workflows/release.yml",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "edba9a11be5e6a909cd2d9eadd7c8638dec4519b322f1e7dac27b83dca23968f",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "d4fb1f945ff9880e2d4599626d2b9f6b31cc5b9f",
+      "retained_path": "third_party/first-generation/cpg/.gitignore",
+      "source_id": "cpg:.gitignore",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "9e091a95ae7edc12c30803b4aef85e1f51f24d230d4f7c98cf3f80f4280a4f52",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "retained_path": "third_party/first-generation/cpg/.gitmodules",
+      "source_id": "cpg:.gitmodules",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "retained_path": "third_party/first-generation/cpg/.installation_root",
+      "source_id": "cpg:.installation_root",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "24691b3dbfdd5bb8fd106622b30ba1fc7341e4fd",
+      "retained_path": "third_party/first-generation/cpg/.scalafmt.conf",
+      "source_id": "cpg:.scalafmt.conf",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "7638763ddf518ed7ad58fe359e717675dbe8c2f503f28f0d576ab0e82fbc6133",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "b811fe5c90c81ff526d78f14637ab874e8ac48d3",
+      "retained_path": "third_party/first-generation/cpg/BUILD",
+      "source_id": "cpg:BUILD",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "d331502f744330fa6c5f1e1dff23186ef98595e29b77b46796ab51482004c64a",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "0bfde9ab43afb67241273d83c7f4c6953485d60a",
+      "retained_path": "third_party/first-generation/cpg/LICENSE",
+      "source_id": "cpg:LICENSE",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "10907e9c71b78937d48915c5d78cb3bf18e7a37f9fe5c38eac7388ebf13a2491",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "39339e7a9d2812c556ce9643c659c45c667ebfb5",
+      "retained_path": "third_party/first-generation/cpg/MODULE.bazel",
+      "source_id": "cpg:MODULE.bazel",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "6349b2a361cada1ac1a8e720d5f529f342ee1de0977f90f16c58dbae7ae433a9",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "a9fff93ca84030fae76913d0bd700e7b0f854028",
+      "retained_path": "third_party/first-generation/cpg/MODULE.bazel.lock",
+      "source_id": "cpg:MODULE.bazel.lock",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "e8e53205ae6f5c0e2c20511a158e405245566edef8f420bfe1c2e90809de5f12",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "67cf2a36f54378d8e57a8dc2299ddc63004c442e",
+      "retained_path": "third_party/first-generation/cpg/README.md",
+      "source_id": "cpg:README.md",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "cc3385daade4ca02a306944b7055d3c8219ed8b1a7b25f895c816647523b3d6e",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "retained_path": "third_party/first-generation/cpg/bazel/BUILD",
+      "source_id": "cpg:bazel/BUILD",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "63b02cf1429256a4094bf188f3c397dc959a6ec0",
+      "retained_path": "third_party/first-generation/cpg/bazel/format/BUILD",
+      "source_id": "cpg:bazel/format/BUILD",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "3b590afde4eff4996aabe75df782873cc170b44bcfcf3bbc0f3ef4dc1dcdd6a4",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "authored_sha256": "e85315666436e96c1a21d293615cf3fb3bbd8f1b7dba20d3c012cbd5ea6619f0",
+      "destination": "cpg-rs/bazel/java.bzl",
+      "disposition": "HANDWRITTEN_PRODUCTION",
+      "git_blob": "ab4ecf0b429f2d6e5609beba636b17261849a9f7",
+      "native_counterparts": [
+        "rust-support/cpg/src/build_contracts.rs::java_rules",
+        "rust-support/cpg/src/build_contracts.rs::NativeTarget"
+      ],
+      "retained_path": "third_party/first-generation/cpg/bazel/java.bzl",
+      "source_id": "cpg:bazel/java.bzl",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "e85315666436e96c1a21d293615cf3fb3bbd8f1b7dba20d3c012cbd5ea6619f0",
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "authored_sha256": "a39ce37d0ec68e2fa26a5f9a53646a959bafdac8ff1f724286e7af89a8a0dce2",
+      "destination": "cpg-rs/bazel/scala.bzl",
+      "disposition": "HANDWRITTEN_PRODUCTION",
+      "git_blob": "5b8a4e99e0ec4b1cf299a7d974f3fae1aedf9353",
+      "native_counterparts": [
+        "rust-support/cpg/src/build_contracts.rs::scala_rules",
+        "rust-support/cpg/src/build_contracts.rs::NativeTarget"
+      ],
+      "retained_path": "third_party/first-generation/cpg/bazel/scala.bzl",
+      "source_id": "cpg:bazel/scala.bzl",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "a39ce37d0ec68e2fa26a5f9a53646a959bafdac8ff1f724286e7af89a8a0dce2",
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "authored_sha256": "d49e3c43e754f0654869585324f26046db57cc38a4d6084fb2b07d0e20f3914e",
+      "destination": "cpg-rs/build.sbt",
+      "disposition": "HANDWRITTEN_PRODUCTION",
+      "git_blob": "732d1c48d1ea2d9a0b6a24b3f5b12100ce85f610",
+      "native_counterparts": [
+        "rust-support/cpg/src/build_contracts.rs::LoadNativeBuildConfiguration",
+        "rust-support/cpg/src/lifecycle.rs::NativeBuildContext"
+      ],
+      "retained_path": "third_party/first-generation/cpg/build.sbt",
+      "source_id": "cpg:build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "d49e3c43e754f0654869585324f26046db57cc38a4d6084fb2b07d0e20f3914e",
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "88a5064cc8950f10e121e9566823e2535e240478",
+      "retained_path": "third_party/first-generation/cpg/codepropertygraph/BUILD",
+      "source_id": "cpg:codepropertygraph/BUILD",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "16da69bdbfbafa74b53d77f915f25b53b6e1a3874dab72e9cc25a07a47cc0a94",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "authored_sha256": "56d098b9e21a5362c692086639b27bcfa04182a3c20b098a5030b021a2009c99",
+      "destination": "cpg-rs/codepropertygraph/build.sbt",
+      "disposition": "HANDWRITTEN_PRODUCTION",
+      "git_blob": "f335e113831b23c7974f1370745c35e3478f5f3a",
+      "native_counterparts": [
+        "rust-support/cpg/src/build_contracts.rs::codepropertygraph_dependencies",
+        "rust-support/cpg/src/source_tasks.rs::RunSourceBuildTasks"
+      ],
+      "retained_path": "third_party/first-generation/cpg/codepropertygraph/build.sbt",
+      "source_id": "cpg:codepropertygraph/build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "56d098b9e21a5362c692086639b27bcfa04182a3c20b098a5030b021a2009c99",
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "062ae59f4ac4a65a506dcbda339ba796daa69cb5",
+      "retained_path": "third_party/first-generation/cpg/format_maven_install.json",
+      "source_id": "cpg:format_maven_install.json",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "5eeefbd9be48a625af3b1c8b6abe9eb7dc39d48d2176c537dc36042a4ef23339",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "80752aae5a66db161b92b20c04869f7c0d39845b",
+      "retained_path": "third_party/first-generation/cpg/img/call-site.jpg",
+      "source_id": "cpg:img/call-site.jpg",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "ea671d4a89ec002cd53f46d500de19735517f662aa694bead10d37e3f751ac02",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "d4150663b004b518e273151554f83d3acccdd313",
+      "retained_path": "third_party/first-generation/cpg/img/call-site.odg",
+      "source_id": "cpg:img/call-site.odg",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "7040f13af03f392bee5567ea961016fd06adcee042f73a6f0ed33731472a498e",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "10232fc551ff484f2c4903186be714a12a211361",
+      "retained_path": "third_party/first-generation/cpg/img/program-structure.jpg",
+      "source_id": "cpg:img/program-structure.jpg",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "d3ac6281a201a333f78fd523df2cbb668acff004f5fe6aea0ea6280149d99ef2",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "840ce066e311b4549bbd43f50bea2b73742bfe1e",
+      "retained_path": "third_party/first-generation/cpg/img/program-structure.odg",
+      "source_id": "cpg:img/program-structure.odg",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "769dab4633cdada8a7d4edc491636b2178bb56b5e9f6e6425d983752615bfb15",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "c34e52a1cea5accb2949e2a4268a0de5cc8c2f61",
+      "retained_path": "third_party/first-generation/cpg/img/type-declaration.jpg",
+      "source_id": "cpg:img/type-declaration.jpg",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "d54dc85e757a023445ccb4ae3296c8cf5c177fb117c6f5ae17cba790edb3187e",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "331b9d580dca65a4da08fd782c7629c38f10162c",
+      "retained_path": "third_party/first-generation/cpg/img/type-declaration.odg",
+      "source_id": "cpg:img/type-declaration.odg",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "338f9a77e92c68b19a531833c1abb8171a60181203ef67b846fc4b682cf91c7c",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "75343a6d3a1e3f426310cdd6b5be6cc2d465859c",
+      "retained_path": "third_party/first-generation/cpg/maven_install.json",
+      "source_id": "cpg:maven_install.json",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "91a48f70ff111d9e8bad372efe6412b7ede70c8d6456926c7fa0c04547699804",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "fa949ebced13a6e664d2470bd301108fbf50ae11",
+      "retained_path": "third_party/first-generation/cpg/private-key.pem.enc",
+      "source_id": "cpg:private-key.pem.enc",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "3a4619496053f86c1bafdb14c971a2c1829ddce7d296ca0373d7dd97736c600c",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "authored_sha256": "9ef55f52361acdfd20662d08133abbaf2a4a364a2fbe2d8cc56d7418feb699fc",
+      "destination": "cpg-rs/project/FileUtils.rs",
+      "disposition": "HANDWRITTEN_PRODUCTION",
+      "git_blob": "8d8e5879f7ec1a5af0114e60e4e42c9d2a327fd0",
+      "native_counterparts": [
+        "cpg-rs/project/FileUtils.rs",
+        "rust-support/cpg/src/source_io.rs"
+      ],
+      "retained_path": "third_party/first-generation/cpg/project/FileUtils.scala",
+      "source_id": "cpg:project/FileUtils.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "082131c77b6771cca6c1661275e21bc4272b73d5f97869fa3025312445fa187d",
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "authored_sha256": "bfedc3f61a41fce14fd68efa51d364edd43ff3c94cee269e5572523554400e1a",
+      "destination": "cpg-rs/project/Projects.rs",
+      "disposition": "HANDWRITTEN_PRODUCTION",
+      "git_blob": "53d46b647a32bebfe80718129f64b30dcd61183b",
+      "native_counterparts": [
+        "cpg-rs/project/Projects.rs"
+      ],
+      "retained_path": "third_party/first-generation/cpg/project/Projects.scala",
+      "source_id": "cpg:project/Projects.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "b661b8be7db0cfe87b8f23f65f1b2fb8d0848e62801d04ad73c40936d8cf10a3",
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "authored_sha256": "8ecfcfa1ff23293152eee4ce19ab97f4c32d5e43cbcc8d4adfe36f9774bd9eda",
+      "destination": "cpg-rs/project/Utils.rs",
+      "disposition": "HANDWRITTEN_PRODUCTION",
+      "git_blob": "059dccc14c25be974147f5e13e9cef93a28048f3",
+      "native_counterparts": [
+        "cpg-rs/project/Utils.rs",
+        "rust-support/cpg/src/process.rs"
+      ],
+      "retained_path": "third_party/first-generation/cpg/project/Utils.scala",
+      "source_id": "cpg:project/Utils.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "7a71074e1c14695ef1f46061d929465bae9dc842e0483eb42aee130c418d8b21",
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "authored_sha256": "59b54264b232c6ac853fe055cd1781384aa103e665a3bd16f08863fb2ba2370b",
+      "destination": "cpg-rs/project/Versions.rs",
+      "disposition": "HANDWRITTEN_PRODUCTION",
+      "git_blob": "53d9f2affafc85439de050caffe6b8053e293a25",
+      "native_counterparts": [
+        "cpg-rs/project/Versions.rs",
+        "rust-support/cpg/src/singletons.rs",
+        "rust-support/cpg/src/codec.rs"
+      ],
+      "retained_path": "third_party/first-generation/cpg/project/Versions.scala",
+      "source_id": "cpg:project/Versions.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "916cb600759bfc824c99c566d18394adfb6f201621575890ef264cef7941ce49",
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "b49295c71a981fa966b66b1470357065037ea7e4",
+      "retained_path": "third_party/first-generation/cpg/project/build.properties",
+      "source_id": "cpg:project/build.properties",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "e72872dd14ba73acb3ffb113fb4bbf10ea4b150f31297437a0b76454ca75bcf6",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "authored_sha256": "85db9e5c3baa5b4f89a2bbacc7006121e9bee6c27880d5424d3276ea857aed00",
+      "destination": "cpg-rs/project/plugins.sbt",
+      "disposition": "HANDWRITTEN_PRODUCTION",
+      "git_blob": "495815910b524d9e504a81e5dfeaca4c2331ab68",
+      "native_counterparts": [
+        "rust-support/cpg/src/build_contracts.rs::plugins",
+        "rust-support/cpg/src/stages.rs::NativeFacility"
+      ],
+      "retained_path": "third_party/first-generation/cpg/project/plugins.sbt",
+      "source_id": "cpg:project/plugins.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "85db9e5c3baa5b4f89a2bbacc7006121e9bee6c27880d5424d3276ea857aed00",
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "authored_sha256": "8f4f1defdd92e59235ec4903436d311d5d30584e3fcfdd42164e06ac1976f654",
+      "destination": "cpg-rs/project/project/Versions.rs",
+      "disposition": "HANDWRITTEN_PRODUCTION",
+      "git_blob": "7c7ddb3d2e4ee3e0e6383d65b57acbdd23f49df6",
+      "native_counterparts": [
+        "cpg-rs/project/project/Versions.rs",
+        "rust-support/cpg/src/singletons.rs",
+        "rust-support/cpg/src/codec.rs"
+      ],
+      "retained_path": "third_party/first-generation/cpg/project/project/Versions.scala",
+      "source_id": "cpg:project/project/Versions.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "edcd3da5305a13edbf4ce682003c5b5f62245e84ce410fe50c0027f3da5296c3",
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "92b517598eb1d467cb8be82eacfbcd6ef420a896",
+      "retained_path": "third_party/first-generation/cpg/resources/log4j2-test.xml",
+      "source_id": "cpg:resources/log4j2-test.xml",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "6d56d5acfc914cdc5596b75b094ade7bbbfe64edcb474962a06a54c89f659ca2",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "77bfec7e767aef8c15b56c921d05010e4cbb01e6",
+      "retained_path": "third_party/first-generation/cpg/samples/customcpg/README.md",
+      "source_id": "cpg:samples/customcpg/README.md",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "06aa2f53fbe2a2bba3ef707e98070da98c4b8e435940f57095beb198ba58e7dc",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "e4c68ce7e34ffa57806dacfa2c1cf47788ed1e2f",
+      "retained_path": "third_party/first-generation/cpg/samples/customcpg/local-m2-publish.sh",
+      "source_id": "cpg:samples/customcpg/local-m2-publish.sh",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "21faeac266c4f37060a253c6f77b99f867df372ad719659c6b6886c6584dedde",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "eebc6de2c364e09efdd51489daaa26239800c169",
+      "retained_path": "third_party/first-generation/cpg/samples/customcpg/schemas/myschema.json",
+      "source_id": "cpg:samples/customcpg/schemas/myschema.json",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "555f48a5a1245b649c18030877bdf43ac86c444cf63d2b8db4028ad974301a19",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "63ea8abe49dc099176061a29793d1d2d9952f3b2",
+      "retained_path": "third_party/first-generation/cpg/samples/pass/README.md",
+      "source_id": "cpg:samples/pass/README.md",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "1d860f5d3b0a131f979b2108a5b844e43278948f4eed2ebe1821de9af0da34bd",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "1734880f8cec3fc5d3d500c57c6a9a104fea8612",
+      "retained_path": "third_party/first-generation/cpg/samples/pass/build.sbt",
+      "source_id": "cpg:samples/pass/build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "64892a83c1925d18c82d9b0b7a270b51e0d84fc6383a763045bbd13acc63673b",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "9dbfce148ecf83b1035a6161263c325eb8b566ba",
+      "retained_path": "third_party/first-generation/cpg/samples/pass/project/plugins.sbt",
+      "source_id": "cpg:samples/pass/project/plugins.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "d83a16e5dbc04dc58942017f08616b9b7d84eb90dfc65e254162b401d913e039",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "72a503cdec3abf0c0de8013ce0139542de8119bb",
+      "retained_path": "third_party/first-generation/cpg/samples/pass/samplepass.sh",
+      "source_id": "cpg:samples/pass/samplepass.sh",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "116d2b51c486ec4f6ec7011d31aa491e4082af98ac83140672e3293e1c811e07",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "58daf00e937521567403793fcf7d49e391274715",
+      "retained_path": "third_party/first-generation/cpg/samples/pass/src_cpg.bin.zip",
+      "source_id": "cpg:samples/pass/src_cpg.bin.zip",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "75c818248879cb3ac3c100729d6267902b169f13fa2e5bb48cceb9fe9f814bad",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "7ca917ae8ff3478c2969434aac813f4904c3dbc2",
+      "retained_path": "third_party/first-generation/cpg/schema/BUILD",
+      "source_id": "cpg:schema/BUILD",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "dc73e6a5eb0def31449846c80146696965f002c305240415b8e460a798407a5f",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    },
+    {
+      "authored_sha256": "2b4e293e99233a4adf64538bac5a2480db47dea3be759fbce6dc5f29ed8adc4d",
+      "destination": "cpg-rs/schema/build.sbt",
+      "disposition": "HANDWRITTEN_PRODUCTION",
+      "git_blob": "e6221c6581f7e67453c8b91934b86774b58698fb",
+      "native_counterparts": [
+        "rust-support/cpg/src/build_contracts.rs::RunNativeProtobufBuildTask",
+        "rust-support/cpg/src/stages.rs::RunNativeBuildStages"
+      ],
+      "retained_path": "third_party/first-generation/cpg/schema/build.sbt",
+      "source_id": "cpg:schema/build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "2b4e293e99233a4adf64538bac5a2480db47dea3be759fbce6dc5f29ed8adc4d",
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "disposition": "RETAINED_REFERENCE",
+      "git_blob": "67a873b93fff2a6fb5a3481734a4041871253c2b",
+      "retained_path": "third_party/first-generation/cpg/updateDependencies.sh",
+      "source_id": "cpg:updateDependencies.sh",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "97440df9a38072a0763a9b44274a71fd3c008c5800cb24e8e70e8df345363c7c",
+      "status": "RETAINED_REFERENCE_OBJECT; not ported production behavior"
+    }
+  ],
+  "formal_credit": 0,
+  "gap_resolutions": [
+    {
+      "grade": "AUTHORED_UNVERIFIED",
+      "id": "M0002-TARGET-ADOPTION",
+      "resolution": "All Java/Scala factory exports, native kinds, argument policies, Cargo execution capability and retained BUILD target/dependency/resource counterparts are explicitly mapped. The original BUILD inputs remain references; their presence is not translated-body credit."
+    },
+    {
+      "grade": "AUTHORED_UNVERIFIED",
+      "id": "M0002-PLUGIN-TASK-CLOSURE",
+      "resolution": "All six source facility registrations select fixed typed native operations. Production CLI/context entrypoints consume those operations. Source-specific full domain/protobuf/launcher semantics retain their already declared M0006/M0008/M0010 owners."
+    },
+    {
+      "grade": "AUTHORED_UNVERIFIED",
+      "id": "M0002-SCHEMA-BUILD-OWNERSHIP",
+      "resolution": "The native parent context owns schema/domain/protobuf/binding task dependencies, current consumer registration checks and source protobuf cache conditions. Complete literal generated domain output remains required by M0010, not credited here."
+    },
+    {
+      "grade": "AUTHORED_UNVERIFIED",
+      "id": "M0002-VERSION-INITIALIZATION",
+      "resolution": "Separate scoped cells initialize eagerly, cache success/failure, distinguish first/later exception behavior and support defining-scope reloads. The prior onLoad hook follows the source predicate. Metadata consumes the meta-build version for plugin registration. Selected Scala/sbt/JDK APIs and codec profile are recorded."
+    },
+    {
+      "grade": "AUTHORED_UNVERIFIED",
+      "id": "M0002-IO-ERROR-BOUNDARY",
+      "resolution": "Required closed-source I/O calls have owned walks/readers, source exception values, strict/replacement decoding, checked close, retry/finally handling and 32-byte ASCII MD5 cache writes. This is authored native boundary code, not a claim to reimplement the entire JVM or all sbt IO APIs; parity awaits post-gate assurance."
+    },
+    {
+      "grade": "AUTHORED_UNVERIFIED",
+      "id": "M0002-BODY-AND-SUPPORT-RECONCILIATION",
+      "resolution": "All 49 entry dispositions and 62 source operation/closure groups across the 11 production files have concrete owners. Existing cpg-rs/src and the separate CPGSchema workspace are preserved. No historical body-gap count is subtracted."
+    }
+  ],
+  "global_gate": "CLOSED",
+  "handwritten_production_entries": 11,
+  "historical_partial_record": "verification/agones/roadmap-M0002-partial-map.json",
+  "known_remaining_in_M0002": [],
+  "library_api_inputs": "verification/agones/roadmap-M0002-library-source-inputs.json",
+  "metaprogramming": "derive-deftly owns static CGP delegation for actual production consumers. comprende maps project selection; better_comprehension maps target dependencies. Sequential I/O/cleanup uses ordinary loops to preserve effects and error order.",
+  "milestone_complete": true,
+  "milestone_id": "M0002",
+  "owned_entry_count": 49,
+  "payload_sha256": {
+    "cpg-rs/Cargo.toml": "b59c2d2b72024211e95680b4fa524d62e4a88b082f1b60cf2757b544bbdcbb5d",
+    "cpg-rs/LICENSE": "10907e9c71b78937d48915c5d78cb3bf18e7a37f9fe5c38eac7388ebf13a2491",
+    "cpg-rs/bazel/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "cpg-rs/bazel/java.bzl": "e85315666436e96c1a21d293615cf3fb3bbd8f1b7dba20d3c012cbd5ea6619f0",
+    "cpg-rs/bazel/scala.bzl": "a39ce37d0ec68e2fa26a5f9a53646a959bafdac8ff1f724286e7af89a8a0dce2",
+    "cpg-rs/build.sbt": "d49e3c43e754f0654869585324f26046db57cc38a4d6084fb2b07d0e20f3914e",
+    "cpg-rs/codepropertygraph/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "cpg-rs/codepropertygraph/build.sbt": "56d098b9e21a5362c692086639b27bcfa04182a3c20b098a5030b021a2009c99",
+    "cpg-rs/project/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "cpg-rs/project/FileUtils.rs": "9ef55f52361acdfd20662d08133abbaf2a4a364a2fbe2d8cc56d7418feb699fc",
+    "cpg-rs/project/Projects.rs": "bfedc3f61a41fce14fd68efa51d364edd43ff3c94cee269e5572523554400e1a",
+    "cpg-rs/project/Utils.rs": "8ecfcfa1ff23293152eee4ce19ab97f4c32d5e43cbcc8d4adfe36f9774bd9eda",
+    "cpg-rs/project/Versions.rs": "59b54264b232c6ac853fe055cd1781384aa103e665a3bd16f08863fb2ba2370b",
+    "cpg-rs/project/plugins.sbt": "85db9e5c3baa5b4f89a2bbacc7006121e9bee6c27880d5424d3276ea857aed00",
+    "cpg-rs/project/project/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "cpg-rs/project/project/Versions.rs": "8f4f1defdd92e59235ec4903436d311d5d30584e3fcfdd42164e06ac1976f654",
+    "cpg-rs/schema/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "cpg-rs/schema/build.sbt": "2b4e293e99233a4adf64538bac5a2480db47dea3be759fbce6dc5f29ed8adc4d",
+    "rust-support/cpg/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "rust-support/cpg/Cargo.lock": "1a130b4d4ebc181f394f5c0d24130e2a9123ea42888e041564b958a73dce0ccf",
+    "rust-support/cpg/Cargo.toml": "3e362d31a222bb2f5a36c2b5535e60dc8e1dbeb2c12614db48a468df324040cd",
+    "rust-support/cpg/README.md": "179516b6cb9743756bd41a2e66d2fc2755044847c1524ee767053a9961ac1a27",
+    "rust-support/cpg/src/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "rust-support/cpg/src/build_contracts.rs": "59093a23b7da92507409c534aa23d9e0b6302423332e20a4153402413590b6f0",
+    "rust-support/cpg/src/codec.rs": "7d78b28756befea1225ff3f469844630297828daafe74ea699bed15f79022014",
+    "rust-support/cpg/src/declarations.rs": "7c5fc50dd7286e0f78c4687b1189fd53b3e4e7d4660b19d60e5f1b102a5b5878",
+    "rust-support/cpg/src/error.rs": "ef3e6053f0a52ad80a2ae437d4e8b9f1c1df45dfd45fa3e360d3a8ef60f2e994",
+    "rust-support/cpg/src/lib.rs": "2e6369c34c131344a7d20525b9d6172dd51f75b849dcd80549b45479061787e6",
+    "rust-support/cpg/src/lifecycle.rs": "423ee381892adec515b027f9d84ece982e6b518f68dfca8d8742cbe86902f808",
+    "rust-support/cpg/src/main.rs": "a7beb7f6282d1f7cc7fb27f1a796314c33004f7a38a23cc89c732f818ff7a10d",
+    "rust-support/cpg/src/packaging.rs": "f1d7de2c494ca38b77349cff48939d33a7cdfb92efde5896300121c8ba25eba0",
+    "rust-support/cpg/src/process.rs": "5ad0782f174271f146211bf578cbf0207f3a55357e632b600103110509884102",
+    "rust-support/cpg/src/singletons.rs": "6210d0c33ffcd7e641e84a10610a62aeab7dd21cf070ad604866d158735bb779",
+    "rust-support/cpg/src/source_io.rs": "f3261102929e29279ea2be992d8f07763d0d8ba696db55547aaa9ff8418ff2f8",
+    "rust-support/cpg/src/source_tasks.rs": "68930cb32f294f394d5c349b80ec7539c03eac89649433b89b1bc6810a59b923",
+    "rust-support/cpg/src/stages.rs": "35314ad70f40da765f651fb4a7a57740d4528ac1cc6d12832aaa77f362f23610",
+    "verification/agones/roadmap-M0002-body-ownership.json": "2e8ac1960a88088d2ddb4828c2d719b0479f266d39b92cdb19a0f1187bc6939d",
+    "verification/agones/roadmap-M0002-dependency-adoption.json": "4c4c2edd560cd7855ecc3264b175379c6d1f991a97769daf9f0754a88d548181",
+    "verification/agones/roadmap-M0002-library-source-inputs.json": "d80a457e6550e4bb8d4c5c6808a4d34841f656fd0716aae082904d01094c67a1"
+  },
+  "record_kind": "AUTHORED_MILESTONE_ADOPTION",
+  "required_generated_output_meaning": "M0002 authors build support and task connections. This record does not count required M0006/M0008/M0010 generation outputs as present or fulfilled.",
+  "retained_reference_entries": 38,
+  "route": "CPG",
+  "source_build_vs_native_artifacts": "Original JVM/Bazel inputs remain exact references. Native Cargo artifacts, Rust generated sources, explicit source bundles and static native executables are identified as native equivalents, not claimed Java bytecode or JVM ABI compatibility.",
+  "source_identity_meaning": "355 retained Git file/symlink object payloads; zero content identity differences. Not a semantic, build or behavior check.",
+  "source_identity_receipt": "verification/agones/roadmap-M0002-source-identities.json",
+  "source_pin": "301c4010d28ecdac05bc2ed44310f56446459465",
+  "source_snapshot": "5b0edac4c1416d71577f28c937dccd15ca33dc48",
+  "source_snapshot_kind": "BASE_COMMIT_PLUS_AUTHORED_PAYLOAD_DIGESTS",
+  "source_target_adoption": [
+    {
+      "assurance": "NOT_STARTED",
+      "disposition": "RETAINED_BUILD_CONFIGURATION_WITH_EXPLICIT_NATIVE_ADOPTION",
+      "downstream_required_owners": [],
+      "native_outputs_or_consumers": [
+        "owned formatting snapshot / native rustfmt check"
+      ],
+      "native_production_owner": "NativeBuildStageRunner::{FormatSnapshot,FormatCheck}",
+      "source_build_file_sha256": "d331502f744330fa6c5f1e1dff23186ef98595e29b77b46796ab51482004c64a",
+      "source_dependencies": [
+        "//bazel/format",
+        "//bazel/format:format.check"
+      ],
+      "source_file": "cpg:BUILD",
+      "source_label": "//:format / //:formatCheck"
+    },
+    {
+      "assurance": "NOT_STARTED",
+      "disposition": "RETAINED_BUILD_CONFIGURATION_WITH_EXPLICIT_NATIVE_ADOPTION",
+      "downstream_required_owners": [],
+      "native_outputs_or_consumers": [
+        "native Rust formatting operations"
+      ],
+      "native_production_owner": "NativeBuildStageRunner::{FormatSnapshot,FormatCheck}",
+      "source_build_file_sha256": "3b590afde4eff4996aabe75df782873cc170b44bcfcf3bbc0f3ef4dc1dcdd6a4",
+      "source_dependencies": [
+        "//:.scalafmt.conf",
+        "@format_maven//:org_scalameta_scalafmt_cli_2_13",
+        "@buildifier_prebuilt//:buildifier"
+      ],
+      "source_file": "cpg:bazel/format/BUILD",
+      "source_label": "//bazel/format:{scalafmt,format,format.check}"
+    },
+    {
+      "assurance": "NOT_STARTED",
+      "disposition": "RETAINED_BUILD_CONFIGURATION_WITH_EXPLICIT_NATIVE_ADOPTION",
+      "downstream_required_owners": [
+        "M0006"
+      ],
+      "native_outputs_or_consumers": [
+        "canonical native schema modules"
+      ],
+      "native_production_owner": "cpg-rs/Cargo.toml + cpg_rs::schema/construction",
+      "source_build_file_sha256": "dc73e6a5eb0def31449846c80146696965f002c305240415b8e460a798407a5f",
+      "source_dependencies": [
+        "@maven//:io_joern_flatgraph_domain_classes_generator_3"
+      ],
+      "source_file": "cpg:schema/BUILD",
+      "source_label": "//schema:schema"
+    },
+    {
+      "assurance": "NOT_STARTED",
+      "disposition": "RETAINED_BUILD_CONFIGURATION_WITH_EXPLICIT_NATIVE_ADOPTION",
+      "downstream_required_owners": [
+        "M0010"
+      ],
+      "native_outputs_or_consumers": [
+        "current cpg-rs/generated/domain.rs and generation.json",
+        "M0010 literal domain hierarchy"
+      ],
+      "native_production_owner": "NativeBuildStageRunner::Domain -> cpg_rs::codegen::generate",
+      "source_build_file_sha256": "dc73e6a5eb0def31449846c80146696965f002c305240415b8e460a798407a5f",
+      "source_dependencies": [
+        ":schema",
+        "@maven//:io_joern_flatgraph_domain_classes_generator_3"
+      ],
+      "source_file": "cpg:schema/BUILD",
+      "source_label": "//schema:codegen"
+    },
+    {
+      "assurance": "NOT_STARTED",
+      "disposition": "RETAINED_BUILD_CONFIGURATION_WITH_EXPLICIT_NATIVE_ADOPTION",
+      "downstream_required_owners": [
+        "M0010"
+      ],
+      "native_outputs_or_consumers": [
+        "schema-derived Rust output and declared native source bundle; original generated_classes.srcjar contract retained"
+      ],
+      "native_production_owner": "NativeBuildStageRunner::{Domain,Package}",
+      "source_build_file_sha256": "dc73e6a5eb0def31449846c80146696965f002c305240415b8e460a798407a5f",
+      "source_dependencies": [
+        ":codegen"
+      ],
+      "source_file": "cpg:schema/BUILD",
+      "source_label": "//schema:run_codegen"
+    },
+    {
+      "assurance": "NOT_STARTED",
+      "disposition": "RETAINED_BUILD_CONFIGURATION_WITH_EXPLICIT_NATIVE_ADOPTION",
+      "downstream_required_owners": [
+        "M0010"
+      ],
+      "native_outputs_or_consumers": [
+        "canonical cpg-rs native library; single owner for all imported domain views"
+      ],
+      "native_production_owner": "NativeBuildStageRunner::Compile + cpg-rs generated-domain registration",
+      "source_build_file_sha256": "dc73e6a5eb0def31449846c80146696965f002c305240415b8e460a798407a5f",
+      "source_dependencies": [
+        ":run_codegen",
+        "@maven//:io_joern_flatgraph_core_3",
+        "@maven//:io_joern_flatgraph_help_3"
+      ],
+      "source_file": "cpg:schema/BUILD",
+      "source_label": "//schema:domainClassesDontUseDirectly"
+    },
+    {
+      "assurance": "NOT_STARTED",
+      "disposition": "RETAINED_BUILD_CONFIGURATION_WITH_EXPLICIT_NATIVE_ADOPTION",
+      "downstream_required_owners": [
+        "M0010"
+      ],
+      "native_outputs_or_consumers": [
+        "actual Cargo compiler-artifact paths plus explicit native payload bundle; retained source jar aggregation is not executed"
+      ],
+      "native_production_owner": "NativeBuildStageRunner::{Compile,Package}",
+      "source_build_file_sha256": "dc73e6a5eb0def31449846c80146696965f002c305240415b8e460a798407a5f",
+      "source_dependencies": [
+        ":domainClassesDontUseDirectly"
+      ],
+      "source_file": "cpg:schema/BUILD",
+      "source_label": "//schema:domainClasses_jar"
+    },
+    {
+      "assurance": "NOT_STARTED",
+      "disposition": "RETAINED_BUILD_CONFIGURATION_WITH_EXPLICIT_NATIVE_ADOPTION",
+      "downstream_required_owners": [
+        "M0010"
+      ],
+      "native_outputs_or_consumers": [
+        "one source-owned generated payload; source alias is retained without copying a second implementation"
+      ],
+      "native_production_owner": "NativeBuildStageRunner::{Domain,Package}",
+      "source_build_file_sha256": "dc73e6a5eb0def31449846c80146696965f002c305240415b8e460a798407a5f",
+      "source_dependencies": [
+        ":run_codegen"
+      ],
+      "source_file": "cpg:schema/BUILD",
+      "source_label": "//schema:domainClasses_src_jar"
+    },
+    {
+      "assurance": "NOT_STARTED",
+      "disposition": "RETAINED_BUILD_CONFIGURATION_WITH_EXPLICIT_NATIVE_ADOPTION",
+      "downstream_required_owners": [
+        "M0010"
+      ],
+      "native_outputs_or_consumers": [
+        "same native cpg-rs library provides compile-time types; source neverlink flag retained"
+      ],
+      "native_production_owner": "RuleFactory java_import + SourceBuildTask::Compile",
+      "source_build_file_sha256": "dc73e6a5eb0def31449846c80146696965f002c305240415b8e460a798407a5f",
+      "source_dependencies": [
+        ":domainClasses_jar",
+        ":domainClasses_src_jar",
+        "@maven//:io_joern_flatgraph_core_3",
+        "@maven//:io_joern_flatgraph_help_3"
+      ],
+      "source_file": "cpg:schema/BUILD",
+      "source_label": "//schema:domainClassesNeverLinked"
+    },
+    {
+      "assurance": "NOT_STARTED",
+      "disposition": "RETAINED_BUILD_CONFIGURATION_WITH_EXPLICIT_NATIVE_ADOPTION",
+      "downstream_required_owners": [
+        "M0010"
+      ],
+      "native_outputs_or_consumers": [
+        "same canonical native crate supplies runtime code; no duplicate graph or writable imported store"
+      ],
+      "native_production_owner": "RuleFactory java_import + SourceBuildTask::Compile",
+      "source_build_file_sha256": "dc73e6a5eb0def31449846c80146696965f002c305240415b8e460a798407a5f",
+      "source_dependencies": [
+        ":domainClasses_jar",
+        ":domainClasses_src_jar",
+        "@maven//:io_joern_flatgraph_core_3",
+        "@maven//:io_joern_flatgraph_help_3"
+      ],
+      "source_file": "cpg:schema/BUILD",
+      "source_label": "//schema:domainClassesLinked"
+    },
+    {
+      "assurance": "NOT_STARTED",
+      "disposition": "RETAINED_BUILD_CONFIGURATION_WITH_EXPLICIT_NATIVE_ADOPTION",
+      "downstream_required_owners": [
+        "M0008"
+      ],
+      "native_outputs_or_consumers": [
+        "explicit protocol_output/cpg.proto"
+      ],
+      "native_production_owner": "NativeBuildStageRunner::Protocol",
+      "source_build_file_sha256": "dc73e6a5eb0def31449846c80146696965f002c305240415b8e460a798407a5f",
+      "source_dependencies": [
+        ":schema"
+      ],
+      "source_file": "cpg:schema/BUILD",
+      "source_label": "//schema:protogen-bin / //schema:run_protogen"
+    },
+    {
+      "assurance": "NOT_STARTED",
+      "disposition": "RETAINED_BUILD_CONFIGURATION_WITH_EXPLICIT_NATIVE_ADOPTION",
+      "downstream_required_owners": [
+        "M0008"
+      ],
+      "native_outputs_or_consumers": [
+        "pure native protocol, descriptor and Rust binding inputs consumed by cpg-rs"
+      ],
+      "native_production_owner": "NativeBuildStageRunner::{Protocol,Bindings}",
+      "source_build_file_sha256": "dc73e6a5eb0def31449846c80146696965f002c305240415b8e460a798407a5f",
+      "source_dependencies": [
+        ":run_protogen",
+        ":proto"
+      ],
+      "source_file": "cpg:schema/BUILD",
+      "source_label": "//schema:proto / //schema:java_proto"
+    },
+    {
+      "assurance": "NOT_STARTED",
+      "disposition": "RETAINED_BUILD_CONFIGURATION_WITH_EXPLICIT_NATIVE_ADOPTION",
+      "downstream_required_owners": [
+        "M0012",
+        "M0014",
+        "M0016",
+        "M0018",
+        "M0020"
+      ],
+      "native_outputs_or_consumers": [
+        "one native library imports generated domain/protobuf plus Grafeo graph/storage runtime"
+      ],
+      "native_production_owner": "NativeBuildStageRunner::Compile + cpg-rs/Cargo.toml",
+      "source_build_file_sha256": "16da69bdbfbafa74b53d77f915f25b53b6e1a3874dab72e9cc25a07a47cc0a94",
+      "source_dependencies": [
+        "//schema:domainClassesNeverLinked",
+        "//schema:java_proto",
+        "@maven//:com_google_protobuf_protobuf_java",
+        "@maven//:io_joern_flatgraph_core_3",
+        "@maven//:io_joern_flatgraph_help_3",
+        "@maven//:io_joern_flatgraph_odb_convert_3",
+        "@maven//:net_sf_trove4j_core",
+        "@maven//:org_slf4j_slf4j_api"
+      ],
+      "source_file": "cpg:codepropertygraph/BUILD",
+      "source_label": "//codepropertygraph:codepropertygraph"
+    },
+    {
+      "assurance": "NOT_STARTED",
+      "disposition": "RETAINED_BUILD_CONFIGURATION_WITH_EXPLICIT_NATIVE_ADOPTION",
+      "downstream_required_owners": [
+        "M0036"
+      ],
+      "native_outputs_or_consumers": [
+        "post-gate source-qualified Rust harness targets; no existing test is substituted for this source identity"
+      ],
+      "native_production_owner": "RuleFactory scala_test -> NativeTargetKind::Harness; M0036 exact source harness owner",
+      "source_build_file_sha256": "16da69bdbfbafa74b53d77f915f25b53b6e1a3874dab72e9cc25a07a47cc0a94",
+      "source_dependencies": [
+        ":codepropertygraph"
+      ],
+      "source_file": "cpg:codepropertygraph/BUILD",
+      "source_label": "//codepropertygraph:tests"
+    }
+  ],
+  "stage": "IMPLEMENTED_UNVERIFIED",
+  "tool_availability": {
+    "goastgen": {
+      "expected_sha256": "19ed0db904ccac18e17c1f714d415183a3a460907dd40b04bf7ff8a73ab44c70",
+      "observed_sha256": "19ed0db904ccac18e17c1f714d415183a3a460907dd40b04bf7ff8a73ab44c70",
+      "path": "/home/astral/.local/share/agones-rs/tools/goastgen-0.1.2/goastgen",
+      "receipt": "verification/agones/first-generation-goastgen-build.json",
+      "semantic_compatibility": "UNVERIFIED; no complete Joern frontend runtime closure inferred"
+    },
+    "historical_cpg_generation_and_checks": "Retained receipts only. Manifest/support changes receive no historical current verification credit.",
+    "new_native_support_binary": {
+      "compiled_or_run": false,
+      "manifest": "rust-support/cpg/Cargo.toml",
+      "name": "cpg-build"
+    },
+    "policy": "Filesystem/source-receipt inspection only. No executable was invoked.",
+    "schema2json": {
+      "followup": "M0008 owns native launcher behavior; do not compile a missing launcher before the global gate.",
+      "link_text": "./schema2json/target/universal/stage/bin/schema2json",
+      "source_object": "schema2json.sh",
+      "target_present": false
+    }
+  },
+  "usage_end": "verification/agones/roadmap-M0002-end-usage.json",
+  "verification": "NOT_STARTED"
+}

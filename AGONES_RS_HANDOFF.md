@@ -1,51 +1,59 @@
 # Agones-rs and CPG handoff
 
-Canonical ledger: `AGONES_RS_STATE.json`, revision 324. One native Goal:
-`01a17928-8551-7701-8497-5333c680f283`. The current authority is the combined
-attachment recorded in `delivery.roadmap_execution`, `roadmap/0000-contract.md`
-and `roadmap/alternation-policy.md`. The older standalone generation stop rule
-is superseded for this invocation.
+Canonical ledger: `AGONES_RS_STATE.json`, revision 325. One active native Goal:
+`01a17928-8551-7701-8497-5333c680f283`. Authority: the combined attachment,
+`roadmap/0000-contract.md` and `roadmap/alternation-policy.md`. The archived
+standalone first-generation stopping rule is superseded for this invocation.
 
-Project phase: **IMPLEMENTATION_ONLY**. Global gate: **CLOSED**. Production
-implementation and generated output remain incomplete. Verification has not
-started under this contract. No builds, tests, probes, proofs or CI are allowed.
+Project phase: **IMPLEMENTATION_ONLY**. Global gate: **CLOSED**. Both complete
+production scopes and required generated outputs remain unfinished. Verification
+is NOT_STARTED under this contract. No build, compiler/macro/API probe, formatter,
+generator validation, test, proof, example/app run or CI may execute.
 
-M0001 (MANUAL) is **IMPLEMENTED_UNVERIFIED**. Its 13 source-owned rows, four
-shared GroupName declarations, Cargo registration, raw build-version transfer,
-derive-deftly/CGP configuration wiring and ownership map are in
-`verification/agones/roadmap-adoption-M0001.json`. Existing version callers
-re-export the one source-mirror implementation. Initialization uses the existing
-feature parser and environment effect. Controller/server task lifecycle remains
-required in M0027; build/tool consumer behavior remains required in M0031.
-No compilation, correctness, compatibility or readiness claim is made.
+M0001 (MANUAL): **IMPLEMENTED_UNVERIFIED**, 13 source entries. Canonical version
+and shared configuration adoption is recorded in
+`verification/agones/roadmap-adoption-M0001.json`. Full lifecycle, resource/API
+behavior and final delivery remain required by their later milestones.
 
-Next cursor: **M0002 / CPG / IMPLEMENTING**. Read its overview and affected sections via
-`verification/agones/roadmap/entry-index.tsv`. Complete its pinned CPG tree,
-Bazel/sbt/project helpers, source build/tool equivalents and support registration
-before returning to MANUAL M0003. Inspect runnable-generator receipts by reading
-only; do not build a missing generator or run a compatibility probe.
+M0002 (CPG): **IMPLEMENTED_UNVERIFIED**, 49 entries: 11 handwritten production
+files and 38 retained references. The implementation includes exact-name helper
+modules, native build facilities/source task adapters, CGP/derive-deftly parent
+context composition, separate Versions initialization/reload scopes, ordered
+onLoad hooks, source codecs/I/O/error/cache boundaries, owned child processes,
+local package/stage/format support and explicit target/configuration adoption.
+The 62 source operation/closure groups are accounting, not semantic proof.
 
-M0001 cost observation and forecast comparison:
-`cost-analysis-comparison/0001-M0001.md`. Raw counters are preserved; credits and
-unexposed model settings remain unknown. Shared setup is charged once separately.
+Current M0002 authored record:
+`verification/agones/roadmap-adoption-M0002.json` and
+`verification/agones/roadmap-M0002-body-ownership.json`.
+The prior partial map remains historical. Existing cpg-rs/src and the separate
+CPGSchema workspace remain preserved. No count is subtracted from the historical
+695-candidate body gap. No current compilation or source-equivalence credit is
+claimed. All 355 pristine retained source object identities were recorded by the
+previous content-only receipt, including the launcher symlink text.
 
-Keep working on `agones-rs-dev`; never modify main. Local implementation
-checkpoints are allowed. Remote publication/PR/merge remains deferred because it
-would trigger forbidden checks. Full acceptance and authorized delivery remain
-open. The previous ledger/handoff are retained by digest under
-`verification/agones/states/`; previous proof/check records are historical.
+Required downstream CPG implementation remains explicit: M0006 complete schema
+construction/body adoption; M0008 schema/protobuf inputs, full source CLI/tool
+and launcher behavior; M0010 complete literal domain hierarchy and registration;
+M0012-M0020 remaining runtime/pass/persistence scope. The existing flattened
+`cpg-rs/generated` output is not credited as M0010 completion. A missing runnable
+emitter requiring a forbidden build remains a real blocker when encountered.
 
-M0002 progress is bound by `verification/agones/roadmap-M0002-partial-map.json`.
-The native build support package, five exact-name Rust helper files, original
-Bazel/sbt inputs, CGP target execution and native protobuf cache task are authored
-but incomplete and unverified. All 355 retained Git object payload identities
-(including the launcher symlink text) match the frozen input manifest; this is
-content bookkeeping only. The generated launcher target is absent.
+Mandatory alternation now selects **M0003 / MANUAL / PLANNED / READY**.
+Capture its entry usage after the M0002 local checkpoint, then read only its
+overview/affected sections through `verification/agones/roadmap/entry-index.tsv`.
+Implement source errors, queues, clocks, webhooks and utility effects. Do not
+start the next CPG milestone until M0003's authored implementation is complete.
 
-Continue M0002 gaps: TARGET-ADOPTION, PLUGIN-TASK-CLOSURE,
-SCHEMA-BUILD-OWNERSHIP, VERSION-INITIALIZATION, IO-ERROR-BOUNDARY,
-BODY-AND-SUPPORT-RECONCILIATION. Read their exact requirements in the partial map.
-No M0002 completion/cost comparison or route switch has occurred. No project
-compiler, macro probe, test, proof, generator or CI was executed. The M0001 cost
-comparison now reports UNKNOWN_ATTRIBUTION for full cost and preserves its known
-implementation segment and separately charged shared accounting/switch segment.
+Cost records: `cost-analysis-comparison/0001-M0001.md` and
+`cost-analysis-comparison/0002-M0002.md`. M0002's observed implementation segment
+is 482306 host tokens (153672 -> 635978), versus the original 40000-token base.
+Full milestone-only attribution and credits remain unknown. Completion/checkpoint
+and route-switch overhead is a separate shared segment ending at M0003 entry.
+Preserve original forecasts; do not infer costs or credits from account limits.
+
+Work only on `agones-rs-dev`; never modify main. Local implementation commits
+are permitted. Push/PR/merge remains deferred because remote publication would
+trigger forbidden CI. The combined Goal stays active until full implementation,
+post-gate assurance and authorized delivery are actually complete. Prior state,
+handoff and receipts remain recoverable; old proof/check credit stays historical.

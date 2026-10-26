@@ -533,6 +533,10 @@ dependencies = [
  "libc",
  "md-5",
  "regex",
+ "serde",
+ "serde_json",
+ "sha2",
+ "zip",
 ]
 
 [[package]]

@@ -2,13 +2,23 @@
 // project/project/Versions.scala. Upstream Apache-2.0 terms are retained in LICENSE.
 #![allow(non_snake_case)]
 use std::path::Path;
-use crate::{source_io::HasBuildIo, Result};
+use std::sync::Arc;
+use crate::{source_io::HasBuildIo, singletons::HasBuildSingletons, Result};
 
-pub fn flatgraph<Context: HasBuildIo>(context: &Context, project_root: &Path) -> Result<String> {
-    parseVersion(context, project_root, "flatgraphVersion")
+#[derive(Clone, Debug)]
+pub struct Values { pub flatgraph: String }
+
+pub fn values<Context: HasBuildIo + HasBuildSingletons>(context: &Context, project_root: &Path) -> Result<Arc<Values>> {
+    context.build_singletons().build_definition_versions.get_or_initialize("Versions$", || {
+        Ok(Values { flatgraph: parseVersion(context, project_root, "flatgraphVersion")? })
+    })
 }
 
-pub fn parseVersion<Context: HasBuildIo>(
+pub fn flatgraph<Context: HasBuildIo + HasBuildSingletons>(context: &Context, project_root: &Path) -> Result<String> {
+    Ok(values(context, project_root)?.flatgraph.clone())
+}
+
+pub(crate) fn parseVersion<Context: HasBuildIo>(
     context: &Context,
     project_root: &Path,
     key: &str,

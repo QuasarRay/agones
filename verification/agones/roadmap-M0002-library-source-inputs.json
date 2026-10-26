@@ -1,0 +1,85 @@
+{
+  "project_execution": "NONE",
+  "record_kind": "SOURCE_API_READING",
+  "runtime_profile": {
+    "default_charset": "UTF-8",
+    "jdk_api_reference": "21.0.13+9",
+    "profile_meaning": "Selected JDK 21 UTF-8 source API profile; not a fresh observation or execution of an installed JVM.",
+    "sbt_io": "1.10.5",
+    "scala_build_definition": "2.12.21",
+    "unexecuted": true
+  },
+  "sources": [
+    {
+      "members": [
+        {
+          "path": "scala/io/Codec.scala",
+          "sha256": "bb192faaeb28009b20ceb1f27be6b303a2e7cab34817f75a2a223e3b99a662b5"
+        },
+        {
+          "path": "scala/io/Source.scala",
+          "sha256": "c05c13681de68a97cce7f6e2dc13321ad45c1f25d73bd115e5d6277c4fdba42e"
+        },
+        {
+          "path": "scala/io/BufferedSource.scala",
+          "sha256": "a1997586690cb882a50e914a7920bf7562e913bf7eceb3bf812f97e75d4a9bfc"
+        },
+        {
+          "path": "scala/sys/process/ProcessBuilderImpl.scala",
+          "sha256": "4fece2c8ae16b7598bc686646951e40105224de2668caf62503c156a84ce43aa"
+        },
+        {
+          "path": "scala/sys/process/BasicIO.scala",
+          "sha256": "0427b0e36a9b565a0f6ca4f8441eec499493952a7f6b2bf76a1522c4c814904d"
+        },
+        {
+          "path": "scala/sys/process/ProcessImpl.scala",
+          "sha256": "53a79be19fa75209028b9c4a9c980330a72f033013f07f1a66042374e851c888"
+        }
+      ],
+      "path": ".git/agones-roadmap/source-support/scala-library-2.12.21-sources.jar",
+      "purpose": "Read exact retained sbt/Scala dependency APIs; no executable or probe.",
+      "sha256": "8c017a4ac49179a6d9c0e5300b38f20ec44b8f80d6b00018a5e3034c46365e10",
+      "url": "https://repo.maven.apache.org/maven2/org/scala-lang/scala-library/2.12.21/scala-library-2.12.21-sources.jar"
+    },
+    {
+      "members": [
+        {
+          "path": "sbt/io/IO.scala",
+          "sha256": "fcb41ed20e6156d310d5956f3fb4765df990d5232708ad56b733a900e515ebba"
+        },
+        {
+          "path": "sbt/io/Using.scala",
+          "sha256": "bbb27645ef1f73131b36d40e98e6086b556e17fd99f6f8ffefb7d5036a1e449d"
+        },
+        {
+          "path": "sbt/internal/io/Retry.scala",
+          "sha256": "c6410d1daf98f142723c9f24a76a1746178d5659404ab9f8edda113ca0ac9c7d"
+        },
+        {
+          "path": "sbt/internal/io/ErrorHandling.scala",
+          "sha256": "4e8b7826712bd33bc8de84c4efc55e359c934d4000005ef5c22ae1d1f06c05ce"
+        }
+      ],
+      "path": ".git/agones-roadmap/source-support/io_2.12-1.10.5-sources.jar",
+      "purpose": "Read exact retained sbt/Scala dependency APIs; no executable or probe.",
+      "sha256": "d13f041dbf6ffd6f1f5669c9fbbc3183a6e0711f9872ebf31b42452ccc801753",
+      "url": "https://repo.maven.apache.org/maven2/org/scala-sbt/io_2.12/1.10.5/io_2.12-1.10.5-sources.jar"
+    },
+    {
+      "path": ".git/agones-roadmap/source-support/instanceKlass.cpp",
+      "purpose": "Source reading for Versions initialization error/cause boundaries; no JVM or native execution.",
+      "sha256": "73f236d7a71b61e9cbb5eac25a48df2bc8ea9c148eda07e372f08afa6f2bb107",
+      "url": "https://raw.githubusercontent.com/openjdk/jdk21u/jdk-21.0.13%2B9/src/hotspot/share/oops/instanceKlass.cpp"
+    },
+    {
+      "path": ".git/agones-roadmap/source-support/javaClasses.cpp",
+      "purpose": "Source reading for Versions initialization error/cause boundaries; no JVM or native execution.",
+      "sha256": "15d8e8a8ecd9e2ff9d74eb4d3651de0ee134f2bb4efbfed68ac3b3c8fce64313",
+      "url": "https://raw.githubusercontent.com/openjdk/jdk21u/jdk-21.0.13%2B9/src/hotspot/share/classfile/javaClasses.cpp"
+    }
+  ],
+  "specification_references": [
+    "https://docs.oracle.com/javase/specs/jls/se21/html/jls-12.html#jls-12.4.2"
+  ]
+}

@@ -1,0 +1,921 @@
+{
+  "accounting_basis": "Source reading and explicit native owner mapping only; no extractor, compiler, generator, test, probe or proof was run. Row count is accounting, not semantic evidence.",
+  "caveat": "IMPLEMENTED_UNVERIFIED is an authored implementation declaration. It is not runtime, source-equivalence or buildability evidence, and does not close downstream required production rows.",
+  "downstream_required_implementation": [
+    {
+      "milestone": "M0006",
+      "scope": "Full schema builder/module/body adoption; retain CPGSchema and existing native implementation until exact ownership transfers."
+    },
+    {
+      "milestone": "M0008",
+      "scope": "Complete schema export/Protogen/Schema2Json/protobuf tool input, native launchers and all source CLI/platform/error behavior."
+    },
+    {
+      "milestone": "M0010",
+      "scope": "Complete schema-derived domain hierarchy and output registration in literal domainClasses source-relative paths."
+    },
+    {
+      "milestone": "M0036",
+      "scope": "Source-qualified CPG harnesses and generation/build compatibility assurance, only after global gate."
+    },
+    {
+      "milestone": "M0038",
+      "scope": "Final scope-complete generated/manual artifact integration, release assembly and authorized delivery."
+    }
+  ],
+  "formal_credit": 0,
+  "global_gate": "CLOSED",
+  "milestone_id": "M0002",
+  "ownership_row_count": 62,
+  "production_missing_in_M0002": [],
+  "record_kind": "SOURCE_OWNERSHIP_ACCOUNTING",
+  "rows": [
+    {
+      "authored_contract": "Preserve source language/version, every compiler option, mixed-language options and the two ordered empty runtime-dependency lists. Native debug information and Cargo target selection are concrete outputs.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::java_rules"
+      ],
+      "scope_kind": "factory initializer",
+      "source_id": "cpg:bazel/java.bzl::_rules",
+      "source_path": "bazel/java.bzl",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "e85315666436e96c1a21d293615cf3fb3bbd8f1b7dba20d3c012cbd5ea6619f0",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Export the literal source rule name with its library/binary/harness/imported-artifact kind. Cargo owns native dependency resolution; retained source BUILD consumers are separately mapped. Harness execution remains post-gate.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::RuleFactory::target",
+        "rust-support/cpg/src/build_contracts.rs::NativeTarget::cargo_arguments",
+        "rust-support/cpg/src/build_contracts.rs::ExecuteTargetWithCargo"
+      ],
+      "scope_kind": "factory export",
+      "source_id": "cpg:bazel/java.bzl::java_library",
+      "source_path": "bazel/java.bzl",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "e85315666436e96c1a21d293615cf3fb3bbd8f1b7dba20d3c012cbd5ea6619f0",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Export the literal source rule name with its library/binary/harness/imported-artifact kind. Cargo owns native dependency resolution; retained source BUILD consumers are separately mapped. Harness execution remains post-gate.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::RuleFactory::target",
+        "rust-support/cpg/src/build_contracts.rs::NativeTarget::cargo_arguments",
+        "rust-support/cpg/src/build_contracts.rs::ExecuteTargetWithCargo"
+      ],
+      "scope_kind": "factory export",
+      "source_id": "cpg:bazel/java.bzl::java_binary",
+      "source_path": "bazel/java.bzl",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "e85315666436e96c1a21d293615cf3fb3bbd8f1b7dba20d3c012cbd5ea6619f0",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Export the literal source rule name with its library/binary/harness/imported-artifact kind. Cargo owns native dependency resolution; retained source BUILD consumers are separately mapped. Harness execution remains post-gate.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::RuleFactory::target",
+        "rust-support/cpg/src/build_contracts.rs::NativeTarget::cargo_arguments",
+        "rust-support/cpg/src/build_contracts.rs::ExecuteTargetWithCargo"
+      ],
+      "scope_kind": "factory export",
+      "source_id": "cpg:bazel/java.bzl::java_test",
+      "source_path": "bazel/java.bzl",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "e85315666436e96c1a21d293615cf3fb3bbd8f1b7dba20d3c012cbd5ea6619f0",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Export the literal source rule name with its library/binary/harness/imported-artifact kind. Cargo owns native dependency resolution; retained source BUILD consumers are separately mapped. Harness execution remains post-gate.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::RuleFactory::target",
+        "rust-support/cpg/src/build_contracts.rs::NativeTarget::cargo_arguments",
+        "rust-support/cpg/src/build_contracts.rs::ExecuteTargetWithCargo"
+      ],
+      "scope_kind": "factory export",
+      "source_id": "cpg:bazel/java.bzl::java_import",
+      "source_path": "bazel/java.bzl",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "e85315666436e96c1a21d293615cf3fb3bbd8f1b7dba20d3c012cbd5ea6619f0",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Preserve source language/version, every compiler option, mixed-language options and the two ordered empty runtime-dependency lists. Native debug information and Cargo target selection are concrete outputs.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::scala_rules"
+      ],
+      "scope_kind": "factory initializer",
+      "source_id": "cpg:bazel/scala.bzl::_rules",
+      "source_path": "bazel/scala.bzl",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "a39ce37d0ec68e2fa26a5f9a53646a959bafdac8ff1f724286e7af89a8a0dce2",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Export the literal source rule name with its library/binary/harness/imported-artifact kind. Cargo owns native dependency resolution; retained source BUILD consumers are separately mapped. Harness execution remains post-gate.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::RuleFactory::target",
+        "rust-support/cpg/src/build_contracts.rs::NativeTarget::cargo_arguments",
+        "rust-support/cpg/src/build_contracts.rs::ExecuteTargetWithCargo"
+      ],
+      "scope_kind": "factory export",
+      "source_id": "cpg:bazel/scala.bzl::scala_library",
+      "source_path": "bazel/scala.bzl",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "a39ce37d0ec68e2fa26a5f9a53646a959bafdac8ff1f724286e7af89a8a0dce2",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Export the literal source rule name with its library/binary/harness/imported-artifact kind. Cargo owns native dependency resolution; retained source BUILD consumers are separately mapped. Harness execution remains post-gate.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::RuleFactory::target",
+        "rust-support/cpg/src/build_contracts.rs::NativeTarget::cargo_arguments",
+        "rust-support/cpg/src/build_contracts.rs::ExecuteTargetWithCargo"
+      ],
+      "scope_kind": "factory export",
+      "source_id": "cpg:bazel/scala.bzl::scala_binary",
+      "source_path": "bazel/scala.bzl",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "a39ce37d0ec68e2fa26a5f9a53646a959bafdac8ff1f724286e7af89a8a0dce2",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Export the literal source rule name with its library/binary/harness/imported-artifact kind. Cargo owns native dependency resolution; retained source BUILD consumers are separately mapped. Harness execution remains post-gate.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::RuleFactory::target",
+        "rust-support/cpg/src/build_contracts.rs::NativeTarget::cargo_arguments",
+        "rust-support/cpg/src/build_contracts.rs::ExecuteTargetWithCargo"
+      ],
+      "scope_kind": "factory export",
+      "source_id": "cpg:bazel/scala.bzl::scala_test",
+      "source_path": "bazel/scala.bzl",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "a39ce37d0ec68e2fa26a5f9a53646a959bafdac8ff1f724286e7af89a8a0dce2",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Preserve both name settings and root publish/skip=true; no root or remote publication is executed.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::LoadNativeBuildConfiguration"
+      ],
+      "scope_kind": "build setting or initializer",
+      "source_id": "cpg:build.sbt::name-and-root-publish-skip",
+      "source_path": "build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "d49e3c43e754f0654869585324f26046db57cc38a4d6084fb2b07d0e20f3914e",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Retain the build.sbt version declaration as the input to both separately initialized Versions objects.",
+      "native_owners": [
+        "cpg-rs/build.sbt::flatgraphVersion",
+        "cpg-rs/project/Versions.rs::parseVersion",
+        "cpg-rs/project/project/Versions.rs::parseVersion"
+      ],
+      "scope_kind": "build setting or initializer",
+      "source_id": "cpg:build.sbt::flatgraphVersion",
+      "source_path": "build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "d49e3c43e754f0654869585324f26046db57cc38a4d6084fb2b07d0e20f3914e",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "All scoped organization, Scala version, resolvers, source/doc artifact flags, SCM, homepage, license and three developer declarations are retained as typed configuration.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::LoadNativeBuildConfiguration"
+      ],
+      "scope_kind": "build setting or initializer",
+      "source_id": "cpg:build.sbt::inThisBuild",
+      "source_path": "build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "d49e3c43e754f0654869585324f26046db57cc38a4d6084fb2b07d0e20f3914e",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Keep local bundle selection, credential host and timeout. The native facility prepares a concrete local payload bundle; registry delivery remains a later contract obligation.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::LoadNativeBuildConfiguration",
+        "rust-support/cpg/src/stages.rs::RunNativeBuildStages::Package"
+      ],
+      "scope_kind": "build setting or initializer",
+      "source_id": "cpg:build.sbt::publication-settings",
+      "source_path": "build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "d49e3c43e754f0654869585324f26046db57cc38a4d6084fb2b07d0e20f3914e",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Preserve fork=true and both root-derived log4j and user.dir options; retain log4j2-test.xml. M0036 owns source harness execution.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::LoadNativeBuildConfiguration"
+      ],
+      "scope_kind": "build setting or initializer",
+      "source_id": "cpg:build.sbt::Test-fork-and-javaOptions",
+      "source_path": "build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "d49e3c43e754f0654869585324f26046db57cc38a4d6084fb2b07d0e20f3914e",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Preserve the two 2.19.0 Optional/non-transitive source dependencies. Native effects use the existing tracing boundary; staging a static Rust binary does not add JVM runtime jars.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::LoadNativeBuildConfiguration"
+      ],
+      "scope_kind": "build setting or initializer",
+      "source_id": "cpg:build.sbt::optional-logging-dependencies",
+      "source_path": "build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "d49e3c43e754f0654869585324f26046db57cc38a4d6084fb2b07d0e20f3914e",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Each original project name/directory has a distinct immutable descriptor; no initialization effect or independent graph is introduced.",
+      "native_owners": [
+        "cpg-rs/project/Projects.rs::ALL",
+        "rust-support/cpg/src/build_contracts.rs::LoadNativeBuildConfiguration"
+      ],
+      "scope_kind": "build setting or initializer",
+      "source_id": "cpg:build.sbt::lazy-project-aliases",
+      "source_path": "build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "d49e3c43e754f0654869585324f26046db57cc38a4d6084fb2b07d0e20f3914e",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Preserve all active source compiler options and exact argument order as source configuration. Native Rust uses braces/static types and Cargo debug policy; no JVM compiler is retained for core behavior.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::LoadNativeBuildConfiguration",
+        "rust-support/cpg/src/build_contracts.rs::RuleFactory"
+      ],
+      "scope_kind": "build setting or initializer",
+      "source_id": "cpg:build.sbt::scalacOptions-and-javacOptions",
+      "source_path": "build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "d49e3c43e754f0654869585324f26046db57cc38a4d6084fb2b07d0e20f3914e",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Retain ReloadOnSourceChanges. The host supplies the actual defining-scope reload; resources get a new phase and classloader-scoped singleton cells are retained/reset accordingly.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::LoadNativeBuildConfiguration",
+        "rust-support/cpg/src/lifecycle.rs::NativeBuildContext::reloaded"
+      ],
+      "scope_kind": "build setting or initializer",
+      "source_id": "cpg:build.sbt::onChangedBuildSource",
+      "source_path": "build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "d49e3c43e754f0654869585324f26046db57cc38a4d6084fb2b07d0e20f3914e",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Initialize required build definitions; run Git-LFS predicate and source assertion, then invoke the previous hook once with its state. Predicate/previous-hook failures propagate in order.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::LoadNativeBuildConfiguration",
+        "rust-support/cpg/src/lifecycle.rs::NativeBuildContext::load_with_previous"
+      ],
+      "scope_kind": "build setting or initializer",
+      "source_id": "cpg:build.sbt::onLoad-block-and-previous-hook",
+      "source_path": "build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "d49e3c43e754f0654869585324f26046db57cc38a4d6084fb2b07d0e20f3914e",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Preserve exact project identifier and directory, including proto-bindings versus protoBindings. These pure descriptors share one native Cargo library owner through explicit adoption.",
+      "native_owners": [
+        "cpg-rs/project/Projects.rs::codepropertygraph"
+      ],
+      "scope_kind": "lazy project initializer",
+      "source_id": "cpg:project/Projects.scala::codepropertygraph",
+      "source_path": "project/Projects.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "b661b8be7db0cfe87b8f23f65f1b2fb8d0848e62801d04ad73c40936d8cf10a3",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Preserve exact project identifier and directory, including proto-bindings versus protoBindings. These pure descriptors share one native Cargo library owner through explicit adoption.",
+      "native_owners": [
+        "cpg-rs/project/Projects.rs::schema"
+      ],
+      "scope_kind": "lazy project initializer",
+      "source_id": "cpg:project/Projects.scala::schema",
+      "source_path": "project/Projects.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "b661b8be7db0cfe87b8f23f65f1b2fb8d0848e62801d04ad73c40936d8cf10a3",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Preserve exact project identifier and directory, including proto-bindings versus protoBindings. These pure descriptors share one native Cargo library owner through explicit adoption.",
+      "native_owners": [
+        "cpg-rs/project/Projects.rs::domainClasses"
+      ],
+      "scope_kind": "lazy project initializer",
+      "source_id": "cpg:project/Projects.scala::domainClasses",
+      "source_path": "project/Projects.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "b661b8be7db0cfe87b8f23f65f1b2fb8d0848e62801d04ad73c40936d8cf10a3",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Preserve exact project identifier and directory, including proto-bindings versus protoBindings. These pure descriptors share one native Cargo library owner through explicit adoption.",
+      "native_owners": [
+        "cpg-rs/project/Projects.rs::protoBindings"
+      ],
+      "scope_kind": "lazy project initializer",
+      "source_id": "cpg:project/Projects.scala::protoBindings",
+      "source_path": "project/Projects.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "b661b8be7db0cfe87b8f23f65f1b2fb8d0848e62801d04ad73c40936d8cf10a3",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Preserve exact project identifier and directory, including proto-bindings versus protoBindings. These pure descriptors share one native Cargo library owner through explicit adoption.",
+      "native_owners": [
+        "cpg-rs/project/Projects.rs::schema2json"
+      ],
+      "scope_kind": "lazy project initializer",
+      "source_id": "cpg:project/Projects.scala::schema2json",
+      "source_path": "project/Projects.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "b661b8be7db0cfe87b8f23f65f1b2fb8d0848e62801d04ad73c40936d8cf10a3",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Roots flatMap, path-to-file map and !isDirectory filter retain input/traversal order and link-following differences. Errors propagate; no sorting changes the MD5 order.",
+      "native_owners": [
+        "cpg-rs/project/FileUtils.rs::listFilesRecursively",
+        "rust-support/cpg/src/source_io.rs::NativeWalk"
+      ],
+      "scope_kind": "method and nested callback",
+      "source_id": "cpg:project/FileUtils.scala::listFilesRecursively",
+      "source_path": "project/FileUtils.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "082131c77b6771cca6c1661275e21bc4272b73d5f97869fa3025312445fa187d",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Open a source walk only when root.exists. The result of lazy collect is discarded.",
+      "native_owners": [
+        "cpg-rs/project/FileUtils.rs::deleteRecursively",
+        "rust-support/cpg/src/source_io.rs::BuildIo::file_exists"
+      ],
+      "scope_kind": "method and nested callback",
+      "source_id": "cpg:project/FileUtils.scala::deleteRecursively-root-exists",
+      "source_path": "project/FileUtils.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "082131c77b6771cca6c1661275e21bc4272b73d5f97869fa3025312445fa187d",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Both directory-recursion and file.delete branch bodies are authored inside an unconsumed iterator. Do not eagerly recurse or delete; ignored file.delete boolean remains ignored.",
+      "native_owners": [
+        "cpg-rs/project/FileUtils.rs::deleteRecursively",
+        "rust-support/cpg/src/source_io.rs::BuildIo::file_delete"
+      ],
+      "scope_kind": "method and nested callback",
+      "source_id": "cpg:project/FileUtils.scala::deleteRecursively-map-and-collect",
+      "source_path": "project/FileUtils.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "082131c77b6771cca6c1661275e21bc4272b73d5f97869fa3025312445fa187d",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Use MD5, not a different hash or independent per-file digests.",
+      "native_owners": [
+        "cpg-rs/project/FileUtils.rs::md5"
+      ],
+      "scope_kind": "method and nested callback",
+      "source_id": "cpg:project/FileUtils.scala::md5-digest-initializer",
+      "source_path": "project/FileUtils.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "082131c77b6771cca6c1661275e21bc4272b73d5f97869fa3025312445fa187d",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Retain roots.foreach, directory filter and file callback order; wrap the one shared digest around each owned reader.",
+      "native_owners": [
+        "cpg-rs/project/FileUtils.rs::md5",
+        "rust-support/cpg/src/source_io.rs::NativeWalk",
+        "rust-support/cpg/src/source_io.rs::SourceReader"
+      ],
+      "scope_kind": "method and nested callback",
+      "source_id": "cpg:project/FileUtils.scala::md5-roots-and-file-callback",
+      "source_path": "project/FileUtils.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "082131c77b6771cca6c1661275e21bc4272b73d5f97869fa3025312445fa187d",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Use channel available=size-position clamped to Java int, consume one byte at a time while positive, and close explicitly only after successful consumption. Error paths retain the owner until teardown.",
+      "native_owners": [
+        "cpg-rs/project/FileUtils.rs::md5",
+        "rust-support/cpg/src/source_io.rs::SourceReader"
+      ],
+      "scope_kind": "method and nested callback",
+      "source_id": "cpg:project/FileUtils.scala::md5-available-read-close",
+      "source_path": "project/FileUtils.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "082131c77b6771cca6c1661275e21bc4272b73d5f97869fa3025312445fa187d",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Format every digest byte as two lower-case hexadecimal characters, in order, with no separators. The sole cache write caller consequently supplies 32 ASCII bytes.",
+      "native_owners": [
+        "cpg-rs/project/FileUtils.rs::md5"
+      ],
+      "scope_kind": "method and nested callback",
+      "source_id": "cpg:project/FileUtils.scala::md5-hex-map-and-mkString",
+      "source_path": "project/FileUtils.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "082131c77b6771cca6c1661275e21bc4272b73d5f97869fa3025312445fa187d",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Run exact git/lfs/ls-files arguments at the source root, close child stdin, discard both logger streams, join output workers and child, and return whether the exit code is zero. Start errors retain source IOException identity. Owned-child cleanup covers failed waits/unwinding; logger-worker failures do not replace the exit status.",
+      "native_owners": [
+        "cpg-rs/project/Utils.rs::GitLFSUtils::isGitLFSEnabled",
+        "rust-support/cpg/src/process.rs::discard_logged_output"
+      ],
+      "scope_kind": "method and callback",
+      "source_id": "cpg:project/Utils.scala::GitLFSUtils.isGitLFSEnabled-and-logger",
+      "source_path": "project/Utils.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "7a71074e1c14695ef1f46061d929465bae9dc842e0483eb42aee130c418d8b21",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "The whole object initializes in declaration order before any getter returns. Each source defining scope has a separate cached success/failure state; plugin registration consumes the meta-build value, not the project value.",
+      "native_owners": [
+        "cpg-rs/project/Versions.rs::values",
+        "rust-support/cpg/src/singletons.rs::SourceSingleton"
+      ],
+      "scope_kind": "eager singleton field",
+      "source_id": "cpg:project/Versions.scala::flatgraph",
+      "source_path": "project/Versions.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "916cb600759bfc824c99c566d18394adfb6f201621575890ef264cef7941ce49",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "The whole object initializes in declaration order before any getter returns. Each source defining scope has a separate cached success/failure state; plugin registration consumes the meta-build value, not the project value.",
+      "native_owners": [
+        "cpg-rs/project/Versions.rs::values",
+        "rust-support/cpg/src/singletons.rs::SourceSingleton"
+      ],
+      "scope_kind": "eager singleton field",
+      "source_id": "cpg:project/Versions.scala::scalatest",
+      "source_path": "project/Versions.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "916cb600759bfc824c99c566d18394adfb6f201621575890ef264cef7941ce49",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "The whole object initializes in declaration order before any getter returns. Each source defining scope has a separate cached success/failure state; plugin registration consumes the meta-build value, not the project value.",
+      "native_owners": [
+        "cpg-rs/project/Versions.rs::values",
+        "rust-support/cpg/src/singletons.rs::SourceSingleton"
+      ],
+      "scope_kind": "eager singleton field",
+      "source_id": "cpg:project/Versions.scala::ujson",
+      "source_path": "project/Versions.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "916cb600759bfc824c99c566d18394adfb6f201621575890ef264cef7941ce49",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Compile the interpolated whole-line regex before opening build.sbt; retain spaces, quotes, non-greedy capture and Java dot line-separator exclusions.",
+      "native_owners": [
+        "cpg-rs/project/Versions.rs::parseVersion",
+        "cpg-rs/project/Versions.rs::parseVersion",
+        "rust-support/cpg/src/source_io.rs::BuildIo::for_each_source_line_at",
+        "rust-support/cpg/src/error.rs::Error"
+      ],
+      "scope_kind": "method and nested callback",
+      "source_id": "cpg:project/Versions.scala::parseVersion-regex",
+      "source_path": "project/Versions.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "916cb600759bfc824c99c566d18394adfb6f201621575890ef264cef7941ce49",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Open source build.sbt with the recorded strict UTF-8 Scala codec; retain line rules, encounter order and no explicit Source.close in this source method.",
+      "native_owners": [
+        "cpg-rs/project/Versions.rs::parseVersion",
+        "cpg-rs/project/Versions.rs::parseVersion",
+        "rust-support/cpg/src/source_io.rs::BuildIo::for_each_source_line_at",
+        "rust-support/cpg/src/error.rs::Error"
+      ],
+      "scope_kind": "method and nested callback",
+      "source_id": "cpg:project/Versions.scala::parseVersion-Source-and-getLines",
+      "source_path": "project/Versions.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "916cb600759bfc824c99c566d18394adfb6f201621575890ef264cef7941ce49",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Run contains(val key) before regex extraction and retain only matching captures, once per line.",
+      "native_owners": [
+        "cpg-rs/project/Versions.rs::parseVersion",
+        "cpg-rs/project/Versions.rs::parseVersion",
+        "rust-support/cpg/src/source_io.rs::BuildIo::for_each_source_line_at",
+        "rust-support/cpg/src/error.rs::Error"
+      ],
+      "scope_kind": "method and nested callback",
+      "source_id": "cpg:project/Versions.scala::parseVersion-filter-and-collect",
+      "source_path": "project/Versions.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "916cb600759bfc824c99c566d18394adfb6f201621575890ef264cef7941ce49",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Materialize the complete matching list before the exactly-one source AssertionError and original diagnostic; return its sole head only after that condition.",
+      "native_owners": [
+        "cpg-rs/project/Versions.rs::parseVersion",
+        "cpg-rs/project/Versions.rs::parseVersion",
+        "rust-support/cpg/src/source_io.rs::BuildIo::for_each_source_line_at",
+        "rust-support/cpg/src/error.rs::Error"
+      ],
+      "scope_kind": "method and nested callback",
+      "source_id": "cpg:project/Versions.scala::parseVersion-toList-assert-head",
+      "source_path": "project/Versions.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "916cb600759bfc824c99c566d18394adfb6f201621575890ef264cef7941ce49",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "The whole object initializes in declaration order before any getter returns. Each source defining scope has a separate cached success/failure state; plugin registration consumes the meta-build value, not the project value.",
+      "native_owners": [
+        "cpg-rs/project/project/Versions.rs::values",
+        "rust-support/cpg/src/singletons.rs::SourceSingleton"
+      ],
+      "scope_kind": "eager singleton field",
+      "source_id": "cpg:project/project/Versions.scala::flatgraph",
+      "source_path": "project/project/Versions.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "edcd3da5305a13edbf4ce682003c5b5f62245e84ce410fe50c0027f3da5296c3",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Compile the interpolated whole-line regex before opening build.sbt; retain spaces, quotes, non-greedy capture and Java dot line-separator exclusions.",
+      "native_owners": [
+        "cpg-rs/project/Versions.rs::parseVersion",
+        "cpg-rs/project/project/Versions.rs::parseVersion",
+        "rust-support/cpg/src/source_io.rs::BuildIo::for_each_source_line_at",
+        "rust-support/cpg/src/error.rs::Error"
+      ],
+      "scope_kind": "method and nested callback",
+      "source_id": "cpg:project/project/Versions.scala::parseVersion-regex",
+      "source_path": "project/project/Versions.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "edcd3da5305a13edbf4ce682003c5b5f62245e84ce410fe50c0027f3da5296c3",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Open source build.sbt with the recorded strict UTF-8 Scala codec; retain line rules, encounter order and no explicit Source.close in this source method.",
+      "native_owners": [
+        "cpg-rs/project/Versions.rs::parseVersion",
+        "cpg-rs/project/project/Versions.rs::parseVersion",
+        "rust-support/cpg/src/source_io.rs::BuildIo::for_each_source_line_at",
+        "rust-support/cpg/src/error.rs::Error"
+      ],
+      "scope_kind": "method and nested callback",
+      "source_id": "cpg:project/project/Versions.scala::parseVersion-Source-and-getLines",
+      "source_path": "project/project/Versions.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "edcd3da5305a13edbf4ce682003c5b5f62245e84ce410fe50c0027f3da5296c3",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Run contains(val key) before regex extraction and retain only matching captures, once per line.",
+      "native_owners": [
+        "cpg-rs/project/Versions.rs::parseVersion",
+        "cpg-rs/project/project/Versions.rs::parseVersion",
+        "rust-support/cpg/src/source_io.rs::BuildIo::for_each_source_line_at",
+        "rust-support/cpg/src/error.rs::Error"
+      ],
+      "scope_kind": "method and nested callback",
+      "source_id": "cpg:project/project/Versions.scala::parseVersion-filter-and-collect",
+      "source_path": "project/project/Versions.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "edcd3da5305a13edbf4ce682003c5b5f62245e84ce410fe50c0027f3da5296c3",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Materialize the complete matching list before the exactly-one source AssertionError and original diagnostic; return its sole head only after that condition.",
+      "native_owners": [
+        "cpg-rs/project/Versions.rs::parseVersion",
+        "cpg-rs/project/project/Versions.rs::parseVersion",
+        "rust-support/cpg/src/source_io.rs::BuildIo::for_each_source_line_at",
+        "rust-support/cpg/src/error.rs::Error"
+      ],
+      "scope_kind": "method and nested callback",
+      "source_id": "cpg:project/project/Versions.scala::parseVersion-toList-assert-head",
+      "source_path": "project/project/Versions.scala",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "edcd3da5305a13edbf4ce682003c5b5f62245e84ce410fe50c0027f3da5296c3",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Preserve exact organization/name/version and bind to a fixed enum plus concrete native operation. Flatgraph version is read from project/project/Versions.scala. This is not a runtime plugin registry. Complete domain/protobuf/launcher output semantics retain their declared later owners.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::plugins",
+        "rust-support/cpg/src/stages.rs::NativeFacility",
+        "rust-support/cpg/src/stages.rs::RunNativeBuildStages"
+      ],
+      "scope_kind": "source build dependency registration",
+      "source_id": "cpg:project/plugins.sbt::sbt-protobuf",
+      "source_path": "project/plugins.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "85db9e5c3baa5b4f89a2bbacc7006121e9bee6c27880d5424d3276ea857aed00",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Preserve exact organization/name/version and bind to a fixed enum plus concrete native operation. Flatgraph version is read from project/project/Versions.scala. This is not a runtime plugin registry. Complete domain/protobuf/launcher output semantics retain their declared later owners.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::plugins",
+        "rust-support/cpg/src/stages.rs::NativeFacility",
+        "rust-support/cpg/src/stages.rs::RunNativeBuildStages"
+      ],
+      "scope_kind": "source build dependency registration",
+      "source_id": "cpg:project/plugins.sbt::sbt-scalafmt",
+      "source_path": "project/plugins.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "85db9e5c3baa5b4f89a2bbacc7006121e9bee6c27880d5424d3276ea857aed00",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Preserve exact organization/name/version and bind to a fixed enum plus concrete native operation. Flatgraph version is read from project/project/Versions.scala. This is not a runtime plugin registry. Complete domain/protobuf/launcher output semantics retain their declared later owners.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::plugins",
+        "rust-support/cpg/src/stages.rs::NativeFacility",
+        "rust-support/cpg/src/stages.rs::RunNativeBuildStages"
+      ],
+      "scope_kind": "source build dependency registration",
+      "source_id": "cpg:project/plugins.sbt::sbt-ci-release-early",
+      "source_path": "project/plugins.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "85db9e5c3baa5b4f89a2bbacc7006121e9bee6c27880d5424d3276ea857aed00",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Preserve exact organization/name/version and bind to a fixed enum plus concrete native operation. Flatgraph version is read from project/project/Versions.scala. This is not a runtime plugin registry. Complete domain/protobuf/launcher output semantics retain their declared later owners.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::plugins",
+        "rust-support/cpg/src/stages.rs::NativeFacility",
+        "rust-support/cpg/src/stages.rs::RunNativeBuildStages"
+      ],
+      "scope_kind": "source build dependency registration",
+      "source_id": "cpg:project/plugins.sbt::sbt-dynver",
+      "source_path": "project/plugins.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "85db9e5c3baa5b4f89a2bbacc7006121e9bee6c27880d5424d3276ea857aed00",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Preserve exact organization/name/version and bind to a fixed enum plus concrete native operation. Flatgraph version is read from project/project/Versions.scala. This is not a runtime plugin registry. Complete domain/protobuf/launcher output semantics retain their declared later owners.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::plugins",
+        "rust-support/cpg/src/stages.rs::NativeFacility",
+        "rust-support/cpg/src/stages.rs::RunNativeBuildStages"
+      ],
+      "scope_kind": "source build dependency registration",
+      "source_id": "cpg:project/plugins.sbt::sbt-native-packager",
+      "source_path": "project/plugins.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "85db9e5c3baa5b4f89a2bbacc7006121e9bee6c27880d5424d3276ea857aed00",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Preserve exact organization/name/version and bind to a fixed enum plus concrete native operation. Flatgraph version is read from project/project/Versions.scala. This is not a runtime plugin registry. Complete domain/protobuf/launcher output semantics retain their declared later owners.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::plugins",
+        "rust-support/cpg/src/stages.rs::NativeFacility",
+        "rust-support/cpg/src/stages.rs::RunNativeBuildStages"
+      ],
+      "scope_kind": "source build dependency registration",
+      "source_id": "cpg:project/plugins.sbt::sbt-flatgraph",
+      "source_path": "project/plugins.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "85db9e5c3baa5b4f89a2bbacc7006121e9bee6c27880d5424d3276ea857aed00",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Preserve codepropertygraph source artifact identity.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::LoadNativeBuildConfiguration"
+      ],
+      "scope_kind": "source project setting",
+      "source_id": "cpg:codepropertygraph/build.sbt::name",
+      "source_path": "codepropertygraph/build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "56d098b9e21a5362c692086639b27bcfa04182a3c20b098a5030b021a2009c99",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Preserve protoBindings and domainClasses dependency edges. Native library imports the canonical generated bindings/domain through its Cargo/source registration; native compile produces both prerequisites first.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::LoadNativeBuildConfiguration",
+        "rust-support/cpg/src/source_tasks.rs::RunSourceBuildTasks",
+        "rust-support/cpg/src/stages.rs::RunNativeBuildStages::Compile"
+      ],
+      "scope_kind": "source project setting",
+      "source_id": "cpg:codepropertygraph/build.sbt::dependsOn",
+      "source_path": "codepropertygraph/build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "56d098b9e21a5362c692086639b27bcfa04182a3c20b098a5030b021a2009c99",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Retain all seven source dependency identities, cross-version flags and scalatest Test scope, with explicit native subsystem and later milestone owners.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::codepropertygraph_dependencies"
+      ],
+      "scope_kind": "source project setting",
+      "source_id": "cpg:codepropertygraph/build.sbt::libraryDependencies",
+      "source_path": "codepropertygraph/build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "56d098b9e21a5362c692086639b27bcfa04182a3c20b098a5030b021a2009c99",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Preserve codepropertygraph-schema and the flatgraph-domain-classes-generator version/cross-version identity. Reuse the existing native schema/construction and Genco owners.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::LoadNativeBuildConfiguration"
+      ],
+      "scope_kind": "source task/initializer/nested closure",
+      "source_id": "cpg:schema/build.sbt::name-and-generator-dependency",
+      "source_path": "schema/build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "2b4e293e99233a4adf64538bac5a2480db47dea3be759fbce6dc5f29ed8adc4d",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Keep the exact source setting key and output project; M0010 owns its full literal generated hierarchy and registration transfer.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::SchemaGeneratorSettings"
+      ],
+      "scope_kind": "source task/initializer/nested closure",
+      "source_id": "cpg:schema/build.sbt::generatedSrcDir-setting-key",
+      "source_path": "schema/build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "2b4e293e99233a4adf64538bac5a2480db47dea3be759fbce6dc5f29ed8adc4d",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Bind FlatgraphCodegenSbtPlugin to the fixed native domain operation. Preserve CpgSchema$ / instance, output project/setting, scala3 and check/scala3=true inputs; native output is Rust. Source check execution belongs to post-gate assurance.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::SchemaGeneratorSettings",
+        "rust-support/cpg/src/stages.rs::RunNativeBuildStages::Domain"
+      ],
+      "scope_kind": "source task/initializer/nested closure",
+      "source_id": "cpg:schema/build.sbt::enablePlugins-and-domain-settings",
+      "source_path": "schema/build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "2b4e293e99233a4adf64538bac5a2480db47dea3be759fbce6dc5f29ed8adc4d",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Compute target/protos/cpg.proto and a shared ordered MD5 over sourceDirectory and schema/build.sbt before evaluating the branch. Overrides remain distinct from the hard-coded runMain output argument.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::SchemaBuildPaths",
+        "rust-support/cpg/src/build_contracts.rs::RunNativeProtobufBuildTask"
+      ],
+      "scope_kind": "source task/initializer/nested closure",
+      "source_id": "cpg:schema/build.sbt::generateProtobuf-task-and-dynamic-inputs",
+      "source_path": "schema/build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "2b4e293e99233a4adf64538bac5a2480db47dea3be759fbce6dc5f29ed8adc4d",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Keep outputRoot.exists directory-only condition and exact cached String equality; do not add outputFile existence as a cache condition. Read cache only after directory existence short-circuits true.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::RunNativeProtobufBuildTask",
+        "rust-support/cpg/src/build_contracts.rs::last_schema_md5"
+      ],
+      "scope_kind": "source task/initializer/nested closure",
+      "source_id": "cpg:schema/build.sbt::generateProtobuf-cache-hit-closure",
+      "source_path": "schema/build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "2b4e293e99233a4adf64538bac5a2480db47dea3be759fbce6dc5f29ed8adc4d",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Call the source lazy deletion helper, then the parent-context native Protogen at schema/target/protos, then write digest, then return configured outputFile. Generation failure does not write a successful cache.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::RunNativeProtobufBuildTask",
+        "cpg-rs/project/FileUtils.rs::deleteRecursively"
+      ],
+      "scope_kind": "source task/initializer/nested closure",
+      "source_id": "cpg:schema/build.sbt::generateProtobuf-cache-miss-closure",
+      "source_path": "schema/build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "2b4e293e99233a4adf64538bac5a2480db47dea3be759fbce6dc5f29ed8adc4d",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Retain target/schema-src.md5 relative to the source build root; path allocation is pure.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::last_schema_md5",
+        "rust-support/cpg/src/build_contracts.rs::write_last_schema_md5"
+      ],
+      "scope_kind": "source task/initializer/nested closure",
+      "source_id": "cpg:schema/build.sbt::schemaMd5File-lazy-initializer",
+      "source_path": "schema/build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "2b4e293e99233a4adf64538bac5a2480db47dea3be759fbce6dc5f29ed8adc4d",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Preserve sbt UTF-8 replacement decoding, ByteArrayOutputStream length conversion before open, parent-creation behavior and finally-close order. NonFatal errors yield None; VM/linkage/interruption errors propagate.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::last_schema_md5",
+        "rust-support/cpg/src/source_io.rs::BuildIo::read_sbt_text_at"
+      ],
+      "scope_kind": "source task/initializer/nested closure",
+      "source_id": "cpg:schema/build.sbt::lastSchemaMd5-read-Try",
+      "source_path": "schema/build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "2b4e293e99233a4adf64538bac5a2480db47dea3be759fbce6dc5f29ed8adc4d",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    },
+    {
+      "authored_contract": "Preserve parent creation/open/truncation, default UTF-8 encoding and write/close error handling. The closed source caller writes the 32 ASCII MD5 string only after successful generation; no cache success is synthesized.",
+      "native_owners": [
+        "rust-support/cpg/src/build_contracts.rs::write_last_schema_md5",
+        "rust-support/cpg/src/source_io.rs::BuildIo::write_sbt_text_at"
+      ],
+      "scope_kind": "source task/initializer/nested closure",
+      "source_id": "cpg:schema/build.sbt::lastSchemaMd5-write",
+      "source_path": "schema/build.sbt",
+      "source_revision": "301c4010d28ecdac05bc2ed44310f56446459465",
+      "source_sha256": "2b4e293e99233a4adf64538bac5a2480db47dea3be759fbce6dc5f29ed8adc4d",
+      "stage": "IMPLEMENTED_UNVERIFIED",
+      "verification": "NOT_STARTED"
+    }
+  ],
+  "scope": "All 11 M0002 handwritten production entries, including their source-owned declarations, initializers, callbacks and dynamic task branches. Imports/comments and the 38 retained-reference entries are not credited as translated bodies.",
+  "source_entry_count": 11,
+  "source_pin": "301c4010d28ecdac05bc2ed44310f56446459465",
+  "verification": "NOT_STARTED"
+}

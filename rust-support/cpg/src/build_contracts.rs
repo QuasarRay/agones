@@ -7,8 +7,10 @@ use better_comprehension::vector;
 use crate::{FileUtils, Projects, Utils::GitLFSUtils, Versions, ProjectVersions, Error, Result};
 use crate::source_io::HasBuildIo;
 use crate::lifecycle::HasBuildProjectRoot;
+use crate::singletons::HasBuildSingletons;
 
 pub const SOURCE_REVISION: &str = "301c4010d28ecdac05bc2ed44310f56446459465";
+pub const SOURCE_RELEASE_VERSION: &str = "1.7.79";
 pub const SOURCE_SCALA_VERSION: &str = "3.9.0";
 pub const SOURCE_JAVA_RELEASE: &str = "17";
 pub const SOURCE_SBT_VERSION: &str = "1.12.5";
@@ -107,10 +109,11 @@ pub trait CanExecuteNativeTarget {
 #[cgp_new_provider]
 impl<Context> NativeTargetExecutor<Context> for ExecuteTargetWithCargo {
     fn execute_native_target(_context: &Context, target: &NativeTarget, action: TargetAction) -> Result<()> {
-        let status = Command::new("cargo")
+        let mut command = Command::new("cargo");
+        command
             .args(target.cargo_arguments(action)?)
-            .env("CARGO_PROFILE_DEV_DEBUG", if target.debug_information { "2" } else { "0" })
-            .status()?;
+            .env("CARGO_PROFILE_DEV_DEBUG", if target.debug_information { "2" } else { "0" });
+        let status = crate::process::status(&mut command, "cargo")?;
         if !status.success() {
             return Err(Error::Runtime(format!("native target {} failed: {status}", target.name)));
         }
@@ -164,7 +167,7 @@ pub struct BuildPlugin {
     pub organization: &'static str,
     pub name: &'static str,
     pub version: String,
-    pub native_owner: &'static str,
+    pub native_facility: crate::stages::NativeFacility,
 }
 
 #[derive(Clone, Debug)]
@@ -177,7 +180,8 @@ pub struct SourceDependency {
     pub native_owner: &'static str,
 }
 
-pub fn codepropertygraph_dependencies(flatgraph: &str) -> Vec<SourceDependency> {
+pub fn codepropertygraph_dependencies(versions: &Versions::Values) -> Vec<SourceDependency> {
+    let flatgraph = versions.flatgraph.as_str();
     [
         ("io.joern", "flatgraph-formats", flatgraph, true, false, "cpg_rs::graph and proto_loading"),
         ("io.joern", "flatgraph-help", flatgraph, true, false, "native CPG facade/help support"),
@@ -185,7 +189,7 @@ pub fn codepropertygraph_dependencies(flatgraph: &str) -> Vec<SourceDependency> 
         ("com.github.scopt", "scopt", "4.0.1", true, false, "native source-tool argument parsing"),
         ("com.github.pathikrit", "better-files", "3.9.2", true, false, "native filesystem/archive effects"),
         ("org.slf4j", "slf4j-api", "2.0.6", false, false, "native tracing effect boundary"),
-        ("org.scalatest", "scalatest", Versions::scalatest, true, true, "M0036 source harnesses after global gate"),
+        ("org.scalatest", "scalatest", versions.scalatest, true, true, "M0036 source harnesses after global gate"),
     ].into_iter().map(|(organization, artifact, version, scala_cross_version, test_only, native_owner)| {
         SourceDependency { organization, artifact, version: version.to_owned(), scala_cross_version, test_only, native_owner }
     }).collect()
@@ -203,15 +207,16 @@ pub struct SchemaGeneratorSettings {
 }
 
 pub fn plugins(flatgraph: &str) -> Vec<BuildPlugin> {
+    use crate::stages::NativeFacility::*;
     [
-        ("com.github.sbt", "sbt-protobuf", "0.8.2", "cpg_rs::protobuf_bindings"),
-        ("org.scalameta", "sbt-scalafmt", "2.4.6", "post-gate formatter tooling"),
-        ("io.shiftleft", "sbt-ci-release-early", "2.1.2", "authorized delivery and packaging"),
-        ("com.github.sbt", "sbt-dynver", "5.1.0", "source version and VCS identity"),
-        ("com.github.sbt", "sbt-native-packager", "1.10.4", "native Cargo package/stage artifacts"),
-        ("io.joern", "sbt-flatgraph", flatgraph, "cpg_rs::construction and codegen"),
-    ].into_iter().map(|(organization, name, version, native_owner)| BuildPlugin {
-        organization, name, version: version.to_owned(), native_owner,
+        ("com.github.sbt", "sbt-protobuf", "0.8.2", ProtocolBindings),
+        ("org.scalameta", "sbt-scalafmt", "2.4.6", SourceFormatting),
+        ("io.shiftleft", "sbt-ci-release-early", "2.1.2", PublicationBundle),
+        ("com.github.sbt", "sbt-dynver", "5.1.0", VersionIdentity),
+        ("com.github.sbt", "sbt-native-packager", "1.10.4", ApplicationStage),
+        ("io.joern", "sbt-flatgraph", flatgraph, DomainGeneration),
+    ].into_iter().map(|(organization, name, version, native_facility)| BuildPlugin {
+        organization, name, version: version.to_owned(), native_facility,
     }).collect()
 }
 
@@ -254,12 +259,13 @@ pub trait CanLoadBuildConfiguration {
 
 #[cgp_new_provider]
 impl<Context> BuildConfigurationLoader<Context> for LoadNativeBuildConfiguration
-where Context: HasBuildIo + HasBuildProjectRoot,
+where Context: HasBuildIo + HasBuildProjectRoot + HasBuildSingletons,
 {
     fn load_build_configuration(context: &Context) -> Result<BuildConfiguration> {
         let root = context.build_project_root();
-        let flatgraph = Versions::flatgraph(context, root)?;
         let nested_flatgraph = ProjectVersions::flatgraph(context, root)?;
+        let versions = Versions::values(context, root)?;
+        let flatgraph = versions.flatgraph.clone();
         // This is the root build's actual onLoad predicate. Spawn errors remain
         // errors; a nonzero command result triggers the source assertion.
         if !GitLFSUtils::isGitLFSEnabled(root)? {
@@ -270,9 +276,9 @@ where Context: HasBuildIo + HasBuildProjectRoot,
         let manifest = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../cpg-rs/Cargo.toml");
         let configured = BuildConfiguration {
             project_names: c![project.source_name for project in Projects::ALL],
-            plugins: plugins(&flatgraph),
+            plugins: plugins(&nested_flatgraph),
             codepropertygraph_projects: &[Projects::protoBindings, Projects::domainClasses],
-            codepropertygraph_dependencies: codepropertygraph_dependencies(&flatgraph),
+            codepropertygraph_dependencies: codepropertygraph_dependencies(&versions),
             schema_dependency: SourceDependency {
                 organization: "io.joern", artifact: "flatgraph-domain-classes-generator",
                 version: flatgraph.clone(), scala_cross_version: true, test_only: false,
@@ -282,7 +288,7 @@ where Context: HasBuildIo + HasBuildProjectRoot,
                 class_with_schema: SCHEMA_CLASS, field_name: SCHEMA_FIELD,
                 output_project: Projects::domainClasses, output_setting: "generatedSrcDir",
                 scala3_generation: true, scala3_check: true,
-                native_generation_owner: "cpg_rs::codegen::CpgToolContext (M0010 output mapping)",
+                native_generation_owner: "NativeBuildContext -> RunNativeBuildStages::Domain -> cpg_rs::codegen::generate; M0010 owns exact output hierarchy",
             },
             flatgraph, nested_flatgraph,
             organization: "io.shiftleft",
@@ -344,13 +350,18 @@ impl SchemaBuildPaths {
 pub const SCHEMA_CLASS: &str = "io.shiftleft.codepropertygraph.schema.CpgSchema$";
 pub const SCHEMA_FIELD: &str = "instance";
 
-pub fn last_schema_md5<Context: HasBuildIo>(context: &Context, root: &Path) -> Option<String> {
-    // scala.util.Try(IO.read(...)).toOption suppresses every read failure.
-    context.build_io().read_source_text(&root.join("target/schema-src.md5")).ok()
+pub fn last_schema_md5<Context: HasBuildIo>(context: &Context, root: &Path) -> Result<Option<String>> {
+    // Scala Try catches NonFatal, including ordinary I/O failures, but retains
+    // VM/linkage/interruption failures rather than silently converting them.
+    match context.build_io().read_sbt_text_at(root, Path::new("target/schema-src.md5")) {
+        Ok(value) => Ok(Some(value)),
+        Err(error) if error.is_nonfatal() => Ok(None),
+        Err(error) => Err(error),
+    }
 }
 
 pub fn write_last_schema_md5<Context: HasBuildIo>(context: &Context, root: &Path, value: &str) -> Result<()> {
-    context.build_io().write_source_text(&root.join("target/schema-src.md5"), value)
+    context.build_io().write_sbt_text_at(root, Path::new("target/schema-src.md5"), value)
 }
 
 #[cgp_component(ProtobufBuildTask)]
@@ -359,7 +370,7 @@ pub trait CanRunProtobufBuildTask {
 }
 
 #[cgp_new_provider]
-impl<Context: HasBuildIo> ProtobufBuildTask<Context> for RunNativeProtobufBuildTask {
+impl<Context: HasBuildIo + cpg_rs::schema_tools::CanGenerateCpgProto> ProtobufBuildTask<Context> for RunNativeProtobufBuildTask {
     fn run_protobuf_build_task(context: &Context, paths: &SchemaBuildPaths) -> Result<PathBuf> {
         use cpg_rs::schema_tools::CanGenerateCpgProto;
         let output_root = paths.target.join("protos");
@@ -369,14 +380,13 @@ impl<Context: HasBuildIo> ProtobufBuildTask<Context> for RunNativeProtobufBuildT
         ])?;
         // The source checks the output directory, not whether cpg.proto exists.
         // Preserve that condition rather than silently repairing its cache rule.
-        if output_root.exists() && last_schema_md5(context, &paths.project_root).as_deref() == Some(digest.as_str()) {
+        if output_root.exists() && last_schema_md5(context, &paths.project_root)?.as_deref() == Some(digest.as_str()) {
             return Ok(output_file);
         }
         FileUtils::deleteRecursively(context, &output_root)?;
         // The runMain argument is hard-coded in the source even if target is
         // overridden. Keep its path distinct from the returned output path.
-        cpg_rs::schema_tools::NativeCpgSchemaContext
-            .generate_cpg_proto(&paths.project_root.join("schema/target/protos"))?;
+        context.generate_cpg_proto(&paths.project_root.join("schema/target/protos"))?;
         write_last_schema_md5(context, &paths.project_root, &digest)?;
         Ok(output_file)
     }

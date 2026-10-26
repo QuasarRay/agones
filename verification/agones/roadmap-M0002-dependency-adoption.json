@@ -1,4 +1,11 @@
 {
+  "additional_direct_pin_origin": "Existing package entries in the retained cpg-rs/Cargo.lock; only the support package dependency list was updated.",
+  "additional_direct_pins": {
+    "serde": "1.0.229",
+    "serde_json": "1.0.154",
+    "sha2": "0.11.1",
+    "zip": "2.4.2"
+  },
   "additional_pinned_closure": [
     {
       "name": "digest",
@@ -27,6 +34,7 @@
   "md5_api_source": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/md-5-0.10.6/src/lib.rs",
   "md5_registry_checksum": "d89e7ee0cfbedfc4da3340218492196241d89eefb6dab27de5df917a6d2e78cf",
   "new_lock": "rust-support/cpg/Cargo.lock",
+  "new_lock_sha256": "1a130b4d4ebc181f394f5c0d24130e2a9123ea42888e041564b958a73dce0ccf",
   "record_kind": "DEPENDENCY_IDENTITY_ADOPTION_ONLY",
   "retained_md5_archive_sha256": "d89e7ee0cfbedfc4da3340218492196241d89eefb6dab27de5df917a6d2e78cf",
   "reused_lock": "Cargo.lock",

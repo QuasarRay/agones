@@ -21,6 +21,10 @@ better_comprehension = { path = "../../third_party/first-generation/better-compr
 regex = "=1.13.1"
 md-5 = "=0.10.6"
 libc = "=0.2.191"
+serde = { version = "=1.0.229", features = ["derive"] }
+serde_json = { version = "=1.0.154", features = ["arbitrary_precision"] }
+zip = { version = "=2.4.2", default-features = false, features = ["deflate"] }
+sha2 = "=0.11.1"
 
 [patch.crates-io]
 grafeo-common = { path = "../../third_party/first-generation/grafeo/grafeo-common" }
