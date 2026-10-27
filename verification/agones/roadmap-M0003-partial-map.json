@@ -13,7 +13,7 @@
       "UtilityGatewayProviders"
     ],
     "feature_owner": "UtilityFeatureContext::feature_state owns one RwLock<FeatureGates>; M0001 state moves through into_parts/from_initialized. Existing core parser is reused, not duplicated.",
-    "filesystem_platform_owner": "NativeWatch owns one resource phase. Linux/Android inotify or Windows pinned overlapped read/handles/wait callback feed the source channel owner. Windows has the source 50-event buffer; errors are unbuffered. Cancellation drains the reader before channels and completion close. No detached Rust reader thread or second manager.",
+    "filesystem_platform_owner": "NativeWatch -> selected v1.4.7 platform CGP provider -> owned native reader/resources/channels/completion, or the source Solaris construction error. Source pin imports gopkg.in/fsnotify.v1 1.4.7; earlier modern candidate mapping is superseded.",
     "gateway_owner": {
       "codec": "Fixed source UseProtoNames/EmitUnpopulated/DiscardUnknown behavior is consumed by serializer/decoder code, not stored as flags. Typed target preparation/decode retains source pointer, map, slice, byte and enum branches; shared first-value framing owns read-ahead and sticky read errors.",
       "metaprogramming": "UtilityRuntimeContext and GatewayContext derive HasField + Deftly; UtilityRuntimeProviders/UtilityGatewayProviders supply static CGP factory, getters, codec, dispatch, callback and response implementations.",
@@ -21,7 +21,7 @@
       "schema": "Each DynamicMessage carries its descriptor and linked pool. Any resolves its type URL against that pool. Full generated source descriptor/handler adoption remains explicit later work.",
       "tasks": "Factory and codec spawn no tasks. Existing HTTP phase owns requests and connection drains. Callbacks borrow the active request; request return, response-body disposal and a dropped pending response head cancel its token. Normal server Shutdown does not cancel active requests early."
     },
-    "http_tls_owner": "SourceMux is the source HTTP route table, not an effect-provider registry. Listeners/connection tasks/handshake timers/response channels belong to native CGP effects. Cert reload shares one certServer store; source fallback files and hardcoded reload files retain distinct roles.",
+    "http_tls_owner": "SourceMux owns a shared source handler table. UtilityRuntimeProviders/CGP HTTP or TLS server owns listeners, connection/request UtilityTaskScopes, body/head channels and request cancellation. No new lifecycle manager, provider registry or request task is added by routing.",
     "logging_scope": "UtilityRuntimeOwner owns shared SourceLogger and SourceErrorBackoff. UtilityRuntimeContext and derived LogEntry values share those resources; CRD logging delegates to the same runtime.",
     "production_package": "Existing util workspace package; Cargo lib entrypoint is rust-support/agones/src/utility_lib.rs",
     "queue_owner": "WorkerQueue owns locked worker/running counts and SyncHandler. SourceQueueContext owns one shared queue state and limiter instance. Queue actor/worker tasks live in the weak-referenced utility parent scope. Ready state and limiter state remain separate owners; Done and Forget are distinct. Stable heap nodes are shared by arena identity/map references rather than reinserting mutated keys.",
@@ -80,10 +80,13 @@
       "utility_signals::windows::{Session,SignalLease,Reader}",
       "utility_fswatch::windows::KernelRead",
       "utility_fswatch::windows::CompletionBridge",
-      "utility_fswatch::windows::WaitRegistration"
+      "utility_fswatch::windows::WaitRegistration",
+      "utility_fswatch::kqueue::Reader",
+      "MuxProfile",
+      "utility_http::mux::{Pattern,Segment,Selection}"
     ]
   },
-  "dependency_adoption": "Native backend declarations retain existing root-lock HTTP/TLS/Tokio/JSON/YAML/base64/libc identities. comprende and better_comprehension reuse the already vendored first-generation sources; five exact package blocks (including clean-macro-docs/if_chain/syn 1) were adopted from the existing isolated CPG lock. Direct util dependency bookkeeping was authored manually, including base64 0.22.1 disambiguation. No resolver, compiler, formatter, macro/API probe or package execution ran. This continuation declares existing root errno 0.3.14 and regex 1.13.1 identities for signal-safe errno restoration and source install-hint Unicode category projection; only util direct lock bookkeeping changed. No resolver or executable assurance ran. Gateway adds prost-reflect 0.14.7 reflection/wire APIs only, with existing once_cell/prost 0.13.5/prost-types identities. One exact lock package was authored from the registry index/source archive without Cargo resolution. Optional serde/serde-value/ordered-float candidates were read but are not adopted. No new tool was installed. Platform continuation declares the existing root windows-sys 0.61.2 package only for cfg(windows), using the pinned FFI modules and existing futures/Tokio primitives. No package block/version upgrade, resolver or tool execution.",
+  "dependency_adoption": "Native backend declarations retain existing root-lock HTTP/TLS/Tokio/JSON/YAML/base64/libc identities. comprende and better_comprehension reuse the already vendored first-generation sources; five exact package blocks (including clean-macro-docs/if_chain/syn 1) were adopted from the existing isolated CPG lock. Direct util dependency bookkeeping was authored manually, including base64 0.22.1 disambiguation. No resolver, compiler, formatter, macro/API probe or package execution ran. This continuation declares existing root errno 0.3.14 and regex 1.13.1 identities for signal-safe errno restoration and source install-hint Unicode category projection; only util direct lock bookkeeping changed. No resolver or executable assurance ran. Gateway adds prost-reflect 0.14.7 reflection/wire APIs only, with existing once_cell/prost 0.13.5/prost-types identities. One exact lock package was authored from the registry index/source archive without Cargo resolution. Optional serde/serde-value/ordered-float candidates were read but are not adopted. No new tool was installed. Platform continuation declares the existing root windows-sys 0.61.2 package only for cfg(windows), using the pinned FFI modules and existing futures/Tokio primitives. No package block/version upgrade, resolver or tool execution. No dependencies changed in this batch. The fswatch support selects pinned gopkg.in/fsnotify.v1 1.4.7 and adds its literal license; newer fsnotify 1.9 candidate semantics have no utility completion credit.",
   "disposition": "READY",
   "entries_not_authored_in_mirror": 0,
   "entries_with_authored_source": 14,
@@ -97,7 +100,8 @@
         "addSerializedHandler GET/serializer/shallow-copy/target-kind/encoding-error policy",
         "Scheme/Codecs source two-kind initializer and real JSON/YAML/Kubernetes protobuf encoders",
         "AcceptedSerializer/negotiation and splitNameSpaceResource",
-        "API resource slice sharing and independent target TypeMeta"
+        "API resource slice sharing and independent target TypeMeta",
+        "Shared SourceMux source profiles, method/host/wildcard/clean/redirect decisions and retained URL/capture bytes; detail in verification/agones/roadmap-M0003-http-authoring.json"
       ],
       "destination": "agones-rs/pkg/util/apiserver/apiserver.rs",
       "remaining": [
@@ -176,23 +180,26 @@
         "batchWatch nil initial timer channel, first-event batching, callback-before-clear, error and closed-channel selection",
         "Native Linux/Android inotify fd, real readiness/read, event/error rendezvous, overflow/ignored/missing-path handling",
         "explicit close panic, fd-close completion, parent cancellation and join ownership",
-        "Windows source single-path directory/named-file watcher with actual GetFileAttributesW/CreateFileW/GetFileInformationByHandle and one pinned OVERLAPPED 65536-byte buffer",
-        "ReadDirectoryChangesW completion event + fixed OS wait callback wake the existing CGP-owned Tokio task; no spawned or detached Rust reader thread",
-        "Source default notify filter is LAST_WRITE/FILE_NAME/DIR_NAME; event actions map directory changes, named-file modification/removal and tracked rename names",
-        "Source 50-event Windows buffer and unbuffered error channel, versus unbuffered Linux events; one shared bounded/rendezvous channel owner handles receipts, cancellation retraction and closed buffered drain",
-        "Rendezvous sends use per-offer acknowledgements and stable Arc identity rather than wrapping global completion counters; concurrent senders cannot lose their individual acknowledgement",
-        "Zero-byte overflow and source ERROR_MORE_DATA sizeof(slice)-header branch; access-denied removal, invalid record bounds, error/idle and file-watch disappearance paths are authored",
-        "Normal cancellation cancels and asynchronously drains pending I/O. Emergency Drop unregisters the event waiter before synchronous drain so two consumers cannot race for the auto-reset completion event",
-        "UnregisterWaitEx waits for callbacks before dropping their Arc context, then file/event handles close, channels close and completion is published; closing a removed watch leaves its source channels open until owner cancel",
-        "Existing Linux overflow message now uses the same source ErrEventOverflow text, and explicit/Drop cancellation signals the reader before its actual close/completion path"
+        "NativeWatch/UtilityRuntimeProviders selects the literal gopkg.in/fsnotify.v1 v1.4.7 contract from pinned pkg/util/fswatch, not the edited Go imports.",
+        "BSD/macOS/ios kqueue owner holds queue and file descriptors, exact source open flags, watch/path/directory flags, external paths and seen-file sets; raw kevent pointers do not cross awaits.",
+        "BSD follows full symlink chains for internal and explicit paths, keeps relative source path identity, bounds links at 255, and suppresses EvalSymlinks/following-Lstat failures as v1 does.",
+        "BSD ioutil.ReadDir style eagerly gathers FileInfo before sorting and adding watches, skips vanished entries, propagates initial internal-watch failures, forwards directory-list errors and silently stops on directory create-watch errors.",
+        "BSD directory existence recheck, zero-Op event delivery, rename/remove with child cleanup, retained external/seen state, overwrite/create recovery and close completion are authored.",
+        "Solaris/illumos construction returns the exact source NewWatcher unsupported error with its trailing newline; this is a source-defined production failure, not an invented placeholder or modern FEN implementation.",
+        "Linux uses the v1 fsnotify queue overflow text, EOF/short-read reporting with continued reads, ignored/missing-path suppression and existing owned native inotify task.",
+        "Windows source single-path directory/named-file tracking uses one pinned OVERLAPPED 4096-byte array and LAST_ACCESS/LAST_WRITE/ATTRIBUTES/FILE_NAME/DIR_NAME filters.",
+        "Windows ERROR_MORE_DATA consumes the v1 sizeof([4096]byte) branch, while zero-byte completion sends an event (source Op==0) then short-read error. This supersedes the v1.9 slice-header/overflow-error mapping.",
+        "Windows 50-event buffer, unbuffered errors, per-offer acknowledgements and cancelled-offer retraction retain the shared channel owner.",
+        "Normal cancellation drains pending Windows I/O; emergency Drop unregisters callbacks before synchronous draining. Handles/resources and channels close before NativeWatch completion; no detached Rust thread or competing application manager."
       ],
       "destination": "agones-rs/pkg/util/fswatch/fswatch.rs",
       "remaining": [
-        "BSD/macOS kqueue and illumos/Solaris event-port filesystem adapters remain unauthored. Do not claim all-platform completion from Linux and Windows paths.",
-        "Reconcile exact Windows path/Clean/UTF16/long-name/symlink/recursive-suffix/case/normalization and malformed kernel-buffer profiles. Current adapter implements the single-path Agones Watch consumer; arbitrary fsnotify multi-Add/Remove/recursive APIs are not independently exposed.",
-        "Complete source error type/string/wrapping and NewWatcher/Add/Close native failure ordering. This backend uses an overlapped event/wait registration instead of the Go IOCP reader, so raw OS allocation/failure sequences are not asserted identical.",
-        "Final failed console-hook removal/wait unregister or undrainable pending filesystem I/O aborts to avoid unsafe continuation. This native last-resort policy remains explicit and unverified; normal cleanup is awaited. Emergency Windows Drop can synchronously wait for kernel I/O cancellation.",
-        "All other M0003 HTTP/TLS/gateway/queue/config/CRD/logging/feature/admission profiles and source-owner consumer adoption remain required. No assurance or route-switch credit comes from this authoring record."
+        "Reconcile all selected v1.4.7 native failure/type/error wrapping and NewWatcher/Add/Close ordering. Linux uses nonblocking AsyncFd rather than the source blocking inotify+poller allocation sequence; Windows uses event/wait completion rather than source IOCP.",
+        "Reconcile BSD source 100ms timed kevent/done/Close schedules versus cancellable readiness, close errors/nonblocking error delivery, partial initialization races, and existing-watch register failure with retained stale fd numbers. Native ownership never creates a second OwnedFd for a reused stale number.",
+        "Reconcile exact Windows filepath.Clean/UTF16/long-name/case/normalization, source MAX_PATH and malformed record, access/attribute and kernel-error/partial-buffer profiles. The adapter serves Agones single-path Watch; arbitrary vendor multi-Add/Remove APIs are not a separate utility contract.",
+        "Final Windows console-hook removal/wait unregister or undrainable filesystem I/O still has an explicit unverified abort policy; emergency Drop can block. Actual M0027 process exit and interaction with preserved old handlers remain required.",
+        "Enumerate any required source build-tag/platform configurations outside the authored Unix/Windows branches before a platform acceptance claim. Source-declared Solaris failure is preserved; modern fsnotify FEN behavior is not substituted.",
+        "All other M0003 HTTP/TLS/gateway/queue/config/CRD/logging/feature/admission profiles, source-body reconciliation and caller adoption remain required. No platform completion, assurance or route-switch credit follows from this authoring."
       ],
       "source_git_blob": "7c46058c214f79361f457461f2b57df9a4b89cf1",
       "source_id": "agones:pkg/util/fswatch/fswatch.go",
@@ -207,7 +214,8 @@
         "sensitiveHeaders and redactSensitiveHeaders key-preserving projection with shared non-sensitive values",
         "LogRequest method/URL/host/redacted headers/requestURI",
         "ErrorHTTPHandler runtime double error handling and actual HTTP 500 write",
-        "FourZeroFour actual streaming body read, success-only close, warning/404 and read-error 500"
+        "FourZeroFour actual streaming body read, success-only close, warning/404 and read-error 500",
+        "Shared SourceMux source profiles, method/host/wildcard/clean/redirect decisions and retained URL/capture bytes; detail in verification/agones/roadmap-M0003-http-authoring.json"
       ],
       "destination": "agones-rs/pkg/util/https/https.rs",
       "remaining": [
@@ -228,7 +236,8 @@
         "NewServer/setupServer hardcoded initial /certs/server.crt and server.key, retained previous cert on failure and root/default handler",
         "WatchForCertificateChanges one-second owned watcher/reload, log while lock held, source Fatal/Exit branch",
         "Run real bind/fallback certificate load, source error wrapping and ServerClosed distinction",
-        "Rustls dynamic certificate resolver, SNI/fallback selection, negotiated HTTP1/HTTP2, owned TLS handshake/deadline and parent connection drain"
+        "Rustls dynamic certificate resolver, SNI/fallback selection, negotiated HTTP1/HTTP2, owned TLS handshake/deadline and parent connection drain",
+        "Shared SourceMux source profiles, method/host/wildcard/clean/redirect decisions and retained URL/capture bytes; detail in verification/agones/roadmap-M0003-http-authoring.json"
       ],
       "destination": "agones-rs/pkg/util/https/server.rs",
       "remaining": [
@@ -250,7 +259,8 @@
         "Run default port 8080, start log, real HTTP1 listener, 60-second header timeout",
         "ServerClosed info path, package-wrapped runtime errors and source always-nil return",
         "Owned connection drain transferred to parent on listener return without cancelling the caller token",
-        "unfinished response detection covers both cancellation and caught async unwind; success is marked only after finish"
+        "unfinished response detection covers both cancellation and caught async unwind; success is marked only after finish",
+        "Shared SourceMux source profiles, method/host/wildcard/clean/redirect decisions and retained URL/capture bytes; detail in verification/agones/roadmap-M0003-http-authoring.json"
       ],
       "destination": "agones-rs/pkg/util/httpserver/server.rs",
       "remaining": [
@@ -381,7 +391,8 @@
         "handle one JSON decode, nil-root zero review, missing-response Allowed true, Request UID and nil dereference panic",
         "ordered current-review operation/group/kind matching, returned review preserved on error, Failure/InternalError details and continuation",
         "whole-review encoding with source misspelled decode/encode prefixes and HTTP late 500",
-        "Admission-v1 TypeMeta/request/response/user/status wire projections, raw JSON extensions and base64 patch bytes, CGP handler invocation"
+        "Admission-v1 TypeMeta/request/response/user/status wire projections, raw JSON extensions and base64 patch bytes, CGP handler invocation",
+        "Shared SourceMux source profiles, method/host/wildcard/clean/redirect decisions and retained URL/capture bytes; detail in verification/agones/roadmap-M0003-http-authoring.json"
       ],
       "destination": "agones-rs/pkg/util/webhooks/webhooks.rs",
       "remaining": [
@@ -429,6 +440,7 @@
   "formal_credit": 0,
   "gateway_authoring_record": "verification/agones/roadmap-M0003-gateway-authoring.json",
   "global_gate": "CLOSED",
+  "http_authoring_record": "verification/agones/roadmap-M0003-http-authoring.json",
   "initial_usage_boundary": "verification/agones/roadmap-M0003-entry-usage.json",
   "known_missing_named_bodies": [],
   "known_remaining": [
@@ -445,11 +457,12 @@
       "detail_record": "verification/agones/roadmap-M0003-platform-effects.json",
       "id": "M0003-FSWATCH",
       "required": [
-        "BSD/macOS kqueue and illumos/Solaris event-port filesystem adapters remain unauthored. Do not claim all-platform completion from Linux and Windows paths.",
-        "Reconcile exact Windows path/Clean/UTF16/long-name/symlink/recursive-suffix/case/normalization and malformed kernel-buffer profiles. Current adapter implements the single-path Agones Watch consumer; arbitrary fsnotify multi-Add/Remove/recursive APIs are not independently exposed.",
-        "Complete source error type/string/wrapping and NewWatcher/Add/Close native failure ordering. This backend uses an overlapped event/wait registration instead of the Go IOCP reader, so raw OS allocation/failure sequences are not asserted identical.",
-        "Final failed console-hook removal/wait unregister or undrainable pending filesystem I/O aborts to avoid unsafe continuation. This native last-resort policy remains explicit and unverified; normal cleanup is awaited. Emergency Windows Drop can synchronously wait for kernel I/O cancellation.",
-        "All other M0003 HTTP/TLS/gateway/queue/config/CRD/logging/feature/admission profiles and source-owner consumer adoption remain required. No assurance or route-switch credit comes from this authoring record."
+        "Reconcile all selected v1.4.7 native failure/type/error wrapping and NewWatcher/Add/Close ordering. Linux uses nonblocking AsyncFd rather than the source blocking inotify+poller allocation sequence; Windows uses event/wait completion rather than source IOCP.",
+        "Reconcile BSD source 100ms timed kevent/done/Close schedules versus cancellable readiness, close errors/nonblocking error delivery, partial initialization races, and existing-watch register failure with retained stale fd numbers. Native ownership never creates a second OwnedFd for a reused stale number.",
+        "Reconcile exact Windows filepath.Clean/UTF16/long-name/case/normalization, source MAX_PATH and malformed record, access/attribute and kernel-error/partial-buffer profiles. The adapter serves Agones single-path Watch; arbitrary vendor multi-Add/Remove APIs are not a separate utility contract.",
+        "Final Windows console-hook removal/wait unregister or undrainable filesystem I/O still has an explicit unverified abort policy; emergency Drop can block. Actual M0027 process exit and interaction with preserved old handlers remain required.",
+        "Enumerate any required source build-tag/platform configurations outside the authored Unix/Windows branches before a platform acceptance claim. Source-declared Solaris failure is preserved; modern fsnotify FEN behavior is not substituted.",
+        "All other M0003 HTTP/TLS/gateway/queue/config/CRD/logging/feature/admission profiles, source-body reconciliation and caller adoption remain required. No platform completion, assurance or route-switch credit follows from this authoring."
       ],
       "source": "pkg/util/fswatch/fswatch.go"
     },
@@ -538,11 +551,15 @@
       "required": "Close all source initializers/closures, resource owners, imports and support/output paths for all 14 entries before IMPLEMENTED_UNVERIFIED. Retain exact source-qualified identities; no source existence/body marker or stale proof credit."
     },
     {
+      "detail_record": "verification/agones/roadmap-M0003-http-authoring.json",
       "id": "M0003-HTTP-BOUNDARY-PROFILES",
       "required": [
-        "Complete Go ServeMux method/host/wildcard/clean-path/trailing-slash redirects; current resolver has exact and longest-prefix routing only.",
-        "Complete URL/RawPath/CONNECT/invalid escaping, informational 1xx headers, content-type detection, default date/framing/error/flush and header alias profiles. Native streaming writer is concrete but does not establish Go transport equivalence.",
-        "Permanent listener failure now retains active connections under the parent until source or owner shutdown; source temporary accept-error backoff and full independent Shutdown profile still need reconciliation."
+        "Complete source Go quote, registration location/conflict witness diagnostics, exact Unicode table profile and empty CONNECT path-segment/tree-alias configurations. The authored linear route table has no claimed all-input refinement proof against the Go tree.",
+        "Complete full net/url and HTTP parse/rejection behavior: host/authority/opaque/absolute/CONNECT/invalid bytes and target grammar. Bad path escapes now reject with 400 before handlers; Hyper raw error framing and HEAD behavior are not asserted identical to Go raw c.serve replies.",
+        "Carry source byte paths through remaining gateway/admission/discovery/logging consumers; HttpRequest.path remains a lossy text compatibility view while mux and captures use retained URL bytes.",
+        "M0027 source tool/GODEBUG bootstrap must select MuxProfile explicitly, including httpmuxgo121 initialization semantics. Default selects the repository Go 1.26.5 baseline and is not evidence of the actual Go runtime profile.",
+        "Finish global OPTIONS *, informational 1xx/100-continue, full sniffing, framing/Date/trailers/header alias and error/flush profiles plus temporary accept/backoff and independent shutdown ownership.",
+        "All other M0003 implementation gaps remain required. No Cargo/formatter/linter/API probe, application/fixture, assurance, generator validation or CI ran."
       ]
     },
     {
@@ -597,6 +614,7 @@
     "crates/util/src/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "crates/util/src/errors.rs": "f8c313758bb23103a6ed7f2ff2188d9589fca0b1adc87ee5214bef16434e45e2",
     "rust-support/agones/FSNOTIFY-LICENSE": "2dfbe6d2b5eb18b55148f3805d88648a09e0d17e38428123259afb08c8996e37",
+    "rust-support/agones/FSNOTIFY-V1-LICENSE": "c8001d18c3dda64c7e72146f1b23d73619fcf426aed6778f447599f5ac8e600a",
     "rust-support/agones/GO-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
     "rust-support/agones/src/lifecycle.rs": "cf19ade05a469d4424f401574af0eabab520657cc0d9977563bdbf4bf9fdef1d",
     "rust-support/agones/src/utility_admission.rs": "a17ed7e9f3c3ffdaf9d42e39ab372be4f107ff4bd50eec371f48824a4b7a5807",
@@ -605,8 +623,10 @@
     "rust-support/agones/src/utility_declarations.rs": "365cc58dbe05295b17e70bd683860347ea0eaf3ba3fa3b47c98b971dec7a1977",
     "rust-support/agones/src/utility_discovery.rs": "8151e804ce4354fef226b0cd915c6e868936c2806089143e4c212ee99e1a32ed",
     "rust-support/agones/src/utility_error_view.rs": "c2776e4aa916b0e4e6f933ece03453da31573ab507a79e023fb854c78407b976",
-    "rust-support/agones/src/utility_fswatch.rs": "b3caa2a5f84716cf4794848df55185f9e332b781e4ab3d281742fa15ad03be8c",
-    "rust-support/agones/src/utility_fswatch_windows.rs": "d467b2b2ddf550244fd16347f308f82e2f21fc27cba534be3e66d5fc2fc6684a",
+    "rust-support/agones/src/utility_fswatch.rs": "594ff335887d01bb1fa4e40c8df41e579567873972c4e89bdb7b89da005fa20f",
+    "rust-support/agones/src/utility_fswatch_fen.rs": "d5ffcbf1fef1be3b40b0fd06dfe14a4ebdd5e954a02c143deccbfba4a16a767d",
+    "rust-support/agones/src/utility_fswatch_kqueue.rs": "67b1963fa38453e9c1ad968648b12e0c7e747dddca7aa3613f44de81d4ed00c3",
+    "rust-support/agones/src/utility_fswatch_windows.rs": "937bc4ab04bea8bce002efc0d82c5067d4d9b94f5313eb60c0a73572f858662e",
     "rust-support/agones/src/utility_gateway.rs": "40fe3710855a95c776f94d296b3871016ddd37af60572cc7d242f7f33678b610",
     "rust-support/agones/src/utility_gateway_framing.rs": "566dea98d8a70c612ffb24c151e63d5cbaa68590df6434825da273177005f6f9",
     "rust-support/agones/src/utility_gateway_json.rs": "8ed085b26f7f9104d48c2751ae872904028472fc9c22d2c17837a828f561d4ff",
@@ -614,7 +634,8 @@
     "rust-support/agones/src/utility_gateway_targets.rs": "3d3d8607f17d4db8f9c6d70dc46793d3d35615e4d887a3f236ee57cda57d8f61",
     "rust-support/agones/src/utility_gateway_wire.rs": "234e6de84955c4240f153c0dece7a5594733562325bf7113998a794b9af0b113",
     "rust-support/agones/src/utility_gateway_wkt.rs": "4cb0f6fa00d5c553911e8eaaca563d17112cfd5123a669c2e180eb02142ed42b",
-    "rust-support/agones/src/utility_http.rs": "a1e40920dc9c0480ba0ad088aa49badac5fc23c606c39594accc404e3d0ce31b",
+    "rust-support/agones/src/utility_http.rs": "bb597341ebecd81f12149614499a614f4ecc83539ccc70fd6c3b8e03900316ac",
+    "rust-support/agones/src/utility_http_mux.rs": "017dfc7e5b6e01f66e0dd6de042b3d833610f0c1f8b549ea14d16ed8132568c6",
     "rust-support/agones/src/utility_https_module.rs": "3b1fc4bf94a5b016cce0c661c3f51d037b36e0718eefd1c17a55e309c878fc2a",
     "rust-support/agones/src/utility_lib.rs": "145614145fd542b2651e8fa73e652e48024c512ac9d389997c0942cd4b2a3f3d",
     "rust-support/agones/src/utility_lifecycle.rs": "5d2fdc2fc65f04f3fcc581edb0203b54cb8314717f6976c3d7404f018a0a26af",
@@ -635,25 +656,12 @@
     "third_party/first-generation/comprende/Cargo.toml": "01f7068b9cd9ec5b27b7df77709117e37dc991cd32597dbf24cbde9074f5ceab",
     "third_party/first-generation/comprende/src/lib.rs": "e8d8da04ca3048bdd7275b1ca77b5a78c4abfd999ecb763d82a615f4aeb0fb96",
     "verification/agones/roadmap-M0003-gateway-authoring.json": "80c5581d3ab2236db4247258769ac24c518e3a045b61fa4c464d8671421234a9",
-    "verification/agones/roadmap-M0003-platform-effects.json": "86ee5cc1ee68978710fc5a40d23e868354d1f18687c8b500437a40b0ebe6d8e9",
-    "verification/agones/roadmap-M0003-reuse-adoption.json": "b7b8462a3997275d8fa29693a5b63f1b6fe20333ad2984cb87657461aa3a51fc"
+    "verification/agones/roadmap-M0003-platform-effects.json": "2f6768def500b051e275aeeb471bfeb386830f3249b02319e9a7ac544b496f87",
+    "verification/agones/roadmap-M0003-reuse-adoption.json": "1bdf6bc92b6f1422df885947853136edd5fc8abb67db1ae998b7a33921fc4bd8"
   },
   "platform_effect_authoring_record": "verification/agones/roadmap-M0003-platform-effects.json",
-  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-12.json",
-  "progress_usage_observations": [
-    "verification/agones/roadmap-M0003-progress-usage-1.json",
-    "verification/agones/roadmap-M0003-progress-usage-2.json",
-    "verification/agones/roadmap-M0003-progress-usage-3.json",
-    "verification/agones/roadmap-M0003-progress-usage-4.json",
-    "verification/agones/roadmap-M0003-progress-usage-5.json",
-    "verification/agones/roadmap-M0003-progress-usage-6.json",
-    "verification/agones/roadmap-M0003-progress-usage-7.json",
-    "verification/agones/roadmap-M0003-progress-usage-8.json",
-    "verification/agones/roadmap-M0003-progress-usage-9.json",
-    "verification/agones/roadmap-M0003-progress-usage-10.json",
-    "verification/agones/roadmap-M0003-progress-usage-11.json",
-    "verification/agones/roadmap-M0003-progress-usage-12.json"
-  ],
+  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-14.json",
+  "progress_usage_observations": 14,
   "project_executable_invocations": 0,
   "record_kind": "PARTIAL_SOURCE_OWNERSHIP_ADOPTION",
   "route": "MANUAL",
@@ -732,6 +740,7 @@
       "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
     },
     {
+      "input_role": "HISTORICAL_UNSELECTED_FSNOTIFY_1_9_CANDIDATE_FOR_UTILITY",
       "path": "vendor/github.com/fsnotify/fsnotify/fsnotify.go",
       "purpose": "Source behavior/API reading for the M0003 runtime, transport, callback and wire implementation. Identity bookkeeping only; no source replay or port execution.",
       "sha256": "c721c84f2a2c6734ec0e82c0c9f4133ba3f62761457b52cc2a26aaf511e2c78a",
@@ -1424,11 +1433,13 @@
       "sha256": "406f958093406930868a85b962ff51f4fdbdd57932b60310c4f125807b4f72ee"
     },
     {
+      "input_role": "HISTORICAL_UNSELECTED_FSNOTIFY_1_9_CANDIDATE_FOR_UTILITY",
       "path": "vendor/github.com/fsnotify/fsnotify/backend_windows.go",
       "purpose": "Read-only platform/source/API/ownership input for M0003 authoring; no executed native API or assurance.",
       "sha256": "750aa64aa42d366b59af209b02089e08a0795281bc2a95dd160c8775094ebf36"
     },
     {
+      "input_role": "HISTORICAL_UNSELECTED_FSNOTIFY_1_9_CANDIDATE_FOR_UTILITY",
       "path": "vendor/github.com/fsnotify/fsnotify/LICENSE",
       "purpose": "Read-only platform/source/API/ownership input for M0003 authoring; no executed native API or assurance.",
       "sha256": "2dfbe6d2b5eb18b55148f3805d88648a09e0d17e38428123259afb08c8996e37"
@@ -1472,10 +1483,180 @@
       "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/futures-core-0.3.34/src/task/__internal/atomic_waker.rs",
       "purpose": "Read-only platform/source/API/ownership input for M0003 authoring; no executed native API or assurance.",
       "sha256": "67d3e3177332e95696bc727420beadc1af44b5c96da78ac8f97f9f5bae4fb143"
+    },
+    {
+      "input_role": "SELECTED_PINNED_SOURCE",
+      "path": "pkg/util/fswatch/fswatch.go",
+      "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "sha256": "23ac1767229cb4699c1e7e1bd41c4be17de45088573a3a8f00bfc9ff9de33d95"
+    },
+    {
+      "input_role": "SELECTED_PINNED_SOURCE",
+      "path": "go.mod",
+      "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "sha256": "01df333891a331341e77aab737c24dc722fab26abc8439b9c2036c71a477215a"
+    },
+    {
+      "input_role": "SELECTED_PINNED_SOURCE",
+      "path": "vendor/modules.txt",
+      "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "sha256": "5162f4b4b75838c5354ee1014da441ff596d924ba41fcac57b8cc23d6cee2751"
+    },
+    {
+      "input_role": "SELECTED_PINNED_SOURCE",
+      "path": "vendor/gopkg.in/fsnotify.v1/fsnotify.go",
+      "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "sha256": "83a3eeb49d1761874a4b63a0f6205f4ed3dd1440b8beb3df611ca9c4ca3c593a"
+    },
+    {
+      "input_role": "SELECTED_PINNED_SOURCE",
+      "path": "vendor/gopkg.in/fsnotify.v1/kqueue.go",
+      "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "sha256": "4276295919dec93c540052cd5eefbed04a1228005a3ffe7c62d13582edebf4bb"
+    },
+    {
+      "input_role": "SELECTED_PINNED_SOURCE",
+      "path": "vendor/gopkg.in/fsnotify.v1/open_mode_bsd.go",
+      "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "sha256": "b5d416f6268d2b43b905c43c3f63b60e17d58a3ff7f60cecf64b34102542a896"
+    },
+    {
+      "input_role": "SELECTED_PINNED_SOURCE",
+      "path": "vendor/gopkg.in/fsnotify.v1/open_mode_darwin.go",
+      "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "sha256": "11ef0eda548fa606e8f554950755fc49274975b36880ad84f51bdebb4b6f3324"
+    },
+    {
+      "input_role": "SELECTED_PINNED_SOURCE",
+      "path": "vendor/gopkg.in/fsnotify.v1/inotify.go",
+      "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "sha256": "7209e2f14aea7c865af3bd92b7af307d679cf48346755343d280fd1c86536090"
+    },
+    {
+      "input_role": "SELECTED_PINNED_SOURCE",
+      "path": "vendor/gopkg.in/fsnotify.v1/inotify_poller.go",
+      "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "sha256": "769ee5b1a55cebfa6aa41cf49bf13edce93069a1e350ca1927c4666650fded0e"
+    },
+    {
+      "input_role": "SELECTED_PINNED_SOURCE",
+      "path": "vendor/gopkg.in/fsnotify.v1/windows.go",
+      "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "sha256": "d30771b4d9819f15be7ae73f709a06f5923d906b9c2bb951ae33eb07298a4d5b"
+    },
+    {
+      "input_role": "SELECTED_PINNED_SOURCE",
+      "path": "vendor/gopkg.in/fsnotify.v1/fen.go",
+      "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "sha256": "1be3b2ff5f57db0ebb85a2d56f442ebb4fad5ea91863e14818f3ad1916b9e5a4"
+    },
+    {
+      "input_role": "SELECTED_PINNED_SOURCE",
+      "path": "vendor/gopkg.in/fsnotify.v1/LICENSE",
+      "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "sha256": "c8001d18c3dda64c7e72146f1b23d73619fcf426aed6778f447599f5ac8e600a"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/server.go",
+      "revision": "go1.26.5",
+      "sha256": "b66f8add8275858ca5bfca1c985374ebff0d31f72970920525913cfcc8effcba",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/server.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/pattern.go",
+      "revision": "go1.26.5",
+      "sha256": "e98488770e5e47b589add6245126faaec5e57bb0d2426ddeca774c889cf9f8ad",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/pattern.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/routing_tree.go",
+      "revision": "go1.26.5",
+      "sha256": "555d7ae16166612d9281b3f6f741c8e0a98f4e3a9968ddaea0b309182096879a",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/routing_tree.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/servemux121.go",
+      "revision": "go1.26.5",
+      "sha256": "e984a617731e8822da83f9619b2063a264c84aef9ab81bfad13665909eff4536",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/servemux121.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/url/url.go",
+      "revision": "go1.26.5",
+      "sha256": "17db8d6dc5764b64716060625495f308fd9179c8ab0310686e9ddfc9c5e7d6fa",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/url/url.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/url/gen_encoding_table.go",
+      "revision": "go1.26.5",
+      "sha256": "cd0f5020e4a5aa9741411afb4ab1bf73b9e9f40cd950e2bb9b369a773fdd9033",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/url/gen_encoding_table.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/path/filepath/symlink.go",
+      "revision": "go1.26.5",
+      "sha256": "d4e5ae166c208c8d0fbbed9aa907208f7cc541100b8e04029a38f16f1b5da1b5",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/path/filepath/symlink.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/path/filepath/symlink_unix.go",
+      "revision": "go1.26.5",
+      "sha256": "9c8178a2b185bc24de24ebab3de927f3ab7a29b971f91c269817026f5aab091a",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/path/filepath/symlink_unix.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/io/ioutil/ioutil.go",
+      "revision": "go1.26.5",
+      "sha256": "166c114baec89fd662376a1f08682589e97f595023df450a9f17a42ae419af39",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/io/ioutil/ioutil.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/net/http/server.go",
+      "revision": "go1.27.1",
+      "sha256": "8a46dd48f65aba824366170f8f335417af263fc60b7b4e04ef2a4bba4a21253d",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/net/http/server.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/net/http/pattern.go",
+      "revision": "go1.27.1",
+      "sha256": "e98488770e5e47b589add6245126faaec5e57bb0d2426ddeca774c889cf9f8ad",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/net/http/pattern.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/net/http/routing_tree.go",
+      "revision": "go1.27.1",
+      "sha256": "555d7ae16166612d9281b3f6f741c8e0a98f4e3a9968ddaea0b309182096879a",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/net/http/routing_tree.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/net/http/servemux121.go",
+      "revision": "go1.27.1",
+      "sha256": "e984a617731e8822da83f9619b2063a264c84aef9ab81bfad13665909eff4536",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/net/http/servemux121.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/net/url/url.go",
+      "revision": "go1.27.1",
+      "sha256": "44c33f88526abf3b5955d6c97297be5c9d228e741b33e52c940dcac5a496e091",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/net/url/url.go"
     }
   ],
   "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
-  "source_snapshot": "e2c1202f1de868a89dc7a444ce4700d7a771ee92",
+  "source_snapshot": "a85b8ff6460597499abb4fc5aec640032d673483",
   "source_snapshot_kind": "BASE_COMMIT_PLUS_AUTHORED_PAYLOAD_DIGESTS",
   "stage": "IMPLEMENTING",
   "usage_attribution_note": "M0003 entry bookkeeping, including the follow-up append of the finalized M0002 shared-boundary paragraph, is allocated once to M0003 entry overhead. It is not included a second time in the prior 20030-token shared segment.",

@@ -1,6 +1,6 @@
 # Agones-rs and CPG handoff
 
-Canonical ledger: `AGONES_RS_STATE.json`, revision 332. Native Goal:
+Canonical ledger: `AGONES_RS_STATE.json`, revision 333. Native Goal:
 `01a17928-8551-7701-8497-5333c680f283`, ACTIVE, no budget. Current work made
 concrete source progress; no wait or blocking condition is live.
 Authority: combined attachment/roadmap SHA
@@ -33,12 +33,14 @@ compilation, parity or assurance. `runtime.NewServerMux` now has an actual
 authored factory/codec/mux consumer, still PARTIAL and UNVERIFIED. The named
 missing-body list is empty; required behavior/platform gaps remain open.
 
-Immediate next action: author the missing BSD/macOS kqueue and illumos/Solaris
-event-port filesystem effects through NativeWatch/CGP, then complete HTTP mux/
-path/redirect and every required M0003 body/profile gap. Windows signal and
-filesystem paths are now authored. Keep all platform path/error/race/native
-failure/cleanup and gateway JSON/ProtoJSON/wire/custom-model obligations in their
-existing partial receipts. Keep the same M0003 cursor; no M4 route switch.
+Immediate next action: continue M0003 MANUAL without a route switch. Reconcile
+selected fsnotify v1.4.7 native failure/close/race and BSD timed-read/stale-fd
+profiles, then finish HTTP global OPTIONS, 1xx/sniff/framing/URL/diagnostics and
+all remaining M0003 gateway/config/queue/logging/CRD/features/admission/body gaps.
+The utility source pin imports gopkg.in/fsnotify.v1 1.4.7; the edited Go file's
+fsnotify 1.9 import is a distinct, unselected variant. Do not use its newer
+backend semantics for utility acceptance. See the corrected platform receipt.
+New HTTP detail: verification/agones/roadmap-M0003-http-authoring.json.
 
 Existing util package registration is `rust-support/agones/src/utility_lib.rs`.
 Literal mirror paths are under agones-rs/pkg/util; Rust-only effect/wiring files
@@ -106,30 +108,33 @@ Stop removes future hooks and quiesces active notification callbacks, clears
 static wakers and cancels readers. Late old readers cannot consume a replacement
 session. Failed final native restoration still has an explicit abort policy.
 
-Windows filesystem effects use GetFileAttributes/CreateFile/GetFileInformation,
-one pinned 65536-byte OVERLAPPED buffer, an auto-reset completion event and a
-fixed OS wait callback. The existing CGP task handles completion/backpressure;
-no detached Rust reader thread or second filesystem manager was added. Directory
-and named-file modify/remove/rename tracking, zero-byte overflow, access-denied
-removal, error/idle paths and the source ERROR_MORE_DATA slice-header-size branch
-are authored. Removed watches release handles while keeping channels open until
-Close. Normal cancel drains I/O asynchronously; emergency Drop unregisters the
-callback waiter before synchronous drain to avoid competing for its auto-reset
-event. Callback context, handles and channels are released before completion.
-Failed final unregister or undrainable I/O aborts rather than free live buffers;
-this native failure policy is explicit and unverified. Emergency Drop can block
-waiting for kernel cancellation. Windows path/Clean/UTF16/long-name/case/error/
-allocation-order/record-boundary/race profiles still need reconciliation.
+Filesystem source-binding correction: pinned pkg/util/fswatch/fswatch.go imports
+gopkg.in/fsnotify.v1 v1.4.7. Revision 332 followed the edited Go file's newer
+fsnotify 1.9 import. Those policy claims are superseded, with no parity or
+completion credit. The selected v1 sources and both consumer hashes are bound
+in roadmap-M0003-platform-effects.json. FSNOTIFY-V1-LICENSE is retained.
 
-The shared Rendezvous channel now has the source zero-capacity or bounded mode.
-Windows Events has the source capacity 50; Errors is unbuffered, as are Linux
-Events. Unbuffered offers use individual oneshot receipts and Arc identity, so
-concurrent senders cannot lose an acknowledgement to a later receive/counter
-wrap. Dropped pending sends retract an unaccepted offer. Closed buffered channels
-drain existing values. NativeWatch cancel signals its reader and waits for actual
-close completion; channels close in reader cleanup after native resources drain.
-The source ErrEventOverflow text is shared on Linux and Windows. BSD/macOS and
-illumos/Solaris filesystem adapters remain absent; no platform completion claim.
+BSD/macOS kqueue now has a concrete CGP-owned queue/file watcher, eager sorted
+FileInfo scans, source-relative full symlink traversal and ignored broken-link
+failures, seen/external/flags maps, missing-directory recheck, zero-Op delivery,
+rename/remove child cleanup and overwrite/create branches. Solaris/illumos
+NewWatcher returns the exact selected source unsupported error plus newline;
+no modern FEN backend is delivered or credited for this utility. BSD source
+100ms timed-read/close schedules and register-error stale-fd reuse profiles remain
+open. Native AsyncFd readiness is owned, with no detached reader thread.
+
+Windows retains the existing owned completion event/wait callback, now using
+the selected source 4096-byte array and LAST_ACCESS/LAST_WRITE/ATTRIBUTES plus
+file/dir name filters. ERROR_MORE_DATA uses sizeof([4096]byte). A zero-byte
+completion sends an Op==0 event before the short-read error. Linux uses v1's
+fsnotify queue overflow text and EOF/short-read continuation. These corrections
+replace the earlier modern buffer/filter/slice-header/error descriptions.
+Normal cancellation drains native resources before channel/completion close.
+Emergency Windows Drop unregisters its waiter before synchronous I/O drain;
+failed final unregister or undrainable I/O retains its explicit unverified
+abort policy. Path/UTF16/native error/failure ordering/close/races remain open.
+Shared Rendezvous keeps per-offer receipts and retraction, zero or source-50
+buffering and closed-buffer drain. Errors and Unix Events are unbuffered.
 
 The cfg(windows) dependency reuses existing root windows-sys 0.61.2, enabling
 Foundation/Security/Storage_FileSystem/System_IO/System_Console/System_Threading.
@@ -178,13 +183,26 @@ with the no-plugin constraint instead of silently deleting source behavior.
 
 Configuration parser/default/duplicate/extension/base64/unselected-path/Unicode/
 URL/proxy/error/diagnostic/certificate profiles remain unverified/incomplete.
-HTTP still needs required mux/path-clean/redirect, URL/RawPath/CONNECT/escape,
+HTTP mux/path-clean/redirect and URL/RawPath/CONNECT branches are authored but still need exact source profiles;
 1xx/sniff/framing/alias and temporary-accept profiles; TLS and Go JSON/YAML/log/
 string/number/type/format profiles remain in the partial record. Native errors
 are retained, without asserting Go equivalence. Full feature Viper/pflag and
 actual command/controller/CRD/admission parent adoption remain open. Async Drop
 cannot itself join; normal cleanup is explicit. Do not claim compilation or
 parity from code presence, manifest declaration, source mapping or this handoff.
+
+SourceMux continuation: utility_http_mux.rs replaces exact/prefix-only lookup
+with method/host precedence, GET-to-HEAD fallback, literal/single/multi/{$}
+patterns, conflict relationships, byte captures, sorted 405 Allow, clean/slash
+redirects and CONNECT handling. Go121 is the explicit compatibility profile
+with 301; BOTH Go1.26.5 and Go1.27.1 modern sources use 307. Their escaped redirect
+construction differs and has separate Go126/Go127 branches. Default selects the
+repository Go1.26.5 baseline; actual source tool/GODEBUG bootstrap remains an
+M0027 obligation, not an inferred Rust-host property. URL and capture bytes are
+retained; other consumers still have a text compatibility view. Bad path escapes
+now reject with 400 before callbacks. Conflict diagnostics/Unicode tables,
+full URL/native transport parsing/rejection and global OPTIONS/1xx/sniff/framing
+remain partial. No HTTP application or probe was run.
 
 Gateway authoring adds `utility_gateway.rs`, `utility_gateway_json.rs`,
 `utility_gateway_wire.rs` and `utility_gateway_wkt.rs`. Actual path:
@@ -256,9 +274,9 @@ One read command attempted `go env GOROOT` for a source path; stdout was empty
 and its dependent file read failed. No project/compile/fixture/semantic assurance
 ran. Do not reinterpret source reading or identity bookkeeping as verification.
 
-M0003 entry usage 656008. Raw progress observations 1..12 retain 752278, 781155,
+M0003 entry usage 656008. Raw progress observations 1..14 retain 752278, 781155,
 905410, 1069792, 1095960, 1289081, 1320264, 1568425, 1577646, 1691561, 1702165,
-1783942. Still NO completed M0003 cost comparison or
+1783942, 1794616, 2082051. Still NO completed M0003 cost comparison or
 route switch. Context/read/accounting is charged once, no credit inference.
 Preserve M0001/M0002 original forecasts/comparisons and shared overhead buckets.
 M0002 observed work was 482306; shared completion/switch was 20030. The explicit

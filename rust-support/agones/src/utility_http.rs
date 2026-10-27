@@ -2,7 +2,7 @@
 //! Request handlers stream through bounded channels into actual Hyper bodies;
 //! a disconnected consumer is a write error, not a synthetic successful write.
 use std::{collections::BTreeMap, error::Error, fmt, io,
-    net::{Ipv4Addr, Ipv6Addr, SocketAddr}, pin::Pin, sync::{Arc, RwLock, atomic::{AtomicBool, Ordering}}, task::{Context, Poll}, time::Duration};
+    net::{Ipv4Addr, Ipv6Addr, SocketAddr}, pin::Pin, sync::{Arc, atomic::{AtomicBool, Ordering}}, task::{Context, Poll}, time::Duration};
 use bytes::Bytes;
 use futures::future::BoxFuture;
 use http_body_util::BodyExt;
@@ -15,6 +15,10 @@ use tokio::{io::{AsyncRead, AsyncWrite}, net::TcpListener, sync::{mpsc, oneshot}
 use tokio_util::sync::CancellationToken;
 use cgp::prelude::*;
 use crate::{errors::{BoxError, Errors}, utility_runtime::UtilityRuntimeContext, utility_scope::{CanSpawnUtilityTask, HasUtilityTaskScope, UtilityTaskScope}};
+
+#[path = "utility_http_mux.rs"]
+mod mux;
+pub use mux::{SourceMux, MuxProfile};
 
 pub type Headers = BTreeMap<String, Arc<Vec<Vec<u8>>>>;
 pub type HttpHandler = Arc<dyn for<'a> Fn(&'a UtilityRuntimeContext, &'a mut ResponseWriter, &'a mut HttpRequest) -> BoxFuture<'a, ()> + Send + Sync>;
@@ -46,6 +50,15 @@ pub struct HttpRequest {
     pub request_uri: String,
     pub url_log_value: Value,
     pub headers: Headers,
+    /// Source Go strings can contain non-UTF8 bytes. Mux path decisions and
+    /// captures use these URL bytes; `path` remains the existing text view.
+    url_path: Vec<u8>,
+    url_raw_path: Vec<u8>,
+    url_host: String,
+    url_raw_query: Vec<u8>,
+    protocol_at_least_11: bool,
+    pub matched_pattern: Vec<u8>,
+    path_values: BTreeMap<String, Vec<u8>>,
     /// The request owner cancels on handler return or transport/body disposal.
     /// Server Shutdown does not cancel an otherwise active request.
     pub cancelled: CancellationToken,
@@ -54,11 +67,13 @@ pub struct HttpRequest {
     body_eof: bool,
 }
 impl HttpRequest {
-    fn from_hyper(request: Request<Incoming>) -> Self {
+    fn from_hyper(request: Request<Incoming>) -> Result<Self, ()> {
         let (parts, body) = request.into_parts();
         let request_uri = parts.uri.to_string();
-        let raw_path = parts.uri.path();
-        let path = String::from_utf8_lossy(&unescape_path(raw_path.as_bytes())).into_owned();
+        let connect_authority = parts.method == hyper::Method::CONNECT && !request_uri.starts_with('/');
+        let raw_path = if connect_authority { "" } else { parts.uri.path() };
+        let url_path = mux::path_unescape(raw_path.as_bytes()).ok_or(())?;
+        let path = String::from_utf8_lossy(&url_path).into_owned();
         let mut headers: Headers = BTreeMap::new();
         for name in parts.headers.keys() {
             let values = parts.headers.get_all(name).iter().map(|value| value.as_bytes().to_vec()).collect();
@@ -68,14 +83,27 @@ impl HttpRequest {
             .or_else(|| header(&headers, "Host").map(|value| String::from_utf8_lossy(value).into_owned())).unwrap_or_default();
         // net/http moves Host out of Request.Header into Request.Host.
         headers.remove("Host");
-        let scheme = parts.uri.scheme_str().unwrap_or_default();
+        let scheme = if connect_authority { "" } else { parts.uri.scheme_str().unwrap_or_default() };
         let authority = parts.uri.authority().map_or("", |value| value.as_str());
         let raw_query = parts.uri.query().unwrap_or_default();
-        let raw_path_log = if raw_path == path { "" } else { raw_path };
+        let raw_path_log = if raw_path == "*" || mux::escape_url_path(&url_path) == raw_path.as_bytes() { "" } else { raw_path };
         let url_log_value = json!({"Scheme":scheme,"Opaque":"","User":null,"Host":authority,"Path":path,
             "RawPath":raw_path_log,"OmitHost":false,"ForceQuery":parts.uri.query()==Some(""),"RawQuery":raw_query,"Fragment":"","RawFragment":""});
-        Self { method: parts.method.to_string(), path, host, request_uri, url_log_value, headers,
-            cancelled: CancellationToken::new(), body: Some(body), body_closed: false, body_eof: false }
+        Ok(Self { method: parts.method.to_string(), path, host, request_uri, url_log_value, headers,
+            url_path, url_raw_path: raw_path_log.as_bytes().to_vec(), url_host: authority.to_owned(), url_raw_query: raw_query.as_bytes().to_vec(),
+            protocol_at_least_11: parts.version != hyper::Version::HTTP_09 && parts.version != hyper::Version::HTTP_10,
+            matched_pattern: Vec::new(), path_values: BTreeMap::new(),
+            cancelled: CancellationToken::new(), body: Some(body), body_closed: false, body_eof: false })
+    }
+    pub fn path_value(&self, name: &str) -> &[u8] { self.path_values.get(name).map_or(&[], Vec::as_slice) }
+    pub fn set_path_value(&mut self, name: &str, value: Vec<u8>) { self.path_values.insert(name.to_owned(), value); }
+    pub fn escaped_path(&self) -> Vec<u8> {
+        if !self.url_raw_path.is_empty() && mux::valid_encoded_path(&self.url_raw_path)
+            && mux::path_unescape(&self.url_raw_path).as_deref() == Some(self.url_path.as_slice()) {
+            return self.url_raw_path.clone();
+        }
+        if self.url_path == b"*" { return vec![b'*']; }
+        mux::escape_url_path(&self.url_path)
     }
     pub async fn read_body(&mut self) -> Result<Vec<u8>, BoxError> {
         self.require_open_body()?;
@@ -124,19 +152,6 @@ impl HttpRequest {
 impl Drop for HttpRequest {
     fn drop(&mut self) { self.cancelled.cancel(); }
 }
-fn unescape_path(raw: &[u8]) -> Vec<u8> {
-    let mut result = Vec::with_capacity(raw.len()); let mut index = 0;
-    while index < raw.len() {
-        if raw[index] == b'%' && index + 2 < raw.len() {
-            if let (Some(a), Some(b)) = ((raw[index+1] as char).to_digit(16), (raw[index+2] as char).to_digit(16)) {
-                result.push((a*16+b) as u8); index += 3; continue;
-            }
-        }
-        result.push(raw[index]); index += 1;
-    }
-    result
-}
-
 struct ResponseHead { status: u16, headers: Headers }
 pub struct ResponseWriter {
     pub headers: Headers,
@@ -274,26 +289,6 @@ impl Body for ResponseBody {
     fn size_hint(&self) -> SizeHint { SizeHint::default() }
 }
 
-#[derive(Clone, Default)]
-pub struct SourceMux { routes: Arc<RwLock<BTreeMap<String, HttpHandler>>> }
-impl SourceMux {
-    pub fn handle(&self, pattern: &str, handler: HttpHandler) {
-        if pattern.is_empty() { panic!("http: invalid pattern"); }
-        let mut routes = self.routes.write().unwrap_or_else(|error| error.into_inner());
-        if routes.contains_key(pattern) { panic!("http: multiple registrations for {pattern}"); }
-        routes.insert(pattern.to_owned(), handler);
-    }
-    fn resolve(&self, path: &str) -> Option<HttpHandler> {
-        let routes = self.routes.read().unwrap_or_else(|error| error.into_inner());
-        routes.iter().filter(|(pattern, _)| *pattern == path || pattern.ends_with('/') && path.starts_with(pattern.as_str()))
-            .max_by_key(|(pattern, _)| pattern.len()).map(|(_, handler)| Arc::clone(handler))
-    }
-    async fn dispatch(&self, context: &UtilityRuntimeContext, writer: &mut ResponseWriter, request: &mut HttpRequest) {
-        if let Some(handler) = self.resolve(&request.path) { handler(context, writer, request).await; }
-        else { writer.http_error("404 page not found", 404).await; }
-    }
-}
-
 #[derive(Debug)]
 pub struct ServerClosed;
 impl fmt::Display for ServerClosed { fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { out.write_str("http: Server closed") } }
@@ -301,7 +296,20 @@ impl Error for ServerClosed {}
 pub fn is_server_closed(error: &(dyn Error + 'static)) -> bool { crate::errors::contains_error::<ServerClosed>(error) }
 
 async fn request_service(context: UtilityRuntimeContext, mux: SourceMux, tasks: Arc<UtilityTaskScope>, incoming: Request<Incoming>) -> Result<Response<ResponseBody>, io::Error> {
-    let mut request = HttpRequest::from_hyper(incoming);
+    let version = incoming.version();
+    let mut request = match HttpRequest::from_hyper(incoming) {
+        Ok(request) => request,
+        Err(()) => {
+            let (data, receiver) = mpsc::channel(2);
+            let _ = data.try_send(Bytes::from_static(b"400 Bad Request")); drop(data);
+            let mut response = Response::new(ResponseBody { receiver, panicked: Arc::new(AtomicBool::new(false)),
+                ended: false, cancelled: CancellationToken::new() });
+            *response.status_mut() = hyper::StatusCode::BAD_REQUEST;
+            response.headers_mut().insert(hyper::header::CONTENT_TYPE, hyper::header::HeaderValue::from_static("text/plain; charset=utf-8"));
+            if version != hyper::Version::HTTP_2 { response.headers_mut().insert(hyper::header::CONNECTION, hyper::header::HeaderValue::from_static("close")); }
+            return Ok(response);
+        }
+    };
     // Hyper may drop the service future before the response head is ready.
     // Until ResponseBody owns cancellation, this guard covers that interval.
     struct PendingRequest(Option<CancellationToken>);

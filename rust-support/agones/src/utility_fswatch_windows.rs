@@ -1,8 +1,8 @@
-//! Source fsnotify Windows effects behind the existing CGP watcher owner.
+//! Source fsnotify v1.4.7 Windows effects behind the CGP watcher owner.
 //! One overlapped read and one OS wait registration belong to each watcher.
 //! No detached Rust thread or alternative filesystem manager is introduced.
 // Source policy adapted from fsnotify. Copyright The Go Authors and fsnotify
-// Authors. BSD-3-Clause; see ../FSNOTIFY-LICENSE.
+// Authors. BSD-3-Clause; see ../FSNOTIFY-V1-LICENSE.
 use super::*;
 use std::{cell::UnsafeCell, ffi::c_void, io, os::windows::{ffi::OsStrExt, io::{AsRawHandle, FromRawHandle, OwnedHandle}},
     path::Path, pin::Pin, task::Poll};
@@ -12,7 +12,8 @@ use windows_sys::Win32::{Foundation::{HANDLE, INVALID_HANDLE_VALUE, ERROR_ACCESS
     GetFileAttributesW, GetFileInformationByHandle, ReadDirectoryChangesW, BY_HANDLE_FILE_INFORMATION,
     FILE_ATTRIBUTE_DIRECTORY, INVALID_FILE_ATTRIBUTES, FILE_LIST_DIRECTORY, FILE_SHARE_READ, FILE_SHARE_WRITE,
     FILE_SHARE_DELETE, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, FILE_FLAG_OVERLAPPED,
-    FILE_NOTIFY_CHANGE_LAST_WRITE, FILE_NOTIFY_CHANGE_FILE_NAME, FILE_NOTIFY_CHANGE_DIR_NAME,
+    FILE_NOTIFY_CHANGE_LAST_ACCESS, FILE_NOTIFY_CHANGE_LAST_WRITE, FILE_NOTIFY_CHANGE_ATTRIBUTES,
+    FILE_NOTIFY_CHANGE_FILE_NAME, FILE_NOTIFY_CHANGE_DIR_NAME,
     FILE_ACTION_MODIFIED, FILE_ACTION_REMOVED, FILE_ACTION_RENAMED_OLD_NAME, FILE_ACTION_RENAMED_NEW_NAME},
     System::{IO::{CancelIoEx, GetOverlappedResult, OVERLAPPED}, Threading::{CreateEventW,
         RegisterWaitForSingleObject, UnregisterWaitEx, WT_EXECUTEDEFAULT, INFINITE}}};
@@ -46,7 +47,7 @@ impl Drop for WaitRegistration {
         }
     }
 }
-struct KernelRead { overlapped: UnsafeCell<OVERLAPPED>, bytes: UnsafeCell<[u8; 65536]> }
+struct KernelRead { overlapped: UnsafeCell<OVERLAPPED>, bytes: UnsafeCell<[u8; 4096]> }
 // The pinned allocation can move between executor threads, but the kernel is
 // its only writer while pending. Rust reads bytes only after I/O completion.
 unsafe impl Send for KernelRead {}
@@ -67,10 +68,11 @@ impl Reader {
     fn overlap(&self) -> *mut OVERLAPPED { self.operation.as_ref().get_ref().overlapped.get() }
     fn start_read(&mut self) -> io::Result<()> {
         self.bridge.ready.store(false, Ordering::Release);
-        let flags = FILE_NOTIFY_CHANGE_LAST_WRITE | FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME;
+        let flags = FILE_NOTIFY_CHANGE_LAST_ACCESS | FILE_NOTIFY_CHANGE_LAST_WRITE | FILE_NOTIFY_CHANGE_ATTRIBUTES
+            | FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME;
         // UnsafeCell grants the kernel exclusive write access until completion.
         let bytes = self.operation.as_ref().get_ref().bytes.get().cast::<c_void>();
-        let started = unsafe { ReadDirectoryChangesW(self.handle(), bytes, 65536, 0, flags,
+        let started = unsafe { ReadDirectoryChangesW(self.handle(), bytes, 4096, 0, flags,
             std::ptr::null_mut(), self.overlap(), None) };
         if started == 0 {
             let error = io::Error::last_os_error();
@@ -128,9 +130,8 @@ impl Reader {
                 }
                 Err(error) if error.raw_os_error() == Some(ERROR_ACCESS_DENIED as i32) => { self.removed().await; return Ok(()); },
                 Err(error) if error.raw_os_error() == Some(ERROR_MORE_DATA as i32) => {
-                    // The pinned source overwrites n with sizeof(slice), not
-                    // the buffer length. Preserve that source branch explicitly.
-                    3 * std::mem::size_of::<usize>()
+                    // v1.4.7 uses sizeof(watch.buf), a [4096]byte array.
+                    4096
                 }
                 Err(error) => {
                     if !self.send_error(Box::new(error)).await { return Ok(()); }
@@ -140,7 +141,10 @@ impl Reader {
                 }
             };
             if count == 0 {
-                if !self.send_error(Errors::default().New(EVENT_OVERFLOW)).await { return Ok(()); }
+                // v1 sends an Op==0 queue-overflow Event before this error.
+                // batchWatch consumes that event even though its Op is empty.
+                if !self.send_event().await { return Ok(()); }
+                if !self.send_error(Errors::default().New("short read in readEvents()")).await { return Ok(()); }
             } else if !self.deliver(count).await? { return Ok(()); }
             if !self.directory && self.name.is_none() {
                 self.release_handles();
@@ -179,7 +183,7 @@ impl Reader {
             if next == 0 { return Ok(true); }
             offset += next;
             if offset >= count {
-                return Ok(self.send_error(Errors::default().New("Windows system assumed buffer larger than it is, events have likely been missed")).await);
+                return Ok(self.send_error(Errors::default().New("Windows system assumed buffer larger than it is, events have likely been missed.")).await);
             }
         }
     }
@@ -237,7 +241,7 @@ impl FileWatcherOpener<UtilityRuntimeContext> for OpenNativeFileWatcher {
         let registration = WaitRegistration(wait);
         let watch = Arc::new(NativeWatch { events: Arc::new(Rendezvous::with_capacity(50)), errors: Arc::default(),
             cancel: context.utility_child_token()?, completion: Arc::default(), explicitly_cancelled: AtomicBool::new(false) });
-        let operation = Box::pin(KernelRead { overlapped: UnsafeCell::new(OVERLAPPED { hEvent: event.as_raw_handle().cast(), ..OVERLAPPED::default() }), bytes: UnsafeCell::new([0; 65536]) });
+        let operation = Box::pin(KernelRead { overlapped: UnsafeCell::new(OVERLAPPED { hEvent: event.as_raw_handle().cast(), ..OVERLAPPED::default() }), bytes: UnsafeCell::new([0; 4096]) });
         let mut reader = Reader { file: Some(file), event: Some(event), registration: Some(registration), operation, bridge, watch: Arc::clone(&watch), directory,
             name: if directory { None } else { path.file_name().map(|name| name.to_string_lossy().into_owned()) }, renamed_from: String::new(), pending: false };
         reader.start_read()?;

@@ -1,0 +1,146 @@
+{
+  "authored_operations": [
+    "Replace exact/prefix-only SourceMux with source pattern parsing, duplicate/conflict relationships, host/method precedence, GET-to-HEAD fallback, literal/single/multi/{$} patterns and byte-preserving named captures.",
+    "Modern not-found versus sorted 405 Allow (including trailing-slash candidates), request matched-pattern projection, all-method legacy literal/longest-prefix host routing and RequestURI * mux rejection.",
+    "Canonicalize escaped modern paths and decoded legacy paths, preserve escaped segment boundaries and query values, strip valid host ports, and keep CONNECT separate URL.Host versus Request.Host matching.",
+    "Explicit Go121 compatibility profile uses 301. BOTH Go1.26.5 and Go1.27.1 modern sources use 307. Go126 retains its decoded/escaped redirect construction, while Go127 uses urlFromEscaped to preserve encoded separators and avoid double escaping.",
+    "Redirect Location non-ASCII escaping, HTML link escaping, existing Content-Type behavior, GET/HEAD content-type and GET-only short body including the second newline.",
+    "Incoming request retains decoded URL bytes and source RawPath/default-escape distinction alongside the old text view. Malformed path escapes return 400 before callbacks. CONNECT authority-form has empty URL.Path."
+  ],
+  "canonical_owner": "SourceMux owns a shared source handler table. UtilityRuntimeProviders/CGP HTTP or TLS server owns listeners, connection/request UtilityTaskScopes, body/head channels and request cancellation. No new lifecycle manager, provider registry or request task is added by routing.",
+  "completion_claim": "Authored, connected source boundary paths only; no full HTTP/source-body/platform/parity or milestone completion credit.",
+  "disposition": "READY",
+  "formal_credit": 0,
+  "global_gate": "CLOSED",
+  "milestone_id": "M0003",
+  "payload_sha256": {
+    "rust-support/agones/GO-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+    "rust-support/agones/src/utility_http.rs": "bb597341ebecd81f12149614499a614f4ecc83539ccc70fd6c3b8e03900316ac",
+    "rust-support/agones/src/utility_http_mux.rs": "017dfc7e5b6e01f66e0dd6de042b3d833610f0c1f8b549ea14d16ed8132568c6"
+  },
+  "project_executable_invocations": 0,
+  "record_kind": "PARTIAL_HTTP_BOUNDARY_AUTHORING",
+  "remaining": [
+    "Complete source Go quote, registration location/conflict witness diagnostics, exact Unicode table profile and empty CONNECT path-segment/tree-alias configurations. The authored linear route table has no claimed all-input refinement proof against the Go tree.",
+    "Complete full net/url and HTTP parse/rejection behavior: host/authority/opaque/absolute/CONNECT/invalid bytes and target grammar. Bad path escapes now reject with 400 before handlers; Hyper raw error framing and HEAD behavior are not asserted identical to Go raw c.serve replies.",
+    "Carry source byte paths through remaining gateway/admission/discovery/logging consumers; HttpRequest.path remains a lossy text compatibility view while mux and captures use retained URL bytes.",
+    "M0027 source tool/GODEBUG bootstrap must select MuxProfile explicitly, including httpmuxgo121 initialization semantics. Default selects the repository Go 1.26.5 baseline and is not evidence of the actual Go runtime profile.",
+    "Finish global OPTIONS *, informational 1xx/100-continue, full sniffing, framing/Date/trailers/header alias and error/flush profiles plus temporary accept/backoff and independent shutdown ownership.",
+    "All other M0003 implementation gaps remain required. No Cargo/formatter/linter/API probe, application/fixture, assurance, generator validation or CI ran."
+  ],
+  "route": "MANUAL",
+  "runtime_credit": 0,
+  "source_ids": [
+    "agones:pkg/util/httpserver/server.go",
+    "agones:pkg/util/https/server.go",
+    "agones:pkg/util/https/https.go",
+    "agones:pkg/util/apiserver/apiserver.go",
+    "agones:pkg/util/webhooks/webhooks.go"
+  ],
+  "source_inputs": [
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/server.go",
+      "revision": "go1.26.5",
+      "sha256": "b66f8add8275858ca5bfca1c985374ebff0d31f72970920525913cfcc8effcba",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/server.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/pattern.go",
+      "revision": "go1.26.5",
+      "sha256": "e98488770e5e47b589add6245126faaec5e57bb0d2426ddeca774c889cf9f8ad",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/pattern.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/routing_tree.go",
+      "revision": "go1.26.5",
+      "sha256": "555d7ae16166612d9281b3f6f741c8e0a98f4e3a9968ddaea0b309182096879a",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/routing_tree.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/servemux121.go",
+      "revision": "go1.26.5",
+      "sha256": "e984a617731e8822da83f9619b2063a264c84aef9ab81bfad13665909eff4536",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/servemux121.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/url/url.go",
+      "revision": "go1.26.5",
+      "sha256": "17db8d6dc5764b64716060625495f308fd9179c8ab0310686e9ddfc9c5e7d6fa",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/url/url.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/url/gen_encoding_table.go",
+      "revision": "go1.26.5",
+      "sha256": "cd0f5020e4a5aa9741411afb4ab1bf73b9e9f40cd950e2bb9b369a773fdd9033",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/url/gen_encoding_table.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/path/filepath/symlink.go",
+      "revision": "go1.26.5",
+      "sha256": "d4e5ae166c208c8d0fbbed9aa907208f7cc541100b8e04029a38f16f1b5da1b5",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/path/filepath/symlink.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/path/filepath/symlink_unix.go",
+      "revision": "go1.26.5",
+      "sha256": "9c8178a2b185bc24de24ebab3de927f3ab7a29b971f91c269817026f5aab091a",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/path/filepath/symlink_unix.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/io/ioutil/ioutil.go",
+      "revision": "go1.26.5",
+      "sha256": "166c114baec89fd662376a1f08682589e97f595023df450a9f17a42ae419af39",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/io/ioutil/ioutil.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/net/http/server.go",
+      "revision": "go1.27.1",
+      "sha256": "8a46dd48f65aba824366170f8f335417af263fc60b7b4e04ef2a4bba4a21253d",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/net/http/server.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/net/http/pattern.go",
+      "revision": "go1.27.1",
+      "sha256": "e98488770e5e47b589add6245126faaec5e57bb0d2426ddeca774c889cf9f8ad",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/net/http/pattern.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/net/http/routing_tree.go",
+      "revision": "go1.27.1",
+      "sha256": "555d7ae16166612d9281b3f6f741c8e0a98f4e3a9968ddaea0b309182096879a",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/net/http/routing_tree.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/net/http/servemux121.go",
+      "revision": "go1.27.1",
+      "sha256": "e984a617731e8822da83f9619b2063a264c84aef9ab81bfad13665909eff4536",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/net/http/servemux121.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/net/url/url.go",
+      "revision": "go1.27.1",
+      "sha256": "44c33f88526abf3b5955d6c97297be5c9d228e741b33e52c940dcac5a496e091",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/net/url/url.go"
+    }
+  ],
+  "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "stage": "IMPLEMENTING",
+  "timestamp": "2026-10-27T01:48:30.914763+00:00",
+  "typed_declaration_template_provider_consumer": "UtilityRuntimeContext + derive-deftly UtilityRuntimeProviders -> static HttpServerRunner/HttpsServerRunner -> existing serve_connection/request_service -> SourceMux::dispatch -> borrowed source callback/ResponseWriter.",
+  "verification": "NOT_STARTED",
+  "work_base_commit": "a85b8ff6460597499abb4fc5aec640032d673483"
+}

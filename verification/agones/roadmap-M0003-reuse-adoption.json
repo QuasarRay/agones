@@ -75,9 +75,11 @@
         "rust-support/agones/src/utility_signals.rs",
         "rust-support/agones/src/utility_signals_windows.rs",
         "rust-support/agones/src/utility_fswatch.rs",
-        "rust-support/agones/src/utility_fswatch_windows.rs"
+        "rust-support/agones/src/utility_fswatch_windows.rs",
+        "rust-support/agones/src/utility_fswatch_kqueue.rs",
+        "rust-support/agones/src/utility_fswatch_fen.rs"
       ],
-      "dependency_reused": "Existing root windows-sys 0.61.2 and futures-core 0.3.34/Tokio. Source Windows signal/runtime and fsnotify policy were read; no foreign application manager or generic OS provider registry.",
+      "dependency_reused": "Existing libc 0.2.191/Tokio 1.53.3/mio 1.2.4 and windows-sys 0.61.2. Actual utility source uses gopkg.in/fsnotify.v1 1.4.7; modern fsnotify 1.9 policies from earlier authoring are superseded. No new package, tool or effect registry.",
       "detail_record": "verification/agones/roadmap-M0003-platform-effects.json",
       "disposition": "AUTHORED_UNVERIFIED_PARTIAL_NO_PLATFORM_OR_PARENT_ACCEPTANCE_CREDIT",
       "existing_effects_reused": "UtilityRuntimeProviders/SourceSignalState/UtilityTaskScope/NativeWatch/batchWatch/channel and completion owner. Common signal subscription wiring now serves Unix and Windows; the old Unix backend is retained.",
@@ -85,7 +87,24 @@
         "agones:pkg/util/signals/signals.go",
         "agones:pkg/util/fswatch/fswatch.go"
       ],
-      "work_base_commit": "6183dcfabe72c589dacad711d189b4b53cca3601"
+      "work_base_commit": "a85b8ff6460597499abb4fc5aec640032d673483"
+    },
+    {
+      "canonical_support_owners": [
+        "rust-support/agones/src/utility_http.rs",
+        "rust-support/agones/src/utility_http_mux.rs"
+      ],
+      "detail_record": "verification/agones/roadmap-M0003-http-authoring.json",
+      "disposition": "AUTHORED_UNVERIFIED_PARTIAL_NO_HTTP_PARITY_OR_PARENT_ACCEPTANCE_CREDIT",
+      "existing_effects_reused": "SourceMux owns a shared source handler table. UtilityRuntimeProviders/CGP HTTP or TLS server owns listeners, connection/request UtilityTaskScopes, body/head channels and request cancellation. No new lifecycle manager, provider registry or request task is added by routing.",
+      "source_ids": [
+        "agones:pkg/util/httpserver/server.go",
+        "agones:pkg/util/https/server.go",
+        "agones:pkg/util/https/https.go",
+        "agones:pkg/util/apiserver/apiserver.go",
+        "agones:pkg/util/webhooks/webhooks.go"
+      ],
+      "work_base_commit": "a85b8ff6460597499abb4fc5aec640032d673483"
     }
   ],
   "milestone_id": "M0003",

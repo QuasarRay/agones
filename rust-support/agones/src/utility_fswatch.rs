@@ -7,7 +7,8 @@ use tokio::sync::{Notify, oneshot};
 use tokio_util::sync::CancellationToken;
 use crate::{errors::{BoxError, Errors}, utility_scope::CanSpawnUtilityTask, utility_runtime::UtilityRuntimeContext};
 
-const EVENT_OVERFLOW: &str = "fsnotify: queue or buffer overflow";
+// pkg/util/fswatch at the source pin imports gopkg.in/fsnotify.v1 1.4.7.
+const EVENT_OVERFLOW: &str = "fsnotify queue overflow";
 
 struct Receipt { identity: Arc<()>, accepted: oneshot::Sender<()> }
 struct Queued<T> { value: T, receipt: Option<Receipt> }
@@ -114,6 +115,29 @@ pub struct OpenNativeFileWatcher;
 #[path = "utility_fswatch_windows.rs"]
 mod windows;
 
+#[cfg(any(target_os = "macos", target_os = "ios", target_os = "freebsd", target_os = "openbsd", target_os = "netbsd", target_os = "dragonfly"))]
+#[path = "utility_fswatch_kqueue.rs"]
+mod kqueue;
+
+#[cfg(any(target_os = "solaris", target_os = "illumos"))]
+#[path = "utility_fswatch_fen.rs"]
+mod fen;
+
+#[cfg(unix)]
+fn clean_unix_path(path: &Path) -> std::path::PathBuf {
+    use std::path::{Component, PathBuf};
+    let mut result = PathBuf::new();
+    for part in path.components() {
+        match part {
+            Component::CurDir => (),
+            Component::ParentDir if result.file_name().is_some_and(|name| name != "..") => { result.pop(); }
+            Component::ParentDir if result.has_root() => (),
+            _ => result.push(part.as_os_str()),
+        }
+    }
+    if result.as_os_str().is_empty() { PathBuf::from(".") } else { result }
+}
+
 #[cfg(any(target_os = "linux", target_os = "android"))]
 mod linux {
     use super::*;
@@ -147,14 +171,13 @@ mod linux {
                     result = read_fd(self.fd.as_ref().expect("owned inotify fd"), &mut bytes) => match result {
                         Ok(count) => count,
                         Err(error) if error.raw_os_error() == Some(libc::EINTR) => continue,
-                        Err(error) if error.raw_os_error() == Some(libc::EBADF) => return Ok(()),
                         Err(error) => { if !self.send_error(Box::new(error)).await { return Ok(()); } continue; }
                     },
                 };
-                if count == 0 { return Ok(()); }
                 if count < 16 {
-                    self.send_error(Errors::default().New("unexpected EOF")).await;
-                    return Ok(());
+                    let error = if count == 0 { "EOF" } else { "notify: short read in readEvents()" };
+                    if !self.send_error(Errors::default().New(error)).await { return Ok(()); }
+                    continue;
                 }
                 let mut offset = 0;
                 while offset + 16 <= count {
@@ -207,7 +230,7 @@ mod linux {
     #[cgp_provider(FileWatcherOpenerComponent)]
     impl FileWatcherOpener<UtilityRuntimeContext> for OpenNativeFileWatcher {
         fn open_file_watcher(context: &UtilityRuntimeContext, path: &Path) -> Result<Arc<NativeWatch>, BoxError> {
-            let path = clean_linux_path(path);
+            let path = clean_unix_path(path);
             let c_path = CString::new(path.as_os_str().as_bytes()).map_err(|_| io::Error::from_raw_os_error(libc::EINVAL))?;
             // SAFETY: no pointers are passed; a successful new fd is given one
             // OwnedFd owner immediately, including every later failure path.
@@ -226,18 +249,5 @@ mod linux {
             context.spawn_utility_task("fswatch kernel reader", Box::pin(reader.run()))?;
             Ok(watch)
         }
-    }
-    fn clean_linux_path(path: &Path) -> PathBuf {
-        use std::path::Component;
-        let mut result = PathBuf::new();
-        for part in path.components() {
-            match part {
-                Component::CurDir => (),
-                Component::ParentDir if result.file_name().is_some_and(|name| name != "..") => { result.pop(); }
-                Component::ParentDir if result.has_root() => (),
-                _ => result.push(part.as_os_str()),
-            }
-        }
-        if result.as_os_str().is_empty() { PathBuf::from(".") } else { result }
     }
 }

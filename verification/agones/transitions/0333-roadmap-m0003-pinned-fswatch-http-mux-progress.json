@@ -1,0 +1,22 @@
+{
+  "authorization": "Explicit combined /goal invocation",
+  "event": "ROADMAP_M0003_PINNED_FSWATCH_AND_HTTP_MUX_PROGRESS",
+  "global_gate": "CLOSED",
+  "handoff_sha256": "466d6c1ea5018b6a78e83a032aa517a32b81d9d49f66f9fbf8a6374778bf681a",
+  "http_authoring": "verification/agones/roadmap-M0003-http-authoring.json",
+  "milestone_stage": "IMPLEMENTING",
+  "native_goal_status": "active",
+  "partial_adoption": "verification/agones/roadmap-M0003-partial-map.json",
+  "platform_effect_authoring": "verification/agones/roadmap-M0003-platform-effects.json",
+  "predecessor_handoff_sha256": "81f7b8fe42bee5ee7087f1ff6bb2179f3f88ebd6f9cd130570bfb417e42cdacf",
+  "predecessor_revision": 332,
+  "predecessor_sha256": "f582cf1ef90778a7de7cd523826950368ce14382e234b0486dd7f77a6391c1eb",
+  "project_executable_invocations": 0,
+  "result_revision": 333,
+  "route_switch": false,
+  "source_binding_correction": "gopkg.in/fsnotify.v1 v1.4.7 selected by pinned source; edited Go fsnotify 1.9 variant is not authoritative for this utility.",
+  "state_sha256": "bcea7f51c1b84af7803f56ff72a2f421581e92619a5e1d660162761a22fb567b",
+  "timestamp": "2026-10-27T01:48:30.914763+00:00",
+  "usage_progress_observation": "verification/agones/roadmap-M0003-progress-usage-14.json",
+  "verification": "NOT_STARTED"
+}
