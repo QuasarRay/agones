@@ -21,7 +21,7 @@
       "schema": "Each DynamicMessage carries its descriptor and linked pool. Any resolves its type URL against that pool. Full generated source descriptor/handler adoption remains explicit later work.",
       "tasks": "Factory and codec spawn no tasks. Existing HTTP phase owns requests and connection drains. Callbacks borrow the active request; request return, response-body disposal and a dropped pending response head cancel its token. Normal server Shutdown does not cancel active requests early."
     },
-    "http_tls_owner": "SourceMux owns a shared source handler table. UtilityRuntimeProviders/CGP HTTP or TLS server owns listeners, connection/request UtilityTaskScopes, body/head channels and request cancellation. No new lifecycle manager, provider registry or request task is added by routing.",
+    "http_tls_owner": "SourceMux owns handler data. CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/date/diagnostic effects; each connection owns protocol child scope and a weak executor, each source request owns response/body/head channels and Continue state. Native H1/H2 drivers own bounded informational receivers and acknowledgements; original errors and disposal remain with these owners.",
     "logging_scope": "UtilityRuntimeOwner owns shared SourceLogger and SourceErrorBackoff. UtilityRuntimeContext and derived LogEntry values share those resources; CRD logging delegates to the same runtime.",
     "production_package": "Existing util workspace package; Cargo lib entrypoint is rust-support/agones/src/utility_lib.rs",
     "queue_owner": "WorkerQueue owns locked worker/running counts and SyncHandler. SourceQueueContext owns one shared queue state and limiter instance. Queue actor/worker tasks live in the weak-referenced utility parent scope. Ready state and limiter state remain separate owners; Done and Forget are distinct. Stable heap nodes are shared by arena identity/map references rather than reinserting mutated keys.",
@@ -83,10 +83,16 @@
       "utility_fswatch::windows::WaitRegistration",
       "utility_fswatch::kqueue::Reader",
       "MuxProfile",
-      "utility_http::mux::{Pattern,Segment,Selection}"
+      "utility_http::mux::{Pattern,Segment,Selection}",
+      "ResponseWriter::WriteFailure",
+      "SourceHttpExecutor",
+      "SourceHttpClock",
+      "SourceHttpDiagnostic",
+      "hyper::ext::InformationalSender",
+      "hyper::ext::informational_sender::Command"
     ]
   },
-  "dependency_adoption": "Native backend declarations retain existing root-lock HTTP/TLS/Tokio/JSON/YAML/base64/libc identities. comprende and better_comprehension reuse the already vendored first-generation sources; five exact package blocks (including clean-macro-docs/if_chain/syn 1) were adopted from the existing isolated CPG lock. Direct util dependency bookkeeping was authored manually, including base64 0.22.1 disambiguation. No resolver, compiler, formatter, macro/API probe or package execution ran. This continuation declares existing root errno 0.3.14 and regex 1.13.1 identities for signal-safe errno restoration and source install-hint Unicode category projection; only util direct lock bookkeeping changed. No resolver or executable assurance ran. Gateway adds prost-reflect 0.14.7 reflection/wire APIs only, with existing once_cell/prost 0.13.5/prost-types identities. One exact lock package was authored from the registry index/source archive without Cargo resolution. Optional serde/serde-value/ordered-float candidates were read but are not adopted. No new tool was installed. Platform continuation declares the existing root windows-sys 0.61.2 package only for cfg(windows), using the pinned FFI modules and existing futures/Tokio primitives. No package block/version upgrade, resolver or tool execution. No dependencies changed in this batch. The fswatch support selects pinned gopkg.in/fsnotify.v1 1.4.7 and adds its literal license; newer fsnotify 1.9 candidate semantics have no utility completion credit.",
+  "dependency_adoption": "Native backend declarations retain existing root-lock HTTP/TLS/Tokio/JSON/YAML/base64/libc identities. comprende and better_comprehension reuse the already vendored first-generation sources; five exact package blocks (including clean-macro-docs/if_chain/syn 1) were adopted from the existing isolated CPG lock. Direct util dependency bookkeeping was authored manually, including base64 0.22.1 disambiguation. No resolver, compiler, formatter, macro/API probe or package execution ran. This continuation declares existing root errno 0.3.14 and regex 1.13.1 identities for signal-safe errno restoration and source install-hint Unicode category projection; only util direct lock bookkeeping changed. No resolver or executable assurance ran. Gateway adds prost-reflect 0.14.7 reflection/wire APIs only, with existing once_cell/prost 0.13.5/prost-types identities. One exact lock package was authored from the registry index/source archive without Cargo resolution. Optional serde/serde-value/ordered-float candidates were read but are not adopted. No new tool was installed. Platform continuation declares the existing root windows-sys 0.61.2 package only for cfg(windows), using the pinned FFI modules and existing futures/Tokio primitives. No package block/version upgrade, resolver or tool execution. No dependencies changed in this batch. The fswatch support selects pinned gopkg.in/fsnotify.v1 1.4.7 and adds its literal license; newer fsnotify 1.9 candidate semantics have no utility completion credit. This batch vendors the exact existing Hyper 1.12.0 source archive, preserving license/base file hashes and adding opt-in informational support in its existing H1/H2 drivers. Root Cargo patch/local lock source bookkeeping replaces that node registry identity without a version upgrade or Cargo resolution. Existing h2 0.4.20 informational APIs are bound to their original crate archive. No new tool/install/resolver or project execution.",
   "disposition": "READY",
   "entries_not_authored_in_mirror": 0,
   "entries_with_authored_source": 14,
@@ -101,13 +107,22 @@
         "Scheme/Codecs source two-kind initializer and real JSON/YAML/Kubernetes protobuf encoders",
         "AcceptedSerializer/negotiation and splitNameSpaceResource",
         "API resource slice sharing and independent target TypeMeta",
-        "Shared SourceMux source profiles, method/host/wildcard/clean/redirect decisions and retained URL/capture bytes; detail in verification/agones/roadmap-M0003-http-authoring.json"
+        "Shared SourceMux source profiles, method/host/wildcard/clean/redirect decisions and retained URL/capture bytes; detail in verification/agones/roadmap-M0003-http-authoring.json",
+        "Native informational response path: source writer -> bounded per-request InformationalSender -> existing H1 driver/encoder/flush acknowledgement or existing H2 stream SendResponse::send_informational. Intermediate headers leave the final response and handler header map uncommitted and uncleared.",
+        "HTTP/1 101 remains a final upgrade response; bundled Go HTTP/2 treats its 1xx class separately. HTTP/1 explicit 100 or final headers disable deferred automatic Continue. HTTP/2 body-read Continue remains its separate source state, including source Expect removal and multi-value token rules.",
+        "Server-level OPTIONS * bypasses mux dispatch, emits zero Content-Length, drains up to the source 4KB bound and closes an oversized HTTP/1 connection. Unknown HTTP/1 expectations produce the source empty 417 with Connection close before user handlers.",
+        "Full ordered 512-byte Go sniff table includes HTML/XML/PDF/PostScript/BOM/images/audio/video/MP4/fonts/archives/WASM/text. Detection uses the first emitted buffered chunk, not the first small handler write.",
+        "ResponseWriter now owns source 2048-byte H1 and 4096-byte H2 buffering, direct large writes, header snapshots and no-body/HEAD/header-presence/Content-Encoding/Transfer-Encoding decisions. H1 signed length parsing and H2 deferred unsigned-63-bit parsing retain their distinct count/error and empty-write behavior.",
+        "Attempted int64 write count wraps and includes rejected length overruns; failed transport writes retain the original error chain through one shared sticky failure. Header transport failures are ignored as in source WriteHeader, while the native connection retains its failure.",
+        "Source clock and default HTTP diagnostic capabilities are statically supplied by UtilityRuntimeProviders. Date is generated only when its header key is absent, with native automatic dates disabled; Go status-line strings and unknown-code fallback are supplied to the existing reason-phrase extension.",
+        "Hyper H2 stream/upgrade futures now use a weak executor and the existing per-connection UtilityTaskScope. Normal/error connection exits cancel and join protocol children; emergency scope Drop aborts owned children. No discarded TokioExecutor JoinHandles or competing lifecycle manager."
       ],
       "destination": "agones-rs/pkg/util/apiserver/apiserver.rs",
       "remaining": [
         "Complete Go unstable-sort/ParseFloat media negotiation boundary; current parser retains the source comparator and q=0 behavior but insertion order is not claimed equal for all clauses.",
         "Exact Go YAML scalar/format profile and public source scheme/codec caller profiles need reconciliation. Native encoders are authored, not run.",
-        "Complete HTTP request/mux/response boundary and actual extension-controller/CRD-handler adoption; existing implementations remain preserved."
+        "Complete HTTP request/mux/response boundary and actual extension-controller/CRD-handler adoption; existing implementations remain preserved.",
+        "Further HTTP boundaries/native package source/remaining profiles: verification/agones/roadmap-M0003-http-authoring.json and verification/agones/roadmap-M0003-hyper-adoption.json"
       ],
       "source_git_blob": "84f47785c726ae04765999b31ad710413963a199",
       "source_id": "agones:pkg/util/apiserver/apiserver.go",
@@ -215,12 +230,21 @@
         "LogRequest method/URL/host/redacted headers/requestURI",
         "ErrorHTTPHandler runtime double error handling and actual HTTP 500 write",
         "FourZeroFour actual streaming body read, success-only close, warning/404 and read-error 500",
-        "Shared SourceMux source profiles, method/host/wildcard/clean/redirect decisions and retained URL/capture bytes; detail in verification/agones/roadmap-M0003-http-authoring.json"
+        "Shared SourceMux source profiles, method/host/wildcard/clean/redirect decisions and retained URL/capture bytes; detail in verification/agones/roadmap-M0003-http-authoring.json",
+        "Native informational response path: source writer -> bounded per-request InformationalSender -> existing H1 driver/encoder/flush acknowledgement or existing H2 stream SendResponse::send_informational. Intermediate headers leave the final response and handler header map uncommitted and uncleared.",
+        "HTTP/1 101 remains a final upgrade response; bundled Go HTTP/2 treats its 1xx class separately. HTTP/1 explicit 100 or final headers disable deferred automatic Continue. HTTP/2 body-read Continue remains its separate source state, including source Expect removal and multi-value token rules.",
+        "Server-level OPTIONS * bypasses mux dispatch, emits zero Content-Length, drains up to the source 4KB bound and closes an oversized HTTP/1 connection. Unknown HTTP/1 expectations produce the source empty 417 with Connection close before user handlers.",
+        "Full ordered 512-byte Go sniff table includes HTML/XML/PDF/PostScript/BOM/images/audio/video/MP4/fonts/archives/WASM/text. Detection uses the first emitted buffered chunk, not the first small handler write.",
+        "ResponseWriter now owns source 2048-byte H1 and 4096-byte H2 buffering, direct large writes, header snapshots and no-body/HEAD/header-presence/Content-Encoding/Transfer-Encoding decisions. H1 signed length parsing and H2 deferred unsigned-63-bit parsing retain their distinct count/error and empty-write behavior.",
+        "Attempted int64 write count wraps and includes rejected length overruns; failed transport writes retain the original error chain through one shared sticky failure. Header transport failures are ignored as in source WriteHeader, while the native connection retains its failure.",
+        "Source clock and default HTTP diagnostic capabilities are statically supplied by UtilityRuntimeProviders. Date is generated only when its header key is absent, with native automatic dates disabled; Go status-line strings and unknown-code fallback are supplied to the existing reason-phrase extension.",
+        "Hyper H2 stream/upgrade futures now use a weak executor and the existing per-connection UtilityTaskScope. Normal/error connection exits cancel and join protocol children; emergency scope Drop aborts owned children. No discarded TokioExecutor JoinHandles or competing lifecycle manager."
       ],
       "destination": "agones-rs/pkg/util/https/https.rs",
       "remaining": [
         "Complete source Header slice alias/mutation and deferred log-field projection behavior. Native header storage currently shares immutable Arc vectors.",
-        "Complete raw-byte Go string/URL/error/JSON field projections and HTTP sniff/framing/mux profiles; no full HTTP parity claim."
+        "Complete raw-byte Go string/URL/error/JSON field projections and HTTP sniff/framing/mux profiles; no full HTTP parity claim.",
+        "Further HTTP boundaries/native package source/remaining profiles: verification/agones/roadmap-M0003-http-authoring.json and verification/agones/roadmap-M0003-hyper-adoption.json"
       ],
       "source_git_blob": "f5ca0c6c16c5c5a24fdac6a0b6373a390e9f385f",
       "source_id": "agones:pkg/util/https/https.go",
@@ -237,13 +261,22 @@
         "WatchForCertificateChanges one-second owned watcher/reload, log while lock held, source Fatal/Exit branch",
         "Run real bind/fallback certificate load, source error wrapping and ServerClosed distinction",
         "Rustls dynamic certificate resolver, SNI/fallback selection, negotiated HTTP1/HTTP2, owned TLS handshake/deadline and parent connection drain",
-        "Shared SourceMux source profiles, method/host/wildcard/clean/redirect decisions and retained URL/capture bytes; detail in verification/agones/roadmap-M0003-http-authoring.json"
+        "Shared SourceMux source profiles, method/host/wildcard/clean/redirect decisions and retained URL/capture bytes; detail in verification/agones/roadmap-M0003-http-authoring.json",
+        "Native informational response path: source writer -> bounded per-request InformationalSender -> existing H1 driver/encoder/flush acknowledgement or existing H2 stream SendResponse::send_informational. Intermediate headers leave the final response and handler header map uncommitted and uncleared.",
+        "HTTP/1 101 remains a final upgrade response; bundled Go HTTP/2 treats its 1xx class separately. HTTP/1 explicit 100 or final headers disable deferred automatic Continue. HTTP/2 body-read Continue remains its separate source state, including source Expect removal and multi-value token rules.",
+        "Server-level OPTIONS * bypasses mux dispatch, emits zero Content-Length, drains up to the source 4KB bound and closes an oversized HTTP/1 connection. Unknown HTTP/1 expectations produce the source empty 417 with Connection close before user handlers.",
+        "Full ordered 512-byte Go sniff table includes HTML/XML/PDF/PostScript/BOM/images/audio/video/MP4/fonts/archives/WASM/text. Detection uses the first emitted buffered chunk, not the first small handler write.",
+        "ResponseWriter now owns source 2048-byte H1 and 4096-byte H2 buffering, direct large writes, header snapshots and no-body/HEAD/header-presence/Content-Encoding/Transfer-Encoding decisions. H1 signed length parsing and H2 deferred unsigned-63-bit parsing retain their distinct count/error and empty-write behavior.",
+        "Attempted int64 write count wraps and includes rejected length overruns; failed transport writes retain the original error chain through one shared sticky failure. Header transport failures are ignored as in source WriteHeader, while the native connection retains its failure.",
+        "Source clock and default HTTP diagnostic capabilities are statically supplied by UtilityRuntimeProviders. Date is generated only when its header key is absent, with native automatic dates disabled; Go status-line strings and unknown-code fallback are supplied to the existing reason-phrase extension.",
+        "Hyper H2 stream/upgrade futures now use a weak executor and the existing per-connection UtilityTaskScope. Normal/error connection exits cancel and join protocol children; emergency scope Drop aborts owned children. No discarded TokioExecutor JoinHandles or competing lifecycle manager."
       ],
       "destination": "agones-rs/pkg/util/https/server.rs",
       "remaining": [
         "Complete Go PEM/key/crypto/default-TLS/error/handshake/shutdown profile reconciliation; native rustls behavior is not asserted equivalent.",
         "Exact listener bind/service-name/accept retry errors, repeated Run/concurrent Shutdown and log-field projections still require source reconciliation.",
-        "Cert watcher depends on the incomplete cross-platform filesystem effect; actual controller/entrypoint ownership remains open."
+        "Cert watcher depends on the incomplete cross-platform filesystem effect; actual controller/entrypoint ownership remains open.",
+        "Further HTTP boundaries/native package source/remaining profiles: verification/agones/roadmap-M0003-http-authoring.json and verification/agones/roadmap-M0003-hyper-adoption.json"
       ],
       "source_git_blob": "ddaa46a85d70a4109835dd9fd41302de36599709",
       "source_id": "agones:pkg/util/https/server.go",
@@ -260,12 +293,21 @@
         "ServerClosed info path, package-wrapped runtime errors and source always-nil return",
         "Owned connection drain transferred to parent on listener return without cancelling the caller token",
         "unfinished response detection covers both cancellation and caught async unwind; success is marked only after finish",
-        "Shared SourceMux source profiles, method/host/wildcard/clean/redirect decisions and retained URL/capture bytes; detail in verification/agones/roadmap-M0003-http-authoring.json"
+        "Shared SourceMux source profiles, method/host/wildcard/clean/redirect decisions and retained URL/capture bytes; detail in verification/agones/roadmap-M0003-http-authoring.json",
+        "Native informational response path: source writer -> bounded per-request InformationalSender -> existing H1 driver/encoder/flush acknowledgement or existing H2 stream SendResponse::send_informational. Intermediate headers leave the final response and handler header map uncommitted and uncleared.",
+        "HTTP/1 101 remains a final upgrade response; bundled Go HTTP/2 treats its 1xx class separately. HTTP/1 explicit 100 or final headers disable deferred automatic Continue. HTTP/2 body-read Continue remains its separate source state, including source Expect removal and multi-value token rules.",
+        "Server-level OPTIONS * bypasses mux dispatch, emits zero Content-Length, drains up to the source 4KB bound and closes an oversized HTTP/1 connection. Unknown HTTP/1 expectations produce the source empty 417 with Connection close before user handlers.",
+        "Full ordered 512-byte Go sniff table includes HTML/XML/PDF/PostScript/BOM/images/audio/video/MP4/fonts/archives/WASM/text. Detection uses the first emitted buffered chunk, not the first small handler write.",
+        "ResponseWriter now owns source 2048-byte H1 and 4096-byte H2 buffering, direct large writes, header snapshots and no-body/HEAD/header-presence/Content-Encoding/Transfer-Encoding decisions. H1 signed length parsing and H2 deferred unsigned-63-bit parsing retain their distinct count/error and empty-write behavior.",
+        "Attempted int64 write count wraps and includes rejected length overruns; failed transport writes retain the original error chain through one shared sticky failure. Header transport failures are ignored as in source WriteHeader, while the native connection retains its failure.",
+        "Source clock and default HTTP diagnostic capabilities are statically supplied by UtilityRuntimeProviders. Date is generated only when its header key is absent, with native automatic dates disabled; Go status-line strings and unknown-code fallback are supplied to the existing reason-phrase extension.",
+        "Hyper H2 stream/upgrade futures now use a weak executor and the existing per-connection UtilityTaskScope. Normal/error connection exits cancel and join protocol children; emergency scope Drop aborts owned children. No discarded TokioExecutor JoinHandles or competing lifecycle manager."
       ],
       "destination": "agones-rs/pkg/util/httpserver/server.rs",
       "remaining": [
         "Complete Go listener service-name/bind/temporary-accept retry/error profiles and response/mux behavior.",
-        "Full production parent lifecycle must own Run, cancel its source context and await the independent graceful drain."
+        "Full production parent lifecycle must own Run, cancel its source context and await the independent graceful drain.",
+        "Further HTTP boundaries/native package source/remaining profiles: verification/agones/roadmap-M0003-http-authoring.json and verification/agones/roadmap-M0003-hyper-adoption.json"
       ],
       "source_git_blob": "72b790615ed7744904062fe3f0bc62d468c253c6",
       "source_id": "agones:pkg/util/httpserver/server.go",
@@ -392,13 +434,22 @@
         "ordered current-review operation/group/kind matching, returned review preserved on error, Failure/InternalError details and continuation",
         "whole-review encoding with source misspelled decode/encode prefixes and HTTP late 500",
         "Admission-v1 TypeMeta/request/response/user/status wire projections, raw JSON extensions and base64 patch bytes, CGP handler invocation",
-        "Shared SourceMux source profiles, method/host/wildcard/clean/redirect decisions and retained URL/capture bytes; detail in verification/agones/roadmap-M0003-http-authoring.json"
+        "Shared SourceMux source profiles, method/host/wildcard/clean/redirect decisions and retained URL/capture bytes; detail in verification/agones/roadmap-M0003-http-authoring.json",
+        "Native informational response path: source writer -> bounded per-request InformationalSender -> existing H1 driver/encoder/flush acknowledgement or existing H2 stream SendResponse::send_informational. Intermediate headers leave the final response and handler header map uncommitted and uncleared.",
+        "HTTP/1 101 remains a final upgrade response; bundled Go HTTP/2 treats its 1xx class separately. HTTP/1 explicit 100 or final headers disable deferred automatic Continue. HTTP/2 body-read Continue remains its separate source state, including source Expect removal and multi-value token rules.",
+        "Server-level OPTIONS * bypasses mux dispatch, emits zero Content-Length, drains up to the source 4KB bound and closes an oversized HTTP/1 connection. Unknown HTTP/1 expectations produce the source empty 417 with Connection close before user handlers.",
+        "Full ordered 512-byte Go sniff table includes HTML/XML/PDF/PostScript/BOM/images/audio/video/MP4/fonts/archives/WASM/text. Detection uses the first emitted buffered chunk, not the first small handler write.",
+        "ResponseWriter now owns source 2048-byte H1 and 4096-byte H2 buffering, direct large writes, header snapshots and no-body/HEAD/header-presence/Content-Encoding/Transfer-Encoding decisions. H1 signed length parsing and H2 deferred unsigned-63-bit parsing retain their distinct count/error and empty-write behavior.",
+        "Attempted int64 write count wraps and includes rejected length overruns; failed transport writes retain the original error chain through one shared sticky failure. Header transport failures are ignored as in source WriteHeader, while the native connection retains its failure.",
+        "Source clock and default HTTP diagnostic capabilities are statically supplied by UtilityRuntimeProviders. Date is generated only when its header key is absent, with native automatic dates disabled; Go status-line strings and unknown-code fallback are supplied to the existing reason-phrase extension.",
+        "Hyper H2 stream/upgrade futures now use a weak executor and the existing per-connection UtilityTaskScope. Normal/error connection exits cancel and join protocol children; emergency scope Drop aborts owned children. No discarded TokioExecutor JoinHandles or competing lifecycle manager."
       ],
       "destination": "agones-rs/pkg/util/webhooks/webhooks.rs",
       "remaining": [
         "Complete Go encoding/json case/duplicate-key/null/byte-string/error/stream/raw-extension numeric and formatting profiles; current serde transport is not whole Go decoder equivalence.",
         "Reconcile callback mutation/sharing/panic/order boundary details and actual production admission-controller adapter adoption.",
-        "Common HTTP request/response/mux and shared logging/type/format profiles remain partial."
+        "Common HTTP request/response/mux and shared logging/type/format profiles remain partial.",
+        "Further HTTP boundaries/native package source/remaining profiles: verification/agones/roadmap-M0003-http-authoring.json and verification/agones/roadmap-M0003-hyper-adoption.json"
       ],
       "source_git_blob": "1995f206ca2d186af3988703fbe9abda8ef86fe7",
       "source_id": "agones:pkg/util/webhooks/webhooks.go",
@@ -554,12 +605,12 @@
       "detail_record": "verification/agones/roadmap-M0003-http-authoring.json",
       "id": "M0003-HTTP-BOUNDARY-PROFILES",
       "required": [
-        "Complete source Go quote, registration location/conflict witness diagnostics, exact Unicode table profile and empty CONNECT path-segment/tree-alias configurations. The authored linear route table has no claimed all-input refinement proof against the Go tree.",
-        "Complete full net/url and HTTP parse/rejection behavior: host/authority/opaque/absolute/CONNECT/invalid bytes and target grammar. Bad path escapes now reject with 400 before handlers; Hyper raw error framing and HEAD behavior are not asserted identical to Go raw c.serve replies.",
-        "Carry source byte paths through remaining gateway/admission/discovery/logging consumers; HttpRequest.path remains a lossy text compatibility view while mux and captures use retained URL bytes.",
-        "M0027 source tool/GODEBUG bootstrap must select MuxProfile explicitly, including httpmuxgo121 initialization semantics. Default selects the repository Go 1.26.5 baseline and is not evidence of the actual Go runtime profile.",
-        "Finish global OPTIONS *, informational 1xx/100-continue, full sniffing, framing/Date/trailers/header alias and error/flush profiles plus temporary accept/backoff and independent shutdown ownership.",
-        "All other M0003 implementation gaps remain required. No Cargo/formatter/linter/API probe, application/fixture, assurance, generator validation or CI ran."
+        "Complete exact Go quote/caller/registration/conflict and panic/stack diagnostics, source Unicode tables and empty CONNECT path-segment/tree-alias configurations. Native default stdlog formatting is authored, but complete global stdlog flags/output/caller identity and native failure behavior remain partial.",
+        "Complete net/url and HTTP parsing/rejection across host/authority/opaque/absolute/CONNECT/invalid bytes and target grammar, and retain byte paths through gateway/admission/discovery/log consumers. HttpRequest.path remains a text compatibility projection.",
+        "Complete actual trailer emission, header slice alias/mutation rules, H1 connection-buffer/Transfer-Encoding/close framing, H2 stream end/Connection close GOAWAY and all partial-write/flush/reset/cancellation/error timing. Informational and body I/O are authored, with no socket/runtime/refinement evidence.",
+        "Reconcile protocol-specific Content-Length, empty writes, Continue/late Continue, HEAD/no-body responses and malformed input profiles across all selected source versions/configurations. Go 1.26.5 protocol code and existing explicit mux version profiles are bound separately; no claim that every Go tool/runtime profile is selected.",
+        "Finish listener named-service/bind/temporary accept-error retry/backoff and independent shutdown/native failure profiles, plus M0027 source tool/GODEBUG and actual production parent adoption.",
+        "Retain every other M0003 filesystem/signal/gateway/config/queue/logging/CRD/features/admission/body gap. Global BOTH-route gate stays CLOSED; no compiler, test, formatter/linter, native/API probe, application, generator validation, proof or CI ran."
       ]
     },
     {
@@ -580,9 +631,11 @@
   "legacy_adoption": "verification/agones/roadmap-M0003-reuse-adoption.json",
   "milestone_complete": false,
   "milestone_id": "M0003",
+  "native_hyper_adoption_record": "verification/agones/roadmap-M0003-hyper-adoption.json",
   "owned_entry_count": 14,
   "payload_sha256": {
-    "Cargo.lock": "6abd7c09e7d1043ccc9c220130adf7bdd5d04a83f16bacc01ff96a7941daef0b",
+    "Cargo.lock": "1d2c5f632a6a590af119a16f3ff926d89bcfdaedde63a265fd185c8d406745a9",
+    "Cargo.toml": "fd4401820492ab3209f748949abe5327e974d6c8d892a510803943391d6a2a18",
     "agones-rs/pkg/util/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/apiserver/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/apiserver/apiserver.rs": "c5a08b1672ad8449312cf6ce700ff6dbda254d05dadccd09c21aa36321cf06bd",
@@ -610,7 +663,7 @@
     "agones-rs/pkg/util/workerqueue/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/workerqueue/workerqueue.rs": "55fecc4e6348c3fd4b40e9aa9c4320b5a94bba0a4bf7a84c8ca089b4c36d5bab",
     "crates/util/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
-    "crates/util/Cargo.toml": "71f814d05b277398d073ec1bf708aed0f4080d07fd0d28c90b74b67d4ff9bb0c",
+    "crates/util/Cargo.toml": "6b011badbe07029ab9a84257636f7de293931d32a2c1bbef49c60b4d07dd91bf",
     "crates/util/src/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "crates/util/src/errors.rs": "f8c313758bb23103a6ed7f2ff2188d9589fca0b1adc87ee5214bef16434e45e2",
     "rust-support/agones/FSNOTIFY-LICENSE": "2dfbe6d2b5eb18b55148f3805d88648a09e0d17e38428123259afb08c8996e37",
@@ -620,7 +673,7 @@
     "rust-support/agones/src/utility_admission.rs": "a17ed7e9f3c3ffdaf9d42e39ab372be4f107ff4bd50eec371f48824a4b7a5807",
     "rust-support/agones/src/utility_client_config.rs": "50b1648d59275ce50ef815d69e7fe9e87338b179e7ea712229e5324fe1cedc4a",
     "rust-support/agones/src/utility_crd.rs": "de93657e926a3498249173e564ccc7798ffd081ba2583c8c9dd490b239195cde",
-    "rust-support/agones/src/utility_declarations.rs": "365cc58dbe05295b17e70bd683860347ea0eaf3ba3fa3b47c98b971dec7a1977",
+    "rust-support/agones/src/utility_declarations.rs": "6ef783fd8254f26628a1a7b793bfc2df4b08a11b91e92061272d45ff3d216b70",
     "rust-support/agones/src/utility_discovery.rs": "8151e804ce4354fef226b0cd915c6e868936c2806089143e4c212ee99e1a32ed",
     "rust-support/agones/src/utility_error_view.rs": "c2776e4aa916b0e4e6f933ece03453da31573ab507a79e023fb854c78407b976",
     "rust-support/agones/src/utility_fswatch.rs": "594ff335887d01bb1fa4e40c8df41e579567873972c4e89bdb7b89da005fa20f",
@@ -634,8 +687,11 @@
     "rust-support/agones/src/utility_gateway_targets.rs": "3d3d8607f17d4db8f9c6d70dc46793d3d35615e4d887a3f236ee57cda57d8f61",
     "rust-support/agones/src/utility_gateway_wire.rs": "234e6de84955c4240f153c0dece7a5594733562325bf7113998a794b9af0b113",
     "rust-support/agones/src/utility_gateway_wkt.rs": "4cb0f6fa00d5c553911e8eaaca563d17112cfd5123a669c2e180eb02142ed42b",
-    "rust-support/agones/src/utility_http.rs": "bb597341ebecd81f12149614499a614f4ecc83539ccc70fd6c3b8e03900316ac",
+    "rust-support/agones/src/utility_http.rs": "efc97b61a51b34cea7b731353487db641492df50623a2e41cac72a719f16804d",
     "rust-support/agones/src/utility_http_mux.rs": "017dfc7e5b6e01f66e0dd6de042b3d833610f0c1f8b549ea14d16ed8132568c6",
+    "rust-support/agones/src/utility_http_response.rs": "fbc924aaaaede564163b43cfc93773b815d5ebfee18bafa78836c611764f3f75",
+    "rust-support/agones/src/utility_http_sniff.rs": "ef1baa72b7bb66ea833ef7e15858766313c8937d13e0d18bf6bf01f8f2a96042",
+    "rust-support/agones/src/utility_http_status.rs": "d310b7f9c71780a03655b4337a444eb7b7d5da3e311585c943af51e8b3a83e3a",
     "rust-support/agones/src/utility_https_module.rs": "3b1fc4bf94a5b016cce0c661c3f51d037b36e0718eefd1c17a55e309c878fc2a",
     "rust-support/agones/src/utility_lib.rs": "145614145fd542b2651e8fa73e652e48024c512ac9d389997c0942cd4b2a3f3d",
     "rust-support/agones/src/utility_lifecycle.rs": "5d2fdc2fc65f04f3fcc581edb0203b54cb8314717f6976c3d7404f018a0a26af",
@@ -656,12 +712,12 @@
     "third_party/first-generation/comprende/Cargo.toml": "01f7068b9cd9ec5b27b7df77709117e37dc991cd32597dbf24cbde9074f5ceab",
     "third_party/first-generation/comprende/src/lib.rs": "e8d8da04ca3048bdd7275b1ca77b5a78c4abfd999ecb763d82a615f4aeb0fb96",
     "verification/agones/roadmap-M0003-gateway-authoring.json": "80c5581d3ab2236db4247258769ac24c518e3a045b61fa4c464d8671421234a9",
-    "verification/agones/roadmap-M0003-platform-effects.json": "2f6768def500b051e275aeeb471bfeb386830f3249b02319e9a7ac544b496f87",
-    "verification/agones/roadmap-M0003-reuse-adoption.json": "1bdf6bc92b6f1422df885947853136edd5fc8abb67db1ae998b7a33921fc4bd8"
+    "verification/agones/roadmap-M0003-platform-effects.json": "296427ea2daf2d41a90aebe35626f70190724f682276af391571c6c6a5188c74",
+    "verification/agones/roadmap-M0003-reuse-adoption.json": "58e4bf21725285be5a4f025e546ab537999c701ea2b9571540cc4d1aa7405666"
   },
   "platform_effect_authoring_record": "verification/agones/roadmap-M0003-platform-effects.json",
-  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-14.json",
-  "progress_usage_observations": 14,
+  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-16.json",
+  "progress_usage_observations": 16,
   "project_executable_invocations": 0,
   "record_kind": "PARTIAL_SOURCE_OWNERSHIP_ADOPTION",
   "route": "MANUAL",
@@ -1653,10 +1709,71 @@
       "revision": "go1.27.1",
       "sha256": "44c33f88526abf3b5955d6c97297be5c9d228e741b33e52c940dcac5a496e091",
       "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/net/url/url.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/sniff.go",
+      "revision": "go1.26.5",
+      "sha256": "3cf7e02214e5c8eeca9f5b12940c17723f4cd7a243c33b98386849c918644667",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/sniff.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/transfer.go",
+      "revision": "go1.26.5",
+      "sha256": "3e04744176d3cf5bef2827ab158b10aaeec3981ac5f4e7fb86e3dbf5f592eed7",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/transfer.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/h2_bundle.go",
+      "revision": "go1.26.5",
+      "sha256": "6541e350500d6b3525d99dce470034c7756bd5c931fd507f9f0352280a16c31e",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/h2_bundle.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/header.go",
+      "revision": "go1.26.5",
+      "sha256": "b4fa959c3db03d4ca67a487b3cbb25dcefecea45ca3dd10fef13cfc32fa6d80d",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/header.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/request.go",
+      "revision": "go1.26.5",
+      "sha256": "4a34a9e157a606a046d5b9f8f761c571c4762668fa351d92048515a595939c38",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/request.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/status.go",
+      "revision": "go1.26.5",
+      "sha256": "7633ca0ca545767f3db3d8960a96ee4ecd68fb39439c88b7c03efcb3d1786297",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/status.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/internal/httpcommon/httpcommon.go",
+      "revision": "go1.26.5",
+      "sha256": "20aedc8a3cde20f3cab6f392d33f9eb4e2fb9f663c7298fcbf0f9462c721c26a",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/internal/httpcommon/httpcommon.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/vendor/golang.org/x/net/http/httpguts/httplex.go",
+      "revision": "go1.26.5",
+      "sha256": "8cfd5819dc821d45f82fde10afff4b2e652535b0091e0559fc8ad7766051a2c2",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/vendor/golang.org/x/net/http/httpguts/httplex.go"
+    },
+    {
+      "input_role": "PINNED_NATIVE_PACKAGE_AND_AUTHORED_ADAPTATION_IDENTITIES",
+      "path": "verification/agones/roadmap-M0003-hyper-adoption.json",
+      "sha256": "b748223e29b5ac10e0d006a9897dedee7ac434a32cee553d68686c0ff4a849fa"
     }
   ],
   "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
-  "source_snapshot": "a85b8ff6460597499abb4fc5aec640032d673483",
+  "source_snapshot": "f294f9c95b3fd99627d164fc1f83d8c5ec950ec0",
   "source_snapshot_kind": "BASE_COMMIT_PLUS_AUTHORED_PAYLOAD_DIGESTS",
   "stage": "IMPLEMENTING",
   "usage_attribution_note": "M0003 entry bookkeeping, including the follow-up append of the finalized M0002 shared-boundary paragraph, is allocated once to M0003 entry overhead. It is not included a second time in the prior 20030-token shared segment.",

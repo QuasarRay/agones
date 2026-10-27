@@ -1,5 +1,6 @@
 [workspace]
 resolver = "2"
+exclude = ["rust-support/agones/vendor/hyper-1.12.0"]
 members = [
     "rust-support/agones",
     "crates/agones-core",
@@ -43,3 +44,6 @@ x509-parser = "0.16.0"
 rusternetes-common = { git = "https://github.com/calfonso/rusternetes.git", rev = "125c0f4a2b6fb888102606493c5e3cf7a126dd58", package = "rusternetes-common" }
 rusternetes-storage = { git = "https://github.com/calfonso/rusternetes.git", rev = "125c0f4a2b6fb888102606493c5e3cf7a126dd58", package = "rusternetes-storage" }
 tokio = { version = "1.40", features = ["macros", "rt-multi-thread", "time"] }
+
+[patch.crates-io]
+hyper = { path = "rust-support/agones/vendor/hyper-1.12.0" }

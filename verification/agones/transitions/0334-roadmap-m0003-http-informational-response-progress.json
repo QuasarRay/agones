@@ -1,0 +1,21 @@
+{
+  "authorization": "Explicit combined /goal invocation",
+  "event": "ROADMAP_M0003_HTTP_INFORMATIONAL_AND_RESPONSE_PROGRESS",
+  "global_gate": "CLOSED",
+  "handoff_sha256": "9ba3232a52538fd9c6db10ce50a9ef53ccb077316f0a4cf1fb33f2fca2dccc59",
+  "http_authoring": "verification/agones/roadmap-M0003-http-authoring.json",
+  "milestone_stage": "IMPLEMENTING",
+  "native_goal_status": "active",
+  "native_hyper_adoption": "verification/agones/roadmap-M0003-hyper-adoption.json",
+  "partial_adoption": "verification/agones/roadmap-M0003-partial-map.json",
+  "predecessor_handoff_sha256": "466d6c1ea5018b6a78e83a032aa517a32b81d9d49f66f9fbf8a6374778bf681a",
+  "predecessor_revision": 333,
+  "predecessor_sha256": "bcea7f51c1b84af7803f56ff72a2f421581e92619a5e1d660162761a22fb567b",
+  "project_executable_invocations": 0,
+  "result_revision": 334,
+  "route_switch": false,
+  "state_sha256": "3638109341b663b36c1efd0c89ad4f09ed5ee0eb3a10e64fba1cc65fccebcb7c",
+  "timestamp": "2026-10-27T03:54:46.610924+00:00",
+  "usage_progress_observation": "verification/agones/roadmap-M0003-progress-usage-16.json",
+  "verification": "NOT_STARTED"
+}

@@ -5,31 +5,49 @@
     "Canonicalize escaped modern paths and decoded legacy paths, preserve escaped segment boundaries and query values, strip valid host ports, and keep CONNECT separate URL.Host versus Request.Host matching.",
     "Explicit Go121 compatibility profile uses 301. BOTH Go1.26.5 and Go1.27.1 modern sources use 307. Go126 retains its decoded/escaped redirect construction, while Go127 uses urlFromEscaped to preserve encoded separators and avoid double escaping.",
     "Redirect Location non-ASCII escaping, HTML link escaping, existing Content-Type behavior, GET/HEAD content-type and GET-only short body including the second newline.",
-    "Incoming request retains decoded URL bytes and source RawPath/default-escape distinction alongside the old text view. Malformed path escapes return 400 before callbacks. CONNECT authority-form has empty URL.Path."
+    "Incoming request retains decoded URL bytes and source RawPath/default-escape distinction alongside the old text view. Malformed path escapes return 400 before callbacks. CONNECT authority-form has empty URL.Path.",
+    "Native informational response path: source writer -> bounded per-request InformationalSender -> existing H1 driver/encoder/flush acknowledgement or existing H2 stream SendResponse::send_informational. Intermediate headers leave the final response and handler header map uncommitted and uncleared.",
+    "HTTP/1 101 remains a final upgrade response; bundled Go HTTP/2 treats its 1xx class separately. HTTP/1 explicit 100 or final headers disable deferred automatic Continue. HTTP/2 body-read Continue remains its separate source state, including source Expect removal and multi-value token rules.",
+    "Server-level OPTIONS * bypasses mux dispatch, emits zero Content-Length, drains up to the source 4KB bound and closes an oversized HTTP/1 connection. Unknown HTTP/1 expectations produce the source empty 417 with Connection close before user handlers.",
+    "Full ordered 512-byte Go sniff table includes HTML/XML/PDF/PostScript/BOM/images/audio/video/MP4/fonts/archives/WASM/text. Detection uses the first emitted buffered chunk, not the first small handler write.",
+    "ResponseWriter now owns source 2048-byte H1 and 4096-byte H2 buffering, direct large writes, header snapshots and no-body/HEAD/header-presence/Content-Encoding/Transfer-Encoding decisions. H1 signed length parsing and H2 deferred unsigned-63-bit parsing retain their distinct count/error and empty-write behavior.",
+    "Attempted int64 write count wraps and includes rejected length overruns; failed transport writes retain the original error chain through one shared sticky failure. Header transport failures are ignored as in source WriteHeader, while the native connection retains its failure.",
+    "Source clock and default HTTP diagnostic capabilities are statically supplied by UtilityRuntimeProviders. Date is generated only when its header key is absent, with native automatic dates disabled; Go status-line strings and unknown-code fallback are supplied to the existing reason-phrase extension.",
+    "Hyper H2 stream/upgrade futures now use a weak executor and the existing per-connection UtilityTaskScope. Normal/error connection exits cancel and join protocol children; emergency scope Drop aborts owned children. No discarded TokioExecutor JoinHandles or competing lifecycle manager."
   ],
-  "canonical_owner": "SourceMux owns a shared source handler table. UtilityRuntimeProviders/CGP HTTP or TLS server owns listeners, connection/request UtilityTaskScopes, body/head channels and request cancellation. No new lifecycle manager, provider registry or request task is added by routing.",
-  "completion_claim": "Authored, connected source boundary paths only; no full HTTP/source-body/platform/parity or milestone completion credit.",
+  "canonical_owner": "SourceMux owns handler data. CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/date/diagnostic effects; each connection owns protocol child scope and a weak executor, each source request owns response/body/head channels and Continue state. Native H1/H2 drivers own bounded informational receivers and acknowledgements; original errors and disposal remain with these owners.",
+  "completion_claim": "Connected source-authoring progress only. Native compatibility package is actual source, not a wrapper marker, but is uncompiled/unexecuted. M0003 and the combined objective remain incomplete.",
   "disposition": "READY",
   "formal_credit": 0,
   "global_gate": "CLOSED",
   "milestone_id": "M0003",
+  "native_hyper_adoption": "verification/agones/roadmap-M0003-hyper-adoption.json",
+  "native_package_payload_manifest_sha256": "afba2b673cf8d0bfc37b6de194629f2a21777dca46c89fe1c2d68d4fe725cb9a",
   "payload_sha256": {
+    "Cargo.lock": "1d2c5f632a6a590af119a16f3ff926d89bcfdaedde63a265fd185c8d406745a9",
+    "Cargo.toml": "fd4401820492ab3209f748949abe5327e974d6c8d892a510803943391d6a2a18",
+    "crates/util/Cargo.toml": "6b011badbe07029ab9a84257636f7de293931d32a2c1bbef49c60b4d07dd91bf",
     "rust-support/agones/GO-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
-    "rust-support/agones/src/utility_http.rs": "bb597341ebecd81f12149614499a614f4ecc83539ccc70fd6c3b8e03900316ac",
-    "rust-support/agones/src/utility_http_mux.rs": "017dfc7e5b6e01f66e0dd6de042b3d833610f0c1f8b549ea14d16ed8132568c6"
+    "rust-support/agones/src/utility_declarations.rs": "6ef783fd8254f26628a1a7b793bfc2df4b08a11b91e92061272d45ff3d216b70",
+    "rust-support/agones/src/utility_http.rs": "efc97b61a51b34cea7b731353487db641492df50623a2e41cac72a719f16804d",
+    "rust-support/agones/src/utility_http_mux.rs": "017dfc7e5b6e01f66e0dd6de042b3d833610f0c1f8b549ea14d16ed8132568c6",
+    "rust-support/agones/src/utility_http_response.rs": "fbc924aaaaede564163b43cfc93773b815d5ebfee18bafa78836c611764f3f75",
+    "rust-support/agones/src/utility_http_sniff.rs": "ef1baa72b7bb66ea833ef7e15858766313c8937d13e0d18bf6bf01f8f2a96042",
+    "rust-support/agones/src/utility_http_status.rs": "d310b7f9c71780a03655b4337a444eb7b7d5da3e311585c943af51e8b3a83e3a"
   },
   "project_executable_invocations": 0,
   "record_kind": "PARTIAL_HTTP_BOUNDARY_AUTHORING",
   "remaining": [
-    "Complete source Go quote, registration location/conflict witness diagnostics, exact Unicode table profile and empty CONNECT path-segment/tree-alias configurations. The authored linear route table has no claimed all-input refinement proof against the Go tree.",
-    "Complete full net/url and HTTP parse/rejection behavior: host/authority/opaque/absolute/CONNECT/invalid bytes and target grammar. Bad path escapes now reject with 400 before handlers; Hyper raw error framing and HEAD behavior are not asserted identical to Go raw c.serve replies.",
-    "Carry source byte paths through remaining gateway/admission/discovery/logging consumers; HttpRequest.path remains a lossy text compatibility view while mux and captures use retained URL bytes.",
-    "M0027 source tool/GODEBUG bootstrap must select MuxProfile explicitly, including httpmuxgo121 initialization semantics. Default selects the repository Go 1.26.5 baseline and is not evidence of the actual Go runtime profile.",
-    "Finish global OPTIONS *, informational 1xx/100-continue, full sniffing, framing/Date/trailers/header alias and error/flush profiles plus temporary accept/backoff and independent shutdown ownership.",
-    "All other M0003 implementation gaps remain required. No Cargo/formatter/linter/API probe, application/fixture, assurance, generator validation or CI ran."
+    "Complete exact Go quote/caller/registration/conflict and panic/stack diagnostics, source Unicode tables and empty CONNECT path-segment/tree-alias configurations. Native default stdlog formatting is authored, but complete global stdlog flags/output/caller identity and native failure behavior remain partial.",
+    "Complete net/url and HTTP parsing/rejection across host/authority/opaque/absolute/CONNECT/invalid bytes and target grammar, and retain byte paths through gateway/admission/discovery/log consumers. HttpRequest.path remains a text compatibility projection.",
+    "Complete actual trailer emission, header slice alias/mutation rules, H1 connection-buffer/Transfer-Encoding/close framing, H2 stream end/Connection close GOAWAY and all partial-write/flush/reset/cancellation/error timing. Informational and body I/O are authored, with no socket/runtime/refinement evidence.",
+    "Reconcile protocol-specific Content-Length, empty writes, Continue/late Continue, HEAD/no-body responses and malformed input profiles across all selected source versions/configurations. Go 1.26.5 protocol code and existing explicit mux version profiles are bound separately; no claim that every Go tool/runtime profile is selected.",
+    "Finish listener named-service/bind/temporary accept-error retry/backoff and independent shutdown/native failure profiles, plus M0027 source tool/GODEBUG and actual production parent adoption.",
+    "Retain every other M0003 filesystem/signal/gateway/config/queue/logging/CRD/features/admission/body gap. Global BOTH-route gate stays CLOSED; no compiler, test, formatter/linter, native/API probe, application, generator validation, proof or CI ran."
   ],
   "route": "MANUAL",
   "runtime_credit": 0,
+  "source_fetch_note": "Two guessed helper URLs and one wrong-directory listing returned 404 during source reading. Bundle imports and the actual directory listing identified net/http/internal/httpcommon/httpcommon.go; only retrieved bytes above receive input identities. No project or native probe ran.",
   "source_ids": [
     "agones:pkg/util/httpserver/server.go",
     "agones:pkg/util/https/server.go",
@@ -135,12 +153,68 @@
       "revision": "go1.27.1",
       "sha256": "44c33f88526abf3b5955d6c97297be5c9d228e741b33e52c940dcac5a496e091",
       "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/net/url/url.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/sniff.go",
+      "revision": "go1.26.5",
+      "sha256": "3cf7e02214e5c8eeca9f5b12940c17723f4cd7a243c33b98386849c918644667",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/sniff.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/transfer.go",
+      "revision": "go1.26.5",
+      "sha256": "3e04744176d3cf5bef2827ab158b10aaeec3981ac5f4e7fb86e3dbf5f592eed7",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/transfer.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/h2_bundle.go",
+      "revision": "go1.26.5",
+      "sha256": "6541e350500d6b3525d99dce470034c7756bd5c931fd507f9f0352280a16c31e",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/h2_bundle.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/header.go",
+      "revision": "go1.26.5",
+      "sha256": "b4fa959c3db03d4ca67a487b3cbb25dcefecea45ca3dd10fef13cfc32fa6d80d",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/header.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/request.go",
+      "revision": "go1.26.5",
+      "sha256": "4a34a9e157a606a046d5b9f8f761c571c4762668fa351d92048515a595939c38",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/request.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/status.go",
+      "revision": "go1.26.5",
+      "sha256": "7633ca0ca545767f3db3d8960a96ee4ecd68fb39439c88b7c03efcb3d1786297",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/status.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/internal/httpcommon/httpcommon.go",
+      "revision": "go1.26.5",
+      "sha256": "20aedc8a3cde20f3cab6f392d33f9eb4e2fb9f663c7298fcbf0f9462c721c26a",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/internal/httpcommon/httpcommon.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/vendor/golang.org/x/net/http/httpguts/httplex.go",
+      "revision": "go1.26.5",
+      "sha256": "8cfd5819dc821d45f82fde10afff4b2e652535b0091e0559fc8ad7766051a2c2",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/vendor/golang.org/x/net/http/httpguts/httplex.go"
     }
   ],
   "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
   "stage": "IMPLEMENTING",
-  "timestamp": "2026-10-27T01:48:30.914763+00:00",
-  "typed_declaration_template_provider_consumer": "UtilityRuntimeContext + derive-deftly UtilityRuntimeProviders -> static HttpServerRunner/HttpsServerRunner -> existing serve_connection/request_service -> SourceMux::dispatch -> borrowed source callback/ResponseWriter.",
+  "timestamp": "2026-10-27T03:54:46.610924+00:00",
+  "typed_declaration_template_provider_consumer": "UtilityRuntimeContext + UtilityRuntimeProviders -> static HttpServerRunner/HttpsServerRunner/SourceHttpClock/SourceHttpDiagnostic -> serve_connection with owned protocol scope -> request_service -> ResponseWriter/HttpRequest and SourceMux -> native Hyper informational driver/stream and body channel.",
   "verification": "NOT_STARTED",
-  "work_base_commit": "a85b8ff6460597499abb4fc5aec640032d673483"
+  "work_base_commit": "f294f9c95b3fd99627d164fc1f83d8c5ec950ec0"
 }

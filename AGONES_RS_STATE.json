@@ -816,11 +816,12 @@
           "gateway_authoring_record": "verification/agones/roadmap-M0003-gateway-authoring.json",
           "http_authoring_record": "verification/agones/roadmap-M0003-http-authoring.json",
           "known_missing_named_bodies": [],
+          "native_hyper_adoption_record": "verification/agones/roadmap-M0003-hyper-adoption.json",
           "owned_entry_count": 14,
           "partial_adoption_record": "verification/agones/roadmap-M0003-partial-map.json",
           "platform_effect_authoring_record": "verification/agones/roadmap-M0003-platform-effects.json",
           "prerequisites": "M0001/M0002 authored implementation complete; global phase remains IMPLEMENTATION_ONLY",
-          "progress_usage_observation": "verification/agones/roadmap-M0003-progress-usage-14.json",
+          "progress_usage_observation": "verification/agones/roadmap-M0003-progress-usage-16.json",
           "progress_usage_observations": [
             "verification/agones/roadmap-M0003-progress-usage-1.json",
             "verification/agones/roadmap-M0003-progress-usage-2.json",
@@ -835,17 +836,19 @@
             "verification/agones/roadmap-M0003-progress-usage-11.json",
             "verification/agones/roadmap-M0003-progress-usage-12.json",
             "verification/agones/roadmap-M0003-progress-usage-13.json",
-            "verification/agones/roadmap-M0003-progress-usage-14.json"
+            "verification/agones/roadmap-M0003-progress-usage-14.json",
+            "verification/agones/roadmap-M0003-progress-usage-15.json",
+            "verification/agones/roadmap-M0003-progress-usage-16.json"
           ],
           "reuse_adoption_record": "verification/agones/roadmap-M0003-reuse-adoption.json",
           "route": "MANUAL",
           "source_snapshot": "95161696e9ad90f9eab2ec7ae978bcafdcbb3483",
           "stage": "IMPLEMENTING",
           "usage_start": "verification/agones/roadmap-M0003-entry-usage.json",
-          "work_base_commit": "a85b8ff6460597499abb4fc5aec640032d673483"
+          "work_base_commit": "f294f9c95b3fd99627d164fc1f83d8c5ec950ec0"
         }
       },
-      "next_action": "Continue M0003 MANUAL without route switch. Reconcile the selected gopkg.in/fsnotify.v1 v1.4.7 native failure/cleanup/race and BSD timed-read/stale-fd profiles, then complete HTTP global OPTIONS, informational headers/sniff/framing/URL/diagnostic profiles and every gateway/config/queue/logging/CRD/features/admission/body gap. BSD native code and exact source Solaris construction error are authored; modern FEN is not substituted. SourceMux now has explicit Go121/Go126/Go127 routing/redirect profiles and retained URL/capture bytes; actual source tool/GODEBUG selection and byte-path consumer adoption remain required. Keep global BOTH-route gate CLOSED and verification NOT_STARTED. No compiler/native probe/fixture/app/proof/generator validation/CI execution.",
+      "next_action": "Continue M0003 MANUAL without route switch. Finish HTTP trailer/header alias/byte-URL/native H1 framing/H2 stream-close and error/reset/flush profiles, listener named-service/temporary accept backoff/shutdown, selected fsnotify v1.4.7 native failure/close/race/BSD timed-read/stale-fd profiles, and every existing gateway/config/queue/logging/CRD/features/admission/body gap. Full sniffing, source protocol buffering/length distinctions, OPTIONS and expectation handling, actual owned H1/H2 informational I/O and protocol task scope are authored but unverified. Exact Hyper 1.12.0 source is vendored with a bounded optional compatibility capability; no tool, dependency version upgrade or Cargo execution. Keep global BOTH-route gate CLOSED and verification NOT_STARTED; no compile/native probe/fixture/app/proof/generator validation/CI.",
       "objective": "AGONES_AND_CPG_COMBINED_ROADMAP",
       "objective_attachment": "/home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt",
       "objective_attachment_sha256": "a9b797fc624be04548c62e63a634bcc2cacab25c4d9f45af346148ba32c1baea",
@@ -893,9 +896,9 @@
   "goal": {
     "objective_attachment": "/home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt",
     "reported_usage": {
-      "observed_at": 1793065377,
-      "time_seconds": 31314,
-      "tokens": 2082051
+      "observed_at": 1793069153,
+      "time_seconds": 35090,
+      "tokens": 2286210
     },
     "status": "active",
     "thread_id": "01a17928-8551-7701-8497-5333c680f283",
@@ -903,8 +906,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 332,
-  "previous_sha256": "f582cf1ef90778a7de7cd523826950368ce14382e234b0486dd7f77a6391c1eb",
+  "previous_revision": 333,
+  "previous_sha256": "bcea7f51c1b84af7803f56ff72a2f421581e92619a5e1d660162761a22fb567b",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -1608,7 +1611,7 @@
       "timestamp": "2026-10-21T09:42:01.132215+00:00"
     }
   ],
-  "revision": 333,
+  "revision": 334,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [

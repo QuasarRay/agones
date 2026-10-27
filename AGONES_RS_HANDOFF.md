@@ -1,6 +1,6 @@
 # Agones-rs and CPG handoff
 
-Canonical ledger: `AGONES_RS_STATE.json`, revision 333. Native Goal:
+Canonical ledger: `AGONES_RS_STATE.json`, revision 334. Native Goal:
 `01a17928-8551-7701-8497-5333c680f283`, ACTIVE, no budget. Current work made
 concrete source progress; no wait or blocking condition is live.
 Authority: combined attachment/roadmap SHA
@@ -33,14 +33,16 @@ compilation, parity or assurance. `runtime.NewServerMux` now has an actual
 authored factory/codec/mux consumer, still PARTIAL and UNVERIFIED. The named
 missing-body list is empty; required behavior/platform gaps remain open.
 
-Immediate next action: continue M0003 MANUAL without a route switch. Reconcile
-selected fsnotify v1.4.7 native failure/close/race and BSD timed-read/stale-fd
-profiles, then finish HTTP global OPTIONS, 1xx/sniff/framing/URL/diagnostics and
-all remaining M0003 gateway/config/queue/logging/CRD/features/admission/body gaps.
-The utility source pin imports gopkg.in/fsnotify.v1 1.4.7; the edited Go file's
-fsnotify 1.9 import is a distinct, unselected variant. Do not use its newer
-backend semantics for utility acceptance. See the corrected platform receipt.
-New HTTP detail: verification/agones/roadmap-M0003-http-authoring.json.
+Immediate next action: continue M0003 MANUAL without a route switch. Finish HTTP
+trailer/header alias/byte-URL/H1 framing/H2 stream close and error/reset/flush
+profiles, listener named-service/temporary accept retry/backoff/shutdown and all
+selected fsnotify v1.4.7 and existing gateway/config/queue/logging/CRD/features/
+admission/body gaps. Do not substitute the edited Go fsnotify 1.9 import for
+the pinned utility's gopkg.in/fsnotify.v1 1.4.7 behavior.
+HTTP/native source detail: roadmap-M0003-http-authoring.json and
+roadmap-M0003-hyper-adoption.json under verification/agones. Full sniffing,
+OPTIONS/expectation/Continue, protocol-specific buffering/counts and actual
+informational I/O are now authored, still uncompiled/unexecuted/unverified.
 
 Existing util package registration is `rust-support/agones/src/utility_lib.rs`.
 Literal mirror paths are under agones-rs/pkg/util; Rust-only effect/wiring files
@@ -191,18 +193,40 @@ actual command/controller/CRD/admission parent adoption remain open. Async Drop
 cannot itself join; normal cleanup is explicit. Do not claim compilation or
 parity from code presence, manifest declaration, source mapping or this handoff.
 
-SourceMux continuation: utility_http_mux.rs replaces exact/prefix-only lookup
-with method/host precedence, GET-to-HEAD fallback, literal/single/multi/{$}
-patterns, conflict relationships, byte captures, sorted 405 Allow, clean/slash
-redirects and CONNECT handling. Go121 is the explicit compatibility profile
-with 301; BOTH Go1.26.5 and Go1.27.1 modern sources use 307. Their escaped redirect
-construction differs and has separate Go126/Go127 branches. Default selects the
-repository Go1.26.5 baseline; actual source tool/GODEBUG bootstrap remains an
-M0027 obligation, not an inferred Rust-host property. URL and capture bytes are
-retained; other consumers still have a text compatibility view. Bad path escapes
-now reject with 400 before callbacks. Conflict diagnostics/Unicode tables,
-full URL/native transport parsing/rejection and global OPTIONS/1xx/sniff/framing
-remain partial. No HTTP application or probe was run.
+SourceMux continuation: utility_http_mux.rs owns method/host precedence,
+wildcards/captures/conflicts, sorted 405 Allow, clean/slash redirects and CONNECT.
+Go121 is the explicit 301 compatibility profile. Go126 and Go127 both use 307
+with their distinct escaped redirect construction. Actual source tool/GODEBUG
+bootstrap and complete byte-path caller adoption remain required.
+
+HTTP response continuation splits utility_http_response.rs, sniff.rs and
+status.rs from the existing effect. Full 512-byte ordered sniff signatures,
+source status text, H1 2048-byte/H2 4096-byte buffering, attempted int64 counts,
+H1 signed versus H2 deferred unsigned-63-bit Content-Length rules, empty writes,
+sticky original I/O errors, header snapshots/no-body/HEAD and Date-key suppression
+are authored. UtilityRuntimeProviders now supplies static HTTP clock and default
+stdio diagnostic capabilities. Exact framing/partial writes/flush/alias/trailer/
+URL/diagnostic/native failure profiles remain open.
+
+Server-level OPTIONS * now bypasses mux rejection, uses zero Content-Length,
+source 4KB body-drain bounds and H1 over-limit close. Unsupported H1 expectations
+produce the source empty 417 with Connection close. H1 and bundled H2 Expect
+parsing and Continue state retain their different source rules.
+
+Actual 1xx output uses the exact pinned Hyper 1.12.0 source archive vendored in
+rust-support/agones/vendor/hyper-1.12.0, MIT license and original hashes retained.
+The opt-in agones-informational feature attaches a bounded per-request sender;
+the existing H1 dispatcher/encoder owns flush acknowledgement, and the existing
+H2 stream uses the already pinned h2 0.4.20 send_informational API. Dropping the
+native owner drops pending acknowledgements. Header operations keep final header
+state uncommitted; H1 101 remains the upgrade path. Root Cargo patch/lock source
+identity bookkeeping is authored; no version was upgraded or Cargo run.
+
+SourceHttpExecutor uses a weak per-connection UtilityTaskScope for Hyper stream/
+upgrade futures. Normal and error exits cancel/join that same owned scope;
+emergency Drop aborts its children. There is no extra application manager or
+provider registry. Full reset/cancel/stream/late Continue/error profiles remain
+unverified; all post-gate compile/runtime/proof work remains prohibited now.
 
 Gateway authoring adds `utility_gateway.rs`, `utility_gateway_json.rs`,
 `utility_gateway_wire.rs` and `utility_gateway_wkt.rs`. Actual path:
@@ -274,9 +298,9 @@ One read command attempted `go env GOROOT` for a source path; stdout was empty
 and its dependent file read failed. No project/compile/fixture/semantic assurance
 ran. Do not reinterpret source reading or identity bookkeeping as verification.
 
-M0003 entry usage 656008. Raw progress observations 1..14 retain 752278, 781155,
+M0003 entry usage 656008. Raw progress observations 1..16 retain 752278, 781155,
 905410, 1069792, 1095960, 1289081, 1320264, 1568425, 1577646, 1691561, 1702165,
-1783942, 1794616, 2082051. Still NO completed M0003 cost comparison or
+1783942, 1794616, 2082051, 2115290, 2286210. Still NO completed M0003 cost comparison or
 route switch. Context/read/accounting is charged once, no credit inference.
 Preserve M0001/M0002 original forecasts/comparisons and shared overhead buckets.
 M0002 observed work was 482306; shared completion/switch was 20030. The explicit

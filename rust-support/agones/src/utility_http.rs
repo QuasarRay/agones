@@ -8,7 +8,7 @@ use futures::future::BoxFuture;
 use http_body_util::BodyExt;
 use hyper::{body::{Body, Frame, Incoming, SizeHint}, Request, Response};
 use hyper::service::service_fn;
-use hyper_util::rt::{TokioExecutor, TokioIo, TokioTimer};
+use hyper_util::rt::{TokioIo, TokioTimer};
 use serde::de::DeserializeOwned;
 use serde_json::{Value, json};
 use tokio::{io::{AsyncRead, AsyncWrite}, net::TcpListener, sync::{mpsc, oneshot}, task::JoinSet};
@@ -19,6 +19,14 @@ use crate::{errors::{BoxError, Errors}, utility_runtime::UtilityRuntimeContext, 
 #[path = "utility_http_mux.rs"]
 mod mux;
 pub use mux::{SourceMux, MuxProfile};
+#[path = "utility_http_sniff.rs"]
+mod sniff;
+use sniff::detect_content_type as sniff_content_type;
+#[path = "utility_http_status.rs"]
+mod status;
+#[path = "utility_http_response.rs"]
+mod response;
+pub use response::ResponseWriter;
 
 pub type Headers = BTreeMap<String, Arc<Vec<Vec<u8>>>>;
 pub type HttpHandler = Arc<dyn for<'a> Fn(&'a UtilityRuntimeContext, &'a mut ResponseWriter, &'a mut HttpRequest) -> BoxFuture<'a, ()> + Send + Sync>;
@@ -43,6 +51,23 @@ pub fn headers_json(headers: &Headers) -> Value {
         .map(|value| Value::String(String::from_utf8_lossy(value).into_owned())).collect()))).collect())
 }
 
+#[cgp_component(SourceHttpClock)]
+pub trait CanReadSourceHttpClock { fn source_http_date(&self) -> String; }
+#[cgp_new_provider]
+impl<Context> SourceHttpClock<Context> for ReadUtcSourceHttpClock {
+    fn source_http_date(_context: &Context) -> String { chrono::Utc::now().format("%a, %d %b %Y %H:%M:%S GMT").to_string() }
+}
+#[cgp_component(SourceHttpDiagnostic)]
+pub trait CanEmitSourceHttpDiagnostic { fn emit_source_http_diagnostic(&self, message: &str); }
+#[cgp_new_provider]
+impl<Context> SourceHttpDiagnostic<Context> for EmitNativeSourceHttpDiagnostic {
+    fn emit_source_http_diagnostic(_context: &Context, message: &str) {
+        let mut line = format!("{} {}", chrono::Local::now().format("%Y/%m/%d %H:%M:%S"), message);
+        if !line.ends_with('\n') { line.push('\n'); }
+        let _ = std::io::Write::write(&mut std::io::stderr().lock(), line.as_bytes());
+    }
+}
+
 pub struct HttpRequest {
     pub method: String,
     pub path: String,
@@ -57,6 +82,10 @@ pub struct HttpRequest {
     url_host: String,
     url_raw_query: Vec<u8>,
     protocol_at_least_11: bool,
+    protocol: hyper::Version,
+    pub content_length: i64,
+    informational: Option<hyper::ext::InformationalSender>,
+    can_write_continue: Arc<AtomicBool>,
     pub matched_pattern: Vec<u8>,
     path_values: BTreeMap<String, Vec<u8>>,
     /// The request owner cancels on handler return or transport/body disposal.
@@ -69,6 +98,7 @@ pub struct HttpRequest {
 impl HttpRequest {
     fn from_hyper(request: Request<Incoming>) -> Result<Self, ()> {
         let (parts, body) = request.into_parts();
+        let content_length = body.size_hint().exact().and_then(|length| i64::try_from(length).ok()).unwrap_or(-1);
         let request_uri = parts.uri.to_string();
         let connect_authority = parts.method == hyper::Method::CONNECT && !request_uri.starts_with('/');
         let raw_path = if connect_authority { "" } else { parts.uri.path() };
@@ -86,12 +116,23 @@ impl HttpRequest {
         let scheme = if connect_authority { "" } else { parts.uri.scheme_str().unwrap_or_default() };
         let authority = parts.uri.authority().map_or("", |value| value.as_str());
         let raw_query = parts.uri.query().unwrap_or_default();
+        let can_write_continue = if parts.version == hyper::Version::HTTP_2 {
+            let expected = headers.get("Expect").is_some_and(|values| values.iter().any(|value| header_has_comma_token(value, b"100-continue")));
+            if expected { headers.remove("Expect"); } // bundled httpcommon.NewServerRequest
+            expected
+        } else {
+            content_length != 0 && parts.version != hyper::Version::HTTP_09 && parts.version != hyper::Version::HTTP_10
+                && header(&headers, "Expect").is_some_and(|value| header_has_token(value, b"100-continue"))
+        };
+        let informational = parts.extensions.get::<hyper::ext::InformationalSender>().cloned();
         let raw_path_log = if raw_path == "*" || mux::escape_url_path(&url_path) == raw_path.as_bytes() { "" } else { raw_path };
         let url_log_value = json!({"Scheme":scheme,"Opaque":"","User":null,"Host":authority,"Path":path,
             "RawPath":raw_path_log,"OmitHost":false,"ForceQuery":parts.uri.query()==Some(""),"RawQuery":raw_query,"Fragment":"","RawFragment":""});
         Ok(Self { method: parts.method.to_string(), path, host, request_uri, url_log_value, headers,
             url_path, url_raw_path: raw_path_log.as_bytes().to_vec(), url_host: authority.to_owned(), url_raw_query: raw_query.as_bytes().to_vec(),
             protocol_at_least_11: parts.version != hyper::Version::HTTP_09 && parts.version != hyper::Version::HTTP_10,
+            protocol: parts.version, content_length,
+            informational, can_write_continue: Arc::new(AtomicBool::new(can_write_continue)),
             matched_pattern: Vec::new(), path_values: BTreeMap::new(),
             cancelled: CancellationToken::new(), body: Some(body), body_closed: false, body_eof: false })
     }
@@ -113,6 +154,13 @@ impl HttpRequest {
     }
     async fn next_data(&mut self) -> Result<Option<Bytes>, BoxError> {
         if self.body_eof { return Ok(None); }
+        if self.can_write_continue.swap(false, Ordering::AcqRel) {
+            let sender = self.informational.as_mut().ok_or_else(|| Errors::default().New("HTTP informational response driver is unavailable"))?;
+            let mut response = Response::new(()); *response.status_mut() = hyper::StatusCode::CONTINUE;
+            // The Go continue reader ignores the header write error and still
+            // performs the body read, which owns any actual input failure.
+            let _ = sender.send(response).await;
+        }
         if let Some(body) = &mut self.body {
             while let Some(frame) = body.frame().await {
                 if let Ok(bytes) = frame?.into_data() { return Ok(Some(bytes)); }
@@ -153,121 +201,31 @@ impl Drop for HttpRequest {
     fn drop(&mut self) { self.cancelled.cancel(); }
 }
 struct ResponseHead { status: u16, headers: Headers }
-pub struct ResponseWriter {
-    pub headers: Headers,
-    committed: Option<u16>,
-    committed_headers: Option<Headers>,
-    head: Option<oneshot::Sender<ResponseHead>>,
-    data: mpsc::Sender<Bytes>,
-    panicked: Arc<AtomicBool>,
-    head_request: bool,
-    written: u64,
-    buffered: Vec<u8>,
-    flushed: bool,
-    finished: bool,
+fn header_has_token(value: &[u8], token: &[u8]) -> bool {
+    if token.is_empty() || token.len() > value.len() { return false; }
+    let boundary = |byte| matches!(byte, b' ' | b',' | b'\t');
+    value.windows(token.len()).enumerate().any(|(start, part)|
+        (start == 0 || boundary(value[start-1])) && (start+token.len() == value.len() || boundary(value[start+token.len()]))
+        && part.eq_ignore_ascii_case(token))
 }
-impl ResponseWriter {
-    pub async fn write_header(&mut self, status: u16) -> Result<(), BoxError> {
-        if self.committed.is_some() { return Ok(()); }
-        if !(100..=999).contains(&status) { panic!("invalid WriteHeader code {status}"); }
-        self.committed = Some(status);
-        self.committed_headers = Some(self.headers.clone());
-        Ok(())
-    }
-    async fn send_head(&mut self) -> Result<(), BoxError> {
-        if self.committed.is_none() { self.write_header(200).await?; }
-        if let Some(sender) = self.head.take() {
-            sender.send(ResponseHead { status: self.committed.unwrap_or(200), headers: self.committed_headers.clone().unwrap_or_default() })
-                .map_err(|_| io::Error::new(io::ErrorKind::BrokenPipe, "HTTP response consumer closed"))?;
-        }
-        Ok(())
-    }
-    pub async fn write(&mut self, bytes: &[u8]) -> Result<usize, BoxError> {
-        if self.committed.is_none() {
-            if !bytes.is_empty() && header(&self.headers, "Content-Type").is_none() && header(&self.headers, "Content-Encoding").is_none() {
-                set_header(&mut self.headers, "Content-Type", sniff_content_type(bytes));
-            }
-            self.write_header(200).await?;
-        }
-        let status = self.committed.unwrap_or(200);
-        if (100..=199).contains(&status) || status == 204 || status == 304 {
-            return Err(Errors::default().New("http: request method or response status code does not allow body"));
-        }
-        if !bytes.is_empty() && !self.flushed {
-            if let Some(headers) = &mut self.committed_headers {
-                if header(headers, "Content-Type").is_none() && header(headers, "Content-Encoding").is_none() {
-                    set_header(headers, "Content-Type", sniff_content_type(bytes));
-                }
-            }
-        }
-        let headers = self.committed_headers.as_ref().unwrap_or(&self.headers);
-        if let Some(length) = header(headers, "Content-Length").and_then(|value| std::str::from_utf8(value).ok()).and_then(|value| value.parse::<u64>().ok()) {
-            if self.written.saturating_add(bytes.len() as u64) > length {
-                return Err(Errors::default().New("http: wrote more than the declared Content-Length"));
-            }
-        }
-        self.written = self.written.saturating_add(bytes.len() as u64);
-        if !self.flushed && self.buffered.len().saturating_add(bytes.len()) <= 2048 {
-            self.buffered.extend_from_slice(bytes);
-            return Ok(bytes.len());
-        }
-        self.flush().await?;
-        if !self.head_request && !bytes.is_empty() {
-            self.data.send(Bytes::copy_from_slice(bytes)).await
-                .map_err(|_| io::Error::new(io::ErrorKind::BrokenPipe, "HTTP response consumer closed"))?;
-        }
-        Ok(bytes.len())
-    }
-    pub async fn flush(&mut self) -> Result<(), BoxError> {
-        self.flushed = true;
-        self.send_head().await?;
-        if !self.head_request && !self.buffered.is_empty() {
-            let bytes = Bytes::from(std::mem::take(&mut self.buffered));
-            self.data.send(bytes).await.map_err(|_| io::Error::new(io::ErrorKind::BrokenPipe, "HTTP response consumer closed"))?;
-        } else { self.buffered.clear(); }
-        Ok(())
-    }
-    pub async fn encode_json<T: serde::Serialize>(&mut self, value: &T) -> Result<(), BoxError> {
-        let bytes = serde_json::to_string(value)?.replace('&', "\\u0026").replace('<', "\\u003c").replace('>', "\\u003e")
-            .replace('\u{2028}', "\\u2028").replace('\u{2029}', "\\u2029") + "\n";
-        self.write(bytes.as_bytes()).await?; Ok(())
-    }
-    pub async fn http_error(&mut self, message: &str, status: u16) {
-        self.headers.remove("Content-Length");
-        set_header(&mut self.headers, "Content-Type", "text/plain; charset=utf-8");
-        set_header(&mut self.headers, "X-Content-Type-Options", "nosniff");
-        let _ = self.write_header(status).await;
-        let _ = self.write(format!("{message}\n").as_bytes()).await;
-    }
-    async fn finish(mut self) {
-        if self.committed.is_none() { let _ = self.write_header(200).await; }
-        if !self.flushed {
-            let status = self.committed.unwrap_or(200);
-            if let Some(headers) = &mut self.committed_headers {
-                if status >= 200 && status != 204 && status != 304 && header(headers, "Content-Length").is_none() && header(headers, "Transfer-Encoding").is_none() {
-                    set_header(headers, "Content-Length", self.written.to_string());
-                }
-            }
-        }
-        let _ = self.flush().await;
-        self.finished = true;
-    }
+fn header_has_comma_token(value: &[u8], token: &[u8]) -> bool {
+    value.split(|byte| *byte == b',').any(|part| {
+        let start = part.iter().position(|byte| !matches!(*byte, b' ' | b'\t')).unwrap_or(part.len());
+        let end = part.iter().rposition(|byte| !matches!(*byte, b' ' | b'\t')).map_or(start, |index| index+1);
+        part[start..end].eq_ignore_ascii_case(token)
+    })
 }
-impl Drop for ResponseWriter {
-    fn drop(&mut self) {
-        // Async supervisors can drop a caught future after unwinding ended.
-        // Cancellation is also an aborted response, even without a panic.
-        if !self.finished { self.panicked.store(true, Ordering::Release); }
+fn native_response_head(status: u16, headers: &Headers) -> Result<Response<()>, BoxError> {
+    let mut response = Response::new(()); *response.status_mut() = hyper::StatusCode::from_u16(status)?;
+    response.extensions_mut().insert(hyper::ext::ReasonPhrase::try_from(status::reason_phrase(status))?);
+    for (name, values) in headers {
+        let Ok(name) = hyper::header::HeaderName::from_bytes(name.as_bytes()) else { continue; };
+        for value in values.iter() {
+            if let Ok(value) = hyper::header::HeaderValue::from_bytes(value) { response.headers_mut().append(name.clone(), value); }
+        }
     }
+    Ok(response)
 }
-fn sniff_content_type(bytes: &[u8]) -> &'static str {
-    // The source utility responses set JSON explicitly or emit text. Retain
-    // the default writer's binary/text distinction for other plain callbacks.
-    if bytes.iter().take(512).any(|byte| *byte <= 0x08 || *byte == 0x0b || (0x0e..=0x1a).contains(byte) || (0x1c..=0x1f).contains(byte)) {
-        "application/octet-stream"
-    } else { "text/plain; charset=utf-8" }
-}
-
 struct ResponseBody { receiver: mpsc::Receiver<Bytes>, panicked: Arc<AtomicBool>, ended: bool, cancelled: CancellationToken }
 impl Drop for ResponseBody {
     fn drop(&mut self) { self.cancelled.cancel(); }
@@ -320,41 +278,75 @@ async fn request_service(context: UtilityRuntimeContext, mux: SourceMux, tasks: 
     let (head_tx, head_rx) = oneshot::channel();
     let (data, receiver) = mpsc::channel(2);
     let panicked = Arc::new(AtomicBool::new(false));
-    let mut writer = ResponseWriter { headers: BTreeMap::new(), committed: None, committed_headers: None, head: Some(head_tx), data,
-        panicked: Arc::clone(&panicked), head_request: request.method == "HEAD", written: 0, buffered: Vec::new(), flushed: false, finished: false };
+    let mut writer = ResponseWriter::new(context.clone(), head_tx, data, Arc::clone(&panicked), &request).map_err(io::Error::other)?;
     tasks.spawn("HTTP request", Box::pin(async move {
-        mux.dispatch(&context, &mut writer, &mut request).await;
+        let rejected_expectation = request.protocol != hyper::Version::HTTP_2 && header(&request.headers, "Expect")
+            .is_some_and(|value| !value.is_empty() && !header_has_token(value, b"100-continue"));
+        if rejected_expectation {
+            set_header(&mut writer.headers, "Connection", "close"); let _ = writer.write_header(417).await;
+        } else if request.method == "OPTIONS" && request.request_uri == "*" { global_options(&mut writer, &mut request).await; }
+        else { mux.dispatch(&context, &mut writer, &mut request).await; }
         request.cancelled.cancel(); // net/http cancels when ServeHTTP returns.
         writer.finish().await;
         Ok(())
     })).map_err(io::Error::other)?;
     let head = head_rx.await.map_err(|_| io::Error::other("HTTP handler ended without a response"))?;
-    let mut response = Response::new(ResponseBody { receiver, panicked, ended: false,
-        cancelled: pending.0.take().expect("pending HTTP request owns cancellation") });
-    *response.status_mut() = hyper::StatusCode::from_u16(head.status).map_err(io::Error::other)?;
-    for (name, values) in head.headers {
-        let Ok(name) = hyper::header::HeaderName::from_bytes(name.as_bytes()) else { continue; };
-        for value in values.iter() {
-            if let Ok(value) = hyper::header::HeaderValue::from_bytes(value) { response.headers_mut().append(name.clone(), value); }
+    let head = native_response_head(head.status, &head.headers).map_err(io::Error::other)?;
+    Ok(head.map(|()| ResponseBody { receiver, panicked, ended: false,
+        cancelled: pending.0.take().expect("pending HTTP request owns cancellation") }))
+}
+
+async fn global_options(writer: &mut ResponseWriter, request: &mut HttpRequest) {
+    set_header(&mut writer.headers, "Content-Length", "0");
+    if request.content_length == 0 { return; }
+    let mut remaining = 4 << 10;
+    while let Ok(Some(bytes)) = request.read_body_chunk().await {
+        if bytes.len() > remaining {
+            // Source MaxBytesReader calls requestTooLarge on the HTTP/1
+            // response, closing this connection after the otherwise empty 200.
+            if request.protocol != hyper::Version::HTTP_2 { set_header(&mut writer.headers, "Connection", "close"); }
+            return;
         }
+        remaining -= bytes.len();
     }
-    Ok(response)
 }
 
 #[derive(Clone, Copy)]
 pub enum HttpProtocol { Http1, Http2 }
+
+#[derive(Clone)]
+struct SourceHttpExecutor { tasks: std::sync::Weak<UtilityTaskScope> }
+impl<Future> hyper::rt::Executor<Future> for SourceHttpExecutor
+where Future: std::future::Future + Send + 'static, Future::Output: Send + 'static,
+{
+    fn execute(&self, future: Future) {
+        if let Some(tasks) = self.tasks.upgrade() {
+            let stop = tasks.child_token();
+            let child: BoxFuture<'static, Result<(), BoxError>> = Box::pin(async move {
+                tokio::select! { _ = stop.cancelled() => (), _ = future => () }
+                Ok(())
+            });
+            // Rejection drops the unstarted, resource-owning future. The weak
+            // executor cannot retain its own scope through an H2 stream task.
+            let _ = tasks.spawn("HTTP protocol stream", child);
+        }
+    }
+}
 
 pub async fn serve_connection<IO>(io: IO, context: UtilityRuntimeContext, mux: SourceMux, stop: CancellationToken,
     owner_stop: CancellationToken, handlers: Arc<UtilityTaskScope>, read_header_timeout: Duration, protocol: HttpProtocol) -> Result<(), BoxError>
 where IO: AsyncRead + AsyncWrite + Unpin + Send + 'static,
 {
     let service = service_fn(move |request| request_service(context.clone(), mux.clone(), Arc::clone(&handlers), request));
-    let mut builder = hyper_util::server::conn::auto::Builder::new(TokioExecutor::new());
-    builder.http1().timer(TokioTimer::new()).header_read_timeout(read_header_timeout);
+    let protocol_tasks = Arc::new(UtilityTaskScope::default());
+    let executor = SourceHttpExecutor { tasks: Arc::downgrade(&protocol_tasks) };
+    let mut builder = hyper_util::server::conn::auto::Builder::new(executor);
+    builder.http1().timer(TokioTimer::new()).header_read_timeout(read_header_timeout).auto_date_header(false).title_case_headers(true);
+    builder.http2().auto_date_header(false);
     builder = match protocol { HttpProtocol::Http1 => builder.http1_only(), HttpProtocol::Http2 => builder.http2_only() };
     let connection = builder.serve_connection(TokioIo::new(io), service);
     tokio::pin!(connection);
-    tokio::select! {
+    let result = tokio::select! {
         result = &mut connection => result.map_err(|error| Errors::default().New(error.to_string())),
         _ = async { tokio::select! { _ = stop.cancelled() => (), _ = owner_stop.cancelled() => () } } => {
             connection.as_mut().graceful_shutdown();
@@ -362,7 +354,12 @@ where IO: AsyncRead + AsyncWrite + Unpin + Send + 'static,
             // cancel the in-flight response or close its connection early.
             connection.await.map_err(|error| Errors::default().New(error.to_string()))
         }
-    }
+    };
+    // Also own Hyper's H2 stream/upgrade futures, rather than relying on an
+    // executor that discards their JoinHandles. Normal and error exits drain
+    // this same connection phase; emergency Drop aborts its owned children.
+    let _ = protocol_tasks.cancel_and_join().await;
+    result
 }
 
 pub async fn serve_plain(context: UtilityRuntimeContext, mux: SourceMux, port: &str, stop: CancellationToken, read_header_timeout: Duration) -> Result<(), BoxError> {
