@@ -54,6 +54,8 @@ cfg_server! {
         pub(crate) service: S,
         #[cfg(feature = "agones-informational")]
         informational: Option<crate::ext::informational_sender::Receiver>,
+        #[cfg(feature = "agones-informational")]
+        source_end: Option<crate::ext::SourceResponseEnd>,
     }
 }
 
@@ -364,6 +366,8 @@ where
     fn poll_write(&mut self, cx: &mut Context<'_>) -> Poll<crate::Result<()>> {
         loop {
             #[cfg(feature = "agones-informational")]
+            self.conn.poll_source_end(cx);
+            #[cfg(feature = "agones-informational")]
             if self.informational_flush.is_some() {
                 let result = ready!(self.poll_flush(cx));
                 if let Some(done) = self.informational_flush.take() {
@@ -606,6 +610,8 @@ cfg_server! {
                 service,
                 #[cfg(feature = "agones-informational")]
                 informational: None,
+                #[cfg(feature = "agones-informational")]
+                source_end: None,
             }
         }
 
@@ -636,6 +642,8 @@ cfg_server! {
             let ret = if let Some(fut) = &mut this.in_flight.as_mut().as_pin_mut() {
                 let resp = ready!(fut.as_mut().poll(cx)?);
                 let (parts, body) = resp.into_parts();
+                #[cfg(feature = "agones-informational")]
+                { this.source_end = parts.extensions.get::<crate::ext::SourceResponse>().and_then(|source| source.end.clone()); }
                 let head = MessageHead {
                     version: parts.version,
                     subject: parts.status,
@@ -665,6 +673,7 @@ cfg_server! {
             #[cfg(feature = "agones-informational")]
             {
                 let (send, receive) = crate::ext::informational_sender::channel(false);
+                self.source_end = None;
                 req.extensions_mut().insert(send); self.informational = Some(receive);
             }
             let fut = self.service.call(req);
@@ -672,10 +681,18 @@ cfg_server! {
             Ok(())
         }
 
-        fn poll_ready(&mut self, _cx: &mut Context<'_>) -> Poll<Result<(), ()>> {
+        fn poll_ready(&mut self, cx: &mut Context<'_>) -> Poll<Result<(), ()>> {
+            #[cfg(not(feature = "agones-informational"))]
+            let _ = cx;
             if self.in_flight.is_some() {
                 Poll::Pending
             } else {
+                #[cfg(feature = "agones-informational")]
+                if let Some(end) = &self.source_end {
+                    // A close decision is handled by the connection's write
+                    // phase, after queued response bytes have been processed.
+                    match end.poll(cx) { Poll::Ready(false) => (), _ => return Poll::Pending }
+                }
                 Poll::Ready(Ok(()))
             }
         }

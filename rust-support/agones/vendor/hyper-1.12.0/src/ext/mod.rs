@@ -73,6 +73,11 @@ mod source_trailers;
 #[cfg(feature = "agones-informational")]
 pub use source_trailers::SourceTrailers;
 
+#[cfg(feature = "agones-informational")]
+mod source_response;
+#[cfg(feature = "agones-informational")]
+pub use source_response::{SourceBody, SourceResponse, SourceResponseEnd};
+
 #[cfg(feature = "http2")]
 /// Extension type representing the `:protocol` pseudo-header in HTTP/2.
 ///

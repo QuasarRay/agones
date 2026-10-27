@@ -22,6 +22,10 @@ type StaticBuf = &'static [u8];
 pub(crate) struct Encoder {
     kind: Kind,
     is_last: bool,
+    #[cfg(feature = "agones-informational")]
+    source_chunked: bool,
+    #[cfg(feature = "agones-informational")]
+    source_body: bool,
 }
 
 #[derive(Debug)]
@@ -62,10 +66,32 @@ impl Encoder {
         Encoder {
             kind,
             is_last: false,
+            #[cfg(feature = "agones-informational")]
+            source_chunked: false,
+            #[cfg(feature = "agones-informational")]
+            source_body: false,
         }
     }
     pub(crate) fn chunked() -> Encoder {
         Encoder::new(Kind::Chunked(None))
+    }
+
+    #[cfg(feature = "agones-informational")]
+    pub(crate) fn source_chunked() -> Encoder {
+        let mut encoder = Encoder::chunked(); encoder.source_chunked = true; encoder
+    }
+
+    #[cfg(feature = "agones-informational")]
+    pub(crate) fn source_length(len: u64) -> Encoder {
+        let mut encoder = Encoder::length(len); encoder.source_body = true; encoder
+    }
+
+    fn chunk_size(&self, len: usize) -> ChunkSize {
+        #[cfg(feature = "agones-informational")]
+        let lower = self.source_chunked;
+        #[cfg(not(feature = "agones-informational"))]
+        let lower = false;
+        ChunkSize::with_case(len, lower)
     }
 
     pub(crate) fn length(len: u64) -> Encoder {
@@ -77,17 +103,28 @@ impl Encoder {
         Encoder::new(Kind::CloseDelimited)
     }
 
+    #[cfg(feature = "agones-informational")]
+    pub(crate) fn source_close_delimited() -> Encoder {
+        let mut encoder = Encoder::close_delimited(); encoder.source_body = true; encoder
+    }
+
     pub(crate) fn into_chunked_with_trailing_fields(self, trailers: Vec<HeaderName>) -> Encoder {
         match self.kind {
             Kind::Chunked(_) => Encoder {
                 kind: Kind::Chunked(Some(trailers)),
                 is_last: self.is_last,
+                #[cfg(feature = "agones-informational")]
+                source_chunked: self.source_chunked,
+                #[cfg(feature = "agones-informational")]
+                source_body: self.source_body,
             },
             _ => self,
         }
     }
 
     pub(crate) fn is_eof(&self) -> bool {
+        #[cfg(feature = "agones-informational")]
+        if self.source_body { return false; }
         matches!(self.kind, Kind::Length(0))
     }
 
@@ -102,6 +139,8 @@ impl Encoder {
     }
 
     pub(crate) fn is_close_delimited(&self) -> bool {
+        #[cfg(feature = "agones-informational")]
+        if self.source_body { return false; } // source phase owns final close
         match self.kind {
             #[cfg(feature = "server")]
             Kind::CloseDelimited => true,
@@ -114,6 +153,8 @@ impl Encoder {
     }
 
     pub(crate) fn end<B>(&self) -> Result<Option<EncodedBuf<B>>, NotEof> {
+        #[cfg(feature = "agones-informational")]
+        if self.source_body { return Ok(None); }
         match self.kind {
             Kind::Length(0) => Ok(None),
             Kind::Chunked(_) => Ok(Some(EncodedBuf {
@@ -132,10 +173,22 @@ impl Encoder {
         let len = msg.remaining();
         debug_assert!(len > 0, "encode() called with empty buf");
 
+        #[cfg(feature = "agones-informational")]
+        if self.source_body {
+            // The source writer owns attempted int64 counts and rejection,
+            // including rejected writes and wrapping. Do not impose a second
+            // byte counter/truncation policy in the native effect.
+            return EncodedBuf { kind: BufKind::Exact(msg) };
+        }
+
+        #[cfg(feature = "agones-informational")]
+        let lower = self.source_chunked;
+        #[cfg(not(feature = "agones-informational"))]
+        let lower = false;
         let kind = match &mut self.kind {
             Kind::Chunked(_) => {
                 trace!("encoding chunked {}B", len);
-                let buf = ChunkSize::new(len)
+                let buf = ChunkSize::with_case(len, lower)
                     .chain(msg)
                     .chain(b"\r\n" as &'static [u8]);
                 BufKind::Chunked(buf)
@@ -239,10 +292,16 @@ impl Encoder {
         let len = msg.remaining();
         debug_assert!(len > 0, "encode() called with empty buf");
 
+        #[cfg(feature = "agones-informational")]
+        if self.source_body {
+            dst.buffer(EncodedBuf { kind: BufKind::Exact(msg) });
+            return !self.is_last;
+        }
+
         match self.kind {
             Kind::Chunked(_) => {
                 trace!("encoding chunked {}B", len);
-                let buf = ChunkSize::new(len)
+                let buf = self.chunk_size(len)
                     .chain(msg)
                     .chain(b"\r\n0\r\n\r\n" as &'static [u8]);
                 dst.buffer(buf);
@@ -358,6 +417,11 @@ struct ChunkSize {
 }
 
 impl ChunkSize {
+    fn with_case(len: usize, lower: bool) -> Self {
+        let mut size = Self::new(len);
+        if lower { for byte in &mut size.bytes { *byte = byte.to_ascii_lowercase(); } }
+        size
+    }
     fn new(len: usize) -> ChunkSize {
         use std::fmt::Write;
         let mut size = ChunkSize {

@@ -49,7 +49,7 @@ pub async fn FourZeroFour(context: &UtilityRuntimeContext, logger: &LogEntry, wr
         Ok(body) => {
             context.emit_source_log(&LogRequest(logger, request).with_field("body", String::from_utf8_lossy(&body).into_owned()), LogLevel::Warn, "404");
             writer.http_error("404 page not found", 404).await;
-            request.close_body();
+            let _ = request.close_body().await;
         }
     }
 }

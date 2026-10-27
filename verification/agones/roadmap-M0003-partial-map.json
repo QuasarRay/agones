@@ -21,7 +21,7 @@
       "schema": "Each DynamicMessage carries its descriptor and linked pool. Any resolves its type URL against that pool. Full generated source descriptor/handler adoption remains explicit later work.",
       "tasks": "Factory and codec spawn no tasks. Existing HTTP phase owns requests and connection drains. Callbacks borrow the active request; request return, response-body disposal and a dropped pending response head cancel its token. Normal server Shutdown does not cancel active requests early."
     },
-    "http_tls_owner": "SourceMux owns handler data. CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/date/diagnostic/delay effects. Each listener owns AcceptBackoff; each connection owns its protocol child scope, weak executor and graceful-close token. Each request writer owns declarations, bounded response frames and one single-publication SourceTrailers packet; existing native drivers consume the packet/frames and own informational acknowledgements. No provider registry or alternate lifecycle manager.",
+    "http_tls_owner": "CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/clock/diagnostic/delay effects. SourceMux owns route data; each listener owns AcceptBackoff. Each connection owns protocol children, a weak executor, graceful-close and physical-disposal cancellation. Each request has one shared RequestBody and one writer/count/header owner. The existing request phase publishes SourceResponseEnd after cleanup; existing native H1/H2 drivers consume immutable header/framing/trailer data and bounded body/control messages. No competing manager or provider registry.",
     "logging_scope": "UtilityRuntimeOwner owns shared SourceLogger and SourceErrorBackoff. UtilityRuntimeContext and derived LogEntry values share those resources; CRD logging delegates to the same runtime.",
     "production_package": "Existing util workspace package; Cargo lib entrypoint is rust-support/agones/src/utility_lib.rs",
     "queue_owner": "WorkerQueue owns locked worker/running counts and SyncHandler. SourceQueueContext owns one shared queue state and limiter instance. Queue actor/worker tasks live in the weak-referenced utility parent scope. Ready state and limiter state remain separate owners; Done and Forget are distinct. Stable heap nodes are shared by arena identity/map references rather than reinserting mutated keys.",
@@ -93,7 +93,12 @@
       "ResponseFrame",
       "SourceHttpDelay",
       "AcceptBackoff",
-      "hyper::ext::SourceTrailers"
+      "hyper::ext::SourceTrailers",
+      "request_body::{RequestBody,Owner,State,BodySnapshot,Discard}",
+      "response::framing::ExtraHeaders",
+      "SourceRequestPhase",
+      "SourceConnectionClosed",
+      "hyper::ext::{SourceBody,SourceResponse,SourceResponseEnd}"
     ]
   },
   "dependency_adoption": "Native backend declarations retain existing root-lock HTTP/TLS/Tokio/JSON/YAML/base64/libc identities. comprende and better_comprehension reuse the already vendored first-generation sources; five exact package blocks (including clean-macro-docs/if_chain/syn 1) were adopted from the existing isolated CPG lock. Direct util dependency bookkeeping was authored manually, including base64 0.22.1 disambiguation. No resolver, compiler, formatter, macro/API probe or package execution ran. This continuation declares existing root errno 0.3.14 and regex 1.13.1 identities for signal-safe errno restoration and source install-hint Unicode category projection; only util direct lock bookkeeping changed. No resolver or executable assurance ran. Gateway adds prost-reflect 0.14.7 reflection/wire APIs only, with existing once_cell/prost 0.13.5/prost-types identities. One exact lock package was authored from the registry index/source archive without Cargo resolution. Optional serde/serde-value/ordered-float candidates were read but are not adopted. No new tool was installed. Platform continuation declares the existing root windows-sys 0.61.2 package only for cfg(windows), using the pinned FFI modules and existing futures/Tokio primitives. No package block/version upgrade, resolver or tool execution. No dependencies changed in this batch. The fswatch support selects pinned gopkg.in/fsnotify.v1 1.4.7 and adds its literal license; newer fsnotify 1.9 candidate semantics have no utility completion credit. This batch vendors the exact existing Hyper 1.12.0 source archive, preserving license/base file hashes and adding opt-in informational support in its existing H1/H2 drivers. Root Cargo patch/local lock source bookkeeping replaces that node registry identity without a version upgrade or Cargo resolution. Existing h2 0.4.20 informational APIs are bound to their original crate archive. No new tool/install/resolver or project execution.",
@@ -230,7 +235,7 @@
       "status": "AUTHORED_UNVERIFIED_PARTIAL"
     },
     {
-      "authored_sha256": "08d7c53722a3e81065dc906ed910fb22bab34164e70d71e2d55c08512cda106f",
+      "authored_sha256": "a9fabc2e82a4d28e0431f2c62a57186a48bcaa625605fd3d243a3bc3d8246169",
       "authored_symbols_or_groups": [
         "sensitiveHeaders and redactSensitiveHeaders key-preserving projection with shared non-sensitive values",
         "LogRequest method/URL/host/redacted headers/requestURI",
@@ -244,7 +249,8 @@
         "ResponseWriter now owns source 2048-byte H1 and 4096-byte H2 buffering, direct large writes, header snapshots and no-body/HEAD/header-presence/Content-Encoding/Transfer-Encoding decisions. H1 signed length parsing and H2 deferred unsigned-63-bit parsing retain their distinct count/error and empty-write behavior.",
         "Attempted int64 write count wraps and includes rejected length overruns; failed transport writes retain the original error chain through one shared sticky failure. Header transport failures are ignored as in source WriteHeader, while the native connection retains its failure.",
         "Source clock and default HTTP diagnostic capabilities are statically supplied by UtilityRuntimeProviders. Date is generated only when its header key is absent, with native automatic dates disabled; Go status-line strings and unknown-code fallback are supplied to the existing reason-phrase extension.",
-        "Hyper H2 stream/upgrade futures now use a weak executor and the existing per-connection UtilityTaskScope. Normal/error connection exits cancel and join protocol children; emergency scope Drop aborts owned children. No discarded TokioExecutor JoinHandles or competing lifecycle manager."
+        "Hyper H2 stream/upgrade futures now use a weak executor and the existing per-connection UtilityTaskScope. Normal/error connection exits cancel and join protocol children; emergency scope Drop aborts owned children. No discarded TokioExecutor JoinHandles or competing lifecycle manager.",
+        "FourZeroFour now awaits the shared source body Close after its successful ReadAll/response path; the same owner handles H1/H2 EOF/closed/early-close state."
       ],
       "destination": "agones-rs/pkg/util/https/https.rs",
       "remaining": [
@@ -623,8 +629,8 @@
       "required": [
         "Complete exact Go quote/caller/registration/conflict and panic/stack diagnostics, source Unicode tables and empty CONNECT path-segment/tree-alias configurations. Native default stdlog formatting is authored, but complete global stdlog flags/output/caller identity and native failure behavior remain partial.",
         "Complete net/url and HTTP parsing/rejection across host/authority/opaque/absolute/CONNECT/invalid bytes and target grammar, and retain byte paths through gateway/admission/discovery/log consumers. HttpRequest.path remains a text compatibility projection.",
-        "Complete header slice alias/mutation and non-UTF8 header-key data, normal H1 response-header encoding/connection buffers/Transfer-Encoding/close framing, native H2 header ordering/HPACK/GOAWAY schedules and all partial-write/flush/reset/cancellation/error timing. Actual H1/H2 trailers, source end-of-stream decisions and H2 graceful-close wiring are authored, without native socket/runtime/refinement evidence. Reconcile all selected protocol/version profiles rather than inferring parity.",
-        "Reconcile protocol-specific Content-Length, empty writes, Continue/late Continue, HEAD/no-body responses and malformed input profiles across all selected source versions/configurations. Go 1.26.5 protocol code and existing explicit mux version profiles are bound separately; no claim that every Go tool/runtime profile is selected.",
+        "Complete mutable request-field/method/body replacement and header backing-slice alias/non-UTF8-key profiles; captured wantsClose/wants10 flags are intentional source pre-handler snapshots, but the old method/content-length compatibility projections do not establish general mutation equivalence. Reconcile native parser/rejection/1.0 keep-alive/upgrade/protocol-switch behavior, exact normal/interim/header/frame ordering and HPACK/GOAWAY profiles. H1 source header/framing/trailer/count/reuse paths are authored, not native-parity evidence.",
+        "Complete request-body Close/read/EOF/abortPendingRead/Continue/full-duplex races, initial declared-trailer maps and replacement/alias profiles, native buffering/readahead/partial-write/flush/reset/cancellation/error timing and source diagnostics. Source length/empty-write/HEAD distinctions, bounded body discard, blocked H2-close wakeup and H1 completion/reuse control are authored for the bound source profile. All selected Go tools/versions/configurations/native paths still require reconciliation and later assurance.",
         "Finish listener named-service/bind and independent listener-close/shutdown timing, native error origin (syscall-wrapped versus direct Errno or poll/init failures), platform/native error display and complete retry profiles. Shared temporary-syscall accept backoff is authored for plain/TLS, but does not establish full Go listener equivalence. M0027 source tool/GODEBUG and actual production parent adoption remain required.",
         "Retain every other M0003 filesystem/signal/gateway/config/queue/logging/CRD/features/admission/body gap. Global BOTH-route gate stays CLOSED; no compiler, test, formatter/linter, native/API probe, application, generator validation, proof or CI ran."
       ]
@@ -649,6 +655,7 @@
   "milestone_id": "M0003",
   "native_hyper_adoption_record": "verification/agones/roadmap-M0003-hyper-adoption.json",
   "owned_entry_count": 14,
+  "payload_identity_refreshed_at": "2026-10-27T05:06:36.501648+00:00",
   "payload_sha256": {
     "Cargo.lock": "1d2c5f632a6a590af119a16f3ff926d89bcfdaedde63a265fd185c8d406745a9",
     "Cargo.toml": "fd4401820492ab3209f748949abe5327e974d6c8d892a510803943391d6a2a18",
@@ -663,7 +670,7 @@
     "agones-rs/pkg/util/fswatch/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/fswatch/fswatch.rs": "b190b19ca16dc78085ae4bee81c4deb3ebb512b6f58201df3ee0364db32ab3a9",
     "agones-rs/pkg/util/https/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
-    "agones-rs/pkg/util/https/https.rs": "08d7c53722a3e81065dc906ed910fb22bab34164e70d71e2d55c08512cda106f",
+    "agones-rs/pkg/util/https/https.rs": "a9fabc2e82a4d28e0431f2c62a57186a48bcaa625605fd3d243a3bc3d8246169",
     "agones-rs/pkg/util/https/server.rs": "af7895fd9cc9724ea1a7f7ff4ae251a4b832a0e22153a65737d0254362404dd5",
     "agones-rs/pkg/util/httpserver/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/httpserver/server.rs": "8ad187943f0959110391d22330a931065557dea048891949509de22c43d7788d",
@@ -703,10 +710,12 @@
     "rust-support/agones/src/utility_gateway_targets.rs": "3d3d8607f17d4db8f9c6d70dc46793d3d35615e4d887a3f236ee57cda57d8f61",
     "rust-support/agones/src/utility_gateway_wire.rs": "234e6de84955c4240f153c0dece7a5594733562325bf7113998a794b9af0b113",
     "rust-support/agones/src/utility_gateway_wkt.rs": "4cb0f6fa00d5c553911e8eaaca563d17112cfd5123a669c2e180eb02142ed42b",
-    "rust-support/agones/src/utility_http.rs": "0dc0d2825d09468c4b713b45ef47bf1b31635e40ba2b9349c1189a27629d71ca",
+    "rust-support/agones/src/utility_http.rs": "90df1d13b9d5e1b95c67601996b144f7ab80da020affc11c31c366a4d4742605",
+    "rust-support/agones/src/utility_http_body.rs": "179bc24a0f372f80e48a83d53d6d65953d9ec36ff51f028b4fce780686696375",
+    "rust-support/agones/src/utility_http_framing.rs": "35cdcca330f898cfbcd3be4b117f7e79833b6fba40905fec690421e8a0aff4b5",
     "rust-support/agones/src/utility_http_listener.rs": "5ca5df95a2e84e16fbe280b2afe4843bde365936a068a910d162a23112b9c460",
     "rust-support/agones/src/utility_http_mux.rs": "017dfc7e5b6e01f66e0dd6de042b3d833610f0c1f8b549ea14d16ed8132568c6",
-    "rust-support/agones/src/utility_http_response.rs": "fc92aeb2e1b947ce5f9f4a6190adb5ce4fb2eed045a14abdbed0e1e53fc1feb3",
+    "rust-support/agones/src/utility_http_response.rs": "07bcab5b7cae08a147c0f252cd985c839515022d7ec2a017efbdcb4e5a9185ef",
     "rust-support/agones/src/utility_http_sniff.rs": "ef1baa72b7bb66ea833ef7e15858766313c8937d13e0d18bf6bf01f8f2a96042",
     "rust-support/agones/src/utility_http_status.rs": "d310b7f9c71780a03655b4337a444eb7b7d5da3e311585c943af51e8b3a83e3a",
     "rust-support/agones/src/utility_http_trailers.rs": "877398c0e611214f679c7f082fa9342262b39c86591677ac9f0a417ddd608050",
@@ -730,12 +739,12 @@
     "third_party/first-generation/comprende/Cargo.toml": "01f7068b9cd9ec5b27b7df77709117e37dc991cd32597dbf24cbde9074f5ceab",
     "third_party/first-generation/comprende/src/lib.rs": "e8d8da04ca3048bdd7275b1ca77b5a78c4abfd999ecb763d82a615f4aeb0fb96",
     "verification/agones/roadmap-M0003-gateway-authoring.json": "80c5581d3ab2236db4247258769ac24c518e3a045b61fa4c464d8671421234a9",
-    "verification/agones/roadmap-M0003-platform-effects.json": "f0ceaf9b38f4e2326d36a8efcf87978ed87265a1d79f4afadf664644f47ca357",
-    "verification/agones/roadmap-M0003-reuse-adoption.json": "43f5cf1793f05e52643b685157d60462bebe5bdb3b0ebf7c3b3d21b69bcadaaf"
+    "verification/agones/roadmap-M0003-platform-effects.json": "3a7a4d4150b22a81f30f4c8e963ae6902f45811068524bfa1d485430a40e50f7",
+    "verification/agones/roadmap-M0003-reuse-adoption.json": "4586c218be2308f29c85e02799c24db67760f83a523518112ec8e9190651bb17"
   },
   "platform_effect_authoring_record": "verification/agones/roadmap-M0003-platform-effects.json",
-  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-18.json",
-  "progress_usage_observations": 18,
+  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-20.json",
+  "progress_usage_observations": 20,
   "project_executable_invocations": 0,
   "record_kind": "PARTIAL_SOURCE_OWNERSHIP_ADOPTION",
   "route": "MANUAL",
@@ -1872,6 +1881,13 @@
       "sha256": "0c3392bd7c2966f894e01ea27514623cf09dc2660e426049219f7e5ee3ec0f74",
       "source_revision": "go1.26.5",
       "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/tcpsock.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/http/response.go",
+      "purpose": "Source-text reading for protocol-switch response/header decisions; no Go/Rust/native execution.",
+      "sha256": "43833d3f5b76380a6ba2ac6972d024f9efc599fbd17ceebda34e3e79b03483ec",
+      "source_revision": "go1.26.5",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/response.go"
     }
   ],
   "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",

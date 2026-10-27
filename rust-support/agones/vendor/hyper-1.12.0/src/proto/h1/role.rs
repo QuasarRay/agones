@@ -394,6 +394,29 @@ impl Http1Transaction for Server {
     }
 
     fn encode(mut msg: Encode<'_, Self::Outgoing>, dst: &mut Vec<u8>) -> crate::Result<Encoder> {
+        #[cfg(feature = "agones-informational")]
+        if let Some(source) = msg.head.extensions.remove::<crate::ext::SourceResponse>() {
+            // Only an explicitly source-owned response bypasses Hyper's
+            // different header normalization and body-framing decisions.
+            extend(dst, if msg.head.version == Version::HTTP_10 { b"HTTP/1.0 " } else { b"HTTP/1.1 " });
+            extend(dst, msg.head.subject.as_str().as_bytes()); extend(dst, b" ");
+            if let Some(reason) = msg.head.extensions.get::<crate::ext::ReasonPhrase>() { extend(dst, reason.as_bytes()); }
+            else { extend(dst, msg.head.subject.canonical_reason().unwrap_or("<none>").as_bytes()); }
+            extend(dst, b"\r\n"); extend(dst, &source.fields); extend(dst, b"\r\n");
+            // The normal connection header cache expects the map to have
+            // been drained by the role encoder, including on this path.
+            msg.head.headers.clear();
+            let encoder = match source.body {
+                crate::ext::SourceBody::Empty => Encoder::length(0),
+                crate::ext::SourceBody::Length(length) => Encoder::source_length(length),
+                crate::ext::SourceBody::Chunked => Encoder::source_chunked(),
+                crate::ext::SourceBody::CloseDelimited => Encoder::source_close_delimited(),
+            };
+            // The source closes only after its handler and request-body
+            // cleanup complete, including no-body responses. That phase
+            // publishes the final close decision through SourceResponseEnd.
+            return Ok(encoder.set_last(source.close && source.end.is_none()));
+        }
         trace!(
             "Server::encode status={:?}, body={:?}, req_method={:?}",
             msg.head.subject,

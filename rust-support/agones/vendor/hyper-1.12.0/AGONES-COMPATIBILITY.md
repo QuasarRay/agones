@@ -44,3 +44,39 @@ graceful-close token used by source HTTP/2 `Connection: close`; its existing
 driver performs graceful shutdown and owns the stream drain. Exact native
 frame/HPACK, GOAWAY timing, header alias, partial I/O and error profiles remain
 unverified implementation work. No compilation or behavior credit is implied.
+
+`SourceResponse` now carries immutable HTTP/1 fields and a body framing decision
+from the same source response writer. Its existing H1 role encoder writes the
+status line and supplied field block, then uses the existing connection I/O and
+body buffers. The source's handler fields and automatically added fields retain
+their separate ordering and normalization. Source chunk sizes use lowercase
+hexadecimal. For source Content-Length responses the request writer owns the
+attempted signed count, rejection and wrap behavior; the native encoder does not
+truncate again or declare the source handler complete when that length is met.
+Ordinary Hyper responses retain their original encoder and count policy.
+
+Each final source response also carries `SourceResponseEnd`. The source request
+phase publishes handler and request-body cleanup completion, with its final
+connection-close decision; emergency phase disposal publishes close. The existing
+H1 dispatcher and connection wait before reuse, including HEAD/no-body replies,
+and preserve queued I/O. This is a per-response data signal using the existing
+driver's waker, without a new task or lifecycle manager. Connection disposal
+cancels its request children; ordinary H1 no-body disposal does not cancel an
+otherwise still-running handler. H2 retains independent stream cancellation.
+
+The source request and response share one body owner, which handles bounded
+pre-response discard, H1 early Close, distinct Continue-reader EOF/closed flags,
+request trailers and H2 close/read wakeup. Remaining work includes mutable
+request/header alias profiles, parser and protocol-switch behavior, body/close/
+abort/partial-I/O timing, exact diagnostics and all selected native profiles.
+These source paths remain uncompiled, unexecuted and unverified.
+
+Source responses also bypass the normal response-metadata keep-alive heuristic:
+their 1.0/1.1 version and Connection decision were already made by the source
+writer, including extra fields that are not in the metadata map. Explicit native
+shutdown remains authoritative and cannot be re-enabled by a source head. The
+normal metadata heuristic remains in place for other Hyper responses.
+
+Source close-delimited bodies also wait for request-phase completion before
+physical close. Their native byte output remains unframed; the source phase's
+final close decision owns EOF timing after handler and request-body cleanup.

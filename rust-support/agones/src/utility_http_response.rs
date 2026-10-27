@@ -8,6 +8,8 @@ use bytes::Bytes;
 use hyper::body::Frame;
 use std::{collections::{BTreeMap, HashMap}, io, sync::{Arc, atomic::{AtomicBool, Ordering}}};
 use tokio::sync::{mpsc, oneshot};
+#[path = "utility_http_framing.rs"]
+mod framing;
 
 const BUFFER_SIZE: usize = 2048;
 #[derive(Clone, Debug)]
@@ -35,16 +37,31 @@ pub struct ResponseWriter {
     declared_trailers: Vec<Vec<u8>>,
     source_trailers: hyper::ext::SourceTrailers,
     source_close: tokio_util::sync::CancellationToken,
+    request_body: super::request_body::RequestBody,
+    protocol_at_least_11: bool,
+    wants10_keep_alive: bool,
+    wants_close: bool,
+    expect_continue: bool,
+    request_content_length: i64,
+    server_stops: [tokio_util::sync::CancellationToken; 2],
+    full_duplex: bool,
+    source_end: hyper::ext::SourceResponseEnd,
+    close_after_reply: bool,
 }
 impl ResponseWriter {
     pub(super) fn new(runtime: UtilityRuntimeContext, head: oneshot::Sender<ResponseHead>, data: mpsc::Sender<ResponseFrame>,
-        panicked: Arc<AtomicBool>, source_close: tokio_util::sync::CancellationToken, request: &HttpRequest) -> Result<Self, BoxError> {
+        panicked: Arc<AtomicBool>, source_close: tokio_util::sync::CancellationToken,
+        server_stops: [tokio_util::sync::CancellationToken; 2], source_end: hyper::ext::SourceResponseEnd, request: &HttpRequest) -> Result<Self, BoxError> {
         let informational = request.informational.clone().ok_or_else(|| Errors::default().New("HTTP informational response driver is unavailable"))?;
         Ok(Self { headers: BTreeMap::new(), committed: None, committed_headers: None, head: Some(head), data, runtime,
             panicked, head_request: request.method == "HEAD", written: 0, content_length: None, buffered: Vec::new(), finished: false,
             http2: request.protocol == hyper::Version::HTTP_2, can_write_continue: Arc::clone(&request.can_write_continue), informational,
-            handler_done: false, write_failure: None, declared_trailers: Vec::new(), source_trailers: hyper::ext::SourceTrailers::new(), source_close })
+            handler_done: false, write_failure: None, declared_trailers: Vec::new(), source_trailers: hyper::ext::SourceTrailers::new(), source_close,
+            request_body: request.body.clone(), protocol_at_least_11: request.protocol_at_least_11, wants10_keep_alive: request.wants10_keep_alive,
+            wants_close: request.wants_close, expect_continue: request.expect_continue, request_content_length: request.content_length,
+            server_stops, full_duplex: false, source_end, close_after_reply: false })
     }
+    pub fn enable_full_duplex(&mut self) { self.full_duplex = true; }
     pub async fn write_header(&mut self, status: u16) -> Result<(), BoxError> {
         if self.committed.is_some() { return Ok(()); }
         if !(100..=999).contains(&status) { panic!("invalid WriteHeader code {status}"); }
@@ -56,7 +73,9 @@ impl ResponseWriter {
         }
         if (100..=199).contains(&status) && (status != 101 || self.http2) {
             let mut headers = self.headers.clone(); headers.remove("Content-Length"); headers.remove("Transfer-Encoding");
-            let response = native_response_head(status, &headers)?;
+            let mut response = native_response_head(status, &headers)?;
+            if !self.http2 { response.extensions_mut().insert(hyper::ext::SourceResponse::new(
+                trailers::encode_http1(&headers), hyper::ext::SourceBody::Empty, false)); }
             let _ = self.informational.send(response).await;
             return Ok(()); // 1xx does not commit or clear the final header map
         }
@@ -81,7 +100,7 @@ impl ResponseWriter {
         if let Some(sender) = self.head.take() {
             let status = self.committed.unwrap_or(200);
             let mut headers = self.committed_headers.clone().unwrap_or_default();
-            let has_transfer_encoding = header(&headers, "Transfer-Encoding").is_some_and(|value| !value.is_empty());
+            let source_http1 = if self.http2 { None } else { Some(self.prepare_http1(&mut headers, status, first_data).await) };
             if self.http2 {
                 if headers.contains_key("Connection") {
                     if header(&headers, "Connection") == Some(b"close") { self.source_close.cancel(); }
@@ -96,23 +115,19 @@ impl ResponseWriter {
                     set_header(&mut headers, "Content-Length", first_data.len().to_string());
                 }
             }
-            if body_allowed(status) {
+            if self.http2 && body_allowed(status) {
                 let encoded = header(&headers, "Content-Encoding").is_some_and(|value| !value.is_empty());
-                if !encoded && !headers.contains_key("Content-Type") && (self.http2 || !has_transfer_encoding) && !first_data.is_empty() {
+                if !encoded && !headers.contains_key("Content-Type") && !first_data.is_empty() {
                     set_header(&mut headers, "Content-Type", sniff_content_type(first_data));
                 }
-            } else if !self.http2 {
-                headers.remove("Content-Length"); headers.remove("Transfer-Encoding");
-                if status == 304 { headers.remove("Content-Type"); }
             }
-            if self.head_request { headers.remove("Transfer-Encoding"); }
-            if !headers.contains_key("Date") { set_header(&mut headers, "Date", self.runtime.source_http_date()); }
+            if self.http2 && !headers.contains_key("Date") { set_header(&mut headers, "Date", self.runtime.source_http_date()); }
             if let Some(values) = headers.get("Trailer") {
                 for value in values.iter() { for name in trailers::elements(value) { self.declare_trailer(name); } }
             }
             headers.retain(|name, _| !name.starts_with("Trailer:"));
             let end_stream = self.http2 && (self.head_request || (self.handler_done && self.declared_trailers.is_empty() && first_data.is_empty()));
-            sender.send(ResponseHead { status, headers, trailers: self.source_trailers.clone(), end_stream })
+            sender.send(ResponseHead { status, headers, trailers: self.source_trailers.clone(), end_stream, source_http1 })
                 .map_err(|_| io::Error::new(io::ErrorKind::BrokenPipe, "HTTP response consumer closed"))?;
         }
         Ok(())
@@ -226,21 +241,9 @@ impl ResponseWriter {
         }
         result
     }
-    pub(super) async fn finish(mut self) {
+    pub(super) async fn finish(mut self) -> bool {
         self.handler_done = true;
         if self.committed.is_none() { let _ = self.write_header(200).await; }
-        if self.head.is_some() && !self.http2 {
-            let status = self.committed.unwrap_or(200);
-            if let Some(headers) = &mut self.committed_headers {
-                let trailers = headers.get("Trailer").is_some_and(|values| !values.is_empty()) || headers.keys().any(|name| name.starts_with("Trailer:"));
-                let transfer_encoding = header(headers, "Transfer-Encoding").is_some_and(|value| !value.is_empty());
-                if !trailers && !transfer_encoding && body_allowed(status) && !headers.contains_key("Content-Length")
-                    && (!self.head_request || !self.buffered.is_empty()) {
-                    self.content_length = Some(self.buffered.len() as i64);
-                    set_header(headers, "Content-Length", self.buffered.len().to_string());
-                }
-            }
-        }
         let flushed = self.flush_buffer().await.is_ok();
         if flushed && !self.head_request {
             let trailers = self.final_trailers();
@@ -253,6 +256,8 @@ impl ResponseWriter {
             }
         }
         self.finished = true;
+        self.close_after_reply || self.write_failure.is_some() || (!self.head_request && body_allowed(self.committed.unwrap_or(200))
+            && self.content_length.is_some_and(|length| self.written != length))
     }
 }
 impl Drop for ResponseWriter {

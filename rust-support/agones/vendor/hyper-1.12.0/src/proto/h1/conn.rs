@@ -86,6 +86,10 @@ where
                 allow_trailer_fields: false,
                 #[cfg(feature = "agones-informational")]
                 source_trailers: None,
+                #[cfg(feature = "agones-informational")]
+                source_end: None,
+                #[cfg(feature = "agones-informational")]
+                source_keep_alive_disabled: false,
             },
             _marker: PhantomData,
         }
@@ -570,6 +574,12 @@ where
     }
 
     fn try_keep_alive(&mut self, cx: &mut Context<'_>) {
+        #[cfg(feature = "agones-informational")]
+        if !self.state.is_read_closed() && !self.state.is_write_closed() {
+            if let Some(end) = &self.state.source_end {
+                if end.poll(cx).is_pending() { return; }
+            }
+        }
         self.state.try_keep_alive::<T>();
         self.maybe_notify(cx);
     }
@@ -621,6 +631,15 @@ where
     }
 
     #[cfg(feature = "agones-informational")]
+    pub(crate) fn poll_source_end(&mut self, cx: &mut Context<'_>) {
+        let close = match &self.state.source_end {
+            Some(end) => matches!(end.poll(cx), Poll::Ready(true)),
+            None => false,
+        };
+        if close { self.disable_keep_alive(); }
+    }
+
+    #[cfg(feature = "agones-informational")]
     pub(crate) fn write_informational(&mut self, response: http::Response<()>) -> crate::Result<()> {
         let (parts, ()) = response.into_parts();
         let status = parts.status;
@@ -654,11 +673,28 @@ where
             }
         }
 
-        self.enforce_version(&mut head);
+        #[cfg(feature = "agones-informational")]
+        let source_keep_alive = head.extensions.get::<crate::ext::SourceResponse>().map(|source| !source.close);
+        #[cfg(not(feature = "agones-informational"))]
+        let source_keep_alive: Option<bool> = None;
+        if let Some(keep_alive) = source_keep_alive {
+            // The source has already made its 1.0/1.1 Connection decision,
+            // including extraHeader fields absent from this metadata map.
+            // Preserve explicit native shutdown, rather than re-applying
+            // Hyper's independent response-header keep-alive heuristic.
+            head.version = self.state.version;
+            #[cfg(feature = "agones-informational")]
+            if keep_alive && !self.state.source_keep_alive_disabled && !self.state.is_read_closed() {
+                self.state.keep_alive = KA::Busy;
+            }
+            #[cfg(not(feature = "agones-informational"))]
+            let _ = keep_alive;
+        } else { self.enforce_version(&mut head); }
 
         #[cfg(feature = "agones-informational")]
         {
             self.state.source_trailers = head.extensions.remove::<crate::ext::SourceTrailers>();
+            self.state.source_end = head.extensions.get::<crate::ext::SourceResponse>().and_then(|source| source.end.clone());
         }
 
         let buf = self.io.headers_buf();
@@ -944,6 +980,8 @@ where
 
     #[cfg(feature = "server")]
     pub(crate) fn disable_keep_alive(&mut self) {
+        #[cfg(feature = "agones-informational")]
+        { self.state.source_keep_alive_disabled = true; }
         if self.state.is_idle() {
             trace!("disable_keep_alive; closing idle connection");
             self.state.close();
@@ -1031,6 +1069,10 @@ struct State {
     allow_trailer_fields: bool,
     #[cfg(feature = "agones-informational")]
     source_trailers: Option<crate::ext::SourceTrailers>,
+    #[cfg(feature = "agones-informational")]
+    source_end: Option<crate::ext::SourceResponseEnd>,
+    #[cfg(feature = "agones-informational")]
+    source_keep_alive_disabled: bool,
 }
 
 #[derive(Debug)]

@@ -98,11 +98,13 @@
         "rust-support/agones/src/utility_http_status.rs",
         "rust-support/agones/vendor/hyper-1.12.0",
         "rust-support/agones/src/utility_http_trailers.rs",
-        "rust-support/agones/src/utility_http_listener.rs"
+        "rust-support/agones/src/utility_http_listener.rs",
+        "rust-support/agones/src/utility_http_body.rs",
+        "rust-support/agones/src/utility_http_framing.rs"
       ],
       "detail_record": "verification/agones/roadmap-M0003-http-authoring.json",
       "disposition": "AUTHORED_UNVERIFIED_PARTIAL_NO_HTTP_PARITY_OR_PARENT_ACCEPTANCE_CREDIT",
-      "existing_effects_reused": "SourceMux owns handler data. CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/date/diagnostic/delay effects. Each listener owns AcceptBackoff; each connection owns its protocol child scope, weak executor and graceful-close token. Each request writer owns declarations, bounded response frames and one single-publication SourceTrailers packet; existing native drivers consume the packet/frames and own informational acknowledgements. No provider registry or alternate lifecycle manager.",
+      "existing_effects_reused": "CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/clock/diagnostic/delay effects. SourceMux owns route data; each listener owns AcceptBackoff. Each connection owns protocol children, a weak executor, graceful-close and physical-disposal cancellation. Each request has one shared RequestBody and one writer/count/header owner. The existing request phase publishes SourceResponseEnd after cleanup; existing native H1/H2 drivers consume immutable header/framing/trailer data and bounded body/control messages. No competing manager or provider registry.",
       "native_source_adoption": "verification/agones/roadmap-M0003-hyper-adoption.json",
       "source_ids": [
         "agones:pkg/util/httpserver/server.go",
@@ -111,7 +113,7 @@
         "agones:pkg/util/apiserver/apiserver.go",
         "agones:pkg/util/webhooks/webhooks.go"
       ],
-      "work_base_commit": "078d8918004248587c3878202c26b8836ba6c179"
+      "work_base_commit": "40ef5be55ded11de249314733c82e928e579f62e"
     }
   ],
   "milestone_id": "M0003",

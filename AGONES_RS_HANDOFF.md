@@ -1,6 +1,6 @@
 # Agones-rs and CPG handoff
 
-Canonical ledger: `AGONES_RS_STATE.json`, revision 335. Native Goal:
+Canonical ledger: `AGONES_RS_STATE.json`, revision 336. Native Goal:
 `01a17928-8551-7701-8497-5333c680f283`, ACTIVE, no budget. Current work made
 concrete source progress; no wait or blocking condition is live.
 Authority: combined attachment/roadmap SHA
@@ -33,16 +33,16 @@ compilation, parity or assurance. `runtime.NewServerMux` now has an actual
 authored factory/codec/mux consumer, still PARTIAL and UNVERIFIED. The named
 missing-body list is empty; required behavior/platform gaps remain open.
 
-Immediate next action: continue M0003 MANUAL without a route switch. Finish HTTP
-normal header encoding/alias/byte-URL/framing/partial-write/flush/reset/error
-profiles; listener named-service/bind/native error-origin/display and independent
-close/shutdown; selected fsnotify v1.4.7 failure/close/race/BSD timed-read/stale-fd;
-and every existing gateway/config/queue/logging/CRD/features/admission/body gap.
-Use the pinned utility's gopkg.in/fsnotify.v1 1.4.7 behavior, not the unselected
-edited Go fsnotify 1.9 import. HTTP details remain in roadmap-M0003-http-authoring
-and roadmap-M0003-hyper-adoption JSON records under verification/agones.
-Trailer I/O, H2 end-of-stream and per-connection graceful-close wiring, plus
-plain/TLS syscall-temporary accept backoff are authored, uncompiled/unexecuted.
+Immediate next action: continue M0003 MANUAL without a route switch. Finish
+mutable request-field/method/body and header-slice alias/non-UTF8 representations;
+HTTP parser/rejection/1.0 keep-alive/upgrade/partial-I/O/flush/reset/abort/Continue
+and native schedules; listener service-name/bind/error-origin/display/shutdown;
+selected fsnotify v1.4.7 failure/close/race/BSD timed-read/stale-fd; and all existing
+gateway/config/queue/logging/CRD/features/admission/body gaps. Keep the actual
+pinned gopkg.in/fsnotify.v1 1.4.7 utility binding. HTTP/native details remain in
+roadmap-M0003-http-authoring and roadmap-M0003-hyper-adoption JSON records.
+Shared body discard/Close, H1 fields/framing/count/completion/reuse are authored,
+uncompiled and unexecuted. No source mutation/native-profile credit is inferred.
 
 Existing util package registration is `rust-support/agones/src/utility_lib.rs`.
 Literal mirror paths are under agones-rs/pkg/util; Rust-only effect/wiring files
@@ -248,6 +248,35 @@ sleep effect. The syscall-wrapped Go Errno rule retains Windows' synthetic
 Errno distinction; source direct-Errno/poll/init origin and native error display,
 listener-close/shutdown timing and named-service resolution remain open.
 
+Shared-body continuation: utility_http_body.rs owns Incoming, bounded pending
+frame data, remaining bytes, H1 underlying/Continue-reader EOF and closed state,
+early Close and trailers. H1 header preparation uses the 256KB discard bound and
+limit+1 rule; explicit Close has its own strict-greater bound and early-close
+state. H2 Close wakes a blocked reader before taking its mutex. Existing
+FourZeroFour awaits this owner on its successful-read/response path. OPTIONS
+also limits each source read to its remaining 4KB allowance plus one byte.
+
+utility_http_framing.rs lives inside the existing response owner. It authors
+H1 inferred lengths, TE/CL/identity/chunking, no-body/HEAD, 1.0 keep-alive/close,
+Continue, full-duplex opt-in, Date/sniff/presence and protocol-switch Connection
+decisions. Native SourceResponse carries immutable fields/framing; handler-map
+fields and extraHeader fields retain separate source order. Source chunks use
+lowercase hex. Native source length mode does not truncate/count again or mark
+the handler complete just because its declared length was reached.
+
+SourceRequestPhase publishes SourceResponseEnd only after the handler and body
+cleanup. Existing H1 driver/reuse state waits, including no-body replies, then
+uses the writer's attempted-count/close/error and body's early-close result.
+Emergency phase Drop publishes close. Physical connection disposal cancels its
+request children; ordinary H1 no-body disposal does not prematurely cancel an
+active handler. H2 keeps independent stream disposal. No new task manager.
+Source heads bypass the separate native metadata keep-alive heuristic while
+preserving explicit shutdown; close-delimited EOF also waits for the source
+handler/body-cleanup phase.
+These are source paths only: mutable request/header aliases, parser, 1.0 native
+keep-alive, upgrade, exact close/abort/Continue/flush/error and all native
+schedules remain open in the authoritative HTTP record.
+
 Gateway authoring adds `utility_gateway.rs`, `utility_gateway_json.rs`,
 `utility_gateway_wire.rs` and `utility_gateway_wkt.rs`. Actual path:
 NewServerMux -> CGP factory -> GatewayContext/GatewayState -> compiled generator
@@ -318,9 +347,9 @@ One read command attempted `go env GOROOT` for a source path; stdout was empty
 and its dependent file read failed. No project/compile/fixture/semantic assurance
 ran. Do not reinterpret source reading or identity bookkeeping as verification.
 
-M0003 entry usage 656008. Raw progress observations 1..18 retain 752278, 781155,
+M0003 entry usage 656008. Raw progress observations 1..20 retain 752278, 781155,
 905410, 1069792, 1095960, 1289081, 1320264, 1568425, 1577646, 1691561, 1702165,
-1783942, 1794616, 2082051, 2115290, 2286210, 2350385, 2469680. Still NO completed M0003 cost comparison or
+1783942, 1794616, 2082051, 2115290, 2286210, 2350385, 2469680, 2482023, 2579579. Still NO completed M0003 cost comparison or
 route switch. Context/read/accounting is charged once, no credit inference.
 Preserve M0001/M0002 original forecasts/comparisons and shared overhead buckets.
 M0002 observed work was 482306; shared completion/switch was 20030. The explicit
