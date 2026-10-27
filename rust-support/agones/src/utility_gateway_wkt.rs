@@ -1,5 +1,7 @@
 //! Text-shaped protobuf well-known types in the source JSONPb profile.
 //! Source: vendored protojson/well_known_types.go and internal/strs/strings.go.
+// Timestamp parsing also adapts Go time/format*. Copyright The Go Authors.
+// BSD-3-Clause; see ../GO-LICENSE.
 use prost_reflect::{DynamicMessage, ReflectMessage, Value};
 use crate::errors::{BoxError, Errors};
 
@@ -50,19 +52,9 @@ pub(crate) fn unmarshal_text(message: &mut DynamicMessage, text: &str) -> Result
             set_seconds_nanos(message, seconds, nanos);
         }
         "google.protobuf.Timestamp" => {
-            if text.get(10..11) != Some("T") || text.ends_with('z') {
-                return Err(ERRORS.New("invalid Timestamp RFC3339 separator"));
-            }
-            let time = chrono::DateTime::parse_from_rfc3339(text)?;
-            let seconds = time.timestamp();
+            let (seconds, nanos) = parse_timestamp(text)?;
             if !(MIN_TIMESTAMP_SECONDS..=MAX_TIMESTAMP_SECONDS).contains(&seconds) { return Err(ERRORS.New("Timestamp value out of range")); }
-            // chrono can parse leap seconds; Go's RFC3339Nano parser rejects them.
-            let nanos = time.timestamp_subsec_nanos();
-            if nanos > 999_999_999 { return Err(ERRORS.New("invalid Timestamp leap second")); }
-            if let (Some(fraction), Some(zone)) = (text.rfind('.'), text.rfind(['Z', '-', '+'])) {
-                if zone >= fraction && zone - fraction > 10 { return Err(ERRORS.New("invalid Timestamp fractional precision")); }
-            }
-            set_seconds_nanos(message, seconds, nanos as i32);
+            set_seconds_nanos(message, seconds, nanos);
         }
         "google.protobuf.FieldMask" => {
             let text = text.trim();
@@ -117,6 +109,62 @@ fn parse_duration(text: &str) -> Result<(i64, i32), BoxError> {
         for _ in fraction.len()..9 { nanos *= 10; }
     }
     Ok(if negative { (-seconds, -nanos) } else { (seconds, nanos) })
+}
+fn parse_timestamp(text: &str) -> Result<(i64, i32), BoxError> {
+    // Go 1.26.5 time.Parse first tries parseRFC3339 and then its layout parser.
+    // The fallback accepts a one-digit hour, a comma fraction, and offsets of
+    // exactly 24 hours or 60 minutes. chrono is used only for Gregorian dates.
+    let invalid = || ERRORS.New(format!("invalid Timestamp value {text:?}"));
+    let input = text.as_bytes(); let mut position = 0;
+    fn digits(input: &[u8], position: &mut usize, minimum: usize, maximum: usize) -> Option<u32> {
+        let start = *position; let mut value = 0;
+        while *position < input.len() && *position - start < maximum && input[*position].is_ascii_digit() {
+            value = value * 10 + u32::from(input[*position] - b'0'); *position += 1;
+        }
+        (*position - start >= minimum).then_some(value)
+    }
+    fn literal(input: &[u8], position: &mut usize, byte: u8) -> bool {
+        if input.get(*position) != Some(&byte) { return false; }
+        *position += 1; true
+    }
+    let year = digits(input, &mut position, 4, 4).ok_or_else(invalid)?;
+    if !literal(input, &mut position, b'-') { return Err(invalid()); }
+    let month = digits(input, &mut position, 2, 2).ok_or_else(invalid)?;
+    if !literal(input, &mut position, b'-') { return Err(invalid()); }
+    let day = digits(input, &mut position, 2, 2).ok_or_else(invalid)?;
+    if !literal(input, &mut position, b'T') { return Err(invalid()); }
+    let hour = digits(input, &mut position, 1, 2).ok_or_else(invalid)?;
+    if !literal(input, &mut position, b':') { return Err(invalid()); }
+    let minute = digits(input, &mut position, 2, 2).ok_or_else(invalid)?;
+    if !literal(input, &mut position, b':') { return Err(invalid()); }
+    let second = digits(input, &mut position, 2, 2).ok_or_else(invalid)?;
+    let date = chrono::NaiveDate::from_ymd_opt(year as i32, month, day).ok_or_else(invalid)?;
+    let time = date.and_hms_opt(hour, minute, second).ok_or_else(invalid)?;
+    let mut nanos = 0_i32;
+    if input.get(position).is_some_and(|byte| matches!(byte, b'.' | b',')) {
+        let period = input[position] == b'.'; position += 1;
+        let start = position;
+        while let Some(byte) = input.get(position).filter(|byte| byte.is_ascii_digit()) {
+            if position - start < 9 { nanos = nanos * 10 + i32::from(*byte - b'0'); }
+            position += 1;
+        }
+        let count = position - start;
+        if count == 0 { return Err(invalid()); }
+        if period && count > 9 { return Err(ERRORS.New("invalid Timestamp fractional precision")); }
+        for _ in count..9 { nanos *= 10; }
+    }
+    let offset = if literal(input, &mut position, b'Z') { 0_i64 } else {
+        let sign = *input.get(position).ok_or_else(invalid)?; position += 1;
+        if sign != b'+' && sign != b'-' { return Err(invalid()); }
+        let hours = digits(input, &mut position, 2, 2).ok_or_else(invalid)?;
+        if !literal(input, &mut position, b':') { return Err(invalid()); }
+        let minutes = digits(input, &mut position, 2, 2).ok_or_else(invalid)?;
+        if hours > 24 || minutes > 60 { return Err(invalid()); }
+        let value = i64::from(hours * 60 + minutes) * 60;
+        if sign == b'-' { -value } else { value }
+    };
+    if position != input.len() { return Err(invalid()); }
+    Ok((time.and_utc().timestamp() - offset, nanos))
 }
 fn valid_full_name(name: &str) -> bool {
     name.split('.').all(|part| {

@@ -11,19 +11,32 @@
     "Duration grammar/range/sign/fraction policy, FieldMask roundtrip/path validation and Timestamp UTC/range/fraction policy",
     "Struct/ListValue/Value/wrappers with recursive protobuf JSON, required-field checks outside Any wire payloads",
     "decoder read-ahead between successive JSON values, unary no-delimiter output and streaming result/error/newline framing",
-    "request cancellation token ownership across request return, body/client drop and pending-head service future disposal"
+    "request cancellation token ownership across request return, body/client drop and pending-head service future disposal",
+    "Source RFC3339Nano fallback grammar: one-digit hours, comma fractions/truncation, exact 24-hour/60-minute offsets, Gregorian validation, leap rejection, UTC timestamp range and dot-fraction cap",
+    "Go base64 quantum decoder preserves original byte offsets/CRLF handling/nonzero tail bits; ProtoJSON selects raw/padded before CRLF removal; non-proto byte decoding uses padded standard alphabet",
+    "ProtoJSON integer normalization zero shortcut, signed 32-bit exponent bound, original integer/fraction digit counts and negative-zero unsigned acceptance; Go NaN payload bits retained",
+    "Statically typed GatewayDecodeTarget for protobuf/primitive/f32/f64/interface, GatewayPointer, GatewaySlice, GatewayBytes, GatewayEnum and GatewayMap; immutable descriptor factories allocate data without runtime service/provider lookup",
+    "Non-proto source map allocation/merge/duplicate-name collapse/unspecified traversal, non-reflexive float-key equality and source supported/unsupported key-kind distinction",
+    "Source base-0 signed/unsigned integer keys, boolean key spellings, decimal/hex float key syntax, underscores, guard/sticky bits and ties-to-even rounding",
+    "Non-proto enum symbolic rejection, float64-to-int32 explicit source numeric profile; null/empty/EOF/pre-allocation and partial container mutations are distinct",
+    "Shared first-value framing with scalar lookahead/retained following bytes, container immediate completion, max depth, UnexpectedEOF and sticky framing/body errors; semantic decode errors permit later values",
+    "EnumTargetFactory requires explicit EnumCastProfile: legacy x86 CVTT, Go 1.27 AMD64 ConvertHash saturating branch, or ARM64 FCVTZS. It never infers the source profile from the Rust build host."
   ],
   "authored_payload_sha256": {
     "Cargo.lock": "ec4f34f68b46f16a0ab24823b7d84796e82f99bfd83312ff804d4f129931eaa8",
     "agones-rs/pkg/util/runtime/runtime.rs": "cbdc9ac8f2b51d6c1cfc1af03b69a41cd4e094f01f35ab6f9d5660c85c07bcd9",
     "crates/util/Cargo.toml": "11fd2118177a05dd6bf101cd20b3691be00e6bd8e8a410ab993e64cd7b71d271",
+    "rust-support/agones/GO-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
     "rust-support/agones/src/utility_declarations.rs": "365cc58dbe05295b17e70bd683860347ea0eaf3ba3fa3b47c98b971dec7a1977",
     "rust-support/agones/src/utility_gateway.rs": "40fe3710855a95c776f94d296b3871016ddd37af60572cc7d242f7f33678b610",
-    "rust-support/agones/src/utility_gateway_json.rs": "57a8419b8768d14d877f56c47793a0b732d85b66501a44c7220411bbc227f341",
+    "rust-support/agones/src/utility_gateway_framing.rs": "566dea98d8a70c612ffb24c151e63d5cbaa68590df6434825da273177005f6f9",
+    "rust-support/agones/src/utility_gateway_json.rs": "8ed085b26f7f9104d48c2751ae872904028472fc9c22d2c17837a828f561d4ff",
+    "rust-support/agones/src/utility_gateway_scalar.rs": "18c20da7322147fe5db79503e11040d745c4a8563580aed6b28cffd3dbab7f19",
+    "rust-support/agones/src/utility_gateway_targets.rs": "3d3d8607f17d4db8f9c6d70dc46793d3d35615e4d887a3f236ee57cda57d8f61",
     "rust-support/agones/src/utility_gateway_wire.rs": "234e6de84955c4240f153c0dece7a5594733562325bf7113998a794b9af0b113",
-    "rust-support/agones/src/utility_gateway_wkt.rs": "8d32866d36f1e0b4d88a6bd622279e898af99a875c2a03f9d359fc7f8cf4e2f4",
+    "rust-support/agones/src/utility_gateway_wkt.rs": "4cb0f6fa00d5c553911e8eaaca563d17112cfd5123a669c2e180eb02142ed42b",
     "rust-support/agones/src/utility_http.rs": "a1e40920dc9c0480ba0ad088aa49badac5fc23c606c39594accc404e3d0ce31b",
-    "rust-support/agones/src/utility_lib.rs": "fbc9fcbcda75f29227da41924d62150c8144a94d7aa346d63422cff9847e0d89"
+    "rust-support/agones/src/utility_lib.rs": "145614145fd542b2651e8fa73e652e48024c512ac9d389997c0942cd4b2a3f3d"
   },
   "call_path": [
     "UtilityRuntimeProviders -> CreateNativeSourceServerMux",
@@ -34,6 +47,25 @@
     "GatewayDispatcher -> request decoder / source callback -> GatewayResponseWriter -> actual ResponseWriter"
   ],
   "completion_claim": "NewServerMux now has an actual authored factory/codec/dispatch/HTTP consumer path. The milestone stays partial and unverified; no compilation, execution, source parity or generated caller adoption credit.",
+  "continuations": [
+    {
+      "authored_operations": [
+        "Source RFC3339Nano fallback grammar: one-digit hours, comma fractions/truncation, exact 24-hour/60-minute offsets, Gregorian validation, leap rejection, UTC timestamp range and dot-fraction cap",
+        "Go base64 quantum decoder preserves original byte offsets/CRLF handling/nonzero tail bits; ProtoJSON selects raw/padded before CRLF removal; non-proto byte decoding uses padded standard alphabet",
+        "ProtoJSON integer normalization zero shortcut, signed 32-bit exponent bound, original integer/fraction digit counts and negative-zero unsigned acceptance; Go NaN payload bits retained",
+        "Statically typed GatewayDecodeTarget for protobuf/primitive/f32/f64/interface, GatewayPointer, GatewaySlice, GatewayBytes, GatewayEnum and GatewayMap; immutable descriptor factories allocate data without runtime service/provider lookup",
+        "Non-proto source map allocation/merge/duplicate-name collapse/unspecified traversal, non-reflexive float-key equality and source supported/unsupported key-kind distinction",
+        "Source base-0 signed/unsigned integer keys, boolean key spellings, decimal/hex float key syntax, underscores, guard/sticky bits and ties-to-even rounding",
+        "Non-proto enum symbolic rejection, float64-to-int32 explicit source numeric profile; null/empty/EOF/pre-allocation and partial container mutations are distinct",
+        "Shared first-value framing with scalar lookahead/retained following bytes, container immediate completion, max depth, UnexpectedEOF and sticky framing/body errors; semantic decode errors permit later values",
+        "EnumTargetFactory requires explicit EnumCastProfile: legacy x86 CVTT, Go 1.27 AMD64 ConvertHash saturating branch, or ARM64 FCVTZS. It never infers the source profile from the Rust build host."
+      ],
+      "project_executable_invocations": 0,
+      "timestamp": "2026-10-27T00:33:14.813180+00:00",
+      "verification": "NOT_STARTED",
+      "work_base_commit": "b8fc32eada38f06752e4832a973c1607f3cfdfab"
+    }
+  ],
   "dependency": {
     "adoption": "One manually authored root lock package, with existing once_cell, prost 0.13.5 and prost-types 0.13.5. No resolver/build/download hook ran. Reflection and wire decoding are reused; the optional prost-reflect serde layer is not enabled.",
     "archive_sha256": "7b5edd582b62f5cde844716e66d92565d7faf7ab1445c8cebce6e00fba83ddb2",
@@ -132,10 +164,10 @@
   ],
   "record_kind": "SOURCE_BOUND_PARTIAL_NATIVE_GATEWAY_AUTHORING",
   "remaining": [
-    "Complete required lexical/diagnostic profiles: float formatting and integer exponent limits, exact Go base64 CR/LF/padding/trailing-bit acceptance, JSON duplicate/error position/invalid-UTF8/surrogate handling and partial target state after malformed containers. Current Rust errors are not asserted equal to Go diagnostics.",
-    "Timestamp uses existing chrono with explicit proto range/nanos/leap-second/precision/case constraints. Reconcile the full Go RFC3339Nano fallback grammar, including comma fractions, one-digit hours and unusual offsets; no equivalence claim from native RFC3339 parsing.",
-    "Reconcile Any embedded wire recursion with prost-reflect decoding limits, required-field error traversal/order, proto2 group/extension/MessageSet profiles and deterministic extension/oneof ordering. Native Any map keys now have explicit deterministic emission; that alone is not full source wire-parity credit.",
-    "Finish the source JSONPb non-proto primitive/pointer/slice/map decoding interface and the full category-specific formatting/alias/nil profiles. GatewayValue explicitly represents supported source categories; it is not arbitrary Go interface/reflection compatibility.",
+    "Complete exact JSON/ProtoJSON diagnostics, byte offsets/type identity, invalid UTF8/surrogate replacement versus rejection, custom JSON/Text unmarshaler/named-type model adapters and all partial-target error states. RawObject currently materializes a message object before field application; it is not full incremental Go protojson error-state parity.",
+    "Numeric and timestamp/base64 grammar branches now have source-derived implementations. Native decimal float conversion, float output rendering and source Go/Rust target-profile rounding/NaN/negative-zero/bounds still need exact profile reconciliation and later assurance; no successful run or proof is claimed.",
+    "Reconcile Any embedded wire recursion with prost-reflect decoding limits, required-field error traversal/order, proto2 group/extension/MessageSet profiles and deterministic extension/oneof ordering. Native Any map keys have explicit deterministic emission; that alone is not full source wire-parity credit.",
+    "Typed non-proto decoders are authored and consumed by GatewayDecoder::decode / GatewayJsonPb::unmarshal_into. Finish required named model/custom serde and source panic/error interfaces without inventing a general Go object layer. EnumTargetFactory now requires a source numeric profile explicitly; source-owner integration must bind it to the exact Go version/target/ConvertHash setting. No Rust-host fallback or source-profile credit is inferred. Source JSON rendering/alias/nil details remain explicit rather than inferred from serde success.",
     "GatewayPattern consumes compiled generator opcodes in default Legacy unescaping mode. HandlePath parser and nondefault configurable gateway APIs are not implemented by this fixed factory. Reconcile HTTP byte path/RawPath/CONNECT/escape, method override Unicode, map iteration choice and form parse/error/partial-state profiles.",
     "Forwarded gRPC server headers/trailers, incoming context/header matching, deadlines/status wrapping/response_body selection and actual SDK/allocator generated request mappings and handlers remain with source-owned M0025/M0027 integration. The real raw gateway callback can already use ResponseWriter; this library registration is not those callers adoption.",
     "Finish required shared HTTP/TLS/fswatch/signal/platform/error/logging/queue/configuration profiles in the M0003 partial map. All implementation and generated outputs across both routes remain required before any assurance."
@@ -217,6 +249,210 @@
     }
   ],
   "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "source_standard_library_profiles": {
+    "acquisition_note": "The initial Go 1.26.5 src/strconv/atoi.go lookup returned 404 because this release keeps numeric parsing under internal/strconv; read public strconv/number.go plus the actual internal sources. A Go 1.27.1 internal/strconv/math.go request was unavailable; no missing source was treated as authored or verified.",
+    "enum_cast_source": "Read Go 1.27.1 ssa _gen/386.rules, AMD64.rules and ARM64.rules. AMD64 has both ConvertHash saturation and legacy CVTT branches; encode both as immutable data profiles and require explicit source-owner selection. No compiler or instruction probe ran.",
+    "historical_tool_profile": "Existing verification/agones/sdk-version-provenance.json and go-quote-provenance.json name go1.27.1-X:nodwarf5 linux/amd64. They are historical input, not current assurance credit. Go 1.27.1 tagged source was also read; affected grammar/quantum/framing source algorithms retain the relevant branches. Decimal conversion internals differ and still require post-gate bit-level assurance.",
+    "language_minimum": "go.mod requires Go 1.26.5; source acquired by immutable release tag, no compiler installed or run.",
+    "license": {
+      "license": "BSD-3-Clause",
+      "path": "rust-support/agones/GO-LICENSE",
+      "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+      "source": "https://raw.githubusercontent.com/golang/go/go1.26.5/LICENSE"
+    },
+    "profiles": {
+      "go1.26.5": [
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.26.5/LICENSE",
+          "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+          "size": 1453,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/LICENSE"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/encoding/base64/base64.go",
+          "sha256": "e6437c7716ecd1ae91c9d10037362cab186e5873a6365b713e2d8c57d8fc32fc",
+          "size": 18294,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/encoding/base64/base64.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/encoding/json/decode.go",
+          "sha256": "a91535f18f9a2c8380448b1c84c4c2017dbe3d530a10faf8babf03494042da48",
+          "size": 36010,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/encoding/json/decode.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/encoding/json/scanner.go",
+          "sha256": "2b16dd215274dfa8e0806b53cca144684d5b9c8a02319cf5ce10120c50e6eef2",
+          "size": 16569,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/encoding/json/scanner.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/encoding/json/stream.go",
+          "sha256": "bb26b2442db6a686fc7f823ea9cc89babe26ac988ec7d8caf4a157aeb60d92f2",
+          "size": 13258,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/encoding/json/stream.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/internal/strconv/atob.go",
+          "sha256": "6938f9a33a3daf57d7bada9b6c38b4cc26487c3e613c42c3512a055bed10d6f9",
+          "size": 954,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/internal/strconv/atob.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/internal/strconv/atof.go",
+          "sha256": "2c2205ccab8626b623a188144a7dcaf202ece77002a27a2cd6b0aaf5a61669a5",
+          "size": 15975,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/internal/strconv/atof.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/internal/strconv/atoi.go",
+          "sha256": "eb5ad640903abe9e8c8b7fbce8dd3487176dbeb43e8b8b4efa6e73ecb5207ddc",
+          "size": 6600,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/internal/strconv/atoi.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/internal/strconv/deps.go",
+          "sha256": "052459732bddd00d8584351fb6a906566fc664ea40cbb125a6084c266ec32238",
+          "size": 866,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/internal/strconv/deps.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/internal/strconv/math.go",
+          "sha256": "88db7fb281cdfab21f657eab8b37af131f23d822977c7e71bc753ffc5aec0145",
+          "size": 6759,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/internal/strconv/math.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/math/bits.go",
+          "sha256": "eaf5a27831d55da48238beb6a86b08e8ce209cd36a535a24a457f7546ca031f7",
+          "size": 1933,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/math/bits.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/strconv/number.go",
+          "sha256": "dda43e8c91d95f9dea0c46b2fec6637e5520cae099e40c5965dca0e41bbaab9e",
+          "size": 11360,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/strconv/number.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/time/format.go",
+          "sha256": "f288c56858ab25828551681778f006b591ed140fc12e60122b6a9a7e35b07eb7",
+          "size": 50739,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/time/format.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/time/format_rfc3339.go",
+          "sha256": "14b2a58fa295cca1a4f99467f5a5059418ed266a2298316124af97ffa014f271",
+          "size": 5809,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/time/format_rfc3339.go"
+        }
+      ],
+      "go1.27.1": [
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.27.1/LICENSE",
+          "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+          "size": 1453,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/LICENSE"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/encoding/base64/base64.go",
+          "sha256": "15e67707bc3f0925f7f56bd4002106681c6b64ba5bf553b4d8cc0bb8eca71aa5",
+          "size": 18318,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/encoding/base64/base64.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/encoding/json/decode.go",
+          "sha256": "1632161a34c8286722716a48ba0b5e0c3d117a2e017e79ace676403808a16e6e",
+          "size": 36122,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/encoding/json/decode.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/encoding/json/scanner.go",
+          "sha256": "2b16dd215274dfa8e0806b53cca144684d5b9c8a02319cf5ce10120c50e6eef2",
+          "size": 16569,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/encoding/json/scanner.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/encoding/json/stream.go",
+          "sha256": "065501364e4954cf1c8f1887900248d4c0983593b8c058b2fe7997d9635b793d",
+          "size": 13862,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/encoding/json/stream.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/internal/strconv/atob.go",
+          "sha256": "6938f9a33a3daf57d7bada9b6c38b4cc26487c3e613c42c3512a055bed10d6f9",
+          "size": 954,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/internal/strconv/atob.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/internal/strconv/atof.go",
+          "sha256": "b3322257fd15836b2ed9355599a767915382c040665391e01a6af35548b9b643",
+          "size": 16734,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/internal/strconv/atof.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/internal/strconv/atoi.go",
+          "sha256": "bd69756b79c2f007ce7900bea400051f9f9da600c9c6bad656e46900331663d8",
+          "size": 6629,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/internal/strconv/atoi.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/internal/strconv/deps.go",
+          "sha256": "052459732bddd00d8584351fb6a906566fc664ea40cbb125a6084c266ec32238",
+          "size": 866,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/internal/strconv/deps.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/math/bits.go",
+          "sha256": "eaf5a27831d55da48238beb6a86b08e8ce209cd36a535a24a457f7546ca031f7",
+          "size": 1933,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/math/bits.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/strconv/number.go",
+          "sha256": "dda43e8c91d95f9dea0c46b2fec6637e5520cae099e40c5965dca0e41bbaab9e",
+          "size": 11360,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/strconv/number.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/time/format.go",
+          "sha256": "f2b75d1440a46231523d3be86925b52c59c5f23657658e24514f2daa588e575d",
+          "size": 50854,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/time/format.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/time/format_rfc3339.go",
+          "sha256": "14b2a58fa295cca1a4f99467f5a5059418ed266a2298316124af97ffa014f271",
+          "size": 5809,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/time/format_rfc3339.go"
+        },
+        {
+          "acquisition_error": "HTTP Error 404: Not Found",
+          "relative_path": "src/internal/strconv/math.go",
+          "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/internal/strconv/math.go"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/cmd/compile/internal/ssa/_gen/386.rules",
+          "sha256": "3e58af68581368b798deed101d2d543294e918ff2b77b2b5cbe252d3a6f6618f",
+          "size": 44425,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/cmd/compile/internal/ssa/_gen/386.rules"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/cmd/compile/internal/ssa/_gen/AMD64.rules",
+          "sha256": "edca1a19c2f294b65810795c68c69dd25f987cd2b531e64323b092e049d183eb",
+          "size": 120020,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/cmd/compile/internal/ssa/_gen/AMD64.rules"
+        },
+        {
+          "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/cmd/compile/internal/ssa/_gen/ARM64.rules",
+          "sha256": "f74551a7fecc831dd77823c33326da934f409307d7a52c005fc2273c49ad4414",
+          "size": 107610,
+          "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/cmd/compile/internal/ssa/_gen/ARM64.rules"
+        }
+      ]
+    },
+    "source_only_policy": "Read source files and compare their identities/edits to choose implementation branches; no Go/Rust execution, compiler/semantic/API probe, fixture or oracle/differential assurance."
+  },
   "stage": "IMPLEMENTING",
   "verification": "NOT_STARTED",
   "work_base_commit": "54cb162253be6ae403303dc038d3e01449b31056"

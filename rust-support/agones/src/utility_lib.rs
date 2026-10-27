@@ -27,6 +27,9 @@ pub mod utility_gateway;
 pub mod utility_gateway_json;
 mod utility_gateway_wire;
 mod utility_gateway_wkt;
+pub mod utility_gateway_scalar;
+pub mod utility_gateway_targets;
+mod utility_gateway_framing;
 
 /// Original module path retained as an alias of the literal source hierarchy.
 pub mod pkg { pub use crate::source as util; }

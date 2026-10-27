@@ -818,7 +818,7 @@
           "owned_entry_count": 14,
           "partial_adoption_record": "verification/agones/roadmap-M0003-partial-map.json",
           "prerequisites": "M0001/M0002 authored implementation complete; global phase remains IMPLEMENTATION_ONLY",
-          "progress_usage_observation": "verification/agones/roadmap-M0003-progress-usage-8.json",
+          "progress_usage_observation": "verification/agones/roadmap-M0003-progress-usage-10.json",
           "progress_usage_observations": [
             "verification/agones/roadmap-M0003-progress-usage-1.json",
             "verification/agones/roadmap-M0003-progress-usage-2.json",
@@ -827,7 +827,9 @@
             "verification/agones/roadmap-M0003-progress-usage-5.json",
             "verification/agones/roadmap-M0003-progress-usage-6.json",
             "verification/agones/roadmap-M0003-progress-usage-7.json",
-            "verification/agones/roadmap-M0003-progress-usage-8.json"
+            "verification/agones/roadmap-M0003-progress-usage-8.json",
+            "verification/agones/roadmap-M0003-progress-usage-9.json",
+            "verification/agones/roadmap-M0003-progress-usage-10.json"
           ],
           "reuse_adoption_record": "verification/agones/roadmap-M0003-reuse-adoption.json",
           "route": "MANUAL",
@@ -837,7 +839,7 @@
           "work_base_commit": "e2c1202f1de868a89dc7a444ce4700d7a771ee92"
         }
       },
-      "next_action": "Continue M0003 MANUAL, no route switch. NewServerMux now has a concrete CGP factory/compiled-pattern route/codec/HTTP consumer path, still AUTHORED_UNVERIFIED_PARTIAL. Finish the required source profiles in roadmap-M0003-gateway-authoring.json: non-proto decoder/value categories, Go timestamp/base64/lexical diagnostics, Any/proto2/wire and HTTP form/path/metadata boundaries. Then fill absent platform effects and reconcile all remaining M0003 partial-map gaps (HTTP/TLS/FS/signals/config/queue/logging/features/CRD/admission) with their actual source-owner callers. Preserve later M0025/M0027 generated handler/command adoption and M0017 queue telemetry scope. Gate stays CLOSED across BOTH routes; no project/verification/generator/CI execution.",
+      "next_action": "Continue M0003 MANUAL, no route switch. Implement the absent source signal/fswatch platform effects through their existing CGP lifecycle owners, then finish HTTP mux/path/redirect and shared utility source-profile/body reconciliation. Gateway typed primitive/pointer/container/enum/protobuf decoders, source scalar rules and first-value framing are now authored but unverified. Retain all required gateway JSON/ProtoJSON error/byte/partial-state/custom-model/decimal-rendering/Any/proto2/HTTP metadata gaps in the existing gateway receipt; bind EnumCastProfile to source tool/target during actual handler adoption. All M0003 partial-map gaps and full later M0017/M0025/M0027 caller/telemetry obligations remain required. Global BOTH-route gate CLOSED: no compiler/verification/project/generator/CI execution.",
       "objective": "AGONES_AND_CPG_COMBINED_ROADMAP",
       "objective_attachment": "/home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt",
       "objective_attachment_sha256": "a9b797fc624be04548c62e63a634bcc2cacab25c4d9f45af346148ba32c1baea",
@@ -885,9 +887,9 @@
   "goal": {
     "objective_attachment": "/home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt",
     "reported_usage": {
-      "observed_at": 1793059842,
-      "time_seconds": 25779,
-      "tokens": 1568425
+      "observed_at": 1793061335,
+      "time_seconds": 27272,
+      "tokens": 1691561
     },
     "status": "active",
     "thread_id": "01a17928-8551-7701-8497-5333c680f283",
@@ -895,8 +897,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 329,
-  "previous_sha256": "6151d1f517d56cdffa5d8b91503d33532a19864561b81257a95a9aa31fd68e2e",
+  "previous_revision": 330,
+  "previous_sha256": "0050394718462467f74911b4f973002848f2cf35948e5913cc3088b7d978046a",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -1600,7 +1602,7 @@
       "timestamp": "2026-10-21T09:42:01.132215+00:00"
     }
   ],
-  "revision": 330,
+  "revision": 331,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [

@@ -1,6 +1,6 @@
 # Agones-rs and CPG handoff
 
-Canonical ledger: `AGONES_RS_STATE.json`, revision 330. Native Goal:
+Canonical ledger: `AGONES_RS_STATE.json`, revision 331. Native Goal:
 `01a17928-8551-7701-8497-5333c680f283`, ACTIVE, no budget. Current work made
 concrete source progress; no wait or blocking condition is live.
 Authority: combined attachment/roadmap SHA
@@ -33,11 +33,12 @@ compilation, parity or assurance. `runtime.NewServerMux` now has an actual
 authored factory/codec/mux consumer, still PARTIAL and UNVERIFIED. The named
 missing-body list is empty; required behavior/platform gaps remain open.
 
-Immediate next action: finish the required gateway profiles recorded in
-`verification/agones/roadmap-M0003-gateway-authoring.json`: non-proto decoder
-categories, exact Go timestamp/base64/lexical/error and Any/proto2/wire behavior,
-HTTP form/path/metadata boundaries. Then fill absent platform effects and
-reconcile every remaining M0003 partial-map gap. Keep the cursor; no M4 switch.
+Immediate next action: implement absent source signal/fswatch platform effects
+through their existing CGP owners, then complete HTTP mux/path/redirect and all
+required M0003 body/profile gaps. Gateway typed decoder/scalar/framing branches
+are now authored. Preserve remaining JSON/ProtoJSON error/byte/partial-state/
+custom-model/decimal-rendering/Any/proto2/HTTP boundary gaps in the gateway
+receipt. Keep the same M0003 cursor; no M4 route switch.
 
 Existing util package registration is `rust-support/agones/src/utility_lib.rs`.
 Literal mirror paths are under agones-rs/pkg/util; Rust-only effect/wiring files
@@ -156,7 +157,8 @@ exact decimal/exponent parsing, bytes, unknown-field/enum-name discard, aliases
 and oneof duplicate checks. It retains previously decoded state when later
 fields fail. Any resolves through the message's linked schema pool and emits
 map keys deterministically in its wire payload. Duration and FieldMask use
-source-derived rules; Timestamp range/UTC/precision uses existing chrono.
+source-derived rules; Timestamp now has source-derived Go fallback grammar; chrono supplies Gregorian
+date arithmetic and canonical UTC formatting.
 Struct/ListValue/Value/wrappers and required-field checks are authored.
 Concrete HttpBody alone has the outbound raw override; inherited NewEncoder
 still writes JSON plus newline. Decoder retains read-ahead between values;
@@ -164,7 +166,36 @@ unary forwarding has no delimiter, streams use result/error plus newline.
 Request cancellation belongs to the existing HTTP request/body/pending-head
 owners and cancels on handler return/client disposal, independently of graceful
 server Shutdown. Required lexical, timestamp fallback, base64, diagnostic,
-proto2/Any recursion/order and non-proto decoder profiles remain incomplete.
+proto2/Any recursion/order, custom model/diagnostic and wire-rendering profiles
+remain incomplete; the typed non-proto decoder categories now have authored code.
+
+Typed input continuation adds utility_gateway_targets.rs, scalar.rs and
+framing.rs. GatewayJsonPb::unmarshal_into and GatewayDecoder::decode consume
+GatewayDecodeTarget for messages, primitives, floats, interface JSON, pointers,
+slices, bytes, enums and maps. Element factories are immutable schema/zero-value
+construction, not runtime effect-provider selection. Pointer/map preparation
+precedes reads. Source null-slice retention, empty replacement, map merge,
+last-duplicate raw map name, unspecified map traversal, non-reflexive float keys,
+byte temporary assignment and partial container progress are authored.
+Non-proto symbolic enums are rejected. EnumTargetFactory requires an explicit
+EnumCastProfile, including legacy CVTT, Go 1.27 AMD64 ConvertHash saturation and
+ARM64 FCVTZS; never infer the Go numeric profile from Rust's host architecture.
+Actual source tool/target/flag selection remains a handler-owner obligation.
+
+Timestamp parser now handles source one-digit hours, comma fractions and the
+24-hour/60-minute offset boundary. Base64 uses source quantum logic and original
+CR/LF/error-byte positions, selecting raw/padded before ignoring newlines.
+Proto integer normalization has the source zero shortcut and int32 exponent
+bound. Numeric key parsers include Go base prefixes/underscores and hex-float
+round-to-even; NaN payload bits are explicit. Shared framing retains scalar
+lookahead and following values; read errors are sticky, semantic decode errors
+allow later values, and the source JSON maximum depth is explicit.
+Go 1.26.5 minimum and Go 1.27.1 historical-tool source files were read by pinned
+tag; archive/URL/digest records retain both. No tool/compiler was installed or
+executed. Source identity/algorithm reading is not differential/runtime proof.
+Derived Go code retains BSD-3-Clause attribution in rust-support/agones/GO-LICENSE.
+RawObject still materializes an object before applying its protobuf fields;
+full incremental malformed-key/error mutation and diagnostics remain open.
 
 Full generated source descriptors/SDK/allocator path/query/body/RPC handlers,
 header/deadline/metadata/trailer/response_body integration and actual command
@@ -181,9 +212,9 @@ One read command attempted `go env GOROOT` for a source path; stdout was empty
 and its dependent file read failed. No project/compile/fixture/semantic assurance
 ran. Do not reinterpret source reading or identity bookkeeping as verification.
 
-M0003 entry usage 656008. Raw progress observations 1..8 retain 752278, 781155,
-905410, 1069792, 1095960, 1289081, 1320264, 1568425. Still NO completed M0003
-cost comparison or
+M0003 entry usage 656008. Raw progress observations 1..10 retain 752278, 781155,
+905410, 1069792, 1095960, 1289081, 1320264, 1568425, 1577646, 1691561. Still NO
+completed M0003 cost comparison or
 route switch. Context/read/accounting is charged once, no credit inference.
 Preserve M0001/M0002 original forecasts/comparisons and shared overhead buckets.
 M0002 observed work was 482306; shared completion/switch was 20030. The explicit

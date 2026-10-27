@@ -2,13 +2,15 @@
 //! Descriptor pools describe protobuf data; they are not effect/provider registries.
 //! Source: vendored grpc-gateway/runtime/marshal_jsonpb.go and protobuf/protojson.
 use std::{collections::{BTreeMap, HashSet}, fmt};
-use base64::{Engine, alphabet, engine::{DecodePaddingMode, GeneralPurpose, GeneralPurposeConfig}};
+use base64::Engine;
 use prost_reflect::{Cardinality, DynamicMessage, EnumDescriptor, ExtensionDescriptor,
     FieldDescriptor, Kind, MapKey, MessageDescriptor, ReflectMessage, Value};
 use serde::{Deserialize, Deserializer, Serialize, Serializer,
     de::{MapAccess, Visitor}, ser::{Error as _, SerializeMap, SerializeSeq}};
 use serde_json::value::RawValue;
 use crate::{errors::{BoxError, Errors}, utility_http::HttpRequest};
+use crate::utility_gateway_targets::GatewayDecodeTarget;
+use crate::utility_gateway_framing::{first_value, ReadFailure};
 
 const ERRORS: Errors = Errors::from_package("github.com/grpc-ecosystem/grpc-gateway/v2/runtime");
 const MAX_MESSAGE_DEPTH: usize = 10_000;
@@ -74,9 +76,12 @@ impl GatewayJsonPb {
     /// Like JSONPb.Unmarshal, Decode one RawMessage before resetting the proto.
     /// A syntax/EOF error in the outer JSON decoder leaves the target alone.
     pub fn unmarshal(&self, bytes: &[u8], target: &mut DynamicMessage) -> Result<(), BoxError> {
-        let mut values = serde_json::Deserializer::from_slice(bytes).into_iter::<Box<RawValue>>();
-        let raw = values.next().transpose()?.ok_or_else(|| ERRORS.New("EOF"))?;
-        self.unmarshal_raw(&raw, target)
+        self.unmarshal_into(bytes, target)
+    }
+    pub fn unmarshal_into<T: GatewayDecodeTarget + ?Sized>(&self, bytes: &[u8], target: &mut T) -> Result<(), BoxError> {
+        target.prepare_gateway_decode()?;
+        let (raw, _) = first_value(bytes, true)?.ok_or_else(|| ERRORS.New("EOF"))?;
+        target.decode_gateway_raw(&raw)
     }
     pub fn unmarshal_raw(&self, raw: &RawValue, target: &mut DynamicMessage) -> Result<(), BoxError> {
         *target = DynamicMessage::new(target.descriptor());
@@ -98,32 +103,31 @@ fn serialize_value(value: &GatewayValue) -> Result<Vec<u8>, BoxError> {
 /// Own the decoder's read-ahead, including a second value in one HTTP frame.
 /// Returning None is io.EOF, which generated unary handlers may ignore.
 #[derive(Default)]
-pub struct GatewayDecoder { buffered: Vec<u8>, eof: bool }
+pub struct GatewayDecoder { buffered: Vec<u8>, eof: bool, read_failure: Option<ReadFailure> }
 impl GatewayDecoder {
-    pub async fn decode(&mut self, request: &mut HttpRequest, target: &mut DynamicMessage) -> Result<bool, BoxError> {
+    pub async fn decode<T: GatewayDecodeTarget + ?Sized>(&mut self, request: &mut HttpRequest, target: &mut T) -> Result<bool, BoxError> {
+        target.prepare_gateway_decode()?;
+        if let Some(error) = &self.read_failure { return Err(Box::new(error.clone())); }
         loop {
-            let mut input = serde_json::Deserializer::from_slice(&self.buffered).into_iter::<Box<RawValue>>();
-            let result = input.next();
-            let offset = input.byte_offset();
-            match result {
-                Some(Ok(raw)) => {
-                    // A number ending at a frame boundary may have more digits.
-                    let number = raw.get().as_bytes().first().is_some_and(|byte| byte.is_ascii_digit() || *byte == b'-');
-                    if !number || offset < self.buffered.len() || self.eof {
-                        self.buffered.drain(..offset);
-                        GatewayJsonPb.unmarshal_raw(&raw, target)?;
-                        return Ok(true);
-                    }
+            match first_value(&self.buffered, self.eof) {
+                Ok(Some((raw, offset))) => {
+                    self.buffered.drain(..offset);
+                    target.decode_gateway_raw(&raw)?; // Semantic errors do not poison the stream.
+                    return Ok(true);
                 }
-                Some(Err(error)) if !error.is_eof() || self.eof => return Err(Box::new(error)),
-                None if self.eof => return Ok(false),
-                _ => {},
+                Ok(None) if self.eof => return Ok(false),
+                Ok(None) => {},
+                Err(error) => return Err(self.remember_failure(error)),
             }
-            match request.read_body_chunk().await? {
-                Some(bytes) => self.buffered.extend_from_slice(&bytes),
-                None => self.eof = true,
+            match request.read_body_chunk().await {
+                Ok(Some(bytes)) => self.buffered.extend_from_slice(&bytes),
+                Ok(None) => self.eof = true,
+                Err(error) => return Err(self.remember_failure(error)),
             }
         }
+    }
+    fn remember_failure(&mut self, error: BoxError) -> BoxError {
+        let error = ReadFailure::new(error); self.read_failure = Some(error.clone()); Box::new(error)
     }
 }
 
@@ -352,7 +356,7 @@ fn check_required_value(value: &Value) -> Result<(), BoxError> {
 }
 
 /// Keep duplicate names until schema-aware duplicate/oneof checks have run.
-struct RawObject(Vec<(String, Box<RawValue>)>);
+pub(crate) struct RawObject(pub(crate) Vec<(String, Box<RawValue>)>);
 impl<'de> Deserialize<'de> for RawObject {
     fn deserialize<D: Deserializer<'de>>(input: D) -> Result<Self, D::Error> {
         struct ObjectVisitor;
@@ -469,10 +473,7 @@ fn decode_scalar(kind: &Kind, raw: &RawValue, depth: usize) -> Result<Option<Val
         Kind::String => Value::String(serde_json::from_str(text)?),
         Kind::Bytes => {
             let text: String = serde_json::from_str(text)?;
-            let alphabet = if text.contains(['-', '_']) { &alphabet::URL_SAFE } else { &alphabet::STANDARD };
-            let config = GeneralPurposeConfig::new().with_decode_allow_trailing_bits(true).with_decode_padding_mode(DecodePaddingMode::Indifferent);
-            let text = text.replace(['\r', '\n'], "");
-            Value::Bytes(GeneralPurpose::new(alphabet, config).decode(text)?.into())
+            Value::Bytes(crate::utility_gateway_scalar::decode_proto_bytes(&text)?.into())
         }
         Kind::Int32 | Kind::Sint32 | Kind::Sfixed32 => Value::I32(integer_text(raw, true)?.parse()?),
         Kind::Int64 | Kind::Sint64 | Kind::Sfixed64 => Value::I64(integer_text(raw, true)?.parse()?),
@@ -498,27 +499,32 @@ fn numeric_text(raw: &RawValue) -> Result<String, BoxError> {
     Ok(text)
 }
 fn integer_text(raw: &RawValue, signed: bool) -> Result<String, BoxError> {
-    // Decimal/exponent arithmetic is exact; never round a 64-bit integer via f64.
+    // Source json.normalizeToIntString, including its zero shortcut and signed
+    // 32-bit exponent bound. No integer is rounded through a float.
     let text = numeric_text(raw)?;
     let negative = text.starts_with('-');
-    if negative && !signed { return Err(ERRORS.New("negative unsigned integer")); }
     let absolute = text.strip_prefix('-').unwrap_or(&text);
     let (mantissa, exponent) = absolute.split_once(['e', 'E']).unwrap_or((absolute, "0"));
-    let exponent: i64 = exponent.parse()?;
-    let fraction = mantissa.split_once('.').map_or(0, |(_, fraction)| fraction.len());
-    let mut digits = mantissa.replace('.', "");
-    let zeros = exponent.checked_sub(i64::try_from(fraction)?).ok_or_else(|| ERRORS.New("integer exponent out of range"))?;
-    if digits.bytes().all(|byte| byte == b'0') { return Ok(if negative { "-0" } else { "0" }.to_owned()); }
-    if zeros < 0 {
-        let remove = usize::try_from(zeros.unsigned_abs())?;
-        if remove >= digits.len() || !digits[digits.len() - remove..].bytes().all(|byte| byte == b'0') { return Err(ERRORS.New("non-integral protobuf integer")); }
-        digits.truncate(digits.len() - remove);
+    let (integer, fraction) = mantissa.split_once('.').unwrap_or((mantissa, ""));
+    let integer = if integer == "0" { "" } else { integer };
+    let fraction = fraction.trim_end_matches('0');
+    if integer.is_empty() && fraction.is_empty() { return Ok("0".into()); }
+    if negative && !signed { return Err(ERRORS.New("negative unsigned integer")); }
+    let exponent: i32 = exponent.parse()?;
+    let mut digits;
+    if exponent >= 0 {
+        let exponent = exponent as usize;
+        if fraction.len() > exponent { return Err(ERRORS.New("non-integral protobuf integer")); }
+        if integer.len().saturating_add(exponent) > 20 { return Err(ERRORS.New("protobuf integer out of range")); }
+        digits = String::from(integer); digits.push_str(fraction);
+        digits.extend(std::iter::repeat_n('0', exponent - fraction.len()));
     } else {
-        let zeros = usize::try_from(zeros)?;
-        if digits.trim_start_matches('0').len().saturating_add(zeros) > 20 { return Err(ERRORS.New("protobuf integer out of range")); }
-        digits.extend(std::iter::repeat_n('0', zeros));
+        if !fraction.is_empty() { return Err(ERRORS.New("non-integral protobuf integer")); }
+        let keep = integer.len().checked_sub(exponent.unsigned_abs() as usize)
+            .ok_or_else(|| ERRORS.New("non-integral protobuf integer"))?;
+        if !integer[keep..].bytes().all(|byte| byte == b'0') { return Err(ERRORS.New("non-integral protobuf integer")); }
+        digits = integer[..keep].to_owned();
     }
-    let digits = digits.trim_start_matches('0');
     Ok(format!("{}{digits}", if negative { "-" } else { "" }))
 }
 fn float_text(raw: &RawValue) -> Result<String, BoxError> {
@@ -530,14 +536,14 @@ fn float_text(raw: &RawValue) -> Result<String, BoxError> {
 }
 fn parse_float32(raw: &RawValue) -> Result<f32, BoxError> {
     let text = float_text(raw)?;
-    match text.as_str() { "NaN" => Ok(f32::NAN), "Infinity" => Ok(f32::INFINITY), "-Infinity" => Ok(f32::NEG_INFINITY), _ => {
+    match text.as_str() { "NaN" => Ok(f32::from_bits(0x7fc0_0000)), "Infinity" => Ok(f32::INFINITY), "-Infinity" => Ok(f32::NEG_INFINITY), _ => {
         let value: f32 = text.parse()?;
         if value.is_finite() { Ok(value) } else { Err(ERRORS.New("protobuf float out of range")) }
     } }
 }
 fn parse_float64(raw: &RawValue) -> Result<f64, BoxError> {
     let text = float_text(raw)?;
-    match text.as_str() { "NaN" => Ok(f64::NAN), "Infinity" => Ok(f64::INFINITY), "-Infinity" => Ok(f64::NEG_INFINITY), _ => {
+    match text.as_str() { "NaN" => Ok(f64::from_bits(0x7ff8_0000_0000_0001)), "Infinity" => Ok(f64::INFINITY), "-Infinity" => Ok(f64::NEG_INFINITY), _ => {
         let value: f64 = text.parse()?;
         if value.is_finite() { Ok(value) } else { Err(ERRORS.New("protobuf double out of range")) }
     } }
@@ -546,10 +552,10 @@ fn decode_map_key(kind: &Kind, text: &str) -> Result<MapKey, BoxError> {
     Ok(match kind {
         Kind::String => MapKey::String(text.to_owned()),
         Kind::Bool => MapKey::Bool(match text { "true" => true, "false" => false, _ => return Err(ERRORS.New("invalid boolean map key")) }),
-        Kind::Int32 | Kind::Sint32 | Kind::Sfixed32 => MapKey::I32(text.parse()?),
-        Kind::Int64 | Kind::Sint64 | Kind::Sfixed64 => MapKey::I64(text.parse()?),
-        Kind::Uint32 | Kind::Fixed32 => MapKey::U32(text.parse()?),
-        Kind::Uint64 | Kind::Fixed64 => MapKey::U64(text.parse()?),
+        Kind::Int32 | Kind::Sint32 | Kind::Sfixed32 => MapKey::I32(crate::utility_gateway_scalar::parse_signed(text, 10, 32)? as i32),
+        Kind::Int64 | Kind::Sint64 | Kind::Sfixed64 => MapKey::I64(crate::utility_gateway_scalar::parse_signed(text, 10, 64)?),
+        Kind::Uint32 | Kind::Fixed32 => MapKey::U32(crate::utility_gateway_scalar::parse_unsigned(text, 10, 32)? as u32),
+        Kind::Uint64 | Kind::Fixed64 => MapKey::U64(crate::utility_gateway_scalar::parse_unsigned(text, 10, 64)?),
         _ => return Err(ERRORS.New("invalid protobuf map key kind")),
     })
 }

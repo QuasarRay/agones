@@ -14,7 +14,7 @@
     ],
     "feature_owner": "UtilityFeatureContext::feature_state owns one RwLock<FeatureGates>; M0001 state moves through into_parts/from_initialized. Existing core parser is reused, not duplicated.",
     "gateway_owner": {
-      "codec": "Fixed source UseProtoNames/EmitUnpopulated/DiscardUnknown behavior is consumed by serializer/decoder code, not stored as flags.",
+      "codec": "Fixed source UseProtoNames/EmitUnpopulated/DiscardUnknown behavior is consumed by serializer/decoder code, not stored as flags. Typed target preparation/decode retains source pointer, map, slice, byte and enum branches; shared first-value framing owns read-ahead and sticky read errors.",
       "metaprogramming": "UtilityRuntimeContext and GatewayContext derive HasField + Deftly; UtilityRuntimeProviders/UtilityGatewayProviders supply static CGP factory, getters, codec, dispatch, callback and response implementations.",
       "routes": "One GatewayState RwLock<HashMap<method, newest-first routes>> owned by the source factory. This source route table is data, not an effect registry. No global mutable descriptor/service/provider registry.",
       "schema": "Each DynamicMessage carries its descriptor and linked pool. Any resolves its type URL against that pool. Full generated source descriptor/handler adoption remains explicit later work.",
@@ -65,7 +65,16 @@
       "GatewayJsonPb",
       "GatewayDecoder",
       "GatewayHttpBody",
-      "GatewayStatus"
+      "GatewayStatus",
+      "GatewayDecodeTarget",
+      "GatewayPointer<T, Factory>",
+      "GatewaySlice<T, Factory>",
+      "GatewayMap<K, V, Factory>",
+      "GatewayBytes",
+      "GatewayEnum",
+      "Base64InputError",
+      "NumberInputError",
+      "EnumCastProfile"
     ]
   },
   "dependency_adoption": "Native backend declarations retain existing root-lock HTTP/TLS/Tokio/JSON/YAML/base64/libc identities. comprende and better_comprehension reuse the already vendored first-generation sources; five exact package blocks (including clean-macro-docs/if_chain/syn 1) were adopted from the existing isolated CPG lock. Direct util dependency bookkeeping was authored manually, including base64 0.22.1 disambiguation. No resolver, compiler, formatter, macro/API probe or package execution ran. This continuation declares existing root errno 0.3.14 and regex 1.13.1 identities for signal-safe errno restoration and source install-hint Unicode category projection; only util direct lock bookkeeping changed. No resolver or executable assurance ran. Gateway adds prost-reflect 0.14.7 reflection/wire APIs only, with existing once_cell/prost 0.13.5/prost-types identities. One exact lock package was authored from the registry index/source archive without Cargo resolution. Optional serde/serde-value/ordered-float candidates were read but are not adopted. No new tool was installed.",
@@ -293,11 +302,20 @@
         "Bounded first-child-failure notification through CGP; original errors/panic payloads stay in join ownership without observation invoking user Display; request-local scopes discard reaped failures",
         "NewServerMux actual CGP factory -> owned compiled-pattern mux -> fixed ProtoJSON/HttpBody decoder/encoder -> raw/unary/streaming HTTP consumer",
         "UtilityGatewayProviders jointly derive-deftly/CGP own state/runtime projections, factory, codec, callback, dispatcher and response implementations",
-        "Source-derived Any payload map ordering, Duration/FieldMask handling, protobuf defaults/oneofs/enum/nil categories and request cancellation ownership"
+        "Source-derived Any payload map ordering, Duration/FieldMask handling, protobuf defaults/oneofs/enum/nil categories and request cancellation ownership",
+        "Source RFC3339Nano fallback grammar: one-digit hours, comma fractions/truncation, exact 24-hour/60-minute offsets, Gregorian validation, leap rejection, UTC timestamp range and dot-fraction cap",
+        "Go base64 quantum decoder preserves original byte offsets/CRLF handling/nonzero tail bits; ProtoJSON selects raw/padded before CRLF removal; non-proto byte decoding uses padded standard alphabet",
+        "ProtoJSON integer normalization zero shortcut, signed 32-bit exponent bound, original integer/fraction digit counts and negative-zero unsigned acceptance; Go NaN payload bits retained",
+        "Statically typed GatewayDecodeTarget for protobuf/primitive/f32/f64/interface, GatewayPointer, GatewaySlice, GatewayBytes, GatewayEnum and GatewayMap; immutable descriptor factories allocate data without runtime service/provider lookup",
+        "Non-proto source map allocation/merge/duplicate-name collapse/unspecified traversal, non-reflexive float-key equality and source supported/unsupported key-kind distinction",
+        "Source base-0 signed/unsigned integer keys, boolean key spellings, decimal/hex float key syntax, underscores, guard/sticky bits and ties-to-even rounding",
+        "Non-proto enum symbolic rejection, float64-to-int32 explicit source numeric profile; null/empty/EOF/pre-allocation and partial container mutations are distinct",
+        "Shared first-value framing with scalar lookahead/retained following bytes, container immediate completion, max depth, UnexpectedEOF and sticky framing/body errors; semantic decode errors permit later values",
+        "EnumTargetFactory requires explicit EnumCastProfile: legacy x86 CVTT, Go 1.27 AMD64 ConvertHash saturating branch, or ARM64 FCVTZS. It never infers the source profile from the Rust build host."
       ],
       "destination": "agones-rs/pkg/util/runtime/runtime.rs",
       "remaining": [
-        "Gateway has an actual authored path, still partial: reconcile required lexical/numeric/base64/diagnostic/WKT/Any/proto2/wire and non-proto input profiles in verification/agones/roadmap-M0003-gateway-authoring.json. Real generated source descriptors/SDK/allocator mapping and metadata/trailers/adoption remain explicit M0025/M0027 work.",
+        "Gateway typed decoders, scalar rules and first-value framing now have concrete implementations. Complete exact error/byte/partial-state/custom-model/numeric-wire/Any/proto2/HTTP profiles from roadmap-M0003-gateway-authoring.json. Generated source SDK/allocator descriptor/handler/metadata adoption remains explicit M0025/M0027 work.",
         "Reconcile clientcmd YAML/JSON/default/duplicate/extension/base64/unselected-path/Unicode/URL/proxy/error/diagnostic and persistence profiles; current native parser/OS/certificate behavior is not a Go-equivalence claim. No KUBECONFIG/home search was invented: ExplicitPath-only rules have nil Precedence and nil DefaultClientConfig.",
         "Auth-provider/exec data is retained and validated without a runtime plugin system or command execution. Actual credential-consumer integration and any real conflict with the no-plugin constraint remain with the later transport/lifecycle owners.",
         "Complete shared source logging/string/type/number/format/caller/panic profiles and production parent failure-policy adoption."
@@ -429,7 +447,7 @@
     {
       "id": "M0003-RUNTIME",
       "required": [
-        "Gateway has an actual authored path, still partial: reconcile required lexical/numeric/base64/diagnostic/WKT/Any/proto2/wire and non-proto input profiles in verification/agones/roadmap-M0003-gateway-authoring.json. Real generated source descriptors/SDK/allocator mapping and metadata/trailers/adoption remain explicit M0025/M0027 work.",
+        "Gateway typed decoders, scalar rules and first-value framing now have concrete implementations. Complete exact error/byte/partial-state/custom-model/numeric-wire/Any/proto2/HTTP profiles from roadmap-M0003-gateway-authoring.json. Generated source SDK/allocator descriptor/handler/metadata adoption remains explicit M0025/M0027 work.",
         "Reconcile clientcmd YAML/JSON/default/duplicate/extension/base64/unselected-path/Unicode/URL/proxy/error/diagnostic and persistence profiles; current native parser/OS/certificate behavior is not a Go-equivalence claim. No KUBECONFIG/home search was invented: ExplicitPath-only rules have nil Precedence and nil DefaultClientConfig.",
         "Auth-provider/exec data is retained and validated without a runtime plugin system or command execution. Actual credential-consumer integration and any real conflict with the no-plugin constraint remain with the later transport/lifecycle owners.",
         "Complete shared source logging/string/type/number/format/caller/panic profiles and production parent failure-policy adoption."
@@ -503,10 +521,10 @@
       "detail_record": "verification/agones/roadmap-M0003-gateway-authoring.json",
       "id": "M0003-GATEWAY",
       "required": [
-        "Complete required lexical/diagnostic profiles: float formatting and integer exponent limits, exact Go base64 CR/LF/padding/trailing-bit acceptance, JSON duplicate/error position/invalid-UTF8/surrogate handling and partial target state after malformed containers. Current Rust errors are not asserted equal to Go diagnostics.",
-        "Timestamp uses existing chrono with explicit proto range/nanos/leap-second/precision/case constraints. Reconcile the full Go RFC3339Nano fallback grammar, including comma fractions, one-digit hours and unusual offsets; no equivalence claim from native RFC3339 parsing.",
-        "Reconcile Any embedded wire recursion with prost-reflect decoding limits, required-field error traversal/order, proto2 group/extension/MessageSet profiles and deterministic extension/oneof ordering. Native Any map keys now have explicit deterministic emission; that alone is not full source wire-parity credit.",
-        "Finish the source JSONPb non-proto primitive/pointer/slice/map decoding interface and the full category-specific formatting/alias/nil profiles. GatewayValue explicitly represents supported source categories; it is not arbitrary Go interface/reflection compatibility.",
+        "Complete exact JSON/ProtoJSON diagnostics, byte offsets/type identity, invalid UTF8/surrogate replacement versus rejection, custom JSON/Text unmarshaler/named-type model adapters and all partial-target error states. RawObject currently materializes a message object before field application; it is not full incremental Go protojson error-state parity.",
+        "Numeric and timestamp/base64 grammar branches now have source-derived implementations. Native decimal float conversion, float output rendering and source Go/Rust target-profile rounding/NaN/negative-zero/bounds still need exact profile reconciliation and later assurance; no successful run or proof is claimed.",
+        "Reconcile Any embedded wire recursion with prost-reflect decoding limits, required-field error traversal/order, proto2 group/extension/MessageSet profiles and deterministic extension/oneof ordering. Native Any map keys have explicit deterministic emission; that alone is not full source wire-parity credit.",
+        "Typed non-proto decoders are authored and consumed by GatewayDecoder::decode / GatewayJsonPb::unmarshal_into. Finish required named model/custom serde and source panic/error interfaces without inventing a general Go object layer. EnumTargetFactory now requires a source numeric profile explicitly; source-owner integration must bind it to the exact Go version/target/ConvertHash setting. No Rust-host fallback or source-profile credit is inferred. Source JSON rendering/alias/nil details remain explicit rather than inferred from serde success.",
         "GatewayPattern consumes compiled generator opcodes in default Legacy unescaping mode. HandlePath parser and nondefault configurable gateway APIs are not implemented by this fixed factory. Reconcile HTTP byte path/RawPath/CONNECT/escape, method override Unicode, map iteration choice and form parse/error/partial-state profiles.",
         "Forwarded gRPC server headers/trailers, incoming context/header matching, deadlines/status wrapping/response_body selection and actual SDK/allocator generated request mappings and handlers remain with source-owned M0025/M0027 integration. The real raw gateway callback can already use ResponseWriter; this library registration is not those callers adoption.",
         "Finish required shared HTTP/TLS/fswatch/signal/platform/error/logging/queue/configuration profiles in the M0003 partial map. All implementation and generated outputs across both routes remain required before any assurance."
@@ -550,6 +568,7 @@
     "crates/util/Cargo.toml": "11fd2118177a05dd6bf101cd20b3691be00e6bd8e8a410ab993e64cd7b71d271",
     "crates/util/src/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "crates/util/src/errors.rs": "f8c313758bb23103a6ed7f2ff2188d9589fca0b1adc87ee5214bef16434e45e2",
+    "rust-support/agones/GO-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
     "rust-support/agones/src/lifecycle.rs": "cf19ade05a469d4424f401574af0eabab520657cc0d9977563bdbf4bf9fdef1d",
     "rust-support/agones/src/utility_admission.rs": "a17ed7e9f3c3ffdaf9d42e39ab372be4f107ff4bd50eec371f48824a4b7a5807",
     "rust-support/agones/src/utility_client_config.rs": "50b1648d59275ce50ef815d69e7fe9e87338b179e7ea712229e5324fe1cedc4a",
@@ -559,12 +578,15 @@
     "rust-support/agones/src/utility_error_view.rs": "c2776e4aa916b0e4e6f933ece03453da31573ab507a79e023fb854c78407b976",
     "rust-support/agones/src/utility_fswatch.rs": "48525e75ffed6aade3bd7c6af0da693c1bc7ea399e45b741cc5588ea86258205",
     "rust-support/agones/src/utility_gateway.rs": "40fe3710855a95c776f94d296b3871016ddd37af60572cc7d242f7f33678b610",
-    "rust-support/agones/src/utility_gateway_json.rs": "57a8419b8768d14d877f56c47793a0b732d85b66501a44c7220411bbc227f341",
+    "rust-support/agones/src/utility_gateway_framing.rs": "566dea98d8a70c612ffb24c151e63d5cbaa68590df6434825da273177005f6f9",
+    "rust-support/agones/src/utility_gateway_json.rs": "8ed085b26f7f9104d48c2751ae872904028472fc9c22d2c17837a828f561d4ff",
+    "rust-support/agones/src/utility_gateway_scalar.rs": "18c20da7322147fe5db79503e11040d745c4a8563580aed6b28cffd3dbab7f19",
+    "rust-support/agones/src/utility_gateway_targets.rs": "3d3d8607f17d4db8f9c6d70dc46793d3d35615e4d887a3f236ee57cda57d8f61",
     "rust-support/agones/src/utility_gateway_wire.rs": "234e6de84955c4240f153c0dece7a5594733562325bf7113998a794b9af0b113",
-    "rust-support/agones/src/utility_gateway_wkt.rs": "8d32866d36f1e0b4d88a6bd622279e898af99a875c2a03f9d359fc7f8cf4e2f4",
+    "rust-support/agones/src/utility_gateway_wkt.rs": "4cb0f6fa00d5c553911e8eaaca563d17112cfd5123a669c2e180eb02142ed42b",
     "rust-support/agones/src/utility_http.rs": "a1e40920dc9c0480ba0ad088aa49badac5fc23c606c39594accc404e3d0ce31b",
     "rust-support/agones/src/utility_https_module.rs": "3b1fc4bf94a5b016cce0c661c3f51d037b36e0718eefd1c17a55e309c878fc2a",
-    "rust-support/agones/src/utility_lib.rs": "fbc9fcbcda75f29227da41924d62150c8144a94d7aa346d63422cff9847e0d89",
+    "rust-support/agones/src/utility_lib.rs": "145614145fd542b2651e8fa73e652e48024c512ac9d389997c0942cd4b2a3f3d",
     "rust-support/agones/src/utility_lifecycle.rs": "5d2fdc2fc65f04f3fcc581edb0203b54cb8314717f6976c3d7404f018a0a26af",
     "rust-support/agones/src/utility_logging.rs": "101e0399f2d439549620d2598cfbfc38ebe5e3adfbe84b884b07c1e69036ca8b",
     "rust-support/agones/src/utility_modules.rs": "dc7edddb040828e3b8d9f2aa4d9bb9ad17ffd848a9a90730f09955b6b4b44c4d",
@@ -581,10 +603,10 @@
     "third_party/first-generation/better-comprehension/src/lib.rs": "f47ba11ce4cd4d6b7424ba0cffca669018e52e5541fb32f83d655aba2ce364b3",
     "third_party/first-generation/comprende/Cargo.toml": "01f7068b9cd9ec5b27b7df77709117e37dc991cd32597dbf24cbde9074f5ceab",
     "third_party/first-generation/comprende/src/lib.rs": "e8d8da04ca3048bdd7275b1ca77b5a78c4abfd999ecb763d82a615f4aeb0fb96",
-    "verification/agones/roadmap-M0003-gateway-authoring.json": "082cb432c9924d7107942764546e3597b1beb08911ea9709f7de11d1edb639b2",
-    "verification/agones/roadmap-M0003-reuse-adoption.json": "2f8a7a8c59c4262c3a50576d76445c23940c325097f674752958e24b399b3708"
+    "verification/agones/roadmap-M0003-gateway-authoring.json": "80c5581d3ab2236db4247258769ac24c518e3a045b61fa4c464d8671421234a9",
+    "verification/agones/roadmap-M0003-reuse-adoption.json": "b7b8462a3997275d8fa29693a5b63f1b6fe20333ad2984cb87657461aa3a51fc"
   },
-  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-8.json",
+  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-10.json",
   "progress_usage_observations": [
     "verification/agones/roadmap-M0003-progress-usage-1.json",
     "verification/agones/roadmap-M0003-progress-usage-2.json",
@@ -593,7 +615,9 @@
     "verification/agones/roadmap-M0003-progress-usage-5.json",
     "verification/agones/roadmap-M0003-progress-usage-6.json",
     "verification/agones/roadmap-M0003-progress-usage-7.json",
-    "verification/agones/roadmap-M0003-progress-usage-8.json"
+    "verification/agones/roadmap-M0003-progress-usage-8.json",
+    "verification/agones/roadmap-M0003-progress-usage-9.json",
+    "verification/agones/roadmap-M0003-progress-usage-10.json"
   ],
   "project_executable_invocations": 0,
   "record_kind": "PARTIAL_SOURCE_OWNERSHIP_ADOPTION",
@@ -1103,6 +1127,256 @@
       "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/dynamic/serde/de/wkt.rs",
       "purpose": "Read-only prost-reflect 0.14.7 reflection/wire and optional-serde candidate API source; no compiler/macro/API execution or library assurance.",
       "sha256": "de59ba2cbf44e429d20455bd4b0f3166793e9c412451790ccd6b9eddc6003a59"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/LICENSE",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+      "size": 1453,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/LICENSE"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/encoding/base64/base64.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "e6437c7716ecd1ae91c9d10037362cab186e5873a6365b713e2d8c57d8fc32fc",
+      "size": 18294,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/encoding/base64/base64.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/encoding/json/decode.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "a91535f18f9a2c8380448b1c84c4c2017dbe3d530a10faf8babf03494042da48",
+      "size": 36010,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/encoding/json/decode.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/encoding/json/scanner.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "2b16dd215274dfa8e0806b53cca144684d5b9c8a02319cf5ce10120c50e6eef2",
+      "size": 16569,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/encoding/json/scanner.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/encoding/json/stream.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "bb26b2442db6a686fc7f823ea9cc89babe26ac988ec7d8caf4a157aeb60d92f2",
+      "size": 13258,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/encoding/json/stream.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/internal/strconv/atob.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "6938f9a33a3daf57d7bada9b6c38b4cc26487c3e613c42c3512a055bed10d6f9",
+      "size": 954,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/internal/strconv/atob.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/internal/strconv/atof.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "2c2205ccab8626b623a188144a7dcaf202ece77002a27a2cd6b0aaf5a61669a5",
+      "size": 15975,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/internal/strconv/atof.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/internal/strconv/atoi.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "eb5ad640903abe9e8c8b7fbce8dd3487176dbeb43e8b8b4efa6e73ecb5207ddc",
+      "size": 6600,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/internal/strconv/atoi.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/internal/strconv/deps.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "052459732bddd00d8584351fb6a906566fc664ea40cbb125a6084c266ec32238",
+      "size": 866,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/internal/strconv/deps.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/internal/strconv/math.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "88db7fb281cdfab21f657eab8b37af131f23d822977c7e71bc753ffc5aec0145",
+      "size": 6759,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/internal/strconv/math.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/math/bits.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "eaf5a27831d55da48238beb6a86b08e8ce209cd36a535a24a457f7546ca031f7",
+      "size": 1933,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/math/bits.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/strconv/number.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "dda43e8c91d95f9dea0c46b2fec6637e5520cae099e40c5965dca0e41bbaab9e",
+      "size": 11360,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/strconv/number.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/time/format.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "f288c56858ab25828551681778f006b591ed140fc12e60122b6a9a7e35b07eb7",
+      "size": 50739,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/time/format.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/time/format_rfc3339.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "14b2a58fa295cca1a4f99467f5a5059418ed266a2298316124af97ffa014f271",
+      "size": 5809,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/time/format_rfc3339.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/LICENSE",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+      "size": 1453,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/LICENSE"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/encoding/base64/base64.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "15e67707bc3f0925f7f56bd4002106681c6b64ba5bf553b4d8cc0bb8eca71aa5",
+      "size": 18318,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/encoding/base64/base64.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/encoding/json/decode.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "1632161a34c8286722716a48ba0b5e0c3d117a2e017e79ace676403808a16e6e",
+      "size": 36122,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/encoding/json/decode.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/encoding/json/scanner.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "2b16dd215274dfa8e0806b53cca144684d5b9c8a02319cf5ce10120c50e6eef2",
+      "size": 16569,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/encoding/json/scanner.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/encoding/json/stream.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "065501364e4954cf1c8f1887900248d4c0983593b8c058b2fe7997d9635b793d",
+      "size": 13862,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/encoding/json/stream.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/internal/strconv/atob.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "6938f9a33a3daf57d7bada9b6c38b4cc26487c3e613c42c3512a055bed10d6f9",
+      "size": 954,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/internal/strconv/atob.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/internal/strconv/atof.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "b3322257fd15836b2ed9355599a767915382c040665391e01a6af35548b9b643",
+      "size": 16734,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/internal/strconv/atof.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/internal/strconv/atoi.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "bd69756b79c2f007ce7900bea400051f9f9da600c9c6bad656e46900331663d8",
+      "size": 6629,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/internal/strconv/atoi.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/internal/strconv/deps.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "052459732bddd00d8584351fb6a906566fc664ea40cbb125a6084c266ec32238",
+      "size": 866,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/internal/strconv/deps.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/math/bits.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "eaf5a27831d55da48238beb6a86b08e8ce209cd36a535a24a457f7546ca031f7",
+      "size": 1933,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/math/bits.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/strconv/number.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "dda43e8c91d95f9dea0c46b2fec6637e5520cae099e40c5965dca0e41bbaab9e",
+      "size": 11360,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/strconv/number.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/time/format.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "f2b75d1440a46231523d3be86925b52c59c5f23657658e24514f2daa588e575d",
+      "size": 50854,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/time/format.go"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/time/format_rfc3339.go",
+      "purpose": "Read-only version-pinned Go standard-library source for scalar, timestamp and JSON framing/target authoring. No execution or assurance.",
+      "sha256": "14b2a58fa295cca1a4f99467f5a5059418ed266a2298316124af97ffa014f271",
+      "size": 5809,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/time/format_rfc3339.go"
+    },
+    {
+      "path": "go.mod",
+      "purpose": "Read-only source/caller/version input; historical provenance remains historical and generated caller adoption remains with its later source owner.",
+      "sha256": "01df333891a331341e77aab737c24dc722fab26abc8439b9c2036c71a477215a"
+    },
+    {
+      "path": "verification/agones/sdk-version-provenance.json",
+      "purpose": "Read-only source/caller/version input; historical provenance remains historical and generated caller adoption remains with its later source owner.",
+      "sha256": "255d5be98beee4f23a3daafdce1304047e4052af872b7f568537e329bdb7d6af"
+    },
+    {
+      "path": "verification/agones/go-quote-provenance.json",
+      "purpose": "Read-only source/caller/version input; historical provenance remains historical and generated caller adoption remains with its later source owner.",
+      "sha256": "c540fa9dad33844cd080f68cc2239812d1acbf6a87d9cfa3cd96c99408d12842"
+    },
+    {
+      "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde_json-1.0.154/src/de.rs",
+      "purpose": "Read-only source/caller/version input; historical provenance remains historical and generated caller adoption remains with its later source owner.",
+      "sha256": "cb55666913c47d86130e7bd48a9c35081ea9a4bb0e2c45ab6429912d905629c5"
+    },
+    {
+      "path": "pkg/sdk/sdk.pb.gw.go",
+      "purpose": "Read-only source/caller/version input; historical provenance remains historical and generated caller adoption remains with its later source owner.",
+      "sha256": "ad34ce6da1cfd3c792b4dd780817b0abab26d0a03dc215a907e863b29e878e89"
+    },
+    {
+      "path": "pkg/sdk/beta/beta.pb.gw.go",
+      "purpose": "Read-only source/caller/version input; historical provenance remains historical and generated caller adoption remains with its later source owner.",
+      "sha256": "ec13c59020ba291745428b1a039f42b76ce1297fabf2b6477f32fdd681270a27"
+    },
+    {
+      "path": "pkg/sdk/alpha/alpha.pb.gw.go",
+      "purpose": "Read-only source/caller/version input; historical provenance remains historical and generated caller adoption remains with its later source owner.",
+      "sha256": "317d400f2b1997ece41d7929657c1d686fd0f6f8a56c649488878861016784eb"
+    },
+    {
+      "path": "pkg/allocation/go/allocation.pb.gw.go",
+      "purpose": "Read-only source/caller/version input; historical provenance remains historical and generated caller adoption remains with its later source owner.",
+      "sha256": "a852bfe56111a71ed90c60cedbafcb0c7c4b4eccde34715e84c96de2dbb68e02"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/cmd/compile/internal/ssa/_gen/386.rules",
+      "purpose": "Read-only source Go numeric conversion rule input; no compiler/API/instruction probe or source-Rust assurance.",
+      "sha256": "3e58af68581368b798deed101d2d543294e918ff2b77b2b5cbe252d3a6f6618f",
+      "size": 44425,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/cmd/compile/internal/ssa/_gen/386.rules"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/cmd/compile/internal/ssa/_gen/AMD64.rules",
+      "purpose": "Read-only source Go numeric conversion rule input; no compiler/API/instruction probe or source-Rust assurance.",
+      "sha256": "edca1a19c2f294b65810795c68c69dd25f987cd2b531e64323b092e049d183eb",
+      "size": 120020,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/cmd/compile/internal/ssa/_gen/AMD64.rules"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/cmd/compile/internal/ssa/_gen/ARM64.rules",
+      "purpose": "Read-only source Go numeric conversion rule input; no compiler/API/instruction probe or source-Rust assurance.",
+      "sha256": "f74551a7fecc831dd77823c33326da934f409307d7a52c005fc2273c49ad4414",
+      "size": 107610,
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/cmd/compile/internal/ssa/_gen/ARM64.rules"
     }
   ],
   "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",

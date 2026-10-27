@@ -54,7 +54,10 @@
         "rust-support/agones/src/utility_gateway.rs",
         "rust-support/agones/src/utility_gateway_json.rs",
         "rust-support/agones/src/utility_gateway_wire.rs",
-        "rust-support/agones/src/utility_gateway_wkt.rs"
+        "rust-support/agones/src/utility_gateway_wkt.rs",
+        "rust-support/agones/src/utility_gateway_scalar.rs",
+        "rust-support/agones/src/utility_gateway_targets.rs",
+        "rust-support/agones/src/utility_gateway_framing.rs"
       ],
       "new_source_owner": "agones-rs/pkg/util/runtime/runtime.rs",
       "registered_by": "UtilityRuntimeProviders + UtilityGatewayProviders and utility_lib.rs",
@@ -64,6 +67,7 @@
       ],
       "source_id": "agones:pkg/util/runtime/runtime.go",
       "symbol": "NewServerMux",
+      "typed_decoder_continuation": "GatewayJsonPb::unmarshal_into and GatewayDecoder::decode consume static GatewayDecodeTarget instances. Primitive/container/pointer/enum/protobuf factories construct wire data only; no provider registry or new lifecycle manager. Source Go license is retained.",
       "work_base_commit": "54cb162253be6ae403303dc038d3e01449b31056"
     }
   ],
