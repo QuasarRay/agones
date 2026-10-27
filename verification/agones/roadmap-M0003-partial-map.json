@@ -13,6 +13,7 @@
       "UtilityGatewayProviders"
     ],
     "feature_owner": "UtilityFeatureContext::feature_state owns one RwLock<FeatureGates>; M0001 state moves through into_parts/from_initialized. Existing core parser is reused, not duplicated.",
+    "filesystem_platform_owner": "NativeWatch owns one resource phase. Linux/Android inotify or Windows pinned overlapped read/handles/wait callback feed the source channel owner. Windows has the source 50-event buffer; errors are unbuffered. Cancellation drains the reader before channels and completion close. No detached Rust reader thread or second manager.",
     "gateway_owner": {
       "codec": "Fixed source UseProtoNames/EmitUnpopulated/DiscardUnknown behavior is consumed by serializer/decoder code, not stored as flags. Typed target preparation/decode retains source pointer, map, slice, byte and enum branches; shared first-value framing owns read-ahead and sticky read errors.",
       "metaprogramming": "UtilityRuntimeContext and GatewayContext derive HasField + Deftly; UtilityRuntimeProviders/UtilityGatewayProviders supply static CGP factory, getters, codec, dispatch, callback and response implementations.",
@@ -24,7 +25,7 @@
     "logging_scope": "UtilityRuntimeOwner owns shared SourceLogger and SourceErrorBackoff. UtilityRuntimeContext and derived LogEntry values share those resources; CRD logging delegates to the same runtime.",
     "production_package": "Existing util workspace package; Cargo lib entrypoint is rust-support/agones/src/utility_lib.rs",
     "queue_owner": "WorkerQueue owns locked worker/running counts and SyncHandler. SourceQueueContext owns one shared queue state and limiter instance. Queue actor/worker tasks live in the weak-referenced utility parent scope. Ready state and limiter state remain separate owners; Done and Forget are distinct. Stable heap nodes are shared by arena identity/map references rather than reinserting mutated keys.",
-    "signal_owner": "One SourceSignalState per application utility phase owns a Unix process sigaction lease and subscriber channels. Atomic process claim prevents another utility owner from installing a second lease. Parent shutdown restores hooks and joins owned tasks; explicit Stop preserves the source registration count and one-shot retention distinction.",
+    "signal_owner": "One SourceSignalState/Hub and common CGP subscriber select Unix sigaction/pipe or Windows console/atomic-waker Session at compile time. Each owns a process lease, subscription channels, reader and stop/quiescence/restore path. Terminal Windows callbacks are OS/process lifetime, with no captured Rust lease; actual application cleanup/exit remains M0027.",
     "task_owner": "Root UtilityRuntimeOwner uses a reporting UtilityTaskScope with a bounded first-failure notification and original joined errors/panic payloads. Request-local HTTP scopes do not retain a growing failed-request history. Context/observer futures do not strongly retain their own supervisor; normal application cleanup cancels and joins. Actual production fatal/recovery policy belongs to the parent composition.",
     "typed_declarations": [
       "UtilityFeatureContext",
@@ -74,10 +75,15 @@
       "GatewayEnum",
       "Base64InputError",
       "NumberInputError",
-      "EnumCastProfile"
+      "EnumCastProfile",
+      "Rendezvous<T>",
+      "utility_signals::windows::{Session,SignalLease,Reader}",
+      "utility_fswatch::windows::KernelRead",
+      "utility_fswatch::windows::CompletionBridge",
+      "utility_fswatch::windows::WaitRegistration"
     ]
   },
-  "dependency_adoption": "Native backend declarations retain existing root-lock HTTP/TLS/Tokio/JSON/YAML/base64/libc identities. comprende and better_comprehension reuse the already vendored first-generation sources; five exact package blocks (including clean-macro-docs/if_chain/syn 1) were adopted from the existing isolated CPG lock. Direct util dependency bookkeeping was authored manually, including base64 0.22.1 disambiguation. No resolver, compiler, formatter, macro/API probe or package execution ran. This continuation declares existing root errno 0.3.14 and regex 1.13.1 identities for signal-safe errno restoration and source install-hint Unicode category projection; only util direct lock bookkeeping changed. No resolver or executable assurance ran. Gateway adds prost-reflect 0.14.7 reflection/wire APIs only, with existing once_cell/prost 0.13.5/prost-types identities. One exact lock package was authored from the registry index/source archive without Cargo resolution. Optional serde/serde-value/ordered-float candidates were read but are not adopted. No new tool was installed.",
+  "dependency_adoption": "Native backend declarations retain existing root-lock HTTP/TLS/Tokio/JSON/YAML/base64/libc identities. comprende and better_comprehension reuse the already vendored first-generation sources; five exact package blocks (including clean-macro-docs/if_chain/syn 1) were adopted from the existing isolated CPG lock. Direct util dependency bookkeeping was authored manually, including base64 0.22.1 disambiguation. No resolver, compiler, formatter, macro/API probe or package execution ran. This continuation declares existing root errno 0.3.14 and regex 1.13.1 identities for signal-safe errno restoration and source install-hint Unicode category projection; only util direct lock bookkeeping changed. No resolver or executable assurance ran. Gateway adds prost-reflect 0.14.7 reflection/wire APIs only, with existing once_cell/prost 0.13.5/prost-types identities. One exact lock package was authored from the registry index/source archive without Cargo resolution. Optional serde/serde-value/ordered-float candidates were read but are not adopted. No new tool was installed. Platform continuation declares the existing root windows-sys 0.61.2 package only for cfg(windows), using the pinned FFI modules and existing futures/Tokio primitives. No package block/version upgrade, resolver or tool execution.",
   "disposition": "READY",
   "entries_not_authored_in_mirror": 0,
   "entries_with_authored_source": 14,
@@ -169,13 +175,24 @@
         "Watch logger/path, captured successful NewWatcher nil error callback and owned batch task",
         "batchWatch nil initial timer channel, first-event batching, callback-before-clear, error and closed-channel selection",
         "Native Linux/Android inotify fd, real readiness/read, event/error rendezvous, overflow/ignored/missing-path handling",
-        "explicit close panic, fd-close completion, parent cancellation and join ownership"
+        "explicit close panic, fd-close completion, parent cancellation and join ownership",
+        "Windows source single-path directory/named-file watcher with actual GetFileAttributesW/CreateFileW/GetFileInformationByHandle and one pinned OVERLAPPED 65536-byte buffer",
+        "ReadDirectoryChangesW completion event + fixed OS wait callback wake the existing CGP-owned Tokio task; no spawned or detached Rust reader thread",
+        "Source default notify filter is LAST_WRITE/FILE_NAME/DIR_NAME; event actions map directory changes, named-file modification/removal and tracked rename names",
+        "Source 50-event Windows buffer and unbuffered error channel, versus unbuffered Linux events; one shared bounded/rendezvous channel owner handles receipts, cancellation retraction and closed buffered drain",
+        "Rendezvous sends use per-offer acknowledgements and stable Arc identity rather than wrapping global completion counters; concurrent senders cannot lose their individual acknowledgement",
+        "Zero-byte overflow and source ERROR_MORE_DATA sizeof(slice)-header branch; access-denied removal, invalid record bounds, error/idle and file-watch disappearance paths are authored",
+        "Normal cancellation cancels and asynchronously drains pending I/O. Emergency Drop unregisters the event waiter before synchronous drain so two consumers cannot race for the auto-reset completion event",
+        "UnregisterWaitEx waits for callbacks before dropping their Arc context, then file/event handles close, channels close and completion is published; closing a removed watch leaves its source channels open until owner cancel",
+        "Existing Linux overflow message now uses the same source ErrEventOverflow text, and explicit/Drop cancellation signals the reader before its actual close/completion path"
       ],
       "destination": "agones-rs/pkg/util/fswatch/fswatch.rs",
       "remaining": [
-        "Non-Linux/Android native watcher providers remain absent; macOS/BSD/Windows/Solaris source profiles are not complete.",
-        "Reconcile exact startup/read/Add/Close ordering, errno/path byte formatting, channel/cancellation races and source path/operation profiles.",
-        "Application owner must explicitly await shutdown; WatchHandle Drop requests cleanup but cannot itself await the reader."
+        "BSD/macOS kqueue and illumos/Solaris event-port filesystem adapters remain unauthored. Do not claim all-platform completion from Linux and Windows paths.",
+        "Reconcile exact Windows path/Clean/UTF16/long-name/symlink/recursive-suffix/case/normalization and malformed kernel-buffer profiles. Current adapter implements the single-path Agones Watch consumer; arbitrary fsnotify multi-Add/Remove/recursive APIs are not independently exposed.",
+        "Complete source error type/string/wrapping and NewWatcher/Add/Close native failure ordering. This backend uses an overlapped event/wait registration instead of the Go IOCP reader, so raw OS allocation/failure sequences are not asserted identical.",
+        "Final failed console-hook removal/wait unregister or undrainable pending filesystem I/O aborts to avoid unsafe continuation. This native last-resort policy remains explicit and unverified; normal cleanup is awaited. Emergency Windows Drop can synchronously wait for kernel I/O cancellation.",
+        "All other M0003 HTTP/TLS/gateway/queue/config/CRD/logging/feature/admission profiles and source-owner consumer adoption remain required. No assurance or route-switch credit comes from this authoring record."
       ],
       "source_git_blob": "7c46058c214f79361f457461f2b57df9a4b89cf1",
       "source_id": "agones:pkg/util/fswatch/fswatch.go",
@@ -334,13 +351,19 @@
         "NewSigTermHandler one-shot SIGTERM/SIGINT callback and retained notification registration",
         "SourceSignalState minimum CGP getter/subscriber and actual Unix sigaction + nonblocking event pipe",
         "errno preservation, signal-safe atomics/write, in-flight quiescence before fd reuse",
-        "Source owner close/Stop restores saved handlers, parent task owns reader and callback futures; stale reader cannot notify a replacement session"
+        "Source owner close/Stop restores saved handlers, parent task owns reader and callback futures; stale reader cannot notify a replacement session",
+        "Common CGP SourceSignalSubscriber path owns one hub/session, subscription ids, one-slot source channels, weak registrations, parent child token and reader spawn/rejection cleanup on Unix and Windows",
+        "Windows SetConsoleCtrlHandler lease with exclusive process claim, atomic pending/waker bridge, active-callback quiescence and explicit removal; stale readers cannot poll or fan out through a replacement lease",
+        "CTRL_C and CTRL_BREAK deliver source SIGINT; CLOSE/LOGOFF/SHUTDOWN deliver source SIGTERM and park the OS-created callback thread as the source runtime does",
+        "Window terminal parking holds no Rust lease/task/waker/context; actual parent cleanup/process exit remains the M0027 owner. Stop removes future notifications without joining an OS-owned terminal callback",
+        "Both explicit Stop and owner close restore/remove the selected hook; reader Drop/rejected spawn cleans the same lease. Final failed restoration abort is an explicit native failure policy, not source parity credit"
       ],
       "destination": "agones-rs/pkg/util/signals/signals.rs",
       "remaining": [
-        "Windows/non-Unix native signal provider remains absent; no cross-platform completion or compilation claim.",
-        "Reconcile source OS signal delivery/Stop race/failure/panic profiles and interaction with legacy Tokio/signal-hook handlers during actual parent transfer. Final failed native sigaction restore aborts rather than leave a handler using a closed fd; this native failure policy is explicit, not asserted equal to every source platform.",
-        "Wire the production parent and its failure policy through its owning lifecycle milestone; the library currently exposes real cancellation and cleanup capabilities."
+        "Final failed console-hook removal/wait unregister or undrainable pending filesystem I/O aborts to avoid unsafe continuation. This native last-resort policy remains explicit and unverified; normal cleanup is awaited. Emergency Windows Drop can synchronously wait for kernel I/O cancellation.",
+        "Source terminal console callbacks are OS-owned and remain parked until process exit or OS timeout after notification. Actual production M0027 exit/cleanup composition and interaction with preserved old Tokio/signal handlers remain required.",
+        "Reconcile signal delivery/Stop/late callback/quiescence/fanout/cancel races and per-platform default behavior, including non-Unix/non-Windows targets, before any cross-platform acceptance.",
+        "All other M0003 HTTP/TLS/gateway/queue/config/CRD/logging/feature/admission profiles and source-owner consumer adoption remain required. No assurance or route-switch credit comes from this authoring record."
       ],
       "source_git_blob": "db00f66bfc48af4148a32f13bd653e1d443e2255",
       "source_id": "agones:pkg/util/signals/signals.go",
@@ -419,11 +442,14 @@
       "source": "pkg/util/apiserver/apiserver.go"
     },
     {
+      "detail_record": "verification/agones/roadmap-M0003-platform-effects.json",
       "id": "M0003-FSWATCH",
       "required": [
-        "Non-Linux/Android native watcher providers remain absent; macOS/BSD/Windows/Solaris source profiles are not complete.",
-        "Reconcile exact startup/read/Add/Close ordering, errno/path byte formatting, channel/cancellation races and source path/operation profiles.",
-        "Application owner must explicitly await shutdown; WatchHandle Drop requests cleanup but cannot itself await the reader."
+        "BSD/macOS kqueue and illumos/Solaris event-port filesystem adapters remain unauthored. Do not claim all-platform completion from Linux and Windows paths.",
+        "Reconcile exact Windows path/Clean/UTF16/long-name/symlink/recursive-suffix/case/normalization and malformed kernel-buffer profiles. Current adapter implements the single-path Agones Watch consumer; arbitrary fsnotify multi-Add/Remove/recursive APIs are not independently exposed.",
+        "Complete source error type/string/wrapping and NewWatcher/Add/Close native failure ordering. This backend uses an overlapped event/wait registration instead of the Go IOCP reader, so raw OS allocation/failure sequences are not asserted identical.",
+        "Final failed console-hook removal/wait unregister or undrainable pending filesystem I/O aborts to avoid unsafe continuation. This native last-resort policy remains explicit and unverified; normal cleanup is awaited. Emergency Windows Drop can synchronously wait for kernel I/O cancellation.",
+        "All other M0003 HTTP/TLS/gateway/queue/config/CRD/logging/feature/admission profiles and source-owner consumer adoption remain required. No assurance or route-switch credit comes from this authoring record."
       ],
       "source": "pkg/util/fswatch/fswatch.go"
     },
@@ -455,11 +481,13 @@
       "source": "pkg/util/runtime/runtime.go"
     },
     {
+      "detail_record": "verification/agones/roadmap-M0003-platform-effects.json",
       "id": "M0003-SIGNALS",
       "required": [
-        "Windows/non-Unix native signal provider remains absent; no cross-platform completion or compilation claim.",
-        "Reconcile source OS signal delivery/Stop race/failure/panic profiles and interaction with legacy Tokio/signal-hook handlers during actual parent transfer. Final failed native sigaction restore aborts rather than leave a handler using a closed fd; this native failure policy is explicit, not asserted equal to every source platform.",
-        "Wire the production parent and its failure policy through its owning lifecycle milestone; the library currently exposes real cancellation and cleanup capabilities."
+        "Final failed console-hook removal/wait unregister or undrainable pending filesystem I/O aborts to avoid unsafe continuation. This native last-resort policy remains explicit and unverified; normal cleanup is awaited. Emergency Windows Drop can synchronously wait for kernel I/O cancellation.",
+        "Source terminal console callbacks are OS-owned and remain parked until process exit or OS timeout after notification. Actual production M0027 exit/cleanup composition and interaction with preserved old Tokio/signal handlers remain required.",
+        "Reconcile signal delivery/Stop/late callback/quiescence/fanout/cancel races and per-platform default behavior, including non-Unix/non-Windows targets, before any cross-platform acceptance.",
+        "All other M0003 HTTP/TLS/gateway/queue/config/CRD/logging/feature/admission profiles and source-owner consumer adoption remain required. No assurance or route-switch credit comes from this authoring record."
       ],
       "source": "pkg/util/signals/signals.go"
     },
@@ -537,7 +565,7 @@
   "milestone_id": "M0003",
   "owned_entry_count": 14,
   "payload_sha256": {
-    "Cargo.lock": "ec4f34f68b46f16a0ab24823b7d84796e82f99bfd83312ff804d4f129931eaa8",
+    "Cargo.lock": "6abd7c09e7d1043ccc9c220130adf7bdd5d04a83f16bacc01ff96a7941daef0b",
     "agones-rs/pkg/util/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/apiserver/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/apiserver/apiserver.rs": "c5a08b1672ad8449312cf6ce700ff6dbda254d05dadccd09c21aa36321cf06bd",
@@ -565,9 +593,10 @@
     "agones-rs/pkg/util/workerqueue/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/workerqueue/workerqueue.rs": "55fecc4e6348c3fd4b40e9aa9c4320b5a94bba0a4bf7a84c8ca089b4c36d5bab",
     "crates/util/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
-    "crates/util/Cargo.toml": "11fd2118177a05dd6bf101cd20b3691be00e6bd8e8a410ab993e64cd7b71d271",
+    "crates/util/Cargo.toml": "71f814d05b277398d073ec1bf708aed0f4080d07fd0d28c90b74b67d4ff9bb0c",
     "crates/util/src/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "crates/util/src/errors.rs": "f8c313758bb23103a6ed7f2ff2188d9589fca0b1adc87ee5214bef16434e45e2",
+    "rust-support/agones/FSNOTIFY-LICENSE": "2dfbe6d2b5eb18b55148f3805d88648a09e0d17e38428123259afb08c8996e37",
     "rust-support/agones/GO-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
     "rust-support/agones/src/lifecycle.rs": "cf19ade05a469d4424f401574af0eabab520657cc0d9977563bdbf4bf9fdef1d",
     "rust-support/agones/src/utility_admission.rs": "a17ed7e9f3c3ffdaf9d42e39ab372be4f107ff4bd50eec371f48824a4b7a5807",
@@ -576,7 +605,8 @@
     "rust-support/agones/src/utility_declarations.rs": "365cc58dbe05295b17e70bd683860347ea0eaf3ba3fa3b47c98b971dec7a1977",
     "rust-support/agones/src/utility_discovery.rs": "8151e804ce4354fef226b0cd915c6e868936c2806089143e4c212ee99e1a32ed",
     "rust-support/agones/src/utility_error_view.rs": "c2776e4aa916b0e4e6f933ece03453da31573ab507a79e023fb854c78407b976",
-    "rust-support/agones/src/utility_fswatch.rs": "48525e75ffed6aade3bd7c6af0da693c1bc7ea399e45b741cc5588ea86258205",
+    "rust-support/agones/src/utility_fswatch.rs": "b3caa2a5f84716cf4794848df55185f9e332b781e4ab3d281742fa15ad03be8c",
+    "rust-support/agones/src/utility_fswatch_windows.rs": "d467b2b2ddf550244fd16347f308f82e2f21fc27cba534be3e66d5fc2fc6684a",
     "rust-support/agones/src/utility_gateway.rs": "40fe3710855a95c776f94d296b3871016ddd37af60572cc7d242f7f33678b610",
     "rust-support/agones/src/utility_gateway_framing.rs": "566dea98d8a70c612ffb24c151e63d5cbaa68590df6434825da273177005f6f9",
     "rust-support/agones/src/utility_gateway_json.rs": "8ed085b26f7f9104d48c2751ae872904028472fc9c22d2c17837a828f561d4ff",
@@ -596,7 +626,8 @@
     "rust-support/agones/src/utility_runtime.rs": "ea8cfac998779a0af5cf283f10f8b079d9c0025abe0484cf028c4d80a95c2929",
     "rust-support/agones/src/utility_runtime_module.rs": "7d98ced3f9d120239b0c87247347018a35e2af5770977612e16223a1e65fb3fe",
     "rust-support/agones/src/utility_scope.rs": "d0f6604c2ee1a1e630c1f108d0359f1fdc80d35e3c27f93042af505875ad00d0",
-    "rust-support/agones/src/utility_signals.rs": "2599b6640abfa1d9d162434690e7d7817fc7d10abed029b32c3be7d889ca880c",
+    "rust-support/agones/src/utility_signals.rs": "86aab0a4b60572e7ad80d125e9f4fdf26056a9cb90374b55b0c34f4da710ebd6",
+    "rust-support/agones/src/utility_signals_windows.rs": "7ee226c03ff13e152d4ee81e12e5d9f6d9e4d25153810c37e8188960ee831239",
     "rust-support/agones/src/utility_tls.rs": "1c370d59ccee7a6d093616428525a1d90b1edb2dde56f6b22e9cff0405356e4f",
     "rust-support/cpg/Cargo.lock": "1a130b4d4ebc181f394f5c0d24130e2a9123ea42888e041564b958a73dce0ccf",
     "third_party/first-generation/better-comprehension/Cargo.toml": "a1ce7a835e9ed3e543b7b06487bc941db6182fcc6f2555ac603ca8b4f6284f36",
@@ -604,9 +635,11 @@
     "third_party/first-generation/comprende/Cargo.toml": "01f7068b9cd9ec5b27b7df77709117e37dc991cd32597dbf24cbde9074f5ceab",
     "third_party/first-generation/comprende/src/lib.rs": "e8d8da04ca3048bdd7275b1ca77b5a78c4abfd999ecb763d82a615f4aeb0fb96",
     "verification/agones/roadmap-M0003-gateway-authoring.json": "80c5581d3ab2236db4247258769ac24c518e3a045b61fa4c464d8671421234a9",
+    "verification/agones/roadmap-M0003-platform-effects.json": "86ee5cc1ee68978710fc5a40d23e868354d1f18687c8b500437a40b0ebe6d8e9",
     "verification/agones/roadmap-M0003-reuse-adoption.json": "b7b8462a3997275d8fa29693a5b63f1b6fe20333ad2984cb87657461aa3a51fc"
   },
-  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-10.json",
+  "platform_effect_authoring_record": "verification/agones/roadmap-M0003-platform-effects.json",
+  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-12.json",
   "progress_usage_observations": [
     "verification/agones/roadmap-M0003-progress-usage-1.json",
     "verification/agones/roadmap-M0003-progress-usage-2.json",
@@ -617,7 +650,9 @@
     "verification/agones/roadmap-M0003-progress-usage-7.json",
     "verification/agones/roadmap-M0003-progress-usage-8.json",
     "verification/agones/roadmap-M0003-progress-usage-9.json",
-    "verification/agones/roadmap-M0003-progress-usage-10.json"
+    "verification/agones/roadmap-M0003-progress-usage-10.json",
+    "verification/agones/roadmap-M0003-progress-usage-11.json",
+    "verification/agones/roadmap-M0003-progress-usage-12.json"
   ],
   "project_executable_invocations": 0,
   "record_kind": "PARTIAL_SOURCE_OWNERSHIP_ADOPTION",
@@ -1377,6 +1412,66 @@
       "sha256": "f74551a7fecc831dd77823c33326da934f409307d7a52c005fc2273c49ad4414",
       "size": 107610,
       "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/cmd/compile/internal/ssa/_gen/ARM64.rules"
+    },
+    {
+      "path": "pkg/util/signals/signals.go",
+      "purpose": "Read-only platform/source/API/ownership input for M0003 authoring; no executed native API or assurance.",
+      "sha256": "bddfa941f5235d32ccf6909f211caf491cd536b3e1920a16473430ec1e51e418"
+    },
+    {
+      "path": "pkg/util/fswatch/fswatch.go",
+      "purpose": "Read-only platform/source/API/ownership input for M0003 authoring; no executed native API or assurance.",
+      "sha256": "406f958093406930868a85b962ff51f4fdbdd57932b60310c4f125807b4f72ee"
+    },
+    {
+      "path": "vendor/github.com/fsnotify/fsnotify/backend_windows.go",
+      "purpose": "Read-only platform/source/API/ownership input for M0003 authoring; no executed native API or assurance.",
+      "sha256": "750aa64aa42d366b59af209b02089e08a0795281bc2a95dd160c8775094ebf36"
+    },
+    {
+      "path": "vendor/github.com/fsnotify/fsnotify/LICENSE",
+      "purpose": "Read-only platform/source/API/ownership input for M0003 authoring; no executed native API or assurance.",
+      "sha256": "2dfbe6d2b5eb18b55148f3805d88648a09e0d17e38428123259afb08c8996e37"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/runtime/os_windows.go",
+      "purpose": "Read-only platform/source/API/ownership input for M0003 authoring; no executed native API or assurance.",
+      "sha256": "e89fc1c8927f8a8bf0ffd862709a7ced6d751d221792329c0d75bb5616cb009d"
+    },
+    {
+      "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/windows-sys-0.61.2/Cargo.toml",
+      "purpose": "Read-only platform/source/API/ownership input for M0003 authoring; no executed native API or assurance.",
+      "sha256": "1adbc955d5460fa64dc16e6c8198b25672e8d4b97d45ecfb262eb2693ce08422"
+    },
+    {
+      "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/windows-sys-0.61.2/src/Windows/Win32/Foundation/mod.rs",
+      "purpose": "Read-only platform/source/API/ownership input for M0003 authoring; no executed native API or assurance.",
+      "sha256": "7da61986429ad6764c2c5ec3656ef5c4b3fba6969b6eabbf85991f86966f2994"
+    },
+    {
+      "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/windows-sys-0.61.2/src/Windows/Win32/System/Console/mod.rs",
+      "purpose": "Read-only platform/source/API/ownership input for M0003 authoring; no executed native API or assurance.",
+      "sha256": "655be5d7edf72d6c0f8b21a9dc1b37389683d6bc73413cd8006ef5c716e8fb3a"
+    },
+    {
+      "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/windows-sys-0.61.2/src/Windows/Win32/System/Threading/mod.rs",
+      "purpose": "Read-only platform/source/API/ownership input for M0003 authoring; no executed native API or assurance.",
+      "sha256": "c91ba24c0890691ee0b4415f0d2d8e512df380068d47e0a4cf2da5d7042ff012"
+    },
+    {
+      "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/windows-sys-0.61.2/src/Windows/Win32/System/IO/mod.rs",
+      "purpose": "Read-only platform/source/API/ownership input for M0003 authoring; no executed native API or assurance.",
+      "sha256": "d52aa60727b3a06463e9f21633fb9159805a09596818e6631d9084fd495cdf1f"
+    },
+    {
+      "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/windows-sys-0.61.2/src/Windows/Win32/Storage/FileSystem/mod.rs",
+      "purpose": "Read-only platform/source/API/ownership input for M0003 authoring; no executed native API or assurance.",
+      "sha256": "b44686d7dcd877df4e539d2a5152a3ec212757efb111139cb0a108c8bad7624a"
+    },
+    {
+      "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/futures-core-0.3.34/src/task/__internal/atomic_waker.rs",
+      "purpose": "Read-only platform/source/API/ownership input for M0003 authoring; no executed native API or assurance.",
+      "sha256": "67d3e3177332e95696bc727420beadc1af44b5c96da78ac8f97f9f5bae4fb143"
     }
   ],
   "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",

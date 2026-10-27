@@ -1,6 +1,6 @@
 # Agones-rs and CPG handoff
 
-Canonical ledger: `AGONES_RS_STATE.json`, revision 331. Native Goal:
+Canonical ledger: `AGONES_RS_STATE.json`, revision 332. Native Goal:
 `01a17928-8551-7701-8497-5333c680f283`, ACTIVE, no budget. Current work made
 concrete source progress; no wait or blocking condition is live.
 Authority: combined attachment/roadmap SHA
@@ -33,12 +33,12 @@ compilation, parity or assurance. `runtime.NewServerMux` now has an actual
 authored factory/codec/mux consumer, still PARTIAL and UNVERIFIED. The named
 missing-body list is empty; required behavior/platform gaps remain open.
 
-Immediate next action: implement absent source signal/fswatch platform effects
-through their existing CGP owners, then complete HTTP mux/path/redirect and all
-required M0003 body/profile gaps. Gateway typed decoder/scalar/framing branches
-are now authored. Preserve remaining JSON/ProtoJSON error/byte/partial-state/
-custom-model/decimal-rendering/Any/proto2/HTTP boundary gaps in the gateway
-receipt. Keep the same M0003 cursor; no M4 route switch.
+Immediate next action: author the missing BSD/macOS kqueue and illumos/Solaris
+event-port filesystem effects through NativeWatch/CGP, then complete HTTP mux/
+path/redirect and every required M0003 body/profile gap. Windows signal and
+filesystem paths are now authored. Keep all platform path/error/race/native
+failure/cleanup and gateway JSON/ProtoJSON/wire/custom-model obligations in their
+existing partial receipts. Keep the same M0003 cursor; no M4 route switch.
 
 Existing util package registration is `rust-support/agones/src/utility_lib.rs`.
 Literal mirror paths are under agones-rs/pkg/util; Rust-only effect/wiring files
@@ -88,10 +88,54 @@ restores saved actions, waits for in-flight handlers before fd reuse and cancels
 the reader when no subscriptions remain. Stale readers cannot notify a new
 session. NotifyContext cancellation alone does not unregister; the one-shot
 handler retains registration after its callback, matching source. Root cleanup
-owns restoration and joins. Windows/non-Unix adapter and exact race/failure/old
-Tokio-handler interaction profiles remain open. Final failed native restoration
+owns restoration and joins. Windows console adapter is now authored; exact race/failure/old Tokio-handler
+interaction and non-Unix/non-Windows profiles remain open. Final failed native restoration
 aborts to prevent writing into a closed fd; this failure policy is explicit and
 unverified. No signals were delivered or APIs executed as probes.
+
+Platform continuation is recorded in
+`verification/agones/roadmap-M0003-platform-effects.json`. Common static CGP
+signal subscription/session construction now serves Unix and Windows through
+one SourceSignalState/Hub. Windows SetConsoleCtrlHandler uses exclusive process
+ownership, an atomic pending/waker bridge and a parent-owned Tokio reader.
+Ctrl+C/Break map to SIGINT; Close/Logoff/Shutdown map to SIGTERM. Like the Go
+runtime, terminal OS-created callback threads park after notification so cleanup
+can proceed before process exit/OS timeout. Parked threads retain no Rust lease,
+task, pointer or waker. M0027 must own actual application cleanup/process exit.
+Stop removes future hooks and quiesces active notification callbacks, clears
+static wakers and cancels readers. Late old readers cannot consume a replacement
+session. Failed final native restoration still has an explicit abort policy.
+
+Windows filesystem effects use GetFileAttributes/CreateFile/GetFileInformation,
+one pinned 65536-byte OVERLAPPED buffer, an auto-reset completion event and a
+fixed OS wait callback. The existing CGP task handles completion/backpressure;
+no detached Rust reader thread or second filesystem manager was added. Directory
+and named-file modify/remove/rename tracking, zero-byte overflow, access-denied
+removal, error/idle paths and the source ERROR_MORE_DATA slice-header-size branch
+are authored. Removed watches release handles while keeping channels open until
+Close. Normal cancel drains I/O asynchronously; emergency Drop unregisters the
+callback waiter before synchronous drain to avoid competing for its auto-reset
+event. Callback context, handles and channels are released before completion.
+Failed final unregister or undrainable I/O aborts rather than free live buffers;
+this native failure policy is explicit and unverified. Emergency Drop can block
+waiting for kernel cancellation. Windows path/Clean/UTF16/long-name/case/error/
+allocation-order/record-boundary/race profiles still need reconciliation.
+
+The shared Rendezvous channel now has the source zero-capacity or bounded mode.
+Windows Events has the source capacity 50; Errors is unbuffered, as are Linux
+Events. Unbuffered offers use individual oneshot receipts and Arc identity, so
+concurrent senders cannot lose an acknowledgement to a later receive/counter
+wrap. Dropped pending sends retract an unaccepted offer. Closed buffered channels
+drain existing values. NativeWatch cancel signals its reader and waits for actual
+close completion; channels close in reader cleanup after native resources drain.
+The source ErrEventOverflow text is shared on Linux and Windows. BSD/macOS and
+illumos/Solaris filesystem adapters remain absent; no platform completion claim.
+
+The cfg(windows) dependency reuses existing root windows-sys 0.61.2, enabling
+Foundation/Security/Storage_FileSystem/System_IO/System_Console/System_Threading.
+No package version/block was added or resolved. Pinned native APIs/source hashes
+and fsnotify/Go BSD license attribution are retained in the platform receipt.
+No console handler, native filesystem watch, syscall probe or project was run.
 
 New queue source is `agones-rs/pkg/util/workerqueue/workerqueue.rs`, reached at
 `util::pkg::util::workerqueue` / `util::source::workerqueue`. It includes all 22
@@ -212,9 +256,9 @@ One read command attempted `go env GOROOT` for a source path; stdout was empty
 and its dependent file read failed. No project/compile/fixture/semantic assurance
 ran. Do not reinterpret source reading or identity bookkeeping as verification.
 
-M0003 entry usage 656008. Raw progress observations 1..10 retain 752278, 781155,
-905410, 1069792, 1095960, 1289081, 1320264, 1568425, 1577646, 1691561. Still NO
-completed M0003 cost comparison or
+M0003 entry usage 656008. Raw progress observations 1..12 retain 752278, 781155,
+905410, 1069792, 1095960, 1289081, 1320264, 1568425, 1577646, 1691561, 1702165,
+1783942. Still NO completed M0003 cost comparison or
 route switch. Context/read/accounting is charged once, no credit inference.
 Preserve M0001/M0002 original forecasts/comparisons and shared overhead buckets.
 M0002 observed work was 482306; shared completion/switch was 20030. The explicit

@@ -69,6 +69,23 @@
       "symbol": "NewServerMux",
       "typed_decoder_continuation": "GatewayJsonPb::unmarshal_into and GatewayDecoder::decode consume static GatewayDecodeTarget instances. Primitive/container/pointer/enum/protobuf factories construct wire data only; no provider registry or new lifecycle manager. Source Go license is retained.",
       "work_base_commit": "54cb162253be6ae403303dc038d3e01449b31056"
+    },
+    {
+      "canonical_support_owners": [
+        "rust-support/agones/src/utility_signals.rs",
+        "rust-support/agones/src/utility_signals_windows.rs",
+        "rust-support/agones/src/utility_fswatch.rs",
+        "rust-support/agones/src/utility_fswatch_windows.rs"
+      ],
+      "dependency_reused": "Existing root windows-sys 0.61.2 and futures-core 0.3.34/Tokio. Source Windows signal/runtime and fsnotify policy were read; no foreign application manager or generic OS provider registry.",
+      "detail_record": "verification/agones/roadmap-M0003-platform-effects.json",
+      "disposition": "AUTHORED_UNVERIFIED_PARTIAL_NO_PLATFORM_OR_PARENT_ACCEPTANCE_CREDIT",
+      "existing_effects_reused": "UtilityRuntimeProviders/SourceSignalState/UtilityTaskScope/NativeWatch/batchWatch/channel and completion owner. Common signal subscription wiring now serves Unix and Windows; the old Unix backend is retained.",
+      "source_ids": [
+        "agones:pkg/util/signals/signals.go",
+        "agones:pkg/util/fswatch/fswatch.go"
+      ],
+      "work_base_commit": "6183dcfabe72c589dacad711d189b4b53cca3601"
     }
   ],
   "milestone_id": "M0003",

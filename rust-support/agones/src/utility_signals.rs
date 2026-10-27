@@ -10,8 +10,8 @@ use crate::{errors::{BoxError, Errors}, utility_scope::CanSpawnUtilityTask};
 struct Hub {
     next_id: u64,
     subscribers: BTreeMap<u64, mpsc::Sender<()>>,
-    #[cfg(unix)]
-    session: Option<unix::Session>,
+    #[cfg(any(unix, windows))]
+    session: Option<native::Session>,
 }
 #[derive(Default)]
 pub struct SourceSignalState { closing: AtomicBool, hub: Mutex<Hub> }
@@ -35,7 +35,7 @@ impl SourceSignalState {
     fn remove(&self, id: u64) -> Result<(), BoxError> {
         let mut hub = self.hub.lock().unwrap_or_else(|error| error.into_inner());
         hub.subscribers.remove(&id);
-        #[cfg(unix)]
+        #[cfg(any(unix, windows))]
         if hub.subscribers.is_empty() {
             if let Some(session) = &hub.session { session.lease.restore()?; session.stop.cancel(); }
             hub.session = None;
@@ -46,7 +46,7 @@ impl SourceSignalState {
         self.closing.store(true, Ordering::Release);
         let mut hub = self.hub.lock().unwrap_or_else(|error| error.into_inner());
         hub.subscribers.clear();
-        #[cfg(unix)]
+        #[cfg(any(unix, windows))]
         {
             if let Some(session) = &hub.session { session.lease.restore()?; session.stop.cancel(); }
             hub.session = None;
@@ -60,6 +60,42 @@ pub trait HasSourceSignalState { fn source_signal_state(&self) -> &Arc<SourceSig
 #[cgp_component(SourceSignalSubscriber)]
 pub trait CanSubscribeSourceSignals { fn subscribe_source_signals(&self) -> Result<SignalSubscription, BoxError>; }
 pub struct SubscribeNativeSourceSignals;
+
+#[cfg(unix)]
+use unix as native;
+#[cfg(windows)]
+#[path = "utility_signals_windows.rs"]
+mod windows;
+#[cfg(windows)]
+use windows as native;
+
+#[cfg(any(unix, windows))]
+#[cgp_provider(SourceSignalSubscriberComponent)]
+impl<Context> SourceSignalSubscriber<Context> for SubscribeNativeSourceSignals
+where Context: HasSourceSignalState + CanSpawnUtilityTask,
+{
+    fn subscribe_source_signals(context: &Context) -> Result<SignalSubscription, BoxError> {
+        let state = Arc::clone(context.source_signal_state());
+        let owner_stop = context.utility_child_token()?;
+        let (sender, receiver) = mpsc::channel(1);
+        let (id, reader) = {
+            let mut hub = state.hub.lock().unwrap_or_else(|error| error.into_inner());
+            if state.closing.load(Ordering::Acquire) { return Err(Errors::default().New("process signal owner is closing")); }
+            let id = hub.next_id.checked_add(1).ok_or_else(|| Errors::default().New("signal subscription identity exhausted"))?;
+            hub.next_id = id;
+            let reader = if hub.session.is_none() {
+                let (session, reader) = native::Session::open(Arc::clone(&state), owner_stop.clone())?;
+                hub.session = Some(session); Some(reader)
+            } else { None };
+            hub.subscribers.insert(id, sender);
+            (id, reader)
+        };
+        // A rejected reader future restores its lease through Drop. Release
+        // the hub lock first, since cleanup acquires the same shared owner.
+        if let Some(reader) = reader { context.spawn_utility_task("process signal reader", reader)?; }
+        Ok(SignalSubscription { receiver, registration: SignalRegistration { state: Arc::downgrade(&state), id }, owner_stop })
+    }
+}
 
 #[cfg(unix)]
 mod unix {
@@ -122,6 +158,14 @@ mod unix {
         }
     }
     pub(super) struct Session { pub lease: Arc<SignalLease>, pub stop: CancellationToken }
+    impl Session {
+        pub(super) fn open(state: Arc<SourceSignalState>, owner_stop: CancellationToken) -> Result<(Self, futures::future::BoxFuture<'static, Result<(), BoxError>>), BoxError> {
+            let (fd, lease) = install()?; let stop = CancellationToken::new();
+            let session = Self { lease: Arc::clone(&lease), stop: stop.clone() };
+            let reader = Reader { fd, lease, state, stop, owner_stop };
+            Ok((session, Box::pin(reader.run())))
+        }
+    }
     fn open_pipe() -> io::Result<(OwnedFd, OwnedFd)> {
         let mut fds = [-1; 2];
         #[cfg(any(target_os = "linux", target_os = "android"))]
@@ -193,33 +237,6 @@ mod unix {
                     }
                 }
             }
-        }
-    }
-    #[cgp_provider(SourceSignalSubscriberComponent)]
-    impl<Context> SourceSignalSubscriber<Context> for SubscribeNativeSourceSignals
-    where Context: HasSourceSignalState + CanSpawnUtilityTask,
-    {
-        fn subscribe_source_signals(context: &Context) -> Result<SignalSubscription, BoxError> {
-            let state = Arc::clone(context.source_signal_state());
-            let owner_stop = context.utility_child_token()?;
-            let (sender, receiver) = mpsc::channel(1);
-            let (id, reader) = {
-                let mut hub = state.hub.lock().unwrap_or_else(|error| error.into_inner());
-                if state.closing.load(Ordering::Acquire) { return Err(Errors::default().New("process signal owner is closing")); }
-                let id = hub.next_id.checked_add(1).ok_or_else(|| Errors::default().New("signal subscription identity exhausted"))?;
-                hub.next_id = id;
-                let reader = if hub.session.is_none() {
-                    let (fd, lease) = install()?; let stop = CancellationToken::new();
-                    hub.session = Some(Session { lease: Arc::clone(&lease), stop: stop.clone() });
-                    Some(Reader { fd, lease, state: Arc::clone(&state), stop, owner_stop: owner_stop.clone() })
-                } else { None };
-                hub.subscribers.insert(id, sender);
-                (id, reader)
-            };
-            // Release the hub lock before spawning: a rejected future drops
-            // its Reader and restores hooks, acquiring this same lock.
-            if let Some(reader) = reader { context.spawn_utility_task("process signal pipe", Box::pin(reader.run()))?; }
-            Ok(SignalSubscription { receiver, registration: SignalRegistration { state: Arc::downgrade(&state), id }, owner_stop })
         }
     }
 }

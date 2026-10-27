@@ -817,8 +817,9 @@
           "known_missing_named_bodies": [],
           "owned_entry_count": 14,
           "partial_adoption_record": "verification/agones/roadmap-M0003-partial-map.json",
+          "platform_effect_authoring_record": "verification/agones/roadmap-M0003-platform-effects.json",
           "prerequisites": "M0001/M0002 authored implementation complete; global phase remains IMPLEMENTATION_ONLY",
-          "progress_usage_observation": "verification/agones/roadmap-M0003-progress-usage-10.json",
+          "progress_usage_observation": "verification/agones/roadmap-M0003-progress-usage-12.json",
           "progress_usage_observations": [
             "verification/agones/roadmap-M0003-progress-usage-1.json",
             "verification/agones/roadmap-M0003-progress-usage-2.json",
@@ -829,7 +830,9 @@
             "verification/agones/roadmap-M0003-progress-usage-7.json",
             "verification/agones/roadmap-M0003-progress-usage-8.json",
             "verification/agones/roadmap-M0003-progress-usage-9.json",
-            "verification/agones/roadmap-M0003-progress-usage-10.json"
+            "verification/agones/roadmap-M0003-progress-usage-10.json",
+            "verification/agones/roadmap-M0003-progress-usage-11.json",
+            "verification/agones/roadmap-M0003-progress-usage-12.json"
           ],
           "reuse_adoption_record": "verification/agones/roadmap-M0003-reuse-adoption.json",
           "route": "MANUAL",
@@ -839,7 +842,7 @@
           "work_base_commit": "e2c1202f1de868a89dc7a444ce4700d7a771ee92"
         }
       },
-      "next_action": "Continue M0003 MANUAL, no route switch. Implement the absent source signal/fswatch platform effects through their existing CGP lifecycle owners, then finish HTTP mux/path/redirect and shared utility source-profile/body reconciliation. Gateway typed primitive/pointer/container/enum/protobuf decoders, source scalar rules and first-value framing are now authored but unverified. Retain all required gateway JSON/ProtoJSON error/byte/partial-state/custom-model/decimal-rendering/Any/proto2/HTTP metadata gaps in the existing gateway receipt; bind EnumCastProfile to source tool/target during actual handler adoption. All M0003 partial-map gaps and full later M0017/M0025/M0027 caller/telemetry obligations remain required. Global BOTH-route gate CLOSED: no compiler/verification/project/generator/CI execution.",
+      "next_action": "Continue M0003 MANUAL, no route switch. Author the missing BSD/macOS kqueue and illumos/Solaris event-port filesystem adapters through the existing NativeWatch/CGP lifecycle, then finish HTTP mux/path/redirect and every required source-profile/body gap. Concrete Windows console and overlapped filesystem paths, source 50-event buffering, per-send rendezvous receipts and drain-before-close ordering are authored but unverified; retain Windows path/error/close/race/native-policy and M0027 process-exit/legacy-handler obligations from roadmap-M0003-platform-effects.json. Preserve all gateway/config/queue/logging/CRD/features/admission gaps and actual later caller/telemetry adoption. Global BOTH-route gate CLOSED; no compiler, native/API probe, fixture, application, proof, generator validation or CI execution.",
       "objective": "AGONES_AND_CPG_COMBINED_ROADMAP",
       "objective_attachment": "/home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt",
       "objective_attachment_sha256": "a9b797fc624be04548c62e63a634bcc2cacab25c4d9f45af346148ba32c1baea",
@@ -887,9 +890,9 @@
   "goal": {
     "objective_attachment": "/home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt",
     "reported_usage": {
-      "observed_at": 1793061335,
-      "time_seconds": 27272,
-      "tokens": 1691561
+      "observed_at": 1793062919,
+      "time_seconds": 28856,
+      "tokens": 1783942
     },
     "status": "active",
     "thread_id": "01a17928-8551-7701-8497-5333c680f283",
@@ -897,8 +900,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 330,
-  "previous_sha256": "0050394718462467f74911b4f973002848f2cf35948e5913cc3088b7d978046a",
+  "previous_revision": 331,
+  "previous_sha256": "8d158511a8a3fd8c89cb24285d02167fdf87d94dea410c27b88a3cf5308c6581",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -1602,7 +1605,7 @@
       "timestamp": "2026-10-21T09:42:01.132215+00:00"
     }
   ],
-  "revision": 331,
+  "revision": 332,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [

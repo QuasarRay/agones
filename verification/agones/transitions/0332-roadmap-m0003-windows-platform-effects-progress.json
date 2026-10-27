@@ -1,0 +1,19 @@
+{
+  "authorization": "Explicit combined /goal invocation",
+  "event": "ROADMAP_M0003_WINDOWS_PLATFORM_EFFECT_PROGRESS",
+  "global_gate": "CLOSED",
+  "milestone_stage": "IMPLEMENTING",
+  "native_goal_status": "active",
+  "partial_adoption": "verification/agones/roadmap-M0003-partial-map.json",
+  "platform_effect_authoring": "verification/agones/roadmap-M0003-platform-effects.json",
+  "predecessor_handoff_sha256": "e8ea59d42277bb3c37205af03049c5f1f30ddb94710d1edf5572d1bf35c0e7eb",
+  "predecessor_revision": 331,
+  "predecessor_sha256": "8d158511a8a3fd8c89cb24285d02167fdf87d94dea410c27b88a3cf5308c6581",
+  "project_executable_invocations": 0,
+  "result_revision": 332,
+  "route_switch": false,
+  "state_sha256": "f582cf1ef90778a7de7cd523826950368ce14382e234b0486dd7f77a6391c1eb",
+  "timestamp": "2026-10-27T01:03:44.480660+00:00",
+  "usage_progress_observation": "verification/agones/roadmap-M0003-progress-usage-12.json",
+  "verification": "NOT_STARTED"
+}

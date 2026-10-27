@@ -1,0 +1,132 @@
+{
+  "completion_claim": "Concrete Windows signal/filesystem and shared channel/cleanup paths are authored but unverified. M0003 and the combined objective remain incomplete.",
+  "dependency_adoption": "Target-specific direct windows-sys =0.61.2 with Foundation/Security/Storage_FileSystem/System_IO/System_Console/System_Threading features. The exact package/checksum/windows-link dependency already exists in the root lock; only util direct dependency bookkeeping changed. Existing futures 0.3.34 AtomicWaker and Tokio sync/tasks are reused. No Cargo resolution, tool install, compile, API probe, signal delivery, filesystem fixture or application run.",
+  "disposition": "READY",
+  "documentation_inputs": [
+    {
+      "purpose": "OS-created control callback threads, return behavior and terminal control lifetime.",
+      "url": "https://learn.microsoft.com/en-us/windows/console/handlerroutine"
+    },
+    {
+      "purpose": "Pinned source ctrlHandler signal mapping and SIGTERM terminal parking.",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/runtime/os_windows.go"
+    }
+  ],
+  "filesystem": {
+    "authored_operations": [
+      "Windows source single-path directory/named-file watcher with actual GetFileAttributesW/CreateFileW/GetFileInformationByHandle and one pinned OVERLAPPED 65536-byte buffer",
+      "ReadDirectoryChangesW completion event + fixed OS wait callback wake the existing CGP-owned Tokio task; no spawned or detached Rust reader thread",
+      "Source default notify filter is LAST_WRITE/FILE_NAME/DIR_NAME; event actions map directory changes, named-file modification/removal and tracked rename names",
+      "Source 50-event Windows buffer and unbuffered error channel, versus unbuffered Linux events; one shared bounded/rendezvous channel owner handles receipts, cancellation retraction and closed buffered drain",
+      "Rendezvous sends use per-offer acknowledgements and stable Arc identity rather than wrapping global completion counters; concurrent senders cannot lose their individual acknowledgement",
+      "Zero-byte overflow and source ERROR_MORE_DATA sizeof(slice)-header branch; access-denied removal, invalid record bounds, error/idle and file-watch disappearance paths are authored",
+      "Normal cancellation cancels and asynchronously drains pending I/O. Emergency Drop unregisters the event waiter before synchronous drain so two consumers cannot race for the auto-reset completion event",
+      "UnregisterWaitEx waits for callbacks before dropping their Arc context, then file/event handles close, channels close and completion is published; closing a removed watch leaves its source channels open until owner cancel",
+      "Existing Linux overflow message now uses the same source ErrEventOverflow text, and explicit/Drop cancellation signals the reader before its actual close/completion path"
+    ],
+    "canonical_owner": "NativeWatch -> platform Reader -> pinned kernel read, handles, event wait, completion bridge and bounded/rendezvous channels",
+    "declarations_templates": "UtilityRuntimeProviders statically delegates FileWatcherOpener; cfg platform provider constructs NativeWatch and uses the existing UtilityTaskScope. No second manager, dynamic provider registry or polling replacement.",
+    "production_consumer": "fswatch::Watch -> open_file_watcher -> shared batchWatch -> source callbacks; WatchHandle::cancel / BatchOwner::Drop -> same native cancellation and close completion.",
+    "source_id": "agones:pkg/util/fswatch/fswatch.go"
+  },
+  "formal_credit": 0,
+  "global_gate": "CLOSED",
+  "milestone_id": "M0003",
+  "native_primary_source_inputs": [
+    {
+      "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/windows-sys-0.61.2/Cargo.toml",
+      "sha256": "1adbc955d5460fa64dc16e6c8198b25672e8d4b97d45ecfb262eb2693ce08422"
+    },
+    {
+      "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/windows-sys-0.61.2/src/Windows/Win32/Foundation/mod.rs",
+      "sha256": "7da61986429ad6764c2c5ec3656ef5c4b3fba6969b6eabbf85991f86966f2994"
+    },
+    {
+      "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/windows-sys-0.61.2/src/Windows/Win32/System/Console/mod.rs",
+      "sha256": "655be5d7edf72d6c0f8b21a9dc1b37389683d6bc73413cd8006ef5c716e8fb3a"
+    },
+    {
+      "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/windows-sys-0.61.2/src/Windows/Win32/System/Threading/mod.rs",
+      "sha256": "c91ba24c0890691ee0b4415f0d2d8e512df380068d47e0a4cf2da5d7042ff012"
+    },
+    {
+      "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/windows-sys-0.61.2/src/Windows/Win32/System/IO/mod.rs",
+      "sha256": "d52aa60727b3a06463e9f21633fb9159805a09596818e6631d9084fd495cdf1f"
+    },
+    {
+      "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/windows-sys-0.61.2/src/Windows/Win32/Storage/FileSystem/mod.rs",
+      "sha256": "b44686d7dcd877df4e539d2a5152a3ec212757efb111139cb0a108c8bad7624a"
+    },
+    {
+      "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/futures-core-0.3.34/src/task/__internal/atomic_waker.rs",
+      "sha256": "67d3e3177332e95696bc727420beadc1af44b5c96da78ac8f97f9f5bae4fb143"
+    }
+  ],
+  "payload_sha256": {
+    "Cargo.lock": "6abd7c09e7d1043ccc9c220130adf7bdd5d04a83f16bacc01ff96a7941daef0b",
+    "crates/util/Cargo.toml": "71f814d05b277398d073ec1bf708aed0f4080d07fd0d28c90b74b67d4ff9bb0c",
+    "rust-support/agones/FSNOTIFY-LICENSE": "2dfbe6d2b5eb18b55148f3805d88648a09e0d17e38428123259afb08c8996e37",
+    "rust-support/agones/GO-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+    "rust-support/agones/src/utility_fswatch.rs": "b3caa2a5f84716cf4794848df55185f9e332b781e4ab3d281742fa15ad03be8c",
+    "rust-support/agones/src/utility_fswatch_windows.rs": "d467b2b2ddf550244fd16347f308f82e2f21fc27cba534be3e66d5fc2fc6684a",
+    "rust-support/agones/src/utility_signals.rs": "86aab0a4b60572e7ad80d125e9f4fdf26056a9cb90374b55b0c34f4da710ebd6",
+    "rust-support/agones/src/utility_signals_windows.rs": "7ee226c03ff13e152d4ee81e12e5d9f6d9e4d25153810c37e8188960ee831239"
+  },
+  "project_executable_invocations": 0,
+  "record_kind": "PARTIAL_PLATFORM_EFFECT_AUTHORING",
+  "remaining": [
+    "BSD/macOS kqueue and illumos/Solaris event-port filesystem adapters remain unauthored. Do not claim all-platform completion from Linux and Windows paths.",
+    "Reconcile exact Windows path/Clean/UTF16/long-name/symlink/recursive-suffix/case/normalization and malformed kernel-buffer profiles. Current adapter implements the single-path Agones Watch consumer; arbitrary fsnotify multi-Add/Remove/recursive APIs are not independently exposed.",
+    "Complete source error type/string/wrapping and NewWatcher/Add/Close native failure ordering. This backend uses an overlapped event/wait registration instead of the Go IOCP reader, so raw OS allocation/failure sequences are not asserted identical.",
+    "Final failed console-hook removal/wait unregister or undrainable pending filesystem I/O aborts to avoid unsafe continuation. This native last-resort policy remains explicit and unverified; normal cleanup is awaited. Emergency Windows Drop can synchronously wait for kernel I/O cancellation.",
+    "Source terminal console callbacks are OS-owned and remain parked until process exit or OS timeout after notification. Actual production M0027 exit/cleanup composition and interaction with preserved old Tokio/signal handlers remain required.",
+    "Reconcile signal delivery/Stop/late callback/quiescence/fanout/cancel races and per-platform default behavior, including non-Unix/non-Windows targets, before any cross-platform acceptance.",
+    "All other M0003 HTTP/TLS/gateway/queue/config/CRD/logging/feature/admission profiles and source-owner consumer adoption remain required. No assurance or route-switch credit comes from this authoring record."
+  ],
+  "route": "MANUAL",
+  "runtime_credit": 0,
+  "signals": {
+    "authored_operations": [
+      "Common CGP SourceSignalSubscriber path owns one hub/session, subscription ids, one-slot source channels, weak registrations, parent child token and reader spawn/rejection cleanup on Unix and Windows",
+      "Windows SetConsoleCtrlHandler lease with exclusive process claim, atomic pending/waker bridge, active-callback quiescence and explicit removal; stale readers cannot poll or fan out through a replacement lease",
+      "CTRL_C and CTRL_BREAK deliver source SIGINT; CLOSE/LOGOFF/SHUTDOWN deliver source SIGTERM and park the OS-created callback thread as the source runtime does",
+      "Window terminal parking holds no Rust lease/task/waker/context; actual parent cleanup/process exit remains the M0027 owner. Stop removes future notifications without joining an OS-owned terminal callback",
+      "Both explicit Stop and owner close restore/remove the selected hook; reader Drop/rejected spawn cleans the same lease. Final failed restoration abort is an explicit native failure policy, not source parity credit"
+    ],
+    "canonical_owner": "SourceSignalState/Hub -> platform Session/SignalLease -> owned Reader",
+    "declarations_templates": "UtilityRuntimeContext HasField + Deftly UtilityRuntimeProviders delegates HasSourceSignalState, SourceSignalSubscriber and UtilityTaskSpawner. The common provider selects platform code at compile time.",
+    "production_consumer": "NewSigKillContext / NewSigTermHandler -> existing CGP source subscription/task owner. Actual command parent transfer remains M0027 work.",
+    "source_id": "agones:pkg/util/signals/signals.go"
+  },
+  "source_inputs": [
+    {
+      "path": "pkg/util/signals/signals.go",
+      "sha256": "bddfa941f5235d32ccf6909f211caf491cd536b3e1920a16473430ec1e51e418"
+    },
+    {
+      "path": "pkg/util/fswatch/fswatch.go",
+      "sha256": "406f958093406930868a85b962ff51f4fdbdd57932b60310c4f125807b4f72ee"
+    },
+    {
+      "path": "vendor/github.com/fsnotify/fsnotify/backend_windows.go",
+      "sha256": "750aa64aa42d366b59af209b02089e08a0795281bc2a95dd160c8775094ebf36"
+    },
+    {
+      "path": "vendor/github.com/fsnotify/fsnotify/fsnotify.go",
+      "sha256": "c721c84f2a2c6734ec0e82c0c9f4133ba3f62761457b52cc2a26aaf511e2c78a"
+    },
+    {
+      "path": "vendor/github.com/fsnotify/fsnotify/LICENSE",
+      "sha256": "2dfbe6d2b5eb18b55148f3805d88648a09e0d17e38428123259afb08c8996e37"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/runtime/os_windows.go",
+      "sha256": "e89fc1c8927f8a8bf0ffd862709a7ced6d751d221792329c0d75bb5616cb009d"
+    }
+  ],
+  "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "stage": "IMPLEMENTING",
+  "timestamp": "2026-10-27T01:01:00.975982+00:00",
+  "verification": "NOT_STARTED",
+  "work_base_commit": "6183dcfabe72c589dacad711d189b4b53cca3601"
+}
