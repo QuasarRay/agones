@@ -68,6 +68,11 @@ pub(crate) mod informational_sender;
 #[cfg(feature = "agones-informational")]
 pub use informational_sender::{InformationalError, InformationalSender};
 
+#[cfg(feature = "agones-informational")]
+mod source_trailers;
+#[cfg(feature = "agones-informational")]
+pub use source_trailers::SourceTrailers;
+
 #[cfg(feature = "http2")]
 /// Extension type representing the `:protocol` pseudo-header in HTTP/2.
 ///

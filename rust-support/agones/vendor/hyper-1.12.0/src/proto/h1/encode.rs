@@ -221,6 +221,17 @@ impl Encoder {
         }
     }
 
+    #[cfg(feature = "agones-informational")]
+    pub(crate) fn encode_source_trailers<B>(&self, fields: Bytes) -> Option<EncodedBuf<B>> {
+        match self.kind {
+            Kind::Chunked(_) => Some(EncodedBuf {
+                kind: BufKind::Trailers(b"0\r\n".chain(fields).chain(b"\r\n")),
+            }),
+            // Go only appends trailers when this response uses chunking.
+            _ => None,
+        }
+    }
+
     pub(super) fn encode_and_end<B>(&self, msg: B, dst: &mut WriteBuf<EncodedBuf<B>>) -> bool
     where
         B: Buf,

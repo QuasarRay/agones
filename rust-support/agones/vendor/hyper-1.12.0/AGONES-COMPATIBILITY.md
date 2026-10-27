@@ -1,4 +1,4 @@
-# Agones informational response adaptation
+# Agones source HTTP adaptation
 
 Base: Hyper 1.12.0, exact crates.io source archive SHA-256
 `2c3e324da4c95177d6291d4c8730197c0d1822f8a9766814a4a44fa5ab797c9c`.
@@ -24,3 +24,23 @@ source. HTTP/2 retains the bundled Go reader's separate Continue state.
 This adaptation was authored during IMPLEMENTATION_ONLY. It has not been
 compiled, tested, linted, exercised on a socket, or granted parity/proof credit.
 Root Cargo patch/lock source bookkeeping was authored without running Cargo.
+
+The same optional capability also exposes `SourceTrailers`, a single-publication
+HTTP/1 trailer block attached to one response. The source response writer owns
+declarations, final handler-header lookup and Go `Header.Write` encoding. After
+publication it yields a normal trailers body frame. The existing H1 dispatcher
+passes that frame to its existing connection encoder, which consumes the block
+only for this response's chunked body. This preserves undeclared `Trailer:`
+fields and the source's lack of a client-TE requirement, without applying that
+policy to other Hyper responses. The packet contains header fields only; the
+existing encoder emits the terminating chunk and blank line. Fixed-length,
+close-delimited and bodyless responses do not emit trailer fields. No task,
+executor, transport, global state or provider registry is introduced by this
+data extension. HTTP/2 uses actual `Frame::trailers` and the existing h2 sender.
+
+The source body carries its end-of-stream decision with each bounded frame,
+including the empty-header and final-data cases. The connection phase owns the
+graceful-close token used by source HTTP/2 `Connection: close`; its existing
+driver performs graceful shutdown and owns the stream drain. Exact native
+frame/HPACK, GOAWAY timing, header alias, partial I/O and error profiles remain
+unverified implementation work. No compilation or behavior credit is implied.

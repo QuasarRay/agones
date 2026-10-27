@@ -84,6 +84,8 @@ where
                 // If they tell us otherwise, we'll downgrade in `read_head`.
                 version: Version::HTTP_11,
                 allow_trailer_fields: false,
+                #[cfg(feature = "agones-informational")]
+                source_trailers: None,
             },
             _marker: PhantomData,
         }
@@ -654,6 +656,11 @@ where
 
         self.enforce_version(&mut head);
 
+        #[cfg(feature = "agones-informational")]
+        {
+            self.state.source_trailers = head.extensions.remove::<crate::ext::SourceTrailers>();
+        }
+
         let buf = self.io.headers_buf();
         match super::role::encode_headers::<T>(
             Encode {
@@ -775,6 +782,21 @@ where
     }
 
     pub(crate) fn write_trailers(&mut self, trailers: HeaderMap) {
+        #[cfg(feature = "agones-informational")]
+        if let Some(source) = &self.state.source_trailers {
+            // The source writer publishes before it yields this trailers
+            // frame. Its block intentionally includes undeclared fields and
+            // does not depend on the request's TE header.
+            if let Some(fields) = source.take_http1() {
+                if let Writing::Body(encoder) = &mut self.state.writing {
+                    if let Some(buffer) = encoder.encode_source_trailers(fields) {
+                        self.io.buffer(buffer);
+                        self.state.writing = if encoder.is_last() { Writing::Closed } else { Writing::KeepAlive };
+                    }
+                }
+            }
+            return;
+        }
         if T::is_server() && !self.state.allow_trailer_fields {
             debug!("trailers not allowed to be sent");
             return;
@@ -1007,6 +1029,8 @@ struct State {
     version: Version,
     /// Flag to track if trailer fields are allowed to be sent.
     allow_trailer_fields: bool,
+    #[cfg(feature = "agones-informational")]
+    source_trailers: Option<crate::ext::SourceTrailers>,
 }
 
 #[derive(Debug)]

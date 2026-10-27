@@ -13,41 +13,48 @@
     "ResponseWriter now owns source 2048-byte H1 and 4096-byte H2 buffering, direct large writes, header snapshots and no-body/HEAD/header-presence/Content-Encoding/Transfer-Encoding decisions. H1 signed length parsing and H2 deferred unsigned-63-bit parsing retain their distinct count/error and empty-write behavior.",
     "Attempted int64 write count wraps and includes rejected length overruns; failed transport writes retain the original error chain through one shared sticky failure. Header transport failures are ignored as in source WriteHeader, while the native connection retains its failure.",
     "Source clock and default HTTP diagnostic capabilities are statically supplied by UtilityRuntimeProviders. Date is generated only when its header key is absent, with native automatic dates disabled; Go status-line strings and unknown-code fallback are supplied to the existing reason-phrase extension.",
-    "Hyper H2 stream/upgrade futures now use a weak executor and the existing per-connection UtilityTaskScope. Normal/error connection exits cancel and join protocol children; emergency scope Drop aborts owned children. No discarded TokioExecutor JoinHandles or competing lifecycle manager."
+    "Hyper H2 stream/upgrade futures now use a weak executor and the existing per-connection UtilityTaskScope. Normal/error connection exits cancel and join protocol children; emergency scope Drop aborts owned children. No discarded TokioExecutor JoinHandles or competing lifecycle manager.",
+    "Trailer declarations now follow source comma/ASCII-space splitting, canonicalization and the exact httpguts forbidden-name table. H1 retains duplicate declarations and prefixed fields; H2 de-duplicates and promotes prefixed fields with unordered canonical-key collision choices.",
+    "Actual response trailer I/O: ResponseWriter publishes one source-encoded H1 field block before yielding its trailers frame. The pinned native connection consumes it only for this response's chunked body, independent of client TE or prior Trailer declarations. Source Header.Write sorting, key spelling, CR/LF replacement and trimming are authored. H2 emits actual trailers frames through the existing h2 body sender, including key-presence with empty values.",
+    "Bounded response messages now carry end-of-stream decisions. HTTP/2 HEAD and completed empty responses can end on HEADERS, final data can carry END_STREAM, and present trailers end on their HEADERS frame. This is authored source control flow, not a native frame/parity observation.",
+    "Source HTTP/2 Connection first-value exactly close removes that field and signals its connection-owned graceful-close token. The existing Hyper connection driver owns shutdown/GOAWAY and independent stream draining; no new server or task manager.",
+    "Plain and TLS accept loops share one per-listener AcceptBackoff, 5ms doubling to 1s, reset on success, via static CGP SourceHttpDelay. Error handling checks shutdown before retry and retains permanent native errors. The source syscall-wrapped Unix/Windows Errno policy is distinct from the direct-Errno exception and Winsock lookalikes; native error-origin and display profiles remain open."
   ],
-  "canonical_owner": "SourceMux owns handler data. CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/date/diagnostic effects; each connection owns protocol child scope and a weak executor, each source request owns response/body/head channels and Continue state. Native H1/H2 drivers own bounded informational receivers and acknowledgements; original errors and disposal remain with these owners.",
+  "canonical_owner": "SourceMux owns handler data. CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/date/diagnostic/delay effects. Each listener owns AcceptBackoff; each connection owns its protocol child scope, weak executor and graceful-close token. Each request writer owns declarations, bounded response frames and one single-publication SourceTrailers packet; existing native drivers consume the packet/frames and own informational acknowledgements. No provider registry or alternate lifecycle manager.",
   "completion_claim": "Connected source-authoring progress only. Native compatibility package is actual source, not a wrapper marker, but is uncompiled/unexecuted. M0003 and the combined objective remain incomplete.",
   "disposition": "READY",
   "formal_credit": 0,
   "global_gate": "CLOSED",
   "milestone_id": "M0003",
   "native_hyper_adoption": "verification/agones/roadmap-M0003-hyper-adoption.json",
-  "native_package_payload_manifest_sha256": "afba2b673cf8d0bfc37b6de194629f2a21777dca46c89fe1c2d68d4fe725cb9a",
+  "native_package_payload_manifest_sha256": "3b3fd19374af4b67816acc4a8bd2c0b13b79a4e6792988314ce57534f5ac6e86",
   "payload_sha256": {
     "Cargo.lock": "1d2c5f632a6a590af119a16f3ff926d89bcfdaedde63a265fd185c8d406745a9",
     "Cargo.toml": "fd4401820492ab3209f748949abe5327e974d6c8d892a510803943391d6a2a18",
     "crates/util/Cargo.toml": "6b011badbe07029ab9a84257636f7de293931d32a2c1bbef49c60b4d07dd91bf",
     "rust-support/agones/GO-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
-    "rust-support/agones/src/utility_declarations.rs": "6ef783fd8254f26628a1a7b793bfc2df4b08a11b91e92061272d45ff3d216b70",
-    "rust-support/agones/src/utility_http.rs": "efc97b61a51b34cea7b731353487db641492df50623a2e41cac72a719f16804d",
+    "rust-support/agones/src/utility_declarations.rs": "565ee1705ffbaff809626019897c0dad29fcf508e27d4239f10bd9f6a7009d66",
+    "rust-support/agones/src/utility_http.rs": "0dc0d2825d09468c4b713b45ef47bf1b31635e40ba2b9349c1189a27629d71ca",
+    "rust-support/agones/src/utility_http_listener.rs": "5ca5df95a2e84e16fbe280b2afe4843bde365936a068a910d162a23112b9c460",
     "rust-support/agones/src/utility_http_mux.rs": "017dfc7e5b6e01f66e0dd6de042b3d833610f0c1f8b549ea14d16ed8132568c6",
-    "rust-support/agones/src/utility_http_response.rs": "fbc924aaaaede564163b43cfc93773b815d5ebfee18bafa78836c611764f3f75",
+    "rust-support/agones/src/utility_http_response.rs": "fc92aeb2e1b947ce5f9f4a6190adb5ce4fb2eed045a14abdbed0e1e53fc1feb3",
     "rust-support/agones/src/utility_http_sniff.rs": "ef1baa72b7bb66ea833ef7e15858766313c8937d13e0d18bf6bf01f8f2a96042",
-    "rust-support/agones/src/utility_http_status.rs": "d310b7f9c71780a03655b4337a444eb7b7d5da3e311585c943af51e8b3a83e3a"
+    "rust-support/agones/src/utility_http_status.rs": "d310b7f9c71780a03655b4337a444eb7b7d5da3e311585c943af51e8b3a83e3a",
+    "rust-support/agones/src/utility_http_trailers.rs": "877398c0e611214f679c7f082fa9342262b39c86591677ac9f0a417ddd608050"
   },
   "project_executable_invocations": 0,
   "record_kind": "PARTIAL_HTTP_BOUNDARY_AUTHORING",
   "remaining": [
     "Complete exact Go quote/caller/registration/conflict and panic/stack diagnostics, source Unicode tables and empty CONNECT path-segment/tree-alias configurations. Native default stdlog formatting is authored, but complete global stdlog flags/output/caller identity and native failure behavior remain partial.",
     "Complete net/url and HTTP parsing/rejection across host/authority/opaque/absolute/CONNECT/invalid bytes and target grammar, and retain byte paths through gateway/admission/discovery/log consumers. HttpRequest.path remains a text compatibility projection.",
-    "Complete actual trailer emission, header slice alias/mutation rules, H1 connection-buffer/Transfer-Encoding/close framing, H2 stream end/Connection close GOAWAY and all partial-write/flush/reset/cancellation/error timing. Informational and body I/O are authored, with no socket/runtime/refinement evidence.",
+    "Complete header slice alias/mutation and non-UTF8 header-key data, normal H1 response-header encoding/connection buffers/Transfer-Encoding/close framing, native H2 header ordering/HPACK/GOAWAY schedules and all partial-write/flush/reset/cancellation/error timing. Actual H1/H2 trailers, source end-of-stream decisions and H2 graceful-close wiring are authored, without native socket/runtime/refinement evidence. Reconcile all selected protocol/version profiles rather than inferring parity.",
     "Reconcile protocol-specific Content-Length, empty writes, Continue/late Continue, HEAD/no-body responses and malformed input profiles across all selected source versions/configurations. Go 1.26.5 protocol code and existing explicit mux version profiles are bound separately; no claim that every Go tool/runtime profile is selected.",
-    "Finish listener named-service/bind/temporary accept-error retry/backoff and independent shutdown/native failure profiles, plus M0027 source tool/GODEBUG and actual production parent adoption.",
+    "Finish listener named-service/bind and independent listener-close/shutdown timing, native error origin (syscall-wrapped versus direct Errno or poll/init failures), platform/native error display and complete retry profiles. Shared temporary-syscall accept backoff is authored for plain/TLS, but does not establish full Go listener equivalence. M0027 source tool/GODEBUG and actual production parent adoption remain required.",
     "Retain every other M0003 filesystem/signal/gateway/config/queue/logging/CRD/features/admission/body gap. Global BOTH-route gate stays CLOSED; no compiler, test, formatter/linter, native/API probe, application, generator validation, proof or CI ran."
   ],
   "route": "MANUAL",
   "runtime_credit": 0,
-  "source_fetch_note": "Two guessed helper URLs and one wrong-directory listing returned 404 during source reading. Bundle imports and the actual directory listing identified net/http/internal/httpcommon/httpcommon.go; only retrieved bytes above receive input identities. No project or native probe ran.",
+  "source_fetch_note": "Prior helper-source 404 history remains in the predecessor record. This batch retrieved the pinned guts/textproto/net/syscall source files listed above for source reading. Source text and constant translation only; no project executable, API/native probe or assurance ran.",
   "source_ids": [
     "agones:pkg/util/httpserver/server.go",
     "agones:pkg/util/https/server.go",
@@ -209,12 +216,96 @@
       "revision": "go1.26.5",
       "sha256": "8cfd5819dc821d45f82fde10afff4b2e652535b0091e0559fc8ad7766051a2c2",
       "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/vendor/golang.org/x/net/http/httpguts/httplex.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/vendor/golang.org/x/net/http/httpguts/guts.go",
+      "revision": "go1.26.5",
+      "sha256": "3da54270a625540809f2f767e54e18acf27199aca64b6cf16d6d3fa3999de959",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/vendor/golang.org/x/net/http/httpguts/guts.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/textproto/textproto.go",
+      "revision": "go1.26.5",
+      "sha256": "e4f0d94752345b5dec4fe7f4805531e8036a9cd44131d807cafa700dd5323901",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/textproto/textproto.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/net.go",
+      "revision": "go1.26.5",
+      "sha256": "35a3d5047c156a1395c4c197fad5a99e123567a12ae7bc08ba7d5c723281ae03",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/net.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/syscall/syscall_unix.go",
+      "revision": "go1.26.5",
+      "sha256": "31fd5823803feb47f4ea0f13d3e0db5bd3cc6e37467bbebd8abbba8467cb20a7",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/syscall/syscall_unix.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/syscall/syscall_windows.go",
+      "revision": "go1.26.5",
+      "sha256": "f1b22dde6bb980cf036561cee7ece968daa260cb622f32c96cebd52477b7a346",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/syscall/syscall_windows.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/error_unix.go",
+      "revision": "go1.26.5",
+      "sha256": "bbcd49442466a102c8b1d0963bed12afb6cb866cbbec8144f66ded21631631c4",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/error_unix.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/error_windows.go",
+      "revision": "go1.26.5",
+      "sha256": "55c05a49e3bc8a0b7ca9c806848e3fb3847ec07c3864ffafc1a92fead6bac0a3",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/error_windows.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/syscall/zerrors_windows.go",
+      "revision": "go1.26.5",
+      "sha256": "627276cf400689ea253d13a2ee2c08cb066d0e019ef7ff3cca691d8ab7144992",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/syscall/zerrors_windows.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/fd_unix.go",
+      "revision": "go1.26.5",
+      "sha256": "0f8f72e4a3bafa38f3a12a826f1ffdaa4797c921a36e152d4e991e222ea8d3e0",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/fd_unix.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/fd_windows.go",
+      "revision": "go1.26.5",
+      "sha256": "8008f4a0bd9fc58a23b3fea17ffdb15e4739c19585c60589b764076d225972ff",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/fd_windows.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/tcpsock_posix.go",
+      "revision": "go1.26.5",
+      "sha256": "01136ba949dd7d7f70511d514ec12a89a22c216457b2ab6220c16387bb62dbed",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/tcpsock_posix.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/tcpsock.go",
+      "revision": "go1.26.5",
+      "sha256": "0c3392bd7c2966f894e01ea27514623cf09dc2660e426049219f7e5ee3ec0f74",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/tcpsock.go"
     }
   ],
   "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
   "stage": "IMPLEMENTING",
-  "timestamp": "2026-10-27T03:54:46.610924+00:00",
-  "typed_declaration_template_provider_consumer": "UtilityRuntimeContext + UtilityRuntimeProviders -> static HttpServerRunner/HttpsServerRunner/SourceHttpClock/SourceHttpDiagnostic -> serve_connection with owned protocol scope -> request_service -> ResponseWriter/HttpRequest and SourceMux -> native Hyper informational driver/stream and body channel.",
+  "timestamp": "2026-10-27T04:19:03.679401+00:00",
+  "typed_declaration_template_provider_consumer": "UtilityRuntimeContext + UtilityRuntimeProviders -> static HttpServerRunner/HttpsServerRunner/SourceHttpClock/SourceHttpDiagnostic/SourceHttpDelay -> accept loop and serve_connection -> request_service -> ResponseWriter + ResponseFrame + SourceTrailers -> existing Hyper H1 connection encoder or H2 body sender and graceful driver.",
   "verification": "NOT_STARTED",
-  "work_base_commit": "f294f9c95b3fd99627d164fc1f83d8c5ec950ec0"
+  "work_base_commit": "078d8918004248587c3878202c26b8836ba6c179"
 }

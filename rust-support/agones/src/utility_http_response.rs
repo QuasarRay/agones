@@ -2,10 +2,11 @@
 // Adapted from Go net/http server.go and transfer.go. Copyright The Go Authors.
 // BSD-3-Clause; see ../GO-LICENSE. The existing CGP request task owns this
 // writer, its bounded body sender, pending head and clock/diagnostic effects.
-use super::{Headers, HttpRequest, ResponseHead, header, set_header, sniff_content_type, native_response_head, CanReadSourceHttpClock, CanEmitSourceHttpDiagnostic};
+use super::{Headers, HttpRequest, ResponseHead, ResponseFrame, header, set_header, sniff_content_type, native_response_head, trailers, CanReadSourceHttpClock, CanEmitSourceHttpDiagnostic};
 use crate::{errors::{BoxError, Errors}, utility_runtime::UtilityRuntimeContext};
 use bytes::Bytes;
-use std::{collections::BTreeMap, io, sync::{Arc, atomic::{AtomicBool, Ordering}}};
+use hyper::body::Frame;
+use std::{collections::{BTreeMap, HashMap}, io, sync::{Arc, atomic::{AtomicBool, Ordering}}};
 use tokio::sync::{mpsc, oneshot};
 
 const BUFFER_SIZE: usize = 2048;
@@ -18,7 +19,7 @@ pub struct ResponseWriter {
     committed: Option<u16>,
     committed_headers: Option<Headers>,
     head: Option<oneshot::Sender<ResponseHead>>,
-    data: mpsc::Sender<Bytes>,
+    data: mpsc::Sender<ResponseFrame>,
     runtime: UtilityRuntimeContext,
     panicked: Arc<AtomicBool>,
     head_request: bool,
@@ -31,15 +32,18 @@ pub struct ResponseWriter {
     informational: hyper::ext::InformationalSender,
     handler_done: bool,
     write_failure: Option<WriteFailure>,
+    declared_trailers: Vec<Vec<u8>>,
+    source_trailers: hyper::ext::SourceTrailers,
+    source_close: tokio_util::sync::CancellationToken,
 }
 impl ResponseWriter {
-    pub(super) fn new(runtime: UtilityRuntimeContext, head: oneshot::Sender<ResponseHead>, data: mpsc::Sender<Bytes>,
-        panicked: Arc<AtomicBool>, request: &HttpRequest) -> Result<Self, BoxError> {
+    pub(super) fn new(runtime: UtilityRuntimeContext, head: oneshot::Sender<ResponseHead>, data: mpsc::Sender<ResponseFrame>,
+        panicked: Arc<AtomicBool>, source_close: tokio_util::sync::CancellationToken, request: &HttpRequest) -> Result<Self, BoxError> {
         let informational = request.informational.clone().ok_or_else(|| Errors::default().New("HTTP informational response driver is unavailable"))?;
         Ok(Self { headers: BTreeMap::new(), committed: None, committed_headers: None, head: Some(head), data, runtime,
             panicked, head_request: request.method == "HEAD", written: 0, content_length: None, buffered: Vec::new(), finished: false,
             http2: request.protocol == hyper::Version::HTTP_2, can_write_continue: Arc::clone(&request.can_write_continue), informational,
-            handler_done: false, write_failure: None })
+            handler_done: false, write_failure: None, declared_trailers: Vec::new(), source_trailers: hyper::ext::SourceTrailers::new(), source_close })
     }
     pub async fn write_header(&mut self, status: u16) -> Result<(), BoxError> {
         if self.committed.is_some() { return Ok(()); }
@@ -73,11 +77,16 @@ impl ResponseWriter {
     }
     async fn send_head(&mut self, first_data: &[u8]) -> Result<(), BoxError> {
         if self.committed.is_none() { self.write_header(200).await?; }
+        if self.http2 && self.handler_done { self.promote_undeclared_trailers(); }
         if let Some(sender) = self.head.take() {
             let status = self.committed.unwrap_or(200);
             let mut headers = self.committed_headers.clone().unwrap_or_default();
             let has_transfer_encoding = header(&headers, "Transfer-Encoding").is_some_and(|value| !value.is_empty());
             if self.http2 {
+                if headers.contains_key("Connection") {
+                    if header(&headers, "Connection") == Some(b"close") { self.source_close.cancel(); }
+                    headers.remove("Connection");
+                }
                 if let Some(value) = header(&headers, "Content-Length").filter(|value| !value.is_empty()).map(<[u8]>::to_vec) {
                     headers.remove("Content-Length");
                     self.content_length = parse_h2_content_length(&value);
@@ -98,10 +107,12 @@ impl ResponseWriter {
             }
             if self.head_request { headers.remove("Transfer-Encoding"); }
             if !headers.contains_key("Date") { set_header(&mut headers, "Date", self.runtime.source_http_date()); }
-            // Fake Trailer:foo keys are not HTTP header names. Their eventual
-            // trailer emission remains a distinct transport responsibility.
+            if let Some(values) = headers.get("Trailer") {
+                for value in values.iter() { for name in trailers::elements(value) { self.declare_trailer(name); } }
+            }
             headers.retain(|name, _| !name.starts_with("Trailer:"));
-            sender.send(ResponseHead { status, headers })
+            let end_stream = self.http2 && (self.head_request || (self.handler_done && self.declared_trailers.is_empty() && first_data.is_empty()));
+            sender.send(ResponseHead { status, headers, trailers: self.source_trailers.clone(), end_stream })
                 .map_err(|_| io::Error::new(io::ErrorKind::BrokenPipe, "HTTP response consumer closed"))?;
         }
         Ok(())
@@ -109,8 +120,9 @@ impl ResponseWriter {
     async fn write_chunk(&mut self, bytes: &[u8]) -> Result<(), BoxError> {
         if let Some(error) = &self.write_failure { return Err(Box::new(error.clone())); }
         if let Err(error) = self.send_head(bytes).await { return Err(self.remember_failure(error)); }
-        if !self.head_request && !bytes.is_empty() {
-            if self.data.send(Bytes::copy_from_slice(bytes)).await.is_err() {
+        let end_stream = self.http2 && self.handler_done && self.final_trailers().is_empty();
+        if !self.head_request && (!bytes.is_empty() || end_stream) {
+            if self.data.send(ResponseFrame { frame: Frame::data(Bytes::copy_from_slice(bytes)), end_stream }).await.is_err() {
                 return Err(self.remember_failure(Box::new(io::Error::new(io::ErrorKind::BrokenPipe, "HTTP response consumer closed"))));
             }
         }
@@ -171,6 +183,49 @@ impl ResponseWriter {
         let _ = self.write_header(status).await;
         let _ = self.write(format!("{message}\n").as_bytes()).await;
     }
+    fn declare_trailer(&mut self, name: &[u8]) {
+        let name = trailers::canonical_name(name);
+        if !trailers::valid_trailer(&name) {
+            if self.http2 {
+                self.runtime.emit_source_http_diagnostic(&format!("ignoring invalid trailer {:?}", String::from_utf8_lossy(&name)));
+            }
+            return;
+        }
+        // HTTP/1 retains repeated declarations; HTTP/2 declares each key once.
+        if !self.http2 || !self.declared_trailers.contains(&name) { self.declared_trailers.push(name); }
+    }
+    fn promote_undeclared_trailers(&mut self) {
+        // Range over unordered source-map data here. Distinct prefixed keys
+        // can canonicalize to one key; their overwrite choice must not become
+        // a prescribed lexicographic priority. Header wire order is sorted
+        // separately by the source encoder.
+        let promoted: HashMap<_, _> = self.headers.iter().filter_map(|(key, values)| key.strip_prefix("Trailer:")
+            .map(|name| (name.to_owned(), Arc::clone(values)))).collect();
+        for (name, values) in promoted {
+            self.declare_trailer(name.as_bytes());
+            // The source overwrites an existing unprefixed key even when its
+            // declaration was rejected; only declared keys reach the encoder.
+            let key = String::from_utf8(trailers::canonical_name(name.as_bytes())).expect("canonical UTF8 trailer key");
+            self.headers.insert(key, values);
+        }
+        self.declared_trailers.sort();
+    }
+    fn final_trailers(&self) -> Headers {
+        let mut result = Headers::new();
+        if !self.http2 {
+            for (key, values) in &self.headers {
+                if let Some(key) = key.strip_prefix("Trailer:") { result.insert(key.to_owned(), Arc::clone(values)); }
+            }
+        }
+        for key in &self.declared_trailers {
+            let Ok(key) = std::str::from_utf8(key) else { continue; };
+            if let Some(values) = self.headers.get(key) {
+                if self.http2 { result.insert(key.to_owned(), Arc::clone(values)); }
+                else { Arc::make_mut(result.entry(key.to_owned()).or_default()).extend(values.iter().cloned()); }
+            }
+        }
+        result
+    }
     pub(super) async fn finish(mut self) {
         self.handler_done = true;
         if self.committed.is_none() { let _ = self.write_header(200).await; }
@@ -186,7 +241,17 @@ impl ResponseWriter {
                 }
             }
         }
-        let _ = self.flush_buffer().await;
+        let flushed = self.flush_buffer().await.is_ok();
+        if flushed && !self.head_request {
+            let trailers = self.final_trailers();
+            if self.http2 {
+                // Key presence, including a nil/empty value slice, determines
+                // whether Go ends with a trailers HEADERS frame.
+                if !trailers.is_empty() { let _ = self.data.send(ResponseFrame { frame: Frame::trailers(trailers::encode_http2(&trailers)), end_stream: true }).await; }
+            } else if self.source_trailers.finish_http1(trailers::encode_http1(&trailers)).is_ok() {
+                let _ = self.data.send(ResponseFrame { frame: Frame::trailers(hyper::HeaderMap::new()), end_stream: true }).await;
+            }
+        }
         self.finished = true;
     }
 }

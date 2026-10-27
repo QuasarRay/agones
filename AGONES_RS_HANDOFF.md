@@ -1,6 +1,6 @@
 # Agones-rs and CPG handoff
 
-Canonical ledger: `AGONES_RS_STATE.json`, revision 334. Native Goal:
+Canonical ledger: `AGONES_RS_STATE.json`, revision 335. Native Goal:
 `01a17928-8551-7701-8497-5333c680f283`, ACTIVE, no budget. Current work made
 concrete source progress; no wait or blocking condition is live.
 Authority: combined attachment/roadmap SHA
@@ -34,15 +34,15 @@ authored factory/codec/mux consumer, still PARTIAL and UNVERIFIED. The named
 missing-body list is empty; required behavior/platform gaps remain open.
 
 Immediate next action: continue M0003 MANUAL without a route switch. Finish HTTP
-trailer/header alias/byte-URL/H1 framing/H2 stream close and error/reset/flush
-profiles, listener named-service/temporary accept retry/backoff/shutdown and all
-selected fsnotify v1.4.7 and existing gateway/config/queue/logging/CRD/features/
-admission/body gaps. Do not substitute the edited Go fsnotify 1.9 import for
-the pinned utility's gopkg.in/fsnotify.v1 1.4.7 behavior.
-HTTP/native source detail: roadmap-M0003-http-authoring.json and
-roadmap-M0003-hyper-adoption.json under verification/agones. Full sniffing,
-OPTIONS/expectation/Continue, protocol-specific buffering/counts and actual
-informational I/O are now authored, still uncompiled/unexecuted/unverified.
+normal header encoding/alias/byte-URL/framing/partial-write/flush/reset/error
+profiles; listener named-service/bind/native error-origin/display and independent
+close/shutdown; selected fsnotify v1.4.7 failure/close/race/BSD timed-read/stale-fd;
+and every existing gateway/config/queue/logging/CRD/features/admission/body gap.
+Use the pinned utility's gopkg.in/fsnotify.v1 1.4.7 behavior, not the unselected
+edited Go fsnotify 1.9 import. HTTP details remain in roadmap-M0003-http-authoring
+and roadmap-M0003-hyper-adoption JSON records under verification/agones.
+Trailer I/O, H2 end-of-stream and per-connection graceful-close wiring, plus
+plain/TLS syscall-temporary accept backoff are authored, uncompiled/unexecuted.
 
 Existing util package registration is `rust-support/agones/src/utility_lib.rs`.
 Literal mirror paths are under agones-rs/pkg/util; Rust-only effect/wiring files
@@ -205,8 +205,8 @@ source status text, H1 2048-byte/H2 4096-byte buffering, attempted int64 counts,
 H1 signed versus H2 deferred unsigned-63-bit Content-Length rules, empty writes,
 sticky original I/O errors, header snapshots/no-body/HEAD and Date-key suppression
 are authored. UtilityRuntimeProviders now supplies static HTTP clock and default
-stdio diagnostic capabilities. Exact framing/partial writes/flush/alias/trailer/
-URL/diagnostic/native failure profiles remain open.
+stdio diagnostic capabilities. Static SourceHttpDelay supplies accept sleeps.
+Exact framing/partial writes/flush/alias/URL/diagnostic/native profiles remain open.
 
 Server-level OPTIONS * now bypasses mux rejection, uses zero Content-Length,
 source 4KB body-drain bounds and H1 over-limit close. Unsupported H1 expectations
@@ -227,6 +227,26 @@ upgrade futures. Normal and error exits cancel/join that same owned scope;
 emergency Drop aborts its children. There is no extra application manager or
 provider registry. Full reset/cancel/stream/late Continue/error profiles remain
 unverified; all post-gate compile/runtime/proof work remains prohibited now.
+
+Trailer continuation: utility_http_trailers.rs owns the source forbidden-name
+rule, ASCII-space/comma declarations and H1 Header.Write field encoding. The
+request writer freezes declarations, selects final handler values and publishes
+one SourceTrailers block before yielding a bounded trailers frame. Existing
+Hyper H1 consumes it only for a chunked response, without client TE/declaration
+filtering. H2 uses real trailers frames, empty-value key presence and unordered
+prefixed-key promotion/collision choices. Normal H1 response headers and alias,
+all selected profile and native frame/error behavior remain required work.
+
+Bounded ResponseFrame carries H2 end-of-stream decisions for final HEADERS,
+DATA and trailers. Source Connection exactly close signals the connection-owned
+graceful token; the existing driver owns GOAWAY/shutdown and stream drain.
+Exact native HPACK/GOAWAY/timer/reset/error schedules remain unresolved.
+
+utility_http_listener.rs shares AcceptBackoff across plain and TLS providers:
+5ms, doubling to 1s, reset on successful accept. CGP SourceHttpDelay owns the
+sleep effect. The syscall-wrapped Go Errno rule retains Windows' synthetic
+Errno distinction; source direct-Errno/poll/init origin and native error display,
+listener-close/shutdown timing and named-service resolution remain open.
 
 Gateway authoring adds `utility_gateway.rs`, `utility_gateway_json.rs`,
 `utility_gateway_wire.rs` and `utility_gateway_wkt.rs`. Actual path:
@@ -298,9 +318,9 @@ One read command attempted `go env GOROOT` for a source path; stdout was empty
 and its dependent file read failed. No project/compile/fixture/semantic assurance
 ran. Do not reinterpret source reading or identity bookkeeping as verification.
 
-M0003 entry usage 656008. Raw progress observations 1..16 retain 752278, 781155,
+M0003 entry usage 656008. Raw progress observations 1..18 retain 752278, 781155,
 905410, 1069792, 1095960, 1289081, 1320264, 1568425, 1577646, 1691561, 1702165,
-1783942, 1794616, 2082051, 2115290, 2286210. Still NO completed M0003 cost comparison or
+1783942, 1794616, 2082051, 2115290, 2286210, 2350385, 2469680. Still NO completed M0003 cost comparison or
 route switch. Context/read/accounting is charged once, no credit inference.
 Preserve M0001/M0002 original forecasts/comparisons and shared overhead buckets.
 M0002 observed work was 482306; shared completion/switch was 20030. The explicit

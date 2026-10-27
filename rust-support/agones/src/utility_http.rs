@@ -24,6 +24,11 @@ mod sniff;
 use sniff::detect_content_type as sniff_content_type;
 #[path = "utility_http_status.rs"]
 mod status;
+#[path = "utility_http_trailers.rs"]
+mod trailers;
+#[path = "utility_http_listener.rs"]
+mod listener;
+pub(crate) use listener::AcceptBackoff;
 #[path = "utility_http_response.rs"]
 mod response;
 pub use response::ResponseWriter;
@@ -65,6 +70,17 @@ impl<Context> SourceHttpDiagnostic<Context> for EmitNativeSourceHttpDiagnostic {
         let mut line = format!("{} {}", chrono::Local::now().format("%Y/%m/%d %H:%M:%S"), message);
         if !line.ends_with('\n') { line.push('\n'); }
         let _ = std::io::Write::write(&mut std::io::stderr().lock(), line.as_bytes());
+    }
+}
+
+#[cgp_component(SourceHttpDelay)]
+pub trait CanWaitSourceHttpDelay: Sync {
+    fn wait_source_http_delay(&self, delay: Duration) -> BoxFuture<'_, ()>;
+}
+#[cgp_new_provider]
+impl<Context: Sync> SourceHttpDelay<Context> for WaitTokioSourceHttpDelay {
+    fn wait_source_http_delay(_context: &Context, delay: Duration) -> BoxFuture<'_, ()> {
+        Box::pin(tokio::time::sleep(delay))
     }
 }
 
@@ -200,7 +216,8 @@ impl HttpRequest {
 impl Drop for HttpRequest {
     fn drop(&mut self) { self.cancelled.cancel(); }
 }
-struct ResponseHead { status: u16, headers: Headers }
+struct ResponseHead { status: u16, headers: Headers, trailers: hyper::ext::SourceTrailers, end_stream: bool }
+struct ResponseFrame { frame: Frame<Bytes>, end_stream: bool }
 fn header_has_token(value: &[u8], token: &[u8]) -> bool {
     if token.is_empty() || token.len() > value.len() { return false; }
     let boundary = |byte| matches!(byte, b' ' | b',' | b'\t');
@@ -226,7 +243,7 @@ fn native_response_head(status: u16, headers: &Headers) -> Result<Response<()>, 
     }
     Ok(response)
 }
-struct ResponseBody { receiver: mpsc::Receiver<Bytes>, panicked: Arc<AtomicBool>, ended: bool, cancelled: CancellationToken }
+struct ResponseBody { receiver: mpsc::Receiver<ResponseFrame>, panicked: Arc<AtomicBool>, ended: bool, cancelled: CancellationToken }
 impl Drop for ResponseBody {
     fn drop(&mut self) { self.cancelled.cancel(); }
 }
@@ -239,12 +256,16 @@ impl Body for ResponseBody {
             return Poll::Ready(Some(Err(io::Error::other("HTTP handler panicked"))));
         }
         match self.receiver.poll_recv(context) {
-            Poll::Ready(Some(bytes)) => Poll::Ready(Some(Ok(Frame::data(bytes)))),
+            Poll::Ready(Some(message)) => {
+                self.ended = message.end_stream;
+                Poll::Ready(Some(Ok(message.frame)))
+            },
             Poll::Ready(None) => { self.ended = true; Poll::Ready(None) }
             Poll::Pending => Poll::Pending,
         }
     }
     fn size_hint(&self) -> SizeHint { SizeHint::default() }
+    fn is_end_stream(&self) -> bool { self.ended }
 }
 
 #[derive(Debug)]
@@ -253,13 +274,13 @@ impl fmt::Display for ServerClosed { fn fmt(&self, out: &mut fmt::Formatter<'_>)
 impl Error for ServerClosed {}
 pub fn is_server_closed(error: &(dyn Error + 'static)) -> bool { crate::errors::contains_error::<ServerClosed>(error) }
 
-async fn request_service(context: UtilityRuntimeContext, mux: SourceMux, tasks: Arc<UtilityTaskScope>, incoming: Request<Incoming>) -> Result<Response<ResponseBody>, io::Error> {
+async fn request_service(context: UtilityRuntimeContext, mux: SourceMux, tasks: Arc<UtilityTaskScope>, source_close: CancellationToken, incoming: Request<Incoming>) -> Result<Response<ResponseBody>, io::Error> {
     let version = incoming.version();
     let mut request = match HttpRequest::from_hyper(incoming) {
         Ok(request) => request,
         Err(()) => {
             let (data, receiver) = mpsc::channel(2);
-            let _ = data.try_send(Bytes::from_static(b"400 Bad Request")); drop(data);
+            let _ = data.try_send(ResponseFrame { frame: Frame::data(Bytes::from_static(b"400 Bad Request")), end_stream: true }); drop(data);
             let mut response = Response::new(ResponseBody { receiver, panicked: Arc::new(AtomicBool::new(false)),
                 ended: false, cancelled: CancellationToken::new() });
             *response.status_mut() = hyper::StatusCode::BAD_REQUEST;
@@ -278,7 +299,7 @@ async fn request_service(context: UtilityRuntimeContext, mux: SourceMux, tasks: 
     let (head_tx, head_rx) = oneshot::channel();
     let (data, receiver) = mpsc::channel(2);
     let panicked = Arc::new(AtomicBool::new(false));
-    let mut writer = ResponseWriter::new(context.clone(), head_tx, data, Arc::clone(&panicked), &request).map_err(io::Error::other)?;
+    let mut writer = ResponseWriter::new(context.clone(), head_tx, data, Arc::clone(&panicked), source_close, &request).map_err(io::Error::other)?;
     tasks.spawn("HTTP request", Box::pin(async move {
         let rejected_expectation = request.protocol != hyper::Version::HTTP_2 && header(&request.headers, "Expect")
             .is_some_and(|value| !value.is_empty() && !header_has_token(value, b"100-continue"));
@@ -291,8 +312,10 @@ async fn request_service(context: UtilityRuntimeContext, mux: SourceMux, tasks: 
         Ok(())
     })).map_err(io::Error::other)?;
     let head = head_rx.await.map_err(|_| io::Error::other("HTTP handler ended without a response"))?;
-    let head = native_response_head(head.status, &head.headers).map_err(io::Error::other)?;
-    Ok(head.map(|()| ResponseBody { receiver, panicked, ended: false,
+    let ended = head.end_stream;
+    let mut response = native_response_head(head.status, &head.headers).map_err(io::Error::other)?;
+    response.extensions_mut().insert(head.trailers);
+    Ok(response.map(|()| ResponseBody { receiver, panicked, ended,
         cancelled: pending.0.take().expect("pending HTTP request owns cancellation") }))
 }
 
@@ -337,7 +360,9 @@ pub async fn serve_connection<IO>(io: IO, context: UtilityRuntimeContext, mux: S
     owner_stop: CancellationToken, handlers: Arc<UtilityTaskScope>, read_header_timeout: Duration, protocol: HttpProtocol) -> Result<(), BoxError>
 where IO: AsyncRead + AsyncWrite + Unpin + Send + 'static,
 {
-    let service = service_fn(move |request| request_service(context.clone(), mux.clone(), Arc::clone(&handlers), request));
+    let source_shutdown = CancellationToken::new();
+    let source_close = source_shutdown.clone();
+    let service = service_fn(move |request| request_service(context.clone(), mux.clone(), Arc::clone(&handlers), source_close.clone(), request));
     let protocol_tasks = Arc::new(UtilityTaskScope::default());
     let executor = SourceHttpExecutor { tasks: Arc::downgrade(&protocol_tasks) };
     let mut builder = hyper_util::server::conn::auto::Builder::new(executor);
@@ -348,7 +373,7 @@ where IO: AsyncRead + AsyncWrite + Unpin + Send + 'static,
     tokio::pin!(connection);
     let result = tokio::select! {
         result = &mut connection => result.map_err(|error| Errors::default().New(error.to_string())),
-        _ = async { tokio::select! { _ = stop.cancelled() => (), _ = owner_stop.cancelled() => () } } => {
+        _ = async { tokio::select! { _ = stop.cancelled() => (), _ = owner_stop.cancelled() => (), _ = source_shutdown.cancelled() => () } } => {
             connection.as_mut().graceful_shutdown();
             // Independent drain: an already cancelled stop token does not
             // cancel the in-flight response or close its connection early.
@@ -404,14 +429,20 @@ async fn serve_listener(listener: TcpListener, context: UtilityRuntimeContext, m
     owner_stop: CancellationToken, read_header_timeout: Duration) -> Result<(), BoxError> {
     let handlers = Arc::new(UtilityTaskScope::default());
     let mut connections = JoinSet::new();
+    let mut accept_backoff = AcceptBackoff::default();
     let result = loop {
         tokio::select! {
             _ = stop.cancelled() => break Err(Box::new(ServerClosed) as BoxError),
             _ = owner_stop.cancelled() => break Err(Box::new(ServerClosed) as BoxError),
             completed = connections.join_next(), if !connections.is_empty() => { let _ = completed; },
             accepted = listener.accept() => match accepted {
-                Err(error) => break Err(Box::new(error) as BoxError),
+                Err(error) => {
+                    if stop.is_cancelled() || owner_stop.is_cancelled() { break Err(Box::new(ServerClosed) as BoxError); }
+                    if accept_backoff.retry(&context, &error).await { continue; }
+                    break Err(Box::new(error) as BoxError);
+                }
                 Ok((socket, _)) => {
+                    accept_backoff.accepted();
                     let (context, mux, stop, owner_stop, handlers) = (context.clone(), mux.clone(), stop.clone(), owner_stop.clone(), Arc::clone(&handlers));
                     connections.spawn(async move { serve_connection(socket, context, mux, stop, owner_stop, handlers, read_header_timeout, HttpProtocol::Http1).await });
                 }

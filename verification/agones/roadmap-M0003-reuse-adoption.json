@@ -96,11 +96,13 @@
         "rust-support/agones/src/utility_http_response.rs",
         "rust-support/agones/src/utility_http_sniff.rs",
         "rust-support/agones/src/utility_http_status.rs",
-        "rust-support/agones/vendor/hyper-1.12.0"
+        "rust-support/agones/vendor/hyper-1.12.0",
+        "rust-support/agones/src/utility_http_trailers.rs",
+        "rust-support/agones/src/utility_http_listener.rs"
       ],
       "detail_record": "verification/agones/roadmap-M0003-http-authoring.json",
       "disposition": "AUTHORED_UNVERIFIED_PARTIAL_NO_HTTP_PARITY_OR_PARENT_ACCEPTANCE_CREDIT",
-      "existing_effects_reused": "SourceMux owns handler data. CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/date/diagnostic effects; each connection owns protocol child scope and a weak executor, each source request owns response/body/head channels and Continue state. Native H1/H2 drivers own bounded informational receivers and acknowledgements; original errors and disposal remain with these owners.",
+      "existing_effects_reused": "SourceMux owns handler data. CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/date/diagnostic/delay effects. Each listener owns AcceptBackoff; each connection owns its protocol child scope, weak executor and graceful-close token. Each request writer owns declarations, bounded response frames and one single-publication SourceTrailers packet; existing native drivers consume the packet/frames and own informational acknowledgements. No provider registry or alternate lifecycle manager.",
       "native_source_adoption": "verification/agones/roadmap-M0003-hyper-adoption.json",
       "source_ids": [
         "agones:pkg/util/httpserver/server.go",
@@ -109,7 +111,7 @@
         "agones:pkg/util/apiserver/apiserver.go",
         "agones:pkg/util/webhooks/webhooks.go"
       ],
-      "work_base_commit": "f294f9c95b3fd99627d164fc1f83d8c5ec950ec0"
+      "work_base_commit": "078d8918004248587c3878202c26b8836ba6c179"
     }
   ],
   "milestone_id": "M0003",

@@ -80,14 +80,22 @@ impl HttpsServerRunner<UtilityRuntimeContext> for RunNativeHttpsServer {
             let acceptor = TlsAcceptor::from(Arc::new(config));
             let handlers = Arc::new(UtilityTaskScope::default());
             let mut connections = JoinSet::new();
+            let mut accept_backoff = utility_http::AcceptBackoff::default();
             let result = loop {
                 tokio::select! {
                     _ = stop.cancelled() => { state.closed.store(true, Ordering::Release); break Err(Box::new(ServerClosed) as BoxError); }
                     _ = owner_stop.cancelled() => { state.closed.store(true, Ordering::Release); break Err(Box::new(ServerClosed) as BoxError); }
                     completed = connections.join_next(), if !connections.is_empty() => { let _ = completed; }
                     accepted = listener.accept() => match accepted {
-                        Err(error) => break Err(Box::new(error) as BoxError),
+                        Err(error) => {
+                            if stop.is_cancelled() || owner_stop.is_cancelled() {
+                                state.closed.store(true, Ordering::Release); break Err(Box::new(ServerClosed) as BoxError);
+                            }
+                            if accept_backoff.retry(context, &error).await { continue; }
+                            break Err(Box::new(error) as BoxError);
+                        }
                         Ok((socket, peer)) => {
+                            accept_backoff.accepted();
                             let (runtime, mux, stop, owner_stop, handlers, acceptor) = (context.clone(), mux.clone(), stop.clone(), owner_stop.clone(), Arc::clone(&handlers), acceptor.clone());
                             connections.spawn(async move {
                                 let handshake = tokio::time::timeout(read_header_timeout, acceptor.accept(socket));
