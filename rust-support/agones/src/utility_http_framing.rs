@@ -2,7 +2,7 @@
 // Adapted from Go net/http/server.go's chunkWriter.writeHeader/extraHeader.
 // Copyright The Go Authors. BSD-3-Clause; see ../GO-LICENSE.
 use super::{ResponseWriter, Headers, header, body_allowed, sniff_content_type, CanReadSourceHttpClock, CanEmitSourceHttpDiagnostic};
-use super::super::{header_has_token, trailers, request_body::Discard};
+use super::super::{header_has_token, trailers, request_body::{Discard, MAX_POST_HANDLER_READ}};
 use hyper::ext::{SourceBody, SourceResponse};
 
 #[derive(Default)]
@@ -30,12 +30,13 @@ impl ExtraHeaders {
 impl ResponseWriter {
     pub(super) async fn prepare_http1(&mut self, headers: &mut Headers, status: u16, first_data: &[u8]) -> SourceResponse {
         let mut extra = ExtraHeaders::default();
+        let is_head = self.is_head_request();
         let trailers_present = headers.keys().any(|key| key.starts_with("Trailer:"))
             || headers.get("Trailer").is_some_and(|values| !values.is_empty());
         let transfer_encoding = header(headers, "Transfer-Encoding").unwrap_or_default().to_vec();
         let has_transfer_encoding = !transfer_encoding.is_empty();
         if self.handler_done && !trailers_present && !has_transfer_encoding && body_allowed(status)
-            && !headers.contains_key("Content-Length") && (!self.head_request || !first_data.is_empty()) {
+            && !headers.contains_key("Content-Length") && (!is_head || !first_data.is_empty()) {
             self.content_length = Some(first_data.len() as i64);
             extra.length = Some(first_data.len().to_string().into_bytes());
         }
@@ -43,14 +44,22 @@ impl ResponseWriter {
         let keep_alives = !self.server_stops.iter().any(|stop| stop.is_cancelled());
         let mut close_after = false;
         let mut has_length = self.content_length.is_some();
-        if self.wants10_keep_alive && (self.head_request || has_length || !body_allowed(status)) {
+        if self.wants10_keep_alive && (is_head || has_length || !body_allowed(status)) {
             if !headers.contains_key("Connection") { extra.connection = Some(b"keep-alive".to_vec()); }
         } else if !self.protocol_at_least_11 || self.wants_close { close_after = true; }
         if header(headers, "Connection").as_deref() == Some(b"close") || !keep_alives { close_after = true; }
-        if self.expect_continue && !self.request_body.expect_saw_eof() { close_after = true; }
+        let current_body = self.request_fields.body();
+        if current_body.has_unread_expectation() { close_after = true; }
 
-        if self.request_content_length != 0 && !close_after && !self.full_duplex {
-            match self.request_body.discard_before_response().await {
+        if self.request_fields.content_length() != 0 && !close_after && !self.full_duplex {
+            let discard = if current_body.is_expect_reader() { Discard::Reusable }
+            else if let Some(body) = current_body.native_http1() {
+                let snapshot = body.snapshot().await;
+                if snapshot.closed { if snapshot.saw_eof { Discard::Reusable } else { Discard::Close } }
+                else if snapshot.remaining.is_some_and(|remaining| remaining >= MAX_POST_HANDLER_READ as u64) { Discard::TooLarge }
+                else { self.request_body.discard_original().await }
+            } else { self.request_body.discard_original().await };
+            match discard {
                 Discard::Reusable => (),
                 Discard::Close => close_after = true,
                 Discard::TooLarge => {
@@ -74,7 +83,7 @@ impl ResponseWriter {
                 String::from_utf8_lossy(&transfer_encoding), self.content_length.unwrap_or(0)));
             headers.remove("Content-Length"); has_length = false;
         }
-        let framing = if self.head_request || !body_allowed(status) {
+        let framing = if self.is_head_request() || !body_allowed(status) {
             headers.remove("Transfer-Encoding"); SourceBody::Empty
         } else if has_length {
             headers.remove("Transfer-Encoding"); SourceBody::Length(self.content_length.unwrap_or(0) as u64)

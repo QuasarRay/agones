@@ -77,6 +77,7 @@ define_derive_deftly! {
             crate::utility_http::SourceHttpClockComponent: crate::utility_http::ReadUtcSourceHttpClock,
             crate::utility_http::SourceHttpDiagnosticComponent: crate::utility_http::EmitNativeSourceHttpDiagnostic,
             crate::utility_http::SourceHttpDelayComponent: crate::utility_http::WaitTokioSourceHttpDelay,
+            crate::utility_http::SourceRequestBodyIoComponent: crate::utility_http::AccessSourceRequestBody,
             crate::utility_fswatch::FileWatcherOpenerComponent: crate::utility_fswatch::OpenNativeFileWatcher,
             crate::utility_tls::SourceCertificateLoaderComponent: crate::utility_tls::LoadRustlsCertificate,
             crate::utility_tls::HttpsServerRunnerComponent: crate::utility_tls::RunNativeHttpsServer,

@@ -25,7 +25,7 @@ use sniff::detect_content_type as sniff_content_type;
 mod status;
 #[path = "utility_http_headers.rs"]
 mod headers;
-pub use headers::{HeaderName, HeaderValues, HeaderAllocationProfile, Headers, canonical_header_key, set_header, header, headers_json};
+pub use headers::{HeaderName, HeaderValues, HeaderAllocationProfile, Headers, SourceByteString, canonical_header_key, set_header, header, headers_json};
 #[path = "utility_http_trailers.rs"]
 mod trailers;
 #[path = "utility_http_listener.rs"]
@@ -33,6 +33,13 @@ mod listener;
 pub(crate) use listener::AcceptBackoff;
 #[path = "utility_http_body.rs"]
 mod request_body;
+#[path = "utility_http_request_body.rs"]
+mod request_body_value;
+pub use request_body_value::{SourceBody, SourceBodyRead, SourceReadError, SourceReadCloser,
+    SourceRequestBodyIo, SourceRequestBodyIoComponent, CanAccessSourceRequestBody, AccessSourceRequestBody};
+#[path = "utility_http_request_fields.rs"]
+mod request_fields;
+pub use request_fields::RequestFields;
 #[path = "utility_http_response.rs"]
 mod response;
 pub use response::ResponseWriter;
@@ -69,7 +76,7 @@ impl<Context: Sync> SourceHttpDelay<Context> for WaitTokioSourceHttpDelay {
 }
 
 pub struct HttpRequest {
-    pub method: String,
+    pub fields: RequestFields,
     pub path: String,
     pub host: String,
     pub request_uri: String,
@@ -83,21 +90,20 @@ pub struct HttpRequest {
     url_raw_query: Vec<u8>,
     protocol_at_least_11: bool,
     protocol: hyper::Version,
-    pub content_length: i64,
     informational: Option<hyper::ext::InformationalSender>,
-    can_write_continue: Arc<AtomicBool>,
+    continue_state: request_body_value::ContinueState,
     wants10_keep_alive: bool,
     wants_close: bool,
-    expect_continue: bool,
     pub matched_pattern: Vec<u8>,
     path_values: BTreeMap<String, Vec<u8>>,
     /// The request owner cancels on handler return or transport/body disposal.
     /// Server Shutdown does not cancel an otherwise active request.
     pub cancelled: CancellationToken,
-    body: request_body::RequestBody,
+    original_body: request_body::RequestBody,
+    runtime: UtilityRuntimeContext,
 }
 impl HttpRequest {
-    fn from_hyper(request: Request<Incoming>) -> Result<Self, ()> {
+    fn from_hyper(runtime: UtilityRuntimeContext, request: Request<Incoming>) -> Result<Self, ()> {
         let (parts, body) = request.into_parts();
         let content_length = body.size_hint().exact().and_then(|length| i64::try_from(length).ok()).unwrap_or(-1);
         let request_uri = parts.uri.to_string();
@@ -139,20 +145,28 @@ impl HttpRequest {
             && header(&headers, "Connection").is_some_and(|value| header_has_token(&value, b"keep-alive"));
         let wants_close = (parts.version == hyper::Version::HTTP_10 && !wants10_keep_alive) || parts.version == hyper::Version::HTTP_09
             || header(&headers, "Connection").is_some_and(|value| header_has_token(&value, b"close"));
-        let expect_continue = parts.version != hyper::Version::HTTP_2 && can_write_continue;
-        let body = request_body::RequestBody::new(body, content_length, parts.version == hyper::Version::HTTP_2, wants_close, expect_continue, initial_trailers);
+        let continue_state = request_body_value::ContinueState::new(parts.version != hyper::Version::HTTP_2 && can_write_continue, informational.clone());
+        let original_body = request_body::RequestBody::new(body, content_length, parts.version == hyper::Version::HTTP_2, wants_close, initial_trailers);
+        let body = SourceBody::from_native(original_body.clone(), can_write_continue, continue_state.clone(), informational.clone());
+        let fields = RequestFields::new(Bytes::copy_from_slice(parts.method.as_str().as_bytes()), content_length, body);
         let raw_path_log = if raw_path == "*" || mux::escape_url_path(&url_path) == raw_path.as_bytes() { "" } else { raw_path };
         let url_log_value = json!({"Scheme":scheme,"Opaque":"","User":null,"Host":authority,"Path":path,
             "RawPath":raw_path_log,"OmitHost":false,"ForceQuery":parts.uri.query()==Some(""),"RawQuery":raw_query,"Fragment":"","RawFragment":""});
-        Ok(Self { method: parts.method.to_string(), path, host, request_uri, url_log_value, headers,
+        Ok(Self { fields, path, host, request_uri, url_log_value, headers,
             url_path, url_raw_path: raw_path_log.as_bytes().to_vec(), url_host: authority.to_owned(), url_raw_query: raw_query.as_bytes().to_vec(),
             protocol_at_least_11: parts.version != hyper::Version::HTTP_09 && parts.version != hyper::Version::HTTP_10,
-            protocol: parts.version, content_length,
-            informational, can_write_continue: Arc::new(AtomicBool::new(can_write_continue)),
-            wants10_keep_alive, wants_close, expect_continue,
+            protocol: parts.version, informational, continue_state,
+            wants10_keep_alive, wants_close,
             matched_pattern: Vec::new(), path_values: BTreeMap::new(),
-            cancelled: CancellationToken::new(), body })
+            cancelled: CancellationToken::new(), original_body, runtime })
     }
+    pub fn method(&self) -> Bytes { self.fields.method() }
+    pub fn set_method(&self, method: impl AsRef<[u8]>) { self.fields.set_method(method); }
+    pub fn content_length(&self) -> i64 { self.fields.content_length() }
+    pub fn set_content_length(&self, length: i64) { self.fields.set_content_length(length); }
+    pub fn body(&self) -> SourceBody { self.fields.body() }
+    pub fn set_body(&self, body: SourceBody) { self.fields.set_body(body); }
+    pub(crate) fn runtime(&self) -> &UtilityRuntimeContext { &self.runtime }
     pub fn path_value(&self, name: &str) -> &[u8] { self.path_values.get(name).map_or(&[], Vec::as_slice) }
     pub fn set_path_value(&mut self, name: &str, value: Vec<u8>) { self.path_values.insert(name.to_owned(), value); }
     pub fn escaped_path(&self) -> Vec<u8> {
@@ -164,54 +178,53 @@ impl HttpRequest {
         mux::escape_url_path(&self.url_path)
     }
     pub async fn read_body(&mut self) -> Result<Vec<u8>, BoxError> {
-        self.require_open_body()?;
+        let read = self.read_body_all().await;
+        match read.error { Some(SourceReadError::Failure(error)) => Err(error), _ => Ok(read.data.to_vec()) }
+    }
+    /// io.ReadAll's buffer sizes are observable to a source io.Reader. Keep a
+    /// logical source capacity independently of the Rust Vec allocation.
+    /// Partial bytes survive a non-EOF error in this low-level result.
+    pub async fn read_body_all(&self) -> SourceBodyRead {
+        self.read_body_all_limited(None).await
+    }
+    /// The optional limit represents io.LimitReader wrapping the retained
+    /// body; its exhaustion is EOF without another call to that body.
+    pub async fn read_body_all_limited(&self, limit: Option<usize>) -> SourceBodyRead {
         let mut bytes = Vec::new();
-        while let Some(data) = self.next_data().await? { bytes.extend_from_slice(&data); }
-        Ok(bytes)
-    }
-    async fn next_data(&mut self) -> Result<Option<Bytes>, BoxError> {
-        self.next_data_limited(usize::MAX).await
-    }
-    async fn next_data_limited(&mut self, limit: usize) -> Result<Option<Bytes>, BoxError> {
-        if self.can_write_continue.swap(false, Ordering::AcqRel) {
-            let sender = self.informational.as_mut().ok_or_else(|| Errors::default().New("HTTP informational response driver is unavailable"))?;
-            let mut response = Response::new(()); *response.status_mut() = hyper::StatusCode::CONTINUE;
-            // The Go continue reader ignores the header write error and still
-            // performs the body read, which owns any actual input failure.
-            let _ = sender.send(response).await;
+        let profile = self.headers.allocation_profile();
+        let mut capacity = 512;
+        // io.ReadAll retains the initial Reader interface even if an alias
+        // assigns another Body to the enclosing Request during a Read call.
+        let body = self.body();
+        loop {
+            let read = match limit.map(|limit| limit - bytes.len()) {
+                Some(0) => SourceBodyRead::eof(),
+                remaining => self.read_body_handle_up_to(body.clone(), remaining.map_or(capacity - bytes.len(), |remaining| remaining.min(capacity - bytes.len()))).await,
+            };
+            bytes.extend_from_slice(&read.data);
+            match read.error {
+                Some(SourceReadError::Eof) => return SourceBodyRead::data(Bytes::from(bytes)),
+                Some(error) => return SourceBodyRead { data: Bytes::from(bytes), error: Some(error) },
+                None => (),
+            }
+            if bytes.len() == capacity { capacity = profile.grow_bytes(capacity, capacity + 1); }
         }
-        if limit == usize::MAX { self.body.read().await } else { self.body.read_up_to(limit).await }
     }
-    /// Streaming decoders retain their own read-ahead across Decode calls.
-    pub async fn read_body_chunk(&mut self) -> Result<Option<Bytes>, BoxError> {
-        self.require_open_body()?;
-        self.next_data().await
+    pub async fn read_body_up_to(&self, limit: usize) -> SourceBodyRead {
+        self.read_body_handle_up_to(self.body(), limit).await
     }
-    fn require_open_body(&self) -> Result<(), BoxError> {
-        // H2 Read sends a needed Continue before consulting its pipe, even
-        // after Close. The body owner checks that protocol's closed state.
-        if self.body.is_http2() { Ok(()) } else { self.body.require_open() }
+    pub async fn read_body_handle_up_to(&self, body: SourceBody, limit: usize) -> SourceBodyRead {
+        self.runtime.read_source_request_body(body, limit).await
     }
     pub async fn decode_one_json<T: DeserializeOwned>(&mut self) -> Result<T, BoxError> {
-        self.require_open_body()?;
-        let mut bytes = Vec::new();
-        loop {
-            let result = { let mut input = serde_json::Deserializer::from_slice(&bytes).into_iter::<T>(); input.next() };
-            match result {
-                Some(Ok(value)) => return Ok(value), // Decode one value; trailing input is not another Decode.
-                Some(Err(error)) if !error.is_eof() => return Err(Box::new(error)),
-                result => {
-                    if let Some(data) = self.next_data().await? { bytes.extend_from_slice(&data); }
-                    else { return Err(match result {
-                        Some(Err(error)) => Box::new(error) as BoxError,
-                        _ => Errors::default().New("EOF"),
-                    }); }
-                }
-            }
-        }
+        let mut decoder = crate::utility_gateway_framing::SourceJsonDecoder::new(self.body(), self.headers.allocation_profile());
+        let raw = decoder.read_raw(&self.runtime).await?.ok_or_else(|| Errors::default().New("EOF"))?;
+        // This is one Decode call. The source's read-ahead is discarded with
+        // that decoder; trailing values are not decoded or validated here.
+        Ok(serde_json::from_str(raw.get())?)
     }
-    pub async fn close_body(&mut self) -> Result<(), BoxError> { self.body.close().await }
-    pub async fn body_trailers(&self) -> Headers { self.body.trailers().await }
+    pub async fn close_body(&mut self) -> Result<(), BoxError> { self.runtime.close_source_request_body(self.body()).await }
+    pub async fn body_trailers(&self) -> Headers { self.original_body.trailers().await }
 }
 impl Drop for HttpRequest {
     fn drop(&mut self) { self.cancelled.cancel(); }
@@ -287,7 +300,7 @@ impl Drop for SourceConnectionClosed { fn drop(&mut self) { self.0.cancel(); } }
 async fn request_service(context: UtilityRuntimeContext, mux: SourceMux, tasks: Arc<UtilityTaskScope>, source_close: CancellationToken,
     server_stops: [CancellationToken; 2], connection_closed: CancellationToken, incoming: Request<Incoming>) -> Result<Response<ResponseBody>, io::Error> {
     let version = incoming.version();
-    let mut request = match HttpRequest::from_hyper(incoming) {
+    let mut request = match HttpRequest::from_hyper(context.clone(), incoming) {
         Ok(request) => request,
         Err(()) => {
             let (data, receiver) = mpsc::channel(2);
@@ -320,13 +333,16 @@ async fn request_service(context: UtilityRuntimeContext, mux: SourceMux, tasks: 
             .is_some_and(|value| !value.is_empty() && !header_has_token(&value, b"100-continue"));
         if rejected_expectation {
             set_header(&mut writer.headers, "Connection", "close"); let _ = writer.write_header(417).await;
-        } else if request.method == "OPTIONS" && request.request_uri == "*" { global_options(&mut writer, &mut request).await; }
+        } else if request.method().as_ref() == b"OPTIONS" && request.request_uri == "*" { global_options(&mut writer, &mut request).await; }
         else { mux.dispatch(&context, &mut writer, &mut request).await; }
         request.cancelled.cancel(); // net/http cancels when ServeHTTP returns.
-        let body = request.body.clone();
         let close = writer.finish().await;
-        let _ = body.close().await;
-        phase.finish(close || body.did_early_close().await);
+        // finishRequest closes the body captured before the expectation
+        // wrapper was installed, even when the handler replaces r.Body.
+        let _ = request.original_body.close().await;
+        let current = request.body();
+        let early_close = match current.native_http1() { Some(body) => body.did_early_close().await, None => false };
+        phase.finish(close || early_close);
         Ok(())
     })).map_err(io::Error::other)?;
     let head = head_rx.await.map_err(|_| io::Error::other("HTTP handler ended without a response"))?;
@@ -340,16 +356,18 @@ async fn request_service(context: UtilityRuntimeContext, mux: SourceMux, tasks: 
 
 async fn global_options(writer: &mut ResponseWriter, request: &mut HttpRequest) {
     set_header(&mut writer.headers, "Content-Length", "0");
-    if request.content_length == 0 { return; }
+    if request.content_length() == 0 { return; }
     let mut remaining = 4 << 10;
-    while let Ok(Some(bytes)) = request.next_data_limited(remaining + 1).await {
-        if bytes.len() > remaining {
+    loop {
+        let read = request.read_body_up_to(remaining + 1).await;
+        if read.data.len() > remaining {
             // Source MaxBytesReader calls requestTooLarge on the HTTP/1
             // response, closing this connection after the otherwise empty 200.
             if request.protocol != hyper::Version::HTTP_2 { set_header(&mut writer.headers, "Connection", "close"); }
             return;
         }
-        remaining -= bytes.len();
+        remaining -= read.data.len();
+        if read.error.is_some() { return; }
     }
 }
 

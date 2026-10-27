@@ -12,8 +12,14 @@ use serde::Serialize;
 pub enum SourceLogValue {
     Json(Value),
     HttpHeaders(crate::utility_http::Headers),
+    Bytes(crate::utility_http::SourceByteString),
 }
 impl LogEntry {
+    pub fn with_bytes(&self, name: impl Into<String>, bytes: impl AsRef<[u8]>) -> Self {
+        let mut entry = self.clone();
+        entry.fields.insert(name.into(), SourceLogValue::Bytes(crate::utility_http::SourceByteString(bytes::Bytes::copy_from_slice(bytes.as_ref()))));
+        entry
+    }
     pub fn with_headers(&self, name: impl Into<String>, headers: crate::utility_http::Headers) -> Self {
         let mut entry = self.clone();
         entry.fields.insert(name.into(), SourceLogValue::HttpHeaders(headers));

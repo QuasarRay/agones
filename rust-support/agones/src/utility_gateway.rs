@@ -2,6 +2,7 @@
 //! Handler tables are the original application's HTTP routes, not effect providers.
 use std::{collections::{BTreeMap, HashMap}, fmt, pin::Pin, sync::{Arc, RwLock}};
 use cgp::prelude::*;
+use bytes::Bytes;
 use derive_deftly::Deftly;
 use futures::{future::BoxFuture, Stream, StreamExt};
 use prost_reflect::{DynamicMessage, MessageDescriptor};
@@ -115,7 +116,7 @@ impl fmt::Display for GatewayPattern {
 #[derive(Clone)]
 struct Route { pattern: GatewayPattern, handler: GatewayHandler }
 #[derive(Default)]
-pub struct GatewayState { routes: RwLock<HashMap<String, Vec<Route>>> }
+pub struct GatewayState { routes: RwLock<HashMap<Bytes, Vec<Route>>> }
 #[cgp_getter]
 pub trait HasGatewayState { fn gateway_state(&self) -> &Arc<GatewayState>; }
 #[cgp_getter]
@@ -125,18 +126,18 @@ pub trait HasGatewayRuntime { fn gateway_runtime(&self) -> &UtilityRuntimeContex
 #[derive_deftly(UtilityGatewayProviders)]
 pub struct GatewayContext { gateway_state: Arc<GatewayState>, gateway_runtime: UtilityRuntimeContext }
 impl GatewayContext {
-    pub fn handle(&self, method: &str, pattern: GatewayPattern, handler: GatewayHandler) {
+    pub fn handle(&self, method: impl AsRef<[u8]>, pattern: GatewayPattern, handler: GatewayHandler) {
         let mut routes = self.gateway_state().routes.write().unwrap_or_else(|error| error.into_inner());
-        routes.entry(method.to_owned()).or_default().insert(0, Route { pattern, handler });
+        routes.entry(Bytes::copy_from_slice(method.as_ref())).or_default().insert(0, Route { pattern, handler });
     }
     /// Generated handlers can use handle directly to perform their own path,
     /// query, body and metadata mapping before calling a source RPC.
-    pub fn handle_unary(&self, method: &str, pattern: GatewayPattern, input: MessageDescriptor, handler: GatewayUnaryHandler) {
+    pub fn handle_unary(&self, method: impl AsRef<[u8]>, pattern: GatewayPattern, input: MessageDescriptor, handler: GatewayUnaryHandler) {
         let route: GatewayHandler = Arc::new(move |context, writer, request, call| {
             let (input, handler) = (input.clone(), Arc::clone(&handler));
             Box::pin(async move {
                 let mut message = DynamicMessage::new(input);
-                let mut decoder = GatewayDecoder::default();
+                let mut decoder = GatewayDecoder::new(request);
                 if let Err(error) = context.decode_gateway(&mut decoder, request, &mut message).await {
                     let _ = context.write_gateway_error(writer, &GatewayStatus::new(3, error.to_string())).await;
                     return;
@@ -213,14 +214,15 @@ async fn dispatch(context: &GatewayContext, writer: &mut ResponseWriter, request
                 Ok(value) => form = Some(value),
                 Err(error) => { let _ = context.write_gateway_error(writer, &GatewayStatus::new(3, error.to_string())).await; return; },
             }
-            request.method = method.to_uppercase();
+            request.set_method(method.to_uppercase());
         }
     }
     let path: Vec<_> = request.path[1..].split('/').map(str::to_owned).collect();
     let (same, others) = {
+        let requested_method = request.method();
         let routes = context.gateway_state().routes.read().unwrap_or_else(|error| error.into_inner());
-        (routes.get(&request.method).cloned().unwrap_or_default(),
-            routes.iter().filter(|(method, _)| **method != request.method).map(|(method, routes)| (method.clone(), routes.clone())).collect::<Vec<_>>())
+        (routes.get(&requested_method).cloned().unwrap_or_default(),
+            routes.iter().filter(|(method, _)| **method != requested_method).map(|(method, routes)| (method.clone(), routes.clone())).collect::<Vec<_>>())
     };
     for route in same {
         let (parts, verb, empty_verb_path) = split_verb(&route.pattern, &path);
@@ -235,7 +237,7 @@ async fn dispatch(context: &GatewayContext, writer: &mut ResponseWriter, request
         for route in routes {
             let (parts, verb, _) = split_verb(&route.pattern, &path);
             if let Some(parameters) = route.pattern.matches(&parts, &verb) {
-                if method == "GET" && is_path_length_fallback(request) {
+                if method.as_ref() == b"GET" && is_path_length_fallback(request) {
                     if form.is_none() {
                         match parse_form(request).await {
                             Ok(value) => form = Some(value),
@@ -264,17 +266,15 @@ fn split_verb(pattern: &GatewayPattern, path: &[String]) -> (Vec<String>, String
     (parts, verb, false)
 }
 fn is_path_length_fallback(request: &HttpRequest) -> bool {
-    request.method == "POST" && header(&request.headers, "Content-Type").as_deref() == Some(b"application/x-www-form-urlencoded".as_slice())
+    request.method().as_ref() == b"POST" && header(&request.headers, "Content-Type").as_deref() == Some(b"application/x-www-form-urlencoded".as_slice())
 }
 async fn parse_form(request: &mut HttpRequest) -> Result<BTreeMap<String, Vec<String>>, BoxError> {
     // ParseForm's default max is ten MiB. Body values precede query values.
     const LIMIT: usize = 10 << 20;
-    let mut bytes = Vec::new();
-    while let Some(chunk) = request.read_body_chunk().await? {
-        if bytes.len().saturating_add(chunk.len()) > LIMIT { return Err(ERRORS.New("http: POST too large")); }
-        bytes.extend_from_slice(&chunk);
-    }
-    let mut form = parse_query(&bytes)?;
+    let read = request.read_body_all_limited(Some(LIMIT + 1)).await;
+    if let Some(crate::utility_http::SourceReadError::Failure(error)) = read.error { return Err(error); }
+    if read.data.len() > LIMIT { return Err(ERRORS.New("http: POST too large")); }
+    let mut form = parse_query(&read.data)?;
     let query = request.url_log_value.get("RawQuery").and_then(serde_json::Value::as_str).unwrap_or_default();
     for (name, values) in parse_query(query.as_bytes())? { form.entry(name).or_default().extend(values); }
     Ok(form)

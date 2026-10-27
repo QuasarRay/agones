@@ -64,12 +64,25 @@ driver's waker, without a new task or lifecycle manager. Connection disposal
 cancels its request children; ordinary H1 no-body disposal does not cancel an
 otherwise still-running handler. H2 retains independent stream cancellation.
 
-The source request and response share one body owner, which handles bounded
-pre-response discard, H1 early Close, distinct Continue-reader EOF/closed flags,
-request trailers and H2 close/read wakeup. Remaining work includes mutable
-request/header alias profiles, parser and protocol-switch behavior, body/close/
-abort/partial-I/O timing, exact diagnostics and all selected native profiles.
-These source paths remain uncompiled, unexecuted and unverified.
+The source request and response share one `RequestFields` handle for the live
+method, content length and current Body interface. The request phase separately
+retains the original transport body used by `response.reqBody` cleanup and
+bounded discard. Replacing Body does not transfer that cleanup to the new
+reader. Continue-reader closed/EOF flags belong to that retained wrapper, and
+the H1 Continue read and disable paths share their source lock/flush order. H2
+keeps its separate read-before-pipe Continue state. Read outcomes retain bytes
+together with EOF or another error. The existing static CGP body-I/O capability
+calls one retained source reader receiver; it adds no registry or tasks.
+
+The H1 source writer checks the current method when flushing bytes. A response
+whose headers were selected for HEAD therefore keeps an unframed native body
+alive until source completion, allowing a later method reassignment to affect
+the source writer's output. An already selected chunked response still emits
+its terminating chunk when the current method later becomes HEAD. The source
+phase continues to own the reuse/close decision. Remaining work includes mutable
+URL/header alias profiles, parser and protocol-switch behavior, body/close/
+abort/partial-I/O and H2 reset timing, exact diagnostics and selected native
+profiles. These source paths remain uncompiled, unexecuted and unverified.
 
 Source responses also bypass the normal response-metadata keep-alive heuristic:
 their 1.0/1.1 version and Connection decision were already made by the source

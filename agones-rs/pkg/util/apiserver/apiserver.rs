@@ -98,7 +98,7 @@ impl APIServer {
         self.mux.handle(pattern, https::ErrorHTTPHandler(state.logger.clone(), Arc::new(move |context, writer, request| {
             let (state, object) = (Arc::clone(&state), Arc::clone(&object));
             Box::pin(async move {
-                if request.method == "GET" {
+                if request.method().as_ref() == b"GET" {
                     let info = AcceptedSerializer(request, &Codecs)?;
                     let object = MetaObject::APIResourceList(object.read().unwrap_or_else(|error| error.into_inner()).clone());
                     let mut copy = shallowCopyObjectForTargetKind(&object); copy.target_v1();

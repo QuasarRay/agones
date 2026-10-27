@@ -20,23 +20,31 @@
     "Source base-0 signed/unsigned integer keys, boolean key spellings, decimal/hex float key syntax, underscores, guard/sticky bits and ties-to-even rounding",
     "Non-proto enum symbolic rejection, float64-to-int32 explicit source numeric profile; null/empty/EOF/pre-allocation and partial container mutations are distinct",
     "Shared first-value framing with scalar lookahead/retained following bytes, container immediate completion, max depth, UnexpectedEOF and sticky framing/body errors; semantic decode errors permit later values",
-    "EnumTargetFactory requires explicit EnumCastProfile: legacy x86 CVTT, Go 1.27 AMD64 ConvertHash saturating branch, or ARM64 FCVTZS. It never infers the source profile from the Rust build host."
+    "EnumTargetFactory requires explicit EnumCastProfile: legacy x86 CVTT, Go 1.27 AMD64 ConvertHash saturating branch, or ARM64 FCVTZS. It never infers the source profile from the Rust build host.",
+    "HttpRequest and ResponseWriter share RequestFields for live method bytes, ContentLength and current Body. Mux, gateway method override, APIServer GET dispatch and HTTP response framing read that shared owner; pre-handler wantsClose/wants10 snapshots remain intentional.",
+    "SourceBodyRead retains data and an optional exact EOF/failure category together. Native known-length H1 reads pair their last data with EOF while holding the body lock; expectation EOF is set from that read result. H2 keeps its subsequent-read EOF behavior. Empty successful reads are not EOF.",
+    "ReadAll retains its initial Reader, starts at 512 logical source bytes, applies source byte-slice nextslicecap/noscan size-class growth and consumes returned bytes before an error. Its low-level result retains partial bytes on failure. Form parsing wraps the retained Reader with a 10MiB+1 limit, preserving ReadAll error precedence before size rejection.",
+    "SourceJsonDecoder is shared by webhook and gateway consumers: retain the Reader, compact only on refill, grow logical capacity by 2*cap+512, scan data before its paired read error, and discard that local error if a value completes. Sticky framing/read failures and successful semantic decoding remain separate."
   ],
-  "authored_payload_identity_refreshed_at": "2026-10-27T05:59:15.879368+00:00",
+  "authored_payload_identity_refreshed_at": "2026-10-27T06:39:26.358935+00:00",
   "authored_payload_sha256": {
     "Cargo.lock": "1d2c5f632a6a590af119a16f3ff926d89bcfdaedde63a265fd185c8d406745a9",
     "agones-rs/pkg/util/runtime/runtime.rs": "cbdc9ac8f2b51d6c1cfc1af03b69a41cd4e094f01f35ab6f9d5660c85c07bcd9",
     "crates/util/Cargo.toml": "6b011badbe07029ab9a84257636f7de293931d32a2c1bbef49c60b4d07dd91bf",
     "rust-support/agones/GO-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
-    "rust-support/agones/src/utility_declarations.rs": "565ee1705ffbaff809626019897c0dad29fcf508e27d4239f10bd9f6a7009d66",
-    "rust-support/agones/src/utility_gateway.rs": "59bd6321b2283722647925bebd7637cbae648e66d01c156433395917a17c5439",
-    "rust-support/agones/src/utility_gateway_framing.rs": "566dea98d8a70c612ffb24c151e63d5cbaa68590df6434825da273177005f6f9",
-    "rust-support/agones/src/utility_gateway_json.rs": "8ed085b26f7f9104d48c2751ae872904028472fc9c22d2c17837a828f561d4ff",
+    "rust-support/agones/src/utility_declarations.rs": "4bfee51f89a54e39d4297a4eeea0dd141a0898d33e90e726052f845074272277",
+    "rust-support/agones/src/utility_gateway.rs": "d730cb437d534013daf51b9071211fd4d8e649f80afaa2cb2c06180f5f9d4588",
+    "rust-support/agones/src/utility_gateway_framing.rs": "43dd0a6375b726182af52243e45152e7dcf756ce4c27ba4f9cb4cb5b77127326",
+    "rust-support/agones/src/utility_gateway_json.rs": "b6aac4a28d90ea4bad7362737cfe7132fc5a72ce81cbd6bd492441798aba48f7",
     "rust-support/agones/src/utility_gateway_scalar.rs": "18c20da7322147fe5db79503e11040d745c4a8563580aed6b28cffd3dbab7f19",
     "rust-support/agones/src/utility_gateway_targets.rs": "3d3d8607f17d4db8f9c6d70dc46793d3d35615e4d887a3f236ee57cda57d8f61",
     "rust-support/agones/src/utility_gateway_wire.rs": "234e6de84955c4240f153c0dece7a5594733562325bf7113998a794b9af0b113",
     "rust-support/agones/src/utility_gateway_wkt.rs": "4cb0f6fa00d5c553911e8eaaca563d17112cfd5123a669c2e180eb02142ed42b",
-    "rust-support/agones/src/utility_http.rs": "3e3a64fdc0380fa6a1efe02fb984bc09657fa7c7635e1c5ffe4639db42adc8c4",
+    "rust-support/agones/src/utility_http.rs": "5409c19ca779ee057da0aa170b49bc309665a702a2c8a9c941fdea14711299de",
+    "rust-support/agones/src/utility_http_body.rs": "af7e4eac5e2623b697f63342445b01b13cba8474310912e8befd823aab9c53da",
+    "rust-support/agones/src/utility_http_header_capacity.rs": "e1387260668f2eafda523d8ed3c1b646c6e471922c71a29e80c26431f625f9a4",
+    "rust-support/agones/src/utility_http_request_body.rs": "27ce8a1de3fee549c020ff2aa6010aa57313c2e14160e1939f5e03ea8bc14385",
+    "rust-support/agones/src/utility_http_request_fields.rs": "145d31a5ff97af740eae510d38a2e88677ca60322f73335f91d71a956f15c68d",
     "rust-support/agones/src/utility_lib.rs": "145614145fd542b2651e8fa73e652e48024c512ac9d389997c0942cd4b2a3f3d"
   },
   "call_path": [
@@ -176,10 +184,11 @@
   "route": "MANUAL",
   "runtime_credit": 0,
   "shared_http_headers": {
-    "change": "Gateway header readers consume immutable Bytes from the shared byte-key header model; existing source method/content-type decisions remain. This is source authoring, not runtime/parity evidence.",
+    "change": "Shared byte-key Headers plus live RequestFields/retained SourceBody and common SourceJsonDecoder; source HTTP/body ownership remains in existing CGP runtime.",
     "record": "verification/agones/roadmap-M0003-http-authoring.json",
-    "work_base_commit": "55f04e9543aeea85dcea3fdcba78ed953f61c925"
+    "work_base_commit": "54238c3a857f4efdc4b30dcea474803544214400"
   },
+  "shared_request_body_authoring": "verification/agones/roadmap-M0003-http-authoring.json",
   "source_inputs": [
     {
       "path": "pkg/util/runtime/runtime.go",
@@ -252,6 +261,27 @@
     {
       "path": "cmd/sdk-server/main.go",
       "sha256": "8113b4b4c2afe299e39c4f5856540d9e121e4280ce023b4dcaa640e028d6cddd"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/io/io.go",
+      "revision": "go1.26.5",
+      "sha256": "3945d328a9072e4f5970b7d4bc0eb834eec29fd22889a1ed9f3fb76ad41c3274",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/io/io.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/bytes/reader.go",
+      "revision": "go1.26.5",
+      "sha256": "5b42a3100971836c10b1e0d3699b46cffd41c8be23d09e1642ee42ff795dc6ab",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/bytes/reader.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/encoding/json/stream.go",
+      "revision": "go1.26.5",
+      "sha256": "bb26b2442db6a686fc7f823ea9cc89babe26ac988ec7d8caf4a157aeb60d92f2",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/encoding/json/stream.go"
     }
   ],
   "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
@@ -461,5 +491,5 @@
   },
   "stage": "IMPLEMENTING",
   "verification": "NOT_STARTED",
-  "work_base_commit": "54cb162253be6ae403303dc038d3e01449b31056"
+  "work_base_commit": "54238c3a857f4efdc4b30dcea474803544214400"
 }

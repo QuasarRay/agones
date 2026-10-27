@@ -212,6 +212,15 @@ pub fn set_header(headers: &Headers, name: impl AsRef<[u8]>, value: impl AsRef<[
 }
 pub fn header(headers: &Headers, name: impl AsRef<[u8]>) -> Option<Bytes> { headers.get(canonical_header_key(name)).and_then(|values| values.first()) }
 pub fn headers_json(headers: &Headers) -> serde_json::Value { serde_json::to_value(headers).expect("source header string values serialize") }
+/// A Go string retains arbitrary original bytes until encoding/json escapes
+/// each invalid UTF8 byte. Rust's lossy String conversion erases that data.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct SourceByteString(pub Bytes);
+impl Serialize for SourceByteString {
+    fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+        let mut json = Vec::new(); append_json_string(&mut json, &self.0); serialize_json(json, serializer)
+    }
+}
 fn serialize_json<S: Serializer>(json: Vec<u8>, serializer: S) -> Result<S::Ok, S::Error> {
     let json = String::from_utf8(json).map_err(S::Error::custom)?;
     let raw = serde_json::value::RawValue::from_string(json).map_err(S::Error::custom)?;

@@ -5,7 +5,7 @@
 use std::sync::Arc;
 use comprende::c;
 use crate::{errors::Errors, logfields::LogEntry, runtime,
-    utility_http::{canonical_header_key, Headers, HeaderValues, HttpHandler, ErrorHandler, HttpRequest, ResponseWriter},
+    utility_http::{canonical_header_key, Headers, HeaderValues, HttpHandler, ErrorHandler, HttpRequest, ResponseWriter, CanAccessSourceRequestBody},
     utility_logging::{CanEmitSourceLog, LogLevel}, utility_runtime::UtilityRuntimeContext};
 
 pub type ErrorHandlerFunc = ErrorHandler;
@@ -21,7 +21,7 @@ pub fn redactSensitiveHeaders(headers: &Headers) -> Headers {
 }
 
 pub fn LogRequest(logger: &LogEntry, request: &HttpRequest) -> LogEntry {
-    logger.with_field("method", request.method.as_str()).with_field("url", request.url_log_value.clone())
+    logger.with_bytes("method", request.method()).with_field("url", request.url_log_value.clone())
         .with_field("host", request.host.as_str()).with_headers("headers", redactSensitiveHeaders(&request.headers))
         .with_field("requestURI", request.request_uri.as_str())
 }
@@ -47,9 +47,12 @@ pub async fn FourZeroFour(context: &UtilityRuntimeContext, logger: &LogEntry, wr
             // The source installs its deferred close only after ReadAll succeeds.
         }
         Ok(body) => {
-            context.emit_source_log(&LogRequest(logger, request).with_field("body", String::from_utf8_lossy(&body).into_owned()), LogLevel::Warn, "404");
+            // The source defer captures this Body receiver before logging and
+            // writing, even if another retained request alias reassigns Body.
+            let body_to_close = request.body();
+            context.emit_source_log(&LogRequest(logger, request).with_bytes("body", &body), LogLevel::Warn, "404");
             writer.http_error("404 page not found", 404).await;
-            let _ = request.close_body().await;
+            let _ = context.close_source_request_body(body_to_close).await;
         }
     }
 }

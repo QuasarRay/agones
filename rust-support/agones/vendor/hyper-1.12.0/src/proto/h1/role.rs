@@ -407,7 +407,7 @@ impl Http1Transaction for Server {
             // been drained by the role encoder, including on this path.
             msg.head.headers.clear();
             let encoder = match source.body {
-                crate::ext::SourceBody::Empty => Encoder::length(0),
+                crate::ext::SourceBody::Empty => Encoder::source_unframed(),
                 crate::ext::SourceBody::Length(length) => Encoder::source_length(length),
                 crate::ext::SourceBody::Chunked => Encoder::source_chunked(),
                 crate::ext::SourceBody::CloseDelimited => Encoder::source_close_delimited(),

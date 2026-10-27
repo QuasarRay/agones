@@ -10,7 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer,
 use serde_json::value::RawValue;
 use crate::{errors::{BoxError, Errors}, utility_http::HttpRequest};
 use crate::utility_gateway_targets::GatewayDecodeTarget;
-use crate::utility_gateway_framing::{first_value, ReadFailure};
+use crate::utility_gateway_framing::{first_value, SourceJsonDecoder};
 
 const ERRORS: Errors = Errors::from_package("github.com/grpc-ecosystem/grpc-gateway/v2/runtime");
 const MAX_MESSAGE_DEPTH: usize = 10_000;
@@ -103,31 +103,17 @@ fn serialize_value(value: &GatewayValue) -> Result<Vec<u8>, BoxError> {
 /// Own the decoder's read-ahead, including a second value in one HTTP frame.
 /// Returning None is io.EOF, which generated unary handlers may ignore.
 #[derive(Default)]
-pub struct GatewayDecoder { buffered: Vec<u8>, eof: bool, read_failure: Option<ReadFailure> }
+pub struct GatewayDecoder { reader: Option<SourceJsonDecoder> }
 impl GatewayDecoder {
+    pub fn new(request: &HttpRequest) -> Self {
+        Self { reader: Some(SourceJsonDecoder::new(request.body(), request.headers.allocation_profile())) }
+    }
     pub async fn decode<T: GatewayDecodeTarget + ?Sized>(&mut self, request: &mut HttpRequest, target: &mut T) -> Result<bool, BoxError> {
         target.prepare_gateway_decode()?;
-        if let Some(error) = &self.read_failure { return Err(Box::new(error.clone())); }
-        loop {
-            match first_value(&self.buffered, self.eof) {
-                Ok(Some((raw, offset))) => {
-                    self.buffered.drain(..offset);
-                    target.decode_gateway_raw(&raw)?; // Semantic errors do not poison the stream.
-                    return Ok(true);
-                }
-                Ok(None) if self.eof => return Ok(false),
-                Ok(None) => {},
-                Err(error) => return Err(self.remember_failure(error)),
-            }
-            match request.read_body_chunk().await {
-                Ok(Some(bytes)) => self.buffered.extend_from_slice(&bytes),
-                Ok(None) => self.eof = true,
-                Err(error) => return Err(self.remember_failure(error)),
-            }
-        }
-    }
-    fn remember_failure(&mut self, error: BoxError) -> BoxError {
-        let error = ReadFailure::new(error); self.read_failure = Some(error.clone()); Box::new(error)
+        let reader = self.reader.get_or_insert_with(|| SourceJsonDecoder::new(request.body(), request.headers.allocation_profile()));
+        let Some(raw) = reader.read_raw(request.runtime()).await? else { return Ok(false); };
+        target.decode_gateway_raw(&raw)?; // Semantic errors do not poison the stream.
+        Ok(true)
     }
 }
 

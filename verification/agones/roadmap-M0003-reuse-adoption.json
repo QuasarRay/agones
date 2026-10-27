@@ -103,11 +103,15 @@
         "rust-support/agones/src/utility_http_framing.rs",
         "rust-support/agones/src/utility_http_headers.rs",
         "rust-support/agones/src/utility_http_header_capacity.rs",
-        "rust-support/agones/src/utility_logging.rs"
+        "rust-support/agones/src/utility_logging.rs",
+        "rust-support/agones/src/utility_http_request_fields.rs",
+        "rust-support/agones/src/utility_http_request_body.rs",
+        "rust-support/agones/src/utility_gateway_framing.rs",
+        "rust-support/agones/src/utility_gateway_json.rs"
       ],
       "detail_record": "verification/agones/roadmap-M0003-http-authoring.json",
       "disposition": "AUTHORED_UNVERIFIED_PARTIAL_NO_HTTP_PARITY_OR_PARENT_ACCEPTANCE_CREDIT",
-      "existing_effects_reused": "CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/clock/diagnostic/delay/log effects. SourceMux owns route data; listener/connection/request phases retain their existing resources. Headers owns one shared byte-key map; each HeaderValues view shares one backing array with independent source slice bounds. Response snapshots explicitly deep-copy. LogEntry retains typed header descriptors for the existing SourceLogger. Header data adds no task, general Go object layer, provider registry or lifecycle manager.",
+      "existing_effects_reused": "CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/clock/diagnostic/delay/log and SourceRequestBodyIo effects. RequestFields owns shared mutable method bytes, ContentLength and the current Body interface. The existing request/response phase separately retains one original transport RequestBody for response.reqBody discard/cleanup. ExpectContinue wrapper flags and its shared read/disable lock belong to that retained wrapper; H2 retains separate Continue state. SourceReadCloser is one per-request interface receiver, not a provider registry. SourceJsonDecoder retains one Reader and read-ahead buffer. Headers owns one shared byte-key map; HeaderValues retains slice bounds and shared backing. The existing SourceLogger serializes typed headers and original-byte strings. No task, competing lifecycle manager or general Go object layer is added.",
       "native_source_adoption": "verification/agones/roadmap-M0003-hyper-adoption.json",
       "source_ids": [
         "agones:pkg/util/httpserver/server.go",
@@ -116,7 +120,7 @@
         "agones:pkg/util/apiserver/apiserver.go",
         "agones:pkg/util/webhooks/webhooks.go"
       ],
-      "work_base_commit": "55f04e9543aeea85dcea3fdcba78ed953f61c925"
+      "work_base_commit": "54238c3a857f4efdc4b30dcea474803544214400"
     }
   ],
   "milestone_id": "M0003",

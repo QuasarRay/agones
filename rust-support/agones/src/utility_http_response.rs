@@ -24,13 +24,13 @@ pub struct ResponseWriter {
     data: mpsc::Sender<ResponseFrame>,
     runtime: UtilityRuntimeContext,
     panicked: Arc<AtomicBool>,
-    head_request: bool,
+    request_fields: super::RequestFields,
     written: i64,
     content_length: Option<i64>,
     buffered: Vec<u8>,
     finished: bool,
     http2: bool,
-    can_write_continue: Arc<AtomicBool>,
+    continue_state: super::request_body_value::ContinueState,
     informational: hyper::ext::InformationalSender,
     handler_done: bool,
     write_failure: Option<WriteFailure>,
@@ -41,8 +41,6 @@ pub struct ResponseWriter {
     protocol_at_least_11: bool,
     wants10_keep_alive: bool,
     wants_close: bool,
-    expect_continue: bool,
-    request_content_length: i64,
     server_stops: [tokio_util::sync::CancellationToken; 2],
     full_duplex: bool,
     source_end: hyper::ext::SourceResponseEnd,
@@ -54,11 +52,11 @@ impl ResponseWriter {
         server_stops: [tokio_util::sync::CancellationToken; 2], source_end: hyper::ext::SourceResponseEnd, request: &HttpRequest) -> Result<Self, BoxError> {
         let informational = request.informational.clone().ok_or_else(|| Errors::default().New("HTTP informational response driver is unavailable"))?;
         Ok(Self { headers: Headers::new(), committed: None, committed_headers: None, head: Some(head), data, runtime,
-            panicked, head_request: request.method == "HEAD", written: 0, content_length: None, buffered: Vec::new(), finished: false,
-            http2: request.protocol == hyper::Version::HTTP_2, can_write_continue: Arc::clone(&request.can_write_continue), informational,
+            panicked, request_fields: request.fields.clone(), written: 0, content_length: None, buffered: Vec::new(), finished: false,
+            http2: request.protocol == hyper::Version::HTTP_2, continue_state: request.continue_state.clone(), informational,
             handler_done: false, write_failure: None, declared_trailers: Vec::new(), source_trailers: hyper::ext::SourceTrailers::new(), source_close,
-            request_body: request.body.clone(), protocol_at_least_11: request.protocol_at_least_11, wants10_keep_alive: request.wants10_keep_alive,
-            wants_close: request.wants_close, expect_continue: request.expect_continue, request_content_length: request.content_length,
+            request_body: request.original_body.clone(), protocol_at_least_11: request.protocol_at_least_11, wants10_keep_alive: request.wants10_keep_alive,
+            wants_close: request.wants_close,
             server_stops, full_duplex: false, source_end, close_after_reply: false })
     }
     pub fn enable_full_duplex(&mut self) { self.full_duplex = true; }
@@ -66,10 +64,9 @@ impl ResponseWriter {
         if self.committed.is_some() { return Ok(()); }
         if !(100..=999).contains(&status) { panic!("invalid WriteHeader code {status}"); }
         if !self.http2 && (status < 101 || status > 199) {
-            self.can_write_continue.store(false, Ordering::Release);
             // Source WriteHeader has no error result; it ignores transport
             // write/flush errors. The connection owner retains that failure.
-            let _ = self.informational.disable_continue().await;
+            self.continue_state.disable().await;
         }
         if (100..=199).contains(&status) && (status != 101 || self.http2) {
             let headers = self.headers.shallow_copy(); headers.remove("Content-Length"); headers.remove("Transfer-Encoding");
@@ -114,7 +111,7 @@ impl ResponseWriter {
                     self.content_length = parse_h2_content_length(&value);
                     if self.content_length.is_some() { set_header(&mut headers, "Content-Length", value); }
                 }
-                if !headers.contains_key("Content-Length") && self.handler_done && body_allowed(status) && (!self.head_request || !first_data.is_empty()) {
+                if !headers.contains_key("Content-Length") && self.handler_done && body_allowed(status) && (!self.is_head_request() || !first_data.is_empty()) {
                     set_header(&mut headers, "Content-Length", first_data.len().to_string());
                 }
             }
@@ -129,7 +126,7 @@ impl ResponseWriter {
                 for value in values.iter() { for name in trailers::elements(&value) { self.declare_trailer(name); } }
             }
             headers.retain(|name, _| !name.starts_with("Trailer:"));
-            let end_stream = self.http2 && (self.head_request || (self.handler_done && self.declared_trailers.is_empty() && first_data.is_empty()));
+            let end_stream = self.http2 && (self.is_head_request() || (self.handler_done && self.declared_trailers.is_empty() && first_data.is_empty()));
             sender.send(ResponseHead { status, headers, trailers: self.source_trailers.clone(), end_stream, source_http1 })
                 .map_err(|_| io::Error::new(io::ErrorKind::BrokenPipe, "HTTP response consumer closed"))?;
         }
@@ -139,7 +136,7 @@ impl ResponseWriter {
         if let Some(error) = &self.write_failure { return Err(Box::new(error.clone())); }
         if let Err(error) = self.send_head(bytes).await { return Err(self.remember_failure(error)); }
         let end_stream = self.http2 && self.handler_done && self.final_trailers().is_empty();
-        if !self.head_request && (!bytes.is_empty() || end_stream) {
+        if !self.is_head_request() && (!bytes.is_empty() || end_stream) {
             if self.data.send(ResponseFrame { frame: Frame::data(Bytes::copy_from_slice(bytes)), end_stream }).await.is_err() {
                 return Err(self.remember_failure(Box::new(io::Error::new(io::ErrorKind::BrokenPipe, "HTTP response consumer closed"))));
             }
@@ -189,6 +186,7 @@ impl ResponseWriter {
         if self.committed.is_none() { self.write_header(200).await?; }
         self.flush_buffer().await
     }
+    fn is_head_request(&self) -> bool { self.request_fields.method().as_ref() == b"HEAD" }
     pub async fn encode_json<T: serde::Serialize>(&mut self, value: &T) -> Result<(), BoxError> {
         let bytes = serde_json::to_string(value)?.replace('&', "\\u0026").replace('<', "\\u003c").replace('>', "\\u003e")
             .replace('\u{2028}', "\\u2028").replace('\u{2029}', "\\u2029") + "\n";
@@ -247,7 +245,9 @@ impl ResponseWriter {
         self.handler_done = true;
         if self.committed.is_none() { let _ = self.write_header(200).await; }
         let flushed = self.flush_buffer().await.is_ok();
-        if flushed && !self.head_request {
+        // H1 chunkWriter.close emits the footer for the framing selected at
+        // the first flush, even if r.Method has subsequently become HEAD.
+        if flushed && (!self.http2 || !self.is_head_request()) {
             let trailers = self.final_trailers();
             if self.http2 {
                 // Key presence, including a nil/empty value slice, determines
@@ -258,7 +258,7 @@ impl ResponseWriter {
             }
         }
         self.finished = true;
-        self.close_after_reply || self.write_failure.is_some() || (!self.head_request && body_allowed(self.committed.unwrap_or(200))
+        self.close_after_reply || self.write_failure.is_some() || (!self.is_head_request() && body_allowed(self.committed.unwrap_or(200))
             && self.content_length.is_some_and(|length| self.written != length))
     }
 }

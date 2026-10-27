@@ -821,7 +821,7 @@
           "partial_adoption_record": "verification/agones/roadmap-M0003-partial-map.json",
           "platform_effect_authoring_record": "verification/agones/roadmap-M0003-platform-effects.json",
           "prerequisites": "M0001/M0002 authored implementation complete; global phase remains IMPLEMENTATION_ONLY",
-          "progress_usage_observation": "verification/agones/roadmap-M0003-progress-usage-22.json",
+          "progress_usage_observation": "verification/agones/roadmap-M0003-progress-usage-24.json",
           "progress_usage_observations": [
             "verification/agones/roadmap-M0003-progress-usage-1.json",
             "verification/agones/roadmap-M0003-progress-usage-2.json",
@@ -844,17 +844,19 @@
             "verification/agones/roadmap-M0003-progress-usage-19.json",
             "verification/agones/roadmap-M0003-progress-usage-20.json",
             "verification/agones/roadmap-M0003-progress-usage-21.json",
-            "verification/agones/roadmap-M0003-progress-usage-22.json"
+            "verification/agones/roadmap-M0003-progress-usage-22.json",
+            "verification/agones/roadmap-M0003-progress-usage-23.json",
+            "verification/agones/roadmap-M0003-progress-usage-24.json"
           ],
           "reuse_adoption_record": "verification/agones/roadmap-M0003-reuse-adoption.json",
           "route": "MANUAL",
           "source_snapshot": "95161696e9ad90f9eab2ec7ae978bcafdcbb3483",
           "stage": "IMPLEMENTING",
           "usage_start": "verification/agones/roadmap-M0003-entry-usage.json",
-          "work_base_commit": "55f04e9543aeea85dcea3fdcba78ed953f61c925"
+          "work_base_commit": "54238c3a857f4efdc4b30dcea474803544214400"
         }
       },
-      "next_action": "Continue M0003 MANUAL without route switch. Finish shared mutable request method/content-length/body/URL fields and aliases; header map additions/nested Trailer: iteration and exact source ABI/allocator/panic profiles; all native HTTP parser/upgrade/partial-I/O/flush/reset/abort/Continue/close profiles; listener service-name/bind/error-origin/display/shutdown; selected fsnotify v1.4.7 failure/close/race/BSD timed-read/stale-fd; and every existing gateway/config/queue/logging/CRD/features/admission/body gap. Byte-key header maps/slice aliases, H1/H2 snapshot distinctions, deferred redacted header logging, declared request trailers and explicit capacity profiles are authored but uncompiled/unexecuted/unverified. Keep global BOTH-route gate CLOSED and verification NOT_STARTED; no project/native/API probe, build, test, lint, proof, generator validation or CI.",
+      "next_action": "Continue M0003 MANUAL without route switch. Finish shared mutable URL/path/host/requestURI and deferred URL-log aliases; header range additions/nested Trailer: iteration and exact source ABI/allocator/panic/custom-Reader profiles; native HTTP parser/upgrade/partial-I/O/flush/H2 reset/abortPendingRead/Continue/close schedules; listener service-name/bind/error-origin/display/shutdown; selected fsnotify v1.4.7 failure/close/race/BSD timed-read/stale-fd; and every existing gateway/config/queue/logging/CRD/features/admission/body gap. RequestFields method/ContentLength/Body, retained original/current body distinction, paired data/error reads, ReadAll/refill capacities, common JSON read-ahead, byte-string method/body logs and live HEAD behavior are authored but uncompiled/unexecuted/unverified. Keep global BOTH-route gate CLOSED and verification NOT_STARTED; no project/native/API probe, build, test, lint, proof, generator validation or CI.",
       "objective": "AGONES_AND_CPG_COMBINED_ROADMAP",
       "objective_attachment": "/home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt",
       "objective_attachment_sha256": "a9b797fc624be04548c62e63a634bcc2cacab25c4d9f45af346148ba32c1baea",
@@ -912,8 +914,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 336,
-  "previous_sha256": "ab2f2019d0eeecc42039432c57e9473789abc0d3c9e3d60682d26b98ad3468a6",
+  "previous_revision": 337,
+  "previous_sha256": "92406f351dfa7e4e199685598336c2a0d07aa9847f08dc49cb347943220bd355",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -1617,7 +1619,7 @@
       "timestamp": "2026-10-21T09:42:01.132215+00:00"
     }
   ],
-  "revision": 337,
+  "revision": 338,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [

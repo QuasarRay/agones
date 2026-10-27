@@ -105,6 +105,14 @@ impl Encoder {
 
     #[cfg(feature = "agones-informational")]
     pub(crate) fn source_close_delimited() -> Encoder {
+        Encoder::source_unframed()
+    }
+
+    #[cfg(feature = "agones-informational")]
+    pub(crate) fn source_unframed() -> Encoder {
+        // The source response owner decides byte suppression and connection
+        // closure. Keeping this body live also supports Method reassignment
+        // after a HEAD header flush, without native length-zero truncation.
         let mut encoder = Encoder::close_delimited(); encoder.source_body = true; encoder
     }
 

@@ -1,6 +1,6 @@
 # Agones-rs and CPG handoff
 
-Canonical ledger: `AGONES_RS_STATE.json`, revision 337. Native Goal:
+Canonical ledger: `AGONES_RS_STATE.json`, revision 338. Native Goal:
 `01a17928-8551-7701-8497-5333c680f283`, ACTIVE, no budget. Current work made
 concrete source progress; no wait or blocking condition is live.
 Authority: combined attachment/roadmap SHA
@@ -33,17 +33,9 @@ compilation, parity or assurance. `runtime.NewServerMux` now has an actual
 authored factory/codec/mux consumer, still PARTIAL and UNVERIFIED. The named
 missing-body list is empty; required behavior/platform gaps remain open.
 
-Immediate next action: continue M0003 MANUAL without a route switch. Finish
-shared mutable request method/content-length/body/URL fields and aliases; header
-map additions/nested Trailer: iteration and source ABI/allocator/panic profiles;
-native HTTP parser/upgrade/partial-I/O/flush/reset/abort/Continue/close schedules;
-listener service-name/bind/error-origin/display/shutdown; selected fsnotify
-v1.4.7 failure/close/race/BSD timed-read/stale-fd; and all existing gateway/config/
-queue/logging/CRD/features/admission/body gaps. Keep the pinned
-gopkg.in/fsnotify.v1 1.4.7 binding. HTTP/native detail records remain
-roadmap-M0003-http-authoring and roadmap-M0003-hyper-adoption under verification.
-Header byte maps/slice aliases, distinct H1/H2 snapshots, deferred redacted log
-data and explicit capacity profiles are authored, uncompiled and unexecuted.
+Immediate next action: Continue M0003 MANUAL without route switch. Finish shared mutable URL/path/host/requestURI and deferred URL-log aliases; header range additions/nested Trailer: iteration and exact source ABI/allocator/panic/custom-Reader profiles; native HTTP parser/upgrade/partial-I/O/flush/H2 reset/abortPendingRead/Continue/close schedules; listener service-name/bind/error-origin/display/shutdown; selected fsnotify v1.4.7 failure/close/race/BSD timed-read/stale-fd; and every existing gateway/config/queue/logging/CRD/features/admission/body gap. RequestFields method/ContentLength/Body, retained original/current body distinction, paired data/error reads, ReadAll/refill capacities, common JSON read-ahead, byte-string method/body logs and live HEAD behavior are authored but uncompiled/unexecuted/unverified. Keep global BOTH-route gate CLOSED and verification NOT_STARTED; no project/native/API probe, build, test, lint, proof, generator validation or CI.
+
+This batch shares method/ContentLength/current Body through RequestFields while retaining the original reqBody for server discard/Close. SourceBody reader/wrapper aliases have distinct EOF/closed/Continue state, and SourceBodyRead preserves bytes with errors. Static SourceRequestBodyIo dispatch is declared through UtilityRuntimeProviders; custom reader receivers are per-request source interface data. ReadAll and the common SourceJsonDecoder retain their selected Reader and logical source buffer capacities. HTTPS method/body logs use original-byte SourceByteString. H1 source no-body headers keep an unframed native body live through completion; chunked footers survive later HEAD mutation. All are source authoring only. Native schedules, custom-reader/panic/error profiles, M0027 ABI/configuration binding and other existing behavior gaps remain open. No new task/provider registry or lifecycle manager.
 
 Existing util package registration is `rust-support/agones/src/utility_lib.rs`.
 Literal mirror paths are under agones-rs/pkg/util; Rust-only effect/wiring files
@@ -320,10 +312,7 @@ One read command attempted `go env GOROOT` for a source path; stdout was empty
 and its dependent file read failed. No project/compile/fixture/semantic assurance
 ran. Do not reinterpret source reading or identity bookkeeping as verification.
 
-M0003 entry usage 656008. Raw progress observations 1..22 retain 752278, 781155,
-905410, 1069792, 1095960, 1289081, 1320264, 1568425, 1577646, 1691561, 1702165,
-1783942, 1794616, 2082051, 2115290, 2286210, 2350385, 2469680, 2482023, 2579579, 2609990, 2707816. Still NO completed M0003 cost comparison or
-route switch. Context/read/accounting is charged once, no credit inference.
+M0003 entry usage 656008. Raw progress observations 1..24 retain 752278, 781155, 905410, 1069792, 1095960, 1289081, 1320264, 1568425, 1577646, 1691561, 1702165, 1783942, 1794616, 2082051, 2115290, 2286210, 2350385, 2469680, 2482023, 2579579, 2609990, 2707816, 2741726, 2928302. Still NO completed M0003 cost comparison or route switch. Context/read/accounting is charged once, no credit inference.
 Preserve M0001/M0002 original forecasts/comparisons and shared overhead buckets.
 M0002 observed work was 482306; shared completion/switch was 20030. The explicit
 M0003 entry bookkeeping allocation remains unchanged.

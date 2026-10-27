@@ -34,7 +34,9 @@ impl Default for SourceResponseEnd { fn default() -> Self { Self::new() } }
 /// The source writer's HTTP/1 response body framing decision.
 #[derive(Clone, Copy, Debug)]
 pub enum SourceBody {
-    /// HEAD, informational, 204 or 304: no response body on the wire.
+    /// The source selected unframed/no-body headers. Its live request-method
+    /// check suppresses HEAD writes; the native body stays open through the
+    /// handler phase because that method can subsequently be reassigned.
     Empty,
     /// A source-valid, explicit or inferred Content-Length.
     Length(u64),

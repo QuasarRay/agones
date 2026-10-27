@@ -103,7 +103,7 @@ impl Pattern {
         }
     }
     fn relationship(&self, other: &Self) -> Relationship { combine(self.compare_methods(other), self.compare_paths(other)) }
-    fn matches_method(&self, method: &str) -> bool { self.method.is_empty() || self.method == method || self.method == "GET" && method == "HEAD" }
+    fn matches_method(&self, method: &[u8]) -> bool { self.method.is_empty() || self.method.as_bytes() == method || self.method == "GET" && method == b"HEAD" }
     fn match_path(&self, mut path: &[u8]) -> Option<BTreeMap<String, Vec<u8>>> {
         let mut captures = BTreeMap::new();
         for segment in &self.segments {
@@ -146,7 +146,7 @@ fn compare_segments(left: &Segment, right: &Segment) -> Relationship {
     }
 }
 struct Matched<'a> { route: &'a Route, captures: BTreeMap<String, Vec<u8>> }
-fn match_modern<'a>(routes: &'a [Route], host: &str, method: &str, path: &[u8]) -> Option<Matched<'a>> {
+fn match_modern<'a>(routes: &'a [Route], host: &str, method: &[u8], path: &[u8]) -> Option<Matched<'a>> {
     let mut selected: Option<Matched<'a>> = None;
     for route in routes {
         let pattern = &route.pattern;
@@ -193,13 +193,14 @@ impl SourceMux {
         let routes = self.routes.read().unwrap_or_else(|error| error.into_inner());
         if self.profile == MuxProfile::Go121 { return resolve_legacy(&routes, request); }
         let escaped = request.escaped_path();
-        let connect = request.method == "CONNECT";
+        let method = request.method();
+        let connect = method.as_ref() == b"CONNECT";
         let host = if connect { request.url_host.clone() } else { strip_host_port(&request.host).to_owned() };
         let path = if connect { escaped.clone() } else { clean_path(&escaped) };
-        let found = match_modern(&routes, &host, &request.method, &path);
+        let found = match_modern(&routes, &host, &method, &path);
         if !found.as_ref().is_some_and(|found| found.route.pattern.exact(&path)) && !path.ends_with(b"/") && !path.is_empty() {
             let mut slash = path.clone(); slash.push(b'/');
-            if let Some(found) = match_modern(&routes, &host, &request.method, &slash).filter(|found| found.route.pattern.exact(&slash)) {
+            if let Some(found) = match_modern(&routes, &host, &method, &slash).filter(|found| found.route.pattern.exact(&slash)) {
                 let target = if self.profile == MuxProfile::Go127 { slash } else {
                     let mut decoded = clean_path(&request.url_path); decoded.push(b'/'); escape_url_path(&decoded)
                 };
@@ -212,7 +213,7 @@ impl SourceMux {
             let target = if self.profile == MuxProfile::Go127 { path.clone() } else { escape_url_path(&path) };
             return Selection::Redirect { url: url_with_query(target, &request.url_raw_query), pattern, status: 307 };
         }
-        let found = if connect { match_modern(&routes, &request.host, &request.method, &path) } else { found };
+        let found = if connect { match_modern(&routes, &request.host, &method, &path) } else { found };
         if found.is_some() { return selected(found); }
         let mut allowed = BTreeSet::new();
         for route in routes.iter().filter(|route| !route.pattern.method.is_empty() && (route.pattern.host.is_empty() || route.pattern.host == host)) {
@@ -256,7 +257,7 @@ fn legacy_match<'a>(routes: &'a [Route], host: &str, path: &[u8]) -> Option<&'a 
     matches(&key).or_else(|| matches(path))
 }
 fn resolve_legacy(routes: &[Route], request: &HttpRequest) -> Selection {
-    let connect = request.method == "CONNECT";
+    let connect = request.method().as_ref() == b"CONNECT";
     let host = if connect { request.url_host.as_str() } else { strip_host_port(&request.host) };
     let path = if connect { request.url_path.clone() } else { clean_path(&request.url_path) };
     let mut key = host.as_bytes().to_vec(); key.extend_from_slice(&path);
@@ -336,9 +337,9 @@ async fn redirect(writer: &mut ResponseWriter, request: &HttpRequest, mut url: V
         else { location.extend_from_slice(&[b'%', b"0123456789ABCDEF"[(*byte >> 4) as usize], b"0123456789ABCDEF"[(*byte & 15) as usize]]); }
     }
     set_header(&mut writer.headers, "Location", location);
-    if !content_type && (request.method == "GET" || request.method == "HEAD") { set_header(&mut writer.headers, "Content-Type", "text/html; charset=utf-8"); }
+    if !content_type && matches!(request.method().as_ref(), b"GET" | b"HEAD") { set_header(&mut writer.headers, "Content-Type", "text/html; charset=utf-8"); }
     let _ = writer.write_header(status).await;
-    if !content_type && request.method == "GET" {
+    if !content_type && request.method().as_ref() == b"GET" {
         let mut body = b"<a href=\"".to_vec();
         for byte in url {
             let escaped: Option<&[u8]> = match byte { b'&' => Some(b"&amp;"), b'<' => Some(b"&lt;"), b'>' => Some(b"&gt;"),

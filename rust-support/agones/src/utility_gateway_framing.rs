@@ -6,6 +6,8 @@
 use std::{error::Error, fmt, io, sync::Arc};
 use serde_json::value::RawValue;
 use crate::errors::BoxError;
+use crate::utility_http::{SourceBody, SourceReadError, HeaderAllocationProfile, CanAccessSourceRequestBody};
+use crate::utility_runtime::UtilityRuntimeContext;
 
 #[derive(Clone, Debug)]
 pub(crate) struct ReadFailure(Arc<dyn Error + Send + Sync>);
@@ -16,6 +18,47 @@ impl fmt::Display for ReadFailure {
     fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { fmt::Display::fmt(self.0.as_ref(), out) }
 }
 impl Error for ReadFailure { fn source(&self) -> Option<&(dyn Error + 'static)> { Some(self.0.as_ref()) } }
+
+/// Common Go json.Decoder reader state for webhook and gateway consumers.
+/// It retains the Reader selected at construction, including read-ahead past
+/// one value, independently of later assignments to the enclosing Request.
+pub(crate) struct SourceJsonDecoder {
+    body: SourceBody, profile: HeaderAllocationProfile,
+    buffered: Vec<u8>, scanp: usize, capacity: usize,
+    eof: bool, read_failure: Option<ReadFailure>,
+}
+impl SourceJsonDecoder {
+    pub(crate) fn new(body: SourceBody, profile: HeaderAllocationProfile) -> Self {
+        Self { body, profile, buffered: Vec::new(), scanp: 0, capacity: 0, eof: false, read_failure: None }
+    }
+    pub(crate) async fn read_raw(&mut self, runtime: &UtilityRuntimeContext) -> Result<Option<Box<RawValue>>, BoxError> {
+        if let Some(error) = &self.read_failure { return Err(Box::new(error.clone())); }
+        if self.eof { return Ok(None); }
+        // readValue delays this call's reader error until scanning its data.
+        // A completed value abandons the local error. The following Decode
+        // scans remaining buffered bytes, then reads the retained Reader anew.
+        let mut read_error = None;
+        loop {
+            let eof = matches!(&read_error, Some(SourceReadError::Eof));
+            match first_value(&self.buffered[self.scanp..], eof) {
+                Ok(Some((raw, offset))) => { self.scanp += offset; return Ok(Some(raw)); },
+                Ok(None) if eof => { self.eof = true; return Ok(None); },
+                Ok(None) => (),
+                Err(error) => return Err(self.remember_failure(error)),
+            }
+            if let Some(SourceReadError::Failure(error)) = read_error.take() { return Err(self.remember_failure(error)); }
+            // refill compacts consumed data only when another Read is needed,
+            // then offers at least 512 bytes of free source buffer capacity.
+            if self.scanp != 0 { self.buffered.drain(..self.scanp); self.scanp = 0; }
+            if self.capacity - self.buffered.len() < 512 { self.capacity = self.profile.json_buffer_capacity(self.capacity); }
+            let read = runtime.read_source_request_body(self.body.clone(), self.capacity - self.buffered.len()).await;
+            self.buffered.extend_from_slice(&read.data); read_error = read.error;
+        }
+    }
+    fn remember_failure(&mut self, error: BoxError) -> BoxError {
+        let error = ReadFailure::new(error); self.read_failure = Some(error.clone()); Box::new(error)
+    }
+}
 
 pub(crate) fn first_value(bytes: &[u8], eof: bool) -> Result<Option<(Box<RawValue>, usize)>, BoxError> {
     let space = |byte: &u8| matches!(*byte, b' ' | b'\t' | b'\r' | b'\n');
