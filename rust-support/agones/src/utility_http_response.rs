@@ -6,7 +6,7 @@ use super::{Headers, HttpRequest, ResponseHead, ResponseFrame, header, set_heade
 use crate::{errors::{BoxError, Errors}, utility_runtime::UtilityRuntimeContext};
 use bytes::Bytes;
 use hyper::body::Frame;
-use std::{collections::{BTreeMap, HashMap}, io, sync::{Arc, atomic::{AtomicBool, Ordering}}};
+use std::{collections::HashMap, io, sync::{Arc, atomic::{AtomicBool, Ordering}}};
 use tokio::sync::{mpsc, oneshot};
 #[path = "utility_http_framing.rs"]
 mod framing;
@@ -53,7 +53,7 @@ impl ResponseWriter {
         panicked: Arc<AtomicBool>, source_close: tokio_util::sync::CancellationToken,
         server_stops: [tokio_util::sync::CancellationToken; 2], source_end: hyper::ext::SourceResponseEnd, request: &HttpRequest) -> Result<Self, BoxError> {
         let informational = request.informational.clone().ok_or_else(|| Errors::default().New("HTTP informational response driver is unavailable"))?;
-        Ok(Self { headers: BTreeMap::new(), committed: None, committed_headers: None, head: Some(head), data, runtime,
+        Ok(Self { headers: Headers::new(), committed: None, committed_headers: None, head: Some(head), data, runtime,
             panicked, head_request: request.method == "HEAD", written: 0, content_length: None, buffered: Vec::new(), finished: false,
             http2: request.protocol == hyper::Version::HTTP_2, can_write_continue: Arc::clone(&request.can_write_continue), informational,
             handler_done: false, write_failure: None, declared_trailers: Vec::new(), source_trailers: hyper::ext::SourceTrailers::new(), source_close,
@@ -72,7 +72,7 @@ impl ResponseWriter {
             let _ = self.informational.disable_continue().await;
         }
         if (100..=199).contains(&status) && (status != 101 || self.http2) {
-            let mut headers = self.headers.clone(); headers.remove("Content-Length"); headers.remove("Transfer-Encoding");
+            let headers = self.headers.shallow_copy(); headers.remove("Content-Length"); headers.remove("Transfer-Encoding");
             let mut response = native_response_head(status, &headers)?;
             if !self.http2 { response.extensions_mut().insert(hyper::ext::SourceResponse::new(
                 trailers::encode_http1(&headers), hyper::ext::SourceBody::Empty, false)); }
@@ -82,12 +82,14 @@ impl ResponseWriter {
         self.committed = Some(status);
         // Source clones the called Header map before parsing Content-Length.
         // Mutations of its map/slices after this point cannot alter this copy.
-        self.committed_headers = Some(self.headers.clone());
+        self.committed_headers = Some(if self.http2 {
+            if self.headers.is_empty() { Headers::nil_with_profile(self.headers.allocation_profile()) } else { self.headers.h2_clone() }
+        } else { self.headers.deep_clone() });
         if let Some(value) = header(&self.headers, "Content-Length").filter(|value| !self.http2 && !value.is_empty()) {
-            match parse_content_length(value) {
+            match parse_content_length(&value) {
                 Some(length) => self.content_length = Some(length),
                 None => {
-                    self.runtime.emit_source_http_diagnostic(&format!("http: invalid Content-Length of {:?}", String::from_utf8_lossy(value)));
+                    self.runtime.emit_source_http_diagnostic(&format!("http: invalid Content-Length of {:?}", String::from_utf8_lossy(&value)));
                     self.headers.remove("Content-Length");
                 }
             }
@@ -99,14 +101,15 @@ impl ResponseWriter {
         if self.http2 && self.handler_done { self.promote_undeclared_trailers(); }
         if let Some(sender) = self.head.take() {
             let status = self.committed.unwrap_or(200);
-            let mut headers = self.committed_headers.clone().unwrap_or_default();
+            let snapshot = self.committed_headers.clone().unwrap_or_default();
+            let mut headers = if self.http2 { snapshot.shallow_copy() } else { snapshot };
             let source_http1 = if self.http2 { None } else { Some(self.prepare_http1(&mut headers, status, first_data).await) };
             if self.http2 {
                 if headers.contains_key("Connection") {
-                    if header(&headers, "Connection") == Some(b"close") { self.source_close.cancel(); }
+                    if header(&headers, "Connection").as_deref() == Some(b"close") { self.source_close.cancel(); }
                     headers.remove("Connection");
                 }
-                if let Some(value) = header(&headers, "Content-Length").filter(|value| !value.is_empty()).map(<[u8]>::to_vec) {
+                if let Some(value) = header(&headers, "Content-Length").filter(|value| !value.is_empty()) {
                     headers.remove("Content-Length");
                     self.content_length = parse_h2_content_length(&value);
                     if self.content_length.is_some() { set_header(&mut headers, "Content-Length", value); }
@@ -123,7 +126,7 @@ impl ResponseWriter {
             }
             if self.http2 && !headers.contains_key("Date") { set_header(&mut headers, "Date", self.runtime.source_http_date()); }
             if let Some(values) = headers.get("Trailer") {
-                for value in values.iter() { for name in trailers::elements(value) { self.declare_trailer(name); } }
+                for value in values.iter() { for name in trailers::elements(&value) { self.declare_trailer(name); } }
             }
             headers.retain(|name, _| !name.starts_with("Trailer:"));
             let end_stream = self.http2 && (self.head_request || (self.handler_done && self.declared_trailers.is_empty() && first_data.is_empty()));
@@ -215,28 +218,27 @@ impl ResponseWriter {
         // a prescribed lexicographic priority. Header wire order is sorted
         // separately by the source encoder.
         let promoted: HashMap<_, _> = self.headers.iter().filter_map(|(key, values)| key.strip_prefix("Trailer:")
-            .map(|name| (name.to_owned(), Arc::clone(values)))).collect();
+            .map(|name| (name, values))).collect();
         for (name, values) in promoted {
             self.declare_trailer(name.as_bytes());
             // The source overwrites an existing unprefixed key even when its
             // declaration was rejected; only declared keys reach the encoder.
-            let key = String::from_utf8(trailers::canonical_name(name.as_bytes())).expect("canonical UTF8 trailer key");
+            let key = super::canonical_header_key(name.as_bytes());
             self.headers.insert(key, values);
         }
         self.declared_trailers.sort();
     }
     fn final_trailers(&self) -> Headers {
-        let mut result = Headers::new();
+        let result = Headers::with_profile(self.headers.allocation_profile());
         if !self.http2 {
             for (key, values) in &self.headers {
-                if let Some(key) = key.strip_prefix("Trailer:") { result.insert(key.to_owned(), Arc::clone(values)); }
+                if let Some(key) = key.strip_prefix("Trailer:") { result.insert(key, values); }
             }
         }
         for key in &self.declared_trailers {
-            let Ok(key) = std::str::from_utf8(key) else { continue; };
             if let Some(values) = self.headers.get(key) {
-                if self.http2 { result.insert(key.to_owned(), Arc::clone(values)); }
-                else { Arc::make_mut(result.entry(key.to_owned()).or_default()).extend(values.iter().cloned()); }
+                if self.http2 { result.insert(key, values); }
+                else { for value in values.iter() { result.add(key, value); } }
             }
         }
         result

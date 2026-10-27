@@ -2,10 +2,10 @@
 // pkg/util/https/https.go. Copyright Contributors to Agones a Series of LF
 // Projects, LLC. Apache-2.0.
 #![allow(non_snake_case, non_upper_case_globals)]
-use std::{collections::BTreeMap, sync::Arc};
+use std::sync::Arc;
 use comprende::c;
 use crate::{errors::Errors, logfields::LogEntry, runtime,
-    utility_http::{canonical_header_key, headers_json, Headers, HttpHandler, ErrorHandler, HttpRequest, ResponseWriter},
+    utility_http::{canonical_header_key, Headers, HeaderValues, HttpHandler, ErrorHandler, HttpRequest, ResponseWriter},
     utility_logging::{CanEmitSourceLog, LogLevel}, utility_runtime::UtilityRuntimeContext};
 
 pub type ErrorHandlerFunc = ErrorHandler;
@@ -13,16 +13,16 @@ pub const sensitiveHeaders: &[&str] = &["Authorization", "Proxy-Authorization", 
 const ERRORS: Errors = Errors::from_package("agones.dev/agones/pkg/util/https");
 
 pub fn redactSensitiveHeaders(headers: &Headers) -> Headers {
-    let mut redacted = BTreeMap::new();
-    c!(redacted.insert(name.clone(), if sensitiveHeaders.contains(&canonical_header_key(name).as_str()) {
-        Arc::new(vec![b"REDACTED".to_vec()])
-    } else { Arc::clone(values) }); for (name, values) in headers);
+    let redacted = Headers::with_profile(headers.allocation_profile());
+    c!(redacted.insert(name.clone(), if sensitiveHeaders.iter().any(|sensitive| canonical_header_key(&name).as_bytes() == sensitive.as_bytes()) {
+        HeaderValues::from_values([bytes::Bytes::from_static(b"REDACTED")])
+    } else { values.clone() }); for (name, values) in headers);
     redacted
 }
 
 pub fn LogRequest(logger: &LogEntry, request: &HttpRequest) -> LogEntry {
     logger.with_field("method", request.method.as_str()).with_field("url", request.url_log_value.clone())
-        .with_field("host", request.host.as_str()).with_field("headers", headers_json(&redactSensitiveHeaders(&request.headers)))
+        .with_field("host", request.host.as_str()).with_headers("headers", redactSensitiveHeaders(&request.headers))
         .with_field("requestURI", request.request_uri.as_str())
 }
 

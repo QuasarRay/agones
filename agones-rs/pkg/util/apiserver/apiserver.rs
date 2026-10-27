@@ -115,7 +115,7 @@ pub fn shallowCopyObjectForTargetKind(object: &MetaObject) -> MetaObject { objec
 
 pub fn AcceptedSerializer(request: &HttpRequest, codecs: &CodecFactory) -> Result<SerializerInfo, BoxError> {
     let alternatives = vector![info.media_type() for info in &codecs.media_types];
-    let accept = header(&request.headers, AcceptHeader).map_or_else(String::new, |value| String::from_utf8_lossy(value).into_owned());
+    let accept = header(&request.headers, AcceptHeader).map_or_else(String::new, |value| String::from_utf8_lossy(&value).into_owned());
     let negotiated = negotiate(&accept, &alternatives).unwrap_or("application/json");
     codecs.media_types.iter().copied().find(|info| info.media_type() == negotiated)
         .ok_or_else(|| errs.New(format!("Could not find serializer for Accept: {accept}")))

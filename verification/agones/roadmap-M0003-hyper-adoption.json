@@ -226,7 +226,7 @@
     "hyper-1.12.0/src/trace.rs": "a766c472433c7569440862e978eceeea78220af170220e9fdc90b71bab731344",
     "hyper-1.12.0/src/upgrade.rs": "a9406f2cf45bb2f3574371a60cab20a60733f36fee65828c4f395f1fcf31e520"
   },
-  "owned_path": "CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/clock/diagnostic/delay effects. SourceMux owns route data; each listener owns AcceptBackoff. Each connection owns protocol children, a weak executor, graceful-close and physical-disposal cancellation. Each request has one shared RequestBody and one writer/count/header owner. The existing request phase publishes SourceResponseEnd after cleanup; existing native H1/H2 drivers consume immutable header/framing/trailer data and bounded body/control messages. No competing manager or provider registry.",
+  "owned_path": "CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/clock/diagnostic/delay/log effects. SourceMux owns route data; listener/connection/request phases retain their existing resources. Headers owns one shared byte-key map; each HeaderValues view shares one backing array with independent source slice bounds. Response snapshots explicitly deep-copy. LogEntry retains typed header descriptors for the existing SourceLogger. Header data adds no task, general Go object layer, provider registry or lifecycle manager.",
   "package": "hyper",
   "project_executable_invocations": 0,
   "purpose": "Existing native H1/H2 drivers consume source informational, header/framing/trailer and request-completion decisions; source counts and lifecycle remain owned by the CGP request/connection phases.",
@@ -238,20 +238,25 @@
   "root_binding": {
     "Cargo.lock": "1d2c5f632a6a590af119a16f3ff926d89bcfdaedde63a265fd185c8d406745a9",
     "Cargo.toml": "fd4401820492ab3209f748949abe5327e974d6c8d892a510803943391d6a2a18",
-    "agones-rs/pkg/util/https/https.rs": "a9fabc2e82a4d28e0431f2c62a57186a48bcaa625605fd3d243a3bc3d8246169",
+    "agones-rs/pkg/util/https/https.rs": "8c282a869986a46bb928d3d53afb5ccd3ba3da9613dd0dffe36d9e25c2197df5",
+    "agones-rs/pkg/util/logfields/logfields.rs": "c1d6a44e34e760fffadead9e1151a1ee67ec965d32c5420be20c888d6ff01b02",
     "crates/util/Cargo.toml": "6b011badbe07029ab9a84257636f7de293931d32a2c1bbef49c60b4d07dd91bf",
     "rust-support/agones/src/utility_declarations.rs": "565ee1705ffbaff809626019897c0dad29fcf508e27d4239f10bd9f6a7009d66",
-    "rust-support/agones/src/utility_http.rs": "90df1d13b9d5e1b95c67601996b144f7ab80da020affc11c31c366a4d4742605",
-    "rust-support/agones/src/utility_http_body.rs": "179bc24a0f372f80e48a83d53d6d65953d9ec36ff51f028b4fce780686696375",
-    "rust-support/agones/src/utility_http_framing.rs": "35cdcca330f898cfbcd3be4b117f7e79833b6fba40905fec690421e8a0aff4b5",
+    "rust-support/agones/src/utility_gateway.rs": "59bd6321b2283722647925bebd7637cbae648e66d01c156433395917a17c5439",
+    "rust-support/agones/src/utility_http.rs": "3e3a64fdc0380fa6a1efe02fb984bc09657fa7c7635e1c5ffe4639db42adc8c4",
+    "rust-support/agones/src/utility_http_body.rs": "cb35fc021862985f33a5dd192dc24a89a478add7537f803202e951d1ef333bce",
+    "rust-support/agones/src/utility_http_framing.rs": "60df160f352188ada758b0a92c3f4acc205967cade01e65e39de0e011edc0bf6",
+    "rust-support/agones/src/utility_http_header_capacity.rs": "9c1f4c2355e2fcac91a9af5fc010c2a9a864e059f1eac005f229f1429f428a99",
+    "rust-support/agones/src/utility_http_headers.rs": "49a416debc1a15ddd964ea3f6f8e28090268ea731adf4aaad5e0f75e0f1ee38d",
     "rust-support/agones/src/utility_http_listener.rs": "5ca5df95a2e84e16fbe280b2afe4843bde365936a068a910d162a23112b9c460",
-    "rust-support/agones/src/utility_http_response.rs": "07bcab5b7cae08a147c0f252cd985c839515022d7ec2a017efbdcb4e5a9185ef",
-    "rust-support/agones/src/utility_http_trailers.rs": "877398c0e611214f679c7f082fa9342262b39c86591677ac9f0a417ddd608050",
+    "rust-support/agones/src/utility_http_response.rs": "d7d5a4a617d64f4dda3f2802a36928133fda33174e1d6181a4908baabfcb5ac0",
+    "rust-support/agones/src/utility_http_trailers.rs": "6a79b0f83cb592981900f92dcb6dc414e176a38ae3f7dd2c83e7bedbe80ac554",
+    "rust-support/agones/src/utility_logging.rs": "0f9d50b71040a2b182352edccae38d7e6898a6c91e4aa7d23fc25d60c4739504",
     "rust-support/agones/src/utility_tls.rs": "548c4993139da2ada7ed2712467449cbe7eeb8fab3465032ca0d8d6e901818ae"
   },
   "runtime_credit": 0,
   "source_url": "https://static.crates.io/crates/hyper/hyper-1.12.0.crate",
-  "timestamp": "2026-10-27T05:06:36.501648+00:00",
+  "timestamp": "2026-10-27T05:54:31.048726+00:00",
   "upstream_archive": "/home/astral/.cargo/registry/cache/index.crates.io-1949cf8c6b5b557f/hyper-1.12.0.crate",
   "upstream_archive_sha256": "2c3e324da4c95177d6291d4c8730197c0d1822f8a9766814a4a44fa5ab797c9c",
   "verification": "NOT_STARTED",
@@ -272,5 +277,5 @@
     "source_text_match": true,
     "version": "1.1.2"
   },
-  "work_base_commit": "40ef5be55ded11de249314733c82e928e579f62e"
+  "work_base_commit": "55f04e9543aeea85dcea3fdcba78ed953f61c925"
 }

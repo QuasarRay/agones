@@ -46,7 +46,7 @@ impl ResponseWriter {
         if self.wants10_keep_alive && (self.head_request || has_length || !body_allowed(status)) {
             if !headers.contains_key("Connection") { extra.connection = Some(b"keep-alive".to_vec()); }
         } else if !self.protocol_at_least_11 || self.wants_close { close_after = true; }
-        if header(headers, "Connection") == Some(b"close") || !keep_alives { close_after = true; }
+        if header(headers, "Connection").as_deref() == Some(b"close") || !keep_alives { close_after = true; }
         if self.expect_continue && !self.request_body.expect_saw_eof() { close_after = true; }
 
         if self.request_content_length != 0 && !close_after && !self.full_duplex {
@@ -89,10 +89,10 @@ impl ResponseWriter {
         } else {
             close_after = true; headers.remove("Transfer-Encoding"); SourceBody::CloseDelimited
         };
-        let already_close = header(headers, "Connection").is_some_and(|value| header_has_token(value, b"close"));
+        let already_close = header(headers, "Connection").is_some_and(|value| header_has_token(&value, b"close"));
         let protocol_switch = status == 101 && header(headers, "Upgrade").is_some_and(|value| !value.is_empty())
             && headers.get("Connection").is_some_and(|values| values.iter().any(|value|
-                trailers::elements(value).any(|token| token.eq_ignore_ascii_case(b"Upgrade"))));
+                trailers::elements(&value).any(|token| token.eq_ignore_ascii_case(b"Upgrade"))));
         if close_after && (!keep_alives || !already_close) && !protocol_switch {
             headers.remove("Connection");
             if self.protocol_at_least_11 { extra.connection = Some(b"close".to_vec()); }

@@ -1,7 +1,7 @@
 //! One request-body owner shared by the source request and response writer.
 // Adapted from Go net/http/{server,transfer,h2_bundle}.go.
 // Copyright The Go Authors. BSD-3-Clause; see ../GO-LICENSE.
-use super::{Headers, canonical_header_key};
+use super::{Headers, HeaderValues, canonical_header_key};
 use crate::errors::BoxError;
 use bytes::Bytes;
 use http_body_util::BodyExt;
@@ -45,10 +45,10 @@ impl fmt::Display for ClosedBody {
 impl Error for ClosedBody {}
 
 impl RequestBody {
-    pub(super) fn new(incoming: Incoming, content_length: i64, http2: bool, closing: bool, expect_continue: bool) -> Self {
+    pub(super) fn new(incoming: Incoming, content_length: i64, http2: bool, closing: bool, expect_continue: bool, trailers: Headers) -> Self {
         let empty = if http2 { incoming.is_end_stream() } else { content_length == 0 };
         Self(Arc::new(Owner { state: Mutex::new(State { incoming: Some(incoming), pending: Bytes::new(),
-            remaining: u64::try_from(content_length).ok(), early_close: false, trailers: Headers::new() }),
+            remaining: u64::try_from(content_length).ok(), early_close: false, trailers }),
             closed: CancellationToken::new(), saw_eof: AtomicBool::new(!http2 && empty),
             expect_saw_eof: AtomicBool::new(false), expect_closed: AtomicBool::new(false), expect_continue,
             http2, empty, closing, chunked: !http2 && content_length < 0 }))
@@ -104,9 +104,10 @@ impl RequestBody {
             match frame.into_data() {
                 Ok(data) => state.pending = data,
                 Err(frame) => if let Ok(trailers) = frame.into_trailers() {
+                    if !trailers.is_empty() && state.trailers.is_nil() { state.trailers = Headers::with_profile(state.trailers.allocation_profile()); }
                     for name in trailers.keys() {
-                        let values = trailers.get_all(name).iter().map(|value| value.as_bytes().to_vec()).collect();
-                        state.trailers.insert(canonical_header_key(name.as_str()), Arc::new(values));
+                        let values = trailers.get_all(name).iter().map(|value| Bytes::copy_from_slice(value.as_bytes()));
+                        state.trailers.insert(canonical_header_key(name.as_str()), HeaderValues::parsed(values, state.trailers.allocation_profile()));
                     }
                 },
             }

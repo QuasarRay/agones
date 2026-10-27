@@ -1,0 +1,23 @@
+{
+  "authorization": "Explicit combined /goal invocation",
+  "event": "ROADMAP_M0003_HTTP_BYTE_HEADER_ALIAS_AND_LOG_DATA_PROGRESS",
+  "global_gate": "CLOSED",
+  "handoff_sha256": "e0dad32a6acd367ca29e2b7aa2ae55f38d33ddface81a8b6d8eb0819bb29dcfd",
+  "http_authoring": "verification/agones/roadmap-M0003-http-authoring.json",
+  "milestone_stage": "IMPLEMENTING",
+  "native_goal_status": "active",
+  "native_hyper_adoption": "verification/agones/roadmap-M0003-hyper-adoption.json",
+  "partial_adoption": "verification/agones/roadmap-M0003-partial-map.json",
+  "predecessor_handoff_sha256": "ca748047a54304108ac883c118b577107c8032f22f638f8235fe99a11944e7a6",
+  "predecessor_revision": 336,
+  "predecessor_sha256": "ab2f2019d0eeecc42039432c57e9473789abc0d3c9e3d60682d26b98ad3468a6",
+  "previous_goal_turn_classification": "progress",
+  "previous_goal_turn_evidence": "55f04e9543aeea85dcea3fdcba78ed953f61c925",
+  "project_executable_invocations": 0,
+  "result_revision": 337,
+  "route_switch": false,
+  "state_sha256": "92406f351dfa7e4e199685598336c2a0d07aa9847f08dc49cb347943220bd355",
+  "timestamp": "2026-10-27T05:54:31.048726+00:00",
+  "usage_progress_observation": "verification/agones/roadmap-M0003-progress-usage-22.json",
+  "verification": "NOT_STARTED"
+}

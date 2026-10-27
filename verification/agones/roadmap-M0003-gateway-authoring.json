@@ -22,20 +22,21 @@
     "Shared first-value framing with scalar lookahead/retained following bytes, container immediate completion, max depth, UnexpectedEOF and sticky framing/body errors; semantic decode errors permit later values",
     "EnumTargetFactory requires explicit EnumCastProfile: legacy x86 CVTT, Go 1.27 AMD64 ConvertHash saturating branch, or ARM64 FCVTZS. It never infers the source profile from the Rust build host."
   ],
+  "authored_payload_identity_refreshed_at": "2026-10-27T05:59:15.879368+00:00",
   "authored_payload_sha256": {
-    "Cargo.lock": "ec4f34f68b46f16a0ab24823b7d84796e82f99bfd83312ff804d4f129931eaa8",
+    "Cargo.lock": "1d2c5f632a6a590af119a16f3ff926d89bcfdaedde63a265fd185c8d406745a9",
     "agones-rs/pkg/util/runtime/runtime.rs": "cbdc9ac8f2b51d6c1cfc1af03b69a41cd4e094f01f35ab6f9d5660c85c07bcd9",
-    "crates/util/Cargo.toml": "11fd2118177a05dd6bf101cd20b3691be00e6bd8e8a410ab993e64cd7b71d271",
+    "crates/util/Cargo.toml": "6b011badbe07029ab9a84257636f7de293931d32a2c1bbef49c60b4d07dd91bf",
     "rust-support/agones/GO-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
-    "rust-support/agones/src/utility_declarations.rs": "365cc58dbe05295b17e70bd683860347ea0eaf3ba3fa3b47c98b971dec7a1977",
-    "rust-support/agones/src/utility_gateway.rs": "40fe3710855a95c776f94d296b3871016ddd37af60572cc7d242f7f33678b610",
+    "rust-support/agones/src/utility_declarations.rs": "565ee1705ffbaff809626019897c0dad29fcf508e27d4239f10bd9f6a7009d66",
+    "rust-support/agones/src/utility_gateway.rs": "59bd6321b2283722647925bebd7637cbae648e66d01c156433395917a17c5439",
     "rust-support/agones/src/utility_gateway_framing.rs": "566dea98d8a70c612ffb24c151e63d5cbaa68590df6434825da273177005f6f9",
     "rust-support/agones/src/utility_gateway_json.rs": "8ed085b26f7f9104d48c2751ae872904028472fc9c22d2c17837a828f561d4ff",
     "rust-support/agones/src/utility_gateway_scalar.rs": "18c20da7322147fe5db79503e11040d745c4a8563580aed6b28cffd3dbab7f19",
     "rust-support/agones/src/utility_gateway_targets.rs": "3d3d8607f17d4db8f9c6d70dc46793d3d35615e4d887a3f236ee57cda57d8f61",
     "rust-support/agones/src/utility_gateway_wire.rs": "234e6de84955c4240f153c0dece7a5594733562325bf7113998a794b9af0b113",
     "rust-support/agones/src/utility_gateway_wkt.rs": "4cb0f6fa00d5c553911e8eaaca563d17112cfd5123a669c2e180eb02142ed42b",
-    "rust-support/agones/src/utility_http.rs": "a1e40920dc9c0480ba0ad088aa49badac5fc23c606c39594accc404e3d0ce31b",
+    "rust-support/agones/src/utility_http.rs": "3e3a64fdc0380fa6a1efe02fb984bc09657fa7c7635e1c5ffe4639db42adc8c4",
     "rust-support/agones/src/utility_lib.rs": "145614145fd542b2651e8fa73e652e48024c512ac9d389997c0942cd4b2a3f3d"
   },
   "call_path": [
@@ -174,6 +175,11 @@
   ],
   "route": "MANUAL",
   "runtime_credit": 0,
+  "shared_http_headers": {
+    "change": "Gateway header readers consume immutable Bytes from the shared byte-key header model; existing source method/content-type decisions remain. This is source authoring, not runtime/parity evidence.",
+    "record": "verification/agones/roadmap-M0003-http-authoring.json",
+    "work_base_commit": "55f04e9543aeea85dcea3fdcba78ed953f61c925"
+  },
   "source_inputs": [
     {
       "path": "pkg/util/runtime/runtime.go",

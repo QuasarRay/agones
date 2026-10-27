@@ -6,6 +6,7 @@ use std::{borrow::Cow, collections::BTreeMap, fmt, sync::Arc};
 use cgp::prelude::*;
 use derive_deftly::Deftly;
 use serde_json::Value;
+use crate::utility_logging::SourceLogValue;
 use crate::utility_declarations::derive_deftly_template_SourceErrorOrigin;
 
 pub const NilGameServer: &str = "NilGameServer";
@@ -24,11 +25,11 @@ impl fmt::Display for ResourceType {
     fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { out.write_str(&self.0) }
 }
 
-/// Immutable field projection. The application's CGP logging capability owns
-/// the shared formatter, level and output resource, not each derived entry.
+/// Entry copies field descriptors while typed shared data retains source aliases.
+/// The CGP logger owns the formatter, level and output resource.
 #[derive(Clone, Debug, Default)]
 pub struct LogEntry {
-    pub fields: BTreeMap<String, Value>,
+    pub fields: BTreeMap<String, SourceLogValue>,
     pub(crate) logger: Option<Arc<crate::utility_logging::SourceLogger>>,
     pub(crate) serialization_error: Option<String>,
 }
@@ -39,7 +40,7 @@ impl LogEntry {
     pub fn from_logger(logger: Arc<crate::utility_logging::SourceLogger>) -> Self { Self { logger: Some(logger), ..Self::default() } }
     pub fn with_field(&self, name: impl Into<String>, value: impl Into<Value>) -> Self {
         let mut entry = self.clone();
-        entry.fields.insert(name.into(), value.into());
+        entry.fields.insert(name.into(), SourceLogValue::Json(value.into()));
         entry
     }
     pub fn with_error(&self, error: Option<&(dyn std::error::Error + Send + Sync)>) -> Self {

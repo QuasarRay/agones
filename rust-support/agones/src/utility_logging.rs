@@ -5,6 +5,21 @@ use chrono::{DateTime, Local};
 use futures::future::BoxFuture;
 use serde_json::Value;
 use crate::{errors::BoxError, logfields::LogEntry};
+use serde::Serialize;
+
+#[derive(Clone, Debug, PartialEq, Serialize)]
+#[serde(untagged)]
+pub enum SourceLogValue {
+    Json(Value),
+    HttpHeaders(crate::utility_http::Headers),
+}
+impl LogEntry {
+    pub fn with_headers(&self, name: impl Into<String>, headers: crate::utility_http::Headers) -> Self {
+        let mut entry = self.clone();
+        entry.fields.insert(name.into(), SourceLogValue::HttpHeaders(headers));
+        entry
+    }
+}
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[repr(u8)]
@@ -26,15 +41,15 @@ impl SourceLogger {
     }
     pub fn set_level(&self, level: LogLevel) { self.level.store(level as u8, Ordering::Release); }
     pub fn enabled(&self, level: LogLevel) -> bool { level as u8 <= self.level.load(Ordering::Acquire) }
-    fn write(&self, level: LogLevel, fields: &BTreeMap<String, Value>, message: &str, timestamp: &str) -> Result<(), BoxError> {
+    fn write(&self, level: LogLevel, fields: &BTreeMap<String, SourceLogValue>, message: &str, timestamp: &str) -> Result<(), BoxError> {
         let mut data = fields.clone();
         // Preserve logrus's collision order and overwrite behavior.
         for name in ["time", "message", "severity", "logrus_error"] {
             if let Some(value) = data.remove(name) { data.insert(format!("fields.{name}"), value); }
         }
-        data.insert("time".into(), Value::String(timestamp.to_owned()));
-        data.insert("message".into(), Value::String(message.to_owned()));
-        data.insert("severity".into(), Value::String(level.source_name().into()));
+        data.insert("time".into(), SourceLogValue::Json(Value::String(timestamp.to_owned())));
+        data.insert("message".into(), SourceLogValue::Json(Value::String(message.to_owned())));
+        data.insert("severity".into(), SourceLogValue::Json(Value::String(level.source_name().into())));
         let json = serde_json::to_string(&data)?;
         // encoding/json's default HTML and JavaScript separator escaping is
         // part of the selected formatter, including strings nested in fields.

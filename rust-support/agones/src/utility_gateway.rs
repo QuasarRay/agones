@@ -207,7 +207,7 @@ async fn dispatch(context: &GatewayContext, writer: &mut ResponseWriter, request
     if !request.path.starts_with('/') { let _ = context.write_gateway_error(writer, &routing_status(400)).await; return; }
     let mut form = None;
     if is_path_length_fallback(request) {
-        let method = header(&request.headers, "X-HTTP-Method-Override").filter(|value| !value.is_empty()).map(|value| String::from_utf8_lossy(value).into_owned());
+        let method = header(&request.headers, "X-HTTP-Method-Override").filter(|value| !value.is_empty()).map(|value| String::from_utf8_lossy(&value).into_owned());
         if let Some(method) = method {
             match parse_form(request).await {
                 Ok(value) => form = Some(value),
@@ -264,7 +264,7 @@ fn split_verb(pattern: &GatewayPattern, path: &[String]) -> (Vec<String>, String
     (parts, verb, false)
 }
 fn is_path_length_fallback(request: &HttpRequest) -> bool {
-    request.method == "POST" && header(&request.headers, "Content-Type") == Some(b"application/x-www-form-urlencoded".as_slice())
+    request.method == "POST" && header(&request.headers, "Content-Type").as_deref() == Some(b"application/x-www-form-urlencoded".as_slice())
 }
 async fn parse_form(request: &mut HttpRequest) -> Result<BTreeMap<String, Vec<String>>, BoxError> {
     // ParseForm's default max is ten MiB. Body values precede query values.

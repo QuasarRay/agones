@@ -1,7 +1,7 @@
 //! Source trailer declarations and wire fields; no transport or task owner.
 // Adapted from Go net/http/{header,server,h2_bundle}.go and httpguts/guts.go.
 // Copyright The Go Authors. BSD-3-Clause; see ../GO-LICENSE.
-use super::Headers;
+use super::{Headers, HeaderValues};
 use bytes::Bytes;
 
 pub(super) fn field_name(name: &[u8]) -> bool {
@@ -33,11 +33,33 @@ fn trim_space(mut value: &[u8]) -> &[u8] {
 pub(super) fn elements(value: &[u8]) -> impl Iterator<Item = &[u8]> {
     value.split(|byte| *byte == b',').map(trim_space).filter(|value| !value.is_empty())
 }
+pub(super) fn request_trailers(headers: &Headers, http2: bool, chunked: bool) -> Result<Headers, ()> {
+    let mut result = Headers::nil_with_profile(headers.allocation_profile());
+    let Some(values) = headers.get("Trailer") else { return Ok(result); };
+    if !http2 && !chunked { return Ok(result); }
+    headers.remove("Trailer");
+    for value in values.iter() {
+        // Bundled H2 splits even an empty element; H1 foreachHeaderElement
+        // removes empty elements. Its three forbidden request keys are also
+        // an error in H1, but silently ignored by H2's request constructor.
+        for part in value.split(|byte| *byte == b',') {
+            let part = trim_space(part);
+            if !http2 && part.is_empty() { continue; }
+            let name = canonical_name(part);
+            if matches!(name.as_slice(), b"Transfer-Encoding" | b"Trailer" | b"Content-Length") {
+                if http2 { continue; } else { return Err(()); }
+            }
+            if result.is_nil() { result = Headers::with_profile(headers.allocation_profile()); }
+            result.insert(name, HeaderValues::nil());
+        }
+    }
+    Ok(result)
+}
 pub(super) fn encode_http1(headers: &Headers) -> Bytes {
     // Header.Write: map keys sorted in byte order, original key spelling,
     // each value independently newline-replaced and SP/HT-trimmed.
     let mut encoded = Vec::new();
-    for (name, values) in headers {
+    for (name, values) in headers.sorted() {
         if !field_name(name.as_bytes()) { continue; }
         for value in values.iter() {
             let value: Vec<_> = value.iter().map(|byte| if matches!(byte, b'\r' | b'\n') { b' ' } else { *byte }).collect();
@@ -49,15 +71,15 @@ pub(super) fn encode_http1(headers: &Headers) -> Bytes {
 }
 pub(super) fn encode_http2(headers: &Headers) -> hyper::HeaderMap {
     let mut encoded = hyper::HeaderMap::new();
-    for (name, values) in headers {
+    for (name, values) in headers.sorted() {
         if !field_name(name.as_bytes()) { continue; }
         let Ok(name) = hyper::header::HeaderName::from_bytes(name.as_bytes()) else { continue; };
         for value in values.iter() {
             // h2_bundle's encodeHeaders omits invalid values rather than
             // applying the HTTP/1 newline/space normalization.
             if value.iter().any(|byte| (*byte < b' ' && *byte != b'\t') || *byte == 0x7f) { continue; }
-            if name == hyper::header::TRANSFER_ENCODING && value != b"trailers" { continue; }
-            if let Ok(value) = hyper::header::HeaderValue::from_bytes(value) { encoded.append(name.clone(), value); }
+            if name == hyper::header::TRANSFER_ENCODING && value.as_ref() != b"trailers" { continue; }
+            if let Ok(value) = hyper::header::HeaderValue::from_bytes(&value) { encoded.append(name.clone(), value); }
         }
     }
     encoded

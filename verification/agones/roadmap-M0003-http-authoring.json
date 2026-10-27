@@ -25,13 +25,44 @@
     "SourceResponse carries immutable H1 fields/framing into the existing native role/connection encoder. Normal and informational source fields use Go Header.Write byte normalization, original key spelling and sorted map order. Source chunks use lowercase hex. Source Content-Length mode does not add native truncation, a competing attempted-byte counter, or an early body-end decision; the source writer retains wrapping/rejected-write accounting.",
     "SourceResponseEnd is published once by the existing request phase after handler return and body cleanup, with declared-length/attempted-count, write-failure, close-after-reply and early-body-close decisions. The existing H1 driver waits before reuse, including HEAD/no-body replies, and preserves queued I/O. Emergency request-phase Drop publishes close. No new actor, executor, registry or lifecycle manager.",
     "Connection disposal now cancels its request children through the existing connection phase. Normal H1 response-body disposal no longer cancels a still-running no-body handler; H2 keeps independent stream/body disposal cancellation. Production parent/source-profile and native schedule reconciliation remain open.",
-    "Source H1 heads now bypass the native response-metadata keep-alive heuristic, including separately encoded HTTP/1.0 extra fields. Explicit native shutdown is retained and cannot be re-enabled by a source head. Source close-delimited output likewise defers physical close to handler/body-cleanup completion rather than ending that phase at byte EOF."
+    "Source H1 heads now bypass the native response-metadata keep-alive heuristic, including separately encoded HTTP/1.0 extra fields. Explicit native shutdown is retained and cannot be re-enabled by a source head. Source close-delimited output likewise defers physical close to handler/body-cleanup completion rather than ending that phase at byte EOF.",
+    "Headers now retains raw byte names, nil-map identity and shared map descriptors; HeaderValues retains nil versus non-nil empty, an independent length/capacity/offset view and one shared backing owner. Map clone, shallow copy and source deep copy are distinct operations. Indexed writes and in-capacity append retain aliases; growth allocates separate backing. Value iteration reads shared slots rather than an eager value snapshot.",
+    "H1 response snapshots use Header.Clone's combined backing and clipped per-key capacities, nil-value preservation and source-int total-count behavior. Bundled H2 uses its separate per-key clone and nil-to-non-nil-empty rule. Informational filtering uses a new map without clearing the handler map. Native H1 header serialization still sorts raw keys independently of source map iteration.",
+    "Header append capacity has explicit Go1.26 word32/word64 and heap-address parameters, signed nextslicecap arithmetic, pointer-containing string size-class/header rounding and source-word page-rounding overflow. The current constructor explicitly selects Go126/64/48; actual source tool/ABI/configuration binding remains M0027, without Rust-host capacity inference.",
+    "Source LogRequest now retains the redacted header map as SourceLogValue::HttpHeaders until the existing CGP logger serializes. Non-sensitive value arrays remain shared, sensitive values are independent REDACTED slices, and WithField replaces the typed field normally. Header JSON retains nil/null versus empty arrays/maps, raw-byte key sort, duplicate keys after UTF8 replacement, per-invalid-byte escaped UFFFD versus literal valid UFFFD, HTML and JS-separator escaping through the already enabled serde_json RawValue capability.",
+    "Requests initialize declared trailer maps with nil values and source H1/H2 forbidden/empty-element rules, retain non-chunked H1 Trailer headers, remove selected trailer declarations from the request header map and merge actual trailers into the same map owner. H2 request Cookie lines join with semicolon-space. Request, response, trailer, gateway and logging consumers use the same typed header data."
   ],
-  "canonical_owner": "CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/clock/diagnostic/delay effects. SourceMux owns route data; each listener owns AcceptBackoff. Each connection owns protocol children, a weak executor, graceful-close and physical-disposal cancellation. Each request has one shared RequestBody and one writer/count/header owner. The existing request phase publishes SourceResponseEnd after cleanup; existing native H1/H2 drivers consume immutable header/framing/trailer data and bounded body/control messages. No competing manager or provider registry.",
+  "canonical_owner": "CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/clock/diagnostic/delay/log effects. SourceMux owns route data; listener/connection/request phases retain their existing resources. Headers owns one shared byte-key map; each HeaderValues view shares one backing array with independent source slice bounds. Response snapshots explicitly deep-copy. LogEntry retains typed header descriptors for the existing SourceLogger. Header data adds no task, general Go object layer, provider registry or lifecycle manager.",
   "completion_claim": "Connected source-authoring progress only. Native compatibility package is actual source, not a wrapper marker, but is uncompiled/unexecuted. M0003 and the combined objective remain incomplete.",
   "disposition": "READY",
   "formal_credit": 0,
   "global_gate": "CLOSED",
+  "header_json_dependency": {
+    "archive": "/home/astral/.cargo/registry/cache/index.crates.io-1949cf8c6b5b557f/serde_json-1.0.154.crate",
+    "archive_sha256": "e7e9cc8b1b85264074fbcc02a88680c4096b1e47df8f739dceb03bf482f04bd6",
+    "execution": "NONE; source identity/API reading only",
+    "feature": "raw_value already enabled in workspace/util; no dependency resolution/version/manifest change",
+    "original_file_sha256": "0e6ae2ade492a3c5c090dfaf31f03ff4e54123a5a47b59def5f1b3dcc035a2e3",
+    "package": "serde_json",
+    "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde_json-1.0.154/src/raw.rs",
+    "read_symbols": [
+      "RawValue::from_string",
+      "RawValue::serialize"
+    ],
+    "sha256": "0e6ae2ade492a3c5c090dfaf31f03ff4e54123a5a47b59def5f1b3dcc035a2e3",
+    "source_text_match": true,
+    "version": "1.0.154"
+  },
+  "headers_authoring": {
+    "h1_clone": "Headers::deep_clone uses source-int length accumulation and one combined clipped backing; nil values stay nil.",
+    "h2_clone": "Headers::h2_clone allocates per-key values and converts nil values to non-nil empty slices.",
+    "iteration_limit": "Initial keys are unordered and later deletions/value updates are observed. Additions during a range, nested Trailer: promotion choices, exact Go Swiss-map schedules and pointer/allocation/panic profiles remain open.",
+    "json": "Typed header JSON retains raw byte ordering, nil/empty, replacement escapes and duplicate emitted keys; compatibility headers_json returns serde_json::Value and cannot retain duplicate object keys.",
+    "map_assignment": "Headers::clone shares the map descriptor; shallow_copy allocates a map sharing slice views.",
+    "scope": "Concrete HTTP data, not a general Go runtime/object layer or a new effect registry.",
+    "source_profile": "Explicit default Go1.26/word64/heap48; word32 and custom heap-address profile implementation authored. M0027 must bind actual tool/ABI/configuration.",
+    "status": "AUTHORED_UNVERIFIED_PARTIAL"
+  },
   "milestone_id": "M0003",
   "native_hyper_adoption": "verification/agones/roadmap-M0003-hyper-adoption.json",
   "native_package_payload_manifest_sha256": "2acd29d7c4fd5e71e3657d6eabfb993eb39ad40f000e6848fff3f4dc8c451d4c",
@@ -41,29 +72,31 @@
     "crates/util/Cargo.toml": "6b011badbe07029ab9a84257636f7de293931d32a2c1bbef49c60b4d07dd91bf",
     "rust-support/agones/GO-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
     "rust-support/agones/src/utility_declarations.rs": "565ee1705ffbaff809626019897c0dad29fcf508e27d4239f10bd9f6a7009d66",
-    "rust-support/agones/src/utility_http.rs": "90df1d13b9d5e1b95c67601996b144f7ab80da020affc11c31c366a4d4742605",
-    "rust-support/agones/src/utility_http_body.rs": "179bc24a0f372f80e48a83d53d6d65953d9ec36ff51f028b4fce780686696375",
-    "rust-support/agones/src/utility_http_framing.rs": "35cdcca330f898cfbcd3be4b117f7e79833b6fba40905fec690421e8a0aff4b5",
+    "rust-support/agones/src/utility_http.rs": "3e3a64fdc0380fa6a1efe02fb984bc09657fa7c7635e1c5ffe4639db42adc8c4",
+    "rust-support/agones/src/utility_http_body.rs": "cb35fc021862985f33a5dd192dc24a89a478add7537f803202e951d1ef333bce",
+    "rust-support/agones/src/utility_http_framing.rs": "60df160f352188ada758b0a92c3f4acc205967cade01e65e39de0e011edc0bf6",
+    "rust-support/agones/src/utility_http_header_capacity.rs": "9c1f4c2355e2fcac91a9af5fc010c2a9a864e059f1eac005f229f1429f428a99",
+    "rust-support/agones/src/utility_http_headers.rs": "49a416debc1a15ddd964ea3f6f8e28090268ea731adf4aaad5e0f75e0f1ee38d",
     "rust-support/agones/src/utility_http_listener.rs": "5ca5df95a2e84e16fbe280b2afe4843bde365936a068a910d162a23112b9c460",
     "rust-support/agones/src/utility_http_mux.rs": "017dfc7e5b6e01f66e0dd6de042b3d833610f0c1f8b549ea14d16ed8132568c6",
-    "rust-support/agones/src/utility_http_response.rs": "07bcab5b7cae08a147c0f252cd985c839515022d7ec2a017efbdcb4e5a9185ef",
+    "rust-support/agones/src/utility_http_response.rs": "d7d5a4a617d64f4dda3f2802a36928133fda33174e1d6181a4908baabfcb5ac0",
     "rust-support/agones/src/utility_http_sniff.rs": "ef1baa72b7bb66ea833ef7e15858766313c8937d13e0d18bf6bf01f8f2a96042",
     "rust-support/agones/src/utility_http_status.rs": "d310b7f9c71780a03655b4337a444eb7b7d5da3e311585c943af51e8b3a83e3a",
-    "rust-support/agones/src/utility_http_trailers.rs": "877398c0e611214f679c7f082fa9342262b39c86591677ac9f0a417ddd608050"
+    "rust-support/agones/src/utility_http_trailers.rs": "6a79b0f83cb592981900f92dcb6dc414e176a38ae3f7dd2c83e7bedbe80ac554"
   },
   "project_executable_invocations": 0,
   "record_kind": "PARTIAL_HTTP_BOUNDARY_AUTHORING",
   "remaining": [
     "Complete exact Go quote/caller/registration/conflict and panic/stack diagnostics, source Unicode tables and empty CONNECT path-segment/tree-alias configurations. Native default stdlog formatting is authored, but complete global stdlog flags/output/caller identity and native failure behavior remain partial.",
     "Complete net/url and HTTP parsing/rejection across host/authority/opaque/absolute/CONNECT/invalid bytes and target grammar, and retain byte paths through gateway/admission/discovery/log consumers. HttpRequest.path remains a text compatibility projection.",
-    "Complete mutable request-field/method/body replacement and header backing-slice alias/non-UTF8-key profiles; captured wantsClose/wants10 flags are intentional source pre-handler snapshots, but the old method/content-length compatibility projections do not establish general mutation equivalence. Reconcile native parser/rejection/1.0 keep-alive/upgrade/protocol-switch behavior, exact normal/interim/header/frame ordering and HPACK/GOAWAY profiles. H1 source header/framing/trailer/count/reuse paths are authored, not native-parity evidence.",
-    "Complete request-body Close/read/EOF/abortPendingRead/Continue/full-duplex races, initial declared-trailer maps and replacement/alias profiles, native buffering/readahead/partial-write/flush/reset/cancellation/error timing and source diagnostics. Source length/empty-write/HEAD distinctions, bounded body discard, blocked H2-close wakeup and H1 completion/reuse control are authored for the bound source profile. All selected Go tools/versions/configurations/native paths still require reconciliation and later assurance.",
+    "Complete mutable request-field/method/body/URL replacement and alias profiles. Headers now has byte keys, shared map/slice views, separate source snapshot operations and deferred redacted log data, but range additions/nested Trailer: promotion, pointer identity, bounds/panic/allocator failures and exact source ABI/version/configuration selection remain open. Captured wantsClose/wants10 flags are intentional pre-handler snapshots; method/content-length/text URL projections still need shared source ownership.",
+    "Reconcile authored request trailer maps/cookies and header JSON/alias operations across all selected profiles; native parser/rejection/1.0 keep-alive/upgrade, H2 header ordering/HPACK/GOAWAY and body Close/read/EOF/abortPendingRead/Continue/full-duplex races. Complete native readahead/partial-write/flush/reset/cancellation/error timing and diagnostics. Source code and API reading do not establish native parity.",
     "Finish listener named-service/bind and independent listener-close/shutdown timing, native error origin (syscall-wrapped versus direct Errno or poll/init failures), platform/native error display and complete retry profiles. Shared temporary-syscall accept backoff is authored for plain/TLS, but does not establish full Go listener equivalence. M0027 source tool/GODEBUG and actual production parent adoption remain required.",
     "Retain every other M0003 filesystem/signal/gateway/config/queue/logging/CRD/features/admission/body gap. Global BOTH-route gate stays CLOSED; no compiler, test, formatter/linter, native/API probe, application, generator validation, proof or CI ran."
   ],
   "route": "MANUAL",
   "runtime_credit": 0,
-  "source_fetch_note": "Earlier source-fetch history is preserved in predecessor records. This batch read the already bound Go server/transfer/h2 source, fetched pinned response.go and read cached atomic-waker declarations. No compiler, project executable, API/native probe or assurance ran.",
+  "source_fetch_note": "Earlier source-fetch history is retained in predecessor records. runtime/sizeclasses.go returned 404; the actual Go1.26 imports and primary directory listing identified internal/runtime/gc/sizeclasses.go. Only retrieved files receive identities. Source reading/authoring and cached API/archive identity only; no compiler, project/native/API probe or assurance ran.",
   "source_ids": [
     "agones:pkg/util/httpserver/server.go",
     "agones:pkg/util/https/server.go",
@@ -316,12 +349,61 @@
       "revision": "go1.26.5",
       "sha256": "43833d3f5b76380a6ba2ac6972d024f9efc599fbd17ceebda34e3e79b03483ec",
       "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/http/response.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/runtime/msize.go",
+      "revision": "go1.26.5",
+      "sha256": "0164d15295726608812842b429e241f553a314985a7c6aa48cb1ad24346a52dd",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/runtime/msize.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/runtime/slice.go",
+      "revision": "go1.26.5",
+      "sha256": "ac595f1a822620fdc52271ef84f06b19c1f0abc0e53c0eb049dbad90b86abdbd",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/runtime/slice.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/internal/runtime/gc/sizeclasses.go",
+      "revision": "go1.26.5",
+      "sha256": "7626b00bbb416c25c5279b29aa73a072d74ace3444e58b178a6ff855a2deec2c",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/internal/runtime/gc/sizeclasses.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/internal/runtime/gc/malloc.go",
+      "revision": "go1.26.5",
+      "sha256": "889e4ee48345fd246b261a9352a0f8b9deb2c595ab59629c0ca70f7eaf06462c",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/internal/runtime/gc/malloc.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/runtime/malloc.go",
+      "revision": "go1.26.5",
+      "sha256": "67e74184452cc6cb5bedee04fbbd6f395822e1cffbb4f91ad4a484796d7f021f",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/runtime/malloc.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/net/textproto/reader.go",
+      "revision": "go1.26.5",
+      "sha256": "9b1c1e5bf4903da22147f3a4ba3eb0e28372b9fbfd1c9159af63cc026d03aef6",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/net/textproto/reader.go"
+    },
+    {
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/encoding/json/encode.go",
+      "revision": "go1.26.5",
+      "sha256": "4012d78aa8236f3067a6330ddf2f719c7e59b262fcf4fff5e51b4abd1ccba235",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/encoding/json/encode.go"
     }
   ],
   "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
   "stage": "IMPLEMENTING",
-  "timestamp": "2026-10-27T05:06:36.501648+00:00",
-  "typed_declaration_template_provider_consumer": "UtilityRuntimeContext + UtilityRuntimeProviders -> static HTTP/TLS/clock/diagnostic/delay capabilities -> owned connection/request phases -> HttpRequest + shared RequestBody + ResponseWriter::prepare_http1 -> SourceResponse/SourceResponseEnd/SourceTrailers + bounded frames -> existing Hyper role/connection/H2 stream I/O and reuse gate.",
+  "timestamp": "2026-10-27T05:54:31.048726+00:00",
+  "typed_declaration_template_provider_consumer": "UtilityRuntimeContext + UtilityRuntimeProviders -> existing static HTTP/TLS/clock/diagnostic/delay/log capabilities -> HttpRequest + shared body/Headers/HeaderValues -> explicit source snapshot/framing/trailer operations -> existing native drivers; https::LogRequest -> redacted shared slices -> SourceLogValue::HttpHeaders -> existing SourceLogEmitter/SourceLogger.",
   "verification": "NOT_STARTED",
-  "work_base_commit": "40ef5be55ded11de249314733c82e928e579f62e"
+  "work_base_commit": "55f04e9543aeea85dcea3fdcba78ed953f61c925"
 }

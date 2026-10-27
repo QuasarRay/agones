@@ -23,6 +23,9 @@ mod sniff;
 use sniff::detect_content_type as sniff_content_type;
 #[path = "utility_http_status.rs"]
 mod status;
+#[path = "utility_http_headers.rs"]
+mod headers;
+pub use headers::{HeaderName, HeaderValues, HeaderAllocationProfile, Headers, canonical_header_key, set_header, header, headers_json};
 #[path = "utility_http_trailers.rs"]
 mod trailers;
 #[path = "utility_http_listener.rs"]
@@ -34,28 +37,8 @@ mod request_body;
 mod response;
 pub use response::ResponseWriter;
 
-pub type Headers = BTreeMap<String, Arc<Vec<Vec<u8>>>>;
 pub type HttpHandler = Arc<dyn for<'a> Fn(&'a UtilityRuntimeContext, &'a mut ResponseWriter, &'a mut HttpRequest) -> BoxFuture<'a, ()> + Send + Sync>;
 pub type ErrorHandler = Arc<dyn for<'a> Fn(&'a UtilityRuntimeContext, &'a mut ResponseWriter, &'a mut HttpRequest) -> BoxFuture<'a, Result<(), BoxError>> + Send + Sync>;
-
-pub fn canonical_header_key(name: &str) -> String {
-    if !name.bytes().all(|value| value.is_ascii_alphanumeric() || b"!#$%&'*+-.^_`|~".contains(&value)) { return name.to_owned(); }
-    let mut upper = true;
-    name.bytes().map(|value| {
-        let next = if upper { value.to_ascii_uppercase() } else { value.to_ascii_lowercase() };
-        upper = value == b'-'; next as char
-    }).collect()
-}
-pub fn set_header(headers: &mut Headers, name: &str, value: impl AsRef<[u8]>) {
-    headers.insert(canonical_header_key(name), Arc::new(vec![value.as_ref().to_vec()]));
-}
-pub fn header<'a>(headers: &'a Headers, name: &str) -> Option<&'a [u8]> {
-    headers.get(&canonical_header_key(name)).and_then(|values| values.first()).map(Vec::as_slice)
-}
-pub fn headers_json(headers: &Headers) -> Value {
-    Value::Object(headers.iter().map(|(key, values)| (key.clone(), Value::Array(values.iter()
-        .map(|value| Value::String(String::from_utf8_lossy(value).into_owned())).collect()))).collect())
-}
 
 #[cgp_component(SourceHttpClock)]
 pub trait CanReadSourceHttpClock { fn source_http_date(&self) -> String; }
@@ -122,33 +105,42 @@ impl HttpRequest {
         let raw_path = if connect_authority { "" } else { parts.uri.path() };
         let url_path = mux::path_unescape(raw_path.as_bytes()).ok_or(())?;
         let path = String::from_utf8_lossy(&url_path).into_owned();
-        let mut headers: Headers = BTreeMap::new();
+        let headers = Headers::new();
         for name in parts.headers.keys() {
-            let values = parts.headers.get_all(name).iter().map(|value| value.as_bytes().to_vec()).collect();
-            headers.insert(canonical_header_key(name.as_str()), Arc::new(values));
+            let values = parts.headers.get_all(name).iter().map(|value| Bytes::copy_from_slice(value.as_bytes()));
+            headers.insert(canonical_header_key(name.as_str()), HeaderValues::parsed(values, headers.allocation_profile()));
         }
+        if parts.version == hyper::Version::HTTP_2 {
+            if let Some(cookies) = headers.get("Cookie").filter(|values| values.len() > 1) {
+                let mut joined = Vec::new();
+                for (index, value) in cookies.iter().enumerate() { if index != 0 { joined.extend_from_slice(b"; "); } joined.extend_from_slice(&value); }
+                headers.insert("Cookie", HeaderValues::from_values([Bytes::from(joined)]));
+            }
+        }
+        let initial_trailers = trailers::request_trailers(&headers, parts.version == hyper::Version::HTTP_2,
+            parts.version != hyper::Version::HTTP_2 && content_length < 0)?;
         let host = parts.uri.authority().map(|authority| authority.as_str().to_owned())
-            .or_else(|| header(&headers, "Host").map(|value| String::from_utf8_lossy(value).into_owned())).unwrap_or_default();
+            .or_else(|| header(&headers, "Host").map(|value| String::from_utf8_lossy(&value).into_owned())).unwrap_or_default();
         // net/http moves Host out of Request.Header into Request.Host.
         headers.remove("Host");
         let scheme = if connect_authority { "" } else { parts.uri.scheme_str().unwrap_or_default() };
         let authority = parts.uri.authority().map_or("", |value| value.as_str());
         let raw_query = parts.uri.query().unwrap_or_default();
         let can_write_continue = if parts.version == hyper::Version::HTTP_2 {
-            let expected = headers.get("Expect").is_some_and(|values| values.iter().any(|value| header_has_comma_token(value, b"100-continue")));
+            let expected = headers.get("Expect").is_some_and(|values| values.iter().any(|value| header_has_comma_token(&value, b"100-continue")));
             if expected { headers.remove("Expect"); } // bundled httpcommon.NewServerRequest
             expected
         } else {
             content_length != 0 && parts.version != hyper::Version::HTTP_09 && parts.version != hyper::Version::HTTP_10
-                && header(&headers, "Expect").is_some_and(|value| header_has_token(value, b"100-continue"))
+                && header(&headers, "Expect").is_some_and(|value| header_has_token(&value, b"100-continue"))
         };
         let informational = parts.extensions.get::<hyper::ext::InformationalSender>().cloned();
         let wants10_keep_alive = parts.version == hyper::Version::HTTP_10
-            && header(&headers, "Connection").is_some_and(|value| header_has_token(value, b"keep-alive"));
+            && header(&headers, "Connection").is_some_and(|value| header_has_token(&value, b"keep-alive"));
         let wants_close = (parts.version == hyper::Version::HTTP_10 && !wants10_keep_alive) || parts.version == hyper::Version::HTTP_09
-            || header(&headers, "Connection").is_some_and(|value| header_has_token(value, b"close"));
+            || header(&headers, "Connection").is_some_and(|value| header_has_token(&value, b"close"));
         let expect_continue = parts.version != hyper::Version::HTTP_2 && can_write_continue;
-        let body = request_body::RequestBody::new(body, content_length, parts.version == hyper::Version::HTTP_2, wants_close, expect_continue);
+        let body = request_body::RequestBody::new(body, content_length, parts.version == hyper::Version::HTTP_2, wants_close, expect_continue, initial_trailers);
         let raw_path_log = if raw_path == "*" || mux::escape_url_path(&url_path) == raw_path.as_bytes() { "" } else { raw_path };
         let url_log_value = json!({"Scheme":scheme,"Opaque":"","User":null,"Host":authority,"Path":path,
             "RawPath":raw_path_log,"OmitHost":false,"ForceQuery":parts.uri.query()==Some(""),"RawQuery":raw_query,"Fragment":"","RawFragment":""});
@@ -246,7 +238,7 @@ fn native_response_head(status: u16, headers: &Headers) -> Result<Response<()>, 
     for (name, values) in headers {
         let Ok(name) = hyper::header::HeaderName::from_bytes(name.as_bytes()) else { continue; };
         for value in values.iter() {
-            if let Ok(value) = hyper::header::HeaderValue::from_bytes(value) { response.headers_mut().append(name.clone(), value); }
+            if let Ok(value) = hyper::header::HeaderValue::from_bytes(&value) { response.headers_mut().append(name.clone(), value); }
         }
     }
     Ok(response)
@@ -325,7 +317,7 @@ async fn request_service(context: UtilityRuntimeContext, mux: SourceMux, tasks: 
     let mut writer = ResponseWriter::new(context.clone(), head_tx, data, Arc::clone(&panicked), source_close, server_stops, end, &request).map_err(io::Error::other)?;
     tasks.spawn("HTTP request", Box::pin(async move {
         let rejected_expectation = request.protocol != hyper::Version::HTTP_2 && header(&request.headers, "Expect")
-            .is_some_and(|value| !value.is_empty() && !header_has_token(value, b"100-continue"));
+            .is_some_and(|value| !value.is_empty() && !header_has_token(&value, b"100-continue"));
         if rejected_expectation {
             set_header(&mut writer.headers, "Connection", "close"); let _ = writer.write_header(417).await;
         } else if request.method == "OPTIONS" && request.request_uri == "*" { global_options(&mut writer, &mut request).await; }

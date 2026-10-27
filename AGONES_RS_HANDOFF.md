@@ -1,6 +1,6 @@
 # Agones-rs and CPG handoff
 
-Canonical ledger: `AGONES_RS_STATE.json`, revision 336. Native Goal:
+Canonical ledger: `AGONES_RS_STATE.json`, revision 337. Native Goal:
 `01a17928-8551-7701-8497-5333c680f283`, ACTIVE, no budget. Current work made
 concrete source progress; no wait or blocking condition is live.
 Authority: combined attachment/roadmap SHA
@@ -34,15 +34,16 @@ authored factory/codec/mux consumer, still PARTIAL and UNVERIFIED. The named
 missing-body list is empty; required behavior/platform gaps remain open.
 
 Immediate next action: continue M0003 MANUAL without a route switch. Finish
-mutable request-field/method/body and header-slice alias/non-UTF8 representations;
-HTTP parser/rejection/1.0 keep-alive/upgrade/partial-I/O/flush/reset/abort/Continue
-and native schedules; listener service-name/bind/error-origin/display/shutdown;
-selected fsnotify v1.4.7 failure/close/race/BSD timed-read/stale-fd; and all existing
-gateway/config/queue/logging/CRD/features/admission/body gaps. Keep the actual
-pinned gopkg.in/fsnotify.v1 1.4.7 utility binding. HTTP/native details remain in
-roadmap-M0003-http-authoring and roadmap-M0003-hyper-adoption JSON records.
-Shared body discard/Close, H1 fields/framing/count/completion/reuse are authored,
-uncompiled and unexecuted. No source mutation/native-profile credit is inferred.
+shared mutable request method/content-length/body/URL fields and aliases; header
+map additions/nested Trailer: iteration and source ABI/allocator/panic profiles;
+native HTTP parser/upgrade/partial-I/O/flush/reset/abort/Continue/close schedules;
+listener service-name/bind/error-origin/display/shutdown; selected fsnotify
+v1.4.7 failure/close/race/BSD timed-read/stale-fd; and all existing gateway/config/
+queue/logging/CRD/features/admission/body gaps. Keep the pinned
+gopkg.in/fsnotify.v1 1.4.7 binding. HTTP/native detail records remain
+roadmap-M0003-http-authoring and roadmap-M0003-hyper-adoption under verification.
+Header byte maps/slice aliases, distinct H1/H2 snapshots, deferred redacted log
+data and explicit capacity profiles are authored, uncompiled and unexecuted.
 
 Existing util package registration is `rust-support/agones/src/utility_lib.rs`.
 Literal mirror paths are under agones-rs/pkg/util; Rust-only effect/wiring files
@@ -199,83 +200,55 @@ Go121 is the explicit 301 compatibility profile. Go126 and Go127 both use 307
 with their distinct escaped redirect construction. Actual source tool/GODEBUG
 bootstrap and complete byte-path caller adoption remain required.
 
-HTTP response continuation splits utility_http_response.rs, sniff.rs and
-status.rs from the existing effect. Full 512-byte ordered sniff signatures,
-source status text, H1 2048-byte/H2 4096-byte buffering, attempted int64 counts,
-H1 signed versus H2 deferred unsigned-63-bit Content-Length rules, empty writes,
-sticky original I/O errors, header snapshots/no-body/HEAD and Date-key suppression
-are authored. UtilityRuntimeProviders now supplies static HTTP clock and default
-stdio diagnostic capabilities. Static SourceHttpDelay supplies accept sleeps.
-Exact framing/partial writes/flush/alias/URL/diagnostic/native profiles remain open.
+HTTP continuation details live in roadmap-M0003-http-authoring.json and
+roadmap-M0003-hyper-adoption.json. The existing effect registers response,
+framing, body, headers/capacity, trailers, sniff and status helpers outside the
+mirror. Source 2048/4096-byte buffering, attempted int64 counts, H1 signed/H2
+unsigned-63-bit length parsing, empty/HEAD/no-body rules, full sniff/status tables,
+Date suppression, OPTIONS 4KB and expectation/Continue distinctions are authored.
 
-Server-level OPTIONS * now bypasses mux rejection, uses zero Content-Length,
-source 4KB body-drain bounds and H1 over-limit close. Unsupported H1 expectations
-produce the source empty 417 with Connection close. H1 and bundled H2 Expect
-parsing and Continue state retain their different source rules.
+SourceRequestBody owns Incoming, pending data, remaining length, H1 underlying/
+Continue EOF/closed flags, bounded 256KB discard/early Close, initial declared
+trailer maps, actual trailer merging and H2 close/read wakeup. FourZeroFour awaits
+its successful-read cleanup. Shared request method/content-length/body/URL
+replacement and alias projections still need completion.
 
-Actual 1xx output uses the exact pinned Hyper 1.12.0 source archive vendored in
-rust-support/agones/vendor/hyper-1.12.0, MIT license and original hashes retained.
-The opt-in agones-informational feature attaches a bounded per-request sender;
-the existing H1 dispatcher/encoder owns flush acknowledgement, and the existing
-H2 stream uses the already pinned h2 0.4.20 send_informational API. Dropping the
-native owner drops pending acknowledgements. Header operations keep final header
-state uncommitted; H1 101 remains the upgrade path. Root Cargo patch/lock source
-identity bookkeeping is authored; no version was upgraded or Cargo run.
+Headers/HeaderValues now own byte-key maps and shared backing slice views,
+including nil/empty, offset/length/capacity and indexed mutation. Clone is map
+assignment; shallow_copy allocates a map sharing values; H1 deep_clone uses one
+combined clipped backing with source-int accumulation; H2 h2_clone makes each
+slice separately, converting nil values to non-nil empty. Native H1 wire fields
+sort raw keys and normalize bytes. Header capacity uses explicit Go1.26 word32/
+word64/heap profiles and source size classes; constructor Go126/64/48 is explicit,
+not proof of actual M0027 source ABI/tool binding. Range additions/nested prefix
+promotion, pointer identity, allocator/panic/native profiles remain open.
 
-SourceHttpExecutor uses a weak per-connection UtilityTaskScope for Hyper stream/
-upgrade futures. Normal and error exits cancel/join that same owned scope;
-emergency Drop aborts its children. There is no extra application manager or
-provider registry. Full reset/cancel/stream/late Continue/error profiles remain
-unverified; all post-gate compile/runtime/proof work remains prohibited now.
+LogRequest retains the redacted map as static SourceLogValue::HttpHeaders until
+CGP SourceLogEmitter/SourceLogger serialization. Sensitive values are independent
+REDACTED slices; non-sensitive arrays remain shared. Header JSON keeps nil/empty,
+raw-byte key order, replacement-induced duplicate keys and exact invalid-byte
+UFFFD versus valid-UFFFD escaping through already-enabled serde_json RawValue.
+headers_json remains only a compatibility Value projection and cannot retain
+duplicate object keys. This leaf data model is not a general Go object layer.
 
-Trailer continuation: utility_http_trailers.rs owns the source forbidden-name
-rule, ASCII-space/comma declarations and H1 Header.Write field encoding. The
-request writer freezes declarations, selects final handler values and publishes
-one SourceTrailers block before yielding a bounded trailers frame. Existing
-Hyper H1 consumes it only for a chunked response, without client TE/declaration
-filtering. H2 uses real trailers frames, empty-value key presence and unordered
-prefixed-key promotion/collision choices. Normal H1 response headers and alias,
-all selected profile and native frame/error behavior remain required work.
+Exact Hyper 1.12.0 source remains vendored, with original MIT license/archive/file
+identities. Bounded informational commands use existing H1 encode/flush ack and
+pinned h2 0.4.20 send_informational. H1 SourceResponse carries immutable fields/
+framing; source lowercase chunks and attempted-count ownership bypass native
+recount/truncation. SourceTrailers publishes once before its frame. Header and
+extraHeader order stay separate; metadata keep-alive heuristics do not override
+the source decision or re-enable explicit shutdown.
 
-Bounded ResponseFrame carries H2 end-of-stream decisions for final HEADERS,
-DATA and trailers. Source Connection exactly close signals the connection-owned
-graceful token; the existing driver owns GOAWAY/shutdown and stream drain.
-Exact native HPACK/GOAWAY/timer/reset/error schedules remain unresolved.
-
-utility_http_listener.rs shares AcceptBackoff across plain and TLS providers:
-5ms, doubling to 1s, reset on successful accept. CGP SourceHttpDelay owns the
-sleep effect. The syscall-wrapped Go Errno rule retains Windows' synthetic
-Errno distinction; source direct-Errno/poll/init origin and native error display,
-listener-close/shutdown timing and named-service resolution remain open.
-
-Shared-body continuation: utility_http_body.rs owns Incoming, bounded pending
-frame data, remaining bytes, H1 underlying/Continue-reader EOF and closed state,
-early Close and trailers. H1 header preparation uses the 256KB discard bound and
-limit+1 rule; explicit Close has its own strict-greater bound and early-close
-state. H2 Close wakes a blocked reader before taking its mutex. Existing
-FourZeroFour awaits this owner on its successful-read/response path. OPTIONS
-also limits each source read to its remaining 4KB allowance plus one byte.
-
-utility_http_framing.rs lives inside the existing response owner. It authors
-H1 inferred lengths, TE/CL/identity/chunking, no-body/HEAD, 1.0 keep-alive/close,
-Continue, full-duplex opt-in, Date/sniff/presence and protocol-switch Connection
-decisions. Native SourceResponse carries immutable fields/framing; handler-map
-fields and extraHeader fields retain separate source order. Source chunks use
-lowercase hex. Native source length mode does not truncate/count again or mark
-the handler complete just because its declared length was reached.
-
-SourceRequestPhase publishes SourceResponseEnd only after the handler and body
-cleanup. Existing H1 driver/reuse state waits, including no-body replies, then
-uses the writer's attempted-count/close/error and body's early-close result.
-Emergency phase Drop publishes close. Physical connection disposal cancels its
-request children; ordinary H1 no-body disposal does not prematurely cancel an
-active handler. H2 keeps independent stream disposal. No new task manager.
-Source heads bypass the separate native metadata keep-alive heuristic while
-preserving explicit shutdown; close-delimited EOF also waits for the source
-handler/body-cleanup phase.
-These are source paths only: mutable request/header aliases, parser, 1.0 native
-keep-alive, upgrade, exact close/abort/Continue/flush/error and all native
-schedules remain open in the authoritative HTTP record.
+SourceRequestPhase publishes SourceResponseEnd after handler/body cleanup.
+Existing H1 driver waits before reuse or physical close, including no-body and
+close-delimited responses. Connection disposal cancels its request children;
+normal H1 no-body disposal does not cancel an active handler. H2 retains stream
+cancellation. SourceHttpExecutor/UtilityTaskScope own protocol children through
+normal cancel/join and emergency abort. The same CGP HTTP/TLS providers share
+AcceptBackoff (5ms doubling to 1s), with static delay/date/diagnostic effects.
+All parser/version/upgrade/partial-I/O/flush/reset/abort/Continue/error, native
+schedules and production parent/source-profile adoption remain unverified work.
+No new runtime registry or competing lifecycle manager was added.
 
 Gateway authoring adds `utility_gateway.rs`, `utility_gateway_json.rs`,
 `utility_gateway_wire.rs` and `utility_gateway_wkt.rs`. Actual path:
@@ -347,9 +320,9 @@ One read command attempted `go env GOROOT` for a source path; stdout was empty
 and its dependent file read failed. No project/compile/fixture/semantic assurance
 ran. Do not reinterpret source reading or identity bookkeeping as verification.
 
-M0003 entry usage 656008. Raw progress observations 1..20 retain 752278, 781155,
+M0003 entry usage 656008. Raw progress observations 1..22 retain 752278, 781155,
 905410, 1069792, 1095960, 1289081, 1320264, 1568425, 1577646, 1691561, 1702165,
-1783942, 1794616, 2082051, 2115290, 2286210, 2350385, 2469680, 2482023, 2579579. Still NO completed M0003 cost comparison or
+1783942, 1794616, 2082051, 2115290, 2286210, 2350385, 2469680, 2482023, 2579579, 2609990, 2707816. Still NO completed M0003 cost comparison or
 route switch. Context/read/accounting is charged once, no credit inference.
 Preserve M0001/M0002 original forecasts/comparisons and shared overhead buckets.
 M0002 observed work was 482306; shared completion/switch was 20030. The explicit
