@@ -1,6 +1,6 @@
 # Agones-rs and CPG handoff
 
-Canonical ledger: `AGONES_RS_STATE.json`, revision 329. Native Goal:
+Canonical ledger: `AGONES_RS_STATE.json`, revision 330. Native Goal:
 `01a17928-8551-7701-8497-5333c680f283`, ACTIVE, no budget. Current work made
 concrete source progress; no wait or blocking condition is live.
 Authority: combined attachment/roadmap SHA
@@ -29,19 +29,22 @@ M0003's entire authored milestone is complete. Authoritative partial record:
 `verification/agones/roadmap-M0003-partial-map.json`; retained-body map:
 `verification/agones/roadmap-M0003-reuse-adoption.json`. All 14 mirror entries
 now contain authored code at varying depth; this is NOT all-body completion,
-compilation, parity or assurance. `runtime.NewServerMux` remains UNAUTHORED.
-The partial record identifies that named missing body separately from file count.
+compilation, parity or assurance. `runtime.NewServerMux` now has an actual
+authored factory/codec/mux consumer, still PARTIAL and UNVERIFIED. The named
+missing-body list is empty; required behavior/platform gaps remain open.
 
-Immediate next action: implement runtime.NewServerMux with actual HTTPBody and
-proto JSON use-proto-names / emit-unpopulated / discard-unknown behavior, backed
-by a real codec and mux consumer, not stored flags alone. Then reconcile the
-required source profiles in the same record. Keep the cursor; do not jump to M4.
+Immediate next action: finish the required gateway profiles recorded in
+`verification/agones/roadmap-M0003-gateway-authoring.json`: non-proto decoder
+categories, exact Go timestamp/base64/lexical/error and Any/proto2/wire behavior,
+HTTP form/path/metadata boundaries. Then fill absent platform effects and
+reconcile every remaining M0003 partial-map gap. Keep the cursor; no M4 switch.
 
 Existing util package registration is `rust-support/agones/src/utility_lib.rs`.
 Literal mirror paths are under agones-rs/pkg/util; Rust-only effect/wiring files
 are in rust-support/agones/src. derive-deftly templates SourceErrorOrigin,
 UtilityFeatureProviders, UtilityCrdProviders, UtilityRuntimeProviders and new
-UtilityQueueProviders connect typed declarations to static CGP providers.
+UtilityQueueProviders and UtilityGatewayProviders connect typed declarations
+to static CGP providers.
 The queue template uses the pinned syntax `<$tgens> $ttype`; source API docs
 were read, but no expansion/compiler probe ran. No runtime provider registry.
 
@@ -138,13 +141,49 @@ actual command/controller/CRD/admission parent adoption remain open. Async Drop
 cannot itself join; normal cleanup is explicit. Do not claim compilation or
 parity from code presence, manifest declaration, source mapping or this handoff.
 
-All dependency declarations were authored without Cargo resolution. This batch
-adds direct existing-root errno 0.3.14 and regex 1.13.1 identities only. Preserve
-all pinned packages and the earlier comprehension blocks adopted from the CPG
-lock. notify 8.2 and signal-hook-registry were read as candidates, not adopted.
+Gateway authoring adds `utility_gateway.rs`, `utility_gateway_json.rs`,
+`utility_gateway_wire.rs` and `utility_gateway_wkt.rs`. Actual path:
+NewServerMux -> CGP factory -> GatewayContext/GatewayState -> compiled generator
+pattern -> CGP dispatcher/decoder/callback/response -> existing SourceMux and
+concrete HTTP/TLS writer. Compiled patterns validate stack/pool/deep wildcard,
+vars and custom verbs; newest registration wins. Default routing error/status,
+POST form fallback/method override and raw/unary callbacks are authored.
+No route operation spawns its own task or introduces an effect registry.
 
-M0003 entry usage 656008. Raw progress observations 1..6 retain 752278, 781155,
-905410, 1069792, 1095960, 1289081. Still NO completed M0003 cost comparison or
+Fixed ProtoJSON consumes source names, implicit defaults, presence nulls,
+omitted oneofs, enum names/unknown numbers, NullValue, quoted 64-bit integers,
+exact decimal/exponent parsing, bytes, unknown-field/enum-name discard, aliases
+and oneof duplicate checks. It retains previously decoded state when later
+fields fail. Any resolves through the message's linked schema pool and emits
+map keys deterministically in its wire payload. Duration and FieldMask use
+source-derived rules; Timestamp range/UTC/precision uses existing chrono.
+Struct/ListValue/Value/wrappers and required-field checks are authored.
+Concrete HttpBody alone has the outbound raw override; inherited NewEncoder
+still writes JSON plus newline. Decoder retains read-ahead between values;
+unary forwarding has no delimiter, streams use result/error plus newline.
+Request cancellation belongs to the existing HTTP request/body/pending-head
+owners and cancels on handler return/client disposal, independently of graceful
+server Shutdown. Required lexical, timestamp fallback, base64, diagnostic,
+proto2/Any recursion/order and non-proto decoder profiles remain incomplete.
+
+Full generated source descriptors/SDK/allocator path/query/body/RPC handlers,
+header/deadline/metadata/trailer/response_body integration and actual command
+adoption remain explicit M0025/M0027 work. This factory is a callable library
+path, not credit for those preserved callers. See the gateway receipt.
+
+Dependency declarations were authored without Cargo resolution: one exact
+prost-reflect 0.14.7 package reuses existing once_cell/prost 0.13.5/prost-types.
+Its optional serde layer and serde-value/ordered-float candidates are NOT
+adopted. Preserve existing errno/regex/native and earlier CPG comprehension
+blocks. protobuf-json-mapping 3.7.2, notify 8.2 and signal-hook-registry were
+read as candidates only. Archive/index/API input hashes are in the receipt.
+One read command attempted `go env GOROOT` for a source path; stdout was empty
+and its dependent file read failed. No project/compile/fixture/semantic assurance
+ran. Do not reinterpret source reading or identity bookkeeping as verification.
+
+M0003 entry usage 656008. Raw progress observations 1..8 retain 752278, 781155,
+905410, 1069792, 1095960, 1289081, 1320264, 1568425. Still NO completed M0003
+cost comparison or
 route switch. Context/read/accounting is charged once, no credit inference.
 Preserve M0001/M0002 original forecasts/comparisons and shared overhead buckets.
 M0002 observed work was 482306; shared completion/switch was 20030. The explicit

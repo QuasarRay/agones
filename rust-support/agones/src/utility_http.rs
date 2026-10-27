@@ -46,6 +46,9 @@ pub struct HttpRequest {
     pub request_uri: String,
     pub url_log_value: Value,
     pub headers: Headers,
+    /// The request owner cancels on handler return or transport/body disposal.
+    /// Server Shutdown does not cancel an otherwise active request.
+    pub cancelled: CancellationToken,
     body: Option<Incoming>,
     body_closed: bool,
     body_eof: bool,
@@ -72,7 +75,7 @@ impl HttpRequest {
         let url_log_value = json!({"Scheme":scheme,"Opaque":"","User":null,"Host":authority,"Path":path,
             "RawPath":raw_path_log,"OmitHost":false,"ForceQuery":parts.uri.query()==Some(""),"RawQuery":raw_query,"Fragment":"","RawFragment":""});
         Self { method: parts.method.to_string(), path, host, request_uri, url_log_value, headers,
-            body: Some(body), body_closed: false, body_eof: false }
+            cancelled: CancellationToken::new(), body: Some(body), body_closed: false, body_eof: false }
     }
     pub async fn read_body(&mut self) -> Result<Vec<u8>, BoxError> {
         self.require_open_body()?;
@@ -89,6 +92,11 @@ impl HttpRequest {
         }
         self.body_eof = true;
         Ok(None)
+    }
+    /// Streaming decoders retain their own read-ahead across Decode calls.
+    pub async fn read_body_chunk(&mut self) -> Result<Option<Bytes>, BoxError> {
+        self.require_open_body()?;
+        self.next_data().await
     }
     fn require_open_body(&self) -> Result<(), BoxError> {
         if self.body_closed { Err(Errors::default().New("http: invalid Read on closed Body")) } else { Ok(()) }
@@ -112,6 +120,9 @@ impl HttpRequest {
         }
     }
     pub fn close_body(&mut self) { self.body_closed = true; self.body.take(); }
+}
+impl Drop for HttpRequest {
+    fn drop(&mut self) { self.cancelled.cancel(); }
 }
 fn unescape_path(raw: &[u8]) -> Vec<u8> {
     let mut result = Vec::with_capacity(raw.len()); let mut index = 0;
@@ -242,7 +253,10 @@ fn sniff_content_type(bytes: &[u8]) -> &'static str {
     } else { "text/plain; charset=utf-8" }
 }
 
-struct ResponseBody { receiver: mpsc::Receiver<Bytes>, panicked: Arc<AtomicBool>, ended: bool }
+struct ResponseBody { receiver: mpsc::Receiver<Bytes>, panicked: Arc<AtomicBool>, ended: bool, cancelled: CancellationToken }
+impl Drop for ResponseBody {
+    fn drop(&mut self) { self.cancelled.cancel(); }
+}
 impl Body for ResponseBody {
     type Data = Bytes; type Error = io::Error;
     fn poll_frame(mut self: Pin<&mut Self>, context: &mut Context<'_>) -> Poll<Option<Result<Frame<Bytes>, io::Error>>> {
@@ -288,6 +302,13 @@ pub fn is_server_closed(error: &(dyn Error + 'static)) -> bool { crate::errors::
 
 async fn request_service(context: UtilityRuntimeContext, mux: SourceMux, tasks: Arc<UtilityTaskScope>, incoming: Request<Incoming>) -> Result<Response<ResponseBody>, io::Error> {
     let mut request = HttpRequest::from_hyper(incoming);
+    // Hyper may drop the service future before the response head is ready.
+    // Until ResponseBody owns cancellation, this guard covers that interval.
+    struct PendingRequest(Option<CancellationToken>);
+    impl Drop for PendingRequest {
+        fn drop(&mut self) { if let Some(stop) = &self.0 { stop.cancel(); } }
+    }
+    let mut pending = PendingRequest(Some(request.cancelled.clone()));
     let (head_tx, head_rx) = oneshot::channel();
     let (data, receiver) = mpsc::channel(2);
     let panicked = Arc::new(AtomicBool::new(false));
@@ -295,11 +316,13 @@ async fn request_service(context: UtilityRuntimeContext, mux: SourceMux, tasks: 
         panicked: Arc::clone(&panicked), head_request: request.method == "HEAD", written: 0, buffered: Vec::new(), flushed: false, finished: false };
     tasks.spawn("HTTP request", Box::pin(async move {
         mux.dispatch(&context, &mut writer, &mut request).await;
+        request.cancelled.cancel(); // net/http cancels when ServeHTTP returns.
         writer.finish().await;
         Ok(())
     })).map_err(io::Error::other)?;
     let head = head_rx.await.map_err(|_| io::Error::other("HTTP handler ended without a response"))?;
-    let mut response = Response::new(ResponseBody { receiver, panicked, ended: false });
+    let mut response = Response::new(ResponseBody { receiver, panicked, ended: false,
+        cancelled: pending.0.take().expect("pending HTTP request owns cancellation") });
     *response.status_mut() = hyper::StatusCode::from_u16(head.status).map_err(io::Error::other)?;
     for (name, values) in head.headers {
         let Ok(name) = hyper::header::HeaderName::from_bytes(name.as_bytes()) else { continue; };

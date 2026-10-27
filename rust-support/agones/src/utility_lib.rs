@@ -23,6 +23,10 @@ pub mod utility_queue_values;
 pub mod utility_queue_limiters;
 pub mod utility_client_config;
 pub mod utility_error_view;
+pub mod utility_gateway;
+pub mod utility_gateway_json;
+mod utility_gateway_wire;
+mod utility_gateway_wkt;
 
 /// Original module path retained as an alias of the literal source hierarchy.
 pub mod pkg { pub use crate::source as util; }

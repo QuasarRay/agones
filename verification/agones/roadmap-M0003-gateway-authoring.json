@@ -1,0 +1,223 @@
+{
+  "authored_operations": [
+    "compiled opcode validation/stack/capture/deep-wildcard/tail/custom-verb matching; newest registration first",
+    "default source routing errors, method mismatch and exact-content-type POST/form fallback with override",
+    "raw callback and unary callback adapters with concrete request body decoder and response writer",
+    "protobuf names and declaration field order, unset presence nulls, omitted oneofs, implicit scalar/list/map defaults",
+    "enum name/unknown-number/NullValue, quoted 64-bit integers, exact decimal/exponent integer parsing, bytes and nonfinite float categories",
+    "unknown field and enum-name discard, field-name alias duplicate rejection, oneof duplicate rejection and retained earlier decoded state",
+    "typed nil versus untyped nil, concrete HttpBody outbound-only raw override and inherited JSON encoder delimiter behavior",
+    "Any URL resolution/embedded message, custom JSON payload/Empty handling and deterministic map-key wire payload emission",
+    "Duration grammar/range/sign/fraction policy, FieldMask roundtrip/path validation and Timestamp UTC/range/fraction policy",
+    "Struct/ListValue/Value/wrappers with recursive protobuf JSON, required-field checks outside Any wire payloads",
+    "decoder read-ahead between successive JSON values, unary no-delimiter output and streaming result/error/newline framing",
+    "request cancellation token ownership across request return, body/client drop and pending-head service future disposal"
+  ],
+  "authored_payload_sha256": {
+    "Cargo.lock": "ec4f34f68b46f16a0ab24823b7d84796e82f99bfd83312ff804d4f129931eaa8",
+    "agones-rs/pkg/util/runtime/runtime.rs": "cbdc9ac8f2b51d6c1cfc1af03b69a41cd4e094f01f35ab6f9d5660c85c07bcd9",
+    "crates/util/Cargo.toml": "11fd2118177a05dd6bf101cd20b3691be00e6bd8e8a410ab993e64cd7b71d271",
+    "rust-support/agones/src/utility_declarations.rs": "365cc58dbe05295b17e70bd683860347ea0eaf3ba3fa3b47c98b971dec7a1977",
+    "rust-support/agones/src/utility_gateway.rs": "40fe3710855a95c776f94d296b3871016ddd37af60572cc7d242f7f33678b610",
+    "rust-support/agones/src/utility_gateway_json.rs": "57a8419b8768d14d877f56c47793a0b732d85b66501a44c7220411bbc227f341",
+    "rust-support/agones/src/utility_gateway_wire.rs": "234e6de84955c4240f153c0dece7a5594733562325bf7113998a794b9af0b113",
+    "rust-support/agones/src/utility_gateway_wkt.rs": "8d32866d36f1e0b4d88a6bd622279e898af99a875c2a03f9d359fc7f8cf4e2f4",
+    "rust-support/agones/src/utility_http.rs": "a1e40920dc9c0480ba0ad088aa49badac5fc23c606c39594accc404e3d0ce31b",
+    "rust-support/agones/src/utility_lib.rs": "fbc9fcbcda75f29227da41924d62150c8144a94d7aa346d63422cff9847e0d89"
+  },
+  "call_path": [
+    "UtilityRuntimeProviders -> CreateNativeSourceServerMux",
+    "NewServerMux(context) -> GatewayContext { Arc<GatewayState>, shared runtime }",
+    "UtilityGatewayProviders -> fixed CGP codec/handler/dispatcher/response providers",
+    "GatewayContext::handle / handle_unary -> compiled GatewayPattern route table",
+    "GatewayContext::as_http_handler -> SourceMux::handle -> existing concrete HTTP/TLS request service",
+    "GatewayDispatcher -> request decoder / source callback -> GatewayResponseWriter -> actual ResponseWriter"
+  ],
+  "completion_claim": "NewServerMux now has an actual authored factory/codec/dispatch/HTTP consumer path. The milestone stays partial and unverified; no compilation, execution, source parity or generated caller adoption credit.",
+  "dependency": {
+    "adoption": "One manually authored root lock package, with existing once_cell, prost 0.13.5 and prost-types 0.13.5. No resolver/build/download hook ran. Reflection and wire decoding are reused; the optional prost-reflect serde layer is not enabled.",
+    "archive_sha256": "7b5edd582b62f5cde844716e66d92565d7faf7ab1445c8cebce6e00fba83ddb2",
+    "archive_url": "https://static.crates.io/crates/prost-reflect/prost-reflect-0.14.7.crate",
+    "features": [],
+    "index_record_sha256": "f44faa365637f6bf2eb0f932a1f24de286c93599d119e414dad9c6aca5dc1023",
+    "index_url": "https://index.crates.io/pr/os/prost-reflect",
+    "license": "MIT OR Apache-2.0",
+    "name": "prost-reflect",
+    "native_primary_source_inputs": [
+      {
+        "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/Cargo.toml",
+        "sha256": "1f08fe0303b0662a3f95c6fe1fc2629ad6325877c4cbe8a586919fb2ad9cd78d"
+      },
+      {
+        "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/descriptor/api.rs",
+        "sha256": "95881318b5915ea9ba89455b017ebe39fb95a10b44d39fca77096ed83cb04115"
+      },
+      {
+        "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/descriptor/mod.rs",
+        "sha256": "1b8ab2c4968dd7030bc6c385406427cc8181467cc436d991960af5bf74175273"
+      },
+      {
+        "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/dynamic/mod.rs",
+        "sha256": "38aaff3f0b879bfcca8c684e2b7721c4ac3ebfaeb36099e7a89a20ef5bea8650"
+      },
+      {
+        "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/dynamic/message.rs",
+        "sha256": "d64430675dafe40fa7005f7350ad126df241615e454334780917e8a6f7f07a22"
+      },
+      {
+        "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/dynamic/fields.rs",
+        "sha256": "a31c32dccaf5e329d8c53736dab056873a8f9a56056e1017a151dbfb0a9fb9a4"
+      },
+      {
+        "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/dynamic/unknown.rs",
+        "sha256": "b476e1f3f8e730bd4fe0f39aaa447af0b9e27750b01bedf246e5fccceec4876f"
+      },
+      {
+        "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/dynamic/serde/mod.rs",
+        "sha256": "343686f2bbc1cc27d1726d2003df364537266f8e588151ee8117e731dfb46ad4"
+      },
+      {
+        "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/dynamic/serde/ser/mod.rs",
+        "sha256": "d7a83b44db31e56996eb4bd106e801f26c650fe528c572c6430941e37cef3bd2"
+      },
+      {
+        "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/dynamic/serde/ser/wkt.rs",
+        "sha256": "e188dfdfe6853caf134edd91818b1f87c0dba4e93ebe853813de0db728e697c1"
+      },
+      {
+        "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/dynamic/serde/de/mod.rs",
+        "sha256": "395972066ea8c65d47cb8a42a08c4f8fed2f4912c71c588b0292748cf147b58e"
+      },
+      {
+        "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/dynamic/serde/de/kind.rs",
+        "sha256": "f3125753a89250c113947e6091f082944504fd095ed3635b4582289bce8c2b31"
+      },
+      {
+        "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/dynamic/serde/de/wkt.rs",
+        "sha256": "de59ba2cbf44e429d20455bd4b0f3166793e9c412451790ccd6b9eddc6003a59"
+      }
+    ],
+    "version": "0.14.7"
+  },
+  "disposition": "READY",
+  "entrypoint": "agones-rs/pkg/util/runtime/runtime.rs::NewServerMux",
+  "environment_introspection_attempts": [
+    {
+      "command": "go env GOROOT",
+      "observed_result": "Empty stdout; the dependent /src/net/http/request.go read failed. No Go project execution, compilation, fixture or semantic assurance was performed.",
+      "purpose": "Read-only standard-library source-path lookup inside one read command"
+    }
+  ],
+  "formal_credit": 0,
+  "global_gate": "CLOSED",
+  "milestone_id": "M0003",
+  "ownership": {
+    "codec": "Fixed source UseProtoNames/EmitUnpopulated/DiscardUnknown behavior is consumed by serializer/decoder code, not stored as flags.",
+    "metaprogramming": "UtilityRuntimeContext and GatewayContext derive HasField + Deftly; UtilityRuntimeProviders/UtilityGatewayProviders supply static CGP factory, getters, codec, dispatch, callback and response implementations.",
+    "routes": "One GatewayState RwLock<HashMap<method, newest-first routes>> owned by the source factory. This source route table is data, not an effect registry. No global mutable descriptor/service/provider registry.",
+    "schema": "Each DynamicMessage carries its descriptor and linked pool. Any resolves its type URL against that pool. Full generated source descriptor/handler adoption remains explicit later work.",
+    "tasks": "Factory and codec spawn no tasks. Existing HTTP phase owns requests and connection drains. Callbacks borrow the active request; request return, response-body disposal and a dropped pending response head cancel its token. Normal server Shutdown does not cancel active requests early."
+  },
+  "project_executable_invocations": 0,
+  "read_only_candidates_not_adopted": [
+    {
+      "archive_sha256": "e0d6e4be637b310d8a5c02fa195243328e2d97fa7df1127a27281ef1187fcb1d",
+      "package": "protobuf-json-mapping 3.7.2",
+      "reason": "Source has no Any implementation; default presence and unknown-enum behavior need source-specific handling."
+    },
+    {
+      "package": "prost-reflect optional serde / serde-value 0.7.0 / ordered-float 2.10.1",
+      "reason": "Read-only source candidates. The final implementation uses the reflection/wire APIs and source-derived text WKT handling, so the optional serde layer and its extra dependencies are not adopted."
+    }
+  ],
+  "record_kind": "SOURCE_BOUND_PARTIAL_NATIVE_GATEWAY_AUTHORING",
+  "remaining": [
+    "Complete required lexical/diagnostic profiles: float formatting and integer exponent limits, exact Go base64 CR/LF/padding/trailing-bit acceptance, JSON duplicate/error position/invalid-UTF8/surrogate handling and partial target state after malformed containers. Current Rust errors are not asserted equal to Go diagnostics.",
+    "Timestamp uses existing chrono with explicit proto range/nanos/leap-second/precision/case constraints. Reconcile the full Go RFC3339Nano fallback grammar, including comma fractions, one-digit hours and unusual offsets; no equivalence claim from native RFC3339 parsing.",
+    "Reconcile Any embedded wire recursion with prost-reflect decoding limits, required-field error traversal/order, proto2 group/extension/MessageSet profiles and deterministic extension/oneof ordering. Native Any map keys now have explicit deterministic emission; that alone is not full source wire-parity credit.",
+    "Finish the source JSONPb non-proto primitive/pointer/slice/map decoding interface and the full category-specific formatting/alias/nil profiles. GatewayValue explicitly represents supported source categories; it is not arbitrary Go interface/reflection compatibility.",
+    "GatewayPattern consumes compiled generator opcodes in default Legacy unescaping mode. HandlePath parser and nondefault configurable gateway APIs are not implemented by this fixed factory. Reconcile HTTP byte path/RawPath/CONNECT/escape, method override Unicode, map iteration choice and form parse/error/partial-state profiles.",
+    "Forwarded gRPC server headers/trailers, incoming context/header matching, deadlines/status wrapping/response_body selection and actual SDK/allocator generated request mappings and handlers remain with source-owned M0025/M0027 integration. The real raw gateway callback can already use ResponseWriter; this library registration is not those callers adoption.",
+    "Finish required shared HTTP/TLS/fswatch/signal/platform/error/logging/queue/configuration profiles in the M0003 partial map. All implementation and generated outputs across both routes remain required before any assurance."
+  ],
+  "route": "MANUAL",
+  "runtime_credit": 0,
+  "source_inputs": [
+    {
+      "path": "pkg/util/runtime/runtime.go",
+      "sha256": "d1683d9c5931891d59ae46cbfdbce13b45d2836355097e7e1bd24fd30200271a"
+    },
+    {
+      "path": "vendor/github.com/grpc-ecosystem/grpc-gateway/v2/runtime/mux.go",
+      "sha256": "f970d6e68ec52945a9f106d25a5edbb15e3f39ecbd04e71cc8e4bb667f46912f"
+    },
+    {
+      "path": "vendor/github.com/grpc-ecosystem/grpc-gateway/v2/runtime/pattern.go",
+      "sha256": "babf890951c6cf8bcfdfc1e74b7797bad0de3fdbfd4c3ecb3410934e86252ac2"
+    },
+    {
+      "path": "vendor/github.com/grpc-ecosystem/grpc-gateway/v2/runtime/marshal_jsonpb.go",
+      "sha256": "64a8847a795ee97267d48d6a8904ea0e32e6b480e218fbe731ba7472e012962d"
+    },
+    {
+      "path": "vendor/github.com/grpc-ecosystem/grpc-gateway/v2/runtime/marshal_httpbodyproto.go",
+      "sha256": "3cef025e12e893e7eab92786d2b8b5efe6cbf38984fe899127b19769d347c772"
+    },
+    {
+      "path": "vendor/github.com/grpc-ecosystem/grpc-gateway/v2/runtime/marshaler_registry.go",
+      "sha256": "5adaf037b4927444eaa6a1294e63a40b57bb0861fd60a490f23f3210a7175bbb"
+    },
+    {
+      "path": "vendor/github.com/grpc-ecosystem/grpc-gateway/v2/runtime/handler.go",
+      "sha256": "a4f79314928f91d29b868afaf64730514e17d96d15c84a3ad823086ade47c830"
+    },
+    {
+      "path": "vendor/github.com/grpc-ecosystem/grpc-gateway/v2/runtime/errors.go",
+      "sha256": "5dc0dd6af8471c0922164791d4a628338305a30ebbcd3198a22f22b6599e7a8b"
+    },
+    {
+      "path": "vendor/github.com/grpc-ecosystem/grpc-gateway/v2/utilities/pattern.go",
+      "sha256": "abad694accb86e8e259b3b35224aaf0a0fa508c290518dfad191092d8d966a76"
+    },
+    {
+      "path": "vendor/google.golang.org/protobuf/encoding/protojson/encode.go",
+      "sha256": "76d996dd40a3cf689b49d8c787ee857388277e7a3bd45b4bceec93dc8fabdee1"
+    },
+    {
+      "path": "vendor/google.golang.org/protobuf/encoding/protojson/decode.go",
+      "sha256": "240f38a45c0b0b9000be8e0862b1d8d720cf6ed245ba77cb95cbe641fa4dfc2c"
+    },
+    {
+      "path": "vendor/google.golang.org/protobuf/encoding/protojson/well_known_types.go",
+      "sha256": "811976bfadc6497cd00b6cb5d1fd6ec6a94d3f39118b177f7b6ee0894f497636"
+    },
+    {
+      "path": "vendor/google.golang.org/protobuf/internal/strs/strings.go",
+      "sha256": "97aaee23976801265248c5462662e5061a2af09956c4d6b12990e16b5acf0c8d"
+    },
+    {
+      "path": "vendor/google.golang.org/protobuf/internal/order/order.go",
+      "sha256": "07529bca11498b579b4d02849560f7fb52ee6cc8cbfcfb82ede169728d8ee4a1"
+    },
+    {
+      "path": "vendor/google.golang.org/protobuf/proto/checkinit.go",
+      "sha256": "f95547595ee464a0d2f2bfae729afb61c91c5ed3bc64f089949b4b1555a71b9b"
+    },
+    {
+      "path": "vendor/google.golang.org/protobuf/internal/impl/checkinit.go",
+      "sha256": "6d1b9b5da1fad3d8cc5efc939e90672dc1690df3fa3f296e140685d78d7167eb"
+    },
+    {
+      "path": "cmd/allocator/main.go",
+      "sha256": "190e43f3d8364ec13feab11632547c69592c94a5d1833956fbdab4986c6032c7"
+    },
+    {
+      "path": "cmd/sdk-server/main.go",
+      "sha256": "8113b4b4c2afe299e39c4f5856540d9e121e4280ce023b4dcaa640e028d6cddd"
+    }
+  ],
+  "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+  "stage": "IMPLEMENTING",
+  "verification": "NOT_STARTED",
+  "work_base_commit": "54cb162253be6ae403303dc038d3e01449b31056"
+}

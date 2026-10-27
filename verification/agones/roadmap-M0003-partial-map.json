@@ -9,9 +9,17 @@
       "UtilityCrdProviders",
       "UtilityRuntimeProviders",
       "SourceErrorOrigin",
-      "UtilityQueueProviders"
+      "UtilityQueueProviders",
+      "UtilityGatewayProviders"
     ],
     "feature_owner": "UtilityFeatureContext::feature_state owns one RwLock<FeatureGates>; M0001 state moves through into_parts/from_initialized. Existing core parser is reused, not duplicated.",
+    "gateway_owner": {
+      "codec": "Fixed source UseProtoNames/EmitUnpopulated/DiscardUnknown behavior is consumed by serializer/decoder code, not stored as flags.",
+      "metaprogramming": "UtilityRuntimeContext and GatewayContext derive HasField + Deftly; UtilityRuntimeProviders/UtilityGatewayProviders supply static CGP factory, getters, codec, dispatch, callback and response implementations.",
+      "routes": "One GatewayState RwLock<HashMap<method, newest-first routes>> owned by the source factory. This source route table is data, not an effect registry. No global mutable descriptor/service/provider registry.",
+      "schema": "Each DynamicMessage carries its descriptor and linked pool. Any resolves its type URL against that pool. Full generated source descriptor/handler adoption remains explicit later work.",
+      "tasks": "Factory and codec spawn no tasks. Existing HTTP phase owns requests and connection drains. Callbacks borrow the active request; request return, response-body disposal and a dropped pending response head cancel its token. Normal server Shutdown does not cancel active requests early."
+    },
     "http_tls_owner": "SourceMux is the source HTTP route table, not an effect-provider registry. Listeners/connection tasks/handshake timers/response channels belong to native CGP effects. Cert reload shares one certServer store; source fallback files and hardcoded reload files retain distinct roles.",
     "logging_scope": "UtilityRuntimeOwner owns shared SourceLogger and SourceErrorBackoff. UtilityRuntimeContext and derived LogEntry values share those resources; CRD logging delegates to the same runtime.",
     "production_package": "Existing util workspace package; Cargo lib entrypoint is rust-support/agones/src/utility_lib.rs",
@@ -49,10 +57,18 @@
       "QueueKey",
       "RusternetesClientConfiguration",
       "ApiStatusEnvelope",
-      "ChildFailure"
+      "ChildFailure",
+      "GatewayContext",
+      "GatewayState",
+      "GatewayPattern",
+      "GatewayCall",
+      "GatewayJsonPb",
+      "GatewayDecoder",
+      "GatewayHttpBody",
+      "GatewayStatus"
     ]
   },
-  "dependency_adoption": "Native backend declarations retain existing root-lock HTTP/TLS/Tokio/JSON/YAML/base64/libc identities. comprende and better_comprehension reuse the already vendored first-generation sources; five exact package blocks (including clean-macro-docs/if_chain/syn 1) were adopted from the existing isolated CPG lock. Direct util dependency bookkeeping was authored manually, including base64 0.22.1 disambiguation. No resolver, compiler, formatter, macro/API probe or package execution ran. This continuation declares existing root errno 0.3.14 and regex 1.13.1 identities for signal-safe errno restoration and source install-hint Unicode category projection; only util direct lock bookkeeping changed. No resolver or executable assurance ran.",
+  "dependency_adoption": "Native backend declarations retain existing root-lock HTTP/TLS/Tokio/JSON/YAML/base64/libc identities. comprende and better_comprehension reuse the already vendored first-generation sources; five exact package blocks (including clean-macro-docs/if_chain/syn 1) were adopted from the existing isolated CPG lock. Direct util dependency bookkeeping was authored manually, including base64 0.22.1 disambiguation. No resolver, compiler, formatter, macro/API probe or package execution ran. This continuation declares existing root errno 0.3.14 and regex 1.13.1 identities for signal-safe errno restoration and source install-hint Unicode category projection; only util direct lock bookkeeping changed. No resolver or executable assurance ran. Gateway adds prost-reflect 0.14.7 reflection/wire APIs only, with existing once_cell/prost 0.13.5/prost-types identities. One exact lock package was authored from the registry index/source archive without Cargo resolution. Optional serde/serde-value/ordered-float candidates were read but are not adopted. No new tool was installed.",
   "disposition": "READY",
   "entries_not_authored_in_mirror": 0,
   "entries_with_authored_source": 14,
@@ -265,7 +281,7 @@
       "status": "AUTHORED_UNVERIFIED_PARTIAL"
     },
     {
-      "authored_sha256": "6e364b0a10ee4263a2fac0791ce3be6b37e8fe356a481725c6a7683f255696f8",
+      "authored_sha256": "cbdc9ac8f2b51d6c1cfc1af03b69a41cd4e094f01f35ab6f9d5660c85c07bcd9",
       "authored_symbols_or_groups": [
         "init JSON field map/time formatting and source standard error handler replacement with inherited 1ms backoff",
         "SetLevel, HandleError optional entry then standard error log and backoff",
@@ -274,11 +290,14 @@
         "UtilityTaskScope owned JoinSet, close/cancel/join, request reaping, spawn-or-return resource transfer and Drop abort policy",
         "InClusterBuildConfig actual first in-cluster read, warning/Sprint argument order and exact zero-precedence deferred explicit-path call",
         "RusternetesClientConfiguration reader: token/CA, typed explicit YAML/JSON, selected auth/cluster validation, path/file reads, TLS-only user/server fields, inert auth/exec records and empty-config second in-cluster attempt",
-        "Bounded first-child-failure notification through CGP; original errors/panic payloads stay in join ownership without observation invoking user Display; request-local scopes discard reaped failures"
+        "Bounded first-child-failure notification through CGP; original errors/panic payloads stay in join ownership without observation invoking user Display; request-local scopes discard reaped failures",
+        "NewServerMux actual CGP factory -> owned compiled-pattern mux -> fixed ProtoJSON/HttpBody decoder/encoder -> raw/unary/streaming HTTP consumer",
+        "UtilityGatewayProviders jointly derive-deftly/CGP own state/runtime projections, factory, codec, callback, dispatcher and response implementations",
+        "Source-derived Any payload map ordering, Duration/FieldMask handling, protobuf defaults/oneofs/enum/nil categories and request cancellation ownership"
       ],
       "destination": "agones-rs/pkg/util/runtime/runtime.rs",
       "remaining": [
-        "NewServerMux grpc-gateway HTTPBody/UseProtoNames/EmitUnpopulated/DiscardUnknown implementation remains unauthored.",
+        "Gateway has an actual authored path, still partial: reconcile required lexical/numeric/base64/diagnostic/WKT/Any/proto2/wire and non-proto input profiles in verification/agones/roadmap-M0003-gateway-authoring.json. Real generated source descriptors/SDK/allocator mapping and metadata/trailers/adoption remain explicit M0025/M0027 work.",
         "Reconcile clientcmd YAML/JSON/default/duplicate/extension/base64/unselected-path/Unicode/URL/proxy/error/diagnostic and persistence profiles; current native parser/OS/certificate behavior is not a Go-equivalence claim. No KUBECONFIG/home search was invented: ExplicitPath-only rules have nil Precedence and nil DefaultClientConfig.",
         "Auth-provider/exec data is retained and validated without a runtime plugin system or command execution. Actual credential-consumer integration and any real conflict with the no-plugin constraint remain with the later transport/lifecycle owners.",
         "Complete shared source logging/string/type/number/format/caller/panic profiles and production parent failure-policy adoption."
@@ -367,15 +386,10 @@
     }
   ],
   "formal_credit": 0,
+  "gateway_authoring_record": "verification/agones/roadmap-M0003-gateway-authoring.json",
   "global_gate": "CLOSED",
   "initial_usage_boundary": "verification/agones/roadmap-M0003-entry-usage.json",
-  "known_missing_named_bodies": [
-    {
-      "required": "Real grpc-gateway-equivalent mux/HTTPBody and proto JSON option behavior through the existing CGP runtime, not configuration flags without an encoder/decoder consumer.",
-      "source_id": "agones:pkg/util/runtime/runtime.go",
-      "symbol": "NewServerMux"
-    }
-  ],
+  "known_missing_named_bodies": [],
   "known_remaining": [
     {
       "id": "M0003-APISERVER",
@@ -415,7 +429,7 @@
     {
       "id": "M0003-RUNTIME",
       "required": [
-        "NewServerMux grpc-gateway HTTPBody/UseProtoNames/EmitUnpopulated/DiscardUnknown implementation remains unauthored.",
+        "Gateway has an actual authored path, still partial: reconcile required lexical/numeric/base64/diagnostic/WKT/Any/proto2/wire and non-proto input profiles in verification/agones/roadmap-M0003-gateway-authoring.json. Real generated source descriptors/SDK/allocator mapping and metadata/trailers/adoption remain explicit M0025/M0027 work.",
         "Reconcile clientcmd YAML/JSON/default/duplicate/extension/base64/unselected-path/Unicode/URL/proxy/error/diagnostic and persistence profiles; current native parser/OS/certificate behavior is not a Go-equivalence claim. No KUBECONFIG/home search was invented: ExplicitPath-only rules have nil Precedence and nil DefaultClientConfig.",
         "Auth-provider/exec data is retained and validated without a runtime plugin system or command execution. Actual credential-consumer integration and any real conflict with the no-plugin constraint remain with the later transport/lifecycle owners.",
         "Complete shared source logging/string/type/number/format/caller/panic profiles and production parent failure-policy adoption."
@@ -484,6 +498,20 @@
         "Complete URL/RawPath/CONNECT/invalid escaping, informational 1xx headers, content-type detection, default date/framing/error/flush and header alias profiles. Native streaming writer is concrete but does not establish Go transport equivalence.",
         "Permanent listener failure now retains active connections under the parent until source or owner shutdown; source temporary accept-error backoff and full independent Shutdown profile still need reconciliation."
       ]
+    },
+    {
+      "detail_record": "verification/agones/roadmap-M0003-gateway-authoring.json",
+      "id": "M0003-GATEWAY",
+      "required": [
+        "Complete required lexical/diagnostic profiles: float formatting and integer exponent limits, exact Go base64 CR/LF/padding/trailing-bit acceptance, JSON duplicate/error position/invalid-UTF8/surrogate handling and partial target state after malformed containers. Current Rust errors are not asserted equal to Go diagnostics.",
+        "Timestamp uses existing chrono with explicit proto range/nanos/leap-second/precision/case constraints. Reconcile the full Go RFC3339Nano fallback grammar, including comma fractions, one-digit hours and unusual offsets; no equivalence claim from native RFC3339 parsing.",
+        "Reconcile Any embedded wire recursion with prost-reflect decoding limits, required-field error traversal/order, proto2 group/extension/MessageSet profiles and deterministic extension/oneof ordering. Native Any map keys now have explicit deterministic emission; that alone is not full source wire-parity credit.",
+        "Finish the source JSONPb non-proto primitive/pointer/slice/map decoding interface and the full category-specific formatting/alias/nil profiles. GatewayValue explicitly represents supported source categories; it is not arbitrary Go interface/reflection compatibility.",
+        "GatewayPattern consumes compiled generator opcodes in default Legacy unescaping mode. HandlePath parser and nondefault configurable gateway APIs are not implemented by this fixed factory. Reconcile HTTP byte path/RawPath/CONNECT/escape, method override Unicode, map iteration choice and form parse/error/partial-state profiles.",
+        "Forwarded gRPC server headers/trailers, incoming context/header matching, deadlines/status wrapping/response_body selection and actual SDK/allocator generated request mappings and handlers remain with source-owned M0025/M0027 integration. The real raw gateway callback can already use ResponseWriter; this library registration is not those callers adoption.",
+        "Finish required shared HTTP/TLS/fswatch/signal/platform/error/logging/queue/configuration profiles in the M0003 partial map. All implementation and generated outputs across both routes remain required before any assurance."
+      ],
+      "source": "pkg/util/runtime/runtime.go"
     }
   ],
   "legacy_adoption": "verification/agones/roadmap-M0003-reuse-adoption.json",
@@ -491,7 +519,7 @@
   "milestone_id": "M0003",
   "owned_entry_count": 14,
   "payload_sha256": {
-    "Cargo.lock": "c3179fa53c1ecf85c9b15bdfe495ecea3f9b80da250c492d258a99ed293cdf22",
+    "Cargo.lock": "ec4f34f68b46f16a0ab24823b7d84796e82f99bfd83312ff804d4f129931eaa8",
     "agones-rs/pkg/util/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/apiserver/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/apiserver/apiserver.rs": "c5a08b1672ad8449312cf6ce700ff6dbda254d05dadccd09c21aa36321cf06bd",
@@ -511,7 +539,7 @@
     "agones-rs/pkg/util/logfields/logfields.rs": "26e637e2ac9243143c529941c0a41eb7634d760c6d5f76fba02fe678e186c22b",
     "agones-rs/pkg/util/runtime/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/runtime/features.rs": "b1e42035bd6912c5ce2b397610f24df6b7f3b1d902e6a710546c41ee5d3a036a",
-    "agones-rs/pkg/util/runtime/runtime.rs": "6e364b0a10ee4263a2fac0791ce3be6b37e8fe356a481725c6a7683f255696f8",
+    "agones-rs/pkg/util/runtime/runtime.rs": "cbdc9ac8f2b51d6c1cfc1af03b69a41cd4e094f01f35ab6f9d5660c85c07bcd9",
     "agones-rs/pkg/util/signals/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/signals/signals.rs": "f14d91d1ef4262484cd733e04c455e6b0b6f35a7e7786403d376b3714e61f90b",
     "agones-rs/pkg/util/webhooks/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
@@ -519,20 +547,24 @@
     "agones-rs/pkg/util/workerqueue/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/workerqueue/workerqueue.rs": "55fecc4e6348c3fd4b40e9aa9c4320b5a94bba0a4bf7a84c8ca089b4c36d5bab",
     "crates/util/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
-    "crates/util/Cargo.toml": "a39b54ae14e3fe2beee0f845ea9a0456fed5910a092367d77d584d3768b79dd3",
+    "crates/util/Cargo.toml": "11fd2118177a05dd6bf101cd20b3691be00e6bd8e8a410ab993e64cd7b71d271",
     "crates/util/src/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "crates/util/src/errors.rs": "f8c313758bb23103a6ed7f2ff2188d9589fca0b1adc87ee5214bef16434e45e2",
     "rust-support/agones/src/lifecycle.rs": "cf19ade05a469d4424f401574af0eabab520657cc0d9977563bdbf4bf9fdef1d",
     "rust-support/agones/src/utility_admission.rs": "a17ed7e9f3c3ffdaf9d42e39ab372be4f107ff4bd50eec371f48824a4b7a5807",
     "rust-support/agones/src/utility_client_config.rs": "50b1648d59275ce50ef815d69e7fe9e87338b179e7ea712229e5324fe1cedc4a",
     "rust-support/agones/src/utility_crd.rs": "de93657e926a3498249173e564ccc7798ffd081ba2583c8c9dd490b239195cde",
-    "rust-support/agones/src/utility_declarations.rs": "6b78f286668b31bc4b39aa5eeede00b6d119bbad47a315c8399940c0b2273ddf",
+    "rust-support/agones/src/utility_declarations.rs": "365cc58dbe05295b17e70bd683860347ea0eaf3ba3fa3b47c98b971dec7a1977",
     "rust-support/agones/src/utility_discovery.rs": "8151e804ce4354fef226b0cd915c6e868936c2806089143e4c212ee99e1a32ed",
     "rust-support/agones/src/utility_error_view.rs": "c2776e4aa916b0e4e6f933ece03453da31573ab507a79e023fb854c78407b976",
     "rust-support/agones/src/utility_fswatch.rs": "48525e75ffed6aade3bd7c6af0da693c1bc7ea399e45b741cc5588ea86258205",
-    "rust-support/agones/src/utility_http.rs": "6f0f80a777275ffcc91834c7d053d2e83813105c27742db5960dbe0274786e86",
+    "rust-support/agones/src/utility_gateway.rs": "40fe3710855a95c776f94d296b3871016ddd37af60572cc7d242f7f33678b610",
+    "rust-support/agones/src/utility_gateway_json.rs": "57a8419b8768d14d877f56c47793a0b732d85b66501a44c7220411bbc227f341",
+    "rust-support/agones/src/utility_gateway_wire.rs": "234e6de84955c4240f153c0dece7a5594733562325bf7113998a794b9af0b113",
+    "rust-support/agones/src/utility_gateway_wkt.rs": "8d32866d36f1e0b4d88a6bd622279e898af99a875c2a03f9d359fc7f8cf4e2f4",
+    "rust-support/agones/src/utility_http.rs": "a1e40920dc9c0480ba0ad088aa49badac5fc23c606c39594accc404e3d0ce31b",
     "rust-support/agones/src/utility_https_module.rs": "3b1fc4bf94a5b016cce0c661c3f51d037b36e0718eefd1c17a55e309c878fc2a",
-    "rust-support/agones/src/utility_lib.rs": "88e2dc257e225b726c098810a9060a39ec095f6dd70d3065b373aea5865e6ddb",
+    "rust-support/agones/src/utility_lib.rs": "fbc9fcbcda75f29227da41924d62150c8144a94d7aa346d63422cff9847e0d89",
     "rust-support/agones/src/utility_lifecycle.rs": "5d2fdc2fc65f04f3fcc581edb0203b54cb8314717f6976c3d7404f018a0a26af",
     "rust-support/agones/src/utility_logging.rs": "101e0399f2d439549620d2598cfbfc38ebe5e3adfbe84b884b07c1e69036ca8b",
     "rust-support/agones/src/utility_modules.rs": "dc7edddb040828e3b8d9f2aa4d9bb9ad17ffd848a9a90730f09955b6b4b44c4d",
@@ -549,16 +581,19 @@
     "third_party/first-generation/better-comprehension/src/lib.rs": "f47ba11ce4cd4d6b7424ba0cffca669018e52e5541fb32f83d655aba2ce364b3",
     "third_party/first-generation/comprende/Cargo.toml": "01f7068b9cd9ec5b27b7df77709117e37dc991cd32597dbf24cbde9074f5ceab",
     "third_party/first-generation/comprende/src/lib.rs": "e8d8da04ca3048bdd7275b1ca77b5a78c4abfd999ecb763d82a615f4aeb0fb96",
+    "verification/agones/roadmap-M0003-gateway-authoring.json": "082cb432c9924d7107942764546e3597b1beb08911ea9709f7de11d1edb639b2",
     "verification/agones/roadmap-M0003-reuse-adoption.json": "2f8a7a8c59c4262c3a50576d76445c23940c325097f674752958e24b399b3708"
   },
-  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-6.json",
+  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-8.json",
   "progress_usage_observations": [
     "verification/agones/roadmap-M0003-progress-usage-1.json",
     "verification/agones/roadmap-M0003-progress-usage-2.json",
     "verification/agones/roadmap-M0003-progress-usage-3.json",
     "verification/agones/roadmap-M0003-progress-usage-4.json",
     "verification/agones/roadmap-M0003-progress-usage-5.json",
-    "verification/agones/roadmap-M0003-progress-usage-6.json"
+    "verification/agones/roadmap-M0003-progress-usage-6.json",
+    "verification/agones/roadmap-M0003-progress-usage-7.json",
+    "verification/agones/roadmap-M0003-progress-usage-8.json"
   ],
   "project_executable_invocations": 0,
   "record_kind": "PARTIAL_SOURCE_OWNERSHIP_ADOPTION",
@@ -895,6 +930,179 @@
       "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/derive-deftly-1.14.0/doc/reference.md",
       "purpose": "Read-only native API/template syntax and effect input; no compiler, macro expansion or API execution probe.",
       "sha256": "d0e85288c0986f1bc59eb9cf88eebcbb5efb4c08872cacf3222180f23d79a1a8"
+    },
+    {
+      "path": "pkg/util/runtime/runtime.go",
+      "purpose": "Pinned gateway/ProtoJSON source or actual future caller input, read for authoring only. No executable or parity assurance.",
+      "sha256": "d1683d9c5931891d59ae46cbfdbce13b45d2836355097e7e1bd24fd30200271a",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/github.com/grpc-ecosystem/grpc-gateway/v2/runtime/mux.go",
+      "purpose": "Pinned gateway/ProtoJSON source or actual future caller input, read for authoring only. No executable or parity assurance.",
+      "sha256": "f970d6e68ec52945a9f106d25a5edbb15e3f39ecbd04e71cc8e4bb667f46912f",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/github.com/grpc-ecosystem/grpc-gateway/v2/runtime/pattern.go",
+      "purpose": "Pinned gateway/ProtoJSON source or actual future caller input, read for authoring only. No executable or parity assurance.",
+      "sha256": "babf890951c6cf8bcfdfc1e74b7797bad0de3fdbfd4c3ecb3410934e86252ac2",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/github.com/grpc-ecosystem/grpc-gateway/v2/runtime/marshal_jsonpb.go",
+      "purpose": "Pinned gateway/ProtoJSON source or actual future caller input, read for authoring only. No executable or parity assurance.",
+      "sha256": "64a8847a795ee97267d48d6a8904ea0e32e6b480e218fbe731ba7472e012962d",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/github.com/grpc-ecosystem/grpc-gateway/v2/runtime/marshal_httpbodyproto.go",
+      "purpose": "Pinned gateway/ProtoJSON source or actual future caller input, read for authoring only. No executable or parity assurance.",
+      "sha256": "3cef025e12e893e7eab92786d2b8b5efe6cbf38984fe899127b19769d347c772",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/github.com/grpc-ecosystem/grpc-gateway/v2/runtime/marshaler_registry.go",
+      "purpose": "Pinned gateway/ProtoJSON source or actual future caller input, read for authoring only. No executable or parity assurance.",
+      "sha256": "5adaf037b4927444eaa6a1294e63a40b57bb0861fd60a490f23f3210a7175bbb",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/github.com/grpc-ecosystem/grpc-gateway/v2/runtime/handler.go",
+      "purpose": "Pinned gateway/ProtoJSON source or actual future caller input, read for authoring only. No executable or parity assurance.",
+      "sha256": "a4f79314928f91d29b868afaf64730514e17d96d15c84a3ad823086ade47c830",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/github.com/grpc-ecosystem/grpc-gateway/v2/runtime/errors.go",
+      "purpose": "Pinned gateway/ProtoJSON source or actual future caller input, read for authoring only. No executable or parity assurance.",
+      "sha256": "5dc0dd6af8471c0922164791d4a628338305a30ebbcd3198a22f22b6599e7a8b",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/github.com/grpc-ecosystem/grpc-gateway/v2/utilities/pattern.go",
+      "purpose": "Pinned gateway/ProtoJSON source or actual future caller input, read for authoring only. No executable or parity assurance.",
+      "sha256": "abad694accb86e8e259b3b35224aaf0a0fa508c290518dfad191092d8d966a76",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/google.golang.org/protobuf/encoding/protojson/encode.go",
+      "purpose": "Pinned gateway/ProtoJSON source or actual future caller input, read for authoring only. No executable or parity assurance.",
+      "sha256": "76d996dd40a3cf689b49d8c787ee857388277e7a3bd45b4bceec93dc8fabdee1",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/google.golang.org/protobuf/encoding/protojson/decode.go",
+      "purpose": "Pinned gateway/ProtoJSON source or actual future caller input, read for authoring only. No executable or parity assurance.",
+      "sha256": "240f38a45c0b0b9000be8e0862b1d8d720cf6ed245ba77cb95cbe641fa4dfc2c",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/google.golang.org/protobuf/encoding/protojson/well_known_types.go",
+      "purpose": "Pinned gateway/ProtoJSON source or actual future caller input, read for authoring only. No executable or parity assurance.",
+      "sha256": "811976bfadc6497cd00b6cb5d1fd6ec6a94d3f39118b177f7b6ee0894f497636",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/google.golang.org/protobuf/internal/strs/strings.go",
+      "purpose": "Pinned gateway/ProtoJSON source or actual future caller input, read for authoring only. No executable or parity assurance.",
+      "sha256": "97aaee23976801265248c5462662e5061a2af09956c4d6b12990e16b5acf0c8d",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/google.golang.org/protobuf/internal/order/order.go",
+      "purpose": "Pinned gateway/ProtoJSON source or actual future caller input, read for authoring only. No executable or parity assurance.",
+      "sha256": "07529bca11498b579b4d02849560f7fb52ee6cc8cbfcfb82ede169728d8ee4a1",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/google.golang.org/protobuf/proto/checkinit.go",
+      "purpose": "Pinned gateway/ProtoJSON source or actual future caller input, read for authoring only. No executable or parity assurance.",
+      "sha256": "f95547595ee464a0d2f2bfae729afb61c91c5ed3bc64f089949b4b1555a71b9b",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "vendor/google.golang.org/protobuf/internal/impl/checkinit.go",
+      "purpose": "Pinned gateway/ProtoJSON source or actual future caller input, read for authoring only. No executable or parity assurance.",
+      "sha256": "6d1b9b5da1fad3d8cc5efc939e90672dc1690df3fa3f296e140685d78d7167eb",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "cmd/allocator/main.go",
+      "purpose": "Pinned gateway/ProtoJSON source or actual future caller input, read for authoring only. No executable or parity assurance.",
+      "sha256": "190e43f3d8364ec13feab11632547c69592c94a5d1833956fbdab4986c6032c7",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": "cmd/sdk-server/main.go",
+      "purpose": "Pinned gateway/ProtoJSON source or actual future caller input, read for authoring only. No executable or parity assurance.",
+      "sha256": "8113b4b4c2afe299e39c4f5856540d9e121e4280ce023b4dcaa640e028d6cddd",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/Cargo.toml",
+      "purpose": "Read-only prost-reflect 0.14.7 reflection/wire and optional-serde candidate API source; no compiler/macro/API execution or library assurance.",
+      "sha256": "1f08fe0303b0662a3f95c6fe1fc2629ad6325877c4cbe8a586919fb2ad9cd78d"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/descriptor/api.rs",
+      "purpose": "Read-only prost-reflect 0.14.7 reflection/wire and optional-serde candidate API source; no compiler/macro/API execution or library assurance.",
+      "sha256": "95881318b5915ea9ba89455b017ebe39fb95a10b44d39fca77096ed83cb04115"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/descriptor/mod.rs",
+      "purpose": "Read-only prost-reflect 0.14.7 reflection/wire and optional-serde candidate API source; no compiler/macro/API execution or library assurance.",
+      "sha256": "1b8ab2c4968dd7030bc6c385406427cc8181467cc436d991960af5bf74175273"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/dynamic/mod.rs",
+      "purpose": "Read-only prost-reflect 0.14.7 reflection/wire and optional-serde candidate API source; no compiler/macro/API execution or library assurance.",
+      "sha256": "38aaff3f0b879bfcca8c684e2b7721c4ac3ebfaeb36099e7a89a20ef5bea8650"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/dynamic/message.rs",
+      "purpose": "Read-only prost-reflect 0.14.7 reflection/wire and optional-serde candidate API source; no compiler/macro/API execution or library assurance.",
+      "sha256": "d64430675dafe40fa7005f7350ad126df241615e454334780917e8a6f7f07a22"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/dynamic/fields.rs",
+      "purpose": "Read-only prost-reflect 0.14.7 reflection/wire and optional-serde candidate API source; no compiler/macro/API execution or library assurance.",
+      "sha256": "a31c32dccaf5e329d8c53736dab056873a8f9a56056e1017a151dbfb0a9fb9a4"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/dynamic/unknown.rs",
+      "purpose": "Read-only prost-reflect 0.14.7 reflection/wire and optional-serde candidate API source; no compiler/macro/API execution or library assurance.",
+      "sha256": "b476e1f3f8e730bd4fe0f39aaa447af0b9e27750b01bedf246e5fccceec4876f"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/dynamic/serde/mod.rs",
+      "purpose": "Read-only prost-reflect 0.14.7 reflection/wire and optional-serde candidate API source; no compiler/macro/API execution or library assurance.",
+      "sha256": "343686f2bbc1cc27d1726d2003df364537266f8e588151ee8117e731dfb46ad4"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/dynamic/serde/ser/mod.rs",
+      "purpose": "Read-only prost-reflect 0.14.7 reflection/wire and optional-serde candidate API source; no compiler/macro/API execution or library assurance.",
+      "sha256": "d7a83b44db31e56996eb4bd106e801f26c650fe528c572c6430941e37cef3bd2"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/dynamic/serde/ser/wkt.rs",
+      "purpose": "Read-only prost-reflect 0.14.7 reflection/wire and optional-serde candidate API source; no compiler/macro/API execution or library assurance.",
+      "sha256": "e188dfdfe6853caf134edd91818b1f87c0dba4e93ebe853813de0db728e697c1"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/dynamic/serde/de/mod.rs",
+      "purpose": "Read-only prost-reflect 0.14.7 reflection/wire and optional-serde candidate API source; no compiler/macro/API execution or library assurance.",
+      "sha256": "395972066ea8c65d47cb8a42a08c4f8fed2f4912c71c588b0292748cf147b58e"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/dynamic/serde/de/kind.rs",
+      "purpose": "Read-only prost-reflect 0.14.7 reflection/wire and optional-serde candidate API source; no compiler/macro/API execution or library assurance.",
+      "sha256": "f3125753a89250c113947e6091f082944504fd095ed3635b4582289bce8c2b31"
+    },
+    {
+      "path": ".git/agones-roadmap/utility-sources/prost-reflect-0.14.7/src/dynamic/serde/de/wkt.rs",
+      "purpose": "Read-only prost-reflect 0.14.7 reflection/wire and optional-serde candidate API source; no compiler/macro/API execution or library assurance.",
+      "sha256": "de59ba2cbf44e429d20455bd4b0f3166793e9c412451790ccd6b9eddc6003a59"
     }
   ],
   "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",

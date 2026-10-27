@@ -84,6 +84,7 @@ define_derive_deftly! {
                 ::cgp::prelude::UseField<::cgp::prelude::Symbol!("source_signal_state")>,
             crate::utility_signals::SourceSignalSubscriberComponent: crate::utility_signals::SubscribeNativeSourceSignals,
             crate::utility_client_config::SourceClientConfigurationReaderComponent: crate::utility_client_config::ReadRusternetesSourceConfiguration,
+            crate::utility_gateway::SourceServerMuxFactoryComponent: crate::utility_gateway::CreateNativeSourceServerMux,
         }
     }
 }
@@ -107,3 +108,20 @@ define_derive_deftly! {
     }
 }
 pub(crate) use derive_deftly_template_UtilityQueueProviders;
+
+define_derive_deftly! {
+    UtilityGatewayProviders:
+    ::cgp::prelude::delegate_and_check_components! {
+        $tname {
+            crate::utility_gateway::GatewayStateGetterComponent:
+                ::cgp::prelude::UseField<::cgp::prelude::Symbol!("gateway_state")>,
+            crate::utility_gateway::GatewayRuntimeGetterComponent:
+                ::cgp::prelude::UseField<::cgp::prelude::Symbol!("gateway_runtime")>,
+            crate::utility_gateway::GatewayCodecComponent: crate::utility_gateway::UseSourceGatewayJsonPb,
+            crate::utility_gateway::GatewayHandlerCallerComponent: crate::utility_gateway::CallSourceGatewayHandler,
+            crate::utility_gateway::GatewayDispatcherComponent: crate::utility_gateway::DispatchSourceGateway,
+            crate::utility_gateway::GatewayResponseWriterComponent: crate::utility_gateway::WriteSourceGatewayResponse,
+        }
+    }
+}
+pub(crate) use derive_deftly_template_UtilityGatewayProviders;

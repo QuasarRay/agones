@@ -810,26 +810,24 @@
             "M0003-FEATURE-INPUT-CONSUMERS",
             "M0003-CRD-ADOPTION",
             "M0003-WHOLE-BODY-RECONCILIATION",
-            "M0003-HTTP-BOUNDARY-PROFILES"
+            "M0003-HTTP-BOUNDARY-PROFILES",
+            "M0003-GATEWAY"
           ],
-          "known_missing_named_bodies": [
-            {
-              "required": "Real grpc-gateway-equivalent mux/HTTPBody and proto JSON option behavior through the existing CGP runtime, not configuration flags without an encoder/decoder consumer.",
-              "source_id": "agones:pkg/util/runtime/runtime.go",
-              "symbol": "NewServerMux"
-            }
-          ],
+          "gateway_authoring_record": "verification/agones/roadmap-M0003-gateway-authoring.json",
+          "known_missing_named_bodies": [],
           "owned_entry_count": 14,
           "partial_adoption_record": "verification/agones/roadmap-M0003-partial-map.json",
           "prerequisites": "M0001/M0002 authored implementation complete; global phase remains IMPLEMENTATION_ONLY",
-          "progress_usage_observation": "verification/agones/roadmap-M0003-progress-usage-6.json",
+          "progress_usage_observation": "verification/agones/roadmap-M0003-progress-usage-8.json",
           "progress_usage_observations": [
             "verification/agones/roadmap-M0003-progress-usage-1.json",
             "verification/agones/roadmap-M0003-progress-usage-2.json",
             "verification/agones/roadmap-M0003-progress-usage-3.json",
             "verification/agones/roadmap-M0003-progress-usage-4.json",
             "verification/agones/roadmap-M0003-progress-usage-5.json",
-            "verification/agones/roadmap-M0003-progress-usage-6.json"
+            "verification/agones/roadmap-M0003-progress-usage-6.json",
+            "verification/agones/roadmap-M0003-progress-usage-7.json",
+            "verification/agones/roadmap-M0003-progress-usage-8.json"
           ],
           "reuse_adoption_record": "verification/agones/roadmap-M0003-reuse-adoption.json",
           "route": "MANUAL",
@@ -839,7 +837,7 @@
           "work_base_commit": "e2c1202f1de868a89dc7a444ce4700d7a771ee92"
         }
       },
-      "next_action": "Continue M0003 MANUAL, no route switch. Implement runtime.NewServerMux with actual HTTPBody/proto-name/default/unknown-field codec behavior and consumers. Reconcile required source profiles in the existing partial map: signal platform/Stop/legacy handler interaction; queue value/format/limiter/metrics and actual old caller adoption; clientcmd decoder/path/URL/error boundaries; HTTP/TLS/FS/admission/logging/feature/CRD profiles. Preserve exact gaps and source ownership; library registration is not parent adoption. No project executable, verification or CI while the global BOTH-route gate is CLOSED.",
+      "next_action": "Continue M0003 MANUAL, no route switch. NewServerMux now has a concrete CGP factory/compiled-pattern route/codec/HTTP consumer path, still AUTHORED_UNVERIFIED_PARTIAL. Finish the required source profiles in roadmap-M0003-gateway-authoring.json: non-proto decoder/value categories, Go timestamp/base64/lexical diagnostics, Any/proto2/wire and HTTP form/path/metadata boundaries. Then fill absent platform effects and reconcile all remaining M0003 partial-map gaps (HTTP/TLS/FS/signals/config/queue/logging/features/CRD/admission) with their actual source-owner callers. Preserve later M0025/M0027 generated handler/command adoption and M0017 queue telemetry scope. Gate stays CLOSED across BOTH routes; no project/verification/generator/CI execution.",
       "objective": "AGONES_AND_CPG_COMBINED_ROADMAP",
       "objective_attachment": "/home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt",
       "objective_attachment_sha256": "a9b797fc624be04548c62e63a634bcc2cacab25c4d9f45af346148ba32c1baea",
@@ -887,9 +885,9 @@
   "goal": {
     "objective_attachment": "/home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt",
     "reported_usage": {
-      "observed_at": 1793056860,
-      "time_seconds": 22798,
-      "tokens": 1289081
+      "observed_at": 1793059842,
+      "time_seconds": 25779,
+      "tokens": 1568425
     },
     "status": "active",
     "thread_id": "01a17928-8551-7701-8497-5333c680f283",
@@ -897,8 +895,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 328,
-  "previous_sha256": "a7505bc0e651e65d69f2358eeeaeeeedbffba8caa8cf7ae31f3b40c4050b06e4",
+  "previous_revision": 329,
+  "previous_sha256": "6151d1f517d56cdffa5d8b91503d33532a19864561b81257a95a9aa31fd68e2e",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -1602,7 +1600,7 @@
       "timestamp": "2026-10-21T09:42:01.132215+00:00"
     }
   ],
-  "revision": 329,
+  "revision": 330,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [

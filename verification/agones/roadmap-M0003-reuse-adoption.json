@@ -44,6 +44,27 @@
       "old_sha256": "d8a5ec2ecbae9c1f9e38297a262311e6b4b52baf2a294bc4c5405c9ccf4fce4a",
       "required_followup": "Existing controller runtimes still use their old queue. Its saturating retry counts, approximate bucket and caller-owned delayed futures are not the new source queue. Transfer actual controller consumers during their source/lifecycle ownership work; do not silently replace or credit the old bodies.",
       "work_base_commit": "e2c1202f1de868a89dc7a444ce4700d7a771ee92"
+    },
+    {
+      "data_dependency_reused": "prost-reflect 0.14.7 descriptors/DynamicMessage/wire decode; existing chrono/base64/serde_json. Native reflection is protobuf data, not a runtime effect/provider registry.",
+      "detail_record": "verification/agones/roadmap-M0003-gateway-authoring.json",
+      "disposition": "AUTHORED_UNVERIFIED_PARTIAL_NO_GENERATED_CALLER_TRANSFER",
+      "existing_effects_reused": "utility_http::SourceMux/HttpRequest/ResponseWriter and concrete HTTP/TLS transport; source utility runtime/task ownership is shared. Request cancellation is added to that existing owner, not a second server/task manager.",
+      "native_core": [
+        "rust-support/agones/src/utility_gateway.rs",
+        "rust-support/agones/src/utility_gateway_json.rs",
+        "rust-support/agones/src/utility_gateway_wire.rs",
+        "rust-support/agones/src/utility_gateway_wkt.rs"
+      ],
+      "new_source_owner": "agones-rs/pkg/util/runtime/runtime.rs",
+      "registered_by": "UtilityRuntimeProviders + UtilityGatewayProviders and utility_lib.rs",
+      "source_callers_remaining": [
+        "cmd/allocator/main.go source gateway handler registration: M0027/M0023 owners",
+        "cmd/sdk-server/main.go and source SDK handler mappings: M0025/M0027 owners"
+      ],
+      "source_id": "agones:pkg/util/runtime/runtime.go",
+      "symbol": "NewServerMux",
+      "work_base_commit": "54cb162253be6ae403303dc038d3e01449b31056"
     }
   ],
   "milestone_id": "M0003",

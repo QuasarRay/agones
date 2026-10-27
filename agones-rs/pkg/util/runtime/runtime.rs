@@ -29,6 +29,12 @@ pub fn NewLoggerWithType<Context: HasSourceLogger, Object: SourceLogType + ?Size
 }
 pub fn NewLoggerForNilInterface<Context: HasSourceLogger>(context: &Context) -> LogEntry { NewLoggerWithSource(context, "<nil>") }
 
+/// The source wildcard HTTPBodyMarshaler over JSONPb with UseProtoNames,
+/// EmitUnpopulated and DiscardUnknown is consumed by the concrete mux/codec.
+pub fn NewServerMux<Context: crate::utility_gateway::CanCreateSourceServerMux>(context: &Context) -> crate::utility_gateway::GatewayContext {
+    context.new_source_server_mux()
+}
+
 pub async fn InClusterBuildConfig<Context>(context: &Context, logger: Option<&LogEntry>, kubeconfigPath: &str) -> Result<RusternetesClientConfiguration, BoxError>
 where Context: CanReadSourceClientConfiguration + CanEmitSourceLog + HasSourceLogger,
 {
