@@ -18,6 +18,7 @@
       "byte_pattern_unicode_owner": "Existing CGP/derive-deftly UtilityGatewayProviders owns route state/dispatch and RuntimeProviders owns the static SourceUppercaseMapper plus SourceUnicodeProfile getter. GatewayPattern retains a HeaderValues slice view of the caller pool; literal reads/String rendering see shared pool edits while captured variable names are copied byte strings at construction. Path components, verbs and callback captures are byte data; capture maps do not prescribe lexicographic iteration. RuntimeContext defaults explicitly to Go1265 and selects tracked Unicode15/Unicode17 inputs. The case-range lookup caches are immutable projections of pinned data, not writable policy, Go evaluators, Go-to-Rust emitters, provider registries or task owners. Actual compiled-version/ABI/default binding remains M0027.",
       "codec": "Fixed source UseProtoNames/EmitUnpopulated/DiscardUnknown behavior is consumed by serializer/decoder code, not stored as flags. Typed target preparation/decode retains source pointer, map, slice, byte and enum branches; shared first-value framing owns read-ahead and sticky read errors.",
       "metaprogramming": "UtilityRuntimeContext and GatewayContext derive HasField + Deftly; UtilityRuntimeProviders/UtilityGatewayProviders supply static CGP factory, getters, codec, dispatch, callback and response implementations.",
+      "pattern_constructor_owner": "Existing CGP/derive-deftly UtilityRuntimeProviders owns SourcePatternDiagnosticEmitter, SourceGatewayPatternConstructor, SourcePatternLoggerGetter and the existing SourceProcessExit capability. RuntimeOwner constructs one source-pattern logger resource (writer mutex and typed enabled/JSON profile). GatewayContext new_pattern/must_pattern/handle_compiled consume that provider and then use the existing route owner. PatternConstruction retains both Go result fields; InvalidPatternError copies reference one static identity token. Word profiles are explicit data and never inferred from the Rust host. There is no logger/provider registry, task or competing lifecycle manager; environment/custom LoggerV2 and actual ABI/initializer binding remain later source work.",
       "routes": "One GatewayState RwLock<HashMap<method, newest-first routes>> owned by the source factory. This source route table is data, not an effect registry. No global mutable descriptor/service/provider registry.",
       "schema": "Each DynamicMessage carries its descriptor and linked pool. Any resolves its type URL against that pool. Full generated source descriptor/handler adoption remains explicit later work.",
       "tasks": "Factory and codec spawn no tasks. Existing HTTP phase owns requests and connection drains. Callbacks borrow the active request; request return, response-body disposal and a dropped pending response head cancel its token. Normal server Shutdown does not cancel active requests early."
@@ -135,7 +136,15 @@
       "HasSourceUnicodeProfile",
       "SourceUppercaseMapper",
       "MapSourceUppercase",
-      "CaseRange immutable lookup cache"
+      "CaseRange immutable lookup cache",
+      "PatternWordProfile",
+      "PatternConstruction",
+      "InvalidPatternError static identity token",
+      "PatternDiagnostic",
+      "PatternLogProfile",
+      "SourcePatternLogger",
+      "SourcePatternDiagnosticEmitter",
+      "SourceGatewayPatternConstructor"
     ]
   },
   "dependency_adoption": "Native backend declarations retain existing root-lock HTTP/TLS/Tokio/JSON/YAML/base64/libc identities. comprende and better_comprehension reuse the already vendored first-generation sources; five exact package blocks (including clean-macro-docs/if_chain/syn 1) were adopted from the existing isolated CPG lock. Direct util dependency bookkeeping was authored manually, including base64 0.22.1 disambiguation. No resolver, compiler, formatter, macro/API probe or package execution ran. This continuation declares existing root errno 0.3.14 and regex 1.13.1 identities for signal-safe errno restoration and source install-hint Unicode category projection; only util direct lock bookkeeping changed. No resolver or executable assurance ran. Gateway adds prost-reflect 0.14.7 reflection/wire APIs only, with existing once_cell/prost 0.13.5/prost-types identities. One exact lock package was authored from the registry index/source archive without Cargo resolution. Optional serde/serde-value/ordered-float candidates were read but are not adopted. No new tool was installed. Platform continuation declares the existing root windows-sys 0.61.2 package only for cfg(windows), using the pinned FFI modules and existing futures/Tokio primitives. No package block/version upgrade, resolver or tool execution. No dependencies changed in this batch. The fswatch support selects pinned gopkg.in/fsnotify.v1 1.4.7 and adds its literal license; newer fsnotify 1.9 candidate semantics have no utility completion credit. This batch vendors the exact existing Hyper 1.12.0 source archive, preserving license/base file hashes and adding opt-in informational support in its existing H1/H2 drivers. Root Cargo patch/local lock source bookkeeping replaces that node registry identity without a version upgrade or Cargo resolution. Existing h2 0.4.20 informational APIs are bound to their original crate archive. No new tool/install/resolver or project execution.",
@@ -495,7 +504,13 @@
         "Byte suffix splitting preserves exact colon/verb bytes, including a verb containing a colon, empty-prefix 404 handling on same-method routes and the separate other-method fallback path. GatewayPattern.string_bytes is the canonical Pattern.String operation; fmt::Display is only a lossy text compatibility view.",
         "SourceUppercaseMapper is statically delegated through UtilityRuntimeProviders and reads the SourceUnicodeProfile getter. Header override bytes captured before ParseForm are mapped afterward through the same runtime context. Go single-rune uppercase and per-invalid-byte UTF8 replacement replace the prior Rust expanding/lossy conversion.",
         "Tracked original Go1.26.5 Unicode15 and Go1.27.1 Unicode17 tables.go artifacts supply immutable data. The Rust reader projects only numeric CaseRanges uppercase deltas into disposable OnceLock lookup caches, then uses source binary-range lookup and UpperLower even-offset conversion. No production Go body is parsed/evaluated and no Rust source is generated from Go text.",
-        "The default runtime context explicitly selects Go1265. Both source Unicode profiles are authored, but actual application/compiler/profile binding, source string/builder identity/capacity/allocation/panic behavior and native integration remain unverified required work."
+        "The default runtime context explicitly selects Go1265. Both source Unicode profiles are authored, but actual application/compiler/profile binding, source string/builder identity/capacity/allocation/panic behavior and native integration remain unverified required work.",
+        "GatewayPattern.new now accepts i64 version/opcode operands with an explicit Go32/Go64 PatternWordProfile. Ingress values and stack/tail arithmetic use source-word normalization/wrapping. All constructor rejection branches carry their exact selected numeric value/message through the existing CGP runtime.",
+        "PatternConstruction retains a zero GatewayPattern plus an optional shared-identity invalid-pattern error on rejection, and the real pattern plus nil error on success. into_result is an explicit Rust projection. InvalidPatternError copies retain one private static identity token; direct equality helper is distinct from wrapped-error traversal.",
+        "Constructor diagnostics distinguish unsupported version, odd opcode count, duplicate pushM, literal/concat/capture indices, stack underflow and invalid opcode with the source messages, including source misleading negative-literal wording for positive out-of-bounds indices.",
+        "SourcePatternLogger models the default Error/Fatal stderr profile plus explicit discard/JSON choices. It checks discard before formatting user Error values, uses source severity prefixes/local standard-log date-time or sorted JSON message/severity fields, appends only a missing newline and ignores the single Write result. General formatter/caller/native writer/global configuration profiles remain open.",
+        "MustPattern is consumed by SourceGatewayPatternConstructor.require_source_gateway_pattern: nil error returns the given pattern; nonnil error emits the fatal initialization message and invokes the existing CGP SourceProcessExit(1). An unexpectedly returning exit provider panics instead of reporting success. No fatal path was executed.",
+        "GatewayContext new_pattern/must_pattern/handle_compiled provide a connected compiled-registration path through RuntimeProviders and the existing route table. Actual generated SDK/allocator initializer and command adoption remains M0025/M0027, without registration-only acceptance credit."
       ],
       "destination": "agones-rs/pkg/util/runtime/runtime.rs",
       "remaining": [
@@ -503,7 +518,7 @@
         "Reconcile clientcmd YAML/JSON/default/duplicate/extension/base64/unselected-path/Unicode/URL/proxy/error/diagnostic and persistence profiles; current native parser/OS/certificate behavior is not a Go-equivalence claim. No KUBECONFIG/home search was invented: ExplicitPath-only rules have nil Precedence and nil DefaultClientConfig.",
         "Auth-provider/exec data is retained and validated without a runtime plugin system or command execution. Actual credential-consumer integration and any real conflict with the no-plugin constraint remain with the later transport/lifecycle owners.",
         "Complete shared source logging/string/type/number/format/caller/panic profiles and production parent failure-policy adoption.",
-        "Finish source Pattern constructor diagnostics/grpclog/ErrInvalidPattern identity/MustPattern fatal behavior; full source-int opcode/stack/concat length overflow, pool/capture/map iteration and alias/race/panic/allocator profiles. The fixed Legacy byte matching and capture path, shared literal pool/copy-name distinction and explicit Go1265/Go1271 uppercase profiles are authored. Canonical Pattern.String uses string_bytes; Rust Display remains a compatibility projection. Bind actual source Unicode/compiler/ABI and string/builder/lazy-lookup allocation/initialization/pointer/failure profiles. General MIME/multipart/MaxBytesReader, Values.Clone and query/escape diagnostics, actual GODEBUG/default/metric selection, configurable gateway APIs and all existing integration requirements remain open. No full Unicode package, source-profile, HTTP parity or generated caller adoption credit follows."
+        "Reconcile actual source ABI and Rust input/native index bounds, match/render/concat/source string length and allocation/panic profiles, pool/map/capture alias and concurrency behavior. Constructor diagnostic/zero-result/shared-sentinel/MustPattern paths and explicit source-word arithmetic are authored, not proved. Finish Go error type/identity/Is/As/wrapping and fmt.Error panic/caller/byte profiles; actual GRPC_GO_LOG_* initialization, custom LoggerV2/depth/verbosity/multiwriter/global flags/time/output/error ordering and production initializer adoption. Continue all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape, request/header/native HTTP/listener/platform/config/queue/logging/CRD/features/admission/body requirements. Default pattern logging is explicit stderr text, not evidence of actual process environment or source logger equivalence."
       ],
       "source_git_blob": "7581ddc41945340b97d4561a275bf969a32e4f8f",
       "source_id": "agones:pkg/util/runtime/runtime.go",
@@ -743,7 +758,7 @@
         "Reconcile authored request trailer maps/cookies and header JSON/alias operations across all selected profiles; native parser/rejection/1.0 keep-alive/upgrade, H2 header ordering/HPACK/GOAWAY and body Close/read/EOF/abortPendingRead/Continue/full-duplex races. Complete native readahead/partial-write/flush/reset/cancellation/error timing and diagnostics. Source code and API reading do not establish native parity.",
         "Finish listener named-service/bind and independent listener-close/shutdown timing, native error origin (syscall-wrapped versus direct Errno or poll/init failures), platform/native error display and complete retry profiles. Shared temporary-syscall accept backoff is authored for plain/TLS, but does not establish full Go listener equivalence. M0027 source tool/GODEBUG and actual production parent adoption remain required.",
         "Retain every other M0003 filesystem/signal/gateway/config/queue/logging/CRD/features/admission/body gap. Global BOTH-route gate stays CLOSED; no compiler, test, formatter/linter, native/API probe, application, generator validation, proof or CI ran.",
-        "Finish source Pattern constructor diagnostics/grpclog/ErrInvalidPattern identity/MustPattern fatal behavior; full source-int opcode/stack/concat length overflow, pool/capture/map iteration and alias/race/panic/allocator profiles. The fixed Legacy byte matching and capture path, shared literal pool/copy-name distinction and explicit Go1265/Go1271 uppercase profiles are authored. Canonical Pattern.String uses string_bytes; Rust Display remains a compatibility projection. Bind actual source Unicode/compiler/ABI and string/builder/lazy-lookup allocation/initialization/pointer/failure profiles. General MIME/multipart/MaxBytesReader, Values.Clone and query/escape diagnostics, actual GODEBUG/default/metric selection, configurable gateway APIs and all existing integration requirements remain open. No full Unicode package, source-profile, HTTP parity or generated caller adoption credit follows."
+        "Reconcile actual source ABI and Rust input/native index bounds, match/render/concat/source string length and allocation/panic profiles, pool/map/capture alias and concurrency behavior. Constructor diagnostic/zero-result/shared-sentinel/MustPattern paths and explicit source-word arithmetic are authored, not proved. Finish Go error type/identity/Is/As/wrapping and fmt.Error panic/caller/byte profiles; actual GRPC_GO_LOG_* initialization, custom LoggerV2/depth/verbosity/multiwriter/global flags/time/output/error ordering and production initializer adoption. Continue all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape, request/header/native HTTP/listener/platform/config/queue/logging/CRD/features/admission/body requirements. Default pattern logging is explicit stderr text, not evidence of actual process environment or source logger equivalence."
       ]
     },
     {
@@ -754,7 +769,7 @@
         "Numeric and timestamp/base64 grammar branches now have source-derived implementations. Native decimal float conversion, float output rendering and source Go/Rust target-profile rounding/NaN/negative-zero/bounds still need exact profile reconciliation and later assurance; no successful run or proof is claimed.",
         "Reconcile Any embedded wire recursion with prost-reflect decoding limits, required-field error traversal/order, proto2 group/extension/MessageSet profiles and deterministic extension/oneof ordering. Native Any map keys have explicit deterministic emission; that alone is not full source wire-parity credit.",
         "Typed non-proto decoders are authored and consumed by GatewayDecoder::decode / GatewayJsonPb::unmarshal_into. Finish required named model/custom serde and source panic/error interfaces without inventing a general Go object layer. EnumTargetFactory now requires a source numeric profile explicitly; source-owner integration must bind it to the exact Go version/target/ConvertHash setting. No Rust-host fallback or source-profile credit is inferred. Source JSON rendering/alias/nil details remain explicit rather than inferred from serde success.",
-        "GatewayPattern consumes compiled generator opcodes in default Legacy mode; nondefault/configurable APIs retain source accounting. Finish source Pattern constructor diagnostics/grpclog/ErrInvalidPattern identity/MustPattern fatal behavior; full source-int opcode/stack/concat length overflow, pool/capture/map iteration and alias/race/panic/allocator profiles. The fixed Legacy byte matching and capture path, shared literal pool/copy-name distinction and explicit Go1265/Go1271 uppercase profiles are authored. Canonical Pattern.String uses string_bytes; Rust Display remains a compatibility projection. Bind actual source Unicode/compiler/ABI and string/builder/lazy-lookup allocation/initialization/pointer/failure profiles. General MIME/multipart/MaxBytesReader, Values.Clone and query/escape diagnostics, actual GODEBUG/default/metric selection, configurable gateway APIs and all existing integration requirements remain open. No full Unicode package, source-profile, HTTP parity or generated caller adoption credit follows.",
+        "GatewayPattern default Legacy scope retains byte matching and explicit source data profiles. Reconcile actual source ABI and Rust input/native index bounds, match/render/concat/source string length and allocation/panic profiles, pool/map/capture alias and concurrency behavior. Constructor diagnostic/zero-result/shared-sentinel/MustPattern paths and explicit source-word arithmetic are authored, not proved. Finish Go error type/identity/Is/As/wrapping and fmt.Error panic/caller/byte profiles; actual GRPC_GO_LOG_* initialization, custom LoggerV2/depth/verbosity/multiwriter/global flags/time/output/error ordering and production initializer adoption. Continue all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape, request/header/native HTTP/listener/platform/config/queue/logging/CRD/features/admission/body requirements. Default pattern logging is explicit stderr text, not evidence of actual process environment or source logger equivalence.",
         "Forwarded gRPC server headers/trailers, incoming context/header matching, deadlines/status wrapping/response_body selection and actual SDK/allocator generated request mappings and handlers remain with source-owned M0025/M0027 integration. The real raw gateway callback can already use ResponseWriter; this library registration is not those callers adoption.",
         "Finish required shared HTTP/TLS/fswatch/signal/platform/error/logging/queue/configuration profiles in the M0003 partial map. All implementation and generated outputs across both routes remain required before any assurance."
       ],
@@ -766,7 +781,7 @@
   "milestone_id": "M0003",
   "native_hyper_adoption_record": "verification/agones/roadmap-M0003-hyper-adoption.json",
   "owned_entry_count": 14,
-  "payload_identity_refreshed_at": "2026-10-28T11:38:42.874586+00:00",
+  "payload_identity_refreshed_at": "2026-10-28T12:05:48.935154+00:00",
   "payload_sha256": {
     "Cargo.lock": "1d2c5f632a6a590af119a16f3ff926d89bcfdaedde63a265fd185c8d406745a9",
     "Cargo.toml": "fd4401820492ab3209f748949abe5327e974d6c8d892a510803943391d6a2a18",
@@ -803,6 +818,7 @@
     "rust-support/agones/FSNOTIFY-LICENSE": "2dfbe6d2b5eb18b55148f3805d88648a09e0d17e38428123259afb08c8996e37",
     "rust-support/agones/FSNOTIFY-V1-LICENSE": "c8001d18c3dda64c7e72146f1b23d73619fcf426aed6778f447599f5ac8e600a",
     "rust-support/agones/GO-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+    "rust-support/agones/GRPC-LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
     "rust-support/agones/source-data/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "rust-support/agones/source-data/unicode/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "rust-support/agones/source-data/unicode/go1.26.5/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
@@ -813,16 +829,17 @@
     "rust-support/agones/src/utility_admission.rs": "a17ed7e9f3c3ffdaf9d42e39ab372be4f107ff4bd50eec371f48824a4b7a5807",
     "rust-support/agones/src/utility_client_config.rs": "50b1648d59275ce50ef815d69e7fe9e87338b179e7ea712229e5324fe1cedc4a",
     "rust-support/agones/src/utility_crd.rs": "de93657e926a3498249173e564ccc7798ffd081ba2583c8c9dd490b239195cde",
-    "rust-support/agones/src/utility_declarations.rs": "052ff5286077a01f95bfcf984e25d54a4b9b08bc85febb6f82a7e57d5a9e5518",
+    "rust-support/agones/src/utility_declarations.rs": "9f1517777da9c2ae7cb32c16a05ca1cc019e30d2500520af225f641a3536bd6d",
     "rust-support/agones/src/utility_discovery.rs": "8151e804ce4354fef226b0cd915c6e868936c2806089143e4c212ee99e1a32ed",
     "rust-support/agones/src/utility_error_view.rs": "c2776e4aa916b0e4e6f933ece03453da31573ab507a79e023fb854c78407b976",
     "rust-support/agones/src/utility_fswatch.rs": "594ff335887d01bb1fa4e40c8df41e579567873972c4e89bdb7b89da005fa20f",
     "rust-support/agones/src/utility_fswatch_fen.rs": "d5ffcbf1fef1be3b40b0fd06dfe14a4ebdd5e954a02c143deccbfba4a16a767d",
     "rust-support/agones/src/utility_fswatch_kqueue.rs": "67b1963fa38453e9c1ad968648b12e0c7e747dddca7aa3613f44de81d4ed00c3",
     "rust-support/agones/src/utility_fswatch_windows.rs": "937bc4ab04bea8bce002efc0d82c5067d4d9b94f5313eb60c0a73572f858662e",
-    "rust-support/agones/src/utility_gateway.rs": "9c634605776b42bc4857633b7e5a36b3d6e83953fad5f5b6524483e793acea10",
+    "rust-support/agones/src/utility_gateway.rs": "7dbe238a34ecac56ef5d07f2bac48e84855d5f81c663b2fedddc62a34487c4a0",
     "rust-support/agones/src/utility_gateway_framing.rs": "43dd0a6375b726182af52243e45152e7dcf756ce4c27ba4f9cb4cb5b77127326",
     "rust-support/agones/src/utility_gateway_json.rs": "b6aac4a28d90ea4bad7362737cfe7132fc5a72ce81cbd6bd492441798aba48f7",
+    "rust-support/agones/src/utility_gateway_pattern.rs": "d21e108df3acc2e3d53cfe2b25658ef57b5e0c1a4082fb8e5a179ed3685ed2a6",
     "rust-support/agones/src/utility_gateway_scalar.rs": "18c20da7322147fe5db79503e11040d745c4a8563580aed6b28cffd3dbab7f19",
     "rust-support/agones/src/utility_gateway_targets.rs": "3d3d8607f17d4db8f9c6d70dc46793d3d35615e4d887a3f236ee57cda57d8f61",
     "rust-support/agones/src/utility_gateway_wire.rs": "234e6de84955c4240f153c0dece7a5594733562325bf7113998a794b9af0b113",
@@ -851,7 +868,7 @@
     "rust-support/agones/src/utility_queue.rs": "21c1c20f9e50ac5191cfa82cf8eb80c990ad1b5187de409e95d8bc720d69d9e7",
     "rust-support/agones/src/utility_queue_limiters.rs": "6bec0da3ae6f9d1068b738c7be445b18a34bc17a211f82fdf15b0d605848db9d",
     "rust-support/agones/src/utility_queue_values.rs": "e7be82bc28e640948c1b333130228ce3962535c815eef39e7d71daeb74fc2285",
-    "rust-support/agones/src/utility_runtime.rs": "78267d62c86b3c81ff533a3b3ddaf607c4f0bf526e762c2a1b22764c80e5fe2b",
+    "rust-support/agones/src/utility_runtime.rs": "1d6984cb234cc6b010262b8f179cfc1ab4f549bc12c418768fbb2b75c47a98f4",
     "rust-support/agones/src/utility_runtime_module.rs": "7d98ced3f9d120239b0c87247347018a35e2af5770977612e16223a1e65fb3fe",
     "rust-support/agones/src/utility_scope.rs": "d0f6604c2ee1a1e630c1f108d0359f1fdc80d35e3c27f93042af505875ad00d0",
     "rust-support/agones/src/utility_signals.rs": "86aab0a4b60572e7ad80d125e9f4fdf26056a9cb90374b55b0c34f4da710ebd6",
@@ -862,15 +879,15 @@
     "third_party/first-generation/better-comprehension/src/lib.rs": "f47ba11ce4cd4d6b7424ba0cffca669018e52e5541fb32f83d655aba2ce364b3",
     "third_party/first-generation/comprende/Cargo.toml": "01f7068b9cd9ec5b27b7df77709117e37dc991cd32597dbf24cbde9074f5ceab",
     "third_party/first-generation/comprende/src/lib.rs": "e8d8da04ca3048bdd7275b1ca77b5a78c4abfd999ecb763d82a615f4aeb0fb96",
-    "verification/agones/roadmap-M0003-gateway-authoring.json": "0e0dca1e547bd56827b5e0c8660f97a8ef068f6bed98936a7124161721fff7a9",
-    "verification/agones/roadmap-M0003-http-authoring.json": "51a03f414e7f8bbe2b24a01d37d6a2900cb7132fc811635ed072e7a711614f05",
-    "verification/agones/roadmap-M0003-hyper-adoption.json": "455fceab5dabbde1fa6e75b73eef52725b99849249d20df368039fc8dc434fe9",
-    "verification/agones/roadmap-M0003-platform-effects.json": "edf6e0ebebe6850818d950603682b83e7695b5e5babe7eb5ecc37965cf5aa199",
-    "verification/agones/roadmap-M0003-reuse-adoption.json": "e231abfcb20db8efc422bc9dd341949415ed801f750c3990157074db70b964af"
+    "verification/agones/roadmap-M0003-gateway-authoring.json": "617a99027e23ed4060cee22a78a9d2ad1e543d224f88b0b866d0beddb274b826",
+    "verification/agones/roadmap-M0003-http-authoring.json": "55b7784419c7ed2262c86ac80ac0ff1daa35595828293c9118c6f1cb7f07cc44",
+    "verification/agones/roadmap-M0003-hyper-adoption.json": "d7acb70d797256d91e0ad55e527adfe7e0998e2a24a88e45122106f5eaed926f",
+    "verification/agones/roadmap-M0003-platform-effects.json": "bc777559d7af4ad109c97568fa042ca23188078baaf18f664dbcb2909da3cf32",
+    "verification/agones/roadmap-M0003-reuse-adoption.json": "7f2f4b47c5b8fe2fbbe74ce5c9d979217c9b3e41afd85020af459149218a618a"
   },
   "platform_effect_authoring_record": "verification/agones/roadmap-M0003-platform-effects.json",
-  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-30.json",
-  "progress_usage_observations": 30,
+  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-32.json",
+  "progress_usage_observations": 32,
   "project_executable_invocations": 0,
   "record_kind": "PARTIAL_SOURCE_OWNERSHIP_ADOPTION",
   "route": "MANUAL",
@@ -2119,6 +2136,41 @@
       "sha256": "a81bdf73a308277c322e35d0c602e3813f57b6f769c091f8f8962c8884a45ea3",
       "source_revision": "go1.27.1",
       "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/strings/strings.go"
+    },
+    {
+      "path": "vendor/google.golang.org/grpc/grpclog/grpclog.go",
+      "purpose": "Pinned constructor/log/error/exit source reading and authoring only; no constructor/fatal/project/native execution.",
+      "sha256": "6b1c4c32181da0292783b4feb489b979830556724bfa3b33e4612b1279d24081",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "url": "https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/vendor/google.golang.org/grpc/grpclog/grpclog.go"
+    },
+    {
+      "path": "vendor/google.golang.org/grpc/grpclog/loggerv2.go",
+      "purpose": "Pinned constructor/log/error/exit source reading and authoring only; no constructor/fatal/project/native execution.",
+      "sha256": "e5a0d19469e8fb4f14b809f118dbdbf14b76bfb0698679eac53f45d3d3793779",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "url": "https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/vendor/google.golang.org/grpc/grpclog/loggerv2.go"
+    },
+    {
+      "path": "vendor/google.golang.org/grpc/grpclog/internal/loggerv2.go",
+      "purpose": "Pinned constructor/log/error/exit source reading and authoring only; no constructor/fatal/project/native execution.",
+      "sha256": "73624458b062c9a9b60b89b0640d5958c53d2703d032dfedbcfed5b68dcd6b37",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "url": "https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/vendor/google.golang.org/grpc/grpclog/internal/loggerv2.go"
+    },
+    {
+      "path": "vendor/google.golang.org/grpc/grpclog/internal/grpclog.go",
+      "purpose": "Pinned constructor/log/error/exit source reading and authoring only; no constructor/fatal/project/native execution.",
+      "sha256": "ca8b6f4b1662bcc98929293f22f4d3fdab23b32975f7387b6254f5a70df0b985",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "url": "https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/vendor/google.golang.org/grpc/grpclog/internal/grpclog.go"
+    },
+    {
+      "path": "vendor/google.golang.org/grpc/LICENSE",
+      "purpose": "Pinned constructor/log/error/exit source reading and authoring only; no constructor/fatal/project/native execution.",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "url": "https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/vendor/google.golang.org/grpc/LICENSE"
     }
   ],
   "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
@@ -2127,5 +2179,5 @@
   "stage": "IMPLEMENTING",
   "usage_attribution_note": "M0003 entry bookkeeping, including the follow-up append of the finalized M0002 shared-boundary paragraph, is allocated once to M0003 entry overhead. It is not included a second time in the prior 20030-token shared segment.",
   "verification": "NOT_STARTED",
-  "work_base_commit": "d7649c813950d023e25288adcc1781b3623882ec"
+  "work_base_commit": "7acb99cc8edf5f547e5f2d574d51b0c43bd89a5d"
 }

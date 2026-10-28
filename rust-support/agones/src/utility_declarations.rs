@@ -83,6 +83,10 @@ define_derive_deftly! {
             crate::utility_http::SourceUnicodeProfileGetterComponent:
                 ::cgp::prelude::UseField<::cgp::prelude::Symbol!("source_unicode_profile")>,
             crate::utility_http::SourceUppercaseMapperComponent: crate::utility_http::MapSourceUppercase,
+            crate::utility_gateway::SourcePatternLoggerGetterComponent:
+                ::cgp::prelude::UseField<::cgp::prelude::Symbol!("source_pattern_logger")>,
+            crate::utility_gateway::SourcePatternDiagnosticEmitterComponent: crate::utility_gateway::EmitSourcePatternDiagnostic,
+            crate::utility_gateway::SourceGatewayPatternConstructorComponent: crate::utility_gateway::ConstructSourceGatewayPattern,
             crate::utility_fswatch::FileWatcherOpenerComponent: crate::utility_fswatch::OpenNativeFileWatcher,
             crate::utility_tls::SourceCertificateLoaderComponent: crate::utility_tls::LoadRustlsCertificate,
             crate::utility_tls::HttpsServerRunnerComponent: crate::utility_tls::RunNativeHttpsServer,

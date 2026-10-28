@@ -12,6 +12,13 @@ use crate::{errors::{BoxError, Errors}, utility_http::{header, set_header, HttpH
     utility_gateway_json::{GatewayDecoder, GatewayJsonPb, GatewayValue},
     utility_declarations::derive_deftly_template_UtilityGatewayProviders};
 
+#[path = "utility_gateway_pattern.rs"]
+mod pattern_support;
+pub use pattern_support::{PatternWordProfile, PatternConstruction, InvalidPatternError, is_invalid_pattern,
+    PatternDiagnostic, PatternLogProfile, SourcePatternLogger, HasSourcePatternLogger, SourcePatternLoggerGetterComponent,
+    CanEmitSourcePatternDiagnostic, SourcePatternDiagnosticEmitter, SourcePatternDiagnosticEmitterComponent, EmitSourcePatternDiagnostic,
+    CanConstructSourceGatewayPattern, SourceGatewayPatternConstructor, SourceGatewayPatternConstructorComponent, ConstructSourceGatewayPattern};
+
 const ERRORS: Errors = Errors::from_package("github.com/grpc-ecosystem/grpc-gateway/v2/runtime");
 pub type PathParameters = HashMap<Bytes, Bytes>;
 pub type GatewayHandler = Arc<dyn for<'a> Fn(&'a GatewayContext, &'a mut ResponseWriter,
@@ -32,41 +39,54 @@ pub struct GatewayCall {
 /// The caller's []string pool remains a shared slice view; capture names are
 /// copied string values, as in NewPattern. Registered Pattern copies retain
 /// the same pool backing without another routing or lifecycle owner.
-#[derive(Clone, Debug)]
-pub struct GatewayPattern { operations: Vec<(i32, usize)>, pool: crate::utility_http::HeaderValues, variables: Vec<Bytes>,
+#[derive(Clone, Debug, Default)]
+pub struct GatewayPattern { operations: Vec<(i64, usize)>, pool: crate::utility_http::HeaderValues, variables: Vec<Bytes>,
     stack_size: usize, tail_length: usize, verb: Bytes }
 impl GatewayPattern {
-    pub fn new(version: i32, operations: &[i32], pool: crate::utility_http::HeaderValues, verb: impl AsRef<[u8]>) -> Result<Self, BoxError> {
-        let invalid = || ERRORS.New("invalid pattern");
-        if version != 1 || operations.len() % 2 != 0 { return Err(invalid()); }
+    pub fn new(context: &impl CanEmitSourcePatternDiagnostic, profile: PatternWordProfile, version: i64,
+        operations: &[i64], pool: crate::utility_http::HeaderValues, verb: impl AsRef<[u8]>) -> PatternConstruction {
+        use PatternDiagnostic::*;
+        let version = profile.integer(version);
+        if version != 1 { return pattern_support::reject_pattern(context, UnsupportedVersion(version)); }
+        if operations.len() % 2 != 0 { return pattern_support::reject_pattern(context, OddCodeCount(profile.integer(operations.len() as i64))); }
         let mut result = Self { operations: Vec::new(), pool, variables: Vec::new(), stack_size: 0, tail_length: 0,
             verb: Bytes::copy_from_slice(verb.as_ref()) };
-        let mut stack = 0_usize;
+        let (mut stack, mut maxstack, mut tail) = (0_i64, 0_i64, 0_i64);
         let mut deep_seen = false;
         for pair in operations.chunks_exact(2) {
-            let code = pair[0];
-            let mut operand = pair[1] as usize;
+            let code = profile.integer(pair[0]); let source_operand = profile.integer(pair[1]);
+            let mut operand = source_operand as usize;
             match code {
                 0 => continue,
-                1 => { stack += 1; if deep_seen { result.tail_length += 1; } },
+                1 => { if deep_seen { tail = profile.add(tail, 1); } stack = profile.add(stack, 1); },
                 2 => {
-                    if pair[1] < 0 || operand >= result.pool.len() { return Err(invalid()); }
-                    stack += 1; if deep_seen { result.tail_length += 1; }
+                    if source_operand < 0 || operand >= result.pool.len() { return pattern_support::reject_pattern(context, LiteralIndex(source_operand)); }
+                    if deep_seen { tail = profile.add(tail, 1); } stack = profile.add(stack, 1);
                 }
-                3 => { if deep_seen { return Err(invalid()); } deep_seen = true; stack += 1; },
-                4 => { if pair[1] <= 0 { return Err(invalid()); } stack = stack.checked_sub(operand).ok_or_else(invalid)? + 1; },
+                3 => {
+                    if deep_seen { return pattern_support::reject_pattern(context, DuplicatePushM); }
+                    deep_seen = true; stack = profile.add(stack, 1);
+                }
+                4 => {
+                    if source_operand <= 0 { return pattern_support::reject_pattern(context, ConcatSize(source_operand)); }
+                    stack = profile.sub(stack, source_operand);
+                    if stack < 0 { return pattern_support::reject_pattern(context, StackUnderflow); }
+                    stack = profile.add(stack, 1);
+                }
                 5 => {
-                    if pair[1] < 0 || operand >= result.pool.len() { return Err(invalid()); }
+                    if source_operand < 0 || operand >= result.pool.len() { return pattern_support::reject_pattern(context, CaptureIndex(source_operand)); }
                     result.variables.push(result.pool.get(operand).expect("validated source literal index"));
                     operand = result.variables.len() - 1;
-                    stack = stack.checked_sub(1).ok_or_else(invalid)?;
+                    stack = profile.sub(stack, 1);
+                    if stack < 0 { return pattern_support::reject_pattern(context, StackUnderflow); }
                 }
-                _ => return Err(invalid()),
+                _ => return pattern_support::reject_pattern(context, InvalidOpcode(code)),
             }
-            result.stack_size = result.stack_size.max(stack);
+            if maxstack < stack { maxstack = stack; }
             result.operations.push((code, operand));
         }
-        Ok(result)
+        result.stack_size = maxstack as usize; result.tail_length = tail as usize;
+        PatternConstruction { pattern: result, error: None }
     }
     pub fn verb(&self) -> &[u8] { &self.verb }
     pub fn matches(&self, components: &[Bytes], verb: &[u8]) -> Option<PathParameters> {
@@ -148,6 +168,15 @@ pub trait HasGatewayRuntime { fn gateway_runtime(&self) -> &UtilityRuntimeContex
 #[derive_deftly(UtilityGatewayProviders)]
 pub struct GatewayContext { gateway_state: Arc<GatewayState>, gateway_runtime: UtilityRuntimeContext }
 impl GatewayContext {
+    pub fn new_pattern(&self, profile: PatternWordProfile, version: i64, operations: &[i64], pool: crate::utility_http::HeaderValues, verb: &[u8]) -> PatternConstruction {
+        self.gateway_runtime().construct_source_gateway_pattern(profile, version, operations, pool, verb)
+    }
+    pub fn must_pattern(&self, construction: PatternConstruction) -> GatewayPattern { self.gateway_runtime().require_source_gateway_pattern(construction) }
+    pub fn handle_compiled(&self, profile: PatternWordProfile, method: impl AsRef<[u8]>, operations: &[i64], pool: crate::utility_http::HeaderValues, verb: &[u8], handler: GatewayHandler) {
+        let construction = self.new_pattern(profile, 1, operations, pool, verb);
+        self.handle(method, self.must_pattern(construction), handler);
+    }
+
     pub fn handle(&self, method: impl AsRef<[u8]>, pattern: GatewayPattern, handler: GatewayHandler) {
         let mut routes = self.gateway_state().routes.write().unwrap_or_else(|error| error.into_inner());
         routes.entry(Bytes::copy_from_slice(method.as_ref())).or_default().insert(0, Route { pattern, handler });

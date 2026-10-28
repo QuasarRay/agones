@@ -253,16 +253,18 @@
     "agones-rs/pkg/util/logfields/logfields.rs": "c1d6a44e34e760fffadead9e1151a1ee67ec965d32c5420be20c888d6ff01b02",
     "agones-rs/pkg/util/webhooks/webhooks.rs": "f728be5333aecae9018da4ce9bc09a278907e10d2bfa6cc56a77566c9c878da5",
     "crates/util/Cargo.toml": "6b011badbe07029ab9a84257636f7de293931d32a2c1bbef49c60b4d07dd91bf",
+    "rust-support/agones/GRPC-LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
     "rust-support/agones/source-data/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "rust-support/agones/source-data/unicode/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "rust-support/agones/source-data/unicode/go1.26.5/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "rust-support/agones/source-data/unicode/go1.26.5/tables.go": "6a88d48746c4b2c471cc04ae40559694b734770212e6f5ea5f1962adb0c0bdb1",
     "rust-support/agones/source-data/unicode/go1.27.1/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "rust-support/agones/source-data/unicode/go1.27.1/tables.go": "ac0e5d5d1b58ed4b02d7cb4a0085bdefbdb4f7aae6fadddbc9477f8463da8bd8",
-    "rust-support/agones/src/utility_declarations.rs": "052ff5286077a01f95bfcf984e25d54a4b9b08bc85febb6f82a7e57d5a9e5518",
-    "rust-support/agones/src/utility_gateway.rs": "9c634605776b42bc4857633b7e5a36b3d6e83953fad5f5b6524483e793acea10",
+    "rust-support/agones/src/utility_declarations.rs": "9f1517777da9c2ae7cb32c16a05ca1cc019e30d2500520af225f641a3536bd6d",
+    "rust-support/agones/src/utility_gateway.rs": "7dbe238a34ecac56ef5d07f2bac48e84855d5f81c663b2fedddc62a34487c4a0",
     "rust-support/agones/src/utility_gateway_framing.rs": "43dd0a6375b726182af52243e45152e7dcf756ce4c27ba4f9cb4cb5b77127326",
     "rust-support/agones/src/utility_gateway_json.rs": "b6aac4a28d90ea4bad7362737cfe7132fc5a72ce81cbd6bd492441798aba48f7",
+    "rust-support/agones/src/utility_gateway_pattern.rs": "d21e108df3acc2e3d53cfe2b25658ef57b5e0c1a4082fb8e5a179ed3685ed2a6",
     "rust-support/agones/src/utility_http.rs": "fbf4000c50d31d7d21dc2b700efbf60e882f18902c7bc4cc1ba1da2ac114f7bf",
     "rust-support/agones/src/utility_http_body.rs": "af7e4eac5e2623b697f63342445b01b13cba8474310912e8befd823aab9c53da",
     "rust-support/agones/src/utility_http_form.rs": "6d0d19a94d76cde97bd8e9eeb86446804f0d87dcdc96fa92424a6ee2bc6bb57b",
@@ -277,12 +279,13 @@
     "rust-support/agones/src/utility_http_unicode.rs": "6b9084be0b215ec01c70d42264c0c8e51977f8368f8b346d5f93e2894e75fe7b",
     "rust-support/agones/src/utility_http_url.rs": "9c6fca7c6f52999f31679ba393c494ed3f543e02dbe1a7a6449f26d4b4fbb1c4",
     "rust-support/agones/src/utility_logging.rs": "a055f664578d49d0a7b985468446218a8e13f0a4512470b05ab3c7a1190ea043",
-    "rust-support/agones/src/utility_runtime.rs": "78267d62c86b3c81ff533a3b3ddaf607c4f0bf526e762c2a1b22764c80e5fe2b",
+    "rust-support/agones/src/utility_runtime.rs": "1d6984cb234cc6b010262b8f179cfc1ab4f549bc12c418768fbb2b75c47a98f4",
     "rust-support/agones/src/utility_tls.rs": "548c4993139da2ada7ed2712467449cbe7eeb8fab3465032ca0d8d6e901818ae"
   },
   "runtime_credit": 0,
+  "source_pattern_constructor_owner": "Existing CGP/derive-deftly UtilityRuntimeProviders owns SourcePatternDiagnosticEmitter, SourceGatewayPatternConstructor, SourcePatternLoggerGetter and the existing SourceProcessExit capability. RuntimeOwner constructs one source-pattern logger resource (writer mutex and typed enabled/JSON profile). GatewayContext new_pattern/must_pattern/handle_compiled consume that provider and then use the existing route owner. PatternConstruction retains both Go result fields; InvalidPatternError copies reference one static identity token. Word profiles are explicit data and never inferred from the Rust host. There is no logger/provider registry, task or competing lifecycle manager; environment/custom LoggerV2 and actual ABI/initializer binding remain later source work.",
   "source_url": "https://static.crates.io/crates/hyper/hyper-1.12.0.crate",
-  "timestamp": "2026-10-28T11:38:42.874586+00:00",
+  "timestamp": "2026-10-28T12:05:48.935154+00:00",
   "upstream_archive": "/home/astral/.cargo/registry/cache/index.crates.io-1949cf8c6b5b557f/hyper-1.12.0.crate",
   "upstream_archive_sha256": "2c3e324da4c95177d6291d4c8730197c0d1822f8a9766814a4a44fa5ab797c9c",
   "url_alias_authoring": {
@@ -321,5 +324,5 @@
     "source_text_match": true,
     "version": "1.1.2"
   },
-  "work_base_commit": "d7649c813950d023e25288adcc1781b3623882ec"
+  "work_base_commit": "7acb99cc8edf5f547e5f2d574d51b0c43bd89a5d"
 }
