@@ -228,6 +228,9 @@ pub fn find_error<'a, T: Error + 'static>(error: &'a (dyn Error + 'static)) -> O
 }
 pub fn first_error_view<'a, Value>(error: &'a (dyn Error + 'static), view: &impl Fn(&'a (dyn Error + 'static)) -> Option<Value>) -> Option<Value> {
     if let Some(value) = view(error) { return Some(value); }
+    if let Some(error) = error.downcast_ref::<crate::utility_panic::SourceRuntimeErrorEnvelope>() {
+        return first_error_view(error.error(), view);
+    }
     if let Some(formatted) = error.downcast_ref::<FormattedError>() {
         return formatted.wrapped.iter().find_map(|source| first_error_view(source.as_ref(), view));
     }

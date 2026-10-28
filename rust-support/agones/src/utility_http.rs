@@ -350,45 +350,56 @@ async fn request_service(context: UtilityRuntimeContext, mux: SourceMux, tasks: 
     let panicked = Arc::new(AtomicBool::new(false));
     let end = hyper::ext::SourceResponseEnd::new();
     let phase = SourceRequestPhase(Some(end.clone()));
-    let mut writer = ResponseWriter::new(context.clone(), head_tx, data, Arc::clone(&panicked), source_close, server_stops, end, &request).map_err(io::Error::other)?;
+    let writer = ResponseWriter::new(context.clone(), head_tx, data, Arc::clone(&panicked), source_close, server_stops, end, &request).map_err(io::Error::other)?;
     tasks.spawn("HTTP request", Box::pin(async move {
+        let http2 = request.protocol == hyper::Version::HTTP_2;
+        let mut writer = Some(writer);
+        let mut handler_returned = false;
         let handled = std::panic::AssertUnwindSafe(async {
-            let rejected_expectation = request.protocol != hyper::Version::HTTP_2 && header(&request.headers, "Expect")
-                .is_some_and(|value| !value.is_empty() && !header_has_token(&value, b"100-continue"));
-            if rejected_expectation {
-                set_header(&mut writer.headers, "Connection", "close"); let _ = writer.write_header(417).await;
-            } else if request.method().as_ref() == b"OPTIONS" && request.request_uri().as_ref() == b"*" { global_options(&mut writer, &mut request).await; }
-            else { mux.dispatch(&context, &mut writer, &mut request).await; }
-        }).catch_unwind().await;
-        if let Err(payload) = handled {
-            let panic = crate::utility_panic::SourceRecoveredPanic::new(payload);
-            if request.protocol == hyper::Version::HTTP_2 {
-                // H2 cancellation precedes reporting. Dropping an unfinished
-                // writer marks Body failure and wakes its existing consumer;
-                // the existing Hyper driver owns the actual stream reset.
-                request.cancelled.cancel();
-                drop(writer);
-                context.report_source_http_panic(true, &remote_addr, &panic);
-            } else {
-                // H1 reports before its deferred cancellation and original
-                // reqBody cleanup, without committing a successful response.
-                context.report_source_http_panic(false, &remote_addr, &panic);
-                request.cancelled.cancel();
-                request.continue_state.disable().await;
-                drop(writer);
-                let _ = request.original_body.close().await;
+            {
+                let writer = writer.as_mut().expect("live handler owns its response writer");
+                let rejected_expectation = !http2 && header(&request.headers, "Expect")
+                    .is_some_and(|value| !value.is_empty() && !header_has_token(&value, b"100-continue"));
+                if rejected_expectation {
+                    set_header(&mut writer.headers, "Connection", "close"); let _ = writer.write_header(417).await;
+                } else if request.method().as_ref() == b"OPTIONS" && request.request_uri().as_ref() == b"*" { global_options(writer, &mut request).await; }
+                else { mux.dispatch(&context, writer, &mut request).await; }
             }
-            phase.finish(true);
-            return Ok(());
+            // H1 conn.serve clears inFlightResponse before cancelCtx and
+            // finishRequest. A later panic must not repeat its request cleanup.
+            handler_returned = true;
+            if http2 { return None; }
+            request.cancelled.cancel();
+            Some(finish_source_request(writer.take().expect("unfinished H1 response"), &mut request).await)
+        }).catch_unwind().await;
+        match handled {
+            Ok(Some(close)) => phase.finish(close),
+            Ok(None) => {
+                // H2 didPanic is cleared before its deferred handlerDone.
+                // Finish failures therefore remain outside its handler catch.
+                request.cancelled.cancel();
+                let close = finish_source_request(writer.take().expect("unfinished H2 response"), &mut request).await;
+                phase.finish(close);
+            }
+            Err(payload) => {
+                let panic = crate::utility_panic::SourceRecoveredPanic::new(payload);
+                if http2 {
+                    request.cancelled.cancel();
+                    // Mark Body failure and wake its native reset consumer.
+                    drop(writer.take());
+                    context.report_source_http_panic(true, &remote_addr, &panic);
+                } else {
+                    context.report_source_http_panic(false, &remote_addr, &panic);
+                    if !handler_returned {
+                        request.cancelled.cancel();
+                        request.continue_state.disable().await;
+                        drop(writer.take());
+                        let _ = request.original_body.close().await;
+                    }
+                }
+                phase.finish(true);
+            }
         }
-        request.cancelled.cancel(); // net/http cancels when ServeHTTP returns.
-        let close = writer.finish().await;
-        // finishRequest closes the body captured before the expectation
-        // wrapper was installed, even when the handler replaces r.Body.
-        let _ = request.original_body.close().await;
-        let current = request.body();
-        let early_close = match current.native_http1() { Some(body) => body.did_early_close().await, None => false };
-        phase.finish(close || early_close);
         Ok(())
     })).map_err(io::Error::other)?;
     let head = head_rx.await.map_err(|_| io::Error::other("HTTP handler ended without a response"))?;
@@ -398,6 +409,16 @@ async fn request_service(context: UtilityRuntimeContext, mux: SourceMux, tasks: 
     if let Some(source) = head.source_http1 { response.extensions_mut().insert(source); }
     Ok(response.map(|()| ResponseBody { receiver, panicked, ended,
         cancelled: pending.0.take().expect("pending HTTP request owns cancellation"), cancel_on_drop: version == hyper::Version::HTTP_2 }))
+}
+
+async fn finish_source_request(writer: ResponseWriter, request: &mut HttpRequest) -> bool {
+    let close = writer.finish().await;
+    // finishRequest closes the body captured before the expectation wrapper
+    // was installed, even when the handler replaces r.Body.
+    let _ = request.original_body.close().await;
+    let current = request.body();
+    let early_close = match current.native_http1() { Some(body) => body.did_early_close().await, None => false };
+    close || early_close
 }
 
 async fn global_options(writer: &mut ResponseWriter, request: &mut HttpRequest) {

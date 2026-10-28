@@ -821,7 +821,7 @@
           "partial_adoption_record": "verification/agones/roadmap-M0003-partial-map.json",
           "platform_effect_authoring_record": "verification/agones/roadmap-M0003-platform-effects.json",
           "prerequisites": "M0001/M0002 authored implementation complete; global phase remains IMPLEMENTATION_ONLY",
-          "progress_usage_observation": "verification/agones/roadmap-M0003-progress-usage-46.json",
+          "progress_usage_observation": "verification/agones/roadmap-M0003-progress-usage-48.json",
           "progress_usage_observations": [
             "verification/agones/roadmap-M0003-progress-usage-1.json",
             "verification/agones/roadmap-M0003-progress-usage-2.json",
@@ -868,17 +868,19 @@
             "verification/agones/roadmap-M0003-progress-usage-43.json",
             "verification/agones/roadmap-M0003-progress-usage-44.json",
             "verification/agones/roadmap-M0003-progress-usage-45.json",
-            "verification/agones/roadmap-M0003-progress-usage-46.json"
+            "verification/agones/roadmap-M0003-progress-usage-46.json",
+            "verification/agones/roadmap-M0003-progress-usage-47.json",
+            "verification/agones/roadmap-M0003-progress-usage-48.json"
           ],
           "reuse_adoption_record": "verification/agones/roadmap-M0003-reuse-adoption.json",
           "route": "MANUAL",
           "source_snapshot": "95161696e9ad90f9eab2ec7ae978bcafdcbb3483",
           "stage": "IMPLEMENTING",
           "usage_start": "verification/agones/roadmap-M0003-entry-usage.json",
-          "work_base_commit": "16273c552df7e4d862de9ee36207b61762c0cbe6"
+          "work_base_commit": "a439a5be58498bf81d58aec410edbc259bcf124d"
         }
       },
-      "next_action": "Continue M0003 MANUAL without route switch. Complete source parent/root/worker recovery and fatal reporting, H1 recovery around response finishing/body cleanup, abortPendingRead/hijack/multipart/H2 committed-head/no-body END_STREAM/reset and disposal schedules, Go goroutine traceback/caller/panic(nil)/Goexit/secure/crash/core/output and complete RuntimeError/panic/recover/Is/As/type/format interfaces, including arbitrary boxed application runtime errors. The current HTTP reporter uses bounded native Rust recovery frames, not Go panic frames; opaque native payloads retain a native-only display. Preserve original runtime/bounds aliases and exact source error identity. Remaining control/Arc/Bytes/RawValue/serde/native allocations and source GC/heap/elision/sanitizer/experiment/pressure/failure ordering; Go map hash/group/growth/range/key/pointer/alias/concurrency; actual ABI/unwind/address/layout/lifetime/profile binding; fmt pool/tiny/extreme Go32 and GRPC_GO_LOG_*/custom logger/source SDK/command adoption remain required. Preserve all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirements. Native catch/report/marker paths are authored only, not full Go/native/HTTP equivalence, executed evidence or M0003 completion. Full BOTH-route scope remains intact, global gate CLOSED, assurance NOT_STARTED; no compiler/probes/tests/lint/proof/generator validation/CI.",
+      "next_action": "Continue M0003 MANUAL without route switch. Complete source parent/root/worker recovery and fatal reporting; H1 abortPendingRead/hijack/multipart/cleanup-panic/native close schedules and H2 committed-head/no-body END_STREAM/reset/disposal ordering. H1 handler-versus-finish catch boundaries and selected BoxError runtime views are authored only. Complete Go goroutine traceback/caller/panic(nil)/Goexit/secure/crash/core/output; full RuntimeError/panic/recover/Is/As/type/format interfaces, custom/composed APIStatus/runtime interfaces, all required runtime classes and native method-set erasure/boxing adoption. The current reporter captures bounded Rust recovery frames, not Go panic frames; opaque native payload formatting remains native-only. Preserve existing error identities, aliases and all remaining control/Arc/Bytes/RawValue/serde/native allocation, source GC/heap/elision/sanitizer/experiment/pressure/failure ordering, Go map hash/group/growth/range/key/pointer/alias/concurrency, actual ABI/unwind/address/layout/lifetime/profile, fmt pool/tiny/extreme Go32, GRPC_GO_LOG_*/custom logger/source SDK/command requirements. Preserve all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirements. No native/source execution, full equivalence, assurance or M0003 completion is claimed. Full BOTH-route scope remains intact; global gate CLOSED and assurance NOT_STARTED. No compiler/probes/tests/lint/proof/generator validation/CI.",
       "objective": "AGONES_AND_CPG_COMBINED_ROADMAP",
       "objective_attachment": "/home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt",
       "objective_attachment_sha256": "a9b797fc624be04548c62e63a634bcc2cacab25c4d9f45af346148ba32c1baea",
@@ -936,8 +938,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 348,
-  "previous_sha256": "3de2a55d01f730a180b2ed58b3570299a6e14d3632480d38560b0d136e39635c",
+  "previous_revision": 349,
+  "previous_sha256": "f2c19c797b1dcc90bee8786d390beebff7997b24a5a5b03df01c496080181fd6",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -1641,7 +1643,7 @@
       "timestamp": "2026-10-21T09:42:01.132215+00:00"
     }
   ],
-  "revision": 349,
+  "revision": 350,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [

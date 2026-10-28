@@ -36,6 +36,7 @@
     "production_package": "Existing util workspace package; Cargo lib entrypoint is rust-support/agones/src/utility_lib.rs",
     "queue_owner": "WorkerQueue owns locked worker/running counts and SyncHandler. SourceQueueContext owns one shared queue state and limiter instance. Queue actor/worker tasks live in the weak-referenced utility parent scope. Ready state and limiter state remain separate owners; Done and Forget are distinct. Stable heap nodes are shared by arena identity/map references rather than reinserting mutated keys.",
     "signal_owner": "One SourceSignalState/Hub and common CGP subscriber select Unix sigaction/pipe or Windows console/atomic-waker Session at compile time. Each owns a process lease, subscription channels, reader and stop/quiescence/restore path. Terminal Windows callbacks are OS/process lifetime, with no captured Rust lease; actual application cleanup/exit remains M0027.",
+    "source_panic_boundary_boxing_owner": "Existing HTTP request/task ownership now retains handler-returned state separately from its optional response writer. H1 catches handler, normal response finishing and original-body completion failures; clearing the in-flight state prevents repeating handler cleanup after a later panic. H2 keeps finishing outside its handler catch. Existing SourceHttpPanicReporter/UtilityRuntimeProviders own reporting. The existing leaf utility_panic bridge preserves direct canonical runtime classes and per-value RuntimeError envelopes across BoxError/Must without adding a source Unwrap layer. One compile-time runtime_error_views! family list supplies owned/borrowed/type views; no registry, manager, task, provider selection or competing mutable state owner is introduced.",
     "source_panic_owner": "Existing UtilityRuntimeProviders adds SourceHttpPanicReporter -> ReportNativeSourceHttpPanic -> existing SourceHttpDiagnostic. Existing request tasks catch handler unwinds, retain the original source panic/error data, perform protocol-specific cancellation/cleanup and suppress only the direct ErrAbortHandler identity. Native listener/TLS phases pass accepted peer data. utility_panic is a leaf source error/string bridge with SourceRuntimeError, canonical runtime.errorString/plainError/boundsError data and a non-registry recovered payload; gateway bounds aliases reuse the same type. Must and selected allocation/bounds/nil-body/response panics skip Rust's eager hook. Existing task, request/body/map/parent owners remain canonical; no manager, registry or task is introduced.",
     "task_owner": "Root UtilityRuntimeOwner uses a reporting UtilityTaskScope with a bounded first-failure notification and original joined errors/panic payloads. Request-local HTTP scopes do not retain a growing failed-request history. Context/observer futures do not strongly retain their own supervisor; normal application cleanup cancels and joins. Actual production fatal/recovery policy belongs to the parent composition.",
     "typed_declarations": [
@@ -183,7 +184,11 @@
       "SourceErrorPanic",
       "SourceRecoveredPanic",
       "SourceAbortHandler / ErrAbortHandler",
-      "SourceHttpPanicReporter / ReportNativeSourceHttpPanic"
+      "SourceHttpPanicReporter / ReportNativeSourceHttpPanic",
+      "finish_source_request",
+      "SourceRuntimeErrorEnvelope",
+      "SourceRuntimeError.into_source_error / with_runtime_error",
+      "runtime_error_views! / runtime_error_view"
     ]
   },
   "dependency_adoption": "Native backend declarations retain existing root-lock HTTP/TLS/Tokio/JSON/YAML/base64/libc identities. comprende and better_comprehension reuse the already vendored first-generation sources; five exact package blocks (including clean-macro-docs/if_chain/syn 1) were adopted from the existing isolated CPG lock. Direct util dependency bookkeeping was authored manually, including base64 0.22.1 disambiguation. No resolver, compiler, formatter, macro/API probe or package execution ran. This continuation declares existing root errno 0.3.14 and regex 1.13.1 identities for signal-safe errno restoration and source install-hint Unicode category projection; only util direct lock bookkeeping changed. No resolver or executable assurance ran. Gateway adds prost-reflect 0.14.7 reflection/wire APIs only, with existing once_cell/prost 0.13.5/prost-types identities. One exact lock package was authored from the registry index/source archive without Cargo resolution. Optional serde/serde-value/ordered-float candidates were read but are not adopted. No new tool was installed. Platform continuation declares the existing root windows-sys 0.61.2 package only for cfg(windows), using the pinned FFI modules and existing futures/Tokio primitives. No package block/version upgrade, resolver or tool execution. No dependencies changed in this batch. The fswatch support selects pinned gopkg.in/fsnotify.v1 1.4.7 and adds its literal license; newer fsnotify 1.9 candidate semantics have no utility completion credit. This batch vendors the exact existing Hyper 1.12.0 source archive, preserving license/base file hashes and adding opt-in informational support in its existing H1/H2 drivers. Root Cargo patch/local lock source bookkeeping replaces that node registry identity without a version upgrade or Cargo resolution. Existing h2 0.4.20 informational APIs are bound to their original crate archive. No new tool/install/resolver or project execution.",
@@ -276,18 +281,20 @@
       "status": "AUTHORED_UNVERIFIED"
     },
     {
-      "authored_sha256": "e877b5680f306bfef0e1a536ea461ac7396113bbdc38ba16cd9d4e4fd5c28175",
+      "authored_sha256": "ca266f116f8556d68af1ff9a82cea8d450966c98cbd41cb0d8702e2f5d9da096",
       "authored_symbols_or_groups": [
         "Errors prefix/New/Wrap/Wrapf",
         "packageFromFunc/callerPackage metadata boundary",
         "SourceErrorOrigin typed metadata",
         "SourceFormat wrapped causes and contains_error traversal",
         "legacy Rust utility API preserved through one canonical owner",
-        "first_error_view/find_error depth-first traversal, native APIStatus data-interface projection without adding an Unwrap edge"
+        "first_error_view/find_error depth-first traversal, native APIStatus data-interface projection without adding an Unwrap edge",
+        "SourceRecoveredPanic exposes original errors and runtime/type views for native boxed payloads. Existing errors.first_error_view traverses the runtime envelope's original value and its real source chain, preserving the existing ordered multiple-cause traversal. Full custom Is/As/composed interface behavior remains required."
       ],
       "destination": "agones-rs/pkg/util/errors/errors.rs",
       "remaining": [
-        "Complete source-call-site/type metadata and arbitrary Go-string/format/error-interface accounting; SourceFormat is explicitly not a Go format parser. No whole-source Errorf compatibility claim."
+        "Complete source-call-site/type metadata and arbitrary Go-string/format/error-interface accounting; SourceFormat is explicitly not a Go format parser. No whole-source Errorf compatibility claim.",
+        "Complete source parent/root/worker recovery and fatal reporting; H1 abortPendingRead/hijack/multipart/cleanup-panic/native close schedules and H2 committed-head/no-body END_STREAM/reset/disposal ordering. H1 handler-versus-finish catch boundaries and selected BoxError runtime views are authored only. Complete Go goroutine traceback/caller/panic(nil)/Goexit/secure/crash/core/output; full RuntimeError/panic/recover/Is/As/type/format interfaces, custom/composed APIStatus/runtime interfaces, all required runtime classes and native method-set erasure/boxing adoption. The current reporter captures bounded Rust recovery frames, not Go panic frames; opaque native payload formatting remains native-only. Preserve existing error identities, aliases and all remaining control/Arc/Bytes/RawValue/serde/native allocation, source GC/heap/elision/sanitizer/experiment/pressure/failure ordering, Go map hash/group/growth/range/key/pointer/alias/concurrency, actual ABI/unwind/address/layout/lifetime/profile, fmt pool/tiny/extreme Go32, GRPC_GO_LOG_*/custom logger/source SDK/command requirements. Preserve all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirements. No native/source execution, full equivalence, assurance or M0003 completion is claimed."
       ],
       "source_git_blob": "ff3c173b9b8130352a16050fbd6f2a5a0dae9e1c",
       "source_id": "agones:pkg/util/errors/errors.go",
@@ -590,7 +597,12 @@
         "Selected source allocation/nil-map/pattern-bounds/header-set/full-reslice/nil-body/invalid-WriteHeader paths quietly unwind typed runtime errors or source strings. Header full slices check maximum/capacity, high/maximum then low/high; native unsigned index views remain an explicit bridge profile.",
         "Private ErrAbortHandler token preserves direct sentinel equality. HTTP recovery suppresses reporting for that direct value, while wrapped sentinel errors retain ordinary reporting.",
         "Existing HTTP request tasks catch only the authored handler/expectation/OPTIONS phase, apply H1 report-before-cancel/Continue-disable/original-body cleanup and H2 cancel/unfinished-writer failure-before-report branches, then complete the existing response phase. Finish/cleanup panic coverage, hijack/multipart/pending-read and native reset/close schedules remain open.",
-        "SourceHttpPanicReporter is selected by the existing derive-deftly UtilityRuntimeProviders and uses the existing diagnostic and collection-failure effects. It emits protocol-specific panic prefixes and a bounded native recovery stack; source Go traceback/caller parity is not claimed. Native plaintext/TLS accept phases pass accepted peer text without new state owners."
+        "SourceHttpPanicReporter is selected by the existing derive-deftly UtilityRuntimeProviders and uses the existing diagnostic and collection-failure effects. It emits protocol-specific panic prefixes and a bounded native recovery stack; source Go traceback/caller parity is not claimed. Native plaintext/TLS accept phases pass accepted peer text without new state owners.",
+        "H1 handler_returned mirrors clearing conn.serve.inFlightResponse before cancellation and finishRequest. Its catch includes normal response finishing/original body completion; a finish panic is reported without repeating the active-handler cancellation/Continue/body-close branch.",
+        "finish_source_request retains the existing writer/original-body/early-close operation order. H2 handler success exits its catch before cancellation and finishing, retaining its distinct didPanic/handlerDone boundary. Existing response-phase ownership closes failed H1 work.",
+        "SourceRuntimeErrorEnvelope, with_runtime_error and SourceRuntimeError.into_source_error retain the original error, RuntimeError method and declared source type across a BoxError boundary. The envelope delegates its original source chain rather than creating a source Unwrap edge.",
+        "One runtime_error_views! declaration covers canonical runtime.errorString/plainError/boundsError owned, borrowed and type views. Must recognizes those direct BoxError classes and typed envelopes without stringification, reboxing canonical objects or classifying a wrapper's child as the wrapper's RuntimeError interface.",
+        "SourceRecoveredPanic exposes original errors and runtime/type views for native boxed payloads. Existing errors.first_error_view traverses the runtime envelope's original value and its real source chain, preserving the existing ordered multiple-cause traversal. Full custom Is/As/composed interface behavior remains required."
       ],
       "destination": "agones-rs/pkg/util/runtime/runtime.rs",
       "remaining": [
@@ -598,7 +610,7 @@
         "Reconcile clientcmd YAML/JSON/default/duplicate/extension/base64/unselected-path/Unicode/URL/proxy/error/diagnostic and persistence profiles; current native parser/OS/certificate behavior is not a Go-equivalence claim. No KUBECONFIG/home search was invented: ExplicitPath-only rules have nil Precedence and nil DefaultClientConfig.",
         "Auth-provider/exec data is retained and validated without a runtime plugin system or command execution. Actual credential-consumer integration and any real conflict with the no-plugin constraint remain with the later transport/lifecycle owners.",
         "Complete shared source logging/string/type/number/format/caller/panic profiles and production parent failure-policy adoption.",
-        "Complete source parent/root/worker recovery and fatal reporting, H1 recovery around response finishing/body cleanup, abortPendingRead/hijack/multipart/H2 committed-head/no-body END_STREAM/reset and disposal schedules, Go goroutine traceback/caller/panic(nil)/Goexit/secure/crash/core/output and complete RuntimeError/panic/recover/Is/As/type/format interfaces, including arbitrary boxed application runtime errors. The current HTTP reporter uses bounded native Rust recovery frames, not Go panic frames; opaque native payloads retain a native-only display. Preserve original runtime/bounds aliases and exact source error identity. Remaining control/Arc/Bytes/RawValue/serde/native allocations and source GC/heap/elision/sanitizer/experiment/pressure/failure ordering; Go map hash/group/growth/range/key/pointer/alias/concurrency; actual ABI/unwind/address/layout/lifetime/profile binding; fmt pool/tiny/extreme Go32 and GRPC_GO_LOG_*/custom logger/source SDK/command adoption remain required. Preserve all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirements. Native catch/report/marker paths are authored only, not full Go/native/HTTP equivalence, executed evidence or M0003 completion."
+        "Complete source parent/root/worker recovery and fatal reporting; H1 abortPendingRead/hijack/multipart/cleanup-panic/native close schedules and H2 committed-head/no-body END_STREAM/reset/disposal ordering. H1 handler-versus-finish catch boundaries and selected BoxError runtime views are authored only. Complete Go goroutine traceback/caller/panic(nil)/Goexit/secure/crash/core/output; full RuntimeError/panic/recover/Is/As/type/format interfaces, custom/composed APIStatus/runtime interfaces, all required runtime classes and native method-set erasure/boxing adoption. The current reporter captures bounded Rust recovery frames, not Go panic frames; opaque native payload formatting remains native-only. Preserve existing error identities, aliases and all remaining control/Arc/Bytes/RawValue/serde/native allocation, source GC/heap/elision/sanitizer/experiment/pressure/failure ordering, Go map hash/group/growth/range/key/pointer/alias/concurrency, actual ABI/unwind/address/layout/lifetime/profile, fmt pool/tiny/extreme Go32, GRPC_GO_LOG_*/custom logger/source SDK/command requirements. Preserve all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirements. No native/source execution, full equivalence, assurance or M0003 completion is claimed."
       ],
       "source_git_blob": "7581ddc41945340b97d4561a275bf969a32e4f8f",
       "source_id": "agones:pkg/util/runtime/runtime.go",
@@ -838,7 +850,7 @@
         "Reconcile authored request trailer maps/cookies and header JSON/alias operations across all selected profiles; native parser/rejection/1.0 keep-alive/upgrade, H2 header ordering/HPACK/GOAWAY and body Close/read/EOF/abortPendingRead/Continue/full-duplex races. Complete native readahead/partial-write/flush/reset/cancellation/error timing and diagnostics. Source code and API reading do not establish native parity.",
         "Finish listener named-service/bind and independent listener-close/shutdown timing, native error origin (syscall-wrapped versus direct Errno or poll/init failures), platform/native error display and complete retry profiles. Shared temporary-syscall accept backoff is authored for plain/TLS, but does not establish full Go listener equivalence. M0027 source tool/GODEBUG and actual production parent adoption remain required.",
         "Retain every other M0003 filesystem/signal/gateway/config/queue/logging/CRD/features/admission/body gap. Global BOTH-route gate stays CLOSED; no compiler, test, formatter/linter, native/API probe, application, generator validation, proof or CI ran.",
-        "Complete source parent/root/worker recovery and fatal reporting, H1 recovery around response finishing/body cleanup, abortPendingRead/hijack/multipart/H2 committed-head/no-body END_STREAM/reset and disposal schedules, Go goroutine traceback/caller/panic(nil)/Goexit/secure/crash/core/output and complete RuntimeError/panic/recover/Is/As/type/format interfaces, including arbitrary boxed application runtime errors. The current HTTP reporter uses bounded native Rust recovery frames, not Go panic frames; opaque native payloads retain a native-only display. Preserve original runtime/bounds aliases and exact source error identity. Remaining control/Arc/Bytes/RawValue/serde/native allocations and source GC/heap/elision/sanitizer/experiment/pressure/failure ordering; Go map hash/group/growth/range/key/pointer/alias/concurrency; actual ABI/unwind/address/layout/lifetime/profile binding; fmt pool/tiny/extreme Go32 and GRPC_GO_LOG_*/custom logger/source SDK/command adoption remain required. Preserve all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirements. Native catch/report/marker paths are authored only, not full Go/native/HTTP equivalence, executed evidence or M0003 completion."
+        "Complete source parent/root/worker recovery and fatal reporting; H1 abortPendingRead/hijack/multipart/cleanup-panic/native close schedules and H2 committed-head/no-body END_STREAM/reset/disposal ordering. H1 handler-versus-finish catch boundaries and selected BoxError runtime views are authored only. Complete Go goroutine traceback/caller/panic(nil)/Goexit/secure/crash/core/output; full RuntimeError/panic/recover/Is/As/type/format interfaces, custom/composed APIStatus/runtime interfaces, all required runtime classes and native method-set erasure/boxing adoption. The current reporter captures bounded Rust recovery frames, not Go panic frames; opaque native payload formatting remains native-only. Preserve existing error identities, aliases and all remaining control/Arc/Bytes/RawValue/serde/native allocation, source GC/heap/elision/sanitizer/experiment/pressure/failure ordering, Go map hash/group/growth/range/key/pointer/alias/concurrency, actual ABI/unwind/address/layout/lifetime/profile, fmt pool/tiny/extreme Go32, GRPC_GO_LOG_*/custom logger/source SDK/command requirements. Preserve all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirements. No native/source execution, full equivalence, assurance or M0003 completion is claimed."
       ]
     },
     {
@@ -849,7 +861,7 @@
         "Numeric and timestamp/base64 grammar branches now have source-derived implementations. Native decimal float conversion, float output rendering and source Go/Rust target-profile rounding/NaN/negative-zero/bounds still need exact profile reconciliation and later assurance; no successful run or proof is claimed.",
         "Reconcile Any embedded wire recursion with prost-reflect decoding limits, required-field error traversal/order, proto2 group/extension/MessageSet profiles and deterministic extension/oneof ordering. Native Any map keys have explicit deterministic emission; that alone is not full source wire-parity credit.",
         "Typed non-proto decoders are authored and consumed by GatewayDecoder::decode / GatewayJsonPb::unmarshal_into. Finish required named model/custom serde and source panic/error interfaces without inventing a general Go object layer. EnumTargetFactory now requires a source numeric profile explicitly; source-owner integration must bind it to the exact Go version/target/ConvertHash setting. No Rust-host fallback or source-profile credit is inferred. Source JSON rendering/alias/nil details remain explicit rather than inferred from serde success.",
-        "Complete source parent/root/worker recovery and fatal reporting, H1 recovery around response finishing/body cleanup, abortPendingRead/hijack/multipart/H2 committed-head/no-body END_STREAM/reset and disposal schedules, Go goroutine traceback/caller/panic(nil)/Goexit/secure/crash/core/output and complete RuntimeError/panic/recover/Is/As/type/format interfaces, including arbitrary boxed application runtime errors. The current HTTP reporter uses bounded native Rust recovery frames, not Go panic frames; opaque native payloads retain a native-only display. Preserve original runtime/bounds aliases and exact source error identity. Remaining control/Arc/Bytes/RawValue/serde/native allocations and source GC/heap/elision/sanitizer/experiment/pressure/failure ordering; Go map hash/group/growth/range/key/pointer/alias/concurrency; actual ABI/unwind/address/layout/lifetime/profile binding; fmt pool/tiny/extreme Go32 and GRPC_GO_LOG_*/custom logger/source SDK/command adoption remain required. Preserve all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirements. Native catch/report/marker paths are authored only, not full Go/native/HTTP equivalence, executed evidence or M0003 completion.",
+        "Complete source parent/root/worker recovery and fatal reporting; H1 abortPendingRead/hijack/multipart/cleanup-panic/native close schedules and H2 committed-head/no-body END_STREAM/reset/disposal ordering. H1 handler-versus-finish catch boundaries and selected BoxError runtime views are authored only. Complete Go goroutine traceback/caller/panic(nil)/Goexit/secure/crash/core/output; full RuntimeError/panic/recover/Is/As/type/format interfaces, custom/composed APIStatus/runtime interfaces, all required runtime classes and native method-set erasure/boxing adoption. The current reporter captures bounded Rust recovery frames, not Go panic frames; opaque native payload formatting remains native-only. Preserve existing error identities, aliases and all remaining control/Arc/Bytes/RawValue/serde/native allocation, source GC/heap/elision/sanitizer/experiment/pressure/failure ordering, Go map hash/group/growth/range/key/pointer/alias/concurrency, actual ABI/unwind/address/layout/lifetime/profile, fmt pool/tiny/extreme Go32, GRPC_GO_LOG_*/custom logger/source SDK/command requirements. Preserve all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirements. No native/source execution, full equivalence, assurance or M0003 completion is claimed.",
         "Forwarded gRPC server headers/trailers, incoming context/header matching, deadlines/status wrapping/response_body selection and actual SDK/allocator generated request mappings and handlers remain with source-owned M0025/M0027 integration. The real raw gateway callback can already use ResponseWriter; this library registration is not those callers adoption.",
         "Finish required shared HTTP/TLS/fswatch/signal/platform/error/logging/queue/configuration profiles in the M0003 partial map. All implementation and generated outputs across both routes remain required before any assurance."
       ],
@@ -861,7 +873,7 @@
   "milestone_id": "M0003",
   "native_hyper_adoption_record": "verification/agones/roadmap-M0003-hyper-adoption.json",
   "owned_entry_count": 14,
-  "payload_identity_refreshed_at": "2026-10-28T15:27:26.903151+00:00",
+  "payload_identity_refreshed_at": "2026-10-28T15:43:21.746011+00:00",
   "payload_sha256": {
     "Cargo.lock": "1d2c5f632a6a590af119a16f3ff926d89bcfdaedde63a265fd185c8d406745a9",
     "Cargo.toml": "fd4401820492ab3209f748949abe5327e974d6c8d892a510803943391d6a2a18",
@@ -872,7 +884,7 @@
     "agones-rs/pkg/util/crd/crd.rs": "86d59b98438b2a1e905fed4fa30f5990048c35c90ffe49e86ae40adaac3144f5",
     "agones-rs/pkg/util/doc.rs": "ce08fe982c04e9f77c87ec3c43886a6c88e95693e19b893289c77d7902b5edfa",
     "agones-rs/pkg/util/errors/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
-    "agones-rs/pkg/util/errors/errors.rs": "e877b5680f306bfef0e1a536ea461ac7396113bbdc38ba16cd9d4e4fd5c28175",
+    "agones-rs/pkg/util/errors/errors.rs": "ca266f116f8556d68af1ff9a82cea8d450966c98cbd41cb0d8702e2f5d9da096",
     "agones-rs/pkg/util/fswatch/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/fswatch/fswatch.rs": "b190b19ca16dc78085ae4bee81c4deb3ebb512b6f58201df3ee0364db32ab3a9",
     "agones-rs/pkg/util/https/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
@@ -927,7 +939,7 @@
     "rust-support/agones/src/utility_gateway_targets.rs": "3d3d8607f17d4db8f9c6d70dc46793d3d35615e4d887a3f236ee57cda57d8f61",
     "rust-support/agones/src/utility_gateway_wire.rs": "234e6de84955c4240f153c0dece7a5594733562325bf7113998a794b9af0b113",
     "rust-support/agones/src/utility_gateway_wkt.rs": "4cb0f6fa00d5c553911e8eaaca563d17112cfd5123a669c2e180eb02142ed42b",
-    "rust-support/agones/src/utility_http.rs": "7a406bfdf85359e3d49ff0678e1b03ff7c3d2b292c90541dac6cee1399307dc3",
+    "rust-support/agones/src/utility_http.rs": "2b2e62e6e5a5668cbeb46022235e2d0a32468e709b37b7e4b1bd24cfd2c2f5ee",
     "rust-support/agones/src/utility_http_allocation.rs": "49d131afa97bd1fac3bfd6cf45a17636b4e1230163bad6089c1dc5895bab3867",
     "rust-support/agones/src/utility_http_body.rs": "af7e4eac5e2623b697f63342445b01b13cba8474310912e8befd823aab9c53da",
     "rust-support/agones/src/utility_http_form.rs": "09dae2ed480223c422374e661b6afcdc3bf437ad84b453dde103ee19ab61b06f",
@@ -950,7 +962,7 @@
     "rust-support/agones/src/utility_lifecycle.rs": "5d2fdc2fc65f04f3fcc581edb0203b54cb8314717f6976c3d7404f018a0a26af",
     "rust-support/agones/src/utility_logging.rs": "a055f664578d49d0a7b985468446218a8e13f0a4512470b05ab3c7a1190ea043",
     "rust-support/agones/src/utility_modules.rs": "dc7edddb040828e3b8d9f2aa4d9bb9ad17ffd848a9a90730f09955b6b4b44c4d",
-    "rust-support/agones/src/utility_panic.rs": "ed33e6cc1cf51d5121252bc4f882e6912894a57092ea4d4952859a8ab1652ae3",
+    "rust-support/agones/src/utility_panic.rs": "4c744358aff8ade5a52bfc0acdb46871aeca20d2556a8f9de150be7a06f25f8a",
     "rust-support/agones/src/utility_queue.rs": "21c1c20f9e50ac5191cfa82cf8eb80c990ad1b5187de409e95d8bc720d69d9e7",
     "rust-support/agones/src/utility_queue_limiters.rs": "6bec0da3ae6f9d1068b738c7be445b18a34bc17a211f82fdf15b0d605848db9d",
     "rust-support/agones/src/utility_queue_values.rs": "e7be82bc28e640948c1b333130228ce3962535c815eef39e7d71daeb74fc2285",
@@ -965,15 +977,15 @@
     "third_party/first-generation/better-comprehension/src/lib.rs": "f47ba11ce4cd4d6b7424ba0cffca669018e52e5541fb32f83d655aba2ce364b3",
     "third_party/first-generation/comprende/Cargo.toml": "01f7068b9cd9ec5b27b7df77709117e37dc991cd32597dbf24cbde9074f5ceab",
     "third_party/first-generation/comprende/src/lib.rs": "e8d8da04ca3048bdd7275b1ca77b5a78c4abfd999ecb763d82a615f4aeb0fb96",
-    "verification/agones/roadmap-M0003-gateway-authoring.json": "32e8e314e37f7cf0a487341a7bc68b91f3ec8ade86432c5d5b8610bdb0c627e3",
-    "verification/agones/roadmap-M0003-http-authoring.json": "d6e9fb7d78cfbc0223efd98e6ced439c30bdbd1fee01d5ecc08357e89a4e6f9b",
-    "verification/agones/roadmap-M0003-hyper-adoption.json": "31c44ae09a4987b2d0ce04b1a38247ba22a2c1f93b15f3cc1f1d19646d76852a",
-    "verification/agones/roadmap-M0003-platform-effects.json": "5fdd56fd8aed248acdc052f26d9cd52f8de19cb72ef02a32dcfe49199c7843d2",
-    "verification/agones/roadmap-M0003-reuse-adoption.json": "8f951ed49b5bb7d2af144adaeebd20427503c9f99aae2a4d1a9e40ab0e4570dd"
+    "verification/agones/roadmap-M0003-gateway-authoring.json": "7a998a3d133bbf7810c05c0380bee207516a2d7e447d2dc44c8bd0e59ac4aa80",
+    "verification/agones/roadmap-M0003-http-authoring.json": "7583e80d83217df158d0ead5bb7c007e016cb3789a22490570235c0cfc117ae2",
+    "verification/agones/roadmap-M0003-hyper-adoption.json": "9ab1dbd80ef3d9bf1200d30e802677f4f05a75ac845cd1e61e7fda4061061c27",
+    "verification/agones/roadmap-M0003-platform-effects.json": "79f74a63bdee52220dec2d48c37ddf42c55c6d924ef80f93c5e5758926282a3d",
+    "verification/agones/roadmap-M0003-reuse-adoption.json": "da74eabc01f9599b2df57d1dc410fefc25e32c1657101dfd14195d2a3d8cbf47"
   },
   "platform_effect_authoring_record": "verification/agones/roadmap-M0003-platform-effects.json",
-  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-46.json",
-  "progress_usage_observations": 46,
+  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-48.json",
+  "progress_usage_observations": 48,
   "project_executable_invocations": 0,
   "record_kind": "PARTIAL_SOURCE_OWNERSHIP_ADOPTION",
   "route": "MANUAL",
@@ -2499,6 +2511,28 @@
       "purpose": "Source panic/runtime-error/HTTP recovery authoring only; no source/project/native execution",
       "revision": "hyper-1.12.0",
       "sha256": "8f10d6023aa310984b7e9450e9fe9db2dde3a5c34ad6f78c6a16210ad868258a"
+    },
+    {
+      "git_blob": "8062658020239edfc517fe77e00dc54dd117e8ad",
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/rust1.89.0/library/alloc/src/boxed/convert.rs",
+      "purpose": "Source H1 completion/runtime-error boxing authoring only; no source/project/native execution",
+      "repository": "rust-lang/rust",
+      "revision": "1.89.0",
+      "sha256": "c15ff21dd7aad43a4836031b82cc2caaf1c38722bd96f3af5c3c8df30f49f393",
+      "upstream_path": "library/alloc/src/boxed/convert.rs",
+      "url": "https://github.com/rust-lang/rust/blob/1.89.0/library/alloc/src/boxed/convert.rs"
+    },
+    {
+      "git_blob": "e4a5ca33d5e0e7ef3b05c24eb5a516a749decea1",
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/errors/wrap.go",
+      "purpose": "Source H1 completion/runtime-error boxing authoring only; no source/project/native execution",
+      "repository": "golang/go",
+      "revision": "go1.26.5",
+      "sha256": "54c4cccbc979c8b20e7aaa84e0ae63fb83a871a80e78737e3fffef6a599629c4",
+      "upstream_path": "src/errors/wrap.go",
+      "url": "https://github.com/golang/go/blob/go1.26.5/src/errors/wrap.go"
     }
   ],
   "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
@@ -2507,5 +2541,5 @@
   "stage": "IMPLEMENTING",
   "usage_attribution_note": "M0003 entry bookkeeping, including the follow-up append of the finalized M0002 shared-boundary paragraph, is allocated once to M0003 entry overhead. It is not included a second time in the prior 20030-token shared segment.",
   "verification": "NOT_STARTED",
-  "work_base_commit": "16273c552df7e4d862de9ee36207b61762c0cbe6"
+  "work_base_commit": "a439a5be58498bf81d58aec410edbc259bcf124d"
 }

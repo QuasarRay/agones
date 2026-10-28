@@ -9,7 +9,12 @@ use crate::{errors::BoxError, runtime::SourceLogType,
 
 /// Go runtime.Error is identified by its no-op RuntimeError method. Preserve
 /// that interface separately from ordinary application Error implementations.
-pub trait SourceRuntimeError: Error { fn runtime_error(&self) {} }
+pub trait SourceRuntimeError: Error {
+    fn runtime_error(&self) {}
+    fn into_source_error(self) -> BoxError
+    where Self: SourceLogType + Send + Sync + Sized + 'static,
+    { with_runtime_error(self) }
+}
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Deftly)]
 #[derive_deftly(SourceErrorOrigin)]
@@ -93,10 +98,63 @@ impl<T: SourceRuntimeError + SourceLogType + Send + Sync + 'static> RuntimeError
     fn runtime_error_view(&self) -> &dyn SourceRuntimeError { self }
     fn source_type(&self) -> &'static str { T::SOURCE_LOG_TYPE }
 }
+
+/// Preserve the RuntimeError method set when a typed source error crosses a
+/// native BoxError boundary. The original error is the source value; this
+/// envelope supplies its erased interface view without another Unwrap layer.
+pub struct SourceRuntimeErrorEnvelope { inner: Box<dyn RuntimeErrorObject> }
+impl SourceRuntimeErrorEnvelope {
+    pub fn error(&self) -> &(dyn Error + Send + Sync + 'static) { self.inner.error() }
+    pub fn runtime_error(&self) -> &dyn SourceRuntimeError { self.inner.runtime_error_view() }
+    pub fn source_type(&self) -> &'static str { self.inner.source_type() }
+}
+impl fmt::Debug for SourceRuntimeErrorEnvelope {
+    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { fmt::Debug::fmt(self.error(), out) }
+}
+impl fmt::Display for SourceRuntimeErrorEnvelope {
+    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { fmt::Display::fmt(self.error(), out) }
+}
+impl Error for SourceRuntimeErrorEnvelope {
+    fn source(&self) -> Option<&(dyn Error + 'static)> { self.error().source() }
+}
+pub fn with_runtime_error<T: SourceRuntimeError + SourceLogType + Send + Sync + 'static>(error: T) -> BoxError {
+    Box::new(SourceRuntimeErrorEnvelope { inner: Box::new(error) })
+}
+
+// One compile-time family list supplies owned and borrowed views for the
+// canonical runtime classes already authored here. Other statically typed
+// RuntimeError implementations retain their method set via the envelope.
+macro_rules! runtime_error_views {
+    ($($ty:ty),+ $(,)?) => {
+        fn take_runtime_error(error: BoxError) -> Result<Box<dyn RuntimeErrorObject>, BoxError> {
+            let error = match error.downcast::<SourceRuntimeErrorEnvelope>() {
+                Ok(error) => return Ok((*error).inner), Err(error) => error,
+            };
+            $(let error = match error.downcast::<$ty>() { Ok(error) => return Ok(error), Err(error) => error };)+
+            Err(error)
+        }
+        pub fn runtime_error_view(error: &(dyn Error + 'static)) -> Option<&dyn SourceRuntimeError> {
+            if let Some(error) = error.downcast_ref::<SourceRuntimeErrorEnvelope>() { return Some(error.runtime_error()); }
+            $(if let Some(error) = error.downcast_ref::<$ty>() { return Some(error); })+
+            None
+        }
+        fn runtime_error_type(error: &(dyn Error + 'static)) -> Option<&'static str> {
+            if let Some(error) = error.downcast_ref::<SourceRuntimeErrorEnvelope>() { return Some(error.source_type()); }
+            $(if error.is::<$ty>() { return Some(<$ty as SourceLogType>::SOURCE_LOG_TYPE); })+
+            None
+        }
+    };
+}
+runtime_error_views!(SourceRuntimeErrorString, SourceNilMapAssignment, SourceBoundsError);
+
 enum PanicErrorKind { Application(BoxError), Runtime(Box<dyn RuntimeErrorObject>) }
 pub struct SourceErrorPanic { kind: PanicErrorKind }
 impl SourceErrorPanic {
-    pub fn application(error: BoxError) -> Self { Self { kind: PanicErrorKind::Application(error) } }
+    pub fn application(error: BoxError) -> Self {
+        Self { kind: match take_runtime_error(error) {
+            Ok(error) => PanicErrorKind::Runtime(error), Err(error) => PanicErrorKind::Application(error),
+        } }
+    }
     pub fn runtime<T: SourceRuntimeError + SourceLogType + Send + Sync + 'static>(error: T) -> Self {
         Self { kind: PanicErrorKind::Runtime(Box::new(error)) }
     }
@@ -145,14 +203,20 @@ impl SourceRecoveredPanic {
     pub fn resume(self) -> ! { std::panic::resume_unwind(self.payload) }
     pub fn error(&self) -> Option<&(dyn Error + Send + Sync + 'static)> {
         if let Some(error) = self.payload.downcast_ref::<SourceErrorPanic>() { return Some(error.error()); }
-        if let Some(error) = self.payload.downcast_ref::<BoxError>() { return Some(error.as_ref()); }
+        if let Some(error) = self.payload.downcast_ref::<BoxError>() {
+            return Some(match error.downcast_ref::<SourceRuntimeErrorEnvelope>() {
+                Some(error) => error.error(), None => error.as_ref(),
+            });
+        }
         self.payload.downcast_ref::<SourceAbortHandler>().map(|error| error as &(dyn Error + Send + Sync + 'static))
     }
     pub fn runtime_error(&self) -> Option<&dyn SourceRuntimeError> {
-        self.payload.downcast_ref::<SourceErrorPanic>()?.runtime_error()
+        if let Some(error) = self.payload.downcast_ref::<SourceErrorPanic>() { return error.runtime_error(); }
+        runtime_error_view(self.payload.downcast_ref::<BoxError>()?.as_ref())
     }
     pub fn source_type(&self) -> Option<&'static str> {
         if let Some(error) = self.payload.downcast_ref::<SourceErrorPanic>() { return error.source_type(); }
+        if let Some(source_type) = self.payload.downcast_ref::<BoxError>().and_then(|error| runtime_error_type(error.as_ref())) { return Some(source_type); }
         if self.payload.is::<String>() || self.payload.is::<&'static str>() { return Some("string"); }
         if self.is_abort_handler() { return Some(SourceAbortHandler::SOURCE_LOG_TYPE); }
         None
