@@ -1,6 +1,7 @@
 //! Typed printer-state input and canonical source fmt/errors result objects.
 // Adapted from Go fmt/errors.go. Copyright The Go Authors. BSD-3-Clause;
-// see ../GO-LICENSE. Full Go format parsing/rendering remains a separate path.
+// see ../GO-LICENSE. Raw scanning is in utility_format_scan; full rendering
+// and source prefix-format lowering remain required.
 use std::{error::Error, fmt};
 use derive_deftly::Deftly;
 use crate::{errors::BoxError, utility_declarations::derive_deftly_template_SourceErrorOrigin};
@@ -32,6 +33,13 @@ pub struct SourceFormat {
     reordered: bool,
 }
 impl SourceFormat {
+    /// Scan the original format bytes for wrapping/argument control. Rendered
+    /// output is still supplied by the caller; this does not render Go values
+    /// or apply Agones' prefix to the format before parsing it.
+    pub fn scanned(rendered: impl Into<String>, format: &[u8], operands: Vec<Option<BoxError>>) -> Self {
+        let (wrapped_positions, reordered) = crate::utility_format_scan::SourcePrintfPlan::scan(format, operands.len()).into_wrapping();
+        Self { rendered: rendered.into(), operands, wrapped_positions, reordered }
+    }
     pub fn indexed(rendered: impl Into<String>, operands: Vec<Option<BoxError>>, wrapped_positions: Vec<usize>, reordered: bool)
         -> Result<Self, SourceFormatInputError>
     {
