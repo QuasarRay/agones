@@ -8,12 +8,12 @@ use futures::{future::BoxFuture, Stream, StreamExt};
 use prost_reflect::{DynamicMessage, MessageDescriptor};
 use tokio_util::sync::CancellationToken;
 use crate::{errors::{BoxError, Errors}, utility_http::{header, set_header, HttpHandler, HttpRequest, ResponseWriter},
-    utility_runtime::UtilityRuntimeContext, utility_http::SourceValues,
+    utility_runtime::UtilityRuntimeContext, utility_http::{SourceValues, CanUppercaseSourceString},
     utility_gateway_json::{GatewayDecoder, GatewayJsonPb, GatewayValue},
     utility_declarations::derive_deftly_template_UtilityGatewayProviders};
 
 const ERRORS: Errors = Errors::from_package("github.com/grpc-ecosystem/grpc-gateway/v2/runtime");
-pub type PathParameters = BTreeMap<String, String>;
+pub type PathParameters = HashMap<Bytes, Bytes>;
 pub type GatewayHandler = Arc<dyn for<'a> Fn(&'a GatewayContext, &'a mut ResponseWriter,
     &'a mut HttpRequest, &'a GatewayCall) -> BoxFuture<'a, ()> + Send + Sync>;
 pub type GatewayUnaryHandler = Arc<dyn for<'a> Fn(&'a GatewayContext, &'a GatewayCall,
@@ -29,14 +29,18 @@ pub struct GatewayCall {
 }
 
 /// The int opcode format emitted by the pinned grpc-gateway generator.
+/// The caller's []string pool remains a shared slice view; capture names are
+/// copied string values, as in NewPattern. Registered Pattern copies retain
+/// the same pool backing without another routing or lifecycle owner.
 #[derive(Clone, Debug)]
-pub struct GatewayPattern { operations: Vec<(i32, usize)>, pool: Vec<String>, variables: Vec<String>,
-    stack_size: usize, tail_length: usize, verb: String }
+pub struct GatewayPattern { operations: Vec<(i32, usize)>, pool: crate::utility_http::HeaderValues, variables: Vec<Bytes>,
+    stack_size: usize, tail_length: usize, verb: Bytes }
 impl GatewayPattern {
-    pub fn new(version: i32, operations: &[i32], pool: Vec<String>, verb: String) -> Result<Self, BoxError> {
+    pub fn new(version: i32, operations: &[i32], pool: crate::utility_http::HeaderValues, verb: impl AsRef<[u8]>) -> Result<Self, BoxError> {
         let invalid = || ERRORS.New("invalid pattern");
         if version != 1 || operations.len() % 2 != 0 { return Err(invalid()); }
-        let mut result = Self { operations: Vec::new(), pool, variables: Vec::new(), stack_size: 0, tail_length: 0, verb };
+        let mut result = Self { operations: Vec::new(), pool, variables: Vec::new(), stack_size: 0, tail_length: 0,
+            verb: Bytes::copy_from_slice(verb.as_ref()) };
         let mut stack = 0_usize;
         let mut deep_seen = false;
         for pair in operations.chunks_exact(2) {
@@ -53,7 +57,7 @@ impl GatewayPattern {
                 4 => { if pair[1] <= 0 { return Err(invalid()); } stack = stack.checked_sub(operand).ok_or_else(invalid)? + 1; },
                 5 => {
                     if pair[1] < 0 || operand >= result.pool.len() { return Err(invalid()); }
-                    result.variables.push(result.pool[operand].clone());
+                    result.variables.push(result.pool.get(operand).expect("validated source literal index"));
                     operand = result.variables.len() - 1;
                     stack = stack.checked_sub(1).ok_or_else(invalid)?;
                 }
@@ -64,53 +68,71 @@ impl GatewayPattern {
         }
         Ok(result)
     }
-    pub fn verb(&self) -> &str { &self.verb }
-    pub fn matches(&self, components: &[String], verb: &str) -> Option<PathParameters> {
+    pub fn verb(&self) -> &[u8] { &self.verb }
+    pub fn matches(&self, components: &[Bytes], verb: &[u8]) -> Option<PathParameters> {
         let mut components = components.to_vec();
-        if self.verb != verb {
+        if self.verb.as_ref() != verb {
             if !self.verb.is_empty() { return None; }
-            if let Some(last) = components.last_mut() { last.push(':'); last.push_str(verb); }
-            else { components.push(format!(":{verb}")); }
+            let mut suffix = vec![b':']; suffix.extend_from_slice(verb);
+            if let Some(last) = components.last_mut() {
+                let mut combined = last.to_vec(); combined.extend_from_slice(&suffix); *last = Bytes::from(combined);
+            } else { components.push(Bytes::from(suffix)); }
         }
         let mut position = 0;
         let mut stack = Vec::with_capacity(self.stack_size);
-        let mut captures = vec![String::new(); self.variables.len()];
+        let mut captures = vec![Bytes::new(); self.variables.len()];
         for (code, operand) in &self.operations {
             match code {
                 1 | 2 => {
                     let component = components.get(position)?;
-                    if *code == 2 && component != &self.pool[*operand] { return None; }
+                    if *code == 2 && component != &self.pool.get(*operand).expect("validated source literal index") { return None; }
                     stack.push(component.clone()); position += 1;
                 }
                 3 => {
                     let end = components.len().checked_sub(self.tail_length)?;
                     if end < position { return None; }
-                    stack.push(components[position..end].join("/")); position = end;
+                    stack.push(join_components(&components[position..end])); position = end;
                 }
-                4 => { let start = stack.len() - operand; let value = stack[start..].join("/"); stack.truncate(start); stack.push(value); },
+                4 => { let start = stack.len() - operand; let value = join_components(&stack[start..]); stack.truncate(start); stack.push(value); },
                 5 => { captures[*operand] = stack.pop()?; },
                 _ => unreachable!("validated pattern opcode"),
             }
         }
         if position < components.len() { return None; }
+        // Duplicate capture names overwrite in source variable order. Map
+        // iteration does not acquire a prescribed lexicographic priority.
         Some(self.variables.iter().cloned().zip(captures).collect())
     }
-}
-impl fmt::Display for GatewayPattern {
-    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let mut stack: Vec<String> = Vec::new();
+    /// Source Pattern.String result. Display below is a text compatibility
+    /// view; routing/callback data and this result retain arbitrary Go bytes.
+    pub fn string_bytes(&self) -> Bytes {
+        let mut stack: Vec<Bytes> = Vec::new();
         for (code, operand) in &self.operations {
             match code {
-                1 => stack.push("*".into()), 2 => stack.push(self.pool[*operand].clone()), 3 => stack.push("**".into()),
-                4 => { let start = stack.len() - operand; let value = stack[start..].join("/"); stack.truncate(start); stack.push(value); },
-                5 => { let value = stack.last_mut().expect("validated pattern capture"); *value = format!("{{{}={value}}}", self.variables[*operand]); },
+                1 => stack.push(Bytes::from_static(b"*")),
+                2 => stack.push(self.pool.get(*operand).expect("validated source literal index")),
+                3 => stack.push(Bytes::from_static(b"**")),
+                4 => { let start = stack.len() - operand; let value = join_components(&stack[start..]); stack.truncate(start); stack.push(value); },
+                5 => {
+                    let value = stack.last_mut().expect("validated pattern capture");
+                    let mut captured = vec![b'{']; captured.extend_from_slice(&self.variables[*operand]); captured.push(b'=');
+                    captured.extend_from_slice(value); captured.push(b'}'); *value = Bytes::from(captured);
+                }
                 _ => unreachable!("validated pattern opcode"),
             }
         }
-        write!(out, "/{}", stack.join("/"))?;
-        if !self.verb.is_empty() { write!(out, ":{}", self.verb)?; }
-        Ok(())
+        let mut result = vec![b'/']; result.extend_from_slice(&join_components(&stack));
+        if !self.verb.is_empty() { result.push(b':'); result.extend_from_slice(&self.verb); }
+        Bytes::from(result)
     }
+}
+fn join_components(components: &[Bytes]) -> Bytes {
+    let mut joined = Vec::new();
+    for (index, component) in components.iter().enumerate() { if index != 0 { joined.push(b'/'); } joined.extend_from_slice(component); }
+    Bytes::from(joined)
+}
+impl fmt::Display for GatewayPattern {
+    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { out.write_str(&String::from_utf8_lossy(&self.string_bytes())) }
 }
 
 #[derive(Clone)]
@@ -206,21 +228,20 @@ impl GatewayDispatcher<GatewayContext> for DispatchSourceGateway {
 }
 async fn dispatch(context: &GatewayContext, writer: &mut ResponseWriter, request: &mut HttpRequest) {
     // The source captures URL.Path before ParseForm can call a user Reader.
-    // This text projection remains a separate gateway byte-string boundary.
     let path = request.path();
     if !path.starts_with(b"/") { let _ = context.write_gateway_error(writer, &routing_status(400)).await; return; }
     let mut form = None;
     if is_path_length_fallback(request) {
-        let method = header(&request.headers, "X-HTTP-Method-Override").filter(|value| !value.is_empty()).map(|value| String::from_utf8_lossy(&value).into_owned());
+        let method = header(&request.headers, "X-HTTP-Method-Override").filter(|value| !value.is_empty());
         if let Some(method) = method {
             match parse_form(request).await {
                 Ok(value) => form = Some(value),
                 Err(error) => { let _ = context.write_gateway_error(writer, &GatewayStatus::new(3, error.to_string())).await; return; },
             }
-            request.set_method(method.to_uppercase());
+            request.set_method(context.gateway_runtime().uppercase_source_string(&method));
         }
     }
-    let path: Vec<_> = path[1..].split(|byte| *byte == b'/').map(|part| String::from_utf8_lossy(part).into_owned()).collect();
+    let path: Vec<_> = path[1..].split(|byte| *byte == b'/').map(Bytes::copy_from_slice).collect();
     let (same, others) = {
         let requested_method = request.method();
         let routes = context.gateway_state().routes.read().unwrap_or_else(|error| error.into_inner());
@@ -256,18 +277,21 @@ async fn dispatch(context: &GatewayContext, writer: &mut ResponseWriter, request
     }
     let _ = context.write_gateway_error(writer, &routing_status(404)).await;
 }
-fn split_verb(pattern: &GatewayPattern, path: &[String]) -> (Vec<String>, String, bool) {
+fn split_verb(pattern: &GatewayPattern, path: &[Bytes]) -> (Vec<Bytes>, Bytes, bool) {
     let mut parts = path.to_vec();
-    let mut verb = String::new();
+    let mut verb = Bytes::new();
     let last = parts.last_mut().expect("split path contains at least one component");
     if !pattern.verb().is_empty() {
-        if let Some(prefix) = last.strip_suffix(&format!(":{}", pattern.verb())) {
-            if prefix.is_empty() { return (parts, verb, true); }
-            let prefix = prefix.to_owned(); verb = pattern.verb().to_owned(); *last = prefix;
+        let mut suffix = vec![b':']; suffix.extend_from_slice(pattern.verb());
+        if last.ends_with(&suffix) {
+            let prefix_len = last.len() - suffix.len();
+            if prefix_len == 0 { return (parts, verb, true); }
+            let prefix = last.slice(..prefix_len); verb = last.slice(prefix_len+1..); *last = prefix;
         }
     }
     (parts, verb, false)
 }
+
 fn is_path_length_fallback(request: &HttpRequest) -> bool {
     request.method().as_ref() == b"POST" && header(&request.headers, "Content-Type").as_deref() == Some(b"application/x-www-form-urlencoded".as_slice())
 }

@@ -52,9 +52,15 @@
     "URL query parsing returns a non-nil map and optional error together. It continues past bad names/values, preserves all valid pairs, appends duplicate values in input order, keeps the first escape error, and lets each later semicolon error overwrite the prior error as in the source. QueryUnescape retains arbitrary bytes and plus-to-space behavior; typed invalid escapes retain the original at-most-three-byte segment.",
     "The fixed gateway form path retains nil-Body missing-form error, ReadAll bytes/error handling, 10MiB+1 body bound and POST-too-large result. It assigns partial PostForm values on query errors, still populates Form from the current optional URL after body errors, and preserves the body error over the later query error. Cached errors are not replayed once the source maps are initialized.",
     "SourceQueryProfile explicitly supplies source allocation/word size and selected urlmaxqueryparams bytes. Both selected Go sources default to at most 10000 ampersand-counted parameters; valid custom values use zero=unlimited or params<custom, invalid/source-int-overflow values fall back to default, negative values retain their source comparison, and a differing default/custom decision increments the shared nondefault counter. The source second setting read before Atoi is retained.",
-    "UtilityRuntimeProviders statically delegates SourceQuerySettingsGetter through UseField(source_query_settings); UtilityRuntimeOwner constructs one explicit Go126/64 default data profile. No Rust-host fallback, environment probe, automatic GODEBUG binding, native metric publication or completed source-profile credit is inferred."
+    "UtilityRuntimeProviders statically delegates SourceQuerySettingsGetter through UseField(source_query_settings); UtilityRuntimeOwner constructs one explicit Go126/64 default data profile. No Rust-host fallback, environment probe, automatic GODEBUG binding, native metric publication or completed source-profile credit is inferred.",
+    "Gateway dispatch splits the captured URL.Path into Bytes without UTF8-lossy conversion. Pattern literals, verbs, wildcard/multi/concat stacks, capture names and values retain bytes through the actual raw callback; duplicate capture keys overwrite in source variable order in a HashMap<Bytes,Bytes>.",
+    "GatewayPattern.new retains the supplied HeaderValues []string slice backing and its view length/capacity. Literal operations and source string rendering read the live pool. NewPattern copies variable name values when processing capture operations, so later pool edits do not rename captures. Registered pattern copies retain that same literal backing.",
+    "Byte suffix splitting preserves exact colon/verb bytes, including a verb containing a colon, empty-prefix 404 handling on same-method routes and the separate other-method fallback path. GatewayPattern.string_bytes is the canonical Pattern.String operation; fmt::Display is only a lossy text compatibility view.",
+    "SourceUppercaseMapper is statically delegated through UtilityRuntimeProviders and reads the SourceUnicodeProfile getter. Header override bytes captured before ParseForm are mapped afterward through the same runtime context. Go single-rune uppercase and per-invalid-byte UTF8 replacement replace the prior Rust expanding/lossy conversion.",
+    "Tracked original Go1.26.5 Unicode15 and Go1.27.1 Unicode17 tables.go artifacts supply immutable data. The Rust reader projects only numeric CaseRanges uppercase deltas into disposable OnceLock lookup caches, then uses source binary-range lookup and UpperLower even-offset conversion. No production Go body is parsed/evaluated and no Rust source is generated from Go text.",
+    "The default runtime context explicitly selects Go1265. Both source Unicode profiles are authored, but actual application/compiler/profile binding, source string/builder identity/capacity/allocation/panic behavior and native integration remain unverified required work."
   ],
-  "canonical_owner": "Existing CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/body-I/O/clock/diagnostic/delay/log effects and existing request/connection phases. RequestFields owns method bytes, ContentLength, current Body, current optional SourceUrl, Host bytes and RequestURI bytes. SourceUrl owns one shared URL field value; Clone aliases the pointer and fields()/new copies the value into a different pointer. LogEntry retains the selected optional URL pointer until the existing SourceLogger serializes it. Method/Host/RequestURI log fields capture string bytes by value. The original transport RequestBody remains separately retained for server discard/cleanup. Headers and HeaderValues keep their existing map/slice owners. SourceUserinfo is immutable per source. URL data introduces no effect/provider registry, tasks, general Go object layer or competing lifecycle manager. Existing CGP/derive-deftly UtilityRuntimeProviders and UtilityRuntimeOwner retain HTTP/body-I/O/log/task ownership. RequestFields owns one current Form and PostForm map descriptor alongside existing request fields. SourceValues reuses Headers/HeaderValues byte-key map and shared slice storage with exact, case-sensitive key operations. UtilityRuntimeContext retains one SourceQuerySettings profile/nondefault-counter resource exposed by the static SourceQuerySettings getter. The gateway fixed fallback calls the same source form parser; there is no second parser state, effect registry, actor or lifecycle manager. Actual tool/ABI/GODEBUG/metric binding remains with the later application/telemetry owners.",
+  "canonical_owner": "Existing CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/body-I/O/clock/diagnostic/delay/log effects and existing request/connection phases. RequestFields owns method bytes, ContentLength, current Body, current optional SourceUrl, Host bytes and RequestURI bytes. SourceUrl owns one shared URL field value; Clone aliases the pointer and fields()/new copies the value into a different pointer. LogEntry retains the selected optional URL pointer until the existing SourceLogger serializes it. Method/Host/RequestURI log fields capture string bytes by value. The original transport RequestBody remains separately retained for server discard/cleanup. Headers and HeaderValues keep their existing map/slice owners. SourceUserinfo is immutable per source. URL data introduces no effect/provider registry, tasks, general Go object layer or competing lifecycle manager. Existing CGP/derive-deftly UtilityRuntimeProviders and UtilityRuntimeOwner retain HTTP/body-I/O/log/task ownership. RequestFields owns one current Form and PostForm map descriptor alongside existing request fields. SourceValues reuses Headers/HeaderValues byte-key map and shared slice storage with exact, case-sensitive key operations. UtilityRuntimeContext retains one SourceQuerySettings profile/nondefault-counter resource exposed by the static SourceQuerySettings getter. The gateway fixed fallback calls the same source form parser; there is no second parser state, effect registry, actor or lifecycle manager. Actual tool/ABI/GODEBUG/metric binding remains with the later application/telemetry owners. Existing CGP/derive-deftly UtilityGatewayProviders owns route state/dispatch and RuntimeProviders owns the static SourceUppercaseMapper plus SourceUnicodeProfile getter. GatewayPattern retains a HeaderValues slice view of the caller pool; literal reads/String rendering see shared pool edits while captured variable names are copied byte strings at construction. Path components, verbs and callback captures are byte data; capture maps do not prescribe lexicographic iteration. RuntimeContext defaults explicitly to Go1265 and selects tracked Unicode15/Unicode17 inputs. The case-range lookup caches are immutable projections of pinned data, not writable policy, Go evaluators, Go-to-Rust emitters, provider registries or task owners. Actual compiled-version/ABI/default binding remains M0027.",
   "completion_claim": "Connected source-authoring progress only. Native compatibility package is actual source, not a wrapper marker, but is uncompiled/unexecuted. M0003 and the combined objective remain incomplete.",
   "disposition": "READY",
   "form_query_authoring": {
@@ -72,6 +78,79 @@
     "status": "AUTHORED_UNVERIFIED_PARTIAL"
   },
   "formal_credit": 0,
+  "gateway_byte_unicode_authoring": {
+    "assurance": "NOT_STARTED; no Rust/Go executable, compiler/macro/API probe, test/lint/proof/schema/generator validation or CI",
+    "data_boundary": "Tracked generated dependency data only; no Go body evaluation, Go-text Rust emitter, CPG pipeline bypass or code generation invocation.",
+    "default_profile": "Go1265 (explicit, not actual tool-version evidence)",
+    "owner": "Existing CGP/derive-deftly UtilityGatewayProviders owns route state/dispatch and RuntimeProviders owns the static SourceUppercaseMapper plus SourceUnicodeProfile getter. GatewayPattern retains a HeaderValues slice view of the caller pool; literal reads/String rendering see shared pool edits while captured variable names are copied byte strings at construction. Path components, verbs and callback captures are byte data; capture maps do not prescribe lexicographic iteration. RuntimeContext defaults explicitly to Go1265 and selects tracked Unicode15/Unicode17 inputs. The case-range lookup caches are immutable projections of pinned data, not writable policy, Go evaluators, Go-to-Rust emitters, provider registries or task owners. Actual compiled-version/ABI/default binding remains M0027.",
+    "remaining": "Finish source Pattern constructor diagnostics/grpclog/ErrInvalidPattern identity/MustPattern fatal behavior; full source-int opcode/stack/concat length overflow, pool/capture/map iteration and alias/race/panic/allocator profiles. The fixed Legacy byte matching and capture path, shared literal pool/copy-name distinction and explicit Go1265/Go1271 uppercase profiles are authored. Canonical Pattern.String uses string_bytes; Rust Display remains a compatibility projection. Bind actual source Unicode/compiler/ABI and string/builder/lazy-lookup allocation/initialization/pointer/failure profiles. General MIME/multipart/MaxBytesReader, Values.Clone and query/escape diagnostics, actual GODEBUG/default/metric selection, configurable gateway APIs and all existing integration requirements remain open. No full Unicode package, source-profile, HTTP parity or generated caller adoption credit follows.",
+    "source_method_mapping": {
+      "grpc-gateway.Pattern.MatchAndEscape(default Legacy)": "GatewayPattern::matches",
+      "grpc-gateway.Pattern.String": "GatewayPattern::string_bytes",
+      "strings.ToUpper(method override)": "CGP SourceUppercaseMapper::uppercase_source_string"
+    },
+    "status": "AUTHORED_UNVERIFIED_PARTIAL",
+    "unicode_sources": [
+      {
+        "git_blob": "f66d553c5da652f2a1e2b8efe1458328de698d0c",
+        "input_role": "TRACKED_ORIGINAL_DEPENDENCY_DATA_NOT_A_PORTED_GO_BODY",
+        "license": "rust-support/agones/GO-LICENSE",
+        "path": "rust-support/agones/source-data/unicode/go1.26.5/tables.go",
+        "revision": "go1.26.5",
+        "sha256": "6a88d48746c4b2c471cc04ae40559694b734770212e6f5ea5f1962adb0c0bdb1",
+        "unicode_version": "15.0.0",
+        "upstream_path": "src/unicode/tables.go",
+        "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/unicode/tables.go"
+      },
+      {
+        "git_blob": "5e89043e66bf773bd230fe6b0bff3c08bbb8d14a",
+        "input_role": "TRACKED_ORIGINAL_DEPENDENCY_DATA_NOT_A_PORTED_GO_BODY",
+        "license": "rust-support/agones/GO-LICENSE",
+        "path": "rust-support/agones/source-data/unicode/go1.27.1/tables.go",
+        "revision": "go1.27.1",
+        "sha256": "ac0e5d5d1b58ed4b02d7cb4a0085bdefbdb4f7aae6fadddbc9477f8463da8bd8",
+        "unicode_version": "17.0.0",
+        "upstream_path": "src/unicode/tables.go",
+        "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/unicode/tables.go"
+      },
+      {
+        "git_blob": "3959314c979361f03351df74bf047ee2c2f5ec14",
+        "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+        "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/unicode/letter.go",
+        "revision": "go1.26.5",
+        "sha256": "b35a6d259313cef88d07e9e4027b8bd72c60ae140418f5be2c41a2ecea6074fe",
+        "upstream_path": "src/unicode/letter.go",
+        "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/unicode/letter.go"
+      },
+      {
+        "git_blob": "3959314c979361f03351df74bf047ee2c2f5ec14",
+        "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+        "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/unicode/letter.go",
+        "revision": "go1.27.1",
+        "sha256": "b35a6d259313cef88d07e9e4027b8bd72c60ae140418f5be2c41a2ecea6074fe",
+        "upstream_path": "src/unicode/letter.go",
+        "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/unicode/letter.go"
+      },
+      {
+        "git_blob": "80cea67d626d2e3445a29a4574fa3268de944763",
+        "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+        "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/strings/strings.go",
+        "revision": "go1.26.5",
+        "sha256": "ba9478be775d11b6956c828ebf870a8f8e7b7318ee382834f1e741f02d1336ef",
+        "upstream_path": "src/strings/strings.go",
+        "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/strings/strings.go"
+      },
+      {
+        "git_blob": "3e5de2f840b78f778823049b622a46a722d201d7",
+        "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+        "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/strings/strings.go",
+        "revision": "go1.27.1",
+        "sha256": "a81bdf73a308277c322e35d0c602e3813f57b6f769c091f8f8962c8884a45ea3",
+        "upstream_path": "src/strings/strings.go",
+        "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/strings/strings.go"
+      }
+    ]
+  },
   "global_gate": "CLOSED",
   "header_json_dependency": {
     "archive": "/home/astral/.cargo/registry/cache/index.crates.io-1949cf8c6b5b557f/serde_json-1.0.154.crate",
@@ -111,11 +190,17 @@
     "agones-rs/pkg/util/webhooks/webhooks.rs": "f728be5333aecae9018da4ce9bc09a278907e10d2bfa6cc56a77566c9c878da5",
     "crates/util/Cargo.toml": "6b011badbe07029ab9a84257636f7de293931d32a2c1bbef49c60b4d07dd91bf",
     "rust-support/agones/GO-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
-    "rust-support/agones/src/utility_declarations.rs": "a4ef7e2b4554ee73e9400cfa4ea6b6e6422eec5ede9880236bc8efa3a5212c91",
-    "rust-support/agones/src/utility_gateway.rs": "2c5f76998526783599e0f27e0dac3ff3c8cd3e11003451590dae043227ec8cc2",
+    "rust-support/agones/source-data/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "rust-support/agones/source-data/unicode/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "rust-support/agones/source-data/unicode/go1.26.5/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "rust-support/agones/source-data/unicode/go1.26.5/tables.go": "6a88d48746c4b2c471cc04ae40559694b734770212e6f5ea5f1962adb0c0bdb1",
+    "rust-support/agones/source-data/unicode/go1.27.1/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
+    "rust-support/agones/source-data/unicode/go1.27.1/tables.go": "ac0e5d5d1b58ed4b02d7cb4a0085bdefbdb4f7aae6fadddbc9477f8463da8bd8",
+    "rust-support/agones/src/utility_declarations.rs": "052ff5286077a01f95bfcf984e25d54a4b9b08bc85febb6f82a7e57d5a9e5518",
+    "rust-support/agones/src/utility_gateway.rs": "9c634605776b42bc4857633b7e5a36b3d6e83953fad5f5b6524483e793acea10",
     "rust-support/agones/src/utility_gateway_framing.rs": "43dd0a6375b726182af52243e45152e7dcf756ce4c27ba4f9cb4cb5b77127326",
     "rust-support/agones/src/utility_gateway_json.rs": "b6aac4a28d90ea4bad7362737cfe7132fc5a72ce81cbd6bd492441798aba48f7",
-    "rust-support/agones/src/utility_http.rs": "5f737239869bc043eb70117b3df24b57f43181b0b7d93f8bb7f5b57ecbf919ec",
+    "rust-support/agones/src/utility_http.rs": "fbf4000c50d31d7d21dc2b700efbf60e882f18902c7bc4cc1ba1da2ac114f7bf",
     "rust-support/agones/src/utility_http_body.rs": "af7e4eac5e2623b697f63342445b01b13cba8474310912e8befd823aab9c53da",
     "rust-support/agones/src/utility_http_form.rs": "6d0d19a94d76cde97bd8e9eeb86446804f0d87dcdc96fa92424a6ee2bc6bb57b",
     "rust-support/agones/src/utility_http_framing.rs": "f7b894456029fcedad1bc7dee9feb97b55745c94921e921a0dc99b437c269104",
@@ -129,20 +214,21 @@
     "rust-support/agones/src/utility_http_sniff.rs": "ef1baa72b7bb66ea833ef7e15858766313c8937d13e0d18bf6bf01f8f2a96042",
     "rust-support/agones/src/utility_http_status.rs": "d310b7f9c71780a03655b4337a444eb7b7d5da3e311585c943af51e8b3a83e3a",
     "rust-support/agones/src/utility_http_trailers.rs": "6a79b0f83cb592981900f92dcb6dc414e176a38ae3f7dd2c83e7bedbe80ac554",
+    "rust-support/agones/src/utility_http_unicode.rs": "6b9084be0b215ec01c70d42264c0c8e51977f8368f8b346d5f93e2894e75fe7b",
     "rust-support/agones/src/utility_http_url.rs": "9c6fca7c6f52999f31679ba393c494ed3f543e02dbe1a7a6449f26d4b4fbb1c4",
     "rust-support/agones/src/utility_logging.rs": "a055f664578d49d0a7b985468446218a8e13f0a4512470b05ab3c7a1190ea043",
-    "rust-support/agones/src/utility_runtime.rs": "9c59158ec7a05c6bc985ff8d323c02bc72ff6f393b557daa6f9463e91593dbdd"
+    "rust-support/agones/src/utility_runtime.rs": "78267d62c86b3c81ff533a3b3ddaf607c4f0bf526e762c2a1b22764c80e5fe2b"
   },
   "project_executable_invocations": 0,
   "record_kind": "PARTIAL_HTTP_BOUNDARY_AUTHORING",
   "remaining": [
     "Complete exact Go quote/caller/registration/conflict and panic/stack diagnostics, source Unicode tables and empty CONNECT path-segment/tree-alias configurations. Native default stdlog formatting is authored, but complete global stdlog flags/output/caller identity and native failure behavior remain partial.",
-    "Complete net/url and HTTP parsing/rejection across host/authority/opaque/absolute/CONNECT/invalid bytes and target grammar. Current request URL, mux, discovery namespace and URL/host/requestURI logs retain bytes; gateway component/capture/form strings, typed models and error/diagnostic byte profiles remain open.",
-    "Finish remaining source request-field/copy/Clone/alias profiles, including relevant protocol/Close/Trailer/TransferEncoding/Form/PostForm mutation and native consumption. Method/ContentLength/Body/URL/Host/RequestURI shared fields, retained URL-pointer logs and original/current body ownership are authored, not assured. Header range additions/nested Trailer: iteration, pointer/nil/panic/stack/bounds/allocator and custom Reader failure profiles, concurrency schedules and exact source ABI/version/configuration selection remain open. Gateway strings.ToUpper Unicode versus Rust conversion remains explicit; wantsClose/wants10 retain intentional pre-handler snapshots.",
+    "Complete net/url and HTTP parsing/rejection across host/authority/opaque/absolute/CONNECT/invalid bytes and target grammar. Current request URL, mux, discovery namespace and URL/host/requestURI logs retain bytes; gateway component/capture/form bytes are now authored; typed model/diagnostic boundaries and native/profile integration remain open.",
+    "Finish remaining source request-field/copy/Clone/alias profiles, including relevant protocol/Close/Trailer/TransferEncoding/Form/PostForm mutation and native consumption. Method/ContentLength/Body/URL/Host/RequestURI shared fields, retained URL-pointer logs and original/current body ownership are authored, not assured. Header range additions/nested Trailer: iteration, pointer/nil/panic/stack/bounds/allocator and custom Reader failure profiles, concurrency schedules and exact source ABI/version/configuration selection remain open. Source method uppercase uses explicit Go table profiles; actual compiler/profile and allocation binding remains open; wantsClose/wants10 retain intentional pre-handler snapshots.",
     "Reconcile authored request trailer maps/cookies and header JSON/alias operations across all selected profiles; native parser/rejection/1.0 keep-alive/upgrade, H2 header ordering/HPACK/GOAWAY and body Close/read/EOF/abortPendingRead/Continue/full-duplex races. Complete native readahead/partial-write/flush/reset/cancellation/error timing and diagnostics. Source code and API reading do not establish native parity.",
     "Finish listener named-service/bind and independent listener-close/shutdown timing, native error origin (syscall-wrapped versus direct Errno or poll/init failures), platform/native error display and complete retry profiles. Shared temporary-syscall accept backoff is authored for plain/TLS, but does not establish full Go listener equivalence. M0027 source tool/GODEBUG and actual production parent adoption remain required.",
     "Retain every other M0003 filesystem/signal/gateway/config/queue/logging/CRD/features/admission/body gap. Global BOTH-route gate stays CLOSED; no compiler, test, formatter/linter, native/API probe, application, generator validation, proof or CI ran.",
-    "Finish gateway byte path components/pool/captures and method-override Unicode. The exact fixed POST/urlencoded factory path now uses SourceValues/Form/PostForm caches, partial values/error precedence and explicit query limit rules. General ParseForm MIME/multipart and *maxBytesReader profiles, source escape Quote/error/type/caller diagnostics, Go1.27 Values.Clone versus map assignment, map iteration addition/panic/allocator/concurrency details, live production GODEBUG/default/tool/ABI selection and nondefault telemetry publication remain required with their source owners. SourceQuerySettings currently has an explicit Go126/64 default; it is not a claim of actual process GODEBUG/compiler selection."
+    "Finish source Pattern constructor diagnostics/grpclog/ErrInvalidPattern identity/MustPattern fatal behavior; full source-int opcode/stack/concat length overflow, pool/capture/map iteration and alias/race/panic/allocator profiles. The fixed Legacy byte matching and capture path, shared literal pool/copy-name distinction and explicit Go1265/Go1271 uppercase profiles are authored. Canonical Pattern.String uses string_bytes; Rust Display remains a compatibility projection. Bind actual source Unicode/compiler/ABI and string/builder/lazy-lookup allocation/initialization/pointer/failure profiles. General MIME/multipart/MaxBytesReader, Values.Clone and query/escape diagnostics, actual GODEBUG/default/metric selection, configurable gateway APIs and all existing integration requirements remain open. No full Unicode package, source-profile, HTTP parity or generated caller adoption credit follows."
   ],
   "request_fields_authoring": {
     "continue_owner": "H1 wrapper closed/sawEOF + shared available/sender mutex; H2 separate needsContinue and native body",
@@ -480,12 +566,70 @@
       "revision": "go1.26.5",
       "sha256": "bb26b2442db6a686fc7f823ea9cc89babe26ac988ec7d8caf4a157aeb60d92f2",
       "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/encoding/json/stream.go"
+    },
+    {
+      "git_blob": "f66d553c5da652f2a1e2b8efe1458328de698d0c",
+      "input_role": "TRACKED_ORIGINAL_DEPENDENCY_DATA_NOT_A_PORTED_GO_BODY",
+      "license": "rust-support/agones/GO-LICENSE",
+      "path": "rust-support/agones/source-data/unicode/go1.26.5/tables.go",
+      "revision": "go1.26.5",
+      "sha256": "6a88d48746c4b2c471cc04ae40559694b734770212e6f5ea5f1962adb0c0bdb1",
+      "unicode_version": "15.0.0",
+      "upstream_path": "src/unicode/tables.go",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/unicode/tables.go"
+    },
+    {
+      "git_blob": "5e89043e66bf773bd230fe6b0bff3c08bbb8d14a",
+      "input_role": "TRACKED_ORIGINAL_DEPENDENCY_DATA_NOT_A_PORTED_GO_BODY",
+      "license": "rust-support/agones/GO-LICENSE",
+      "path": "rust-support/agones/source-data/unicode/go1.27.1/tables.go",
+      "revision": "go1.27.1",
+      "sha256": "ac0e5d5d1b58ed4b02d7cb4a0085bdefbdb4f7aae6fadddbc9477f8463da8bd8",
+      "unicode_version": "17.0.0",
+      "upstream_path": "src/unicode/tables.go",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/unicode/tables.go"
+    },
+    {
+      "git_blob": "3959314c979361f03351df74bf047ee2c2f5ec14",
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/unicode/letter.go",
+      "revision": "go1.26.5",
+      "sha256": "b35a6d259313cef88d07e9e4027b8bd72c60ae140418f5be2c41a2ecea6074fe",
+      "upstream_path": "src/unicode/letter.go",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/unicode/letter.go"
+    },
+    {
+      "git_blob": "3959314c979361f03351df74bf047ee2c2f5ec14",
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/unicode/letter.go",
+      "revision": "go1.27.1",
+      "sha256": "b35a6d259313cef88d07e9e4027b8bd72c60ae140418f5be2c41a2ecea6074fe",
+      "upstream_path": "src/unicode/letter.go",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/unicode/letter.go"
+    },
+    {
+      "git_blob": "80cea67d626d2e3445a29a4574fa3268de944763",
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/strings/strings.go",
+      "revision": "go1.26.5",
+      "sha256": "ba9478be775d11b6956c828ebf870a8f8e7b7318ee382834f1e741f02d1336ef",
+      "upstream_path": "src/strings/strings.go",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/src/strings/strings.go"
+    },
+    {
+      "git_blob": "3e5de2f840b78f778823049b622a46a722d201d7",
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/strings/strings.go",
+      "revision": "go1.27.1",
+      "sha256": "a81bdf73a308277c322e35d0c602e3813f57b6f769c091f8f8962c8884a45ea3",
+      "upstream_path": "src/strings/strings.go",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.27.1/src/strings/strings.go"
     }
   ],
   "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
   "stage": "IMPLEMENTING",
-  "timestamp": "2026-10-28T11:06:11.379440+00:00",
-  "typed_declaration_template_provider_consumer": "UtilityRuntimeContext + UtilityRuntimeProviders -> existing static HTTP/body-I/O/TLS/log effects -> shared RequestFields and SourceUrl data -> current mux/APIServer/default/gateway decisions; HTTPS/webhook -> SourceLogValue::Url retained pointer and SourceByteString value fields -> existing SourceLogEmitter/SourceLogger. No extra task, provider registry or lifecycle owner. Query/form path: SourceValues + RequestFields -> UtilityRuntimeProviders SourceQuerySettingsGetter/UseField + existing body-I/O -> fixed gateway parse/cache consumer; original URL/Body/log owners remain unchanged.",
+  "timestamp": "2026-10-28T11:38:42.874586+00:00",
+  "typed_declaration_template_provider_consumer": "UtilityRuntimeContext + UtilityRuntimeProviders -> existing static HTTP/body-I/O/TLS/log effects -> shared RequestFields and SourceUrl data -> current mux/APIServer/default/gateway decisions; HTTPS/webhook -> SourceLogValue::Url retained pointer and SourceByteString value fields -> existing SourceLogEmitter/SourceLogger. No extra task, provider registry or lifecycle owner. Query/form path: SourceValues + RequestFields -> UtilityRuntimeProviders SourceQuerySettingsGetter/UseField + existing body-I/O -> fixed gateway parse/cache consumer; original URL/Body/log owners remain unchanged. Byte/unicode path: typed GatewayPattern + shared literal slice -> existing UtilityGatewayProviders -> byte callback data; RuntimeProviders SourceUnicodeProfileGetter/SourceUppercaseMapper -> pinned data lookup -> request method assignment.",
   "url_alias_authoring": {
     "assurance": "No Rust/native executable, compiler, tests, formatter/linter, proof, API probe, generator validation or CI",
     "consumers": [
@@ -505,5 +649,5 @@
     "value_copy": "SourceUrl.fields copies URL field values; SourceUrl.new allocates a different pointer, retaining the immutable Userinfo pointer"
   },
   "verification": "NOT_STARTED",
-  "work_base_commit": "cf9dbff2a4f2a0cf44c485a2a8fd50efe21aaad5"
+  "work_base_commit": "d7649c813950d023e25288adcc1781b3623882ec"
 }

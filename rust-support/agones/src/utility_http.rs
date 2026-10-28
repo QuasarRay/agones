@@ -46,6 +46,10 @@ pub use url::{SourceUrl, SourceUrlFields, SourceUserinfo};
 mod form;
 pub use form::{SourceValues, SourceQueryProfile, SourceQuerySettings, SourceQueryParse, SourceUrlEscapeError,
     parse_source_query, HasSourceQuerySettings, SourceQuerySettingsGetterComponent};
+#[path = "utility_http_unicode.rs"]
+mod unicode;
+pub use unicode::{SourceUnicodeProfile, HasSourceUnicodeProfile, SourceUnicodeProfileGetterComponent,
+    CanUppercaseSourceString, SourceUppercaseMapper, SourceUppercaseMapperComponent, MapSourceUppercase, source_to_upper};
 #[path = "utility_http_response.rs"]
 mod response;
 pub use response::ResponseWriter;
