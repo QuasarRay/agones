@@ -21,9 +21,9 @@ pub fn redactSensitiveHeaders(headers: &Headers) -> Headers {
 }
 
 pub fn LogRequest(logger: &LogEntry, request: &HttpRequest) -> LogEntry {
-    logger.with_bytes("method", request.method()).with_field("url", request.url_log_value.clone())
-        .with_field("host", request.host.as_str()).with_headers("headers", redactSensitiveHeaders(&request.headers))
-        .with_field("requestURI", request.request_uri.as_str())
+    logger.with_bytes("method", request.method()).with_url("url", request.url())
+        .with_bytes("host", request.host()).with_headers("headers", redactSensitiveHeaders(&request.headers))
+        .with_bytes("requestURI", request.request_uri())
 }
 
 pub fn ErrorHTTPHandler(logger: LogEntry, handler: ErrorHandlerFunc) -> HttpHandler {

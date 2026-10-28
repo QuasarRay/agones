@@ -96,7 +96,7 @@ impl Server {
         }
     }
     async fn defaultHandler(context: &UtilityRuntimeContext, logger: &LogEntry, writer: &mut ResponseWriter, request: &mut HttpRequest) {
-        if request.path == "/" { let _ = writer.write_header(200).await; }
+        if request.path().as_ref() == b"/" { let _ = writer.write_header(200).await; }
         else { super::FourZeroFour(context, logger, writer, request).await; }
     }
 }

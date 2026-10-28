@@ -4,6 +4,7 @@
 #![allow(non_snake_case, non_upper_case_globals)]
 use std::{collections::BTreeMap, sync::{Arc, RwLock, LazyLock}};
 use futures::future::BoxFuture;
+use bytes::Bytes;
 use derive_deftly::Deftly;
 use better_comprehension::vector;
 use crate::{errors::{BoxError, Errors}, logfields::LogEntry, runtime, https,
@@ -17,12 +18,12 @@ pub static Codecs: LazyLock<CodecFactory> = LazyLock::new(CodecFactory::default)
 const errs: Errors = Errors::from_package("agones.dev/agones/pkg/util/apiserver");
 pub const ContentTypeHeader: &str = "Content-Type";
 pub const AcceptHeader: &str = "Accept";
-pub type CRDHandler = Arc<dyn for<'a> Fn(&'a UtilityRuntimeContext, &'a mut ResponseWriter, &'a mut HttpRequest, String) -> BoxFuture<'a, Result<(), BoxError>> + Send + Sync>;
+pub type CRDHandler = Arc<dyn for<'a> Fn(&'a UtilityRuntimeContext, &'a mut ResponseWriter, &'a mut HttpRequest, Bytes) -> BoxFuture<'a, Result<(), BoxError>> + Send + Sync>;
 
 struct ApiState {
     logger: LogEntry, errs: Errors,
     resourceList: RwLock<BTreeMap<String, Arc<RwLock<APIResourceList>>>>,
-    delegates: RwLock<BTreeMap<String, CRDHandler>>,
+    delegates: RwLock<BTreeMap<Bytes, CRDHandler>>,
 }
 #[derive(Deftly)]
 #[derive_deftly(SourceErrorOrigin)]
@@ -74,7 +75,7 @@ impl APIServer {
             let mut list = list.write().unwrap_or_else(|error| error.into_inner());
             Arc::make_mut(list.resources.get_or_insert_with(Arc::default)).push(resource.clone());
         }
-        self.state.delegates.write().unwrap_or_else(|error| error.into_inner()).insert(format!("{groupVersion}/{}", resource.name), handler);
+        self.state.delegates.write().unwrap_or_else(|error| error.into_inner()).insert(Bytes::from(format!("{groupVersion}/{}", resource.name)), handler);
         self.runtime.emit_source_log(&self.state.logger.with_field("groupversion", groupVersion)
             .with_field("apiresource", serde_json::to_value(&resource).expect("APIResource wire value")), LogLevel::Debug, "Adding APIResource");
     }
@@ -83,11 +84,12 @@ impl APIServer {
         Arc::new(move |context, writer, request| {
             let (state, gv) = (Arc::clone(&state), gv.clone());
             Box::pin(async move {
-                let (namespace, resource) = match splitNameSpaceResource(&request.path) {
+                let (namespace, resource) = match splitNameSpaceResource(request.path()) {
                     Ok(value) => value,
                     Err(error) => { https::FourZeroFour(context, &state.logger.with_error(Some(error.as_ref())), writer, request).await; return Ok(()); }
                 };
-                let delegate = state.delegates.read().unwrap_or_else(|error| error.into_inner()).get(&format!("{gv}/{resource}")).cloned();
+                let mut key = gv.as_bytes().to_vec(); key.push(b'/'); key.extend_from_slice(&resource);
+                let delegate = state.delegates.read().unwrap_or_else(|error| error.into_inner()).get(key.as_slice()).cloned();
                 if let Some(delegate) = delegate { delegate(context, writer, request, namespace).await }
                 else { https::FourZeroFour(context, &state.logger, writer, request).await; Ok(()) }
             })
@@ -160,10 +162,15 @@ fn negotiate<'a>(header: &str, alternatives: &[&'a str]) -> Option<&'a str> {
         }
     } None
 }
-pub fn splitNameSpaceResource(path: &str) -> Result<(String, String), BoxError> {
-    let list: Vec<_> = path.trim_matches('/').split('/').collect();
-    if list.len() < 3 { return Err(errs.New(format!("could not find namespace and resource in path: {path}"))); }
+pub fn splitNameSpaceResource(path: impl AsRef<[u8]>) -> Result<(Bytes, Bytes), BoxError> {
+    let path = path.as_ref();
+    let start = path.iter().position(|byte| *byte != b'/').unwrap_or(path.len());
+    let end = path.iter().rposition(|byte| *byte != b'/').map_or(start, |index| index + 1);
+    let list: Vec<_> = path[start..end].split(|byte| *byte == b'/').collect();
+    // Error Display still has the shared Go string/error-format profile gap;
+    // routing, equality and the callback namespace retain the original bytes.
+    if list.len() < 3 { return Err(errs.New(format!("could not find namespace and resource in path: {}", String::from_utf8_lossy(path)))); }
     let last = &list[list.len()-3..];
-    if last[0] != "namespaces" { return Err(errs.New(format!("wrong format in path: {path}"))); }
-    Ok((last[1].into(), last[2].into()))
+    if last[0] != b"namespaces" { return Err(errs.New(format!("wrong format in path: {}", String::from_utf8_lossy(path)))); }
+    Ok((Bytes::copy_from_slice(last[1]), Bytes::copy_from_slice(last[2])))
 }

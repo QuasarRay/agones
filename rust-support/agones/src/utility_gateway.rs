@@ -205,7 +205,10 @@ impl GatewayDispatcher<GatewayContext> for DispatchSourceGateway {
     }
 }
 async fn dispatch(context: &GatewayContext, writer: &mut ResponseWriter, request: &mut HttpRequest) {
-    if !request.path.starts_with('/') { let _ = context.write_gateway_error(writer, &routing_status(400)).await; return; }
+    // The source captures URL.Path before ParseForm can call a user Reader.
+    // This text projection remains a separate gateway byte-string boundary.
+    let path = request.path();
+    if !path.starts_with(b"/") { let _ = context.write_gateway_error(writer, &routing_status(400)).await; return; }
     let mut form = None;
     if is_path_length_fallback(request) {
         let method = header(&request.headers, "X-HTTP-Method-Override").filter(|value| !value.is_empty()).map(|value| String::from_utf8_lossy(&value).into_owned());
@@ -217,7 +220,7 @@ async fn dispatch(context: &GatewayContext, writer: &mut ResponseWriter, request
             request.set_method(method.to_uppercase());
         }
     }
-    let path: Vec<_> = request.path[1..].split('/').map(str::to_owned).collect();
+    let path: Vec<_> = path[1..].split(|byte| *byte == b'/').map(|part| String::from_utf8_lossy(part).into_owned()).collect();
     let (same, others) = {
         let requested_method = request.method();
         let routes = context.gateway_state().routes.read().unwrap_or_else(|error| error.into_inner());
@@ -275,8 +278,10 @@ async fn parse_form(request: &mut HttpRequest) -> Result<BTreeMap<String, Vec<St
     if let Some(crate::utility_http::SourceReadError::Failure(error)) = read.error { return Err(error); }
     if read.data.len() > LIMIT { return Err(ERRORS.New("http: POST too large")); }
     let mut form = parse_query(&read.data)?;
-    let query = request.url_log_value.get("RawQuery").and_then(serde_json::Value::as_str).unwrap_or_default();
-    for (name, values) in parse_query(query.as_bytes())? { form.entry(name).or_default().extend(values); }
+    // ParseForm consults the current URL after reading the body and permits
+    // a nil URL. It does not read a previously captured logging snapshot.
+    let query = request.url().map(|url| url.raw_query()).unwrap_or_default();
+    for (name, values) in parse_query(&query)? { form.entry(name).or_default().extend(values); }
     Ok(form)
 }
 fn parse_query(query: &[u8]) -> Result<BTreeMap<String, Vec<String>>, BoxError> {

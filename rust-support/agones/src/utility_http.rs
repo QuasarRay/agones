@@ -9,7 +9,6 @@ use hyper::{body::{Body, Frame, Incoming, SizeHint}, Request, Response};
 use hyper::service::service_fn;
 use hyper_util::rt::{TokioIo, TokioTimer};
 use serde::de::DeserializeOwned;
-use serde_json::{Value, json};
 use tokio::{io::{AsyncRead, AsyncWrite}, net::TcpListener, sync::{mpsc, oneshot}, task::JoinSet};
 use tokio_util::sync::CancellationToken;
 use cgp::prelude::*;
@@ -40,6 +39,9 @@ pub use request_body_value::{SourceBody, SourceBodyRead, SourceReadError, Source
 #[path = "utility_http_request_fields.rs"]
 mod request_fields;
 pub use request_fields::RequestFields;
+#[path = "utility_http_url.rs"]
+mod url;
+pub use url::{SourceUrl, SourceUrlFields, SourceUserinfo};
 #[path = "utility_http_response.rs"]
 mod response;
 pub use response::ResponseWriter;
@@ -76,18 +78,8 @@ impl<Context: Sync> SourceHttpDelay<Context> for WaitTokioSourceHttpDelay {
 }
 
 pub struct HttpRequest {
-    pub fields: RequestFields,
-    pub path: String,
-    pub host: String,
-    pub request_uri: String,
-    pub url_log_value: Value,
+    fields: RequestFields,
     pub headers: Headers,
-    /// Source Go strings can contain non-UTF8 bytes. Mux path decisions and
-    /// captures use these URL bytes; `path` remains the existing text view.
-    url_path: Vec<u8>,
-    url_raw_path: Vec<u8>,
-    url_host: String,
-    url_raw_query: Vec<u8>,
     protocol_at_least_11: bool,
     protocol: hyper::Version,
     informational: Option<hyper::ext::InformationalSender>,
@@ -110,7 +102,6 @@ impl HttpRequest {
         let connect_authority = parts.method == hyper::Method::CONNECT && !request_uri.starts_with('/');
         let raw_path = if connect_authority { "" } else { parts.uri.path() };
         let url_path = mux::path_unescape(raw_path.as_bytes()).ok_or(())?;
-        let path = String::from_utf8_lossy(&url_path).into_owned();
         let headers = Headers::new();
         for name in parts.headers.keys() {
             let values = parts.headers.get_all(name).iter().map(|value| Bytes::copy_from_slice(value.as_bytes()));
@@ -125,8 +116,8 @@ impl HttpRequest {
         }
         let initial_trailers = trailers::request_trailers(&headers, parts.version == hyper::Version::HTTP_2,
             parts.version != hyper::Version::HTTP_2 && content_length < 0)?;
-        let host = parts.uri.authority().map(|authority| authority.as_str().to_owned())
-            .or_else(|| header(&headers, "Host").map(|value| String::from_utf8_lossy(&value).into_owned())).unwrap_or_default();
+        let host = parts.uri.authority().map(|authority| Bytes::copy_from_slice(authority.as_str().as_bytes()))
+            .or_else(|| header(&headers, "Host")).unwrap_or_default();
         // net/http moves Host out of Request.Header into Request.Host.
         headers.remove("Host");
         let scheme = if connect_authority { "" } else { parts.uri.scheme_str().unwrap_or_default() };
@@ -148,34 +139,41 @@ impl HttpRequest {
         let continue_state = request_body_value::ContinueState::new(parts.version != hyper::Version::HTTP_2 && can_write_continue, informational.clone());
         let original_body = request_body::RequestBody::new(body, content_length, parts.version == hyper::Version::HTTP_2, wants_close, initial_trailers);
         let body = SourceBody::from_native(original_body.clone(), can_write_continue, continue_state.clone(), informational.clone());
-        let fields = RequestFields::new(Bytes::copy_from_slice(parts.method.as_str().as_bytes()), content_length, body);
-        let raw_path_log = if raw_path == "*" || mux::escape_url_path(&url_path) == raw_path.as_bytes() { "" } else { raw_path };
-        let url_log_value = json!({"Scheme":scheme,"Opaque":"","User":null,"Host":authority,"Path":path,
-            "RawPath":raw_path_log,"OmitHost":false,"ForceQuery":parts.uri.query()==Some(""),"RawQuery":raw_query,"Fragment":"","RawFragment":""});
-        Ok(Self { fields, path, host, request_uri, url_log_value, headers,
-            url_path, url_raw_path: raw_path_log.as_bytes().to_vec(), url_host: authority.to_owned(), url_raw_query: raw_query.as_bytes().to_vec(),
+        let raw_path_hint = if raw_path == "*" || mux::escape_url_path(&url_path) == raw_path.as_bytes() { "" } else { raw_path };
+        let url = SourceUrl::new(SourceUrlFields { scheme: Bytes::copy_from_slice(scheme.as_bytes()), host: Bytes::copy_from_slice(authority.as_bytes()),
+            path: Bytes::from(url_path), raw_path: Bytes::copy_from_slice(raw_path_hint.as_bytes()), raw_query: Bytes::copy_from_slice(raw_query.as_bytes()),
+            force_query: parts.uri.query() == Some(""), ..Default::default() });
+        let fields = RequestFields::new(Bytes::copy_from_slice(parts.method.as_str().as_bytes()), content_length, body,
+            Some(url), host, Bytes::from(request_uri));
+        Ok(Self { fields, headers,
             protocol_at_least_11: parts.version != hyper::Version::HTTP_09 && parts.version != hyper::Version::HTTP_10,
             protocol: parts.version, informational, continue_state,
             wants10_keep_alive, wants_close,
             matched_pattern: Vec::new(), path_values: BTreeMap::new(),
             cancelled: CancellationToken::new(), original_body, runtime })
     }
+    /// Retain this Request's field owner without allowing replacement of the
+    /// owner itself. Its setters mutate fields seen by the response writer.
+    pub fn fields(&self) -> RequestFields { self.fields.clone() }
     pub fn method(&self) -> Bytes { self.fields.method() }
     pub fn set_method(&self, method: impl AsRef<[u8]>) { self.fields.set_method(method); }
     pub fn content_length(&self) -> i64 { self.fields.content_length() }
     pub fn set_content_length(&self, length: i64) { self.fields.set_content_length(length); }
     pub fn body(&self) -> SourceBody { self.fields.body() }
     pub fn set_body(&self, body: SourceBody) { self.fields.set_body(body); }
+    pub fn url(&self) -> Option<SourceUrl> { self.fields.url() }
+    pub fn set_url(&self, url: Option<SourceUrl>) { self.fields.set_url(url); }
+    pub fn require_url(&self) -> SourceUrl { self.url().expect("invalid memory address or nil pointer dereference: Request.URL") }
+    pub fn host(&self) -> Bytes { self.fields.host() }
+    pub fn set_host(&self, host: impl AsRef<[u8]>) { self.fields.set_host(host); }
+    pub fn request_uri(&self) -> Bytes { self.fields.request_uri() }
+    pub fn set_request_uri(&self, uri: impl AsRef<[u8]>) { self.fields.set_request_uri(uri); }
+    pub fn path(&self) -> Bytes { self.require_url().path() }
     pub(crate) fn runtime(&self) -> &UtilityRuntimeContext { &self.runtime }
     pub fn path_value(&self, name: &str) -> &[u8] { self.path_values.get(name).map_or(&[], Vec::as_slice) }
     pub fn set_path_value(&mut self, name: &str, value: Vec<u8>) { self.path_values.insert(name.to_owned(), value); }
     pub fn escaped_path(&self) -> Vec<u8> {
-        if !self.url_raw_path.is_empty() && mux::valid_encoded_path(&self.url_raw_path)
-            && mux::path_unescape(&self.url_raw_path).as_deref() == Some(self.url_path.as_slice()) {
-            return self.url_raw_path.clone();
-        }
-        if self.url_path == b"*" { return vec![b'*']; }
-        mux::escape_url_path(&self.url_path)
+        self.require_url().escaped_path()
     }
     pub async fn read_body(&mut self) -> Result<Vec<u8>, BoxError> {
         let read = self.read_body_all().await;
@@ -333,7 +331,7 @@ async fn request_service(context: UtilityRuntimeContext, mux: SourceMux, tasks: 
             .is_some_and(|value| !value.is_empty() && !header_has_token(&value, b"100-continue"));
         if rejected_expectation {
             set_header(&mut writer.headers, "Connection", "close"); let _ = writer.write_header(417).await;
-        } else if request.method().as_ref() == b"OPTIONS" && request.request_uri == "*" { global_options(&mut writer, &mut request).await; }
+        } else if request.method().as_ref() == b"OPTIONS" && request.request_uri().as_ref() == b"*" { global_options(&mut writer, &mut request).await; }
         else { mux.dispatch(&context, &mut writer, &mut request).await; }
         request.cancelled.cancel(); // net/http cancels when ServeHTTP returns.
         let close = writer.finish().await;

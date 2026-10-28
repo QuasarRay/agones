@@ -13,8 +13,14 @@ pub enum SourceLogValue {
     Json(Value),
     HttpHeaders(crate::utility_http::Headers),
     Bytes(crate::utility_http::SourceByteString),
+    Url(Option<crate::utility_http::SourceUrl>),
 }
 impl LogEntry {
+    pub fn with_url(&self, name: impl Into<String>, url: Option<crate::utility_http::SourceUrl>) -> Self {
+        let mut entry = self.clone();
+        entry.fields.insert(name.into(), SourceLogValue::Url(url));
+        entry
+    }
     pub fn with_bytes(&self, name: impl Into<String>, bytes: impl AsRef<[u8]>) -> Self {
         let mut entry = self.clone();
         entry.fields.insert(name.into(), SourceLogValue::Bytes(crate::utility_http::SourceByteString(bytes::Bytes::copy_from_slice(bytes.as_ref()))));

@@ -146,11 +146,11 @@ fn compare_segments(left: &Segment, right: &Segment) -> Relationship {
     }
 }
 struct Matched<'a> { route: &'a Route, captures: BTreeMap<String, Vec<u8>> }
-fn match_modern<'a>(routes: &'a [Route], host: &str, method: &[u8], path: &[u8]) -> Option<Matched<'a>> {
+fn match_modern<'a>(routes: &'a [Route], host: &[u8], method: &[u8], path: &[u8]) -> Option<Matched<'a>> {
     let mut selected: Option<Matched<'a>> = None;
     for route in routes {
         let pattern = &route.pattern;
-        if !pattern.host.is_empty() && pattern.host != host || !pattern.matches_method(method) { continue; }
+        if !pattern.host.is_empty() && pattern.host.as_bytes() != host || !pattern.matches_method(method) { continue; }
         let Some(captures) = pattern.match_path(path) else { continue; };
         let prefer = selected.as_ref().is_none_or(|old| {
             if pattern.host.is_empty() != old.route.pattern.host.is_empty() { !pattern.host.is_empty() }
@@ -192,31 +192,34 @@ impl SourceMux {
     fn resolve(&self, request: &HttpRequest) -> Selection {
         let routes = self.routes.read().unwrap_or_else(|error| error.into_inner());
         if self.profile == MuxProfile::Go121 { return resolve_legacy(&routes, request); }
-        let escaped = request.escaped_path();
+        let url = request.require_url();
+        let escaped = url.escaped_path();
         let method = request.method();
         let connect = method.as_ref() == b"CONNECT";
-        let host = if connect { request.url_host.clone() } else { strip_host_port(&request.host).to_owned() };
+        let request_host = request.host();
+        let url_host = url.host();
+        let host = if connect { url_host.as_ref() } else { strip_host_port(&request_host) };
         let path = if connect { escaped.clone() } else { clean_path(&escaped) };
-        let found = match_modern(&routes, &host, &method, &path);
+        let found = match_modern(&routes, host, &method, &path);
         if !found.as_ref().is_some_and(|found| found.route.pattern.exact(&path)) && !path.ends_with(b"/") && !path.is_empty() {
             let mut slash = path.clone(); slash.push(b'/');
-            if let Some(found) = match_modern(&routes, &host, &method, &slash).filter(|found| found.route.pattern.exact(&slash)) {
+            if let Some(found) = match_modern(&routes, host, &method, &slash).filter(|found| found.route.pattern.exact(&slash)) {
                 let target = if self.profile == MuxProfile::Go127 { slash } else {
-                    let mut decoded = clean_path(&request.url_path); decoded.push(b'/'); escape_url_path(&decoded)
+                    let mut decoded = clean_path(&url.path()); decoded.push(b'/'); escape_url_path(&decoded)
                 };
                 let pattern = if connect { unescape_or_original(&target) } else { found.route.pattern.text.as_bytes().to_vec() };
-                return Selection::Redirect { url: url_with_query(target, &request.url_raw_query), pattern, status: 307 };
+                return Selection::Redirect { url: url_with_query(target, &url.raw_query()), pattern, status: 307 };
             }
         }
         if !connect && path != escaped {
             let pattern = found.as_ref().map_or_else(Vec::new, |found| found.route.pattern.text.as_bytes().to_vec());
             let target = if self.profile == MuxProfile::Go127 { path.clone() } else { escape_url_path(&path) };
-            return Selection::Redirect { url: url_with_query(target, &request.url_raw_query), pattern, status: 307 };
+            return Selection::Redirect { url: url_with_query(target, &url.raw_query()), pattern, status: 307 };
         }
-        let found = if connect { match_modern(&routes, &request.host, &method, &path) } else { found };
+        let found = if connect { match_modern(&routes, &request_host, &method, &path) } else { found };
         if found.is_some() { return selected(found); }
         let mut allowed = BTreeSet::new();
-        for route in routes.iter().filter(|route| !route.pattern.method.is_empty() && (route.pattern.host.is_empty() || route.pattern.host == host)) {
+        for route in routes.iter().filter(|route| !route.pattern.method.is_empty() && (route.pattern.host.is_empty() || route.pattern.host.as_bytes() == host)) {
             let mut slash = path.clone(); slash.push(b'/');
             if route.pattern.match_path(&path).is_some() || !path.ends_with(b"/") && route.pattern.match_path(&slash).is_some() {
                 allowed.insert(route.pattern.method.clone());
@@ -226,7 +229,7 @@ impl SourceMux {
         if allowed.is_empty() { Selection::NotFound } else { Selection::MethodNotAllowed(allowed.into_iter().collect::<Vec<_>>().join(", ")) }
     }
     pub(super) async fn dispatch(&self, context: &UtilityRuntimeContext, writer: &mut ResponseWriter, request: &mut HttpRequest) {
-        if request.request_uri == "*" {
+        if request.request_uri().as_ref() == b"*" {
             if request.protocol_at_least_11 { set_header(&mut writer.headers, "Connection", "close"); }
             let _ = writer.write_header(400).await; return;
         }
@@ -249,40 +252,45 @@ impl SourceMux {
         }
     }
 }
-fn legacy_match<'a>(routes: &'a [Route], host: &str, path: &[u8]) -> Option<&'a Route> {
+fn legacy_match<'a>(routes: &'a [Route], host: &[u8], path: &[u8]) -> Option<&'a Route> {
     let matches = |key: &[u8]| routes.iter().filter(|route| {
         let pattern = route.pattern.text.as_bytes(); pattern == key || pattern.ends_with(b"/") && key.starts_with(pattern)
     }).max_by_key(|route| route.pattern.text.len());
-    let mut key = host.as_bytes().to_vec(); key.extend_from_slice(path);
+    let mut key = host.to_vec(); key.extend_from_slice(path);
     matches(&key).or_else(|| matches(path))
 }
 fn resolve_legacy(routes: &[Route], request: &HttpRequest) -> Selection {
     let connect = request.method().as_ref() == b"CONNECT";
-    let host = if connect { request.url_host.as_str() } else { strip_host_port(&request.host) };
-    let path = if connect { request.url_path.clone() } else { clean_path(&request.url_path) };
-    let mut key = host.as_bytes().to_vec(); key.extend_from_slice(&path);
+    let url = request.require_url();
+    let request_host = request.host();
+    let url_host = url.host();
+    let host = if connect { url_host.as_ref() } else { strip_host_port(&request_host) };
+    let original_path = url.path();
+    let path = if connect { original_path.to_vec() } else { clean_path(&original_path) };
+    let mut key = host.to_vec(); key.extend_from_slice(&path);
     let exact = |key: &[u8]| routes.iter().any(|route| route.pattern.text.as_bytes() == key);
     if !path.is_empty() && !path.ends_with(b"/") && !exact(&path) && !exact(&key) {
         let mut slash = path.clone(); slash.push(b'/'); key.push(b'/');
         if exact(&slash) || exact(&key) {
-            return Selection::Redirect { url: url_with_query(escape_url_path(&slash), &request.url_raw_query), pattern: slash, status: 301 };
+            return Selection::Redirect { url: url_with_query(escape_url_path(&slash), &url.raw_query()), pattern: slash, status: 301 };
         }
     }
-    let found = legacy_match(routes, if connect { &request.host } else { host }, &path);
-    if !connect && path != request.url_path {
-        return Selection::Redirect { url: url_with_query(escape_url_path(&path), &request.url_raw_query),
+    let found = legacy_match(routes, if connect { &request_host } else { host }, &path);
+    if !connect && path.as_slice() != original_path.as_ref() {
+        return Selection::Redirect { url: url_with_query(escape_url_path(&path), &url.raw_query()),
             pattern: found.map_or_else(Vec::new, |route| route.pattern.text.as_bytes().to_vec()), status: 301 };
     }
     found.map_or(Selection::NotFound, |route| Selection::Handler { handler: Arc::clone(&route.handler),
         pattern: route.pattern.text.as_bytes().to_vec(), captures: BTreeMap::new() })
 }
-fn strip_host_port(host: &str) -> &str {
-    if let Some(rest) = host.strip_prefix('[') {
-        if let Some(end) = rest.find(']') {
-            if rest[end+1..].starts_with(':') && !rest[end+2..].contains([':', '[', ']']) && !rest[..end].contains(['[', ']']) { return &rest[..end]; }
+fn strip_host_port(host: &[u8]) -> &[u8] {
+    if let Some(rest) = host.strip_prefix(b"[") {
+        if let Some(end) = rest.iter().position(|byte| *byte == b']') {
+            if rest[end+1..].starts_with(b":") && !rest[end+2..].iter().any(|byte| b":[]".contains(byte))
+                && !rest[..end].iter().any(|byte| b"[]".contains(byte)) { return &rest[..end]; }
         }
-    } else if let Some((name, port)) = host.rsplit_once(':') {
-        if !name.contains([':', '[', ']']) && !port.contains(['[', ']']) { return name; }
+    } else if let Some(colon) = host.iter().rposition(|byte| *byte == b':') {
+        if !host[..colon].iter().any(|byte| b":[]".contains(byte)) && !host[colon+1..].iter().any(|byte| b"[]".contains(byte)) { return &host[..colon]; }
     }
     host
 }

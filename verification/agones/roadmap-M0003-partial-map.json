@@ -21,9 +21,9 @@
       "schema": "Each DynamicMessage carries its descriptor and linked pool. Any resolves its type URL against that pool. Full generated source descriptor/handler adoption remains explicit later work.",
       "tasks": "Factory and codec spawn no tasks. Existing HTTP phase owns requests and connection drains. Callbacks borrow the active request; request return, response-body disposal and a dropped pending response head cancel its token. Normal server Shutdown does not cancel active requests early."
     },
-    "http_owner": "CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/clock/diagnostic/delay/log and SourceRequestBodyIo effects. RequestFields owns shared mutable method bytes, ContentLength and the current Body interface. The existing request/response phase separately retains one original transport RequestBody for response.reqBody discard/cleanup. ExpectContinue wrapper flags and its shared read/disable lock belong to that retained wrapper; H2 retains separate Continue state. SourceReadCloser is one per-request interface receiver, not a provider registry. SourceJsonDecoder retains one Reader and read-ahead buffer. Headers owns one shared byte-key map; HeaderValues retains slice bounds and shared backing. The existing SourceLogger serializes typed headers and original-byte strings. No task, competing lifecycle manager or general Go object layer is added.",
+    "http_owner": "Existing CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/body-I/O/clock/diagnostic/delay/log effects and existing request/connection phases. RequestFields owns method bytes, ContentLength, current Body, current optional SourceUrl, Host bytes and RequestURI bytes. SourceUrl owns one shared URL field value; Clone aliases the pointer and fields()/new copies the value into a different pointer. LogEntry retains the selected optional URL pointer until the existing SourceLogger serializes it. Method/Host/RequestURI log fields capture string bytes by value. The original transport RequestBody remains separately retained for server discard/cleanup. Headers and HeaderValues keep their existing map/slice owners. SourceUserinfo is immutable per source. URL data introduces no effect/provider registry, tasks, general Go object layer or competing lifecycle manager.",
     "http_tls_owner": "CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/clock/diagnostic/delay/log effects. SourceMux owns route data; listener/connection/request phases retain their existing resources. Headers owns one shared byte-key map; each HeaderValues view shares one backing array with independent source slice bounds. Response snapshots explicitly deep-copy. LogEntry retains typed header descriptors for the existing SourceLogger. Header data adds no task, general Go object layer, provider registry or lifecycle manager.",
-    "logging_scope": "UtilityRuntimeOwner retains SourceLogger/SourceErrorBackoff. LogEntry field copies retain typed shared Headers and SourceByteString original method/body bytes until the existing CGP emitter serializes. Source reader and HTTP lifecycle ownership stays in UtilityRuntimeProviders.",
+    "logging_scope": "Existing SourceLogger/SourceLogEmitter serializes shared Headers, retained optional SourceUrl pointers and immutable SourceByteString value fields. URL/Body/Request data is owned by the existing CGP HTTP context; no registry or lifecycle manager.",
     "production_package": "Existing util workspace package; Cargo lib entrypoint is rust-support/agones/src/utility_lib.rs",
     "queue_owner": "WorkerQueue owns locked worker/running counts and SyncHandler. SourceQueueContext owns one shared queue state and limiter instance. Queue actor/worker tasks live in the weak-referenced utility parent scope. Ready state and limiter state remain separate owners; Done and Forget are distinct. Stable heap nodes are shared by arena identity/map references rather than reinserting mutated keys.",
     "signal_owner": "One SourceSignalState/Hub and common CGP subscriber select Unix sigaction/pipe or Windows console/atomic-waker Session at compile time. Each owns a process lease, subscription channels, reader and stop/quiescence/restore path. Terminal Windows callbacks are OS/process lifetime, with no captured Rust lease; actual application cleanup/exit remains M0027.",
@@ -115,7 +115,12 @@
       "SourceRequestBodyIo",
       "request_body_value::{ContinueState,ExpectBody,Http2Body}",
       "SourceJsonDecoder",
-      "SourceByteString"
+      "SourceByteString",
+      "SourceUrl",
+      "SourceUrlFields",
+      "SourceUserinfo",
+      "SourceLogValue::Url",
+      "apiserver::CRDHandler(namespace Bytes)"
     ]
   },
   "dependency_adoption": "Native backend declarations retain existing root-lock HTTP/TLS/Tokio/JSON/YAML/base64/libc identities. comprende and better_comprehension reuse the already vendored first-generation sources; five exact package blocks (including clean-macro-docs/if_chain/syn 1) were adopted from the existing isolated CPG lock. Direct util dependency bookkeeping was authored manually, including base64 0.22.1 disambiguation. No resolver, compiler, formatter, macro/API probe or package execution ran. This continuation declares existing root errno 0.3.14 and regex 1.13.1 identities for signal-safe errno restoration and source install-hint Unicode category projection; only util direct lock bookkeeping changed. No resolver or executable assurance ran. Gateway adds prost-reflect 0.14.7 reflection/wire APIs only, with existing once_cell/prost 0.13.5/prost-types identities. One exact lock package was authored from the registry index/source archive without Cargo resolution. Optional serde/serde-value/ordered-float candidates were read but are not adopted. No new tool was installed. Platform continuation declares the existing root windows-sys 0.61.2 package only for cfg(windows), using the pinned FFI modules and existing futures/Tokio primitives. No package block/version upgrade, resolver or tool execution. No dependencies changed in this batch. The fswatch support selects pinned gopkg.in/fsnotify.v1 1.4.7 and adds its literal license; newer fsnotify 1.9 candidate semantics have no utility completion credit. This batch vendors the exact existing Hyper 1.12.0 source archive, preserving license/base file hashes and adding opt-in informational support in its existing H1/H2 drivers. Root Cargo patch/local lock source bookkeeping replaces that node registry identity without a version upgrade or Cargo resolution. Existing h2 0.4.20 informational APIs are bound to their original crate archive. No new tool/install/resolver or project execution.",
@@ -124,7 +129,7 @@
   "entries_with_authored_source": 14,
   "files": [
     {
-      "authored_sha256": "7200fece24d3b0e24345e30a2da5441fa3b9d3eb479796daa80939e8bcdda9de",
+      "authored_sha256": "ffb6d799cf1b0a570710b1d97e64e3945ce99b3714e6815c60c20e4ed2ba367c",
       "authored_symbols_or_groups": [
         "NewAPIServer OpenAPI-v2/v3/root discovery registration and startup log",
         "AddAPIResource shared discovery list, namespace prefix and delegate overwrite",
@@ -146,14 +151,21 @@
         "SourceBody retains NoBody, native, H1 expectContinueReader, H2 reader, io.NopCloser(bytes.Reader), nil or one custom SourceReadCloser receiver. Cloning retains the interface receiver/cursor; replacing Request.Body does not mutate the retained original body or close the replacement during server cleanup.",
         "H1 framing inspects current Body type/closed/remaining/expect-EOF state, but io.CopyN discard and finishRequest Close use the original response.reqBody. The final early-close type assertion applies only to the current native H1 Body, excluding expectation wrappers and custom readers.",
         "SourceBodyRead retains data and an optional exact EOF/failure category together. Native known-length H1 reads pair their last data with EOF while holding the body lock; expectation EOF is set from that read result. H2 keeps its subsequent-read EOF behavior. Empty successful reads are not EOF.",
-        "H1 byte suppression and final length/reuse checks read the current Method; a previously selected chunked response still emits its final chunk after Method becomes HEAD. Source Empty headers use a native unframed body kept alive through the source phase, allowing subsequent Method reassignment without native length-zero truncation."
+        "H1 byte suppression and final length/reuse checks read the current Method; a previously selected chunked response still emits its final chunk after Method becomes HEAD. Source Empty headers use a native unframed body kept alive through the source phase, allowing subsequent Method reassignment without native length-zero truncation.",
+        "RequestFields now owns optional SourceUrl, Host and RequestURI bytes in addition to method/ContentLength/Body. HttpRequest no longer stores separate path/host/query or precomputed JSON snapshots; its path and escaped-path accessors read the current URL owner.",
+        "SourceUrl Clone retains pointer identity; fields() copies the URL value and new(fields) creates a different URL pointer while retaining immutable strings and Userinfo. URL replacement and in-place field mutation are distinct. Nil URL logs serialize null; source URL dereferences retain a panic boundary.",
+        "SourceUrlFields retains arbitrary bytes in Scheme/Opaque/Host/Path/Fragment/RawQuery/RawPath/RawFragment plus User/ForceQuery/OmitHost. URL JSON follows the common Go1.26.5/Go1.27.1 field declaration order and existing SourceByteString escaping. Non-nil immutable Userinfo serializes its empty exported-field shape rather than username/password data.",
+        "SourceLogValue::Url and LogEntry::with_url retain the selected URL pointer through field-map copies. HTTPS LogRequest and webhook error logging serialize later mutations of that same object; Request.URL replacement does not retarget saved entries. Host and RequestURI use original-byte string log fields.",
+        "Modern and legacy muxes read current URL.Path/RawPath/Host/RawQuery and byte Host/RequestURI values. EscapedPath validates the current RawPath hint against current decoded Path. Host comparisons and port stripping retain bytes instead of creating lossy text projections; routing/profile/parser gaps remain explicit.",
+        "HTTPS default root matching and APIServer namespace/resource extraction consume current URL path bytes. CRDHandler namespace and delegate lookup keys now retain Bytes, including malformed/non-UTF8 path values. General Go error Display and typed resource/model boundaries remain separate gaps."
       ],
       "destination": "agones-rs/pkg/util/apiserver/apiserver.rs",
       "remaining": [
         "Complete Go unstable-sort/ParseFloat media negotiation boundary; current parser retains the source comparator and q=0 behavior but insertion order is not claimed equal for all clauses.",
         "Exact Go YAML scalar/format profile and public source scheme/codec caller profiles need reconciliation. Native encoders are authored, not run.",
         "Complete HTTP request/mux/response boundary and actual extension-controller/CRD-handler adoption; existing implementations remain preserved.",
-        "Further HTTP boundaries/native package source/remaining profiles: verification/agones/roadmap-M0003-http-authoring.json and verification/agones/roadmap-M0003-hyper-adoption.json"
+        "Further HTTP boundaries/native package source/remaining profiles: verification/agones/roadmap-M0003-http-authoring.json and verification/agones/roadmap-M0003-hyper-adoption.json",
+        "Namespace/resource routing and callback data retain bytes; exact arbitrary-byte error Display and public typed resource/model/registration inputs remain part of the shared source string/model profiles."
       ],
       "shared_http_authoring_record": "verification/agones/roadmap-M0003-http-authoring.json",
       "shared_native_http_adoption_record": "verification/agones/roadmap-M0003-hyper-adoption.json",
@@ -257,7 +269,7 @@
       "status": "AUTHORED_UNVERIFIED_PARTIAL"
     },
     {
-      "authored_sha256": "89c066c1692035c0ee500ac80c336fda9d7e910f9860e02a44ba3e09886d280b",
+      "authored_sha256": "5700eb42eae4c9733c7021a2008740a0f89ef09a016f8dbe551cc3ea956ca75b",
       "authored_symbols_or_groups": [
         "sensitiveHeaders and redactSensitiveHeaders key-preserving projection with shared non-sensitive values",
         "LogRequest method/URL/host/redacted headers/requestURI",
@@ -280,7 +292,12 @@
         "SourceBodyRead retains data and an optional exact EOF/failure category together. Native known-length H1 reads pair their last data with EOF while holding the body lock; expectation EOF is set from that read result. H2 keeps its subsequent-read EOF behavior. Empty successful reads are not EOF.",
         "H1 byte suppression and final length/reuse checks read the current Method; a previously selected chunked response still emits its final chunk after Method becomes HEAD. Source Empty headers use a native unframed body kept alive through the source phase, allowing subsequent Method reassignment without native length-zero truncation.",
         "ReadAll retains its initial Reader, starts at 512 logical source bytes, applies source byte-slice nextslicecap/noscan size-class growth and consumes returned bytes before an error. Its low-level result retains partial bytes on failure. Form parsing wraps the retained Reader with a 10MiB+1 limit, preserving ReadAll error precedence before size rejection.",
-        "SourceByteString and SourceLogValue::Bytes preserve original method/body bytes until Go JSON escaping, including per-invalid-byte escapes. FourZeroFour captures the successful-path deferred Body receiver before logging/writing; the existing CGP body-I/O capability closes that retained receiver."
+        "SourceByteString and SourceLogValue::Bytes preserve original method/body bytes until Go JSON escaping, including per-invalid-byte escapes. FourZeroFour captures the successful-path deferred Body receiver before logging/writing; the existing CGP body-I/O capability closes that retained receiver.",
+        "RequestFields now owns optional SourceUrl, Host and RequestURI bytes in addition to method/ContentLength/Body. HttpRequest no longer stores separate path/host/query or precomputed JSON snapshots; its path and escaped-path accessors read the current URL owner.",
+        "SourceUrl Clone retains pointer identity; fields() copies the URL value and new(fields) creates a different URL pointer while retaining immutable strings and Userinfo. URL replacement and in-place field mutation are distinct. Nil URL logs serialize null; source URL dereferences retain a panic boundary.",
+        "SourceUrlFields retains arbitrary bytes in Scheme/Opaque/Host/Path/Fragment/RawQuery/RawPath/RawFragment plus User/ForceQuery/OmitHost. URL JSON follows the common Go1.26.5/Go1.27.1 field declaration order and existing SourceByteString escaping. Non-nil immutable Userinfo serializes its empty exported-field shape rather than username/password data.",
+        "SourceLogValue::Url and LogEntry::with_url retain the selected URL pointer through field-map copies. HTTPS LogRequest and webhook error logging serialize later mutations of that same object; Request.URL replacement does not retarget saved entries. Host and RequestURI use original-byte string log fields.",
+        "Modern and legacy muxes read current URL.Path/RawPath/Host/RawQuery and byte Host/RequestURI values. EscapedPath validates the current RawPath hint against current decoded Path. Host comparisons and port stripping retain bytes instead of creating lossy text projections; routing/profile/parser gaps remain explicit."
       ],
       "destination": "agones-rs/pkg/util/https/https.rs",
       "remaining": [
@@ -298,7 +315,7 @@
       "status": "AUTHORED_UNVERIFIED_PARTIAL"
     },
     {
-      "authored_sha256": "af7895fd9cc9724ea1a7f7ff4ae251a4b832a0e22153a65737d0254362404dd5",
+      "authored_sha256": "72c44f2f2f9bb3eb8e2dab6137cc39ed43d6e2d7d6abfa0fe02a7764d3ebd8b3",
       "authored_symbols_or_groups": [
         "certServer single mutex-protected dynamic certificate owner and getCertificate",
         "NewServer/setupServer hardcoded initial /certs/server.crt and server.key, retained previous cert on failure and root/default handler",
@@ -318,7 +335,12 @@
         "SourceBody retains NoBody, native, H1 expectContinueReader, H2 reader, io.NopCloser(bytes.Reader), nil or one custom SourceReadCloser receiver. Cloning retains the interface receiver/cursor; replacing Request.Body does not mutate the retained original body or close the replacement during server cleanup.",
         "H1 framing inspects current Body type/closed/remaining/expect-EOF state, but io.CopyN discard and finishRequest Close use the original response.reqBody. The final early-close type assertion applies only to the current native H1 Body, excluding expectation wrappers and custom readers.",
         "SourceBodyRead retains data and an optional exact EOF/failure category together. Native known-length H1 reads pair their last data with EOF while holding the body lock; expectation EOF is set from that read result. H2 keeps its subsequent-read EOF behavior. Empty successful reads are not EOF.",
-        "H1 byte suppression and final length/reuse checks read the current Method; a previously selected chunked response still emits its final chunk after Method becomes HEAD. Source Empty headers use a native unframed body kept alive through the source phase, allowing subsequent Method reassignment without native length-zero truncation."
+        "H1 byte suppression and final length/reuse checks read the current Method; a previously selected chunked response still emits its final chunk after Method becomes HEAD. Source Empty headers use a native unframed body kept alive through the source phase, allowing subsequent Method reassignment without native length-zero truncation.",
+        "RequestFields now owns optional SourceUrl, Host and RequestURI bytes in addition to method/ContentLength/Body. HttpRequest no longer stores separate path/host/query or precomputed JSON snapshots; its path and escaped-path accessors read the current URL owner.",
+        "SourceUrl Clone retains pointer identity; fields() copies the URL value and new(fields) creates a different URL pointer while retaining immutable strings and Userinfo. URL replacement and in-place field mutation are distinct. Nil URL logs serialize null; source URL dereferences retain a panic boundary.",
+        "SourceUrlFields retains arbitrary bytes in Scheme/Opaque/Host/Path/Fragment/RawQuery/RawPath/RawFragment plus User/ForceQuery/OmitHost. URL JSON follows the common Go1.26.5/Go1.27.1 field declaration order and existing SourceByteString escaping. Non-nil immutable Userinfo serializes its empty exported-field shape rather than username/password data.",
+        "SourceLogValue::Url and LogEntry::with_url retain the selected URL pointer through field-map copies. HTTPS LogRequest and webhook error logging serialize later mutations of that same object; Request.URL replacement does not retarget saved entries. Host and RequestURI use original-byte string log fields.",
+        "Modern and legacy muxes read current URL.Path/RawPath/Host/RawQuery and byte Host/RequestURI values. EscapedPath validates the current RawPath hint against current decoded Path. Host comparisons and port stripping retain bytes instead of creating lossy text projections; routing/profile/parser gaps remain explicit."
       ],
       "destination": "agones-rs/pkg/util/https/server.rs",
       "remaining": [
@@ -357,7 +379,12 @@
         "SourceBody retains NoBody, native, H1 expectContinueReader, H2 reader, io.NopCloser(bytes.Reader), nil or one custom SourceReadCloser receiver. Cloning retains the interface receiver/cursor; replacing Request.Body does not mutate the retained original body or close the replacement during server cleanup.",
         "H1 framing inspects current Body type/closed/remaining/expect-EOF state, but io.CopyN discard and finishRequest Close use the original response.reqBody. The final early-close type assertion applies only to the current native H1 Body, excluding expectation wrappers and custom readers.",
         "SourceBodyRead retains data and an optional exact EOF/failure category together. Native known-length H1 reads pair their last data with EOF while holding the body lock; expectation EOF is set from that read result. H2 keeps its subsequent-read EOF behavior. Empty successful reads are not EOF.",
-        "H1 byte suppression and final length/reuse checks read the current Method; a previously selected chunked response still emits its final chunk after Method becomes HEAD. Source Empty headers use a native unframed body kept alive through the source phase, allowing subsequent Method reassignment without native length-zero truncation."
+        "H1 byte suppression and final length/reuse checks read the current Method; a previously selected chunked response still emits its final chunk after Method becomes HEAD. Source Empty headers use a native unframed body kept alive through the source phase, allowing subsequent Method reassignment without native length-zero truncation.",
+        "RequestFields now owns optional SourceUrl, Host and RequestURI bytes in addition to method/ContentLength/Body. HttpRequest no longer stores separate path/host/query or precomputed JSON snapshots; its path and escaped-path accessors read the current URL owner.",
+        "SourceUrl Clone retains pointer identity; fields() copies the URL value and new(fields) creates a different URL pointer while retaining immutable strings and Userinfo. URL replacement and in-place field mutation are distinct. Nil URL logs serialize null; source URL dereferences retain a panic boundary.",
+        "SourceUrlFields retains arbitrary bytes in Scheme/Opaque/Host/Path/Fragment/RawQuery/RawPath/RawFragment plus User/ForceQuery/OmitHost. URL JSON follows the common Go1.26.5/Go1.27.1 field declaration order and existing SourceByteString escaping. Non-nil immutable Userinfo serializes its empty exported-field shape rather than username/password data.",
+        "SourceLogValue::Url and LogEntry::with_url retain the selected URL pointer through field-map copies. HTTPS LogRequest and webhook error logging serialize later mutations of that same object; Request.URL replacement does not retarget saved entries. Host and RequestURI use original-byte string log fields.",
+        "Modern and legacy muxes read current URL.Path/RawPath/Host/RawQuery and byte Host/RequestURI values. EscapedPath validates the current RawPath hint against current decoded Path. Host comparisons and port stripping retain bytes instead of creating lossy text projections; routing/profile/parser gaps remain explicit."
       ],
       "destination": "agones-rs/pkg/util/httpserver/server.rs",
       "remaining": [
@@ -440,7 +467,8 @@
         "Non-proto enum symbolic rejection, float64-to-int32 explicit source numeric profile; null/empty/EOF/pre-allocation and partial container mutations are distinct",
         "Shared first-value framing with scalar lookahead/retained following bytes, container immediate completion, max depth, UnexpectedEOF and sticky framing/body errors; semantic decode errors permit later values",
         "EnumTargetFactory requires explicit EnumCastProfile: legacy x86 CVTT, Go 1.27 AMD64 ConvertHash saturating branch, or ARM64 FCVTZS. It never infers the source profile from the Rust build host.",
-        "SourceJsonDecoder is shared by webhook and gateway consumers: retain the Reader, compact only on refill, grow logical capacity by 2*cap+512, scan data before its paired read error, and discard that local error if a value completes. Sticky framing/read failures and successful semantic decoding remain separate."
+        "SourceJsonDecoder is shared by webhook and gateway consumers: retain the Reader, compact only on refill, grow logical capacity by 2*cap+512, scan data before its paired read error, and discard that local error if a value completes. Sticky framing/read failures and successful semantic decoding remain separate.",
+        "Gateway dispatch captures current URL.Path before its ParseForm/body reader call, as in source. Form query parsing reads current URL.RawQuery after the body read and permits nil URL. Gateway component/parameter/form text representations, form caches/partial states and parameter-limit binding remain explicit unfinished work."
       ],
       "destination": "agones-rs/pkg/util/runtime/runtime.rs",
       "remaining": [
@@ -485,7 +513,7 @@
       "status": "AUTHORED_UNVERIFIED_PARTIAL"
     },
     {
-      "authored_sha256": "8001eb8de0c4a8dfcb18e91f725ea02acd747f39d6a46f73f3009a1cdd87b8e7",
+      "authored_sha256": "f728be5333aecae9018da4ce9bc09a278907e10d2bfa6cc56a77566c9c878da5",
       "authored_symbols_or_groups": [
         "WebHook/operationHandler/Handler typed declarations and one shared ordered handler owner",
         "NewWebHook logger/error initialization and mux ownership",
@@ -508,7 +536,12 @@
         "H1 framing inspects current Body type/closed/remaining/expect-EOF state, but io.CopyN discard and finishRequest Close use the original response.reqBody. The final early-close type assertion applies only to the current native H1 Body, excluding expectation wrappers and custom readers.",
         "SourceBodyRead retains data and an optional exact EOF/failure category together. Native known-length H1 reads pair their last data with EOF while holding the body lock; expectation EOF is set from that read result. H2 keeps its subsequent-read EOF behavior. Empty successful reads are not EOF.",
         "H1 byte suppression and final length/reuse checks read the current Method; a previously selected chunked response still emits its final chunk after Method becomes HEAD. Source Empty headers use a native unframed body kept alive through the source phase, allowing subsequent Method reassignment without native length-zero truncation.",
-        "SourceJsonDecoder is shared by webhook and gateway consumers: retain the Reader, compact only on refill, grow logical capacity by 2*cap+512, scan data before its paired read error, and discard that local error if a value completes. Sticky framing/read failures and successful semantic decoding remain separate."
+        "SourceJsonDecoder is shared by webhook and gateway consumers: retain the Reader, compact only on refill, grow logical capacity by 2*cap+512, scan data before its paired read error, and discard that local error if a value completes. Sticky framing/read failures and successful semantic decoding remain separate.",
+        "RequestFields now owns optional SourceUrl, Host and RequestURI bytes in addition to method/ContentLength/Body. HttpRequest no longer stores separate path/host/query or precomputed JSON snapshots; its path and escaped-path accessors read the current URL owner.",
+        "SourceUrl Clone retains pointer identity; fields() copies the URL value and new(fields) creates a different URL pointer while retaining immutable strings and Userinfo. URL replacement and in-place field mutation are distinct. Nil URL logs serialize null; source URL dereferences retain a panic boundary.",
+        "SourceUrlFields retains arbitrary bytes in Scheme/Opaque/Host/Path/Fragment/RawQuery/RawPath/RawFragment plus User/ForceQuery/OmitHost. URL JSON follows the common Go1.26.5/Go1.27.1 field declaration order and existing SourceByteString escaping. Non-nil immutable Userinfo serializes its empty exported-field shape rather than username/password data.",
+        "SourceLogValue::Url and LogEntry::with_url retain the selected URL pointer through field-map copies. HTTPS LogRequest and webhook error logging serialize later mutations of that same object; Request.URL replacement does not retarget saved entries. Host and RequestURI use original-byte string log fields.",
+        "Modern and legacy muxes read current URL.Path/RawPath/Host/RawQuery and byte Host/RequestURI values. EscapedPath validates the current RawPath hint against current decoded Path. Host comparisons and port stripping retain bytes instead of creating lossy text projections; routing/profile/parser gaps remain explicit."
       ],
       "destination": "agones-rs/pkg/util/webhooks/webhooks.rs",
       "remaining": [
@@ -568,7 +601,8 @@
       "required": [
         "Complete Go unstable-sort/ParseFloat media negotiation boundary; current parser retains the source comparator and q=0 behavior but insertion order is not claimed equal for all clauses.",
         "Exact Go YAML scalar/format profile and public source scheme/codec caller profiles need reconciliation. Native encoders are authored, not run.",
-        "Complete HTTP request/mux/response boundary and actual extension-controller/CRD-handler adoption; existing implementations remain preserved."
+        "Complete HTTP request/mux/response boundary and actual extension-controller/CRD-handler adoption; existing implementations remain preserved.",
+        "Byte-preserving namespace/resource callback and delegate keys are authored; source arbitrary-byte diagnostics and typed registration/model interfaces remain open."
       ],
       "source": "pkg/util/apiserver/apiserver.go"
     },
@@ -676,8 +710,8 @@
       "id": "M0003-HTTP-BOUNDARY-PROFILES",
       "required": [
         "Complete exact Go quote/caller/registration/conflict and panic/stack diagnostics, source Unicode tables and empty CONNECT path-segment/tree-alias configurations. Native default stdlog formatting is authored, but complete global stdlog flags/output/caller identity and native failure behavior remain partial.",
-        "Complete net/url and HTTP parsing/rejection across host/authority/opaque/absolute/CONNECT/invalid bytes and target grammar, and retain byte paths through gateway/admission/discovery/log consumers. HttpRequest.path remains a text compatibility projection.",
-        "Complete mutable URL/path/host/requestURI and log-pointer replacement/alias profiles. Method bytes, ContentLength and Body now share RequestFields; original versus current body ownership, retained reader handles and paired data/error reads are authored. Header range additions/nested Trailer: iteration, pointer identity, nil/panic/stack/bounds/allocator and custom Reader failure profiles, all relevant concurrency schedules and exact source ABI/version/configuration selection remain open. Go strings.ToUpper Unicode versus Rust conversion in gateway override remains explicit. Captured wantsClose/wants10 flags are intentional pre-handler snapshots.",
+        "Complete net/url and HTTP parsing/rejection across host/authority/opaque/absolute/CONNECT/invalid bytes and target grammar. Current request URL, mux, discovery namespace and URL/host/requestURI logs retain bytes; gateway component/capture/form strings, typed models and error/diagnostic byte profiles remain open.",
+        "Finish remaining source request-field/copy/Clone/alias profiles, including relevant protocol/Close/Trailer/TransferEncoding/Form/PostForm mutation and native consumption. Method/ContentLength/Body/URL/Host/RequestURI shared fields, retained URL-pointer logs and original/current body ownership are authored, not assured. Header range additions/nested Trailer: iteration, pointer/nil/panic/stack/bounds/allocator and custom Reader failure profiles, concurrency schedules and exact source ABI/version/configuration selection remain open. Gateway strings.ToUpper Unicode versus Rust conversion remains explicit; wantsClose/wants10 retain intentional pre-handler snapshots.",
         "Reconcile authored request trailer maps/cookies and header JSON/alias operations across all selected profiles; native parser/rejection/1.0 keep-alive/upgrade, H2 header ordering/HPACK/GOAWAY and body Close/read/EOF/abortPendingRead/Continue/full-duplex races. Complete native readahead/partial-write/flush/reset/cancellation/error timing and diagnostics. Source code and API reading do not establish native parity.",
         "Finish listener named-service/bind and independent listener-close/shutdown timing, native error origin (syscall-wrapped versus direct Errno or poll/init failures), platform/native error display and complete retry profiles. Shared temporary-syscall accept backoff is authored for plain/TLS, but does not establish full Go listener equivalence. M0027 source tool/GODEBUG and actual production parent adoption remain required.",
         "Retain every other M0003 filesystem/signal/gateway/config/queue/logging/CRD/features/admission/body gap. Global BOTH-route gate stays CLOSED; no compiler, test, formatter/linter, native/API probe, application, generator validation, proof or CI ran."
@@ -691,7 +725,7 @@
         "Numeric and timestamp/base64 grammar branches now have source-derived implementations. Native decimal float conversion, float output rendering and source Go/Rust target-profile rounding/NaN/negative-zero/bounds still need exact profile reconciliation and later assurance; no successful run or proof is claimed.",
         "Reconcile Any embedded wire recursion with prost-reflect decoding limits, required-field error traversal/order, proto2 group/extension/MessageSet profiles and deterministic extension/oneof ordering. Native Any map keys have explicit deterministic emission; that alone is not full source wire-parity credit.",
         "Typed non-proto decoders are authored and consumed by GatewayDecoder::decode / GatewayJsonPb::unmarshal_into. Finish required named model/custom serde and source panic/error interfaces without inventing a general Go object layer. EnumTargetFactory now requires a source numeric profile explicitly; source-owner integration must bind it to the exact Go version/target/ConvertHash setting. No Rust-host fallback or source-profile credit is inferred. Source JSON rendering/alias/nil details remain explicit rather than inferred from serde success.",
-        "GatewayPattern consumes compiled generator opcodes in default Legacy unescaping mode. HandlePath parser and nondefault configurable gateway APIs are not implemented by this fixed factory. Reconcile HTTP byte path/RawPath/CONNECT/escape, method override Unicode, map iteration choice and form parse/error/partial-state profiles.",
+        "GatewayPattern consumes compiled generator opcodes in default Legacy unescaping mode. HandlePath parser and nondefault configurable gateway APIs are not implemented by this fixed factory. Reconcile HTTP byte path/RawPath/CONNECT/escape, method override Unicode, map iteration choice and form parse/error/partial-state profiles. Preserve original gateway path components/pool/captures/form bytes; implement Request.Form/PostForm nil/shared caches and partial values/error precedence, MIME/maxBytesReader branches and source urlParamsWithinMax/GODEBUG parameter-limit binding. Current ParseQuery stops early on errors and text conversion is lossy; neither receives parity credit.",
         "Forwarded gRPC server headers/trailers, incoming context/header matching, deadlines/status wrapping/response_body selection and actual SDK/allocator generated request mappings and handlers remain with source-owned M0025/M0027 integration. The real raw gateway callback can already use ResponseWriter; this library registration is not those callers adoption.",
         "Finish required shared HTTP/TLS/fswatch/signal/platform/error/logging/queue/configuration profiles in the M0003 partial map. All implementation and generated outputs across both routes remain required before any assurance."
       ],
@@ -703,13 +737,13 @@
   "milestone_id": "M0003",
   "native_hyper_adoption_record": "verification/agones/roadmap-M0003-hyper-adoption.json",
   "owned_entry_count": 14,
-  "payload_identity_refreshed_at": "2026-10-27T06:39:26.358935+00:00",
+  "payload_identity_refreshed_at": "2026-10-27T07:01:00.605955+00:00",
   "payload_sha256": {
     "Cargo.lock": "1d2c5f632a6a590af119a16f3ff926d89bcfdaedde63a265fd185c8d406745a9",
     "Cargo.toml": "fd4401820492ab3209f748949abe5327e974d6c8d892a510803943391d6a2a18",
     "agones-rs/pkg/util/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/apiserver/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
-    "agones-rs/pkg/util/apiserver/apiserver.rs": "7200fece24d3b0e24345e30a2da5441fa3b9d3eb479796daa80939e8bcdda9de",
+    "agones-rs/pkg/util/apiserver/apiserver.rs": "ffb6d799cf1b0a570710b1d97e64e3945ce99b3714e6815c60c20e4ed2ba367c",
     "agones-rs/pkg/util/crd/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/crd/crd.rs": "86d59b98438b2a1e905fed4fa30f5990048c35c90ffe49e86ae40adaac3144f5",
     "agones-rs/pkg/util/doc.rs": "ce08fe982c04e9f77c87ec3c43886a6c88e95693e19b893289c77d7902b5edfa",
@@ -718,8 +752,8 @@
     "agones-rs/pkg/util/fswatch/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/fswatch/fswatch.rs": "b190b19ca16dc78085ae4bee81c4deb3ebb512b6f58201df3ee0364db32ab3a9",
     "agones-rs/pkg/util/https/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
-    "agones-rs/pkg/util/https/https.rs": "89c066c1692035c0ee500ac80c336fda9d7e910f9860e02a44ba3e09886d280b",
-    "agones-rs/pkg/util/https/server.rs": "af7895fd9cc9724ea1a7f7ff4ae251a4b832a0e22153a65737d0254362404dd5",
+    "agones-rs/pkg/util/https/https.rs": "5700eb42eae4c9733c7021a2008740a0f89ef09a016f8dbe551cc3ea956ca75b",
+    "agones-rs/pkg/util/https/server.rs": "72c44f2f2f9bb3eb8e2dab6137cc39ed43d6e2d7d6abfa0fe02a7764d3ebd8b3",
     "agones-rs/pkg/util/httpserver/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/httpserver/server.rs": "8ad187943f0959110391d22330a931065557dea048891949509de22c43d7788d",
     "agones-rs/pkg/util/logfields/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
@@ -730,7 +764,7 @@
     "agones-rs/pkg/util/signals/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/signals/signals.rs": "f14d91d1ef4262484cd733e04c455e6b0b6f35a7e7786403d376b3714e61f90b",
     "agones-rs/pkg/util/webhooks/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
-    "agones-rs/pkg/util/webhooks/webhooks.rs": "8001eb8de0c4a8dfcb18e91f725ea02acd747f39d6a46f73f3009a1cdd87b8e7",
+    "agones-rs/pkg/util/webhooks/webhooks.rs": "f728be5333aecae9018da4ce9bc09a278907e10d2bfa6cc56a77566c9c878da5",
     "agones-rs/pkg/util/workerqueue/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/workerqueue/workerqueue.rs": "55fecc4e6348c3fd4b40e9aa9c4320b5a94bba0a4bf7a84c8ca089b4c36d5bab",
     "crates/util/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
@@ -751,30 +785,31 @@
     "rust-support/agones/src/utility_fswatch_fen.rs": "d5ffcbf1fef1be3b40b0fd06dfe14a4ebdd5e954a02c143deccbfba4a16a767d",
     "rust-support/agones/src/utility_fswatch_kqueue.rs": "67b1963fa38453e9c1ad968648b12e0c7e747dddca7aa3613f44de81d4ed00c3",
     "rust-support/agones/src/utility_fswatch_windows.rs": "937bc4ab04bea8bce002efc0d82c5067d4d9b94f5313eb60c0a73572f858662e",
-    "rust-support/agones/src/utility_gateway.rs": "d730cb437d534013daf51b9071211fd4d8e649f80afaa2cb2c06180f5f9d4588",
+    "rust-support/agones/src/utility_gateway.rs": "64b965e7981316b3d8007367e16dd805573f12fb1485cc55ac636fd57012e1c3",
     "rust-support/agones/src/utility_gateway_framing.rs": "43dd0a6375b726182af52243e45152e7dcf756ce4c27ba4f9cb4cb5b77127326",
     "rust-support/agones/src/utility_gateway_json.rs": "b6aac4a28d90ea4bad7362737cfe7132fc5a72ce81cbd6bd492441798aba48f7",
     "rust-support/agones/src/utility_gateway_scalar.rs": "18c20da7322147fe5db79503e11040d745c4a8563580aed6b28cffd3dbab7f19",
     "rust-support/agones/src/utility_gateway_targets.rs": "3d3d8607f17d4db8f9c6d70dc46793d3d35615e4d887a3f236ee57cda57d8f61",
     "rust-support/agones/src/utility_gateway_wire.rs": "234e6de84955c4240f153c0dece7a5594733562325bf7113998a794b9af0b113",
     "rust-support/agones/src/utility_gateway_wkt.rs": "4cb0f6fa00d5c553911e8eaaca563d17112cfd5123a669c2e180eb02142ed42b",
-    "rust-support/agones/src/utility_http.rs": "5409c19ca779ee057da0aa170b49bc309665a702a2c8a9c941fdea14711299de",
+    "rust-support/agones/src/utility_http.rs": "6a6c66ec9dd2005baa324485f9cdb14be2f710a95115e58be2a5ec1e17a1c9b2",
     "rust-support/agones/src/utility_http_body.rs": "af7e4eac5e2623b697f63342445b01b13cba8474310912e8befd823aab9c53da",
     "rust-support/agones/src/utility_http_framing.rs": "f7b894456029fcedad1bc7dee9feb97b55745c94921e921a0dc99b437c269104",
     "rust-support/agones/src/utility_http_header_capacity.rs": "e1387260668f2eafda523d8ed3c1b646c6e471922c71a29e80c26431f625f9a4",
     "rust-support/agones/src/utility_http_headers.rs": "aab3e4437efcc1b6001cefd5a69183c5ac20113ed4052d364e09e4085760304f",
     "rust-support/agones/src/utility_http_listener.rs": "5ca5df95a2e84e16fbe280b2afe4843bde365936a068a910d162a23112b9c460",
-    "rust-support/agones/src/utility_http_mux.rs": "2a1a2dd2b478c6024259b240d9902c8025e71fdda424880a31ce92a46fb4282c",
+    "rust-support/agones/src/utility_http_mux.rs": "a842e469d51dd5db09f8e62f9c8cc350eb948466bfa95574665c10d1b4ad2991",
     "rust-support/agones/src/utility_http_request_body.rs": "27ce8a1de3fee549c020ff2aa6010aa57313c2e14160e1939f5e03ea8bc14385",
-    "rust-support/agones/src/utility_http_request_fields.rs": "145d31a5ff97af740eae510d38a2e88677ca60322f73335f91d71a956f15c68d",
+    "rust-support/agones/src/utility_http_request_fields.rs": "a5becc7c0f2c05d8a493727db2ae1a7d7c65746d25eb9f3aa100506f11aeb396",
     "rust-support/agones/src/utility_http_response.rs": "1fa0e700813f87d652979e57da25e723dadadcca897a9e88eacbd92940d97207",
     "rust-support/agones/src/utility_http_sniff.rs": "ef1baa72b7bb66ea833ef7e15858766313c8937d13e0d18bf6bf01f8f2a96042",
     "rust-support/agones/src/utility_http_status.rs": "d310b7f9c71780a03655b4337a444eb7b7d5da3e311585c943af51e8b3a83e3a",
     "rust-support/agones/src/utility_http_trailers.rs": "6a79b0f83cb592981900f92dcb6dc414e176a38ae3f7dd2c83e7bedbe80ac554",
+    "rust-support/agones/src/utility_http_url.rs": "9c6fca7c6f52999f31679ba393c494ed3f543e02dbe1a7a6449f26d4b4fbb1c4",
     "rust-support/agones/src/utility_https_module.rs": "3b1fc4bf94a5b016cce0c661c3f51d037b36e0718eefd1c17a55e309c878fc2a",
     "rust-support/agones/src/utility_lib.rs": "145614145fd542b2651e8fa73e652e48024c512ac9d389997c0942cd4b2a3f3d",
     "rust-support/agones/src/utility_lifecycle.rs": "5d2fdc2fc65f04f3fcc581edb0203b54cb8314717f6976c3d7404f018a0a26af",
-    "rust-support/agones/src/utility_logging.rs": "ce729883a1d9da07f2236b3685f3b4405c5a94af8a0198316c44d2ea928eb1ff",
+    "rust-support/agones/src/utility_logging.rs": "a055f664578d49d0a7b985468446218a8e13f0a4512470b05ab3c7a1190ea043",
     "rust-support/agones/src/utility_modules.rs": "dc7edddb040828e3b8d9f2aa4d9bb9ad17ffd848a9a90730f09955b6b4b44c4d",
     "rust-support/agones/src/utility_queue.rs": "21c1c20f9e50ac5191cfa82cf8eb80c990ad1b5187de409e95d8bc720d69d9e7",
     "rust-support/agones/src/utility_queue_limiters.rs": "6bec0da3ae6f9d1068b738c7be445b18a34bc17a211f82fdf15b0d605848db9d",
@@ -790,15 +825,15 @@
     "third_party/first-generation/better-comprehension/src/lib.rs": "f47ba11ce4cd4d6b7424ba0cffca669018e52e5541fb32f83d655aba2ce364b3",
     "third_party/first-generation/comprende/Cargo.toml": "01f7068b9cd9ec5b27b7df77709117e37dc991cd32597dbf24cbde9074f5ceab",
     "third_party/first-generation/comprende/src/lib.rs": "e8d8da04ca3048bdd7275b1ca77b5a78c4abfd999ecb763d82a615f4aeb0fb96",
-    "verification/agones/roadmap-M0003-gateway-authoring.json": "96df4eba29aff10b5b92c854dde57e7b113b40d9fc0fc51607bee332f0d08a2d",
-    "verification/agones/roadmap-M0003-http-authoring.json": "bd8c79fbfacd6770fdc737eca4f1e9e41280e4303debf9b11a7bcaf64023143c",
-    "verification/agones/roadmap-M0003-hyper-adoption.json": "f068f041429d94681c89d3477ac131b12ffd9272146ad3d05e05ea27cdabf75d",
+    "verification/agones/roadmap-M0003-gateway-authoring.json": "55335c188122b7ea7194450dbbfefddcae34c0a2dd7f24534a2e27357803fc68",
+    "verification/agones/roadmap-M0003-http-authoring.json": "70b49eb01f514cc894013d57e3eda0db1d8527c0104304a3f684aad728b820bb",
+    "verification/agones/roadmap-M0003-hyper-adoption.json": "3f74120fb961a5c3fec6b3207c4a896f4ddf7fe0b7ceff0a3fe2568b5fd33c2e",
     "verification/agones/roadmap-M0003-platform-effects.json": "f973c57271f6f9b79e393163d8066af2ae219895912cd263aeac94ba4678090f",
-    "verification/agones/roadmap-M0003-reuse-adoption.json": "ba483ccd25056d9616ded29536031358fa016d8c8e8c630f0ec2ae7cc30f58a2"
+    "verification/agones/roadmap-M0003-reuse-adoption.json": "c2433d893d28d267db3593df9d4fd16d488a9f1a88de93c0896a3b7eefddd6cc"
   },
   "platform_effect_authoring_record": "verification/agones/roadmap-M0003-platform-effects.json",
-  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-24.json",
-  "progress_usage_observations": 24,
+  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-26.json",
+  "progress_usage_observations": 26,
   "project_executable_invocations": 0,
   "record_kind": "PARTIAL_SOURCE_OWNERSHIP_ADOPTION",
   "route": "MANUAL",
@@ -2013,5 +2048,5 @@
   "stage": "IMPLEMENTING",
   "usage_attribution_note": "M0003 entry bookkeeping, including the follow-up append of the finalized M0002 shared-boundary paragraph, is allocated once to M0003 entry overhead. It is not included a second time in the prior 20030-token shared segment.",
   "verification": "NOT_STARTED",
-  "work_base_commit": "54238c3a857f4efdc4b30dcea474803544214400"
+  "work_base_commit": "ea8c1bfff8de7578c63367e4b55a31fc58a777f5"
 }

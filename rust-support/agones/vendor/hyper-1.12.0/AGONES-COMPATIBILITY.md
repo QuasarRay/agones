@@ -80,9 +80,22 @@ alive until source completion, allowing a later method reassignment to affect
 the source writer's output. An already selected chunked response still emits
 its terminating chunk when the current method later becomes HEAD. The source
 phase continues to own the reuse/close decision. Remaining work includes mutable
-URL/header alias profiles, parser and protocol-switch behavior, body/close/
+header alias profiles, parser and protocol-switch behavior, body/close/
 abort/partial-I/O and H2 reset timing, exact diagnostics and selected native
 profiles. These source paths remain uncompiled, unexecuted and unverified.
+
+The request's URL is now a separate shared `SourceUrl` data owner. RequestFields
+owns the current optional URL pointer, Host bytes and RequestURI bytes. Source
+mux decisions read the current URL.Path/RawPath/Host/RawQuery; typed log entries
+retain the URL pointer selected when the field was created. In-place mutation
+is visible when those entries serialize, while later Request.URL replacement
+does not retarget the saved pointer. URL JSON uses the selected Go1.26.5/1.27.1
+struct declaration order, original-byte string escaping, null User pointers and
+the empty exported-field shape of non-nil Userinfo. This is data/serialization
+authoring under the existing CGP HTTP/log effects, without another effect or
+lifecycle owner. Native URL/authority/parser equivalence, remaining request-field
+copy/alias profiles and protocol schedules remain open; no execution or assurance
+credit follows from these changes.
 
 Source responses also bypass the normal response-metadata keep-alive heuristic:
 their 1.0/1.1 version and Connection decision were already made by the source
