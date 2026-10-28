@@ -8,7 +8,7 @@ use futures::{future::BoxFuture, Stream, StreamExt};
 use prost_reflect::{DynamicMessage, MessageDescriptor};
 use tokio_util::sync::CancellationToken;
 use crate::{errors::{BoxError, Errors}, utility_http::{header, set_header, HttpHandler, HttpRequest, ResponseWriter},
-    utility_runtime::UtilityRuntimeContext,
+    utility_runtime::UtilityRuntimeContext, utility_http::SourceValues,
     utility_gateway_json::{GatewayDecoder, GatewayJsonPb, GatewayValue},
     utility_declarations::derive_deftly_template_UtilityGatewayProviders};
 
@@ -24,7 +24,7 @@ pub type GatewayResponseStream = Pin<Box<dyn Stream<Item = Result<GatewayValue, 
 pub struct GatewayCall {
     pub path_parameters: PathParameters,
     pub pattern: GatewayPattern,
-    pub form: Option<BTreeMap<String, Vec<String>>>,
+    pub form: Option<SourceValues>,
     pub cancelled: CancellationToken,
 }
 
@@ -271,48 +271,7 @@ fn split_verb(pattern: &GatewayPattern, path: &[String]) -> (Vec<String>, String
 fn is_path_length_fallback(request: &HttpRequest) -> bool {
     request.method().as_ref() == b"POST" && header(&request.headers, "Content-Type").as_deref() == Some(b"application/x-www-form-urlencoded".as_slice())
 }
-async fn parse_form(request: &mut HttpRequest) -> Result<BTreeMap<String, Vec<String>>, BoxError> {
-    // ParseForm's default max is ten MiB. Body values precede query values.
-    const LIMIT: usize = 10 << 20;
-    let read = request.read_body_all_limited(Some(LIMIT + 1)).await;
-    if let Some(crate::utility_http::SourceReadError::Failure(error)) = read.error { return Err(error); }
-    if read.data.len() > LIMIT { return Err(ERRORS.New("http: POST too large")); }
-    let mut form = parse_query(&read.data)?;
-    // ParseForm consults the current URL after reading the body and permits
-    // a nil URL. It does not read a previously captured logging snapshot.
-    let query = request.url().map(|url| url.raw_query()).unwrap_or_default();
-    for (name, values) in parse_query(&query)? { form.entry(name).or_default().extend(values); }
-    Ok(form)
-}
-fn parse_query(query: &[u8]) -> Result<BTreeMap<String, Vec<String>>, BoxError> {
-    let mut values: BTreeMap<String, Vec<String>> = BTreeMap::new();
-    for part in query.split(|byte| *byte == b'&').filter(|part| !part.is_empty()) {
-        if part.contains(&b';') { return Err(ERRORS.New("invalid semicolon separator in query")); }
-        let equal = part.iter().position(|byte| *byte == b'=');
-        let (name, value) = equal.map_or((part, &[][..]), |index| (&part[..index], &part[index + 1..]));
-        let name = unescape_query(name)?; let value = unescape_query(value)?;
-        values.entry(name).or_default().push(value);
-    }
-    Ok(values)
-}
-fn unescape_query(bytes: &[u8]) -> Result<String, BoxError> {
-    let mut result = Vec::with_capacity(bytes.len()); let mut index = 0;
-    while index < bytes.len() {
-        match bytes[index] {
-            b'+' => result.push(b' '),
-            b'%' => {
-                let Some(pair) = bytes.get(index + 1..index + 3) else { return Err(ERRORS.New("invalid URL escape")); };
-                let digit = |byte: u8| match byte { b'0'..=b'9' => Some(byte - b'0'), b'a'..=b'f' => Some(byte - b'a' + 10), b'A'..=b'F' => Some(byte - b'A' + 10), _ => None };
-                let Some(high) = digit(pair[0]) else { return Err(ERRORS.New("invalid URL escape")); };
-                let Some(low) = digit(pair[1]) else { return Err(ERRORS.New("invalid URL escape")); };
-                result.push(high * 16 + low); index += 2;
-            }
-            byte => result.push(byte),
-        }
-        index += 1;
-    }
-    Ok(String::from_utf8_lossy(&result).into_owned())
-}
+async fn parse_form(request: &mut HttpRequest) -> Result<SourceValues, BoxError> { request.parse_gateway_form().await }
 
 #[derive(Clone, Debug)]
 pub struct GatewayStatus { pub code: i32, pub message: String, pub details: Vec<DynamicMessage>, pub http_status: Option<u16> }

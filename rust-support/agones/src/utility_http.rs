@@ -42,6 +42,10 @@ pub use request_fields::RequestFields;
 #[path = "utility_http_url.rs"]
 mod url;
 pub use url::{SourceUrl, SourceUrlFields, SourceUserinfo};
+#[path = "utility_http_form.rs"]
+mod form;
+pub use form::{SourceValues, SourceQueryProfile, SourceQuerySettings, SourceQueryParse, SourceUrlEscapeError,
+    parse_source_query, HasSourceQuerySettings, SourceQuerySettingsGetterComponent};
 #[path = "utility_http_response.rs"]
 mod response;
 pub use response::ResponseWriter;
@@ -169,6 +173,10 @@ impl HttpRequest {
     pub fn request_uri(&self) -> Bytes { self.fields.request_uri() }
     pub fn set_request_uri(&self, uri: impl AsRef<[u8]>) { self.fields.set_request_uri(uri); }
     pub fn path(&self) -> Bytes { self.require_url().path() }
+    pub fn form(&self) -> SourceValues { self.fields.form() }
+    pub fn set_form(&self, values: SourceValues) { self.fields.set_form(values); }
+    pub fn post_form(&self) -> SourceValues { self.fields.post_form() }
+    pub fn set_post_form(&self, values: SourceValues) { self.fields.set_post_form(values); }
     pub(crate) fn runtime(&self) -> &UtilityRuntimeContext { &self.runtime }
     pub fn path_value(&self, name: &str) -> &[u8] { self.path_values.get(name).map_or(&[], Vec::as_slice) }
     pub fn set_path_value(&mut self, name: &str, value: Vec<u8>) { self.path_values.insert(name.to_owned(), value); }

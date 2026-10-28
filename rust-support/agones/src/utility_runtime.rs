@@ -12,6 +12,7 @@ pub struct UtilityRuntimeContext {
     pub source_error_backoff: Arc<SourceErrorBackoff>,
     pub utility_task_scope: Weak<UtilityTaskScope>,
     pub source_signal_state: Arc<crate::utility_signals::SourceSignalState>,
+    pub source_query_settings: Arc<crate::utility_http::SourceQuerySettings>,
 }
 
 /// The parent lifecycle owns this resource phase and awaits shutdown. Children
@@ -24,6 +25,7 @@ impl UtilityRuntimeOwner {
             source_logger: Arc::new(SourceLogger::new(output)), source_error_backoff: Arc::default(),
             utility_task_scope: Arc::downgrade(&tasks),
             source_signal_state: Arc::default(),
+            source_query_settings: Arc::default(),
         }, tasks }
     }
     pub fn stderr() -> Self { Self::new(std::io::stderr()) }

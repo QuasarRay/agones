@@ -144,8 +144,14 @@ impl Headers {
     }
     pub fn add(&self, name: impl AsRef<[u8]>, value: impl Into<Bytes>) {
         let name = canonical_header_key(name);
+        self.append_exact(name, [value.into()]);
+    }
+    /// Shared map/slice machinery also serves url.Values, whose keys must
+    /// retain spelling and case rather than MIME-header canonicalization.
+    pub(crate) fn append_exact(&self, name: impl AsRef<[u8]>, values: impl IntoIterator<Item = Bytes>) {
+        let name = HeaderName::new(name);
         let mut map = self.map.as_ref().unwrap_or_else(|| panic!("assignment to entry in nil map")).write().unwrap_or_else(|error| error.into_inner());
-        map.entry(name).or_default().append([value.into()], self.profile);
+        map.entry(name).or_default().append(values, self.profile);
     }
     pub fn retain(&self, mut keep: impl FnMut(&HeaderName, &mut HeaderValues) -> bool) {
         if let Some(map) = &self.map { map.write().unwrap_or_else(|error| error.into_inner()).retain(|name, value| keep(name, value)); }

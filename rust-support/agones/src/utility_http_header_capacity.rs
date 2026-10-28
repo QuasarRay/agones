@@ -7,6 +7,7 @@ pub struct HeaderAllocationProfile { word_bits: u8, heap_address_bits: u8 }
 impl HeaderAllocationProfile {
     pub const GO126_64: Self = Self { word_bits: 64, heap_address_bits: 48 };
     pub const GO126_32: Self = Self { word_bits: 32, heap_address_bits: 32 };
+    pub const fn word_bits(self) -> u8 { self.word_bits }
     pub const fn go126(word_bits: u8, heap_address_bits: u8) -> Self {
         assert!(word_bits == 32 || word_bits == 64);
         assert!(heap_address_bits > 0 && heap_address_bits < 64 && heap_address_bits <= word_bits);

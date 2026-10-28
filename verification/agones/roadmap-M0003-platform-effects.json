@@ -106,7 +106,7 @@
       "sha256": "ed6e69041a6d154843c5c9509541a311f7415879c6c845b750b6ba29e1f48e84"
     }
   ],
-  "payload_identity_refreshed_at": "2026-10-27T06:39:26.358935+00:00",
+  "payload_identity_refreshed_at": "2026-10-28T11:06:11.379440+00:00",
   "payload_sha256": {
     "Cargo.lock": "1d2c5f632a6a590af119a16f3ff926d89bcfdaedde63a265fd185c8d406745a9",
     "crates/util/Cargo.toml": "6b011badbe07029ab9a84257636f7de293931d32a2c1bbef49c60b4d07dd91bf",
@@ -117,8 +117,8 @@
     "rust-support/agones/src/utility_fswatch_fen.rs": "d5ffcbf1fef1be3b40b0fd06dfe14a4ebdd5e954a02c143deccbfba4a16a767d",
     "rust-support/agones/src/utility_fswatch_kqueue.rs": "67b1963fa38453e9c1ad968648b12e0c7e747dddca7aa3613f44de81d4ed00c3",
     "rust-support/agones/src/utility_fswatch_windows.rs": "937bc4ab04bea8bce002efc0d82c5067d4d9b94f5313eb60c0a73572f858662e",
-    "rust-support/agones/src/utility_http.rs": "5409c19ca779ee057da0aa170b49bc309665a702a2c8a9c941fdea14711299de",
-    "rust-support/agones/src/utility_http_mux.rs": "2a1a2dd2b478c6024259b240d9902c8025e71fdda424880a31ce92a46fb4282c",
+    "rust-support/agones/src/utility_http.rs": "5f737239869bc043eb70117b3df24b57f43181b0b7d93f8bb7f5b57ecbf919ec",
+    "rust-support/agones/src/utility_http_mux.rs": "a842e469d51dd5db09f8e62f9c8cc350eb948466bfa95574665c10d1b4ad2991",
     "rust-support/agones/src/utility_signals.rs": "86aab0a4b60572e7ad80d125e9f4fdf26056a9cb90374b55b0c34f4da710ebd6",
     "rust-support/agones/src/utility_signals_windows.rs": "7ee226c03ff13e152d4ee81e12e5d9f6d9e4d25153810c37e8188960ee831239"
   },
@@ -134,6 +134,15 @@
   ],
   "route": "MANUAL",
   "runtime_credit": 0,
+  "shared_http_binding_correction": {
+    "affected_paths": [
+      "rust-support/agones/src/utility_http.rs",
+      "rust-support/agones/src/utility_http_mux.rs"
+    ],
+    "assurance": "NOT_STARTED; no platform/native execution or proof credit",
+    "reason": "Prior HTTP/mux authoring changed shared files without refreshing this platform receipt; current digests rebind content identity only.",
+    "supersedes_checkpoint": "cf9dbff2a4f2a0cf44c485a2a8fd50efe21aaad5"
+  },
   "signals": {
     "authored_operations": [
       "Common CGP SourceSignalSubscriber path owns one hub/session, subscription ids, one-slot source channels, weak registrations, parent child token and reader spawn/rejection cleanup on Unix and Windows",

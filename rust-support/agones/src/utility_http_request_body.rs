@@ -72,6 +72,7 @@ async fn send_continue(sender: &mut hyper::ext::InformationalSender) {
 }
 impl SourceBody {
     pub fn nil() -> Self { Self(BodyValue::Nil) }
+    pub fn is_nil(&self) -> bool { matches!(&self.0, BodyValue::Nil) }
     pub fn no_body() -> Self { Self(BodyValue::NoBody) }
     /// io.NopCloser(bytes.NewReader(data)): the last data read has nil error,
     /// and Close does not prevent later reads through a retained alias.
