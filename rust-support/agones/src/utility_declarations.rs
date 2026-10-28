@@ -85,6 +85,10 @@ define_derive_deftly! {
             crate::utility_scope::UtilityTaskSpawnerComponent: crate::utility_scope::SpawnOwnedUtilityTask,
             crate::utility_runtime_panic::SourceRuntimePanicReporterComponent: crate::utility_runtime_panic::ReportNativeSourceRuntimePanic,
             crate::utility_runtime_panic::SourceUtilityPanicHandlerComponent: crate::utility_runtime_panic::ExitAfterSourceUtilityPanic,
+            crate::utility_crash::SourceCrashStateGetterComponent:
+                ::cgp::prelude::UseField<::cgp::prelude::Symbol!("source_crash_state")>,
+            crate::utility_crash::SourceCrashHandlerComponent: crate::utility_crash::HandleSourceCrash,
+            crate::utility_crash::SourceCrashPanicReporterComponent: crate::utility_crash::ReportNativeSourceCrashPanic,
             crate::utility_scope::UtilityTaskFailureObserverComponent: crate::utility_scope::ObserveOwnedUtilityTaskFailure,
             crate::utility_http::HttpServerRunnerComponent: crate::utility_http::RunNativeHttpServer,
             crate::utility_http::SourceHttpClockComponent: crate::utility_http::ReadUtcSourceHttpClock,

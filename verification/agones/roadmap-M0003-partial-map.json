@@ -39,7 +39,8 @@
     "source_panic_boundary_boxing_owner": "Existing HTTP request/task ownership now retains handler-returned state separately from its optional response writer. H1 catches handler, normal response finishing and original-body completion failures; clearing the in-flight state prevents repeating handler cleanup after a later panic. H2 keeps finishing outside its handler catch. Existing SourceHttpPanicReporter/UtilityRuntimeProviders own reporting. The existing leaf utility_panic bridge preserves direct canonical runtime classes and per-value RuntimeError envelopes across BoxError/Must without adding a source Unwrap layer. One compile-time runtime_error_views! family list supplies owned/borrowed/type views; no registry, manager, task, provider selection or competing mutable state owner is introduced.",
     "source_panic_owner": "Existing UtilityRuntimeProviders adds SourceHttpPanicReporter -> ReportNativeSourceHttpPanic -> existing SourceHttpDiagnostic. Existing request tasks catch handler unwinds, retain the original source panic/error data, perform protocol-specific cancellation/cleanup and suppress only the direct ErrAbortHandler identity. Native listener/TLS phases pass accepted peer data. utility_panic is a leaf source error/string bridge with SourceRuntimeError, canonical runtime.errorString/plainError/boundsError data and a non-registry recovered payload; gateway bounds aliases reuse the same type. Must and selected allocation/bounds/nil-body/response panics skip Rust's eager hook. Existing task, request/body/map/parent owners remain canonical; no manager, registry or task is introduced.",
     "source_parent_panic_policy_owner": "Existing derive-deftly UtilityRuntimeProviders statically selects SourceRuntimePanicReporter and SourceUtilityPanicHandler for the current UtilityRuntimeContext. SpawnOwnedUtilityTask wraps existing child futures with source_utility_task, retaining a context clone with only the existing Weak task-scope reference. Unhandled poll panics reach the selected report/exit policy before the underlying scope can turn them into discarded joins; returned errors retain their existing observer/join/caller policy. spawn_utility_task_or_return preserves rejected live futures, and the existing HTTP connection drain adopts it. HTTP and root reports reuse one bounded native recovery-stack helper. No new task, mutable state owner, registry, manager or runtime provider selection is added.",
-    "task_owner": "Root UtilityRuntimeOwner retains the existing reporting UtilityTaskScope and weak context links. Returned errors keep bounded first-failure observation and original joined values without observer stringification. CGP-spawned unhandled poll panics now enter the statically selected parent report/exit policy; raw/direct scope, HTTP/protocol/connection and source worker HandleCrash profiles remain required. HTTP request-local scopes retain their own recovery and discard policy. Rejected HTTP drain futures remain owned for caller cancellation/join; no context/guard strongly retains its supervisor.",
+    "source_worker_crash_owner": "Existing UtilityRuntimeOwner owns one SourceCrashState for the source ReallyCrash flag and PanicHandlers header; its existing UtilityRuntimeContext clones share that Arc. UtilityRuntimeProviders statically binds the state getter, SourceCrashHandler and SourceCrashPanicReporter. SourcePanicHandlers retains nil/empty/fixed backing/offset/length/capacity views and reads each function value outside callback execution, preserving later-slot replacement and header-reassignment behavior. Callback lists are source function/interface data, not effect-provider selection. SourceCrashPanic uses an ephemeral per-invocation rethrow tag to transfer the original owned payload through its active callback boundary. WorkerQueue keeps its existing queue/count/task owners and runs crash handlers inside the wait-style iteration before the outer running-count defer and parent fatal guard. No additional task, registry or lifecycle manager is added.",
+    "task_owner": "Root UtilityRuntimeOwner retains the existing scope and one shared SourceCrashState for source crash variables. Worker iteration recovery invokes source callback data before final ReallyCrash/rethrow; outer count defers and existing parent CGP panic guards retain their own phases. Callbacks run outside state/backing locks. Source callback headers and fixed backing have distinct owners/aliases. Rejected drain and returned-error ownership remains unchanged. Full source klog/context/panic-value/trace/native/GC/timer integration is still required.",
     "typed_declarations": [
       "UtilityFeatureContext",
       "RusternetesCrdContext",
@@ -194,7 +195,13 @@
       "SourceUtilityPanicHandler / ExitAfterSourceUtilityPanic",
       "source_utility_task",
       "CanSpawnUtilityTask.spawn_utility_task_or_return",
-      "native_recovery_stack"
+      "native_recovery_stack",
+      "SourceCrashState",
+      "SourceCrashContext",
+      "SourcePanicHandler / SourcePanicHandlers / SourcePanicCallback",
+      "SourceCrashPanic.repanic",
+      "SourceCrashHandler / HandleSourceCrash",
+      "SourceCrashPanicReporter / ReportNativeSourceCrashPanic"
     ]
   },
   "dependency_adoption": "Native backend declarations retain existing root-lock HTTP/TLS/Tokio/JSON/YAML/base64/libc identities. comprende and better_comprehension reuse the already vendored first-generation sources; five exact package blocks (including clean-macro-docs/if_chain/syn 1) were adopted from the existing isolated CPG lock. Direct util dependency bookkeeping was authored manually, including base64 0.22.1 disambiguation. No resolver, compiler, formatter, macro/API probe or package execution ran. This continuation declares existing root errno 0.3.14 and regex 1.13.1 identities for signal-safe errno restoration and source install-hint Unicode category projection; only util direct lock bookkeeping changed. No resolver or executable assurance ran. Gateway adds prost-reflect 0.14.7 reflection/wire APIs only, with existing once_cell/prost 0.13.5/prost-types identities. One exact lock package was authored from the registry index/source archive without Cargo resolution. Optional serde/serde-value/ordered-float candidates were read but are not adopted. No new tool was installed. Platform continuation declares the existing root windows-sys 0.61.2 package only for cfg(windows), using the pinned FFI modules and existing futures/Tokio primitives. No package block/version upgrade, resolver or tool execution. No dependencies changed in this batch. The fswatch support selects pinned gopkg.in/fsnotify.v1 1.4.7 and adds its literal license; newer fsnotify 1.9 candidate semantics have no utility completion credit. This batch vendors the exact existing Hyper 1.12.0 source archive, preserving license/base file hashes and adding opt-in informational support in its existing H1/H2 drivers. Root Cargo patch/local lock source bookkeeping replaces that node registry identity without a version upgrade or Cargo resolution. Existing h2 0.4.20 informational APIs are bound to their original crate archive. No new tool/install/resolver or project execution.",
@@ -614,7 +621,13 @@
         "The native parent reporter converts selected Error/string values before stack capture, indents embedded panic newlines, and handles a panic during value printing through a fatal-error branch without recursively formatting that second value. Source panic chains, full types/printing and runtime trace modes remain required.",
         "ExitAfterSourceUtilityPanic retains a reporting failure until termination, emits the native panic-during-panic fallback if reporting unwinds, and calls the existing process-exit effect with status2, then aborts if it returns. It does not suppress ErrAbortHandler or cancel/join unrelated children before its terminal decision. Native/Go exit, hook, crash and concurrency profiles are unverified and incomplete.",
         "New spawn_utility_task_or_return returns its guarded live future if the parent is closed/released. retain_connection_drain uses that CGP boundary; caller-side cancellation and inline join retain the original connection/request resources on rejection.",
-        "HTTP and parent panic reporters share native_recovery_stack and one bounded buffer implementation. This is a native Rust recovery-frame adapter, not source Go traceback evidence; the HTTP suppression and diagnostic path remain separate from root fatal output."
+        "HTTP and parent panic reporters share native_recovery_stack and one bounded buffer implementation. This is a native Rust recovery-frame adapter, not source Go traceback evidence; the HTTP suppression and diagnostic path remain separate from root fatal output.",
+        "Root SourceCrashState owns ReallyCrash (default true) and the default one-element LogPanic callback slice. Existing derive-deftly UtilityRuntimeProviders selects its getter, crash handler and diagnostic reporter; workers share this state through the same runtime context.",
+        "SourcePanicHandlers supports nil/non-nil-empty/fixed backing slots, index/full-reslice operations and source-profile make/append growth. A range captures the header and length, then copies each current function slot separately without holding locks over user callbacks. Later-slot writes are visible; reassigned/grown headers do not redirect the captured range.",
+        "HandleSourceCrash copies additional-handler headers, adds logical call depth4, runs global handlers then additional handlers and reads ReallyCrash after those effects. Nil handlers quietly raise the canonical runtime nil-memory error; callback failures stop later handlers and preserve the new payload.",
+        "SourceCrashPanic.repanic transfers the original owned recovered value via a private invocation-matched tag; nested callback boundaries forward a tag that belongs to an outer active invocation. This scoped control path does not stringify or fabricate the payload. General retained/cross-goroutine Go panic-value semantics remain required.",
+        "Source default LogPanic suppresses only the direct ErrAbortHandler value. The native reporter retains Observed a panic, panic/stacktrace and string-versus-panicGoValue field branches, with Rust Debug/recovery-stack output explicitly partial. Other callbacks and the final ReallyCrash decision still run for the sentinel.",
+        "WorkerQueue.run catches one runWorker iteration before its running-count defer, invokes source crash handling and, if absorbed, prepares its sliding delay before cancellation selection and next-loop stop check. processNextWorkItem retains Done-on-unwind; nil SyncHandler now raises a quiet typed runtime nil-memory error. True/rethrown failures reach the existing parent panic guard."
       ],
       "destination": "agones-rs/pkg/util/runtime/runtime.rs",
       "remaining": [
@@ -622,7 +635,7 @@
         "Reconcile clientcmd YAML/JSON/default/duplicate/extension/base64/unselected-path/Unicode/URL/proxy/error/diagnostic and persistence profiles; current native parser/OS/certificate behavior is not a Go-equivalence claim. No KUBECONFIG/home search was invented: ExplicitPath-only rules have nil Precedence and nil DefaultClientConfig.",
         "Auth-provider/exec data is retained and validated without a runtime plugin system or command execution. Actual credential-consumer integration and any real conflict with the no-plugin constraint remain with the later transport/lifecycle owners.",
         "Complete shared source logging/string/type/number/format/caller/panic profiles and production parent failure-policy adoption.",
-        "Complete source worker/wait HandleCrash/ReallyCrash/PanicHandlers/additional-handler/context/call-depth behavior and remaining parent/direct HTTP/protocol/connection/JoinSet recovery/fatal boundaries. Selected CGP-spawn/or-return parent panic reporting plus exit2 is authored, not a complete Go fatal runtime. Complete Go goroutine/panic chains, caller/traceback flags/all-goroutine/systemstack/freeze/secure/crash/core/print-failure/output/exit/atexit/native hooks, panic(nil)/Goexit and actual source/target/profile binding. Native recovery frames are bounded Rust frames; opaque/native format and scalar/type/composed APIStatus/RuntimeError/Is/As/boxing profiles remain required. Preserve H1 abortPendingRead/hijack/multipart/cleanup-panic/native close and H2 committed-head/no-body END_STREAM/reset/disposal requirements. Remaining guard-future/context/format/control/Arc/Bytes/RawValue/serde/native allocations, source GC/heap/elision/sanitizer/experiment/pressure/failure ordering, Go map hash/group/growth/range/key/pointer/alias/concurrency, ABI/unwind/address/layout/lifetime, fmt pool/tiny/extreme Go32, GRPC_GO_LOG_*/custom logger/source SDK/command adoption all remain required. Preserve every prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirement. No runtime execution, proof, full equivalence or M0003 completion is claimed."
+        "Complete source klog/logr panic diagnostics, Go %#v/Error/GoStringer/byte/type formatting, context values/deadline/logger/sink/flags/caller/depth and actual word/heap/profile binding. The current default crash reporter emits native diagnostic fields and Rust Debug/recovery frames, not full Go klog/traceback parity. Scoped callback order/header aliases/ReallyCrash/rethrow and worker integration are authored only; retained/copied/cross-goroutine callback panic values, Go panic chains/nil/Goexit, generalized interfaces and native callback/GC/allocation/timer/cancellation schedules remain required. Preserve remaining parent/direct HTTP/protocol/connection/JoinSet fatal/recovery boundaries, full traceback/all-goroutine/systemstack/freeze/secure/crash/core/printing/exit/atexit/native-hook profiles and actual source/target binding. Preserve H1 abortPendingRead/hijack/multipart/cleanup-panic/native close and H2 committed-head/no-body END_STREAM/reset/disposal requirements. Preserve every prior control/guard-future/context/format/Arc/Bytes/RawValue/serde/native allocation, GC/heap/elision/sanitizer/experiment/pressure/failure ordering, Go map hash/group/growth/range/key/pointer/alias/concurrency, ABI/unwind/address/layout/lifetime, fmt pool/tiny/extreme Go32, GRPC_GO_LOG_*/custom logger/source SDK/command requirement. All prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirements remain. No executed result, proof, full equivalence or M0003 completion is claimed."
       ],
       "source_git_blob": "7581ddc41945340b97d4561a275bf969a32e4f8f",
       "source_id": "agones:pkg/util/runtime/runtime.go",
@@ -707,7 +720,7 @@
       "status": "AUTHORED_UNVERIFIED_PARTIAL"
     },
     {
-      "authored_sha256": "55fecc4e6348c3fd4b40e9aa9c4320b5a94bba0a4bf7a84c8ca089b4c36d5bab",
+      "authored_sha256": "786b780f3f4c6fc7d8a7e61df96f5e0799afed8d7b9274f3651bdd8437223481",
       "authored_symbols_or_groups": [
         "traceError/NewTraceError/Error/isTraceError; deliberately no Error::source/Go Unwrap",
         "Handler and WorkerQueue source declarations, source error/type origins and mutable SyncHandler",
@@ -719,14 +732,21 @@
         "SourceQueueContext generic derive-deftly CGP delegation to clock/key/queue/limiter/handler/error capabilities",
         "Concrete FIFO dirty/processing state, shutdown backlog drain, 1000-slot producer backpressure, 10-second heartbeat, stable-pointer heap and earliest-deadline coalescing",
         "Byte-preserving QueueKey, typed comparable/unhashable/float/nil queue values and non-reflexive ItemMap equality without Rust Eq abuse",
-        "APIStatus data-interface bridge, ordered multiple-error traversal and separate Status() calls for reason/code"
+        "APIStatus data-interface bridge, ordered multiple-error traversal and separate Status() calls for reason/code",
+        "Root SourceCrashState owns ReallyCrash (default true) and the default one-element LogPanic callback slice. Existing derive-deftly UtilityRuntimeProviders selects its getter, crash handler and diagnostic reporter; workers share this state through the same runtime context.",
+        "SourcePanicHandlers supports nil/non-nil-empty/fixed backing slots, index/full-reslice operations and source-profile make/append growth. A range captures the header and length, then copies each current function slot separately without holding locks over user callbacks. Later-slot writes are visible; reassigned/grown headers do not redirect the captured range.",
+        "HandleSourceCrash copies additional-handler headers, adds logical call depth4, runs global handlers then additional handlers and reads ReallyCrash after those effects. Nil handlers quietly raise the canonical runtime nil-memory error; callback failures stop later handlers and preserve the new payload.",
+        "SourceCrashPanic.repanic transfers the original owned recovered value via a private invocation-matched tag; nested callback boundaries forward a tag that belongs to an outer active invocation. This scoped control path does not stringify or fabricate the payload. General retained/cross-goroutine Go panic-value semantics remain required.",
+        "Source default LogPanic suppresses only the direct ErrAbortHandler value. The native reporter retains Observed a panic, panic/stacktrace and string-versus-panicGoValue field branches, with Rust Debug/recovery-stack output explicitly partial. Other callbacks and the final ReallyCrash decision still run for the sentinel.",
+        "WorkerQueue.run catches one runWorker iteration before its running-count defer, invokes source crash handling and, if absorbed, prepares its sliding delay before cancellation selection and next-loop stop check. processNextWorkItem retains Done-on-unwind; nil SyncHandler now raises a quiet typed runtime nil-memory error. True/rethrown failures reach the existing parent panic guard."
       ],
       "destination": "agones-rs/pkg/util/workerqueue/workerqueue.rs",
       "remaining": [
         "Reconcile full Go value/type/hash/equality/format/JSON and custom errors.As/status interface profiles, target-dependent float-to-integer boundaries and raw-byte log projections. Byte keys and source algorithm state are authored, not proved.",
         "Source named-queue telemetry/updater callbacks require their explicit M0017 telemetry ownership/adoption; this batch does not claim queue metrics credit.",
         "Old util queue and Rusternetes controller_work_queue/callers remain preserved and separately mapped. New queue body registration does not transfer their consumers.",
-        "Production parent must consume immediate failure observation and implement the source fatal/recovery policy; normal shutdown owns worker/delay joins, while emergency Drop abort remains distinct."
+        "Production parent must consume immediate failure observation and implement the source fatal/recovery policy; normal shutdown owns worker/delay joins, while emergency Drop abort remains distinct.",
+        "Complete source klog/logr panic diagnostics, Go %#v/Error/GoStringer/byte/type formatting, context values/deadline/logger/sink/flags/caller/depth and actual word/heap/profile binding. The current default crash reporter emits native diagnostic fields and Rust Debug/recovery frames, not full Go klog/traceback parity. Scoped callback order/header aliases/ReallyCrash/rethrow and worker integration are authored only; retained/copied/cross-goroutine callback panic values, Go panic chains/nil/Goexit, generalized interfaces and native callback/GC/allocation/timer/cancellation schedules remain required. Preserve remaining parent/direct HTTP/protocol/connection/JoinSet fatal/recovery boundaries, full traceback/all-goroutine/systemstack/freeze/secure/crash/core/printing/exit/atexit/native-hook profiles and actual source/target binding. Preserve H1 abortPendingRead/hijack/multipart/cleanup-panic/native close and H2 committed-head/no-body END_STREAM/reset/disposal requirements. Preserve every prior control/guard-future/context/format/Arc/Bytes/RawValue/serde/native allocation, GC/heap/elision/sanitizer/experiment/pressure/failure ordering, Go map hash/group/growth/range/key/pointer/alias/concurrency, ABI/unwind/address/layout/lifetime, fmt pool/tiny/extreme Go32, GRPC_GO_LOG_*/custom logger/source SDK/command requirement. All prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirements remain. No executed result, proof, full equivalence or M0003 completion is claimed."
       ],
       "source_git_blob": "98b8b2431036013b0764f1cf4be2c30b26db99e9",
       "source_id": "agones:pkg/util/workerqueue/workerqueue.go",
@@ -862,7 +882,7 @@
         "Reconcile authored request trailer maps/cookies and header JSON/alias operations across all selected profiles; native parser/rejection/1.0 keep-alive/upgrade, H2 header ordering/HPACK/GOAWAY and body Close/read/EOF/abortPendingRead/Continue/full-duplex races. Complete native readahead/partial-write/flush/reset/cancellation/error timing and diagnostics. Source code and API reading do not establish native parity.",
         "Finish listener named-service/bind and independent listener-close/shutdown timing, native error origin (syscall-wrapped versus direct Errno or poll/init failures), platform/native error display and complete retry profiles. Shared temporary-syscall accept backoff is authored for plain/TLS, but does not establish full Go listener equivalence. M0027 source tool/GODEBUG and actual production parent adoption remain required.",
         "Retain every other M0003 filesystem/signal/gateway/config/queue/logging/CRD/features/admission/body gap. Global BOTH-route gate stays CLOSED; no compiler, test, formatter/linter, native/API probe, application, generator validation, proof or CI ran.",
-        "Complete source worker/wait HandleCrash/ReallyCrash/PanicHandlers/additional-handler/context/call-depth behavior and remaining parent/direct HTTP/protocol/connection/JoinSet recovery/fatal boundaries. Selected CGP-spawn/or-return parent panic reporting plus exit2 is authored, not a complete Go fatal runtime. Complete Go goroutine/panic chains, caller/traceback flags/all-goroutine/systemstack/freeze/secure/crash/core/print-failure/output/exit/atexit/native hooks, panic(nil)/Goexit and actual source/target/profile binding. Native recovery frames are bounded Rust frames; opaque/native format and scalar/type/composed APIStatus/RuntimeError/Is/As/boxing profiles remain required. Preserve H1 abortPendingRead/hijack/multipart/cleanup-panic/native close and H2 committed-head/no-body END_STREAM/reset/disposal requirements. Remaining guard-future/context/format/control/Arc/Bytes/RawValue/serde/native allocations, source GC/heap/elision/sanitizer/experiment/pressure/failure ordering, Go map hash/group/growth/range/key/pointer/alias/concurrency, ABI/unwind/address/layout/lifetime, fmt pool/tiny/extreme Go32, GRPC_GO_LOG_*/custom logger/source SDK/command adoption all remain required. Preserve every prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirement. No runtime execution, proof, full equivalence or M0003 completion is claimed."
+        "Complete source klog/logr panic diagnostics, Go %#v/Error/GoStringer/byte/type formatting, context values/deadline/logger/sink/flags/caller/depth and actual word/heap/profile binding. The current default crash reporter emits native diagnostic fields and Rust Debug/recovery frames, not full Go klog/traceback parity. Scoped callback order/header aliases/ReallyCrash/rethrow and worker integration are authored only; retained/copied/cross-goroutine callback panic values, Go panic chains/nil/Goexit, generalized interfaces and native callback/GC/allocation/timer/cancellation schedules remain required. Preserve remaining parent/direct HTTP/protocol/connection/JoinSet fatal/recovery boundaries, full traceback/all-goroutine/systemstack/freeze/secure/crash/core/printing/exit/atexit/native-hook profiles and actual source/target binding. Preserve H1 abortPendingRead/hijack/multipart/cleanup-panic/native close and H2 committed-head/no-body END_STREAM/reset/disposal requirements. Preserve every prior control/guard-future/context/format/Arc/Bytes/RawValue/serde/native allocation, GC/heap/elision/sanitizer/experiment/pressure/failure ordering, Go map hash/group/growth/range/key/pointer/alias/concurrency, ABI/unwind/address/layout/lifetime, fmt pool/tiny/extreme Go32, GRPC_GO_LOG_*/custom logger/source SDK/command requirement. All prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirements remain. No executed result, proof, full equivalence or M0003 completion is claimed."
       ]
     },
     {
@@ -873,7 +893,7 @@
         "Numeric and timestamp/base64 grammar branches now have source-derived implementations. Native decimal float conversion, float output rendering and source Go/Rust target-profile rounding/NaN/negative-zero/bounds still need exact profile reconciliation and later assurance; no successful run or proof is claimed.",
         "Reconcile Any embedded wire recursion with prost-reflect decoding limits, required-field error traversal/order, proto2 group/extension/MessageSet profiles and deterministic extension/oneof ordering. Native Any map keys have explicit deterministic emission; that alone is not full source wire-parity credit.",
         "Typed non-proto decoders are authored and consumed by GatewayDecoder::decode / GatewayJsonPb::unmarshal_into. Finish required named model/custom serde and source panic/error interfaces without inventing a general Go object layer. EnumTargetFactory now requires a source numeric profile explicitly; source-owner integration must bind it to the exact Go version/target/ConvertHash setting. No Rust-host fallback or source-profile credit is inferred. Source JSON rendering/alias/nil details remain explicit rather than inferred from serde success.",
-        "Complete source worker/wait HandleCrash/ReallyCrash/PanicHandlers/additional-handler/context/call-depth behavior and remaining parent/direct HTTP/protocol/connection/JoinSet recovery/fatal boundaries. Selected CGP-spawn/or-return parent panic reporting plus exit2 is authored, not a complete Go fatal runtime. Complete Go goroutine/panic chains, caller/traceback flags/all-goroutine/systemstack/freeze/secure/crash/core/print-failure/output/exit/atexit/native hooks, panic(nil)/Goexit and actual source/target/profile binding. Native recovery frames are bounded Rust frames; opaque/native format and scalar/type/composed APIStatus/RuntimeError/Is/As/boxing profiles remain required. Preserve H1 abortPendingRead/hijack/multipart/cleanup-panic/native close and H2 committed-head/no-body END_STREAM/reset/disposal requirements. Remaining guard-future/context/format/control/Arc/Bytes/RawValue/serde/native allocations, source GC/heap/elision/sanitizer/experiment/pressure/failure ordering, Go map hash/group/growth/range/key/pointer/alias/concurrency, ABI/unwind/address/layout/lifetime, fmt pool/tiny/extreme Go32, GRPC_GO_LOG_*/custom logger/source SDK/command adoption all remain required. Preserve every prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirement. No runtime execution, proof, full equivalence or M0003 completion is claimed.",
+        "Complete source klog/logr panic diagnostics, Go %#v/Error/GoStringer/byte/type formatting, context values/deadline/logger/sink/flags/caller/depth and actual word/heap/profile binding. The current default crash reporter emits native diagnostic fields and Rust Debug/recovery frames, not full Go klog/traceback parity. Scoped callback order/header aliases/ReallyCrash/rethrow and worker integration are authored only; retained/copied/cross-goroutine callback panic values, Go panic chains/nil/Goexit, generalized interfaces and native callback/GC/allocation/timer/cancellation schedules remain required. Preserve remaining parent/direct HTTP/protocol/connection/JoinSet fatal/recovery boundaries, full traceback/all-goroutine/systemstack/freeze/secure/crash/core/printing/exit/atexit/native-hook profiles and actual source/target binding. Preserve H1 abortPendingRead/hijack/multipart/cleanup-panic/native close and H2 committed-head/no-body END_STREAM/reset/disposal requirements. Preserve every prior control/guard-future/context/format/Arc/Bytes/RawValue/serde/native allocation, GC/heap/elision/sanitizer/experiment/pressure/failure ordering, Go map hash/group/growth/range/key/pointer/alias/concurrency, ABI/unwind/address/layout/lifetime, fmt pool/tiny/extreme Go32, GRPC_GO_LOG_*/custom logger/source SDK/command requirement. All prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirements remain. No executed result, proof, full equivalence or M0003 completion is claimed.",
         "Forwarded gRPC server headers/trailers, incoming context/header matching, deadlines/status wrapping/response_body selection and actual SDK/allocator generated request mappings and handlers remain with source-owned M0025/M0027 integration. The real raw gateway callback can already use ResponseWriter; this library registration is not those callers adoption.",
         "Finish required shared HTTP/TLS/fswatch/signal/platform/error/logging/queue/configuration profiles in the M0003 partial map. All implementation and generated outputs across both routes remain required before any assurance."
       ],
@@ -885,7 +905,7 @@
   "milestone_id": "M0003",
   "native_hyper_adoption_record": "verification/agones/roadmap-M0003-hyper-adoption.json",
   "owned_entry_count": 14,
-  "payload_identity_refreshed_at": "2026-10-28T16:03:07.777671+00:00",
+  "payload_identity_refreshed_at": "2026-10-28T16:29:49.699983+00:00",
   "payload_sha256": {
     "Cargo.lock": "1d2c5f632a6a590af119a16f3ff926d89bcfdaedde63a265fd185c8d406745a9",
     "Cargo.toml": "fd4401820492ab3209f748949abe5327e974d6c8d892a510803943391d6a2a18",
@@ -914,7 +934,7 @@
     "agones-rs/pkg/util/webhooks/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "agones-rs/pkg/util/webhooks/webhooks.rs": "f728be5333aecae9018da4ce9bc09a278907e10d2bfa6cc56a77566c9c878da5",
     "agones-rs/pkg/util/workerqueue/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
-    "agones-rs/pkg/util/workerqueue/workerqueue.rs": "55fecc4e6348c3fd4b40e9aa9c4320b5a94bba0a4bf7a84c8ca089b4c36d5bab",
+    "agones-rs/pkg/util/workerqueue/workerqueue.rs": "786b780f3f4c6fc7d8a7e61df96f5e0799afed8d7b9274f3651bdd8437223481",
     "crates/util/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "crates/util/Cargo.toml": "6b011badbe07029ab9a84257636f7de293931d32a2c1bbef49c60b4d07dd91bf",
     "crates/util/src/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
@@ -932,8 +952,9 @@
     "rust-support/agones/src/lifecycle.rs": "cf19ade05a469d4424f401574af0eabab520657cc0d9977563bdbf4bf9fdef1d",
     "rust-support/agones/src/utility_admission.rs": "a17ed7e9f3c3ffdaf9d42e39ab372be4f107ff4bd50eec371f48824a4b7a5807",
     "rust-support/agones/src/utility_client_config.rs": "50b1648d59275ce50ef815d69e7fe9e87338b179e7ea712229e5324fe1cedc4a",
+    "rust-support/agones/src/utility_crash.rs": "8e7262b94cb36243a2184df486b02d6de4f8c90397317e7a8b9fdc7512c21f2e",
     "rust-support/agones/src/utility_crd.rs": "de93657e926a3498249173e564ccc7798ffd081ba2583c8c9dd490b239195cde",
-    "rust-support/agones/src/utility_declarations.rs": "522fcadc9c469b7c47a97e7615b4eacb5bdbb74ba0c1a9be2a0e657be2298619",
+    "rust-support/agones/src/utility_declarations.rs": "98a8882c7e447873c94a39b5d017c683bcfe6f3a705d9f2b7f2aac2b23a56682",
     "rust-support/agones/src/utility_discovery.rs": "8151e804ce4354fef226b0cd915c6e868936c2806089143e4c212ee99e1a32ed",
     "rust-support/agones/src/utility_error_view.rs": "c2776e4aa916b0e4e6f933ece03453da31573ab507a79e023fb854c78407b976",
     "rust-support/agones/src/utility_fswatch.rs": "594ff335887d01bb1fa4e40c8df41e579567873972c4e89bdb7b89da005fa20f",
@@ -970,7 +991,7 @@
     "rust-support/agones/src/utility_http_unicode.rs": "6b9084be0b215ec01c70d42264c0c8e51977f8368f8b346d5f93e2894e75fe7b",
     "rust-support/agones/src/utility_http_url.rs": "9c6fca7c6f52999f31679ba393c494ed3f543e02dbe1a7a6449f26d4b4fbb1c4",
     "rust-support/agones/src/utility_https_module.rs": "3b1fc4bf94a5b016cce0c661c3f51d037b36e0718eefd1c17a55e309c878fc2a",
-    "rust-support/agones/src/utility_lib.rs": "2b20487737045bfb24a44e7c9fa11779533bac72f9627d8e0943fc7439b18ad8",
+    "rust-support/agones/src/utility_lib.rs": "77930952dad3bcecc6130a2aa9428d7626e584cf073bc0a38b4f22a6931b7d12",
     "rust-support/agones/src/utility_lifecycle.rs": "5d2fdc2fc65f04f3fcc581edb0203b54cb8314717f6976c3d7404f018a0a26af",
     "rust-support/agones/src/utility_logging.rs": "a055f664578d49d0a7b985468446218a8e13f0a4512470b05ab3c7a1190ea043",
     "rust-support/agones/src/utility_modules.rs": "dc7edddb040828e3b8d9f2aa4d9bb9ad17ffd848a9a90730f09955b6b4b44c4d",
@@ -978,7 +999,7 @@
     "rust-support/agones/src/utility_queue.rs": "21c1c20f9e50ac5191cfa82cf8eb80c990ad1b5187de409e95d8bc720d69d9e7",
     "rust-support/agones/src/utility_queue_limiters.rs": "6bec0da3ae6f9d1068b738c7be445b18a34bc17a211f82fdf15b0d605848db9d",
     "rust-support/agones/src/utility_queue_values.rs": "e7be82bc28e640948c1b333130228ce3962535c815eef39e7d71daeb74fc2285",
-    "rust-support/agones/src/utility_runtime.rs": "1d6984cb234cc6b010262b8f179cfc1ab4f549bc12c418768fbb2b75c47a98f4",
+    "rust-support/agones/src/utility_runtime.rs": "c26432c7fbb4ead0b44db40243dc315b233bffa0864e071930a4c39343cbbfee",
     "rust-support/agones/src/utility_runtime_module.rs": "7d98ced3f9d120239b0c87247347018a35e2af5770977612e16223a1e65fb3fe",
     "rust-support/agones/src/utility_runtime_panic.rs": "3f23c67ba8d28668e3e7f4ec557e7534b39bc3e53811eca70cebc2cab895ed08",
     "rust-support/agones/src/utility_scope.rs": "dec2d3ea78eb21c855bec39c96efc8d5bb35cc5bbfbee01959049e3de8cf7e63",
@@ -990,15 +1011,15 @@
     "third_party/first-generation/better-comprehension/src/lib.rs": "f47ba11ce4cd4d6b7424ba0cffca669018e52e5541fb32f83d655aba2ce364b3",
     "third_party/first-generation/comprende/Cargo.toml": "01f7068b9cd9ec5b27b7df77709117e37dc991cd32597dbf24cbde9074f5ceab",
     "third_party/first-generation/comprende/src/lib.rs": "e8d8da04ca3048bdd7275b1ca77b5a78c4abfd999ecb763d82a615f4aeb0fb96",
-    "verification/agones/roadmap-M0003-gateway-authoring.json": "d60a64c2636b73c791b8abaefeabab9d04271bc4c6e39f01196a2303e12ff4d2",
-    "verification/agones/roadmap-M0003-http-authoring.json": "7c4622f6689305ad8e5f5625c1651f64376c8aea2c764e86573697dd685540e0",
-    "verification/agones/roadmap-M0003-hyper-adoption.json": "b03d714c35cc33559a804f5be73769ebfd57de3a741e599ebf4e7681e817a521",
-    "verification/agones/roadmap-M0003-platform-effects.json": "80cb1660da0a482d849dba935db24a6c5bfab0ddb7756a2eb0ddc6a918baab84",
-    "verification/agones/roadmap-M0003-reuse-adoption.json": "806f39f1062cc4754d056e696e4753de1731de2c3d0af7110aaa06a6e7ab7e5d"
+    "verification/agones/roadmap-M0003-gateway-authoring.json": "dd4c65cec34afd078d224750c4bad2379c04618c8417b313a58cd4b95464fcf0",
+    "verification/agones/roadmap-M0003-http-authoring.json": "3498287b05299f52f1862d59cae54671206a146f1945887dd7a2b2aaf006c277",
+    "verification/agones/roadmap-M0003-hyper-adoption.json": "042c8af0f1e8c126905083f3ebd0088ec6dd56f379db3641537d82581dd40ada",
+    "verification/agones/roadmap-M0003-platform-effects.json": "2ada33803b509c568b5bf87e80df2b2680ac23d99b20ce8557f7b76e3629b19c",
+    "verification/agones/roadmap-M0003-reuse-adoption.json": "69f57bd65bfe91823a8f7a23d1c5371b37a427d8f1ec114e2010b635d0a117ab"
   },
   "platform_effect_authoring_record": "verification/agones/roadmap-M0003-platform-effects.json",
-  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-50.json",
-  "progress_usage_observations": 50,
+  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-52.json",
+  "progress_usage_observations": 52,
   "project_executable_invocations": 0,
   "record_kind": "PARTIAL_SOURCE_OWNERSHIP_ADOPTION",
   "route": "MANUAL",
@@ -2546,6 +2567,50 @@
       "sha256": "54c4cccbc979c8b20e7aaa84e0ae63fb83a871a80e78737e3fffef6a599629c4",
       "upstream_path": "src/errors/wrap.go",
       "url": "https://github.com/golang/go/blob/go1.26.5/src/errors/wrap.go"
+    },
+    {
+      "git_blob": "cc09bdbc43609597e8e57ab5bb6277bbac075e75",
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/agones-6eb4a025-apimachinery-runtime.go",
+      "purpose": "Source worker crash/callback/ReallyCrash authoring only; no source/project/native execution",
+      "repository": "QuasarRay/agones",
+      "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "sha256": "c19c73e4ca6c0976dc3be5c5484a5cdb3b4c0df4f3c27c22e48d8ac0bb0ab565",
+      "upstream_path": "vendor/k8s.io/apimachinery/pkg/util/runtime/runtime.go",
+      "url": "https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/vendor/k8s.io/apimachinery/pkg/util/runtime/runtime.go"
+    },
+    {
+      "git_blob": "177be09a957137707aa2f8ffa66db9fcbdbdda23",
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/agones-6eb4a025-wait-backoff.go",
+      "purpose": "Source worker crash/callback/ReallyCrash authoring only; no source/project/native execution",
+      "repository": "QuasarRay/agones",
+      "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "sha256": "b134270c12370c42d19e49599a3e1fa5e6e34639ee882fe923086b2d7678e657",
+      "upstream_path": "vendor/k8s.io/apimachinery/pkg/util/wait/backoff.go",
+      "url": "https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/vendor/k8s.io/apimachinery/pkg/util/wait/backoff.go"
+    },
+    {
+      "git_blob": "98b8b2431036013b0764f1cf4be2c30b26db99e9",
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/agones-6eb4a025-workerqueue.go",
+      "purpose": "Source worker crash/callback/ReallyCrash authoring only; no source/project/native execution",
+      "repository": "QuasarRay/agones",
+      "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "sha256": "d54982a28e63b658150be8ab77365321fef296a98ea2c8ca5d8a3f5e43247835",
+      "upstream_path": "pkg/util/workerqueue/workerqueue.go",
+      "url": "https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/pkg/util/workerqueue/workerqueue.go"
+    },
+    {
+      "git_blob": "1acb041e357ad7546bb55f8b269b30bc0d3383e2",
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5-function-size.go",
+      "purpose": "Source worker crash/callback/ReallyCrash authoring only; no source/project/native execution",
+      "repository": "golang/go",
+      "revision": "go1.26.5",
+      "sha256": "7a995d4fd430260741b85850b2cf018873a4162c8eaf40eb1e8e6cf394d0d474",
+      "upstream_path": "src/cmd/compile/internal/types/size.go",
+      "url": "https://github.com/golang/go/blob/go1.26.5/src/cmd/compile/internal/types/size.go"
     }
   ],
   "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
@@ -2554,5 +2619,5 @@
   "stage": "IMPLEMENTING",
   "usage_attribution_note": "M0003 entry bookkeeping, including the follow-up append of the finalized M0002 shared-boundary paragraph, is allocated once to M0003 entry overhead. It is not included a second time in the prior 20030-token shared segment.",
   "verification": "NOT_STARTED",
-  "work_base_commit": "1519e24373eb479d32b2ad53916a34010705966d"
+  "work_base_commit": "fb3a502df648e4275926fdfdc0053dc4379b9d9c"
 }

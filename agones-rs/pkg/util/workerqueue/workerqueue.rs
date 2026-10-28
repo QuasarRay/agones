@@ -4,10 +4,11 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals)]
 use std::{error::Error, fmt, sync::{Arc, Mutex, RwLock}};
 use derive_deftly::Deftly;
-use futures::future::BoxFuture;
+use futures::{future::BoxFuture, FutureExt};
 use tokio_util::sync::CancellationToken;
 use crate::{errors::{BoxError, Errors}, logfields::{LogEntry, ResourceType}, runtime,
     utility_runtime::UtilityRuntimeContext, utility_scope::CanSpawnUtilityTask,
+    utility_crash::{CanHandleSourceCrash, SourceCrashContext, SourcePanicHandlers},
     utility_logging::{CanEmitSourceLog, LogLevel}, utility_admission::Status,
     utility_queue::{SourceQueueContext, CanUseSourceQueue, CanReadSourceQueueKey, CanReadSourceQueueClock, CanDecideSourceQueueDelay,
         CanCallSourceQueueHandler, CanClassifySourceQueueError},
@@ -113,7 +114,8 @@ impl<Limiter: SourceRateLimiter> WorkerQueue<Limiter> {
             runtime::HandleError(&self.queue.source_queue_runtime, Some(&object.with_log_field(&self.logger, &self.keyName)), Some(error.as_ref())).await;
             self.queue.source_queue_forget(&object); return true;
         };
-        let handler = self.SyncHandler.read().unwrap_or_else(|error| error.into_inner()).clone().expect("nil WorkerQueue.SyncHandler");
+        let handler = self.SyncHandler.read().unwrap_or_else(|error| error.into_inner()).clone().unwrap_or_else(||
+            crate::utility_panic::unwind_source_runtime_error(crate::utility_panic::SourceRuntimeErrorString::new("invalid memory address or nil pointer dereference")));
         match self.queue.source_queue_call_handler(&handler, context, key).await {
             Err(error) => {
                 if self.queue.source_queue_expected_error(error.as_ref()) {
@@ -155,9 +157,14 @@ impl<Limiter: SourceRateLimiter> WorkerQueue<Limiter> {
         let _running = Running(Arc::clone(&self));
         loop {
             if context.is_cancelled() { return; }
-            self.runWorker(context.clone()).await;
-            if context.is_cancelled() { return; }
-            tokio::select! { _ = context.cancelled() => return, _ = self.queue.source_queue_sleep(workFx) => () }
+            if let Err(payload) = std::panic::AssertUnwindSafe(self.runWorker(context.clone())).catch_unwind().await {
+                self.queue.source_queue_runtime.handle_source_crash(SourceCrashContext::new(context.clone()),
+                    crate::utility_panic::SourceRecoveredPanic::new(payload), &SourcePanicHandlers::nil());
+            }
+            // Sliding Until prepares its delay after f/HandleCrash, then
+            // selects cancellation. It rechecks stop before the next f.
+            let delay = self.queue.source_queue_sleep(workFx);
+            tokio::select! { _ = context.cancelled() => return, _ = delay => () }
         }
     }
     pub fn Healthy(&self) -> Result<(), BoxError> {

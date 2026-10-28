@@ -15,6 +15,7 @@ pub struct UtilityRuntimeContext {
     pub source_query_settings: Arc<crate::utility_http::SourceQuerySettings>,
     pub source_unicode_profile: crate::utility_http::SourceUnicodeProfile,
     pub source_pattern_logger: Arc<crate::utility_gateway::SourcePatternLogger>,
+    pub source_crash_state: Arc<crate::utility_crash::SourceCrashState>,
 }
 
 /// The parent lifecycle owns this resource phase and awaits shutdown. Children
@@ -30,6 +31,7 @@ impl UtilityRuntimeOwner {
             source_query_settings: Arc::default(),
             source_unicode_profile: crate::utility_http::SourceUnicodeProfile::Go1265,
             source_pattern_logger: Arc::new(crate::utility_gateway::SourcePatternLogger::stderr()),
+            source_crash_state: Arc::default(),
         }, tasks }
     }
     pub fn stderr() -> Self { Self::new(std::io::stderr()) }
