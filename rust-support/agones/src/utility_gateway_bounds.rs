@@ -3,7 +3,6 @@
 // Copyright The Go Authors. BSD-3-Clause; see ../GO-LICENSE.
 use super::{PatternSourceProfile, PatternStringFailure};
 use crate::utility_http::HeaderValues;
-use bytes::Bytes;
 use derive_deftly::Deftly;
 use crate::utility_declarations::derive_deftly_template_SourceErrorOrigin;
 use std::{error::Error, fmt, ops::Range};
@@ -77,15 +76,5 @@ pub(super) fn slice(low: i64, high: i64, capacity: usize) -> Result<Range<usize>
 }
 
 pub(super) fn make_strings(profile: PatternSourceProfile, length: i64, capacity: i64) -> Result<HeaderValues, PatternStringFailure> {
-    let width = (profile.allocation().word_bits() / 4) as u128;
-    let limit = profile.allocation().max_alloc() as u128;
-    if length < 0 || capacity < 0 || length > capacity || capacity as u128 * width > limit {
-        return Err(if length < 0 || length as u128 * width > limit {
-            PatternStringFailure::MakeSliceLengthOverflow
-        } else { PatternStringFailure::MakeSliceCapacityOverflow });
-    }
-    if capacity as u128 * std::mem::size_of::<Bytes>() as u128 > isize::MAX as u128 {
-        return Err(PatternStringFailure::NativeAddressSpace);
-    }
-    Ok(HeaderValues::make(length as usize, capacity as usize, profile.allocation()))
+    HeaderValues::try_make(length, capacity, profile.allocation()).map_err(Into::into)
 }

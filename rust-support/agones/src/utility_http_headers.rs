@@ -6,7 +6,8 @@ use serde::{Serialize, Serializer, ser::Error as _};
 use std::{borrow::Borrow, collections::HashMap, fmt, sync::{Arc, RwLock}};
 #[path = "utility_http_header_capacity.rs"]
 mod capacity;
-pub use capacity::HeaderAllocationProfile;
+pub use capacity::{HeaderAllocationProfile, SourceSliceAllocationError, SourceSliceAllocationLayout};
+pub(crate) use capacity::reserve_source_array;
 
 #[derive(Clone, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub struct HeaderName(Bytes);
@@ -41,6 +42,63 @@ impl HeaderValues {
         if length > capacity { panic!("makeslice: cap out of range"); }
         profile.validate(capacity);
         Self { backing: Some(Arc::new(RwLock::new(vec![Bytes::new(); capacity]))), offset: 0, length, capacity }
+    }
+    pub fn try_make(length: i64, capacity: i64, profile: HeaderAllocationProfile) -> Result<Self, SourceSliceAllocationError> {
+        let layout = profile.make_slice_layout(length, capacity, (profile.word_bits() / 4) as u64)?;
+        let mut slots = reserve_source_array::<Bytes>(layout.capacity)?;
+        slots.resize_with(layout.capacity as usize, Bytes::new);
+        Ok(Self { backing: Some(Arc::new(RwLock::new(slots))), offset: 0, length: length as usize, capacity: layout.capacity as usize })
+    }
+    fn try_extend_backing(&mut self, count: usize, profile: HeaderAllocationProfile) -> Result<usize, SourceSliceAllocationError> {
+        let length = self.length.checked_add(count).ok_or(SourceSliceAllocationError::GrowLength)?;
+        if length as u128 > (1u128 << (profile.word_bits() - 1)) - 1 { return Err(SourceSliceAllocationError::GrowLength); }
+        if length > self.capacity {
+            let layout = profile.grow_slice_layout(self.capacity as u64, length as u64, (profile.word_bits() / 4) as u64, false)?;
+            let mut slots = reserve_source_array::<Bytes>(layout.capacity)?;
+            slots.resize_with(layout.capacity as usize, Bytes::new);
+            if let Some(backing) = &self.backing {
+                let old = backing.read().unwrap_or_else(|error| error.into_inner());
+                slots[..self.length].clone_from_slice(&old[self.offset..self.offset + self.length]);
+            }
+            self.backing = Some(Arc::new(RwLock::new(slots))); self.offset = 0; self.capacity = layout.capacity as usize;
+        }
+        Ok(length)
+    }
+    /// A lowered append argument already consists of string values. Avoid
+    /// an extra temporary Vec for the common source append(slice, value).
+    pub fn try_append_values(&mut self, values: &[Bytes], profile: HeaderAllocationProfile) -> Result<(), SourceSliceAllocationError> {
+        let length = self.try_extend_backing(values.len(), profile)?;
+        if !values.is_empty() {
+            let mut slots = self.backing.as_ref().expect("nonempty source slice backing").write().unwrap_or_else(|error| error.into_inner());
+            slots[self.offset + self.length..self.offset + length].clone_from_slice(values);
+        }
+        self.length = length; Ok(())
+    }
+    /// Source append(dst, src...) retains overlapping-copy semantics. When
+    /// descriptors share backing, take one lock and choose memmove order;
+    /// holding a destination write lock while iterating src would deadlock.
+    pub fn try_append_slice(&mut self, values: &Self, profile: HeaderAllocationProfile) -> Result<(), SourceSliceAllocationError> {
+        let length = self.try_extend_backing(values.length, profile)?;
+        if values.length == 0 { self.length = length; return Ok(()); }
+        let destination = self.backing.as_ref().expect("nonempty source slice backing");
+        let source = values.backing.as_ref().expect("nonempty source append argument");
+        if Arc::ptr_eq(destination, source) {
+            let mut slots = destination.write().unwrap_or_else(|error| error.into_inner());
+            let start = self.offset + self.length;
+            if start > values.offset && start < values.offset + values.length {
+                for index in (0..values.length).rev() { slots[start + index] = slots[values.offset + index].clone(); }
+            } else {
+                for index in 0..values.length { slots[start + index] = slots[values.offset + index].clone(); }
+            }
+        } else {
+            // Snapshot-free copy without holding two backing locks at once.
+            // External concurrent mutation remains a source race profile.
+            for index in 0..values.length {
+                let value = values.get(index).expect("source append argument index");
+                destination.write().unwrap_or_else(|error| error.into_inner())[self.offset + self.length + index] = value;
+            }
+        }
+        self.length = length; Ok(())
     }
     pub fn from_values(values: impl IntoIterator<Item = Bytes>) -> Self {
         let values: Vec<_> = values.into_iter().collect(); let length = values.len();

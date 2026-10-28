@@ -1,10 +1,10 @@
 //! Source integer limits for grpc-gateway pattern string operations.
 // Adapted from Go strings.Join, runtime.concatstrings and fmt's string buffer.
 // Copyright The Go Authors. BSD-3-Clause; see ../GO-LICENSE.
-use super::{PatternSourceProfile, PatternBoundsError, PatternMatchResult};
+use super::{PatternSourceProfile, PatternBoundsError, PatternMatchResult, PatternConstruction, PatternInputDomainError};
 use bytes::Bytes;
 use cgp::prelude::*;
-use crate::{utility_tls::CanExitSourceProcess, utility_http::HeaderValues};
+use crate::{utility_tls::CanExitSourceProcess, utility_http::{HeaderValues, SourceSliceAllocationError}};
 use std::{error::Error, fmt, io::Write};
 
 /// These are distinct source failure sites. Join panics with a string;
@@ -12,7 +12,7 @@ use std::{error::Error, fmt, io::Write};
 /// without unwinding. This is not a complete Go allocator/runtime profile.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum PatternStringFailure {
-    JoinOverflow, FormatBufferOverflow, MakeSliceLengthOverflow, MakeSliceCapacityOverflow, ConcatenationTooLong, OutOfMemory,
+    JoinOverflow, FormatBufferOverflow, SliceGrowthOverflow, MakeSliceLengthOverflow, MakeSliceCapacityOverflow, ConcatenationTooLong, OutOfMemory,
     /// The selected Go allocation fits its source domain but cannot be
     /// represented by this Rust host. This is not source overflow credit.
     NativeAddressSpace,
@@ -22,6 +22,7 @@ impl PatternStringFailure {
         match self {
             Self::JoinOverflow => "strings: Join output length overflow",
             Self::FormatBufferOverflow => "runtime error: growslice: len out of range",
+            Self::SliceGrowthOverflow => "runtime error: growslice: len out of range",
             Self::MakeSliceLengthOverflow => "runtime error: makeslice: len out of range",
             Self::MakeSliceCapacityOverflow => "runtime error: makeslice: cap out of range",
             Self::ConcatenationTooLong => "string concatenation too long",
@@ -34,14 +35,27 @@ impl fmt::Display for PatternStringFailure {
     fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { out.write_str(self.message()) }
 }
 impl Error for PatternStringFailure {}
+impl From<SourceSliceAllocationError> for PatternStringFailure {
+    fn from(error: SourceSliceAllocationError) -> Self {
+        match error {
+            SourceSliceAllocationError::MakeLength => Self::MakeSliceLengthOverflow,
+            SourceSliceAllocationError::MakeCapacity => Self::MakeSliceCapacityOverflow,
+            SourceSliceAllocationError::GrowLength => Self::SliceGrowthOverflow,
+            SourceSliceAllocationError::OutOfMemory => Self::OutOfMemory,
+            SourceSliceAllocationError::NativeAddressSpace => Self::NativeAddressSpace,
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum PatternOperationFailure { String(PatternStringFailure), Bounds(PatternBoundsError) }
+pub enum PatternOperationFailure { String(PatternStringFailure), Bounds(PatternBoundsError), Input(PatternInputDomainError) }
 impl From<PatternStringFailure> for PatternOperationFailure { fn from(error: PatternStringFailure) -> Self { Self::String(error) } }
 impl From<PatternBoundsError> for PatternOperationFailure { fn from(error: PatternBoundsError) -> Self { Self::Bounds(error) } }
+impl From<PatternInputDomainError> for PatternOperationFailure { fn from(error: PatternInputDomainError) -> Self { Self::Input(error) } }
+impl From<SourceSliceAllocationError> for PatternOperationFailure { fn from(error: SourceSliceAllocationError) -> Self { Self::String(error.into()) } }
 impl fmt::Display for PatternOperationFailure {
     fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self { Self::String(error) => fmt::Display::fmt(error, out), Self::Bounds(error) => fmt::Display::fmt(error, out) }
+        match self { Self::String(error) => fmt::Display::fmt(error, out), Self::Bounds(error) => fmt::Display::fmt(error, out), Self::Input(error) => fmt::Display::fmt(error, out) }
     }
 }
 impl Error for PatternOperationFailure {}
@@ -52,6 +66,8 @@ pub trait CanCompleteSourcePatternString {
     fn complete_source_pattern_render(&self, result: Result<Bytes, PatternOperationFailure>) -> Bytes;
     fn complete_source_pattern_match(&self, result: Result<PatternMatchResult, PatternOperationFailure>) -> PatternMatchResult;
     fn complete_source_pattern_slice(&self, result: Result<HeaderValues, PatternStringFailure>) -> HeaderValues;
+    fn complete_source_pattern_construction(&self, result: Result<PatternConstruction, PatternOperationFailure>) -> PatternConstruction;
+    fn complete_source_pattern_input(&self, result: Result<(), PatternInputDomainError>);
 }
 #[cgp_new_provider]
 impl<Context: CanExitSourceProcess> SourcePatternStringCompletion<Context> for CompleteSourcePatternString {
@@ -65,14 +81,17 @@ impl<Context: CanExitSourceProcess> SourcePatternStringCompletion<Context> for C
     fn complete_source_pattern_slice(context: &Context, result: Result<HeaderValues, PatternStringFailure>) -> HeaderValues {
         complete_pattern(context, result.map_err(Into::into))
     }
+    fn complete_source_pattern_construction(context: &Context, result: Result<PatternConstruction, PatternOperationFailure>) -> PatternConstruction { complete_pattern(context, result) }
+    fn complete_source_pattern_input(context: &Context, result: Result<(), PatternInputDomainError>) { complete_pattern(context, result.map_err(Into::into)); }
 }
 fn complete_pattern<T>(context: &impl CanExitSourceProcess, result: Result<T, PatternOperationFailure>) -> T {
     match result {
         Ok(value) => value,
         Err(PatternOperationFailure::Bounds(error)) => std::panic::panic_any(error),
+        Err(PatternOperationFailure::Input(error)) => std::panic::panic_any(error),
         Err(PatternOperationFailure::String(error)) => match error {
             PatternStringFailure::JoinOverflow => std::panic::panic_any(PatternStringFailure::JoinOverflow.message()),
-            failure @ (PatternStringFailure::FormatBufferOverflow | PatternStringFailure::MakeSliceLengthOverflow |
+            failure @ (PatternStringFailure::FormatBufferOverflow | PatternStringFailure::SliceGrowthOverflow | PatternStringFailure::MakeSliceLengthOverflow |
                 PatternStringFailure::MakeSliceCapacityOverflow | PatternStringFailure::NativeAddressSpace) => std::panic::panic_any(failure),
             failure @ (PatternStringFailure::ConcatenationTooLong | PatternStringFailure::OutOfMemory) => {
                 // runtime.throw bypasses grpclog (including io.Discard) and

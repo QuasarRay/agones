@@ -1,7 +1,8 @@
 //! Source pattern construction effects, error identity and MustPattern exit.
 // Adapted from grpc-gateway/runtime/pattern.go and grpc/grpclog's default
 // logger. Copyright gRPC authors. Apache-2.0; see ../GRPC-LICENSE.
-use super::GatewayPattern;
+use super::{GatewayPattern, CanCompleteSourcePatternString};
+use bytes::Bytes;
 use crate::{errors::BoxError, utility_http::{HeaderValues, HeaderAllocationProfile}, utility_tls::CanExitSourceProcess};
 use cgp::prelude::*;
 use derive_deftly::Deftly;
@@ -129,12 +130,12 @@ pub(super) fn reject_pattern(context: &impl CanEmitSourcePatternDiagnostic, prof
 }
 #[cgp_component(SourceGatewayPatternConstructor)]
 pub trait CanConstructSourceGatewayPattern {
-    fn construct_source_gateway_pattern(&self, profile: PatternSourceProfile, version: i64, operations: &[i64], pool: HeaderValues, verb: &[u8]) -> PatternConstruction;
+    fn construct_source_gateway_pattern(&self, profile: PatternSourceProfile, version: i64, operations: &[i64], pool: HeaderValues, verb: Bytes) -> PatternConstruction;
     fn require_source_gateway_pattern(&self, construction: PatternConstruction) -> GatewayPattern;
 }
 #[cgp_new_provider]
-impl<Context: CanEmitSourcePatternDiagnostic + CanExitSourceProcess> SourceGatewayPatternConstructor<Context> for ConstructSourceGatewayPattern {
-    fn construct_source_gateway_pattern(context: &Context, profile: PatternSourceProfile, version: i64, operations: &[i64], pool: HeaderValues, verb: &[u8]) -> PatternConstruction {
+impl<Context: CanEmitSourcePatternDiagnostic + CanExitSourceProcess + CanCompleteSourcePatternString> SourceGatewayPatternConstructor<Context> for ConstructSourceGatewayPattern {
+    fn construct_source_gateway_pattern(context: &Context, profile: PatternSourceProfile, version: i64, operations: &[i64], pool: HeaderValues, verb: Bytes) -> PatternConstruction {
         GatewayPattern::new(context, profile, version, operations, pool, verb)
     }
     fn require_source_gateway_pattern(context: &Context, construction: PatternConstruction) -> GatewayPattern {

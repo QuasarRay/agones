@@ -1,6 +1,36 @@
 //! Source allocation capacities shared by HTTP buffers and gateway patterns.
 // Adapted from Go 1.26.5 runtime/{slice,msize}.go and internal/runtime/gc.
 // Copyright The Go Authors. BSD-3-Clause; see ../GO-LICENSE.
+use std::{error::Error, fmt};
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum SourceSliceAllocationError { MakeLength, MakeCapacity, GrowLength, OutOfMemory, NativeAddressSpace }
+impl fmt::Display for SourceSliceAllocationError {
+    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result {
+        out.write_str(match self {
+            Self::MakeLength => "runtime error: makeslice: len out of range",
+            Self::MakeCapacity => "runtime error: makeslice: cap out of range",
+            Self::GrowLength => "runtime error: growslice: len out of range",
+            Self::OutOfMemory => "out of memory",
+            Self::NativeAddressSpace => "source allocation exceeds native Rust address space",
+        })
+    }
+}
+impl Error for SourceSliceAllocationError {}
+/// Unsigned capacity bits and the byte request passed to source mallocgc.
+/// For Go32 byte slices, the capacity's high bit can be signed in the Go
+/// slice header; it must not disappear in a native Rust conversion.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct SourceSliceAllocationLayout { pub capacity: u64, pub allocation_bytes: u64 }
+
+pub(crate) fn reserve_source_array<T>(capacity: u64) -> Result<Vec<T>, SourceSliceAllocationError> {
+    if capacity as u128 > usize::MAX as u128 || capacity as u128 * std::mem::size_of::<T>() as u128 > isize::MAX as u128 {
+        return Err(SourceSliceAllocationError::NativeAddressSpace);
+    }
+    let mut result = Vec::new();
+    result.try_reserve_exact(capacity as usize).map_err(|_| SourceSliceAllocationError::OutOfMemory)?;
+    Ok(result)
+}
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct HeaderAllocationProfile { word_bits: u8, heap_address_bits: u8 }
@@ -17,6 +47,26 @@ impl HeaderAllocationProfile {
     fn add(self, left: i64, right: i64) -> i64 { self.word((left as u64).wrapping_add(right as u64)) }
     fn unsigned(self, value: i64) -> u64 { if self.word_bits == 32 { value as u32 as u64 } else { value as u64 } }
     pub(crate) fn max_alloc(self) -> u64 { (1u64 << self.heap_address_bits) - u64::from(self.word_bits == 32) }
+    pub fn make_slice_layout(self, length: i64, capacity: i64, element_size: u64) -> Result<SourceSliceAllocationLayout, SourceSliceAllocationError> {
+        let maximum = (1u128 << (self.word_bits - 1)) - 1;
+        let invalid_length = length < 0 || length as u128 > maximum || length as u128 * element_size as u128 > self.max_alloc() as u128;
+        if invalid_length { return Err(SourceSliceAllocationError::MakeLength); }
+        if capacity < 0 || capacity as u128 > maximum || length > capacity || capacity as u128 * element_size as u128 > self.max_alloc() as u128 {
+            return Err(SourceSliceAllocationError::MakeCapacity);
+        }
+        Ok(SourceSliceAllocationLayout { capacity: capacity as u64, allocation_bytes: capacity as u64 * element_size })
+    }
+    pub fn grow_slice_layout(self, old: u64, length: u64, element_size: u64, no_scan: bool) -> Result<SourceSliceAllocationLayout, SourceSliceAllocationError> {
+        if length as u128 > (1u128 << (self.word_bits - 1)) - 1 { return Err(SourceSliceAllocationError::GrowLength); }
+        if element_size == 0 { return Ok(SourceSliceAllocationLayout { capacity: length, allocation_bytes: 0 }); }
+        let capacity = self.unsigned(self.next_capacity(old, length));
+        if capacity as u128 * element_size as u128 > self.max_alloc() as u128 { return Err(SourceSliceAllocationError::GrowLength); }
+        let rounded = self.roundup(capacity * element_size, no_scan);
+        let capacity = rounded / element_size;
+        let allocation_bytes = capacity * element_size;
+        if allocation_bytes > self.max_alloc() { return Err(SourceSliceAllocationError::GrowLength); }
+        Ok(SourceSliceAllocationLayout { capacity, allocation_bytes })
+    }
     pub(super) fn clone_length(self, lengths: impl Iterator<Item = usize>) -> usize {
         let mut length = 0;
         for next in lengths { length = self.add(length, next as i64); }
@@ -30,13 +80,9 @@ impl HeaderAllocationProfile {
         }
     }
     pub(super) fn grow(self, old: usize, length: usize) -> usize {
-        self.validate(length);
-        let capacity = self.next_capacity(old as u64, length as u64);
-        let string_size = (self.word_bits / 4) as u64;
-        if capacity as u64 > self.max_alloc() / string_size { panic!("growslice: len out of range"); }
-        let rounded = self.roundup(capacity as u64 * string_size, false);
-        if rounded > self.max_alloc() { panic!("growslice: len out of range"); }
-        usize::try_from(rounded / string_size).unwrap_or_else(|_| panic!("growslice: len out of range"))
+        let layout = self.grow_slice_layout(old as u64, length as u64, (self.word_bits / 4) as u64, false)
+            .unwrap_or_else(|_| panic!("growslice: len out of range"));
+        usize::try_from(layout.capacity).unwrap_or_else(|_| panic!("growslice: len out of range"))
     }
     pub(crate) fn grow_bytes(self, old: usize, length: usize) -> usize {
         self.try_grow_bytes(old, length).unwrap_or_else(|| panic!("growslice: len out of range"))
@@ -52,15 +98,7 @@ impl HeaderAllocationProfile {
     }
     /// Source-sized result precedes conversion to any native Rust capacity.
     pub(crate) fn source_grow_byte_capacity(self, old: u64, length: u64) -> Option<u64> {
-        if !self.valid_byte_capacity(length as u128) { return None; }
-        let capacity = self.next_capacity(old, length);
-        if capacity as u64 > self.max_alloc() { return None; }
-        let rounded = self.roundup(capacity as u64, true);
-        // growslice checks capmem against maxAlloc after rounding, not the
-        // signed int maximum. Keep the unsigned allocation size here; a
-        // Go32 slice header may reinterpret its high bit as a negative cap.
-        if rounded > self.max_alloc() { return None; }
-        Some(rounded)
+        self.grow_slice_layout(old, length, 1, true).ok().map(|layout| layout.capacity)
     }
     /// A fresh strings.Builder.Grow calls MakeNoZero(n). Its requested
     /// length check precedes allocator rounding; the returned capacity is

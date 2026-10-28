@@ -24,7 +24,9 @@ use sniff::detect_content_type as sniff_content_type;
 mod status;
 #[path = "utility_http_headers.rs"]
 mod headers;
-pub use headers::{HeaderName, HeaderValues, HeaderAllocationProfile, Headers, SourceByteString, canonical_header_key, set_header, header, headers_json};
+pub use headers::{HeaderName, HeaderValues, HeaderAllocationProfile, SourceSliceAllocationError, SourceSliceAllocationLayout,
+    Headers, SourceByteString, canonical_header_key, set_header, header, headers_json};
+pub(crate) use headers::reserve_source_array;
 #[path = "utility_http_trailers.rs"]
 mod trailers;
 #[path = "utility_http_listener.rs"]
