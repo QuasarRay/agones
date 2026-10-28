@@ -1,6 +1,6 @@
 # Agones-rs and CPG handoff
 
-Canonical ledger: `AGONES_RS_STATE.json`, revision 350. Native Goal:
+Canonical ledger: `AGONES_RS_STATE.json`, revision 351. Native Goal:
 `01a17928-8551-7701-8497-5333c680f283`, ACTIVE, no budget. Current work made
 concrete source progress; no wait or blocking condition is live.
 Authority: combined attachment/roadmap SHA
@@ -33,9 +33,9 @@ compilation, parity or assurance. `runtime.NewServerMux` now has an actual
 authored factory/codec/mux consumer, still PARTIAL and UNVERIFIED. The named
 missing-body list is empty; required behavior/platform gaps remain open.
 
-Immediate next action: Continue M0003 MANUAL without route switch. Complete source parent/root/worker recovery and fatal reporting; H1 abortPendingRead/hijack/multipart/cleanup-panic/native close schedules and H2 committed-head/no-body END_STREAM/reset/disposal ordering. H1 handler-versus-finish catch boundaries and selected BoxError runtime views are authored only. Complete Go goroutine traceback/caller/panic(nil)/Goexit/secure/crash/core/output; full RuntimeError/panic/recover/Is/As/type/format interfaces, custom/composed APIStatus/runtime interfaces, all required runtime classes and native method-set erasure/boxing adoption. The current reporter captures bounded Rust recovery frames, not Go panic frames; opaque native payload formatting remains native-only. Preserve existing error identities, aliases and all remaining control/Arc/Bytes/RawValue/serde/native allocation, source GC/heap/elision/sanitizer/experiment/pressure/failure ordering, Go map hash/group/growth/range/key/pointer/alias/concurrency, actual ABI/unwind/address/layout/lifetime/profile, fmt pool/tiny/extreme Go32, GRPC_GO_LOG_*/custom logger/source SDK/command requirements. Preserve all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirements. No native/source execution, full equivalence, assurance or M0003 completion is claimed. Full BOTH-route scope remains intact; global gate CLOSED and assurance NOT_STARTED. No compiler/probes/tests/lint/proof/generator validation/CI.
+Immediate next action: Continue M0003 MANUAL without route switch. Complete source worker/wait HandleCrash/ReallyCrash/PanicHandlers/additional-handler/context/call-depth behavior and remaining parent/direct HTTP/protocol/connection/JoinSet recovery/fatal boundaries. Selected CGP-spawn/or-return parent panic reporting plus exit2 is authored, not a complete Go fatal runtime. Complete Go goroutine/panic chains, caller/traceback flags/all-goroutine/systemstack/freeze/secure/crash/core/print-failure/output/exit/atexit/native hooks, panic(nil)/Goexit and actual source/target/profile binding. Native recovery frames are bounded Rust frames; opaque/native format and scalar/type/composed APIStatus/RuntimeError/Is/As/boxing profiles remain required. Preserve H1 abortPendingRead/hijack/multipart/cleanup-panic/native close and H2 committed-head/no-body END_STREAM/reset/disposal requirements. Remaining guard-future/context/format/control/Arc/Bytes/RawValue/serde/native allocations, source GC/heap/elision/sanitizer/experiment/pressure/failure ordering, Go map hash/group/growth/range/key/pointer/alias/concurrency, ABI/unwind/address/layout/lifetime, fmt pool/tiny/extreme Go32, GRPC_GO_LOG_*/custom logger/source SDK/command adoption all remain required. Preserve every prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirement. No runtime execution, proof, full equivalence or M0003 completion is claimed. Full BOTH-route scope remains intact, global gate CLOSED, assurance NOT_STARTED. No compiler/probes/tests/lint/proof/generator validation/CI.
 
-This batch extends H1 recovery through response finishing and original-body completion, tracking the source in-flight transition so late panics do not repeat active-handler cleanup. H2 finishing remains outside its handler catch. BoxError/Must/recovered-error paths now preserve direct canonical runtime classes and statically captured RuntimeError envelopes; existing error traversal reaches original values without an added source Unwrap edge. Compile-time family reuse adds no lifecycle manager, registry or task. Full parent/worker fatal, native cleanup/reset/trace, custom/composed interface and every prior M0003 requirement remain open. No project/native/source execution, compiler/macro/API probe, assurance, formatter or generator ran.
+This batch connects a static CGP parent panic reporter/terminal handler to existing utility-spawned futures and the HTTP drain transfer, preserving returned-error policy and rejected-future resource ownership. Error/string preprinting, embedded newline indentation, a nested printing-panic branch and exit2 are authored through existing process-exit ownership. The current HTTP/root bounded native stack formatter is shared. No extra task, manager, mutable policy owner or runtime provider registry is introduced. Worker HandleCrash/callback policy, direct native scopes, full Go runtime/trace/exit and every prior M0003 gap remain open. No native/process/HTTP/task/project execution, compiler/API/macro probe, assurance, formatter or generator ran.
 
 Existing util package registration is `rust-support/agones/src/utility_lib.rs`.
 Literal mirror paths are under agones-rs/pkg/util; Rust-only effect/wiring files
@@ -54,11 +54,12 @@ Current authored utility behavior:
   Rusternetes HTTP reader and shared source logger. Native client/error profiles
   and the old controller CRD/cache barrier bypass remain open.
 - Runtime JSON log state/backoff/Must/logger identities and shared weak-referenced
-  task ownership. Root uses UtilityTaskScope::reporting: bounded first failure
-  wakes a CGP observer immediately, retaining original errors/panic payloads for
-  join. Observation does not call user Display. HTTP request-local scopes discard
-  reaped failures rather than retain a growing failure history. Parent fatal/
-  recovery policy and real command integration still require their source owner.
+  task ownership. Returned failures retain bounded observation and original
+  joined values without observer Display calls. CGP utility spawns now wrap poll
+  panics in the selected parent report/exit policy; rejected drain futures retain
+  the same guard and live resources. Direct native/HTTP/protocol scopes, worker
+  HandleCrash/callback/ReallyCrash, full fatal runtime/trace/exit profiles and real
+  command integration remain required. HTTP request recovery stays distinct.
 - Concrete HTTP/TLS bounded streaming transport, sensitive-header redaction,
   request/error/404 callbacks, 60-second header timeout, plaintext HTTP1 and TLS
   ALPN-selected HTTP1/HTTP2. Initial/reload hardcoded /certs paths remain distinct
@@ -312,7 +313,7 @@ One read command attempted `go env GOROOT` for a source path; stdout was empty
 and its dependent file read failed. No project/compile/fixture/semantic assurance
 ran. Do not reinterpret source reading or identity bookkeeping as verification.
 
-M0003 entry usage 656008. Raw progress observations 1..48 retain 752278, 781155, 905410, 1069792, 1095960, 1289081, 1320264, 1568425, 1577646, 1691561, 1702165, 1783942, 1794616, 2082051, 2115290, 2286210, 2350385, 2469680, 2482023, 2579579, 2609990, 2707816, 2741726, 2928302, 2936025, 3233954, 3245592, 3556307, 3566347, 3630874, 3637953, 3675741, 3684341, 3800243, 3812429, 3874147, 3879089, 3947602, 3956894, 4026389, 4034406, 4102317, 4110264, 4177671, 4187033, 4284942, 4294159, 4335337. Still NO completed M0003 cost comparison or route switch. Source/context/read/accounting is charged once; no credit inference.
+M0003 entry usage 656008. Raw progress observations 1..50 retain 752278, 781155, 905410, 1069792, 1095960, 1289081, 1320264, 1568425, 1577646, 1691561, 1702165, 1783942, 1794616, 2082051, 2115290, 2286210, 2350385, 2469680, 2482023, 2579579, 2609990, 2707816, 2741726, 2928302, 2936025, 3233954, 3245592, 3556307, 3566347, 3630874, 3637953, 3675741, 3684341, 3800243, 3812429, 3874147, 3879089, 3947602, 3956894, 4026389, 4034406, 4102317, 4110264, 4177671, 4187033, 4284942, 4294159, 4335337, 4343582, 4385962. Still NO completed M0003 cost comparison or route switch. Source/context/read/accounting is charged once; no credit inference.
 Preserve M0001/M0002 original forecasts/comparisons and shared overhead buckets.
 M0002 observed work was 482306; shared completion/switch was 20030. The explicit
 M0003 entry bookkeeping allocation remains unchanged.

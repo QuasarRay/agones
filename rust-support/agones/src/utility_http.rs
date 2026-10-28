@@ -12,7 +12,7 @@ use serde::de::DeserializeOwned;
 use tokio::{io::{AsyncRead, AsyncWrite}, net::TcpListener, sync::{mpsc, oneshot}, task::JoinSet};
 use tokio_util::sync::CancellationToken;
 use cgp::prelude::*;
-use crate::{errors::{BoxError, Errors}, utility_runtime::UtilityRuntimeContext, utility_scope::{CanSpawnUtilityTask, HasUtilityTaskScope, UtilityTaskScope}};
+use crate::{errors::{BoxError, Errors}, utility_runtime::UtilityRuntimeContext, utility_scope::{CanSpawnUtilityTask, UtilityTaskScope}};
 
 #[path = "utility_http_mux.rs"]
 mod mux;
@@ -539,10 +539,7 @@ pub async fn retain_connection_drain(context: &UtilityRuntimeContext, mut connec
         let _ = handlers.cancel_and_join().await;
         Ok(())
     });
-    let rejected = match context.utility_task_scope().upgrade() {
-        Some(scope) => scope.spawn_or_return("HTTP server connection drain", drain).err(),
-        None => Some(drain),
-    };
+    let rejected = context.spawn_utility_task_or_return("HTTP server connection drain", drain).err();
     if let Some(drain) = rejected { owner_stop.cancel(); let _ = drain.await; }
 }
 

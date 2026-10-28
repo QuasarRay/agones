@@ -11,6 +11,7 @@ pub use utility_crd::RusternetesCrdContext;
 pub mod utility_logging;
 pub mod utility_scope;
 pub mod utility_runtime;
+pub mod utility_runtime_panic;
 pub use utility_runtime::{UtilityRuntimeContext, UtilityRuntimeOwner};
 pub mod utility_http;
 pub mod utility_fswatch;
