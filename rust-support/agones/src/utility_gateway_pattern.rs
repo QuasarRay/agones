@@ -2,7 +2,7 @@
 // Adapted from grpc-gateway/runtime/pattern.go and grpc/grpclog's default
 // logger. Copyright gRPC authors. Apache-2.0; see ../GRPC-LICENSE.
 use super::GatewayPattern;
-use crate::{errors::BoxError, utility_http::HeaderValues, utility_tls::CanExitSourceProcess};
+use crate::{errors::BoxError, utility_http::{HeaderValues, HeaderAllocationProfile}, utility_tls::CanExitSourceProcess};
 use cgp::prelude::*;
 use std::{collections::BTreeMap, error::Error, fmt, io::Write, sync::{Arc, Mutex, RwLock}};
 
@@ -13,6 +13,23 @@ impl PatternWordProfile {
     pub(super) fn integer(self, value: i64) -> i64 { match self { Self::Go32 => value as i32 as i64, Self::Go64 => value } }
     pub(super) fn add(self, left: i64, right: i64) -> i64 { self.integer(left.wrapping_add(right)) }
     pub(super) fn sub(self, left: i64, right: i64) -> i64 { self.integer(left.wrapping_sub(right)) }
+}
+/// One immutable source allocation profile owns both word width and heap
+/// address width. Actual process tool/target selection remains M0027.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct PatternSourceProfile { allocation: HeaderAllocationProfile }
+impl PatternSourceProfile {
+    pub const fn go126(allocation: HeaderAllocationProfile) -> Self { Self { allocation } }
+    pub const fn allocation(self) -> HeaderAllocationProfile { self.allocation }
+    pub const fn word(self) -> PatternWordProfile {
+        if self.allocation.word_bits() == 32 { PatternWordProfile::Go32 } else { PatternWordProfile::Go64 }
+    }
+}
+impl From<PatternWordProfile> for PatternSourceProfile {
+    fn from(word: PatternWordProfile) -> Self {
+        Self::go126(match word { PatternWordProfile::Go32 => HeaderAllocationProfile::GO126_32,
+            PatternWordProfile::Go64 => HeaderAllocationProfile::GO126_64 })
+    }
 }
 #[derive(Debug)]
 struct PatternErrorIdentity(u8);
@@ -93,18 +110,18 @@ pub trait CanEmitSourcePatternDiagnostic { fn emit_source_pattern_diagnostic(&se
 impl<Context: HasSourcePatternLogger> SourcePatternDiagnosticEmitter<Context> for EmitSourcePatternDiagnostic {
     fn emit_source_pattern_diagnostic(context: &Context, diagnostic: PatternDiagnostic<'_>) { context.source_pattern_logger().write(diagnostic); }
 }
-pub(super) fn reject_pattern(context: &impl CanEmitSourcePatternDiagnostic, profile: PatternWordProfile, diagnostic: PatternDiagnostic<'_>) -> PatternConstruction {
+pub(super) fn reject_pattern(context: &impl CanEmitSourcePatternDiagnostic, profile: PatternSourceProfile, diagnostic: PatternDiagnostic<'_>) -> PatternConstruction {
     context.emit_source_pattern_diagnostic(diagnostic);
     PatternConstruction { pattern: GatewayPattern::zero(profile), error: Some(Box::new(InvalidPatternError { identity: &INVALID_PATTERN })) }
 }
 #[cgp_component(SourceGatewayPatternConstructor)]
 pub trait CanConstructSourceGatewayPattern {
-    fn construct_source_gateway_pattern(&self, profile: PatternWordProfile, version: i64, operations: &[i64], pool: HeaderValues, verb: &[u8]) -> PatternConstruction;
+    fn construct_source_gateway_pattern(&self, profile: PatternSourceProfile, version: i64, operations: &[i64], pool: HeaderValues, verb: &[u8]) -> PatternConstruction;
     fn require_source_gateway_pattern(&self, construction: PatternConstruction) -> GatewayPattern;
 }
 #[cgp_new_provider]
 impl<Context: CanEmitSourcePatternDiagnostic + CanExitSourceProcess> SourceGatewayPatternConstructor<Context> for ConstructSourceGatewayPattern {
-    fn construct_source_gateway_pattern(context: &Context, profile: PatternWordProfile, version: i64, operations: &[i64], pool: HeaderValues, verb: &[u8]) -> PatternConstruction {
+    fn construct_source_gateway_pattern(context: &Context, profile: PatternSourceProfile, version: i64, operations: &[i64], pool: HeaderValues, verb: &[u8]) -> PatternConstruction {
         GatewayPattern::new(context, profile, version, operations, pool, verb)
     }
     fn require_source_gateway_pattern(context: &Context, construction: PatternConstruction) -> GatewayPattern {

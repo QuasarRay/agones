@@ -1,7 +1,7 @@
 //! Source integer limits for grpc-gateway pattern string operations.
 // Adapted from Go strings.Join, runtime.concatstrings and fmt's string buffer.
 // Copyright The Go Authors. BSD-3-Clause; see ../GO-LICENSE.
-use super::PatternWordProfile;
+use super::PatternSourceProfile;
 use bytes::Bytes;
 use cgp::prelude::*;
 use crate::utility_tls::CanExitSourceProcess;
@@ -11,13 +11,21 @@ use std::{error::Error, fmt, io::Write};
 /// fmt's append overflow panics with a runtime error; concatstrings throws
 /// without unwinding. This is not a complete Go allocator/runtime profile.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum PatternStringFailure { JoinOverflow, FormatBufferOverflow, ConcatenationTooLong }
+pub enum PatternStringFailure {
+    JoinOverflow, FormatBufferOverflow, MakeSliceLengthOverflow, ConcatenationTooLong, OutOfMemory,
+    /// The selected Go allocation fits its source domain but cannot be
+    /// represented by this Rust host. This is not source overflow credit.
+    NativeAddressSpace,
+}
 impl PatternStringFailure {
     pub const fn message(self) -> &'static str {
         match self {
             Self::JoinOverflow => "strings: Join output length overflow",
             Self::FormatBufferOverflow => "runtime error: growslice: len out of range",
+            Self::MakeSliceLengthOverflow => "runtime error: makeslice: len out of range",
             Self::ConcatenationTooLong => "string concatenation too long",
+            Self::OutOfMemory => "out of memory",
+            Self::NativeAddressSpace => "source allocation exceeds native Rust address space",
         }
     }
 }
@@ -36,12 +44,17 @@ impl<Context: CanExitSourceProcess> SourcePatternStringCompletion<Context> for C
         match result {
             Ok(value) => value,
             Err(PatternStringFailure::JoinOverflow) => std::panic::panic_any(PatternStringFailure::JoinOverflow.message()),
-            Err(PatternStringFailure::FormatBufferOverflow) => std::panic::panic_any(PatternStringFailure::FormatBufferOverflow),
-            Err(PatternStringFailure::ConcatenationTooLong) => {
+            Err(failure @ (PatternStringFailure::FormatBufferOverflow | PatternStringFailure::MakeSliceLengthOverflow |
+                PatternStringFailure::NativeAddressSpace)) => std::panic::panic_any(failure),
+            Err(failure @ (PatternStringFailure::ConcatenationTooLong | PatternStringFailure::OutOfMemory)) => {
                 // runtime.throw bypasses grpclog (including io.Discard) and
                 // is unrecoverable. Full Go stack/crash/secure-mode output
                 // and native write ordering remain required runtime work.
-                let _ = std::io::stderr().write_all(b"fatal error: string concatenation too long\n");
+                let line: &[u8] = match failure {
+                    PatternStringFailure::OutOfMemory => b"fatal error: out of memory\n",
+                    _ => b"fatal error: string concatenation too long\n",
+                };
+                let _ = std::io::stderr().write_all(line);
                 context.exit_source_process(2);
                 // A returning effect provider must not turn a source throw
                 // into a recoverable Rust panic or a successful result.
@@ -51,13 +64,13 @@ impl<Context: CanExitSourceProcess> SourcePatternStringCompletion<Context> for C
     }
 }
 
-pub(super) fn join_components(profile: PatternWordProfile, components: &[Bytes]) -> Result<Bytes, PatternStringFailure> {
+pub(super) fn join_components(profile: PatternSourceProfile, components: &[Bytes]) -> Result<Bytes, PatternStringFailure> {
     match components {
         [] => return Ok(Bytes::new()),
         [only] => return Ok(only.clone()),
         _ => {},
     }
-    let maximum = profile.max_int() as u128;
+    let maximum = profile.word().max_int() as u128;
     let separators = (components.len() - 1) as u128;
     // strings.Join uses >=, even at the exactly divisible boundary. Do
     // not replace it by a sum-only check or Rust's host integer maximum.
@@ -67,14 +80,18 @@ pub(super) fn join_components(profile: PatternWordProfile, components: &[Bytes])
         if component.len() as u128 > maximum - length { return Err(PatternStringFailure::JoinOverflow); }
         length += component.len() as u128;
     }
-    let mut joined = Vec::with_capacity(native_length(length));
+    // Join constructs a fresh Builder. Grow(n) uses MakeNoZero(n), with
+    // a makeslice panic for the requested length, before native allocation.
+    let capacity = profile.allocation().make_no_zero_byte_capacity(length)
+        .ok_or(PatternStringFailure::MakeSliceLengthOverflow)?;
+    let mut joined = allocate_bytes(native_length(capacity as u128)?)?;
     joined.extend_from_slice(&components[0]);
     for component in &components[1..] { joined.push(b'/'); joined.extend_from_slice(component); }
     Ok(Bytes::from(joined))
 }
 
-pub(super) fn concat_strings(profile: PatternWordProfile, parts: &[Bytes]) -> Result<Bytes, PatternStringFailure> {
-    let maximum = profile.max_int() as u128;
+pub(super) fn concat_strings(profile: PatternSourceProfile, parts: &[Bytes]) -> Result<Bytes, PatternStringFailure> {
+    let maximum = profile.word().max_int() as u128;
     let (mut length, mut nonempty, mut last) = (0_u128, 0_usize, None);
     for part in parts {
         if part.is_empty() { continue; }
@@ -85,7 +102,7 @@ pub(super) fn concat_strings(profile: PatternWordProfile, parts: &[Bytes]) -> Re
     // Bytes values own their immutable storage; none refers to a Go stack
     // temporary. This is concatstrings' sole nonempty heap-string fast path.
     if nonempty == 1 { return Ok(last.expect("one nonempty source string").clone()); }
-    let mut result = Vec::with_capacity(native_length(length));
+    let mut result = allocate_string_storage(profile, length)?;
     for part in parts { result.extend_from_slice(part); }
     Ok(Bytes::from(result))
 }
@@ -93,20 +110,65 @@ pub(super) fn concat_strings(profile: PatternWordProfile, parts: &[Bytes]) -> Re
 /// Only the two fixed string-only Sprintf forms in Pattern.String: no user
 /// formatter, width, precision, Unicode conversion or Go format interpreter.
 /// Append length overflow stays recoverable, unlike runtime concatenation.
-/// Source heap limits, printer-pool capacity, allocation/failure ordering and
-/// the final []byte-to-string copy still require their allocation profile.
-pub(super) fn format_string_parts(profile: PatternWordProfile, parts: &[&[u8]]) -> Result<Bytes, PatternStringFailure> {
-    let maximum = profile.max_int() as u128;
+/// Fresh printer buffers use source growslice capacities; the final result
+/// copies storage before releasing the scratch buffer. Actual fmt sync.Pool
+/// reuse/GC/sanitizer/tiny allocator/native memory-pressure profiles remain.
+pub(super) fn format_string_parts(profile: PatternSourceProfile, parts: &[&[u8]]) -> Result<Bytes, PatternStringFailure> {
+    let maximum = profile.word().max_int() as u128;
     let mut result = Vec::new();
+    let mut source_capacity = 0_u64;
     for part in parts {
         if part.len() as u128 > maximum - result.len() as u128 { return Err(PatternStringFailure::FormatBufferOverflow); }
+        let length = result.len() as u128 + part.len() as u128;
+        if length > source_capacity as u128 {
+            let capacity = profile.allocation().source_grow_byte_capacity(source_capacity, length as u64)
+                .ok_or(PatternStringFailure::FormatBufferOverflow)?;
+            // A source grow allocates new backing even if Rust's allocator
+            // happened to overallocate the prior block.
+            let mut grown = allocate_bytes(native_length(capacity as u128)?)?;
+            grown.extend_from_slice(&result); result = grown; source_capacity = capacity;
+        }
         result.extend_from_slice(part);
     }
-    Ok(Bytes::from(result))
+    match result.as_slice() {
+        [] => Ok(Bytes::new()),
+        [only] => {
+            let index = *only as usize;
+            Ok(Bytes::from_static(&SINGLE_BYTE_STRINGS[index..index + 1]))
+        }
+        _ => {
+            let mut copied = allocate_string_storage(profile, result.len() as u128)?;
+            copied.extend_from_slice(&result);
+            Ok(Bytes::from(copied))
+        }
+    }
 }
 
-fn native_length(length: u128) -> usize {
+fn native_length(length: u128) -> Result<usize, PatternStringFailure> {
     // A Go64 result on a smaller Rust address space is a native hosting
     // limitation, not a source Join/concat overflow or a truncated length.
-    usize::try_from(length).expect("source string exceeds native Rust address space")
+    if length > isize::MAX as u128 { return Err(PatternStringFailure::NativeAddressSpace); }
+    Ok(length as usize)
 }
+
+fn allocate_bytes(capacity: usize) -> Result<Vec<u8>, PatternStringFailure> {
+    let capacity = native_length(capacity as u128)?;
+    let mut result = Vec::new();
+    result.try_reserve_exact(capacity).map_err(|_| PatternStringFailure::OutOfMemory)?;
+    Ok(result)
+}
+
+fn allocate_string_storage(profile: PatternSourceProfile, length: u128) -> Result<Vec<u8>, PatternStringFailure> {
+    // rawstring/mallocgc does not raise the Builder's makeslice panic.
+    // A request larger than the selected source heap can only fail to
+    // allocate. Native pressure can also fail a smaller request.
+    if length > profile.allocation().max_alloc() as u128 { return Err(PatternStringFailure::OutOfMemory); }
+    allocate_bytes(native_length(length)?)
+}
+
+static SINGLE_BYTE_STRINGS: [u8; 256] = {
+    let mut bytes = [0; 256];
+    let mut index = 0;
+    while index < bytes.len() { bytes[index] = index as u8; index += 1; }
+    bytes
+};

@@ -16,7 +16,7 @@ use crate::{errors::{BoxError, Errors}, utility_http::{header, set_header, HttpH
 mod pattern_support;
 #[path = "utility_gateway_strings.rs"]
 mod string_support;
-pub use pattern_support::{PatternWordProfile, PatternConstruction, InvalidPatternError, is_invalid_pattern,
+pub use pattern_support::{PatternWordProfile, PatternSourceProfile, PatternConstruction, InvalidPatternError, is_invalid_pattern,
     PatternDiagnostic, PatternLogProfile, SourcePatternLogger, HasSourcePatternLogger, SourcePatternLoggerGetterComponent,
     CanEmitSourcePatternDiagnostic, SourcePatternDiagnosticEmitter, SourcePatternDiagnosticEmitterComponent, EmitSourcePatternDiagnostic,
     CanConstructSourceGatewayPattern, SourceGatewayPatternConstructor, SourceGatewayPatternConstructorComponent, ConstructSourceGatewayPattern};
@@ -46,51 +46,54 @@ pub struct GatewayCall {
 /// the same pool backing without another routing or lifecycle owner.
 #[derive(Clone, Debug)]
 pub struct GatewayPattern { operations: Vec<(i64, usize)>, pool: crate::utility_http::HeaderValues, variables: Vec<Bytes>,
-    stack_size: usize, tail_length: usize, verb: Bytes, word_profile: PatternWordProfile }
+    stack_size: usize, tail_length: usize, verb: Bytes, source_profile: PatternSourceProfile }
 impl Default for GatewayPattern { fn default() -> Self { Self::zero(PatternWordProfile::Go64) } }
 impl GatewayPattern {
-    /// A Go zero Pattern under an explicit source int ABI. The profile is
+    /// A Go zero Pattern under an explicit source word/heap profile. It is
     /// retained on rejected construction and every registered Pattern copy.
-    pub fn zero(profile: PatternWordProfile) -> Self {
+    pub fn zero(profile: impl Into<PatternSourceProfile>) -> Self {
         Self { operations: Vec::new(), pool: crate::utility_http::HeaderValues::nil(), variables: Vec::new(),
-            stack_size: 0, tail_length: 0, verb: Bytes::new(), word_profile: profile }
+            stack_size: 0, tail_length: 0, verb: Bytes::new(), source_profile: profile.into() }
     }
-    pub fn word_profile(&self) -> PatternWordProfile { self.word_profile }
-    pub fn new(context: &impl CanEmitSourcePatternDiagnostic, profile: PatternWordProfile, version: i64,
+    pub fn source_profile(&self) -> PatternSourceProfile { self.source_profile }
+    pub fn word_profile(&self) -> PatternWordProfile { self.source_profile.word() }
+    pub fn new(context: &impl CanEmitSourcePatternDiagnostic, profile: impl Into<PatternSourceProfile>, version: i64,
         operations: &[i64], pool: crate::utility_http::HeaderValues, verb: impl AsRef<[u8]>) -> PatternConstruction {
         use PatternDiagnostic::*;
-        let version = profile.integer(version);
+        let profile = profile.into();
+        let word = profile.word();
+        let version = word.integer(version);
         if version != 1 { return pattern_support::reject_pattern(context, profile, UnsupportedVersion(version)); }
-        if operations.len() % 2 != 0 { return pattern_support::reject_pattern(context, profile, OddCodeCount(profile.integer(operations.len() as i64))); }
+        if operations.len() % 2 != 0 { return pattern_support::reject_pattern(context, profile, OddCodeCount(word.integer(operations.len() as i64))); }
         let mut result = Self { operations: Vec::new(), pool, variables: Vec::new(), stack_size: 0, tail_length: 0,
-            verb: Bytes::copy_from_slice(verb.as_ref()), word_profile: profile };
+            verb: Bytes::copy_from_slice(verb.as_ref()), source_profile: profile };
         let (mut stack, mut maxstack, mut tail) = (0_i64, 0_i64, 0_i64);
         let mut deep_seen = false;
         for pair in operations.chunks_exact(2) {
-            let code = profile.integer(pair[0]); let source_operand = profile.integer(pair[1]);
+            let code = word.integer(pair[0]); let source_operand = word.integer(pair[1]);
             let mut operand = source_operand as usize;
             match code {
                 0 => continue,
-                1 => { if deep_seen { tail = profile.add(tail, 1); } stack = profile.add(stack, 1); },
+                1 => { if deep_seen { tail = word.add(tail, 1); } stack = word.add(stack, 1); },
                 2 => {
                     if source_operand < 0 || operand >= result.pool.len() { return pattern_support::reject_pattern(context, profile, LiteralIndex(source_operand)); }
-                    if deep_seen { tail = profile.add(tail, 1); } stack = profile.add(stack, 1);
+                    if deep_seen { tail = word.add(tail, 1); } stack = word.add(stack, 1);
                 }
                 3 => {
                     if deep_seen { return pattern_support::reject_pattern(context, profile, DuplicatePushM); }
-                    deep_seen = true; stack = profile.add(stack, 1);
+                    deep_seen = true; stack = word.add(stack, 1);
                 }
                 4 => {
                     if source_operand <= 0 { return pattern_support::reject_pattern(context, profile, ConcatSize(source_operand)); }
-                    stack = profile.sub(stack, source_operand);
+                    stack = word.sub(stack, source_operand);
                     if stack < 0 { return pattern_support::reject_pattern(context, profile, StackUnderflow); }
-                    stack = profile.add(stack, 1);
+                    stack = word.add(stack, 1);
                 }
                 5 => {
                     if source_operand < 0 || operand >= result.pool.len() { return pattern_support::reject_pattern(context, profile, CaptureIndex(source_operand)); }
                     result.variables.push(result.pool.get(operand).expect("validated source literal index"));
                     operand = result.variables.len() - 1;
-                    stack = profile.sub(stack, 1);
+                    stack = word.sub(stack, 1);
                     if stack < 0 { return pattern_support::reject_pattern(context, profile, StackUnderflow); }
                 }
                 _ => return pattern_support::reject_pattern(context, profile, InvalidOpcode(code)),
@@ -110,10 +113,10 @@ impl GatewayPattern {
             if !self.verb.is_empty() { return None; }
             if components.is_empty() {
                 components = std::borrow::Cow::Owned(vec![context.complete_source_pattern_string(
-                    concat_strings(self.word_profile, &[Bytes::from_static(b":"), verb.clone()]))]);
+                    concat_strings(self.source_profile, &[Bytes::from_static(b":"), verb.clone()]))]);
             } else {
                 let last = components.to_mut().last_mut().expect("nonempty source components");
-                *last = context.complete_source_pattern_string(concat_strings(self.word_profile, &[last.clone(), Bytes::from_static(b":"), verb.clone()]));
+                *last = context.complete_source_pattern_string(concat_strings(self.source_profile, &[last.clone(), Bytes::from_static(b":"), verb.clone()]));
             }
         }
         let mut position = 0;
@@ -129,9 +132,9 @@ impl GatewayPattern {
                 3 => {
                     let end = components.len().checked_sub(self.tail_length)?;
                     if end < position { return None; }
-                    stack.push(context.complete_source_pattern_string(join_components(self.word_profile, &components[position..end]))); position = end;
+                    stack.push(context.complete_source_pattern_string(join_components(self.source_profile, &components[position..end]))); position = end;
                 }
-                4 => { let start = stack.len() - operand; let value = context.complete_source_pattern_string(join_components(self.word_profile, &stack[start..])); stack.truncate(start); stack.push(value); },
+                4 => { let start = stack.len() - operand; let value = context.complete_source_pattern_string(join_components(self.source_profile, &stack[start..])); stack.truncate(start); stack.push(value); },
                 5 => { captures[*operand] = stack.pop()?; },
                 _ => unreachable!("validated pattern opcode"),
             }
@@ -155,17 +158,17 @@ impl GatewayPattern {
                 1 => stack.push(Bytes::from_static(b"*")),
                 2 => stack.push(self.pool.get(*operand).expect("validated source literal index")),
                 3 => stack.push(Bytes::from_static(b"**")),
-                4 => { let start = stack.len() - operand; let value = join_components(self.word_profile, &stack[start..])?; stack.truncate(start); stack.push(value); },
+                4 => { let start = stack.len() - operand; let value = join_components(self.source_profile, &stack[start..])?; stack.truncate(start); stack.push(value); },
                 5 => {
                     let value = stack.last_mut().expect("validated pattern capture");
-                    *value = format_string_parts(self.word_profile, &[b"{", &self.variables[*operand], b"=", value.as_ref(), b"}"])?;
+                    *value = format_string_parts(self.source_profile, &[b"{", &self.variables[*operand], b"=", value.as_ref(), b"}"])?;
                 }
                 _ => unreachable!("validated pattern opcode"),
             }
         }
-        let segments = join_components(self.word_profile, &stack)?;
-        if !self.verb.is_empty() { return format_string_parts(self.word_profile, &[b"/", &segments, b":", &self.verb]); }
-        concat_strings(self.word_profile, &[Bytes::from_static(b"/"), segments])
+        let segments = join_components(self.source_profile, &stack)?;
+        if !self.verb.is_empty() { return format_string_parts(self.source_profile, &[b"/", &segments, b":", &self.verb]); }
+        concat_strings(self.source_profile, &[Bytes::from_static(b"/"), segments])
     }
 }
 impl fmt::Display for GatewayPattern {
@@ -188,11 +191,11 @@ pub trait HasGatewayRuntime { fn gateway_runtime(&self) -> &UtilityRuntimeContex
 #[derive_deftly(UtilityGatewayProviders)]
 pub struct GatewayContext { gateway_state: Arc<GatewayState>, gateway_runtime: UtilityRuntimeContext }
 impl GatewayContext {
-    pub fn new_pattern(&self, profile: PatternWordProfile, version: i64, operations: &[i64], pool: crate::utility_http::HeaderValues, verb: &[u8]) -> PatternConstruction {
-        self.gateway_runtime().construct_source_gateway_pattern(profile, version, operations, pool, verb)
+    pub fn new_pattern(&self, profile: impl Into<PatternSourceProfile>, version: i64, operations: &[i64], pool: crate::utility_http::HeaderValues, verb: &[u8]) -> PatternConstruction {
+        self.gateway_runtime().construct_source_gateway_pattern(profile.into(), version, operations, pool, verb)
     }
     pub fn must_pattern(&self, construction: PatternConstruction) -> GatewayPattern { self.gateway_runtime().require_source_gateway_pattern(construction) }
-    pub fn handle_compiled(&self, profile: PatternWordProfile, method: impl AsRef<[u8]>, operations: &[i64], pool: crate::utility_http::HeaderValues, verb: &[u8], handler: GatewayHandler) {
+    pub fn handle_compiled(&self, profile: impl Into<PatternSourceProfile>, method: impl AsRef<[u8]>, operations: &[i64], pool: crate::utility_http::HeaderValues, verb: &[u8], handler: GatewayHandler) {
         let construction = self.new_pattern(profile, 1, operations, pool, verb);
         self.handle(method, self.must_pattern(construction), handler);
     }

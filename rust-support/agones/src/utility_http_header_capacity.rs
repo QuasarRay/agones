@@ -1,4 +1,4 @@
-//! Source allocation capacities for HTTP []string and reader byte buffers.
+//! Source allocation capacities shared by HTTP buffers and gateway patterns.
 // Adapted from Go 1.26.5 runtime/{slice,msize}.go and internal/runtime/gc.
 // Copyright The Go Authors. BSD-3-Clause; see ../GO-LICENSE.
 
@@ -16,7 +16,7 @@ impl HeaderAllocationProfile {
     fn word(self, value: u64) -> i64 { if self.word_bits == 32 { value as u32 as i32 as i64 } else { value as i64 } }
     fn add(self, left: i64, right: i64) -> i64 { self.word((left as u64).wrapping_add(right as u64)) }
     fn unsigned(self, value: i64) -> u64 { if self.word_bits == 32 { value as u32 as u64 } else { value as u64 } }
-    fn max_alloc(self) -> u64 { (1u64 << self.heap_address_bits) - u64::from(self.word_bits == 32) }
+    pub(crate) fn max_alloc(self) -> u64 { (1u64 << self.heap_address_bits) - u64::from(self.word_bits == 32) }
     pub(super) fn clone_length(self, lengths: impl Iterator<Item = usize>) -> usize {
         let mut length = 0;
         for next in lengths { length = self.add(length, next as i64); }
@@ -31,7 +31,7 @@ impl HeaderAllocationProfile {
     }
     pub(super) fn grow(self, old: usize, length: usize) -> usize {
         self.validate(length);
-        let capacity = self.next_capacity(old, length);
+        let capacity = self.next_capacity(old as u64, length as u64);
         let string_size = (self.word_bits / 4) as u64;
         if capacity as u64 > self.max_alloc() / string_size { panic!("growslice: len out of range"); }
         let rounded = self.roundup(capacity as u64 * string_size, false);
@@ -39,12 +39,35 @@ impl HeaderAllocationProfile {
         usize::try_from(rounded / string_size).unwrap_or_else(|_| panic!("growslice: len out of range"))
     }
     pub(crate) fn grow_bytes(self, old: usize, length: usize) -> usize {
-        self.validate_byte_capacity(length as u128, "growslice: len out of range");
+        self.try_grow_bytes(old, length).unwrap_or_else(|| panic!("growslice: len out of range"))
+    }
+    /// Shared source calculation; callers retain their own panic/effect
+    /// representation instead of catching a Rust panic to inspect its text.
+    pub(crate) fn try_grow_bytes(self, old: usize, length: usize) -> Option<usize> {
+        let rounded = self.source_grow_byte_capacity(old as u64, length as u64)?;
+        // Retain the existing HTTP buffer projection. Complete signed Go32
+        // slice-header capacities remain a separate required boundary.
+        if !self.valid_byte_capacity(rounded as u128) { return None; }
+        usize::try_from(rounded).ok()
+    }
+    /// Source-sized result precedes conversion to any native Rust capacity.
+    pub(crate) fn source_grow_byte_capacity(self, old: u64, length: u64) -> Option<u64> {
+        if !self.valid_byte_capacity(length as u128) { return None; }
         let capacity = self.next_capacity(old, length);
-        if capacity as u64 > self.max_alloc() { panic!("growslice: len out of range"); }
+        if capacity as u64 > self.max_alloc() { return None; }
         let rounded = self.roundup(capacity as u64, true);
-        self.validate_byte_capacity(rounded as u128, "growslice: len out of range");
-        usize::try_from(rounded).unwrap_or_else(|_| panic!("growslice: len out of range"))
+        // growslice checks capmem against maxAlloc after rounding, not the
+        // signed int maximum. Keep the unsigned allocation size here; a
+        // Go32 slice header may reinterpret its high bit as a negative cap.
+        if rounded > self.max_alloc() { return None; }
+        Some(rounded)
+    }
+    /// A fresh strings.Builder.Grow calls MakeNoZero(n). Its requested
+    /// length check precedes allocator rounding; the returned capacity is
+    /// the rounded no-pointer size, not n or Rust Vec::capacity().
+    pub(crate) fn make_no_zero_byte_capacity(self, length: u128) -> Option<u64> {
+        if !self.valid_byte_capacity(length) { return None; }
+        Some(self.roundup(length as u64, true))
     }
     /// encoding/json.refill uses make([]byte, len, 2*cap+512); make retains
     /// the requested capacity rather than growslice's allocator size class.
@@ -55,9 +78,12 @@ impl HeaderAllocationProfile {
         usize::try_from(capacity).unwrap_or_else(|_| panic!("makeslice: cap out of range"))
     }
     fn validate_byte_capacity(self, capacity: u128, message: &str) {
-        if capacity > ((1u128 << (self.word_bits - 1)) - 1) || capacity > self.max_alloc() as u128 { panic!("{message}"); }
+        if !self.valid_byte_capacity(capacity) { panic!("{message}"); }
     }
-    fn next_capacity(self, old: usize, length: usize) -> i64 {
+    fn valid_byte_capacity(self, capacity: u128) -> bool {
+        capacity <= ((1u128 << (self.word_bits - 1)) - 1) && capacity <= self.max_alloc() as u128
+    }
+    fn next_capacity(self, old: u64, length: u64) -> i64 {
         let requested = length as i64;
         let mut capacity = old as i64;
         let double = self.add(capacity, capacity);
