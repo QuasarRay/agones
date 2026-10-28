@@ -260,11 +260,12 @@
     "rust-support/agones/source-data/unicode/go1.26.5/tables.go": "6a88d48746c4b2c471cc04ae40559694b734770212e6f5ea5f1962adb0c0bdb1",
     "rust-support/agones/source-data/unicode/go1.27.1/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "rust-support/agones/source-data/unicode/go1.27.1/tables.go": "ac0e5d5d1b58ed4b02d7cb4a0085bdefbdb4f7aae6fadddbc9477f8463da8bd8",
-    "rust-support/agones/src/utility_declarations.rs": "9f1517777da9c2ae7cb32c16a05ca1cc019e30d2500520af225f641a3536bd6d",
-    "rust-support/agones/src/utility_gateway.rs": "7dbe238a34ecac56ef5d07f2bac48e84855d5f81c663b2fedddc62a34487c4a0",
+    "rust-support/agones/src/utility_declarations.rs": "3a18812480af775d88a29f441327a627d81e121bc7e9bb98d0acb384ef677991",
+    "rust-support/agones/src/utility_gateway.rs": "f0149cbeb992769464d9df87376b425130ba1955dc4e6cac58ee332cbfd9ad20",
     "rust-support/agones/src/utility_gateway_framing.rs": "43dd0a6375b726182af52243e45152e7dcf756ce4c27ba4f9cb4cb5b77127326",
     "rust-support/agones/src/utility_gateway_json.rs": "b6aac4a28d90ea4bad7362737cfe7132fc5a72ce81cbd6bd492441798aba48f7",
-    "rust-support/agones/src/utility_gateway_pattern.rs": "d21e108df3acc2e3d53cfe2b25658ef57b5e0c1a4082fb8e5a179ed3685ed2a6",
+    "rust-support/agones/src/utility_gateway_pattern.rs": "c48172ee35949951cb831d01ac37a69573cd0c07d2ef4c6e12dac25311394208",
+    "rust-support/agones/src/utility_gateway_strings.rs": "5404bb6230924fdc495715289c0b330ea0569034f8b36cd5c92a937871270817",
     "rust-support/agones/src/utility_http.rs": "fbf4000c50d31d7d21dc2b700efbf60e882f18902c7bc4cc1ba1da2ac114f7bf",
     "rust-support/agones/src/utility_http_body.rs": "af7e4eac5e2623b697f63342445b01b13cba8474310912e8befd823aab9c53da",
     "rust-support/agones/src/utility_http_form.rs": "6d0d19a94d76cde97bd8e9eeb86446804f0d87dcdc96fa92424a6ee2bc6bb57b",
@@ -284,8 +285,9 @@
   },
   "runtime_credit": 0,
   "source_pattern_constructor_owner": "Existing CGP/derive-deftly UtilityRuntimeProviders owns SourcePatternDiagnosticEmitter, SourceGatewayPatternConstructor, SourcePatternLoggerGetter and the existing SourceProcessExit capability. RuntimeOwner constructs one source-pattern logger resource (writer mutex and typed enabled/JSON profile). GatewayContext new_pattern/must_pattern/handle_compiled consume that provider and then use the existing route owner. PatternConstruction retains both Go result fields; InvalidPatternError copies reference one static identity token. Word profiles are explicit data and never inferred from the Rust host. There is no logger/provider registry, task or competing lifecycle manager; environment/custom LoggerV2 and actual ABI/initializer binding remain later source work.",
+  "source_pattern_string_owner": "GatewayPattern owns the explicit Go32/Go64 word profile, including zero/error patterns and registered copies. Pure Rust join/concat/fixed-format helpers use that profile, not Rust usize limits. Existing derive-deftly UtilityRuntimeProviders statically binds SourcePatternStringCompletion to CompleteSourcePatternString and the existing SourceProcessExit effect. Actual GatewayDispatcher same/other-method matching passes its existing UtilityRuntimeContext; Pattern.string_bytes takes the same capability. try_string_bytes and Rust Display are explicit projections, not the source panic/throw entrypoint. No new task, state owner, provider registry, Go evaluator or generation path is introduced.",
   "source_url": "https://static.crates.io/crates/hyper/hyper-1.12.0.crate",
-  "timestamp": "2026-10-28T12:05:48.935154+00:00",
+  "timestamp": "2026-10-28T12:23:38.577469+00:00",
   "upstream_archive": "/home/astral/.cargo/registry/cache/index.crates.io-1949cf8c6b5b557f/hyper-1.12.0.crate",
   "upstream_archive_sha256": "2c3e324da4c95177d6291d4c8730197c0d1822f8a9766814a4a44fa5ab797c9c",
   "url_alias_authoring": {
@@ -324,5 +326,5 @@
     "source_text_match": true,
     "version": "1.1.2"
   },
-  "work_base_commit": "7acb99cc8edf5f547e5f2d574d51b0c43bd89a5d"
+  "work_base_commit": "2dfc9d70dd528e10380f41baecaf9a998085c8ed"
 }

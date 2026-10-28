@@ -64,9 +64,16 @@
     "Constructor diagnostics distinguish unsupported version, odd opcode count, duplicate pushM, literal/concat/capture indices, stack underflow and invalid opcode with the source messages, including source misleading negative-literal wording for positive out-of-bounds indices.",
     "SourcePatternLogger models the default Error/Fatal stderr profile plus explicit discard/JSON choices. It checks discard before formatting user Error values, uses source severity prefixes/local standard-log date-time or sorted JSON message/severity fields, appends only a missing newline and ignores the single Write result. General formatter/caller/native writer/global configuration profiles remain open.",
     "MustPattern is consumed by SourceGatewayPatternConstructor.require_source_gateway_pattern: nil error returns the given pattern; nonnil error emits the fatal initialization message and invokes the existing CGP SourceProcessExit(1). An unexpectedly returning exit provider panics instead of reporting success. No fatal path was executed.",
-    "GatewayContext new_pattern/must_pattern/handle_compiled provide a connected compiled-registration path through RuntimeProviders and the existing route table. Actual generated SDK/allocator initializer and command adoption remains M0025/M0027, without registration-only acceptance credit."
+    "GatewayContext new_pattern/must_pattern/handle_compiled provide a connected compiled-registration path through RuntimeProviders and the existing route table. Actual generated SDK/allocator initializer and command adoption remains M0025/M0027, without registration-only acceptance credit.",
+    "GatewayPattern retains its explicit PatternWordProfile through successful/rejected construction, zero(profile), cloning and registered routes. max_int is source i32::MAX/i64::MAX, independent of the Rust host.",
+    "Source strings.Join slash helper preserves empty/single-element fast paths, including immutable single-string reuse, the source strict separator >= maxInt/(count-1) guard and ordered element remaining-length checks.",
+    "Source concat helper skips empty parts, reuses a sole nonempty immutable string and checks the selected source integer bound before concatenating. Matcher verb fallback and the no-verb Pattern.String slash prefix consume it.",
+    "Pattern.String capture braces and nonempty-verb rendering follow their two fixed byte-only Sprintf forms, with per-append source-int overflow classification kept distinct from runtime concatenation. This is not a general Go formatter or a complete printer-pool/heap/allocator profile.",
+    "SourcePatternStringCompletion routes Join overflow to a string panic, fixed-format overflow to a typed recoverable runtime-error projection, and concat overflow to stderr fatal prefix plus SourceProcessExit(2). A returning exit provider aborts; runtime.throw is not downgraded to recoverable panic or pattern-logger output.",
+    "GatewayDispatcher passes its runtime capability for both same-method and other-method matching. Canonical Pattern.string_bytes consumes the same provider; try_string_bytes returns an explicit Rust result and Display returns fmt::Error on a length failure rather than claiming source effect equivalence.",
+    "Matcher borrows the input components on equal verbs and rejects a nonempty mismatching pattern verb before copying. It copies only when source verb fallback must change the last component; empty fallback creates one component."
   ],
-  "canonical_owner": "Existing CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/body-I/O/clock/diagnostic/delay/log effects and existing request/connection phases. RequestFields owns method bytes, ContentLength, current Body, current optional SourceUrl, Host bytes and RequestURI bytes. SourceUrl owns one shared URL field value; Clone aliases the pointer and fields()/new copies the value into a different pointer. LogEntry retains the selected optional URL pointer until the existing SourceLogger serializes it. Method/Host/RequestURI log fields capture string bytes by value. The original transport RequestBody remains separately retained for server discard/cleanup. Headers and HeaderValues keep their existing map/slice owners. SourceUserinfo is immutable per source. URL data introduces no effect/provider registry, tasks, general Go object layer or competing lifecycle manager. Existing CGP/derive-deftly UtilityRuntimeProviders and UtilityRuntimeOwner retain HTTP/body-I/O/log/task ownership. RequestFields owns one current Form and PostForm map descriptor alongside existing request fields. SourceValues reuses Headers/HeaderValues byte-key map and shared slice storage with exact, case-sensitive key operations. UtilityRuntimeContext retains one SourceQuerySettings profile/nondefault-counter resource exposed by the static SourceQuerySettings getter. The gateway fixed fallback calls the same source form parser; there is no second parser state, effect registry, actor or lifecycle manager. Actual tool/ABI/GODEBUG/metric binding remains with the later application/telemetry owners. Existing CGP/derive-deftly UtilityGatewayProviders owns route state/dispatch and RuntimeProviders owns the static SourceUppercaseMapper plus SourceUnicodeProfile getter. GatewayPattern retains a HeaderValues slice view of the caller pool; literal reads/String rendering see shared pool edits while captured variable names are copied byte strings at construction. Path components, verbs and callback captures are byte data; capture maps do not prescribe lexicographic iteration. RuntimeContext defaults explicitly to Go1265 and selects tracked Unicode15/Unicode17 inputs. The case-range lookup caches are immutable projections of pinned data, not writable policy, Go evaluators, Go-to-Rust emitters, provider registries or task owners. Actual compiled-version/ABI/default binding remains M0027. Existing CGP/derive-deftly UtilityRuntimeProviders owns SourcePatternDiagnosticEmitter, SourceGatewayPatternConstructor, SourcePatternLoggerGetter and the existing SourceProcessExit capability. RuntimeOwner constructs one source-pattern logger resource (writer mutex and typed enabled/JSON profile). GatewayContext new_pattern/must_pattern/handle_compiled consume that provider and then use the existing route owner. PatternConstruction retains both Go result fields; InvalidPatternError copies reference one static identity token. Word profiles are explicit data and never inferred from the Rust host. There is no logger/provider registry, task or competing lifecycle manager; environment/custom LoggerV2 and actual ABI/initializer binding remain later source work.",
+  "canonical_owner": "Existing CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/body-I/O/clock/diagnostic/delay/log effects and existing request/connection phases. RequestFields owns method bytes, ContentLength, current Body, current optional SourceUrl, Host bytes and RequestURI bytes. SourceUrl owns one shared URL field value; Clone aliases the pointer and fields()/new copies the value into a different pointer. LogEntry retains the selected optional URL pointer until the existing SourceLogger serializes it. Method/Host/RequestURI log fields capture string bytes by value. The original transport RequestBody remains separately retained for server discard/cleanup. Headers and HeaderValues keep their existing map/slice owners. SourceUserinfo is immutable per source. URL data introduces no effect/provider registry, tasks, general Go object layer or competing lifecycle manager. Existing CGP/derive-deftly UtilityRuntimeProviders and UtilityRuntimeOwner retain HTTP/body-I/O/log/task ownership. RequestFields owns one current Form and PostForm map descriptor alongside existing request fields. SourceValues reuses Headers/HeaderValues byte-key map and shared slice storage with exact, case-sensitive key operations. UtilityRuntimeContext retains one SourceQuerySettings profile/nondefault-counter resource exposed by the static SourceQuerySettings getter. The gateway fixed fallback calls the same source form parser; there is no second parser state, effect registry, actor or lifecycle manager. Actual tool/ABI/GODEBUG/metric binding remains with the later application/telemetry owners. Existing CGP/derive-deftly UtilityGatewayProviders owns route state/dispatch and RuntimeProviders owns the static SourceUppercaseMapper plus SourceUnicodeProfile getter. GatewayPattern retains a HeaderValues slice view of the caller pool; literal reads/String rendering see shared pool edits while captured variable names are copied byte strings at construction. Path components, verbs and callback captures are byte data; capture maps do not prescribe lexicographic iteration. RuntimeContext defaults explicitly to Go1265 and selects tracked Unicode15/Unicode17 inputs. The case-range lookup caches are immutable projections of pinned data, not writable policy, Go evaluators, Go-to-Rust emitters, provider registries or task owners. Actual compiled-version/ABI/default binding remains M0027. Existing CGP/derive-deftly UtilityRuntimeProviders owns SourcePatternDiagnosticEmitter, SourceGatewayPatternConstructor, SourcePatternLoggerGetter and the existing SourceProcessExit capability. RuntimeOwner constructs one source-pattern logger resource (writer mutex and typed enabled/JSON profile). GatewayContext new_pattern/must_pattern/handle_compiled consume that provider and then use the existing route owner. PatternConstruction retains both Go result fields; InvalidPatternError copies reference one static identity token. Word profiles are explicit data and never inferred from the Rust host. There is no logger/provider registry, task or competing lifecycle manager; environment/custom LoggerV2 and actual ABI/initializer binding remain later source work. GatewayPattern owns the explicit Go32/Go64 word profile, including zero/error patterns and registered copies. Pure Rust join/concat/fixed-format helpers use that profile, not Rust usize limits. Existing derive-deftly UtilityRuntimeProviders statically binds SourcePatternStringCompletion to CompleteSourcePatternString and the existing SourceProcessExit effect. Actual GatewayDispatcher same/other-method matching passes its existing UtilityRuntimeContext; Pattern.string_bytes takes the same capability. try_string_bytes and Rust Display are explicit projections, not the source panic/throw entrypoint. No new task, state owner, provider registry, Go evaluator or generation path is introduced.",
   "completion_claim": "Connected source-authoring progress only. Native compatibility package is actual source, not a wrapper marker, but is uncompiled/unexecuted. M0003 and the combined objective remain incomplete.",
   "disposition": "READY",
   "form_query_authoring": {
@@ -89,7 +96,7 @@
     "data_boundary": "Tracked generated dependency data only; no Go body evaluation, Go-text Rust emitter, CPG pipeline bypass or code generation invocation.",
     "default_profile": "Go1265 (explicit, not actual tool-version evidence)",
     "owner": "Existing CGP/derive-deftly UtilityGatewayProviders owns route state/dispatch and RuntimeProviders owns the static SourceUppercaseMapper plus SourceUnicodeProfile getter. GatewayPattern retains a HeaderValues slice view of the caller pool; literal reads/String rendering see shared pool edits while captured variable names are copied byte strings at construction. Path components, verbs and callback captures are byte data; capture maps do not prescribe lexicographic iteration. RuntimeContext defaults explicitly to Go1265 and selects tracked Unicode15/Unicode17 inputs. The case-range lookup caches are immutable projections of pinned data, not writable policy, Go evaluators, Go-to-Rust emitters, provider registries or task owners. Actual compiled-version/ABI/default binding remains M0027.",
-    "remaining": "Finish source Pattern constructor diagnostics/grpclog/ErrInvalidPattern identity/MustPattern fatal behavior; full source-int opcode/stack/concat length overflow, pool/capture/map iteration and alias/race/panic/allocator profiles. The fixed Legacy byte matching and capture path, shared literal pool/copy-name distinction and explicit Go1265/Go1271 uppercase profiles are authored. Canonical Pattern.String uses string_bytes; Rust Display remains a compatibility projection. Bind actual source Unicode/compiler/ABI and string/builder/lazy-lookup allocation/initialization/pointer/failure profiles. General MIME/multipart/MaxBytesReader, Values.Clone and query/escape diagnostics, actual GODEBUG/default/metric selection, configurable gateway APIs and all existing integration requirements remain open. No full Unicode package, source-profile, HTTP parity or generated caller adoption credit follows.",
+    "remaining": "Finish actual source ABI and Rust input/native index domains, match stack/tail/slice bounds and pool/map/capture alias/concurrency behavior. Retained Go32/Go64 profiles, Join fast paths/strict guard, concat integer limits, fixed-format append limits and static CGP failure completion are authored only. Source allocator maxAlloc, Builder.MakeNoZero/growth, fmt printer-pool capacities and final string copy, precise allocation/failure ordering, native address-space limits and Go runtime-error/panic/recover type identity remain required. Concat throw currently writes its required fatal prefix and exits 2; full Go traceback, caller/goroutine metadata, secure mode, GOTRACEBACK crash/core-dump profiles, interleaving and native output failure ordering are not implemented or credited. Finish Go error identity/type/Is/As/wrapping/fmt and actual GRPC_GO_LOG_* initialization/custom LoggerV2/depth/verbosity/multiwriter/global flags/time/output/caller/initializer adoption. Continue all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/platform/config/queue/logging/CRD/features/admission/body requirements. No Go/Rust runtime, source ABI, fatal diagnostic or allocation parity follows from this source authoring.",
     "source_method_mapping": {
       "grpc-gateway.Pattern.MatchAndEscape(default Legacy)": "GatewayPattern::matches",
       "grpc-gateway.Pattern.String": "GatewayPattern::string_bytes",
@@ -192,7 +199,7 @@
     "assurance": "NOT_STARTED; zero constructor/fatal/application/native probes, builds/tests/lint/proofs/generator validation/CI",
     "default_profile": "Explicit Go64/Go32 supplied by caller; default logger resource is enabled stderr text; actual selection remains M0027",
     "owner": "Existing CGP/derive-deftly UtilityRuntimeProviders owns SourcePatternDiagnosticEmitter, SourceGatewayPatternConstructor, SourcePatternLoggerGetter and the existing SourceProcessExit capability. RuntimeOwner constructs one source-pattern logger resource (writer mutex and typed enabled/JSON profile). GatewayContext new_pattern/must_pattern/handle_compiled consume that provider and then use the existing route owner. PatternConstruction retains both Go result fields; InvalidPatternError copies reference one static identity token. Word profiles are explicit data and never inferred from the Rust host. There is no logger/provider registry, task or competing lifecycle manager; environment/custom LoggerV2 and actual ABI/initializer binding remain later source work.",
-    "remaining": "Reconcile actual source ABI and Rust input/native index bounds, match/render/concat/source string length and allocation/panic profiles, pool/map/capture alias and concurrency behavior. Constructor diagnostic/zero-result/shared-sentinel/MustPattern paths and explicit source-word arithmetic are authored, not proved. Finish Go error type/identity/Is/As/wrapping and fmt.Error panic/caller/byte profiles; actual GRPC_GO_LOG_* initialization, custom LoggerV2/depth/verbosity/multiwriter/global flags/time/output/error ordering and production initializer adoption. Continue all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape, request/header/native HTTP/listener/platform/config/queue/logging/CRD/features/admission/body requirements. Default pattern logging is explicit stderr text, not evidence of actual process environment or source logger equivalence.",
+    "remaining": "Finish actual source ABI and Rust input/native index domains, match stack/tail/slice bounds and pool/map/capture alias/concurrency behavior. Retained Go32/Go64 profiles, Join fast paths/strict guard, concat integer limits, fixed-format append limits and static CGP failure completion are authored only. Source allocator maxAlloc, Builder.MakeNoZero/growth, fmt printer-pool capacities and final string copy, precise allocation/failure ordering, native address-space limits and Go runtime-error/panic/recover type identity remain required. Concat throw currently writes its required fatal prefix and exits 2; full Go traceback, caller/goroutine metadata, secure mode, GOTRACEBACK crash/core-dump profiles, interleaving and native output failure ordering are not implemented or credited. Finish Go error identity/type/Is/As/wrapping/fmt and actual GRPC_GO_LOG_* initialization/custom LoggerV2/depth/verbosity/multiwriter/global flags/time/output/caller/initializer adoption. Continue all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/platform/config/queue/logging/CRD/features/admission/body requirements. No Go/Rust runtime, source ABI, fatal diagnostic or allocation parity follows from this source authoring.",
     "rights": "rust-support/agones/GRPC-LICENSE copied from the pinned vendor package",
     "source_mapping": {
       "grpc-gateway.ErrInvalidPattern": "InvalidPatternError shared token/direct is_invalid_pattern",
@@ -200,6 +207,107 @@
       "grpc-gateway.NewPattern": "GatewayPattern.new -> PatternConstruction",
       "grpclog.Errorf/Fatalf used by pattern construction": "SourcePatternDiagnosticEmitter -> SourcePatternLogger + existing SourceProcessExit"
     },
+    "status": "AUTHORED_UNVERIFIED_PARTIAL"
+  },
+  "pattern_string_authoring": {
+    "assurance": "NOT_STARTED; zero project/compiler/API probes, fixtures/apps/fatal executions, tests/lint/proofs/generator validation/CI",
+    "owner": "GatewayPattern owns the explicit Go32/Go64 word profile, including zero/error patterns and registered copies. Pure Rust join/concat/fixed-format helpers use that profile, not Rust usize limits. Existing derive-deftly UtilityRuntimeProviders statically binds SourcePatternStringCompletion to CompleteSourcePatternString and the existing SourceProcessExit effect. Actual GatewayDispatcher same/other-method matching passes its existing UtilityRuntimeContext; Pattern.string_bytes takes the same capability. try_string_bytes and Rust Display are explicit projections, not the source panic/throw entrypoint. No new task, state owner, provider registry, Go evaluator or generation path is introduced.",
+    "remaining": "Finish actual source ABI and Rust input/native index domains, match stack/tail/slice bounds and pool/map/capture alias/concurrency behavior. Retained Go32/Go64 profiles, Join fast paths/strict guard, concat integer limits, fixed-format append limits and static CGP failure completion are authored only. Source allocator maxAlloc, Builder.MakeNoZero/growth, fmt printer-pool capacities and final string copy, precise allocation/failure ordering, native address-space limits and Go runtime-error/panic/recover type identity remain required. Concat throw currently writes its required fatal prefix and exits 2; full Go traceback, caller/goroutine metadata, secure mode, GOTRACEBACK crash/core-dump profiles, interleaving and native output failure ordering are not implemented or credited. Finish Go error identity/type/Is/As/wrapping/fmt and actual GRPC_GO_LOG_* initialization/custom LoggerV2/depth/verbosity/multiwriter/global flags/time/output/caller/initializer adoption. Continue all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/platform/config/queue/logging/CRD/features/admission/body requirements. No Go/Rust runtime, source ABI, fatal diagnostic or allocation parity follows from this source authoring.",
+    "source_inputs": [
+      {
+        "acquisition": "Read-only GitHub fetch_file by explicit source tag; no tool/compiler/runtime probe",
+        "git_blob": "15b3868cbc0fc68fc3269fb5f19f9e243fd20ae6",
+        "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+        "license": "rust-support/agones/GO-LICENSE",
+        "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/runtime/string.go",
+        "revision": "go1.26.5",
+        "sha256": "ba5aca9b7febcacdbe0e49c308768d79e09da1b2ddd4184e973d9f0c33b95c75",
+        "upstream_path": "src/runtime/string.go",
+        "url": "https://github.com/golang/go/blob/go1.26.5/src/runtime/string.go"
+      },
+      {
+        "acquisition": "Read-only GitHub fetch_file by explicit source tag; no tool/compiler/runtime probe",
+        "git_blob": "7207f834a855a8a3a3ab13926d9b01e7e23969b4",
+        "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+        "license": "rust-support/agones/GO-LICENSE",
+        "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/runtime/string.go",
+        "revision": "go1.27.1",
+        "sha256": "7e42368d5ba47af61c75e48334d9001ec0c17905cb9163d00f923d4cba3d3a69",
+        "upstream_path": "src/runtime/string.go",
+        "url": "https://github.com/golang/go/blob/go1.27.1/src/runtime/string.go"
+      },
+      {
+        "acquisition": "Read-only GitHub fetch_file by explicit source tag; no tool/compiler/runtime probe",
+        "git_blob": "d467e9305d12e6c71dd32055f34601e0d0419432",
+        "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+        "license": "rust-support/agones/GO-LICENSE",
+        "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/runtime/panic.go",
+        "revision": "go1.26.5",
+        "sha256": "4951c11983710ee957881d230290aa8cb130a873d83c55c86a0e4c7ecd35d190",
+        "upstream_path": "src/runtime/panic.go",
+        "url": "https://github.com/golang/go/blob/go1.26.5/src/runtime/panic.go"
+      },
+      {
+        "acquisition": "Read-only GitHub fetch_file by explicit source tag; no tool/compiler/runtime probe",
+        "git_blob": "2340ceed8f294488d73d28e1ffd26a3fa67a2eb1",
+        "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+        "license": "rust-support/agones/GO-LICENSE",
+        "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/fmt/print.go",
+        "revision": "go1.26.5",
+        "sha256": "57250462a0d06d61f124b4530493bcdd150e9de29600bd60347e1c74457ac8a1",
+        "upstream_path": "src/fmt/print.go",
+        "url": "https://github.com/golang/go/blob/go1.26.5/src/fmt/print.go"
+      },
+      {
+        "acquisition": "Read-only GitHub fetch_file by explicit source tag; no tool/compiler/runtime probe",
+        "git_blob": "334a94e2983e634a0d010742e93dc39d30fa6b9d",
+        "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+        "license": "rust-support/agones/GO-LICENSE",
+        "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/fmt/format.go",
+        "revision": "go1.26.5",
+        "sha256": "a668c0d6bb23f6ac929b73ef661a65be2225a9f665052a2ce02c4c58339c3335",
+        "upstream_path": "src/fmt/format.go",
+        "url": "https://github.com/golang/go/blob/go1.26.5/src/fmt/format.go"
+      },
+      {
+        "acquisition": "Read-only GitHub fetch_file by explicit source tag; no tool/compiler/runtime probe",
+        "git_blob": "7ecef3176b2ce5755d63460001aac6ab9b583c4d",
+        "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+        "license": "rust-support/agones/GO-LICENSE",
+        "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/strings/builder.go",
+        "revision": "go1.26.5",
+        "sha256": "02370c56ffbd50bbe8e8ab02f8cc0a0ecf934f02981aeb9a85b025daffdb428b",
+        "upstream_path": "src/strings/builder.go",
+        "url": "https://github.com/golang/go/blob/go1.26.5/src/strings/builder.go"
+      },
+      {
+        "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+        "license": "rust-support/agones/GO-LICENSE",
+        "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/strings/strings.go",
+        "revision": "go1.26.5",
+        "sha256": "ba9478be775d11b6956c828ebf870a8f8e7b7318ee382834f1e741f02d1336ef",
+        "upstream_path": "src/strings/strings.go",
+        "url": "https://github.com/golang/go/blob/go1.26.5/src/strings/strings.go"
+      },
+      {
+        "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+        "license": "rust-support/agones/GO-LICENSE",
+        "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/strings/strings.go",
+        "revision": "go1.27.1",
+        "sha256": "a81bdf73a308277c322e35d0c602e3813f57b6f769c091f8f8962c8884a45ea3",
+        "upstream_path": "src/strings/strings.go",
+        "url": "https://github.com/golang/go/blob/go1.27.1/src/strings/strings.go"
+      }
+    ],
+    "source_mapping": {
+      "Pattern.MatchAndEscape PushM/ConcatN": "GatewayPattern.matches -> join_components -> SourcePatternStringCompletion",
+      "Pattern.MatchAndEscape verb fallback": "GatewayPattern.matches -> concat_strings -> SourcePatternStringCompletion",
+      "Pattern.String": "GatewayPattern.string_bytes -> try_string_bytes -> join/concat/fixed-format helpers -> SourcePatternStringCompletion",
+      "fmt.buffer append overflow": "PatternStringFailure.FormatBufferOverflow -> typed runtime-error panic projection",
+      "runtime.concatstrings throw": "PatternStringFailure.ConcatenationTooLong -> stderr prefix + existing SourceProcessExit(2)",
+      "strings.Join overflow": "PatternStringFailure.JoinOverflow -> string panic projection"
+    },
+    "source_profiles": "Retained Go32/Go64 signed int widths; no current process ABI/configuration inference",
     "status": "AUTHORED_UNVERIFIED_PARTIAL"
   },
   "payload_sha256": {
@@ -218,11 +326,12 @@
     "rust-support/agones/source-data/unicode/go1.26.5/tables.go": "6a88d48746c4b2c471cc04ae40559694b734770212e6f5ea5f1962adb0c0bdb1",
     "rust-support/agones/source-data/unicode/go1.27.1/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "rust-support/agones/source-data/unicode/go1.27.1/tables.go": "ac0e5d5d1b58ed4b02d7cb4a0085bdefbdb4f7aae6fadddbc9477f8463da8bd8",
-    "rust-support/agones/src/utility_declarations.rs": "9f1517777da9c2ae7cb32c16a05ca1cc019e30d2500520af225f641a3536bd6d",
-    "rust-support/agones/src/utility_gateway.rs": "7dbe238a34ecac56ef5d07f2bac48e84855d5f81c663b2fedddc62a34487c4a0",
+    "rust-support/agones/src/utility_declarations.rs": "3a18812480af775d88a29f441327a627d81e121bc7e9bb98d0acb384ef677991",
+    "rust-support/agones/src/utility_gateway.rs": "f0149cbeb992769464d9df87376b425130ba1955dc4e6cac58ee332cbfd9ad20",
     "rust-support/agones/src/utility_gateway_framing.rs": "43dd0a6375b726182af52243e45152e7dcf756ce4c27ba4f9cb4cb5b77127326",
     "rust-support/agones/src/utility_gateway_json.rs": "b6aac4a28d90ea4bad7362737cfe7132fc5a72ce81cbd6bd492441798aba48f7",
-    "rust-support/agones/src/utility_gateway_pattern.rs": "d21e108df3acc2e3d53cfe2b25658ef57b5e0c1a4082fb8e5a179ed3685ed2a6",
+    "rust-support/agones/src/utility_gateway_pattern.rs": "c48172ee35949951cb831d01ac37a69573cd0c07d2ef4c6e12dac25311394208",
+    "rust-support/agones/src/utility_gateway_strings.rs": "5404bb6230924fdc495715289c0b330ea0569034f8b36cd5c92a937871270817",
     "rust-support/agones/src/utility_http.rs": "fbf4000c50d31d7d21dc2b700efbf60e882f18902c7bc4cc1ba1da2ac114f7bf",
     "rust-support/agones/src/utility_http_body.rs": "af7e4eac5e2623b697f63342445b01b13cba8474310912e8befd823aab9c53da",
     "rust-support/agones/src/utility_http_form.rs": "6d0d19a94d76cde97bd8e9eeb86446804f0d87dcdc96fa92424a6ee2bc6bb57b",
@@ -251,7 +360,7 @@
     "Reconcile authored request trailer maps/cookies and header JSON/alias operations across all selected profiles; native parser/rejection/1.0 keep-alive/upgrade, H2 header ordering/HPACK/GOAWAY and body Close/read/EOF/abortPendingRead/Continue/full-duplex races. Complete native readahead/partial-write/flush/reset/cancellation/error timing and diagnostics. Source code and API reading do not establish native parity.",
     "Finish listener named-service/bind and independent listener-close/shutdown timing, native error origin (syscall-wrapped versus direct Errno or poll/init failures), platform/native error display and complete retry profiles. Shared temporary-syscall accept backoff is authored for plain/TLS, but does not establish full Go listener equivalence. M0027 source tool/GODEBUG and actual production parent adoption remain required.",
     "Retain every other M0003 filesystem/signal/gateway/config/queue/logging/CRD/features/admission/body gap. Global BOTH-route gate stays CLOSED; no compiler, test, formatter/linter, native/API probe, application, generator validation, proof or CI ran.",
-    "Reconcile actual source ABI and Rust input/native index bounds, match/render/concat/source string length and allocation/panic profiles, pool/map/capture alias and concurrency behavior. Constructor diagnostic/zero-result/shared-sentinel/MustPattern paths and explicit source-word arithmetic are authored, not proved. Finish Go error type/identity/Is/As/wrapping and fmt.Error panic/caller/byte profiles; actual GRPC_GO_LOG_* initialization, custom LoggerV2/depth/verbosity/multiwriter/global flags/time/output/error ordering and production initializer adoption. Continue all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape, request/header/native HTTP/listener/platform/config/queue/logging/CRD/features/admission/body requirements. Default pattern logging is explicit stderr text, not evidence of actual process environment or source logger equivalence."
+    "Finish actual source ABI and Rust input/native index domains, match stack/tail/slice bounds and pool/map/capture alias/concurrency behavior. Retained Go32/Go64 profiles, Join fast paths/strict guard, concat integer limits, fixed-format append limits and static CGP failure completion are authored only. Source allocator maxAlloc, Builder.MakeNoZero/growth, fmt printer-pool capacities and final string copy, precise allocation/failure ordering, native address-space limits and Go runtime-error/panic/recover type identity remain required. Concat throw currently writes its required fatal prefix and exits 2; full Go traceback, caller/goroutine metadata, secure mode, GOTRACEBACK crash/core-dump profiles, interleaving and native output failure ordering are not implemented or credited. Finish Go error identity/type/Is/As/wrapping/fmt and actual GRPC_GO_LOG_* initialization/custom LoggerV2/depth/verbosity/multiwriter/global flags/time/output/caller/initializer adoption. Continue all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/platform/config/queue/logging/CRD/features/admission/body requirements. No Go/Rust runtime, source ABI, fatal diagnostic or allocation parity follows from this source authoring."
   ],
   "request_fields_authoring": {
     "continue_owner": "H1 wrapper closed/sawEOF + shared available/sender mutex; H2 separate needsContinue and native body",
@@ -682,11 +791,77 @@
       "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
       "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
       "url": "https://github.com/QuasarRay/agones/blob/6eb4a02588d8e7b581de187f3bc849733a78dcb2/vendor/google.golang.org/grpc/LICENSE"
+    },
+    {
+      "acquisition": "Read-only GitHub fetch_file by explicit source tag; no tool/compiler/runtime probe",
+      "git_blob": "15b3868cbc0fc68fc3269fb5f19f9e243fd20ae6",
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "license": "rust-support/agones/GO-LICENSE",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/runtime/string.go",
+      "revision": "go1.26.5",
+      "sha256": "ba5aca9b7febcacdbe0e49c308768d79e09da1b2ddd4184e973d9f0c33b95c75",
+      "upstream_path": "src/runtime/string.go",
+      "url": "https://github.com/golang/go/blob/go1.26.5/src/runtime/string.go"
+    },
+    {
+      "acquisition": "Read-only GitHub fetch_file by explicit source tag; no tool/compiler/runtime probe",
+      "git_blob": "7207f834a855a8a3a3ab13926d9b01e7e23969b4",
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "license": "rust-support/agones/GO-LICENSE",
+      "path": ".git/agones-roadmap/utility-sources/go1.27.1/src/runtime/string.go",
+      "revision": "go1.27.1",
+      "sha256": "7e42368d5ba47af61c75e48334d9001ec0c17905cb9163d00f923d4cba3d3a69",
+      "upstream_path": "src/runtime/string.go",
+      "url": "https://github.com/golang/go/blob/go1.27.1/src/runtime/string.go"
+    },
+    {
+      "acquisition": "Read-only GitHub fetch_file by explicit source tag; no tool/compiler/runtime probe",
+      "git_blob": "d467e9305d12e6c71dd32055f34601e0d0419432",
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "license": "rust-support/agones/GO-LICENSE",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/runtime/panic.go",
+      "revision": "go1.26.5",
+      "sha256": "4951c11983710ee957881d230290aa8cb130a873d83c55c86a0e4c7ecd35d190",
+      "upstream_path": "src/runtime/panic.go",
+      "url": "https://github.com/golang/go/blob/go1.26.5/src/runtime/panic.go"
+    },
+    {
+      "acquisition": "Read-only GitHub fetch_file by explicit source tag; no tool/compiler/runtime probe",
+      "git_blob": "2340ceed8f294488d73d28e1ffd26a3fa67a2eb1",
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "license": "rust-support/agones/GO-LICENSE",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/fmt/print.go",
+      "revision": "go1.26.5",
+      "sha256": "57250462a0d06d61f124b4530493bcdd150e9de29600bd60347e1c74457ac8a1",
+      "upstream_path": "src/fmt/print.go",
+      "url": "https://github.com/golang/go/blob/go1.26.5/src/fmt/print.go"
+    },
+    {
+      "acquisition": "Read-only GitHub fetch_file by explicit source tag; no tool/compiler/runtime probe",
+      "git_blob": "334a94e2983e634a0d010742e93dc39d30fa6b9d",
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "license": "rust-support/agones/GO-LICENSE",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/fmt/format.go",
+      "revision": "go1.26.5",
+      "sha256": "a668c0d6bb23f6ac929b73ef661a65be2225a9f665052a2ce02c4c58339c3335",
+      "upstream_path": "src/fmt/format.go",
+      "url": "https://github.com/golang/go/blob/go1.26.5/src/fmt/format.go"
+    },
+    {
+      "acquisition": "Read-only GitHub fetch_file by explicit source tag; no tool/compiler/runtime probe",
+      "git_blob": "7ecef3176b2ce5755d63460001aac6ab9b583c4d",
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "license": "rust-support/agones/GO-LICENSE",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/strings/builder.go",
+      "revision": "go1.26.5",
+      "sha256": "02370c56ffbd50bbe8e8ab02f8cc0a0ecf934f02981aeb9a85b025daffdb428b",
+      "upstream_path": "src/strings/builder.go",
+      "url": "https://github.com/golang/go/blob/go1.26.5/src/strings/builder.go"
     }
   ],
   "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
   "stage": "IMPLEMENTING",
-  "timestamp": "2026-10-28T12:05:48.935154+00:00",
+  "timestamp": "2026-10-28T12:23:38.577469+00:00",
   "typed_declaration_template_provider_consumer": "UtilityRuntimeContext + UtilityRuntimeProviders -> existing static HTTP/body-I/O/TLS/log effects -> shared RequestFields and SourceUrl data -> current mux/APIServer/default/gateway decisions; HTTPS/webhook -> SourceLogValue::Url retained pointer and SourceByteString value fields -> existing SourceLogEmitter/SourceLogger. No extra task, provider registry or lifecycle owner. Query/form path: SourceValues + RequestFields -> UtilityRuntimeProviders SourceQuerySettingsGetter/UseField + existing body-I/O -> fixed gateway parse/cache consumer; original URL/Body/log owners remain unchanged. Byte/unicode path: typed GatewayPattern + shared literal slice -> existing UtilityGatewayProviders -> byte callback data; RuntimeProviders SourceUnicodeProfileGetter/SourceUppercaseMapper -> pinned data lookup -> request method assignment.",
   "url_alias_authoring": {
     "assurance": "No Rust/native executable, compiler, tests, formatter/linter, proof, API probe, generator validation or CI",
@@ -707,5 +882,5 @@
     "value_copy": "SourceUrl.fields copies URL field values; SourceUrl.new allocates a different pointer, retaining the immutable Userinfo pointer"
   },
   "verification": "NOT_STARTED",
-  "work_base_commit": "7acb99cc8edf5f547e5f2d574d51b0c43bd89a5d"
+  "work_base_commit": "2dfc9d70dd528e10380f41baecaf9a998085c8ed"
 }

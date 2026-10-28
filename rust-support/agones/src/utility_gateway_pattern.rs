@@ -6,9 +6,10 @@ use crate::{errors::BoxError, utility_http::HeaderValues, utility_tls::CanExitSo
 use cgp::prelude::*;
 use std::{collections::BTreeMap, error::Error, fmt, io::Write, sync::{Arc, Mutex, RwLock}};
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum PatternWordProfile { Go32, Go64 }
 impl PatternWordProfile {
+    pub const fn max_int(self) -> u64 { match self { Self::Go32 => i32::MAX as u64, Self::Go64 => i64::MAX as u64 } }
     pub(super) fn integer(self, value: i64) -> i64 { match self { Self::Go32 => value as i32 as i64, Self::Go64 => value } }
     pub(super) fn add(self, left: i64, right: i64) -> i64 { self.integer(left.wrapping_add(right)) }
     pub(super) fn sub(self, left: i64, right: i64) -> i64 { self.integer(left.wrapping_sub(right)) }
@@ -92,9 +93,9 @@ pub trait CanEmitSourcePatternDiagnostic { fn emit_source_pattern_diagnostic(&se
 impl<Context: HasSourcePatternLogger> SourcePatternDiagnosticEmitter<Context> for EmitSourcePatternDiagnostic {
     fn emit_source_pattern_diagnostic(context: &Context, diagnostic: PatternDiagnostic<'_>) { context.source_pattern_logger().write(diagnostic); }
 }
-pub(super) fn reject_pattern(context: &impl CanEmitSourcePatternDiagnostic, diagnostic: PatternDiagnostic<'_>) -> PatternConstruction {
+pub(super) fn reject_pattern(context: &impl CanEmitSourcePatternDiagnostic, profile: PatternWordProfile, diagnostic: PatternDiagnostic<'_>) -> PatternConstruction {
     context.emit_source_pattern_diagnostic(diagnostic);
-    PatternConstruction { pattern: GatewayPattern::default(), error: Some(Box::new(InvalidPatternError { identity: &INVALID_PATTERN })) }
+    PatternConstruction { pattern: GatewayPattern::zero(profile), error: Some(Box::new(InvalidPatternError { identity: &INVALID_PATTERN })) }
 }
 #[cgp_component(SourceGatewayPatternConstructor)]
 pub trait CanConstructSourceGatewayPattern {

@@ -87,6 +87,7 @@ define_derive_deftly! {
                 ::cgp::prelude::UseField<::cgp::prelude::Symbol!("source_pattern_logger")>,
             crate::utility_gateway::SourcePatternDiagnosticEmitterComponent: crate::utility_gateway::EmitSourcePatternDiagnostic,
             crate::utility_gateway::SourceGatewayPatternConstructorComponent: crate::utility_gateway::ConstructSourceGatewayPattern,
+            crate::utility_gateway::SourcePatternStringCompletionComponent: crate::utility_gateway::CompleteSourcePatternString,
             crate::utility_fswatch::FileWatcherOpenerComponent: crate::utility_fswatch::OpenNativeFileWatcher,
             crate::utility_tls::SourceCertificateLoaderComponent: crate::utility_tls::LoadRustlsCertificate,
             crate::utility_tls::HttpsServerRunnerComponent: crate::utility_tls::RunNativeHttpsServer,
