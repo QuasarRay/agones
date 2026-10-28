@@ -1,0 +1,182 @@
+//! Recoverable source panic data shared by the existing runtime/HTTP owners.
+//! This is a leaf error/string bridge, not a type registry or a Go object model.
+// Adapted from Go runtime/error.go and net/http's ErrAbortHandler identity.
+// Copyright The Go Authors. BSD-3-Clause; see ../GO-LICENSE.
+use std::{any::Any, error::Error, fmt};
+use derive_deftly::Deftly;
+use crate::{errors::BoxError, runtime::SourceLogType,
+    utility_declarations::derive_deftly_template_SourceErrorOrigin};
+
+/// Go runtime.Error is identified by its no-op RuntimeError method. Preserve
+/// that interface separately from ordinary application Error implementations.
+pub trait SourceRuntimeError: Error { fn runtime_error(&self) {} }
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Deftly)]
+#[derive_deftly(SourceErrorOrigin)]
+#[deftly(source_package = "runtime", source_struct = "errorString", source_log_type = "runtime.errorString")]
+pub struct SourceRuntimeErrorString { message: &'static str }
+impl SourceRuntimeErrorString {
+    pub const fn new(message: &'static str) -> Self { Self { message } }
+}
+impl fmt::Display for SourceRuntimeErrorString {
+    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { write!(out, "runtime error: {}", self.message) }
+}
+impl Error for SourceRuntimeErrorString {}
+impl SourceRuntimeError for SourceRuntimeErrorString {}
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Deftly)]
+#[derive_deftly(SourceErrorOrigin)]
+#[deftly(source_package = "runtime", source_struct = "plainError", source_log_type = "runtime.plainError")]
+pub struct SourceNilMapAssignment;
+impl fmt::Display for SourceNilMapAssignment {
+    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { out.write_str("assignment to entry in nil map") }
+}
+impl Error for SourceNilMapAssignment {}
+impl SourceRuntimeError for SourceNilMapAssignment {}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum SourceBoundsCode { Index, SliceLength, SliceCapacity, SliceLow, Slice3Length,
+    Slice3Capacity, Slice3High, Slice3Low, SliceConvert }
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Deftly)]
+#[derive_deftly(SourceErrorOrigin)]
+#[deftly(source_package = "runtime", source_struct = "boundsError", source_log_type = "runtime.boundsError")]
+pub struct SourceBoundsError { pub x: i64, pub y: i64, pub signed: bool, pub code: SourceBoundsCode }
+impl SourceBoundsError {
+    fn format(self) -> &'static str {
+        use SourceBoundsCode::*;
+        match (self.code, self.signed && self.x < 0) {
+            (Index, false) => "index out of range [%x] with length %y",
+            (Index, true) => "index out of range [%x]",
+            (SliceLength, false) => "slice bounds out of range [:%x] with length %y",
+            (SliceLength, true) => "slice bounds out of range [:%x]",
+            (SliceCapacity, false) => "slice bounds out of range [:%x] with capacity %y",
+            (SliceCapacity, true) => "slice bounds out of range [:%x]",
+            (SliceLow, false) => "slice bounds out of range [%x:%y]",
+            (SliceLow, true) => "slice bounds out of range [%x:]",
+            (Slice3Length, false) => "slice bounds out of range [::%x] with length %y",
+            (Slice3Length, true) => "slice bounds out of range [::%x]",
+            (Slice3Capacity, false) => "slice bounds out of range [::%x] with capacity %y",
+            (Slice3Capacity, true) => "slice bounds out of range [::%x]",
+            (Slice3High, false) => "slice bounds out of range [:%x:%y]",
+            (Slice3High, true) => "slice bounds out of range [:%x:]",
+            (Slice3Low, false) => "slice bounds out of range [%x:%y:]",
+            (Slice3Low, true) => "slice bounds out of range [%x::]",
+            (SliceConvert, _) => "cannot convert slice with length %y to array or pointer to array with length %x",
+        }
+    }
+}
+impl fmt::Display for SourceBoundsError {
+    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result {
+        out.write_str("runtime error: ")?;
+        let mut bytes = self.format().bytes();
+        while let Some(byte) = bytes.next() {
+            if byte != b'%' { out.write_str(std::str::from_utf8(&[byte]).expect("ASCII bounds format"))?; continue; }
+            match bytes.next() {
+                Some(b'x') if self.signed => write!(out, "{}", self.x)?,
+                Some(b'x') => write!(out, "{}", self.x as u64)?,
+                Some(b'y') => write!(out, "{}", self.y)?,
+                _ => unreachable!("source bounds format placeholder"),
+            }
+        }
+        Ok(())
+    }
+}
+impl Error for SourceBoundsError {}
+impl SourceRuntimeError for SourceBoundsError {}
+
+trait RuntimeErrorObject: Send + Sync {
+    fn error(&self) -> &(dyn Error + Send + Sync + 'static);
+    fn runtime_error_view(&self) -> &dyn SourceRuntimeError;
+    fn source_type(&self) -> &'static str;
+}
+impl<T: SourceRuntimeError + SourceLogType + Send + Sync + 'static> RuntimeErrorObject for T {
+    fn error(&self) -> &(dyn Error + Send + Sync + 'static) { self }
+    fn runtime_error_view(&self) -> &dyn SourceRuntimeError { self }
+    fn source_type(&self) -> &'static str { T::SOURCE_LOG_TYPE }
+}
+enum PanicErrorKind { Application(BoxError), Runtime(Box<dyn RuntimeErrorObject>) }
+pub struct SourceErrorPanic { kind: PanicErrorKind }
+impl SourceErrorPanic {
+    pub fn application(error: BoxError) -> Self { Self { kind: PanicErrorKind::Application(error) } }
+    pub fn runtime<T: SourceRuntimeError + SourceLogType + Send + Sync + 'static>(error: T) -> Self {
+        Self { kind: PanicErrorKind::Runtime(Box::new(error)) }
+    }
+    /// Retain the original boxed error and its own source chain. The panic
+    /// envelope is not an additional source Unwrap layer.
+    pub fn error(&self) -> &(dyn Error + Send + Sync + 'static) {
+        match &self.kind { PanicErrorKind::Application(error) => error.as_ref(), PanicErrorKind::Runtime(error) => error.error() }
+    }
+    pub fn runtime_error(&self) -> Option<&dyn SourceRuntimeError> {
+        match &self.kind { PanicErrorKind::Runtime(error) => Some(error.runtime_error_view()), PanicErrorKind::Application(_) => None }
+    }
+    pub fn source_type(&self) -> Option<&'static str> {
+        match &self.kind { PanicErrorKind::Runtime(error) => Some(error.source_type()), PanicErrorKind::Application(_) => None }
+    }
+}
+impl fmt::Debug for SourceErrorPanic {
+    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { out.debug_struct("SourceErrorPanic").field("error", &self.error()).finish() }
+}
+
+struct AbortIdentity { _unique: u8 }
+static ABORT_IDENTITY: AbortIdentity = AbortIdentity { _unique: 0 };
+#[derive(Clone, Copy, Debug, Deftly)]
+#[derive_deftly(SourceErrorOrigin)]
+#[deftly(source_package = "errors", source_struct = "errorString", source_log_type = "*errors.errorString")]
+pub struct SourceAbortHandler { identity: &'static AbortIdentity }
+impl fmt::Debug for AbortIdentity {
+    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { out.write_str("http.ErrAbortHandler") }
+}
+impl PartialEq for SourceAbortHandler {
+    fn eq(&self, other: &Self) -> bool { std::ptr::eq(self.identity, other.identity) }
+}
+impl Eq for SourceAbortHandler {}
+impl fmt::Display for SourceAbortHandler {
+    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { out.write_str("net/http: abort Handler") }
+}
+impl Error for SourceAbortHandler {}
+pub const ERR_ABORT_HANDLER: SourceAbortHandler = SourceAbortHandler { identity: &ABORT_IDENTITY };
+
+/// Own the actual catch_unwind payload. Source error recovery exposes its
+/// original error and RuntimeError interface; forwarding retains its identity.
+pub struct SourceRecoveredPanic { payload: Box<dyn Any + Send> }
+impl SourceRecoveredPanic {
+    pub fn new(payload: Box<dyn Any + Send>) -> Self { Self { payload } }
+    pub fn payload(&self) -> &(dyn Any + Send) { self.payload.as_ref() }
+    pub fn into_payload(self) -> Box<dyn Any + Send> { self.payload }
+    pub fn resume(self) -> ! { std::panic::resume_unwind(self.payload) }
+    pub fn error(&self) -> Option<&(dyn Error + Send + Sync + 'static)> {
+        if let Some(error) = self.payload.downcast_ref::<SourceErrorPanic>() { return Some(error.error()); }
+        if let Some(error) = self.payload.downcast_ref::<BoxError>() { return Some(error.as_ref()); }
+        self.payload.downcast_ref::<SourceAbortHandler>().map(|error| error as &(dyn Error + Send + Sync + 'static))
+    }
+    pub fn runtime_error(&self) -> Option<&dyn SourceRuntimeError> {
+        self.payload.downcast_ref::<SourceErrorPanic>()?.runtime_error()
+    }
+    pub fn source_type(&self) -> Option<&'static str> {
+        if let Some(error) = self.payload.downcast_ref::<SourceErrorPanic>() { return error.source_type(); }
+        if self.payload.is::<String>() || self.payload.is::<&'static str>() { return Some("string"); }
+        if self.is_abort_handler() { return Some(SourceAbortHandler::SOURCE_LOG_TYPE); }
+        None
+    }
+    /// Suppress logging only for the direct sentinel value. An error that
+    /// wraps the sentinel has different source interface equality.
+    pub fn is_abort_handler(&self) -> bool {
+        self.error().and_then(|error| error.downcast_ref::<SourceAbortHandler>()).is_some_and(|error| *error == ERR_ABORT_HANDLER)
+    }
+}
+impl fmt::Display for SourceRecoveredPanic {
+    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result {
+        if let Some(error) = self.error() { return fmt::Display::fmt(error, out); }
+        if let Some(value) = self.payload.downcast_ref::<String>() { return out.write_str(value); }
+        if let Some(value) = self.payload.downcast_ref::<&'static str>() { return out.write_str(value); }
+        // Native opaque payloads have no Go formatting contract. Full source
+        // fmt/type/caller/panic(nil) profiles remain required implementation.
+        out.write_str("Box<dyn Any>")
+    }
+}
+
+/// Skip Rust's eager hook: source recovery decides whether output is needed.
+pub fn unwind_source_panic<T: Any + Send>(payload: T) -> ! { std::panic::resume_unwind(Box::new(payload)) }
+pub fn unwind_source_error(error: BoxError) -> ! { unwind_source_panic(SourceErrorPanic::application(error)) }
+pub fn unwind_source_runtime_error<T: SourceRuntimeError + SourceLogType + Send + Sync + 'static>(error: T) -> ! {
+    unwind_source_panic(SourceErrorPanic::runtime(error))
+}

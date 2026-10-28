@@ -88,7 +88,7 @@ impl<Context: CanExitSourceProcess> SourcePatternStringCompletion<Context> for C
 fn complete_pattern<T>(context: &impl CanExitSourceProcess, result: Result<T, PatternOperationFailure>) -> T {
     match result {
         Ok(value) => value,
-        Err(PatternOperationFailure::Bounds(error)) => unwind_source_panic(error),
+        Err(PatternOperationFailure::Bounds(error)) => crate::utility_panic::unwind_source_runtime_error(error),
         Err(PatternOperationFailure::Input(error)) => std::panic::panic_any(error),
         Err(PatternOperationFailure::String(error)) => match error {
             PatternStringFailure::JoinOverflow => unwind_source_panic(PatternStringFailure::JoinOverflow.message()),

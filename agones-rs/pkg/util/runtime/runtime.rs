@@ -20,7 +20,7 @@ pub fn SetLevel<Context: HasSourceLogger>(context: &Context, level: LogLevel) {
 pub async fn HandleError<Context: CanHandleSourceRuntimeError>(context: &Context, logger: Option<&LogEntry>, error: Option<&(dyn std::error::Error + Send + Sync)>) {
     context.handle_source_runtime_error(logger, error).await;
 }
-pub fn Must(error: Option<BoxError>) { if let Some(error) = error { std::panic::panic_any(error); } }
+pub fn Must(error: Option<BoxError>) { if let Some(error) = error { crate::utility_panic::unwind_source_error(error); } }
 pub fn NewLoggerWithSource<Context: HasSourceLogger>(context: &Context, source: &str) -> LogEntry {
     LogEntry::from_logger(Arc::clone(context.source_logger())).with_field(sourceKey, source)
 }

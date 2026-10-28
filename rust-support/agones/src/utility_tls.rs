@@ -111,7 +111,7 @@ impl HttpsServerRunner<UtilityRuntimeContext> for RunNativeHttpsServer {
                                 match handshake {
                                     Some(Ok(Ok(stream))) => {
                                         let protocol = if stream.get_ref().1.alpn_protocol() == Some(b"h2") { HttpProtocol::Http2 } else { HttpProtocol::Http1 };
-                                        utility_http::serve_connection(stream, runtime, mux, stop, owner_stop, handlers, read_header_timeout, protocol).await
+                                        utility_http::serve_connection_from(stream, runtime, mux, stop, owner_stop, handlers, read_header_timeout, protocol, peer.to_string()).await
                                     }
                                     Some(Ok(Err(error))) => { eprintln!("http: TLS handshake error from {peer}: {error}"); Ok(()) }
                                     Some(Err(_)) => { eprintln!("http: TLS handshake error from {peer}: i/o timeout"); Ok(()) }

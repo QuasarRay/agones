@@ -93,7 +93,8 @@ impl SourceBody {
     pub(super) fn native_http1(&self) -> Option<&RequestBody> { if let BodyValue::Native(body) = &self.0 { Some(body) } else { None } }
     async fn read(&self, limit: usize) -> SourceBodyRead {
         let read = match &self.0 {
-            BodyValue::Nil => panic!("invalid memory address or nil pointer dereference: Request.Body.Read"),
+            BodyValue::Nil => crate::utility_panic::unwind_source_runtime_error(
+                crate::utility_panic::SourceRuntimeErrorString::new("invalid memory address or nil pointer dereference")),
             BodyValue::NoBody => SourceBodyRead::eof(),
             BodyValue::Native(body) => body.read_up_to(limit).await,
             BodyValue::Expect(body) => {
@@ -120,7 +121,8 @@ impl SourceBody {
     }
     async fn close(&self) -> Result<(), BoxError> {
         match &self.0 {
-            BodyValue::Nil => panic!("invalid memory address or nil pointer dereference: Request.Body.Close"),
+            BodyValue::Nil => crate::utility_panic::unwind_source_runtime_error(
+                crate::utility_panic::SourceRuntimeErrorString::new("invalid memory address or nil pointer dereference")),
             BodyValue::NoBody | BodyValue::Bytes(_) => Ok(()),
             BodyValue::Native(body) => body.close().await,
             BodyValue::Expect(body) => { body.closed.store(true, Ordering::Release); body.native.close().await },

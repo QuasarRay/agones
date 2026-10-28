@@ -62,7 +62,7 @@ impl ResponseWriter {
     pub fn enable_full_duplex(&mut self) { self.full_duplex = true; }
     pub async fn write_header(&mut self, status: u16) -> Result<(), BoxError> {
         if self.committed.is_some() { return Ok(()); }
-        if !(100..=999).contains(&status) { panic!("invalid WriteHeader code {status}"); }
+        if !(100..=999).contains(&status) { crate::utility_panic::unwind_source_panic(format!("invalid WriteHeader code {status}")); }
         if !self.http2 && (status < 101 || status > 199) {
             // Source WriteHeader has no error result; it ignores transport
             // write/flush errors. The connection owner retains that failure.

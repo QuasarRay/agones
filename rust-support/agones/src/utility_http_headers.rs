@@ -136,11 +136,20 @@ impl HeaderValues {
     }
     pub fn first(&self) -> Option<Bytes> { self.get(0) }
     pub fn set(&self, index: usize, value: impl Into<Bytes>) {
-        if index >= self.length { panic!("runtime error: index out of range [{index}] with length {}", self.length); }
+        if index >= self.length {
+            crate::utility_panic::unwind_source_runtime_error(crate::utility_panic::SourceBoundsError {
+                x: index as i64, y: self.length as i64, signed: false, code: crate::utility_panic::SourceBoundsCode::Index });
+        }
         self.backing.as_ref().expect("nonempty source header backing").write().unwrap_or_else(|error| error.into_inner())[self.offset + index] = value.into();
     }
     pub fn reslice(&self, low: usize, high: usize, maximum: usize) -> Self {
-        if low > high || high > maximum || maximum > self.capacity { panic!("runtime error: slice bounds out of range"); }
+        use crate::utility_panic::{SourceBoundsError, SourceBoundsCode, unwind_source_runtime_error};
+        if maximum > self.capacity { unwind_source_runtime_error(SourceBoundsError {
+            x: maximum as i64, y: self.capacity as i64, signed: false, code: SourceBoundsCode::Slice3Capacity }); }
+        if high > maximum { unwind_source_runtime_error(SourceBoundsError {
+            x: high as i64, y: maximum as i64, signed: false, code: SourceBoundsCode::Slice3High }); }
+        if low > high { unwind_source_runtime_error(SourceBoundsError {
+            x: low as i64, y: high as i64, signed: false, code: SourceBoundsCode::Slice3Low }); }
         Self { backing: self.backing.clone(), offset: self.offset + low, length: high - low, capacity: maximum - low }
     }
     pub fn append(&mut self, values: impl IntoIterator<Item = Bytes>, profile: HeaderAllocationProfile) {

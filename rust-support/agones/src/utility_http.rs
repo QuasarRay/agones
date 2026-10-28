@@ -4,7 +4,7 @@
 use std::{collections::BTreeMap, error::Error, fmt, io,
     net::{Ipv4Addr, Ipv6Addr, SocketAddr}, pin::Pin, sync::{Arc, atomic::{AtomicBool, Ordering}}, task::{Context, Poll}, time::Duration};
 use bytes::Bytes;
-use futures::future::BoxFuture;
+use futures::{future::BoxFuture, FutureExt};
 use hyper::{body::{Body, Frame, Incoming, SizeHint}, Request, Response};
 use hyper::service::service_fn;
 use hyper_util::rt::{TokioIo, TokioTimer};
@@ -33,6 +33,11 @@ pub use allocation::{SourceRuntimeAllocationError, SourceNilMapAssignment, Nativ
     CanRaiseSourceCollectionFailure, SourceCollectionFailureRaiser, SourceCollectionFailureRaiserComponent,
     RaiseSourceCollectionFailure, complete_source_collection};
 pub(crate) use allocation::{raise_source_allocation_failure, unwind_source_panic};
+pub use crate::utility_panic::{SourceAbortHandler, ERR_ABORT_HANDLER as ErrAbortHandler};
+#[path = "utility_http_panic.rs"]
+mod panic_reporting;
+pub use panic_reporting::{CanReportSourceHttpPanic, SourceHttpPanicReporter,
+    SourceHttpPanicReporterComponent, ReportNativeSourceHttpPanic};
 #[path = "utility_http_trailers.rs"]
 mod trailers;
 #[path = "utility_http_listener.rs"]
@@ -316,7 +321,7 @@ struct SourceConnectionClosed(CancellationToken);
 impl Drop for SourceConnectionClosed { fn drop(&mut self) { self.0.cancel(); } }
 
 async fn request_service(context: UtilityRuntimeContext, mux: SourceMux, tasks: Arc<UtilityTaskScope>, source_close: CancellationToken,
-    server_stops: [CancellationToken; 2], connection_closed: CancellationToken, incoming: Request<Incoming>) -> Result<Response<ResponseBody>, io::Error> {
+    server_stops: [CancellationToken; 2], connection_closed: CancellationToken, remote_addr: Arc<str>, incoming: Request<Incoming>) -> Result<Response<ResponseBody>, io::Error> {
     let version = incoming.version();
     let mut request = match HttpRequest::from_hyper(context.clone(), incoming) {
         Ok(request) => request,
@@ -347,12 +352,35 @@ async fn request_service(context: UtilityRuntimeContext, mux: SourceMux, tasks: 
     let phase = SourceRequestPhase(Some(end.clone()));
     let mut writer = ResponseWriter::new(context.clone(), head_tx, data, Arc::clone(&panicked), source_close, server_stops, end, &request).map_err(io::Error::other)?;
     tasks.spawn("HTTP request", Box::pin(async move {
-        let rejected_expectation = request.protocol != hyper::Version::HTTP_2 && header(&request.headers, "Expect")
-            .is_some_and(|value| !value.is_empty() && !header_has_token(&value, b"100-continue"));
-        if rejected_expectation {
-            set_header(&mut writer.headers, "Connection", "close"); let _ = writer.write_header(417).await;
-        } else if request.method().as_ref() == b"OPTIONS" && request.request_uri().as_ref() == b"*" { global_options(&mut writer, &mut request).await; }
-        else { mux.dispatch(&context, &mut writer, &mut request).await; }
+        let handled = std::panic::AssertUnwindSafe(async {
+            let rejected_expectation = request.protocol != hyper::Version::HTTP_2 && header(&request.headers, "Expect")
+                .is_some_and(|value| !value.is_empty() && !header_has_token(&value, b"100-continue"));
+            if rejected_expectation {
+                set_header(&mut writer.headers, "Connection", "close"); let _ = writer.write_header(417).await;
+            } else if request.method().as_ref() == b"OPTIONS" && request.request_uri().as_ref() == b"*" { global_options(&mut writer, &mut request).await; }
+            else { mux.dispatch(&context, &mut writer, &mut request).await; }
+        }).catch_unwind().await;
+        if let Err(payload) = handled {
+            let panic = crate::utility_panic::SourceRecoveredPanic::new(payload);
+            if request.protocol == hyper::Version::HTTP_2 {
+                // H2 cancellation precedes reporting. Dropping an unfinished
+                // writer marks Body failure and wakes its existing consumer;
+                // the existing Hyper driver owns the actual stream reset.
+                request.cancelled.cancel();
+                drop(writer);
+                context.report_source_http_panic(true, &remote_addr, &panic);
+            } else {
+                // H1 reports before its deferred cancellation and original
+                // reqBody cleanup, without committing a successful response.
+                context.report_source_http_panic(false, &remote_addr, &panic);
+                request.cancelled.cancel();
+                request.continue_state.disable().await;
+                drop(writer);
+                let _ = request.original_body.close().await;
+            }
+            phase.finish(true);
+            return Ok(());
+        }
         request.cancelled.cancel(); // net/http cancels when ServeHTTP returns.
         let close = writer.finish().await;
         // finishRequest closes the body captured before the expectation
@@ -415,14 +443,25 @@ pub async fn serve_connection<IO>(io: IO, context: UtilityRuntimeContext, mux: S
     owner_stop: CancellationToken, handlers: Arc<UtilityTaskScope>, read_header_timeout: Duration, protocol: HttpProtocol) -> Result<(), BoxError>
 where IO: AsyncRead + AsyncWrite + Unpin + Send + 'static,
 {
+    serve_connection_from(io, context, mux, stop, owner_stop, handlers, read_header_timeout, protocol, String::new()).await
+}
+
+/// Native listeners supply the accepted peer; an address-less stream retains
+/// the source empty RemoteAddr projection through serve_connection above.
+pub async fn serve_connection_from<IO>(io: IO, context: UtilityRuntimeContext, mux: SourceMux, stop: CancellationToken,
+    owner_stop: CancellationToken, handlers: Arc<UtilityTaskScope>, read_header_timeout: Duration, protocol: HttpProtocol,
+    remote_addr: String) -> Result<(), BoxError>
+where IO: AsyncRead + AsyncWrite + Unpin + Send + 'static,
+{
     let source_shutdown = CancellationToken::new();
     let source_close = source_shutdown.clone();
     let connection_closed = CancellationToken::new();
     let _closed_guard = SourceConnectionClosed(connection_closed.clone());
     let request_connection = connection_closed.clone();
+    let remote_addr: Arc<str> = remote_addr.into();
     let server_stop = stop.clone(); let server_owner_stop = owner_stop.clone();
     let service = service_fn(move |request| request_service(context.clone(), mux.clone(), Arc::clone(&handlers), source_close.clone(),
-        [server_stop.clone(), server_owner_stop.clone()], request_connection.clone(), request));
+        [server_stop.clone(), server_owner_stop.clone()], request_connection.clone(), Arc::clone(&remote_addr), request));
     let protocol_tasks = Arc::new(UtilityTaskScope::default());
     let executor = SourceHttpExecutor { tasks: Arc::downgrade(&protocol_tasks) };
     let mut builder = hyper_util::server::conn::auto::Builder::new(executor);
@@ -502,10 +541,10 @@ async fn serve_listener(listener: TcpListener, context: UtilityRuntimeContext, m
                     if accept_backoff.retry(&context, &error).await { continue; }
                     break Err(Box::new(error) as BoxError);
                 }
-                Ok((socket, _)) => {
+                Ok((socket, peer)) => {
                     accept_backoff.accepted();
                     let (context, mux, stop, owner_stop, handlers) = (context.clone(), mux.clone(), stop.clone(), owner_stop.clone(), Arc::clone(&handlers));
-                    connections.spawn(async move { serve_connection(socket, context, mux, stop, owner_stop, handlers, read_header_timeout, HttpProtocol::Http1).await });
+                    connections.spawn(async move { serve_connection_from(socket, context, mux, stop, owner_stop, handlers, read_header_timeout, HttpProtocol::Http1, peer.to_string()).await });
                 }
             }
         }
