@@ -268,13 +268,13 @@
     "rust-support/agones/src/utility_gateway_pattern.rs": "24da1c8bc6e2fd4cbf2b4c11a56ce94a9dc8c2ae6e12786d96c9fa8a72943167",
     "rust-support/agones/src/utility_gateway_storage.rs": "5603082f3744c022d6360e10a55d90b8d9dc7a58a5d0cf8b3cd2e361ee9abf41",
     "rust-support/agones/src/utility_gateway_strings.rs": "586fbfa4fddf704b3e3824ef8216a94c50404d0404958cbec333211f5316db5a",
-    "rust-support/agones/src/utility_http.rs": "62855301576173ebcbc40f7a25e6017fd1110d3e7cb3fb9baefc86b19f76fe47",
+    "rust-support/agones/src/utility_http.rs": "5213352970497e3ad42562994981626bf80248d2d700516950d8a5f8efe8c84b",
     "rust-support/agones/src/utility_http_allocation.rs": "2cc9c0f7c7dadbced736b0afd4f7086cae61b301955ef454d2ad2cc9dbf34f60",
     "rust-support/agones/src/utility_http_body.rs": "af7e4eac5e2623b697f63342445b01b13cba8474310912e8befd823aab9c53da",
     "rust-support/agones/src/utility_http_form.rs": "09dae2ed480223c422374e661b6afcdc3bf437ad84b453dde103ee19ab61b06f",
     "rust-support/agones/src/utility_http_framing.rs": "f7b894456029fcedad1bc7dee9feb97b55745c94921e921a0dc99b437c269104",
     "rust-support/agones/src/utility_http_header_capacity.rs": "da5b63d388f947b66fa7fe81b69e6c6d988bda18fd958435a78bdafaa238353c",
-    "rust-support/agones/src/utility_http_headers.rs": "e7a919e79861c59e1b9eacc2d92375deace50b15342f5be75b4a85d239b3f38c",
+    "rust-support/agones/src/utility_http_headers.rs": "dbbc09d181e0fc773cd0763ee74319322bce4f1f28443705b3b23448f79428c4",
     "rust-support/agones/src/utility_http_listener.rs": "5ca5df95a2e84e16fbe280b2afe4843bde365936a068a910d162a23112b9c460",
     "rust-support/agones/src/utility_http_request_body.rs": "6d1b14f8e8235ea9020d630e1eaae9cf75280c9be6d1d2215bbc6777d7d01e17",
     "rust-support/agones/src/utility_http_request_fields.rs": "ce7217c4a6ec01f726e082e1671a787516ffe42947d7a7e4b1e8fc2e84bf3653",
@@ -288,13 +288,14 @@
   },
   "runtime_credit": 0,
   "source_collection_effect_owner": "StringBacking owns the nil/non-nil-empty/allocated distinction without an Arc for zero-capacity slices. Existing HeaderValues fallible primitives now back native public make/append/materialization/parsing and clone allocation paths. SourceCollectionFailureRaiser is a static CGP provider selected by the existing RuntimeProviders and a stateless NativeSourceCollectionContext; the new derive-deftly NativeSourceCollectionProviders template owns that native projection. It creates no resources, manager, registry or tasks. Typed runtime.errorString/plainError origin declarations reuse SourceErrorOrigin. Source recoverable unwinding skips Rust's eager hook and leaves recovery/reporting to the existing parent owner.",
+  "source_header_map_allocation_owner": "Headers retains its existing shared map owner. Explicit native table growth, key/entry snapshots, clone arrays, name/value copies and JSON byte assembly return SourceSliceAllocationError to the already statically selected collection provider. Overwriting an existing key skips table reservation; unique-key serialization uses an allocation-free unstable sort with the same byte order. Native convenience methods complete fallible outcomes through NativeSourceCollectionProviders/UtilityRuntimeProviders; no registry, manager, task or additional mutable map owner is introduced.",
   "source_pattern_allocation_owner": "GatewayPattern retains one immutable PatternSourceProfile backed by the existing HeaderAllocationProfile; source word width is derived from that same profile, so word and heap limits cannot disagree. GatewayContext new_pattern/handle_compiled and the existing CGP SourceGatewayPatternConstructor carry the profile into successful, zero and rejected patterns. Pure allocation-size calculations reuse the shared source class/growth owner. Existing derive-deftly UtilityRuntimeProviders/SourcePatternStringCompletion/SourceProcessExit complete returned string failures; no provider registry, new lifecycle owner or task is introduced.",
   "source_pattern_bounds_owner": "GatewayPattern retains signed source opcode operands, stack size, tail length and positions. Components, stacks, captures and capture-name storage use the existing HeaderValues slice owner, preserving length/capacity/backing and reslice-retained slots. Existing CGP/derive-deftly UtilityRuntimeProviders/SourcePatternStringCompletion completes match/render/slice outcomes through one generic implementation: returned non-match remains separate from typed bounds panics and string/allocator failures. Existing SourceErrorOrigin derives runtime.boundsError and the common errors.errorString sentinel class. No runtime effect registry, extra task or lifecycle manager is added.",
   "source_pattern_constructor_owner": "Existing CGP/derive-deftly UtilityRuntimeProviders owns SourcePatternDiagnosticEmitter, SourceGatewayPatternConstructor, SourcePatternLoggerGetter and the existing SourceProcessExit capability. RuntimeOwner constructs one source-pattern logger resource (writer mutex and typed enabled/JSON profile). GatewayContext new_pattern/must_pattern/handle_compiled consume that provider and then use the existing route owner. PatternConstruction retains both Go result fields; InvalidPatternError copies reference one static identity token. Word profiles are explicit data and never inferred from the Rust host. There is no logger/provider registry, task or competing lifecycle manager; environment/custom LoggerV2 and actual ABI/initializer binding remain later source work.",
   "source_pattern_storage_owner": "Existing HeaderAllocationProfile owns shared make/growth layouts for source element size, GC scanning, signed length bounds, class rounding and heap limits. HeaderValues owns the same string-slot backing and exposes fallible make/single/bulk append; overlapping append uses one backing lock and memmove order. GatewayPattern construction/matching/rendering adopts these outcomes. PatternOperationBuilder owns mutable typed ops until construction finishes, then PatternOperations shares immutable backing across copies. Existing derive-deftly RuntimeProviders/SourcePatternStringCompletion/SourceGatewayPatternConstructor/SourceProcessExit complete failures. Length/address-span bridge guards are ordinary typed data checks, not Go failures. No effect registry, new lifecycle manager or task is introduced.",
   "source_pattern_string_owner": "GatewayPattern owns the explicit Go32/Go64 word profile, including zero/error patterns and registered copies. Pure Rust join/concat/fixed-format helpers use that profile, not Rust usize limits. Existing derive-deftly UtilityRuntimeProviders statically binds SourcePatternStringCompletion to CompleteSourcePatternString and the existing SourceProcessExit effect. Actual GatewayDispatcher same/other-method matching passes its existing UtilityRuntimeContext; Pattern.string_bytes takes the same capability. try_string_bytes and Rust Display are explicit projections, not the source panic/throw entrypoint. No new task, state owner, provider registry, Go evaluator or generation path is introduced.",
   "source_url": "https://static.crates.io/crates/hyper/hyper-1.12.0.crate",
-  "timestamp": "2026-10-28T14:27:27.432530+00:00",
+  "timestamp": "2026-10-28T15:09:11.358717+00:00",
   "upstream_archive": "/home/astral/.cargo/registry/cache/index.crates.io-1949cf8c6b5b557f/hyper-1.12.0.crate",
   "upstream_archive_sha256": "2c3e324da4c95177d6291d4c8730197c0d1822f8a9766814a4a44fa5ab797c9c",
   "url_alias_authoring": {
@@ -333,5 +334,5 @@
     "source_text_match": true,
     "version": "1.1.2"
   },
-  "work_base_commit": "debb43a7cbcf96bc668a78171df275db65dedc65"
+  "work_base_commit": "fdf32f624a0dfda4b98b53f2fe0f3fd4f1a70134"
 }

@@ -821,7 +821,7 @@
           "partial_adoption_record": "verification/agones/roadmap-M0003-partial-map.json",
           "platform_effect_authoring_record": "verification/agones/roadmap-M0003-platform-effects.json",
           "prerequisites": "M0001/M0002 authored implementation complete; global phase remains IMPLEMENTATION_ONLY",
-          "progress_usage_observation": "verification/agones/roadmap-M0003-progress-usage-42.json",
+          "progress_usage_observation": "verification/agones/roadmap-M0003-progress-usage-44.json",
           "progress_usage_observations": [
             "verification/agones/roadmap-M0003-progress-usage-1.json",
             "verification/agones/roadmap-M0003-progress-usage-2.json",
@@ -864,17 +864,19 @@
             "verification/agones/roadmap-M0003-progress-usage-39.json",
             "verification/agones/roadmap-M0003-progress-usage-40.json",
             "verification/agones/roadmap-M0003-progress-usage-41.json",
-            "verification/agones/roadmap-M0003-progress-usage-42.json"
+            "verification/agones/roadmap-M0003-progress-usage-42.json",
+            "verification/agones/roadmap-M0003-progress-usage-43.json",
+            "verification/agones/roadmap-M0003-progress-usage-44.json"
           ],
           "reuse_adoption_record": "verification/agones/roadmap-M0003-reuse-adoption.json",
           "route": "MANUAL",
           "source_snapshot": "95161696e9ad90f9eab2ec7ae978bcafdcbb3483",
           "stage": "IMPLEMENTING",
           "usage_start": "verification/agones/roadmap-M0003-entry-usage.json",
-          "work_base_commit": "debb43a7cbcf96bc668a78171df275db65dedc65"
+          "work_base_commit": "fdf32f624a0dfda4b98b53f2fe0f3fd4f1a70134"
         }
       },
-      "next_action": "Continue M0003 MANUAL without route switch. Finish map/reference/control/name/JSON/iterator/native allocations and source GC/heap/elision/sanitizer/experiment/pressure/failure ordering. Nil/non-nil-empty zero-capacity backing, static CGP public header collection completion, typed runtime allocation/nil-map payloads, RHS-before-assignment, direct form slice copy and selected quiet source unwinding are authored, uncompiled/unexecuted/unverified. Complete actual unwind/abort/ABI/address/layout/lifetime/profile binding, Go panic/recover/RuntimeError/Is/As/type/caller and parent recovery/fatal reporting; fmt pool/tiny/extreme Go32; full runtime traceback/secure/crash/output; GRPC_GO_LOG_*/custom logger/source SDK/command adoption. Preserve all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirements. Full BOTH-route scope remains intact, gate CLOSED, assurance NOT_STARTED; no compiler/probes/tests/lint/proof/generator validation/CI.",
+      "next_action": "Continue M0003 MANUAL without route switch. Complete source parent recovery/fatal reporting and Go RuntimeError/panic/recover/Is/As/type/caller interfaces; remaining control/Arc/Bytes/RawValue/serde/native allocations and source GC/heap/elision/sanitizer/experiment/pressure/failure ordering. Native header table/vector/name/value/JSON reservations and try_* insertion/snapshot/sort/clones are authored, uncompiled/unexecuted/unverified. Complete Go map hash/group/growth/range-addition/key/pointer/concurrency profiles and actual ABI/unwind/address/layout/lifetime binding; fmt pool/tiny/extreme Go32; full runtime traceback/secure/crash/output; GRPC_GO_LOG_*/custom logger/source SDK/command adoption. Preserve every prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirement. Full BOTH-route scope stays intact, gate CLOSED, assurance NOT_STARTED; no compiler/probes/tests/lint/proof/generator validation/CI.",
       "objective": "AGONES_AND_CPG_COMBINED_ROADMAP",
       "objective_attachment": "/home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt",
       "objective_attachment_sha256": "a9b797fc624be04548c62e63a634bcc2cacab25c4d9f45af346148ba32c1baea",
@@ -932,8 +934,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 346,
-  "previous_sha256": "19a5bb15aa86f65d924ccfc4f0995790a0b543a44b1b35770fd3f3246d4dfa3d",
+  "previous_revision": 347,
+  "previous_sha256": "98016495797f83e961154e60e506923ed693a135fdce42aab2fc65f76ea4df7b",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -1637,7 +1639,7 @@
       "timestamp": "2026-10-21T09:42:01.132215+00:00"
     }
   ],
-  "revision": 347,
+  "revision": 348,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [

@@ -1,4 +1,7 @@
 //! Byte-preserving source HTTP maps and shared []string backing views.
+//! Fallible entrypoints cover explicit buffer/table reservations. Shared
+//! control allocations, serializer internals and source GC/runtime allocation
+//! schedules still require their native boundary/profile implementation.
 // Adapted from Go net/http/header.go and net/textproto's MIMEHeader operations.
 // Copyright The Go Authors. BSD-3-Clause; see ../GO-LICENSE.
 use bytes::Bytes;
@@ -13,7 +16,11 @@ pub(crate) use capacity::reserve_source_array;
 #[derive(Clone, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub struct HeaderName(Bytes);
 impl HeaderName {
-    pub fn new(name: impl AsRef<[u8]>) -> Self { Self(Bytes::copy_from_slice(name.as_ref())) }
+    pub fn new(name: impl AsRef<[u8]>) -> Self { complete_native_source_collection(Self::try_new(name.as_ref())) }
+    pub fn try_new(name: &[u8]) -> Result<Self, SourceSliceAllocationError> {
+        let mut copied = reserve_source_array::<u8>(name.len() as u64)?;
+        copied.extend_from_slice(name); Ok(Self(Bytes::from(copied)))
+    }
     pub fn as_bytes(&self) -> &[u8] { &self.0 }
     pub fn starts_with(&self, prefix: impl AsRef<[u8]>) -> bool { self.0.starts_with(prefix.as_ref()) }
     pub fn strip_prefix(&self, prefix: impl AsRef<[u8]>) -> Option<Self> {
@@ -172,11 +179,16 @@ impl Serialize for HeaderValues {
     }
 }
 impl HeaderValues {
-    fn json_bytes(&self) -> Vec<u8> {
-        if self.is_nil() { return b"null".to_vec(); }
-        let mut json = vec![b'['];
-        for (index, value) in self.iter().enumerate() { if index != 0 { json.push(b','); } append_json_string(&mut json, &value); }
-        json.push(b']'); json
+    fn json_bytes(&self) -> Vec<u8> { complete_native_source_collection(self.try_json_bytes()) }
+    pub fn try_json_bytes(&self) -> Result<Vec<u8>, SourceSliceAllocationError> {
+        let mut json = Vec::new();
+        if self.is_nil() { append_json_bytes(&mut json, b"null")?; return Ok(json); }
+        append_json_bytes(&mut json, b"[")?;
+        for (index, value) in self.iter().enumerate() {
+            if index != 0 { append_json_bytes(&mut json, b",")?; }
+            append_json_string(&mut json, &value)?;
+        }
+        append_json_bytes(&mut json, b"]")?; Ok(json)
     }
 }
 
@@ -211,10 +223,18 @@ impl Headers {
     }
     pub fn contains_key(&self, name: impl AsRef<[u8]>) -> bool { self.get(name).is_some() }
     pub fn insert(&self, name: impl AsRef<[u8]>, values: HeaderValues) -> Option<HeaderValues> {
-        self.insert_name(HeaderName::new(name), values)
+        complete_native_source_collection(self.try_insert(name, values))
+    }
+    pub fn try_insert(&self, name: impl AsRef<[u8]>, values: HeaderValues) -> Result<Option<HeaderValues>, SourceSliceAllocationError> {
+        self.try_insert_name(HeaderName::try_new(name.as_ref())?, values)
     }
     fn insert_name(&self, name: HeaderName, values: HeaderValues) -> Option<HeaderValues> {
-        self.map.as_ref().unwrap_or_else(|| nil_source_map_assignment()).write().unwrap_or_else(|error| error.into_inner()).insert(name, values)
+        complete_native_source_collection(self.try_insert_name(name, values))
+    }
+    fn try_insert_name(&self, name: HeaderName, values: HeaderValues) -> Result<Option<HeaderValues>, SourceSliceAllocationError> {
+        let mut map = self.map.as_ref().unwrap_or_else(|| nil_source_map_assignment()).write().unwrap_or_else(|error| error.into_inner());
+        if !map.contains_key(&name) { map.try_reserve(1).map_err(|_| SourceSliceAllocationError::OutOfMemory)?; }
+        Ok(map.insert(name, values))
     }
     pub fn remove(&self, name: impl AsRef<[u8]>) -> Option<HeaderValues> {
         self.map.as_ref()?.write().unwrap_or_else(|error| error.into_inner()).remove(name.as_ref())
@@ -247,42 +267,80 @@ impl Headers {
         if let Some(map) = &self.map { map.write().unwrap_or_else(|error| error.into_inner()).retain(|name, value| keep(name, value)); }
     }
     pub fn iter(&self) -> HeaderIter {
-        let keys = self.map.as_ref().map(|map| map.read().unwrap_or_else(|error| error.into_inner()).keys().cloned().collect::<Vec<_>>()).unwrap_or_default();
-        HeaderIter { map: self.map.clone(), keys: keys.into_iter() }
+        complete_native_source_collection(self.try_iter())
+    }
+    pub fn try_iter(&self) -> Result<HeaderIter, SourceSliceAllocationError> {
+        let keys = if let Some(map) = &self.map {
+            let map = map.read().unwrap_or_else(|error| error.into_inner());
+            let mut keys = reserve_source_array::<HeaderName>(map.len() as u64)?;
+            keys.extend(map.keys().cloned()); keys
+        } else { Vec::new() };
+        Ok(HeaderIter { map: self.map.clone(), keys: keys.into_iter() })
     }
     pub fn keys(&self) -> impl Iterator<Item = HeaderName> { self.iter().map(|(name, _)| name) }
-    pub fn sorted(&self) -> Vec<(HeaderName, HeaderValues)> { let mut fields: Vec<_> = self.iter().collect(); fields.sort_by(|left, right| left.0.cmp(&right.0)); fields }
+    fn try_fields(&self) -> Result<Vec<(HeaderName, HeaderValues)>, SourceSliceAllocationError> {
+        let iter = self.try_iter()?;
+        let mut fields = reserve_source_array::<(HeaderName, HeaderValues)>(iter.keys.len() as u64)?;
+        fields.extend(iter); Ok(fields)
+    }
+    pub fn sorted(&self) -> Vec<(HeaderName, HeaderValues)> { complete_native_source_collection(self.try_sorted()) }
+    pub fn try_sorted(&self) -> Result<Vec<(HeaderName, HeaderValues)>, SourceSliceAllocationError> {
+        let mut fields = self.try_fields()?;
+        // Map keys are unique; stable and unstable sorting have the same
+        // byte order. The latter needs no additional merge scratch buffer.
+        fields.sort_unstable_by(|left, right| left.0.cmp(&right.0)); Ok(fields)
+    }
     pub fn shallow_copy(&self) -> Self {
+        complete_native_source_collection(self.try_shallow_copy())
+    }
+    pub fn try_shallow_copy(&self) -> Result<Self, SourceSliceAllocationError> {
         let copy = Self::with_profile(self.profile);
-        for (name, value) in self { copy.insert_name(name, value); }
-        copy
+        for (name, value) in self.try_iter()? { copy.try_insert_name(name, value)?; }
+        Ok(copy)
     }
     pub fn deep_clone(&self) -> Self {
-        if self.is_nil() { return self.clone(); }
-        let fields: Vec<_> = self.iter().collect();
-        let total = complete_native_source_collection(self.profile.try_clone_length(fields.iter().map(|(_, values)| values.len())));
-        let all = HeaderValues::make(total, total, self.profile);
+        complete_native_source_collection(self.try_deep_clone())
+    }
+    pub fn try_deep_clone(&self) -> Result<Self, SourceSliceAllocationError> {
+        if self.is_nil() { return Ok(self.clone()); }
+        let fields = self.try_fields()?;
+        let total = self.profile.try_clone_length(fields.iter().map(|(_, values)| values.len()))?;
+        let all = HeaderValues::try_make(total as i64, total as i64, self.profile)?;
         let copy = Self::with_profile(self.profile); let mut offset = 0;
         for (name, values) in fields {
             // Header.Clone uses source int accumulation, then copy into the
             // remaining combined buffer, including its overflow/truncation.
             let length = values.len().min(total - offset);
             for (index, value) in values.iter().take(length).enumerate() { all.set(offset + index, value); }
-            copy.insert_name(name, if values.is_nil() { HeaderValues::nil() } else { all.reslice(offset, offset + length, offset + length) });
+            copy.try_insert_name(name, if values.is_nil() { HeaderValues::nil() } else { all.reslice(offset, offset + length, offset + length) })?;
             offset += length;
         }
-        copy
+        Ok(copy)
     }
     pub fn h2_clone(&self) -> Self {
+        complete_native_source_collection(self.try_h2_clone())
+    }
+    pub fn try_h2_clone(&self) -> Result<Self, SourceSliceAllocationError> {
         let copy = Self::with_profile(self.profile);
         // Bundled http2cloneHeader makes each value slice separately and
         // turns nil value slices into non-nil empty slices.
-        for (name, values) in self {
-            let copied = HeaderValues::make(values.len(), values.len(), self.profile);
+        for (name, values) in self.try_iter()? {
+            let copied = HeaderValues::try_make(values.len() as i64, values.len() as i64, self.profile)?;
             for (index, value) in values.iter().enumerate() { copied.set(index, value); }
-            copy.insert_name(name, copied);
+            copy.try_insert_name(name, copied)?;
         }
-        copy
+        Ok(copy)
+    }
+    pub fn try_json_bytes(&self) -> Result<Vec<u8>, SourceSliceAllocationError> {
+        let mut json = Vec::new();
+        if self.is_nil() { append_json_bytes(&mut json, b"null")?; return Ok(json); }
+        append_json_bytes(&mut json, b"{")?;
+        for (index, (name, values)) in self.try_sorted()?.into_iter().enumerate() {
+            if index != 0 { append_json_bytes(&mut json, b",")?; }
+            append_json_string(&mut json, name.as_bytes())?; append_json_bytes(&mut json, b":")?;
+            append_json_bytes(&mut json, &values.try_json_bytes()?)?;
+        }
+        append_json_bytes(&mut json, b"}")?; Ok(json)
     }
 }
 impl IntoIterator for &Headers {
@@ -298,17 +356,32 @@ impl PartialEq for Headers {
 impl Serialize for Headers {
     fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
         if self.is_nil() { return serializer.serialize_none(); }
-        let mut json = vec![b'{'];
-        for (index, (name, values)) in self.sorted().into_iter().enumerate() {
-            if index != 0 { json.push(b','); }
-            append_json_string(&mut json, name.as_bytes()); json.push(b':'); json.extend(values.json_bytes());
-        }
-        json.push(b'}'); serialize_json(json, serializer)
+        serialize_json(complete_native_source_collection(self.try_json_bytes()), serializer)
     }
 }
-pub fn canonical_header_key(name: impl AsRef<[u8]>) -> HeaderName { HeaderName::new(super::trailers::canonical_name(name.as_ref())) }
+pub fn canonical_header_key(name: impl AsRef<[u8]>) -> HeaderName { complete_native_source_collection(try_canonical_header_key(name.as_ref())) }
+pub fn try_canonical_header_key(name: &[u8]) -> Result<HeaderName, SourceSliceAllocationError> {
+    let mut copied = reserve_source_array::<u8>(name.len() as u64)?;
+    copied.extend_from_slice(name);
+    if super::trailers::field_name(name) {
+        let mut upper = true;
+        for byte in &mut copied {
+            let next = if upper { byte.to_ascii_uppercase() } else { byte.to_ascii_lowercase() };
+            upper = *byte == b'-'; *byte = next;
+        }
+    }
+    Ok(HeaderName(Bytes::from(copied)))
+}
 pub fn set_header(headers: &Headers, name: impl AsRef<[u8]>, value: impl AsRef<[u8]>) {
-    headers.insert(canonical_header_key(name), HeaderValues::from_values([Bytes::copy_from_slice(value.as_ref())]));
+    complete_native_source_collection(try_set_header(headers, name.as_ref(), value.as_ref()));
+}
+pub fn try_set_header(headers: &Headers, name: &[u8], value: &[u8]) -> Result<(), SourceSliceAllocationError> {
+    let name = try_canonical_header_key(name)?;
+    let mut copied = reserve_source_array::<u8>(value.len() as u64)?;
+    copied.extend_from_slice(value);
+    let values = HeaderValues::try_make(1, 1, headers.profile)?;
+    values.set(0, Bytes::from(copied));
+    headers.try_insert_name(name, values)?; Ok(())
 }
 pub fn header(headers: &Headers, name: impl AsRef<[u8]>) -> Option<Bytes> { headers.get(canonical_header_key(name)).and_then(|values| values.first()) }
 pub fn headers_json(headers: &Headers) -> serde_json::Value { serde_json::to_value(headers).expect("source header string values serialize") }
@@ -318,7 +391,7 @@ pub fn headers_json(headers: &Headers) -> serde_json::Value { serde_json::to_val
 pub struct SourceByteString(pub Bytes);
 impl Serialize for SourceByteString {
     fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
-        let mut json = Vec::new(); append_json_string(&mut json, &self.0); serialize_json(json, serializer)
+        let mut json = Vec::new(); complete_native_source_collection(append_json_string(&mut json, &self.0)); serialize_json(json, serializer)
     }
 }
 fn serialize_json<S: Serializer>(json: Vec<u8>, serializer: S) -> Result<S::Ok, S::Error> {
@@ -326,31 +399,37 @@ fn serialize_json<S: Serializer>(json: Vec<u8>, serializer: S) -> Result<S::Ok, 
     let raw = serde_json::value::RawValue::from_string(json).map_err(S::Error::custom)?;
     raw.serialize(serializer)
 }
-fn append_json_string(result: &mut Vec<u8>, bytes: &[u8]) {
+fn append_json_bytes(result: &mut Vec<u8>, bytes: &[u8]) -> Result<(), SourceSliceAllocationError> {
+    let length = result.len().checked_add(bytes.len()).ok_or(SourceSliceAllocationError::NativeAddressSpace)?;
+    if length > isize::MAX as usize { return Err(SourceSliceAllocationError::NativeAddressSpace); }
+    result.try_reserve(bytes.len()).map_err(|_| SourceSliceAllocationError::OutOfMemory)?;
+    result.extend_from_slice(bytes); Ok(())
+}
+fn append_json_string(result: &mut Vec<u8>, bytes: &[u8]) -> Result<(), SourceSliceAllocationError> {
     const HEX: &[u8; 16] = b"0123456789abcdef";
-    result.push(b'"'); let mut offset = 0;
+    append_json_bytes(result, b"\"")?; let mut offset = 0;
     while offset < bytes.len() {
         let first = bytes[offset];
         if first < 0x80 {
             match first {
-                b'"' | b'\\' => { result.push(b'\\'); result.push(first); }
-                b'\n' => result.extend_from_slice(b"\\n"), b'\r' => result.extend_from_slice(b"\\r"), b'\t' => result.extend_from_slice(b"\\t"),
-                8 => result.extend_from_slice(b"\\b"), 12 => result.extend_from_slice(b"\\f"),
-                0..=31 | b'<' | b'>' | b'&' => { result.extend_from_slice(b"\\u00"); result.push(HEX[(first >> 4) as usize]); result.push(HEX[(first & 15) as usize]); }
-                _ => result.push(first),
+                b'"' | b'\\' => append_json_bytes(result, &[b'\\', first])?,
+                b'\n' => append_json_bytes(result, b"\\n")?, b'\r' => append_json_bytes(result, b"\\r")?, b'\t' => append_json_bytes(result, b"\\t")?,
+                8 => append_json_bytes(result, b"\\b")?, 12 => append_json_bytes(result, b"\\f")?,
+                0..=31 | b'<' | b'>' | b'&' => append_json_bytes(result, &[b'\\', b'u', b'0', b'0', HEX[(first >> 4) as usize], HEX[(first & 15) as usize]])?,
+                _ => append_json_bytes(result, &[first])?,
             }
             offset += 1; continue;
         }
         let width = match first { 0..=0x7f => 1, 0xc2..=0xdf => 2, 0xe0..=0xef => 3, 0xf0..=0xf4 => 4, _ => 0 };
         if width > 0 && offset + width <= bytes.len() {
             if let Ok(value) = std::str::from_utf8(&bytes[offset..offset + width]) {
-                match value { "\u{2028}" => result.extend_from_slice(b"\\u2028"), "\u{2029}" => result.extend_from_slice(b"\\u2029"), _ => result.extend_from_slice(value.as_bytes()) }
+                match value { "\u{2028}" => append_json_bytes(result, b"\\u2028")?, "\u{2029}" => append_json_bytes(result, b"\\u2029")?, _ => append_json_bytes(result, value.as_bytes())? }
                 offset += width; continue;
             }
         }
         // The source emits an escape for each invalid original byte, while
         // an already valid U+FFFD remains literal UTF8. Keep that distinction.
-        result.extend_from_slice(b"\\ufffd"); offset += 1;
+        append_json_bytes(result, b"\\ufffd")?; offset += 1;
     }
-    result.push(b'"');
+    append_json_bytes(result, b"\"")?; Ok(())
 }

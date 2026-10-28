@@ -25,7 +25,7 @@ mod status;
 #[path = "utility_http_headers.rs"]
 mod headers;
 pub use headers::{HeaderName, HeaderValues, HeaderAllocationProfile, SourceSliceAllocationError, SourceSliceAllocationLayout,
-    Headers, SourceByteString, canonical_header_key, set_header, header, headers_json};
+    Headers, SourceByteString, canonical_header_key, try_canonical_header_key, set_header, try_set_header, header, headers_json};
 pub(crate) use headers::reserve_source_array;
 #[path = "utility_http_allocation.rs"]
 mod allocation;

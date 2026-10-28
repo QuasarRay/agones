@@ -106,7 +106,7 @@
       "sha256": "ed6e69041a6d154843c5c9509541a311f7415879c6c845b750b6ba29e1f48e84"
     }
   ],
-  "payload_identity_refreshed_at": "2026-10-28T14:27:27.432530+00:00",
+  "payload_identity_refreshed_at": "2026-10-28T15:09:11.358717+00:00",
   "payload_sha256": {
     "Cargo.lock": "1d2c5f632a6a590af119a16f3ff926d89bcfdaedde63a265fd185c8d406745a9",
     "crates/util/Cargo.toml": "6b011badbe07029ab9a84257636f7de293931d32a2c1bbef49c60b4d07dd91bf",
@@ -123,11 +123,11 @@
     "rust-support/agones/src/utility_gateway_pattern.rs": "24da1c8bc6e2fd4cbf2b4c11a56ce94a9dc8c2ae6e12786d96c9fa8a72943167",
     "rust-support/agones/src/utility_gateway_storage.rs": "5603082f3744c022d6360e10a55d90b8d9dc7a58a5d0cf8b3cd2e361ee9abf41",
     "rust-support/agones/src/utility_gateway_strings.rs": "586fbfa4fddf704b3e3824ef8216a94c50404d0404958cbec333211f5316db5a",
-    "rust-support/agones/src/utility_http.rs": "62855301576173ebcbc40f7a25e6017fd1110d3e7cb3fb9baefc86b19f76fe47",
+    "rust-support/agones/src/utility_http.rs": "5213352970497e3ad42562994981626bf80248d2d700516950d8a5f8efe8c84b",
     "rust-support/agones/src/utility_http_allocation.rs": "2cc9c0f7c7dadbced736b0afd4f7086cae61b301955ef454d2ad2cc9dbf34f60",
     "rust-support/agones/src/utility_http_form.rs": "09dae2ed480223c422374e661b6afcdc3bf437ad84b453dde103ee19ab61b06f",
     "rust-support/agones/src/utility_http_header_capacity.rs": "da5b63d388f947b66fa7fe81b69e6c6d988bda18fd958435a78bdafaa238353c",
-    "rust-support/agones/src/utility_http_headers.rs": "e7a919e79861c59e1b9eacc2d92375deace50b15342f5be75b4a85d239b3f38c",
+    "rust-support/agones/src/utility_http_headers.rs": "dbbc09d181e0fc773cd0763ee74319322bce4f1f28443705b3b23448f79428c4",
     "rust-support/agones/src/utility_http_mux.rs": "a842e469d51dd5db09f8e62f9c8cc350eb948466bfa95574665c10d1b4ad2991",
     "rust-support/agones/src/utility_signals.rs": "86aab0a4b60572e7ad80d125e9f4fdf26056a9cb90374b55b0c34f4da710ebd6",
     "rust-support/agones/src/utility_signals_windows.rs": "7ee226c03ff13e152d4ee81e12e5d9f6d9e4d25153810c37e8188960ee831239"
