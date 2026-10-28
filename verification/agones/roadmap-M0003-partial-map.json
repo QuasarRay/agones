@@ -19,6 +19,7 @@
       "codec": "Fixed source UseProtoNames/EmitUnpopulated/DiscardUnknown behavior is consumed by serializer/decoder code, not stored as flags. Typed target preparation/decode retains source pointer, map, slice, byte and enum branches; shared first-value framing owns read-ahead and sticky read errors.",
       "metaprogramming": "UtilityRuntimeContext and GatewayContext derive HasField + Deftly; UtilityRuntimeProviders/UtilityGatewayProviders supply static CGP factory, getters, codec, dispatch, callback and response implementations.",
       "pattern_allocation_owner": "GatewayPattern retains one immutable PatternSourceProfile backed by the existing HeaderAllocationProfile; source word width is derived from that same profile, so word and heap limits cannot disagree. GatewayContext new_pattern/handle_compiled and the existing CGP SourceGatewayPatternConstructor carry the profile into successful, zero and rejected patterns. Pure allocation-size calculations reuse the shared source class/growth owner. Existing derive-deftly UtilityRuntimeProviders/SourcePatternStringCompletion/SourceProcessExit complete returned string failures; no provider registry, new lifecycle owner or task is introduced.",
+      "pattern_bounds_owner": "GatewayPattern retains signed source opcode operands, stack size, tail length and positions. Components, stacks, captures and capture-name storage use the existing HeaderValues slice owner, preserving length/capacity/backing and reslice-retained slots. Existing CGP/derive-deftly UtilityRuntimeProviders/SourcePatternStringCompletion completes match/render/slice outcomes through one generic implementation: returned non-match remains separate from typed bounds panics and string/allocator failures. Existing SourceErrorOrigin derives runtime.boundsError and the common errors.errorString sentinel class. No runtime effect registry, extra task or lifecycle manager is added.",
       "pattern_constructor_owner": "Existing CGP/derive-deftly UtilityRuntimeProviders owns SourcePatternDiagnosticEmitter, SourceGatewayPatternConstructor, SourcePatternLoggerGetter and the existing SourceProcessExit capability. RuntimeOwner constructs one source-pattern logger resource (writer mutex and typed enabled/JSON profile). GatewayContext new_pattern/must_pattern/handle_compiled consume that provider and then use the existing route owner. PatternConstruction retains both Go result fields; InvalidPatternError copies reference one static identity token. Word profiles are explicit data and never inferred from the Rust host. There is no logger/provider registry, task or competing lifecycle manager; environment/custom LoggerV2 and actual ABI/initializer binding remain later source work.",
       "pattern_string_owner": "GatewayPattern owns the explicit Go32/Go64 word profile, including zero/error patterns and registered copies. Pure Rust join/concat/fixed-format helpers use that profile, not Rust usize limits. Existing derive-deftly UtilityRuntimeProviders statically binds SourcePatternStringCompletion to CompleteSourcePatternString and the existing SourceProcessExit effect. Actual GatewayDispatcher same/other-method matching passes its existing UtilityRuntimeContext; Pattern.string_bytes takes the same capability. try_string_bytes and Rust Display are explicit projections, not the source panic/throw entrypoint. No new task, state owner, provider registry, Go evaluator or generation path is introduced.",
       "routes": "One GatewayState RwLock<HashMap<method, newest-first routes>> owned by the source factory. This source route table is data, not an effect registry. No global mutable descriptor/service/provider registry.",
@@ -152,7 +153,12 @@
       "SourcePatternStringCompletion",
       "CompleteSourcePatternString",
       "PatternSourceProfile retained immutable HeaderAllocationProfile",
-      "PatternStringFailure.MakeSliceLengthOverflow/OutOfMemory/NativeAddressSpace"
+      "PatternStringFailure.MakeSliceLengthOverflow/OutOfMemory/NativeAddressSpace",
+      "PatternBoundsError",
+      "PatternBoundsCode",
+      "PatternOperationFailure",
+      "PatternSentinelError",
+      "PatternMatchResult"
     ]
   },
   "dependency_adoption": "Native backend declarations retain existing root-lock HTTP/TLS/Tokio/JSON/YAML/base64/libc identities. comprende and better_comprehension reuse the already vendored first-generation sources; five exact package blocks (including clean-macro-docs/if_chain/syn 1) were adopted from the existing isolated CPG lock. Direct util dependency bookkeeping was authored manually, including base64 0.22.1 disambiguation. No resolver, compiler, formatter, macro/API probe or package execution ran. This continuation declares existing root errno 0.3.14 and regex 1.13.1 identities for signal-safe errno restoration and source install-hint Unicode category projection; only util direct lock bookkeeping changed. No resolver or executable assurance ran. Gateway adds prost-reflect 0.14.7 reflection/wire APIs only, with existing once_cell/prost 0.13.5/prost-types identities. One exact lock package was authored from the registry index/source archive without Cargo resolution. Optional serde/serde-value/ordered-float candidates were read but are not adopted. No new tool was installed. Platform continuation declares the existing root windows-sys 0.61.2 package only for cfg(windows), using the pinned FFI modules and existing futures/Tokio primitives. No package block/version upgrade, resolver or tool execution. No dependencies changed in this batch. The fswatch support selects pinned gopkg.in/fsnotify.v1 1.4.7 and adds its literal license; newer fsnotify 1.9 candidate semantics have no utility completion credit. This batch vendors the exact existing Hyper 1.12.0 source archive, preserving license/base file hashes and adding opt-in informational support in its existing H1/H2 drivers. Root Cargo patch/local lock source bookkeeping replaces that node registry identity without a version upgrade or Cargo resolution. Existing h2 0.4.20 informational APIs are bound to their original crate archive. No new tool/install/resolver or project execution.",
@@ -530,7 +536,14 @@
         "HeaderAllocationProfile exposes source-sized byte-growth and fresh MakeNoZero capacity calculations, preserving requested-length validation before class/page rounding and native conversion. Existing HTTP byte-growth callers reuse the same calculation and panic wrapper.",
         "Join uses fresh Builder/MakeNoZero allocation limits and rounded capacity after its existing integer-length checks. A source makeslice failure is distinct from Join string overflow, native address-space limits and native allocation failure.",
         "Fixed pattern Sprintf forms track logical source byte capacity, allocate replacement storage at source growslice points and copy the completed []byte into separate string storage before releasing the fresh scratch buffer. Empty/single-byte string conversion paths use empty/static immutable storage.",
-        "String allocation uses fallible native reservation. Source makeslice/growslice projections remain recoverable; source heap/native OOM uses fatal out-of-memory prefix plus the existing process-exit 2 capability. Native address-space failure remains a separately named hosting limitation."
+        "String allocation uses fallible native reservation. Source makeslice/growslice projections remain recoverable; source heap/native OOM uses fatal out-of-memory prefix plus the existing process-exit 2 capability. Native address-space failure remains a separately named hosting limitation.",
+        "Pattern opcode operands, stacksize, tailLen and match position retain signed source int values. PushM uses wrapped source pos+tail/end-tail in source order; concat/capture use source subtraction before checked indexing or slicing.",
+        "Components, stacks, captured strings and copied variable-name storage reuse HeaderValues length/capacity/backing. Stack truncation reslices rather than dropping backing slots. Join reads slice values directly and preserves zero/single-element fast paths.",
+        "PatternBoundsError carries source x/y/signed/code with source negative and unsigned formatting families. Pattern index/slice helpers check source upper-capacity before lower-bound order and retain runtime.boundsError origin through the existing SourceErrorOrigin template.",
+        "Logical make([]string,len,cap) retains len-versus-capacity error precedence and selected source element/heap limits before native layout conversion. Native backing allocation/runtime panic/failure ordering remains explicit unfinished work.",
+        "PatternSentinelError gives ErrNotMatch and ErrInvalidPattern one errors.errorString source class and separate private singleton identities. Direct identity helpers remain distinct from wrapped error traversal; aliases share the same underlying Rust class.",
+        "Canonical match_source returns PatternMatchResult through the static CGP provider. Dispatcher matches is an explicit Option projection; try_matches/try_string_bytes preserve typed operation-failure results for Rust callers without pretending those projections execute source panic/throw effects.",
+        "ServeMux verb suffix concatenation now completes through the same source profile/provider. The same-method empty-prefix 404 returns before component make/copy; the other-method case still makes the source untrimmed copy. Per-route component copies have source logical length/capacity."
       ],
       "destination": "agones-rs/pkg/util/runtime/runtime.rs",
       "remaining": [
@@ -538,7 +551,7 @@
         "Reconcile clientcmd YAML/JSON/default/duplicate/extension/base64/unselected-path/Unicode/URL/proxy/error/diagnostic and persistence profiles; current native parser/OS/certificate behavior is not a Go-equivalence claim. No KUBECONFIG/home search was invented: ExplicitPath-only rules have nil Precedence and nil DefaultClientConfig.",
         "Auth-provider/exec data is retained and validated without a runtime plugin system or command execution. Actual credential-consumer integration and any real conflict with the no-plugin constraint remain with the later transport/lifecycle owners.",
         "Complete shared source logging/string/type/number/format/caller/panic profiles and production parent failure-policy adoption.",
-        "Complete source ABI/input/index/stack/tail/slice domains and allocation/error identity edge profiles. PatternSourceProfile word/heap retention, fresh Join MakeNoZero limits/rounding, fresh fixed-format growslice capacities and final string copy, and fallible native allocation with separate makeslice/growslice/OOM/native-address-space classifications are authored only. Actual source fmt sync.Pool buffer reuse/GC policy, tiny allocation reuse, sanitizer/experiment/heap and native memory-pressure/failure ordering, full Go32 extreme-capacity semantics, general panic/recover/runtime-error identity and caller profiles remain required. NativeAddressSpace is an explicit hosting limitation, not a source failure or parity credit. Runtime throws currently write their fatal prefix and exit 2; complete source traceback/goroutine/secure/GOTRACEBACK crash/core/native write behavior remains open. Finish GRPC_GO_LOG_* initialization/custom LoggerV2/depth/verbosity/multiwriter/stdlog/time/caller and source SDK/command initializer adoption, plus all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7 platform/config/queue/logging/CRD/features/admission/body requirements. No native allocator/ABI/runtime parity, executed result, proof or M0003 completion is claimed."
+        "Complete actual Go ABI ingress domains for Rust slices/strings and source int inputs, typed opcode-slice allocation/capacity, HeaderValues native backing allocation/OOM/runtime-error projection and all source/compiler elision/evaluation/failure-order profiles. Signed pattern fields, source tail arithmetic, capacity-aware slice storage/checks, index/negative bounds data and messages, logical make length/capacity error precedence, shared ErrNotMatch/ErrInvalidPattern class and identity, canonical default-Legacy match return and same-method 404-before-copy are authored only. Actual Go runtime-error/RuntimeError/panic/recover/Is/As/type-interface behavior, source memory pressure/GC/pool/tiny/sanitizer/experiment and extreme Go32 byte-capacity semantics remain required. Full traceback/secure/GOTRACEBACK crash/core/native output and GRPC_GO_LOG_*/custom logger/global flags/time/depth/multiwriter/caller/SDK/command adoption remain open. Continue every prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirement. Canonical match_source is the selected default-Legacy path; configurable gateway unescaping/other APIs remain source-owned integration work. No whole Go runtime/type/allocator/ABI/HTTP parity or M0003 completion is claimed."
       ],
       "source_git_blob": "7581ddc41945340b97d4561a275bf969a32e4f8f",
       "source_id": "agones:pkg/util/runtime/runtime.go",
@@ -778,7 +791,7 @@
         "Reconcile authored request trailer maps/cookies and header JSON/alias operations across all selected profiles; native parser/rejection/1.0 keep-alive/upgrade, H2 header ordering/HPACK/GOAWAY and body Close/read/EOF/abortPendingRead/Continue/full-duplex races. Complete native readahead/partial-write/flush/reset/cancellation/error timing and diagnostics. Source code and API reading do not establish native parity.",
         "Finish listener named-service/bind and independent listener-close/shutdown timing, native error origin (syscall-wrapped versus direct Errno or poll/init failures), platform/native error display and complete retry profiles. Shared temporary-syscall accept backoff is authored for plain/TLS, but does not establish full Go listener equivalence. M0027 source tool/GODEBUG and actual production parent adoption remain required.",
         "Retain every other M0003 filesystem/signal/gateway/config/queue/logging/CRD/features/admission/body gap. Global BOTH-route gate stays CLOSED; no compiler, test, formatter/linter, native/API probe, application, generator validation, proof or CI ran.",
-        "Complete source ABI/input/index/stack/tail/slice domains and allocation/error identity edge profiles. PatternSourceProfile word/heap retention, fresh Join MakeNoZero limits/rounding, fresh fixed-format growslice capacities and final string copy, and fallible native allocation with separate makeslice/growslice/OOM/native-address-space classifications are authored only. Actual source fmt sync.Pool buffer reuse/GC policy, tiny allocation reuse, sanitizer/experiment/heap and native memory-pressure/failure ordering, full Go32 extreme-capacity semantics, general panic/recover/runtime-error identity and caller profiles remain required. NativeAddressSpace is an explicit hosting limitation, not a source failure or parity credit. Runtime throws currently write their fatal prefix and exit 2; complete source traceback/goroutine/secure/GOTRACEBACK crash/core/native write behavior remains open. Finish GRPC_GO_LOG_* initialization/custom LoggerV2/depth/verbosity/multiwriter/stdlog/time/caller and source SDK/command initializer adoption, plus all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7 platform/config/queue/logging/CRD/features/admission/body requirements. No native allocator/ABI/runtime parity, executed result, proof or M0003 completion is claimed."
+        "Complete actual Go ABI ingress domains for Rust slices/strings and source int inputs, typed opcode-slice allocation/capacity, HeaderValues native backing allocation/OOM/runtime-error projection and all source/compiler elision/evaluation/failure-order profiles. Signed pattern fields, source tail arithmetic, capacity-aware slice storage/checks, index/negative bounds data and messages, logical make length/capacity error precedence, shared ErrNotMatch/ErrInvalidPattern class and identity, canonical default-Legacy match return and same-method 404-before-copy are authored only. Actual Go runtime-error/RuntimeError/panic/recover/Is/As/type-interface behavior, source memory pressure/GC/pool/tiny/sanitizer/experiment and extreme Go32 byte-capacity semantics remain required. Full traceback/secure/GOTRACEBACK crash/core/native output and GRPC_GO_LOG_*/custom logger/global flags/time/depth/multiwriter/caller/SDK/command adoption remain open. Continue every prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirement. Canonical match_source is the selected default-Legacy path; configurable gateway unescaping/other APIs remain source-owned integration work. No whole Go runtime/type/allocator/ABI/HTTP parity or M0003 completion is claimed."
       ]
     },
     {
@@ -789,7 +802,7 @@
         "Numeric and timestamp/base64 grammar branches now have source-derived implementations. Native decimal float conversion, float output rendering and source Go/Rust target-profile rounding/NaN/negative-zero/bounds still need exact profile reconciliation and later assurance; no successful run or proof is claimed.",
         "Reconcile Any embedded wire recursion with prost-reflect decoding limits, required-field error traversal/order, proto2 group/extension/MessageSet profiles and deterministic extension/oneof ordering. Native Any map keys have explicit deterministic emission; that alone is not full source wire-parity credit.",
         "Typed non-proto decoders are authored and consumed by GatewayDecoder::decode / GatewayJsonPb::unmarshal_into. Finish required named model/custom serde and source panic/error interfaces without inventing a general Go object layer. EnumTargetFactory now requires a source numeric profile explicitly; source-owner integration must bind it to the exact Go version/target/ConvertHash setting. No Rust-host fallback or source-profile credit is inferred. Source JSON rendering/alias/nil details remain explicit rather than inferred from serde success.",
-        "Complete source ABI/input/index/stack/tail/slice domains and allocation/error identity edge profiles. PatternSourceProfile word/heap retention, fresh Join MakeNoZero limits/rounding, fresh fixed-format growslice capacities and final string copy, and fallible native allocation with separate makeslice/growslice/OOM/native-address-space classifications are authored only. Actual source fmt sync.Pool buffer reuse/GC policy, tiny allocation reuse, sanitizer/experiment/heap and native memory-pressure/failure ordering, full Go32 extreme-capacity semantics, general panic/recover/runtime-error identity and caller profiles remain required. NativeAddressSpace is an explicit hosting limitation, not a source failure or parity credit. Runtime throws currently write their fatal prefix and exit 2; complete source traceback/goroutine/secure/GOTRACEBACK crash/core/native write behavior remains open. Finish GRPC_GO_LOG_* initialization/custom LoggerV2/depth/verbosity/multiwriter/stdlog/time/caller and source SDK/command initializer adoption, plus all prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7 platform/config/queue/logging/CRD/features/admission/body requirements. No native allocator/ABI/runtime parity, executed result, proof or M0003 completion is claimed.",
+        "Complete actual Go ABI ingress domains for Rust slices/strings and source int inputs, typed opcode-slice allocation/capacity, HeaderValues native backing allocation/OOM/runtime-error projection and all source/compiler elision/evaluation/failure-order profiles. Signed pattern fields, source tail arithmetic, capacity-aware slice storage/checks, index/negative bounds data and messages, logical make length/capacity error precedence, shared ErrNotMatch/ErrInvalidPattern class and identity, canonical default-Legacy match return and same-method 404-before-copy are authored only. Actual Go runtime-error/RuntimeError/panic/recover/Is/As/type-interface behavior, source memory pressure/GC/pool/tiny/sanitizer/experiment and extreme Go32 byte-capacity semantics remain required. Full traceback/secure/GOTRACEBACK crash/core/native output and GRPC_GO_LOG_*/custom logger/global flags/time/depth/multiwriter/caller/SDK/command adoption remain open. Continue every prior Unicode/builder/cache, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirement. Canonical match_source is the selected default-Legacy path; configurable gateway unescaping/other APIs remain source-owned integration work. No whole Go runtime/type/allocator/ABI/HTTP parity or M0003 completion is claimed.",
         "Forwarded gRPC server headers/trailers, incoming context/header matching, deadlines/status wrapping/response_body selection and actual SDK/allocator generated request mappings and handlers remain with source-owned M0025/M0027 integration. The real raw gateway callback can already use ResponseWriter; this library registration is not those callers adoption.",
         "Finish required shared HTTP/TLS/fswatch/signal/platform/error/logging/queue/configuration profiles in the M0003 partial map. All implementation and generated outputs across both routes remain required before any assurance."
       ],
@@ -801,7 +814,7 @@
   "milestone_id": "M0003",
   "native_hyper_adoption_record": "verification/agones/roadmap-M0003-hyper-adoption.json",
   "owned_entry_count": 14,
-  "payload_identity_refreshed_at": "2026-10-28T12:38:15.117075+00:00",
+  "payload_identity_refreshed_at": "2026-10-28T13:08:14.946399+00:00",
   "payload_sha256": {
     "Cargo.lock": "1d2c5f632a6a590af119a16f3ff926d89bcfdaedde63a265fd185c8d406745a9",
     "Cargo.toml": "fd4401820492ab3209f748949abe5327e974d6c8d892a510803943391d6a2a18",
@@ -856,12 +869,13 @@
     "rust-support/agones/src/utility_fswatch_fen.rs": "d5ffcbf1fef1be3b40b0fd06dfe14a4ebdd5e954a02c143deccbfba4a16a767d",
     "rust-support/agones/src/utility_fswatch_kqueue.rs": "67b1963fa38453e9c1ad968648b12e0c7e747dddca7aa3613f44de81d4ed00c3",
     "rust-support/agones/src/utility_fswatch_windows.rs": "937bc4ab04bea8bce002efc0d82c5067d4d9b94f5313eb60c0a73572f858662e",
-    "rust-support/agones/src/utility_gateway.rs": "689b081f96f147715ce7a396684915f7561a8f72004d0fe314242655045fed62",
+    "rust-support/agones/src/utility_gateway.rs": "f6abfb0d651ffab9046c5bc214c62c5a328b62be228464445b382c3fdee430f4",
+    "rust-support/agones/src/utility_gateway_bounds.rs": "52fa7c6dc9b7fb46299caef99fb9e2912cc37e1fd45efc3151316441a074ebb6",
     "rust-support/agones/src/utility_gateway_framing.rs": "43dd0a6375b726182af52243e45152e7dcf756ce4c27ba4f9cb4cb5b77127326",
     "rust-support/agones/src/utility_gateway_json.rs": "b6aac4a28d90ea4bad7362737cfe7132fc5a72ce81cbd6bd492441798aba48f7",
-    "rust-support/agones/src/utility_gateway_pattern.rs": "61a54d8e00733aa3258405ab629d320799e78347a1d4a6181c9a7a40ea7faba3",
+    "rust-support/agones/src/utility_gateway_pattern.rs": "ad3379f1f94645fc435a77d3b0fef530625ff764987038d7620f6f4e22623013",
     "rust-support/agones/src/utility_gateway_scalar.rs": "18c20da7322147fe5db79503e11040d745c4a8563580aed6b28cffd3dbab7f19",
-    "rust-support/agones/src/utility_gateway_strings.rs": "22f802b7ce8dc898d0ed441d42516cdff0884942e46d0e78dba2ce718aca2fb2",
+    "rust-support/agones/src/utility_gateway_strings.rs": "7faa49578ad1b6a950edf201608c5ee6b4465b74765e99e9cd607bec08fc3792",
     "rust-support/agones/src/utility_gateway_targets.rs": "3d3d8607f17d4db8f9c6d70dc46793d3d35615e4d887a3f236ee57cda57d8f61",
     "rust-support/agones/src/utility_gateway_wire.rs": "234e6de84955c4240f153c0dece7a5594733562325bf7113998a794b9af0b113",
     "rust-support/agones/src/utility_gateway_wkt.rs": "4cb0f6fa00d5c553911e8eaaca563d17112cfd5123a669c2e180eb02142ed42b",
@@ -900,15 +914,15 @@
     "third_party/first-generation/better-comprehension/src/lib.rs": "f47ba11ce4cd4d6b7424ba0cffca669018e52e5541fb32f83d655aba2ce364b3",
     "third_party/first-generation/comprende/Cargo.toml": "01f7068b9cd9ec5b27b7df77709117e37dc991cd32597dbf24cbde9074f5ceab",
     "third_party/first-generation/comprende/src/lib.rs": "e8d8da04ca3048bdd7275b1ca77b5a78c4abfd999ecb763d82a615f4aeb0fb96",
-    "verification/agones/roadmap-M0003-gateway-authoring.json": "2ce24f51d1cbe11d052758b4e95524d60ea857f46e3699fd176faa669734ea73",
-    "verification/agones/roadmap-M0003-http-authoring.json": "8daa97bc56a11f4af16824804a297aeb1206d86c3df530b6f5995fa3b354f843",
-    "verification/agones/roadmap-M0003-hyper-adoption.json": "3b2717aec88915bfe6b3ca2f864a6d38e8a1dcf3464c9a6780d4ebcf7db346c9",
-    "verification/agones/roadmap-M0003-platform-effects.json": "a321baaf6e54e511a50f7a9a21949bfc1b9872b77a5305cc98d0508f14e1fa94",
-    "verification/agones/roadmap-M0003-reuse-adoption.json": "d3f388c667b4f61bcfddf8d7f6e40418962d2b841b37ff3b4ac828fdb5443861"
+    "verification/agones/roadmap-M0003-gateway-authoring.json": "64720668826dc1b2c4e10f83695b999c07ffb2c8972978e71bdf30b5ed57b1a6",
+    "verification/agones/roadmap-M0003-http-authoring.json": "cfc4bbab2d42323f0e5ccfe6b2781501fa4bfa2bb6d1f2fb79fbdd1ac8ef57e0",
+    "verification/agones/roadmap-M0003-hyper-adoption.json": "28cc8e1f08d3291ae8f7891309cec52b07cb14686097f7a187bfc08e8d92f0a8",
+    "verification/agones/roadmap-M0003-platform-effects.json": "8808d8d4a5885d6420b0fd99f289c0cbd03fd800b9f21b4b5edaf9cb5ee9f88b",
+    "verification/agones/roadmap-M0003-reuse-adoption.json": "b2c14d2e31a3e18ee3c7953af2e1bcfbe3c5a1f3e5a59cc58bf0404bdbae6b43"
   },
   "platform_effect_authoring_record": "verification/agones/roadmap-M0003-platform-effects.json",
-  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-36.json",
-  "progress_usage_observations": 36,
+  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-38.json",
+  "progress_usage_observations": 38,
   "project_executable_invocations": 0,
   "record_kind": "PARTIAL_SOURCE_OWNERSHIP_ADOPTION",
   "route": "MANUAL",
@@ -2286,6 +2300,39 @@
       "sha256": "6147548986e268b53fca158135149396a586cfd7d82aef7669b06f59a113bc04",
       "upstream_path": "src/runtime/mheap.go",
       "url": "https://github.com/golang/go/blob/go1.26.5/src/runtime/mheap.go"
+    },
+    {
+      "git_blob": "f95b14d7808189ef79ad6bd5747023f689a2b636",
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "license": "rust-support/agones/GO-LICENSE",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/runtime/error.go",
+      "purpose": "Source integer/slice/bounds/sentinel authoring only; no source/project/native execution",
+      "revision": "go1.26.5",
+      "sha256": "138957e6d2a126af0d6b2d032466fbe2bc3c95bb57b058a00987e814b2385e1f",
+      "upstream_path": "src/runtime/error.go",
+      "url": "https://github.com/golang/go/blob/go1.26.5/src/runtime/error.go"
+    },
+    {
+      "git_blob": "b279cf06bc05dd8ca983b260a0067b14b3cd5bd5",
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "license": "rust-support/agones/GO-LICENSE",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/cmd/compile/internal/ssa/op.go",
+      "purpose": "Source integer/slice/bounds/sentinel authoring only; no source/project/native execution",
+      "revision": "go1.26.5",
+      "sha256": "3c7964e4fd421e3c359f847d3fdf74f6b4b00e28f6de00b70e354ceaab6ac174",
+      "upstream_path": "src/cmd/compile/internal/ssa/op.go",
+      "url": "https://github.com/golang/go/blob/go1.26.5/src/cmd/compile/internal/ssa/op.go"
+    },
+    {
+      "git_blob": "3da43e715e7df6116c3b0df898b6283b8f2bdefa",
+      "input_role": "PINNED_PRIMARY_SOURCE_TEXT_ONLY",
+      "license": "rust-support/agones/GO-LICENSE",
+      "path": ".git/agones-roadmap/utility-sources/go1.26.5/src/cmd/compile/internal/ssagen/ssa.go",
+      "purpose": "Source integer/slice/bounds/sentinel authoring only; no source/project/native execution",
+      "revision": "go1.26.5",
+      "sha256": "d83c6e8be402c91de44bd628edf3246478d4dc67ac08a11593c034e39355adbe",
+      "upstream_path": "src/cmd/compile/internal/ssagen/ssa.go",
+      "url": "https://github.com/golang/go/blob/go1.26.5/src/cmd/compile/internal/ssagen/ssa.go"
     }
   ],
   "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
@@ -2294,5 +2341,5 @@
   "stage": "IMPLEMENTING",
   "usage_attribution_note": "M0003 entry bookkeeping, including the follow-up append of the finalized M0002 shared-boundary paragraph, is allocated once to M0003 entry overhead. It is not included a second time in the prior 20030-token shared segment.",
   "verification": "NOT_STARTED",
-  "work_base_commit": "94e92ae0a751c216aa2fb62c7cdf0eb01c88f78e"
+  "work_base_commit": "e6561ead2b39d6e57f0ca3b7cf4e9ce5e3e8bcba"
 }

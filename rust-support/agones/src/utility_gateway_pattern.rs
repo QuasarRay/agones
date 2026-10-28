@@ -4,6 +4,8 @@
 use super::GatewayPattern;
 use crate::{errors::BoxError, utility_http::{HeaderValues, HeaderAllocationProfile}, utility_tls::CanExitSourceProcess};
 use cgp::prelude::*;
+use derive_deftly::Deftly;
+use crate::utility_declarations::derive_deftly_template_SourceErrorOrigin;
 use std::{collections::BTreeMap, error::Error, fmt, io::Write, sync::{Arc, Mutex, RwLock}};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -32,20 +34,31 @@ impl From<PatternWordProfile> for PatternSourceProfile {
     }
 }
 #[derive(Debug)]
-struct PatternErrorIdentity(u8);
-static INVALID_PATTERN: PatternErrorIdentity = PatternErrorIdentity(0);
-#[derive(Clone, Debug)]
-pub struct InvalidPatternError { identity: &'static PatternErrorIdentity }
-impl InvalidPatternError {
+struct PatternErrorIdentity(&'static str);
+static INVALID_PATTERN: PatternErrorIdentity = PatternErrorIdentity("invalid pattern");
+static NOT_MATCH: PatternErrorIdentity = PatternErrorIdentity("not match to the path pattern");
+/// Both source variables have the errors.errorString class and distinct
+/// singleton identities. Copying the Rust view keeps the source identity.
+#[derive(Clone, Debug, Deftly)]
+#[derive_deftly(SourceErrorOrigin)]
+#[deftly(source_package = "errors", source_struct = "errorString")]
+pub struct PatternSentinelError { identity: &'static PatternErrorIdentity }
+pub type InvalidPatternError = PatternSentinelError;
+pub type PatternNotMatchError = PatternSentinelError;
+impl PatternSentinelError {
     pub fn same_identity(&self, other: &Self) -> bool { std::ptr::eq(self.identity, other.identity) }
 }
-impl fmt::Display for InvalidPatternError { fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { out.write_str("invalid pattern") } }
-impl Error for InvalidPatternError {}
+impl fmt::Display for PatternSentinelError { fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { out.write_str(self.identity.0) } }
+impl Error for PatternSentinelError {}
 /// Direct ErrInvalidPattern equality. Wrapping/unwrapping is a separate error
 /// operation; this does not turn every containing error into direct equality.
 pub fn is_invalid_pattern(error: &(dyn Error + 'static)) -> bool {
     error.downcast_ref::<InvalidPatternError>().is_some_and(|error| std::ptr::eq(error.identity, &INVALID_PATTERN))
 }
+pub fn is_pattern_not_match(error: &(dyn Error + 'static)) -> bool {
+    error.downcast_ref::<PatternNotMatchError>().is_some_and(|error| std::ptr::eq(error.identity, &NOT_MATCH))
+}
+pub(super) fn not_match_error() -> PatternNotMatchError { PatternSentinelError { identity: &NOT_MATCH } }
 pub struct PatternConstruction { pub pattern: GatewayPattern, pub error: Option<BoxError> }
 impl PatternConstruction {
     pub fn into_result(self) -> Result<GatewayPattern, BoxError> { match self.error { Some(error) => Err(error), None => Ok(self.pattern) } }

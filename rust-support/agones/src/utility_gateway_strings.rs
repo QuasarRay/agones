@@ -1,10 +1,10 @@
 //! Source integer limits for grpc-gateway pattern string operations.
 // Adapted from Go strings.Join, runtime.concatstrings and fmt's string buffer.
 // Copyright The Go Authors. BSD-3-Clause; see ../GO-LICENSE.
-use super::PatternSourceProfile;
+use super::{PatternSourceProfile, PatternBoundsError, PatternMatchResult};
 use bytes::Bytes;
 use cgp::prelude::*;
-use crate::utility_tls::CanExitSourceProcess;
+use crate::{utility_tls::CanExitSourceProcess, utility_http::HeaderValues};
 use std::{error::Error, fmt, io::Write};
 
 /// These are distinct source failure sites. Join panics with a string;
@@ -12,7 +12,7 @@ use std::{error::Error, fmt, io::Write};
 /// without unwinding. This is not a complete Go allocator/runtime profile.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum PatternStringFailure {
-    JoinOverflow, FormatBufferOverflow, MakeSliceLengthOverflow, ConcatenationTooLong, OutOfMemory,
+    JoinOverflow, FormatBufferOverflow, MakeSliceLengthOverflow, MakeSliceCapacityOverflow, ConcatenationTooLong, OutOfMemory,
     /// The selected Go allocation fits its source domain but cannot be
     /// represented by this Rust host. This is not source overflow credit.
     NativeAddressSpace,
@@ -23,6 +23,7 @@ impl PatternStringFailure {
             Self::JoinOverflow => "strings: Join output length overflow",
             Self::FormatBufferOverflow => "runtime error: growslice: len out of range",
             Self::MakeSliceLengthOverflow => "runtime error: makeslice: len out of range",
+            Self::MakeSliceCapacityOverflow => "runtime error: makeslice: cap out of range",
             Self::ConcatenationTooLong => "string concatenation too long",
             Self::OutOfMemory => "out of memory",
             Self::NativeAddressSpace => "source allocation exceeds native Rust address space",
@@ -34,19 +35,46 @@ impl fmt::Display for PatternStringFailure {
 }
 impl Error for PatternStringFailure {}
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum PatternOperationFailure { String(PatternStringFailure), Bounds(PatternBoundsError) }
+impl From<PatternStringFailure> for PatternOperationFailure { fn from(error: PatternStringFailure) -> Self { Self::String(error) } }
+impl From<PatternBoundsError> for PatternOperationFailure { fn from(error: PatternBoundsError) -> Self { Self::Bounds(error) } }
+impl fmt::Display for PatternOperationFailure {
+    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self { Self::String(error) => fmt::Display::fmt(error, out), Self::Bounds(error) => fmt::Display::fmt(error, out) }
+    }
+}
+impl Error for PatternOperationFailure {}
+
 #[cgp_component(SourcePatternStringCompletion)]
 pub trait CanCompleteSourcePatternString {
     fn complete_source_pattern_string(&self, result: Result<Bytes, PatternStringFailure>) -> Bytes;
+    fn complete_source_pattern_render(&self, result: Result<Bytes, PatternOperationFailure>) -> Bytes;
+    fn complete_source_pattern_match(&self, result: Result<PatternMatchResult, PatternOperationFailure>) -> PatternMatchResult;
+    fn complete_source_pattern_slice(&self, result: Result<HeaderValues, PatternStringFailure>) -> HeaderValues;
 }
 #[cgp_new_provider]
 impl<Context: CanExitSourceProcess> SourcePatternStringCompletion<Context> for CompleteSourcePatternString {
     fn complete_source_pattern_string(context: &Context, result: Result<Bytes, PatternStringFailure>) -> Bytes {
-        match result {
-            Ok(value) => value,
-            Err(PatternStringFailure::JoinOverflow) => std::panic::panic_any(PatternStringFailure::JoinOverflow.message()),
-            Err(failure @ (PatternStringFailure::FormatBufferOverflow | PatternStringFailure::MakeSliceLengthOverflow |
-                PatternStringFailure::NativeAddressSpace)) => std::panic::panic_any(failure),
-            Err(failure @ (PatternStringFailure::ConcatenationTooLong | PatternStringFailure::OutOfMemory)) => {
+        complete_pattern(context, result.map_err(Into::into))
+    }
+    fn complete_source_pattern_render(context: &Context, result: Result<Bytes, PatternOperationFailure>) -> Bytes { complete_pattern(context, result) }
+    fn complete_source_pattern_match(context: &Context, result: Result<PatternMatchResult, PatternOperationFailure>) -> PatternMatchResult {
+        complete_pattern(context, result)
+    }
+    fn complete_source_pattern_slice(context: &Context, result: Result<HeaderValues, PatternStringFailure>) -> HeaderValues {
+        complete_pattern(context, result.map_err(Into::into))
+    }
+}
+fn complete_pattern<T>(context: &impl CanExitSourceProcess, result: Result<T, PatternOperationFailure>) -> T {
+    match result {
+        Ok(value) => value,
+        Err(PatternOperationFailure::Bounds(error)) => std::panic::panic_any(error),
+        Err(PatternOperationFailure::String(error)) => match error {
+            PatternStringFailure::JoinOverflow => std::panic::panic_any(PatternStringFailure::JoinOverflow.message()),
+            failure @ (PatternStringFailure::FormatBufferOverflow | PatternStringFailure::MakeSliceLengthOverflow |
+                PatternStringFailure::MakeSliceCapacityOverflow | PatternStringFailure::NativeAddressSpace) => std::panic::panic_any(failure),
+            failure @ (PatternStringFailure::ConcatenationTooLong | PatternStringFailure::OutOfMemory) => {
                 // runtime.throw bypasses grpclog (including io.Discard) and
                 // is unrecoverable. Full Go stack/crash/secure-mode output
                 // and native write ordering remain required runtime work.
@@ -60,14 +88,14 @@ impl<Context: CanExitSourceProcess> SourcePatternStringCompletion<Context> for C
                 // into a recoverable Rust panic or a successful result.
                 std::process::abort();
             }
-        }
+        },
     }
 }
 
-pub(super) fn join_components(profile: PatternSourceProfile, components: &[Bytes]) -> Result<Bytes, PatternStringFailure> {
-    match components {
-        [] => return Ok(Bytes::new()),
-        [only] => return Ok(only.clone()),
+pub(super) fn join_components(profile: PatternSourceProfile, components: &HeaderValues) -> Result<Bytes, PatternStringFailure> {
+    match components.len() {
+        0 => return Ok(Bytes::new()),
+        1 => return Ok(components.get(0).expect("one source component")),
         _ => {},
     }
     let maximum = profile.word().max_int() as u128;
@@ -76,7 +104,7 @@ pub(super) fn join_components(profile: PatternSourceProfile, components: &[Bytes
     // not replace it by a sum-only check or Rust's host integer maximum.
     if 1 >= maximum / separators { return Err(PatternStringFailure::JoinOverflow); }
     let mut length = separators;
-    for component in components {
+    for component in components.iter() {
         if component.len() as u128 > maximum - length { return Err(PatternStringFailure::JoinOverflow); }
         length += component.len() as u128;
     }
@@ -85,8 +113,8 @@ pub(super) fn join_components(profile: PatternSourceProfile, components: &[Bytes
     let capacity = profile.allocation().make_no_zero_byte_capacity(length)
         .ok_or(PatternStringFailure::MakeSliceLengthOverflow)?;
     let mut joined = allocate_bytes(native_length(capacity as u128)?)?;
-    joined.extend_from_slice(&components[0]);
-    for component in &components[1..] { joined.push(b'/'); joined.extend_from_slice(component); }
+    joined.extend_from_slice(&components.get(0).expect("nonempty source components"));
+    for component in components.iter().skip(1) { joined.push(b'/'); joined.extend_from_slice(&component); }
     Ok(Bytes::from(joined))
 }
 
