@@ -67,11 +67,11 @@ impl HeaderAllocationProfile {
         if allocation_bytes > self.max_alloc() { return Err(SourceSliceAllocationError::GrowLength); }
         Ok(SourceSliceAllocationLayout { capacity, allocation_bytes })
     }
-    pub(super) fn clone_length(self, lengths: impl Iterator<Item = usize>) -> usize {
+    pub(super) fn try_clone_length(self, lengths: impl Iterator<Item = usize>) -> Result<usize, SourceSliceAllocationError> {
         let mut length = 0;
         for next in lengths { length = self.add(length, next as i64); }
-        if length < 0 || length as u64 > self.max_alloc() / (self.word_bits / 4) as u64 { panic!("makeslice: len out of range"); }
-        usize::try_from(length).unwrap_or_else(|_| panic!("makeslice: len out of range"))
+        self.make_slice_layout(length, length, (self.word_bits / 4) as u64)?;
+        usize::try_from(length).map_err(|_| SourceSliceAllocationError::NativeAddressSpace)
     }
     pub(super) fn validate(self, length: usize) {
         let size = (self.word_bits / 4) as u64; // two source words per string

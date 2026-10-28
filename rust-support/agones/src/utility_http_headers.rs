@@ -4,6 +4,7 @@
 use bytes::Bytes;
 use serde::{Serialize, Serializer, ser::Error as _};
 use std::{borrow::Borrow, collections::HashMap, fmt, sync::{Arc, RwLock}};
+use super::allocation::{complete_native_source_collection, nil_source_map_assignment};
 #[path = "utility_http_header_capacity.rs"]
 mod capacity;
 pub use capacity::{HeaderAllocationProfile, SourceSliceAllocationError, SourceSliceAllocationLayout};
@@ -24,7 +25,20 @@ impl Borrow<[u8]> for HeaderName { fn borrow(&self) -> &[u8] { &self.0 } }
 impl fmt::Debug for HeaderName { fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { fmt::Debug::fmt(&self.0, out) } }
 
 #[derive(Clone, Default)]
-pub struct HeaderValues { backing: Option<Arc<RwLock<Vec<Bytes>>>>, offset: usize, length: usize, capacity: usize }
+enum StringBacking {
+    #[default] Nil,
+    Empty,
+    Slots(Arc<RwLock<Vec<Bytes>>>),
+}
+impl StringBacking {
+    fn from_slots(slots: Vec<Bytes>) -> Self {
+        if slots.is_empty() { Self::Empty } else { Self::Slots(Arc::new(RwLock::new(slots))) }
+    }
+    fn is_none(&self) -> bool { matches!(self, Self::Nil) }
+    fn as_ref(&self) -> Option<&Arc<RwLock<Vec<Bytes>>>> { match self { Self::Slots(slots) => Some(slots), _ => None } }
+}
+#[derive(Clone, Default)]
+pub struct HeaderValues { backing: StringBacking, offset: usize, length: usize, capacity: usize }
 pub struct HeaderValueIter { values: HeaderValues, index: usize }
 impl Iterator for HeaderValueIter {
     type Item = Bytes;
@@ -39,15 +53,15 @@ impl HeaderValues {
     pub fn is_empty(&self) -> bool { self.length == 0 }
     pub fn capacity(&self) -> usize { self.capacity }
     pub fn make(length: usize, capacity: usize, profile: HeaderAllocationProfile) -> Self {
-        if length > capacity { panic!("makeslice: cap out of range"); }
-        profile.validate(capacity);
-        Self { backing: Some(Arc::new(RwLock::new(vec![Bytes::new(); capacity]))), offset: 0, length, capacity }
+        let length = complete_native_source_collection(i64::try_from(length).map_err(|_| SourceSliceAllocationError::MakeLength));
+        let capacity = complete_native_source_collection(i64::try_from(capacity).map_err(|_| SourceSliceAllocationError::MakeCapacity));
+        complete_native_source_collection(Self::try_make(length, capacity, profile))
     }
     pub fn try_make(length: i64, capacity: i64, profile: HeaderAllocationProfile) -> Result<Self, SourceSliceAllocationError> {
         let layout = profile.make_slice_layout(length, capacity, (profile.word_bits() / 4) as u64)?;
         let mut slots = reserve_source_array::<Bytes>(layout.capacity)?;
         slots.resize_with(layout.capacity as usize, Bytes::new);
-        Ok(Self { backing: Some(Arc::new(RwLock::new(slots))), offset: 0, length: length as usize, capacity: layout.capacity as usize })
+        Ok(Self { backing: StringBacking::from_slots(slots), offset: 0, length: length as usize, capacity: layout.capacity as usize })
     }
     fn try_extend_backing(&mut self, count: usize, profile: HeaderAllocationProfile) -> Result<usize, SourceSliceAllocationError> {
         let length = self.length.checked_add(count).ok_or(SourceSliceAllocationError::GrowLength)?;
@@ -56,11 +70,11 @@ impl HeaderValues {
             let layout = profile.grow_slice_layout(self.capacity as u64, length as u64, (profile.word_bits() / 4) as u64, false)?;
             let mut slots = reserve_source_array::<Bytes>(layout.capacity)?;
             slots.resize_with(layout.capacity as usize, Bytes::new);
-            if let Some(backing) = &self.backing {
+            if let Some(backing) = self.backing.as_ref() {
                 let old = backing.read().unwrap_or_else(|error| error.into_inner());
                 slots[..self.length].clone_from_slice(&old[self.offset..self.offset + self.length]);
             }
-            self.backing = Some(Arc::new(RwLock::new(slots))); self.offset = 0; self.capacity = layout.capacity as usize;
+            self.backing = StringBacking::from_slots(slots); self.offset = 0; self.capacity = layout.capacity as usize;
         }
         Ok(length)
     }
@@ -101,12 +115,12 @@ impl HeaderValues {
         self.length = length; Ok(())
     }
     pub fn from_values(values: impl IntoIterator<Item = Bytes>) -> Self {
-        let values: Vec<_> = values.into_iter().collect(); let length = values.len();
-        Self { backing: Some(Arc::new(RwLock::new(values))), offset: 0, length, capacity: length }
+        let values = complete_native_source_collection(collect_native_values(values)); let length = values.len();
+        Self { backing: StringBacking::from_slots(values), offset: 0, length, capacity: length }
     }
     pub fn parsed(values: impl IntoIterator<Item = Bytes>, profile: HeaderAllocationProfile) -> Self {
         let mut result = Self::nil();
-        for value in values { result.append([value], profile); }
+        for value in values { complete_native_source_collection(result.try_append_values(&[value], profile)); }
         result
     }
     pub fn get(&self, index: usize) -> Option<Bytes> {
@@ -123,28 +137,30 @@ impl HeaderValues {
         Self { backing: self.backing.clone(), offset: self.offset + low, length: high - low, capacity: maximum - low }
     }
     pub fn append(&mut self, values: impl IntoIterator<Item = Bytes>, profile: HeaderAllocationProfile) {
-        let values: Vec<_> = values.into_iter().collect();
-        let length = self.length.checked_add(values.len()).unwrap_or_else(|| panic!("growslice: len out of range"));
-        profile.validate(length);
-        if length > self.capacity {
-            let mut replacement = Self::make(length, profile.grow(self.capacity, length), profile);
-            if let Some(backing) = &replacement.backing {
-                let mut slots = backing.write().unwrap_or_else(|error| error.into_inner());
-                for (index, value) in self.iter().chain(values).enumerate() { slots[index] = value; }
-            }
-            replacement.length = length; *self = replacement;
-        } else {
-            if let Some(backing) = &self.backing {
-                let mut slots = backing.write().unwrap_or_else(|error| error.into_inner());
-                for (index, value) in values.into_iter().enumerate() { slots[self.offset + self.length + index] = value; }
-            }
-            self.length = length;
-        }
+        let values = complete_native_source_collection(collect_native_values(values));
+        complete_native_source_collection(self.try_append_values(&values, profile));
     }
     pub fn iter(&self) -> HeaderValueIter { HeaderValueIter { values: self.clone(), index: 0 } }
     pub fn shares_backing_with(&self, other: &Self) -> bool {
-        match (&self.backing, &other.backing) { (Some(left), Some(right)) => Arc::ptr_eq(left, right), (None, None) => true, _ => false }
+        match (&self.backing, &other.backing) {
+            (StringBacking::Slots(left), StringBacking::Slots(right)) => Arc::ptr_eq(left, right),
+            (StringBacking::Nil, StringBacking::Nil) | (StringBacking::Empty, StringBacking::Empty) => true,
+            _ => false,
+        }
     }
+}
+/// Rust iterator bridge only. Source single-value and slice appends use
+/// try_append_values/try_append_slice directly, without staging this Vec.
+fn collect_native_values(values: impl IntoIterator<Item = Bytes>) -> Result<Vec<Bytes>, SourceSliceAllocationError> {
+    let mut result = Vec::new();
+    for value in values {
+        if result.len() == result.capacity() {
+            if result.len() as u128 >= isize::MAX as u128 / std::mem::size_of::<Bytes>() as u128 { return Err(SourceSliceAllocationError::NativeAddressSpace); }
+            result.try_reserve(1).map_err(|_| SourceSliceAllocationError::OutOfMemory)?;
+        }
+        result.push(value);
+    }
+    Ok(result)
 }
 impl fmt::Debug for HeaderValues {
     fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { if self.is_nil() { out.write_str("nil") } else { out.debug_list().entries(self.iter()).finish() } }
@@ -195,21 +211,37 @@ impl Headers {
     }
     pub fn contains_key(&self, name: impl AsRef<[u8]>) -> bool { self.get(name).is_some() }
     pub fn insert(&self, name: impl AsRef<[u8]>, values: HeaderValues) -> Option<HeaderValues> {
-        self.map.as_ref().unwrap_or_else(|| panic!("assignment to entry in nil map")).write().unwrap_or_else(|error| error.into_inner()).insert(HeaderName::new(name), values)
+        self.insert_name(HeaderName::new(name), values)
+    }
+    fn insert_name(&self, name: HeaderName, values: HeaderValues) -> Option<HeaderValues> {
+        self.map.as_ref().unwrap_or_else(|| nil_source_map_assignment()).write().unwrap_or_else(|error| error.into_inner()).insert(name, values)
     }
     pub fn remove(&self, name: impl AsRef<[u8]>) -> Option<HeaderValues> {
         self.map.as_ref()?.write().unwrap_or_else(|error| error.into_inner()).remove(name.as_ref())
     }
     pub fn add(&self, name: impl AsRef<[u8]>, value: impl Into<Bytes>) {
         let name = canonical_header_key(name);
-        self.append_exact(name, [value.into()]);
+        self.append_exact_values(name, &[value.into()]);
     }
     /// Shared map/slice machinery also serves url.Values, whose keys must
     /// retain spelling and case rather than MIME-header canonicalization.
     pub(crate) fn append_exact(&self, name: impl AsRef<[u8]>, values: impl IntoIterator<Item = Bytes>) {
+        let values = complete_native_source_collection(collect_native_values(values));
+        self.append_exact_values(name, &values);
+    }
+    pub(crate) fn append_exact_values(&self, name: impl AsRef<[u8]>, values: &[Bytes]) {
         let name = HeaderName::new(name);
-        let mut map = self.map.as_ref().unwrap_or_else(|| panic!("assignment to entry in nil map")).write().unwrap_or_else(|error| error.into_inner());
-        map.entry(name).or_default().append(values, self.profile);
+        let mut appended = self.get(name.as_bytes()).unwrap_or_else(HeaderValues::nil);
+        // Source RHS append precedes map assignment, including on a nil map.
+        // A failed append must not leave a newly inserted nil-valued key.
+        complete_native_source_collection(appended.try_append_values(values, self.profile));
+        self.insert_name(name, appended);
+    }
+    pub(crate) fn append_exact_slice(&self, name: impl AsRef<[u8]>, values: &HeaderValues) {
+        let name = HeaderName::new(name);
+        let mut appended = self.get(name.as_bytes()).unwrap_or_else(HeaderValues::nil);
+        complete_native_source_collection(appended.try_append_slice(values, self.profile));
+        self.insert_name(name, appended);
     }
     pub fn retain(&self, mut keep: impl FnMut(&HeaderName, &mut HeaderValues) -> bool) {
         if let Some(map) = &self.map { map.write().unwrap_or_else(|error| error.into_inner()).retain(|name, value| keep(name, value)); }
@@ -222,13 +254,13 @@ impl Headers {
     pub fn sorted(&self) -> Vec<(HeaderName, HeaderValues)> { let mut fields: Vec<_> = self.iter().collect(); fields.sort_by(|left, right| left.0.cmp(&right.0)); fields }
     pub fn shallow_copy(&self) -> Self {
         let copy = Self::with_profile(self.profile);
-        for (name, value) in self { copy.insert(name, value); }
+        for (name, value) in self { copy.insert_name(name, value); }
         copy
     }
     pub fn deep_clone(&self) -> Self {
         if self.is_nil() { return self.clone(); }
         let fields: Vec<_> = self.iter().collect();
-        let total = self.profile.clone_length(fields.iter().map(|(_, values)| values.len()));
+        let total = complete_native_source_collection(self.profile.try_clone_length(fields.iter().map(|(_, values)| values.len())));
         let all = HeaderValues::make(total, total, self.profile);
         let copy = Self::with_profile(self.profile); let mut offset = 0;
         for (name, values) in fields {
@@ -236,7 +268,7 @@ impl Headers {
             // remaining combined buffer, including its overflow/truncation.
             let length = values.len().min(total - offset);
             for (index, value) in values.iter().take(length).enumerate() { all.set(offset + index, value); }
-            copy.insert(name, if values.is_nil() { HeaderValues::nil() } else { all.reslice(offset, offset + length, offset + length) });
+            copy.insert_name(name, if values.is_nil() { HeaderValues::nil() } else { all.reslice(offset, offset + length, offset + length) });
             offset += length;
         }
         copy
@@ -245,7 +277,11 @@ impl Headers {
         let copy = Self::with_profile(self.profile);
         // Bundled http2cloneHeader makes each value slice separately and
         // turns nil value slices into non-nil empty slices.
-        for (name, values) in self { copy.insert(name, HeaderValues::from_values(values.iter())); }
+        for (name, values) in self {
+            let copied = HeaderValues::make(values.len(), values.len(), self.profile);
+            for (index, value) in values.iter().enumerate() { copied.set(index, value); }
+            copy.insert_name(name, copied);
+        }
         copy
     }
 }

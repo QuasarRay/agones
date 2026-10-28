@@ -27,6 +27,12 @@ mod headers;
 pub use headers::{HeaderName, HeaderValues, HeaderAllocationProfile, SourceSliceAllocationError, SourceSliceAllocationLayout,
     Headers, SourceByteString, canonical_header_key, set_header, header, headers_json};
 pub(crate) use headers::reserve_source_array;
+#[path = "utility_http_allocation.rs"]
+mod allocation;
+pub use allocation::{SourceRuntimeAllocationError, SourceNilMapAssignment, NativeSourceCollectionContext,
+    CanRaiseSourceCollectionFailure, SourceCollectionFailureRaiser, SourceCollectionFailureRaiserComponent,
+    RaiseSourceCollectionFailure, complete_source_collection};
+pub(crate) use allocation::{raise_source_allocation_failure, unwind_source_panic};
 #[path = "utility_http_trailers.rs"]
 mod trailers;
 #[path = "utility_http_listener.rs"]

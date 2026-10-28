@@ -106,13 +106,14 @@
       "sha256": "ed6e69041a6d154843c5c9509541a311f7415879c6c845b750b6ba29e1f48e84"
     }
   ],
-  "payload_identity_refreshed_at": "2026-10-28T13:49:03.366448+00:00",
+  "payload_identity_refreshed_at": "2026-10-28T14:27:27.432530+00:00",
   "payload_sha256": {
     "Cargo.lock": "1d2c5f632a6a590af119a16f3ff926d89bcfdaedde63a265fd185c8d406745a9",
     "crates/util/Cargo.toml": "6b011badbe07029ab9a84257636f7de293931d32a2c1bbef49c60b4d07dd91bf",
     "rust-support/agones/FSNOTIFY-LICENSE": "2dfbe6d2b5eb18b55148f3805d88648a09e0d17e38428123259afb08c8996e37",
     "rust-support/agones/FSNOTIFY-V1-LICENSE": "c8001d18c3dda64c7e72146f1b23d73619fcf426aed6778f447599f5ac8e600a",
     "rust-support/agones/GO-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+    "rust-support/agones/src/utility_declarations.rs": "d3d965ad6308991ade15d2a126c300096e1d2aadccb4c3d67759ae7f77d21554",
     "rust-support/agones/src/utility_fswatch.rs": "594ff335887d01bb1fa4e40c8df41e579567873972c4e89bdb7b89da005fa20f",
     "rust-support/agones/src/utility_fswatch_fen.rs": "d5ffcbf1fef1be3b40b0fd06dfe14a4ebdd5e954a02c143deccbfba4a16a767d",
     "rust-support/agones/src/utility_fswatch_kqueue.rs": "67b1963fa38453e9c1ad968648b12e0c7e747dddca7aa3613f44de81d4ed00c3",
@@ -121,10 +122,12 @@
     "rust-support/agones/src/utility_gateway_bounds.rs": "54e744b95d4fd8bc88e1d44044906bce237c85abd9648fdf3bbad84c653467a6",
     "rust-support/agones/src/utility_gateway_pattern.rs": "24da1c8bc6e2fd4cbf2b4c11a56ce94a9dc8c2ae6e12786d96c9fa8a72943167",
     "rust-support/agones/src/utility_gateway_storage.rs": "5603082f3744c022d6360e10a55d90b8d9dc7a58a5d0cf8b3cd2e361ee9abf41",
-    "rust-support/agones/src/utility_gateway_strings.rs": "06b82526e24d9787444dd7f04b682e1871aeb7b6aaf8f8f00fc38423163feebf",
-    "rust-support/agones/src/utility_http.rs": "ee80bcbbabbdcce3bba8adc3ead620ab806e82c90f5c0108aed89d8d09995733",
-    "rust-support/agones/src/utility_http_header_capacity.rs": "92875d2fe34bfbc009bf0e7bdf0f04b56af22959861db7ffb034853d0c716df2",
-    "rust-support/agones/src/utility_http_headers.rs": "e2d700c63c8b804d673314fb35fa5a5249f16dbc54ba483b0825f7cf53fe5231",
+    "rust-support/agones/src/utility_gateway_strings.rs": "586fbfa4fddf704b3e3824ef8216a94c50404d0404958cbec333211f5316db5a",
+    "rust-support/agones/src/utility_http.rs": "62855301576173ebcbc40f7a25e6017fd1110d3e7cb3fb9baefc86b19f76fe47",
+    "rust-support/agones/src/utility_http_allocation.rs": "2cc9c0f7c7dadbced736b0afd4f7086cae61b301955ef454d2ad2cc9dbf34f60",
+    "rust-support/agones/src/utility_http_form.rs": "09dae2ed480223c422374e661b6afcdc3bf437ad84b453dde103ee19ab61b06f",
+    "rust-support/agones/src/utility_http_header_capacity.rs": "da5b63d388f947b66fa7fe81b69e6c6d988bda18fd958435a78bdafaa238353c",
+    "rust-support/agones/src/utility_http_headers.rs": "e7a919e79861c59e1b9eacc2d92375deace50b15342f5be75b4a85d239b3f38c",
     "rust-support/agones/src/utility_http_mux.rs": "a842e469d51dd5db09f8e62f9c8cc350eb948466bfa95574665c10d1b4ad2991",
     "rust-support/agones/src/utility_signals.rs": "86aab0a4b60572e7ad80d125e9f4fdf26056a9cb90374b55b0c34f4da710ebd6",
     "rust-support/agones/src/utility_signals_windows.rs": "7ee226c03ff13e152d4ee81e12e5d9f6d9e4d25153810c37e8188960ee831239"

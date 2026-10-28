@@ -24,9 +24,9 @@ impl SourceValues {
     pub fn insert(&self, key: impl AsRef<[u8]>, values: HeaderValues) { self.0.insert(key, values); }
     pub fn remove(&self, key: impl AsRef<[u8]>) -> Option<HeaderValues> { self.0.remove(key) }
     pub fn iter(&self) -> impl Iterator<Item = (super::HeaderName, HeaderValues)> { self.0.iter() }
-    pub fn add(&self, key: impl AsRef<[u8]>, value: impl Into<Bytes>) { self.0.append_exact(key, [value.into()]); }
+    pub fn add(&self, key: impl AsRef<[u8]>, value: impl Into<Bytes>) { self.0.append_exact_values(key, &[value.into()]); }
     pub fn copy_values(&self, source: &Self) {
-        for (key, values) in &source.0 { self.0.append_exact(key, values.iter()); }
+        for (key, values) in &source.0 { self.0.append_exact_slice(key, &values); }
     }
 }
 

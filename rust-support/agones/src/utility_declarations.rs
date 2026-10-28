@@ -59,6 +59,17 @@ define_derive_deftly! {
 pub(crate) use derive_deftly_template_UtilityCrdProviders;
 
 define_derive_deftly! {
+    NativeSourceCollectionProviders:
+    ::cgp::prelude::delegate_and_check_components! {
+        $tname {
+            crate::utility_http::SourceCollectionFailureRaiserComponent: crate::utility_http::RaiseSourceCollectionFailure,
+            crate::utility_tls::SourceProcessExitComponent: crate::utility_tls::ExitNativeSourceProcess,
+        }
+    }
+}
+pub(crate) use derive_deftly_template_NativeSourceCollectionProviders;
+
+define_derive_deftly! {
     UtilityRuntimeProviders:
     ::cgp::prelude::delegate_and_check_components! {
         $tname {
@@ -88,6 +99,7 @@ define_derive_deftly! {
             crate::utility_gateway::SourcePatternDiagnosticEmitterComponent: crate::utility_gateway::EmitSourcePatternDiagnostic,
             crate::utility_gateway::SourceGatewayPatternConstructorComponent: crate::utility_gateway::ConstructSourceGatewayPattern,
             crate::utility_gateway::SourcePatternStringCompletionComponent: crate::utility_gateway::CompleteSourcePatternString,
+            crate::utility_http::SourceCollectionFailureRaiserComponent: crate::utility_http::RaiseSourceCollectionFailure,
             crate::utility_fswatch::FileWatcherOpenerComponent: crate::utility_fswatch::OpenNativeFileWatcher,
             crate::utility_tls::SourceCertificateLoaderComponent: crate::utility_tls::LoadRustlsCertificate,
             crate::utility_tls::HttpsServerRunnerComponent: crate::utility_tls::RunNativeHttpsServer,

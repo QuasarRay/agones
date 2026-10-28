@@ -4,7 +4,8 @@
 use super::{PatternSourceProfile, PatternBoundsError, PatternMatchResult, PatternConstruction, PatternInputDomainError};
 use bytes::Bytes;
 use cgp::prelude::*;
-use crate::{utility_tls::CanExitSourceProcess, utility_http::{HeaderValues, SourceSliceAllocationError}};
+use crate::{utility_tls::CanExitSourceProcess, utility_http::{HeaderValues, SourceSliceAllocationError,
+    raise_source_allocation_failure, unwind_source_panic}};
 use std::{error::Error, fmt, io::Write};
 
 /// These are distinct source failure sites. Join panics with a string;
@@ -87,21 +88,20 @@ impl<Context: CanExitSourceProcess> SourcePatternStringCompletion<Context> for C
 fn complete_pattern<T>(context: &impl CanExitSourceProcess, result: Result<T, PatternOperationFailure>) -> T {
     match result {
         Ok(value) => value,
-        Err(PatternOperationFailure::Bounds(error)) => std::panic::panic_any(error),
+        Err(PatternOperationFailure::Bounds(error)) => unwind_source_panic(error),
         Err(PatternOperationFailure::Input(error)) => std::panic::panic_any(error),
         Err(PatternOperationFailure::String(error)) => match error {
-            PatternStringFailure::JoinOverflow => std::panic::panic_any(PatternStringFailure::JoinOverflow.message()),
-            failure @ (PatternStringFailure::FormatBufferOverflow | PatternStringFailure::SliceGrowthOverflow | PatternStringFailure::MakeSliceLengthOverflow |
-                PatternStringFailure::MakeSliceCapacityOverflow | PatternStringFailure::NativeAddressSpace) => std::panic::panic_any(failure),
-            failure @ (PatternStringFailure::ConcatenationTooLong | PatternStringFailure::OutOfMemory) => {
+            PatternStringFailure::JoinOverflow => unwind_source_panic(PatternStringFailure::JoinOverflow.message()),
+            PatternStringFailure::FormatBufferOverflow | PatternStringFailure::SliceGrowthOverflow => raise_source_allocation_failure(context, SourceSliceAllocationError::GrowLength),
+            PatternStringFailure::MakeSliceLengthOverflow => raise_source_allocation_failure(context, SourceSliceAllocationError::MakeLength),
+            PatternStringFailure::MakeSliceCapacityOverflow => raise_source_allocation_failure(context, SourceSliceAllocationError::MakeCapacity),
+            PatternStringFailure::NativeAddressSpace => raise_source_allocation_failure(context, SourceSliceAllocationError::NativeAddressSpace),
+            PatternStringFailure::OutOfMemory => raise_source_allocation_failure(context, SourceSliceAllocationError::OutOfMemory),
+            PatternStringFailure::ConcatenationTooLong => {
                 // runtime.throw bypasses grpclog (including io.Discard) and
                 // is unrecoverable. Full Go stack/crash/secure-mode output
                 // and native write ordering remain required runtime work.
-                let line: &[u8] = match failure {
-                    PatternStringFailure::OutOfMemory => b"fatal error: out of memory\n",
-                    _ => b"fatal error: string concatenation too long\n",
-                };
-                let _ = std::io::stderr().write_all(line);
+                let _ = std::io::stderr().write_all(b"fatal error: string concatenation too long\n");
                 context.exit_source_process(2);
                 // A returning effect provider must not turn a source throw
                 // into a recoverable Rust panic or a successful result.
