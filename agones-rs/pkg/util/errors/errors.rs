@@ -106,13 +106,13 @@ impl Errors {
     }
 
     pub fn Wrap(&self, error: Option<BoxError>, message: &str) -> Option<BoxError> {
-        error.map(|source| Box::new(WrappedError { message: self.prefix(message), source }) as BoxError)
+        error.map(|source| Box::new(WrappedError::new(self.prefix(message), source)) as BoxError)
     }
 
     pub fn Wrapf(&self, error: Option<BoxError>, format: impl FnOnce() -> String) -> Option<BoxError> {
         // Source Wrapf returns before formatting when err is nil. Keeping the
         // formatting closure lazy also preserves Stringer/effect ordering.
-        error.map(|source| Box::new(WrappedError { message: self.prefix(&format()), source }) as BoxError)
+        error.map(|source| Box::new(WrappedError::new(self.prefix(&format()), source)) as BoxError)
     }
 
     /// Creates a new prefixed error.
@@ -137,10 +137,7 @@ impl Errors {
     where
         E: Error + Send + Sync + 'static,
     {
-        Box::new(WrappedError {
-            message: self.prefix(msg.as_ref()),
-            source: Box::new(err),
-        })
+        Box::new(WrappedError::new(self.prefix(msg.as_ref()), Box::new(err)))
     }
 
     /// Formatted equivalent of Wrapf.
@@ -237,8 +234,10 @@ pub fn first_error_view<'a, Value>(error: &'a (dyn Error + 'static), view: &impl
     error.source().and_then(|source| first_error_view(source, view))
 }
 
-#[derive(Debug)]
-struct MessageError(String);
+#[derive(Debug, Deftly)]
+#[derive_deftly(SourceErrorOrigin)]
+#[deftly(source_package = "errors", source_struct = "errorString", source_log_type = "*errors.errorString")]
+pub(crate) struct MessageError(pub(crate) String);
 
 impl fmt::Display for MessageError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -253,10 +252,18 @@ struct WrappedError {
     message: String,
     source: BoxError,
 }
+impl WrappedError {
+    fn new(prefix: String, source: BoxError) -> Self {
+        // fmt.Errorf renders %w while constructing wrapError. Retain that
+        // message, while Unwrap continues to return the original error value.
+        let message = format!("{prefix}: {source}");
+        Self { message, source }
+    }
+}
 
 impl fmt::Display for WrappedError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}: {}", self.message, self.source)
+        f.write_str(&self.message)
     }
 }
 

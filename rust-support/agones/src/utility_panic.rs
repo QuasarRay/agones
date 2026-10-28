@@ -19,7 +19,7 @@ pub trait SourceRuntimeError: Error {
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Deftly)]
 #[derive_deftly(SourceErrorOrigin)]
 #[deftly(source_package = "runtime", source_struct = "errorString", source_log_type = "runtime.errorString")]
-pub struct SourceRuntimeErrorString { message: &'static str }
+pub struct SourceRuntimeErrorString { pub(crate) message: &'static str }
 impl SourceRuntimeErrorString {
     pub const fn new(message: &'static str) -> Self { Self { message } }
 }
