@@ -138,7 +138,7 @@ macro_rules! runtime_error_views {
             $(if let Some(error) = error.downcast_ref::<$ty>() { return Some(error); })+
             None
         }
-        fn runtime_error_type(error: &(dyn Error + 'static)) -> Option<&'static str> {
+        pub(crate) fn runtime_error_type(error: &(dyn Error + 'static)) -> Option<&'static str> {
             if let Some(error) = error.downcast_ref::<SourceRuntimeErrorEnvelope>() { return Some(error.source_type()); }
             $(if error.is::<$ty>() { return Some(<$ty as SourceLogType>::SOURCE_LOG_TYPE); })+
             None
@@ -167,7 +167,8 @@ impl SourceErrorPanic {
         match &self.kind { PanicErrorKind::Runtime(error) => Some(error.runtime_error_view()), PanicErrorKind::Application(_) => None }
     }
     pub fn source_type(&self) -> Option<&'static str> {
-        match &self.kind { PanicErrorKind::Runtime(error) => Some(error.source_type()), PanicErrorKind::Application(_) => None }
+        match &self.kind { PanicErrorKind::Runtime(error) => Some(error.source_type()),
+            PanicErrorKind::Application(error) => crate::utility_error_view::source_error_type(error.as_ref()) }
     }
 }
 impl fmt::Debug for SourceErrorPanic {
@@ -216,7 +217,7 @@ impl SourceRecoveredPanic {
     }
     pub fn source_type(&self) -> Option<&'static str> {
         if let Some(error) = self.payload.downcast_ref::<SourceErrorPanic>() { return error.source_type(); }
-        if let Some(source_type) = self.payload.downcast_ref::<BoxError>().and_then(|error| runtime_error_type(error.as_ref())) { return Some(source_type); }
+        if let Some(source_type) = self.payload.downcast_ref::<BoxError>().and_then(|error| crate::utility_error_view::source_error_type(error.as_ref())) { return Some(source_type); }
         if self.payload.is::<String>() || self.payload.is::<&'static str>() { return Some("string"); }
         if self.is_abort_handler() { return Some(SourceAbortHandler::SOURCE_LOG_TYPE); }
         None

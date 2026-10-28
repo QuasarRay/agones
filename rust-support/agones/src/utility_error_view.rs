@@ -30,3 +30,16 @@ impl Error for ApiStatusEnvelope { fn source(&self) -> Option<&(dyn Error + 'sta
 pub fn with_api_status<T>(error: T) -> BoxError
 where T: Error + SourceApiStatus + SourceLogType + Send + Sync + 'static,
 { Box::new(ApiStatusEnvelope { inner: Box::new(error) }) }
+
+/// Source type metadata for the concrete interface bridges and canonical
+/// errors already owned here. Unknown native types remain unclassified.
+pub fn source_error_type(error: &(dyn Error + 'static)) -> Option<&'static str> {
+    if let Some(error) = error.downcast_ref::<ApiStatusEnvelope>() { return Some(error.source_type()); }
+    if let Some(source_type) = crate::utility_panic::runtime_error_type(error) { return Some(source_type); }
+    macro_rules! source_types {
+        ($($ty:ty),+ $(,)?) => { $(if error.is::<$ty>() { return Some(<$ty as SourceLogType>::SOURCE_LOG_TYPE); })+ };
+    }
+    source_types!(crate::utility_error_format::MessageError, crate::utility_error_format::WrappedError,
+        crate::utility_error_format::FormattedError, crate::utility_panic::SourceAbortHandler);
+    None
+}

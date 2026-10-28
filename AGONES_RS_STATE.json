@@ -821,7 +821,7 @@
           "partial_adoption_record": "verification/agones/roadmap-M0003-partial-map.json",
           "platform_effect_authoring_record": "verification/agones/roadmap-M0003-platform-effects.json",
           "prerequisites": "M0001/M0002 authored implementation complete; global phase remains IMPLEMENTATION_ONLY",
-          "progress_usage_observation": "verification/agones/roadmap-M0003-progress-usage-54.json",
+          "progress_usage_observation": "verification/agones/roadmap-M0003-progress-usage-56.json",
           "progress_usage_observations": [
             "verification/agones/roadmap-M0003-progress-usage-1.json",
             "verification/agones/roadmap-M0003-progress-usage-2.json",
@@ -876,17 +876,19 @@
             "verification/agones/roadmap-M0003-progress-usage-51.json",
             "verification/agones/roadmap-M0003-progress-usage-52.json",
             "verification/agones/roadmap-M0003-progress-usage-53.json",
-            "verification/agones/roadmap-M0003-progress-usage-54.json"
+            "verification/agones/roadmap-M0003-progress-usage-54.json",
+            "verification/agones/roadmap-M0003-progress-usage-55.json",
+            "verification/agones/roadmap-M0003-progress-usage-56.json"
           ],
           "reuse_adoption_record": "verification/agones/roadmap-M0003-reuse-adoption.json",
           "route": "MANUAL",
           "source_snapshot": "95161696e9ad90f9eab2ec7ae978bcafdcbb3483",
           "stage": "IMPLEMENTING",
           "usage_start": "verification/agones/roadmap-M0003-entry-usage.json",
-          "work_base_commit": "4cdfcf18ea63a615846e68204155997216a12845"
+          "work_base_commit": "e622b6ba2044f9a8a97aa84e2c1799aa13f6d744"
         }
       },
-      "next_action": "Continue M0003 MANUAL without route switch. Complete source klog/logr header/multiline/field/context/sink/flags/caller/depth output and full fmt formatting/Formatter/GoStringer/reflection/pointer/value/type/width/precision/verb behavior. Selected canonical Go value syntax, fresh quoted byte strings, pinned print categories and Wrap construction-time capture are authored only. Complete Errorf single/multiple/reordered/repeated-%w operand/class/dedup/invalid/nil and formatting-panic behavior, arbitrary error/interface/typed-nil/copy/retention/Goexit/panic-chain profiles and actual word/heap/Unicode/target binding. Preserve complete quote/builder/cache/native allocation, source GC/heap/elision/sanitizer/experiment/pressure/failure and callback/timer/cancellation schedules. Preserve remaining parent/direct HTTP/protocol/connection/JoinSet fatal/recovery boundaries, complete traceback/all-goroutine/systemstack/freeze/secure/crash/core/printing/exit/atexit/native hooks, H1 abortPendingRead/hijack/multipart/cleanup-panic/native close and H2 committed-head/no-body END_STREAM/reset/disposal behavior. All prior control/guard-future/context/format/Arc/Bytes/RawValue/serde/native allocation, Go map hash/group/growth/range/key/pointer/alias/concurrency, ABI/unwind/address/layout/lifetime, fmt pool/tiny/extreme Go32, GRPC_GO_LOG_*/custom logger/source SDK/command requirements remain. Preserve every prior Unicode, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirement. Native noncanonical Debug/recovery frames remain projections; no executed evidence, full equivalence or M0003 completion is claimed. Full BOTH-route scope remains intact, global gate CLOSED and assurance NOT_STARTED. No compiler/probes/tests/lint/proof/generator validation/CI.",
+      "next_action": "Continue M0003 MANUAL without route switch. Complete source raw Go format parsing/rendering, prefix-format lowering, width/precision/index/verb diagnostics, Formatter/GoStringer/Error and formatting-panic behavior, typed-nil/arbitrary/composed interface/value/pointer/type handling and actual word/heap/Unicode/target binding. Indexed pre-rendered Errorf result construction now authors plain/single/multiple forms, invalid/nil child handling and source index sort/dedup, but is not the complete fmt printer. Complete mutable/aliased Unwrap() []error views, copied/retained interface/error identity/lifetime/native allocation/GC semantics and full custom Is/As. Preserve full klog/logr header/multiline/field/context/sink/flags/caller/depth, retained/cross-goroutine panic values, Goexit/panic chains, source/native callback/timer/cancellation and trace/stack/freeze/secure/crash/core/printing/exit/atexit/native-hook profiles. Preserve remaining parent/direct HTTP/protocol/connection/JoinSet boundaries, H1 abortPendingRead/hijack/multipart/cleanup-panic/native close and H2 committed-head/no-body END_STREAM/reset/disposal requirements. All prior quote/builder/cache/control/guard-future/context/format/Arc/Bytes/RawValue/serde/native allocation, source GC/heap/elision/sanitizer/experiment/pressure/failure, Go map hash/group/growth/range/key/pointer/alias/concurrency, ABI/unwind/address/layout/lifetime, fmt pool/tiny/extreme Go32, GRPC_GO_LOG_*/custom logger/source SDK/command requirements remain. Every prior Unicode, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirement remains. No executed evidence, full parity or M0003 completion is claimed. Full BOTH-route scope remains intact, global gate CLOSED and assurance NOT_STARTED. No compiler/probes/tests/lint/proof/generator validation/CI.",
       "objective": "AGONES_AND_CPG_COMBINED_ROADMAP",
       "objective_attachment": "/home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt",
       "objective_attachment_sha256": "a9b797fc624be04548c62e63a634bcc2cacab25c4d9f45af346148ba32c1baea",
@@ -944,8 +946,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 352,
-  "previous_sha256": "1fa953c137c502143c76eb06bc852dfc8eddcdc31cedc577acb8209b2c6ac4f7",
+  "previous_revision": 353,
+  "previous_sha256": "332289d59be14bc92c6400a3e96903a33e2e610de6e7b389ba625ccb4d77c721",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -1649,7 +1651,7 @@
       "timestamp": "2026-10-21T09:42:01.132215+00:00"
     }
   ],
-  "revision": 353,
+  "revision": 354,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [

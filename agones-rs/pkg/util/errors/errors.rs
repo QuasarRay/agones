@@ -10,6 +10,8 @@ use derive_deftly::Deftly;
 use crate::utility_declarations::derive_deftly_template_SourceErrorOrigin;
 
 pub type BoxError = Box<dyn Error + Send + Sync + 'static>;
+pub use crate::utility_error_format::{SourceFormat, SourceFormatInputError};
+pub(crate) use crate::utility_error_format::{MessageError, WrappedError, FormattedError};
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Deftly)]
 #[derive_deftly(SourceErrorOrigin)]
@@ -57,14 +59,6 @@ macro_rules! unnamed_origins {
 }
 unnamed_origins!((), bool, i8, i16, i32, i64, isize, u8, u16, u32, u64, usize, f32, f64, str, String);
 
-/// The caller performs its typed formatting once and retains every `%w`
-/// operand in source argument order. This value does not parse a Go format
-/// string; complete Go format lowering remains an explicit adoption task.
-pub struct SourceFormat {
-    pub rendered: String,
-    pub wrapped: Vec<BoxError>,
-}
-
 impl Errors {
     /// Used by `errors_from_package!()`.
     pub const fn from_package(module: &'static str) -> Self {
@@ -101,8 +95,8 @@ impl Errors {
     pub fn New(&self, message: impl Into<String>) -> BoxError { self.new(message) }
 
     pub fn Errorf(&self, format: SourceFormat) -> BoxError {
-        if format.wrapped.is_empty() { return self.New(format.rendered); }
-        Box::new(FormattedError { message: self.prefix(&format.rendered), wrapped: format.wrapped })
+        let message = self.prefix(format.rendered());
+        format.into_error(message)
     }
 
     pub fn Wrap(&self, error: Option<BoxError>, message: &str) -> Option<BoxError> {
@@ -203,17 +197,6 @@ pub fn callerPackage(frames: &[Option<&str>], skip: isize) -> String {
         .map(packageFromFunc).unwrap_or_default()
 }
 
-#[derive(Debug)]
-struct FormattedError { message: String, wrapped: Vec<BoxError> }
-impl fmt::Display for FormattedError {
-    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { out.write_str(&self.message) }
-}
-impl Error for FormattedError {
-    fn source(&self) -> Option<&(dyn Error + 'static)> {
-        if self.wrapped.len() == 1 { Some(self.wrapped[0].as_ref()) } else { None }
-    }
-}
-
 /// Source errors.As/errors.Is can traverse both Unwrap() error and
 /// Unwrap() []error. Rust's standard source() represents only the first form.
 pub fn contains_error<T: Error + 'static>(error: &(dyn Error + 'static)) -> bool {
@@ -229,48 +212,9 @@ pub fn first_error_view<'a, Value>(error: &'a (dyn Error + 'static), view: &impl
         return first_error_view(error.error(), view);
     }
     if let Some(formatted) = error.downcast_ref::<FormattedError>() {
-        return formatted.wrapped.iter().find_map(|source| first_error_view(source.as_ref(), view));
+        return formatted.wrapped().unwrap_or(&[]).iter().find_map(|source| first_error_view(source.as_ref(), view));
     }
     error.source().and_then(|source| first_error_view(source, view))
-}
-
-#[derive(Debug, Deftly)]
-#[derive_deftly(SourceErrorOrigin)]
-#[deftly(source_package = "errors", source_struct = "errorString", source_log_type = "*errors.errorString")]
-pub(crate) struct MessageError(pub(crate) String);
-
-impl fmt::Display for MessageError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str(&self.0)
-    }
-}
-
-impl Error for MessageError {}
-
-#[derive(Debug)]
-struct WrappedError {
-    message: String,
-    source: BoxError,
-}
-impl WrappedError {
-    fn new(prefix: String, source: BoxError) -> Self {
-        // fmt.Errorf renders %w while constructing wrapError. Retain that
-        // message, while Unwrap continues to return the original error value.
-        let message = format!("{prefix}: {source}");
-        Self { message, source }
-    }
-}
-
-impl fmt::Display for WrappedError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str(&self.message)
-    }
-}
-
-impl Error for WrappedError {
-    fn source(&self) -> Option<&(dyn Error + 'static)> {
-        Some(self.source.as_ref())
-    }
 }
 
 /// Exact Rust analogue of Go's `FromPackage()`.

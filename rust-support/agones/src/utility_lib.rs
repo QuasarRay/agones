@@ -26,6 +26,7 @@ pub mod utility_queue_values;
 pub mod utility_queue_limiters;
 pub mod utility_client_config;
 pub mod utility_error_view;
+pub mod utility_error_format;
 pub mod utility_panic;
 pub mod utility_gateway;
 pub mod utility_gateway_json;
