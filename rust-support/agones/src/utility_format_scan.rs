@@ -177,7 +177,7 @@ impl Scanner<'_> {
         let (verb, outcome) = if self.cursor >= self.format.len() {
             (None, SourcePrintfOutcome::NoVerb)
         } else {
-            let (verb, size) = decode_verb(&self.format[self.cursor..]);
+            let (verb, size) = decode_source_rune(&self.format[self.cursor..]);
             self.cursor += size;
             let outcome = if verb == '%' { SourcePrintfOutcome::Percent }
             else if !self.good_index { SourcePrintfOutcome::BadIndex }
@@ -248,7 +248,7 @@ fn parse_number(format: &[u8], start: usize, end: usize) -> (Option<u32>, usize)
     ((cursor > start).then_some(number), cursor)
 }
 
-fn decode_verb(bytes: &[u8]) -> (char, usize) {
+pub(crate) fn decode_source_rune(bytes: &[u8]) -> (char, usize) {
     let size = match bytes[0] { 0..=0x7f => 1, 0xc2..=0xdf => 2, 0xe0..=0xef => 3, 0xf0..=0xf4 => 4, _ => 0 };
     if size != 0 && size <= bytes.len() {
         if let Ok(text) = std::str::from_utf8(&bytes[..size]) {

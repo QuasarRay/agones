@@ -28,6 +28,7 @@ pub mod utility_client_config;
 pub mod utility_error_view;
 pub mod utility_error_format;
 pub mod utility_format_scan;
+pub mod utility_format_text;
 pub mod utility_panic;
 pub mod utility_gateway;
 pub mod utility_gateway_json;

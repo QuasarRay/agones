@@ -95,8 +95,7 @@ impl Errors {
     pub fn New(&self, message: impl Into<String>) -> BoxError { self.new(message) }
 
     pub fn Errorf(&self, format: SourceFormat) -> BoxError {
-        let message = self.prefix(format.rendered());
-        format.into_error(message)
+        format.into_error(self)
     }
 
     pub fn Wrap(&self, error: Option<BoxError>, message: &str) -> Option<BoxError> {
@@ -111,7 +110,7 @@ impl Errors {
 
     /// Creates a new prefixed error.
     pub fn new(&self, msg: impl Into<String>) -> BoxError {
-        Box::new(MessageError(self.prefix(&msg.into())))
+        Box::new(MessageError(self.prefix(&msg.into()).into()))
     }
 
     /// Rust equivalent of Errorf.

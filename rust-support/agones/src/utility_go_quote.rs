@@ -5,7 +5,7 @@ use std::error::Error;
 use crate::{utility_http::{SourceUnicodeProfile, SourceSliceAllocationError, reserve_source_array},
     utility_panic::{SourceRuntimeErrorString, SourceNilMapAssignment, SourceBoundsError, SourceBoundsCode}};
 
-fn append(output: &mut Vec<u8>, value: &[u8]) -> Result<(), SourceSliceAllocationError> {
+pub(crate) fn append(output: &mut Vec<u8>, value: &[u8]) -> Result<(), SourceSliceAllocationError> {
     let length = output.len().checked_add(value.len()).ok_or(SourceSliceAllocationError::NativeAddressSpace)?;
     if length > isize::MAX as usize { return Err(SourceSliceAllocationError::NativeAddressSpace); }
     output.try_reserve(value.len()).map_err(|_| SourceSliceAllocationError::OutOfMemory)?;
@@ -13,6 +13,13 @@ fn append(output: &mut Vec<u8>, value: &[u8]) -> Result<(), SourceSliceAllocatio
 }
 const HEX: &[u8; 16] = b"0123456789abcdef";
 pub fn try_source_go_quote(value: &[u8], profile: SourceUnicodeProfile) -> Result<String, SourceSliceAllocationError> {
+    try_source_go_quote_with_ascii(value, profile, false)
+}
+
+/// fmt's plus-q path uses QuoteToASCII; ordinary q retains printable Unicode.
+pub fn try_source_go_quote_with_ascii(value: &[u8], profile: SourceUnicodeProfile, ascii_only: bool)
+    -> Result<String, SourceSliceAllocationError>
+{
     let length = value.len().checked_add(2).ok_or(SourceSliceAllocationError::NativeAddressSpace)?;
     let mut output = reserve_source_array::<u8>(length as u64)?;
     append(&mut output, b"\"")?;
@@ -27,7 +34,7 @@ pub fn try_source_go_quote(value: &[u8], profile: SourceUnicodeProfile) -> Resul
             offset += 1; continue;
         };
         if rune == b'"' as u32 || rune == b'\\' as u32 { append(&mut output, &[b'\\', rune as u8])?; }
-        else if profile.is_print(rune) { append(&mut output, &value[offset..offset + width])?; }
+        else if profile.is_print(rune) && (!ascii_only || rune < 0x80) { append(&mut output, &value[offset..offset + width])?; }
         else {
             let short = match rune { 7 => Some(b'a'), 8 => Some(b'b'), 12 => Some(b'f'), 10 => Some(b'n'),
                 13 => Some(b'r'), 9 => Some(b't'), 11 => Some(b'v'), _ => None };
@@ -44,6 +51,19 @@ pub fn try_source_go_quote(value: &[u8], profile: SourceUnicodeProfile) -> Resul
     }
     append(&mut output, b"\"")?;
     Ok(String::from_utf8(output).expect("Go quoting emits UTF8 or ASCII escapes"))
+}
+
+pub fn source_can_backquote(mut value: &[u8]) -> bool {
+    while !value.is_empty() {
+        let (rune, width) = crate::utility_format_scan::decode_source_rune(value);
+        value = &value[width..];
+        if width > 1 {
+            if rune == '\u{feff}' { return false; }
+            continue;
+        }
+        if rune == '\u{fffd}' || (rune < ' ' && rune != '\t') || rune == '`' || rune == '\u{7f}' { return false; }
+    }
+    true
 }
 
 /// Selected source dynamic types whose complete value data is owned here.
