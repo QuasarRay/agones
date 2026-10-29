@@ -9,12 +9,15 @@ use cgp::prelude::*;
 use crate::errors::{BoxError, Errors};
 use crate::utility_runtime_panic::CanHandleSourceUtilityPanic;
 
+pub type UtilityBlockingTask = Box<dyn FnOnce() -> Result<(), BoxError> + Send + 'static>;
+
 pub struct UtilityTaskScope {
     closing: AtomicBool,
     cancel: CancellationToken,
     tasks: Mutex<JoinSet<(String, Result<(), BoxError>)>>,
     completed_errors: Mutex<Vec<(String, BoxError)>>,
     failures: Option<Arc<FirstFailure>>,
+    runtime: Option<tokio::runtime::Handle>,
 }
 #[derive(Clone, Debug)]
 pub enum ChildFailureKind { ReturnedError, Panic }
@@ -40,7 +43,8 @@ impl FirstFailure {
 }
 impl Default for UtilityTaskScope {
     fn default() -> Self {
-        Self { closing: AtomicBool::new(false), cancel: CancellationToken::new(), tasks: Mutex::new(JoinSet::new()), completed_errors: Mutex::new(Vec::new()), failures: None }
+        Self { closing: AtomicBool::new(false), cancel: CancellationToken::new(), tasks: Mutex::new(JoinSet::new()),
+            completed_errors: Mutex::new(Vec::new()), failures: None, runtime: tokio::runtime::Handle::try_current().ok() }
     }
 }
 impl UtilityTaskScope {
@@ -59,16 +63,7 @@ impl UtilityTaskScope {
         if self.closing.load(Ordering::Acquire) {
             return Err(future);
         }
-        // Long-lived servers must reap completed request tasks rather than
-        // retain one JoinSet entry per request until process shutdown.
-        while let Some(result) = tasks.try_join_next() {
-            match result {
-                Ok((name, Err(error))) if self.failures.is_some() => self.completed_errors.lock().unwrap_or_else(|error| error.into_inner()).push((name, error)),
-                Err(error) if self.failures.is_some() => self.completed_errors.lock().unwrap_or_else(|error| error.into_inner()).push(("utility child".into(), Box::new(error))),
-                Ok((_, Err(_))) | Err(_) => (),
-                Ok((_, Ok(()))) => (),
-            }
-        }
+        self.reap_completed(&mut tasks);
         let name = name.to_owned();
         let failures = self.failures.clone();
         tasks.spawn(async move {
@@ -92,6 +87,49 @@ impl UtilityTaskScope {
             }
         });
         Ok(())
+    }
+    /// Synchronous source effects may wait for work which must keep running
+    /// after their timeout. Keep that work in the same parent-owned JoinSet.
+    /// Rejection returns the closure without executing or losing ownership.
+    pub fn spawn_blocking_or_return(&self, name: &str, work: UtilityBlockingTask) -> Result<(), UtilityBlockingTask> {
+        let mut tasks = self.tasks.lock().unwrap_or_else(|error| error.into_inner());
+        if self.closing.load(Ordering::Acquire) { return Err(work); }
+        // Logging may originate on an ordinary native thread. Use the
+        // application's retained runtime handle instead of requiring a Tokio
+        // entry guard on the calling thread. No runtime is created here.
+        let Some(runtime) = self.runtime.clone().or_else(|| tokio::runtime::Handle::try_current().ok()) else { return Err(work); };
+        self.reap_completed(&mut tasks);
+        let name = name.to_owned();
+        let failures = self.failures.clone();
+        tasks.spawn_blocking_on(move || {
+            match std::panic::catch_unwind(AssertUnwindSafe(work)) {
+                Ok(result) => {
+                    if let (Some(failures), Err(_)) = (&failures, &result) {
+                        failures.report(ChildFailure { task: name.clone(), kind: ChildFailureKind::ReturnedError });
+                    }
+                    (name, result)
+                }
+                Err(payload) => {
+                    if let Some(failures) = failures {
+                        failures.report(ChildFailure { task: name, kind: ChildFailureKind::Panic });
+                    }
+                    std::panic::resume_unwind(payload)
+                }
+            }
+        }, &runtime);
+        Ok(())
+    }
+    fn reap_completed(&self, tasks: &mut JoinSet<(String, Result<(), BoxError>)>) {
+        // Long-lived servers must reap completed work rather than retain one
+        // JoinSet entry per call until process shutdown.
+        while let Some(result) = tasks.try_join_next() {
+            match result {
+                Ok((name, Err(error))) if self.failures.is_some() => self.completed_errors.lock().unwrap_or_else(|error| error.into_inner()).push((name, error)),
+                Err(error) if self.failures.is_some() => self.completed_errors.lock().unwrap_or_else(|error| error.into_inner()).push(("utility child".into(), Box::new(error))),
+                Ok((_, Err(_))) | Err(_) => (),
+                Ok((_, Ok(()))) => (),
+            }
+        }
     }
     pub async fn cancel_and_join(&self) -> Vec<(String, BoxError)> {
         let mut tasks = {
@@ -130,6 +168,9 @@ impl<Context: HasUtilityTaskScope> UtilityTaskFailureObserver<Context> for Obser
 impl Drop for UtilityTaskScope {
     fn drop(&mut self) {
         self.cancel.cancel();
+        // Tokio cannot abort blocking work which has already begun. Normal
+        // lifecycle shutdown must await cancel_and_join; fatal process exit
+        // remains a distinct source effect.
         self.tasks.get_mut().unwrap_or_else(|error| error.into_inner()).abort_all();
     }
 }
@@ -142,6 +183,7 @@ pub trait CanSpawnUtilityTask {
     fn spawn_utility_task(&self, name: &str, future: BoxFuture<'static, Result<(), BoxError>>) -> Result<(), BoxError>;
     fn spawn_utility_task_or_return(&self, name: &str, future: BoxFuture<'static, Result<(), BoxError>>)
         -> Result<(), BoxFuture<'static, Result<(), BoxError>>>;
+    fn spawn_blocking_utility_task_or_return(&self, name: &str, work: UtilityBlockingTask) -> Result<(), UtilityBlockingTask>;
 }
 #[cgp_new_provider]
 impl<Context> UtilityTaskSpawner<Context> for SpawnOwnedUtilityTask
@@ -161,6 +203,18 @@ where Context: HasUtilityTaskScope + CanHandleSourceUtilityPanic + Clone + Send 
         let future = source_utility_task(context.clone(), future);
         match context.utility_task_scope().upgrade() {
             Some(scope) => scope.spawn_or_return(name, future), None => Err(future),
+        }
+    }
+    fn spawn_blocking_utility_task_or_return(context: &Context, name: &str, work: UtilityBlockingTask) -> Result<(), UtilityBlockingTask> {
+        let parent = context.clone();
+        let work: UtilityBlockingTask = Box::new(move || {
+            match std::panic::catch_unwind(AssertUnwindSafe(work)) {
+                Ok(result) => result,
+                Err(payload) => parent.handle_source_utility_panic(crate::utility_panic::SourceRecoveredPanic::new(payload)),
+            }
+        });
+        match context.utility_task_scope().upgrade() {
+            Some(scope) => scope.spawn_blocking_or_return(name, work), None => Err(work),
         }
     }
 }

@@ -1,8 +1,8 @@
-//! Source klog header preparation and non-fatal output policy.
+//! Source klog header, output, fatal and flush control.
 // klog/v2/klog.go and internal/buffer/buffer.go, Google Inc./Kubernetes
 // Authors, Apache-2.0. Native caller/clock/file creation/rotation/flush daemon,
-// fatal/trace/exit/pool/GC/ABI/race/configuration profiles remain required.
-use std::{io::Write, sync::{Arc, Mutex, RwLock}};
+// native stack/exit/pool/GC/ABI/race/configuration profiles remain required.
+use std::{io::Write, sync::{Arc, Mutex, RwLock, atomic::{AtomicI64, AtomicU32, Ordering}}, time::Duration};
 use crate::{utility_runtime::UtilityRuntimeContext,
     utility_klog::{SourceKlogSeverity, LogWriter}, utility_logr::add_int,
     utility_klog_header::{SourceKlogCallSite, SourceKlogHeaderBindings, source_file, format_header, append_body},
@@ -10,7 +10,8 @@ use crate::{utility_runtime::UtilityRuntimeContext,
     utility_time_values::SourceGoTime,
     utility_error_slice::SourceRetainedError, utility_format_copy::{SourceFmtSharedString, SourceFmtValueCopy},
     utility_http::HeaderAllocationProfile, utility_go_quote::append,
-    utility_tls::CanExitSourceProcess};
+    utility_tls::CanExitSourceProcess, utility_scope::CanSpawnUtilityTask,
+    utility_format_methods::SourceStringer, utility_slog_values::SourceSlogDuration};
 
 pub trait SourceKlogSyncTarget: Send + Sync { fn source_sync(&self) -> Result<(), SourceRetainedError>; }
 pub trait SourceKlogSyncBuffer: Send + Sync {
@@ -58,7 +59,7 @@ impl Default for SourceKlogOutputFlags {
         stderr_threshold: 2, also_stderr_threshold: 0, one_output: false, log_file: SourceFmtSharedString(Arc::from(&b""[..])) } }
 }
 struct OutputData {
-    flags: SourceKlogOutputFlags, files: [Option<SourceKlogWriter>; 4], stderr: SourceKlogWriter,
+    flags: SourceKlogOutputFlags, files: [Option<SourceKlogWriter>; 4],
     create_files: Option<SourceKlogFileFactory>, trace: Option<SourceKlogCallSite>, stacks: Option<SourceKlogStacks>,
     log_exit_function: Option<SourceKlogExitFunction>, statistics: [[i64; 2]; 3],
 }
@@ -72,13 +73,17 @@ pub struct SourceKlogOutputState {
     // This is the source logging.mu output owner. Source output invokes
     // writers/trace/exit hooks while holding it; do not silently unlock them.
     output: Mutex<OutputData>, profile: HeaderAllocationProfile,
+    // os.Stderr is independent of logging.mu. In particular, timeoutFlush
+    // must print its timeout while the flush worker may still hold that mu.
+    stderr: RwLock<SourceKlogWriter>, fatal_no_stacks: AtomicU32, exit_flush_timeout: AtomicI64,
 }
 impl SourceKlogOutputState {
     pub fn new(profile: HeaderAllocationProfile) -> Self {
         Self { header: Mutex::new(SourceKlogHeaderSettings::default()), profile,
+            stderr: RwLock::new(Arc::new(NativeKlogWriter::new(std::io::stderr()))),
+            fatal_no_stacks: AtomicU32::new(0), exit_flush_timeout: AtomicI64::new(10_000_000_000),
             output: Mutex::new(OutputData { flags: SourceKlogOutputFlags::default(), files: std::array::from_fn(|_| None),
-                stderr: Arc::new(NativeKlogWriter::new(std::io::stderr())), create_files: None, trace: None,
-                stacks: None, log_exit_function: None, statistics: [[0; 2]; 3] }) }
+                create_files: None, trace: None, stacks: None, log_exit_function: None, statistics: [[0; 2]; 3] }) }
     }
     pub fn set_header_settings(&self, settings: SourceKlogHeaderSettings) -> SourceKlogHeaderSettings {
         std::mem::replace(&mut *self.header.lock().unwrap_or_else(|e| e.into_inner()), settings)
@@ -98,7 +103,19 @@ impl SourceKlogOutputState {
         let mut data = self.output.lock().unwrap_or_else(|e| e.into_inner()); std::mem::replace(&mut data.files[severity as usize], writer)
     }
     pub fn set_stderr(&self, writer: SourceKlogWriter) -> SourceKlogWriter {
-        let mut data = self.output.lock().unwrap_or_else(|e| e.into_inner()); std::mem::replace(&mut data.stderr, writer)
+        std::mem::replace(&mut *self.stderr.write().unwrap_or_else(|e| e.into_inner()), writer)
+    }
+    fn write_stderr(&self, bytes: &[u8]) {
+        let stderr = Arc::clone(&self.stderr.read().unwrap_or_else(|e| e.into_inner()));
+        let _ = stderr.source_write(bytes);
+    }
+    /// Exit/Exitln/Exitf set this source global permanently before logging.
+    /// Fatal does not reset it for later calls.
+    pub fn mark_exit_without_stacks(&self) { self.fatal_no_stacks.store(1, Ordering::SeqCst); }
+    pub fn set_exit_flush_timeout(&self, nanoseconds: i64) -> i64 {
+        // This native cell does not establish the source unguarded variable's
+        // concurrent mutation/race profile.
+        self.exit_flush_timeout.swap(nanoseconds, Ordering::SeqCst)
     }
     pub fn set_file_factory(&self, factory: Option<SourceKlogFileFactory>) -> Option<SourceKlogFileFactory> {
         let mut data = self.output.lock().unwrap_or_else(|e| e.into_inner()); std::mem::replace(&mut data.create_files, factory)
@@ -170,18 +187,18 @@ impl SourceKlogOutputState {
             }
         } else if data.flags.to_stderr {
             if data.flags.legacy_stderr_threshold_behavior || severity as i32 >= data.flags.stderr_threshold {
-                let _ = data.stderr.source_write(bytes);
+                self.write_stderr(bytes);
             }
         } else {
             if also_to_stderr || data.flags.also_to_stderr && severity as i32 >= data.flags.also_stderr_threshold
                 || !data.flags.also_to_stderr && severity as i32 >= data.flags.stderr_threshold
-            { let _ = data.stderr.source_write(bytes); }
+            { self.write_stderr(bytes); }
             let single_file = !data.flags.log_file.0.is_empty();
             let selected = if single_file { SourceKlogSeverity::Info } else { severity };
             if data.files[selected as usize].is_none() {
                 let create = data.create_files.as_ref().cloned().ok_or_else(|| missing("klog createFiles/rotation/flush-daemon binding"))?;
                 match create(runtime, selected, &mut data.files) {
-                    Err(error) => { let _ = data.stderr.source_write(bytes); exit_error(runtime, &mut data, error)?; }
+                    Err(error) => { self.write_stderr(bytes); exit_error(self, runtime, &mut data, error)?; }
                     Ok(()) if data.files[selected as usize].is_none() => return Err(missing("klog createFiles success/file binding")),
                     Ok(()) => (),
                 }
@@ -196,7 +213,30 @@ impl SourceKlogOutputState {
             }
         }
         if severity == SourceKlogSeverity::Fatal {
-            return Err(missing("klog fatalNoStacks/all-goroutine-stack/timeoutFlush/OsExit binding"));
+            if self.fatal_no_stacks.load(Ordering::SeqCst) > 0 {
+                drop(data);
+                timeout_flush(runtime, self.exit_flush_timeout.load(Ordering::SeqCst))?;
+                runtime.exit_source_process(1);
+                // The real CGP process effect does not return. The source
+                // substituted-exit profile continues with unlocked reads and
+                // an eventual second Unlock; do not invent a safe relock or
+                // claim that returning here implements that profile.
+                return Err(missing("klog returning OsExit(1)/unlocked continuation profile"));
+            }
+            let stacks = data.stacks.as_ref().cloned().ok_or_else(|| missing("klog fatal current/all-goroutine stack binding"))?;
+            if !data.flags.to_stderr { self.write_stderr(&stacks(false)?); }
+            let trace = stacks(true)?;
+            // A file write can invoke exit_error; fatal must still reach its
+            // own flush and status, so install the source no-op exit hook.
+            data.log_exit_function = Some(Arc::new(|_| ()));
+            for index in (0..4).rev() {
+                if let Some(file) = &data.files[index] { let _ = file.source_write(&trace); }
+            }
+            drop(data);
+            timeout_flush(runtime, self.exit_flush_timeout.load(Ordering::SeqCst))?;
+            runtime.exit_source_process(255);
+            // Fatal has no severityStats slot, including when OsExit returns.
+            return Ok(());
         }
         let statistics = &mut data.statistics[severity as usize];
         statistics[0] = statistics[0].wrapping_add(1); statistics[1] = statistics[1].wrapping_add(bytes.len() as i64);
@@ -207,27 +247,77 @@ impl SourceKlogOutputState {
         let data = self.output.lock().unwrap_or_else(|e| e.into_inner()); let counts = data.statistics[severity as usize];
         Some((counts[0], counts[1]))
     }
+    pub fn flush(&self, runtime: &UtilityRuntimeContext) {
+        let files = {
+            let data = self.output.lock().unwrap_or_else(|e| e.into_inner());
+            flush_all(runtime, &data)
+        };
+        // Source lockAndFlushAll releases logging.mu before Sync, unlike exit.
+        sync_all(files);
+    }
 }
 fn write_file(data: &OutputData, severity: SourceKlogSeverity, bytes: &[u8]) {
     let writer = data.files[severity as usize].as_ref().unwrap_or_else(|| crate::utility_error_nil::nil_error_receiver());
     let _ = writer.source_write(bytes);
 }
-fn exit_error(runtime: &UtilityRuntimeContext, data: &mut OutputData, error: SourceRetainedError) -> FormatResult {
-    let mut message = b"log: exiting because of error: ".to_vec();
-    crate::utility_format_arguments::write_source_error_operand(&error, 's', runtime.source_unicode_profile,
-        crate::utility_format_print::SourcePrintfMode::Sprintf, &mut message)?;
-    append(&mut message, b"\n")?; let _ = data.stderr.source_write(&message);
-    if let Some(exit) = &data.log_exit_function { exit(error); return Ok(()); }
-    let mut files: [Option<Arc<dyn SourceKlogSyncTarget>>; 4] = std::array::from_fn(|_| None);
-    let mut count = 0;
+struct FilesToSync { files: [Option<Arc<dyn SourceKlogSyncTarget>>; 4], count: usize }
+fn flush_all(runtime: &UtilityRuntimeContext, data: &OutputData) -> FilesToSync {
+    let mut files = FilesToSync { files: std::array::from_fn(|_| None), count: 0 };
     for severity in (0..4).rev() {
         if let Some(buffer) = data.files[severity].as_ref().and_then(|writer| writer.source_sync_buffer()) {
-            if let Some(file) = buffer.source_flush_file() { files[count] = Some(file); count += 1; }
+            if let Some(file) = buffer.source_flush_file() {
+                files.files[files.count] = Some(file); files.count += 1;
+            }
         }
     }
     runtime.source_klog_state.flush_backing_logger();
-    for file in files[..count].iter().flatten() { let _ = file.source_sync(); }
+    files
+}
+fn sync_all(files: FilesToSync) {
+    for file in files.files[..files.count].iter().flatten() { let _ = file.source_sync(); }
+}
+fn exit_error(output: &SourceKlogOutputState, runtime: &UtilityRuntimeContext, data: &mut OutputData, error: SourceRetainedError) -> FormatResult {
+    let mut message = b"log: exiting because of error: ".to_vec();
+    crate::utility_format_arguments::write_source_error_operand(&error, 's', runtime.source_unicode_profile,
+        crate::utility_format_print::SourcePrintfMode::Sprintf, &mut message)?;
+    append(&mut message, b"\n")?; output.write_stderr(&message);
+    if let Some(exit) = &data.log_exit_function { exit(error); return Ok(()); }
+    sync_all(flush_all(runtime, data));
     runtime.exit_source_process(2);
-    Err(missing("klog OsExit returned without a configured logExitFunc"))
+    Ok(())
+}
+/// Source FlushAndExit shares the same timed worker as Fatal and Exit.
+pub fn flush_and_exit(runtime: &UtilityRuntimeContext, nanoseconds: i64, status: i32) -> FormatResult {
+    timeout_flush(runtime, nanoseconds)?;
+    runtime.exit_source_process(status);
+    Ok(())
+}
+pub fn timeout_flush(runtime: &UtilityRuntimeContext, nanoseconds: i64) -> FormatResult {
+    let (done, completion) = std::sync::mpsc::sync_channel(1);
+    let parent = runtime.clone();
+    let work = Box::new(move || {
+        parent.source_klog_state.output.flush(&parent);
+        // The source completion channel has capacity one. A timeout must not
+        // block or cancel the worker when it eventually finishes flushing.
+        let _ = done.send(true);
+        Ok(())
+    });
+    if let Err(_unstarted) = runtime.spawn_blocking_utility_task_or_return("klog timeoutFlush", work) {
+        return Err(missing("klog timeoutFlush live utility task owner"));
+    }
+    let timeout = Duration::from_nanos(nanoseconds.max(0) as u64);
+    match completion.recv_timeout(timeout) {
+        Ok(_) => Ok(()),
+        Err(std::sync::mpsc::RecvTimeoutError::Timeout) => {
+            let mut diagnostic = b"klog: Flush took longer than ".to_vec();
+            append(&mut diagnostic, &SourceSlogDuration(nanoseconds).source_string())?;
+            append(&mut diagnostic, b"\n")?;
+            runtime.source_klog_state.output.write_stderr(&diagnostic);
+            Ok(())
+        }
+        // A source goroutine panic is process-fatal via the CGP parent policy;
+        // losing the sender is not successful Flush completion.
+        Err(std::sync::mpsc::RecvTimeoutError::Disconnected) => Err(missing("klog flush worker completion/panic/exit profile")),
+    }
 }
 fn missing(operation: &'static str) -> SourceKlogFormatError { SourceKlogFormatError::Unbound { source_type: None, operation } }
