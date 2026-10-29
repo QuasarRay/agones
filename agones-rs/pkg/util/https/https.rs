@@ -31,7 +31,8 @@ pub fn ErrorHTTPHandler(logger: LogEntry, handler: ErrorHandlerFunc) -> HttpHand
         let (logger, handler) = (logger.clone(), Arc::clone(&handler));
         Box::pin(async move {
             if let Err(error) = handler(context, writer, request).await {
-                runtime::HandleError(context, Some(&LogRequest(&logger, request)), Some(error.as_ref())).await;
+                let error = crate::utility_error_slice::SourceRetainedError::from_original(error);
+                runtime::HandleError(context, Some(&LogRequest(&logger, request)), Some(&error)).await;
                 writer.http_error(&error.to_string(), 500).await;
             }
         })
@@ -42,7 +43,8 @@ pub async fn FourZeroFour(context: &UtilityRuntimeContext, logger: &LogEntry, wr
     match request.read_body().await {
         Err(error) => {
             let error = ERRORS.Wrap(Some(error), "error in default handler").expect("source non-nil error");
-            runtime::HandleError(context, Some(&LogRequest(logger, request)), Some(error.as_ref())).await;
+            let error = crate::utility_error_slice::SourceRetainedError::from_original(error);
+            runtime::HandleError(context, Some(&LogRequest(logger, request)), Some(&error)).await;
             writer.http_error(&error.to_string(), 500).await;
             // The source installs its deferred close only after ReadAll succeeds.
         }

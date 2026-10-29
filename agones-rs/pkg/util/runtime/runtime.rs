@@ -4,7 +4,7 @@
 #![allow(non_snake_case, non_upper_case_globals)]
 use std::sync::Arc;
 use crate::{errors::BoxError, logfields::LogEntry,
-    utility_logging::{CanHandleSourceRuntimeError, HasSourceLogger, CanEmitSourceLog, LogLevel},
+    utility_logging::{CanHandleSourceRuntimeError, HasSourceLogger, CanEmitSourceLog, CanEmitSourceErrorLog, LogLevel},
     utility_client_config::{CanReadSourceClientConfiguration, RusternetesClientConfiguration}};
 
 pub const sourceKey: &str = "source";
@@ -17,7 +17,7 @@ const errs: crate::errors::Errors = crate::errors::Errors::from_package("agones.
 pub fn SetLevel<Context: HasSourceLogger>(context: &Context, level: LogLevel) {
     context.source_logger().set_level(level);
 }
-pub async fn HandleError<Context: CanHandleSourceRuntimeError>(context: &Context, logger: Option<&LogEntry>, error: Option<&(dyn std::error::Error + Send + Sync)>) {
+pub async fn HandleError<Context: CanHandleSourceRuntimeError>(context: &Context, logger: Option<&LogEntry>, error: Option<&(dyn std::error::Error + Send + Sync + 'static)>) {
     context.handle_source_runtime_error(logger, error).await;
 }
 pub fn Must(error: Option<BoxError>) { if let Some(error) = error { crate::utility_panic::unwind_source_error(error); } }
@@ -36,16 +36,17 @@ pub fn NewServerMux<Context: crate::utility_gateway::CanCreateSourceServerMux>(c
 }
 
 pub async fn InClusterBuildConfig<Context>(context: &Context, logger: Option<&LogEntry>, kubeconfigPath: &str) -> Result<RusternetesClientConfiguration, BoxError>
-where Context: CanReadSourceClientConfiguration + CanEmitSourceLog + HasSourceLogger,
+where Context: CanReadSourceClientConfiguration + CanEmitSourceLog + CanEmitSourceErrorLog + HasSourceLogger,
 {
     match context.source_in_cluster_config().await {
         Ok(config) => return Ok(config),
         Err(error) => {
-            let logger = logger.expect("nil logrus.Entry after InClusterConfig failure").with_error(Some(error.as_ref()));
+            let error = crate::utility_error_slice::SourceRetainedError::from_original(error);
+            let logger = logger.expect("nil logrus.Entry after InClusterConfig failure").with_error(Some(&error));
             // logrus.Warning uses Sprint: a leading string argument suppresses
             // an automatically inserted space before the error argument.
-            context.emit_source_log(&logger, LogLevel::Warn,
-                &format!("Error creating inClusterConfig, trying to build config from flags{error}"));
+            context.emit_source_error_log(&logger, LogLevel::Warn,
+                b"Error creating inClusterConfig, trying to build config from flags", &error);
         }
     }
     if kubeconfigPath.is_empty() {

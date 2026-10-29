@@ -86,7 +86,10 @@ impl APIServer {
             Box::pin(async move {
                 let (namespace, resource) = match splitNameSpaceResource(request.path()) {
                     Ok(value) => value,
-                    Err(error) => { https::FourZeroFour(context, &state.logger.with_error(Some(error.as_ref())), writer, request).await; return Ok(()); }
+                    Err(error) => {
+                        let logger = state.logger.with_retained_error(Some(crate::utility_error_slice::SourceRetainedError::from_original(error)));
+                        https::FourZeroFour(context, &logger, writer, request).await; return Ok(());
+                    }
                 };
                 let mut key = gv.as_bytes().to_vec(); key.push(b'/'); key.extend_from_slice(&resource);
                 let delegate = state.delegates.read().unwrap_or_else(|error| error.into_inner()).get(key.as_slice()).cloned();

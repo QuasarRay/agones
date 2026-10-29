@@ -1,5 +1,5 @@
 //! Source JSON logging and the inherited apimachinery error-backoff resource.
-// Entry.Log/Trace order follows the pinned vendored Logrus entry.go.
+// Entry.Log/Trace, JSONFormatter and prefixFieldClashes follow pinned Logrus.
 // Copyright (c) 2014 Simon Eskildsen, MIT; see
 // ../../../vendor/github.com/sirupsen/logrus/LICENSE.
 use std::{collections::BTreeMap, fmt, io::Write, sync::{Arc, Mutex, atomic::{AtomicU8, Ordering}}, time::{Duration, Instant}};
@@ -9,14 +9,48 @@ use futures::future::BoxFuture;
 use serde_json::Value;
 use crate::{errors::BoxError, logfields::LogEntry};
 use serde::Serialize;
+use crate::{utility_error_slice::SourceRetainedError, utility_format_copy::SourceFmtValueCopy};
 
-#[derive(Clone, Debug, PartialEq, Serialize)]
-#[serde(untagged)]
+#[derive(Debug)]
 pub enum SourceLogValue {
     Json(Value),
     HttpHeaders(crate::utility_http::Headers),
     Bytes(crate::utility_http::SourceByteString),
     Url(Option<crate::utility_http::SourceUrl>),
+    Error(SourceRetainedError),
+}
+impl Clone for SourceLogValue {
+    fn clone(&self) -> Self {
+        match self { Self::Json(value) => Self::Json(value.clone()), Self::HttpHeaders(value) => Self::HttpHeaders(value.clone()),
+            Self::Bytes(value) => Self::Bytes(value.clone()), Self::Url(value) => Self::Url(value.clone()),
+            Self::Error(error) => Self::Error(error.source_fmt_copy()) }
+    }
+}
+// LogEntry's native comparison is a descriptor convenience, not a Go Fields
+// or error-interface == operation; it must never call Error during comparison.
+impl PartialEq for SourceLogValue {
+    fn eq(&self, other: &Self) -> bool {
+        match (self, other) { (Self::Json(a), Self::Json(b)) => a == b,
+            (Self::HttpHeaders(a), Self::HttpHeaders(b)) => a == b, (Self::Bytes(a), Self::Bytes(b)) => a == b,
+            (Self::Url(a), Self::Url(b)) => a == b, (Self::Error(a), Self::Error(b)) => a.native_same_owner(b), _ => false }
+    }
+}
+impl SourceLogValue {
+    /// JSONFormatter converts every error-valued field before field clashes
+    /// or JSON encoding. This is a plain Error call, with no fmt panic recovery.
+    fn json_field_copy(&self) -> Self {
+        let Self::Error(error) = self else { return self.clone(); };
+        let message = crate::utility_error_format::source_error_message(error)
+            .unwrap_or_else(|| std::borrow::Cow::Owned(error.to_string().into_bytes()));
+        Self::Bytes(crate::utility_http::SourceByteString(bytes::Bytes::copy_from_slice(&message)))
+    }
+}
+impl Serialize for SourceLogValue {
+    fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+        match self { Self::Json(value) => value.serialize(serializer), Self::HttpHeaders(value) => value.serialize(serializer),
+            Self::Bytes(value) => value.serialize(serializer), Self::Url(value) => value.serialize(serializer),
+            Self::Error(_) => self.json_field_copy().serialize(serializer) }
+    }
 }
 impl LogEntry {
     pub fn with_url(&self, name: impl Into<String>, url: Option<crate::utility_http::SourceUrl>) -> Self {
@@ -47,6 +81,11 @@ impl LogLevel {
 }
 
 pub struct SourceLogger { level: AtomicU8, output: Mutex<Box<dyn Write + Send>> }
+enum SourceLogWriteError { Format(BoxError), Output(std::io::Error) }
+fn report_log_write_error(error: SourceLogWriteError) {
+    match error { SourceLogWriteError::Format(error) => eprintln!("Failed to obtain reader, {error}"),
+        SourceLogWriteError::Output(error) => eprintln!("Failed to write to log, {error}") }
+}
 impl fmt::Debug for SourceLogger {
     fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { out.debug_struct("SourceLogger").field("level", &self.level.load(Ordering::Relaxed)).finish_non_exhaustive() }
 }
@@ -56,26 +95,36 @@ impl SourceLogger {
     }
     pub fn set_level(&self, level: LogLevel) { self.level.store(level as u8, Ordering::Release); }
     pub fn enabled(&self, level: LogLevel) -> bool { level as u8 <= self.level.load(Ordering::Acquire) }
-    fn write(&self, level: LogLevel, fields: &BTreeMap<String, SourceLogValue>, message: &str, timestamp: &str) -> Result<(), BoxError> {
-        self.write_bytes(level, fields, message.as_bytes(), timestamp)
+    fn write(&self, level: LogLevel, fields: &BTreeMap<String, SourceLogValue>, message: &str, timestamp: &str,
+        serialization_error: Option<&str>) {
+        self.write_bytes(level, fields, message.as_bytes(), timestamp, serialization_error)
     }
-    fn write_bytes(&self, level: LogLevel, fields: &BTreeMap<String, SourceLogValue>, message: &[u8], timestamp: &str) -> Result<(), BoxError> {
-        let mut data = fields.clone();
-        // Preserve logrus's collision order and overwrite behavior.
-        for name in ["time", "message", "severity", "logrus_error"] {
-            if let Some(value) = data.remove(name) { data.insert(format!("fields.{name}"), value); }
-        }
-        data.insert("time".into(), SourceLogValue::Json(Value::String(timestamp.to_owned())));
-        data.insert("message".into(), SourceLogValue::Bytes(crate::utility_http::SourceByteString(bytes::Bytes::copy_from_slice(message))));
-        data.insert("severity".into(), SourceLogValue::Json(Value::String(level.source_name().into())));
-        let json = serde_json::to_string(&data)?;
-        // encoding/json's default HTML and JavaScript separator escaping is
-        // part of the selected formatter, including strings nested in fields.
-        let json = json.replace('&', "\\u0026").replace('<', "\\u003c").replace('>', "\\u003e")
-            .replace('\u{2028}', "\\u2028").replace('\u{2029}', "\\u2029") + "\n";
-        // logrus calls Writer.Write once and ignores a short successful count.
-        self.output.lock().unwrap_or_else(|error| error.into_inner()).write(json.as_bytes())?;
-        Ok(())
+    fn write_bytes(&self, level: LogLevel, fields: &BTreeMap<String, SourceLogValue>, message: &[u8], timestamp: &str,
+        serialization_error: Option<&str>) {
+        // Source Entry.write holds Logger.mu over Formatter.Format and Out.Write.
+        // The message's Sprint ran before this lock; field Error calls run here.
+        let mut output = self.output.lock().unwrap_or_else(|error| error.into_inner());
+        let result = (|| -> Result<(), SourceLogWriteError> {
+            let mut data: BTreeMap<_, _> = fields.iter().map(|(key, value)| (key.clone(), value.json_field_copy())).collect();
+            // Preserve logrus's collision order and overwrite behavior.
+            for name in ["time", "message", "severity", "logrus_error"] {
+                if let Some(value) = data.remove(name) { data.insert(format!("fields.{name}"), value); }
+            }
+            data.insert("time".into(), SourceLogValue::Json(Value::String(timestamp.to_owned())));
+            data.insert("message".into(), SourceLogValue::Bytes(crate::utility_http::SourceByteString(bytes::Bytes::copy_from_slice(message))));
+            data.insert("severity".into(), SourceLogValue::Json(Value::String(level.source_name().into())));
+            if let Some(error) = serialization_error { return Err(SourceLogWriteError::Format(format!("failed to marshal fields to JSON, {error}").into())); }
+            let json = serde_json::to_string(&data).map_err(|error| SourceLogWriteError::Format(format!("failed to marshal fields to JSON, {error}").into()))?;
+            // encoding/json's default HTML and JavaScript separator escaping is
+            // part of the selected formatter, including strings nested in fields.
+            let json = json.replace('&', "\\u0026").replace('<', "\\u003c").replace('>', "\\u003e")
+                .replace('\u{2028}', "\\u2028").replace('\u{2029}', "\\u2029") + "\n";
+            // logrus calls Writer.Write once and ignores a short successful count.
+            output.write(json.as_bytes()).map_err(SourceLogWriteError::Output)?;
+            Ok(())
+        })();
+        // Entry.write diagnoses both stages before its deferred unlock.
+        if let Err(error) = result { report_log_write_error(error); }
     }
 }
 
@@ -123,13 +172,7 @@ where Context: HasSourceLogger + CanReadSourceLogClock,
     fn emit_source_log(context: &Context, logger: &LogEntry, level: LogLevel, message: &str) {
         let state = logger.logger.as_ref().unwrap_or_else(|| context.source_logger());
         if !state.enabled(level) { return; }
-        if let Some(error) = &logger.serialization_error {
-            eprintln!("Failed to obtain reader, failed to marshal fields to JSON, {error}");
-            return;
-        }
-        if let Err(error) = state.write(level, &logger.fields, message, &context.source_log_timestamp()) {
-            eprintln!("Failed to write to log, {error}");
-        }
+        state.write(level, &logger.fields, message, &context.source_log_timestamp(), logger.serialization_error.as_deref());
     }
 }
 
@@ -137,46 +180,42 @@ where Context: HasSourceLogger + CanReadSourceLogClock,
 /// that lazy method call and source panic/nil formatting in the CGP provider.
 #[cgp_component(SourceErrorLogEmitter)]
 pub trait CanEmitSourceErrorLog {
-    fn emit_source_error_log(&self, logger: &LogEntry, level: LogLevel, error: &(dyn std::error::Error + Send + Sync + 'static));
+    fn emit_source_error_log(&self, logger: &LogEntry, level: LogLevel, prefix: &[u8], error: &(dyn std::error::Error + Send + Sync + 'static));
 }
 #[cgp_new_provider]
 impl<Context> SourceErrorLogEmitter<Context> for EmitSourceJsonErrorLog
 where Context: HasSourceLogger + CanReadSourceLogClock + crate::utility_http::HasSourceUnicodeProfile
     + crate::utility_http::CanRaiseSourceCollectionFailure,
 {
-    fn emit_source_error_log(context: &Context, logger: &LogEntry, level: LogLevel, error: &(dyn std::error::Error + Send + Sync + 'static)) {
+    fn emit_source_error_log(context: &Context, logger: &LogEntry, level: LogLevel, prefix: &[u8], error: &(dyn std::error::Error + Send + Sync + 'static)) {
         let state = logger.logger.as_ref().unwrap_or_else(|| context.source_logger());
         if !state.enabled(level) { return; }
         let mut message = Vec::new();
+        // Sprint's leading string argument suppresses the implicit separator.
+        crate::utility_http::complete_source_collection(context, crate::utility_go_quote::append(&mut message, prefix));
         crate::utility_http::complete_source_collection(context,
             crate::utility_format_arguments::write_source_error_operand(error, 'v', *context.source_unicode_profile(),
                 crate::utility_format_print::SourcePrintfMode::Sprintf, &mut message));
-        if let Some(error) = &logger.serialization_error {
-            eprintln!("Failed to obtain reader, failed to marshal fields to JSON, {error}");
-            return;
-        }
         // Entry.log continues after Sprint even if a value method changes the
         // level. Avoid a second enabled check through the string emitter.
-        if let Err(error) = state.write_bytes(level, &logger.fields, &message, &context.source_log_timestamp()) {
-            eprintln!("Failed to write to log, {error}");
-        }
+        state.write_bytes(level, &logger.fields, &message, &context.source_log_timestamp(), logger.serialization_error.as_deref());
     }
 }
 
 #[cgp_component(SourceRuntimeErrorHandler)]
 pub trait CanHandleSourceRuntimeError: Sync {
-    fn handle_source_runtime_error<'a>(&'a self, logger: Option<&'a LogEntry>, error: Option<&'a (dyn std::error::Error + Send + Sync)>) -> BoxFuture<'a, ()>;
+    fn handle_source_runtime_error<'a>(&'a self, logger: Option<&'a LogEntry>, error: Option<&'a (dyn std::error::Error + Send + Sync + 'static)>) -> BoxFuture<'a, ()>;
 }
 #[cgp_new_provider]
 impl<Context> SourceRuntimeErrorHandler<Context> for HandleSourceErrorAndBackoff
-where Context: CanEmitSourceLog + HasSourceLogger + HasSourceErrorBackoff + Sync,
+where Context: CanEmitSourceLog + CanEmitSourceErrorLog + HasSourceLogger + HasSourceErrorBackoff + Sync,
 {
-    fn handle_source_runtime_error<'a>(context: &'a Context, logger: Option<&'a LogEntry>, error: Option<&'a (dyn std::error::Error + Send + Sync)>) -> BoxFuture<'a, ()> {
+    fn handle_source_runtime_error<'a>(context: &'a Context, logger: Option<&'a LogEntry>, error: Option<&'a (dyn std::error::Error + Send + Sync + 'static)>) -> BoxFuture<'a, ()> {
         Box::pin(async move {
             if let Some(logger) = logger { context.emit_source_log(&logger.with_error(error), LogLevel::Error, ""); }
             if let Some(error) = error {
                 let logger = LogEntry::from_logger(Arc::clone(context.source_logger()));
-                context.emit_source_log(&logger, LogLevel::Error, &error.to_string());
+                context.emit_source_error_log(&logger, LogLevel::Error, b"", error);
                 // The source starts its timestamp before locking and sleeps
                 // after unlocking, so other callers do not hold this lock.
                 let delay = context.source_error_backoff().next_delay(Instant::now());

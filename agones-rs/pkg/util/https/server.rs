@@ -51,7 +51,8 @@ impl Server {
     async fn setupServer(&mut self) {
         self.tls = Arc::default();
         match self.runtime.load_source_certificate(Path::new("/certs/server.crt"), Path::new("/certs/server.key")).await {
-            Err(error) => self.runtime.emit_source_log(&self.logger.with_error(Some(error.as_ref())), LogLevel::Error, "could not load Initial TLS certs; keeping old one"),
+            Err(error) => self.runtime.emit_source_log(&self.logger.with_retained_error(Some(crate::utility_error_slice::SourceRetainedError::from_original(error))),
+                LogLevel::Error, "could not load Initial TLS certs; keeping old one"),
             Ok(certificate) => *self.certServer.certs.lock().unwrap_or_else(|error| error.into_inner()) = Some(certificate),
         }
     }
@@ -64,7 +65,8 @@ impl Server {
             Box::pin(async move {
                 context.emit_source_log(&logger, LogLevel::Info, "TLS certs changed, reloading");
                 match context.load_source_certificate(Path::new("/certs/server.crt"), Path::new("/certs/server.key")).await {
-                    Err(error) => context.emit_source_log(&logger.with_error(Some(error.as_ref())), LogLevel::Error, "could not load TLS certs; keeping old one"),
+                    Err(error) => context.emit_source_log(&logger.with_retained_error(Some(crate::utility_error_slice::SourceRetainedError::from_original(error))),
+                        LogLevel::Error, "could not load TLS certs; keeping old one"),
                     Ok(certificate) => {
                         let mut certs = certificates.certs.lock().unwrap_or_else(|error| error.into_inner());
                         *certs = Some(certificate);
@@ -77,9 +79,10 @@ impl Server {
         match fswatch::Watch(&self.runtime, &self.logger, Path::new(tlsDir), 1_000_000_000, process) {
             Ok(handle) => Ok(handle),
             Err(error) => {
-                self.runtime.emit_source_log(&self.logger.with_error(Some(error.as_ref())), LogLevel::Fatal, "could not create watcher for TLS certs");
+                let error = crate::utility_error_slice::SourceRetainedError::from_original(error);
+                self.runtime.emit_source_log(&self.logger.with_error(Some(&error)), LogLevel::Fatal, "could not create watcher for TLS certs");
                 self.runtime.exit_source_process(1);
-                Err(error) // retained for an explicitly substituted source ExitFunc
+                Err(error.into_error()) // retained for an explicitly substituted source ExitFunc
             }
         }
     }
@@ -89,7 +92,8 @@ impl Server {
         match self.runtime.run_https_server(Arc::clone(&self.tls), Arc::clone(&self.certServer), &self.Mux,
             &self.port, &self.certFile, &self.keyFile, stop, readHeaderTimeout).await {
             Err(error) if is_server_closed(error.as_ref()) => {
-                self.runtime.emit_source_log(&self.logger.with_error(Some(error.as_ref())), LogLevel::Info, "https server closed"); Ok(())
+                self.runtime.emit_source_log(&self.logger.with_retained_error(Some(crate::utility_error_slice::SourceRetainedError::from_original(error))),
+                    LogLevel::Info, "https server closed"); Ok(())
             }
             Err(error) => Err(self.errs.Wrap(Some(error), &format!("Could not listen on :{}", self.port)).expect("source non-nil error")),
             Ok(()) => Ok(()),

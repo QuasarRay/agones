@@ -43,8 +43,21 @@ impl LogEntry {
         entry.fields.insert(name.into(), SourceLogValue::Json(value.into()));
         entry
     }
-    pub fn with_error(&self, error: Option<&(dyn std::error::Error + Send + Sync)>) -> Self {
-        self.with_field("error", error.map_or(Value::Null, |error| Value::String(error.to_string())))
+    pub fn with_retained_error(&self, error: Option<crate::utility_error_slice::SourceRetainedError>) -> Self {
+        let mut entry = self.clone();
+        entry.fields.insert("error".into(), error.map_or(SourceLogValue::Json(Value::Null), SourceLogValue::Error));
+        entry
+    }
+    /// Borrowed native compatibility. Existing retained/shared interfaces defer
+    /// Error until JSONFormatter; arbitrary borrowed payloads need owner adoption.
+    pub fn with_error(&self, error: Option<&(dyn std::error::Error + Send + Sync + 'static)>) -> Self {
+        match error {
+            None => self.with_retained_error(None),
+            Some(error) => match crate::utility_error_query::SourceErrorCursor::borrowed(error).retained_copy() {
+                Some(error) => self.with_retained_error(Some(error)),
+                None => self.with_field("error", Value::String(error.to_string())),
+            },
+        }
     }
     pub fn with_unserializable_field(&self, source_type: &str) -> Self {
         let mut entry = self.clone();

@@ -117,7 +117,8 @@ impl<Limiter: SourceRateLimiter> WorkerQueue<Limiter> {
             Ok(key) => Some(key),
             Err(error) => {
                 let error = self.errs.Wrap(Some(error), "Error creating key for object").expect("non-nil key error");
-                runtime::HandleError(&self.queue.source_queue_runtime, Some(&object.log_object(&self.logger)), Some(error.as_ref())).await; None
+                let error = crate::utility_error_slice::SourceRetainedError::from_original(error);
+                runtime::HandleError(&self.queue.source_queue_runtime, Some(&object.log_object(&self.logger)), Some(&error)).await; None
             }
         }
     }
@@ -151,7 +152,8 @@ impl<Limiter: SourceRateLimiter> WorkerQueue<Limiter> {
         self.queue.source_queue_runtime.emit_source_log(&object.with_log_field(&self.logger, &self.keyName), LogLevel::Debug, "Processing");
         let Some(key) = object.string_key().cloned() else {
             let error = self.errs.New(format!("expected string in queue, but got {}", object.source_type()));
-            runtime::HandleError(&self.queue.source_queue_runtime, Some(&object.with_log_field(&self.logger, &self.keyName)), Some(error.as_ref())).await;
+            let error = crate::utility_error_slice::SourceRetainedError::from_original(error);
+            runtime::HandleError(&self.queue.source_queue_runtime, Some(&object.with_log_field(&self.logger, &self.keyName)), Some(&error)).await;
             self.queue.source_queue_forget(&object); return true;
         };
         let handler = self.SyncHandler.read().unwrap_or_else(|error| error.into_inner()).clone().unwrap_or_else(||
@@ -163,7 +165,7 @@ impl<Limiter: SourceRateLimiter> WorkerQueue<Limiter> {
                 // classifiers, loggers and retry await share that data owner.
                 let error = crate::utility_error_slice::SourceRetainedError::from_original(error);
                 if self.queue.source_queue_expected_error(&error) {
-                    self.queue.source_queue_runtime.emit_source_error_log(&object.with_log_field(&self.logger, &self.keyName), LogLevel::Trace, &error);
+                    self.queue.source_queue_runtime.emit_source_error_log(&object.with_log_field(&self.logger, &self.keyName), LogLevel::Trace, b"", &error);
                 } else {
                     runtime::HandleError(&self.queue.source_queue_runtime, Some(&object.with_log_field(&self.logger, &self.keyName)), Some(&error)).await;
                 }

@@ -22,6 +22,9 @@ impl SourceRetainedError {
     }
     pub fn original(&self) -> &(dyn Error + Send + Sync + 'static) { self.original.as_ref().as_ref() }
     pub fn into_error(self) -> BoxError { Box::new(self) }
+    /// Native convenience identity for retained-field descriptors. Source
+    /// error equality uses its declared type/comparability operation instead.
+    pub(crate) fn native_same_owner(&self, other: &Self) -> bool { Arc::ptr_eq(&self.original, &other.original) }
 }
 impl SourceFmtValueCopy for SourceRetainedError {
     fn source_fmt_copy(&self) -> Self { Self { original: Arc::clone(&self.original) } }
