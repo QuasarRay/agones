@@ -9,8 +9,9 @@ use crate::{
     errors::BoxError,
     utility_format_scan::{SourcePrintfInteger, SourcePrintfResolvedCounts},
     utility_format_print::{SourcePrintfArguments, SourcePrintfOutput, SourcePrintfMode,
-        print_arguments, write_nil, append_rune},
-    utility_format_integer::{SourcePrintfIntegerValue, write_integer, write_number},
+        print_arguments, write_nil},
+    utility_format_integer::{SourcePrintfIntegerValue, write_integer},
+    utility_format_pointer::write_source_address,
     utility_format_text::write_text,
     utility_format_bool::write_bool,
     utility_format_methods::{SourcePrintfMethodViews, SourcePrintfRecursion, SourceErrorMethod, write_source_value},
@@ -24,6 +25,7 @@ use crate::{
 
 pub trait SourcePrintfValue: SourcePrintfMethodViews + Sized {
     const SOURCE_KIND_UINT8: bool = false;
+    const SOURCE_DEREFERENCE_AT_ROOT: bool = false;
     fn source_type(&self) -> &str;
     fn source_integer(&self) -> SourcePrintfInteger { SourcePrintfInteger::Other }
     fn source_is_nil(&self) -> bool { false }
@@ -230,24 +232,27 @@ fn write_error_pointer(output: &mut Vec<u8>, error: &(dyn Error + 'static), sour
     // This is the retained native allocation's address. Full Go heap/word/
     // pointer/ABI binding remains required; no source-address evidence exists.
     let address = error as *const (dyn Error + 'static) as *const () as usize as u64;
-    let mut number = state.value_state();
-    if verb == 'v' && state.flags.sharp_v {
-        append(output, b"(")?; append(output, source_type.as_bytes())?; append(output, b")(")?;
-        number.flags.sharp = true;
-        write_number(output, address, false, 16, 'v', false, &number)?;
-        append(output, b")")
-    } else if verb == 'v' || verb == 'p' {
-        number.flags.sharp = !state.flags.sharp;
-        write_number(output, address, false, 16, 'v', false, &number)
-    } else if matches!(verb, 'b' | 'o' | 'd' | 'x' | 'X') {
-        write_integer(output, address, false, source_type, verb, state, profile)
-    } else {
-        append(output, b"%!")?; append_rune(output, verb)?; append(output, b"(")?;
-        append(output, source_type.as_bytes())?; append(output, b"=")?;
-        if canonical_error_fields(error).is_some() {
-            write_canonical_reflection(output, error, source_type, 'v', state, profile)?;
-        } else { append(output, format!("{error:?}").as_bytes())?; }
-        append(output, b")")
+    let value = CanonicalPointerValue { error, source_type };
+    write_source_address(&value, address, verb, state, profile, SourcePrintfMode::Sprintf,
+        SourcePrintfRecursion { depth: 1, can_interface: false, ..SourcePrintfRecursion::default() }, output)
+}
+
+#[derive(Deftly)]
+#[derive_deftly(SourcePrintfInterfaces)]
+struct CanonicalPointerValue<'a> { error: &'a (dyn Error + 'static), source_type: &'a str }
+impl SourcePrintfValue for CanonicalPointerValue<'_> {
+    fn source_type(&self) -> &str { self.source_type }
+    fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
+        mode: SourcePrintfMode, recursion: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+    {
+        if recursion.depth == 0 && verb != 'p' {
+            if canonical_error_fields(self.error).is_some() {
+                return write_canonical_reflection(output, self.error, self.source_type, verb, state, profile);
+            }
+            return append(output, format!("{:?}", self.error).as_bytes());
+        }
+        let address = self.error as *const (dyn Error + 'static) as *const () as usize as u64;
+        write_source_address(self, address, verb, state, profile, mode, recursion, output)
     }
 }
 
@@ -267,6 +272,7 @@ fn write_canonical_reflection(output: &mut Vec<u8>, error: &(dyn Error + 'static
 #[derive_deftly(SourcePrintfInterfaces)]
 struct CanonicalStructFields<'a> { fields: CanonicalErrorFields<'a>, source_type: &'a str }
 impl SourcePrintfValue for CanonicalStructFields<'_> {
+    const SOURCE_DEREFERENCE_AT_ROOT: bool = true;
     fn source_type(&self) -> &str { self.source_type }
     fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
         mode: SourcePrintfMode, recursion: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>

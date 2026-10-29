@@ -9,7 +9,7 @@ use crate::{
     utility_format_methods::{SourcePrintfRecursion, SourcePrintfMethodViews, SourcePrintfInterfaces, write_source_value, bad_verb},
     utility_format_print::SourcePrintfMode,
     utility_format_scan::SourcePrintfResolvedCounts,
-    utility_format_integer::write_number,
+    utility_format_pointer::write_source_address,
     utility_format_text::write_text,
     utility_go_quote::append,
     utility_http::{SourceUnicodeProfile, SourceSliceAllocationError, reserve_source_array},
@@ -30,6 +30,7 @@ impl<'a> SourcePrintfSlice<'a, i32> {
     pub fn runes(values: Option<&'a [i32]>) -> Self { Self { values, source_type: "[]int32" } }
 }
 impl<Value: SourcePrintfValue> SourcePrintfValue for SourcePrintfSlice<'_, Value> {
+    const SOURCE_DEREFERENCE_AT_ROOT: bool = true;
     fn source_type(&self) -> &str { self.source_type }
     fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
         mode: SourcePrintfMode, recursion: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
@@ -38,8 +39,7 @@ impl<Value: SourcePrintfValue> SourcePrintfValue for SourcePrintfSlice<'_, Value
             // Original native backing address only. Full source slice-header,
             // zero-base/heap/address/word/ABI identity remains required.
             let address = self.values.map_or(0, |values| values.as_ptr() as usize as u64);
-            let mut number = state.value_state(); number.flags.sharp = !state.flags.sharp;
-            return write_number(output, address, false, 16, 'v', false, &number);
+            return write_source_address(self, address, verb, state, profile, mode, recursion, output);
         }
         write_sequence(self.values.unwrap_or(&[]), self.values.is_none(), false, true,
             self.source_type, verb, state, profile, mode, recursion, output)
@@ -73,6 +73,7 @@ impl<Value: SourcePrintfStructFields> SourcePrintfMethodViews for SourcePrintfSt
     fn source_methods(&self) -> SourcePrintfInterfaces<'_> { self.0.source_methods() }
 }
 impl<Value: SourcePrintfStructFields> SourcePrintfValue for SourcePrintfStruct<Value> {
+    const SOURCE_DEREFERENCE_AT_ROOT: bool = true;
     fn source_type(&self) -> &str { self.0.source_type() }
     fn source_error_view(&self) -> Option<&(dyn std::error::Error + Send + Sync + 'static)> { self.0.source_error_view() }
     fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
@@ -100,6 +101,7 @@ pub fn write_source_struct<Value: SourcePrintfStructFields>(value: &Value, verb:
     append(output, b"}")
 }
 impl<Value: SourcePrintfValue, const LENGTH: usize> SourcePrintfValue for SourcePrintfArray<'_, Value, LENGTH> {
+    const SOURCE_DEREFERENCE_AT_ROOT: bool = true;
     fn source_type(&self) -> &str { self.source_type }
     fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
         mode: SourcePrintfMode, recursion: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>

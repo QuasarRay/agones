@@ -31,6 +31,7 @@ impl<Value: SourcePrintfValue, Function> SourcePrintfValue for SourcePrintfForma
 where Function: for<'a, 'b, 'c> Fn(&'a Value, &'b mut SourceFormatState<'c>, char) -> Result<(), SourceSliceAllocationError>,
 {
     const SOURCE_KIND_UINT8: bool = Value::SOURCE_KIND_UINT8;
+    const SOURCE_DEREFERENCE_AT_ROOT: bool = Value::SOURCE_DEREFERENCE_AT_ROOT;
     fn source_type(&self) -> &str { self.value.source_type() }
     fn source_integer(&self) -> SourcePrintfInteger { self.value.source_integer() }
     fn source_is_nil(&self) -> bool { self.value.source_is_nil() }
@@ -63,6 +64,7 @@ macro_rules! string_method_adapter {
         where Function: for<'a> Fn(&'a Value) -> Cow<'a, [u8]>,
         {
             const SOURCE_KIND_UINT8: bool = Value::SOURCE_KIND_UINT8;
+            const SOURCE_DEREFERENCE_AT_ROOT: bool = Value::SOURCE_DEREFERENCE_AT_ROOT;
             fn source_type(&self) -> &str { self.value.source_type() }
             fn source_integer(&self) -> SourcePrintfInteger { self.value.source_integer() }
             fn source_is_nil(&self) -> bool { self.value.source_is_nil() }
@@ -105,6 +107,7 @@ impl<Value> SourcePrintfValue for SourcePrintfOwnedError<Value>
 where Value: SourcePrintfValue + SourceErrorMethod + Error + SourceLogType + Send + Sync + 'static,
 {
     const SOURCE_KIND_UINT8: bool = Value::SOURCE_KIND_UINT8;
+    const SOURCE_DEREFERENCE_AT_ROOT: bool = Value::SOURCE_DEREFERENCE_AT_ROOT;
     fn source_type(&self) -> &str { Value::SOURCE_LOG_TYPE }
     fn source_integer(&self) -> SourcePrintfInteger { self.error.source_integer() }
     // A typed error interface is non-nil even when its receiver pointer is nil.
