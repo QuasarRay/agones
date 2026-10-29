@@ -5,7 +5,7 @@
 // Copyright The Go Authors. BSD-3-Clause; see ../GO-LICENSE.
 use crate::{
     utility_format_scan::{SourcePrintfInteger, SourcePrintfResolvedCounts},
-    utility_format_print::{SourcePrintfArguments, print_arguments, write_plain, truncate_runes, pad, append_rune},
+    utility_format_print::{SourcePrintfArguments, SourcePrintfMode, print_arguments, write_plain, truncate_runes, pad, append_rune},
     utility_go_quote::{append, source_can_backquote, try_source_go_quote_with_ascii},
     utility_http::{SourceUnicodeProfile, SourceSliceAllocationError},
 };
@@ -18,7 +18,7 @@ pub use crate::utility_format_print::SourcePrintfOutput as SourceTextPrintf;
 pub fn try_source_text_printf(format: &[u8], arguments: &[&[u8]], profile: SourceUnicodeProfile)
     -> Result<SourceTextPrintf, SourceSliceAllocationError>
 {
-    print_arguments(format, &TextArguments(arguments), profile)
+    print_arguments(format, &TextArguments(arguments), profile, SourcePrintfMode::Sprintf)
 }
 
 struct TextArguments<'a>(&'a [&'a [u8]]);
@@ -27,13 +27,13 @@ impl SourcePrintfArguments for TextArguments<'_> {
     fn type_name(&self, _: usize) -> &str { "string" }
     fn integer(&self, _: usize) -> SourcePrintfInteger { SourcePrintfInteger::Other }
     fn write_value(&self, index: usize, verb: char, state: &SourcePrintfResolvedCounts,
-        profile: SourceUnicodeProfile, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+        profile: SourceUnicodeProfile, _: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
     {
         write_text(output, self.0[index], verb, state, profile)
     }
 }
 
-fn write_text(output: &mut Vec<u8>, value: &[u8], verb: char, state: &SourcePrintfResolvedCounts,
+pub(crate) fn write_text(output: &mut Vec<u8>, value: &[u8], verb: char, state: &SourcePrintfResolvedCounts,
     profile: SourceUnicodeProfile) -> Result<(), SourceSliceAllocationError>
 {
     match verb {

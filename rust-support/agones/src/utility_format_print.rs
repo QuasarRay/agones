@@ -10,14 +10,18 @@ use crate::{
     utility_http::{SourceUnicodeProfile, SourceSliceAllocationError},
 };
 
-/// Concrete views supply source scalar kind/value operations. The Sized
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum SourcePrintfMode { Sprintf, Errorf }
+
+/// Concrete views supply source kind/value operations. The Sized
 /// bound on print_arguments keeps selection static at every caller.
-pub(crate) trait SourcePrintfArguments {
+pub trait SourcePrintfArguments {
     fn len(&self) -> usize;
     fn type_name(&self, index: usize) -> &str;
     fn integer(&self, index: usize) -> SourcePrintfInteger;
+    fn is_nil(&self, _: usize) -> bool { false }
     fn write_value(&self, index: usize, verb: char, state: &SourcePrintfResolvedCounts,
-        profile: SourceUnicodeProfile, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>;
+        profile: SourceUnicodeProfile, mode: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>;
 }
 
 pub struct SourcePrintfOutput { bytes: Vec<u8>, plan: SourcePrintfPlan }
@@ -28,7 +32,7 @@ impl SourcePrintfOutput {
 }
 
 pub(crate) fn print_arguments<Arguments: SourcePrintfArguments>(format: &[u8], arguments: &Arguments,
-    profile: SourceUnicodeProfile) -> Result<SourcePrintfOutput, SourceSliceAllocationError>
+    profile: SourceUnicodeProfile, mode: SourcePrintfMode) -> Result<SourcePrintfOutput, SourceSliceAllocationError>
 {
     let plan = SourcePrintfPlan::scan(format, arguments.len());
     let mut output = Vec::new();
@@ -54,9 +58,10 @@ pub(crate) fn print_arguments<Arguments: SourcePrintfArguments>(format: &[u8], a
             }
             SourcePrintfOutcome::Value { argument } => {
                 let verb = directive.verb.expect("scanner supplies a value verb");
-                // printArg handles source type names before value dispatch.
-                if verb == 'T' { write_plain(&mut output, arguments.type_name(argument).as_bytes(), &state)?; }
-                else { arguments.write_value(argument, verb, &state, profile, &mut output)?; }
+                // A nil interface is handled even before the type-name verb.
+                if arguments.is_nil(argument) { write_nil(&mut output, verb, &state)?; }
+                else if verb == 'T' { write_plain(&mut output, arguments.type_name(argument).as_bytes(), &state)?; }
+                else { arguments.write_value(argument, verb, &state, profile, mode, &mut output)?; }
             }
         }
     }
@@ -66,13 +71,23 @@ pub(crate) fn print_arguments<Arguments: SourcePrintfArguments>(format: &[u8], a
             precision: None, diagnostics: Vec::new() };
         for (offset, index) in extra.enumerate() {
             if offset != 0 { append(&mut output, b", ")?; }
+            if arguments.is_nil(index) { append(&mut output, b"<nil>")?; continue; }
             append(&mut output, arguments.type_name(index).as_bytes())?;
             append(&mut output, b"=")?;
-            arguments.write_value(index, 'v', &state, profile, &mut output)?;
+            arguments.write_value(index, 'v', &state, profile, mode, &mut output)?;
         }
         append(&mut output, b")")?;
     }
     Ok(SourcePrintfOutput { bytes: output, plan })
+}
+
+pub(crate) fn write_nil(output: &mut Vec<u8>, verb: char, state: &SourcePrintfResolvedCounts)
+    -> Result<(), SourceSliceAllocationError>
+{
+    match verb {
+        'v' | 'T' => pad(output, b"<nil>", state),
+        _ => { append(output, b"%!")?; append_rune(output, verb)?; append(output, b"(<nil>)") }
+    }
 }
 
 pub(crate) fn write_plain(output: &mut Vec<u8>, value: &[u8], state: &SourcePrintfResolvedCounts)

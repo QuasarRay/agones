@@ -72,6 +72,19 @@ impl SourceFormat {
         let output = crate::utility_format_bool::try_source_bool_printf(format, arguments, profile)?;
         Ok(Self::from_scalar_output(output, arguments.len()))
     }
+    /// Render borrowed tuple fields, then move their original errors into
+    /// argument-indexed ownership. No error payload is cloned or reboxed.
+    pub fn arguments<Arguments: crate::utility_format_arguments::SourcePrintfOwnedArguments>(format: &[u8],
+        arguments: Arguments, profile: crate::utility_http::SourceUnicodeProfile)
+        -> Result<Self, crate::utility_http::SourceSliceAllocationError>
+    {
+        let output = crate::utility_format_arguments::try_source_arguments_printf(format, &arguments, profile,
+            crate::utility_format_print::SourcePrintfMode::Errorf)?;
+        let (rendered, plan) = output.into_parts();
+        let (wrapped_positions, reordered) = plan.into_wrapping();
+        let operands = arguments.into_error_operands();
+        Ok(Self { rendered: SourceErrorMessage::Bytes(rendered), operands, wrapped_positions, reordered, origin_prefixed: false })
+    }
     fn from_scalar_output(output: crate::utility_format_print::SourcePrintfOutput, arguments: usize) -> Self {
         let (rendered, plan) = output.into_parts();
         let (wrapped_positions, reordered) = plan.into_wrapping();
@@ -194,6 +207,22 @@ pub fn source_error_bytes(error: &(dyn Error + 'static)) -> Option<&[u8]> {
     error.downcast_ref::<FormattedError>().map(|error| error.message.as_bytes())
 }
 
+/// Borrowed fields for the three canonical source structs, for their concrete
+/// reflection formatter. This does not add a general Go value hierarchy.
+pub(crate) enum CanonicalErrorFields<'a> {
+    Message(&'a [u8]),
+    Wrapped { message: &'a [u8], source: Option<&'a (dyn Error + 'static)> },
+    Multiple { message: &'a [u8], errors: Option<&'a [BoxError]> },
+}
+pub(crate) fn canonical_error_fields(error: &(dyn Error + 'static)) -> Option<CanonicalErrorFields<'_>> {
+    if let Some(error) = error.downcast_ref::<MessageError>() { return Some(CanonicalErrorFields::Message(error.0.as_bytes())); }
+    if let Some(error) = error.downcast_ref::<WrappedError>() {
+        return Some(CanonicalErrorFields::Wrapped { message: error.message.as_bytes(), source: error.source() });
+    }
+    error.downcast_ref::<FormattedError>().map(|error| CanonicalErrorFields::Multiple {
+        message: error.message.as_bytes(), errors: error.wrapped.as_deref() })
+}
+
 impl crate::errors::Errors {
     pub fn new_bytes(&self, message: &[u8]) -> Result<BoxError, crate::utility_http::SourceSliceAllocationError> {
         let mut prefixed = self.prefix("").into_bytes();
@@ -235,6 +264,17 @@ impl crate::errors::Errors {
         Ok(self.Errorf(result))
     }
 
+    pub fn errorf_arguments<Arguments: crate::utility_format_arguments::SourcePrintfOwnedArguments>(&self, format: &[u8],
+        arguments: Arguments, profile: crate::utility_http::SourceUnicodeProfile)
+        -> Result<BoxError, crate::utility_http::SourceSliceAllocationError>
+    {
+        let mut prefixed = self.prefix("").into_bytes();
+        crate::utility_go_quote::append(&mut prefixed, format)?;
+        let mut result = SourceFormat::arguments(&prefixed, arguments, profile)?;
+        result.origin_prefixed = true;
+        Ok(self.Errorf(result))
+    }
+
     /// Source Wrapf returns on nil before parsing or rendering its format.
     /// Sprintf's result receives the origin prefix as data, then the separate
     /// final %s: %w factory captures that message and the original error.
@@ -262,6 +302,16 @@ impl crate::errors::Errors {
     {
         let Some(error) = error else { return Ok(None); };
         let formatted = crate::utility_format_bool::try_source_bool_printf(format, arguments, profile)?;
+        self.wrap_source_formatted(error, formatted.bytes()).map(Some)
+    }
+
+    pub fn wrapf_arguments<Arguments: crate::utility_format_print::SourcePrintfArguments>(&self, error: Option<BoxError>,
+        format: &[u8], arguments: Arguments, profile: crate::utility_http::SourceUnicodeProfile)
+        -> Result<Option<BoxError>, crate::utility_http::SourceSliceAllocationError>
+    {
+        let Some(error) = error else { return Ok(None); };
+        let formatted = crate::utility_format_arguments::try_source_arguments_printf(format, &arguments, profile,
+            crate::utility_format_print::SourcePrintfMode::Sprintf)?;
         self.wrap_source_formatted(error, formatted.bytes()).map(Some)
     }
 

@@ -5,7 +5,7 @@
 // BSD-3-Clause; see ../GO-LICENSE.
 use crate::{
     utility_format_scan::{SourcePrintfInteger, SourcePrintfResolvedCounts},
-    utility_format_print::{SourcePrintfArguments, SourcePrintfOutput, print_arguments, pad, write_padding, append_rune},
+    utility_format_print::{SourcePrintfArguments, SourcePrintfOutput, SourcePrintfMode, print_arguments, pad, write_padding, append_rune},
     utility_go_quote::{append, try_source_go_quote_rune},
     utility_http::{SourceUnicodeProfile, SourceSliceAllocationError},
 };
@@ -46,7 +46,7 @@ impl<Value: SourcePrintfIntegerValue> SourcePrintfArguments for IntegerArguments
     fn type_name(&self, _: usize) -> &str { Value::SOURCE_TYPE }
     fn integer(&self, index: usize) -> SourcePrintfInteger { self.0[index].source_count() }
     fn write_value(&self, index: usize, verb: char, state: &SourcePrintfResolvedCounts,
-        profile: SourceUnicodeProfile, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+        profile: SourceUnicodeProfile, _: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
     {
         write_integer(output, self.0[index].source_bits(), Value::SIGNED, Value::SOURCE_TYPE, verb, state, profile)
     }
@@ -55,10 +55,10 @@ impl<Value: SourcePrintfIntegerValue> SourcePrintfArguments for IntegerArguments
 pub fn try_source_integer_printf<Value: SourcePrintfIntegerValue>(format: &[u8], arguments: &[Value],
     profile: SourceUnicodeProfile) -> Result<SourcePrintfOutput, SourceSliceAllocationError>
 {
-    print_arguments(format, &IntegerArguments(arguments), profile)
+    print_arguments(format, &IntegerArguments(arguments), profile, SourcePrintfMode::Sprintf)
 }
 
-fn write_integer(output: &mut Vec<u8>, bits: u64, signed: bool, type_name: &str, verb: char,
+pub(crate) fn write_integer(output: &mut Vec<u8>, bits: u64, signed: bool, type_name: &str, verb: char,
     state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile) -> Result<(), SourceSliceAllocationError>
 {
     match verb {
@@ -100,7 +100,7 @@ fn digits(mut value: u64, base: u64, upper: bool, storage: &mut [u8; 64]) -> &[u
     }
 }
 
-fn write_number(output: &mut Vec<u8>, bits: u64, signed: bool, base: u64, verb: char,
+pub(crate) fn write_number(output: &mut Vec<u8>, bits: u64, signed: bool, base: u64, verb: char,
     upper: bool, state: &SourcePrintfResolvedCounts) -> Result<(), SourceSliceAllocationError>
 {
     let negative = signed && (bits as i64) < 0;
