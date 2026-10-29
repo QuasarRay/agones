@@ -328,6 +328,8 @@ define_derive_deftly! {
             crate::utility_klog::SourceKlogRecordEmitterComponent: crate::utility_klog::EmitNativeSourceKlogRecord,
             crate::utility_klog_daemon::SourceKlogFlushDaemonControllerComponent:
                 crate::utility_klog_daemon::ControlNativeSourceKlogFlushDaemon,
+            crate::utility_klog_file_env::SourceKlogFileInitializerComponent:
+                crate::utility_klog_file_env::InitializeOwnedSourceKlogFiles,
             crate::utility_logging::SourceErrorBackoffGetterComponent:
                 ::cgp::prelude::UseField<::cgp::prelude::Symbol!("source_error_backoff")>,
             crate::utility_error_handlers::SourceErrorHandlerStateGetterComponent:

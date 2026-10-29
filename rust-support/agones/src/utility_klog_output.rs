@@ -49,19 +49,20 @@ impl Default for SourceKlogHeaderSettings {
 pub struct SourceKlogOutputFlags {
     pub to_stderr: bool, pub also_to_stderr: bool, pub legacy_stderr_threshold_behavior: bool,
     pub stderr_threshold: i32, pub also_stderr_threshold: i32, pub one_output: bool,
-    pub log_file: SourceFmtSharedString,
+    pub log_file: SourceFmtSharedString, pub log_dir: SourceFmtSharedString,
     pub log_file_max_size_mb: u64, pub max_size: u64, pub skip_log_headers: bool, pub flush_interval: i64,
 }
 impl Clone for SourceKlogOutputFlags {
     fn clone(&self) -> Self { Self { to_stderr: self.to_stderr, also_to_stderr: self.also_to_stderr,
         legacy_stderr_threshold_behavior: self.legacy_stderr_threshold_behavior, stderr_threshold: self.stderr_threshold,
         also_stderr_threshold: self.also_stderr_threshold, one_output: self.one_output, log_file: self.log_file.source_fmt_copy(),
-        log_file_max_size_mb: self.log_file_max_size_mb, max_size: self.max_size,
+        log_dir: self.log_dir.source_fmt_copy(), log_file_max_size_mb: self.log_file_max_size_mb, max_size: self.max_size,
         skip_log_headers: self.skip_log_headers, flush_interval: self.flush_interval } }
 }
 impl Default for SourceKlogOutputFlags {
     fn default() -> Self { Self { to_stderr: true, also_to_stderr: false, legacy_stderr_threshold_behavior: true,
         stderr_threshold: 2, also_stderr_threshold: 0, one_output: false, log_file: SourceFmtSharedString(Arc::from(&b""[..])),
+        log_dir: SourceFmtSharedString(Arc::from(&b""[..])),
         log_file_max_size_mb: 1800, max_size: 1800 * 1024 * 1024, skip_log_headers: false, flush_interval: 0 } }
 }
 struct OutputData {

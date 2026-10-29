@@ -3,7 +3,7 @@
 // Go1.26.5 bufio/bufio.go, Copyright The Go Authors, BSD-3-Clause
 // (../GO-LICENSE). Native filesystem/path/error/clock/GC/ABI/race profiles
 // remain required. Actual compiled file effects are data, not a registry.
-use std::{fs::{File, OpenOptions}, io::Write, path::Path, sync::{Arc, Mutex, OnceLock}};
+use std::{fs::{File, OpenOptions}, io::Write, path::Path, sync::{Arc, Mutex, OnceLock, RwLock}};
 use crate::{utility_runtime::UtilityRuntimeContext,
     utility_klog::SourceKlogSeverity,
     utility_klog_output::{SourceKlogOutputWriter, SourceKlogSyncBuffer, SourceKlogSyncTarget,
@@ -74,7 +74,7 @@ fn short_write() -> SourceRetainedError {
     ERROR.get_or_init(|| message_error(b"short write".to_vec())).source_fmt_copy()
 }
 pub struct SourceKlogBinaryInfo {
-    pub host: SourceFmtSharedString, pub compiler: SourceFmtSharedString, pub version: SourceFmtSharedString,
+    pub host: Arc<RwLock<SourceFmtSharedString>>, pub compiler: SourceFmtSharedString, pub version: SourceFmtSharedString,
     pub operating_system: SourceFmtSharedString, pub architecture: SourceFmtSharedString,
 }
 pub type SourceKlogCreateFile = Arc<dyn Fn(&UtilityRuntimeContext, &SourceKlogOutputFlags,
@@ -166,7 +166,8 @@ impl SourceKlogFileBuffer {
         data.writer = Some(BufferedWriter::new(Arc::clone(&file))?);
         if flags.skip_log_headers { return Ok(None); }
         let mut header = b"Log file created at: ".to_vec(); append(&mut header, &now.klog_file_time()?)?;
-        append(&mut header, b"\nRunning on machine: ")?; append(&mut header, &self.bindings.binary.host.0)?;
+        append(&mut header, b"\nRunning on machine: ")?;
+        append(&mut header, &self.bindings.binary.host.read().unwrap_or_else(|e| e.into_inner()).0)?;
         append(&mut header, b"\nBinary: Built with ")?; append(&mut header, &self.bindings.binary.compiler.0)?;
         append(&mut header, b" ")?; append(&mut header, &self.bindings.binary.version.0)?;
         append(&mut header, b" for ")?; append(&mut header, &self.bindings.binary.operating_system.0)?;
