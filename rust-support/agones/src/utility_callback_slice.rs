@@ -29,6 +29,12 @@ impl<Value: Default + SourceFmtValueCopy> SourceCallbackSlice<Value> {
     pub fn is_nil(&self) -> bool { self.backing.is_none() }
     pub fn len(&self) -> usize { self.length }
     pub fn capacity(&self) -> usize { self.capacity }
+    pub fn allocation_profile(&self) -> HeaderAllocationProfile { self.profile }
+    /// Native backing identity for existing pointer formatting projections.
+    /// The cells are Rust hosting storage, not the Go element layout/heap.
+    pub(crate) fn native_backing_address(&self) -> u64 {
+        self.backing.as_ref().map_or(0, |backing| backing.cells.as_ptr() as usize as u64)
+    }
     pub fn get(&self, index: SourceErrorSliceIndex) -> Value {
         let index = self.index(index);
         self.backing.as_ref().expect("nonempty callback slice has backing").cells[self.start + index]

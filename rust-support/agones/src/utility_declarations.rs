@@ -83,6 +83,14 @@ define_derive_deftly! {
                 let klog = crate::utility_klog_dispatch::SourceKlogInterfaces { json_encoder: Some(self), ..methods.klog };
                 let methods = crate::utility_format_methods::SourcePrintfInterfaces { klog, ..methods };
             }}
+            ${if tmeta(source_slog_value) {
+                let klog = crate::utility_klog_dispatch::SourceKlogInterfaces { slog_value: Some(self), ..methods.klog };
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { klog, ..methods };
+            }}
+            ${if tmeta(source_slog_log_valuer) {
+                let klog = crate::utility_klog_dispatch::SourceKlogInterfaces { log_valuer: Some(self), ..methods.klog };
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { klog, ..methods };
+            }}
             methods
         }
     }
@@ -106,6 +114,10 @@ define_derive_deftly! {
             }}
             ${if tmeta(source_klog_json_encoder) {
                 let klog = crate::utility_klog_dispatch::SourceKlogInterfaces { json_encoder: Some(self), ..methods.klog };
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { klog, ..methods };
+            }}
+            ${if tmeta(source_slog_log_valuer) {
+                let klog = crate::utility_klog_dispatch::SourceKlogInterfaces { log_valuer: Some(self), ..methods.klog };
                 let methods = crate::utility_format_methods::SourcePrintfInterfaces { klog, ..methods };
             }}
             methods
@@ -208,6 +220,7 @@ define_derive_deftly! {
         pub fn is_nil(&self) -> bool { self.slice.is_nil() }
         pub fn len(&self) -> usize { self.slice.len() }
         pub fn capacity(&self) -> usize { self.slice.capacity() }
+        pub fn allocation_profile(&self) -> crate::utility_http::HeaderAllocationProfile { self.slice.allocation_profile() }
         pub fn get(&self, index: usize) -> ${tmeta(source_slice_value) as ty} {
             self.get_source(crate::utility_error_slice::SourceErrorSliceIndex::unsigned(index as u64))
         }

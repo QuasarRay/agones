@@ -22,6 +22,7 @@ trait ErrorArgumentData: Send + Sync {
     fn is_nil(&self) -> bool;
     fn methods(&self) -> SourcePrintfInterfaces<'_>;
     fn write(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
+        mode: SourcePrintfMode, recursion: SourcePrintfRecursion,
         output: &mut Vec<u8>) -> Option<Result<(), SourceSliceAllocationError>>;
 }
 struct TypedErrorArgument<Value>(Value);
@@ -31,8 +32,9 @@ impl<Value: SourcePrintfValue + Send + Sync + 'static> ErrorArgumentData for Typ
     fn is_nil(&self) -> bool { self.0.source_is_nil() }
     fn methods(&self) -> SourcePrintfInterfaces<'_> { self.0.source_methods() }
     fn write(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
+        mode: SourcePrintfMode, recursion: SourcePrintfRecursion,
         output: &mut Vec<u8>) -> Option<Result<(), SourceSliceAllocationError>>
-    { Some(write_source_value(&self.0, verb, state, profile, SourcePrintfMode::Sprintf, SourcePrintfRecursion::default(), output)) }
+    { Some(write_source_value(&self.0, verb, state, profile, mode, recursion, output)) }
 }
 struct NativeErrorArgument<Value>(Value);
 impl<Value: Any + Send + Sync> ErrorArgumentData for NativeErrorArgument<Value> {
@@ -40,7 +42,7 @@ impl<Value: Any + Send + Sync> ErrorArgumentData for NativeErrorArgument<Value> 
     fn source_type(&self) -> Option<&str> { None }
     fn is_nil(&self) -> bool { false }
     fn methods(&self) -> SourcePrintfInterfaces<'_> { SourcePrintfInterfaces::default() }
-    fn write(&self, _: char, _: &SourcePrintfResolvedCounts, _: SourceUnicodeProfile,
+    fn write(&self, _: char, _: &SourcePrintfResolvedCounts, _: SourceUnicodeProfile, _: SourcePrintfMode, _: SourcePrintfRecursion,
         _: &mut Vec<u8>) -> Option<Result<(), SourceSliceAllocationError>> { None }
 }
 /// Per-argument interface data retains an actual compiled value. Copying the
@@ -69,10 +71,12 @@ impl SourceErrorArgument {
     }
     pub fn try_write(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
         output: &mut Vec<u8>) -> Option<Result<(), SourceSliceAllocationError>>
+    { self.try_write_recursive(verb, state, profile, SourcePrintfMode::Sprintf, SourcePrintfRecursion::default(), output) }
+    pub fn try_write_recursive(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
+        mode: SourcePrintfMode, recursion: SourcePrintfRecursion, output: &mut Vec<u8>) -> Option<Result<(), SourceSliceAllocationError>>
     {
-        match &self.data { Some(data) => data.write(verb, state, profile, output),
-            None => Some(write_source_value(&SourcePrintfNil, verb, state, profile, SourcePrintfMode::Sprintf,
-                SourcePrintfRecursion::default(), output)) }
+        match &self.data { Some(data) => data.write(verb, state, profile, mode, recursion, output),
+            None => Some(write_source_value(&SourcePrintfNil, verb, state, profile, mode, recursion, output)) }
     }
 }
 impl SourceFmtValueCopy for SourceErrorArgument {

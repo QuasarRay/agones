@@ -264,12 +264,12 @@
     "rust-support/agones/source-data/unicode/go1.26.5/tables.go": "6a88d48746c4b2c471cc04ae40559694b734770212e6f5ea5f1962adb0c0bdb1",
     "rust-support/agones/source-data/unicode/go1.27.1/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "rust-support/agones/source-data/unicode/go1.27.1/tables.go": "ac0e5d5d1b58ed4b02d7cb4a0085bdefbdb4f7aae6fadddbc9477f8463da8bd8",
-    "rust-support/agones/src/utility_callback_slice.rs": "6fdc12c0fc044b1ef868fef89d65b34e1ab66246cc0a4dde2eeff3a74e482bce",
+    "rust-support/agones/src/utility_callback_slice.rs": "fe1b5582794aba4bee0f17133a36ed557fb23efaf7de7e130e7a668176afdc98",
     "rust-support/agones/src/utility_crash.rs": "a8b6737513f1070a9a3c9d111759ae1fbfe6bc44520e7308e0f9150b2663b917",
-    "rust-support/agones/src/utility_declarations.rs": "ed745baf723c598543cd2131a8d0e17b91992251bcc5ef3d68803dd1512be226",
+    "rust-support/agones/src/utility_declarations.rs": "9d3db8781928e84df7dc0f3a6a1b987635686f19fd6c5788a5d2fdb0f5bba72d",
     "rust-support/agones/src/utility_error_alias.rs": "005bf2c6b9f833b7d4205f894b6c990df660dd61e5cd2a2078f373de07b01c65",
     "rust-support/agones/src/utility_error_format.rs": "592ca4530182fd87113b2af64465f38f31ca4c1dec3c26b170a10f9eba89fbe0",
-    "rust-support/agones/src/utility_error_handlers.rs": "d4288e78669aac1d8c704b755a985b37536978b17211f537a9de020a9d53ef27",
+    "rust-support/agones/src/utility_error_handlers.rs": "eeb60ff918b1cec754f882e20b72a6e45b8338d7cba9c91ad62a33f17af8d24b",
     "rust-support/agones/src/utility_error_nil.rs": "7903af20d3518ee25e6b8c55972f0832f9702000b4dcdf7b2d788593df5543e2",
     "rust-support/agones/src/utility_error_query.rs": "1e90be8837b58db58dc9a662c5061d9b5b2c494eebe41ca1a1e0fd4c52a4dc68",
     "rust-support/agones/src/utility_error_slice.rs": "8645d31ebbae4d8a0b4d970ab4306b4fa4d4d4e287206d1adc70307f0ab0a8af",
@@ -321,9 +321,9 @@
     "rust-support/agones/src/utility_http_trailers.rs": "6a79b0f83cb592981900f92dcb6dc414e176a38ae3f7dd2c83e7bedbe80ac554",
     "rust-support/agones/src/utility_http_unicode.rs": "db0a657267886ddfe7b905ab8c22e5d1052d7f76ad0a77447ec9d60a0afaca87",
     "rust-support/agones/src/utility_http_url.rs": "9c6fca7c6f52999f31679ba393c494ed3f543e02dbe1a7a6449f26d4b4fbb1c4",
-    "rust-support/agones/src/utility_klog_dispatch.rs": "6863b7df9476758b06b780a2d981d4138f65352291489e518d52a83bb96677e5",
+    "rust-support/agones/src/utility_klog_dispatch.rs": "d8ed7bcba801ada9c13ce6cc1f4e82f464cdfff1428ed003b14761adbbe3b9b8",
     "rust-support/agones/src/utility_klog_values.rs": "4d4c340e808cb9f9ab10d03127b2f0f9ab55abd26c9a25463f2e97acb783db5a",
-    "rust-support/agones/src/utility_lib.rs": "a73d570acc8e7067613c5bfbc42c573dffe727cf392e5582d660a60967086c3b",
+    "rust-support/agones/src/utility_lib.rs": "293d5394172cc222a061df0e20a5ea8ea43ccf034c94268e831b4b46045cd255",
     "rust-support/agones/src/utility_logging.rs": "ff03b507d32fc2623a802b850c8dd42c72246161a07ad37f4cc5cdbdb220c993",
     "rust-support/agones/src/utility_panic.rs": "d340eb417858addae11d63aef37ad3b451e2043544e56e98bcd62b8989f71f92",
     "rust-support/agones/src/utility_queue.rs": "21cf2a5d628aa3ad4dc8d16ff2fdb19f343e864fe74a7087f0a2f50ccc79377b",
@@ -331,6 +331,7 @@
     "rust-support/agones/src/utility_runtime_format.rs": "4d374cc9986204c680b276fbd0396177ae82699b18b698bbfc5a270845fb6dc3",
     "rust-support/agones/src/utility_runtime_panic.rs": "3f23c67ba8d28668e3e7f4ec557e7534b39bc3e53811eca70cebc2cab895ed08",
     "rust-support/agones/src/utility_scope.rs": "dec2d3ea78eb21c855bec39c96efc8d5bb35cc5bbfbee01959049e3de8cf7e63",
+    "rust-support/agones/src/utility_slog_values.rs": "15a2691fa3d4bc93d682e955eb0020c59caf0d4651dc5f451f18ae90afaef3cb",
     "rust-support/agones/src/utility_tls.rs": "47034a6a225137c1d3e732bcd7a4b897d3780d2d7d2ede246f5ada61476d43d8",
     "rust-support/agones/src/utility_trace_error.rs": "df6955fdb4099148dea9db372bd2b5bbb23e9da914f1aa19eeb88242c93c347f"
   },
@@ -367,10 +368,11 @@
   "source_raw_format_scan_owner": "Rust-only SourcePrintfPlan scans original format bytes into literal/directive spans, source flags, width/precision references, ordered star operands, verb outcomes and %w positions. SourceFormat.scanned consumes its wrapping metadata on the existing Errors.Errorf path. Count resolution classifies source integer kinds without user formatting methods. Existing canonical fmt error classes, per-value type views, CGP runtime context and derive-deftly ownership remain canonical. This pure printer control data adds no dynamic Go object layer, effects, tasks, provider registry or competing lifecycle manager.",
   "source_runtime_value_format_owner": "Rust-only utility_runtime_format owns the source Error message bodies and base/reflection formatting for existing runtime.errorString, fixed nil-map runtime.plainError and runtime.boundsError projections. Native Display and known Go-syntax quoting now consume those bodies; the canonical formatter, method/error dispatch and SourceFormat/factory remain shared. utility_panic owns the original data/marker declarations, now deriving actual source method views and value copies. SourceBoundsCode is a transparent byte with all 256 source values and the original named constants; message selection authors the source positive/negative table faults rather than narrowing that domain. Existing static CGP runtime/crash/factory/task composition and derive-deftly source/type/copy declarations stay canonical. No new runtime map, provider/type registry, interpreter, alternative print loop, application manager or resource owner is introduced. Full native/source allocation, GC, ABI, target word, other runtime families and assurance remain required.",
   "source_scalar_format_owner": "Rust-only utility_format_print owns one statically selected borrowed-operand printf control loop and shared byte padding/rune truncation. TextArguments, IntegerArguments<Value> and BoolArguments supply concrete scalar operations without erased values or a runtime registry. utility_format_integer uses one source numeric renderer and macro-declared native signed/unsigned kinds; utility_format_bool retains source boolean precision/width behavior. SourceFormat scalar constructors and typed Errorf/Wrapf bridges consume these real outputs through the existing canonical factory. SourceErrorOrigin and current CGP context/Unicode/runtime/lifecycle ownership remain canonical. No resource/task owner, general Go object model, runtime plugin/provider system or alternative application manager is added.",
+  "source_slog_value_owner": "utility_slog_values owns typed source slog Value num/data, Kind/Attr policy and passive attribute headers using the existing SourceCallbackSlice. SourceSlogLogValuerValue uses derive-deftly SourceKlogAdapter to expose an actual retained per-value LogValue callback. SourcePrintfInterfaces supplies concrete slog.Value identity before Stringer and a separate LogValuer method reference. utility_klog_dispatch owns serialization order/JSON recursion/Resolve invocation; existing CGP crash/Unicode/collection and logger/task providers remain lifecycle/effect owners. SourceSlogStack is per-call frame binding data, not a registry; no native frame binding is supplied by the default formatter, so the panic branch reports that gap rather than inventing Go frames. Native raw field pointer addresses are explicit hosting projections. No competing manager, runtime type/provider table, plugin or Go object interpreter is introduced.",
   "source_text_format_owner": "Rust-only utility_format_text renders pinned Go string operands directly into byte buffers using SourcePrintfPlan, ordered count diagnostics, source text/quote/hex formatting and trailing argument diagnostics. SourceFormat.text retains output bytes and %w positions; Errors.errorf_text prefixes raw format bytes before scanning and enters the existing mirror Errorf factory exactly once through private origin-prefixed control. Errors.new_bytes and nil-short-circuiting wrapf_text provide byte-preserving constructors; canonical MessageError/WrappedError/FormattedError retain byte messages and expose source_error_bytes. Existing SourceErrorOrigin derives source classes, and current CGP runtime/context/Unicode/lifecycle ownership remains canonical. Pure byte transformations add no task, resource manager, dynamic Go object emulation, source provider registry or alternative formatting owner.",
   "source_url": "https://static.crates.io/crates/hyper/hyper-1.12.0.crate",
   "source_worker_crash_owner": "Existing UtilityRuntimeOwner owns one SourceCrashState for the source ReallyCrash flag and PanicHandlers header; its existing UtilityRuntimeContext clones share that Arc. UtilityRuntimeProviders statically binds the state getter, SourceCrashHandler and SourceCrashPanicReporter. SourcePanicHandlers retains nil/empty/fixed backing/offset/length/capacity views and reads each function value outside callback execution, preserving later-slot replacement and header-reassignment behavior. Callback lists are source function/interface data, not effect-provider selection. SourceCrashPanic uses an ephemeral per-invocation rethrow tag to transfer the original owned payload through its active callback boundary. WorkerQueue keeps its existing queue/count/task owners and runs crash handlers inside the wait-style iteration before the outer running-count defer and parent fatal guard. No additional task, registry or lifecycle manager is added.",
-  "timestamp": "2026-10-29T13:52:41.624481+00:00",
+  "timestamp": "2026-10-29T14:17:31.597900+00:00",
   "upstream_archive": "/home/astral/.cargo/registry/cache/index.crates.io-1949cf8c6b5b557f/hyper-1.12.0.crate",
   "upstream_archive_sha256": "2c3e324da4c95177d6291d4c8730197c0d1822f8a9766814a4a44fa5ab797c9c",
   "url_alias_authoring": {
@@ -409,5 +411,5 @@
     "source_text_match": true,
     "version": "1.1.2"
   },
-  "work_base_commit": "10457f58552be4aa861f88a0e90c84c9c586d145"
+  "work_base_commit": "688127436cf2948efa4067a6bb4c43f662732236"
 }

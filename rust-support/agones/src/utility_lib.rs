@@ -36,6 +36,7 @@ mod utility_callback_slice;
 pub mod utility_error_handlers;
 mod utility_klog_values;
 pub mod utility_klog_dispatch;
+pub mod utility_slog_values;
 mod utility_trace_error;
 pub mod utility_error_status;
 pub mod utility_error_format;

@@ -1,13 +1,13 @@
 //! klog value-method ordering and recovery over retained argument data.
 // Adapted from klog/v2/internal/serialize/keyvalues{,_slog}.go, Kubernetes
 // Authors, Apache-2.0, and Go encoding/json/encode.go, Go Authors, BSD-3-Clause
-// (../GO-LICENSE). Full slog.Value/Resolve, arbitrary JSON type bindings and
+// (../GO-LICENSE). Full time/native/ABI and arbitrary JSON type bindings and
 // native buffer/heap/ABI profiles remain required. No registry or lifecycle.
 use std::{fmt, panic::{catch_unwind, AssertUnwindSafe}, sync::Arc};
 use derive_deftly::Deftly;
 use crate::{utility_error_handlers::{SourceErrorArgument, SourceErrorArguments},
     utility_error_slice::SourceRetainedError,
-    utility_format_copy::SourceFmtSharedString,
+    utility_format_copy::{SourceFmtSharedString, SourceFmtValueCopy},
     utility_format_arguments::SourcePrintfValue,
     utility_format_collections::SourcePrintfSlice,
     utility_format_scan::SourcePrintfResolvedCounts,
@@ -43,6 +43,8 @@ pub struct SourceKlogInterfaces<'a> {
     pub text_writer: Option<&'a dyn SourceKlogTextWriter>,
     pub marshaler: Option<&'a dyn SourceKlogMarshaler>,
     pub json_encoder: Option<&'a dyn SourceKlogJsonEncoder>,
+    pub slog_value: Option<&'a crate::utility_slog_values::SourceSlogValue>,
+    pub log_valuer: Option<&'a dyn crate::utility_slog_values::SourceSlogLogValuer>,
 }
 
 #[derive(Debug)]
@@ -66,9 +68,10 @@ pub type SourceKlogAnyToStringHook = Arc<dyn Fn(&SourceErrorArgument) -> Vec<u8>
 pub struct SourceKlogFormatter {
     pub profile: SourceUnicodeProfile,
     pub any_to_string_hook: Option<SourceKlogAnyToStringHook>,
+    pub slog_stack: Option<crate::utility_slog_values::SourceSlogStack>,
 }
 impl SourceKlogFormatter {
-    pub fn new(profile: SourceUnicodeProfile) -> Self { Self { profile, any_to_string_hook: None } }
+    pub fn new(profile: SourceUnicodeProfile) -> Self { Self { profile, any_to_string_hook: None, slog_stack: None } }
     pub fn format_kvs(&self, output: &mut Vec<u8>, groups: &[SourceErrorArguments]) -> FormatResult {
         crate::utility_klog_values::format_kvs(output, groups, |output, key, value| self.kv_format(output, key, value))
     }
@@ -96,9 +99,8 @@ impl SourceKlogFormatter {
                 self.panic_string(SourceRecoveredPanic::new(payload))?)))),
         }
     }
-    /// Non-slog bindings follow the active Go1.21+ switch. slog.Value must
-    /// precede Stringer and LogValuer needs Resolve; those complete concrete
-    /// declarations remain an explicit scope gap, not an inferred type name.
+    /// Source Go1.21+ order: the concrete slog.Value precedes Stringer, and
+    /// raw LogValuer follows Marshaler. These use actual method/type views.
     pub fn kv_format(&self, output: &mut Vec<u8>, key: &SourceErrorArgument, value: &SourceErrorArgument)
         -> FormatResult<Vec<u8>>
     {
@@ -119,6 +121,8 @@ impl SourceKlogFormatter {
                     append(output, b"\"")?; append(output, &marker)?; append(output, b"\"")?;
                 }
             }
+        } else if let Some(value) = methods.klog.slog_value {
+            append(output, b"=")?; self.generate_slog_json(output, value)?;
         } else if let Some(stringer) = methods.stringer {
             let value = self.recovered_string(|| stringer.source_string().into_owned())?;
             write_string_value(output, &value, self.profile)?;
@@ -131,6 +135,10 @@ impl SourceKlogFormatter {
             let value = self.marshal_value(marshaler)?;
             if let Some(value) = string_bytes(&value) { write_string_value(output, value, self.profile)?; }
             else { self.format_any(output, &value)?; } // no second MarshalLog
+        } else if methods.klog.log_valuer.is_some() {
+            let resolved = crate::utility_slog_values::SourceSlogValue::any_value(value.source_fmt_copy()).resolve(self)?;
+            if let Some(bytes) = resolved.string_bytes() { write_string_value(output, bytes, self.profile)?; }
+            else { append(output, b"=")?; self.generate_slog_json(output, &resolved)?; }
         } else if value.downcast_ref::<SourcePrintfSlice<'static, u8>>()
             .is_some_and(|bytes| bytes.source_type == "[]uint8") {
             append(output, b"=")?;
@@ -151,17 +159,37 @@ impl SourceKlogFormatter {
     }
     /// JSON generation differs from KV dispatch: Marshaler recurses, the
     /// hook is excluded, and Error is invoked directly without recovery.
-    /// slog.Value groups and LogValuer Resolve still require their bindings.
     pub fn generate_json(&self, output: &mut Vec<u8>, value: &SourceErrorArgument) -> FormatResult {
         let methods = value.source_methods();
-        if let Some(stringer) = methods.stringer {
+        if let Some(value) = methods.klog.slog_value { self.generate_slog_json(output, value) }
+        else if let Some(stringer) = methods.stringer {
             let value = self.recovered_string(|| stringer.source_string().into_owned())?;
             self.quote(output, &value)
         } else if let Some(marshaler) = methods.klog.marshaler {
             self.generate_json(output, &self.marshal_value(marshaler)?)
+        } else if methods.klog.log_valuer.is_some() {
+            // This source branch peels Any after Resolve. In particular a
+            // group becomes []Attr here, whereas the concrete Value branch
+            // above serializes its attributes as a JSON object.
+            let resolved = crate::utility_slog_values::SourceSlogValue::any_value(value.source_fmt_copy()).resolve(self)?;
+            self.generate_json(output, &resolved.any())
         } else if let Some(value) = string_bytes(value) { self.quote(output, value) }
         else if let Some(error) = methods.error { self.quote(output, &error.source_error_message()) }
         else { self.format_as_json(output, value) }
+    }
+    fn generate_slog_json(&self, output: &mut Vec<u8>, value: &crate::utility_slog_values::SourceSlogValue) -> FormatResult {
+        if let Some(group) = value.group_ref() {
+            append(output, b"{")?;
+            for index in 0..group.len() {
+                let attr = group.get(index);
+                if index != 0 { append(output, b",")?; }
+                self.quote(output, &attr.key.0)?; append(output, b":")?;
+                self.generate_slog_json(output, &attr.value)?;
+            }
+            append(output, b"}")?; Ok(())
+        } else if value.kind() == crate::utility_slog_values::SourceSlogKind::LOG_VALUER {
+            self.generate_slog_json(output, &value.resolve(self)?)
+        } else { self.generate_json(output, &value.any()) }
     }
     fn quote(&self, output: &mut Vec<u8>, value: &[u8]) -> FormatResult {
         append(output, crate::utility_go_quote::try_source_go_quote(value, self.profile)?.as_bytes())?; Ok(())
