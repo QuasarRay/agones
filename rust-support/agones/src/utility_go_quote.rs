@@ -84,6 +84,7 @@ pub fn source_can_backquote(mut value: &[u8]) -> bool {
 pub fn try_source_error_go_syntax(error: &(dyn Error + 'static), profile: SourceUnicodeProfile)
     -> Result<Option<String>, SourceSliceAllocationError>
 {
+    let error = crate::utility_error_alias::source_error_original(error);
     if let Some(error) = error.downcast_ref::<SourceRuntimeErrorString>() {
         return try_source_go_quote(error.message.as_bytes(), profile).map(Some);
     }

@@ -99,6 +99,15 @@ impl<T: SourceRuntimeError + SourceLogType + Send + Sync + 'static> RuntimeError
     fn source_type(&self) -> &'static str { T::SOURCE_LOG_TYPE }
 }
 
+struct SharedRuntimeErrorOwner { error: crate::utility_error_alias::SourceSharedError }
+impl RuntimeErrorObject for SharedRuntimeErrorOwner {
+    fn error(&self) -> &(dyn Error + Send + Sync + 'static) { &self.error }
+    fn runtime_error_view(&self) -> &dyn SourceRuntimeError {
+        runtime_error_view(&self.error).expect("shared runtime owner retains its RuntimeError view")
+    }
+    fn source_type(&self) -> &'static str { self.error.source_type_name() }
+}
+
 /// Preserve the RuntimeError method set when a typed source error crosses a
 /// native BoxError boundary. The original error is the source value; this
 /// envelope supplies its erased interface view without another Unwrap layer.
@@ -127,6 +136,12 @@ pub fn with_runtime_error<T: SourceRuntimeError + SourceLogType + Send + Sync + 
 macro_rules! runtime_error_views {
     ($($ty:ty),+ $(,)?) => {
         fn take_runtime_error(error: BoxError) -> Result<Box<dyn RuntimeErrorObject>, BoxError> {
+            let error = match error.downcast::<crate::utility_error_alias::SourceSharedError>() {
+                Ok(error) if runtime_error_view(error.as_ref()).is_some() =>
+                    return Ok(Box::new(SharedRuntimeErrorOwner { error: *error })),
+                Ok(error) => error as BoxError,
+                Err(error) => error,
+            };
             let error = match error.downcast::<SourceRuntimeErrorEnvelope>() {
                 Ok(error) => return Ok((*error).inner), Err(error) => error,
             };
@@ -134,11 +149,21 @@ macro_rules! runtime_error_views {
             Err(error)
         }
         pub fn runtime_error_view(error: &(dyn Error + 'static)) -> Option<&dyn SourceRuntimeError> {
+            let mut error = error;
+            while let Some(shared) = error.downcast_ref::<crate::utility_error_alias::SourceSharedError>() {
+                if let Some(runtime) = shared.runtime_error() { return Some(runtime); }
+                error = shared.original();
+            }
             if let Some(error) = error.downcast_ref::<SourceRuntimeErrorEnvelope>() { return Some(error.runtime_error()); }
             $(if let Some(error) = error.downcast_ref::<$ty>() { return Some(error); })+
             None
         }
         pub(crate) fn runtime_error_type(error: &(dyn Error + 'static)) -> Option<&'static str> {
+            let mut error = error;
+            while let Some(shared) = error.downcast_ref::<crate::utility_error_alias::SourceSharedError>() {
+                if shared.runtime_error().is_some() { return Some(shared.source_type_name()); }
+                error = shared.original();
+            }
             if let Some(error) = error.downcast_ref::<SourceRuntimeErrorEnvelope>() { return Some(error.source_type()); }
             $(if error.is::<$ty>() { return Some(<$ty as SourceLogType>::SOURCE_LOG_TYPE); })+
             None
@@ -210,6 +235,7 @@ impl SourceRecoveredPanic {
                 Some(error) => error.error(), None => error.as_ref(),
             });
         }
+        if let Some(error) = self.payload.downcast_ref::<crate::utility_error_alias::SourceSharedError>() { return Some(error); }
         self.payload.downcast_ref::<SourceAbortHandler>().map(|error| error as &(dyn Error + Send + Sync + 'static))
     }
     pub fn runtime_error(&self) -> Option<&dyn SourceRuntimeError> {
@@ -220,6 +246,7 @@ impl SourceRecoveredPanic {
     pub fn source_type(&self) -> Option<&str> {
         if let Some(value) = self.payload.downcast_ref::<crate::utility_format_methods::SourcePrintfPanic>() { return Some(value.source_type()); }
         if let Some(error) = self.payload.downcast_ref::<SourceErrorPanic>() { return error.source_type(); }
+        if let Some(error) = self.payload.downcast_ref::<crate::utility_error_alias::SourceSharedError>() { return Some(error.source_type_name()); }
         if let Some(source_type) = self.payload.downcast_ref::<BoxError>().and_then(|error| crate::utility_error_view::source_error_type(error.as_ref())) { return Some(source_type); }
         if self.payload.is::<String>() || self.payload.is::<&'static str>() { return Some("string"); }
         if self.is_abort_handler() { return Some(SourceAbortHandler::SOURCE_LOG_TYPE); }
@@ -228,7 +255,8 @@ impl SourceRecoveredPanic {
     /// Suppress logging only for the direct sentinel value. An error that
     /// wraps the sentinel has different source interface equality.
     pub fn is_abort_handler(&self) -> bool {
-        self.error().and_then(|error| error.downcast_ref::<SourceAbortHandler>()).is_some_and(|error| *error == ERR_ABORT_HANDLER)
+        self.error().map(|error| crate::utility_error_alias::source_error_original(error))
+            .and_then(|error| error.downcast_ref::<SourceAbortHandler>()).is_some_and(|error| *error == ERR_ABORT_HANDLER)
     }
 }
 impl fmt::Display for SourceRecoveredPanic {

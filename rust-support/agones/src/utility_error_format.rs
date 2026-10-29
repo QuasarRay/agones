@@ -166,7 +166,7 @@ impl WrappedError {
     pub(crate) fn new(prefix: String, source: BoxError) -> Self {
         let mut message = prefix.into_bytes();
         message.extend_from_slice(b": ");
-        if let Some(bytes) = source_error_bytes(source.as_ref()) { message.extend_from_slice(bytes); }
+        if let Some(bytes) = source_error_message(source.as_ref()) { message.extend_from_slice(&bytes); }
         else { message.extend_from_slice(source.to_string().as_bytes()); }
         let message = SourceErrorMessage::Bytes(message);
         Self { message, source: Some(source) }
@@ -196,15 +196,26 @@ impl Error for FormattedError {}
 /// the source nil []error; Some(Some(...)) retains its current elements.
 /// Mutable source slice/interface aliasing still requires its native bridge.
 pub fn source_wrapped_errors(error: &(dyn Error + 'static)) -> Option<Option<&[BoxError]>> {
+    let error = crate::utility_error_alias::source_error_original(error);
     error.downcast_ref::<FormattedError>().map(FormattedError::wrapped)
 }
 
 /// The canonical objects expose their source byte messages without calling
 /// user Error/Display methods. Other error kinds require their own adapter.
 pub fn source_error_bytes(error: &(dyn Error + 'static)) -> Option<&[u8]> {
+    let error = crate::utility_error_alias::source_error_original(error);
     if let Some(error) = error.downcast_ref::<MessageError>() { return Some(error.0.as_bytes()); }
     if let Some(error) = error.downcast_ref::<WrappedError>() { return Some(error.message.as_bytes()); }
     error.downcast_ref::<FormattedError>().map(|error| error.message.as_bytes())
+}
+
+/// A copied source error can supply its declared Error method without a
+/// native Display fallback. Canonical immutable messages remain borrowed.
+pub fn source_error_message(error: &(dyn Error + 'static)) -> Option<Cow<'_, [u8]>> {
+    if let Some(error) = error.downcast_ref::<crate::utility_error_alias::SourceSharedError>() {
+        return Some(crate::utility_format_methods::SourceErrorMethod::source_error_message(error));
+    }
+    source_error_bytes(error).map(Cow::Borrowed)
 }
 
 /// Borrowed fields for the three canonical source structs, for their concrete
@@ -215,6 +226,7 @@ pub(crate) enum CanonicalErrorFields<'a> {
     Multiple { message: &'a [u8], errors: Option<&'a [BoxError]> },
 }
 pub(crate) fn canonical_error_fields(error: &(dyn Error + 'static)) -> Option<CanonicalErrorFields<'_>> {
+    let error = crate::utility_error_alias::source_error_original(error);
     if let Some(error) = error.downcast_ref::<MessageError>() { return Some(CanonicalErrorFields::Message(error.0.as_bytes())); }
     if let Some(error) = error.downcast_ref::<WrappedError>() {
         return Some(CanonicalErrorFields::Wrapped { message: error.message.as_bytes(), source: error.source() });
@@ -321,7 +333,7 @@ impl crate::errors::Errors {
         let mut message = self.prefix("").into_bytes();
         crate::utility_go_quote::append(&mut message, formatted)?;
         crate::utility_go_quote::append(&mut message, b": ")?;
-        if let Some(bytes) = source_error_bytes(error.as_ref()) { crate::utility_go_quote::append(&mut message, bytes)?; }
+        if let Some(bytes) = source_error_message(error.as_ref()) { crate::utility_go_quote::append(&mut message, &bytes)?; }
         else { crate::utility_go_quote::append(&mut message, error.to_string().as_bytes())?; }
         // The final format has exactly one w, independently of any w that
         // Sprintf encountered while formatting the annotation's scalar values.

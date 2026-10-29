@@ -8,7 +8,7 @@ use crate::{
     utility_format_print::{SourcePrintfArguments, SourcePrintfMode, append_rune, write_plain, write_nil},
     utility_format_scan::SourcePrintfResolvedCounts,
     utility_format_text::write_text,
-    utility_error_format::source_error_bytes,
+    utility_error_format::source_error_message,
     utility_panic::SourceRecoveredPanic,
     utility_go_quote::append,
     utility_http::{SourceUnicodeProfile, SourceSliceAllocationError},
@@ -201,8 +201,12 @@ fn write_panic_value(panic: SourceRecoveredPanic, profile: SourceUnicodeProfile,
     if let Some(value) = panic.payload().downcast_ref::<SourcePrintfPanic>() {
         return value.value.write_panic_value(&SourcePrintfResolvedCounts::default(), profile, true, output);
     }
+    if let Some(value) = panic.payload().downcast_ref::<crate::utility_error_alias::SourceSharedError>() {
+        return write_source_value(value, 'v', &SourcePrintfResolvedCounts::default(), profile, SourcePrintfMode::Sprintf,
+            SourcePrintfRecursion { panicking: true, ..SourcePrintfRecursion::default() }, output);
+    }
     if let Some(error) = panic.error() {
-        if let Some(bytes) = source_error_bytes(error) { return append(output, bytes); }
+        if let Some(bytes) = source_error_message(error) { return append(output, &bytes); }
         // Existing native errors without source method views retain their
         // Display bridge. A nested panic propagates its original payload.
         return append(output, error.to_string().as_bytes());

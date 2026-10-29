@@ -127,6 +127,7 @@ impl SourcePrintfError {
         Err(error)
     }
     pub fn original(&self) -> &(dyn Error + Send + Sync + 'static) { self.error.as_ref() }
+    pub(crate) fn source_type_name(&self) -> &'static str { self.source_type }
     pub fn into_original(self) -> BoxError { self.error }
 }
 impl SourcePrintfValue for SourcePrintfError {
@@ -229,6 +230,7 @@ pub fn try_source_arguments_printf<Arguments: SourcePrintfArguments>(format: &[u
 fn write_error_pointer(output: &mut Vec<u8>, error: &(dyn Error + 'static), source_type: &str,
     verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile) -> Result<(), SourceSliceAllocationError>
 {
+    let error = crate::utility_error_alias::source_error_original(error);
     // This is the retained native allocation's address. Full Go heap/word/
     // pointer/ABI binding remains required; no source-address evidence exists.
     let address = error as *const (dyn Error + 'static) as *const () as usize as u64;
@@ -251,7 +253,8 @@ impl SourcePrintfValue for CanonicalPointerValue<'_> {
             }
             return append(output, format!("{:?}", self.error).as_bytes());
         }
-        let address = self.error as *const (dyn Error + 'static) as *const () as usize as u64;
+        let error = crate::utility_error_alias::source_error_original(self.error);
+        let address = error as *const (dyn Error + 'static) as *const () as usize as u64;
         write_source_address(self, address, verb, state, profile, mode, recursion, output)
     }
 }

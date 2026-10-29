@@ -206,6 +206,7 @@ pub fn find_error<'a, T: Error + 'static>(error: &'a (dyn Error + 'static)) -> O
         error.downcast_ref::<crate::utility_error_view::ApiStatusEnvelope>()?.original_any().downcast_ref::<T>()))
 }
 pub fn first_error_view<'a, Value>(error: &'a (dyn Error + 'static), view: &impl Fn(&'a (dyn Error + 'static)) -> Option<Value>) -> Option<Value> {
+    let error = crate::utility_error_alias::source_error_original(error);
     if let Some(value) = view(error) { return Some(value); }
     if let Some(error) = error.downcast_ref::<crate::utility_panic::SourceRuntimeErrorEnvelope>() {
         return first_error_view(error.error(), view);
