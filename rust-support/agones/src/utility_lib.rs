@@ -27,6 +27,8 @@ pub mod utility_queue_limiters;
 pub mod utility_client_config;
 pub mod utility_error_view;
 pub mod utility_error_alias;
+pub mod utility_error_slice;
+pub mod utility_error_walk;
 pub mod utility_error_format;
 pub mod utility_format_scan;
 pub mod utility_format_print;

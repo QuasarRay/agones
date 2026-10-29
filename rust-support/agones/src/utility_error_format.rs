@@ -131,18 +131,22 @@ impl SourceFormat {
         let Self { rendered: message, mut operands, mut wrapped_positions, reordered, .. } = self;
         match wrapped_positions.len() {
             0 => Box::new(MessageError(message)),
-            1 => Box::new(WrappedError { message, source: operands[wrapped_positions[0]].take() }),
+            1 => Box::new(WrappedError { message, source: operands[wrapped_positions[0]].take()
+                .map(crate::utility_error_slice::SourceRetainedError::from_original) }),
             _ => {
                 if reordered { wrapped_positions.sort_unstable(); }
-                let mut errors: Option<Vec<BoxError>> = None;
+                let mut errors = crate::utility_error_slice::SourceErrorSlice::nil();
                 let mut previous = None;
                 for index in wrapped_positions {
                     if previous == Some(index) { continue; }
                     previous = Some(index);
-                    if let Some(error) = operands[index].take() { errors.get_or_insert_with(Vec::new).push(error); }
+                    if let Some(error) = operands[index].take() {
+                        errors.append(Some(crate::utility_error_slice::SourceRetainedError::from_original(error)));
+                    }
                 }
                 // The result remains wrapErrors after deduplication even if
-                // only one or no valid error operand survives. None is nil.
+                // only one or no valid operand survives. The empty header
+                // remains nil until the first valid error is appended.
                 Box::new(FormattedError { message, wrapped: errors })
             }
         }
@@ -161,7 +165,7 @@ impl Error for MessageError {}
 #[derive(Debug, Deftly)]
 #[derive_deftly(SourceErrorOrigin)]
 #[deftly(source_package = "fmt", source_struct = "wrapError", source_log_type = "*fmt.wrapError")]
-pub(crate) struct WrappedError { message: SourceErrorMessage, source: Option<BoxError> }
+pub(crate) struct WrappedError { message: SourceErrorMessage, source: Option<crate::utility_error_slice::SourceRetainedError> }
 impl WrappedError {
     pub(crate) fn new(prefix: String, source: BoxError) -> Self {
         let mut message = prefix.into_bytes();
@@ -169,22 +173,27 @@ impl WrappedError {
         if let Some(bytes) = source_error_message(source.as_ref()) { message.extend_from_slice(&bytes); }
         else { message.extend_from_slice(source.to_string().as_bytes()); }
         let message = SourceErrorMessage::Bytes(message);
-        Self { message, source: Some(source) }
+        Self { message, source: Some(crate::utility_error_slice::SourceRetainedError::from_original(source)) }
+    }
+    pub(crate) fn unwrapped(&self) -> Option<crate::utility_error_slice::SourceRetainedError> {
+        self.source.as_ref().map(crate::utility_format_copy::SourceFmtValueCopy::source_fmt_copy)
     }
 }
 impl fmt::Display for WrappedError {
     fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { fmt::Display::fmt(&self.message, out) }
 }
 impl Error for WrappedError {
-    fn source(&self) -> Option<&(dyn Error + 'static)> { self.source.as_ref().map(|source| source.as_ref() as &(dyn Error + 'static)) }
+    fn source(&self) -> Option<&(dyn Error + 'static)> { self.source.as_ref().map(|source| source as &(dyn Error + 'static)) }
 }
 
 #[derive(Debug, Deftly)]
 #[derive_deftly(SourceErrorOrigin)]
 #[deftly(source_package = "fmt", source_struct = "wrapErrors", source_log_type = "*fmt.wrapErrors")]
-pub(crate) struct FormattedError { message: SourceErrorMessage, wrapped: Option<Vec<BoxError>> }
+pub(crate) struct FormattedError { message: SourceErrorMessage, wrapped: crate::utility_error_slice::SourceErrorSlice }
 impl FormattedError {
-    pub(crate) fn wrapped(&self) -> Option<&[BoxError]> { self.wrapped.as_deref() }
+    pub(crate) fn wrapped(&self) -> crate::utility_error_slice::SourceErrorSlice {
+        crate::utility_format_copy::SourceFmtValueCopy::source_fmt_copy(&self.wrapped)
+    }
 }
 impl fmt::Display for FormattedError {
     fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { fmt::Display::fmt(&self.message, out) }
@@ -192,12 +201,17 @@ impl fmt::Display for FormattedError {
 // Unwrap() []error must not become Rust's single source() even when len==1.
 impl Error for FormattedError {}
 
-/// Outer None means this value has no multiple-error method. Some(None) is
-/// the source nil []error; Some(Some(...)) retains its current elements.
-/// Mutable source slice/interface aliasing still requires its native bridge.
-pub fn source_wrapped_errors(error: &(dyn Error + 'static)) -> Option<Option<&[BoxError]>> {
+/// None means no multiple-error method. A returned header preserves nil,
+/// length/capacity and live mutable backing without copying its elements.
+pub fn source_wrapped_errors(error: &(dyn Error + 'static)) -> Option<crate::utility_error_slice::SourceErrorSlice> {
     let error = crate::utility_error_alias::source_error_original(error);
     error.downcast_ref::<FormattedError>().map(FormattedError::wrapped)
+}
+
+/// The outer Option distinguishes no single Unwrap method from Unwrap()==nil.
+pub fn source_unwrapped_error(error: &(dyn Error + 'static)) -> Option<Option<crate::utility_error_slice::SourceRetainedError>> {
+    let error = crate::utility_error_alias::source_error_original(error);
+    error.downcast_ref::<WrappedError>().map(WrappedError::unwrapped)
 }
 
 /// The canonical objects expose their source byte messages without calling
@@ -212,6 +226,9 @@ pub fn source_error_bytes(error: &(dyn Error + 'static)) -> Option<&[u8]> {
 /// A copied source error can supply its declared Error method without a
 /// native Display fallback. Canonical immutable messages remain borrowed.
 pub fn source_error_message(error: &(dyn Error + 'static)) -> Option<Cow<'_, [u8]>> {
+    if let Some(error) = error.downcast_ref::<crate::utility_error_slice::SourceRetainedError>() {
+        return source_error_message(error.original());
+    }
     if let Some(error) = error.downcast_ref::<crate::utility_error_alias::SourceSharedError>() {
         return Some(crate::utility_format_methods::SourceErrorMethod::source_error_message(error));
     }
@@ -223,7 +240,7 @@ pub fn source_error_message(error: &(dyn Error + 'static)) -> Option<Cow<'_, [u8
 pub(crate) enum CanonicalErrorFields<'a> {
     Message(&'a [u8]),
     Wrapped { message: &'a [u8], source: Option<&'a (dyn Error + 'static)> },
-    Multiple { message: &'a [u8], errors: Option<&'a [BoxError]> },
+    Multiple { message: &'a [u8], errors: crate::utility_error_slice::SourceErrorSlice },
 }
 pub(crate) fn canonical_error_fields(error: &(dyn Error + 'static)) -> Option<CanonicalErrorFields<'_>> {
     let error = crate::utility_error_alias::source_error_original(error);
@@ -232,7 +249,7 @@ pub(crate) fn canonical_error_fields(error: &(dyn Error + 'static)) -> Option<Ca
         return Some(CanonicalErrorFields::Wrapped { message: error.message.as_bytes(), source: error.source() });
     }
     error.downcast_ref::<FormattedError>().map(|error| CanonicalErrorFields::Multiple {
-        message: error.message.as_bytes(), errors: error.wrapped.as_deref() })
+        message: error.message.as_bytes(), errors: error.wrapped() })
 }
 
 impl crate::errors::Errors {

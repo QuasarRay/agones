@@ -201,20 +201,11 @@ pub fn callerPackage(frames: &[Option<&str>], skip: isize) -> String {
 pub fn contains_error<T: Error + 'static>(error: &(dyn Error + 'static)) -> bool {
     find_error::<T>(error).is_some()
 }
-pub fn find_error<'a, T: Error + 'static>(error: &'a (dyn Error + 'static)) -> Option<&'a T> {
-    first_error_view(error, &|error| error.downcast_ref::<T>().or_else(||
-        error.downcast_ref::<crate::utility_error_view::ApiStatusEnvelope>()?.original_any().downcast_ref::<T>()))
+pub fn find_error<T: Error + 'static>(error: &(dyn Error + 'static)) -> Option<crate::utility_error_walk::SourceErrorMatch<'_, T>> {
+    crate::utility_error_walk::find_error_match(error)
 }
-pub fn first_error_view<'a, Value>(error: &'a (dyn Error + 'static), view: &impl Fn(&'a (dyn Error + 'static)) -> Option<Value>) -> Option<Value> {
-    let error = crate::utility_error_alias::source_error_original(error);
-    if let Some(value) = view(error) { return Some(value); }
-    if let Some(error) = error.downcast_ref::<crate::utility_panic::SourceRuntimeErrorEnvelope>() {
-        return first_error_view(error.error(), view);
-    }
-    if let Some(formatted) = error.downcast_ref::<FormattedError>() {
-        return formatted.wrapped().unwrap_or(&[]).iter().find_map(|source| first_error_view(source.as_ref(), view));
-    }
-    error.source().and_then(|source| first_error_view(source, view))
+pub fn first_error_view<Value>(error: &(dyn Error + 'static), view: &impl Fn(&(dyn Error + 'static)) -> Option<Value>) -> Option<Value> {
+    crate::utility_error_walk::first_error_view(error, view)
 }
 
 /// Exact Rust analogue of Go's `FromPackage()`.

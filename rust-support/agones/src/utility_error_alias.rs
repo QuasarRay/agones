@@ -114,6 +114,9 @@ impl Error for SourceSharedError {
 
 /// Resolve native interface carriers without traversing a source Unwrap edge.
 pub fn source_error_original<'a>(mut error: &'a (dyn Error + 'static)) -> &'a (dyn Error + 'static) {
-    while let Some(shared) = error.downcast_ref::<SourceSharedError>() { error = shared.original(); }
-    error
+    loop {
+        if let Some(shared) = error.downcast_ref::<SourceSharedError>() { error = shared.original(); continue; }
+        if let Some(retained) = error.downcast_ref::<crate::utility_error_slice::SourceRetainedError>() { error = retained.original(); continue; }
+        return error;
+    }
 }

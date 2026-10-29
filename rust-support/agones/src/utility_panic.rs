@@ -77,6 +77,16 @@ impl RuntimeErrorObject for SharedRuntimeErrorOwner {
     }
     fn source_type(&self) -> &'static str { self.error.source_type_name() }
 }
+struct RetainedRuntimeErrorOwner { error: crate::utility_error_slice::SourceRetainedError }
+impl RuntimeErrorObject for RetainedRuntimeErrorOwner {
+    fn error(&self) -> &(dyn Error + Send + Sync + 'static) { &self.error }
+    fn runtime_error_view(&self) -> &dyn SourceRuntimeError {
+        runtime_error_view(&self.error).expect("retained runtime owner keeps its RuntimeError view")
+    }
+    fn source_type(&self) -> &'static str {
+        crate::utility_error_view::source_error_type(&self.error).expect("retained runtime value has source type metadata")
+    }
+}
 
 /// Preserve the RuntimeError method set when a typed source error crosses a
 /// native BoxError boundary. The original error is the source value; this
@@ -110,6 +120,12 @@ macro_rules! runtime_error_views {
             None
         }
         fn take_runtime_error(error: BoxError) -> Result<Box<dyn RuntimeErrorObject>, BoxError> {
+            let error = match error.downcast::<crate::utility_error_slice::SourceRetainedError>() {
+                Ok(error) if runtime_error_view(error.as_ref()).is_some() =>
+                    return Ok(Box::new(RetainedRuntimeErrorOwner { error: *error })),
+                Ok(error) => error as BoxError,
+                Err(error) => error,
+            };
             let error = match error.downcast::<crate::utility_error_alias::SourceSharedError>() {
                 Ok(error) if runtime_error_view(error.as_ref()).is_some() =>
                     return Ok(Box::new(SharedRuntimeErrorOwner { error: *error })),
@@ -124,9 +140,13 @@ macro_rules! runtime_error_views {
         }
         pub fn runtime_error_view(error: &(dyn Error + 'static)) -> Option<&dyn SourceRuntimeError> {
             let mut error = error;
-            while let Some(shared) = error.downcast_ref::<crate::utility_error_alias::SourceSharedError>() {
-                if let Some(runtime) = shared.runtime_error() { return Some(runtime); }
-                error = shared.original();
+            loop {
+                if let Some(shared) = error.downcast_ref::<crate::utility_error_alias::SourceSharedError>() {
+                    if let Some(runtime) = shared.runtime_error() { return Some(runtime); }
+                    error = shared.original(); continue;
+                }
+                if let Some(retained) = error.downcast_ref::<crate::utility_error_slice::SourceRetainedError>() { error = retained.original(); continue; }
+                break;
             }
             if let Some(error) = error.downcast_ref::<SourceRuntimeErrorEnvelope>() { return Some(error.runtime_error()); }
             $(if let Some(error) = error.downcast_ref::<$ty>() { return Some(error); })+
@@ -134,9 +154,13 @@ macro_rules! runtime_error_views {
         }
         pub(crate) fn runtime_error_type(error: &(dyn Error + 'static)) -> Option<&'static str> {
             let mut error = error;
-            while let Some(shared) = error.downcast_ref::<crate::utility_error_alias::SourceSharedError>() {
-                if shared.runtime_error().is_some() { return Some(shared.source_type_name()); }
-                error = shared.original();
+            loop {
+                if let Some(shared) = error.downcast_ref::<crate::utility_error_alias::SourceSharedError>() {
+                    if shared.runtime_error().is_some() { return Some(shared.source_type_name()); }
+                    error = shared.original(); continue;
+                }
+                if let Some(retained) = error.downcast_ref::<crate::utility_error_slice::SourceRetainedError>() { error = retained.original(); continue; }
+                break;
             }
             if let Some(error) = error.downcast_ref::<SourceRuntimeErrorEnvelope>() { return Some(error.source_type()); }
             $(if error.is::<$ty>() { return Some(<$ty as SourceLogType>::SOURCE_LOG_TYPE); })+
@@ -210,6 +234,7 @@ impl SourceRecoveredPanic {
             });
         }
         if let Some(error) = self.payload.downcast_ref::<crate::utility_error_alias::SourceSharedError>() { return Some(error); }
+        if let Some(error) = self.payload.downcast_ref::<crate::utility_error_slice::SourceRetainedError>() { return Some(error); }
         if let Some(error) = direct_runtime_panic_error(self.payload.as_ref()) { return Some(error); }
         self.payload.downcast_ref::<SourceAbortHandler>().map(|error| error as &(dyn Error + Send + Sync + 'static))
     }
@@ -222,6 +247,9 @@ impl SourceRecoveredPanic {
         if let Some(value) = self.payload.downcast_ref::<crate::utility_format_methods::SourcePrintfPanic>() { return Some(value.source_type()); }
         if let Some(error) = self.payload.downcast_ref::<SourceErrorPanic>() { return error.source_type(); }
         if let Some(error) = self.payload.downcast_ref::<crate::utility_error_alias::SourceSharedError>() { return Some(error.source_type_name()); }
+        if let Some(error) = self.payload.downcast_ref::<crate::utility_error_slice::SourceRetainedError>() {
+            return crate::utility_error_view::source_error_type(error);
+        }
         if let Some(source_type) = direct_runtime_panic_error(self.payload.as_ref()).and_then(|error| runtime_error_type(error)) { return Some(source_type); }
         if let Some(source_type) = self.payload.downcast_ref::<BoxError>().and_then(|error| crate::utility_error_view::source_error_type(error.as_ref())) { return Some(source_type); }
         if self.payload.is::<String>() || self.payload.is::<&'static str>() { return Some("string"); }

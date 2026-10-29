@@ -310,29 +310,67 @@ impl SourcePrintfStructFields for CanonicalStructFields<'_> {
                 else { append(output, if state.flags.sharp_v { b"error(nil)" } else { b"<nil>" })?; }
             }
             (1, CanonicalErrorFields::Multiple { errors, .. }) => {
-                if state.flags.sharp_v {
-                    append(output, b"[]error")?;
-                    if errors.is_none() { return append(output, b"(nil)"); }
-                }
-                append(output, if state.flags.sharp_v { b"{" } else { b"[" })?;
-                for (index, error) in errors.unwrap_or(&[]).iter().enumerate() {
-                    if index != 0 { field_separator(output, state)?; }
-                    write_nested_error(output, error.as_ref(), verb, state, profile)?;
-                }
-                append(output, if state.flags.sharp_v { b"}" } else { b"]" })?;
+                errors.write_source(verb, state, profile, SourcePrintfMode::Sprintf,
+                    SourcePrintfRecursion { depth: 2, can_interface: false, ..SourcePrintfRecursion::default() }, output)?;
             }
             _ => panic!("canonical source field index out of range"),
         }
         Ok(())
     }
 }
-fn field_separator(output: &mut Vec<u8>, state: &SourcePrintfResolvedCounts) -> Result<(), SourceSliceAllocationError> {
-    append(output, if state.flags.sharp_v { b", " } else { b" " })
-}
 fn write_nested_error(output: &mut Vec<u8>, error: &(dyn Error + 'static), verb: char,
     state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile)
     -> Result<(), SourceSliceAllocationError>
 {
+    write_source_error_value(error, verb, state, profile, SourcePrintfMode::Sprintf,
+        SourcePrintfRecursion { depth: 2, can_interface: false, ..SourcePrintfRecursion::default() }, output)
+}
+
+#[derive(Deftly)]
+#[derive_deftly(SourcePrintfInterfaces)]
+#[deftly(source_error_method)]
+struct CanonicalBorrowedError<'a> { error: &'a (dyn Error + 'static), source_type: &'static str }
+impl SourceErrorMethod for CanonicalBorrowedError<'_> {
+    fn source_error_message(&self) -> Cow<'_, [u8]> {
+        Cow::Borrowed(source_error_bytes(self.error).expect("canonical borrowed error retains its message"))
+    }
+}
+impl SourcePrintfValue for CanonicalBorrowedError<'_> {
+    fn source_type(&self) -> &str { self.source_type }
+    fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
+        _: SourcePrintfMode, recursion: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+    {
+        if verb == 'p' || recursion.depth > 0 { write_error_pointer(output, self.error, self.source_type, verb, state, profile) }
+        else { write_canonical_reflection(output, self.error, self.source_type, verb, state, profile) }
+    }
+}
+
+/// Source interface elements retain their concrete declared format views.
+/// The existing opaque native Debug path remains explicitly unbound source
+/// data; it is not used to assign a fabricated source type or method set.
+pub(crate) fn write_source_error_value(mut error: &(dyn Error + 'static), verb: char,
+    state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile, mode: SourcePrintfMode,
+    recursion: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+{
+    loop {
+        if let Some(retained) = error.downcast_ref::<crate::utility_error_slice::SourceRetainedError>() { error = retained.original(); continue; }
+        if let Some(shared) = error.downcast_ref::<crate::utility_error_alias::SourceSharedError>() {
+            return write_source_value(shared, verb, state, profile, mode, recursion, output);
+        }
+        if let Some(runtime) = error.downcast_ref::<crate::utility_panic::SourceRuntimeErrorEnvelope>() { error = runtime.error(); continue; }
+        break;
+    }
+    if canonical_error_fields(error).is_some() {
+        let value = CanonicalBorrowedError { error, source_type: source_error_type(error).expect("canonical error has source type") };
+        return write_source_value(&value, verb, state, profile, mode, recursion, output);
+    }
+    macro_rules! runtime_values {
+        ($($ty:ty),+ $(,)?) => { $(if let Some(value) = error.downcast_ref::<$ty>() {
+            return write_source_value(value, verb, state, profile, mode, recursion, output);
+        })+ };
+    }
+    runtime_values!(crate::utility_panic::SourceRuntimeErrorString, crate::utility_panic::SourceNilMapAssignment,
+        crate::utility_panic::SourceBoundsError);
     if let Some(source_type) = source_error_type(error).filter(|name| name.starts_with('*')) {
         return write_error_pointer(output, error, source_type, verb, state, profile);
     }

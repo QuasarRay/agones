@@ -34,6 +34,7 @@ where T: Error + SourceApiStatus + SourceLogType + Send + Sync + 'static,
 /// Source type metadata for the concrete interface bridges and canonical
 /// errors already owned here. Unknown native types remain unclassified.
 pub fn source_error_type(error: &(dyn Error + 'static)) -> Option<&'static str> {
+    if let Some(error) = error.downcast_ref::<crate::utility_error_slice::SourceRetainedError>() { return source_error_type(error.original()); }
     if let Some(error) = error.downcast_ref::<crate::utility_error_alias::SourceSharedError>() { return Some(error.source_type_name()); }
     if let Some(error) = error.downcast_ref::<ApiStatusEnvelope>() { return Some(error.source_type()); }
     if let Some(source_type) = crate::utility_panic::runtime_error_type(error) { return Some(source_type); }
