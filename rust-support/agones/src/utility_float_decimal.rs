@@ -1,7 +1,7 @@
 //! Bounded multiprecision decimal used by source reference float conversion.
 // Adapted from Go internal/strconv/decimal.go. Copyright The Go Authors.
 // BSD-3-Clause; see ../GO-LICENSE. This is formatter arithmetic, not a general
-// numeric runtime. Optimized Dragonbox/fixed paths remain separate work.
+// numeric runtime. Optimized paths borrow their own smaller digit scratch.
 pub(crate) struct SourceDecimal {
     pub digits: [u8; 800],
     pub count: i32,

@@ -1,12 +1,19 @@
-//! Exact-decimal source fallback and binary/hex float conversion.
+//! Source IEEE dispatch, shared decimal layout and reference float conversion.
 // Adapted from Go internal/strconv/ftoa.go. Copyright The Go Authors.
-// BSD-3-Clause; see ../GO-LICENSE. The selected multiprecision fallback is
-// substantive conversion code; optimized Dragonbox/fixed paths remain required.
-use crate::{utility_float_decimal::SourceDecimal, utility_go_quote::append,
+// BSD-3-Clause; see ../GO-LICENSE. Optimized and multiprecision paths share
+// source layout. Native allocation/word/codegen profiles remain unverified.
+use crate::{utility_float_decimal::SourceDecimal,
+    utility_float_math::{SourceFloatDigits, mul_log10_2},
+    utility_float_dragonbox::source_dragonbox, utility_float_fixed::source_fixed,
+    utility_go_quote::append,
     utility_http::SourceSliceAllocationError};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum SourceFloatWidth { Binary32, Binary64 }
+/// Source optimize=true is the production default; the slow path remains
+/// an explicit conversion choice, without mutable global formatter state.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum SourceFloatConversion { Optimized, Multiprecision }
 #[derive(Clone, Copy)]
 struct FloatInfo { mantissa: u32, exponent: u32, bias: i32 }
 impl SourceFloatWidth {
@@ -16,7 +23,16 @@ impl SourceFloatWidth {
     }
 }
 
-pub fn try_source_float_reference(value: f64, width: SourceFloatWidth, verb: u8, mut precision: i32)
+pub fn try_source_float(value: f64, width: SourceFloatWidth, verb: u8, precision: i32)
+    -> Result<Vec<u8>, SourceSliceAllocationError>
+{ try_source_float_conversion(value, width, verb, precision, SourceFloatConversion::Optimized) }
+
+pub fn try_source_float_reference(value: f64, width: SourceFloatWidth, verb: u8, precision: i32)
+    -> Result<Vec<u8>, SourceSliceAllocationError>
+{ try_source_float_conversion(value, width, verb, precision, SourceFloatConversion::Multiprecision) }
+
+pub fn try_source_float_conversion(value: f64, width: SourceFloatWidth, verb: u8, mut precision: i32,
+    conversion: SourceFloatConversion)
     -> Result<Vec<u8>, SourceSliceAllocationError>
 {
     let info = width.info();
@@ -29,7 +45,8 @@ pub fn try_source_float_reference(value: f64, width: SourceFloatWidth, verb: u8,
         append(&mut output, if mantissa != 0 { b"NaN" } else if negative { b"-Inf" } else { b"+Inf" })?;
         return Ok(output);
     }
-    if exponent == 0 { exponent += 1; } else { mantissa |= 1u64 << info.mantissa; }
+    let denormal = exponent == 0;
+    if denormal { exponent += 1; } else { mantissa |= 1u64 << info.mantissa; }
     exponent += info.bias;
     if verb == b'b' {
         if negative { append(&mut output, b"-")?; }
@@ -40,8 +57,38 @@ pub fn try_source_float_reference(value: f64, width: SourceFloatWidth, verb: u8,
     if verb == b'x' || verb == b'X' {
         write_hex(&mut output, mantissa, exponent, negative, precision, verb, info)?; return Ok(output);
     }
-    let mut decimal = SourceDecimal::default(); decimal.assign(mantissa); decimal.shift(exponent - info.mantissa as i32);
     let shortest = precision < 0;
+    if conversion == SourceFloatConversion::Optimized {
+        if mantissa == 0 {
+            let digits = SourceFloatDigits { digits: &[], count: 0, point: 0 };
+            format_digits(&mut output, &digits, negative, precision, verb, shortest)?;
+            return Ok(output);
+        }
+        if shortest {
+            let mut buffer = [0; 32];
+            let digits = source_dragonbox(&mut buffer, mantissa, exponent - info.mantissa as i32, denormal, width);
+            match verb { b'e' | b'E' => precision = (digits.count - 1).max(0),
+                b'f' => precision = (digits.count - digits.point).max(0), b'g' | b'G' => precision = digits.count, _ => {} }
+            format_digits(&mut output, &digits, negative, precision, verb, true)?;
+            return Ok(output);
+        }
+        let digits = match verb {
+            b'f' if exponent >= 0 => 1 + mul_log10_2(1 + exponent) + precision,
+            b'f' => 1 + precision - mul_log10_2(-exponent),
+            b'e' | b'E' => precision + 1,
+            b'g' | b'G' => { if precision == 0 { precision = 1; } precision },
+            _ => 1,
+        };
+        if digits <= 18 {
+            let mut buffer = [0; 24];
+            let digits = if digits > 0 {
+                source_fixed(&mut buffer, mantissa, exponent - info.mantissa as i32, digits, precision, verb)
+            } else { SourceFloatDigits { digits: &[], count: 0, point: 0 } };
+            format_digits(&mut output, &digits, negative, precision, verb, false)?;
+            return Ok(output);
+        }
+    }
+    let mut decimal = SourceDecimal::default(); decimal.assign(mantissa); decimal.shift(exponent - info.mantissa as i32);
     if shortest {
         round_shortest(&mut decimal, mantissa, exponent, info);
         match verb { b'e' | b'E' => precision = decimal.count - 1,
@@ -50,9 +97,17 @@ pub fn try_source_float_reference(value: f64, width: SourceFloatWidth, verb: u8,
         match verb { b'e' | b'E' => decimal.round(precision + 1), b'f' => decimal.round(decimal.point + precision),
             b'g' | b'G' => { if precision == 0 { precision = 1; } decimal.round(precision); }, _ => {} }
     }
+    let digits = SourceFloatDigits { digits: &decimal.digits, count: decimal.count, point: decimal.point };
+    format_digits(&mut output, &digits, negative, precision, verb, shortest)?;
+    Ok(output)
+}
+
+fn format_digits(output: &mut Vec<u8>, decimal: &SourceFloatDigits<'_>, negative: bool,
+    mut precision: i32, verb: u8, shortest: bool) -> Result<(), SourceSliceAllocationError>
+{
     match verb {
-        b'e' | b'E' => write_e(&mut output, &decimal, negative, precision, verb)?,
-        b'f' => write_f(&mut output, &decimal, negative, precision)?,
+        b'e' | b'E' => write_e(output, decimal, negative, precision, verb)?,
+        b'f' => write_f(output, decimal, negative, precision)?,
         b'g' | b'G' => {
             let mut exponent_precision = precision;
             if exponent_precision > decimal.count && decimal.count >= decimal.point { exponent_precision = decimal.count; }
@@ -60,15 +115,15 @@ pub fn try_source_float_reference(value: f64, width: SourceFloatWidth, verb: u8,
             let exponent = decimal.point - 1;
             if exponent < -4 || exponent >= exponent_precision {
                 precision = precision.min(decimal.count);
-                write_e(&mut output, &decimal, negative, precision - 1, if verb == b'g' { b'e' } else { b'E' })?;
+                write_e(output, decimal, negative, precision - 1, if verb == b'g' { b'e' } else { b'E' })?;
             } else {
                 if precision > decimal.point { precision = decimal.count; }
-                write_f(&mut output, &decimal, negative, (precision - decimal.point).max(0))?;
+                write_f(output, decimal, negative, (precision - decimal.point).max(0))?;
             }
         }
-        _ => append(&mut output, &[b'%', verb])?,
+        _ => append(output, &[b'%', verb])?,
     }
-    Ok(output)
+    Ok(())
 }
 
 fn round_shortest(decimal: &mut SourceDecimal, mantissa: u64, exponent: i32, info: FloatInfo) {
@@ -103,7 +158,7 @@ fn round_shortest(decimal: &mut SourceDecimal, mantissa: u64, exponent: i32, inf
     }
 }
 
-fn write_e(output: &mut Vec<u8>, decimal: &SourceDecimal, negative: bool, precision: i32, verb: u8)
+fn write_e(output: &mut Vec<u8>, decimal: &SourceFloatDigits<'_>, negative: bool, precision: i32, verb: u8)
     -> Result<(), SourceSliceAllocationError>
 {
     if negative { append(output, b"-")?; }
@@ -118,7 +173,7 @@ fn write_e(output: &mut Vec<u8>, decimal: &SourceDecimal, negative: bool, precis
     append_exponent(output, if decimal.count == 0 { 0 } else { decimal.point - 1 }, 2)
 }
 
-fn write_f(output: &mut Vec<u8>, decimal: &SourceDecimal, negative: bool, precision: i32)
+fn write_f(output: &mut Vec<u8>, decimal: &SourceFloatDigits<'_>, negative: bool, precision: i32)
     -> Result<(), SourceSliceAllocationError>
 {
     if negative { append(output, b"-")?; }

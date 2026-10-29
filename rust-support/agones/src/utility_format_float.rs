@@ -9,7 +9,7 @@ use crate::{
     utility_format_methods::SourcePrintfRecursion,
     utility_format_print::{SourcePrintfMode, pad, write_padding, append_rune},
     utility_format_scan::SourcePrintfResolvedCounts,
-    utility_float_reference::{SourceFloatWidth, try_source_float_reference, repeat},
+    utility_float_reference::{SourceFloatWidth, try_source_float, repeat},
     utility_format_map::SourceFmtMapKey,
     utility_go_quote::append,
     utility_http::{SourceUnicodeProfile, SourceSliceAllocationError},
@@ -41,7 +41,7 @@ pub(crate) fn write_float(output: &mut Vec<u8>, value: f64, width: SourceFloatWi
         }
     };
     let precision = state.precision.map_or(default_precision, |precision| precision as i32);
-    let converted = try_source_float_reference(value, width, format, precision)?;
+    let converted = try_source_float(value, width, format, precision)?;
     let mut number = Vec::new();
     if !matches!(converted.first(), Some(b'-' | b'+')) { append(&mut number, b"+")?; }
     append(&mut number, &converted)?;
