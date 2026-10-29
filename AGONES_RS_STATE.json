@@ -821,7 +821,7 @@
           "partial_adoption_record": "verification/agones/roadmap-M0003-partial-map.json",
           "platform_effect_authoring_record": "verification/agones/roadmap-M0003-platform-effects.json",
           "prerequisites": "M0001/M0002 authored implementation complete; global phase remains IMPLEMENTATION_ONLY",
-          "progress_usage_observation": "verification/agones/roadmap-M0003-progress-usage-76.json",
+          "progress_usage_observation": "verification/agones/roadmap-M0003-progress-usage-78.json",
           "progress_usage_observations": [
             "verification/agones/roadmap-M0003-progress-usage-1.json",
             "verification/agones/roadmap-M0003-progress-usage-2.json",
@@ -898,17 +898,19 @@
             "verification/agones/roadmap-M0003-progress-usage-73.json",
             "verification/agones/roadmap-M0003-progress-usage-74.json",
             "verification/agones/roadmap-M0003-progress-usage-75.json",
-            "verification/agones/roadmap-M0003-progress-usage-76.json"
+            "verification/agones/roadmap-M0003-progress-usage-76.json",
+            "verification/agones/roadmap-M0003-progress-usage-77.json",
+            "verification/agones/roadmap-M0003-progress-usage-78.json"
           ],
           "reuse_adoption_record": "verification/agones/roadmap-M0003-reuse-adoption.json",
           "route": "MANUAL",
           "source_snapshot": "95161696e9ad90f9eab2ec7ae978bcafdcbb3483",
           "stage": "IMPLEMENTING",
           "usage_start": "verification/agones/roadmap-M0003-entry-usage.json",
-          "work_base_commit": "d0ec6cafa6ea2aa1c04213a5621a54430a5084e2"
+          "work_base_commit": "dd9109fc1db6033890cfff37818ade03d00e6064"
         }
       },
-      "next_action": "Continue M0003 MANUAL without route switch. Continue source runtime heterogeneous values, map snapshot/copy/pointer/interface ownership and remaining source/native lifecycle/configuration paths. Complete remaining source raw Go format/value behavior and production bindings. Binary32/binary64 optimized and multiprecision conversion plus explicit Go32/Go64 arithmetic profiles are authored and connected, all uncompiled and unverified. Reference decimal shifts now select 28/60-bit chunks from the shared target profile, upper/lower bounds use that same profile, the digit writer preserves both source host-word predicates, and fixed rounding retains the selected uint cast. Production default conversion projects the compiled host word width; explicit try_source_float_profile accepts either shared source profile. Complete source/target configuration inventory and complete production context bindings, native compiler/codegen/heap/allocation/stack/pool/failure/ABI/GC profiles and post-gate edge/rounding/refinement evidence. Complete source runtime heterogeneous values, map snapshot timing/copies/live aliases/hash/range/concurrency/NaN tie provenance, interface type-token and pointer/word/ABI bindings, inherited/nil method declarations and copied/retained error/interface ownership. Static aggregate/native base views remain authored; source mutable storage/field addressability/copy/lifetime profiles and unknown/noncanonical reflection still require complete paths. Complete retained State/pool aliases, panic(nil)/GODEBUG/Goexit/cross-goroutine/hook/unwind/fatal/trace/exit behavior and every byte consumer. Native Display defaults/opaque fallbacks and indexed/scanned external-rendering compatibility inputs still require complete source bindings. Native fixed arrays/Vec/Cow/Box/reference arithmetic do not establish source scratch/overflow/GC/pressure/failure/sanitizer/experiment/elision/native ABI profiles. Complete mutable/aliased Unwrap() []error views, copied/retained interface/error identity/lifetime/native allocation/GC semantics and full custom Is/As. Preserve full klog/logr header/multiline/field/context/sink/flags/caller/depth, retained/cross-goroutine panic values, Goexit/panic chains, source/native callback/timer/cancellation and trace/stack/freeze/secure/crash/core/printing/exit/atexit/native-hook profiles. Preserve remaining parent/direct HTTP/protocol/connection/JoinSet boundaries, H1 abortPendingRead/hijack/multipart/cleanup-panic/native close and H2 committed-head/no-body END_STREAM/reset/disposal requirements. All prior quote/builder/cache/control/guard-future/context/format/Arc/Bytes/RawValue/serde/native allocation, source GC/heap/elision/sanitizer/experiment/pressure/failure, Go map hash/group/growth/range/key/pointer/alias/concurrency, ABI/unwind/address/layout/lifetime, fmt pool/tiny/extreme Go32, GRPC_GO_LOG_*/custom logger/source SDK/command requirements remain. Every prior Unicode, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirement remains. No executed evidence, full parity or M0003 completion is claimed. Full BOTH-route scope remains intact, global gate CLOSED and assurance NOT_STARTED. No compiler/probes/tests/lint/proof/generator validation/CI.",
+      "next_action": "Continue M0003 MANUAL without route switch. Complete remaining source heterogeneous/interface/error-copy and mutable reference bindings, map/runtime/platform/configuration/lifecycle paths and all other M0003 bodies. Complete remaining source raw Go format/value behavior and production bindings. Native print-time map capture, explicit scalar/aggregate/reference-header copies and pinned in-place stable sorting are authored and connected, all uncompiled/unverified. Complete source map storage/hash/group/growth/random iteration, tied-NaN range provenance, mutable slice/map/pointer/interface/error aliases, non-Copy closure/function and full error-interface copies, source/runtime concurrent-map fatal behavior, snapshot allocation/GC/ABI/escape/stack/native profiles and whole production context/adoption paths. Native HashMap/BTreeMap/RefCell iteration is an explicit storage adapter and does not establish Go runtime-map parity. Existing pre-captured pairs remain an explicit caller-provided path. Complete source/target configuration inventory and complete production context bindings, native compiler/codegen/heap/allocation/stack/pool/failure/ABI/GC profiles and post-gate edge/rounding/refinement evidence. Complete source runtime heterogeneous values, complete source map-storage/copy/reference-alias/hash/range/concurrent-fatal and NaN-tie provenance, interface type-token and pointer/word/ABI bindings, inherited/nil method declarations and copied/retained error/interface ownership. Static aggregate/native base views remain authored; source mutable storage/field addressability/copy/lifetime profiles and unknown/noncanonical reflection still require complete paths. Complete retained State/pool aliases, panic(nil)/GODEBUG/Goexit/cross-goroutine/hook/unwind/fatal/trace/exit behavior and every byte consumer. Native Display defaults/opaque fallbacks and indexed/scanned external-rendering compatibility inputs still require complete source bindings. Native fixed arrays/Vec/Cow/Box/reference arithmetic do not establish source scratch/overflow/GC/pressure/failure/sanitizer/experiment/elision/native ABI profiles. Complete mutable/aliased Unwrap() []error views, copied/retained interface/error identity/lifetime/native allocation/GC semantics and full custom Is/As. Preserve full klog/logr header/multiline/field/context/sink/flags/caller/depth, retained/cross-goroutine panic values, Goexit/panic chains, source/native callback/timer/cancellation and trace/stack/freeze/secure/crash/core/printing/exit/atexit/native-hook profiles. Preserve remaining parent/direct HTTP/protocol/connection/JoinSet boundaries, H1 abortPendingRead/hijack/multipart/cleanup-panic/native close and H2 committed-head/no-body END_STREAM/reset/disposal requirements. All prior quote/builder/cache/control/guard-future/context/format/Arc/Bytes/RawValue/serde/native allocation, source GC/heap/elision/sanitizer/experiment/pressure/failure, Go map hash/group/growth/range/key/pointer/alias/concurrency, ABI/unwind/address/layout/lifetime, fmt pool/tiny/extreme Go32, GRPC_GO_LOG_*/custom logger/source SDK/command requirements remain. Every prior Unicode, MIME/multipart/MaxBytesReader/Values.Clone/query/escape/GODEBUG, request/header/native HTTP/listener/fsnotify v1.4.7/platform/config/queue/logging/CRD/features/admission/body requirement remains. No executed evidence, full parity or M0003 completion is claimed. Full BOTH-route scope remains intact, global gate CLOSED and assurance NOT_STARTED. No compiler/probes/tests/lint/proof/generator validation/CI.",
       "objective": "AGONES_AND_CPG_COMBINED_ROADMAP",
       "objective_attachment": "/home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt",
       "objective_attachment_sha256": "a9b797fc624be04548c62e63a634bcc2cacab25c4d9f45af346148ba32c1baea",
@@ -966,8 +968,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 363,
-  "previous_sha256": "22c8885a9cddc3655848ae019fe3cd1ffa6df090c7b9ce6a0964f9651a1294fe",
+  "previous_revision": 364,
+  "previous_sha256": "5a09638f0dada4fb7e3340dfcd9dd41063234171908b3786fd1d1f9967b2f3ec",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -1671,7 +1673,7 @@
       "timestamp": "2026-10-21T09:42:01.132215+00:00"
     }
   ],
-  "revision": 364,
+  "revision": 365,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [

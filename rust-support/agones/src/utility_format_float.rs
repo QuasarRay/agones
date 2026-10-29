@@ -4,7 +4,7 @@
 // optimized Dragonbox/fixed paths and native allocation profiles remain open.
 use derive_deftly::Deftly;
 use crate::{
-    utility_declarations::derive_deftly_template_SourcePrintfInterfaces,
+    utility_declarations::{derive_deftly_template_SourcePrintfInterfaces, derive_deftly_template_SourceFmtValueCopy},
     utility_format_arguments::SourcePrintfValue,
     utility_format_methods::SourcePrintfRecursion,
     utility_format_print::{SourcePrintfMode, pad, write_padding, append_rune},
@@ -85,10 +85,10 @@ pub(crate) fn write_float(output: &mut Vec<u8>, value: f64, width: SourceFloatWi
 }
 
 #[derive(Deftly)]
-#[derive_deftly(SourcePrintfInterfaces)]
+#[derive_deftly(SourcePrintfInterfaces, SourceFmtValueCopy)]
 pub struct SourceComplex64 { pub real: f32, pub imaginary: f32 }
 #[derive(Deftly)]
-#[derive_deftly(SourcePrintfInterfaces)]
+#[derive_deftly(SourcePrintfInterfaces, SourceFmtValueCopy)]
 pub struct SourceComplex128 { pub real: f64, pub imaginary: f64 }
 
 macro_rules! complex_values {

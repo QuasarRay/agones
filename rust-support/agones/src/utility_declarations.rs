@@ -38,6 +38,25 @@ define_derive_deftly! {
 }
 pub(crate) use derive_deftly_template_SourcePrintfInterfaces;
 
+// Source value copies are declaration-driven. Each field supplies its own
+// scalar/header copy; Rust Clone is not an implicit source-copy operation.
+define_derive_deftly! {
+    SourceFmtValueCopy:
+    impl<$tgens> crate::utility_format_copy::SourceFmtValueCopy for $ttype
+    where $( $ftype: crate::utility_format_copy::SourceFmtValueCopy, )
+          $twheres
+    {
+        fn source_fmt_copy(&self) -> Self {
+            match self { $(
+                $vpat => $vtype { $(
+                    $fname: crate::utility_format_copy::SourceFmtValueCopy::source_fmt_copy($fpatname),
+                ) },
+            ) }
+        }
+    }
+}
+pub(crate) use derive_deftly_template_SourceFmtValueCopy;
+
 define_derive_deftly! {
     UtilityFeatureProviders:
     ::cgp::prelude::delegate_and_check_components! {

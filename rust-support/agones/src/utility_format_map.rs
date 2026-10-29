@@ -14,6 +14,7 @@ use crate::{
     utility_format_scan::SourcePrintfInteger,
     utility_format_print::SourcePrintfMode,
     utility_format_scan::SourcePrintfResolvedCounts,
+    utility_format_sort::source_stable_sort,
     utility_go_quote::append,
     utility_http::{SourceUnicodeProfile, SourceSliceAllocationError, reserve_source_array},
 };
@@ -180,27 +181,47 @@ impl<Key: SourceFmtMapKey + SourcePrintfValue, Value: SourcePrintfValue> SourceP
     fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
         mode: SourcePrintfMode, recursion: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
     {
-        if recursion.depth == 0 && verb == 'p' {
-            let address = if self.entries.is_none() { 0 } else { self.native_address };
-            return write_source_address(self, address, verb, state, profile, mode, recursion, output);
-        }
-        if state.flags.sharp_v {
-            append(output, self.source_type.as_bytes())?;
-            if self.entries.is_none() { return append(output, b"(nil)"); }
-            append(output, b"{")?;
-        } else { append(output, b"map[")?; }
+        if begin_source_map(self, self.entries.is_none(), self.native_address,
+            verb, state, profile, mode, recursion, output)? { return Ok(()); }
         let entries = self.entries.unwrap_or(&[]);
         let mut order = reserve_source_array::<usize>(entries.len() as u64)?;
         order.extend(0..entries.len());
         // Stable ties retain the captured iteration order, including all NaNs
         // and equal signed zeros. Source scratch/allocation schedules remain.
-        order.sort_by(|&left, &right| entries[left].0.source_key_cmp(&entries[right].0));
-        for (position, index) in order.into_iter().enumerate() {
-            if position != 0 { append(output, if state.flags.sharp_v { b", " } else { b" " })?; }
-            write_source_value(&entries[index].0, verb, state, profile, mode, recursion.child(true), output)?;
-            append(output, b":")?;
-            write_source_value(&entries[index].1, verb, state, profile, mode, recursion.child(true), output)?;
-        }
-        append(output, if state.flags.sharp_v { b"}" } else { b"]" })
+        source_stable_sort(&mut order, |&left, &right| entries[left].0.source_key_cmp(&entries[right].0));
+        write_source_map_pairs(order.into_iter().map(|index| (&entries[index].0, &entries[index].1)),
+            verb, state, profile, mode, recursion, output)
     }
+}
+
+/// Framing precedes fmtsort capture in the source. A pointer result or sharp
+/// nil result finishes before a range or any key/value copy is requested.
+pub(crate) fn begin_source_map<Value: SourcePrintfValue>(value: &Value, nil: bool, address: u64,
+    verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
+    mode: SourcePrintfMode, recursion: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<bool, SourceSliceAllocationError>
+{
+    if recursion.depth == 0 && verb == 'p' {
+        write_source_address(value, if nil { 0 } else { address }, verb, state, profile, mode, recursion, output)?;
+        return Ok(true);
+    }
+    if state.flags.sharp_v {
+        append(output, value.source_type().as_bytes())?;
+        if nil { append(output, b"(nil)")?; return Ok(true); }
+        append(output, b"{")?;
+    } else { append(output, b"map[")?; }
+    Ok(false)
+}
+
+pub(crate) fn write_source_map_pairs<'a, Key: SourcePrintfValue + 'a, Value: SourcePrintfValue + 'a>(
+    entries: impl IntoIterator<Item = (&'a Key, &'a Value)>, verb: char,
+    state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile, mode: SourcePrintfMode,
+    recursion: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+{
+    for (position, (key, value)) in entries.into_iter().enumerate() {
+        if position != 0 { append(output, if state.flags.sharp_v { b", " } else { b" " })?; }
+        write_source_value(key, verb, state, profile, mode, recursion.child(true), output)?;
+        append(output, b":")?;
+        write_source_value(value, verb, state, profile, mode, recursion.child(true), output)?;
+    }
+    append(output, if state.flags.sharp_v { b"}" } else { b"]" })
 }
