@@ -6,7 +6,7 @@ use crate::{
     errors::BoxError, runtime::SourceLogType,
     utility_format_arguments::SourcePrintfValue,
     utility_format_methods::{SourcePrintfMethodViews, SourcePrintfInterfaces, SourceFormatState,
-        SourceFormatter, SourceGoStringer, SourceStringer, SourceErrorMethod},
+        SourceFormatter, SourceGoStringer, SourceStringer, SourceErrorMethod, SourcePrintfRecursion},
     utility_format_print::SourcePrintfMode,
     utility_format_scan::{SourcePrintfInteger, SourcePrintfResolvedCounts},
     utility_http::{SourceUnicodeProfile, SourceSliceAllocationError},
@@ -30,14 +30,17 @@ where Function: for<'a, 'b, 'c> Fn(&'a Value, &'b mut SourceFormatState<'c>, cha
 impl<Value: SourcePrintfValue, Function> SourcePrintfValue for SourcePrintfFormatter<Value, Function>
 where Function: for<'a, 'b, 'c> Fn(&'a Value, &'b mut SourceFormatState<'c>, char) -> Result<(), SourceSliceAllocationError>,
 {
+    const SOURCE_KIND_UINT8: bool = Value::SOURCE_KIND_UINT8;
     fn source_type(&self) -> &str { self.value.source_type() }
     fn source_integer(&self) -> SourcePrintfInteger { self.value.source_integer() }
     fn source_is_nil(&self) -> bool { self.value.source_is_nil() }
+    fn source_nil_interface_type(&self) -> &str { self.value.source_nil_interface_type() }
     fn source_is_nil_pointer(&self) -> bool { self.value.source_is_nil_pointer() }
     fn source_error_view(&self) -> Option<&(dyn Error + Send + Sync + 'static)> { self.value.source_error_view() }
+    fn source_uint8(&self) -> Option<u8> { self.value.source_uint8() }
     fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
-        mode: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
-    { self.value.write_source(verb, state, profile, mode, output) }
+        mode: SourcePrintfMode, recursion: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+    { self.value.write_source(verb, state, profile, mode, recursion, output) }
     fn into_source_error(self) -> Option<BoxError> { self.value.into_source_error() }
 }
 
@@ -59,14 +62,17 @@ macro_rules! string_method_adapter {
         impl<Value: SourcePrintfValue, Function> SourcePrintfValue for $name<Value, Function>
         where Function: for<'a> Fn(&'a Value) -> Cow<'a, [u8]>,
         {
+            const SOURCE_KIND_UINT8: bool = Value::SOURCE_KIND_UINT8;
             fn source_type(&self) -> &str { self.value.source_type() }
             fn source_integer(&self) -> SourcePrintfInteger { self.value.source_integer() }
             fn source_is_nil(&self) -> bool { self.value.source_is_nil() }
+            fn source_nil_interface_type(&self) -> &str { self.value.source_nil_interface_type() }
             fn source_is_nil_pointer(&self) -> bool { self.value.source_is_nil_pointer() }
             fn source_error_view(&self) -> Option<&(dyn Error + Send + Sync + 'static)> { self.value.source_error_view() }
+            fn source_uint8(&self) -> Option<u8> { self.value.source_uint8() }
             fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
-                mode: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
-            { self.value.write_source(verb, state, profile, mode, output) }
+                mode: SourcePrintfMode, recursion: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+            { self.value.write_source(verb, state, profile, mode, recursion, output) }
             fn into_source_error(self) -> Option<BoxError> { self.value.into_source_error() }
         }
     };
@@ -98,14 +104,16 @@ where Value: SourcePrintfValue + SourceErrorMethod,
 impl<Value> SourcePrintfValue for SourcePrintfOwnedError<Value>
 where Value: SourcePrintfValue + SourceErrorMethod + Error + SourceLogType + Send + Sync + 'static,
 {
+    const SOURCE_KIND_UINT8: bool = Value::SOURCE_KIND_UINT8;
     fn source_type(&self) -> &str { Value::SOURCE_LOG_TYPE }
     fn source_integer(&self) -> SourcePrintfInteger { self.error.source_integer() }
     // A typed error interface is non-nil even when its receiver pointer is nil.
     fn source_is_nil_pointer(&self) -> bool { self.error.source_is_nil_pointer() }
     fn source_error_view(&self) -> Option<&(dyn Error + Send + Sync + 'static)> { Some(self.error.as_ref()) }
+    fn source_uint8(&self) -> Option<u8> { self.error.source_uint8() }
     fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
-        mode: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
-    { self.error.write_source(verb, state, profile, mode, output) }
+        mode: SourcePrintfMode, recursion: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+    { self.error.write_source(verb, state, profile, mode, recursion, output) }
     fn into_source_error(self) -> Option<BoxError> {
         let original: BoxError = self.error;
         Some(original)

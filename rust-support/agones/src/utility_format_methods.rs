@@ -32,6 +32,22 @@ pub trait SourcePrintfMethodViews {
     fn source_methods(&self) -> SourcePrintfInterfaces<'_> { SourcePrintfInterfaces::default() }
 }
 
+#[derive(Clone, Copy, Debug)]
+pub struct SourcePrintfRecursion {
+    pub depth: usize,
+    pub erroring: bool,
+    pub panicking: bool,
+    pub can_interface: bool,
+}
+impl Default for SourcePrintfRecursion {
+    fn default() -> Self { Self { depth: 0, erroring: false, panicking: false, can_interface: true } }
+}
+impl SourcePrintfRecursion {
+    pub fn child(self, interfaceable: bool) -> Self {
+        Self { depth: self.depth + 1, can_interface: self.can_interface && interfaceable, ..self }
+    }
+}
+
 pub struct SourceFormatState<'a> {
     output: &'a mut Vec<u8>,
     printer: SourcePrintfResolvedCounts,
@@ -61,58 +77,68 @@ impl SourceFormatState<'_> {
     }
 }
 
-pub(crate) fn write_source_value<Value: SourcePrintfValue>(value: &Value, verb: char,
+pub fn write_source_value<Value: SourcePrintfValue>(value: &Value, verb: char,
     state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile, mode: SourcePrintfMode,
-    panicking: bool, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+    recursion: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
 {
-    if value.source_is_nil() { return write_nil(output, verb, state); }
+    if value.source_is_nil() {
+        if recursion.depth == 0 { return write_nil(output, verb, state); }
+        if state.flags.sharp_v {
+            append(output, value.source_nil_interface_type().as_bytes())?; return append(output, b"(nil)");
+        }
+        return append(output, b"<nil>");
+    }
     // printArg handles p/T before any user methods. T normally exits in the
     // shared control loop, but remains correct for a direct panic-value view.
-    if verb == 'T' { return write_plain(output, value.source_type().as_bytes(), state); }
-    if verb == 'p' { return value.write_source(verb, state, profile, mode, output); }
+    if recursion.depth == 0 && verb == 'T' { return write_plain(output, value.source_type().as_bytes(), state); }
+    if recursion.depth == 0 && verb == 'p' { return value.write_source(verb, state, profile, mode, recursion, output); }
+    if recursion.erroring || !recursion.can_interface {
+        return value.write_source(verb, state, profile, mode, recursion, output);
+    }
     let methods = value.source_methods();
     if verb == 'w' && (methods.error.is_none() || mode != SourcePrintfMode::Errorf) {
-        return bad_verb(value, verb, state, profile, mode, output);
+        return bad_verb(value, verb, state, profile, mode, recursion, output);
     }
     // w becomes v only inside handleMethods. A reflection fallback still
     // receives the original verb from printArg, including sharp-w.
     let method_verb = if verb == 'w' { 'v' } else { verb };
     let nil_pointer = value.source_is_nil_pointer();
     if let Some(formatter) = methods.formatter {
-        return call_method("Format", method_verb, nil_pointer, panicking, profile, output, |output| {
+        return call_method("Format", method_verb, nil_pointer, recursion.panicking, profile, output, |output| {
             let mut frame = SourceFormatState { output, printer: state.value_state(), profile };
             formatter.source_format(&mut frame, method_verb)
         });
     }
     if state.flags.sharp_v {
         if let Some(stringer) = methods.go_stringer {
-            return call_method("GoString", method_verb, nil_pointer, panicking, profile, output, |output| {
+            return call_method("GoString", method_verb, nil_pointer, recursion.panicking, profile, output, |output| {
                 let text = stringer.source_go_string(); write_plain(output, &text, state)
             });
         }
     } else if matches!(method_verb, 'v' | 's' | 'x' | 'X' | 'q') {
         if let Some(error) = methods.error {
-            return call_method("Error", method_verb, nil_pointer, panicking, profile, output, |output| {
+            return call_method("Error", method_verb, nil_pointer, recursion.panicking, profile, output, |output| {
                 let text = error.source_error_message(); write_text(output, &text, method_verb, state, profile)
             });
         }
         if let Some(stringer) = methods.stringer {
-            return call_method("String", method_verb, nil_pointer, panicking, profile, output, |output| {
+            return call_method("String", method_verb, nil_pointer, recursion.panicking, profile, output, |output| {
                 let text = stringer.source_string(); write_text(output, &text, method_verb, state, profile)
             });
         }
     }
-    value.write_source(verb, state, profile, mode, output)
+    value.write_source(verb, state, profile, mode, recursion, output)
 }
 
-fn bad_verb<Value: SourcePrintfValue>(value: &Value, verb: char, state: &SourcePrintfResolvedCounts,
-    profile: SourceUnicodeProfile, mode: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+pub(crate) fn bad_verb<Value: SourcePrintfValue>(value: &Value, verb: char, state: &SourcePrintfResolvedCounts,
+    profile: SourceUnicodeProfile, mode: SourcePrintfMode, recursion: SourcePrintfRecursion,
+    output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
 {
     append(output, b"%!")?; append_rune(output, verb)?; append(output, b"(")?;
     append(output, value.source_type().as_bytes())?; append(output, b"=")?;
     // erroring=true suppresses all methods during the recursive v. The
     // concrete value's fallback is separate from method dispatch.
-    value.write_source('v', state, profile, mode, output)?;
+    value.write_source('v', state, profile, mode, SourcePrintfRecursion { depth: 0, erroring: true, ..recursion }, output)?;
     append(output, b")")
 }
 
@@ -147,7 +173,8 @@ impl<Value: SourcePrintfValue + Send + 'static> PanicValue for TypedPanicValue<V
     fn source_error(&self) -> Option<&(dyn Error + Send + Sync + 'static)> { self.0.source_error_view() }
     fn write_panic_value(&self, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
         panicking: bool, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError> {
-        write_source_value(&self.0, 'v', state, profile, SourcePrintfMode::Sprintf, panicking, output)
+        write_source_value(&self.0, 'v', state, profile, SourcePrintfMode::Sprintf,
+            SourcePrintfRecursion { panicking, ..SourcePrintfRecursion::default() }, output)
     }
 }
 /// Per-panic native value data preserves its formatting interfaces. The
@@ -183,7 +210,8 @@ fn write_panic_value(panic: SourceRecoveredPanic, profile: SourceUnicodeProfile,
     macro_rules! primitive_payloads {
         ($($ty:ty),+ $(,)?) => { $(
             if let Some(value) = panic.payload().downcast_ref::<$ty>() {
-                return write_source_value(value, 'v', &SourcePrintfResolvedCounts::default(), profile, SourcePrintfMode::Sprintf, true, output);
+                return write_source_value(value, 'v', &SourcePrintfResolvedCounts::default(), profile, SourcePrintfMode::Sprintf,
+                    SourcePrintfRecursion { panicking: true, ..SourcePrintfRecursion::default() }, output);
             }
         )+ };
     }

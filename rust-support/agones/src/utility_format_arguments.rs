@@ -13,7 +13,8 @@ use crate::{
     utility_format_integer::{SourcePrintfIntegerValue, write_integer, write_number},
     utility_format_text::write_text,
     utility_format_bool::write_bool,
-    utility_format_methods::{SourcePrintfMethodViews, SourceErrorMethod, write_source_value},
+    utility_format_methods::{SourcePrintfMethodViews, SourcePrintfRecursion, SourceErrorMethod, write_source_value},
+    utility_format_collections::{SourcePrintfStructFields, write_source_struct},
     utility_declarations::derive_deftly_template_SourcePrintfInterfaces,
     utility_error_format::{source_error_bytes, canonical_error_fields, CanonicalErrorFields},
     utility_error_view::source_error_type,
@@ -22,15 +23,19 @@ use crate::{
 };
 
 pub trait SourcePrintfValue: SourcePrintfMethodViews + Sized {
+    const SOURCE_KIND_UINT8: bool = false;
     fn source_type(&self) -> &str;
     fn source_integer(&self) -> SourcePrintfInteger { SourcePrintfInteger::Other }
     fn source_is_nil(&self) -> bool { false }
+    fn source_nil_interface_type(&self) -> &str { "interface {}" }
     fn source_is_nil_pointer(&self) -> bool { false }
     fn source_error_view(&self) -> Option<&(dyn Error + Send + Sync + 'static)> { None }
+    fn source_uint8(&self) -> Option<u8> { None }
+    fn source_contiguous_bytes(_: &[Self]) -> Option<&[u8]> { None }
     /// Base/reflection formatting without user method dispatch. The shared
     /// method helper calls this directly while suppressing recursive methods.
     fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
-        mode: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>;
+        mode: SourcePrintfMode, recursion: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>;
     /// Non-errors are dropped after rendering. Error adapters transfer the
     /// existing Box once; repeated w occurrences retain only argument indexes.
     fn into_source_error(self) -> Option<BoxError> { None }
@@ -43,25 +48,25 @@ pub struct SourcePrintfString<'a>(pub &'a [u8]);
 impl SourcePrintfValue for SourcePrintfString<'_> {
     fn source_type(&self) -> &str { "string" }
     fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
-        _: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+        _: SourcePrintfMode, _: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
     { write_text(output, self.0, verb, state, profile) }
 }
 impl SourcePrintfValue for &str {
     fn source_type(&self) -> &str { "string" }
     fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
-        _: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+        _: SourcePrintfMode, _: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
     { write_text(output, self.as_bytes(), verb, state, profile) }
 }
 impl SourcePrintfValue for String {
     fn source_type(&self) -> &str { "string" }
     fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
-        _: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+        _: SourcePrintfMode, _: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
     { write_text(output, self.as_bytes(), verb, state, profile) }
 }
 impl SourcePrintfValue for bool {
     fn source_type(&self) -> &str { "bool" }
     fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, _: SourceUnicodeProfile,
-        _: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+        _: SourcePrintfMode, _: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
     { write_bool(output, *self, verb, state) }
 }
 macro_rules! integer_values {
@@ -70,13 +75,23 @@ macro_rules! integer_values {
             fn source_type(&self) -> &str { <Self as SourcePrintfIntegerValue>::SOURCE_TYPE }
             fn source_integer(&self) -> SourcePrintfInteger { self.source_count() }
             fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
-                _: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+                _: SourcePrintfMode, _: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
             { write_integer(output, self.source_bits(), <Self as SourcePrintfIntegerValue>::SIGNED,
                 <Self as SourcePrintfIntegerValue>::SOURCE_TYPE, verb, state, profile) }
         }
     )+ };
 }
-integer_values!(i8, i16, i32, i64, isize, u8, u16, u32, u64, usize);
+integer_values!(i8, i16, i32, i64, isize, u16, u32, u64, usize);
+impl SourcePrintfValue for u8 {
+    const SOURCE_KIND_UINT8: bool = true;
+    fn source_type(&self) -> &str { "uint8" }
+    fn source_integer(&self) -> SourcePrintfInteger { self.source_count() }
+    fn source_uint8(&self) -> Option<u8> { Some(*self) }
+    fn source_contiguous_bytes(values: &[Self]) -> Option<&[u8]> { Some(values) }
+    fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
+        _: SourcePrintfMode, _: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+    { write_integer(output, u64::from(*self), false, "uint8", verb, state, profile) }
+}
 
 macro_rules! no_source_methods {
     ($($ty:ty),+ $(,)?) => { $(impl SourcePrintfMethodViews for $ty {})+ };
@@ -90,7 +105,7 @@ impl SourcePrintfValue for SourcePrintfNil {
     fn source_type(&self) -> &str { "" }
     fn source_is_nil(&self) -> bool { true }
     fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, _: SourceUnicodeProfile,
-        _: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+        _: SourcePrintfMode, _: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
     { write_nil(output, verb, state) }
 }
 
@@ -116,9 +131,9 @@ impl SourcePrintfValue for SourcePrintfError {
     fn source_type(&self) -> &str { self.source_type }
     fn source_error_view(&self) -> Option<&(dyn Error + Send + Sync + 'static)> { Some(self.error.as_ref()) }
     fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
-        _: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+        _: SourcePrintfMode, recursion: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
     {
-        if verb == 'p' { return write_error_pointer(output, self.error.as_ref(), self.source_type, verb, state, profile); }
+        if verb == 'p' || recursion.depth > 0 { return write_error_pointer(output, self.error.as_ref(), self.source_type, verb, state, profile); }
         write_canonical_reflection(output, self.error.as_ref(), self.source_type, verb, state, profile)
     }
     fn into_source_error(self) -> Option<BoxError> { Some(self.error) }
@@ -159,7 +174,7 @@ macro_rules! tuple_arguments {
             fn write_value(&self, index: usize, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
                 mode: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
             {
-                match index { $($index => write_source_value(&self.$index, verb, state, profile, mode, false, output),)+
+                match index { $($index => write_source_value(&self.$index, verb, state, profile, mode, SourcePrintfRecursion::default(), output),)+
                     _ => panic!("source printf tuple index {index} out of range") }
             }
         }
@@ -194,7 +209,7 @@ impl<Head: SourcePrintfValue, Tail: SourcePrintfArguments> SourcePrintfArguments
     fn write_value(&self, index: usize, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
         mode: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
     {
-        if index == 0 { write_source_value(&self.0, verb, state, profile, mode, false, output) }
+        if index == 0 { write_source_value(&self.0, verb, state, profile, mode, SourcePrintfRecursion::default(), output) }
         else { self.1.write_value(index - 1, verb, state, profile, mode, output) }
     }
 }
@@ -239,41 +254,68 @@ fn write_error_pointer(output: &mut Vec<u8>, error: &(dyn Error + 'static), sour
 fn write_canonical_reflection(output: &mut Vec<u8>, error: &(dyn Error + 'static), source_type: &str,
     verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile) -> Result<(), SourceSliceAllocationError>
 {
-    let fields = canonical_error_fields(error).expect("canonical error adapter retains canonical fields");
     append(output, b"&")?;
-    if state.flags.sharp_v { append(output, source_type.strip_prefix('*').unwrap_or(source_type).as_bytes())?; }
-    append(output, b"{")?;
-    let (message, field) = match &fields {
-        CanonicalErrorFields::Message(message) => (*message, b"s".as_slice()),
-        CanonicalErrorFields::Wrapped { message, .. } | CanonicalErrorFields::Multiple { message, .. } => (*message, b"msg".as_slice()),
+    let fields = CanonicalStructFields {
+        fields: canonical_error_fields(error).expect("canonical error adapter retains canonical fields"),
+        source_type: source_type.strip_prefix('*').unwrap_or(source_type),
     };
-    field_name(output, field, state)?; write_text(output, message, verb, state, profile)?;
-    match fields {
-        CanonicalErrorFields::Message(_) => {}
-        CanonicalErrorFields::Wrapped { source, .. } => {
-            field_separator(output, state)?; field_name(output, b"err", state)?;
-            if let Some(source) = source { write_nested_error(output, source, verb, state, profile)?; }
-            else { append(output, if state.flags.sharp_v { b"error(nil)" } else { b"<nil>" })?; }
-        }
-        CanonicalErrorFields::Multiple { errors, .. } => {
-            field_separator(output, state)?; field_name(output, b"errs", state)?;
-            if state.flags.sharp_v {
-                append(output, b"[]error")?;
-                if errors.is_none() { append(output, b"(nil)")?; append(output, b"}")?; return Ok(()); }
-            }
-            append(output, if state.flags.sharp_v { b"{" } else { b"[" })?;
-            for (index, error) in errors.unwrap_or(&[]).iter().enumerate() {
-                if index != 0 { field_separator(output, state)?; }
-                write_nested_error(output, error.as_ref(), verb, state, profile)?;
-            }
-            append(output, if state.flags.sharp_v { b"}" } else { b"]" })?;
+    write_source_struct(&fields, verb, state, profile, SourcePrintfMode::Sprintf,
+        SourcePrintfRecursion { depth: 1, can_interface: false, ..SourcePrintfRecursion::default() }, output)
+}
+
+#[derive(Deftly)]
+#[derive_deftly(SourcePrintfInterfaces)]
+struct CanonicalStructFields<'a> { fields: CanonicalErrorFields<'a>, source_type: &'a str }
+impl SourcePrintfValue for CanonicalStructFields<'_> {
+    fn source_type(&self) -> &str { self.source_type }
+    fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
+        mode: SourcePrintfMode, recursion: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+    { write_source_struct(self, verb, state, profile, mode, recursion, output) }
+}
+impl SourcePrintfStructFields for CanonicalStructFields<'_> {
+    fn source_field_count(&self) -> usize { if matches!(&self.fields, CanonicalErrorFields::Message(_)) { 1 } else { 2 } }
+    fn source_field_name(&self, index: usize) -> &str {
+        match (index, &self.fields) {
+            (0, CanonicalErrorFields::Message(_)) => "s",
+            (0, _) => "msg",
+            (1, CanonicalErrorFields::Wrapped { .. }) => "err",
+            (1, CanonicalErrorFields::Multiple { .. }) => "errs",
+            _ => panic!("canonical source field index out of range"),
         }
     }
-    append(output, b"}")
-}
-fn field_name(output: &mut Vec<u8>, name: &[u8], state: &SourcePrintfResolvedCounts) -> Result<(), SourceSliceAllocationError> {
-    if state.flags.sharp_v || state.flags.plus_v { append(output, name)?; append(output, b":")?; }
-    Ok(())
+    fn source_field_interfaceable(&self, _: usize) -> bool { false }
+    fn source_write_field(&self, index: usize, verb: char, state: &SourcePrintfResolvedCounts,
+        profile: SourceUnicodeProfile, _: SourcePrintfMode, _: SourcePrintfRecursion,
+        output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+    {
+        if index == 0 {
+            let message = match &self.fields {
+                CanonicalErrorFields::Message(message) | CanonicalErrorFields::Wrapped { message, .. }
+                    | CanonicalErrorFields::Multiple { message, .. } => *message,
+            };
+            return write_text(output, message, verb, state, profile);
+        }
+        match (index, &self.fields) {
+            (1, CanonicalErrorFields::Wrapped { source, .. }) => {
+                if let Some(source) = source { write_nested_error(output, *source, verb, state, profile)?; }
+                else { append(output, if state.flags.sharp_v { b"error(nil)" } else { b"<nil>" })?; }
+            }
+            (1, CanonicalErrorFields::Multiple { errors, .. }) => {
+                if state.flags.sharp_v {
+                    append(output, b"[]error")?;
+                    if errors.is_none() { return append(output, b"(nil)"); }
+                }
+                append(output, if state.flags.sharp_v { b"{" } else { b"[" })?;
+                for (index, error) in errors.unwrap_or(&[]).iter().enumerate() {
+                    if index != 0 { field_separator(output, state)?; }
+                    write_nested_error(output, error.as_ref(), verb, state, profile)?;
+                }
+                append(output, if state.flags.sharp_v { b"}" } else { b"]" })?;
+            }
+            _ => panic!("canonical source field index out of range"),
+        }
+        Ok(())
+    }
 }
 fn field_separator(output: &mut Vec<u8>, state: &SourcePrintfResolvedCounts) -> Result<(), SourceSliceAllocationError> {
     append(output, if state.flags.sharp_v { b", " } else { b" " })
