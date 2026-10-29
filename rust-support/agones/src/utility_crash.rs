@@ -1,7 +1,7 @@
 //! Source apimachinery HandleCrash state, ordered callbacks and worker boundary.
 // Adapted from selected apimachinery util/runtime and util/wait (Apache-2.0).
 // Copyright 2014 The Kubernetes Authors. Apache-2.0.
-use std::{fmt::Write as _, io::Write as _, sync::{Arc, Mutex, RwLock, atomic::{AtomicBool, Ordering}}};
+use std::{io::Write as _, sync::{Arc, Mutex, RwLock, atomic::{AtomicBool, Ordering}}};
 use cgp::prelude::*;
 use tokio_util::sync::CancellationToken;
 use crate::{utility_runtime::UtilityRuntimeContext, utility_panic::{SourceRecoveredPanic,
@@ -162,19 +162,14 @@ impl<Context: CanRaiseSourceCollectionFailure + HasSourceUnicodeProfile> SourceC
         if panic.is_abort_handler() { return; }
         let stack = crate::utility_runtime_panic::native_recovery_stack(runtime);
         let profile = *runtime.source_unicode_profile();
-        let quote = |value: &str| complete_source_collection(runtime, crate::utility_go_quote::try_source_go_quote(value.as_bytes(), profile));
         let typed = panic.payload().downcast_ref::<crate::utility_format_methods::SourcePrintfPanic>();
         let panic_value = match typed {
             Some(value) => complete_source_collection(runtime, value.render(profile, false)),
             None => panic.to_string().into_bytes(),
         };
-        let panic_quoted = complete_source_collection(runtime, crate::utility_go_quote::try_source_go_quote(&panic_value, profile));
-        let mut record = format!("\"Observed a panic\" panic={panic_quoted}");
-        if panic.source_type() != Some("string") {
+        let go_value = if panic.source_type() != Some("string") {
             if let Some(value) = typed {
-                let bytes = complete_source_collection(runtime, value.render(profile, true));
-                let value = complete_source_collection(runtime, crate::utility_go_quote::try_source_go_quote(&bytes, profile));
-                let _ = write!(&mut record, " panicGoValue={value}");
+                Some(complete_source_collection(runtime, value.render(profile, true)))
             } else {
                 let value = match panic.error() {
                     Some(error) => complete_source_collection(runtime, crate::utility_go_quote::try_source_error_go_syntax(error, profile))
@@ -183,10 +178,19 @@ impl<Context: CanRaiseSourceCollectionFailure + HasSourceUnicodeProfile> SourceC
                 };
                 // Noncanonical values retain an explicit native Debug projection.
                 // Full GoStringer/reflection/klog/context/caller profiles remain.
-                let _ = write!(&mut record, " panicGoValue={}", quote(&value));
+                Some(value.into_bytes())
             }
-        }
-        let _ = writeln!(&mut record, " stacktrace={}", quote(&stack));
-        let _ = std::io::stderr().lock().write_all(record.as_bytes());
+        } else { None };
+        let allocation = if usize::BITS == 32 { HeaderAllocationProfile::GO126_32 } else { HeaderAllocationProfile::GO126_64 };
+        let fields = match &go_value {
+            Some(value) => crate::utility_klog_values::panic_fields(allocation,
+                &[("panic", panic_value.as_slice()), ("panicGoValue", value.as_slice()), ("stacktrace", stack.as_bytes())]),
+            None => crate::utility_klog_values::panic_fields(allocation,
+                &[("panic", panic_value.as_slice()), ("stacktrace", stack.as_bytes())]),
+        };
+        let mut record = b"\"Observed a panic\"".to_vec();
+        complete_source_collection(runtime, crate::utility_klog_values::format_panic_strings(&mut record, fields, profile));
+        complete_source_collection(runtime, crate::utility_go_quote::append(&mut record, b"\n"));
+        let _ = std::io::stderr().lock().write_all(&record);
     }
 }

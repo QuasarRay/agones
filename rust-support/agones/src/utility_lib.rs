@@ -34,6 +34,7 @@ pub mod utility_error_target;
 pub mod utility_error_nil;
 mod utility_callback_slice;
 pub mod utility_error_handlers;
+mod utility_klog_values;
 mod utility_trace_error;
 pub mod utility_error_status;
 pub mod utility_error_format;
