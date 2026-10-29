@@ -38,9 +38,9 @@ struct Existing { key: Vec<u8>, interval: Interval }
 /// The formatter returns the actual rendered key bytes used for equality.
 /// The source's first identical pair keeps its position; a changed later value
 /// removes the earlier bytes and takes the later position.
-pub(crate) fn format_kvs(output: &mut Vec<u8>, groups: &[SourceErrorArguments],
+pub(crate) fn format_kvs<Failure: From<SourceSliceAllocationError>>(output: &mut Vec<u8>, groups: &[SourceErrorArguments],
     mut format: impl FnMut(&mut Vec<u8>, &SourceErrorArgument, &SourceErrorArgument)
-        -> Result<Vec<u8>, SourceSliceAllocationError>) -> Result<(), SourceSliceAllocationError>
+        -> Result<Vec<u8>, Failure>) -> Result<(), Failure>
 {
     // These are the source's two initial capacity-32 scratch slices. Native
     // Vec storage is a projection, not source stack/escape/allocation evidence.
@@ -112,26 +112,27 @@ pub(crate) fn write_string_value(output: &mut Vec<u8>, value: &[u8], profile: So
     else { append(output, b"\t")?; append(output, tail)?; append(output, b"\n >") }
 }
 
-fn string_bytes(value: &SourceErrorArgument) -> Option<&[u8]> {
+pub(crate) fn string_bytes(value: &SourceErrorArgument) -> Option<&[u8]> {
+    // from_native transports data without declaring its Go type. A native
+    // Rust String alone must not silently gain a source binding here.
+    value.source_type()?;
     if let Some(value) = value.downcast_ref::<SourceFmtSharedString>() { return Some(&value.0); }
+    if let Some(value) = value.downcast_ref::<crate::utility_format_arguments::SourcePrintfString<'static>>() { return Some(value.0); }
     if let Some(value) = value.downcast_ref::<&'static str>() { return Some(value.as_bytes()); }
     if let Some(value) = value.downcast_ref::<String>() { return Some(value.as_bytes()); }
     None
 }
 /// The apimachinery logPanic caller has already converted every field to a Go
-/// string (panic, panicGoValue and stacktrace). It uses this concrete branch;
-/// arbitrary klog value/Stringer/Marshaler/slog dispatch remains separate.
+/// string (panic, panicGoValue and stacktrace). The common value dispatcher
+/// consumes these fields. This caller cannot encounter an unbound value.
 pub(crate) fn format_panic_strings(output: &mut Vec<u8>, values: SourceErrorArguments, profile: SourceUnicodeProfile)
     -> Result<(), SourceSliceAllocationError>
 {
-    format_kvs(output, &[values], |output, key, value| {
-        let key = string_bytes(key).expect("logPanic supplies concrete string keys");
-        let value = string_bytes(value).expect("logPanic supplies preformatted string values");
-        append(output, b" ")?; append(output, key)?;
-        write_string_value(output, value, profile)?;
-        let mut copied = reserve_source_array::<u8>(key.len() as u64)?;
-        copied.extend_from_slice(key); Ok(copied)
-    })
+    match crate::utility_klog_dispatch::SourceKlogFormatter::new(profile).format_kvs(output, &[values]) {
+        Ok(()) => Ok(()),
+        Err(crate::utility_klog_dispatch::SourceKlogFormatError::Allocation(error)) => Err(error),
+        Err(error) => panic!("logPanic string field has a missing source binding: {error}"),
+    }
 }
 pub(crate) fn panic_fields(profile: HeaderAllocationProfile, fields: &[(&'static str, &[u8])]) -> SourceErrorArguments {
     let length = fields.len().checked_mul(2).and_then(|length| i64::try_from(length).ok());

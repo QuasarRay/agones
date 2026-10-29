@@ -414,7 +414,7 @@ fn append_json_bytes(result: &mut Vec<u8>, bytes: &[u8]) -> Result<(), SourceSli
     result.try_reserve(bytes.len()).map_err(|_| SourceSliceAllocationError::OutOfMemory)?;
     result.extend_from_slice(bytes); Ok(())
 }
-fn append_json_string(result: &mut Vec<u8>, bytes: &[u8]) -> Result<(), SourceSliceAllocationError> {
+pub(crate) fn append_json_string(result: &mut Vec<u8>, bytes: &[u8]) -> Result<(), SourceSliceAllocationError> {
     const HEX: &[u8; 16] = b"0123456789abcdef";
     append_json_bytes(result, b"\"")?; let mut offset = 0;
     while offset < bytes.len() {

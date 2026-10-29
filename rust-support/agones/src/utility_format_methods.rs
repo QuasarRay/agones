@@ -28,6 +28,7 @@ pub struct SourcePrintfInterfaces<'a> {
     pub error: Option<&'a dyn SourceErrorMethod>,
     pub stringer: Option<&'a dyn SourceStringer>,
     pub error_methods: crate::utility_error_query::SourceErrorMethods<'a>,
+    pub klog: crate::utility_klog_dispatch::SourceKlogInterfaces<'a>,
 }
 pub trait SourcePrintfMethodViews {
     fn source_methods(&self) -> SourcePrintfInterfaces<'_> { SourcePrintfInterfaces::default() }
@@ -165,16 +166,16 @@ fn call_method(method: &str, verb: char, nil_pointer: bool, panicking: bool, pro
 trait PanicValue: Send {
     fn source_type(&self) -> &str;
     fn source_error(&self) -> Option<&(dyn Error + Send + Sync + 'static)>;
-    fn write_panic_value(&self, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
+    fn write_panic_value(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
         panicking: bool, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>;
 }
 struct TypedPanicValue<Value>(Value);
 impl<Value: SourcePrintfValue + Send + 'static> PanicValue for TypedPanicValue<Value> {
     fn source_type(&self) -> &str { self.0.source_type() }
     fn source_error(&self) -> Option<&(dyn Error + Send + Sync + 'static)> { self.0.source_error_view() }
-    fn write_panic_value(&self, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
+    fn write_panic_value(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
         panicking: bool, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError> {
-        write_source_value(&self.0, 'v', state, profile, SourcePrintfMode::Sprintf,
+        write_source_value(&self.0, verb, state, profile, SourcePrintfMode::Sprintf,
             SourcePrintfRecursion { panicking, ..SourcePrintfRecursion::default() }, output)
     }
 }
@@ -192,7 +193,7 @@ impl SourcePrintfPanic {
     pub fn error(&self) -> Option<&(dyn Error + Send + Sync + 'static)> { self.value.source_error() }
     pub fn render(&self, profile: SourceUnicodeProfile, go_syntax: bool) -> Result<Vec<u8>, SourceSliceAllocationError> {
         let mut state = SourcePrintfResolvedCounts::default(); state.flags.sharp_v = go_syntax;
-        let mut output = Vec::new(); self.value.write_panic_value(&state, profile, false, &mut output)?; Ok(output)
+        let mut output = Vec::new(); self.value.write_panic_value('v', &state, profile, false, &mut output)?; Ok(output)
     }
 }
 
@@ -200,7 +201,7 @@ fn write_panic_value(panic: SourceRecoveredPanic, profile: SourceUnicodeProfile,
     -> Result<(), SourceSliceAllocationError>
 {
     if let Some(value) = panic.payload().downcast_ref::<SourcePrintfPanic>() {
-        return value.value.write_panic_value(&SourcePrintfResolvedCounts::default(), profile, true, output);
+        return value.value.write_panic_value('v', &SourcePrintfResolvedCounts::default(), profile, true, output);
     }
     if let Some(value) = panic.payload().downcast_ref::<crate::utility_error_alias::SourceSharedError>() {
         return write_source_value(value, 'v', &SourcePrintfResolvedCounts::default(), profile, SourcePrintfMode::Sprintf,
@@ -224,4 +225,31 @@ fn write_panic_value(panic: SourceRecoveredPanic, profile: SourceUnicodeProfile,
     // Opaque native payloads have no source reflection data yet. Preserve the
     // existing native recovery view; full arbitrary/nil/Goexit profiles remain.
     append(output, panic.to_string().as_bytes())
+}
+
+/// A new Sprintf printer for a recovered value, rather than fmt's nested
+/// panicking printer. klog's recovery uses %s, including its bad-verb output
+/// for non-string values. Unmapped native payloads remain explicit.
+pub(crate) fn write_recovered_value(panic: &SourceRecoveredPanic, verb: char,
+    profile: SourceUnicodeProfile, output: &mut Vec<u8>) -> Option<Result<(), SourceSliceAllocationError>>
+{
+    let state = SourcePrintfResolvedCounts::default();
+    if let Some(value) = panic.payload().downcast_ref::<SourcePrintfPanic>() {
+        return Some(value.value.write_panic_value(verb, &state, profile, false, output));
+    }
+    if let Some(error) = panic.error() {
+        if crate::utility_error_view::source_error_type(error).is_none() { return None; }
+        return Some(crate::utility_format_arguments::write_source_error_operand(error, verb, profile, SourcePrintfMode::Sprintf, output));
+    }
+    macro_rules! primitive_payloads {
+        ($($ty:ty),+ $(,)?) => { $(
+            if let Some(value) = panic.payload().downcast_ref::<$ty>() {
+                return Some(write_source_value(value, verb, &state, profile, SourcePrintfMode::Sprintf,
+                    SourcePrintfRecursion::default(), output));
+            }
+        )+ };
+    }
+    primitive_payloads!(String, &'static str, bool, i8, i16, i32, i64, isize, u8, u16, u32, u64, usize, f32, f64,
+        crate::utility_format_copy::SourceFmtSharedString);
+    None
 }

@@ -10,7 +10,7 @@ use futures::future::BoxFuture;
 use tokio_util::sync::CancellationToken;
 use crate::{utility_callback_slice::SourceCallbackSlice, utility_error_slice::SourceRetainedError,
     utility_format_copy::SourceFmtValueCopy, utility_format_arguments::{SourcePrintfValue, SourcePrintfNil},
-    utility_format_methods::{SourcePrintfRecursion, write_source_value}, utility_format_scan::SourcePrintfResolvedCounts,
+    utility_format_methods::{SourcePrintfInterfaces, SourcePrintfRecursion, write_source_value}, utility_format_scan::SourcePrintfResolvedCounts,
     utility_format_print::SourcePrintfMode, utility_http::{HeaderAllocationProfile, SourceUnicodeProfile, SourceSliceAllocationError},
     utility_logging::{SourceErrorBackoff, HasSourceLogger, CanEmitSourceLog, CanEmitSourceErrorLog, LogLevel},
     utility_runtime::UtilityRuntimeContext, logfields::LogEntry,
@@ -19,6 +19,8 @@ use crate::{utility_callback_slice::SourceCallbackSlice, utility_error_slice::So
 trait ErrorArgumentData: Send + Sync {
     fn original(&self) -> &dyn Any;
     fn source_type(&self) -> Option<&str>;
+    fn is_nil(&self) -> bool;
+    fn methods(&self) -> SourcePrintfInterfaces<'_>;
     fn write(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
         output: &mut Vec<u8>) -> Option<Result<(), SourceSliceAllocationError>>;
 }
@@ -26,6 +28,8 @@ struct TypedErrorArgument<Value>(Value);
 impl<Value: SourcePrintfValue + Send + Sync + 'static> ErrorArgumentData for TypedErrorArgument<Value> {
     fn original(&self) -> &dyn Any { &self.0 }
     fn source_type(&self) -> Option<&str> { Some(self.0.source_type()) }
+    fn is_nil(&self) -> bool { self.0.source_is_nil() }
+    fn methods(&self) -> SourcePrintfInterfaces<'_> { self.0.source_methods() }
     fn write(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
         output: &mut Vec<u8>) -> Option<Result<(), SourceSliceAllocationError>>
     { Some(write_source_value(&self.0, verb, state, profile, SourcePrintfMode::Sprintf, SourcePrintfRecursion::default(), output)) }
@@ -34,6 +38,8 @@ struct NativeErrorArgument<Value>(Value);
 impl<Value: Any + Send + Sync> ErrorArgumentData for NativeErrorArgument<Value> {
     fn original(&self) -> &dyn Any { &self.0 }
     fn source_type(&self) -> Option<&str> { None }
+    fn is_nil(&self) -> bool { false }
+    fn methods(&self) -> SourcePrintfInterfaces<'_> { SourcePrintfInterfaces::default() }
     fn write(&self, _: char, _: &SourcePrintfResolvedCounts, _: SourceUnicodeProfile,
         _: &mut Vec<u8>) -> Option<Result<(), SourceSliceAllocationError>> { None }
 }
@@ -55,9 +61,12 @@ impl SourceErrorArgument {
     pub fn from_native<Value: Any + Send + Sync>(value: Value) -> Self {
         Self { data: Some(Arc::new(NativeErrorArgument(value))) }
     }
-    pub fn is_nil(&self) -> bool { self.data.is_none() }
+    pub fn is_nil(&self) -> bool { self.data.as_ref().is_none_or(|data| data.is_nil()) }
     pub fn downcast_ref<Value: Any>(&self) -> Option<&Value> { self.data.as_ref()?.original().downcast_ref() }
     pub fn source_type(&self) -> Option<&str> { self.data.as_ref().and_then(|data| data.source_type()) }
+    pub fn source_methods(&self) -> SourcePrintfInterfaces<'_> {
+        self.data.as_ref().map_or_else(SourcePrintfInterfaces::default, |data| data.methods())
+    }
     pub fn try_write(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
         output: &mut Vec<u8>) -> Option<Result<(), SourceSliceAllocationError>>
     {

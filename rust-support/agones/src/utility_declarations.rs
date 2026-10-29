@@ -71,11 +71,65 @@ define_derive_deftly! {
             ${if tmeta(source_stringer) {
                 let methods = crate::utility_format_methods::SourcePrintfInterfaces { stringer: Some(self), ..methods };
             }}
+            ${if tmeta(source_klog_text_writer) {
+                let klog = crate::utility_klog_dispatch::SourceKlogInterfaces { text_writer: Some(self), ..methods.klog };
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { klog, ..methods };
+            }}
+            ${if tmeta(source_klog_marshaler) {
+                let klog = crate::utility_klog_dispatch::SourceKlogInterfaces { marshaler: Some(self), ..methods.klog };
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { klog, ..methods };
+            }}
+            ${if tmeta(source_klog_json_encoder) {
+                let klog = crate::utility_klog_dispatch::SourceKlogInterfaces { json_encoder: Some(self), ..methods.klog };
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { klog, ..methods };
+            }}
             methods
         }
     }
 }
 pub(crate) use derive_deftly_template_SourcePrintfInterfaces;
+
+// Klog method adapters have one typed `value` and one method closure. Copy
+// and lifecycle ownership remain with that value and the existing CGP caller.
+define_derive_deftly! {
+    SourceKlogAdapter:
+    impl<$tgens> crate::utility_format_methods::SourcePrintfMethodViews for $ttype $twheres {
+        fn source_methods(&self) -> crate::utility_format_methods::SourcePrintfInterfaces<'_> {
+            let methods = self.value.source_methods();
+            ${if tmeta(source_klog_text_writer) {
+                let klog = crate::utility_klog_dispatch::SourceKlogInterfaces { text_writer: Some(self), ..methods.klog };
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { klog, ..methods };
+            }}
+            ${if tmeta(source_klog_marshaler) {
+                let klog = crate::utility_klog_dispatch::SourceKlogInterfaces { marshaler: Some(self), ..methods.klog };
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { klog, ..methods };
+            }}
+            ${if tmeta(source_klog_json_encoder) {
+                let klog = crate::utility_klog_dispatch::SourceKlogInterfaces { json_encoder: Some(self), ..methods.klog };
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { klog, ..methods };
+            }}
+            methods
+        }
+    }
+    impl<$tgens> crate::utility_format_arguments::SourcePrintfValue for $ttype $twheres {
+        const SOURCE_KIND_UINT8: bool = Value::SOURCE_KIND_UINT8;
+        const SOURCE_DEREFERENCE_AT_ROOT: bool = Value::SOURCE_DEREFERENCE_AT_ROOT;
+        fn source_type(&self) -> &str { self.value.source_type() }
+        fn source_integer(&self) -> crate::utility_format_scan::SourcePrintfInteger { self.value.source_integer() }
+        fn source_is_nil(&self) -> bool { self.value.source_is_nil() }
+        fn source_nil_interface_type(&self) -> &str { self.value.source_nil_interface_type() }
+        fn source_is_nil_pointer(&self) -> bool { self.value.source_is_nil_pointer() }
+        fn source_error_view(&self) -> Option<&(dyn ::std::error::Error + Send + Sync + 'static)> { self.value.source_error_view() }
+        fn source_uint8(&self) -> Option<u8> { self.value.source_uint8() }
+        fn write_source(&self, verb: char, state: &crate::utility_format_scan::SourcePrintfResolvedCounts,
+            profile: crate::utility_http::SourceUnicodeProfile, mode: crate::utility_format_print::SourcePrintfMode,
+            recursion: crate::utility_format_methods::SourcePrintfRecursion, output: &mut Vec<u8>)
+            -> Result<(), crate::utility_http::SourceSliceAllocationError>
+        { self.value.write_source(verb, state, profile, mode, recursion, output) }
+        fn into_source_error(self) -> Option<crate::errors::BoxError> { self.value.into_source_error() }
+    }
+}
+pub(crate) use derive_deftly_template_SourceKlogAdapter;
 
 // Concrete nil pointer drivers retain their real source method set. They
 // share the nil dereference and pointer formatting bodies, without declaring
