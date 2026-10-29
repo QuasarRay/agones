@@ -22,14 +22,34 @@ impl<'a> SourceErrorCursor<'a> {
     pub fn raw_error(&self) -> &(dyn Error + 'static) {
         match self { Self::Borrowed(error) => *error, Self::Retained(error) => error.original() }
     }
-    pub fn original(&self) -> &(dyn Error + 'static) {
-        let mut error = self.raw_error();
-        loop {
-            error = source_error_original(error);
-            if let Some(runtime) = error.downcast_ref::<crate::utility_panic::SourceRuntimeErrorEnvelope>() {
-                error = runtime.error();
-            } else { return error; }
+    /// Copy an already owned interface; never extend an arbitrary native
+    /// borrow or clone the concrete error payload to manufacture ownership.
+    pub fn retained_copy(&self) -> Option<SourceRetainedError> {
+        match self {
+            Self::Retained(error) => Some(error.source_fmt_copy()),
+            Self::Borrowed(error) => {
+                if let Some(error) = error.downcast_ref::<SourceRetainedError>() {
+                    return Some(error.source_fmt_copy());
+                }
+                error.downcast_ref::<SourceSharedError>().map(|error|
+                    SourceRetainedError::from_original(error.source_fmt_copy().into_error()))
+            },
         }
+    }
+    pub fn original(&self) -> &(dyn Error + 'static) {
+        source_query_original(self.raw_error())
+    }
+}
+pub(crate) fn source_query_original(mut error: &(dyn Error + 'static)) -> &(dyn Error + 'static) {
+    loop {
+        error = source_error_original(error);
+        if let Some(runtime) = error.downcast_ref::<crate::utility_panic::SourceRuntimeErrorEnvelope>() {
+            error = runtime.error();
+        } else if let Some(status) = error.downcast_ref::<crate::utility_error_view::ApiStatusEnvelope>() {
+            // Interface erasure adds no source Unwrap edge or new payload
+            // identity. Retain metadata through raw_error for method dispatch.
+            error = status.original_error();
+        } else { return error; }
     }
 }
 impl SourceFmtValueCopy for SourceErrorCursor<'_> {
@@ -64,6 +84,7 @@ pub struct SourceErrorMethods<'a> {
     pub as_target: Option<&'a dyn SourceErrorAs>,
     pub unwrap_one: Option<&'a dyn SourceErrorUnwrapOne>,
     pub unwrap_many: Option<&'a dyn SourceErrorUnwrapMany>,
+    pub api_status: Option<&'a dyn crate::utility_error_view::SourceApiStatus>,
 }
 impl SourceErrorMethods<'_> {
     pub fn leaf() -> Self { Self { declared: true, ..Self::default() } }
@@ -113,6 +134,9 @@ fn query_methods(mut error: &(dyn Error + 'static)) -> Result<SourceErrorMethods
             return if methods.declared { Ok(methods) }
                 else { Err(SourceErrorBindingError { source_type: Some(status.source_type()) }) };
         }
+        if let Some(status) = error.downcast_ref::<crate::source::workerqueue::ApiStatusError>() {
+            return Ok(status.source_methods().error_methods);
+        }
         // These are explicit declarations for existing concrete source types;
         // no unknown Rust Error::source edge is treated as a Go Unwrap method.
         if error.is::<crate::utility_panic::SourceRuntimeErrorString>()
@@ -120,7 +144,6 @@ fn query_methods(mut error: &(dyn Error + 'static)) -> Result<SourceErrorMethods
             || error.is::<crate::utility_panic::SourceBoundsError>()
             || error.is::<crate::utility_panic::SourceAbortHandler>()
             || error.is::<crate::source::workerqueue::traceError>()
-            || error.is::<crate::source::workerqueue::ApiStatusError>()
             || error.is::<crate::utility_http::ServerClosed>()
         { return Ok(SourceErrorMethods::leaf()); }
         return Err(SourceErrorBindingError { source_type: crate::utility_error_view::source_error_type(error) });

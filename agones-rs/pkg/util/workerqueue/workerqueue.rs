@@ -14,7 +14,7 @@ use crate::{errors::{BoxError, Errors}, logfields::{LogEntry, ResourceType}, run
         CanCallSourceQueueHandler, CanClassifySourceQueueError},
     utility_queue_limiters::{self, SourceRateLimiter, ItemFastSlowRateLimiter, DefaultControllerRateLimiter},
     utility_queue_values::{QueueItem, QueueKey, QueueObject},
-    utility_declarations::derive_deftly_template_SourceErrorOrigin};
+    utility_declarations::{derive_deftly_template_SourceErrorOrigin, derive_deftly_template_SourcePrintfInterfaces}};
 
 pub const workFx: i64 = 1_000_000_000;
 #[derive(Debug)]
@@ -27,20 +27,30 @@ impl Error for traceError {}
 pub fn NewTraceError(err: Option<BoxError>) -> BoxError { Box::new(traceError { err }) }
 pub fn isTraceError(err: &(dyn Error + 'static)) -> bool {
     use crate::utility_error_query::{SourceErrorCursor, SourceErrorAsTarget, try_source_error_as};
+    if let Some(error) = SourceErrorCursor::borrowed(err).retained_copy() {
+        let mut target = crate::utility_error_target::retained_error_pointer_slot::<traceError>();
+        return try_source_error_as(Some(SourceErrorCursor::retained(error)), SourceErrorAsTarget::Pointer(&mut target))
+            .unwrap_or_else(|_| crate::errors::contains_error::<traceError>(err));
+    }
     let mut target = crate::utility_error_target::source_error_pointer_slot::<traceError>();
     try_source_error_as(Some(SourceErrorCursor::borrowed(err)), SourceErrorAsTarget::Pointer(&mut target))
         .unwrap_or_else(|_| crate::errors::contains_error::<traceError>(err))
 }
 
-#[derive(Debug)]
+#[derive(Debug, Deftly)]
+#[derive_deftly(SourcePrintfInterfaces)]
+#[deftly(source_error_method, source_api_status)]
 pub struct ApiStatusError { pub status: Status }
 impl fmt::Display for ApiStatusError { fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { out.write_str(&self.status.message) } }
 impl Error for ApiStatusError {}
 impl crate::runtime::SourceLogType for ApiStatusError { const SOURCE_LOG_TYPE: &'static str = "*errors.StatusError"; }
+impl crate::utility_format_methods::SourceErrorMethod for ApiStatusError {
+    fn source_error_message(&self) -> std::borrow::Cow<'_, [u8]> { std::borrow::Cow::Borrowed(self.status.message.as_bytes()) }
+}
 impl crate::utility_error_view::SourceApiStatus for ApiStatusError {
     fn source_api_status(&self) -> Status { self.status.clone() }
     fn source_error_query_methods(&self) -> crate::utility_error_query::SourceErrorMethods<'_> {
-        crate::utility_error_query::SourceErrorMethods::leaf()
+        crate::utility_format_methods::SourcePrintfMethodViews::source_methods(self).error_methods
     }
 }
 pub fn isConflict(error: &(dyn Error + 'static)) -> bool {
@@ -140,10 +150,14 @@ impl<Limiter: SourceRateLimiter> WorkerQueue<Limiter> {
             crate::utility_panic::unwind_source_runtime_error(crate::utility_panic::SourceRuntimeErrorString::new("invalid memory address or nil pointer dereference")));
         match self.queue.source_queue_call_handler(&handler, context, key).await {
             Err(error) => {
-                if self.queue.source_queue_expected_error(error.as_ref()) {
+                // The source error interface can escape through a custom As
+                // target. Retain its original Box once at the CGP boundary;
+                // classifiers, loggers and retry await share that data owner.
+                let error = crate::utility_error_slice::SourceRetainedError::from_original(error);
+                if self.queue.source_queue_expected_error(&error) {
                     self.queue.source_queue_runtime.emit_source_log(&object.with_log_field(&self.logger, &self.keyName), LogLevel::Trace, &error.to_string());
                 } else {
-                    runtime::HandleError(&self.queue.source_queue_runtime, Some(&object.with_log_field(&self.logger, &self.keyName)), Some(error.as_ref())).await;
+                    runtime::HandleError(&self.queue.source_queue_runtime, Some(&object.with_log_field(&self.logger, &self.keyName)), Some(&error)).await;
                 }
                 // Do not Forget a failed item. Done runs after AddRateLimited,
                 // including its bounded-channel wait and immediate dirty path.

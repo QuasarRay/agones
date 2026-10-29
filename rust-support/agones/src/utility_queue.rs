@@ -92,10 +92,10 @@ impl<Context: Sync> SourceQueueHandlerCaller<Context> for CallSourceQueueHandler
     fn source_queue_call_handler<'a>(_context: &'a Context, handler: &'a crate::source::workerqueue::Handler, stop: CancellationToken, key: QueueKey) -> BoxFuture<'a, Result<(), BoxError>> { handler(stop, key) }
 }
 #[cgp_component(SourceQueueErrorClassifier)]
-pub trait CanClassifySourceQueueError { fn source_queue_expected_error(&self, error: &(dyn std::error::Error + 'static)) -> bool; }
+pub trait CanClassifySourceQueueError { fn source_queue_expected_error(&self, error: &crate::utility_error_slice::SourceRetainedError) -> bool; }
 #[cgp_new_provider]
 impl<Context> SourceQueueErrorClassifier<Context> for ClassifySourceQueueError {
-    fn source_queue_expected_error(_context: &Context, error: &(dyn std::error::Error + 'static)) -> bool {
+    fn source_queue_expected_error(_context: &Context, error: &crate::utility_error_slice::SourceRetainedError) -> bool {
         crate::source::workerqueue::isConflict(error) || crate::source::workerqueue::isTraceError(error)
     }
 }

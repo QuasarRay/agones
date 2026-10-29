@@ -56,6 +56,12 @@ define_derive_deftly! {
                 };
                 let methods = crate::utility_format_methods::SourcePrintfInterfaces { error_methods, ..methods };
             }}
+            ${if tmeta(source_api_status) {
+                let error_methods = crate::utility_error_query::SourceErrorMethods {
+                    api_status: Some(self), ..methods.error_methods
+                };
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { error_methods, ..methods };
+            }}
             ${if tmeta(source_stringer) {
                 let methods = crate::utility_format_methods::SourcePrintfInterfaces { stringer: Some(self), ..methods };
             }}
