@@ -2,6 +2,7 @@
 // Adapted from Go internal/strconv/decimal.go. Copyright The Go Authors.
 // BSD-3-Clause; see ../GO-LICENSE. This is formatter arithmetic, not a general
 // numeric runtime. Optimized paths borrow their own smaller digit scratch.
+use crate::utility_http::HeaderAllocationProfile;
 pub(crate) struct SourceDecimal {
     pub digits: [u8; 800],
     pub count: i32,
@@ -23,12 +24,14 @@ impl SourceDecimal {
         while self.count > 0 && self.digits[(self.count - 1) as usize] == b'0' { self.count -= 1; }
         if self.count == 0 { self.point = 0; }
     }
-    pub fn shift(&mut self, mut bits: i32) {
+    pub fn shift(&mut self, mut bits: i32, profile: HeaderAllocationProfile) {
         if self.count == 0 { return; }
-        // This selected arithmetic path uses Go64's source uint chunk bound.
-        // Full Go32/native allocation/word/configuration profiles stay open.
-        while bits > 60 { self.left_shift(60); bits -= 60; }
-        while bits < -60 { self.right_shift(60); bits += 60; }
+        // Source maxShift = uintSize - 4 leaves room for 9 << chunk.
+        // u64 holds the bounded source word for either profile; 28-bit chunks
+        // keep every Go32 intermediate inside the original uint32 domain.
+        let maximum = i32::from(profile.word_bits()) - 4;
+        while bits > maximum { self.left_shift(maximum as usize); bits -= maximum; }
+        while bits < -maximum { self.right_shift(maximum as u32); bits += maximum; }
         if bits > 0 { self.left_shift(bits as usize); }
         else if bits < 0 { self.right_shift((-bits) as u32); }
     }

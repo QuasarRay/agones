@@ -2,6 +2,7 @@
 // Adapted from Go internal/strconv/math.go, itoa.go and ftoadbox.go.
 // Copyright The Go Authors. BSD-3-Clause; see ../GO-LICENSE.
 use crate::utility_float_powers::{POWER10, POWER10_MIN, POWER10_MAX};
+use crate::utility_http::HeaderAllocationProfile;
 
 #[derive(Clone, Copy, Default)]
 pub(crate) struct SourceUint128 { pub high: u64, pub low: u64 }
@@ -108,11 +109,12 @@ pub(crate) fn trim_zeros(mut value: u64) -> (u64, i32) {
 }
 
 const SMALLS: &[u8] = b"00010203040506070809101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899";
-pub(crate) fn format_base10(buffer: &mut [u8], mut value: u64) -> usize {
+pub(crate) fn format_base10(buffer: &mut [u8], mut value: u64, profile: HeaderAllocationProfile) -> usize {
     let mut index = buffer.len();
-    // Both source host-word predicates have the same value. This native data
-    // path preserves uint32 chunks; source/native target codegen stays open.
-    while value >> 29 != 0 {
+    // Retain the source's separate host64bit/uint32 chunk predicates.
+    while if profile.word_bits() == 64 { value >> 29 != 0 }
+        else { (((value as u32) >> 29) | ((value >> 32) as u32)) != 0 }
+    {
         let mut low = (value % 1000000000) as u32; value /= 1000000000;
         for _ in 0..4 {
             let pair = (low % 100 * 2) as usize; low /= 100; index -= 2;

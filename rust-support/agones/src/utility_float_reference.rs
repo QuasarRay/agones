@@ -6,7 +6,7 @@ use crate::{utility_float_decimal::SourceDecimal,
     utility_float_math::{SourceFloatDigits, mul_log10_2},
     utility_float_dragonbox::source_dragonbox, utility_float_fixed::source_fixed,
     utility_go_quote::append,
-    utility_http::SourceSliceAllocationError};
+    utility_http::{SourceSliceAllocationError, HeaderAllocationProfile}};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum SourceFloatWidth { Binary32, Binary64 }
@@ -31,8 +31,22 @@ pub fn try_source_float_reference(value: f64, width: SourceFloatWidth, verb: u8,
     -> Result<Vec<u8>, SourceSliceAllocationError>
 { try_source_float_conversion(value, width, verb, precision, SourceFloatConversion::Multiprecision) }
 
-pub fn try_source_float_conversion(value: f64, width: SourceFloatWidth, verb: u8, mut precision: i32,
+pub fn try_source_float_conversion(value: f64, width: SourceFloatWidth, verb: u8, precision: i32,
     conversion: SourceFloatConversion)
+    -> Result<Vec<u8>, SourceSliceAllocationError>
+{
+    // Go's uintSize follows the compiled target. This projection selects
+    // arithmetic only; it does not establish a native heap/ABI/GC profile.
+    let profile = if usize::BITS == 32 { HeaderAllocationProfile::GO126_32 }
+        else { HeaderAllocationProfile::GO126_64 };
+    try_source_float_profile(value, width, verb, precision, conversion, profile)
+}
+
+/// Explicit source word profile for native formatting consumers. Only the
+/// profile's word width controls arithmetic here; output storage still uses
+/// the shared byte-append owner and has separate allocation obligations.
+pub fn try_source_float_profile(value: f64, width: SourceFloatWidth, verb: u8, mut precision: i32,
+    conversion: SourceFloatConversion, profile: HeaderAllocationProfile)
     -> Result<Vec<u8>, SourceSliceAllocationError>
 {
     let info = width.info();
@@ -66,7 +80,7 @@ pub fn try_source_float_conversion(value: f64, width: SourceFloatWidth, verb: u8
         }
         if shortest {
             let mut buffer = [0; 32];
-            let digits = source_dragonbox(&mut buffer, mantissa, exponent - info.mantissa as i32, denormal, width);
+            let digits = source_dragonbox(&mut buffer, mantissa, exponent - info.mantissa as i32, denormal, width, profile);
             match verb { b'e' | b'E' => precision = (digits.count - 1).max(0),
                 b'f' => precision = (digits.count - digits.point).max(0), b'g' | b'G' => precision = digits.count, _ => {} }
             format_digits(&mut output, &digits, negative, precision, verb, true)?;
@@ -82,15 +96,15 @@ pub fn try_source_float_conversion(value: f64, width: SourceFloatWidth, verb: u8
         if digits <= 18 {
             let mut buffer = [0; 24];
             let digits = if digits > 0 {
-                source_fixed(&mut buffer, mantissa, exponent - info.mantissa as i32, digits, precision, verb)
+                source_fixed(&mut buffer, mantissa, exponent - info.mantissa as i32, digits, precision, verb, profile)
             } else { SourceFloatDigits { digits: &[], count: 0, point: 0 } };
             format_digits(&mut output, &digits, negative, precision, verb, false)?;
             return Ok(output);
         }
     }
-    let mut decimal = SourceDecimal::default(); decimal.assign(mantissa); decimal.shift(exponent - info.mantissa as i32);
+    let mut decimal = SourceDecimal::default(); decimal.assign(mantissa); decimal.shift(exponent - info.mantissa as i32, profile);
     if shortest {
-        round_shortest(&mut decimal, mantissa, exponent, info);
+        round_shortest(&mut decimal, mantissa, exponent, info, profile);
         match verb { b'e' | b'E' => precision = decimal.count - 1,
             b'f' => precision = (decimal.count - decimal.point).max(0), b'g' | b'G' => precision = decimal.count, _ => {} }
     } else {
@@ -126,15 +140,15 @@ fn format_digits(output: &mut Vec<u8>, decimal: &SourceFloatDigits<'_>, negative
     Ok(())
 }
 
-fn round_shortest(decimal: &mut SourceDecimal, mantissa: u64, exponent: i32, info: FloatInfo) {
+fn round_shortest(decimal: &mut SourceDecimal, mantissa: u64, exponent: i32, info: FloatInfo, profile: HeaderAllocationProfile) {
     if mantissa == 0 { decimal.count = 0; return; }
     let minimum_exponent = info.bias + 1;
     if exponent > minimum_exponent && 332 * (decimal.point - decimal.count) >= 100 * (exponent - info.mantissa as i32) { return; }
-    let mut upper = SourceDecimal::default(); upper.assign(mantissa * 2 + 1); upper.shift(exponent - info.mantissa as i32 - 1);
+    let mut upper = SourceDecimal::default(); upper.assign(mantissa * 2 + 1); upper.shift(exponent - info.mantissa as i32 - 1, profile);
     let (lower_mantissa, lower_exponent) = if mantissa > 1u64 << info.mantissa || exponent == minimum_exponent {
         (mantissa - 1, exponent)
     } else { (mantissa * 2 - 1, exponent - 1) };
-    let mut lower = SourceDecimal::default(); lower.assign(lower_mantissa * 2 + 1); lower.shift(lower_exponent - info.mantissa as i32 - 1);
+    let mut lower = SourceDecimal::default(); lower.assign(lower_mantissa * 2 + 1); lower.shift(lower_exponent - info.mantissa as i32 - 1, profile);
     let inclusive = mantissa % 2 == 0;
     let mut upper_delta = 0u8; let mut index = 0;
     loop {

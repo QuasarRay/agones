@@ -1,7 +1,7 @@
 //! Source Dragonbox shortest conversion for binary32 and binary64.
 // Adapted from Go internal/strconv/ftoadbox.go at go1.26.5.
 // Copyright 2025 The Go Authors. BSD-3-Clause; see ../GO-LICENSE.
-use crate::{utility_float_reference::SourceFloatWidth, utility_float_math::{
+use crate::{utility_float_reference::SourceFloatWidth, utility_http::HeaderAllocationProfile, utility_float_math::{
     SourceUint128, SourceFloatDigits, power10, mul_log10_2,
     mul_log10_2_minus_log10_4_over_3, trim_zeros, format_base10,
     multiply192_upper128, multiply192_lower128, multiply96_upper64,
@@ -9,13 +9,13 @@ use crate::{utility_float_reference::SourceFloatWidth, utility_float_math::{
 }};
 
 pub(crate) fn source_dragonbox(buffer: &mut [u8; 32], mantissa: u64, exponent: i32,
-    denormal: bool, width: SourceFloatWidth) -> SourceFloatDigits<'_>
+    denormal: bool, width: SourceFloatWidth, profile: HeaderAllocationProfile) -> SourceFloatDigits<'_>
 {
     let (significand, decimal_exponent) = match width {
         SourceFloatWidth::Binary32 => dragonbox32(mantissa as u32, exponent, denormal),
         SourceFloatWidth::Binary64 => dragonbox64(mantissa, exponent, denormal),
     };
-    let start = format_base10(buffer, significand);
+    let start = format_base10(buffer, significand, profile);
     let count = (buffer.len() - start) as i32;
     SourceFloatDigits { digits: &buffer[start..], count, point: count + decimal_exponent }
 }

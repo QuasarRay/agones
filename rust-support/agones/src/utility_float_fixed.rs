@@ -3,7 +3,7 @@
 // Copyright 2025 The Go Authors. BSD-3-Clause; see ../GO-LICENSE.
 use crate::{utility_float_math::{SourceFloatDigits, power10, mul_log10_2,
     divisible_power5, multiply192, format_base10, shr64, shl64},
-    utility_format_methods::SourcePrintfPanic};
+    utility_format_methods::SourcePrintfPanic, utility_http::HeaderAllocationProfile};
 
 const UINT64_POWER10: [u64; 20] = [1, 10, 100, 1000, 10000, 100000, 1000000,
     10000000, 100000000, 1000000000, 10000000000, 100000000000, 1000000000000,
@@ -11,7 +11,7 @@ const UINT64_POWER10: [u64; 20] = [1, 10, 100, 1000, 10000, 100000, 1000000,
     100000000000000000, 1000000000000000000, 10000000000000000000];
 
 pub(crate) fn source_fixed(buffer: &mut [u8; 24], mut mantissa: u64, mut exponent: i32,
-    mut digits: i32, precision: i32, verb: u8) -> SourceFloatDigits<'_>
+    mut digits: i32, precision: i32, verb: u8, profile: HeaderAllocationProfile) -> SourceFloatDigits<'_>
 {
     if digits > 18 { SourcePrintfPanic::raise(String::from("fixedFtoa called with digits > 18")); }
     // genericFtoa supplies mantissa > 0 and 1 <= digits <= 18.
@@ -41,14 +41,14 @@ pub(crate) fn source_fixed(buffer: &mut [u8; 24], mut mantissa: u64, mut exponen
         if digits <= 0 { digits = 1; point += 1; }
         maximum = UINT64_POWER10[digits as usize] << 1;
     }
-    // The source uint conversion only affects higher bits. The &1 result is
-    // the same for Go32/Go64; target codegen/allocation profiles stay open.
-    decimal = decimal.wrapping_add(decimal & (truncated | (decimal >> 1)) & 1);
+    // Preserve the selected source uint cast before its rounding expression.
+    let word = if profile.word_bits() == 32 { u64::from(decimal as u32) } else { decimal };
+    decimal = decimal.wrapping_add(word & (truncated | (word >> 1)) & 1);
     decimal >>= 1;
     if decimal == maximum >> 1 { decimal = UINT64_POWER10[(digits - 1) as usize]; point += 1; }
     let mut count = 0;
     if decimal != 0 {
-        if format_base10(&mut buffer[..digits as usize], decimal) != 0 {
+        if format_base10(&mut buffer[..digits as usize], decimal, profile) != 0 {
             SourcePrintfPanic::raise(String::from("formatBase10"));
         }
         count = digits;
