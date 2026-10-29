@@ -15,9 +15,11 @@ use crate::{utility_runtime::UtilityRuntimeContext,
 
 pub trait SourceKlogSyncTarget: Send + Sync { fn source_sync(&self) -> Result<(), SourceRetainedError>; }
 pub trait SourceKlogSyncBuffer: Send + Sync {
-    /// Source Flush's ignored result followed by the actual current file.
-    /// None means this syncBuffer currently has a nil file.
+    /// Return None without Flush when the file is nil. Otherwise ignore the
+    /// source Flush error and return the actual current file after flushing.
     fn source_flush_file(&self) -> Option<Arc<dyn SourceKlogSyncTarget>>;
+    fn source_write_buffer(&self, runtime: &UtilityRuntimeContext, flags: &SourceKlogOutputFlags,
+        bytes: &[u8], exit: &mut dyn FnMut(SourceRetainedError) -> FormatResult) -> FormatResult<crate::utility_klog_file::SourceKlogWrite>;
 }
 pub trait SourceKlogOutputWriter: Send + Sync {
     fn source_write(&self, bytes: &[u8]) -> Result<usize, SourceRetainedError>;
@@ -32,8 +34,8 @@ impl<Writer: Write + Send> SourceKlogOutputWriter for NativeKlogWriter<Writer> {
     }
 }
 pub type SourceKlogWriter = Arc<dyn SourceKlogOutputWriter>;
-pub type SourceKlogFileFactory = Arc<dyn Fn(&UtilityRuntimeContext, SourceKlogSeverity,
-    &mut [Option<SourceKlogWriter>; 4]) -> Result<(), SourceRetainedError> + Send + Sync>;
+pub type SourceKlogFileFactory = Arc<dyn Fn(&UtilityRuntimeContext, SourceKlogSeverity, &SourceKlogOutputFlags,
+    &mut [Option<SourceKlogWriter>; 4]) -> FormatResult<Result<(), SourceRetainedError>> + Send + Sync>;
 pub type SourceKlogStacks = Arc<dyn Fn(bool) -> FormatResult<Vec<u8>> + Send + Sync>;
 pub type SourceKlogExitFunction = Arc<dyn Fn(SourceRetainedError) + Send + Sync>;
 #[derive(Clone)]
@@ -48,15 +50,19 @@ pub struct SourceKlogOutputFlags {
     pub to_stderr: bool, pub also_to_stderr: bool, pub legacy_stderr_threshold_behavior: bool,
     pub stderr_threshold: i32, pub also_stderr_threshold: i32, pub one_output: bool,
     pub log_file: SourceFmtSharedString,
+    pub log_file_max_size_mb: u64, pub max_size: u64, pub skip_log_headers: bool, pub flush_interval: i64,
 }
 impl Clone for SourceKlogOutputFlags {
     fn clone(&self) -> Self { Self { to_stderr: self.to_stderr, also_to_stderr: self.also_to_stderr,
         legacy_stderr_threshold_behavior: self.legacy_stderr_threshold_behavior, stderr_threshold: self.stderr_threshold,
-        also_stderr_threshold: self.also_stderr_threshold, one_output: self.one_output, log_file: self.log_file.source_fmt_copy() } }
+        also_stderr_threshold: self.also_stderr_threshold, one_output: self.one_output, log_file: self.log_file.source_fmt_copy(),
+        log_file_max_size_mb: self.log_file_max_size_mb, max_size: self.max_size,
+        skip_log_headers: self.skip_log_headers, flush_interval: self.flush_interval } }
 }
 impl Default for SourceKlogOutputFlags {
     fn default() -> Self { Self { to_stderr: true, also_to_stderr: false, legacy_stderr_threshold_behavior: true,
-        stderr_threshold: 2, also_stderr_threshold: 0, one_output: false, log_file: SourceFmtSharedString(Arc::from(&b""[..])) } }
+        stderr_threshold: 2, also_stderr_threshold: 0, one_output: false, log_file: SourceFmtSharedString(Arc::from(&b""[..])),
+        log_file_max_size_mb: 1800, max_size: 1800 * 1024 * 1024, skip_log_headers: false, flush_interval: 0 } }
 }
 struct OutputData {
     flags: SourceKlogOutputFlags, files: [Option<SourceKlogWriter>; 4],
@@ -76,12 +82,14 @@ pub struct SourceKlogOutputState {
     // os.Stderr is independent of logging.mu. In particular, timeoutFlush
     // must print its timeout while the flush worker may still hold that mu.
     stderr: RwLock<SourceKlogWriter>, fatal_no_stacks: AtomicU32, exit_flush_timeout: AtomicI64,
+    pub(crate) flush_daemon: crate::utility_klog_daemon::SourceKlogFlushDaemon,
 }
 impl SourceKlogOutputState {
     pub fn new(profile: HeaderAllocationProfile) -> Self {
         Self { header: Mutex::new(SourceKlogHeaderSettings::default()), profile,
             stderr: RwLock::new(Arc::new(NativeKlogWriter::new(std::io::stderr()))),
             fatal_no_stacks: AtomicU32::new(0), exit_flush_timeout: AtomicI64::new(10_000_000_000),
+            flush_daemon: crate::utility_klog_daemon::SourceKlogFlushDaemon::default(),
             output: Mutex::new(OutputData { flags: SourceKlogOutputFlags::default(), files: std::array::from_fn(|_| None),
                 create_files: None, trace: None, stacks: None, log_exit_function: None, statistics: [[0; 2]; 3] }) }
     }
@@ -119,6 +127,9 @@ impl SourceKlogOutputState {
     }
     pub fn set_file_factory(&self, factory: Option<SourceKlogFileFactory>) -> Option<SourceKlogFileFactory> {
         let mut data = self.output.lock().unwrap_or_else(|e| e.into_inner()); std::mem::replace(&mut data.create_files, factory)
+    }
+    pub fn set_file_bindings(&self, bindings: Arc<crate::utility_klog_file::SourceKlogFileBindings>) -> Option<SourceKlogFileFactory> {
+        self.set_file_factory(Some(crate::utility_klog_file::file_factory(bindings)))
     }
     pub fn set_trace(&self, site: Option<SourceKlogCallSite>, stacks: Option<SourceKlogStacks>)
         -> (Option<SourceKlogCallSite>, Option<SourceKlogStacks>)
@@ -197,18 +208,20 @@ impl SourceKlogOutputState {
             let selected = if single_file { SourceKlogSeverity::Info } else { severity };
             if data.files[selected as usize].is_none() {
                 let create = data.create_files.as_ref().cloned().ok_or_else(|| missing("klog createFiles/rotation/flush-daemon binding"))?;
-                match create(runtime, selected, &mut data.files) {
+                let flags = data.flags.clone();
+                match create(runtime, selected, &flags, &mut data.files)? {
                     Err(error) => { self.write_stderr(bytes); exit_error(self, runtime, &mut data, error)?; }
                     Ok(()) if data.files[selected as usize].is_none() => return Err(missing("klog createFiles success/file binding")),
                     Ok(()) => (),
                 }
             }
             if single_file || data.flags.one_output {
-                write_file(&data, selected, bytes);
+                write_file(self, runtime, &mut data, selected, bytes)?;
             } else {
                 for index in (0..=severity as usize).rev() {
-                    let writer = data.files[index].as_ref().unwrap_or_else(|| crate::utility_error_nil::nil_error_receiver());
-                    let _ = writer.source_write(bytes);
+                    let selected = [SourceKlogSeverity::Info, SourceKlogSeverity::Warning,
+                        SourceKlogSeverity::Error, SourceKlogSeverity::Fatal][index];
+                    write_file(self, runtime, &mut data, selected, bytes)?;
                 }
             }
         }
@@ -230,7 +243,11 @@ impl SourceKlogOutputState {
             // own flush and status, so install the source no-op exit hook.
             data.log_exit_function = Some(Arc::new(|_| ()));
             for index in (0..4).rev() {
-                if let Some(file) = &data.files[index] { let _ = file.source_write(&trace); }
+                if data.files[index].is_some() {
+                    let selected = [SourceKlogSeverity::Info, SourceKlogSeverity::Warning,
+                        SourceKlogSeverity::Error, SourceKlogSeverity::Fatal][index];
+                    write_file(self, runtime, &mut data, selected, &trace)?;
+                }
             }
             drop(data);
             timeout_flush(runtime, self.exit_flush_timeout.load(Ordering::SeqCst))?;
@@ -256,9 +273,15 @@ impl SourceKlogOutputState {
         sync_all(files);
     }
 }
-fn write_file(data: &OutputData, severity: SourceKlogSeverity, bytes: &[u8]) {
-    let writer = data.files[severity as usize].as_ref().unwrap_or_else(|| crate::utility_error_nil::nil_error_receiver());
-    let _ = writer.source_write(bytes);
+fn write_file(output: &SourceKlogOutputState, runtime: &UtilityRuntimeContext, data: &mut OutputData,
+    severity: SourceKlogSeverity, bytes: &[u8]) -> FormatResult
+{
+    let writer = data.files[severity as usize].as_ref().cloned().unwrap_or_else(|| crate::utility_error_nil::nil_error_receiver());
+    if let Some(buffer) = writer.source_sync_buffer() {
+        let flags = data.flags.clone();
+        buffer.source_write_buffer(runtime, &flags, bytes, &mut |error| exit_error(output, runtime, data, error))?;
+    } else { let _ = writer.source_write(bytes); }
+    Ok(())
 }
 struct FilesToSync { files: [Option<Arc<dyn SourceKlogSyncTarget>>; 4], count: usize }
 fn flush_all(runtime: &UtilityRuntimeContext, data: &OutputData) -> FilesToSync {

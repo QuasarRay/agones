@@ -41,6 +41,8 @@ pub mod utility_logr_context;
 pub mod utility_klog;
 pub mod utility_klog_header;
 pub mod utility_klog_output;
+pub mod utility_klog_file;
+pub mod utility_klog_daemon;
 pub mod utility_slog_values;
 pub mod utility_time_values;
 mod utility_time_format;

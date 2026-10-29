@@ -64,6 +64,17 @@ impl SourceGoTime {
         let (_, absolute) = self.location_abs()?; let (_, _, _, hour, minute, second) = calendar(absolute);
         Ok((hour, minute, second))
     }
+    /// The concrete layout used by klog's file header. General Time.Format
+    /// remains separately owned; this uses the same source calendar/zone read.
+    pub(crate) fn klog_file_time(&self) -> FormatResult<Vec<u8>> {
+        let (_, absolute) = self.location_abs()?;
+        let (year, month, day, hour, minute, second) = calendar(absolute);
+        let mut bytes = Vec::new(); number(&mut bytes, year, 4)?;
+        for value in [month, day] { append(&mut bytes, b"/")?; number(&mut bytes, value, 2)?; }
+        append(&mut bytes, b" ")?; number(&mut bytes, hour, 2)?;
+        for value in [minute, second] { append(&mut bytes, b":")?; number(&mut bytes, value, 2)?; }
+        Ok(bytes)
+    }
     pub fn try_string(&self) -> FormatResult<Vec<u8>> {
         let (offset, absolute) = self.location_abs()?;
         let mut output = Vec::new(); date_time(&mut output, absolute, b" ")?;
