@@ -17,7 +17,7 @@ const errs: crate::errors::Errors = crate::errors::Errors::from_package("agones.
 pub fn SetLevel<Context: HasSourceLogger>(context: &Context, level: LogLevel) {
     context.source_logger().set_level(level);
 }
-pub async fn HandleError<Context: CanHandleSourceRuntimeError>(context: &Context, logger: Option<&LogEntry>, error: Option<&(dyn std::error::Error + Send + Sync + 'static)>) {
+pub async fn HandleError<Context: CanHandleSourceRuntimeError>(context: &Context, logger: Option<&LogEntry>, error: Option<&crate::utility_error_slice::SourceRetainedError>) {
     context.handle_source_runtime_error(logger, error).await;
 }
 pub fn Must(error: Option<BoxError>) { if let Some(error) = error { crate::utility_panic::unwind_source_error(error); } }

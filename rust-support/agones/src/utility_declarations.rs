@@ -135,6 +135,52 @@ define_derive_deftly! {
 }
 pub(crate) use derive_deftly_template_SourceFmtValueCopy;
 
+// Both real ErrorHandlers and keysAndValues drivers fix their source element
+// width here. Copies retain backing/window metadata; they never clone bodies.
+define_derive_deftly! {
+    SourceCallbackSlice:
+    impl<$tgens> $ttype $twheres {
+        pub fn nil() -> Self {
+            let profile = if usize::BITS == 32 { crate::utility_http::HeaderAllocationProfile::GO126_32 }
+                else { crate::utility_http::HeaderAllocationProfile::GO126_64 };
+            Self::nil_with_profile(profile)
+        }
+        pub fn nil_with_profile(profile: crate::utility_http::HeaderAllocationProfile) -> Self {
+            Self { slice: crate::utility_callback_slice::SourceCallbackSlice::nil(profile, ${tmeta(source_slice_words) as expr}) }
+        }
+        pub fn make(length: i64, capacity: i64, profile: crate::utility_http::HeaderAllocationProfile) -> Self {
+            Self { slice: crate::utility_callback_slice::SourceCallbackSlice::make(length, capacity, profile, ${tmeta(source_slice_words) as expr}) }
+        }
+        pub fn is_nil(&self) -> bool { self.slice.is_nil() }
+        pub fn len(&self) -> usize { self.slice.len() }
+        pub fn capacity(&self) -> usize { self.slice.capacity() }
+        pub fn get(&self, index: usize) -> ${tmeta(source_slice_value) as ty} {
+            self.get_source(crate::utility_error_slice::SourceErrorSliceIndex::unsigned(index as u64))
+        }
+        pub fn get_source(&self, index: crate::utility_error_slice::SourceErrorSliceIndex) -> ${tmeta(source_slice_value) as ty} {
+            self.slice.get(index)
+        }
+        pub fn set(&self, index: usize, value: ${tmeta(source_slice_value) as ty}) -> ${tmeta(source_slice_value) as ty} {
+            self.set_source(crate::utility_error_slice::SourceErrorSliceIndex::unsigned(index as u64), value)
+        }
+        pub fn set_source(&self, index: crate::utility_error_slice::SourceErrorSliceIndex, value: ${tmeta(source_slice_value) as ty})
+            -> ${tmeta(source_slice_value) as ty} { self.slice.set(index, value) }
+        pub fn slice2(&self, low: crate::utility_error_slice::SourceErrorSliceIndex, high: crate::utility_error_slice::SourceErrorSliceIndex) -> Self {
+            Self { slice: self.slice.slice2(low, high) }
+        }
+        pub fn slice3(&self, low: crate::utility_error_slice::SourceErrorSliceIndex, high: crate::utility_error_slice::SourceErrorSliceIndex,
+            maximum: crate::utility_error_slice::SourceErrorSliceIndex) -> Self { Self { slice: self.slice.slice3(low, high, maximum) } }
+        pub fn append(&mut self, value: ${tmeta(source_slice_value) as ty}) { self.slice.append(value); }
+        pub fn try_append(&mut self, value: ${tmeta(source_slice_value) as ty}) -> Result<(), crate::utility_http::SourceSliceAllocationError> {
+            self.slice.try_append(value)
+        }
+    }
+    ${impl crate::utility_format_copy::SourceFmtValueCopy} {
+        fn source_fmt_copy(&self) -> Self { Self { slice: crate::utility_format_copy::SourceFmtValueCopy::source_fmt_copy(&self.slice) } }
+    }
+}
+pub(crate) use derive_deftly_template_SourceCallbackSlice;
+
 define_derive_deftly! {
     UtilityFeatureProviders:
     ::cgp::prelude::delegate_and_check_components! {
@@ -197,10 +243,15 @@ define_derive_deftly! {
                 ::cgp::prelude::UseField<::cgp::prelude::Symbol!("source_logger")>,
             crate::utility_logging::SourceErrorBackoffGetterComponent:
                 ::cgp::prelude::UseField<::cgp::prelude::Symbol!("source_error_backoff")>,
+            crate::utility_error_handlers::SourceErrorHandlerStateGetterComponent:
+                ::cgp::prelude::UseField<::cgp::prelude::Symbol!("source_error_handler_state")>,
+            crate::utility_error_handlers::SourceRuntimeErrorDispatcherComponent: crate::utility_error_handlers::DispatchSourceRuntimeError,
+            crate::utility_error_handlers::SourceRuntimeErrorClockComponent: crate::utility_error_handlers::ReadNativeSourceErrorClock,
+            crate::utility_error_handlers::SourceRuntimeErrorDelayComponent: crate::utility_error_handlers::WaitNativeSourceErrorDelay,
             crate::utility_logging::SourceLogClockComponent: crate::utility_logging::ReadLocalSourceLogClock,
             crate::utility_logging::SourceLogEmitterComponent: crate::utility_logging::EmitSourceJsonLog,
             crate::utility_logging::SourceErrorLogEmitterComponent: crate::utility_logging::EmitSourceJsonErrorLog,
-            crate::utility_logging::SourceRuntimeErrorHandlerComponent: crate::utility_logging::HandleSourceErrorAndBackoff,
+            crate::utility_logging::SourceRuntimeErrorHandlerComponent: crate::utility_logging::HandleSourceErrorHandlers,
             crate::utility_scope::UtilityTaskScopeGetterComponent:
                 ::cgp::prelude::UseField<::cgp::prelude::Symbol!("utility_task_scope")>,
             crate::utility_scope::UtilityTaskSpawnerComponent: crate::utility_scope::SpawnOwnedUtilityTask,

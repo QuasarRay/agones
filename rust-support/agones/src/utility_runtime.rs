@@ -10,6 +10,7 @@ use crate::{errors::BoxError, utility_logging::{SourceLogger, SourceErrorBackoff
 pub struct UtilityRuntimeContext {
     pub source_logger: Arc<SourceLogger>,
     pub source_error_backoff: Arc<SourceErrorBackoff>,
+    pub source_error_handler_state: Arc<crate::utility_error_handlers::SourceErrorHandlerState>,
     pub utility_task_scope: Weak<UtilityTaskScope>,
     pub source_signal_state: Arc<crate::utility_signals::SourceSignalState>,
     pub source_query_settings: Arc<crate::utility_http::SourceQuerySettings>,
@@ -24,8 +25,13 @@ pub struct UtilityRuntimeOwner { pub context: UtilityRuntimeContext, tasks: Arc<
 impl UtilityRuntimeOwner {
     pub fn new(output: impl Write + Send + 'static) -> Self {
         let tasks = Arc::new(UtilityTaskScope::reporting());
+        let backoff = Arc::new(SourceErrorBackoff::default());
+        let profile = if usize::BITS == 32 { crate::utility_http::HeaderAllocationProfile::GO126_32 }
+            else { crate::utility_http::HeaderAllocationProfile::GO126_64 };
+        let error_handlers = Arc::new(crate::utility_error_handlers::SourceErrorHandlerState::agones_defaults(Arc::clone(&backoff), profile));
         Self { context: UtilityRuntimeContext {
-            source_logger: Arc::new(SourceLogger::new(output)), source_error_backoff: Arc::default(),
+            source_logger: Arc::new(SourceLogger::new(output)), source_error_backoff: backoff,
+            source_error_handler_state: error_handlers,
             utility_task_scope: Arc::downgrade(&tasks),
             source_signal_state: Arc::default(),
             source_query_settings: Arc::default(),

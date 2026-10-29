@@ -2,7 +2,7 @@
 // Entry.Log/Trace, JSONFormatter and prefixFieldClashes follow pinned Logrus.
 // Copyright (c) 2014 Simon Eskildsen, MIT; see
 // ../../../vendor/github.com/sirupsen/logrus/LICENSE.
-use std::{collections::BTreeMap, fmt, io::Write, sync::{Arc, Mutex, atomic::{AtomicU8, Ordering}}, time::{Duration, Instant}};
+use std::{collections::BTreeMap, fmt, io::Write, sync::{Arc, Mutex, atomic::{AtomicU8, Ordering}}, time::Instant};
 use cgp::prelude::*;
 use chrono::{DateTime, Local};
 use futures::future::BoxFuture;
@@ -128,16 +128,20 @@ impl SourceLogger {
     }
 }
 
-pub struct SourceErrorBackoff { last: Mutex<Instant> }
-impl Default for SourceErrorBackoff { fn default() -> Self { Self { last: Mutex::new(Instant::now()) } } }
+pub struct SourceErrorBackoff { last: Mutex<Instant>, min_period: i64 }
+impl Default for SourceErrorBackoff { fn default() -> Self { Self::new(1_000_000) } }
 impl SourceErrorBackoff {
-    fn next_delay(&self, now: Instant) -> Duration {
+    pub fn new(min_period: i64) -> Self { Self { last: Mutex::new(Instant::now()), min_period } }
+    pub fn min_period(&self) -> i64 { self.min_period }
+    pub(crate) fn next_delay(&self, now: Instant, next_now: impl FnOnce() -> Instant) -> i64 {
         let mut last = self.last.lock().unwrap_or_else(|error| error.into_inner());
         let delta = if now >= *last { now.duration_since(*last).as_nanos().min(i64::MAX as u128) as i64 }
-            else { -(last.duration_since(now).as_nanos().min(i64::MAX as u128) as i64) };
-        *last = Instant::now();
-        // Go time.Duration subtraction wraps; nonpositive Sleep is immediate.
-        Duration::from_nanos(1_000_000i64.wrapping_sub(delta).max(0) as u64)
+            else { let magnitude = last.duration_since(now).as_nanos();
+                if magnitude >= (1u128 << 63) { i64::MIN } else { -(magnitude as i64) } };
+        *last = next_now();
+        // time.Time.Sub saturates; Duration subtraction then wraps. The CGP
+        // delay provider implements Sleep's nonpositive immediate return.
+        self.min_period.wrapping_sub(delta)
     }
 }
 
@@ -204,22 +208,23 @@ where Context: HasSourceLogger + CanReadSourceLogClock + crate::utility_http::Ha
 
 #[cgp_component(SourceRuntimeErrorHandler)]
 pub trait CanHandleSourceRuntimeError: Sync {
-    fn handle_source_runtime_error<'a>(&'a self, logger: Option<&'a LogEntry>, error: Option<&'a (dyn std::error::Error + Send + Sync + 'static)>) -> BoxFuture<'a, ()>;
+    fn handle_source_runtime_error<'a>(&'a self, logger: Option<&'a LogEntry>, error: Option<&'a SourceRetainedError>) -> BoxFuture<'a, ()>;
 }
 #[cgp_new_provider]
-impl<Context> SourceRuntimeErrorHandler<Context> for HandleSourceErrorAndBackoff
-where Context: CanEmitSourceLog + CanEmitSourceErrorLog + HasSourceLogger + HasSourceErrorBackoff + Sync,
+impl<Context> SourceRuntimeErrorHandler<Context> for HandleSourceErrorHandlers
+where Context: CanEmitSourceLog + crate::utility_error_handlers::CanDispatchSourceRuntimeError + Sync,
 {
-    fn handle_source_runtime_error<'a>(context: &'a Context, logger: Option<&'a LogEntry>, error: Option<&'a (dyn std::error::Error + Send + Sync + 'static)>) -> BoxFuture<'a, ()> {
+    fn handle_source_runtime_error<'a>(context: &'a Context, logger: Option<&'a LogEntry>, error: Option<&'a SourceRetainedError>) -> BoxFuture<'a, ()> {
         Box::pin(async move {
-            if let Some(logger) = logger { context.emit_source_log(&logger.with_error(error), LogLevel::Error, ""); }
+            if let Some(logger) = logger {
+                context.emit_source_log(&logger.with_retained_error(error.map(SourceFmtValueCopy::source_fmt_copy)), LogLevel::Error, "");
+            }
             if let Some(error) = error {
-                let logger = LogEntry::from_logger(Arc::clone(context.source_logger()));
-                context.emit_source_error_log(&logger, LogLevel::Error, b"", error);
-                // The source starts its timestamp before locking and sleeps
-                // after unlocking, so other callers do not hold this lock.
-                let delay = context.source_error_backoff().next_delay(Instant::now());
-                if !delay.is_zero() { tokio::time::sleep(delay).await; }
+                context.dispatch_source_runtime_error(crate::utility_error_handlers::SourceErrorReport {
+                    context: crate::utility_error_handlers::SourceErrorContext::background(),
+                    error: Some(error.source_fmt_copy()), message: bytes::Bytes::from_static(b"Unhandled Error"),
+                    keys_and_values: crate::utility_error_handlers::SourceErrorArguments::nil(),
+                }).await;
             }
         })
     }
