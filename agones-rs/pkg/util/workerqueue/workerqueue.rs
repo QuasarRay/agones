@@ -25,21 +25,43 @@ impl fmt::Display for traceError {
 // Source traceError has no Unwrap. Do not expose err through Error::source.
 impl Error for traceError {}
 pub fn NewTraceError(err: Option<BoxError>) -> BoxError { Box::new(traceError { err }) }
-pub fn isTraceError(err: &(dyn Error + 'static)) -> bool { crate::errors::contains_error::<traceError>(err) }
+pub fn isTraceError(err: &(dyn Error + 'static)) -> bool {
+    use crate::utility_error_query::{SourceErrorCursor, SourceErrorAsTarget, try_source_error_as};
+    let mut target = crate::utility_error_target::source_error_pointer_slot::<traceError>();
+    try_source_error_as(Some(SourceErrorCursor::borrowed(err)), SourceErrorAsTarget::Pointer(&mut target))
+        .unwrap_or_else(|_| crate::errors::contains_error::<traceError>(err))
+}
 
 #[derive(Debug)]
 pub struct ApiStatusError { pub status: Status }
 impl fmt::Display for ApiStatusError { fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { out.write_str(&self.status.message) } }
 impl Error for ApiStatusError {}
 impl crate::runtime::SourceLogType for ApiStatusError { const SOURCE_LOG_TYPE: &'static str = "*errors.StatusError"; }
-impl crate::utility_error_view::SourceApiStatus for ApiStatusError { fn source_api_status(&self) -> Status { self.status.clone() } }
+impl crate::utility_error_view::SourceApiStatus for ApiStatusError {
+    fn source_api_status(&self) -> Status { self.status.clone() }
+    fn source_error_query_methods(&self) -> crate::utility_error_query::SourceErrorMethods<'_> {
+        crate::utility_error_query::SourceErrorMethods::leaf()
+    }
+}
 pub fn isConflict(error: &(dyn Error + 'static)) -> bool {
-    let Some((reason, code)) = crate::errors::first_error_view(error, &|error| {
-        if let Some(error) = error.downcast_ref::<ApiStatusError>() { return Some((error.status.reason.clone(), error.status.code)); }
-        let error = error.downcast_ref::<crate::utility_error_view::ApiStatusEnvelope>()?;
-        // reasonAndCodeForError calls Status separately for Reason and Code.
-        Some((error.status().reason, error.status().code))
-    }) else { return false; };
+    let status = match crate::utility_error_status::try_api_status(error) {
+        Ok((status, true)) => {
+            let status = status.unwrap_or_else(|| crate::utility_panic::unwind_source_runtime_error(
+                crate::utility_panic::SourceRuntimeErrorString::new("invalid memory address or nil pointer dereference")));
+            // Keep two calls, in order, even if a custom As returned true.
+            Some((status.status().reason, status.status().code))
+        },
+        Ok((_, false)) => None,
+        // Opaque native Error::source bridges have no complete source method
+        // set yet. Preserve their old hosting path explicitly; mapped source
+        // values above dispatch direct assignment/custom As/Unwrap in order.
+        Err(_) => crate::errors::first_error_view(error, &|error| {
+            if let Some(error) = error.downcast_ref::<ApiStatusError>() { return Some((error.status.reason.clone(), error.status.code)); }
+            let error = error.downcast_ref::<crate::utility_error_view::ApiStatusEnvelope>()?;
+            Some((error.status().reason, error.status().code))
+        }),
+    };
+    let Some((reason, code)) = status else { return false; };
     const KNOWN_REASONS: &[&str] = &["Unauthorized", "Forbidden", "NotFound", "AlreadyExists", "Conflict", "Gone", "Invalid",
         "ServerTimeout", "StoreReadError", "Timeout", "TooManyRequests", "BadRequest", "MethodNotAllowed", "NotAcceptable",
         "RequestEntityTooLarge", "UnsupportedMediaType", "InternalError", "Expired", "ServiceUnavailable"];

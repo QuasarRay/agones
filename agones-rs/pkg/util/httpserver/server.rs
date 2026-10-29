@@ -5,7 +5,7 @@
 use std::time::Duration;
 use derive_deftly::Deftly;
 use tokio_util::sync::CancellationToken;
-use crate::{errors::{BoxError, Errors}, logfields::LogEntry, utility_http::{CanRunHttpServer, SourceMux, is_server_closed},
+use crate::{errors::{BoxError, Errors}, logfields::LogEntry, utility_http::{CanRunHttpServer, SourceMux, is_direct_server_closed},
     utility_logging::{CanEmitSourceLog, CanHandleSourceRuntimeError, LogLevel}, utility_runtime::UtilityRuntimeContext,
     utility_declarations::derive_deftly_template_SourceErrorOrigin};
 
@@ -32,7 +32,7 @@ where Context: CanRunHttpServer + CanEmitSourceLog + CanHandleSourceRuntimeError
         self.runtime.emit_source_log(logger, LogLevel::Info, "Starting http server...");
         if self.Port.is_empty() { self.Port = "8080".into(); }
         if let Err(error) = self.runtime.run_http_server(&self.Mux, &self.Port, stop, readHeaderTimeout).await {
-            if is_server_closed(error.as_ref()) {
+            if is_direct_server_closed(error.as_ref()) {
                 self.runtime.emit_source_log(&logger.with_error(Some(error.as_ref())), LogLevel::Info, "http server closed");
             } else {
                 let error = ERRORS.Wrap(Some(error), &format!("Could not listen on :{}", self.Port)).expect("source non-nil error");

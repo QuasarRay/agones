@@ -115,9 +115,6 @@ impl SourcePrintfValue for SourcePrintfNil {
 /// The constructor's Err returns unknown native input unchanged; it is a
 /// bridge classification result, not a source fmt error. Arbitrary source
 /// error/Formatter/GoStringer data still needs its concrete value adapter.
-#[derive(Deftly)]
-#[derive_deftly(SourcePrintfInterfaces)]
-#[deftly(source_error_method)]
 pub struct SourcePrintfError { error: BoxError, source_type: &'static str }
 impl SourcePrintfError {
     pub fn canonical(error: BoxError) -> Result<Self, BoxError> {
@@ -129,6 +126,16 @@ impl SourcePrintfError {
     pub fn original(&self) -> &(dyn Error + Send + Sync + 'static) { self.error.as_ref() }
     pub(crate) fn source_type_name(&self) -> &'static str { self.source_type }
     pub fn into_original(self) -> BoxError { self.error }
+}
+impl SourcePrintfMethodViews for SourcePrintfError {
+    fn source_methods(&self) -> crate::utility_format_methods::SourcePrintfInterfaces<'_> {
+        crate::utility_format_methods::SourcePrintfInterfaces {
+            error: Some(self),
+            error_methods: crate::utility_error_query::canonical_query_methods(self.original())
+                .expect("canonical error constructor binds its source method set"),
+            ..crate::utility_format_methods::SourcePrintfInterfaces::default()
+        }
+    }
 }
 impl SourcePrintfValue for SourcePrintfError {
     fn source_type(&self) -> &str { self.source_type }

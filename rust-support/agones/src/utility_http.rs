@@ -308,7 +308,22 @@ impl Body for ResponseBody {
 pub struct ServerClosed;
 impl fmt::Display for ServerClosed { fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { out.write_str("http: Server closed") } }
 impl Error for ServerClosed {}
-pub fn is_server_closed(error: &(dyn Error + 'static)) -> bool { crate::errors::contains_error::<ServerClosed>(error) }
+// The unit native marker denotes the one source http.ErrServerClosed error
+// value at every existing close-return site. A type-name/message comparison
+// must never classify an arbitrary errors.errorString as this sentinel.
+static SOURCE_SERVER_CLOSED: ServerClosed = ServerClosed;
+fn source_server_closed_equal(left: &(dyn Error + 'static), right: &(dyn Error + 'static)) -> bool {
+    left.is::<ServerClosed>() && right.is::<ServerClosed>()
+}
+pub fn is_direct_server_closed(error: &(dyn Error + 'static)) -> bool {
+    source_server_closed_equal(crate::utility_error_alias::source_error_original(error), &SOURCE_SERVER_CLOSED)
+}
+pub fn is_server_closed(error: &(dyn Error + 'static)) -> bool {
+    use crate::utility_error_query::{SourceErrorCursor, SourceErrorIsTarget, try_source_error_is};
+    let target = SourceErrorIsTarget::declared(SourceErrorCursor::borrowed(&SOURCE_SERVER_CLOSED), Some(source_server_closed_equal));
+    try_source_error_is(Some(SourceErrorCursor::borrowed(error)), &target)
+        .unwrap_or_else(|_| crate::errors::contains_error::<ServerClosed>(error))
+}
 
 struct SourceRequestPhase(Option<hyper::ext::SourceResponseEnd>);
 impl SourceRequestPhase {

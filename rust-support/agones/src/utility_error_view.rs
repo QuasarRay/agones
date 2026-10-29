@@ -3,12 +3,18 @@
 use std::{any::Any, error::Error, fmt};
 use crate::{errors::BoxError, runtime::SourceLogType, utility_admission::Status};
 
-pub trait SourceApiStatus { fn source_api_status(&self) -> Status; }
+pub trait SourceApiStatus {
+    fn source_api_status(&self) -> Status;
+    fn source_error_query_methods(&self) -> crate::utility_error_query::SourceErrorMethods<'_> {
+        crate::utility_error_query::SourceErrorMethods::default()
+    }
+}
 trait DynamicApiStatus: Error + Send + Sync {
     fn as_any(&self) -> &dyn Any;
     fn status(&self) -> Status;
     fn original_source(&self) -> Option<&(dyn Error + 'static)>;
     fn source_type(&self) -> &'static str;
+    fn query_methods(&self) -> crate::utility_error_query::SourceErrorMethods<'_>;
 }
 impl<T> DynamicApiStatus for T
 where T: Error + SourceApiStatus + SourceLogType + Send + Sync + 'static,
@@ -17,6 +23,7 @@ where T: Error + SourceApiStatus + SourceLogType + Send + Sync + 'static,
     fn status(&self) -> Status { self.source_api_status() }
     fn original_source(&self) -> Option<&(dyn Error + 'static)> { self.source() }
     fn source_type(&self) -> &'static str { T::SOURCE_LOG_TYPE }
+    fn query_methods(&self) -> crate::utility_error_query::SourceErrorMethods<'_> { self.source_error_query_methods() }
 }
 #[derive(Debug)]
 pub struct ApiStatusEnvelope { inner: Box<dyn DynamicApiStatus> }
@@ -24,6 +31,7 @@ impl ApiStatusEnvelope {
     pub fn status(&self) -> Status { self.inner.status() }
     pub fn original_any(&self) -> &dyn Any { self.inner.as_any() }
     pub fn source_type(&self) -> &'static str { self.inner.source_type() }
+    pub(crate) fn query_methods(&self) -> crate::utility_error_query::SourceErrorMethods<'_> { self.inner.query_methods() }
 }
 impl fmt::Display for ApiStatusEnvelope { fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { fmt::Display::fmt(self.inner.as_ref(), out) } }
 impl Error for ApiStatusEnvelope { fn source(&self) -> Option<&(dyn Error + 'static)> { self.inner.original_source() } }

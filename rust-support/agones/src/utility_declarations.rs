@@ -27,7 +27,34 @@ define_derive_deftly! {
                 let methods = crate::utility_format_methods::SourcePrintfInterfaces { go_stringer: Some(self), ..methods };
             }}
             ${if tmeta(source_error_method) {
-                let methods = crate::utility_format_methods::SourcePrintfInterfaces { error: Some(self), ..methods };
+                let error_methods = crate::utility_error_query::SourceErrorMethods {
+                    declared: true, ..methods.error_methods
+                };
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { error: Some(self), error_methods, ..methods };
+            }}
+            ${if tmeta(source_error_is) {
+                let error_methods = crate::utility_error_query::SourceErrorMethods {
+                    declared: true, is: Some(self), ..methods.error_methods
+                };
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { error_methods, ..methods };
+            }}
+            ${if tmeta(source_error_as) {
+                let error_methods = crate::utility_error_query::SourceErrorMethods {
+                    declared: true, as_target: Some(self), ..methods.error_methods
+                };
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { error_methods, ..methods };
+            }}
+            ${if tmeta(source_error_unwrap_one) {
+                let error_methods = crate::utility_error_query::SourceErrorMethods {
+                    declared: true, unwrap_one: Some(self), ..methods.error_methods
+                };
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { error_methods, ..methods };
+            }}
+            ${if tmeta(source_error_unwrap_many) {
+                let error_methods = crate::utility_error_query::SourceErrorMethods {
+                    declared: true, unwrap_many: Some(self), ..methods.error_methods
+                };
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { error_methods, ..methods };
             }}
             ${if tmeta(source_stringer) {
                 let methods = crate::utility_format_methods::SourcePrintfInterfaces { stringer: Some(self), ..methods };

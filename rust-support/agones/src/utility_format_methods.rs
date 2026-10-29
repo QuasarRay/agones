@@ -27,6 +27,7 @@ pub struct SourcePrintfInterfaces<'a> {
     pub go_stringer: Option<&'a dyn SourceGoStringer>,
     pub error: Option<&'a dyn SourceErrorMethod>,
     pub stringer: Option<&'a dyn SourceStringer>,
+    pub error_methods: crate::utility_error_query::SourceErrorMethods<'a>,
 }
 pub trait SourcePrintfMethodViews {
     fn source_methods(&self) -> SourcePrintfInterfaces<'_> { SourcePrintfInterfaces::default() }
