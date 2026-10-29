@@ -1,7 +1,7 @@
 //! Source apimachinery HandleCrash state, ordered callbacks and worker boundary.
 // Adapted from selected apimachinery util/runtime and util/wait (Apache-2.0).
 // Copyright 2014 The Kubernetes Authors. Apache-2.0.
-use std::{io::Write as _, sync::{Arc, Mutex, RwLock, atomic::{AtomicBool, Ordering}}};
+use std::sync::{Arc, Mutex, RwLock, atomic::{AtomicBool, Ordering}};
 use cgp::prelude::*;
 use tokio_util::sync::CancellationToken;
 use crate::{utility_runtime::UtilityRuntimeContext, utility_panic::{SourceRecoveredPanic,
@@ -10,11 +10,20 @@ use crate::{utility_runtime::UtilityRuntimeContext, utility_panic::{SourceRecove
         CanRaiseSourceCollectionFailure, HasSourceUnicodeProfile, complete_source_collection, reserve_source_array}};
 
 #[derive(Clone)]
-pub struct SourceCrashContext { cancelled: CancellationToken, pub call_depth: i64 }
+pub struct SourceCrashContext {
+    pub call_depth: i64,
+    pub log_context: crate::utility_error_handlers::SourceErrorContext,
+}
 impl SourceCrashContext {
-    pub fn new(cancelled: CancellationToken) -> Self { Self { cancelled, call_depth: 0 } }
-    pub fn is_cancelled(&self) -> bool { self.cancelled.is_cancelled() }
-    pub async fn cancelled(&self) { self.cancelled.cancelled().await; }
+    pub fn new(cancelled: CancellationToken) -> Self {
+        Self { log_context: crate::utility_error_handlers::SourceErrorContext::from_stop(cancelled), call_depth: 0 }
+    }
+    pub fn with_log_context(mut self, context: crate::utility_error_handlers::SourceErrorContext) -> Self { self.log_context = context; self }
+    pub fn with_logger(mut self, runtime: &UtilityRuntimeContext, logger: crate::utility_logr::SourceLogr) -> Self {
+        self.log_context = runtime.source_klog_state.new_context(self.log_context, logger); self
+    }
+    pub fn is_cancelled(&self) -> bool { self.log_context.is_cancelled() }
+    pub async fn cancelled(&self) { self.log_context.cancelled().await; }
 }
 /// Source callback/interface data. Selection of the crash effect stays in CGP.
 pub type SourcePanicCallback = Arc<dyn for<'a, 'b, 'c> Fn(&'a UtilityRuntimeContext, &'b SourceCrashContext, SourceCrashPanic<'c>) + Send + Sync>;
@@ -134,7 +143,9 @@ pub trait CanHandleSourceCrash {
 impl SourceCrashHandler<UtilityRuntimeContext> for HandleSourceCrash {
     fn handle_source_crash(runtime: &UtilityRuntimeContext, mut context: SourceCrashContext, panic: SourceRecoveredPanic, additional: &SourcePanicHandlers) {
         let additional = additional.clone();
-        context.call_depth = context.call_depth.wrapping_add(4);
+        let logger = runtime.source_klog_state.from_context(runtime, &context.log_context).with_call_depth(4);
+        context.log_context = runtime.source_klog_state.new_context(context.log_context, logger);
+        context.call_depth = crate::utility_logr::add_int(runtime.source_klog_state.profile(), context.call_depth, 4);
         let handlers = runtime.source_crash_state().panic_handlers();
         // Copy only the slice header. Each next function value is read from
         // its retained backing, so mutations of later slots remain visible.
@@ -157,10 +168,11 @@ pub trait CanReportSourceCrashPanic {
     fn report_source_crash_panic(&self, context: &SourceCrashContext, panic: &SourceRecoveredPanic);
 }
 #[cgp_new_provider]
-impl<Context: CanRaiseSourceCollectionFailure + HasSourceUnicodeProfile> SourceCrashPanicReporter<Context> for ReportNativeSourceCrashPanic {
-    fn report_source_crash_panic(runtime: &Context, _context: &SourceCrashContext, panic: &SourceRecoveredPanic) {
+impl SourceCrashPanicReporter<UtilityRuntimeContext> for ReportNativeSourceCrashPanic {
+    fn report_source_crash_panic(runtime: &UtilityRuntimeContext, context: &SourceCrashContext, panic: &SourceRecoveredPanic) {
         if panic.is_abort_handler() { return; }
         let stack = crate::utility_runtime_panic::native_recovery_stack(runtime);
+        let logger = runtime.source_klog_state.from_context(runtime, &context.log_context);
         let profile = *runtime.source_unicode_profile();
         let typed = panic.payload().downcast_ref::<crate::utility_format_methods::SourcePrintfPanic>();
         let panic_value = match typed {
@@ -188,9 +200,6 @@ impl<Context: CanRaiseSourceCollectionFailure + HasSourceUnicodeProfile> SourceC
             None => crate::utility_klog_values::panic_fields(allocation,
                 &[("panic", panic_value.as_slice()), ("stacktrace", stack.as_bytes())]),
         };
-        let mut record = b"\"Observed a panic\"".to_vec();
-        complete_source_collection(runtime, crate::utility_klog_values::format_panic_strings(&mut record, fields, profile));
-        complete_source_collection(runtime, crate::utility_go_quote::append(&mut record, b"\n"));
-        let _ = std::io::stderr().lock().write_all(&record);
+        logger.error(runtime, None, b"Observed a panic", fields);
     }
 }

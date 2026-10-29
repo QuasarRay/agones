@@ -122,18 +122,9 @@ pub(crate) fn string_bytes(value: &SourceErrorArgument) -> Option<&[u8]> {
     if let Some(value) = value.downcast_ref::<String>() { return Some(value.as_bytes()); }
     None
 }
-/// The apimachinery logPanic caller has already converted every field to a Go
-/// string (panic, panicGoValue and stacktrace). The common value dispatcher
-/// consumes these fields. This caller cannot encounter an unbound value.
-pub(crate) fn format_panic_strings(output: &mut Vec<u8>, values: SourceErrorArguments, profile: SourceUnicodeProfile)
-    -> Result<(), SourceSliceAllocationError>
-{
-    match crate::utility_klog_dispatch::SourceKlogFormatter::new(profile).format_kvs(output, &[values]) {
-        Ok(()) => Ok(()),
-        Err(crate::utility_klog_dispatch::SourceKlogFormatError::Allocation(error)) => Err(error),
-        Err(error) => panic!("logPanic string field has a missing source binding: {error}"),
-    }
-}
+/// The source logPanic variadic arguments. Sink-specific WithValues merging
+/// happens in SourceKlogger; an arbitrary contextual sink gets these actual
+/// arguments directly, without an extra pre-merge or separate string driver.
 pub(crate) fn panic_fields(profile: HeaderAllocationProfile, fields: &[(&'static str, &[u8])]) -> SourceErrorArguments {
     let length = fields.len().checked_mul(2).and_then(|length| i64::try_from(length).ok());
     let length = complete_source_collection(&NativeSourceCollectionContext, length.ok_or(SourceSliceAllocationError::MakeCapacity));
@@ -142,5 +133,5 @@ pub(crate) fn panic_fields(profile: HeaderAllocationProfile, fields: &[(&'static
         values.append(SourceErrorArgument::from_value(*key));
         values.append(SourceErrorArgument::from_value(SourceFmtSharedString(std::sync::Arc::from(*value))));
     }
-    with_values(&SourceErrorArguments::nil_with_profile(profile), &values, profile)
+    values
 }

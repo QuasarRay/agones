@@ -25,6 +25,46 @@ trait ErrorArgumentData: Send + Sync {
         mode: SourcePrintfMode, recursion: SourcePrintfRecursion,
         output: &mut Vec<u8>) -> Option<Result<(), SourceSliceAllocationError>>;
 }
+struct RetainedErrorArgument { error: SourceRetainedError }
+impl crate::utility_format_methods::SourceErrorMethod for RetainedErrorArgument {
+    fn source_error_message(&self) -> std::borrow::Cow<'_, [u8]> {
+        crate::utility_error_format::source_error_message(self.error.original()).unwrap_or_else(||
+            std::panic::panic_any(crate::utility_klog_dispatch::SourceKlogFormatError::Unbound {
+                source_type: self.source_type().map(str::to_owned), operation: "retained klog error Error method" }))
+    }
+}
+impl ErrorArgumentData for RetainedErrorArgument {
+    fn original(&self) -> &dyn Any { &self.error }
+    fn source_type(&self) -> Option<&str> { crate::utility_error_view::source_error_type(self.error.original()) }
+    fn is_nil(&self) -> bool { false }
+    fn methods(&self) -> SourcePrintfInterfaces<'_> {
+        use crate::utility_format_methods::SourcePrintfMethodViews;
+        let mut error = self.error.original();
+        loop {
+            if let Some(retained) = error.downcast_ref::<SourceRetainedError>() { error = retained.original(); continue; }
+            if let Some(runtime) = error.downcast_ref::<crate::utility_panic::SourceRuntimeErrorEnvelope>() { error = runtime.error(); continue; }
+            if let Some(shared) = error.downcast_ref::<crate::utility_error_alias::SourceSharedError>() { return shared.source_methods(); }
+            break;
+        }
+        macro_rules! declared {
+            ($($ty:ty),+) => { $(if let Some(value) = error.downcast_ref::<$ty>() { return value.source_methods(); })+ };
+        }
+        declared!(crate::utility_panic::SourceRuntimeErrorString, crate::utility_panic::SourceNilMapAssignment,
+            crate::utility_panic::SourceBoundsError, crate::utility_error_nil::SourceNilStatusError,
+            crate::utility_error_nil::SourceNilTraceError, crate::source::workerqueue::traceError,
+            crate::utility_time_json_error::SourceTimeMarshalerError, crate::utility_logr_context::SourceLogrNotFoundError);
+        if self.source_type().is_none() { return SourcePrintfInterfaces::default(); }
+        SourcePrintfInterfaces { error: Some(self),
+            error_methods: crate::utility_error_query::canonical_query_methods(error).unwrap_or_default(),
+            ..SourcePrintfInterfaces::default() }
+    }
+    fn write(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
+        mode: SourcePrintfMode, recursion: SourcePrintfRecursion, output: &mut Vec<u8>) -> Option<Result<(), SourceSliceAllocationError>>
+    {
+        self.source_type()?;
+        Some(crate::utility_format_arguments::write_source_error_value(self.error.original(), verb, state, profile, mode, recursion, output))
+    }
+}
 struct TypedErrorArgument<Value>(Value);
 impl<Value: SourcePrintfValue + Send + Sync + 'static> ErrorArgumentData for TypedErrorArgument<Value> {
     fn original(&self) -> &dyn Any { &self.0 }
@@ -51,6 +91,9 @@ impl<Value: Any + Send + Sync> ErrorArgumentData for NativeErrorArgument<Value> 
 #[derive(Default)]
 pub struct SourceErrorArgument { data: Option<Arc<dyn ErrorArgumentData>> }
 impl SourceErrorArgument {
+    pub fn from_error(error: Option<SourceRetainedError>) -> Self {
+        Self { data: error.map(|error| Arc::new(RetainedErrorArgument { error }) as Arc<dyn ErrorArgumentData>) }
+    }
     pub fn from_value<Value: SourcePrintfValue + Send + Sync + 'static>(value: Value) -> Self {
         Self { data: Some(Arc::new(TypedErrorArgument(value))) }
     }
@@ -94,14 +137,32 @@ pub struct SourceErrorArguments { slice: SourceCallbackSlice<SourceErrorArgument
 pub struct SourceErrorContext {
     stop: Option<CancellationToken>,
     data: Option<Arc<dyn Any + Send + Sync>>,
+    source_nil: bool,
+    logr_lookup: Option<crate::utility_logr_context::SourceLogrContextLookup>,
 }
 impl SourceErrorContext {
-    pub fn background() -> Self { Self { stop: None, data: None } }
-    pub fn from_stop(stop: CancellationToken) -> Self { Self { stop: Some(stop), data: None } }
+    pub fn background() -> Self { Self { stop: None, data: None, source_nil: false, logr_lookup: None } }
+    pub fn nil() -> Self { Self { source_nil: true, ..Self::background() } }
+    pub fn from_stop(stop: CancellationToken) -> Self { Self { stop: Some(stop), ..Self::background() } }
+    pub fn logr_value(&self) -> crate::utility_logr_context::SourceLogrContextValue {
+        if self.source_nil { crate::utility_error_nil::nil_error_receiver(); }
+        self.logr_lookup.as_ref().map_or(crate::utility_logr_context::SourceLogrContextValue::Nil, |lookup| lookup())
+    }
+    pub fn with_logr_lookup(mut self, lookup: crate::utility_logr_context::SourceLogrContextLookup) -> Self {
+        self.logr_lookup = Some(lookup); self
+    }
+    pub fn with_logr_value(mut self, value: crate::utility_logr_context::SourceLogrContextValue) -> Self {
+        if self.source_nil { crate::utility_format_methods::SourcePrintfPanic::raise("cannot create context from nil parent"); }
+        self.logr_lookup = Some(Arc::new(move || value.source_fmt_copy())); self
+    }
     pub fn with_native_data<Value: Any + Send + Sync>(mut self, data: Arc<Value>) -> Self { self.data = Some(data); self }
     pub fn native_data<Value: Any>(&self) -> Option<&Value> { self.data.as_ref()?.downcast_ref() }
-    pub fn is_cancelled(&self) -> bool { self.stop.as_ref().is_some_and(CancellationToken::is_cancelled) }
+    pub fn is_cancelled(&self) -> bool {
+        if self.source_nil { crate::utility_error_nil::nil_error_receiver(); }
+        self.stop.as_ref().is_some_and(CancellationToken::is_cancelled)
+    }
     pub async fn cancelled(&self) {
+        if self.source_nil { crate::utility_error_nil::nil_error_receiver(); }
         match &self.stop { Some(stop) => stop.cancelled().await, None => std::future::pending::<()>().await }
     }
 }
@@ -120,6 +181,7 @@ pub type SourceErrorCallback = Arc<dyn for<'a> Fn(&'a UtilityRuntimeContext, Sou
 #[derive(Default)]
 pub enum SourceErrorHandler {
     #[default] Nil,
+    KlogError,
     LogrusError,
     Backoff(Arc<SourceErrorBackoff>),
     Callback(SourceErrorCallback),
@@ -129,7 +191,7 @@ pub fn source_backoff_error(min_period: i64) -> SourceErrorHandler {
 }
 impl SourceFmtValueCopy for SourceErrorHandler {
     fn source_fmt_copy(&self) -> Self {
-        match self { Self::Nil => Self::Nil, Self::LogrusError => Self::LogrusError,
+        match self { Self::Nil => Self::Nil, Self::KlogError => Self::KlogError, Self::LogrusError => Self::LogrusError,
             Self::Backoff(counter) => Self::Backoff(Arc::clone(counter)), Self::Callback(callback) => Self::Callback(Arc::clone(callback)) }
     }
 }
@@ -138,6 +200,11 @@ impl SourceErrorHandler {
         Box::pin(async move {
             match self {
                 Self::Nil => crate::utility_error_nil::nil_error_receiver(),
+                Self::KlogError => {
+                    let logger = runtime.source_klog_state.from_context(runtime, &report.context).with_call_depth(3);
+                    let logger = runtime.source_klog_state.logger_with_name(&logger, b"UnhandledError");
+                    logger.error(runtime, report.error, &report.message, report.keys_and_values);
+                },
                 Self::LogrusError => {
                     // Agones replaces ErrorHandlers[0]; it ignores ctx/msg/kv.
                     let logger = LogEntry::from_logger(Arc::clone(runtime.source_logger()));
@@ -164,8 +231,12 @@ pub struct SourceErrorHandlers { slice: SourceCallbackSlice<SourceErrorHandler> 
 pub struct SourceErrorHandlerState { handlers: Mutex<SourceErrorHandlers> }
 impl SourceErrorHandlerState {
     pub fn agones_defaults(backoff: Arc<SourceErrorBackoff>, profile: HeaderAllocationProfile) -> Self {
+        let state = Self::source_defaults(backoff, profile);
+        state.handlers().set(0, SourceErrorHandler::LogrusError); state
+    }
+    pub fn source_defaults(backoff: Arc<SourceErrorBackoff>, profile: HeaderAllocationProfile) -> Self {
         let handlers = SourceErrorHandlers::make(2, 2, profile);
-        handlers.set(0, SourceErrorHandler::LogrusError);
+        handlers.set(0, SourceErrorHandler::KlogError);
         handlers.set(1, SourceErrorHandler::Backoff(backoff));
         Self { handlers: Mutex::new(handlers) }
     }
@@ -216,4 +287,10 @@ impl<Context: Sync> SourceRuntimeErrorDelay<Context> for WaitNativeSourceErrorDe
 /// inherited non-contextual HandleError wrapper's early nil return.
 pub async fn handle_error_with_context<Context: CanDispatchSourceRuntimeError>(runtime: &Context, report: SourceErrorReport) {
     runtime.dispatch_source_runtime_error(report).await;
+}
+pub async fn handle_error_with_logger(runtime: &UtilityRuntimeContext, logger: crate::utility_logr::SourceLogr,
+    error: Option<SourceRetainedError>, message: Bytes, keys_and_values: SourceErrorArguments)
+{
+    let context = runtime.source_klog_state.new_context(SourceErrorContext::background(), logger);
+    runtime.dispatch_source_runtime_error(SourceErrorReport { context, error, message, keys_and_values }).await;
 }

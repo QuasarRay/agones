@@ -97,6 +97,23 @@ define_derive_deftly! {
 }
 pub(crate) use derive_deftly_template_SourcePrintfInterfaces;
 
+define_derive_deftly! {
+    SourceLogSinkInterfaces:
+    ${impl crate::utility_logr::SourceLogSinkMethodViews} {
+        fn source_sink_methods(&self) -> crate::utility_logr::SourceLogSinkInterfaces<'_> {
+            let methods = crate::utility_logr::SourceLogSinkInterfaces::default();
+            ${if tmeta(source_logr_call_depth) {
+                let methods = crate::utility_logr::SourceLogSinkInterfaces { call_depth: Some(self), ..methods };
+            }}
+            ${if tmeta(source_logr_call_stack_helper) {
+                let methods = crate::utility_logr::SourceLogSinkInterfaces { call_stack_helper: Some(self), ..methods };
+            }}
+            methods
+        }
+    }
+}
+pub(crate) use derive_deftly_template_SourceLogSinkInterfaces;
+
 // Klog method adapters have one typed `value` and one method closure. Copy
 // and lifecycle ownership remain with that value and the existing CGP caller.
 define_derive_deftly! {
@@ -308,6 +325,7 @@ define_derive_deftly! {
         $tname {
             crate::utility_logging::SourceLoggerGetterComponent:
                 ::cgp::prelude::UseField<::cgp::prelude::Symbol!("source_logger")>,
+            crate::utility_klog::SourceKlogRecordEmitterComponent: crate::utility_klog::EmitNativeSourceKlogRecord,
             crate::utility_logging::SourceErrorBackoffGetterComponent:
                 ::cgp::prelude::UseField<::cgp::prelude::Symbol!("source_error_backoff")>,
             crate::utility_error_handlers::SourceErrorHandlerStateGetterComponent:

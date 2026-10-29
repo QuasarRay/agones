@@ -9,6 +9,7 @@ use crate::{errors::BoxError, utility_logging::{SourceLogger, SourceErrorBackoff
 #[derive_deftly(UtilityRuntimeProviders)]
 pub struct UtilityRuntimeContext {
     pub source_logger: Arc<SourceLogger>,
+    pub source_klog_state: Arc<crate::utility_klog::SourceKlogState>,
     pub source_error_backoff: Arc<SourceErrorBackoff>,
     pub source_error_handler_state: Arc<crate::utility_error_handlers::SourceErrorHandlerState>,
     pub utility_task_scope: Weak<UtilityTaskScope>,
@@ -31,6 +32,7 @@ impl UtilityRuntimeOwner {
         let error_handlers = Arc::new(crate::utility_error_handlers::SourceErrorHandlerState::agones_defaults(Arc::clone(&backoff), profile));
         Self { context: UtilityRuntimeContext {
             source_logger: Arc::new(SourceLogger::new(output)), source_error_backoff: backoff,
+            source_klog_state: Arc::new(crate::utility_klog::SourceKlogState::new(profile)),
             source_error_handler_state: error_handlers,
             utility_task_scope: Arc::downgrade(&tasks),
             source_signal_state: Arc::default(),
