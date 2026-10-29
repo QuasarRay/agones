@@ -47,7 +47,7 @@ pub struct SourceKlogInterfaces<'a> {
     pub log_valuer: Option<&'a dyn crate::utility_slog_values::SourceSlogLogValuer>,
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub enum SourceKlogFormatError {
     Allocation(SourceSliceAllocationError),
     Unbound { source_type: Option<String>, operation: &'static str },
@@ -80,8 +80,16 @@ impl SourceKlogFormatter {
     }
     fn printf(&self, output: &mut Vec<u8>, value: &SourceErrorArgument, verb: char,
         state: &SourcePrintfResolvedCounts) -> FormatResult
-    { value.try_write(verb, state, self.profile, output).ok_or_else(|| self.unbound(value, "fmt operand"))??; Ok(()) }
+    {
+        match catch_unwind(AssertUnwindSafe(|| value.try_write(verb, state, self.profile, output))) {
+            Ok(result) => { result.ok_or_else(|| self.unbound(value, "fmt operand"))??; Ok(()) }
+            Err(payload) => match payload.downcast::<SourceKlogFormatError>() {
+                Ok(error) => Err(*error), Err(payload) => std::panic::resume_unwind(payload),
+            }
+        }
+    }
     fn panic_string(&self, panic: SourceRecoveredPanic) -> FormatResult<Vec<u8>> {
+        if let Some(error) = panic.payload().downcast_ref::<SourceKlogFormatError>() { return Err(error.clone()); }
         let mut output = Vec::new(); append(&mut output, b"<panic: ")?;
         write_recovered_value(&panic, 's', self.profile, &mut output).ok_or_else(|| SourceKlogFormatError::Unbound {
             source_type: panic.source_type().map(str::to_owned), operation: "recovered panic fmt %s" })??;

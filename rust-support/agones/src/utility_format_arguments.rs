@@ -378,7 +378,8 @@ pub(crate) fn write_source_error_value(mut error: &(dyn Error + 'static), verb: 
     }
     runtime_values!(crate::utility_panic::SourceRuntimeErrorString, crate::utility_panic::SourceNilMapAssignment,
         crate::utility_panic::SourceBoundsError, crate::utility_error_nil::SourceNilStatusError,
-        crate::utility_error_nil::SourceNilTraceError, crate::source::workerqueue::traceError);
+        crate::utility_error_nil::SourceNilTraceError, crate::source::workerqueue::traceError,
+        crate::utility_time_json_error::SourceTimeMarshalerError);
     if let Some(source_type) = source_error_type(error).filter(|name| name.starts_with('*')) {
         return write_error_pointer(output, error, source_type, verb, state, profile);
     }
@@ -408,7 +409,8 @@ pub(crate) fn write_source_error_operand(error: &(dyn Error + 'static), verb: ch
         || value.is::<crate::utility_panic::SourceBoundsError>()
         || value.is::<crate::utility_error_nil::SourceNilStatusError>()
         || value.is::<crate::utility_error_nil::SourceNilTraceError>()
-        || value.is::<crate::source::workerqueue::traceError>();
+        || value.is::<crate::source::workerqueue::traceError>()
+        || value.is::<crate::utility_time_json_error::SourceTimeMarshalerError>();
     if declared {
         return write_source_error_value(original, verb, &SourcePrintfResolvedCounts::default(), profile, mode,
             SourcePrintfRecursion::default(), output);

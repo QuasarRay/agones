@@ -59,6 +59,6 @@ pub fn source_error_type(error: &(dyn Error + 'static)) -> Option<&'static str> 
     source_types!(crate::utility_error_format::MessageError, crate::utility_error_format::WrappedError,
         crate::utility_error_format::FormattedError, crate::utility_panic::SourceAbortHandler,
         crate::utility_error_nil::SourceNilStatusError, crate::utility_error_nil::SourceNilTraceError,
-        crate::source::workerqueue::traceError);
+        crate::source::workerqueue::traceError, crate::utility_time_json_error::SourceTimeMarshalerError);
     None
 }

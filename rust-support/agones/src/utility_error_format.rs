@@ -241,7 +241,7 @@ pub fn source_error_message(error: &(dyn Error + 'static)) -> Option<Cow<'_, [u8
     declared_messages!(crate::source::workerqueue::traceError, crate::source::workerqueue::ApiStatusError,
         crate::utility_error_nil::SourceNilStatusError, crate::utility_error_nil::SourceNilTraceError,
         crate::utility_panic::SourceRuntimeErrorString, crate::utility_panic::SourceNilMapAssignment,
-        crate::utility_panic::SourceBoundsError);
+        crate::utility_panic::SourceBoundsError, crate::utility_time_json_error::SourceTimeMarshalerError);
     source_error_bytes(error).map(Cow::Borrowed)
 }
 

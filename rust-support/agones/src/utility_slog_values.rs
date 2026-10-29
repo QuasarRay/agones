@@ -2,7 +2,7 @@
 // Adapted from Go1.26.5 log/slog/{value,attr}.go and time/time.go.
 // Copyright The Go Authors. BSD-3-Clause; see ../GO-LICENSE. These are typed
 // source values, not a general Go object interpreter or lifecycle manager.
-// Full time.Time, interface equality/type/word/heap/ABI and native caller-frame
+// Full time/native timezone, interface equality/type/word/heap/ABI and caller-frame
 // bindings remain required. A missing frame/format binding is explicit.
 use std::{borrow::Cow, panic::{catch_unwind, AssertUnwindSafe}, sync::Arc};
 use derive_deftly::Deftly;
@@ -18,6 +18,7 @@ use crate::{utility_error_handlers::{SourceErrorArgument, SourceErrorArguments},
     utility_format_scan::{SourcePrintfInteger, SourcePrintfResolvedCounts},
     utility_format_print::SourcePrintfMode,
     utility_float_reference::{try_source_float, SourceFloatWidth},
+    utility_time_values::{SourceGoTime, SourceTimeLocation},
     utility_http::{HeaderAllocationProfile, SourceUnicodeProfile, SourceSliceAllocationError,
         NativeSourceCollectionContext, complete_source_collection},
     utility_go_quote::append,
@@ -81,6 +82,7 @@ impl SourcePrintfValue for SourceSlogDuration {
 enum ValueData {
     Kind(SourceSlogKind), String(SourceFmtSharedString), Group(SourceSlogAttrs),
     Any(SourceErrorArgument), KindValue(SourceSlogKind),
+    TimeLocation(Option<Arc<SourceTimeLocation>>), TimeTime(SourceGoTime),
 }
 #[derive(Deftly)]
 #[derive_deftly(SourcePrintfInterfaces)]
@@ -96,6 +98,8 @@ impl SourceFmtValueCopy for SourceSlogValue {
             ValueData::String(value) => ValueData::String(value.source_fmt_copy()),
             ValueData::Group(value) => ValueData::Group(value.source_fmt_copy()),
             ValueData::Any(value) => ValueData::Any(value.source_fmt_copy()),
+            ValueData::TimeLocation(value) => ValueData::TimeLocation(value.as_ref().map(Arc::clone)),
+            ValueData::TimeTime(value) => ValueData::TimeTime(value.source_fmt_copy()),
         };
         Self { num: self.num, data }
     }
@@ -107,6 +111,16 @@ impl SourceSlogValue {
     pub fn float64_value(value: f64) -> Self { Self { num: value.to_bits(), data: ValueData::Kind(SourceSlogKind::FLOAT64) } }
     pub fn bool_value(value: bool) -> Self { Self { num: u64::from(value), data: ValueData::Kind(SourceSlogKind::BOOL) } }
     pub fn duration_value(value: i64) -> Self { Self { num: value as u64, data: ValueData::Kind(SourceSlogKind::DURATION) } }
+    pub fn time_value(value: &SourceGoTime) -> Self {
+        if value.is_zero() { return Self { num: 0, data: ValueData::TimeLocation(None) }; }
+        let nanos = value.unix_nano();
+        // The intermediate Unix time is used only for instant equality. Its
+        // temporary Local pointer cannot affect that comparison; final Time
+        // reconstruction explicitly restores the retained source location.
+        if value.equal(&SourceGoTime::unix_utc(0, nanos)) {
+            Self { num: nanos as u64, data: ValueData::TimeLocation(Some(value.location())) }
+        } else { Self { num: 0, data: ValueData::TimeTime(value.without_monotonic()) } }
+    }
     pub fn group_value(attrs: SourceSlogAttrs) -> Self {
         let mut empty = 0;
         for index in 0..attrs.len() { if attrs.get(index).value.is_empty_group() { empty += 1; } }
@@ -136,6 +150,7 @@ impl SourceSlogValue {
             if let Some(value) = value.downcast_ref::<f64>() { return Self::float64_value(*value); }
             if let Some(value) = value.downcast_ref::<f32>() { return Self::float64_value(f64::from(*value)); }
             if let Some(value) = value.downcast_ref::<SourceSlogDuration>() { return Self::duration_value(value.0); }
+            if let Some(value) = value.downcast_ref::<SourceGoTime>() { return Self::time_value(value); }
             if let Some(value) = value.downcast_ref::<SourceSlogAttrs>() { return Self::group_value(value.source_fmt_copy()); }
             if let Some(value) = value.downcast_ref::<SourceSlogKind>() { return Self { num: 0, data: ValueData::KindValue(*value) }; }
         }
@@ -145,6 +160,7 @@ impl SourceSlogValue {
         match &self.data {
             ValueData::Kind(kind) => *kind, ValueData::String(_) => SourceSlogKind::STRING,
             ValueData::Group(_) => SourceSlogKind::GROUP, ValueData::KindValue(_) => SourceSlogKind::ANY,
+            ValueData::TimeLocation(_) | ValueData::TimeTime(_) => SourceSlogKind::TIME,
             ValueData::Any(value) => if value.source_methods().klog.log_valuer.is_some() {
                 SourceSlogKind::LOG_VALUER } else { SourceSlogKind::ANY },
         }
@@ -158,6 +174,7 @@ impl SourceSlogValue {
             ValueData::KindValue(value) => SourceErrorArgument::from_value(*value),
             ValueData::String(value) => SourceErrorArgument::copy_value(value),
             ValueData::Group(value) => SourceErrorArgument::copy_value(value),
+            ValueData::TimeLocation(_) | ValueData::TimeTime(_) => SourceErrorArgument::from_value(self.time()),
             ValueData::Kind(kind) => match *kind {
                 SourceSlogKind::INT64 => SourceErrorArgument::from_value(self.num as i64),
                 SourceSlogKind::UINT64 => SourceErrorArgument::from_value(self.num),
@@ -179,6 +196,15 @@ impl SourceSlogValue {
     pub fn bool(&self) -> bool { self.require(SourceSlogKind::BOOL); self.num == 1 }
     pub fn float64(&self) -> f64 { self.require(SourceSlogKind::FLOAT64); f64::from_bits(self.num) }
     pub fn duration(&self) -> i64 { self.require(SourceSlogKind::DURATION); self.num as i64 }
+    pub fn time(&self) -> SourceGoTime {
+        self.require(SourceSlogKind::TIME);
+        match &self.data {
+            ValueData::TimeLocation(None) => SourceGoTime::default(),
+            ValueData::TimeLocation(Some(location)) => SourceGoTime::unix_utc(0, self.num as i64).in_location(Some(Arc::clone(location))),
+            ValueData::TimeTime(value) => value.source_fmt_copy(),
+            _ => unreachable!("KindTime has an actual time representation"),
+        }
+    }
     pub fn group(&self) -> SourceSlogAttrs {
         match &self.data { ValueData::Group(value) => value.source_fmt_copy(), _ => raise_bytes(b"Group: bad kind".to_vec()) }
     }
@@ -227,6 +253,7 @@ impl SourceSlogValue {
             SourceSlogKind::FLOAT64 => append(&mut output, &try_source_float(f64::from_bits(self.num), SourceFloatWidth::Binary64, b'g', -1)?)?,
             SourceSlogKind::BOOL => append(&mut output, if self.num == 1 { b"true" } else { b"false" })?,
             SourceSlogKind::DURATION => append(&mut output, &duration_string(self.num as i64))?,
+            SourceSlogKind::TIME => append(&mut output, &self.time().try_string()?)?,
             SourceSlogKind::GROUP | SourceSlogKind::ANY | SourceSlogKind::LOG_VALUER => {
                 let value = self.any();
                 value.try_write('v', &SourcePrintfResolvedCounts::default(), profile, &mut output)
@@ -248,6 +275,7 @@ impl SourceSlogValue {
             SourceSlogKind::INT64 | SourceSlogKind::UINT64 | SourceSlogKind::BOOL | SourceSlogKind::DURATION => Ok(self.num == other.num),
             SourceSlogKind::STRING => Ok(self.string_bytes() == other.string_bytes()),
             SourceSlogKind::FLOAT64 => Ok(f64::from_bits(self.num) == f64::from_bits(other.num)),
+            SourceSlogKind::TIME => Ok(self.time().equal(&other.time())),
             SourceSlogKind::ANY | SourceSlogKind::LOG_VALUER => interface_equal(&self.any(), &other.any()),
             SourceSlogKind::GROUP => {
                 let left = self.group_ref().expect("group kind"); let right = other.group_ref().expect("group kind");
@@ -455,6 +483,11 @@ impl SourcePrintfStructFields for SourceSlogValue {
                 Some(result) => result,
                 None => std::panic::panic_any(missing(value, "slog.Value private any reflection binding")),
             },
+            ValueData::TimeLocation(location) => write_source_value(&SourcePrintfAddress {
+                address: location.as_ref().map_or(0, |value| Arc::as_ptr(value) as usize as u64),
+                source_type: "slog.timeLocation", kind: SourceAddressKind::Pointer,
+            }, verb, state, profile, mode, recursion.child(true), output),
+            ValueData::TimeTime(value) => write_source_value(&SlogTimeTime(value), verb, state, profile, mode, recursion.child(true), output),
         }
     }
 }
@@ -537,3 +570,25 @@ macro_rules! scalar_json {
     })+ };
 }
 scalar_json!(SourceSlogKind, SourceSlogDuration);
+
+// slog.timeTime is a distinct defined type with time.Time's underlying
+// fields and no inherited Time.String/GoString/MarshalJSON method set.
+#[derive(Deftly)]
+#[derive_deftly(SourcePrintfInterfaces)]
+struct SlogTimeTime<'a>(&'a SourceGoTime);
+impl SourcePrintfValue for SlogTimeTime<'_> {
+    const SOURCE_DEREFERENCE_AT_ROOT: bool = true;
+    fn source_type(&self) -> &str { "slog.timeTime" }
+    fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
+        mode: SourcePrintfMode, recursion: SourcePrintfRecursion, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+    { write_source_struct(self, verb, state, profile, mode, recursion, output) }
+}
+impl SourcePrintfStructFields for SlogTimeTime<'_> {
+    fn source_field_count(&self) -> usize { self.0.source_field_count() }
+    fn source_field_name(&self, index: usize) -> &str { self.0.source_field_name(index) }
+    fn source_field_interfaceable(&self, _: usize) -> bool { false }
+    fn source_write_field(&self, index: usize, verb: char, state: &SourcePrintfResolvedCounts,
+        profile: SourceUnicodeProfile, mode: SourcePrintfMode, recursion: SourcePrintfRecursion,
+        output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+    { self.0.source_write_field(index, verb, state, profile, mode, recursion, output) }
+}

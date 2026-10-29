@@ -151,6 +151,10 @@ fn call_method(method: &str, verb: char, nil_pointer: bool, panicking: bool, pro
     match catch_unwind(AssertUnwindSafe(|| call(output))) {
         Ok(result) => result,
         Err(payload) => {
+            // This is a host declaration gap, not a Go panic value. Preserve
+            // it for the typed outer boundary instead of fabricating a fmt
+            // panic diagnostic or treating a nil receiver as implemented.
+            if payload.is::<crate::utility_klog_dispatch::SourceKlogFormatError>() { std::panic::resume_unwind(payload); }
             // Existing partial writes remain. Nil receivers are checked before
             // the nested-panic branch, matching catchPanic's source ordering.
             if nil_pointer { return append(output, b"<nil>"); }

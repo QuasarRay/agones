@@ -152,6 +152,9 @@ fn query_methods(mut error: &(dyn Error + 'static)) -> Result<SourceErrorMethods
         if let Some(error) = error.downcast_ref::<crate::source::workerqueue::traceError>() {
             return Ok(error.source_methods().error_methods);
         }
+        if let Some(error) = error.downcast_ref::<crate::utility_time_json_error::SourceTimeMarshalerError>() {
+            return Ok(error.source_methods().error_methods);
+        }
         // These are explicit declarations for existing concrete source types;
         // no unknown Rust Error::source edge is treated as a Go Unwrap method.
         if error.is::<crate::utility_panic::SourceRuntimeErrorString>()
