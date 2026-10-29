@@ -1,7 +1,8 @@
 //! Typed printer-state input and canonical source fmt/errors result objects.
 // Adapted from Go fmt/errors.go. Copyright The Go Authors. BSD-3-Clause;
 // see ../GO-LICENSE. Raw scanning is in utility_format_scan and concrete
-// string rendering in utility_format_text; other value kinds remain required.
+// scalar rendering in utility_format_text/utility_format_integer; full Go
+// value and formatting-interface support remains required.
 use std::{borrow::Cow, error::Error, fmt};
 use derive_deftly::Deftly;
 use crate::{errors::BoxError, utility_declarations::derive_deftly_template_SourceErrorOrigin};
@@ -56,10 +57,26 @@ impl SourceFormat {
     pub fn text(format: &[u8], arguments: &[&[u8]], profile: crate::utility_http::SourceUnicodeProfile)
         -> Result<Self, crate::utility_http::SourceSliceAllocationError>
     {
-        let (rendered, plan) = crate::utility_format_text::try_source_text_printf(format, arguments, profile)?.into_parts();
+        let output = crate::utility_format_text::try_source_text_printf(format, arguments, profile)?;
+        Ok(Self::from_scalar_output(output, arguments.len()))
+    }
+    pub fn integers<Value: crate::utility_format_integer::SourcePrintfIntegerValue>(format: &[u8], arguments: &[Value],
+        profile: crate::utility_http::SourceUnicodeProfile) -> Result<Self, crate::utility_http::SourceSliceAllocationError>
+    {
+        let output = crate::utility_format_integer::try_source_integer_printf(format, arguments, profile)?;
+        Ok(Self::from_scalar_output(output, arguments.len()))
+    }
+    pub fn booleans(format: &[u8], arguments: &[bool], profile: crate::utility_http::SourceUnicodeProfile)
+        -> Result<Self, crate::utility_http::SourceSliceAllocationError>
+    {
+        let output = crate::utility_format_bool::try_source_bool_printf(format, arguments, profile)?;
+        Ok(Self::from_scalar_output(output, arguments.len()))
+    }
+    fn from_scalar_output(output: crate::utility_format_print::SourcePrintfOutput, arguments: usize) -> Self {
+        let (rendered, plan) = output.into_parts();
         let (wrapped_positions, reordered) = plan.into_wrapping();
-        Ok(Self { rendered: SourceErrorMessage::Bytes(rendered),
-            operands: arguments.iter().map(|_| None).collect(), wrapped_positions, reordered, origin_prefixed: false })
+        Self { rendered: SourceErrorMessage::Bytes(rendered),
+            operands: (0..arguments).map(|_| None).collect(), wrapped_positions, reordered, origin_prefixed: false }
     }
     /// Scan the original format bytes for wrapping/argument control. Rendered
     /// output is still supplied by the caller; this does not render Go values
@@ -197,6 +214,27 @@ impl crate::errors::Errors {
         Ok(self.Errorf(result))
     }
 
+    pub fn errorf_integers<Value: crate::utility_format_integer::SourcePrintfIntegerValue>(&self, format: &[u8],
+        arguments: &[Value], profile: crate::utility_http::SourceUnicodeProfile)
+        -> Result<BoxError, crate::utility_http::SourceSliceAllocationError>
+    {
+        let mut prefixed = self.prefix("").into_bytes();
+        crate::utility_go_quote::append(&mut prefixed, format)?;
+        let mut result = SourceFormat::integers(&prefixed, arguments, profile)?;
+        result.origin_prefixed = true;
+        Ok(self.Errorf(result))
+    }
+
+    pub fn errorf_booleans(&self, format: &[u8], arguments: &[bool], profile: crate::utility_http::SourceUnicodeProfile)
+        -> Result<BoxError, crate::utility_http::SourceSliceAllocationError>
+    {
+        let mut prefixed = self.prefix("").into_bytes();
+        crate::utility_go_quote::append(&mut prefixed, format)?;
+        let mut result = SourceFormat::booleans(&prefixed, arguments, profile)?;
+        result.origin_prefixed = true;
+        Ok(self.Errorf(result))
+    }
+
     /// Source Wrapf returns on nil before parsing or rendering its format.
     /// Sprintf's result receives the origin prefix as data, then the separate
     /// final %s: %w factory captures that message and the original error.
@@ -206,15 +244,39 @@ impl crate::errors::Errors {
     {
         let Some(error) = error else { return Ok(None); };
         let formatted = crate::utility_format_text::try_source_text_printf(format, arguments, profile)?;
+        self.wrap_source_formatted(error, formatted.bytes()).map(Some)
+    }
+
+    pub fn wrapf_integers<Value: crate::utility_format_integer::SourcePrintfIntegerValue>(&self, error: Option<BoxError>,
+        format: &[u8], arguments: &[Value], profile: crate::utility_http::SourceUnicodeProfile)
+        -> Result<Option<BoxError>, crate::utility_http::SourceSliceAllocationError>
+    {
+        let Some(error) = error else { return Ok(None); };
+        let formatted = crate::utility_format_integer::try_source_integer_printf(format, arguments, profile)?;
+        self.wrap_source_formatted(error, formatted.bytes()).map(Some)
+    }
+
+    pub fn wrapf_booleans(&self, error: Option<BoxError>, format: &[u8], arguments: &[bool],
+        profile: crate::utility_http::SourceUnicodeProfile)
+        -> Result<Option<BoxError>, crate::utility_http::SourceSliceAllocationError>
+    {
+        let Some(error) = error else { return Ok(None); };
+        let formatted = crate::utility_format_bool::try_source_bool_printf(format, arguments, profile)?;
+        self.wrap_source_formatted(error, formatted.bytes()).map(Some)
+    }
+
+    fn wrap_source_formatted(&self, error: BoxError, formatted: &[u8])
+        -> Result<BoxError, crate::utility_http::SourceSliceAllocationError>
+    {
         let mut message = self.prefix("").into_bytes();
-        crate::utility_go_quote::append(&mut message, formatted.bytes())?;
+        crate::utility_go_quote::append(&mut message, formatted)?;
         crate::utility_go_quote::append(&mut message, b": ")?;
         if let Some(bytes) = source_error_bytes(error.as_ref()) { crate::utility_go_quote::append(&mut message, bytes)?; }
         else { crate::utility_go_quote::append(&mut message, error.to_string().as_bytes())?; }
         // The final format has exactly one w, independently of any w that
-        // Sprintf encountered while formatting the annotation as strings.
+        // Sprintf encountered while formatting the annotation's scalar values.
         let result = SourceFormat { rendered: SourceErrorMessage::Bytes(message),
             operands: vec![Some(error)], wrapped_positions: vec![0], reordered: false, origin_prefixed: true };
-        Ok(Some(self.Errorf(result)))
+        Ok(self.Errorf(result))
     }
 }

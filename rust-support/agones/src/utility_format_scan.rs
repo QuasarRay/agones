@@ -30,6 +30,13 @@ pub struct SourcePrintfResolvedCounts {
     /// The printer emits these before the verb result, in this order.
     pub diagnostics: Vec<SourcePrintfCountDiagnostic>,
 }
+impl SourcePrintfResolvedCounts {
+    /// Value formatters temporarily change flags after count diagnostics have
+    /// already been emitted. Copy only printer state, without cloning output.
+    pub(crate) fn value_state(&self) -> Self {
+        Self { flags: self.flags, width: self.width, precision: self.precision, diagnostics: Vec::new() }
+    }
+}
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum SourcePrintfOutcome {

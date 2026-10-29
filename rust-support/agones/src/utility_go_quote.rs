@@ -20,9 +20,22 @@ pub fn try_source_go_quote(value: &[u8], profile: SourceUnicodeProfile) -> Resul
 pub fn try_source_go_quote_with_ascii(value: &[u8], profile: SourceUnicodeProfile, ascii_only: bool)
     -> Result<String, SourceSliceAllocationError>
 {
+    quote_delimited(value, profile, ascii_only, b'"')
+}
+
+pub fn try_source_go_quote_rune(rune: char, profile: SourceUnicodeProfile, ascii_only: bool)
+    -> Result<String, SourceSliceAllocationError>
+{
+    let mut bytes = [0; 4];
+    quote_delimited(rune.encode_utf8(&mut bytes).as_bytes(), profile, ascii_only, b'\'')
+}
+
+fn quote_delimited(value: &[u8], profile: SourceUnicodeProfile, ascii_only: bool, quote: u8)
+    -> Result<String, SourceSliceAllocationError>
+{
     let length = value.len().checked_add(2).ok_or(SourceSliceAllocationError::NativeAddressSpace)?;
     let mut output = reserve_source_array::<u8>(length as u64)?;
-    append(&mut output, b"\"")?;
+    append(&mut output, &[quote])?;
     let mut offset = 0;
     while offset < value.len() {
         let first = value[offset];
@@ -33,7 +46,7 @@ pub fn try_source_go_quote_with_ascii(value: &[u8], profile: SourceUnicodeProfil
             append(&mut output, &[b'\\', b'x', HEX[(first >> 4) as usize], HEX[(first & 15) as usize]])?;
             offset += 1; continue;
         };
-        if rune == b'"' as u32 || rune == b'\\' as u32 { append(&mut output, &[b'\\', rune as u8])?; }
+        if rune == quote as u32 || rune == b'\\' as u32 { append(&mut output, &[b'\\', rune as u8])?; }
         else if profile.is_print(rune) && (!ascii_only || rune < 0x80) { append(&mut output, &value[offset..offset + width])?; }
         else {
             let short = match rune { 7 => Some(b'a'), 8 => Some(b'b'), 12 => Some(b'f'), 10 => Some(b'n'),
@@ -49,7 +62,7 @@ pub fn try_source_go_quote_with_ascii(value: &[u8], profile: SourceUnicodeProfil
         }
         offset += width;
     }
-    append(&mut output, b"\"")?;
+    append(&mut output, &[quote])?;
     Ok(String::from_utf8(output).expect("Go quoting emits UTF8 or ASCII escapes"))
 }
 
