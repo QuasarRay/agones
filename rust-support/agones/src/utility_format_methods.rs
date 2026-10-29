@@ -215,7 +215,7 @@ fn write_panic_value(panic: SourceRecoveredPanic, profile: SourceUnicodeProfile,
             }
         )+ };
     }
-    primitive_payloads!(String, &'static str, bool, i8, i16, i32, i64, isize, u8, u16, u32, u64, usize);
+    primitive_payloads!(String, &'static str, bool, i8, i16, i32, i64, isize, u8, u16, u32, u64, usize, f32, f64);
     // Opaque native payloads have no source reflection data yet. Preserve the
     // existing native recovery view; full arbitrary/nil/Goexit profiles remain.
     append(output, panic.to_string().as_bytes())

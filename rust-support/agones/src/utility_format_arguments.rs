@@ -98,7 +98,7 @@ impl SourcePrintfValue for u8 {
 macro_rules! no_source_methods {
     ($($ty:ty),+ $(,)?) => { $(impl SourcePrintfMethodViews for $ty {})+ };
 }
-no_source_methods!(String, &str, bool, i8, i16, i32, i64, isize, u8, u16, u32, u64, usize);
+no_source_methods!(String, &str, bool, i8, i16, i32, i64, isize, u8, u16, u32, u64, usize, f32, f64);
 
 #[derive(Deftly)]
 #[derive_deftly(SourcePrintfInterfaces)]
