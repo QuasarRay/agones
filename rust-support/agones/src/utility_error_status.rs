@@ -58,6 +58,9 @@ fn api_status_method(mut error: &(dyn Error + 'static)) -> Option<&dyn SourceApi
         }
         if let Some(error) = error.downcast_ref::<ApiStatusEnvelope>() { return Some(error); }
         if let Some(error) = error.downcast_ref::<ApiStatusError>() { return error.source_methods().error_methods.api_status; }
+        if let Some(error) = error.downcast_ref::<crate::utility_error_nil::SourceNilStatusError>() {
+            return error.source_methods().error_methods.api_status;
+        }
         return None;
     }
 }

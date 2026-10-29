@@ -170,8 +170,9 @@ impl WrappedError {
     pub(crate) fn new(prefix: String, source: BoxError) -> Self {
         let mut message = prefix.into_bytes();
         message.extend_from_slice(b": ");
-        if let Some(bytes) = source_error_message(source.as_ref()) { message.extend_from_slice(&bytes); }
-        else { message.extend_from_slice(source.to_string().as_bytes()); }
+        crate::utility_http::complete_source_collection(&crate::utility_http::NativeSourceCollectionContext,
+            crate::utility_format_arguments::write_source_error_operand(source.as_ref(), 'w',
+                crate::utility_http::SourceUnicodeProfile::default(), crate::utility_format_print::SourcePrintfMode::Errorf, &mut message));
         let message = SourceErrorMessage::Bytes(message);
         Self { message, source: Some(crate::utility_error_slice::SourceRetainedError::from_original(source)) }
     }
@@ -232,6 +233,15 @@ pub fn source_error_message(error: &(dyn Error + 'static)) -> Option<Cow<'_, [u8
     if let Some(error) = error.downcast_ref::<crate::utility_error_alias::SourceSharedError>() {
         return Some(crate::utility_format_methods::SourceErrorMethod::source_error_message(error));
     }
+    macro_rules! declared_messages {
+        ($($ty:ty),+ $(,)?) => { $(if let Some(value) = error.downcast_ref::<$ty>() {
+            return Some(crate::utility_format_methods::SourceErrorMethod::source_error_message(value));
+        })+ };
+    }
+    declared_messages!(crate::source::workerqueue::traceError, crate::source::workerqueue::ApiStatusError,
+        crate::utility_error_nil::SourceNilStatusError, crate::utility_error_nil::SourceNilTraceError,
+        crate::utility_panic::SourceRuntimeErrorString, crate::utility_panic::SourceNilMapAssignment,
+        crate::utility_panic::SourceBoundsError);
     source_error_bytes(error).map(Cow::Borrowed)
 }
 
@@ -313,7 +323,7 @@ impl crate::errors::Errors {
     {
         let Some(error) = error else { return Ok(None); };
         let formatted = crate::utility_format_text::try_source_text_printf(format, arguments, profile)?;
-        self.wrap_source_formatted(error, formatted.bytes()).map(Some)
+        self.wrap_source_formatted(error, formatted.bytes(), profile).map(Some)
     }
 
     pub fn wrapf_integers<Value: crate::utility_format_integer::SourcePrintfIntegerValue>(&self, error: Option<BoxError>,
@@ -322,7 +332,7 @@ impl crate::errors::Errors {
     {
         let Some(error) = error else { return Ok(None); };
         let formatted = crate::utility_format_integer::try_source_integer_printf(format, arguments, profile)?;
-        self.wrap_source_formatted(error, formatted.bytes()).map(Some)
+        self.wrap_source_formatted(error, formatted.bytes(), profile).map(Some)
     }
 
     pub fn wrapf_booleans(&self, error: Option<BoxError>, format: &[u8], arguments: &[bool],
@@ -331,7 +341,7 @@ impl crate::errors::Errors {
     {
         let Some(error) = error else { return Ok(None); };
         let formatted = crate::utility_format_bool::try_source_bool_printf(format, arguments, profile)?;
-        self.wrap_source_formatted(error, formatted.bytes()).map(Some)
+        self.wrap_source_formatted(error, formatted.bytes(), profile).map(Some)
     }
 
     pub fn wrapf_arguments<Arguments: crate::utility_format_print::SourcePrintfArguments>(&self, error: Option<BoxError>,
@@ -341,17 +351,17 @@ impl crate::errors::Errors {
         let Some(error) = error else { return Ok(None); };
         let formatted = crate::utility_format_arguments::try_source_arguments_printf(format, &arguments, profile,
             crate::utility_format_print::SourcePrintfMode::Sprintf)?;
-        self.wrap_source_formatted(error, formatted.bytes()).map(Some)
+        self.wrap_source_formatted(error, formatted.bytes(), profile).map(Some)
     }
 
-    fn wrap_source_formatted(&self, error: BoxError, formatted: &[u8])
+    fn wrap_source_formatted(&self, error: BoxError, formatted: &[u8], profile: crate::utility_http::SourceUnicodeProfile)
         -> Result<BoxError, crate::utility_http::SourceSliceAllocationError>
     {
         let mut message = self.prefix("").into_bytes();
         crate::utility_go_quote::append(&mut message, formatted)?;
         crate::utility_go_quote::append(&mut message, b": ")?;
-        if let Some(bytes) = source_error_message(error.as_ref()) { crate::utility_go_quote::append(&mut message, &bytes)?; }
-        else { crate::utility_go_quote::append(&mut message, error.to_string().as_bytes())?; }
+        crate::utility_format_arguments::write_source_error_operand(error.as_ref(), 'w', profile,
+            crate::utility_format_print::SourcePrintfMode::Errorf, &mut message)?;
         // The final format has exactly one w, independently of any w that
         // Sprintf encountered while formatting the annotation's scalar values.
         let result = SourceFormat { rendered: SourceErrorMessage::Bytes(message),

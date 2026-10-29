@@ -9,7 +9,7 @@ use tokio_util::sync::CancellationToken;
 use crate::{errors::{BoxError, Errors}, logfields::{LogEntry, ResourceType}, runtime,
     utility_runtime::UtilityRuntimeContext, utility_scope::CanSpawnUtilityTask,
     utility_crash::{CanHandleSourceCrash, SourceCrashContext, SourcePanicHandlers},
-    utility_logging::{CanEmitSourceLog, LogLevel}, utility_admission::Status,
+    utility_logging::{CanEmitSourceLog, CanEmitSourceErrorLog, LogLevel}, utility_admission::Status,
     utility_queue::{SourceQueueContext, CanUseSourceQueue, CanReadSourceQueueKey, CanReadSourceQueueClock, CanDecideSourceQueueDelay,
         CanCallSourceQueueHandler, CanClassifySourceQueueError},
     utility_queue_limiters::{self, SourceRateLimiter, ItemFastSlowRateLimiter, DefaultControllerRateLimiter},
@@ -17,10 +17,18 @@ use crate::{errors::{BoxError, Errors}, logfields::{LogEntry, ResourceType}, run
     utility_declarations::{derive_deftly_template_SourceErrorOrigin, derive_deftly_template_SourcePrintfInterfaces}};
 
 pub const workFx: i64 = 1_000_000_000;
-#[derive(Debug)]
+#[derive(Debug, Deftly)]
+#[derive_deftly(SourceErrorOrigin, SourcePrintfInterfaces)]
+#[deftly(source_package = "agones.dev/agones/pkg/util/workerqueue", source_struct = "traceError",
+    source_log_type = "*workerqueue.traceError", source_error_method)]
 pub struct traceError { err: Option<BoxError> }
+impl traceError {
+    pub(crate) fn source_inner_error(&self) -> Option<&(dyn Error + Send + Sync + 'static)> { self.err.as_deref() }
+}
 impl fmt::Display for traceError {
-    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { match &self.err { Some(error) => error.fmt(out), None => out.write_str("<nil>") } }
+    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result {
+        out.write_str(&String::from_utf8_lossy(&crate::utility_format_methods::SourceErrorMethod::source_error_message(self)))
+    }
 }
 // Source traceError has no Unwrap. Do not expose err through Error::source.
 impl Error for traceError {}
@@ -155,7 +163,7 @@ impl<Limiter: SourceRateLimiter> WorkerQueue<Limiter> {
                 // classifiers, loggers and retry await share that data owner.
                 let error = crate::utility_error_slice::SourceRetainedError::from_original(error);
                 if self.queue.source_queue_expected_error(&error) {
-                    self.queue.source_queue_runtime.emit_source_log(&object.with_log_field(&self.logger, &self.keyName), LogLevel::Trace, &error.to_string());
+                    self.queue.source_queue_runtime.emit_source_error_log(&object.with_log_field(&self.logger, &self.keyName), LogLevel::Trace, &error);
                 } else {
                     runtime::HandleError(&self.queue.source_queue_runtime, Some(&object.with_log_field(&self.logger, &self.keyName)), Some(&error)).await;
                 }

@@ -57,6 +57,8 @@ pub fn source_error_type(error: &(dyn Error + 'static)) -> Option<&'static str> 
         ($($ty:ty),+ $(,)?) => { $(if error.is::<$ty>() { return Some(<$ty as SourceLogType>::SOURCE_LOG_TYPE); })+ };
     }
     source_types!(crate::utility_error_format::MessageError, crate::utility_error_format::WrappedError,
-        crate::utility_error_format::FormattedError, crate::utility_panic::SourceAbortHandler);
+        crate::utility_error_format::FormattedError, crate::utility_panic::SourceAbortHandler,
+        crate::utility_error_nil::SourceNilStatusError, crate::utility_error_nil::SourceNilTraceError,
+        crate::source::workerqueue::traceError);
     None
 }

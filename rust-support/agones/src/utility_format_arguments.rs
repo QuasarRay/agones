@@ -377,11 +377,42 @@ pub(crate) fn write_source_error_value(mut error: &(dyn Error + 'static), verb: 
         })+ };
     }
     runtime_values!(crate::utility_panic::SourceRuntimeErrorString, crate::utility_panic::SourceNilMapAssignment,
-        crate::utility_panic::SourceBoundsError);
+        crate::utility_panic::SourceBoundsError, crate::utility_error_nil::SourceNilStatusError,
+        crate::utility_error_nil::SourceNilTraceError, crate::source::workerqueue::traceError);
     if let Some(source_type) = source_error_type(error).filter(|name| name.starts_with('*')) {
         return write_error_pointer(output, error, source_type, verb, state, profile);
     }
     // Native errors without a source reflection view retain an explicit
     // Debug fallback. Their source field/method/panic profiles remain required.
     append(output, format!("{error:?}").as_bytes())
+}
+
+/// Default Error operand formatting for source Wrap/Wrapf and Logrus Sprint.
+/// Declared source values retain method precedence and fmt panic recovery.
+/// Opaque native errors preserve their old Display bridge, without source
+/// method/receiver/panic/refinement credit; they are not reflection objects.
+pub(crate) fn write_source_error_operand(error: &(dyn Error + 'static), verb: char,
+    profile: SourceUnicodeProfile, mode: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+{
+    let original = error;
+    let mut value = error;
+    loop {
+        if let Some(retained) = value.downcast_ref::<crate::utility_error_slice::SourceRetainedError>() { value = retained.original(); continue; }
+        if value.is::<crate::utility_error_alias::SourceSharedError>() { break; }
+        if let Some(runtime) = value.downcast_ref::<crate::utility_panic::SourceRuntimeErrorEnvelope>() { value = runtime.error(); continue; }
+        break;
+    }
+    let declared = value.is::<crate::utility_error_alias::SourceSharedError>() || canonical_error_fields(value).is_some()
+        || value.is::<crate::utility_panic::SourceRuntimeErrorString>()
+        || value.is::<crate::utility_panic::SourceNilMapAssignment>()
+        || value.is::<crate::utility_panic::SourceBoundsError>()
+        || value.is::<crate::utility_error_nil::SourceNilStatusError>()
+        || value.is::<crate::utility_error_nil::SourceNilTraceError>()
+        || value.is::<crate::source::workerqueue::traceError>();
+    if declared {
+        return write_source_error_value(original, verb, &SourcePrintfResolvedCounts::default(), profile, mode,
+            SourcePrintfRecursion::default(), output);
+    }
+    if let Some(message) = crate::utility_error_format::source_error_message(original) { return append(output, &message); }
+    append(output, original.to_string().as_bytes())
 }

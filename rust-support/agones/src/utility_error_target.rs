@@ -100,7 +100,10 @@ impl<Value: Error + 'static> Deref for SourceErrorPointer<'_, Value> {
 }
 fn project_pointer<'error, Value: Error + 'static>(error: SourceErrorCursor<'error>)
     -> Option<Option<SourceErrorPointer<'error, Value>>>
-{ SourceErrorPointer::project(error).map(Some) }
+{
+    if crate::utility_error_query::nil_pointer_matches::<Value>(error.raw_error()) { return Some(None); }
+    SourceErrorPointer::project(error).map(Some)
+}
 pub fn source_error_pointer_slot<'error, Value: Error + 'static>()
     -> SourceErrorAsValueSlot<'error, Option<SourceErrorPointer<'error, Value>>>
 { SourceErrorAsValueSlot::new(None, SourceAsElement::ImplementsError, project_pointer::<Value>) }
@@ -141,7 +144,10 @@ impl<Value: Error + 'static> Deref for SourceOwnedErrorPointer<Value> {
 }
 fn project_owned_pointer<Value: Error + 'static>(error: SourceErrorCursor<'_>)
     -> Option<Option<SourceOwnedErrorPointer<Value>>>
-{ SourceOwnedErrorPointer::project(error).map(Some) }
+{
+    if crate::utility_error_query::nil_pointer_matches::<Value>(error.raw_error()) { return Some(None); }
+    SourceOwnedErrorPointer::project(error).map(Some)
+}
 pub type SourceErrorPointerCell<Value: Error + 'static> = Arc<SourceAsCell<Option<SourceOwnedErrorPointer<Value>>>>;
 pub fn retained_error_pointer_slot<'error, Value: Error + 'static>()
     -> SourceErrorAsOwnedSlot<'error, Option<SourceOwnedErrorPointer<Value>>>

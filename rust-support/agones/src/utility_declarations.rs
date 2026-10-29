@@ -62,6 +62,12 @@ define_derive_deftly! {
                 };
                 let methods = crate::utility_format_methods::SourcePrintfInterfaces { error_methods, ..methods };
             }}
+            ${if tmeta(source_nil_error_pointer) {
+                let error_methods = crate::utility_error_query::SourceErrorMethods {
+                    nil_pointer: Some(self), ..methods.error_methods
+                };
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { error_methods, ..methods };
+            }}
             ${if tmeta(source_stringer) {
                 let methods = crate::utility_format_methods::SourcePrintfInterfaces { stringer: Some(self), ..methods };
             }}
@@ -70,6 +76,45 @@ define_derive_deftly! {
     }
 }
 pub(crate) use derive_deftly_template_SourcePrintfInterfaces;
+
+// Concrete nil pointer drivers retain their real source method set. They
+// share the nil dereference and pointer formatting bodies, without declaring
+// a fictional source Is/As method or a general Go pointer/object interpreter.
+define_derive_deftly! {
+    SourceNilErrorPointer:
+    ${impl crate::utility_error_query::SourceErrorNilPointer} {
+        fn source_nil_pointer_target(&self) -> ::std::any::TypeId {
+            ::std::any::TypeId::of::<${tmeta(source_error_target) as ty}>()
+        }
+    }
+    ${impl ::std::fmt::Display} {
+        fn fmt(&self, _: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            crate::utility_error_nil::nil_error_receiver()
+        }
+    }
+    ${impl ::std::error::Error} {}
+    ${impl crate::utility_format_methods::SourceErrorMethod} {
+        fn source_error_message(&self) -> ::std::borrow::Cow<'_, [u8]> {
+            crate::utility_error_nil::nil_error_receiver()
+        }
+    }
+    ${impl crate::utility_format_arguments::SourcePrintfValue} {
+        fn source_type(&self) -> &str { <Self as crate::runtime::SourceLogType>::SOURCE_LOG_TYPE }
+        fn source_is_nil_pointer(&self) -> bool { true }
+        fn source_error_view(&self) -> Option<&(dyn ::std::error::Error + Send + Sync + 'static)> { Some(self) }
+        fn write_source(&self, verb: char, state: &crate::utility_format_scan::SourcePrintfResolvedCounts,
+            profile: crate::utility_http::SourceUnicodeProfile, mode: crate::utility_format_print::SourcePrintfMode,
+            recursion: crate::utility_format_methods::SourcePrintfRecursion, output: &mut Vec<u8>)
+            -> Result<(), crate::utility_http::SourceSliceAllocationError>
+        {
+            crate::utility_format_pointer::write_source_address(self, 0, verb, state, profile, mode, recursion, output)
+        }
+        fn into_source_error(self) -> Option<crate::errors::BoxError> {
+            Some(crate::utility_error_alias::SourceSharedError::from_original(Box::new(self)).into_error())
+        }
+    }
+}
+pub(crate) use derive_deftly_template_SourceNilErrorPointer;
 
 // Source value copies are declaration-driven. Each field supplies its own
 // scalar/header copy; Rust Clone is not an implicit source-copy operation.
@@ -154,6 +199,7 @@ define_derive_deftly! {
                 ::cgp::prelude::UseField<::cgp::prelude::Symbol!("source_error_backoff")>,
             crate::utility_logging::SourceLogClockComponent: crate::utility_logging::ReadLocalSourceLogClock,
             crate::utility_logging::SourceLogEmitterComponent: crate::utility_logging::EmitSourceJsonLog,
+            crate::utility_logging::SourceErrorLogEmitterComponent: crate::utility_logging::EmitSourceJsonErrorLog,
             crate::utility_logging::SourceRuntimeErrorHandlerComponent: crate::utility_logging::HandleSourceErrorAndBackoff,
             crate::utility_scope::UtilityTaskScopeGetterComponent:
                 ::cgp::prelude::UseField<::cgp::prelude::Symbol!("utility_task_scope")>,

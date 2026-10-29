@@ -74,6 +74,11 @@ pub trait SourceErrorUnwrapOne {
 pub trait SourceErrorUnwrapMany {
     fn source_unwrap_many(&self) -> SourceErrorSlice;
 }
+/// Native marker for a declared source *T whose value is nil. This metadata
+/// belongs to that interface value; it is not a runtime type/provider table.
+pub trait SourceErrorNilPointer {
+    fn source_nil_pointer_target(&self) -> std::any::TypeId;
+}
 
 #[derive(Default)]
 pub struct SourceErrorMethods<'a> {
@@ -85,6 +90,7 @@ pub struct SourceErrorMethods<'a> {
     pub unwrap_one: Option<&'a dyn SourceErrorUnwrapOne>,
     pub unwrap_many: Option<&'a dyn SourceErrorUnwrapMany>,
     pub api_status: Option<&'a dyn crate::utility_error_view::SourceApiStatus>,
+    pub nil_pointer: Option<&'a dyn SourceErrorNilPointer>,
 }
 impl SourceErrorMethods<'_> {
     pub fn leaf() -> Self { Self { declared: true, ..Self::default() } }
@@ -137,13 +143,21 @@ fn query_methods(mut error: &(dyn Error + 'static)) -> Result<SourceErrorMethods
         if let Some(status) = error.downcast_ref::<crate::source::workerqueue::ApiStatusError>() {
             return Ok(status.source_methods().error_methods);
         }
+        if let Some(error) = error.downcast_ref::<crate::utility_error_nil::SourceNilStatusError>() {
+            return Ok(error.source_methods().error_methods);
+        }
+        if let Some(error) = error.downcast_ref::<crate::utility_error_nil::SourceNilTraceError>() {
+            return Ok(error.source_methods().error_methods);
+        }
+        if let Some(error) = error.downcast_ref::<crate::source::workerqueue::traceError>() {
+            return Ok(error.source_methods().error_methods);
+        }
         // These are explicit declarations for existing concrete source types;
         // no unknown Rust Error::source edge is treated as a Go Unwrap method.
         if error.is::<crate::utility_panic::SourceRuntimeErrorString>()
             || error.is::<crate::utility_panic::SourceNilMapAssignment>()
             || error.is::<crate::utility_panic::SourceBoundsError>()
             || error.is::<crate::utility_panic::SourceAbortHandler>()
-            || error.is::<crate::source::workerqueue::traceError>()
             || error.is::<crate::utility_http::ServerClosed>()
         { return Ok(SourceErrorMethods::leaf()); }
         return Err(SourceErrorBindingError { source_type: crate::utility_error_view::source_error_type(error) });
@@ -173,9 +187,17 @@ impl<'a> SourceErrorIsTarget<'a> {
     pub fn comparable(&self) -> bool { self.equality.is_some() }
 }
 pub fn pointer_equal<Value: Error + 'static>(left: &(dyn Error + 'static), right: &(dyn Error + 'static)) -> bool {
+    let (left_nil, right_nil) = (nil_pointer_target(left), nil_pointer_target(right));
+    if left_nil.is_some() || right_nil.is_some() { return left_nil == right_nil; }
     match (left.downcast_ref::<Value>(), right.downcast_ref::<Value>()) {
         (Some(left), Some(right)) => std::ptr::eq(left, right), _ => false,
     }
+}
+fn nil_pointer_target(error: &(dyn Error + 'static)) -> Option<std::any::TypeId> {
+    query_methods(error).ok()?.nil_pointer.map(SourceErrorNilPointer::source_nil_pointer_target)
+}
+pub(crate) fn nil_pointer_matches<Value: Error + 'static>(error: &(dyn Error + 'static)) -> bool {
+    nil_pointer_target(error) == Some(std::any::TypeId::of::<Value>())
 }
 pub fn value_equal<Value: Error + PartialEq + 'static>(left: &(dyn Error + 'static), right: &(dyn Error + 'static)) -> bool {
     match (left.downcast_ref::<Value>(), right.downcast_ref::<Value>()) {
