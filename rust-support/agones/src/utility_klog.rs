@@ -2,7 +2,7 @@
 // klog/v2/{contextual,klog,klogr}.go, Kubernetes Authors, Apache-2.0.
 // Header/caller/vmodule/native buffer/output/flag profiles remain required.
 // Existing CGP owns effects; all callbacks here belong to actual source data.
-use std::{io::Write as _, sync::{Arc, Mutex}};
+use std::sync::{Arc, Mutex};
 use bytes::Bytes;
 use cgp::prelude::*;
 use derive_deftly::Deftly;
@@ -29,13 +29,16 @@ pub enum SourceKlogLoggerOption {
     Callback(Arc<dyn Fn(&SourceKlogState) + Send + Sync>),
 }
 #[derive(Clone)]
-struct LogWriter { logger: SourceLogr, write_klog_buffer: Option<SourceKlogWriteBuffer> }
+pub(crate) struct LogWriter { pub(crate) logger: SourceLogr, pub(crate) write_klog_buffer: Option<SourceKlogWriteBuffer> }
 struct StateData {
     contextual_enabled: bool, options: SourceKlogOptions, writer: Option<LogWriter>,
     verbosity: i32, vmodule: Option<SourceKlogVmodule>, filter: Option<SourceKlogFilter>,
     slog_stack: Option<crate::utility_slog_values::SourceSlogStack>,
 }
-pub struct SourceKlogState { data: Mutex<StateData>, builtin: SourceLogr, profile: HeaderAllocationProfile }
+pub struct SourceKlogState {
+    data: Mutex<StateData>, builtin: SourceLogr, profile: HeaderAllocationProfile,
+    pub output: crate::utility_klog_output::SourceKlogOutputState,
+}
 pub fn new_klogr(profile: HeaderAllocationProfile) -> SourceLogr {
     SourceLogr::new(Some(Arc::new(SourceKlogger::empty(profile))), profile)
 }
@@ -43,7 +46,7 @@ impl SourceKlogState {
     pub fn new(profile: HeaderAllocationProfile) -> Self {
         Self { data: Mutex::new(StateData { contextual_enabled: true, options: SourceKlogOptions::default(), writer: None,
             verbosity: 0, vmodule: None, filter: None, slog_stack: None }),
-            builtin: new_klogr(profile), profile }
+            builtin: new_klogr(profile), output: crate::utility_klog_output::SourceKlogOutputState::new(profile), profile }
     }
     pub fn profile(&self) -> HeaderAllocationProfile { self.profile }
     pub fn enable_contextual_logging(&self, enabled: bool) { self.data.lock().unwrap_or_else(|e| e.into_inner()).contextual_enabled = enabled; }
@@ -149,8 +152,8 @@ impl SourceKlogState {
         if let Some(filter) = filter { (record.message, record.values) = filter(record.message, record.values); }
         if let Some(writer) = writer {
             let logger = writer.logger.with_call_depth(add_int(self.profile, record.call_depth, 2));
-            match record.severity { SourceKlogSeverity::Info => logger.info(runtime, &record.message, record.values),
-                SourceKlogSeverity::Error => logger.error(runtime, record.error, &record.message, record.values) }
+            if record.severity == SourceKlogSeverity::Error { logger.error(runtime, record.error, &record.message, record.values); }
+            else { logger.info(runtime, &record.message, record.values); }
         } else {
             // errorS/infoS -> printS(depth+1) -> printDepth(depth+1).
             record.call_depth = add_int(self.profile, record.call_depth, 2);
@@ -216,8 +219,9 @@ impl SourceCallDepthLogSink for SourceKlogger {
         let mut data = self.snapshot(); data.call_depth = add_int(self.profile, data.call_depth, depth); self.copied(data)
     }
 }
-#[derive(Clone, Copy)]
-pub enum SourceKlogSeverity { Info, Error }
+#[derive(Clone, Copy, PartialEq, Eq)]
+#[repr(i32)]
+pub enum SourceKlogSeverity { Info = 0, Warning = 1, Error = 2, Fatal = 3 }
 pub struct SourceKlogRecord {
     pub severity: SourceKlogSeverity, pub call_depth: i64, pub error: Option<SourceRetainedError>,
     pub message: Bytes, pub values: SourceErrorArguments,
@@ -230,13 +234,16 @@ impl SourceKlogRecordEmitter<UtilityRuntimeContext> for EmitNativeSourceKlogReco
         let profile = runtime.source_unicode_profile;
         let mut formatter = SourceKlogFormatter::new(profile);
         formatter.slog_stack = runtime.source_klog_state.data.lock().unwrap_or_else(|e| e.into_inner()).slog_stack.as_ref().map(Arc::clone);
-        let formatted = format_record_body(record, &formatter, runtime.source_klog_state.profile());
-        let bytes = match formatted { Ok(bytes) => bytes,
+        let severity = record.severity; let depth = record.call_depth;
+        let formatted = (|| {
+            let body = format_record_body(record, &formatter, runtime.source_klog_state.profile())?;
+            let output = &runtime.source_klog_state.output;
+            let prepared = output.prepare_native(runtime, severity, depth, &body)?;
+            output.write_prepared(runtime, severity, None, prepared, add_int(runtime.source_klog_state.profile(), depth, 1), false)
+        })();
+        match formatted { Ok(()) => (),
             Err(SourceKlogFormatError::Allocation(error)) => complete_source_collection(runtime, Err(error)),
-            Err(error) => std::panic::panic_any(error) };
-        // Existing native stderr projection. Complete severity/header/caller,
-        // configured writers, flags, buffer pools and failure policy remain.
-        let _ = std::io::stderr().lock().write_all(&bytes);
+            Err(error) => std::panic::panic_any(error) }
     }
 }
 fn format_record_body(record: SourceKlogRecord, formatter: &SourceKlogFormatter, profile: HeaderAllocationProfile)
@@ -250,6 +257,5 @@ fn format_record_body(record: SourceKlogRecord, formatter: &SourceKlogFormatter,
         errors.set(0, SourceErrorArgument::from_value("err")); errors.set(1, SourceErrorArgument::from_error(Some(error)));
     }
     formatter.format_kvs(&mut output, &[errors, record.values])?;
-    if output.last() != Some(&b'\n') { crate::utility_go_quote::append(&mut output, b"\n")?; }
     Ok(output)
 }

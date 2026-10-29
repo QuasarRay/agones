@@ -56,6 +56,14 @@ fn zone(output: &mut Vec<u8>, offset: i64, colon: bool) -> Result<(), SourceSlic
     number(output, minutes / 60, 2)?; if colon { append(output, b":")?; } number(output, minutes % 60, 2)
 }
 impl SourceGoTime {
+    pub fn date(&self) -> FormatResult<(i64, i64, i64)> {
+        let (_, absolute) = self.location_abs()?; let (year, month, day, _, _, _) = calendar(absolute);
+        Ok((year, month, day))
+    }
+    pub fn clock(&self) -> FormatResult<(i64, i64, i64)> {
+        let (_, absolute) = self.location_abs()?; let (_, _, _, hour, minute, second) = calendar(absolute);
+        Ok((hour, minute, second))
+    }
     pub fn try_string(&self) -> FormatResult<Vec<u8>> {
         let (offset, absolute) = self.location_abs()?;
         let mut output = Vec::new(); date_time(&mut output, absolute, b" ")?;
