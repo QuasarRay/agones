@@ -1,7 +1,7 @@
-//! Source float/complex verbs over the selected multiprecision conversion path.
+//! Source float/complex verbs over optimized and multiprecision conversion.
 // Adapted from Go fmt/print.go and fmt/format.go. Copyright The Go Authors.
 // BSD-3-Clause; see ../GO-LICENSE. Conversion is authored, not executed evidence;
-// optimized Dragonbox/fixed paths and native allocation profiles remain open.
+// all conversion/native profile evidence remains open.
 use derive_deftly::Deftly;
 use crate::{
     utility_declarations::{derive_deftly_template_SourcePrintfInterfaces, derive_deftly_template_SourceFmtValueCopy},

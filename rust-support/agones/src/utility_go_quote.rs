@@ -3,7 +3,7 @@
 // Copyright The Go Authors. BSD-3-Clause; see ../GO-LICENSE.
 use std::error::Error;
 use crate::{utility_http::{SourceUnicodeProfile, SourceSliceAllocationError, reserve_source_array},
-    utility_panic::{SourceRuntimeErrorString, SourceNilMapAssignment, SourceBoundsError, SourceBoundsCode}};
+    utility_panic::{SourceRuntimeErrorString, SourceNilMapAssignment, SourceBoundsError}};
 
 pub(crate) fn append(output: &mut Vec<u8>, value: &[u8]) -> Result<(), SourceSliceAllocationError> {
     let length = output.len().checked_add(value.len()).ok_or(SourceSliceAllocationError::NativeAddressSpace)?;
@@ -86,20 +86,27 @@ pub fn try_source_error_go_syntax(error: &(dyn Error + 'static), profile: Source
 {
     let error = crate::utility_error_alias::source_error_original(error);
     if let Some(error) = error.downcast_ref::<SourceRuntimeErrorString>() {
-        return try_source_go_quote(error.message.as_bytes(), profile).map(Some);
+        return runtime_value_go_syntax(error, profile);
     }
-    if error.is::<SourceNilMapAssignment>() {
-        return try_source_go_quote(b"assignment to entry in nil map", profile).map(Some);
+    if let Some(error) = error.downcast_ref::<SourceNilMapAssignment>() {
+        return runtime_value_go_syntax(error, profile);
     }
     if let Some(error) = error.downcast_ref::<SourceBoundsError>() {
-        let code = match error.code { SourceBoundsCode::Index => 0, SourceBoundsCode::SliceLength => 1,
-            SourceBoundsCode::SliceCapacity => 2, SourceBoundsCode::SliceLow => 3, SourceBoundsCode::Slice3Length => 4,
-            SourceBoundsCode::Slice3Capacity => 5, SourceBoundsCode::Slice3High => 6, SourceBoundsCode::Slice3Low => 7,
-            SourceBoundsCode::SliceConvert => 8 };
-        return Ok(Some(format!("runtime.boundsError{{x:{}, y:{}, signed:{}, code:0x{code:x}}}", error.x, error.y, error.signed)));
+        return runtime_value_go_syntax(error, profile);
     }
     if let Some(error) = error.downcast_ref::<crate::errors::MessageError>() {
         return Ok(Some(format!("&errors.errorString{{s:{}}}", try_source_go_quote(error.0.as_bytes(), profile)?)));
     }
     Ok(None)
+}
+
+fn runtime_value_go_syntax<Value: crate::utility_format_arguments::SourcePrintfValue>(value: &Value,
+    profile: SourceUnicodeProfile) -> Result<Option<String>, SourceSliceAllocationError>
+{
+    let mut state = crate::utility_format_scan::SourcePrintfResolvedCounts::default();
+    state.flags.sharp_v = true;
+    let mut output = Vec::new();
+    value.write_source('v', &state, profile, crate::utility_format_print::SourcePrintfMode::Sprintf,
+        crate::utility_format_methods::SourcePrintfRecursion::default(), &mut output)?;
+    Ok(Some(String::from_utf8(output).expect("known source runtime Go-syntax output is UTF8")))
 }

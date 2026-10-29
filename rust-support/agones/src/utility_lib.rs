@@ -50,6 +50,7 @@ pub mod utility_float_reference;
 pub mod utility_format_float;
 pub mod utility_format_text;
 pub mod utility_panic;
+mod utility_runtime_format;
 pub mod utility_gateway;
 pub mod utility_gateway_json;
 mod utility_gateway_wire;

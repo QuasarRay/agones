@@ -279,7 +279,7 @@
     "rust-support/agones/src/utility_format_bool.rs": "23477d54c5c0e085e888d9d3e8104e602b8cda1f349f0316c24104a3bb85b0b1",
     "rust-support/agones/src/utility_format_collections.rs": "9c1ec27d96fdd1ecc3df7ece9dbcf3612394d7ced7bca626197604b05bb9ebee",
     "rust-support/agones/src/utility_format_copy.rs": "d6184792bc3e41ef52f3c09ebaabec2f3385de39cb67f43f441afe311d810836",
-    "rust-support/agones/src/utility_format_float.rs": "3b5c7221ac1b065f06ca39f135710641fcacbc169179747e416fb37ec951729f",
+    "rust-support/agones/src/utility_format_float.rs": "cdab38f99653a264ee802697278b95e1d751c0861531ea7b6c15f5f8a8fbc1b7",
     "rust-support/agones/src/utility_format_integer.rs": "041bb4541fb6871b8d692f93f8df1350da1ae5389ca46f95c455b7938d22517f",
     "rust-support/agones/src/utility_format_map.rs": "a7164e5fe0da87d1ee5cbb9d3c00f46b2e82a883b4ada1593ccbeef1c955048c",
     "rust-support/agones/src/utility_format_methods.rs": "da88463d2d5c6159c6dcb6ce2faa7f6e863b7a5ef61508441033f2d170537a35",
@@ -296,7 +296,7 @@
     "rust-support/agones/src/utility_gateway_pattern.rs": "24da1c8bc6e2fd4cbf2b4c11a56ce94a9dc8c2ae6e12786d96c9fa8a72943167",
     "rust-support/agones/src/utility_gateway_storage.rs": "5603082f3744c022d6360e10a55d90b8d9dc7a58a5d0cf8b3cd2e361ee9abf41",
     "rust-support/agones/src/utility_gateway_strings.rs": "3fc63fd6cd5dee67c22bf3722e665e4cbd290c7b17bb3b6e67d932523678785b",
-    "rust-support/agones/src/utility_go_quote.rs": "48a1e2606c89da2fbdc1db49c7a83d665a5d81a871aeb8591aedc90b35ce005a",
+    "rust-support/agones/src/utility_go_quote.rs": "3a56c88a770b512fce4bc8e7071425f0e74fe9390bcead7043e73b340e423b1e",
     "rust-support/agones/src/utility_http.rs": "ea18910b03691371126d3f1b8bb57292f7a80f24dabc684d6034a4e48f3afbfb",
     "rust-support/agones/src/utility_http_allocation.rs": "49d131afa97bd1fac3bfd6cf45a17636b4e1230163bad6089c1dc5895bab3867",
     "rust-support/agones/src/utility_http_body.rs": "af7e4eac5e2623b697f63342445b01b13cba8474310912e8befd823aab9c53da",
@@ -312,10 +312,11 @@
     "rust-support/agones/src/utility_http_trailers.rs": "6a79b0f83cb592981900f92dcb6dc414e176a38ae3f7dd2c83e7bedbe80ac554",
     "rust-support/agones/src/utility_http_unicode.rs": "db0a657267886ddfe7b905ab8c22e5d1052d7f76ad0a77447ec9d60a0afaca87",
     "rust-support/agones/src/utility_http_url.rs": "9c6fca7c6f52999f31679ba393c494ed3f543e02dbe1a7a6449f26d4b4fbb1c4",
-    "rust-support/agones/src/utility_lib.rs": "f7fb2b66a415fc793f31dd0fe2c027b48d70a3ba5631542f63ee6c58af1a3102",
+    "rust-support/agones/src/utility_lib.rs": "3b9a9151749247e53bc6e862c4104c106f3f8daff1a869e5091b7a6a31aa79c3",
     "rust-support/agones/src/utility_logging.rs": "a055f664578d49d0a7b985468446218a8e13f0a4512470b05ab3c7a1190ea043",
-    "rust-support/agones/src/utility_panic.rs": "a4ac4ae3cd1aa7e45637c7703a223fa931e0e84aaf01132b75382532aab9d783",
+    "rust-support/agones/src/utility_panic.rs": "06652b8712faae82e753ae5992debcfc025bc6fa2934bdcfa2ecd838b75c6683",
     "rust-support/agones/src/utility_runtime.rs": "c26432c7fbb4ead0b44db40243dc315b233bffa0864e071930a4c39343cbbfee",
+    "rust-support/agones/src/utility_runtime_format.rs": "4d374cc9986204c680b276fbd0396177ae82699b18b698bbfc5a270845fb6dc3",
     "rust-support/agones/src/utility_runtime_panic.rs": "3f23c67ba8d28668e3e7f4ec557e7534b39bc3e53811eca70cebc2cab895ed08",
     "rust-support/agones/src/utility_scope.rs": "dec2d3ea78eb21c855bec39c96efc8d5bb35cc5bbfbee01959049e3de8cf7e63",
     "rust-support/agones/src/utility_tls.rs": "47034a6a225137c1d3e732bcd7a4b897d3780d2d7d2ede246f5ada61476d43d8"
@@ -343,11 +344,12 @@
   "source_pattern_storage_owner": "Existing HeaderAllocationProfile owns shared make/growth layouts for source element size, GC scanning, signed length bounds, class rounding and heap limits. HeaderValues owns the same string-slot backing and exposes fallible make/single/bulk append; overlapping append uses one backing lock and memmove order. GatewayPattern construction/matching/rendering adopts these outcomes. PatternOperationBuilder owns mutable typed ops until construction finishes, then PatternOperations shares immutable backing across copies. Existing derive-deftly RuntimeProviders/SourcePatternStringCompletion/SourceGatewayPatternConstructor/SourceProcessExit complete failures. Length/address-span bridge guards are ordinary typed data checks, not Go failures. No effect registry, new lifecycle manager or task is introduced.",
   "source_pattern_string_owner": "GatewayPattern owns the explicit Go32/Go64 word profile, including zero/error patterns and registered copies. Pure Rust join/concat/fixed-format helpers use that profile, not Rust usize limits. Existing derive-deftly UtilityRuntimeProviders statically binds SourcePatternStringCompletion to CompleteSourcePatternString and the existing SourceProcessExit effect. Actual GatewayDispatcher same/other-method matching passes its existing UtilityRuntimeContext; Pattern.string_bytes takes the same capability. try_string_bytes and Rust Display are explicit projections, not the source panic/throw entrypoint. No new task, state owner, provider registry, Go evaluator or generation path is introduced.",
   "source_raw_format_scan_owner": "Rust-only SourcePrintfPlan scans original format bytes into literal/directive spans, source flags, width/precision references, ordered star operands, verb outcomes and %w positions. SourceFormat.scanned consumes its wrapping metadata on the existing Errors.Errorf path. Count resolution classifies source integer kinds without user formatting methods. Existing canonical fmt error classes, per-value type views, CGP runtime context and derive-deftly ownership remain canonical. This pure printer control data adds no dynamic Go object layer, effects, tasks, provider registry or competing lifecycle manager.",
+  "source_runtime_value_format_owner": "Rust-only utility_runtime_format owns the source Error message bodies and base/reflection formatting for existing runtime.errorString, fixed nil-map runtime.plainError and runtime.boundsError projections. Native Display and known Go-syntax quoting now consume those bodies; the canonical formatter, method/error dispatch and SourceFormat/factory remain shared. utility_panic owns the original data/marker declarations, now deriving actual source method views and value copies. SourceBoundsCode is a transparent byte with all 256 source values and the original named constants; message selection authors the source positive/negative table faults rather than narrowing that domain. Existing static CGP runtime/crash/factory/task composition and derive-deftly source/type/copy declarations stay canonical. No new runtime map, provider/type registry, interpreter, alternative print loop, application manager or resource owner is introduced. Full native/source allocation, GC, ABI, target word, other runtime families and assurance remain required.",
   "source_scalar_format_owner": "Rust-only utility_format_print owns one statically selected borrowed-operand printf control loop and shared byte padding/rune truncation. TextArguments, IntegerArguments<Value> and BoolArguments supply concrete scalar operations without erased values or a runtime registry. utility_format_integer uses one source numeric renderer and macro-declared native signed/unsigned kinds; utility_format_bool retains source boolean precision/width behavior. SourceFormat scalar constructors and typed Errorf/Wrapf bridges consume these real outputs through the existing canonical factory. SourceErrorOrigin and current CGP context/Unicode/runtime/lifecycle ownership remain canonical. No resource/task owner, general Go object model, runtime plugin/provider system or alternative application manager is added.",
   "source_text_format_owner": "Rust-only utility_format_text renders pinned Go string operands directly into byte buffers using SourcePrintfPlan, ordered count diagnostics, source text/quote/hex formatting and trailing argument diagnostics. SourceFormat.text retains output bytes and %w positions; Errors.errorf_text prefixes raw format bytes before scanning and enters the existing mirror Errorf factory exactly once through private origin-prefixed control. Errors.new_bytes and nil-short-circuiting wrapf_text provide byte-preserving constructors; canonical MessageError/WrappedError/FormattedError retain byte messages and expose source_error_bytes. Existing SourceErrorOrigin derives source classes, and current CGP runtime/context/Unicode/lifecycle ownership remains canonical. Pure byte transformations add no task, resource manager, dynamic Go object emulation, source provider registry or alternative formatting owner.",
   "source_url": "https://static.crates.io/crates/hyper/hyper-1.12.0.crate",
   "source_worker_crash_owner": "Existing UtilityRuntimeOwner owns one SourceCrashState for the source ReallyCrash flag and PanicHandlers header; its existing UtilityRuntimeContext clones share that Arc. UtilityRuntimeProviders statically binds the state getter, SourceCrashHandler and SourceCrashPanicReporter. SourcePanicHandlers retains nil/empty/fixed backing/offset/length/capacity views and reads each function value outside callback execution, preserving later-slot replacement and header-reassignment behavior. Callback lists are source function/interface data, not effect-provider selection. SourceCrashPanic uses an ephemeral per-invocation rethrow tag to transfer the original owned payload through its active callback boundary. WorkerQueue keeps its existing queue/count/task owners and runs crash handlers inside the wait-style iteration before the outer running-count defer and parent fatal guard. No additional task, registry or lifecycle manager is added.",
-  "timestamp": "2026-10-29T10:08:57.628745+00:00",
+  "timestamp": "2026-10-29T10:36:23.962648+00:00",
   "upstream_archive": "/home/astral/.cargo/registry/cache/index.crates.io-1949cf8c6b5b557f/hyper-1.12.0.crate",
   "upstream_archive_sha256": "2c3e324da4c95177d6291d4c8730197c0d1822f8a9766814a4a44fa5ab797c9c",
   "url_alias_authoring": {
@@ -386,5 +388,5 @@
     "source_text_match": true,
     "version": "1.1.2"
   },
-  "work_base_commit": "6ccf8f1f3a487300bc87a6bd696e03310581f340"
+  "work_base_commit": "7933b355fd783a846e9fce4fb1b841ac9f0b6a08"
 }

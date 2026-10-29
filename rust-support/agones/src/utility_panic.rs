@@ -5,7 +5,8 @@
 use std::{any::Any, error::Error, fmt};
 use derive_deftly::Deftly;
 use crate::{errors::BoxError, runtime::SourceLogType,
-    utility_declarations::derive_deftly_template_SourceErrorOrigin};
+    utility_declarations::{derive_deftly_template_SourceErrorOrigin,
+        derive_deftly_template_SourcePrintfInterfaces, derive_deftly_template_SourceFmtValueCopy}};
 
 /// Go runtime.Error is identified by its no-op RuntimeError method. Preserve
 /// that interface separately from ordinary application Error implementations.
@@ -17,74 +18,43 @@ pub trait SourceRuntimeError: Error {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Deftly)]
-#[derive_deftly(SourceErrorOrigin)]
-#[deftly(source_package = "runtime", source_struct = "errorString", source_log_type = "runtime.errorString")]
+#[derive_deftly(SourceErrorOrigin, SourcePrintfInterfaces, SourceFmtValueCopy)]
+#[deftly(source_package = "runtime", source_struct = "errorString", source_log_type = "runtime.errorString", source_error_method)]
 pub struct SourceRuntimeErrorString { pub(crate) message: &'static str }
 impl SourceRuntimeErrorString {
     pub const fn new(message: &'static str) -> Self { Self { message } }
 }
-impl fmt::Display for SourceRuntimeErrorString {
-    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { write!(out, "runtime error: {}", self.message) }
-}
 impl Error for SourceRuntimeErrorString {}
 impl SourceRuntimeError for SourceRuntimeErrorString {}
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Deftly)]
-#[derive_deftly(SourceErrorOrigin)]
-#[deftly(source_package = "runtime", source_struct = "plainError", source_log_type = "runtime.plainError")]
+#[derive_deftly(SourceErrorOrigin, SourcePrintfInterfaces, SourceFmtValueCopy)]
+#[deftly(source_package = "runtime", source_struct = "plainError", source_log_type = "runtime.plainError", source_error_method)]
 pub struct SourceNilMapAssignment;
-impl fmt::Display for SourceNilMapAssignment {
-    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { out.write_str("assignment to entry in nil map") }
-}
 impl Error for SourceNilMapAssignment {}
 impl SourceRuntimeError for SourceNilMapAssignment {}
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum SourceBoundsCode { Index, SliceLength, SliceCapacity, SliceLow, Slice3Length,
-    Slice3Capacity, Slice3High, Slice3Low, SliceConvert }
+/// internal/abi.BoundsErrorCode is a uint8, including values outside the nine
+/// named codes. Preserve those values and their source table-index failures.
+#[repr(transparent)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Deftly)]
-#[derive_deftly(SourceErrorOrigin)]
-#[deftly(source_package = "runtime", source_struct = "boundsError", source_log_type = "runtime.boundsError")]
+#[derive_deftly(SourcePrintfInterfaces, SourceFmtValueCopy)]
+pub struct SourceBoundsCode(pub u8);
+#[allow(non_upper_case_globals)]
+impl SourceBoundsCode {
+    pub const Index: Self = Self(0);
+    pub const SliceLength: Self = Self(1);
+    pub const SliceCapacity: Self = Self(2);
+    pub const SliceLow: Self = Self(3);
+    pub const Slice3Length: Self = Self(4);
+    pub const Slice3Capacity: Self = Self(5);
+    pub const Slice3High: Self = Self(6);
+    pub const Slice3Low: Self = Self(7);
+    pub const SliceConvert: Self = Self(8);
+}
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Deftly)]
+#[derive_deftly(SourceErrorOrigin, SourcePrintfInterfaces, SourceFmtValueCopy)]
+#[deftly(source_package = "runtime", source_struct = "boundsError", source_log_type = "runtime.boundsError", source_error_method)]
 pub struct SourceBoundsError { pub x: i64, pub y: i64, pub signed: bool, pub code: SourceBoundsCode }
-impl SourceBoundsError {
-    fn format(self) -> &'static str {
-        use SourceBoundsCode::*;
-        match (self.code, self.signed && self.x < 0) {
-            (Index, false) => "index out of range [%x] with length %y",
-            (Index, true) => "index out of range [%x]",
-            (SliceLength, false) => "slice bounds out of range [:%x] with length %y",
-            (SliceLength, true) => "slice bounds out of range [:%x]",
-            (SliceCapacity, false) => "slice bounds out of range [:%x] with capacity %y",
-            (SliceCapacity, true) => "slice bounds out of range [:%x]",
-            (SliceLow, false) => "slice bounds out of range [%x:%y]",
-            (SliceLow, true) => "slice bounds out of range [%x:]",
-            (Slice3Length, false) => "slice bounds out of range [::%x] with length %y",
-            (Slice3Length, true) => "slice bounds out of range [::%x]",
-            (Slice3Capacity, false) => "slice bounds out of range [::%x] with capacity %y",
-            (Slice3Capacity, true) => "slice bounds out of range [::%x]",
-            (Slice3High, false) => "slice bounds out of range [:%x:%y]",
-            (Slice3High, true) => "slice bounds out of range [:%x:]",
-            (Slice3Low, false) => "slice bounds out of range [%x:%y:]",
-            (Slice3Low, true) => "slice bounds out of range [%x::]",
-            (SliceConvert, _) => "cannot convert slice with length %y to array or pointer to array with length %x",
-        }
-    }
-}
-impl fmt::Display for SourceBoundsError {
-    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result {
-        out.write_str("runtime error: ")?;
-        let mut bytes = self.format().bytes();
-        while let Some(byte) = bytes.next() {
-            if byte != b'%' { out.write_str(std::str::from_utf8(&[byte]).expect("ASCII bounds format"))?; continue; }
-            match bytes.next() {
-                Some(b'x') if self.signed => write!(out, "{}", self.x)?,
-                Some(b'x') => write!(out, "{}", self.x as u64)?,
-                Some(b'y') => write!(out, "{}", self.y)?,
-                _ => unreachable!("source bounds format placeholder"),
-            }
-        }
-        Ok(())
-    }
-}
 impl Error for SourceBoundsError {}
 impl SourceRuntimeError for SourceBoundsError {}
 
@@ -135,6 +105,10 @@ pub fn with_runtime_error<T: SourceRuntimeError + SourceLogType + Send + Sync + 
 // RuntimeError implementations retain their method set via the envelope.
 macro_rules! runtime_error_views {
     ($($ty:ty),+ $(,)?) => {
+        fn direct_runtime_panic_error(payload: &(dyn Any + Send)) -> Option<&(dyn Error + Send + Sync + 'static)> {
+            $(if let Some(error) = payload.downcast_ref::<$ty>() { return Some(error); })+
+            None
+        }
         fn take_runtime_error(error: BoxError) -> Result<Box<dyn RuntimeErrorObject>, BoxError> {
             let error = match error.downcast::<crate::utility_error_alias::SourceSharedError>() {
                 Ok(error) if runtime_error_view(error.as_ref()).is_some() =>
@@ -236,6 +210,7 @@ impl SourceRecoveredPanic {
             });
         }
         if let Some(error) = self.payload.downcast_ref::<crate::utility_error_alias::SourceSharedError>() { return Some(error); }
+        if let Some(error) = direct_runtime_panic_error(self.payload.as_ref()) { return Some(error); }
         self.payload.downcast_ref::<SourceAbortHandler>().map(|error| error as &(dyn Error + Send + Sync + 'static))
     }
     pub fn runtime_error(&self) -> Option<&dyn SourceRuntimeError> {
@@ -247,6 +222,7 @@ impl SourceRecoveredPanic {
         if let Some(value) = self.payload.downcast_ref::<crate::utility_format_methods::SourcePrintfPanic>() { return Some(value.source_type()); }
         if let Some(error) = self.payload.downcast_ref::<SourceErrorPanic>() { return error.source_type(); }
         if let Some(error) = self.payload.downcast_ref::<crate::utility_error_alias::SourceSharedError>() { return Some(error.source_type_name()); }
+        if let Some(source_type) = direct_runtime_panic_error(self.payload.as_ref()).and_then(|error| runtime_error_type(error)) { return Some(source_type); }
         if let Some(source_type) = self.payload.downcast_ref::<BoxError>().and_then(|error| crate::utility_error_view::source_error_type(error.as_ref())) { return Some(source_type); }
         if self.payload.is::<String>() || self.payload.is::<&'static str>() { return Some("string"); }
         if self.is_abort_handler() { return Some(SourceAbortHandler::SOURCE_LOG_TYPE); }
