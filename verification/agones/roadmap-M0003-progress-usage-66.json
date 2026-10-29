@@ -1,0 +1,13 @@
+{
+  "goal": {
+    "threadId": "01a17928-8551-7701-8497-5333c680f283",
+    "objective": "Referenced pasted text files:\n- pasted text file: /home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt. Read this file before continuing.",
+    "status": "active",
+    "tokensUsed": 5016398,
+    "timeUsedSeconds": 78550,
+    "createdAt": 1793034062,
+    "updatedAt": 1793259831
+  },
+  "remainingTokens": null,
+  "completionBudgetReport": null
+}

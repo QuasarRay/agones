@@ -16,6 +16,29 @@ define_derive_deftly! {
 pub(crate) use derive_deftly_template_SourceErrorOrigin;
 
 define_derive_deftly! {
+    SourcePrintfInterfaces:
+    ${impl crate::utility_format_methods::SourcePrintfMethodViews} {
+        fn source_methods(&self) -> crate::utility_format_methods::SourcePrintfInterfaces<'_> {
+            let methods = crate::utility_format_methods::SourcePrintfInterfaces::default();
+            ${if tmeta(source_formatter) {
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { formatter: Some(self), ..methods };
+            }}
+            ${if tmeta(source_go_stringer) {
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { go_stringer: Some(self), ..methods };
+            }}
+            ${if tmeta(source_error_method) {
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { error: Some(self), ..methods };
+            }}
+            ${if tmeta(source_stringer) {
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { stringer: Some(self), ..methods };
+            }}
+            methods
+        }
+    }
+}
+pub(crate) use derive_deftly_template_SourcePrintfInterfaces;
+
+define_derive_deftly! {
     UtilityFeatureProviders:
     ::cgp::prelude::delegate_and_check_components! {
         $tname {

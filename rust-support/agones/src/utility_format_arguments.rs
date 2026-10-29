@@ -3,7 +3,8 @@
 //! operations without erased value containers or a runtime provider registry.
 // Adapted from Go fmt/print.go and fmt/errors.go. Copyright The Go Authors.
 // BSD-3-Clause; see ../GO-LICENSE.
-use std::error::Error;
+use std::{borrow::Cow, error::Error};
+use derive_deftly::Deftly;
 use crate::{
     errors::BoxError,
     utility_format_scan::{SourcePrintfInteger, SourcePrintfResolvedCounts},
@@ -12,16 +13,22 @@ use crate::{
     utility_format_integer::{SourcePrintfIntegerValue, write_integer, write_number},
     utility_format_text::write_text,
     utility_format_bool::write_bool,
+    utility_format_methods::{SourcePrintfMethodViews, SourceErrorMethod, write_source_value},
+    utility_declarations::derive_deftly_template_SourcePrintfInterfaces,
     utility_error_format::{source_error_bytes, canonical_error_fields, CanonicalErrorFields},
     utility_error_view::source_error_type,
     utility_go_quote::append,
     utility_http::{SourceUnicodeProfile, SourceSliceAllocationError},
 };
 
-pub trait SourcePrintfValue: Sized {
+pub trait SourcePrintfValue: SourcePrintfMethodViews + Sized {
     fn source_type(&self) -> &str;
     fn source_integer(&self) -> SourcePrintfInteger { SourcePrintfInteger::Other }
     fn source_is_nil(&self) -> bool { false }
+    fn source_is_nil_pointer(&self) -> bool { false }
+    fn source_error_view(&self) -> Option<&(dyn Error + Send + Sync + 'static)> { None }
+    /// Base/reflection formatting without user method dispatch. The shared
+    /// method helper calls this directly while suppressing recursive methods.
     fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
         mode: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>;
     /// Non-errors are dropped after rendering. Error adapters transfer the
@@ -30,6 +37,8 @@ pub trait SourcePrintfValue: Sized {
 }
 
 /// Explicit Go string-kind view, distinct from a source []byte operand.
+#[derive(Deftly)]
+#[derive_deftly(SourcePrintfInterfaces)]
 pub struct SourcePrintfString<'a>(pub &'a [u8]);
 impl SourcePrintfValue for SourcePrintfString<'_> {
     fn source_type(&self) -> &str { "string" }
@@ -69,6 +78,13 @@ macro_rules! integer_values {
 }
 integer_values!(i8, i16, i32, i64, isize, u8, u16, u32, u64, usize);
 
+macro_rules! no_source_methods {
+    ($($ty:ty),+ $(,)?) => { $(impl SourcePrintfMethodViews for $ty {})+ };
+}
+no_source_methods!(String, &str, bool, i8, i16, i32, i64, isize, u8, u16, u32, u64, usize);
+
+#[derive(Deftly)]
+#[derive_deftly(SourcePrintfInterfaces)]
 pub struct SourcePrintfNil;
 impl SourcePrintfValue for SourcePrintfNil {
     fn source_type(&self) -> &str { "" }
@@ -82,6 +98,9 @@ impl SourcePrintfValue for SourcePrintfNil {
 /// The constructor's Err returns unknown native input unchanged; it is a
 /// bridge classification result, not a source fmt error. Arbitrary source
 /// error/Formatter/GoStringer data still needs its concrete value adapter.
+#[derive(Deftly)]
+#[derive_deftly(SourcePrintfInterfaces)]
+#[deftly(source_error_method)]
 pub struct SourcePrintfError { error: BoxError, source_type: &'static str }
 impl SourcePrintfError {
     pub fn canonical(error: BoxError) -> Result<Self, BoxError> {
@@ -95,26 +114,19 @@ impl SourcePrintfError {
 }
 impl SourcePrintfValue for SourcePrintfError {
     fn source_type(&self) -> &str { self.source_type }
+    fn source_error_view(&self) -> Option<&(dyn Error + Send + Sync + 'static)> { Some(self.error.as_ref()) }
     fn write_source(&self, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
-        mode: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
+        _: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
     {
-        let verb = if verb == 'w' && mode == SourcePrintfMode::Errorf { 'v' } else { verb };
         if verb == 'p' { return write_error_pointer(output, self.error.as_ref(), self.source_type, verb, state, profile); }
-        if matches!(verb, 'v' | 's' | 'q' | 'x' | 'X') && !state.flags.sharp_v {
-            return write_text(output, source_error_bytes(self.error.as_ref()).expect("canonical error retains its message"), verb, state, profile);
-        }
-        // A forbidden w calls badVerb immediately. Other verbs continue into
-        // the concrete struct's fields with that verb, just like printValue.
-        if verb == 'w' {
-            append(output, b"%!")?; append_rune(output, verb)?; append(output, b"(")?;
-            append(output, self.source_type.as_bytes())?; append(output, b"=")?;
-        }
-        let reflected_verb = if verb == 'w' { 'v' } else { verb };
-        write_canonical_reflection(output, self.error.as_ref(), self.source_type, reflected_verb, state, profile)?;
-        if verb == 'w' { append(output, b")")?; }
-        Ok(())
+        write_canonical_reflection(output, self.error.as_ref(), self.source_type, verb, state, profile)
     }
     fn into_source_error(self) -> Option<BoxError> { Some(self.error) }
+}
+impl SourceErrorMethod for SourcePrintfError {
+    fn source_error_message(&self) -> Cow<'_, [u8]> {
+        Cow::Borrowed(source_error_bytes(self.error.as_ref()).expect("canonical error retains its message"))
+    }
 }
 
 pub trait SourcePrintfOwnedArguments: SourcePrintfArguments + Sized {
@@ -147,7 +159,7 @@ macro_rules! tuple_arguments {
             fn write_value(&self, index: usize, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
                 mode: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
             {
-                match index { $($index => self.$index.write_source(verb, state, profile, mode, output),)+
+                match index { $($index => write_source_value(&self.$index, verb, state, profile, mode, false, output),)+
                     _ => panic!("source printf tuple index {index} out of range") }
             }
         }
@@ -182,7 +194,7 @@ impl<Head: SourcePrintfValue, Tail: SourcePrintfArguments> SourcePrintfArguments
     fn write_value(&self, index: usize, verb: char, state: &SourcePrintfResolvedCounts, profile: SourceUnicodeProfile,
         mode: SourcePrintfMode, output: &mut Vec<u8>) -> Result<(), SourceSliceAllocationError>
     {
-        if index == 0 { self.0.write_source(verb, state, profile, mode, output) }
+        if index == 0 { write_source_value(&self.0, verb, state, profile, mode, false, output) }
         else { self.1.write_value(index - 1, verb, state, profile, mode, output) }
     }
 }

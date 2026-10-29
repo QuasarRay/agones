@@ -163,16 +163,28 @@ impl<Context: CanRaiseSourceCollectionFailure + HasSourceUnicodeProfile> SourceC
         let stack = crate::utility_runtime_panic::native_recovery_stack(runtime);
         let profile = *runtime.source_unicode_profile();
         let quote = |value: &str| complete_source_collection(runtime, crate::utility_go_quote::try_source_go_quote(value.as_bytes(), profile));
-        let mut record = format!("\"Observed a panic\" panic={}", quote(&panic.to_string()));
+        let typed = panic.payload().downcast_ref::<crate::utility_format_methods::SourcePrintfPanic>();
+        let panic_value = match typed {
+            Some(value) => complete_source_collection(runtime, value.render(profile, false)),
+            None => panic.to_string().into_bytes(),
+        };
+        let panic_quoted = complete_source_collection(runtime, crate::utility_go_quote::try_source_go_quote(&panic_value, profile));
+        let mut record = format!("\"Observed a panic\" panic={panic_quoted}");
         if panic.source_type() != Some("string") {
-            let value = match panic.error() {
-                Some(error) => complete_source_collection(runtime, crate::utility_go_quote::try_source_error_go_syntax(error, profile))
-                    .unwrap_or_else(|| format!("{error:?}")),
-                None => format!("{:?}", panic.payload()),
-            };
-            // Noncanonical values retain an explicit native Debug projection.
-            // Full GoStringer/reflection/klog/context/caller profiles remain.
-            let _ = write!(&mut record, " panicGoValue={}", quote(&value));
+            if let Some(value) = typed {
+                let bytes = complete_source_collection(runtime, value.render(profile, true));
+                let value = complete_source_collection(runtime, crate::utility_go_quote::try_source_go_quote(&bytes, profile));
+                let _ = write!(&mut record, " panicGoValue={value}");
+            } else {
+                let value = match panic.error() {
+                    Some(error) => complete_source_collection(runtime, crate::utility_go_quote::try_source_error_go_syntax(error, profile))
+                        .unwrap_or_else(|| format!("{error:?}")),
+                    None => format!("{:?}", panic.payload()),
+                };
+                // Noncanonical values retain an explicit native Debug projection.
+                // Full GoStringer/reflection/klog/context/caller profiles remain.
+                let _ = write!(&mut record, " panicGoValue={}", quote(&value));
+            }
         }
         let _ = writeln!(&mut record, " stacktrace={}", quote(&stack));
         let _ = std::io::stderr().lock().write_all(record.as_bytes());

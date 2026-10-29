@@ -203,6 +203,7 @@ impl SourceRecoveredPanic {
     pub fn into_payload(self) -> Box<dyn Any + Send> { self.payload }
     pub fn resume(self) -> ! { std::panic::resume_unwind(self.payload) }
     pub fn error(&self) -> Option<&(dyn Error + Send + Sync + 'static)> {
+        if let Some(value) = self.payload.downcast_ref::<crate::utility_format_methods::SourcePrintfPanic>() { return value.error(); }
         if let Some(error) = self.payload.downcast_ref::<SourceErrorPanic>() { return Some(error.error()); }
         if let Some(error) = self.payload.downcast_ref::<BoxError>() {
             return Some(match error.downcast_ref::<SourceRuntimeErrorEnvelope>() {
@@ -213,9 +214,11 @@ impl SourceRecoveredPanic {
     }
     pub fn runtime_error(&self) -> Option<&dyn SourceRuntimeError> {
         if let Some(error) = self.payload.downcast_ref::<SourceErrorPanic>() { return error.runtime_error(); }
-        runtime_error_view(self.payload.downcast_ref::<BoxError>()?.as_ref())
+        if let Some(error) = self.payload.downcast_ref::<BoxError>() { return runtime_error_view(error.as_ref()); }
+        runtime_error_view(self.error()?)
     }
-    pub fn source_type(&self) -> Option<&'static str> {
+    pub fn source_type(&self) -> Option<&str> {
+        if let Some(value) = self.payload.downcast_ref::<crate::utility_format_methods::SourcePrintfPanic>() { return Some(value.source_type()); }
         if let Some(error) = self.payload.downcast_ref::<SourceErrorPanic>() { return error.source_type(); }
         if let Some(source_type) = self.payload.downcast_ref::<BoxError>().and_then(|error| crate::utility_error_view::source_error_type(error.as_ref())) { return Some(source_type); }
         if self.payload.is::<String>() || self.payload.is::<&'static str>() { return Some("string"); }
@@ -230,6 +233,12 @@ impl SourceRecoveredPanic {
 }
 impl fmt::Display for SourceRecoveredPanic {
     fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result {
+        if let Some(value) = self.payload.downcast_ref::<crate::utility_format_methods::SourcePrintfPanic>() {
+            // Native Display has no context argument. Source-aware consumers
+            // provide their selected Unicode profile and keep the byte result.
+            let bytes = value.render(crate::utility_http::SourceUnicodeProfile::default(), false).map_err(|_| fmt::Error)?;
+            return out.write_str(&String::from_utf8_lossy(&bytes));
+        }
         if let Some(error) = self.error() { return fmt::Display::fmt(error, out); }
         if let Some(value) = self.payload.downcast_ref::<String>() { return out.write_str(value); }
         if let Some(value) = self.payload.downcast_ref::<&'static str>() { return out.write_str(value); }

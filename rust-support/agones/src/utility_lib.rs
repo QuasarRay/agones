@@ -32,6 +32,8 @@ pub mod utility_format_print;
 pub mod utility_format_integer;
 pub mod utility_format_bool;
 pub mod utility_format_arguments;
+pub mod utility_format_methods;
+pub mod utility_format_adapters;
 pub mod utility_format_text;
 pub mod utility_panic;
 pub mod utility_gateway;

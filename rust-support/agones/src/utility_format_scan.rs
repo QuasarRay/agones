@@ -22,7 +22,7 @@ pub enum SourcePrintfInteger { Signed(i64), Unsigned(u64), Other }
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum SourcePrintfCountDiagnostic { BadWidth, BadPrecision }
 
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct SourcePrintfResolvedCounts {
     pub flags: SourcePrintfFlags,
     pub width: Option<i64>,
