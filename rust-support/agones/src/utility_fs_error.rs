@@ -266,13 +266,26 @@ pub(crate) fn native_io_error(error: std::io::Error) -> SourceRetainedError {
             let code = code as i64 as u64;
             return linux_amd64_errno_error(code).unwrap_or_else(|| SourceUnixErrno::new(0, &LINUX_AMD64).into_error());
         }
-        // Rust's path conversion reports embedded NUL as InvalidInput without
-        // an errno; the source Unix syscall conversion returns EINVAL.
-        if error.kind() == std::io::ErrorKind::InvalidInput { return linux_amd64_errno_error(22).unwrap(); }
     }
     // Unsupported native errors remain actual data, with no guessed source
     // errno, invented type/method set, or Display string as source evidence.
     SourceRetainedError::from_original(Box::new(error))
+}
+fn native_name_error(names: &[&[u8]], error: std::io::Error) -> SourceRetainedError {
+    #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+    if error.raw_os_error().is_none() && error.kind() == std::io::ErrorKind::InvalidInput
+        && names.iter().any(|name| name.contains(&0)) {
+        // This is the concrete BytePtrFromString failure, not a guess from
+        // an arbitrary native InvalidInput error or its Display text.
+        return linux_amd64_errno_error(22).unwrap();
+    }
+    native_io_error(error)
+}
+pub(crate) fn native_path_error(op: &[u8], path: &[u8], error: std::io::Error) -> SourceRetainedError {
+    path_error(op, path, Some(native_name_error(&[path], error)))
+}
+pub(crate) fn native_link_error(op: &[u8], old: &[u8], new: &[u8], error: std::io::Error) -> SourceRetainedError {
+    link_error(op, old, new, Some(native_name_error(&[old, new], error)))
 }
 pub(crate) fn retry_interrupted<Value>(mut operation: impl FnMut() -> std::io::Result<Value>) -> std::io::Result<Value> {
     loop {

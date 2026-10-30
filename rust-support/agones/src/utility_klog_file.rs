@@ -41,7 +41,7 @@ pub fn native_open_file(path: &Path, startup: bool) -> SourceKlogCreatedFile {
     }
 }
 fn path_error(op: &[u8], name: &SourceFmtSharedString, error: std::io::Error) -> SourceRetainedError {
-    crate::utility_fs_error::path_error(op, &name.0, Some(crate::utility_fs_error::native_io_error(error)))
+    crate::utility_fs_error::native_path_error(op, &name.0, error)
 }
 fn closed_file(op: &[u8], name: &SourceFmtSharedString) -> SourceRetainedError {
     crate::utility_fs_error::path_error(op, &name.0, Some(crate::utility_fs_error::sentinel(crate::utility_fs_error::SourceFsSentinel::Closed)))

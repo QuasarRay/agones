@@ -1,0 +1,31 @@
+{
+  "authorization": "Explicit combined /goal invocation",
+  "checkpoint_parent_commit": "8d5a5c0effab0be02192d543acbdb30fab277143",
+  "event": "ROADMAP_M0003_FILESYSTEM_ERROR_PROGRESS",
+  "global_gate": "CLOSED",
+  "handoff_sha256": "1b5d85c57b2b3a52c352fc288658bd6fa845bd27d190beaafec8a70019aa1ae8",
+  "http_authoring": "verification/agones/roadmap-M0003-http-authoring.json",
+  "intermediate_source_checkpoint": "8d5a5c0effab0be02192d543acbdb30fab277143",
+  "milestone_stage": "IMPLEMENTING",
+  "native_goal_status": "active",
+  "native_hyper_adoption": "verification/agones/roadmap-M0003-hyper-adoption.json",
+  "partial_adoption": "verification/agones/roadmap-M0003-partial-map.json",
+  "predecessor_handoff_sha256": "39167b7ebfa6f9140edf35322d133d8ce9944ff8798e185a45976ca13bea5ce2",
+  "predecessor_revision": 382,
+  "predecessor_sha256": "4cb85aa8336e0935969f97ab39880f6aba6afe80ade0a01623787636bae1d69d",
+  "preserved_intermediate_lockfile": {
+    "commit": "8d5a5c0effab0be02192d543acbdb30fab277143",
+    "disposition": "Preserved existing intermediate commit; not an agent-authored dependency update or assurance result",
+    "path": "Cargo.lock",
+    "sha256": "6c0f3edb41af33bc2b204575ce6f553170768e79bc64a9bbcc65ffc1b6346337"
+  },
+  "previous_goal_turn_classification": "progress",
+  "previous_goal_turn_evidence": "8d5a5c0effab0be02192d543acbdb30fab277143",
+  "project_executable_invocations": 0,
+  "result_revision": 383,
+  "route_switch": false,
+  "state_sha256": "1e698cd58c102e53db32824d2a23380ec21d49dd24d0d67c21a3b2bb3f55b7fd",
+  "timestamp": "2026-10-30T05:21:15.188597+00:00",
+  "usage_progress_observation": "verification/agones/roadmap-M0003-progress-usage-114.json",
+  "verification": "NOT_STARTED"
+}

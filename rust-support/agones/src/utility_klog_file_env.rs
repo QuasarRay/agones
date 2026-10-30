@@ -221,11 +221,11 @@ pub fn native_unix_file_system(
                 Err(error) if error.raw_os_error() == Some(libc::ENOTDIR) => first,
                 Err(error) => error,
             };
-            Err(crate::utility_fs_error::path_error(b"remove", name, Some(native_error(error))))
+            Err(crate::utility_fs_error::native_path_error(b"remove", name, error))
         }),
         symlink: Arc::new(|name, link| crate::utility_fs_error::retry_interrupted(||
             std::os::unix::fs::symlink(native_path(name), native_path(link)))
-            .map_err(|error| crate::utility_fs_error::link_error(b"symlink", name, link, Some(native_error(error))))),
+            .map_err(|error| crate::utility_fs_error::native_link_error(b"symlink", name, link, error))),
     }
 }
 fn native_error(error: std::io::Error) -> SourceRetainedError { crate::utility_fs_error::native_io_error(error) }
@@ -246,10 +246,10 @@ pub fn native_linux_hostname(android: bool) -> Result<SourceFmtSharedString, Sou
     if success && !name.is_empty() && name.len() < 64 { return Ok(SourceFmtSharedString(Arc::from(name))); }
     if android { return Ok(if name.is_empty() { string(b"localhost") } else { SourceFmtSharedString(Arc::from(name)) }); }
     let mut file = crate::utility_fs_error::retry_interrupted(|| std::fs::File::open("/proc/sys/kernel/hostname"))
-        .map_err(|error| crate::utility_fs_error::path_error(b"open", b"/proc/sys/kernel/hostname", Some(native_error(error))))?;
+        .map_err(|error| crate::utility_fs_error::native_path_error(b"open", b"/proc/sys/kernel/hostname", error))?;
     let mut bytes = [0_u8; 512];
     let mut count = crate::utility_fs_error::retry_interrupted(|| file.read(&mut bytes))
-        .map_err(|error| crate::utility_fs_error::path_error(b"read", b"/proc/sys/kernel/hostname", Some(native_error(error))))?;
+        .map_err(|error| crate::utility_fs_error::native_path_error(b"read", b"/proc/sys/kernel/hostname", error))?;
     if count == 0 { return Err(crate::utility_fs_error::sentinel(crate::utility_fs_error::SourceFsSentinel::Eof)); }
     if bytes[count - 1] == b'\n' { count -= 1; }
     Ok(string(&bytes[..count]))
