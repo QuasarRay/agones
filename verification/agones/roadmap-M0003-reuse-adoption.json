@@ -1,5 +1,7 @@
 {
+  "existing_compatibility_code": "PRESERVE_EXISTING_CODE; inspect consumers and reuse, replace or retire it during implementation. No Rust source was changed by this amendment.",
   "global_gate": "CLOSED",
+  "historical_descriptive_fields": [],
   "mappings": [
     {
       "caller_inventory": "Read-only rg over crates/rust-support/agones-rs finds only the declaration and macro documentation before transfer; no external caller in the current repository was replaced. Public legacy method/macro spelling, Copy/Clone and prefix/wrap behavior are retained.",
@@ -206,12 +208,11 @@
     }
   ],
   "milestone_id": "M0003",
+  "native_runtime_authoring_record": "verification/agones/roadmap-M0003-native-runtime-adoption.json",
   "record_kind": "PARTIAL_BODY_OWNERSHIP_TRANSFER",
-  "source_snapshot": "95161696e9ad90f9eab2ec7ae978bcafdcbb3483",
-  "verification": "NOT_STARTED",
   "semantic_policy": "AGONES_NATIVE_RUST_V1",
   "semantic_scope": "Existing authored operations/source profiles are historical implementation descriptions. Only current Agones-required gaps and native Rust adoption remain active; no Go runtime or language equivalence obligation survives.",
   "semantic_supersession": [],
-  "existing_compatibility_code": "PRESERVE_EXISTING_CODE; inspect consumers and reuse, replace or retire it during implementation. No Rust source was changed by this amendment.",
-  "historical_descriptive_fields": []
+  "source_snapshot": "95161696e9ad90f9eab2ec7ae978bcafdcbb3483",
+  "verification": "NOT_STARTED"
 }

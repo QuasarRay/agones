@@ -1,72 +1,26 @@
-//! Source JSON logging and the inherited apimachinery error-backoff resource.
-// Entry.Log/Trace, JSONFormatter and prefixFieldClashes follow pinned Logrus.
-// Copyright (c) 2014 Simon Eskildsen, MIT; see
-// ../../../vendor/github.com/sirupsen/logrus/LICENSE.
-use std::{collections::BTreeMap, fmt, io::Write, sync::{Arc, Mutex, atomic::{AtomicU8, Ordering}}, time::Instant};
+//! Agones structured logs and error-loop backoff using Rust facilities.
+//! The application context owns the sink, filter and backoff. Formatting and
+//! serialization use Display, serde_json and chrono; no Go formatter is involved.
+use std::{collections::BTreeMap, error::Error, fmt, io::Write,
+    sync::{Arc, Mutex, atomic::{AtomicU8, Ordering}}, time::{Duration, Instant}};
 use cgp::prelude::*;
-use chrono::{DateTime, Local};
+use chrono::{Local, SecondsFormat};
 use futures::future::BoxFuture;
-use serde_json::Value;
-use crate::{errors::BoxError, logfields::LogEntry};
 use serde::Serialize;
-use crate::{utility_error_slice::SourceRetainedError, utility_format_copy::SourceFmtValueCopy};
+use serde_json::Value;
+use crate::{logfields::LogEntry, utility_scope::HasUtilityTaskScope};
 
-#[derive(Debug)]
-pub enum SourceLogValue {
-    Json(Value),
-    HttpHeaders(crate::utility_http::Headers),
-    Bytes(crate::utility_http::SourceByteString),
-    Url(Option<crate::utility_http::SourceUrl>),
-    Error(SourceRetainedError),
-}
-impl Clone for SourceLogValue {
-    fn clone(&self) -> Self {
-        match self { Self::Json(value) => Self::Json(value.clone()), Self::HttpHeaders(value) => Self::HttpHeaders(value.clone()),
-            Self::Bytes(value) => Self::Bytes(value.clone()), Self::Url(value) => Self::Url(value.clone()),
-            Self::Error(error) => Self::Error(error.source_fmt_copy()) }
-    }
-}
-// LogEntry's native comparison is a descriptor convenience, not a Go Fields
-// or error-interface == operation; it must never call Error during comparison.
-impl PartialEq for SourceLogValue {
-    fn eq(&self, other: &Self) -> bool {
-        match (self, other) { (Self::Json(a), Self::Json(b)) => a == b,
-            (Self::HttpHeaders(a), Self::HttpHeaders(b)) => a == b, (Self::Bytes(a), Self::Bytes(b)) => a == b,
-            (Self::Url(a), Self::Url(b)) => a == b, (Self::Error(a), Self::Error(b)) => a.native_same_owner(b), _ => false }
-    }
-}
-impl SourceLogValue {
-    /// JSONFormatter converts every error-valued field before field clashes
-    /// or JSON encoding. This is a plain Error call, with no fmt panic recovery.
-    fn json_field_copy(&self) -> Self {
-        let Self::Error(error) = self else { return self.clone(); };
-        let message = crate::utility_error_format::source_error_message(error)
-            .unwrap_or_else(|| std::borrow::Cow::Owned(error.to_string().into_bytes()));
-        Self::Bytes(crate::utility_http::SourceByteString(bytes::Bytes::copy_from_slice(&message)))
-    }
-}
-impl Serialize for SourceLogValue {
-    fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
-        match self { Self::Json(value) => value.serialize(serializer), Self::HttpHeaders(value) => value.serialize(serializer),
-            Self::Bytes(value) => value.serialize(serializer), Self::Url(value) => value.serialize(serializer),
-            Self::Error(_) => self.json_field_copy().serialize(serializer) }
-    }
-}
 impl LogEntry {
+    // These are temporary HTTP-boundary adapters. Their producers remain in
+    // the HTTP adoption queue; the logging sink stores only serde_json values.
     pub fn with_url(&self, name: impl Into<String>, url: Option<crate::utility_http::SourceUrl>) -> Self {
-        let mut entry = self.clone();
-        entry.fields.insert(name.into(), SourceLogValue::Url(url));
-        entry
+        self.with_serializable_field(name, &url)
     }
     pub fn with_bytes(&self, name: impl Into<String>, bytes: impl AsRef<[u8]>) -> Self {
-        let mut entry = self.clone();
-        entry.fields.insert(name.into(), SourceLogValue::Bytes(crate::utility_http::SourceByteString(bytes::Bytes::copy_from_slice(bytes.as_ref()))));
-        entry
+        self.with_field(name, String::from_utf8_lossy(bytes.as_ref()).into_owned())
     }
     pub fn with_headers(&self, name: impl Into<String>, headers: crate::utility_http::Headers) -> Self {
-        let mut entry = self.clone();
-        entry.fields.insert(name.into(), SourceLogValue::HttpHeaders(headers));
-        entry
+        self.with_serializable_field(name, &headers)
     }
 }
 
@@ -81,13 +35,21 @@ impl LogLevel {
 }
 
 pub struct SourceLogger { level: AtomicU8, output: Mutex<Box<dyn Write + Send>> }
-enum SourceLogWriteError { Format(BoxError), Output(std::io::Error) }
-fn report_log_write_error(error: SourceLogWriteError) {
-    match error { SourceLogWriteError::Format(error) => eprintln!("Failed to obtain reader, {error}"),
-        SourceLogWriteError::Output(error) => eprintln!("Failed to write to log, {error}") }
-}
 impl fmt::Debug for SourceLogger {
-    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { out.debug_struct("SourceLogger").field("level", &self.level.load(Ordering::Relaxed)).finish_non_exhaustive() }
+    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result {
+        out.debug_struct("SourceLogger").field("level", &self.level.load(Ordering::Relaxed)).finish_non_exhaustive()
+    }
+}
+
+#[derive(Serialize)]
+struct JsonLogRecord<'a> {
+    time: &'a str,
+    severity: &'a str,
+    message: &'a str,
+    #[serde(flatten)]
+    attributes: BTreeMap<&'a str, &'a Value>,
+    #[serde(skip_serializing_if = "BTreeMap::is_empty")]
+    fields: BTreeMap<&'a str, &'a Value>,
 }
 impl SourceLogger {
     pub fn new(output: impl Write + Send + 'static) -> Self {
@@ -95,53 +57,37 @@ impl SourceLogger {
     }
     pub fn set_level(&self, level: LogLevel) { self.level.store(level as u8, Ordering::Release); }
     pub fn enabled(&self, level: LogLevel) -> bool { level as u8 <= self.level.load(Ordering::Acquire) }
-    fn write(&self, level: LogLevel, fields: &BTreeMap<String, SourceLogValue>, message: &str, timestamp: &str,
-        serialization_error: Option<&str>) {
-        self.write_bytes(level, fields, message.as_bytes(), timestamp, serialization_error)
-    }
-    fn write_bytes(&self, level: LogLevel, fields: &BTreeMap<String, SourceLogValue>, message: &[u8], timestamp: &str,
-        serialization_error: Option<&str>) {
-        // Source Entry.write holds Logger.mu over Formatter.Format and Out.Write.
-        // The message's Sprint ran before this lock; field Error calls run here.
-        let mut output = self.output.lock().unwrap_or_else(|error| error.into_inner());
-        let result = (|| -> Result<(), SourceLogWriteError> {
-            let mut data: BTreeMap<_, _> = fields.iter().map(|(key, value)| (key.clone(), value.json_field_copy())).collect();
-            // Preserve logrus's collision order and overwrite behavior.
-            for name in ["time", "message", "severity", "logrus_error"] {
-                if let Some(value) = data.remove(name) { data.insert(format!("fields.{name}"), value); }
+    fn write(&self, level: LogLevel, fields: &BTreeMap<String, Value>, message: &str, timestamp: &str) {
+        // Keep the Agones metadata keys stable. User attributes cannot replace
+        // them; colliding attributes are retained in the nested fields object.
+        let (collisions, attributes) = fields.iter().map(|(key, value)| (key.as_str(), value))
+            .partition(|(key, _)| matches!(*key, "time" | "severity" | "message" | "fields"));
+        let record = JsonLogRecord { time: timestamp, severity: level.source_name(), message,
+            attributes, fields: collisions };
+        let encoded = serde_json::to_vec(&record).map(|mut bytes| { bytes.push(b'\n'); bytes });
+        match encoded {
+            Ok(bytes) => {
+                let mut output = self.output.lock().unwrap_or_else(|error| error.into_inner());
+                if let Err(error) = output.write_all(&bytes) { eprintln!("Agones log output failed: {error}"); }
             }
-            data.insert("time".into(), SourceLogValue::Json(Value::String(timestamp.to_owned())));
-            data.insert("message".into(), SourceLogValue::Bytes(crate::utility_http::SourceByteString(bytes::Bytes::copy_from_slice(message))));
-            data.insert("severity".into(), SourceLogValue::Json(Value::String(level.source_name().into())));
-            if let Some(error) = serialization_error { return Err(SourceLogWriteError::Format(format!("failed to marshal fields to JSON, {error}").into())); }
-            let json = serde_json::to_string(&data).map_err(|error| SourceLogWriteError::Format(format!("failed to marshal fields to JSON, {error}").into()))?;
-            // encoding/json's default HTML and JavaScript separator escaping is
-            // part of the selected formatter, including strings nested in fields.
-            let json = json.replace('&', "\\u0026").replace('<', "\\u003c").replace('>', "\\u003e")
-                .replace('\u{2028}', "\\u2028").replace('\u{2029}', "\\u2029") + "\n";
-            // logrus calls Writer.Write once and ignores a short successful count.
-            output.write(json.as_bytes()).map_err(SourceLogWriteError::Output)?;
-            Ok(())
-        })();
-        // Entry.write diagnoses both stages before its deferred unlock.
-        if let Err(error) = result { report_log_write_error(error); }
+            Err(error) => eprintln!("Agones log serialization failed: {error}"),
+        }
     }
 }
 
-pub struct SourceErrorBackoff { last: Mutex<Instant>, min_period: i64 }
-impl Default for SourceErrorBackoff { fn default() -> Self { Self::new(1_000_000) } }
+/// Agones retains the inherited one-millisecond error-loop delay, using a
+/// monotonic Rust clock and saturating Duration arithmetic. Sleeping never
+/// holds the state lock and can be interrupted by the parent lifecycle.
+pub struct SourceErrorBackoff { last: Mutex<Instant>, min_period: Duration }
+impl Default for SourceErrorBackoff { fn default() -> Self { Self::new(Duration::from_millis(1)) } }
 impl SourceErrorBackoff {
-    pub fn new(min_period: i64) -> Self { Self { last: Mutex::new(Instant::now()), min_period } }
-    pub fn min_period(&self) -> i64 { self.min_period }
-    pub(crate) fn next_delay(&self, now: Instant, next_now: impl FnOnce() -> Instant) -> i64 {
+    pub fn new(min_period: Duration) -> Self { Self { last: Mutex::new(Instant::now()), min_period } }
+    pub fn min_period(&self) -> Duration { self.min_period }
+    pub(crate) fn next_delay(&self, now: Instant) -> Duration {
         let mut last = self.last.lock().unwrap_or_else(|error| error.into_inner());
-        let delta = if now >= *last { now.duration_since(*last).as_nanos().min(i64::MAX as u128) as i64 }
-            else { let magnitude = last.duration_since(now).as_nanos();
-                if magnitude >= (1u128 << 63) { i64::MIN } else { -(magnitude as i64) } };
-        *last = next_now();
-        // time.Time.Sub saturates; Duration subtraction then wraps. The CGP
-        // delay provider implements Sleep's nonpositive immediate return.
-        self.min_period.wrapping_sub(delta)
+        let elapsed = now.saturating_duration_since(*last);
+        *last = now;
+        self.min_period.saturating_sub(elapsed)
     }
 }
 
@@ -153,16 +99,7 @@ pub trait HasSourceErrorBackoff { fn source_error_backoff(&self) -> &Arc<SourceE
 pub trait CanReadSourceLogClock { fn source_log_timestamp(&self) -> String; }
 #[cgp_new_provider]
 impl<Context> SourceLogClock<Context> for ReadLocalSourceLogClock {
-    fn source_log_timestamp(_context: &Context) -> String { rfc3339_nano(Local::now()) }
-}
-fn rfc3339_nano(time: DateTime<Local>) -> String {
-    let mut result = time.format("%Y-%m-%dT%H:%M:%S").to_string();
-    if time.timestamp_subsec_nanos() != 0 {
-        result.push('.'); result.push_str(format!("{:09}", time.timestamp_subsec_nanos()).trim_end_matches('0'));
-    }
-    if time.offset().local_minus_utc() == 0 { result.push('Z'); }
-    else { result.push_str(&time.format("%:z").to_string()); }
-    result
+    fn source_log_timestamp(_context: &Context) -> String { Local::now().to_rfc3339_opts(SecondsFormat::AutoSi, true) }
 }
 
 #[cgp_component(SourceLogEmitter)]
@@ -175,56 +112,48 @@ where Context: HasSourceLogger + CanReadSourceLogClock,
 {
     fn emit_source_log(context: &Context, logger: &LogEntry, level: LogLevel, message: &str) {
         let state = logger.logger.as_ref().unwrap_or_else(|| context.source_logger());
-        if !state.enabled(level) { return; }
-        state.write(level, &logger.fields, message, &context.source_log_timestamp(), logger.serialization_error.as_deref());
+        if state.enabled(level) { state.write(level, &logger.fields, message, &context.source_log_timestamp()); }
     }
 }
 
-/// Logrus Entry.Trace(err) checks the level before fmt.Sprint(err). Preserve
-/// that lazy method call and source panic/nil formatting in the CGP provider.
 #[cgp_component(SourceErrorLogEmitter)]
 pub trait CanEmitSourceErrorLog {
-    fn emit_source_error_log(&self, logger: &LogEntry, level: LogLevel, prefix: &[u8], error: &(dyn std::error::Error + Send + Sync + 'static));
+    fn emit_source_error_log(&self, logger: &LogEntry, level: LogLevel, prefix: &str, error: &(dyn Error + Send + Sync + 'static));
 }
 #[cgp_new_provider]
 impl<Context> SourceErrorLogEmitter<Context> for EmitSourceJsonErrorLog
-where Context: HasSourceLogger + CanReadSourceLogClock + crate::utility_http::HasSourceUnicodeProfile
-    + crate::utility_http::CanRaiseSourceCollectionFailure,
+where Context: HasSourceLogger + CanReadSourceLogClock,
 {
-    fn emit_source_error_log(context: &Context, logger: &LogEntry, level: LogLevel, prefix: &[u8], error: &(dyn std::error::Error + Send + Sync + 'static)) {
+    fn emit_source_error_log(context: &Context, logger: &LogEntry, level: LogLevel, prefix: &str, error: &(dyn Error + Send + Sync + 'static)) {
         let state = logger.logger.as_ref().unwrap_or_else(|| context.source_logger());
-        if !state.enabled(level) { return; }
-        let mut message = Vec::new();
-        // Sprint's leading string argument suppresses the implicit separator.
-        crate::utility_http::complete_source_collection(context, crate::utility_go_quote::append(&mut message, prefix));
-        crate::utility_http::complete_source_collection(context,
-            crate::utility_format_arguments::write_source_error_operand(error, 'v', *context.source_unicode_profile(),
-                crate::utility_format_print::SourcePrintfMode::Sprintf, &mut message));
-        // Entry.log continues after Sprint even if a value method changes the
-        // level. Avoid a second enabled check through the string emitter.
-        state.write_bytes(level, &logger.fields, &message, &context.source_log_timestamp(), logger.serialization_error.as_deref());
+        if state.enabled(level) {
+            state.write(level, &logger.fields, &format!("{prefix}{error}"), &context.source_log_timestamp());
+        }
     }
 }
 
 #[cgp_component(SourceRuntimeErrorHandler)]
 pub trait CanHandleSourceRuntimeError: Sync {
-    fn handle_source_runtime_error<'a>(&'a self, logger: Option<&'a LogEntry>, error: Option<&'a SourceRetainedError>) -> BoxFuture<'a, ()>;
+    fn handle_source_runtime_error<'a>(&'a self, logger: Option<&'a LogEntry>, error: Option<&'a (dyn Error + Send + Sync + 'static)>) -> BoxFuture<'a, ()>;
 }
 #[cgp_new_provider]
-impl<Context> SourceRuntimeErrorHandler<Context> for HandleSourceErrorHandlers
-where Context: CanEmitSourceLog + crate::utility_error_handlers::CanDispatchSourceRuntimeError + Sync,
+impl<Context> SourceRuntimeErrorHandler<Context> for HandleNativeRuntimeError
+where Context: CanEmitSourceLog + CanEmitSourceErrorLog + HasSourceLogger + HasSourceErrorBackoff + HasUtilityTaskScope + Sync,
 {
-    fn handle_source_runtime_error<'a>(context: &'a Context, logger: Option<&'a LogEntry>, error: Option<&'a SourceRetainedError>) -> BoxFuture<'a, ()> {
+    fn handle_source_runtime_error<'a>(context: &'a Context, logger: Option<&'a LogEntry>, error: Option<&'a (dyn Error + Send + Sync + 'static)>) -> BoxFuture<'a, ()> {
         Box::pin(async move {
-            if let Some(logger) = logger {
-                context.emit_source_log(&logger.with_retained_error(error.map(SourceFmtValueCopy::source_fmt_copy)), LogLevel::Error, "");
-            }
-            if let Some(error) = error {
-                context.dispatch_source_runtime_error(crate::utility_error_handlers::SourceErrorReport {
-                    context: crate::utility_error_handlers::SourceErrorContext::background(),
-                    error: Some(error.source_fmt_copy()), message: bytes::Bytes::from_static(b"Unhandled Error"),
-                    keys_and_values: crate::utility_error_handlers::SourceErrorArguments::nil(),
-                }).await;
+            if let Some(logger) = logger { context.emit_source_log(&logger.with_error(error), LogLevel::Error, ""); }
+            let Some(error) = error else { return; };
+            let logger = LogEntry::from_logger(Arc::clone(context.source_logger()));
+            context.emit_source_error_log(&logger, LogLevel::Error, "", error);
+            let delay = context.source_error_backoff().next_delay(Instant::now());
+            if delay.is_zero() { return; }
+            let Some(scope) = context.utility_task_scope().upgrade() else { return; };
+            let stop = scope.child_token();
+            drop(scope);
+            tokio::select! {
+                _ = tokio::time::sleep(delay) => (),
+                _ = stop.cancelled() => (),
             }
         })
     }

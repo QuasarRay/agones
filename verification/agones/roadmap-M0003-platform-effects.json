@@ -24,6 +24,7 @@
       "url": "https://raw.githubusercontent.com/illumos/illumos-gate/master/usr/src/uts/common/fs/portfs/port_vnops.c"
     }
   ],
+  "existing_compatibility_code": "PRESERVE_EXISTING_CODE; inspect consumers and reuse, replace or retire it during implementation. No Rust source was changed by this amendment.",
   "filesystem": {
     "authored_operations": [
       "NativeWatch/UtilityRuntimeProviders selects the literal gopkg.in/fsnotify.v1 v1.4.7 contract from pinned pkg/util/fswatch, not the edited Go imports.",
@@ -45,6 +46,15 @@
   },
   "formal_credit": 0,
   "global_gate": "CLOSED",
+  "historical_descriptive_fields": [],
+  "historical_remaining_before_native_rust_v1": [
+    "Reconcile all selected v1.4.7 native failure/type/error wrapping and NewWatcher/Add/Close ordering. Linux uses nonblocking AsyncFd rather than the source blocking inotify+poller allocation sequence; Windows uses event/wait completion rather than source IOCP.",
+    "Reconcile BSD source 100ms timed kevent/done/Close schedules versus cancellable readiness, close errors/nonblocking error delivery, partial initialization races, and existing-watch register failure with retained stale fd numbers. Native ownership never creates a second OwnedFd for a reused stale number.",
+    "Reconcile exact Windows filepath.Clean/UTF16/long-name/case/normalization, source MAX_PATH and malformed record, access/attribute and kernel-error/partial-buffer profiles. The adapter serves Agones single-path Watch; arbitrary vendor multi-Add/Remove APIs are not a separate utility contract.",
+    "Final Windows console-hook removal/wait unregister or undrainable filesystem I/O still has an explicit unverified abort policy; emergency Drop can block. Actual M0027 process exit and interaction with preserved old handlers remain required.",
+    "Enumerate any required source build-tag/platform configurations outside the authored Unix/Windows branches before a platform acceptance claim. Source-declared Solaris failure is preserved; modern fsnotify FEN behavior is not substituted.",
+    "All other M0003 HTTP/TLS/gateway/queue/config/CRD/logging/feature/admission profiles, source-body reconciliation and caller adoption remain required. No platform completion, assurance or route-switch credit follows from this authoring."
+  ],
   "milestone_id": "M0003",
   "native_primary_source_inputs": [
     {
@@ -106,28 +116,29 @@
       "sha256": "ed6e69041a6d154843c5c9509541a311f7415879c6c845b750b6ba29e1f48e84"
     }
   ],
+  "native_runtime_authoring_record": "verification/agones/roadmap-M0003-native-runtime-adoption.json",
   "payload_identity_refreshed_at": "2026-10-30T05:21:15.188597+00:00",
   "payload_sha256": {
     "Cargo.lock": "6c0f3edb41af33bc2b204575ce6f553170768e79bc64a9bbcc65ffc1b6346337",
-    "agones-rs/pkg/util/apiserver/apiserver.rs": "01fb69036282723bf6e0fbd404b0999cab905da4ee60f03f0c1313dd7af7d7d5",
-    "agones-rs/pkg/util/errors/errors.rs": "dac951cf0509e4779cf3b0948221a4623d6afd9ed13ef03c06b3e3a577e35925",
-    "agones-rs/pkg/util/https/https.rs": "8ad4d0ce06e6742408ef21735c52651f8d08da7ab5879839e61eea9aae7481ba",
-    "agones-rs/pkg/util/https/server.rs": "7cab123fb48f04583df2b770fce229a8278f26e91652b13335f14cd2c87cb9ab",
-    "agones-rs/pkg/util/httpserver/server.rs": "c26b869b6d0928a97a9abbf2f67ee90c874d9c5d0f1802966c292bc82808dceb",
-    "agones-rs/pkg/util/logfields/logfields.rs": "73c95f782d4e7e848af1da70f40b71bdc7f9f43c75b5697be27a3294f970aa9c",
-    "agones-rs/pkg/util/runtime/runtime.rs": "bd05455e151234da2de81f5f5c28933608ed9325805964b32be1de24c65fabc0",
-    "agones-rs/pkg/util/webhooks/webhooks.rs": "e5ee0f7948eceffa595489969de35a87090fda9bc0ef7effae7f830373a439d5",
-    "agones-rs/pkg/util/workerqueue/workerqueue.rs": "c7ef69ac256c0157ca31fde20ea21c73f2f45ac0eb88bea719033b5416ce3504",
+    "agones-rs/pkg/util/apiserver/apiserver.rs": "c003afa1538dae152684db0c575a7b17d65d9f32eb2d7be68af49759941540c3",
+    "agones-rs/pkg/util/errors/errors.rs": "6e460c47d530795d606e32d3256852235511b7b357ec83dcca9f5470de632342",
+    "agones-rs/pkg/util/https/https.rs": "5700eb42eae4c9733c7021a2008740a0f89ef09a016f8dbe551cc3ea956ca75b",
+    "agones-rs/pkg/util/https/server.rs": "70884b623df996e663156b0f35b7d266276d525b1b824064bb73f255d4add9d6",
+    "agones-rs/pkg/util/httpserver/server.rs": "9659cb93832f13d8eee94bb3e72eca158dce345779e61febfa6d697e1a918a11",
+    "agones-rs/pkg/util/logfields/logfields.rs": "9f364cba01f2de1759de7b344d619409842ce5ab8569157bf997426a08051cad",
+    "agones-rs/pkg/util/runtime/runtime.rs": "12eafdcb25ae7b4f7cefb6041f894eaa55ab4c334139a44a20e3f2f72e47c8f4",
+    "agones-rs/pkg/util/webhooks/webhooks.rs": "f728be5333aecae9018da4ce9bc09a278907e10d2bfa6cc56a77566c9c878da5",
+    "agones-rs/pkg/util/workerqueue/workerqueue.rs": "5c68d029694e4921bae8651f3db71f06107c37944119161896898c8f634c44ca",
     "crates/util/Cargo.toml": "6b011badbe07029ab9a84257636f7de293931d32a2c1bbef49c60b4d07dd91bf",
     "rust-support/agones/FSNOTIFY-LICENSE": "2dfbe6d2b5eb18b55148f3805d88648a09e0d17e38428123259afb08c8996e37",
     "rust-support/agones/FSNOTIFY-V1-LICENSE": "c8001d18c3dda64c7e72146f1b23d73619fcf426aed6778f447599f5ac8e600a",
     "rust-support/agones/GO-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
     "rust-support/agones/src/utility_callback_slice.rs": "fe1b5582794aba4bee0f17133a36ed557fb23efaf7de7e130e7a668176afdc98",
     "rust-support/agones/src/utility_crash.rs": "05f1e3ba160af43279b56566c9b4d6c31e7beb58ca1d8148847431f56abc0313",
-    "rust-support/agones/src/utility_declarations.rs": "a56c8a87d481a7a7e7458834122cd38a08263d08c408d75ba3649e2ba3d65486",
+    "rust-support/agones/src/utility_declarations.rs": "152555b9dc4b6ca940f3e88315c6a5d8db2dcecfc69f5ecc1b686e458069f641",
     "rust-support/agones/src/utility_error_alias.rs": "005bf2c6b9f833b7d4205f894b6c990df660dd61e5cd2a2078f373de07b01c65",
     "rust-support/agones/src/utility_error_format.rs": "8e888b6b82686ea9d3288dde9582ba8f7dc2e4328cb0597105c4f868a5c2f9fc",
-    "rust-support/agones/src/utility_error_handlers.rs": "d1fa0f354022eef5f86f65e73ebb30c35b1186a72ef3a2a49bd46d68ce7cad1c",
+    "rust-support/agones/src/utility_error_handlers.rs": "935a56f1b61ac81fcf7adc528341a098ff3965780b9bcc361e02d030fb2fa459",
     "rust-support/agones/src/utility_error_nil.rs": "7903af20d3518ee25e6b8c55972f0832f9702000b4dcdf7b2d788593df5543e2",
     "rust-support/agones/src/utility_error_query.rs": "945d3e1d7971e4a750e9775b36f972ee0ac21f8b36d77c48ec87a9dc200ca2c4",
     "rust-support/agones/src/utility_error_slice.rs": "8645d31ebbae4d8a0b4d970ab4306b4fa4d4d4e287206d1adc70307f0ab0a8af",
@@ -168,7 +179,7 @@
     "rust-support/agones/src/utility_gateway_storage.rs": "5603082f3744c022d6360e10a55d90b8d9dc7a58a5d0cf8b3cd2e361ee9abf41",
     "rust-support/agones/src/utility_gateway_strings.rs": "3fc63fd6cd5dee67c22bf3722e665e4cbd290c7b17bb3b6e67d932523678785b",
     "rust-support/agones/src/utility_go_quote.rs": "3a56c88a770b512fce4bc8e7071425f0e74fe9390bcead7043e73b340e423b1e",
-    "rust-support/agones/src/utility_http.rs": "bdab627c987d77925e7ef3d79e60185dae079be3bad5e2456ab540150180d12a",
+    "rust-support/agones/src/utility_http.rs": "9718b8eb7c661306a86cafa82d56378f95881235d28796805edd16bb7fa7dace",
     "rust-support/agones/src/utility_http_allocation.rs": "49d131afa97bd1fac3bfd6cf45a17636b4e1230163bad6089c1dc5895bab3867",
     "rust-support/agones/src/utility_http_form.rs": "09dae2ed480223c422374e661b6afcdc3bf437ad84b453dde103ee19ab61b06f",
     "rust-support/agones/src/utility_http_header_capacity.rs": "da5b63d388f947b66fa7fe81b69e6c6d988bda18fd958435a78bdafaa238353c",
@@ -188,15 +199,15 @@
     "rust-support/agones/src/utility_klog_path.rs": "62eb4f4acdefb11e862e1c51e4c5079f924a8305814a2c3ae9f90672f2317d90",
     "rust-support/agones/src/utility_klog_values.rs": "ec5b44723a58520a27ac9822c5a995413f39850e9827b6e5d23012a5c2b4bb7c",
     "rust-support/agones/src/utility_lib.rs": "b4e217b0e364c6db0d969b4b777d39eededfb14dd24365b14f0bb418b0c9fc83",
-    "rust-support/agones/src/utility_logging.rs": "ff03b507d32fc2623a802b850c8dd42c72246161a07ad37f4cc5cdbdb220c993",
+    "rust-support/agones/src/utility_logging.rs": "8990ac662ca4595d5405096ad9f27dfb72a5a6e8d17b68b1f6d73c5b00c391d5",
     "rust-support/agones/src/utility_logr.rs": "695b4a5313f1550aa7c3cadd4590b488abe272dd56b362510016eea62ff1a68e",
     "rust-support/agones/src/utility_logr_context.rs": "1b010a05d93cfeac3ebdca6a24319ede60b266ce6395ae3c54ccf52ea26a0ece",
     "rust-support/agones/src/utility_panic.rs": "d340eb417858addae11d63aef37ad3b451e2043544e56e98bcd62b8989f71f92",
-    "rust-support/agones/src/utility_queue.rs": "21cf2a5d628aa3ad4dc8d16ff2fdb19f343e864fe74a7087f0a2f50ccc79377b",
+    "rust-support/agones/src/utility_queue.rs": "e2868cfcc6f4f0773cb6b0bdaf0a2b9546f32548c115a95cfc268f97d9c00353",
     "rust-support/agones/src/utility_runtime.rs": "ffafc10b6e1b808b75ac395bfa3e7a6d8c3bbf15b5b51cf4ebf0411c60be6069",
     "rust-support/agones/src/utility_runtime_format.rs": "4d374cc9986204c680b276fbd0396177ae82699b18b698bbfc5a270845fb6dc3",
     "rust-support/agones/src/utility_runtime_panic.rs": "3f23c67ba8d28668e3e7f4ec557e7534b39bc3e53811eca70cebc2cab895ed08",
-    "rust-support/agones/src/utility_scope.rs": "9cfd86358c6df8a4a3d5fb6af58dd0902f8b334d68e670bfe8b98041c6bc3558",
+    "rust-support/agones/src/utility_scope.rs": "219cdbba6ce8b82b6247f64ebc162950769af42f0cb4d44ab6adcf2d276e0eb1",
     "rust-support/agones/src/utility_signals.rs": "86aab0a4b60572e7ad80d125e9f4fdf26056a9cb90374b55b0c34f4da710ebd6",
     "rust-support/agones/src/utility_signals_windows.rs": "7ee226c03ff13e152d4ee81e12e5d9f6d9e4d25153810c37e8188960ee831239",
     "rust-support/agones/src/utility_slog_values.rs": "fe63c0792539a6d04a47e3fc24366cb069062f8a236ea5476c5ef2424850b85a",
@@ -204,12 +215,28 @@
     "rust-support/agones/src/utility_time_json_error.rs": "efcca527c775ed37a3766442977ae0313cc5f0512cff20c2e806d7a2dd2f6952",
     "rust-support/agones/src/utility_time_values.rs": "9d2ad82bcb5f1c742fb05a9ec257006d1dfe5a17ac48cc726bc853cd369bd555",
     "rust-support/agones/src/utility_tls.rs": "47034a6a225137c1d3e732bcd7a4b897d3780d2d7d2ede246f5ada61476d43d8",
-    "rust-support/agones/src/utility_trace_error.rs": "df6955fdb4099148dea9db372bd2b5bbb23e9da914f1aa19eeb88242c93c347f"
+    "rust-support/agones/src/utility_trace_error.rs": "4974f6c05e6ca760c12f85a32b47691e73f418f828c8bd908f457d6a0e6e9853"
   },
   "project_executable_invocations": 0,
   "record_kind": "PARTIAL_PLATFORM_EFFECT_AUTHORING",
+  "remaining": [
+    "Use the current M0003 Agones-required gap list in roadmap-M0003-partial-map.json. Review existing native library adoption and consumers; Go-only reconstruction is superseded."
+  ],
   "route": "MANUAL",
   "runtime_credit": 0,
+  "semantic_policy": "AGONES_NATIVE_RUST_V1",
+  "semantic_scope": "Existing authored operations/source profiles are historical implementation descriptions. Only current Agones-required gaps and native Rust adoption remain active; no Go runtime or language equivalence obligation survives.",
+  "semantic_supersession": [
+    {
+      "authority": "AGONES_NATIVE_RUST_V1",
+      "disposition": "GO_ONLY_SUPERSEDED",
+      "native_replacement_disposition": "RUST_NATIVE",
+      "pointer": "/remaining",
+      "retained_agones_obligations": "verification/agones/roadmap-M0003-partial-map.json#known_remaining",
+      "scope": "Go language/runtime/stdlib components of the historical requirement group only; Agones components remain in the canonical native gap list.",
+      "source_text_sha256": "57f854424daaa3d5484b982185e33cadf8add3881936e9727a6be9bf36400d8a"
+    }
+  ],
   "shared_http_binding_correction": {
     "affected_paths": [
       "rust-support/agones/src/utility_http.rs",
@@ -356,31 +383,5 @@
   "stage": "IMPLEMENTING",
   "timestamp": "2026-10-27T01:48:30.914763+00:00",
   "verification": "NOT_STARTED",
-  "work_base_commit": "a85b8ff6460597499abb4fc5aec640032d673483",
-  "historical_remaining_before_native_rust_v1": [
-    "Reconcile all selected v1.4.7 native failure/type/error wrapping and NewWatcher/Add/Close ordering. Linux uses nonblocking AsyncFd rather than the source blocking inotify+poller allocation sequence; Windows uses event/wait completion rather than source IOCP.",
-    "Reconcile BSD source 100ms timed kevent/done/Close schedules versus cancellable readiness, close errors/nonblocking error delivery, partial initialization races, and existing-watch register failure with retained stale fd numbers. Native ownership never creates a second OwnedFd for a reused stale number.",
-    "Reconcile exact Windows filepath.Clean/UTF16/long-name/case/normalization, source MAX_PATH and malformed record, access/attribute and kernel-error/partial-buffer profiles. The adapter serves Agones single-path Watch; arbitrary vendor multi-Add/Remove APIs are not a separate utility contract.",
-    "Final Windows console-hook removal/wait unregister or undrainable filesystem I/O still has an explicit unverified abort policy; emergency Drop can block. Actual M0027 process exit and interaction with preserved old handlers remain required.",
-    "Enumerate any required source build-tag/platform configurations outside the authored Unix/Windows branches before a platform acceptance claim. Source-declared Solaris failure is preserved; modern fsnotify FEN behavior is not substituted.",
-    "All other M0003 HTTP/TLS/gateway/queue/config/CRD/logging/feature/admission profiles, source-body reconciliation and caller adoption remain required. No platform completion, assurance or route-switch credit follows from this authoring."
-  ],
-  "remaining": [
-    "Use the current M0003 Agones-required gap list in roadmap-M0003-partial-map.json. Review existing native library adoption and consumers; Go-only reconstruction is superseded."
-  ],
-  "semantic_policy": "AGONES_NATIVE_RUST_V1",
-  "semantic_scope": "Existing authored operations/source profiles are historical implementation descriptions. Only current Agones-required gaps and native Rust adoption remain active; no Go runtime or language equivalence obligation survives.",
-  "semantic_supersession": [
-    {
-      "pointer": "/remaining",
-      "source_text_sha256": "57f854424daaa3d5484b982185e33cadf8add3881936e9727a6be9bf36400d8a",
-      "disposition": "GO_ONLY_SUPERSEDED",
-      "authority": "AGONES_NATIVE_RUST_V1",
-      "scope": "Go language/runtime/stdlib components of the historical requirement group only; Agones components remain in the canonical native gap list.",
-      "retained_agones_obligations": "verification/agones/roadmap-M0003-partial-map.json#known_remaining",
-      "native_replacement_disposition": "RUST_NATIVE"
-    }
-  ],
-  "existing_compatibility_code": "PRESERVE_EXISTING_CODE; inspect consumers and reuse, replace or retire it during implementation. No Rust source was changed by this amendment.",
-  "historical_descriptive_fields": []
+  "work_base_commit": "a85b8ff6460597499abb4fc5aec640032d673483"
 }

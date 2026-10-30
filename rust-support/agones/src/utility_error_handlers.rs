@@ -188,7 +188,7 @@ pub enum SourceErrorHandler {
     Callback(SourceErrorCallback),
 }
 pub fn source_backoff_error(min_period: i64) -> SourceErrorHandler {
-    SourceErrorHandler::Backoff(Arc::new(SourceErrorBackoff::new(min_period)))
+    SourceErrorHandler::Backoff(Arc::new(SourceErrorBackoff::new(Duration::from_nanos(min_period.try_into().unwrap_or_default()))))
 }
 impl SourceFmtValueCopy for SourceErrorHandler {
     fn source_fmt_copy(&self) -> Self {
@@ -209,13 +209,13 @@ impl SourceErrorHandler {
                 Self::LogrusError => {
                     // Agones replaces ErrorHandlers[0]; it ignores ctx/msg/kv.
                     let logger = LogEntry::from_logger(Arc::clone(runtime.source_logger()));
-                    match report.error { Some(error) => runtime.emit_source_error_log(&logger, LogLevel::Error, b"", &error),
+                    match report.error { Some(error) => runtime.emit_source_error_log(&logger, LogLevel::Error, "", &error),
                         None => runtime.emit_source_log(&logger, LogLevel::Error, "<nil>") }
                 },
                 Self::Backoff(counter) => {
                     let now = runtime.source_error_instant();
-                    let delay = counter.next_delay(now, || runtime.source_error_instant());
-                    runtime.wait_source_error_delay(delay).await;
+                    let delay = counter.next_delay(now);
+                    tokio::time::sleep(delay).await;
                 },
                 Self::Callback(callback) => callback(runtime, report).await,
             }

@@ -118,6 +118,7 @@
   "authored_manifest_sha256": "0e10adb391f502626071cb2d071496b9ebeb4fd3262c2edfb02844c676a943c9",
   "cargo_bookkeeping": "Root patch selects the vendored exact Hyper 1.12.0 package; lock source/checksum fields change to a local path identity. Its registry archive checksum remains retained above. Existing dependency nodes/versions are unchanged. Only util enables agones-informational; no Cargo resolver, build or tool installation ran.",
   "destination": "rust-support/agones/vendor/hyper-1.12.0",
+  "existing_compatibility_code": "PRESERVE_EXISTING_CODE; inspect consumers and reuse, replace or retire it during implementation. No Rust source was changed by this amendment.",
   "form_data_owner": "Existing CGP/derive-deftly UtilityRuntimeProviders and UtilityRuntimeOwner retain HTTP/body-I/O/log/task ownership. RequestFields owns one current Form and PostForm map descriptor alongside existing request fields. SourceValues reuses Headers/HeaderValues byte-key map and shared slice storage with exact, case-sensitive key operations. UtilityRuntimeContext retains one SourceQuerySettings profile/nondefault-counter resource exposed by the static SourceQuerySettings getter. The gateway fixed fallback calls the same source form parser; there is no second parser state, effect registry, actor or lifecycle manager. Actual tool/ABI/GODEBUG/metric binding remains with the later application/telemetry owners.",
   "formal_credit": 0,
   "gateway_byte_unicode_owner": "Existing CGP/derive-deftly UtilityGatewayProviders owns route state/dispatch and RuntimeProviders owns the static SourceUppercaseMapper plus SourceUnicodeProfile getter. GatewayPattern retains a HeaderValues slice view of the caller pool; literal reads/String rendering see shared pool edits while captured variable names are copied byte strings at construction. Path components, verbs and callback captures are byte data; capture maps do not prescribe lexicographic iteration. RuntimeContext defaults explicitly to Go1265 and selects tracked Unicode15/Unicode17 inputs. The case-range lookup caches are immutable projections of pinned data, not writable policy, Go evaluators, Go-to-Rust emitters, provider registries or task owners. Actual compiled-version/ABI/default binding remains M0027.",
@@ -145,6 +146,15 @@
     "source_url": "https://static.crates.io/crates/h2/h2-0.4.20.crate",
     "version": "0.4.20"
   },
+  "historical_descriptive_fields": [
+    "mutable_method_body_authoring",
+    "source_parent_panic_policy_owner",
+    "url_alias_authoring"
+  ],
+  "historical_remaining_before_native_rust_v1": [
+    "Compile and exercise only after the global BOTH-route implementation gate opens. No source/package API, behavior or proof execution credit exists.",
+    "Complete mutable request/header aliases, native parse/rejection/1.0 keep-alive/upgrade/protocol-switch, buffering/readahead/partial I/O/flush/reset/abort/Continue/cancellation/close races, exact diagnostics, H2 HPACK/GOAWAY and all source version/configuration/native profiles. Authored H1 framing/count/completion and shared body control are not proof of native parity."
+  ],
   "modified_upstream_files": [
     "hyper-1.12.0/Cargo.toml",
     "hyper-1.12.0/Cargo.toml.orig",
@@ -163,6 +173,7 @@
     "source_empty_encoding": "Encoder::source_unframed retains native body lifetime; live source Method controls suppression and request phase controls final close/reuse",
     "status": "AUTHORED_UNVERIFIED_PARTIAL"
   },
+  "native_runtime_authoring_record": "verification/agones/roadmap-M0003-native-runtime-adoption.json",
   "original_file_sha256": {
     "hyper-1.12.0/.cargo_vcs_info.json": "ce2a9a274c279810c04796e650842b1db82faac0a8da8a59a5f2cd536774f256",
     "hyper-1.12.0/Cargo.lock": "eccfa5f4325ec5623d82c7ef8a1b598a647a885f0048962ed1b558bf7547d023",
@@ -240,6 +251,9 @@
   "project_executable_invocations": 0,
   "purpose": "Existing native H1/H2 drivers consume source informational, header/framing/trailer and request-completion decisions; source counts and lifecycle remain owned by the CGP request/connection phases.",
   "record_kind": "PINNED_NATIVE_SOURCE_ADOPTION",
+  "remaining": [
+    "Use the current M0003 Agones-required gap list in roadmap-M0003-partial-map.json. Review existing native library adoption and consumers; Go-only reconstruction is superseded."
+  ],
   "root_binding": {
     "Cargo.lock": "6c0f3edb41af33bc2b204575ce6f553170768e79bc64a9bbcc65ffc1b6346337",
     "Cargo.toml": "fd4401820492ab3209f748949abe5327e974d6c8d892a510803943391d6a2a18",
@@ -346,6 +360,28 @@
     "rust-support/agones/src/utility_trace_error.rs": "df6955fdb4099148dea9db372bd2b5bbb23e9da914f1aa19eeb88242c93c347f"
   },
   "runtime_credit": 0,
+  "semantic_policy": "AGONES_NATIVE_RUST_V1",
+  "semantic_scope": "Existing authored operations/source profiles are historical implementation descriptions. Only current Agones-required gaps and native Rust adoption remain active; no Go runtime or language equivalence obligation survives.",
+  "semantic_supersession": [
+    {
+      "authority": "AGONES_NATIVE_RUST_V1",
+      "disposition": "GO_ONLY_SUPERSEDED",
+      "native_replacement_disposition": "RUST_NATIVE",
+      "pointer": "/remaining",
+      "retained_agones_obligations": "verification/agones/roadmap-M0003-partial-map.json#known_remaining",
+      "scope": "Go language/runtime/stdlib components of the historical requirement group only; Agones components remain in the canonical native gap list.",
+      "source_text_sha256": "5932e5d6fffd09450576d7c4224921e1b3ec07ee19fc45b78cbf1c12d2cd787e"
+    },
+    {
+      "authority": "AGONES_NATIVE_RUST_V1",
+      "disposition": "GO_ONLY_SUPERSEDED",
+      "native_replacement_disposition": "RUST_NATIVE",
+      "pointer": "/url_alias_authoring/remaining",
+      "retained_agones_obligations": "verification/agones/roadmap-M0003-partial-map.json#known_remaining",
+      "scope": "Go language/runtime/stdlib components of the historical requirement group only; Agones components remain in the canonical native gap list.",
+      "source_text_sha256": "53fc919047496d3cc9f594c74c07456ac1b1d3d6872f894baee7da32a79d82be"
+    }
+  ],
   "source_collection_effect_owner": "StringBacking owns the nil/non-nil-empty/allocated distinction without an Arc for zero-capacity slices. Existing HeaderValues fallible primitives now back native public make/append/materialization/parsing and clone allocation paths. SourceCollectionFailureRaiser is a static CGP provider selected by the existing RuntimeProviders and a stateless NativeSourceCollectionContext; the new derive-deftly NativeSourceCollectionProviders template owns that native projection. It creates no resources, manager, registry or tasks. Typed runtime.errorString/plainError origin declarations reuse SourceErrorOrigin. Source recoverable unwinding skips Rust's eager hook and leaves recovery/reporting to the existing parent owner.",
   "source_collection_format_owner": "Rust-only utility_format_collections supplies typed borrowed native slice and fixed-array views plus a source struct-field capability and shared struct writer. SourcePrintfRecursion carries depth, method visibility, erroring and panic-printing state through the existing method/value path. Uint8-kind metadata selects source byte conversion without erasing values; native contiguous bytes borrow existing storage, and non-addressable arrays use the source copy branch. Canonical error reflection transfers field framing/names/separators to this shared struct writer through a concrete borrowed field view. Existing CGP runtime/context/Unicode/crash/task owners, derive-deftly SourcePrintfInterfaces and canonical error factory remain the only owners. No dynamic Go object model, writable reflection map, runtime provider/plugin registry, resource manager or alternate print loop is added.",
   "source_context_logger_owner": "utility_logr owns the actual Logger value and per-sink method references; utility_logr_context owns only the declared logr context-key control and actual retained logger/slog/other values; utility_klog owns passive source logger/options/klogger state inside UtilityRuntimeContext.source_klog_state. SourceLogSinkInterfaces derives real optional call-depth/helper methods and UtilityRuntimeProviders selects the sole CGP SourceKlogRecordEmitter. SourceCrashContext now retains one SourceErrorContext for cancellation/native data/logger lookup, so crash callbacks and reporting use the same context. Existing SourceErrorHandlers/SourceCallbackSlice and original retained error/argument owners are reused. No logger/provider registry, plugin, interpreter, competing root/task/orchestrator manager or second source state owner is introduced. Native Go context/slog/header/output/caller/type/GC/ABI/race/initializer effects remain explicitly incomplete.",
@@ -403,15 +439,15 @@
       "rust-support/agones/src/utility_http_request_fields.rs",
       "rust-support/agones/src/utility_logging.rs"
     ],
+    "historical_remaining_before_native_rust_v1": "Finish remaining source request-field/copy/Clone/alias profiles, including relevant protocol/Close/Trailer/TransferEncoding/Form/PostForm mutation and native consumption. Method/ContentLength/Body/URL/Host/RequestURI shared fields, retained URL-pointer logs and original/current body ownership are authored, not assured. Header range additions/nested Trailer: iteration, pointer/nil/panic/stack/bounds/allocator and custom Reader failure profiles, concurrency schedules and exact source ABI/version/configuration selection remain open. Gateway strings.ToUpper Unicode versus Rust conversion remains explicit; wantsClose/wants10 retain intentional pre-handler snapshots.",
     "owner": "Existing CGP/derive-deftly UtilityRuntimeProviders owns HTTP/TLS/body-I/O/clock/diagnostic/delay/log effects and existing request/connection phases. RequestFields owns method bytes, ContentLength, current Body, current optional SourceUrl, Host bytes and RequestURI bytes. SourceUrl owns one shared URL field value; Clone aliases the pointer and fields()/new copies the value into a different pointer. LogEntry retains the selected optional URL pointer until the existing SourceLogger serializes it. Method/Host/RequestURI log fields capture string bytes by value. The original transport RequestBody remains separately retained for server discard/cleanup. Headers and HeaderValues keep their existing map/slice owners. SourceUserinfo is immutable per source. URL data introduces no effect/provider registry, tasks, general Go object layer or competing lifecycle manager.",
     "pointer_assignment": "SourceUrl::clone aliases one Arc<RwLock<SourceUrlFields>>; RequestFields.set_url changes only the request field",
-    "source_json": "Go1.26.5/Go1.27.1 common declaration order; exported fields only; byte strings use SourceByteString; User nil=null and nonnil={}",
-    "status": "AUTHORED_UNVERIFIED_PARTIAL",
-    "value_copy": "SourceUrl.fields copies URL field values; SourceUrl.new allocates a different pointer, retaining the immutable Userinfo pointer",
-    "historical_remaining_before_native_rust_v1": "Finish remaining source request-field/copy/Clone/alias profiles, including relevant protocol/Close/Trailer/TransferEncoding/Form/PostForm mutation and native consumption. Method/ContentLength/Body/URL/Host/RequestURI shared fields, retained URL-pointer logs and original/current body ownership are authored, not assured. Header range additions/nested Trailer: iteration, pointer/nil/panic/stack/bounds/allocator and custom Reader failure profiles, concurrency schedules and exact source ABI/version/configuration selection remain open. Gateway strings.ToUpper Unicode versus Rust conversion remains explicit; wantsClose/wants10 retain intentional pre-handler snapshots.",
     "remaining": [
       "Use the current M0003 Agones-required gap list in roadmap-M0003-partial-map.json. Review existing native library adoption and consumers; Go-only reconstruction is superseded."
-    ]
+    ],
+    "source_json": "Go1.26.5/Go1.27.1 common declaration order; exported fields only; byte strings use SourceByteString; User nil=null and nonnil={}",
+    "status": "AUTHORED_UNVERIFIED_PARTIAL",
+    "value_copy": "SourceUrl.fields copies URL field values; SourceUrl.new allocates a different pointer, retaining the immutable Userinfo pointer"
   },
   "verification": "NOT_STARTED",
   "version": "1.12.0",
@@ -431,40 +467,5 @@
     "source_text_match": true,
     "version": "1.1.2"
   },
-  "work_base_commit": "a0f9850f10cee3e345ba52face074829239fe5bd",
-  "historical_remaining_before_native_rust_v1": [
-    "Compile and exercise only after the global BOTH-route implementation gate opens. No source/package API, behavior or proof execution credit exists.",
-    "Complete mutable request/header aliases, native parse/rejection/1.0 keep-alive/upgrade/protocol-switch, buffering/readahead/partial I/O/flush/reset/abort/Continue/cancellation/close races, exact diagnostics, H2 HPACK/GOAWAY and all source version/configuration/native profiles. Authored H1 framing/count/completion and shared body control are not proof of native parity."
-  ],
-  "remaining": [
-    "Use the current M0003 Agones-required gap list in roadmap-M0003-partial-map.json. Review existing native library adoption and consumers; Go-only reconstruction is superseded."
-  ],
-  "semantic_policy": "AGONES_NATIVE_RUST_V1",
-  "semantic_scope": "Existing authored operations/source profiles are historical implementation descriptions. Only current Agones-required gaps and native Rust adoption remain active; no Go runtime or language equivalence obligation survives.",
-  "semantic_supersession": [
-    {
-      "pointer": "/remaining",
-      "source_text_sha256": "5932e5d6fffd09450576d7c4224921e1b3ec07ee19fc45b78cbf1c12d2cd787e",
-      "disposition": "GO_ONLY_SUPERSEDED",
-      "authority": "AGONES_NATIVE_RUST_V1",
-      "scope": "Go language/runtime/stdlib components of the historical requirement group only; Agones components remain in the canonical native gap list.",
-      "retained_agones_obligations": "verification/agones/roadmap-M0003-partial-map.json#known_remaining",
-      "native_replacement_disposition": "RUST_NATIVE"
-    },
-    {
-      "pointer": "/url_alias_authoring/remaining",
-      "source_text_sha256": "53fc919047496d3cc9f594c74c07456ac1b1d3d6872f894baee7da32a79d82be",
-      "disposition": "GO_ONLY_SUPERSEDED",
-      "authority": "AGONES_NATIVE_RUST_V1",
-      "scope": "Go language/runtime/stdlib components of the historical requirement group only; Agones components remain in the canonical native gap list.",
-      "retained_agones_obligations": "verification/agones/roadmap-M0003-partial-map.json#known_remaining",
-      "native_replacement_disposition": "RUST_NATIVE"
-    }
-  ],
-  "existing_compatibility_code": "PRESERVE_EXISTING_CODE; inspect consumers and reuse, replace or retire it during implementation. No Rust source was changed by this amendment.",
-  "historical_descriptive_fields": [
-    "mutable_method_body_authoring",
-    "source_parent_panic_policy_owner",
-    "url_alias_authoring"
-  ]
+  "work_base_commit": "a0f9850f10cee3e345ba52face074829239fe5bd"
 }

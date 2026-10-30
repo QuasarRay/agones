@@ -10,8 +10,25 @@ use derive_deftly::Deftly;
 use crate::utility_declarations::derive_deftly_template_SourceErrorOrigin;
 
 pub type BoxError = Box<dyn Error + Send + Sync + 'static>;
-pub use crate::utility_error_format::{SourceFormat, SourceFormatInputError};
+// Legacy types remain visible only to the compatibility modules pending
+// retirement. Agones error construction below does not instantiate them.
 pub(crate) use crate::utility_error_format::{MessageError, WrappedError, FormattedError};
+
+#[derive(Debug)]
+pub struct AgonesError {
+    message: String,
+    source: Option<BoxError>,
+}
+impl fmt::Display for AgonesError {
+    fn fmt(&self, output: &mut fmt::Formatter<'_>) -> fmt::Result {
+        output.write_str(&self.message)?;
+        if let Some(source) = &self.source { write!(output, ": {source}")?; }
+        Ok(())
+    }
+}
+impl Error for AgonesError {
+    fn source(&self) -> Option<&(dyn Error + 'static)> { self.source.as_deref().map(|source| source as _) }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Deftly)]
 #[derive_deftly(SourceErrorOrigin)]
@@ -94,23 +111,19 @@ impl Errors {
 
     pub fn New(&self, message: impl Into<String>) -> BoxError { self.new(message) }
 
-    pub fn Errorf(&self, format: SourceFormat) -> BoxError {
-        format.into_error(self)
-    }
+    pub fn Errorf(&self, args: fmt::Arguments<'_>) -> BoxError { self.errorf(args) }
 
     pub fn Wrap(&self, error: Option<BoxError>, message: &str) -> Option<BoxError> {
-        error.map(|source| Box::new(WrappedError::new(self.prefix(message), source)) as BoxError)
+        error.map(|source| Box::new(AgonesError { message: self.prefix(message), source: Some(source) }) as BoxError)
     }
 
     pub fn Wrapf(&self, error: Option<BoxError>, format: impl FnOnce() -> String) -> Option<BoxError> {
-        // Source Wrapf returns before formatting when err is nil. Keeping the
-        // formatting closure lazy also preserves Stringer/effect ordering.
-        error.map(|source| Box::new(WrappedError::new(self.prefix(&format()), source)) as BoxError)
+        error.map(|source| Box::new(AgonesError { message: self.prefix(&format()), source: Some(source) }) as BoxError)
     }
 
     /// Creates a new prefixed error.
     pub fn new(&self, msg: impl Into<String>) -> BoxError {
-        Box::new(MessageError(self.prefix(&msg.into()).into()))
+        Box::new(AgonesError { message: self.prefix(&msg.into()), source: None })
     }
 
     /// Rust equivalent of Errorf.
@@ -130,7 +143,7 @@ impl Errors {
     where
         E: Error + Send + Sync + 'static,
     {
-        Box::new(WrappedError::new(self.prefix(msg.as_ref()), Box::new(err)))
+        Box::new(AgonesError { message: self.prefix(msg.as_ref()), source: Some(Box::new(err)) })
     }
 
     /// Formatted equivalent of Wrapf.
@@ -145,7 +158,7 @@ impl Errors {
         self.wrap(err, args.to_string())
     }
 
-    /// Equivalent to Go's `Wrap(nil, ...) == nil`.
+    /// Add Agones context only when an error is present.
     pub fn wrap_opt<E>(
         &self,
         err: Option<E>,
@@ -157,7 +170,7 @@ impl Errors {
         err.map(|err| self.wrap(err, msg))
     }
 
-    /// Equivalent to Go's nil-preserving Wrapf.
+    /// Add formatted Agones context only when an error is present.
     pub fn wrapf_opt<E>(
         &self,
         err: Option<E>,
@@ -196,16 +209,21 @@ pub fn callerPackage(frames: &[Option<&str>], skip: isize) -> String {
         .map(packageFromFunc).unwrap_or_default()
 }
 
-/// Source errors.As/errors.Is can traverse both Unwrap() error and
-/// Unwrap() []error. Rust's standard source() represents only the first form.
+/// Classify errors through Rust's standard source chain and downcasting.
 pub fn contains_error<T: Error + 'static>(error: &(dyn Error + 'static)) -> bool {
     find_error::<T>(error).is_some()
 }
-pub fn find_error<T: Error + 'static>(error: &(dyn Error + 'static)) -> Option<crate::utility_error_walk::SourceErrorMatch<'_, T>> {
-    crate::utility_error_walk::find_error_match(error)
+pub fn find_error<T: Error + 'static>(mut error: &(dyn Error + 'static)) -> Option<&T> {
+    loop {
+        if let Some(found) = error.downcast_ref::<T>() { return Some(found); }
+        error = error.source()?;
+    }
 }
-pub fn first_error_view<Value>(error: &(dyn Error + 'static), view: &impl Fn(&(dyn Error + 'static)) -> Option<Value>) -> Option<Value> {
-    crate::utility_error_walk::first_error_view(error, view)
+pub fn first_error_view<Value>(mut error: &(dyn Error + 'static), view: &impl Fn(&(dyn Error + 'static)) -> Option<Value>) -> Option<Value> {
+    loop {
+        if let Some(found) = view(error) { return Some(found); }
+        error = error.source()?;
+    }
 }
 
 /// Exact Rust analogue of Go's `FromPackage()`.

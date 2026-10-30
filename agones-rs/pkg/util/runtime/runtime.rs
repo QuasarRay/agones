@@ -11,23 +11,21 @@ pub const sourceKey: &str = "source";
 pub trait SourceLogType { const SOURCE_LOG_TYPE: &'static str; }
 const errs: crate::errors::Errors = crate::errors::Errors::from_package("agones.dev/agones/pkg/util/runtime");
 
-// Initialization is owned by UtilityRuntimeOwner: it installs the selected
-// JSON field map and the replaced error logger while retaining the inherited
-// second backoff handler. No process-global logger is duplicated in children.
+// The lifecycle owns a native JSON sink, filter and error backoff. Child
+// contexts share those resources without a process-global callback registry.
 pub fn SetLevel<Context: HasSourceLogger>(context: &Context, level: LogLevel) {
     context.source_logger().set_level(level);
 }
-pub async fn HandleError<Context: CanHandleSourceRuntimeError>(context: &Context, logger: Option<&LogEntry>, error: Option<&crate::utility_error_slice::SourceRetainedError>) {
+pub async fn HandleError<Context: CanHandleSourceRuntimeError>(context: &Context, logger: Option<&LogEntry>, error: Option<&(dyn std::error::Error + Send + Sync + 'static)>) {
     context.handle_source_runtime_error(logger, error).await;
 }
-pub fn Must(error: Option<BoxError>) { if let Some(error) = error { crate::utility_panic::unwind_source_error(error); } }
+pub fn Must<T, E: std::fmt::Debug>(result: Result<T, E>) -> T { result.expect("Agones initialization failed") }
 pub fn NewLoggerWithSource<Context: HasSourceLogger>(context: &Context, source: &str) -> LogEntry {
     LogEntry::from_logger(Arc::clone(context.source_logger())).with_field(sourceKey, source)
 }
-pub fn NewLoggerWithType<Context: HasSourceLogger, Object: SourceLogType + ?Sized>(context: &Context, _object: Option<&Object>) -> LogEntry {
-    NewLoggerWithSource(context, Object::SOURCE_LOG_TYPE)
+pub fn NewLoggerWithType<Context: HasSourceLogger, Object: ?Sized>(context: &Context, _object: Option<&Object>) -> LogEntry {
+    NewLoggerWithSource(context, std::any::type_name::<Object>())
 }
-pub fn NewLoggerForNilInterface<Context: HasSourceLogger>(context: &Context) -> LogEntry { NewLoggerWithSource(context, "<nil>") }
 
 /// The source wildcard HTTPBodyMarshaler over JSONPb with UseProtoNames,
 /// EmitUnpopulated and DiscardUnknown is consumed by the concrete mux/codec.
@@ -41,12 +39,10 @@ where Context: CanReadSourceClientConfiguration + CanEmitSourceLog + CanEmitSour
     match context.source_in_cluster_config().await {
         Ok(config) => return Ok(config),
         Err(error) => {
-            let error = crate::utility_error_slice::SourceRetainedError::from_original(error);
-            let logger = logger.expect("nil logrus.Entry after InClusterConfig failure").with_error(Some(&error));
-            // logrus.Warning uses Sprint: a leading string argument suppresses
-            // an automatically inserted space before the error argument.
+            let fallback = LogEntry::from_logger(Arc::clone(context.source_logger()));
+            let logger = logger.unwrap_or(&fallback).with_error(Some(error.as_ref()));
             context.emit_source_error_log(&logger, LogLevel::Warn,
-                b"Error creating inClusterConfig, trying to build config from flags", &error);
+                "Error creating inClusterConfig, trying to build config from flags: ", error.as_ref());
         }
     }
     if kubeconfigPath.is_empty() {

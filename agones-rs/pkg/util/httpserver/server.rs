@@ -32,13 +32,11 @@ where Context: CanRunHttpServer + CanEmitSourceLog + CanHandleSourceRuntimeError
         self.runtime.emit_source_log(logger, LogLevel::Info, "Starting http server...");
         if self.Port.is_empty() { self.Port = "8080".into(); }
         if let Err(error) = self.runtime.run_http_server(&self.Mux, &self.Port, stop, readHeaderTimeout).await {
-            let error = crate::utility_error_slice::SourceRetainedError::from_original(error);
-            if is_direct_server_closed(&error) {
-                self.runtime.emit_source_log(&logger.with_error(Some(&error)), LogLevel::Info, "http server closed");
+            if is_direct_server_closed(error.as_ref()) {
+                self.runtime.emit_source_log(&logger.with_error(Some(error.as_ref())), LogLevel::Info, "http server closed");
             } else {
-                let error = ERRORS.Wrap(Some(error.into_error()), &format!("Could not listen on :{}", self.Port)).expect("source non-nil error");
-                let error = crate::utility_error_slice::SourceRetainedError::from_original(error);
-                self.runtime.handle_source_runtime_error(Some(&logger.with_error(Some(&error))), Some(&error)).await;
+                let error = ERRORS.Wrap(Some(error), &format!("Could not listen on :{}", self.Port)).expect("listener error is present");
+                self.runtime.handle_source_runtime_error(Some(&logger.with_error(Some(error.as_ref()))), Some(error.as_ref())).await;
             }
         }
         // The source logs a non-ErrServerClosed listener error and returns nil.

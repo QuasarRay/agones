@@ -16,9 +16,7 @@ use crate::{source::workerqueue::traceError, errors::BoxError,
 
 impl SourceErrorMethod for traceError {
     fn source_error_message(&self) -> Cow<'_, [u8]> {
-        let Some(error) = self.source_inner_error() else { return Cow::Borrowed(b"<nil>"); };
-        crate::utility_error_format::source_error_message(error)
-            .unwrap_or_else(|| Cow::Owned(error.to_string().into_bytes()))
+        Cow::Owned(self.to_string().into_bytes())
     }
 }
 impl SourcePrintfValue for traceError {

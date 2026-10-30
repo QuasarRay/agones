@@ -87,7 +87,7 @@ impl APIServer {
                 let (namespace, resource) = match splitNameSpaceResource(request.path()) {
                     Ok(value) => value,
                     Err(error) => {
-                        let logger = state.logger.with_retained_error(Some(crate::utility_error_slice::SourceRetainedError::from_original(error)));
+                        let logger = state.logger.with_error(Some(error.as_ref()));
                         https::FourZeroFour(context, &logger, writer, request).await; return Ok(());
                     }
                 };

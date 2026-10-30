@@ -73,7 +73,7 @@ impl QueueItem {
     pub fn with_log_field(&self, logger: &LogEntry, field: &str) -> LogEntry {
         match self.0.log_value() {
             Ok(value) => logger.with_field(field, value),
-            Err(_) => logger.with_unserializable_field(self.source_type()),
+            Err(error) => logger.with_field("field_serialization_error", format!("{field}: {error}")),
         }
     }
     fn hash(&self) -> u64 { self.0.hash_value() }

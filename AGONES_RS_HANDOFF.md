@@ -1,12 +1,12 @@
 # Agones-rs and CPG handoff
 
 1. Canonical ledger: `AGONES_RS_STATE.json`. Apply the current root AGENTS.MD, `roadmap/0000-contract.md`, the separate `roadmap/alternation-policy.md`, and semantic policy `AGONES_NATIVE_RUST_V1`. The immutable original Goal attachment remains a historical input where the later user-authorized amendment supersedes it.
-2. Current cursor: M0003 / MANUAL / IMPLEMENTING / READY. Preserve the existing native Goal identity/status; this documentation task did not invoke host Goal controls or start migration execution. M0001 and M0002 retain their historical IMPLEMENTED_UNVERIFIED records. Neither is newly tested or recertified by this amendment.
+2. Current cursor: M0003 / MANUAL / IMPLEMENTING / READY. The existing native Goal is active; implementation has resumed under the amendment. M0001 and M0002 retain their historical IMPLEMENTED_UNVERIFIED records. Neither is newly tested or recertified by this amendment.
 3. Phase: IMPLEMENTATION_ONLY. Global BOTH-route gate: CLOSED. Verification: NOT_STARTED. No project build/test/probe/proof/generator/CI run is authorized until the complete required production scope and outputs are authored. A needed prohibited emitter build remains an explicit blocker.
 
 ## Immediate next action
 
-Continue M0003 MANUAL under AGONES_NATIVE_RUST_V1 without a route switch. Reconcile the 14 utility-file obligations against Agones domain/API contracts. Reuse existing Rust facilities for HTTP/TLS, serialization, errors, formatting/logging, filesystem notifications, clocks, signals, queues and owned async tasks. Finish concrete production consumers, Agones retry/readiness/admission/shutdown behavior and CGP/derive-deftly wiring. Retire Go-only fmt/reflection/typed-nil/panic/channel/map/slice/GC/allocator/ABI reconstruction from active requirements; review existing compatibility code for native reuse, replacement or retirement. Preserve dirty implementation and historical usage. M0003 remains incomplete and unverified; the whole-project implementation gate remains CLOSED.
+Continue M0003 MANUAL under AGONES_NATIVE_RUST_V1. Native logging, Agones error construction/cause traversal, queue error classification and Tokio supervision are partially authored; see roadmap-M0003-native-runtime-adoption.json. Replace remaining queue value/storage machinery with native domain keys and scheduling, then reconcile HTTP/gateway/crash consumers so legacy runtime resources and Go emulation can leave production. Keep all 13 Agones utility gaps open until required native consumers are complete. Do not run project executables or switch routes; BOTH-route implementation gate remains CLOSED.
 
 ## Current semantic obligations and records
 
@@ -20,3 +20,7 @@ Continue M0003 MANUAL under AGONES_NATIVE_RUST_V1 without a route switch. Reconc
 ## Recovery and provenance
 
 Read `verification/agones/roadmap/native-rust-policy-amendment.md` and the current milestone/affected file entries. The amendment inputs and compressed history preserve previous state/handoff, source profiles and gap text. Historical compatibility requirements do not reactivate on resumption. Exact source paths, harness naming, CGP/derive-deftly ownership, Pythonic valid Rust and final post-gate assurance/delivery remain required.
+
+## Native runtime adoption checkpoint
+
+Native Rust JSON logging, structured error fields, Agones error construction and cause traversal, queue conflict/trace classification, configuration-fallback warnings and parent-owned Tokio supervision are authored in this partial batch. See `verification/agones/roadmap-M0003-native-runtime-adoption.json` for source operations, concrete consumers, exact payload identities and remaining legacy paths. The unfinished Go text-logging draft is preserved in `verification/agones/roadmap/superseded-M0003-klog-draft.json.gz` and removed from production registration. No compilation, test, runtime, proof or milestone-completion credit is claimed. The policy amendment is preserved in local commit `84f90aeb7444aeb9805bd1950449f3ddfaa3c20a`; native changes receive a separate local checkpoint. No push or CI was invoked.

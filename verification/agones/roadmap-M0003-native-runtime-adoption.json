@@ -1,0 +1,351 @@
+{
+  "authored_unconsumed_api": {
+    "runtime::Must": "Rust Result::expect replaces source panic-value emulation; downstream startup consumers are not yet implemented or credited"
+  },
+  "cgp_ownership": {
+    "architecture_status": "PARTIAL; legacy runtime resources and HTTP crash consumers remain pending retirement",
+    "declaration": "UtilityRuntimeContext",
+    "resource_owner": "UtilityRuntimeOwner owns sink/backoff and UtilityTaskScope; children hold weak scope references",
+    "retired_default_providers": [
+      "SourceRuntimePanicReporterComponent",
+      "SourceUtilityPanicHandlerComponent"
+    ],
+    "selected_error_provider": "utility_logging.rs::HandleNativeRuntimeError",
+    "supervision": "UtilityTaskScope retains JoinSet results and wakes the existing parent observer; native Rust panic payloads remain JoinError values",
+    "template": "utility_declarations.rs::UtilityRuntimeProviders"
+  },
+  "formal_credit": 0,
+  "global_gate": "CLOSED",
+  "go_only_supersession": {
+    "authority": "verification/agones/roadmap/native-rust-policy-amendment.md",
+    "not_completion_gaps": [
+      "Go runtime/GC/ABI",
+      "typed nil and Go collection representation",
+      "klog/logrus internal formatting parity"
+    ],
+    "retired_from_native_paths": [
+      "Go fmt/error-operand printers and interface reconstruction in log emission",
+      "Go Errorf objects in Agones error construction",
+      "Go errors.Is/As in queue classification and server-close helpers",
+      "Go utility/root panic guards in generic task spawning and worker dispatch",
+      "Go nil-log-entry failure in client-configuration warnings"
+    ]
+  },
+  "guidance_synchronization": {
+    "authority_sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
+    "files_updated": [
+      {
+        "current_sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
+        "path": "agones-rs/AGENTS.MD",
+        "previous_content_recovery_commit": "84f90aeb7444aeb9805bd1950449f3ddfaa3c20a",
+        "previous_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
+      },
+      {
+        "current_sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
+        "path": "agones-rs/pkg/AGENTS.MD",
+        "previous_content_recovery_commit": "84f90aeb7444aeb9805bd1950449f3ddfaa3c20a",
+        "previous_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
+      },
+      {
+        "current_sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
+        "path": "agones-rs/pkg/util/AGENTS.MD",
+        "previous_content_recovery_commit": "84f90aeb7444aeb9805bd1950449f3ddfaa3c20a",
+        "previous_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
+      },
+      {
+        "current_sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
+        "path": "agones-rs/pkg/util/apiserver/AGENTS.MD",
+        "previous_content_recovery_commit": "84f90aeb7444aeb9805bd1950449f3ddfaa3c20a",
+        "previous_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
+      },
+      {
+        "current_sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
+        "path": "agones-rs/pkg/util/errors/AGENTS.MD",
+        "previous_content_recovery_commit": "84f90aeb7444aeb9805bd1950449f3ddfaa3c20a",
+        "previous_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
+      },
+      {
+        "current_sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
+        "path": "agones-rs/pkg/util/https/AGENTS.MD",
+        "previous_content_recovery_commit": "84f90aeb7444aeb9805bd1950449f3ddfaa3c20a",
+        "previous_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
+      },
+      {
+        "current_sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
+        "path": "agones-rs/pkg/util/httpserver/AGENTS.MD",
+        "previous_content_recovery_commit": "84f90aeb7444aeb9805bd1950449f3ddfaa3c20a",
+        "previous_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
+      },
+      {
+        "current_sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
+        "path": "agones-rs/pkg/util/logfields/AGENTS.MD",
+        "previous_content_recovery_commit": "84f90aeb7444aeb9805bd1950449f3ddfaa3c20a",
+        "previous_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
+      },
+      {
+        "current_sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
+        "path": "agones-rs/pkg/util/runtime/AGENTS.MD",
+        "previous_content_recovery_commit": "84f90aeb7444aeb9805bd1950449f3ddfaa3c20a",
+        "previous_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
+      },
+      {
+        "current_sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
+        "path": "agones-rs/pkg/util/webhooks/AGENTS.MD",
+        "previous_content_recovery_commit": "84f90aeb7444aeb9805bd1950449f3ddfaa3c20a",
+        "previous_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
+      },
+      {
+        "current_sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
+        "path": "agones-rs/pkg/util/workerqueue/AGENTS.MD",
+        "previous_content_recovery_commit": "84f90aeb7444aeb9805bd1950449f3ddfaa3c20a",
+        "previous_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
+      },
+      {
+        "current_sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
+        "path": "rust-support/AGENTS.MD",
+        "previous_content_recovery_commit": "84f90aeb7444aeb9805bd1950449f3ddfaa3c20a",
+        "previous_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
+      },
+      {
+        "current_sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
+        "path": "rust-support/agones/AGENTS.MD",
+        "previous_content_recovery_commit": "84f90aeb7444aeb9805bd1950449f3ddfaa3c20a",
+        "previous_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
+      },
+      {
+        "current_sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
+        "path": "rust-support/agones/src/AGENTS.MD",
+        "previous_content_recovery_commit": "84f90aeb7444aeb9805bd1950449f3ddfaa3c20a",
+        "previous_sha256": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10"
+      },
+      {
+        "current_sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
+        "path": "verification/agones/states/AGENTS.MD",
+        "previous_content_recovery_commit": "84f90aeb7444aeb9805bd1950449f3ddfaa3c20a",
+        "previous_sha256": "02c103dc94dbe4f0d2b5f9f6ddf4aaa25c41af50f0d991ea4d66ee8a89fa159f"
+      }
+    ],
+    "scope": "Affected directories and ancestors only. Repository-wide exact-copy reconciliation remains required."
+  },
+  "milestone_complete": false,
+  "milestone_id": "M0003",
+  "native_field_policy": "Agones method/host/requestURI/body byte diagnostics become native UTF-8 text via String::from_utf8_lossy; resource attributes remain serde_json values. Reserved metadata collisions are retained under fields; failed field serialization records its native serde diagnostic without discarding the event.",
+  "operations": [
+    {
+      "agones_requirement": "time/severity/message and Agones attributes; severity filtering; complete newline-delimited writes",
+      "cgp_capabilities": [
+        "SourceLogClock",
+        "SourceLogEmitter",
+        "SourceErrorLogEmitter"
+      ],
+      "id": "M0003-NATIVE-STRUCTURED-JSON-LOGS",
+      "rust_facilities": [
+        "serde_json::to_vec",
+        "std::io::Write::write_all",
+        "chrono::DateTime::to_rfc3339_opts",
+        "std::sync::Mutex",
+        "AtomicU8"
+      ],
+      "source_bodies": [
+        "init",
+        "SetLevel"
+      ],
+      "source_obligation": "agones:pkg/util/runtime/runtime.go::agones-contract",
+      "source_path": "pkg/util/runtime/runtime.go",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "status": "AUTHORED_UNVERIFIED; no compilation or behavioral acceptance"
+    },
+    {
+      "agones_requirement": "gsKey/gssKey/gsaKey/fleetKey/fasKey and resource namespace/name attributes",
+      "cgp_capabilities": [
+        "ResourceLogAugmenter"
+      ],
+      "id": "M0003-NATIVE-RESOURCE-LOG-FIELDS",
+      "rust_facilities": [
+        "serde_json::Value",
+        "BTreeMap",
+        "Clone"
+      ],
+      "source_bodies": [
+        "ResourceType constants",
+        "AugmentLogEntry"
+      ],
+      "source_obligation": "agones:pkg/util/logfields/logfields.go::agones-contract",
+      "source_path": "pkg/util/logfields/logfields.go",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "status": "AUTHORED_UNVERIFIED; no compilation or behavioral acceptance"
+    },
+    {
+      "agones_requirement": "Agones package/struct context, optional error wrapping and causal classification; declaration metadata retains source provenance without runtime reflection",
+      "cgp_capabilities": [
+        "UtilityRuntimeProviders"
+      ],
+      "id": "M0003-NATIVE-NATIVE-ERROR-CONTEXT",
+      "rust_facilities": [
+        "std::fmt::Arguments",
+        "std::error::Error::source",
+        "dyn Error::downcast_ref",
+        "Option",
+        "Result"
+      ],
+      "source_bodies": [
+        "New",
+        "Errorf",
+        "Wrap",
+        "Wrapf",
+        "prefix",
+        "FromPackage",
+        "FromStruct"
+      ],
+      "source_obligation": "agones:pkg/util/errors/errors.go::agones-contract",
+      "source_path": "pkg/util/errors/errors.go",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "status": "AUTHORED_UNVERIFIED; no compilation or behavioral acceptance"
+    },
+    {
+      "agones_requirement": "contextual error attributes plus root error event; inherited one-millisecond delay; cancel delay when the owner shuts down",
+      "cgp_capabilities": [
+        "SourceRuntimeErrorHandler",
+        "SourceErrorBackoffGetter",
+        "UtilityTaskScopeGetter"
+      ],
+      "id": "M0003-NATIVE-UNHANDLED-ERROR-BACKOFF",
+      "rust_facilities": [
+        "std::error::Error",
+        "std::time::Duration",
+        "std::time::Instant",
+        "tokio::time::sleep",
+        "CancellationToken"
+      ],
+      "source_bodies": [
+        "HandleError"
+      ],
+      "source_obligation": "agones:pkg/util/runtime/runtime.go::agones-contract",
+      "source_path": "pkg/util/runtime/runtime.go",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "status": "AUTHORED_UNVERIFIED; no compilation or behavioral acceptance"
+    },
+    {
+      "agones_requirement": "conflict/trace errors use trace logging; other failures use contextual error handling; failures retain retry path; parent observes Rust panics; native worker counts",
+      "cgp_capabilities": [
+        "SourceQueueErrorClassifier",
+        "UtilityTaskSpawner",
+        "UtilityTaskFailureObserver"
+      ],
+      "id": "M0003-NATIVE-QUEUE-ERROR-POLICY",
+      "rust_facilities": [
+        "std::error::Error::source",
+        "downcast_ref",
+        "Tokio JoinSet",
+        "RAII",
+        "checked integer conversion"
+      ],
+      "source_bodies": [
+        "traceError.Error",
+        "isTraceError",
+        "processNextWorkItem",
+        "run",
+        "Run",
+        "Healthy"
+      ],
+      "source_obligation": "agones:pkg/util/workerqueue/workerqueue.go::agones-contract",
+      "source_path": "pkg/util/workerqueue/workerqueue.go",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "status": "AUTHORED_UNVERIFIED; no compilation or behavioral acceptance"
+    },
+    {
+      "agones_requirement": "warn on in-cluster failure, use available logger or context sink, then keep configured/default fallback order",
+      "cgp_capabilities": [
+        "SourceClientConfigurationReader",
+        "SourceErrorLogEmitter"
+      ],
+      "id": "M0003-NATIVE-CONFIGURATION-ERROR-LOG",
+      "rust_facilities": [
+        "Result",
+        "Option",
+        "std::fmt::Display"
+      ],
+      "source_bodies": [
+        "InClusterBuildConfig"
+      ],
+      "source_obligation": "agones:pkg/util/runtime/runtime.go::agones-contract",
+      "source_path": "pkg/util/runtime/runtime.go",
+      "source_revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "status": "AUTHORED_UNVERIFIED; no compilation or behavioral acceptance"
+    }
+  ],
+  "production_consumers": {
+    "agones-rs/pkg/util/apiserver/apiserver.rs": [
+      "resourceHandler error field snapshots"
+    ],
+    "agones-rs/pkg/util/https/https.rs": [
+      "ErrorHTTPHandler and FourZeroFour error reporting"
+    ],
+    "agones-rs/pkg/util/https/server.rs": [
+      "initial/load/reload/server error logs"
+    ],
+    "agones-rs/pkg/util/httpserver/server.rs": [
+      "native listener error logging and typed close classification"
+    ],
+    "agones-rs/pkg/util/runtime/runtime.rs": [
+      "SetLevel, HandleError, logger creation and configuration-fallback warnings"
+    ],
+    "agones-rs/pkg/util/webhooks/webhooks.rs": [
+      "webhook handler error reporting"
+    ],
+    "agones-rs/pkg/util/workerqueue/workerqueue.rs": [
+      "key/sync failures, conflict/trace classification and supervised worker tasks"
+    ]
+  },
+  "project_executable_invocations": 0,
+  "record_kind": "PARTIAL_NATIVE_RUST_AUTHORING_AND_CONSUMER_ADOPTION",
+  "remaining_required_native_adoption": [
+    "UtilityRuntimeOwner still constructs legacy klog/error-handler/crash state and Go allocation/Unicode profiles. Map remaining HTTP/gateway/crash consumers, then remove unused machinery and registrations; no facade completion credit.",
+    "HTTP-boundary LogEntry adapters still accept legacy SourceUrl/Headers producers. Adopt native protocol types and preserve Agones request fields and credential redaction.",
+    "Queue storage/value/rate-limiter implementation still contains Go any/nil/hash/slice/numeric machinery. Replace it with native domain-key queues and selected Rust facilities while preserving deduplication, dirty/in-flight state, retry, delay and shutdown.",
+    "Error-origin/source-format compatibility declarations and modules remain compiled for other legacy consumers. Native Agones errors no longer instantiate old fmt objects; map remaining callers before retirement.",
+    "CRD readiness, discovery/serialization, admission, filesystem notifications, TLS reload, signal cleanup, feature/configuration consumers and whole-body/native-consumer reconciliation remain open in the canonical 13-gap M0003 list.",
+    "Complete required scope across both routes and outputs before opening the global gate. All runtime/test/proof/compile assurance remains NOT_STARTED."
+  ],
+  "route": "MANUAL",
+  "runtime_differential_credit": 0,
+  "semantic_policy": "AGONES_NATIVE_RUST_V1",
+  "source_sha256": {
+    "agones-rs/pkg/util/apiserver/apiserver.rs": "c003afa1538dae152684db0c575a7b17d65d9f32eb2d7be68af49759941540c3",
+    "agones-rs/pkg/util/errors/errors.rs": "6e460c47d530795d606e32d3256852235511b7b357ec83dcca9f5470de632342",
+    "agones-rs/pkg/util/https/https.rs": "5700eb42eae4c9733c7021a2008740a0f89ef09a016f8dbe551cc3ea956ca75b",
+    "agones-rs/pkg/util/https/server.rs": "70884b623df996e663156b0f35b7d266276d525b1b824064bb73f255d4add9d6",
+    "agones-rs/pkg/util/httpserver/server.rs": "9659cb93832f13d8eee94bb3e72eca158dce345779e61febfa6d697e1a918a11",
+    "agones-rs/pkg/util/logfields/logfields.rs": "9f364cba01f2de1759de7b344d619409842ce5ab8569157bf997426a08051cad",
+    "agones-rs/pkg/util/runtime/runtime.rs": "12eafdcb25ae7b4f7cefb6041f894eaa55ab4c334139a44a20e3f2f72e47c8f4",
+    "agones-rs/pkg/util/webhooks/webhooks.rs": "f728be5333aecae9018da4ce9bc09a278907e10d2bfa6cc56a77566c9c878da5",
+    "agones-rs/pkg/util/workerqueue/workerqueue.rs": "5c68d029694e4921bae8651f3db71f06107c37944119161896898c8f634c44ca",
+    "rust-support/agones/src/utility_declarations.rs": "152555b9dc4b6ca940f3e88315c6a5d8db2dcecfc69f5ecc1b686e458069f641",
+    "rust-support/agones/src/utility_error_handlers.rs": "935a56f1b61ac81fcf7adc528341a098ff3965780b9bcc361e02d030fb2fa459",
+    "rust-support/agones/src/utility_http.rs": "9718b8eb7c661306a86cafa82d56378f95881235d28796805edd16bb7fa7dace",
+    "rust-support/agones/src/utility_logging.rs": "8990ac662ca4595d5405096ad9f27dfb72a5a6e8d17b68b1f6d73c5b00c391d5",
+    "rust-support/agones/src/utility_queue.rs": "e2868cfcc6f4f0773cb6b0bdaf0a2b9546f32548c115a95cfc268f97d9c00353",
+    "rust-support/agones/src/utility_queue_values.rs": "729aa0299eea45152e3abe1fb8f8b6dc1c9247c77312fc3ceeeceac6e27abfb7",
+    "rust-support/agones/src/utility_scope.rs": "219cdbba6ce8b82b6247f64ebc162950769af42f0cb4d44ab6adcf2d276e0eb1",
+    "rust-support/agones/src/utility_trace_error.rs": "4974f6c05e6ca760c12f85a32b47691e73f418f828c8bd908f457d6a0e6e9853"
+  },
+  "stage": "IMPLEMENTING",
+  "superseded_draft": {
+    "archive": "verification/agones/roadmap/superseded-M0003-klog-draft.json.gz",
+    "files_preserved": 16,
+    "sha256": "ba78c91cb6ef4467104b806dedb2c725a505de791f4ae7f17a3c443adcd38524",
+    "status": "RECOVERABLE_REFERENCE_ONLY; not registered as production"
+  },
+  "usage": {
+    "amendment_boundary": "Observation 115 to observation 116 includes earlier drafting, pause/resume and policy work and is not reassigned to native implementation. Historical forecasts and completed actuals are unchanged.",
+    "credit_charge": null,
+    "historical_pre_amendment_observation": "verification/agones/roadmap-M0003-progress-usage-115.json",
+    "intermediate_native_progress": "verification/agones/roadmap-M0003-progress-usage-117.json",
+    "measurement_status": "PARTIAL_M0003_OBSERVATION; not a completed-milestone comparison",
+    "native_authoring_entry": "verification/agones/roadmap-M0003-progress-usage-116.json",
+    "native_progress": "verification/agones/roadmap-M0003-progress-usage-118.json",
+    "observed_counter_delta": 162795
+  },
+  "verification": "NOT_STARTED",
+  "work_base_commit": "84f90aeb7444aeb9805bd1950449f3ddfaa3c20a"
+}

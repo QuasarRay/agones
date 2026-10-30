@@ -34,8 +34,7 @@ impl WebHook {
                 let (state, path) = (Arc::clone(&state), registered_path.clone());
                 Box::pin(async move {
                     if let Err(error) = Self::handle(context, &state, &path, writer, request).await {
-                        let error = crate::utility_error_slice::SourceRetainedError::from_original(error);
-                        runtime::HandleError(context, Some(&state.logger.with_url("url", request.url())), Some(&error)).await;
+                        runtime::HandleError(context, Some(&state.logger.with_url("url", request.url())), Some(error.as_ref())).await;
                         let _ = writer.write_header(500).await;
                     }
                 })

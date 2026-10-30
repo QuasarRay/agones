@@ -6,7 +6,6 @@ use std::{borrow::Cow, collections::BTreeMap, fmt, sync::Arc};
 use cgp::prelude::*;
 use derive_deftly::Deftly;
 use serde_json::Value;
-use crate::utility_logging::SourceLogValue;
 use crate::utility_declarations::derive_deftly_template_SourceErrorOrigin;
 
 pub const NilGameServer: &str = "NilGameServer";
@@ -25,44 +24,34 @@ impl fmt::Display for ResourceType {
     fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result { out.write_str(&self.0) }
 }
 
-/// Entry copies field descriptors while typed shared data retains source aliases.
-/// The CGP logger owns the formatter, level and output resource.
+/// Structured field snapshots use serde_json values. The CGP context owns the
+/// output resource; entries can be cloned without retaining arbitrary errors.
 #[derive(Clone, Debug, Default)]
 pub struct LogEntry {
-    pub fields: BTreeMap<String, SourceLogValue>,
+    pub fields: BTreeMap<String, Value>,
     pub(crate) logger: Option<Arc<crate::utility_logging::SourceLogger>>,
-    pub(crate) serialization_error: Option<String>,
 }
 impl PartialEq for LogEntry {
-    fn eq(&self, other: &Self) -> bool { self.fields == other.fields && self.serialization_error == other.serialization_error }
+    fn eq(&self, other: &Self) -> bool { self.fields == other.fields }
 }
 impl LogEntry {
     pub fn from_logger(logger: Arc<crate::utility_logging::SourceLogger>) -> Self { Self { logger: Some(logger), ..Self::default() } }
     pub fn with_field(&self, name: impl Into<String>, value: impl Into<Value>) -> Self {
         let mut entry = self.clone();
-        entry.fields.insert(name.into(), SourceLogValue::Json(value.into()));
+        entry.fields.insert(name.into(), value.into());
         entry
     }
-    pub fn with_retained_error(&self, error: Option<crate::utility_error_slice::SourceRetainedError>) -> Self {
-        let mut entry = self.clone();
-        entry.fields.insert("error".into(), error.map_or(SourceLogValue::Json(Value::Null), SourceLogValue::Error));
-        entry
-    }
-    /// Borrowed native compatibility. Existing retained/shared interfaces defer
-    /// Error until JSONFormatter; arbitrary borrowed payloads need owner adoption.
+    /// Error ownership stays with the caller. Display supplies the diagnostic;
+    /// no interface reconstruction or delayed source formatter is involved.
     pub fn with_error(&self, error: Option<&(dyn std::error::Error + Send + Sync + 'static)>) -> Self {
-        match error {
-            None => self.with_retained_error(None),
-            Some(error) => match crate::utility_error_query::SourceErrorCursor::borrowed(error).retained_copy() {
-                Some(error) => self.with_retained_error(Some(error)),
-                None => self.with_field("error", Value::String(error.to_string())),
-            },
-        }
+        self.with_field("error", error.map_or(Value::Null, |error| Value::String(error.to_string())))
     }
-    pub fn with_unserializable_field(&self, source_type: &str) -> Self {
-        let mut entry = self.clone();
-        entry.serialization_error = Some(format!("json: unsupported type: {source_type}"));
-        entry
+    pub fn with_serializable_field<T: serde::Serialize + ?Sized>(&self, name: impl Into<String>, value: &T) -> Self {
+        let name = name.into();
+        match serde_json::to_value(value) {
+            Ok(value) => self.with_field(name, value),
+            Err(error) => self.with_field("field_serialization_error", format!("{name}: {error}")),
+        }
     }
 }
 

@@ -4,11 +4,10 @@
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals)]
 use std::{error::Error, fmt, sync::{Arc, Mutex, RwLock}};
 use derive_deftly::Deftly;
-use futures::{future::BoxFuture, FutureExt};
+use futures::future::BoxFuture;
 use tokio_util::sync::CancellationToken;
 use crate::{errors::{BoxError, Errors}, logfields::{LogEntry, ResourceType}, runtime,
     utility_runtime::UtilityRuntimeContext, utility_scope::CanSpawnUtilityTask,
-    utility_crash::{CanHandleSourceCrash, SourceCrashContext, SourcePanicHandlers},
     utility_logging::{CanEmitSourceLog, CanEmitSourceErrorLog, LogLevel}, utility_admission::Status,
     utility_queue::{SourceQueueContext, CanUseSourceQueue, CanReadSourceQueueKey, CanReadSourceQueueClock, CanDecideSourceQueueDelay,
         CanCallSourceQueueHandler, CanClassifySourceQueueError},
@@ -27,22 +26,15 @@ impl traceError {
 }
 impl fmt::Display for traceError {
     fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result {
-        out.write_str(&String::from_utf8_lossy(&crate::utility_format_methods::SourceErrorMethod::source_error_message(self)))
+        match &self.err { Some(error) => fmt::Display::fmt(error, out), None => out.write_str("trace error") }
     }
 }
-// Source traceError has no Unwrap. Do not expose err through Error::source.
-impl Error for traceError {}
+impl Error for traceError {
+    fn source(&self) -> Option<&(dyn Error + 'static)> { self.err.as_deref().map(|error| error as _) }
+}
 pub fn NewTraceError(err: Option<BoxError>) -> BoxError { Box::new(traceError { err }) }
 pub fn isTraceError(err: &(dyn Error + 'static)) -> bool {
-    use crate::utility_error_query::{SourceErrorCursor, SourceErrorAsTarget, try_source_error_as};
-    if let Some(error) = SourceErrorCursor::borrowed(err).retained_copy() {
-        let mut target = crate::utility_error_target::retained_error_pointer_slot::<traceError>();
-        return try_source_error_as(Some(SourceErrorCursor::retained(error)), SourceErrorAsTarget::Pointer(&mut target))
-            .unwrap_or_else(|_| crate::errors::contains_error::<traceError>(err));
-    }
-    let mut target = crate::utility_error_target::source_error_pointer_slot::<traceError>();
-    try_source_error_as(Some(SourceErrorCursor::borrowed(err)), SourceErrorAsTarget::Pointer(&mut target))
-        .unwrap_or_else(|_| crate::errors::contains_error::<traceError>(err))
+    crate::errors::contains_error::<traceError>(err)
 }
 
 #[derive(Debug, Deftly)]
@@ -62,23 +54,12 @@ impl crate::utility_error_view::SourceApiStatus for ApiStatusError {
     }
 }
 pub fn isConflict(error: &(dyn Error + 'static)) -> bool {
-    let status = match crate::utility_error_status::try_api_status(error) {
-        Ok((status, true)) => {
-            let status = status.unwrap_or_else(|| crate::utility_panic::unwind_source_runtime_error(
-                crate::utility_panic::SourceRuntimeErrorString::new("invalid memory address or nil pointer dereference")));
-            // Keep two calls, in order, even if a custom As returned true.
-            Some((status.status().reason, status.status().code))
-        },
-        Ok((_, false)) => None,
-        // Opaque native Error::source bridges have no complete source method
-        // set yet. Preserve their old hosting path explicitly; mapped source
-        // values above dispatch direct assignment/custom As/Unwrap in order.
-        Err(_) => crate::errors::first_error_view(error, &|error| {
-            if let Some(error) = error.downcast_ref::<ApiStatusError>() { return Some((error.status.reason.clone(), error.status.code)); }
-            let error = error.downcast_ref::<crate::utility_error_view::ApiStatusEnvelope>()?;
-            Some((error.status().reason, error.status().code))
-        }),
-    };
+    let status = crate::errors::first_error_view(error, &|error| {
+        if let Some(error) = error.downcast_ref::<ApiStatusError>() { return Some((error.status.reason.clone(), error.status.code)); }
+        let error = error.downcast_ref::<crate::utility_error_view::ApiStatusEnvelope>()?;
+        let status = error.status();
+        Some((status.reason, status.code))
+    });
     let Some((reason, code)) = status else { return false; };
     const KNOWN_REASONS: &[&str] = &["Unauthorized", "Forbidden", "NotFound", "AlreadyExists", "Conflict", "Gone", "Invalid",
         "ServerTimeout", "StoreReadError", "Timeout", "TooManyRequests", "BadRequest", "MethodNotAllowed", "NotAcceptable",
@@ -88,7 +69,7 @@ pub fn isConflict(error: &(dyn Error + 'static)) -> bool {
 
 pub type Handler = Arc<dyn Fn(CancellationToken, QueueKey) -> BoxFuture<'static, Result<(), BoxError>> + Send + Sync>;
 #[derive(Default)]
-struct WorkerCounts { workers: i64, running: i64 }
+struct WorkerCounts { workers: usize, running: usize }
 #[derive(Deftly)]
 #[derive_deftly(SourceErrorOrigin)]
 #[deftly(source_package = "agones.dev/agones/pkg/util/workerqueue", source_struct = "WorkerQueue", source_log_type = "*workerqueue.WorkerQueue")]
@@ -117,8 +98,7 @@ impl<Limiter: SourceRateLimiter> WorkerQueue<Limiter> {
             Ok(key) => Some(key),
             Err(error) => {
                 let error = self.errs.Wrap(Some(error), "Error creating key for object").expect("non-nil key error");
-                let error = crate::utility_error_slice::SourceRetainedError::from_original(error);
-                runtime::HandleError(&self.queue.source_queue_runtime, Some(&object.log_object(&self.logger)), Some(&error)).await; None
+                runtime::HandleError(&self.queue.source_queue_runtime, Some(&object.log_object(&self.logger)), Some(error.as_ref())).await; None
             }
         }
     }
@@ -152,22 +132,20 @@ impl<Limiter: SourceRateLimiter> WorkerQueue<Limiter> {
         self.queue.source_queue_runtime.emit_source_log(&object.with_log_field(&self.logger, &self.keyName), LogLevel::Debug, "Processing");
         let Some(key) = object.string_key().cloned() else {
             let error = self.errs.New(format!("expected string in queue, but got {}", object.source_type()));
-            let error = crate::utility_error_slice::SourceRetainedError::from_original(error);
-            runtime::HandleError(&self.queue.source_queue_runtime, Some(&object.with_log_field(&self.logger, &self.keyName)), Some(&error)).await;
+            runtime::HandleError(&self.queue.source_queue_runtime, Some(&object.with_log_field(&self.logger, &self.keyName)), Some(error.as_ref())).await;
             self.queue.source_queue_forget(&object); return true;
         };
-        let handler = self.SyncHandler.read().unwrap_or_else(|error| error.into_inner()).clone().unwrap_or_else(||
-            crate::utility_panic::unwind_source_runtime_error(crate::utility_panic::SourceRuntimeErrorString::new("invalid memory address or nil pointer dereference")));
-        match self.queue.source_queue_call_handler(&handler, context, key).await {
+        let handler = self.SyncHandler.read().unwrap_or_else(|error| error.into_inner()).clone();
+        let result = match handler {
+            Some(handler) => self.queue.source_queue_call_handler(&handler, context, key).await,
+            None => Err(self.errs.New("sync handler is not configured")),
+        };
+        match result {
             Err(error) => {
-                // The source error interface can escape through a custom As
-                // target. Retain its original Box once at the CGP boundary;
-                // classifiers, loggers and retry await share that data owner.
-                let error = crate::utility_error_slice::SourceRetainedError::from_original(error);
-                if self.queue.source_queue_expected_error(&error) {
-                    self.queue.source_queue_runtime.emit_source_error_log(&object.with_log_field(&self.logger, &self.keyName), LogLevel::Trace, b"", &error);
+                if self.queue.source_queue_expected_error(error.as_ref()) {
+                    self.queue.source_queue_runtime.emit_source_error_log(&object.with_log_field(&self.logger, &self.keyName), LogLevel::Trace, "", error.as_ref());
                 } else {
-                    runtime::HandleError(&self.queue.source_queue_runtime, Some(&object.with_log_field(&self.logger, &self.keyName)), Some(&error)).await;
+                    runtime::HandleError(&self.queue.source_queue_runtime, Some(&object.with_log_field(&self.logger, &self.keyName)), Some(error.as_ref())).await;
                 }
                 // Do not Forget a failed item. Done runs after AddRateLimited,
                 // including its bounded-channel wait and immediate dirty path.
@@ -178,6 +156,7 @@ impl<Limiter: SourceRateLimiter> WorkerQueue<Limiter> {
         true
     }
     pub async fn Run(self: &Arc<Self>, context: CancellationToken, workers: i64) -> Result<(), BoxError> {
+        let workers = usize::try_from(workers).map_err(|_| self.errs.New("worker count must be nonnegative and fit usize"))?;
         self.setWorkerCount(workers);
         let runtime = &self.queue.source_queue_runtime;
         runtime.emit_source_log(&self.logger.with_field("workers", workers), LogLevel::Info, "Starting workers...");
@@ -203,22 +182,19 @@ impl<Limiter: SourceRateLimiter> WorkerQueue<Limiter> {
         let _running = Running(Arc::clone(&self));
         loop {
             if context.is_cancelled() { return; }
-            if let Err(payload) = std::panic::AssertUnwindSafe(self.runWorker(context.clone())).catch_unwind().await {
-                self.queue.source_queue_runtime.handle_source_crash(SourceCrashContext::new(context.clone()),
-                    crate::utility_panic::SourceRecoveredPanic::new(payload), &SourcePanicHandlers::nil());
-            }
-            // Sliding Until prepares its delay after f/HandleCrash, then
-            // selects cancellation. It rechecks stop before the next f.
+            // Panics reach the parent-owned Tokio JoinSet. The lifecycle
+            // observes the failed child and decides shutdown policy.
+            self.runWorker(context.clone()).await;
             let delay = self.queue.source_queue_sleep(workFx);
             tokio::select! { _ = context.cancelled() => return, _ = delay => () }
         }
     }
     pub fn Healthy(&self) -> Result<(), BoxError> {
         let counts = self.mu.lock().unwrap_or_else(|error| error.into_inner());
-        if counts.workers != counts.running { return Err(Errors::default().New(format!("want {} worker goroutine(s), got {}", counts.workers, counts.running))); } Ok(())
+        if counts.workers != counts.running { return Err(Errors::default().New(format!("want {} worker task(s), got {}", counts.workers, counts.running))); } Ok(())
     }
-    pub fn RunCount(&self) -> i64 { self.mu.lock().unwrap_or_else(|error| error.into_inner()).running }
-    fn setWorkerCount(&self, workers: i64) { self.mu.lock().unwrap_or_else(|error| error.into_inner()).workers = workers; }
-    fn inc(&self) { let mut counts = self.mu.lock().unwrap_or_else(|error| error.into_inner()); counts.running = counts.running.wrapping_add(1); }
-    fn dec(&self) { let mut counts = self.mu.lock().unwrap_or_else(|error| error.into_inner()); counts.running = counts.running.wrapping_sub(1); }
+    pub fn RunCount(&self) -> usize { self.mu.lock().unwrap_or_else(|error| error.into_inner()).running }
+    fn setWorkerCount(&self, workers: usize) { self.mu.lock().unwrap_or_else(|error| error.into_inner()).workers = workers; }
+    fn inc(&self) { let mut counts = self.mu.lock().unwrap_or_else(|error| error.into_inner()); counts.running = counts.running.checked_add(1).expect("running worker count overflow"); }
+    fn dec(&self) { let mut counts = self.mu.lock().unwrap_or_else(|error| error.into_inner()); counts.running = counts.running.checked_sub(1).expect("running worker count underflow"); }
 }

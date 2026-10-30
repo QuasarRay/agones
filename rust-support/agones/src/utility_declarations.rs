@@ -391,12 +391,10 @@ define_derive_deftly! {
             crate::utility_logging::SourceLogClockComponent: crate::utility_logging::ReadLocalSourceLogClock,
             crate::utility_logging::SourceLogEmitterComponent: crate::utility_logging::EmitSourceJsonLog,
             crate::utility_logging::SourceErrorLogEmitterComponent: crate::utility_logging::EmitSourceJsonErrorLog,
-            crate::utility_logging::SourceRuntimeErrorHandlerComponent: crate::utility_logging::HandleSourceErrorHandlers,
+            crate::utility_logging::SourceRuntimeErrorHandlerComponent: crate::utility_logging::HandleNativeRuntimeError,
             crate::utility_scope::UtilityTaskScopeGetterComponent:
                 ::cgp::prelude::UseField<::cgp::prelude::Symbol!("utility_task_scope")>,
             crate::utility_scope::UtilityTaskSpawnerComponent: crate::utility_scope::SpawnOwnedUtilityTask,
-            crate::utility_runtime_panic::SourceRuntimePanicReporterComponent: crate::utility_runtime_panic::ReportNativeSourceRuntimePanic,
-            crate::utility_runtime_panic::SourceUtilityPanicHandlerComponent: crate::utility_runtime_panic::ExitAfterSourceUtilityPanic,
             crate::utility_crash::SourceCrashStateGetterComponent:
                 ::cgp::prelude::UseField<::cgp::prelude::Symbol!("source_crash_state")>,
             crate::utility_crash::SourceCrashHandlerComponent: crate::utility_crash::HandleSourceCrash,

@@ -7,7 +7,6 @@ use tokio::{task::JoinSet, sync::Notify};
 use tokio_util::sync::CancellationToken;
 use cgp::prelude::*;
 use crate::errors::{BoxError, Errors};
-use crate::utility_runtime_panic::CanHandleSourceUtilityPanic;
 
 pub type UtilityBlockingTask = Box<dyn FnOnce() -> Result<(), BoxError> + Send + 'static>;
 
@@ -187,7 +186,7 @@ pub trait CanSpawnUtilityTask {
 }
 #[cgp_new_provider]
 impl<Context> UtilityTaskSpawner<Context> for SpawnOwnedUtilityTask
-where Context: HasUtilityTaskScope + CanHandleSourceUtilityPanic + Clone + Send + 'static,
+where Context: HasUtilityTaskScope,
 {
     fn utility_child_token(context: &Context) -> Result<CancellationToken, BoxError> {
         context.utility_task_scope().upgrade().map(|scope| scope.child_token())
@@ -195,38 +194,19 @@ where Context: HasUtilityTaskScope + CanHandleSourceUtilityPanic + Clone + Send 
     }
     fn spawn_utility_task(context: &Context, name: &str, future: BoxFuture<'static, Result<(), BoxError>>) -> Result<(), BoxError> {
         context.utility_task_scope().upgrade()
-            .ok_or_else(|| Errors::default().New("utility task owner has been released"))?.spawn(name, source_utility_task(context.clone(), future))
+            .ok_or_else(|| Errors::default().New("utility task owner has been released"))?.spawn(name, future)
     }
     fn spawn_utility_task_or_return(context: &Context, name: &str, future: BoxFuture<'static, Result<(), BoxError>>)
         -> Result<(), BoxFuture<'static, Result<(), BoxError>>>
     {
-        let future = source_utility_task(context.clone(), future);
         match context.utility_task_scope().upgrade() {
             Some(scope) => scope.spawn_or_return(name, future), None => Err(future),
         }
     }
     fn spawn_blocking_utility_task_or_return(context: &Context, name: &str, work: UtilityBlockingTask) -> Result<(), UtilityBlockingTask> {
-        let parent = context.clone();
-        let work: UtilityBlockingTask = Box::new(move || {
-            match std::panic::catch_unwind(AssertUnwindSafe(work)) {
-                Ok(result) => result,
-                Err(payload) => parent.handle_source_utility_panic(crate::utility_panic::SourceRecoveredPanic::new(payload)),
-            }
-        });
         match context.utility_task_scope().upgrade() {
             Some(scope) => scope.spawn_blocking_or_return(name, work), None => Err(work),
         }
     }
 }
 
-fn source_utility_task<Context>(context: Context, future: BoxFuture<'static, Result<(), BoxError>>)
-    -> BoxFuture<'static, Result<(), BoxError>>
-where Context: CanHandleSourceUtilityPanic + Send + 'static,
-{
-    Box::pin(async move {
-        match AssertUnwindSafe(future).catch_unwind().await {
-            Ok(result) => result, // Returned errors retain their caller's policy.
-            Err(payload) => context.handle_source_utility_panic(crate::utility_panic::SourceRecoveredPanic::new(payload)),
-        }
-    })
-}
