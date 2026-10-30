@@ -223,6 +223,7 @@
   "native_queue_authoring_record": "verification/agones/roadmap-M0003-native-queue-adoption.json",
   "native_runtime_authoring_record": "verification/agones/roadmap-M0003-native-runtime-adoption.json",
   "native_signal_authoring_record": "verification/agones/roadmap-M0003-native-signals-adoption.json",
+  "native_web_authoring_record": "verification/agones/roadmap-M0003-native-web-adoption.json",
   "record_kind": "PARTIAL_BODY_OWNERSHIP_TRANSFER",
   "semantic_policy": "AGONES_NATIVE_RUST_V1",
   "semantic_scope": "Existing authored operations/source profiles are historical implementation descriptions. Only current Agones-required gaps and native Rust adoption remain active; no Go runtime or language equivalence obligation survives.",

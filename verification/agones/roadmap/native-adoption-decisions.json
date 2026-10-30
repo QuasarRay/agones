@@ -46,26 +46,29 @@
       "sha256": "de93657e926a3498249173e564ccc7798ffd081ba2583c8c9dd490b239195cde"
     },
     {
-      "decision": "NATIVE_NOTIFY_FSWATCH_AUTHORED; REMAINING_UTILITY_ADOPTION_OPEN",
+      "decision": "NATIVE_WEB_CONSUMERS_AUTHORED; LEGACY_GATEWAY_RUNTIME_RETIREMENT_OPEN",
       "native_authoring_record": "verification/agones/roadmap-M0003-native-runtime-adoption.json",
       "native_fswatch_authoring_record": "verification/agones/roadmap-M0003-native-fswatch-adoption.json",
       "native_signal_authoring_record": "verification/agones/roadmap-M0003-native-signals-adoption.json",
+      "native_web_authoring_record": "verification/agones/roadmap-M0003-native-web-adoption.json",
       "owner_milestone": "M0003",
       "path": "rust-support/agones/src/utility_declarations.rs",
-      "previous_sha256": "f82fef148e6276b7f650e27cb00c7fac42c9903b428a43d04932b0b3eb30c9c7",
-      "production_status": "Native watcher provider and concrete batching/TLS consumers authored; uncompiled and unverified",
+      "previous_sha256": "25cdc4e92b580e7a5703213bdddaccc6d25cbe50a39fe73e1753d258cd4809a2",
+      "production_status": "Native transport/router/request/response and concrete plain/TLS/discovery/admission consumers authored; uncompiled and unverified",
       "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
       "semantic_policy": "AGONES_NATIVE_RUST_V1",
-      "sha256": "25cdc4e92b580e7a5703213bdddaccc6d25cbe50a39fe73e1753d258cd4809a2"
+      "sha256": "58714bb4530853001d81675a06de0e5d1f748efa03105c5ece3bd86308ae0d5a"
     },
     {
-      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "decision": "NATIVE_WEB_CONSUMERS_AUTHORED; LEGACY_GATEWAY_RUNTIME_RETIREMENT_OPEN",
+      "native_web_authoring_record": "verification/agones/roadmap-M0003-native-web-adoption.json",
       "owner_milestone": "M0003",
       "path": "rust-support/agones/src/utility_discovery.rs",
-      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed",
+      "previous_sha256": "8151e804ce4354fef226b0cd915c6e868936c2806089143e4c212ee99e1a32ed",
+      "production_status": "Native transport/router/request/response and concrete plain/TLS/discovery/admission consumers authored; uncompiled and unverified",
       "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
       "semantic_policy": "AGONES_NATIVE_RUST_V1",
-      "sha256": "8151e804ce4354fef226b0cd915c6e868936c2806089143e4c212ee99e1a32ed"
+      "sha256": "ff6a7d5a27fbcbdf79be2f038183d3f4b37c582c2cca64a3d35a7a5fb3fd5975"
     },
     {
       "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
@@ -785,15 +788,16 @@
       "sha256": "ec5b44723a58520a27ac9822c5a995413f39850e9827b6e5d23012a5c2b4bb7c"
     },
     {
-      "decision": "NATIVE_QUEUE_CORE_AUTHORED; REMAINING_UTILITY_AND_CONTROLLER_ADOPTION_OPEN",
+      "decision": "NATIVE_WEB_CONSUMERS_AUTHORED; LEGACY_GATEWAY_RUNTIME_RETIREMENT_OPEN",
       "native_queue_authoring_record": "verification/agones/roadmap-M0003-native-queue-adoption.json",
+      "native_web_authoring_record": "verification/agones/roadmap-M0003-native-web-adoption.json",
       "owner_milestone": "M0003",
       "path": "rust-support/agones/src/utility_lib.rs",
-      "previous_sha256": "a9506f08f4973cee2cc79eed0a6ab018d91cf3ba83b37d9edcdee2fdf5e668f9",
-      "production_status": "Native key/storage/timer/retry operations and worker consumer authored; uncompiled and unverified",
+      "previous_sha256": "6dc131e6c70f0eed21b78e2bf0d52539ffebb05ae4ec810b6b14744c2abebaf6",
+      "production_status": "Native transport/router/request/response and concrete plain/TLS/discovery/admission consumers authored; uncompiled and unverified",
       "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
       "semantic_policy": "AGONES_NATIVE_RUST_V1",
-      "sha256": "6dc131e6c70f0eed21b78e2bf0d52539ffebb05ae4ec810b6b14744c2abebaf6"
+      "sha256": "fa33de3d736a62ca83487adf2c429f35d7d78bd35ce7a1cf411b5a6590bbcba4"
     },
     {
       "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
@@ -993,13 +997,15 @@
       "sha256": "9d2ad82bcb5f1c742fb05a9ec257006d1dfe5a17ac48cc726bc853cd369bd555"
     },
     {
-      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "decision": "NATIVE_WEB_CONSUMERS_AUTHORED; LEGACY_GATEWAY_RUNTIME_RETIREMENT_OPEN",
+      "native_web_authoring_record": "verification/agones/roadmap-M0003-native-web-adoption.json",
       "owner_milestone": "M0003",
       "path": "rust-support/agones/src/utility_tls.rs",
-      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed",
+      "previous_sha256": "47034a6a225137c1d3e732bcd7a4b897d3780d2d7d2ede246f5ada61476d43d8",
+      "production_status": "Native transport/router/request/response and concrete plain/TLS/discovery/admission consumers authored; uncompiled and unverified",
       "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
       "semantic_policy": "AGONES_NATIVE_RUST_V1",
-      "sha256": "47034a6a225137c1d3e732bcd7a4b897d3780d2d7d2ede246f5ada61476d43d8"
+      "sha256": "f41cdbf0845ce32d6cffc4d1df3efdbfa53e5624c6303ff519247319c7946822"
     },
     {
       "decision": "PARTIAL_NATIVE_ADOPTION; REMAINING_CONSUMERS_REQUIRE_RECONCILIATION",
@@ -1011,10 +1017,20 @@
       "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
       "semantic_policy": "AGONES_NATIVE_RUST_V1",
       "sha256": "4974f6c05e6ca760c12f85a32b47691e73f418f828c8bd908f457d6a0e6e9853"
+    },
+    {
+      "decision": "NATIVE_WEB_TRANSPORT_AND_CONSUMERS_AUTHORED_UNVERIFIED",
+      "native_web_authoring_record": "verification/agones/roadmap-M0003-native-web-adoption.json",
+      "owner_milestone": "M0003",
+      "path": "rust-support/agones/src/utility_web.rs",
+      "production_status": "Selected by native plain/TLS/discovery/admission consumers; legacy gateway/runtime/Hyper retirement remains open",
+      "requirement": "Native HTTP transport, routing, headers, streaming and owned request/connection lifecycle for Agones consumers.",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "sha256": "f4e70f85026513c25b42070f31918e42f3fac8358be6d59df5dcaf4ef033bee0"
     }
   ],
   "implementation_changes": true,
-  "latest_partial_authoring_record": "verification/agones/roadmap-M0003-native-fswatch-adoption.json",
+  "latest_partial_authoring_record": "verification/agones/roadmap-M0003-native-web-adoption.json",
   "policy": "AGONES_NATIVE_RUST_V1",
   "record_kind": "EXISTING_IMPLEMENTATION_RECONCILIATION"
 }

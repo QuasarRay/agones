@@ -5,7 +5,7 @@
 use std::time::Duration;
 use derive_deftly::Deftly;
 use tokio_util::sync::CancellationToken;
-use crate::{errors::{BoxError, Errors}, logfields::LogEntry, utility_http::{CanRunHttpServer, SourceMux, is_direct_server_closed},
+use crate::{errors::{BoxError, Errors}, logfields::LogEntry, utility_web::{CanRunHttpServer, SourceMux, is_direct_server_closed},
     utility_logging::{CanEmitSourceLog, CanHandleSourceRuntimeError, LogLevel}, utility_runtime::UtilityRuntimeContext,
     utility_declarations::derive_deftly_template_SourceErrorOrigin};
 
@@ -28,7 +28,8 @@ impl<Context> Server<Context>
 where Context: CanRunHttpServer + CanEmitSourceLog + CanHandleSourceRuntimeError,
 {
     pub async fn Run(&mut self, stop: CancellationToken, _workers: i32) -> Result<(), BoxError> {
-        let logger = self.Logger.as_ref().expect("nil httpserver.Server.Logger");
+        let fallback = LogEntry::default();
+        let logger = self.Logger.as_ref().unwrap_or(&fallback);
         self.runtime.emit_source_log(logger, LogLevel::Info, "Starting http server...");
         if self.Port.is_empty() { self.Port = "8080".into(); }
         if let Err(error) = self.runtime.run_http_server(&self.Mux, &self.Port, stop, readHeaderTimeout).await {

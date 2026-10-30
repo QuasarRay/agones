@@ -1,0 +1,315 @@
+{
+  "ecosystem_reuse": {
+    "api_source_sha256": {
+      "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/axum-0.7.9/src/routing/mod.rs": "b79b10d6b5aa29bca2f4ea71d060a23d7ae48f16dd2424b5d63321009357f761",
+      "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/http-body-util-0.1.5/src/lib.rs": "1830f80e0fed6a6db4284fa68475c209016385906c89660a59c91e050e998ff4",
+      "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/hyper-util-0.1.21/src/server/conn/auto/mod.rs": "0f28859d1e7f2b6dd9bb255a07cd6e11d5acc0caf87159ea9217ae5e1b3d67d0",
+      "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/hyper-util-0.1.21/src/service/glue.rs": "e79b4226013d4b3eaaadaa72b2dc7dc264cd8f5b2267d907a19f4f0e1c1538f0",
+      "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/mime-0.3.17/src/lib.rs": "154cead5ddff82df2b4bda0344bdbbdde5b096fb8e64fce4c624b7d94259694c",
+      "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/percent-encoding-2.3.2/src/lib.rs": "641903d385581e76f31ef8c991d83c2a5d7fbbc2879d93909c539037e4e1e3e2",
+      "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/socket2-0.6.5/src/socket.rs": "14d718fc14286e1a0c35d785d1ece2096c5af12188c248a7493851d0d87f824d",
+      "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-util-0.7.20/src/sync/cancellation_token/guard.rs": "89419faf3dec8ce4e5e2a00f43a55586e49465f5efabf5752e89074b0c6e542f"
+    },
+    "custom_policy_reason": "Agones still owns routes, content negotiation choices, admission ordering, redaction, certificate publication and parent lifecycle. Native libraries own protocol parsing/framing, header/URI types, routing machinery and TLS implementation.",
+    "lockfile_provenance": "Cargo.lock dependency edges changed after manifest edits without an agent Cargo invocation; actor attribution is unconfirmed. No new or removed package versions were observed. This is source configuration only, with no resolution/build/verification credit.",
+    "manifest_change": "Add direct dependencies for existing selected Axum/MIME/percent-encoding/socket2 and enable hyper-util service support.",
+    "new_package_versions": [],
+    "removed_prior_package_versions": [],
+    "selected_existing_packages": {
+      "axum": "0.7.9",
+      "http-body-util": "0.1.5",
+      "hyper": "1.12.0",
+      "hyper-util": "0.1.21",
+      "mime": "0.3.17",
+      "percent-encoding": "2.3.2",
+      "rustls": "0.23.46",
+      "socket2": "0.6.5",
+      "tokio-rustls": "0.26.6"
+    }
+  },
+  "formal_credit": 0,
+  "global_gate": "CLOSED",
+  "legacy_retirement": {
+    "old_http_module": "rust-support/agones/src/utility_http.rs",
+    "old_http_registration_still_present": true,
+    "patched_hyper": "The workspace still selects its patched Hyper and agones-informational feature for legacy code. New utility_web code uses standard APIs, but unmodified Hyper selection and patch/feature retirement remain required after legacy consumers are removed. No completely Go-free application/runtime closure is claimed.",
+    "runtime_resources": "UtilityRuntimeOwner still constructs legacy klog/error-handler/crash/query/unicode/pattern resources. These remain explicit native adoption/retirement work.",
+    "status": "PRESERVED; remaining gateway/formatting/reference consumers still compiled. Native plain/TLS/discovery/admission consumers import utility_web instead."
+  },
+  "milestone_complete": false,
+  "milestone_id": "M0003",
+  "native_policy_decisions": [
+    "Axum routing replaces Go ServeMux grammar, GODEBUG routing profiles and Go URL alias mechanics. Literal Agones routes and namespace/resource dispatch remain mapped.",
+    "HeaderMap/Uri/Method and serde own Rust request/response data. No source slice/map/nil/reflection behavior is reconstructed.",
+    "MIME quality/specificity ordering uses native parsing and stable sorting; served encodings and Agones JSON fallback remain explicit. Go ParseFloat and unstable-sort profiles are superseded.",
+    "Rustls resolves the most recently loaded certificate for each handshake, including clients without SNI; Go crypto/tls callback invocation/nil fallback mechanics are superseded.",
+    "Malformed admission input and invalid handler state use native HTTP/Result errors; no fabricated allowed request or nil-pointer runtime error.",
+    "Go response buffers, sniff tables, write-count overflow, status rendering, panic/recover and internal header/body profiles are not native HTTP completion requirements."
+  ],
+  "operations": [
+    {
+      "agones_requirement": "Serve configured HTTP/TLS ports with header/handshake timeouts, stop accepting on cancellation, preserve closed-server handling and retain connection drain in the parent scope.",
+      "bodies": [
+        "Server.Run",
+        "HTTPS Server.Run"
+      ],
+      "id": "M0003-NATIVE-WEB-TRANSPORT",
+      "owner": "utility_web.rs::{bind_listener,serve_listener,serve_connection}",
+      "rust_facilities": [
+        "Hyper HTTP/1 and HTTP/2",
+        "hyper-util auto::Builder",
+        "Tokio TcpListener",
+        "socket2 dual-stack binding",
+        "JoinSet",
+        "UtilityTaskScope"
+      ],
+      "source_obligations": [
+        "agones:pkg/util/httpserver/server.go::agones-contract",
+        "agones:pkg/util/https/server.go::agones-contract"
+      ],
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "agones_requirement": "Register literal discovery, resource and admission routes; retain dynamic route visibility, resource namespace/key dispatch and one shared mux owner.",
+      "bodies": [
+        "NewAPIServer",
+        "AddAPIResource",
+        "resourceHandler",
+        "NewWebHook",
+        "AddHandler"
+      ],
+      "id": "M0003-NATIVE-WEB-ROUTING",
+      "owner": "utility_web.rs::SourceMux + source APIServer/WebHook",
+      "rust_facilities": [
+        "Axum Router",
+        "State extractor",
+        "native routing methods",
+        "Arc<RwLock<Router>>"
+      ],
+      "source_obligations": [
+        "agones:pkg/util/apiserver/apiserver.go::agones-contract",
+        "agones:pkg/util/webhooks/webhooks.go::agones-contract"
+      ],
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "agones_requirement": "Read native request bodies, decode admission data, send actual streaming response frames with backpressure and receiver errors, and retain errors through Rust Result. Request cancellation follows client/body disposal and the root owner.",
+      "bodies": [
+        "ErrorHTTPHandler",
+        "FourZeroFour",
+        "addSerializedHandler",
+        "WebHook.handle"
+      ],
+      "id": "M0003-NATIVE-WEB-REQUEST-RESPONSE",
+      "owner": "utility_web.rs::{HttpRequest,ResponseWriter,ResponseStream,dispatch}",
+      "rust_facilities": [
+        "http HeaderMap/Method/Uri/StatusCode",
+        "Axum Body",
+        "http-body-util BodyExt",
+        "Tokio mpsc/oneshot",
+        "CancellationToken",
+        "serde_json"
+      ],
+      "source_obligations": [
+        "agones:pkg/util/https/https.go::agones-contract",
+        "agones:pkg/util/apiserver/apiserver.go::agones-contract",
+        "agones:pkg/util/webhooks/webhooks.go::agones-contract"
+      ],
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "agones_requirement": "Own request tasks in the existing scope. Isolate native Rust handler panics as HTTP 500 before header commitment or a failing body stream afterwards; report through the native logger.",
+      "bodies": [
+        "ErrorHTTPHandler",
+        "request handler execution"
+      ],
+      "id": "M0003-NATIVE-WEB-REQUEST-POLICY",
+      "owner": "utility_web.rs::RunRustHttpHandler",
+      "rust_facilities": [
+        "CGP NativeHttpHandlerRunner",
+        "Rust catch_unwind",
+        "bounded streaming body",
+        "UtilityTaskScope"
+      ],
+      "source_obligations": [
+        "agones:pkg/util/https/https.go::agones-contract"
+      ],
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "agones_requirement": "Keep method/URI/host/header/body diagnostic fields and redact Authorization, Proxy-Authorization, Cookie, Set-Cookie and X-Api-Key. Rust ownership drops consumed request bodies.",
+      "bodies": [
+        "redactSensitiveHeaders",
+        "LogRequest",
+        "FourZeroFour"
+      ],
+      "id": "M0003-NATIVE-WEB-LOGGING",
+      "owner": "source::https::{redactSensitiveHeaders,LogRequest,FourZeroFour}",
+      "rust_facilities": [
+        "HeaderMap",
+        "HeaderValue",
+        "serde_json Value",
+        "Rust Drop"
+      ],
+      "source_obligations": [
+        "agones:pkg/util/https/https.go::agones-contract"
+      ],
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "agones_requirement": "Retain JSON, YAML and Kubernetes protobuf media types, JSON fallback, target metadata and resource snapshots. Native MIME parsing selects ordered acceptable alternatives.",
+      "bodies": [
+        "AcceptedSerializer",
+        "addSerializedHandler",
+        "shallowCopyObjectForTargetKind"
+      ],
+      "id": "M0003-NATIVE-WEB-DISCOVERY",
+      "owner": "source::apiserver + utility_discovery.rs",
+      "rust_facilities": [
+        "mime::Mime",
+        "stable Rust quality/specificity sorting",
+        "serde_json",
+        "serde_yaml",
+        "existing required Kubernetes protobuf encoder"
+      ],
+      "source_obligations": [
+        "agones:pkg/util/apiserver/apiserver.go::agones-contract"
+      ],
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "agones_requirement": "Use Rustls validation/ALPN, keep the last successfully loaded certificate and share the native transport/router with the existing reload consumer.",
+      "bodies": [
+        "setupServer",
+        "getCertificate",
+        "WatchForCertificateChanges",
+        "Run"
+      ],
+      "id": "M0003-NATIVE-WEB-TLS",
+      "owner": "utility_tls.rs + source::https::Server",
+      "rust_facilities": [
+        "Rustls",
+        "tokio-rustls",
+        "CertifiedKey",
+        "ResolvesServerCert",
+        "native HTTP connection loop"
+      ],
+      "source_obligations": [
+        "agones:pkg/util/https/server.go::agones-contract"
+      ],
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "agones_requirement": "Keep ordered operation/group/kind matching, response UID/defaults and handler-error Status construction. Missing input request returns 400; invalid handler-returned state becomes a normal server error rather than a reconstructed nil-pointer panic.",
+      "bodies": [
+        "WebHook.handle"
+      ],
+      "id": "M0003-NATIVE-WEB-ADMISSION",
+      "owner": "source::webhooks::WebHook",
+      "rust_facilities": [
+        "serde_json",
+        "Option/Result",
+        "native HTTP error responses"
+      ],
+      "source_obligations": [
+        "agones:pkg/util/webhooks/webhooks.go::agones-contract"
+      ],
+      "status": "AUTHORED_UNVERIFIED"
+    }
+  ],
+  "payload_sha256": {
+    "Cargo.lock": "99e8a7fd89b2605a718611b3694b02482585a04c8477a810701f8101aa779a31",
+    "agones-rs/pkg/util/apiserver/apiserver.rs": "a3a06f31483593824d2f21b3fd24d1dc2cb9fb0aedf99eacb35196ad31704dfd",
+    "agones-rs/pkg/util/https/https.rs": "143ecc697e143cb4470f101c48e0919a7fa687bbf7c303febcbbf49be5196e8b",
+    "agones-rs/pkg/util/https/server.rs": "efb4aa41cf8d22c61a9853648ffb6a2d402ce23fc3b697b0c3009235a270abbf",
+    "agones-rs/pkg/util/httpserver/server.rs": "18091dd47cca264cde37632683a5b9118f49127472767c05f8f043dfb1120401",
+    "agones-rs/pkg/util/webhooks/webhooks.rs": "43ebdbf26143e86d5f4aa8d673efc16ea0ca72f9067b9278493f9f05ad38f307",
+    "crates/util/Cargo.toml": "b2bc17022f4adfd797bff258967416d37d2be1e49116db00c16bc58255c97896",
+    "rust-support/agones/src/utility_declarations.rs": "58714bb4530853001d81675a06de0e5d1f748efa03105c5ece3bd86308ae0d5a",
+    "rust-support/agones/src/utility_discovery.rs": "ff6a7d5a27fbcbdf79be2f038183d3f4b37c582c2cca64a3d35a7a5fb3fd5975",
+    "rust-support/agones/src/utility_lib.rs": "fa33de3d736a62ca83487adf2c429f35d7d78bd35ce7a1cf411b5a6590bbcba4",
+    "rust-support/agones/src/utility_tls.rs": "f41cdbf0845ce32d6cffc4d1df3efdbfa53e5624c6303ff519247319c7946822",
+    "rust-support/agones/src/utility_web.rs": "f4e70f85026513c25b42070f31918e42f3fac8358be6d59df5dcaf4ef033bee0"
+  },
+  "production_composition": {
+    "declaration": "UtilityRuntimeContext",
+    "native_mux_consumers": [
+      "source::httpserver::Server",
+      "source::https::Server",
+      "source::apiserver::APIServer",
+      "source::webhooks::WebHook"
+    ],
+    "new_capabilities": {
+      "NativeHttpHandlerRunner": "utility_web.rs::RunRustHttpHandler",
+      "NativeHttpServerRunner": "utility_web.rs::RunRustHttpServer"
+    },
+    "ownership": "One shared Axum route owner. The existing root task scope owns request and connection-drain futures; each native connection owns/join its Hyper protocol child scope. No detached application task or new application manager.",
+    "reused_capabilities": [
+      "HttpsServerRunner",
+      "SourceCertificateLoader",
+      "ApiObjectEncoder",
+      "AdmissionHandlerCaller",
+      "UtilityTaskSpawner",
+      "SourceLogEmitter"
+    ],
+    "shutdown": "Listener shutdown retains drain in the existing parent scope. Root cancellation reaches request child tokens. Fatal listener errors abort connection tasks before cleanup; rejected drain ownership is awaited locally.",
+    "streaming": "A response head handshake plus a bounded two-frame channel feeds Axum Body. Closed receivers and cancelled requests produce native errors; frames are not claimed delivered to the network merely because they were queued.",
+    "template": "utility_declarations.rs::UtilityRuntimeProviders"
+  },
+  "project_executable_invocations_by_agent": 0,
+  "record_kind": "NATIVE_WEB_TRANSPORT_AND_CONSUMER_AUTHORING_PARTIAL_ADOPTION",
+  "remaining": [
+    "Replace the legacy gateway/protobuf/query/metadata production path with native Rust protocol facilities and connect it to the native mux.",
+    "Retire old utility_http/Gateway/Go formatting/crash consumers, remove unused provider registrations and legacy runtime resources, then remove patched Hyper features/source overrides.",
+    "Complete native application/controller consumer transfer, lifecycle/startup/shutdown sequencing and whole-source/configuration reconciliation.",
+    "Reconcile discovery/admission and transport edge requirements against Agones contracts; retain fixture identities and supersede only Go-only assertions after the gate.",
+    "All 13 M0003 gaps remain open. No type-check, target build, network behavior, runtime observation or formal acceptance is established by this authoring record."
+  ],
+  "route": "MANUAL",
+  "runtime_differential_credit": 0,
+  "semantic_policy": "AGONES_NATIVE_RUST_V1",
+  "sources": [
+    {
+      "git_blob": "72b790615ed7744904062fe3f0bc62d468c253c6",
+      "path": "pkg/util/httpserver/server.go",
+      "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "sha256": "0f9b972fc678b0f33c7531a8b19c08a9ffb54ab745014ed800eff19b4157102b"
+    },
+    {
+      "git_blob": "f5ca0c6c16c5c5a24fdac6a0b6373a390e9f385f",
+      "path": "pkg/util/https/https.go",
+      "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "sha256": "feaf1a8c1d5f3d8933a5752142bc574a6d28f15430ecf1f87a3e657e59223a65"
+    },
+    {
+      "git_blob": "ddaa46a85d70a4109835dd9fd41302de36599709",
+      "path": "pkg/util/https/server.go",
+      "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "sha256": "ba57ba27151f223eabc321c83e295449be5d8d15ba6d0ccf53472cd405e6b951"
+    },
+    {
+      "git_blob": "84f47785c726ae04765999b31ad710413963a199",
+      "path": "pkg/util/apiserver/apiserver.go",
+      "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "sha256": "67e4b15b16088940677a899b870053ee32f7aaea40819bb5c8d059820b9f2a68"
+    },
+    {
+      "git_blob": "1995f206ca2d186af3988703fbe9abda8ef86fe7",
+      "path": "pkg/util/webhooks/webhooks.go",
+      "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+      "sha256": "b3a2c84309dae0dab131cac8bb3a1e8798824333ba063f6bb1a388bbeba54673"
+    }
+  ],
+  "stage": "IMPLEMENTING",
+  "usage": {
+    "credit_charge": null,
+    "entry": "verification/agones/roadmap-M0003-progress-usage-128.json",
+    "intermediate": "verification/agones/roadmap-M0003-progress-usage-129.json",
+    "observed_counter_delta": 144897,
+    "progress": "verification/agones/roadmap-M0003-progress-usage-130.json",
+    "semantic_policy": "AGONES_NATIVE_RUST_V1",
+    "status": "PARTIAL_M0003_OBSERVATION; not a completed-milestone comparison"
+  },
+  "verification": "NOT_STARTED",
+  "work_base_commit": "bf4c152f4bc2c86e35d832b1c10ae7279ee4e66a"
+}

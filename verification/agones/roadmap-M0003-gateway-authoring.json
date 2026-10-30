@@ -10944,6 +10944,7 @@
   "native_queue_authoring_record": "verification/agones/roadmap-M0003-native-queue-adoption.json",
   "native_runtime_authoring_record": "verification/agones/roadmap-M0003-native-runtime-adoption.json",
   "native_signal_authoring_record": "verification/agones/roadmap-M0003-native-signals-adoption.json",
+  "native_web_authoring_record": "verification/agones/roadmap-M0003-native-web-adoption.json",
   "ownership": {
     "codec": "Fixed source UseProtoNames/EmitUnpopulated/DiscardUnknown behavior is consumed by serializer/decoder code, not stored as flags.",
     "metaprogramming": "UtilityRuntimeContext and GatewayContext derive HasField + Deftly; UtilityRuntimeProviders/UtilityGatewayProviders supply static CGP factory, getters, codec, dispatch, callback and response implementations.",

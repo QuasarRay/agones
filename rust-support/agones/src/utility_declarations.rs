@@ -401,6 +401,8 @@ define_derive_deftly! {
             crate::utility_crash::SourceCrashPanicReporterComponent: crate::utility_crash::ReportNativeSourceCrashPanic,
             crate::utility_scope::UtilityTaskFailureObserverComponent: crate::utility_scope::ObserveOwnedUtilityTaskFailure,
             crate::utility_http::HttpServerRunnerComponent: crate::utility_http::RunNativeHttpServer,
+            crate::utility_web::NativeHttpServerRunnerComponent: crate::utility_web::RunRustHttpServer,
+            crate::utility_web::NativeHttpHandlerRunnerComponent: crate::utility_web::RunRustHttpHandler,
             crate::utility_http::SourceHttpClockComponent: crate::utility_http::ReadUtcSourceHttpClock,
             crate::utility_http::SourceHttpDiagnosticComponent: crate::utility_http::EmitNativeSourceHttpDiagnostic,
             crate::utility_http::SourceHttpPanicReporterComponent: crate::utility_http::ReportNativeSourceHttpPanic,

@@ -5,7 +5,7 @@
 use std::{collections::BTreeMap, sync::{Arc, RwLock}};
 use derive_deftly::Deftly;
 use crate::{errors::{BoxError, Errors}, logfields::LogEntry, runtime,
-    utility_http::{HttpRequest, ResponseWriter, SourceMux}, utility_runtime::UtilityRuntimeContext,
+    utility_web::{HttpRequest, ResponseWriter, SourceMux}, utility_runtime::UtilityRuntimeContext,
     utility_logging::{CanEmitSourceLog, LogLevel},
     utility_admission::{CanCallAdmissionHandler, Status, StatusDetails, StatusCause},
     utility_declarations::derive_deftly_template_SourceErrorOrigin};
@@ -34,7 +34,7 @@ impl WebHook {
                 let (state, path) = (Arc::clone(&state), registered_path.clone());
                 Box::pin(async move {
                     if let Err(error) = Self::handle(context, &state, &path, writer, request).await {
-                        runtime::HandleError(context, Some(&state.logger.with_url("url", request.url())), Some(error.as_ref())).await;
+                        runtime::HandleError(context, Some(&state.logger.with_field("url", request.uri().to_string())), Some(error.as_ref())).await;
                         let _ = writer.write_header(500).await;
                     }
                 })
@@ -50,22 +50,23 @@ impl WebHook {
         let mut review: AdmissionReview = request.decode_one_json::<Option<AdmissionReview>>().await.map_err(|error|
             state.errs.Wrap(Some(error), &format!("error decoding decoding json for path {path}")).expect("non-nil decode error"))?.unwrap_or_default();
         if review.response.is_none() { review.response = Some(AdmissionResponse { allowed: true, ..Default::default() }); }
-        // Source dereferences a missing Request; it does not invent an allowed
-        // empty admission request or turn this branch into a normal response.
-        let incoming = review.request.as_ref().expect("nil AdmissionReview.Request");
+        let Some(incoming) = review.request.as_ref() else {
+            writer.http_error("admission request is missing", 400).await;
+            return Ok(());
+        };
         review.response.as_mut().expect("initialized response").uid = incoming.uid.clone();
         context.emit_source_log(&state.logger.with_field("name", incoming.name.clone()).with_field("path", path)
             .with_field("kind", incoming.kind.kind.clone()).with_field("group", incoming.kind.group.clone()), LogLevel::Debug, "handling webhook request");
         let handlers = state.handlers.read().unwrap_or_else(|error| error.into_inner()).get(path).cloned().unwrap_or_default();
         for operation in handlers {
-            let incoming = review.request.as_ref().expect("nil AdmissionReview.Request returned by handler");
+            let incoming = review.request.as_ref().ok_or_else(|| state.errs.New("admission handler returned no request"))?;
             if operation.operation == incoming.operation && operation.groupKind.kind == incoming.kind.kind && operation.groupKind.group == incoming.kind.group {
                 let (returned, error) = context.call_admission_handler(&operation.handler, review).await;
                 review = returned;
                 if let Some(error) = error {
-                    let response = review.response.as_mut().expect("nil AdmissionReview.Response returned by handler");
+                    let response = review.response.as_mut().ok_or_else(|| state.errs.New("admission handler returned no response"))?;
                     response.allowed = false;
-                    let incoming = review.request.as_ref().expect("nil AdmissionReview.Request returned by handler");
+                    let incoming = review.request.as_ref().ok_or_else(|| state.errs.New("admission handler returned no request"))?;
                     response.result = Some(Status { status: "Failure".into(), message: error.to_string(), reason: "InternalError".into(),
                         details: Some(StatusDetails { name: incoming.name.clone(), group: incoming.kind.group.clone(), kind: incoming.kind.kind.clone(),
                             causes: Some(vec![StatusCause { cause_type: "InternalError".into(), message: error.to_string(), ..Default::default() }]), ..Default::default() }),

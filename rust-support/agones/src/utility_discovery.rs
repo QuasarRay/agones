@@ -5,7 +5,7 @@ use std::sync::Arc;
 use cgp::prelude::*;
 use futures::future::BoxFuture;
 use serde::{Serialize, Deserialize};
-use crate::{errors::BoxError, utility_admission::{null_default, TypeMeta, Status, ListMeta, StatusDetails, StatusCause}, utility_http::ResponseWriter};
+use crate::{errors::BoxError, utility_admission::{null_default, TypeMeta, Status, ListMeta, StatusDetails, StatusCause}, utility_web::ResponseWriter};
 
 fn empty<T>(value: &Option<Arc<Vec<T>>>) -> bool { value.as_ref().is_none_or(|values| values.is_empty()) }
 #[derive(Clone, Debug, Default, Serialize, Deserialize)]
@@ -62,8 +62,8 @@ impl<Context: Sync> ApiObjectEncoder<Context> for EncodeSourceMetaObject {
             match info {
                 SerializerInfo::Json => writer.encode_json(object).await,
                 SerializerInfo::Yaml => {
-                    // Match the source's JSON -> YAML data projection. The
-                    // exact go-yaml scalar/format profile remains accounted for.
+                    // Keep the Agones data projection; serde_yaml supplies
+                    // native Rust scalar spelling and presentation.
                     let value = serde_json::to_value(object)?;
                     let bytes = serde_yaml::to_string(&value)?;
                     writer.write(bytes.as_bytes()).await?; Ok(())

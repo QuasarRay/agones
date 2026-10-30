@@ -4259,6 +4259,7 @@ name = "util"
 version = "0.1.0"
 dependencies = [
  "agones-core",
+ "axum",
  "base64 0.22.1",
  "better_comprehension",
  "bytes",
@@ -4272,7 +4273,9 @@ dependencies = [
  "hyper",
  "hyper-util",
  "libc",
+ "mime",
  "notify",
+ "percent-encoding",
  "prost-reflect",
  "regex",
  "reqwest",
@@ -4281,6 +4284,7 @@ dependencies = [
  "serde",
  "serde_json",
  "serde_yaml",
+ "socket2 0.6.5",
  "tokio",
  "tokio-rustls",
  "tokio-util",

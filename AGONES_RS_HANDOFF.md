@@ -6,7 +6,7 @@
 
 ## Immediate next action
 
-Continue M0003 MANUAL under AGONES_NATIVE_RUST_V1. Native logging/errors, keyed queues, Tokio signals and notify-backed filesystem batching/TLS reload consumers are authored in their adoption records. Replace HTTP/gateway/crash facilities with native Rust capabilities, reconcile application/controller consumers and remove legacy runtime resources. Keep all 13 utility gaps open pending whole-body/native-consumer/configuration reconciliation. No route switch or verification/project executable run; global BOTH-route gate remains CLOSED.
+Continue M0003 MANUAL under AGONES_NATIVE_RUST_V1. Native transport/router/request/streaming response, plain/TLS servers and discovery/admission consumers are authored in roadmap-M0003-native-web-adoption.json. Replace the remaining legacy gateway/protobuf/query/metadata path with native Rust facilities, connect it to the native mux, then retire old HTTP/formatting/crash providers, legacy runtime resources and patched Hyper features/overrides. Complete application/controller, Agones edge-case and whole-source/configuration reconciliation. Keep all 13 utility gaps open; no route switch or project verification run. Global BOTH-route gate remains CLOSED.
 
 ## Current semantic obligations and records
 
@@ -36,3 +36,7 @@ Tokio Unix/Windows signal streams now implement the Agones cancellation-context 
 ## Native filesystem watcher authoring checkpoint
 
 notify 8.2.1 now supplies platform notifications through the selected CGP opener. Agones fixed-window batching, error logging and the one-second TLS reload consumer are connected to owned lifetime/callback futures. Native cancellation is idempotent; normal cleanup awaits library callback destruction and owned application tasks. The manual Linux parser, Go-style rendezvous channel and Windows/kqueue/FEN includes are removed from the production path; old platform files are preserved. The observed lockfile gained notify and its dependencies without an agent Cargo invocation; no dependency/build/verification credit is inferred. See `verification/agones/roadmap-M0003-native-fswatch-adoption.json` and pinned API inputs. State revision 388 retains M0003 / MANUAL / IMPLEMENTING, all 13 gaps open, gate CLOSED and verification NOT_STARTED.
+
+## Native HTTP authoring checkpoint
+
+utility_web.rs supplies Axum routing, native HTTP data, bounded streaming responses, Hyper protocol connections, Rust panic/error policy and owned request/drain lifetimes. Plain/TLS servers, request redaction/404 helpers, discovery encoders/routes and admission consumers now use it. Native MIME parsing keeps the served encodings/JSON fallback; Rustls selects the latest loaded certificate. The legacy gateway and compatibility modules still compile and the root still constructs legacy resources; patched Hyper remains selected until those references are retired. This is partial native adoption, not application closure. See `verification/agones/roadmap-M0003-native-web-adoption.json`. State revision 389 retains M0003 / MANUAL / IMPLEMENTING, all 13 gaps open, gate CLOSED and verification NOT_STARTED.

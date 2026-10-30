@@ -177,6 +177,7 @@
   "native_queue_authoring_record": "verification/agones/roadmap-M0003-native-queue-adoption.json",
   "native_runtime_authoring_record": "verification/agones/roadmap-M0003-native-runtime-adoption.json",
   "native_signal_authoring_record": "verification/agones/roadmap-M0003-native-signals-adoption.json",
+  "native_web_authoring_record": "verification/agones/roadmap-M0003-native-web-adoption.json",
   "original_file_sha256": {
     "hyper-1.12.0/.cargo_vcs_info.json": "ce2a9a274c279810c04796e650842b1db82faac0a8da8a59a5f2cd536774f256",
     "hyper-1.12.0/Cargo.lock": "eccfa5f4325ec5623d82c7ef8a1b598a647a885f0048962ed1b558bf7547d023",

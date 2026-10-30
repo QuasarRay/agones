@@ -3,11 +3,10 @@ use std::{fmt, io::Cursor, path::Path, sync::{Arc, atomic::{AtomicBool, Ordering
 use cgp::prelude::*;
 use futures::future::BoxFuture;
 use rustls::{ServerConfig, server::{ClientHello, ResolvesServerCert}, sign::CertifiedKey};
-use tokio::task::JoinSet;
 use tokio_rustls::TlsAcceptor;
 use tokio_util::sync::CancellationToken;
-use crate::{errors::{BoxError, Errors}, https::certServer, utility_http::{self, HttpProtocol, SourceMux, ServerClosed},
-    utility_runtime::UtilityRuntimeContext, utility_scope::{CanSpawnUtilityTask, UtilityTaskScope}};
+use crate::{errors::{BoxError, Errors}, https::certServer, utility_web::{self, SourceMux, ServerClosed},
+    utility_runtime::UtilityRuntimeContext, utility_scope::CanSpawnUtilityTask};
 
 #[derive(Clone)]
 pub struct LoadedCertificate { key: Arc<CertifiedKey> }
@@ -25,7 +24,7 @@ pub trait CanLoadSourceCertificate: Sync {
 impl<Context: Sync> SourceCertificateLoader<Context> for LoadRustlsCertificate {
     fn load_source_certificate<'a>(_context: &'a Context, cert: &'a Path, key: &'a Path) -> BoxFuture<'a, Result<LoadedCertificate, BoxError>> {
         Box::pin(async move {
-            // Go LoadX509KeyPair reads both files, in this order, before parsing.
+            // Read the certificate pair, then let Rustls validate key material.
             let certificate_bytes = tokio::fs::read(cert).await?;
             let key_bytes = tokio::fs::read(key).await?;
             let certificates = rustls_pemfile::certs(&mut Cursor::new(&certificate_bytes)).collect::<Result<Vec<_>, _>>()?;
@@ -45,12 +44,10 @@ impl fmt::Debug for SourceCertificateResolver {
 }
 impl ResolvesServerCert for SourceCertificateResolver {
     fn resolve(&self, hello: ClientHello<'_>) -> Option<Arc<CertifiedKey>> {
-        // crypto/tls consults GetCertificate when no fallback Certificates
-        // exist or SNI is present; a nil callback result falls back afterwards.
-        if self.fallback.is_none() || hello.server_name().is_some() {
-            if let Some(certificate) = self.current.current() { return Some(certificate.key); }
-        }
-        self.fallback.as_ref().map(|certificate| Arc::clone(&certificate.key))
+        // Rustls asks this resolver for each handshake. Prefer the last
+        // successfully loaded Agones certificate, including clients without SNI.
+        let _ = hello;
+        self.current.current().or_else(|| self.fallback.clone()).map(|certificate| certificate.key)
     }
 }
 
@@ -64,12 +61,10 @@ impl HttpsServerRunner<UtilityRuntimeContext> for RunNativeHttpsServer {
     fn run_https_server<'a>(context: &'a UtilityRuntimeContext, state: Arc<TlsListenerState>, certificates: Arc<certServer>, mux: &'a SourceMux,
         port: &'a str, cert: &'a Path, key: &'a Path, stop: CancellationToken, read_header_timeout: Duration) -> BoxFuture<'a, Result<(), BoxError>> {
         Box::pin(async move {
-            if state.closed.load(Ordering::Acquire) || stop.is_cancelled() {
+            if state.closed.load(Ordering::Acquire) || stop.is_cancelled() || context.utility_child_token()?.is_cancelled() {
                 state.closed.store(true, Ordering::Release); return Err(Box::new(ServerClosed) as BoxError);
             }
-            // ListenAndServeTLS binds before ServeTLS loads its fallback files.
-            let owner_stop = context.utility_child_token()?;
-            let listener = utility_http::bind_source_listener(port).await?;
+            let listener = utility_web::bind_listener(port).await?;
             let fallback = if !cert.as_os_str().is_empty() || !key.as_os_str().is_empty() {
                 Some(context.load_source_certificate(cert, key).await?)
             } else { None };
@@ -78,52 +73,8 @@ impl HttpsServerRunner<UtilityRuntimeContext> for RunNativeHttpsServer {
                 .with_no_client_auth().with_cert_resolver(Arc::new(SourceCertificateResolver { current: certificates, fallback }));
             config.alpn_protocols = vec![b"h2".to_vec(), b"http/1.1".to_vec()];
             let acceptor = TlsAcceptor::from(Arc::new(config));
-            let handlers = Arc::new(UtilityTaskScope::default());
-            let mut connections = JoinSet::new();
-            let mut accept_backoff = utility_http::AcceptBackoff::default();
-            let result = loop {
-                tokio::select! {
-                    _ = stop.cancelled() => { state.closed.store(true, Ordering::Release); break Err(Box::new(ServerClosed) as BoxError); }
-                    _ = owner_stop.cancelled() => { state.closed.store(true, Ordering::Release); break Err(Box::new(ServerClosed) as BoxError); }
-                    completed = connections.join_next(), if !connections.is_empty() => { let _ = completed; }
-                    accepted = listener.accept() => match accepted {
-                        Err(error) => {
-                            if stop.is_cancelled() || owner_stop.is_cancelled() {
-                                state.closed.store(true, Ordering::Release); break Err(Box::new(ServerClosed) as BoxError);
-                            }
-                            if accept_backoff.retry(context, &error).await { continue; }
-                            break Err(Box::new(error) as BoxError);
-                        }
-                        Ok((socket, peer)) => {
-                            accept_backoff.accepted();
-                            let (runtime, mux, stop, owner_stop, handlers, acceptor) = (context.clone(), mux.clone(), stop.clone(), owner_stop.clone(), Arc::clone(&handlers), acceptor.clone());
-                            connections.spawn(async move {
-                                let handshake = tokio::time::timeout(read_header_timeout, acceptor.accept(socket));
-                                tokio::pin!(handshake);
-                                let handshake = tokio::select! {
-                                    result = &mut handshake => Some(result),
-                                    _ = async { tokio::select! { _ = stop.cancelled() => (), _ = owner_stop.cancelled() => () } } => {
-                                        // A new connection gets the source shutdown grace
-                                        // for handshakes, independently of the cancelled ctx.
-                                        tokio::time::timeout(Duration::from_secs(5), &mut handshake).await.ok()
-                                    }
-                                };
-                                match handshake {
-                                    Some(Ok(Ok(stream))) => {
-                                        let protocol = if stream.get_ref().1.alpn_protocol() == Some(b"h2") { HttpProtocol::Http2 } else { HttpProtocol::Http1 };
-                                        utility_http::serve_connection_from(stream, runtime, mux, stop, owner_stop, handlers, read_header_timeout, protocol, peer.to_string()).await
-                                    }
-                                    Some(Ok(Err(error))) => { eprintln!("http: TLS handshake error from {peer}: {error}"); Ok(()) }
-                                    Some(Err(_)) => { eprintln!("http: TLS handshake error from {peer}: i/o timeout"); Ok(()) }
-                                    None => Ok(()),
-                                }
-                            });
-                        }
-                    }
-                }
-            };
-            drop(listener);
-            utility_http::retain_connection_drain(context, connections, handlers, owner_stop).await;
+            let result = utility_web::serve_listener(context.clone(), mux.clone(), listener, stop, read_header_timeout, Some(acceptor)).await;
+            state.closed.store(true, Ordering::Release);
             result
         })
     }

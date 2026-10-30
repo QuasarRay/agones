@@ -16,6 +16,7 @@ pub mod utility_crash;
 pub mod utility_go_quote;
 pub use utility_runtime::{UtilityRuntimeContext, UtilityRuntimeOwner};
 pub mod utility_http;
+pub mod utility_web;
 pub mod utility_fswatch;
 pub mod utility_tls;
 pub mod utility_admission;
