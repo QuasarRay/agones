@@ -1,7 +1,7 @@
 <a id="m0028"></a>
 
 
-# M0028 — Go value, type and initialization lowering
+# M0028 — Native Rust domain values, types and initialization
 
 
 **Route:** `CPG`. **Phase:** `IMPLEMENTATION_ONLY`. **State:** `PLANNED_NOT_EXECUTED`. **Forecast:** `F-M0028-v1` in [cost-analysis.md](../cost-analysis.md).
@@ -35,11 +35,24 @@
 ## Implementation sequence
 
 
-1. Implement source-bound rules for integer widths/overflow, constants/conversions, floating bits, strings/bytes/runes, nil/empty containers, interfaces/type assertions, pointers/aliasing, structs/tags, slices/maps and generics.
+1. Lower Agones resource/configuration values to Rust structs/enums, native collections, Option/Result and existing serializers. Preserve API/protobuf field names, ranges, presence and domain arithmetic only where required by Agones contracts.
 
-2. Preserve package/global initialization, evaluation order, short-circuiting, multiple values and external-call contracts. Carry required runtime support through CGP capabilities.
+2. Implement Agones startup/configuration and external-call requirements using native Rust initialization, ownership, checked conversions and selected libraries. Do not emulate Go integers/floating formatting, typed-nil interfaces, reflection, aliases, map/slice headers, allocation or ABI behavior.
 
-3. Generate readable valid Rust, not an embedded Go interpreter. Use derive-deftly and comprehensions where their evaluation and ownership semantics match the source.
+3. Maintain source-to-Agones-obligation-to-Rust-operation provenance. Generate readable Python-familiar valid Rust and reusable derive-deftly declarations; Go-only constructs receive explicit supersession rather than compatibility helpers.
+
+
+## Native Rust semantic boundary
+
+1. Apply `AGONES_NATIVE_RUST_V1` and requirement 10 of the current root AGENTS.MD. Existing Rust ecosystem facilities are the default for data, errors, formatting, logging, I/O, serialization, tasks and synchronization. Custom implementation requires an identified Agones policy or concrete integration gap.
+2. Record `AGONES_REQUIRED`, `RUST_NATIVE` and `GO_ONLY_SUPERSEDED` per obligation, including within mixed files. Preserve source IDs and evidence. A Go implementation mechanism does not create a runtime compatibility obligation.
+3. Preserve Agones API/domain outcomes through native Rust. Do not implement Go formatting/reflection, typed-nil interfaces, panic/recover/Goexit, goroutine/channel/select behavior, map/slice internals, GC, allocator or ABI emulation. Use Rust ownership, Result/Option, RAII, existing libraries and CGP-owned tasks instead.
+4. Quotes containing Go code remain source references. Source-body mappings may point to a real native Rust library operation plus the necessary Agones policy. A mapping must identify the production consumer; a label or empty wrapper is insufficient.
+5. Keep CGP AND derive-deftly as joint architectural/lifecycle owners and Python-familiar valid Rust as a coequal readability requirement. The global implementation-first gate and separate alternation policy remain binding.
+
+The complete native CPG graph/schema/build objective remains required. Preserve its functional graph, schema and interchange contracts through Rust. Go source facts may be retained for analysis/provenance; generated Agones must use the same native Rust boundary as handwritten Agones.
+
+
 
 
 ## Architecture, readability and authored outputs
@@ -68,7 +81,7 @@ let selected_ids = vector![node.id() for node in nodes.iter()
 ```
 
 
-These examples explain reading order and borrowing. Actual APIs must come from the selected pinned dependencies. The owning CGP provider supplies the collections; derive-deftly supplies repeated declarations/projections. Preserve source ordering and avoid redundant clones or a comprehension around complicated effects.
+These examples explain reading order and borrowing. Actual APIs must come from the selected pinned dependencies. The owning CGP provider supplies the collections; derive-deftly supplies repeated declarations/projections. Preserve Agones-required ordering and avoid redundant clones or a comprehension around complicated effects.
 
 
 ## Package/module and file instructions
@@ -98,7 +111,7 @@ These are planned Rust-only support or evidence files, not original-source mirro
 >   [interpolate] values *into* the quoted string if it's supported by the
 >   language.
 
-**Derived file obligation.** Value/type/numeric/container/aliasing rules. Record the concrete input, output, error and lifecycle contract, then implement all branches. CGP owns runtime policy and resources; derive-deftly owns repeated structural implementation. Genco receives explicit semantic inputs. Explain the file as short Python-familiar transformations in valid Rust. Keep one implementation owner, preserve original source identity, and defer execution/assurance to the whole-project gate.
+**Derived file obligation.** Agones domain values and API/schema constraints mapped to native Rust types and libraries. Record the concrete input, output, error and lifecycle contract, then implement all branches. CGP owns runtime policy and resources; derive-deftly owns repeated structural implementation. Genco receives explicit semantic inputs. Explain the file as short Python-familiar transformations in valid Rust. Keep one implementation owner, preserve original source identity, and defer execution/assurance to the whole-project gate.
 
 ### New support/output `rust-support/cpg/src/lower_initialization.rs`
 
@@ -117,7 +130,7 @@ These are planned Rust-only support or evidence files, not original-source mirro
 >   [interpolate] values *into* the quoted string if it's supported by the
 >   language.
 
-**Derived file obligation.** Declarations, package initialization and ordered evaluation. Record the concrete input, output, error and lifecycle contract, then implement all branches. CGP owns runtime policy and resources; derive-deftly owns repeated structural implementation. Genco receives explicit semantic inputs. Explain the file as short Python-familiar transformations in valid Rust. Keep one implementation owner, preserve original source identity, and defer execution/assurance to the whole-project gate.
+**Derived file obligation.** Agones configuration and startup obligations implemented with native Rust initialization. Record the concrete input, output, error and lifecycle contract, then implement all branches. CGP owns runtime policy and resources; derive-deftly owns repeated structural implementation. Genco receives explicit semantic inputs. Explain the file as short Python-familiar transformations in valid Rust. Keep one implementation owner, preserve original source identity, and defer execution/assurance to the whole-project gate.
 
 
 
@@ -168,4 +181,4 @@ These are planned Rust-only support or evidence files, not original-source mirro
 > // ApplyDefaults applies default values to the GameServerSpec if they are not already populated
 > func (gss *GameServerSpec) ApplyDefaults() {
 
-**Derived stage requirement.** Translate these real defaulting operations, method calls, field writes and absence/default decisions through typed lowering. Preserve original widths, nil/empty distinctions and observable sequencing; do not substitute hand-copied output for CPG provenance. No dedicated upstream Go-to-Rust translator specification is claimed; this stage is engineered from the quoted source obligations and the user-approved shared contract.
+**Derived stage requirement.** Translate these real defaulting operations, method calls, field writes and absence/default decisions through typed lowering. Preserve Agones-required API ranges, presence and domain effects using native Rust types and serialization; do not substitute hand-copied output for CPG provenance. No dedicated upstream Go-to-Rust translator specification is claimed; this stage is engineered from the quoted source obligations and the user-approved shared contract.

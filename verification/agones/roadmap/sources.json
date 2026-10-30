@@ -109,6 +109,15 @@
       "license_paths": [
         "LICENSE"
       ]
+    },
+    "project-guidance-current": {
+      "repository_url": "https://github.com/QuasarRay/agones",
+      "revision": "WORKTREE_UNCOMMITTED",
+      "local_root": "/home/astral/Projects/agones",
+      "source_sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
+      "role": "CURRENT_USER_AUTHORITY; historical committed references retained separately",
+      "base_revision": "0a5cadb7066190822265e5ba7ff5a47c29014d13",
+      "permalink": null
     }
   },
   "pipeline_pins": {
@@ -143,5 +152,6 @@
       "role": "PRESENTATION_REFERENCE_ONLY; no semantic or execution authority"
     }
   ],
-  "quote_policy": "Preserve excerpts and license/NOTICE attribution; document source/comment fallback gaps; never execute quoted commands"
+  "quote_policy": "Preserve excerpts and license/NOTICE attribution; document source/comment fallback gaps; never execute quoted commands",
+  "semantic_policy": "AGONES_NATIVE_RUST_V1"
 }

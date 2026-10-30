@@ -43,6 +43,17 @@
 3. Bind allocation state changes and persistence to CGP providers with one resource owner. Derive repeatable request/projection/wiring structure; do not regenerate semantic policy from test outcomes.
 
 
+## Native Rust semantic boundary
+
+1. Apply `AGONES_NATIVE_RUST_V1` and requirement 10 of the current root AGENTS.MD. Existing Rust ecosystem facilities are the default for data, errors, formatting, logging, I/O, serialization, tasks and synchronization. Custom implementation requires an identified Agones policy or concrete integration gap.
+2. Record `AGONES_REQUIRED`, `RUST_NATIVE` and `GO_ONLY_SUPERSEDED` per obligation, including within mixed files. Preserve source IDs and evidence. A Go implementation mechanism does not create a runtime compatibility obligation.
+3. Preserve Agones API/domain outcomes through native Rust. Do not implement Go formatting/reflection, typed-nil interfaces, panic/recover/Goexit, goroutine/channel/select behavior, map/slice internals, GC, allocator or ABI emulation. Use Rust ownership, Result/Option, RAII, existing libraries and CGP-owned tasks instead.
+4. Quotes containing Go code remain source references. Source-body mappings may point to a real native Rust library operation plus the necessary Agones policy. A mapping must identify the production consumer; a label or empty wrapper is insufficient.
+5. Keep CGP AND derive-deftly as joint architectural/lifecycle owners and Python-familiar valid Rust as a coequal readability requirement. The global implementation-first gate and separate alternation policy remain binding.
+
+
+
+
 ## Architecture, readability and authored outputs
 
 
@@ -69,7 +80,7 @@ let selected_ids = vector![node.id() for node in nodes.iter()
 ```
 
 
-These examples explain reading order and borrowing. Actual APIs must come from the selected pinned dependencies. The owning CGP provider supplies the collections; derive-deftly supplies repeated declarations/projections. Preserve source ordering and avoid redundant clones or a comprehension around complicated effects.
+These examples explain reading order and borrowing. Actual APIs must come from the selected pinned dependencies. The owning CGP provider supplies the collections; derive-deftly supplies repeated declarations/projections. Preserve Agones-required ordering and avoid redundant clones or a comprehension around complicated effects.
 
 
 ## Package/module and file instructions
@@ -95,7 +106,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > apiVersion: "allocation.agones.dev/v1"
 
 
-**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve Agones external contracts and exact module/file spelling; express initialization, visibility and ownership through native Rust. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. Use the quoted package/topic contract and file excerpt to identify Agones obligations; classify Go-only mechanisms as superseded under requirement 10.
 
 
 <a id="file-6f7b1bac69179e35"></a>
@@ -126,27 +137,37 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > 			Selectors:  convertGameServerSelectorsToInternalGameServerSelectors(in.GetGameServerSelectors()),
 
 
-**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. The excerpt records the original implementation. Go syntax and mechanisms in it are historical reference inputs; they do not require runtime or language emulation.
 
 
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. **AGONES_REQUIRED:** Agones selection, priorities, counts/lists, contention, allocation responses and remote allocation protocols. Identify this file’s concrete Agones decisions, inputs, outputs, failures and externally required effects using its excerpt and package documentation. Implement those obligations completely; map every relevant source declaration/body to its native Rust consumer.
 
-2. Account for 31 lexically identified declarations, including `ConvertAllocationRequestToGSA` (L32), `ConvertGSAToAllocationRequest` (L91), `convertAllocationSchedulingToGSASchedulingStrategy` (L144), `convertGSASchedulingStrategyToAllocationScheduling` (L155), `convertLabelSelectorToInternalLabelSelector` (L165), `convertMatchExpressionsToInternal` (L172), `convertInternalMatchExpressions` (L194), `convertGameServerSelectorToInternalGameServerSelector` (L216), `convertInternalGameServerSelectorToGameServer` (L261), `convertInternalLabelSelectorToLabelSelector` (L304), `convertInternalLabelSelectorsToLabelSelectors` (L311), `convertGameServerSelectorsToInternalGameServerSelectors` (L320), `ConvertGSAToAllocationResponse` (L331), `convertGSACountersToAllocationCounters` (L361), `convertGSAListsToAllocationLists` (L373), `ConvertAllocationResponseToGSA` (L385), `convertGSAAddressesToAllocationAddresses` (L416), `convertAllocationAddressesToGSAAddresses` (L428), `convertGSAAgonesPortsToAllocationPorts` (L440), `convertAllocationPortsToGSAAgonesPorts` (L453), `convertGSAMetadataToAllocationMetadata` (L465), `convertAllocationMetadataToGSAMetadata` (L475), `convertAllocationCountersToGSACounters` (L485), `convertAllocationListsToGSALists` (L496). The full declaration list is recorded under `agones:pkg/allocation/converters/converter.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-3. Consume the already implemented source packages `agones.dev/agones/pkg/allocation/go`, `agones.dev/agones/pkg/apis`, `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/allocation/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+2. **RUST_NATIVE:** Use the Rust standard library and existing selected ecosystem libraries for ordinary data, error, formatting, I/O and concurrency behavior. Reuse a capable facility before custom code. Record the concrete Agones policy or integration gap for any necessary extension; a library written in Go is a dependency reference, not another porting objective.
 
-4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
 
-5. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
+3. Preserve API/resource/protocol field names, ranges, presence, ordering, defaults and errors only where the Agones contract requires them. Use Rust types, Option/Result, checked domain conversions and existing serializers. Go implementation details do not independently create compatibility requirements.
 
-10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+4. Account for 31 lexically identified declarations, including `ConvertAllocationRequestToGSA` (L32), `ConvertGSAToAllocationRequest` (L91), `convertAllocationSchedulingToGSASchedulingStrategy` (L144), `convertGSASchedulingStrategyToAllocationScheduling` (L155), `convertLabelSelectorToInternalLabelSelector` (L165), `convertMatchExpressionsToInternal` (L172), `convertInternalMatchExpressions` (L194), `convertGameServerSelectorToInternalGameServerSelector` (L216), `convertInternalGameServerSelectorToGameServer` (L261), `convertInternalLabelSelectorToLabelSelector` (L304), `convertInternalLabelSelectorsToLabelSelectors` (L311), `convertGameServerSelectorsToInternalGameServerSelectors` (L320), `ConvertGSAToAllocationResponse` (L331), `convertGSACountersToAllocationCounters` (L361), `convertGSAListsToAllocationLists` (L373), `ConvertAllocationResponseToGSA` (L385), `convertGSAAddressesToAllocationAddresses` (L416), `convertAllocationAddressesToGSAAddresses` (L428), `convertGSAAgonesPortsToAllocationPorts` (L440), `convertAllocationPortsToGSAAgonesPorts` (L453), `convertGSAMetadataToAllocationMetadata` (L465), `convertAllocationMetadataToGSAMetadata` (L475), `convertAllocationCountersToGSACounters` (L485), `convertAllocationListsToGSALists` (L496). The complete list remains in `agones:pkg/allocation/converters/converter.go` in the frozen inventory. Body mappings may use real Rust library implementations; declarations and lexical counts alone establish no completion.
 
-13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+5. GO_ONLY_SUPERSEDED: Go typed-nil interfaces and nil slice/map/header identity. RUST_NATIVE: Option and native containers, with serde/protobuf presence only where an Agones contract requires it. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+6. GO_ONLY_SUPERSEDED: Go map hashing/range/growth, slice headers/capacity and allocation/alias layouts. RUST_NATIVE: Rust collections, borrowing and explicit domain ordering or duplicate policy. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+12. Keep one CGP capability/provider/context and resource owner per production effect. Derive-deftly supplies repeated declarations, ownership metadata and wiring. Native Rust libraries perform infrastructure work; no Go compatibility engine or second application manager sits behind the provider.
+
+
+13. Use Python-familiar valid Rust: clear names, small functions, comprehensions/readable iterators and explicit transformations. Preserve required Agones decisions and Rust ownership/error semantics. Keep the exact filename, case and singular/plural stem; module glue stays outside the mirror.
+
+
+14. Completion record: source/body IDs, AGONES_REQUIRED/RUST_NATIVE/GO_ONLY_SUPERSEDED decisions, Agones evidence, selected Rust facility, actual production consumer, CGP/derive-deftly owners and unresolved Agones gaps. Superseded Go mechanisms are not missing implementation. Keep implementation and all deferred assurance statuses truthful.
 
 
 ## Package `agones:pkg/gameserverallocations` -> module `pkg::gameserverallocations`
@@ -159,7 +180,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > package gameserverallocations
 
 
-**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve Agones external contracts and exact module/file spelling; express initialization, visibility and ownership through native Rust. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. Use the quoted package/topic contract and file excerpt to identify Agones obligations; classify Go-only mechanisms as superseded under requirement 10.
 
 
 <a id="file-9e519b7078ca4764"></a>
@@ -190,31 +211,46 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > 	workerqueue      *workerqueue.WorkerQueue
 
 
-**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. The excerpt records the original implementation. Go syntax and mechanisms in it are historical reference inputs; they do not require runtime or language emulation.
 
 
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. **AGONES_REQUIRED:** Agones selection, priorities, counts/lists, contention, allocation responses and remote allocation protocols. Identify this file’s concrete Agones decisions, inputs, outputs, failures and externally required effects using its excerpt and package documentation. Implement those obligations completely; map every relevant source declaration/body to its native Rust consumer.
 
-2. Account for 16 lexically identified declarations, including `matcher` (L37), `readyOrAllocatedGameServerMatcher` (L40), `AllocationCache` (L45), `NewAllocationCache` (L57), `loggerForGameServerKey` (L106), `RemoveGameServer` (L111), `Sync` (L120), `Resync` (L131), `Run` (L137), `AddGameServer` (L148), `getGameServers` (L155), `ListSortedGameServers` (L171), `ListSortedGameServersPriorities` (L229), `SyncGameServers` (L254), `syncCache` (L261), `getKey` (L306). The full declaration list is recorded under `agones:pkg/gameserverallocations/allocation_cache.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones`, `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/allocation/v1`, `agones.dev/agones/pkg/client/informers/externalversions/agones/v1`, `agones.dev/agones/pkg/client/listers/agones/v1`, `agones.dev/agones/pkg/gameservers`, `agones.dev/agones/pkg/util/errors`, `agones.dev/agones/pkg/util/logfields`, `agones.dev/agones/pkg/util/runtime`, `agones.dev/agones/pkg/util/workerqueue`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+2. **RUST_NATIVE:** Use the Rust standard library and existing selected ecosystem libraries for ordinary data, error, formatting, I/O and concurrency behavior. Reuse a capable facility before custom code. Record the concrete Agones policy or integration gap for any necessary extension; a library written in Go is a dependency reference, not another porting objective.
 
-4. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
 
-5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+3. Preserve API/resource/protocol field names, ranges, presence, ordering, defaults and errors only where the Agones contract requires them. Use Rust types, Option/Result, checked domain conversions and existing serializers. Go implementation details do not independently create compatibility requirements.
 
-6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
 
-7. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+4. Account for 16 lexically identified declarations, including `matcher` (L37), `readyOrAllocatedGameServerMatcher` (L40), `AllocationCache` (L45), `NewAllocationCache` (L57), `loggerForGameServerKey` (L106), `RemoveGameServer` (L111), `Sync` (L120), `Resync` (L131), `Run` (L137), `AddGameServer` (L148), `getGameServers` (L155), `ListSortedGameServers` (L171), `ListSortedGameServersPriorities` (L229), `SyncGameServers` (L254), `syncCache` (L261), `getKey` (L306). The complete list remains in `agones:pkg/gameserverallocations/allocation_cache.go` in the frozen inventory. Body mappings may use real Rust library implementations; declarations and lexical counts alone establish no completion.
 
-10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+5. GO_ONLY_SUPERSEDED: Go goroutine scheduling, channel/select mechanics and channel representation. RUST_NATIVE: Tokio/futures tasks, Rust channels/streams and explicit cancellation/supervision. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
 
-13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+6. GO_ONLY_SUPERSEDED: Go typed-nil interfaces and nil slice/map/header identity. RUST_NATIVE: Option and native containers, with serde/protobuf presence only where an Agones contract requires it. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+7. GO_ONLY_SUPERSEDED: Go map hashing/range/growth, slice headers/capacity and allocation/alias layouts. RUST_NATIVE: Rust collections, borrowing and explicit domain ordering or duplicate policy. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+8. GO_ONLY_SUPERSEDED: Go machine-word, conversion, overflow, float-printing and ABI behavior. RUST_NATIVE: Rust domain types and checked conversions; preserve only documented API/schema ranges and Agones arithmetic. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+9. GO_ONLY_SUPERSEDED: Go fmt/strconv/reflection, klog/logrus internals, GC/allocator/layout and runtime diagnostics. RUST_NATIVE: std::fmt, std::error::Error and established Rust logging/serialization facilities. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+12. Keep one CGP capability/provider/context and resource owner per production effect. Derive-deftly supplies repeated declarations, ownership metadata and wiring. Native Rust libraries perform infrastructure work; no Go compatibility engine or second application manager sits behind the provider.
+
+
+13. Use Python-familiar valid Rust: clear names, small functions, comprehensions/readable iterators and explicit transformations. Preserve required Agones decisions and Rust ownership/error semantics. Keep the exact filename, case and singular/plural stem; module glue stays outside the mirror.
+
+
+14. Completion record: source/body IDs, AGONES_REQUIRED/RUST_NATIVE/GO_ONLY_SUPERSEDED decisions, Agones evidence, selected Rust facility, actual production consumer, CGP/derive-deftly owners and unresolved Agones gaps. Superseded Go mechanisms are not missing implementation. Keep implementation and all deferred assurance statuses truthful.
 
 
 <a id="file-0342e76f4982647d"></a>
@@ -245,35 +281,49 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > 	remoteAllocationCallback     func(context.Context, string, grpc.DialOption, *pb.AllocationRequest) (*pb.AllocationResponse, error)
 
 
-**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. The excerpt records the original implementation. Go syntax and mechanisms in it are historical reference inputs; they do not require runtime or language emulation.
 
 
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. **AGONES_REQUIRED:** Agones selection, priorities, counts/lists, contention, allocation responses and remote allocation protocols. Identify this file’s concrete Agones decisions, inputs, outputs, failures and externally required effects using its excerpt and package documentation. Implement those obligations completely; map every relevant source declaration/body to its native Rust consumer.
 
-2. Account for 24 lexically identified declarations, including `allocationRetry` (L88), `remoteAllocationRetry` (L95), `Allocator` (L104), `request` (L123), `response` (L130), `NewAllocator` (L137), `Run` (L177), `Sync` (L193), `Allocate` (L202), `loggerForGameServerAllocationKey` (L250), `loggerForGameServerAllocation` (L254), `allocateFromLocalCluster` (L264), `applyMultiClusterAllocation` (L316), `allocateFromRemoteCluster` (L364), `createRemoteClusterDialOption` (L415), `getClientCertificates` (L449), `allocate` (L467), `ListenAndAllocate` (L491), `allocationUpdateWorkers` (L607), `tryRespondWithError` (L643), `applyAllocationToGameServer` (L652), `Retry` (L708), `newMetrics` (L737), `addPort` (L750). The full declaration list is recorded under `agones:pkg/gameserverallocations/allocator.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-3. Consume the already implemented source packages `agones.dev/agones/pkg/allocation/converters`, `agones.dev/agones/pkg/allocation/go`, `agones.dev/agones/pkg/apis`, `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/allocation/v1`, `agones.dev/agones/pkg/apis/multicluster/v1`, `agones.dev/agones/pkg/client/clientset/versioned/typed/agones/v1`, `agones.dev/agones/pkg/client/informers/externalversions/multicluster/v1`, `agones.dev/agones/pkg/client/listers/multicluster/v1`, `agones.dev/agones/pkg/util/apiserver`, `agones.dev/agones/pkg/util/errors`, `agones.dev/agones/pkg/util/logfields`, `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+2. **RUST_NATIVE:** Use the Rust standard library and existing selected ecosystem libraries for ordinary data, error, formatting, I/O and concurrency behavior. Reuse a capable facility before custom code. Record the concrete Agones policy or integration gap for any necessary extension; a library written in Go is a dependency reference, not another porting objective.
 
-4. Retain deferred cleanup order and its interaction with returns/errors.
 
-5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+3. Preserve API/resource/protocol field names, ranges, presence, ordering, defaults and errors only where the Agones contract requires them. Use Rust types, Option/Result, checked domain conversions and existing serializers. Go implementation details do not independently create compatibility requirements.
 
-6. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
 
-7. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+4. Account for 24 lexically identified declarations, including `allocationRetry` (L88), `remoteAllocationRetry` (L95), `Allocator` (L104), `request` (L123), `response` (L130), `NewAllocator` (L137), `Run` (L177), `Sync` (L193), `Allocate` (L202), `loggerForGameServerAllocationKey` (L250), `loggerForGameServerAllocation` (L254), `allocateFromLocalCluster` (L264), `applyMultiClusterAllocation` (L316), `allocateFromRemoteCluster` (L364), `createRemoteClusterDialOption` (L415), `getClientCertificates` (L449), `allocate` (L467), `ListenAndAllocate` (L491), `allocationUpdateWorkers` (L607), `tryRespondWithError` (L643), `applyAllocationToGameServer` (L652), `Retry` (L708), `newMetrics` (L737), `addPort` (L750). The complete list remains in `agones:pkg/gameserverallocations/allocator.go` in the frozen inventory. Body mappings may use real Rust library implementations; declarations and lexical counts alone establish no completion.
 
-8. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
 
-9. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+5. GO_ONLY_SUPERSEDED: Go defer execution, panic/unwind ordering and runtime cleanup mechanics. RUST_NATIVE: Rust RAII/Drop, scoped guards and explicit async shutdown under the CGP owner. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
 
-10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+6. GO_ONLY_SUPERSEDED: Go goroutine scheduling, channel/select mechanics and channel representation. RUST_NATIVE: Tokio/futures tasks, Rust channels/streams and explicit cancellation/supervision. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
 
-13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+7. GO_ONLY_SUPERSEDED: Go typed-nil interfaces and nil slice/map/header identity. RUST_NATIVE: Option and native containers, with serde/protobuf presence only where an Agones contract requires it. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+8. GO_ONLY_SUPERSEDED: Go map hashing/range/growth, slice headers/capacity and allocation/alias layouts. RUST_NATIVE: Rust collections, borrowing and explicit domain ordering or duplicate policy. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+9. GO_ONLY_SUPERSEDED: Go machine-word, conversion, overflow, float-printing and ABI behavior. RUST_NATIVE: Rust domain types and checked conversions; preserve only documented API/schema ranges and Agones arithmetic. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+10. GO_ONLY_SUPERSEDED: Go fmt/strconv/reflection, klog/logrus internals, GC/allocator/layout and runtime diagnostics. RUST_NATIVE: std::fmt, std::error::Error and established Rust logging/serialization facilities. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+12. Keep one CGP capability/provider/context and resource owner per production effect. Derive-deftly supplies repeated declarations, ownership metadata and wiring. Native Rust libraries perform infrastructure work; no Go compatibility engine or second application manager sits behind the provider.
+
+
+13. Use Python-familiar valid Rust: clear names, small functions, comprehensions/readable iterators and explicit transformations. Preserve required Agones decisions and Rust ownership/error semantics. Keep the exact filename, case and singular/plural stem; module glue stays outside the mirror.
+
+
+14. Completion record: source/body IDs, AGONES_REQUIRED/RUST_NATIVE/GO_ONLY_SUPERSEDED decisions, Agones evidence, selected Rust facility, actual production consumer, CGP/derive-deftly owners and unresolved Agones gaps. Superseded Go mechanisms are not missing implementation. Keep implementation and all deferred assurance statuses truthful.
 
 
 <a id="file-40f6160c05749b65"></a>
@@ -304,29 +354,43 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > func (e *gameServerCache) Store(key string, gs *agonesv1.GameServer) {
 
 
-**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. The excerpt records the original implementation. Go syntax and mechanisms in it are historical reference inputs; they do not require runtime or language emulation.
 
 
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. **AGONES_REQUIRED:** Agones selection, priorities, counts/lists, contention, allocation responses and remote allocation protocols. Identify this file’s concrete Agones decisions, inputs, outputs, failures and externally required effects using its excerpt and package documentation. Implement those obligations completely; map every relevant source declaration/body to its native Rust consumer.
 
-2. Account for 6 lexically identified declarations, including `gameServerCache` (L26), `Store` (L36), `Delete` (L56), `Load` (L71), `Range` (L80), `Len` (L91). The full declaration list is recorded under `agones:pkg/gameserverallocations/cache.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+2. **RUST_NATIVE:** Use the Rust standard library and existing selected ecosystem libraries for ordinary data, error, formatting, I/O and concurrency behavior. Reuse a capable facility before custom code. Record the concrete Agones policy or integration gap for any necessary extension; a library written in Go is a dependency reference, not another porting objective.
 
-4. Retain deferred cleanup order and its interaction with returns/errors.
 
-5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+3. Preserve API/resource/protocol field names, ranges, presence, ordering, defaults and errors only where the Agones contract requires them. Use Rust types, Option/Result, checked domain conversions and existing serializers. Go implementation details do not independently create compatibility requirements.
 
-6. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
 
-10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+4. Account for 6 lexically identified declarations, including `gameServerCache` (L26), `Store` (L36), `Delete` (L56), `Load` (L71), `Range` (L80), `Len` (L91). The complete list remains in `agones:pkg/gameserverallocations/cache.go` in the frozen inventory. Body mappings may use real Rust library implementations; declarations and lexical counts alone establish no completion.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
-13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+5. GO_ONLY_SUPERSEDED: Go defer execution, panic/unwind ordering and runtime cleanup mechanics. RUST_NATIVE: Rust RAII/Drop, scoped guards and explicit async shutdown under the CGP owner. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+6. GO_ONLY_SUPERSEDED: Go typed-nil interfaces and nil slice/map/header identity. RUST_NATIVE: Option and native containers, with serde/protobuf presence only where an Agones contract requires it. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+7. GO_ONLY_SUPERSEDED: Go map hashing/range/growth, slice headers/capacity and allocation/alias layouts. RUST_NATIVE: Rust collections, borrowing and explicit domain ordering or duplicate policy. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+8. GO_ONLY_SUPERSEDED: Go machine-word, conversion, overflow, float-printing and ABI behavior. RUST_NATIVE: Rust domain types and checked conversions; preserve only documented API/schema ranges and Agones arithmetic. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+12. Keep one CGP capability/provider/context and resource owner per production effect. Derive-deftly supplies repeated declarations, ownership metadata and wiring. Native Rust libraries perform infrastructure work; no Go compatibility engine or second application manager sits behind the provider.
+
+
+13. Use Python-familiar valid Rust: clear names, small functions, comprehensions/readable iterators and explicit transformations. Preserve required Agones decisions and Rust ownership/error semantics. Keep the exact filename, case and singular/plural stem; module glue stays outside the mirror.
+
+
+14. Completion record: source/body IDs, AGONES_REQUIRED/RUST_NATIVE/GO_ONLY_SUPERSEDED decisions, Agones evidence, selected Rust facility, actual production consumer, CGP/derive-deftly owners and unresolved Agones gaps. Superseded Go mechanisms are not missing implementation. Keep implementation and all deferred assurance statuses truthful.
 
 
 <a id="file-0c64a72221440b66"></a>
@@ -356,29 +420,46 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > }
 
 
-**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. The excerpt records the original implementation. Go syntax and mechanisms in it are historical reference inputs; they do not require runtime or language emulation.
 
 
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. **AGONES_REQUIRED:** Agones selection, priorities, counts/lists, contention, allocation responses and remote allocation protocols. Identify this file’s concrete Agones decisions, inputs, outputs, failures and externally required effects using its excerpt and package documentation. Implement those obligations completely; map every relevant source declaration/body to its native Rust consumer.
 
-2. Account for 11 lexically identified declarations, including `init` (L53), `Extensions` (L58), `NewExtensions` (L68), `NewProcessorExtensions` (L107), `registerAPIResource` (L125), `Run` (L143), `processAllocationRequest` (L155), `allocationDeserialization` (L215), `serialisation` (L255), `convertProcessorError` (L271), `convertProcessorResponse` (L300). The full declaration list is recorded under `agones:pkg/gameserverallocations/controller.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-3. Consume the already implemented source packages `agones.dev/agones/pkg/allocation/converters`, `agones.dev/agones/pkg/allocation/go`, `agones.dev/agones/pkg/apis/allocation/v1`, `agones.dev/agones/pkg/client/clientset/versioned`, `agones.dev/agones/pkg/client/informers/externalversions`, `agones.dev/agones/pkg/gameserverallocations/processor`, `agones.dev/agones/pkg/gameservers`, `agones.dev/agones/pkg/util/apiserver`, `agones.dev/agones/pkg/util/errors`, `agones.dev/agones/pkg/util/https`, `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+2. **RUST_NATIVE:** Use the Rust standard library and existing selected ecosystem libraries for ordinary data, error, formatting, I/O and concurrency behavior. Reuse a capable facility before custom code. Record the concrete Agones policy or integration gap for any necessary extension; a library written in Go is a dependency reference, not another porting objective.
 
-4. Retain deferred cleanup order and its interaction with returns/errors.
 
-5. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+3. Preserve API/resource/protocol field names, ranges, presence, ordering, defaults and errors only where the Agones contract requires them. Use Rust types, Option/Result, checked domain conversions and existing serializers. Go implementation details do not independently create compatibility requirements.
 
-6. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
 
-10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+4. Account for 11 lexically identified declarations, including `init` (L53), `Extensions` (L58), `NewExtensions` (L68), `NewProcessorExtensions` (L107), `registerAPIResource` (L125), `Run` (L143), `processAllocationRequest` (L155), `allocationDeserialization` (L215), `serialisation` (L255), `convertProcessorError` (L271), `convertProcessorResponse` (L300). The complete list remains in `agones:pkg/gameserverallocations/controller.go` in the frozen inventory. Body mappings may use real Rust library implementations; declarations and lexical counts alone establish no completion.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
-13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+5. GO_ONLY_SUPERSEDED: Go defer execution, panic/unwind ordering and runtime cleanup mechanics. RUST_NATIVE: Rust RAII/Drop, scoped guards and explicit async shutdown under the CGP owner. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+6. GO_ONLY_SUPERSEDED: Go typed-nil interfaces and nil slice/map/header identity. RUST_NATIVE: Option and native containers, with serde/protobuf presence only where an Agones contract requires it. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+7. GO_ONLY_SUPERSEDED: Go map hashing/range/growth, slice headers/capacity and allocation/alias layouts. RUST_NATIVE: Rust collections, borrowing and explicit domain ordering or duplicate policy. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+8. GO_ONLY_SUPERSEDED: Go machine-word, conversion, overflow, float-printing and ABI behavior. RUST_NATIVE: Rust domain types and checked conversions; preserve only documented API/schema ranges and Agones arithmetic. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+9. GO_ONLY_SUPERSEDED: Go fmt/strconv/reflection, klog/logrus internals, GC/allocator/layout and runtime diagnostics. RUST_NATIVE: std::fmt, std::error::Error and established Rust logging/serialization facilities. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+12. Keep one CGP capability/provider/context and resource owner per production effect. Derive-deftly supplies repeated declarations, ownership metadata and wiring. Native Rust libraries perform infrastructure work; no Go compatibility engine or second application manager sits behind the provider.
+
+
+13. Use Python-familiar valid Rust: clear names, small functions, comprehensions/readable iterators and explicit transformations. Preserve required Agones decisions and Rust ownership/error semantics. Keep the exact filename, case and singular/plural stem; module glue stays outside the mirror.
+
+
+14. Completion record: source/body IDs, AGONES_REQUIRED/RUST_NATIVE/GO_ONLY_SUPERSEDED decisions, Agones evidence, selected Rust facility, actual production consumer, CGP/derive-deftly owners and unresolved Agones gaps. Superseded Go mechanisms are not missing implementation. Keep implementation and all deferred assurance statuses truthful.
 
 
 <a id="file-25c8fcc80240dcf6"></a>
@@ -409,21 +490,31 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > // Package gameserverallocations handles management of
 
 
-**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. The excerpt records the original implementation. Go syntax and mechanisms in it are historical reference inputs; they do not require runtime or language emulation.
 
 
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. **AGONES_REQUIRED:** Agones selection, priorities, counts/lists, contention, allocation responses and remote allocation protocols. Identify this file’s concrete Agones decisions, inputs, outputs, failures and externally required effects using its excerpt and package documentation. Implement those obligations completely; map every relevant source declaration/body to its native Rust consumer.
 
-2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
 
-10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+2. **RUST_NATIVE:** Use the Rust standard library and existing selected ecosystem libraries for ordinary data, error, formatting, I/O and concurrency behavior. Reuse a capable facility before custom code. Record the concrete Agones policy or integration gap for any necessary extension; a library written in Go is a dependency reference, not another porting objective.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
-13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+3. Preserve API/resource/protocol field names, ranges, presence, ordering, defaults and errors only where the Agones contract requires them. Use Rust types, Option/Result, checked domain conversions and existing serializers. Go implementation details do not independently create compatibility requirements.
+
+
+4. Preserve required Agones resource/configuration content and source identity. Retain binary resource bytes and attribution; implement any needed tool behavior with native Rust facilities.
+
+
+12. Keep one CGP capability/provider/context and resource owner per production effect. Derive-deftly supplies repeated declarations, ownership metadata and wiring. Native Rust libraries perform infrastructure work; no Go compatibility engine or second application manager sits behind the provider.
+
+
+13. Use Python-familiar valid Rust: clear names, small functions, comprehensions/readable iterators and explicit transformations. Preserve required Agones decisions and Rust ownership/error semantics. Keep the exact filename, case and singular/plural stem; module glue stays outside the mirror.
+
+
+14. Completion record: source/body IDs, AGONES_REQUIRED/RUST_NATIVE/GO_ONLY_SUPERSEDED decisions, Agones evidence, selected Rust facility, actual production consumer, CGP/derive-deftly owners and unresolved Agones gaps. Superseded Go mechanisms are not missing implementation. Keep implementation and all deferred assurance statuses truthful.
 
 
 <a id="file-9408441aaa90bd84"></a>
@@ -453,25 +544,40 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > 	selectors := make([]*result, len(gsa.Spec.Selectors))
 
 
-**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. The excerpt records the original implementation. Go syntax and mechanisms in it are historical reference inputs; they do not require runtime or language emulation.
 
 
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. **AGONES_REQUIRED:** Agones selection, priorities, counts/lists, contention, allocation responses and remote allocation protocols. Identify this file’s concrete Agones decisions, inputs, outputs, failures and externally required effects using its excerpt and package documentation. Implement those obligations completely; map every relevant source declaration/body to its native Rust consumer.
 
-2. Account for 1 lexically identified declarations, including `findGameServerForAllocation` (L31). The full declaration list is recorded under `agones:pkg/gameserverallocations/find.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-3. Consume the already implemented source packages `agones.dev/agones/pkg/apis`, `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/allocation/v1`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+2. **RUST_NATIVE:** Use the Rust standard library and existing selected ecosystem libraries for ordinary data, error, formatting, I/O and concurrency behavior. Reuse a capable facility before custom code. Record the concrete Agones policy or integration gap for any necessary extension; a library written in Go is a dependency reference, not another porting objective.
 
-4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
 
-10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+3. Preserve API/resource/protocol field names, ranges, presence, ordering, defaults and errors only where the Agones contract requires them. Use Rust types, Option/Result, checked domain conversions and existing serializers. Go implementation details do not independently create compatibility requirements.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
-13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+4. Account for 1 lexically identified declarations, including `findGameServerForAllocation` (L31). The complete list remains in `agones:pkg/gameserverallocations/find.go` in the frozen inventory. Body mappings may use real Rust library implementations; declarations and lexical counts alone establish no completion.
+
+
+5. GO_ONLY_SUPERSEDED: Go typed-nil interfaces and nil slice/map/header identity. RUST_NATIVE: Option and native containers, with serde/protobuf presence only where an Agones contract requires it. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+6. GO_ONLY_SUPERSEDED: Go map hashing/range/growth, slice headers/capacity and allocation/alias layouts. RUST_NATIVE: Rust collections, borrowing and explicit domain ordering or duplicate policy. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+7. GO_ONLY_SUPERSEDED: Go machine-word, conversion, overflow, float-printing and ABI behavior. RUST_NATIVE: Rust domain types and checked conversions; preserve only documented API/schema ranges and Agones arithmetic. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+12. Keep one CGP capability/provider/context and resource owner per production effect. Derive-deftly supplies repeated declarations, ownership metadata and wiring. Native Rust libraries perform infrastructure work; no Go compatibility engine or second application manager sits behind the provider.
+
+
+13. Use Python-familiar valid Rust: clear names, small functions, comprehensions/readable iterators and explicit transformations. Preserve required Agones decisions and Rust ownership/error semantics. Keep the exact filename, case and singular/plural stem; module glue stays outside the mirror.
+
+
+14. Completion record: source/body IDs, AGONES_REQUIRED/RUST_NATIVE/GO_ONLY_SUPERSEDED decisions, Agones evidence, selected Rust facility, actual production consumer, CGP/derive-deftly owners and unresolved Agones gaps. Superseded Go mechanisms are not missing implementation. Keep implementation and all deferred assurance statuses truthful.
 
 
 <a id="file-e903f3cc4e372875"></a>
@@ -489,23 +595,31 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > var errs = errors.FromPackage()
 
 
-**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. The excerpt records the original implementation. Go syntax and mechanisms in it are historical reference inputs; they do not require runtime or language emulation.
 
 
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. **AGONES_REQUIRED:** Agones selection, priorities, counts/lists, contention, allocation responses and remote allocation protocols. Identify this file’s concrete Agones decisions, inputs, outputs, failures and externally required effects using its excerpt and package documentation. Implement those obligations completely; map every relevant source declaration/body to its native Rust consumer.
 
-2. Account for 1 lexically identified declarations, including `errs` (L19). The full declaration list is recorded under `agones:pkg/gameserverallocations/gameserverallocations.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-3. Consume the already implemented source packages `agones.dev/agones/pkg/util/errors`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+2. **RUST_NATIVE:** Use the Rust standard library and existing selected ecosystem libraries for ordinary data, error, formatting, I/O and concurrency behavior. Reuse a capable facility before custom code. Record the concrete Agones policy or integration gap for any necessary extension; a library written in Go is a dependency reference, not another porting objective.
 
-10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+3. Preserve API/resource/protocol field names, ranges, presence, ordering, defaults and errors only where the Agones contract requires them. Use Rust types, Option/Result, checked domain conversions and existing serializers. Go implementation details do not independently create compatibility requirements.
 
-13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+4. Account for 1 lexically identified declarations, including `errs` (L19). The complete list remains in `agones:pkg/gameserverallocations/gameserverallocations.go` in the frozen inventory. Body mappings may use real Rust library implementations; declarations and lexical counts alone establish no completion.
+
+
+12. Keep one CGP capability/provider/context and resource owner per production effect. Derive-deftly supplies repeated declarations, ownership metadata and wiring. Native Rust libraries perform infrastructure work; no Go compatibility engine or second application manager sits behind the provider.
+
+
+13. Use Python-familiar valid Rust: clear names, small functions, comprehensions/readable iterators and explicit transformations. Preserve required Agones decisions and Rust ownership/error semantics. Keep the exact filename, case and singular/plural stem; module glue stays outside the mirror.
+
+
+14. Completion record: source/body IDs, AGONES_REQUIRED/RUST_NATIVE/GO_ONLY_SUPERSEDED decisions, Agones evidence, selected Rust facility, actual production consumer, CGP/derive-deftly owners and unresolved Agones gaps. Superseded Go mechanisms are not missing implementation. Keep implementation and all deferred assurance statuses truthful.
 
 
 <a id="file-1c76fae58c62ce38"></a>
@@ -536,29 +650,43 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > 	}
 
 
-**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. The excerpt records the original implementation. Go syntax and mechanisms in it are historical reference inputs; they do not require runtime or language emulation.
 
 
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. **AGONES_REQUIRED:** Agones selection, priorities, counts/lists, contention, allocation responses and remote allocation protocols. Identify this file’s concrete Agones decisions, inputs, outputs, failures and externally required effects using its excerpt and package documentation. Implement those obligations completely; map every relevant source declaration/body to its native Rust consumer.
 
-2. Account for 11 lexically identified declarations, including `registerViews` (L65), `unRegisterViews` (L74), `latencyTags` (L81), `metrics` (L89), `mutate` (L97), `setStatus` (L106), `setError` (L111), `setRequest` (L116), `setResponse` (L126), `record` (L149), `recordAllocationRetrySuccess` (L154). The full declaration list is recorded under `agones:pkg/gameserverallocations/metrics.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-3. Consume the already implemented source packages `agones.dev/agones/pkg/apis/agones/v1`, `agones.dev/agones/pkg/apis/allocation/v1`, `agones.dev/agones/pkg/client/listers/agones/v1`, `agones.dev/agones/pkg/metrics`, `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+2. **RUST_NATIVE:** Use the Rust standard library and existing selected ecosystem libraries for ordinary data, error, formatting, I/O and concurrency behavior. Reuse a capable facility before custom code. Record the concrete Agones policy or integration gap for any necessary extension; a library written in Go is a dependency reference, not another porting objective.
 
-4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
 
-5. Preserve source floating width, narrowing, exceptional values and relevant bits.
+3. Preserve API/resource/protocol field names, ranges, presence, ordering, defaults and errors only where the Agones contract requires them. Use Rust types, Option/Result, checked domain conversions and existing serializers. Go implementation details do not independently create compatibility requirements.
 
-6. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
 
-10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+4. Account for 11 lexically identified declarations, including `registerViews` (L65), `unRegisterViews` (L74), `latencyTags` (L81), `metrics` (L89), `mutate` (L97), `setStatus` (L106), `setError` (L111), `setRequest` (L116), `setResponse` (L126), `record` (L149), `recordAllocationRetrySuccess` (L154). The complete list remains in `agones:pkg/gameserverallocations/metrics.go` in the frozen inventory. Body mappings may use real Rust library implementations; declarations and lexical counts alone establish no completion.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
-13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+5. GO_ONLY_SUPERSEDED: Go typed-nil interfaces and nil slice/map/header identity. RUST_NATIVE: Option and native containers, with serde/protobuf presence only where an Agones contract requires it. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+6. GO_ONLY_SUPERSEDED: Go map hashing/range/growth, slice headers/capacity and allocation/alias layouts. RUST_NATIVE: Rust collections, borrowing and explicit domain ordering or duplicate policy. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+7. GO_ONLY_SUPERSEDED: Go machine-word, conversion, overflow, float-printing and ABI behavior. RUST_NATIVE: Rust domain types and checked conversions; preserve only documented API/schema ranges and Agones arithmetic. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+8. GO_ONLY_SUPERSEDED: Go fmt/strconv/reflection, klog/logrus internals, GC/allocator/layout and runtime diagnostics. RUST_NATIVE: std::fmt, std::error::Error and established Rust logging/serialization facilities. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+12. Keep one CGP capability/provider/context and resource owner per production effect. Derive-deftly supplies repeated declarations, ownership metadata and wiring. Native Rust libraries perform infrastructure work; no Go compatibility engine or second application manager sits behind the provider.
+
+
+13. Use Python-familiar valid Rust: clear names, small functions, comprehensions/readable iterators and explicit transformations. Preserve required Agones decisions and Rust ownership/error semantics. Keep the exact filename, case and singular/plural stem; module glue stays outside the mirror.
+
+
+14. Completion record: source/body IDs, AGONES_REQUIRED/RUST_NATIVE/GO_ONLY_SUPERSEDED decisions, Agones evidence, selected Rust facility, actual production consumer, CGP/derive-deftly owners and unresolved Agones gaps. Superseded Go mechanisms are not missing implementation. Keep implementation and all deferred assurance statuses truthful.
 
 
 ## Package `agones:pkg/gameserverallocations/processor` -> module `pkg::gameserverallocations::processor`
@@ -580,7 +708,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > // The client establishes a bidirectional gRPC stream with the processor service,
 
 
-**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve Agones external contracts and exact module/file spelling; express initialization, visibility and ownership through native Rust. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. Use the quoted package/topic contract and file excerpt to identify Agones obligations; classify Go-only mechanisms as superseded under requirement 10.
 
 
 <a id="file-f2450964992fb484"></a>
@@ -610,35 +738,49 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > 	AllocationTimeout time.Duration
 
 
-**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. The excerpt records the original implementation. Go syntax and mechanisms in it are historical reference inputs; they do not require runtime or language emulation.
 
 
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. **AGONES_REQUIRED:** Agones selection, priorities, counts/lists, contention, allocation responses and remote allocation protocols. Identify this file’s concrete Agones decisions, inputs, outputs, failures and externally required effects using its excerpt and package documentation. Implement those obligations completely; map every relevant source declaration/body to its native Rust consumer.
 
-2. Account for 18 lexically identified declarations, including `maxSendRetries` (L36), `Config` (L51), `client` (L71), `pendingRequest` (L90), `Client` (L109), `NewClient` (L118), `Run` (L138), `Allocate` (L168), `handleStream` (L221), `pullRequestHandler` (L264), `handlePullRequest` (L281), `sendBatch` (L319), `handleBatchResponse` (L367), `connectAndRun` (L483), `connect` (L513), `healthCheck` (L537), `registerClient` (L560), `drainPendingRequests` (L578). The full declaration list is recorded under `agones:pkg/gameserverallocations/processor/client.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-3. Consume the already implemented source packages `agones.dev/agones/pkg/allocation/go`, `agones.dev/agones/pkg/util/errors`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+2. **RUST_NATIVE:** Use the Rust standard library and existing selected ecosystem libraries for ordinary data, error, formatting, I/O and concurrency behavior. Reuse a capable facility before custom code. Record the concrete Agones policy or integration gap for any necessary extension; a library written in Go is a dependency reference, not another porting objective.
 
-4. Retain deferred cleanup order and its interaction with returns/errors.
 
-5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+3. Preserve API/resource/protocol field names, ranges, presence, ordering, defaults and errors only where the Agones contract requires them. Use Rust types, Option/Result, checked domain conversions and existing serializers. Go implementation details do not independently create compatibility requirements.
 
-6. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
 
-7. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+4. Account for 18 lexically identified declarations, including `maxSendRetries` (L36), `Config` (L51), `client` (L71), `pendingRequest` (L90), `Client` (L109), `NewClient` (L118), `Run` (L138), `Allocate` (L168), `handleStream` (L221), `pullRequestHandler` (L264), `handlePullRequest` (L281), `sendBatch` (L319), `handleBatchResponse` (L367), `connectAndRun` (L483), `connect` (L513), `healthCheck` (L537), `registerClient` (L560), `drainPendingRequests` (L578). The complete list remains in `agones:pkg/gameserverallocations/processor/client.go` in the frozen inventory. Body mappings may use real Rust library implementations; declarations and lexical counts alone establish no completion.
 
-8. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
 
-9. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+5. GO_ONLY_SUPERSEDED: Go defer execution, panic/unwind ordering and runtime cleanup mechanics. RUST_NATIVE: Rust RAII/Drop, scoped guards and explicit async shutdown under the CGP owner. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
 
-10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+6. GO_ONLY_SUPERSEDED: Go goroutine scheduling, channel/select mechanics and channel representation. RUST_NATIVE: Tokio/futures tasks, Rust channels/streams and explicit cancellation/supervision. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
 
-13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+7. GO_ONLY_SUPERSEDED: Go typed-nil interfaces and nil slice/map/header identity. RUST_NATIVE: Option and native containers, with serde/protobuf presence only where an Agones contract requires it. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+8. GO_ONLY_SUPERSEDED: Go map hashing/range/growth, slice headers/capacity and allocation/alias layouts. RUST_NATIVE: Rust collections, borrowing and explicit domain ordering or duplicate policy. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+9. GO_ONLY_SUPERSEDED: Go machine-word, conversion, overflow, float-printing and ABI behavior. RUST_NATIVE: Rust domain types and checked conversions; preserve only documented API/schema ranges and Agones arithmetic. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+10. GO_ONLY_SUPERSEDED: Go fmt/strconv/reflection, klog/logrus internals, GC/allocator/layout and runtime diagnostics. RUST_NATIVE: std::fmt, std::error::Error and established Rust logging/serialization facilities. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+12. Keep one CGP capability/provider/context and resource owner per production effect. Derive-deftly supplies repeated declarations, ownership metadata and wiring. Native Rust libraries perform infrastructure work; no Go compatibility engine or second application manager sits behind the provider.
+
+
+13. Use Python-familiar valid Rust: clear names, small functions, comprehensions/readable iterators and explicit transformations. Preserve required Agones decisions and Rust ownership/error semantics. Keep the exact filename, case and singular/plural stem; module glue stays outside the mirror.
+
+
+14. Completion record: source/body IDs, AGONES_REQUIRED/RUST_NATIVE/GO_ONLY_SUPERSEDED decisions, Agones evidence, selected Rust facility, actual production consumer, CGP/derive-deftly owners and unresolved Agones gaps. Superseded Go mechanisms are not missing implementation. Keep implementation and all deferred assurance statuses truthful.
 
 
 <a id="file-1a500bc872c8ab0c"></a>
@@ -669,21 +811,31 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > // Package processor provides client functionality for the Agones allocation processor system
 
 
-**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. The excerpt records the original implementation. Go syntax and mechanisms in it are historical reference inputs; they do not require runtime or language emulation.
 
 
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. **AGONES_REQUIRED:** Agones selection, priorities, counts/lists, contention, allocation responses and remote allocation protocols. Identify this file’s concrete Agones decisions, inputs, outputs, failures and externally required effects using its excerpt and package documentation. Implement those obligations completely; map every relevant source declaration/body to its native Rust consumer.
 
-2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
 
-10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
+2. **RUST_NATIVE:** Use the Rust standard library and existing selected ecosystem libraries for ordinary data, error, formatting, I/O and concurrency behavior. Reuse a capable facility before custom code. Record the concrete Agones policy or integration gap for any necessary extension; a library written in Go is a dependency reference, not another porting objective.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
-13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+3. Preserve API/resource/protocol field names, ranges, presence, ordering, defaults and errors only where the Agones contract requires them. Use Rust types, Option/Result, checked domain conversions and existing serializers. Go implementation details do not independently create compatibility requirements.
+
+
+4. Preserve required Agones resource/configuration content and source identity. Retain binary resource bytes and attribution; implement any needed tool behavior with native Rust facilities.
+
+
+12. Keep one CGP capability/provider/context and resource owner per production effect. Derive-deftly supplies repeated declarations, ownership metadata and wiring. Native Rust libraries perform infrastructure work; no Go compatibility engine or second application manager sits behind the provider.
+
+
+13. Use Python-familiar valid Rust: clear names, small functions, comprehensions/readable iterators and explicit transformations. Preserve required Agones decisions and Rust ownership/error semantics. Keep the exact filename, case and singular/plural stem; module glue stays outside the mirror.
+
+
+14. Completion record: source/body IDs, AGONES_REQUIRED/RUST_NATIVE/GO_ONLY_SUPERSEDED decisions, Agones evidence, selected Rust facility, actual production consumer, CGP/derive-deftly owners and unresolved Agones gaps. Superseded Go mechanisms are not missing implementation. Keep implementation and all deferred assurance statuses truthful.
 
 
 <a id="file-2742bbe2d534ae2d"></a>
@@ -714,23 +866,37 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > 	case http.StatusNotFound:
 
 
-**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. The excerpt records the original implementation. Go syntax and mechanisms in it are historical reference inputs; they do not require runtime or language emulation.
 
 
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. **AGONES_REQUIRED:** Agones selection, priorities, counts/lists, contention, allocation responses and remote allocation protocols. Identify this file’s concrete Agones decisions, inputs, outputs, failures and externally required effects using its excerpt and package documentation. Implement those obligations completely; map every relevant source declaration/body to its native Rust consumer.
 
-2. Account for 2 lexically identified declarations, including `grpcLogger` (L24), `GRPCCodeFromHTTPStatus` (L27). The full declaration list is recorded under `agones:pkg/gameserverallocations/processor/grpc.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-3. Consume the already implemented source packages `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+2. **RUST_NATIVE:** Use the Rust standard library and existing selected ecosystem libraries for ordinary data, error, formatting, I/O and concurrency behavior. Reuse a capable facility before custom code. Record the concrete Agones policy or integration gap for any necessary extension; a library written in Go is a dependency reference, not another porting objective.
 
-10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+3. Preserve API/resource/protocol field names, ranges, presence, ordering, defaults and errors only where the Agones contract requires them. Use Rust types, Option/Result, checked domain conversions and existing serializers. Go implementation details do not independently create compatibility requirements.
 
-13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+4. Account for 2 lexically identified declarations, including `grpcLogger` (L24), `GRPCCodeFromHTTPStatus` (L27). The complete list remains in `agones:pkg/gameserverallocations/processor/grpc.go` in the frozen inventory. Body mappings may use real Rust library implementations; declarations and lexical counts alone establish no completion.
+
+
+5. GO_ONLY_SUPERSEDED: Go machine-word, conversion, overflow, float-printing and ABI behavior. RUST_NATIVE: Rust domain types and checked conversions; preserve only documented API/schema ranges and Agones arithmetic. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+6. GO_ONLY_SUPERSEDED: Go fmt/strconv/reflection, klog/logrus internals, GC/allocator/layout and runtime diagnostics. RUST_NATIVE: std::fmt, std::error::Error and established Rust logging/serialization facilities. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+12. Keep one CGP capability/provider/context and resource owner per production effect. Derive-deftly supplies repeated declarations, ownership metadata and wiring. Native Rust libraries perform infrastructure work; no Go compatibility engine or second application manager sits behind the provider.
+
+
+13. Use Python-familiar valid Rust: clear names, small functions, comprehensions/readable iterators and explicit transformations. Preserve required Agones decisions and Rust ownership/error semantics. Keep the exact filename, case and singular/plural stem; module glue stays outside the mirror.
+
+
+14. Completion record: source/body IDs, AGONES_REQUIRED/RUST_NATIVE/GO_ONLY_SUPERSEDED decisions, Agones evidence, selected Rust facility, actual production consumer, CGP/derive-deftly owners and unresolved Agones gaps. Superseded Go mechanisms are not missing implementation. Keep implementation and all deferred assurance statuses truthful.
 
 
 <a id="file-5cb75532fc0672ff"></a>
@@ -761,35 +927,49 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > 	allocationpb.UnimplementedProcessorServer
 
 
-**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. Quoted commands are source evidence, not permission to execute them.
+**Reference boundary.** No dedicated prose for this individual file was established; its upstream comments/source and the package documentation below are the normative reference inputs. The excerpt records the original implementation. Go syntax and mechanisms in it are historical reference inputs; they do not require runtime or language emulation.
 
 
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. **AGONES_REQUIRED:** Agones selection, priorities, counts/lists, contention, allocation responses and remote allocation protocols. Identify this file’s concrete Agones decisions, inputs, outputs, failures and externally required effects using its excerpt and package documentation. Implement those obligations completely; map every relevant source declaration/body to its native Rust consumer.
 
-2. Account for 14 lexically identified declarations, including `handlerLogger` (L43), `GameServerAllocator` (L46), `allocationResult` (L51), `Handler` (L57), `NewServiceHandler` (L68), `StreamBatches` (L80), `StartPullRequestTicker` (L156), `sendPullRequestsToClients` (L174), `processAllocationsConcurrently` (L198), `processAllocation` (L214), `submitBatch` (L263), `GetGRPCServerOptions` (L291), `addClient` (L310), `removeClient` (L318). The full declaration list is recorded under `agones:pkg/gameserverallocations/processor/handler.go` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-3. Consume the already implemented source packages `agones.dev/agones/pkg/allocation/converters`, `agones.dev/agones/pkg/allocation/go`, `agones.dev/agones/pkg/apis/allocation/v1`, `agones.dev/agones/pkg/util/runtime`. Keep transport/runtime effects behind CGP capabilities rather than copying concrete dependencies into portable policy.
+2. **RUST_NATIVE:** Use the Rust standard library and existing selected ecosystem libraries for ordinary data, error, formatting, I/O and concurrency behavior. Reuse a capable facility before custom code. Record the concrete Agones policy or integration gap for any necessary extension; a library written in Go is a dependency reference, not another porting objective.
 
-4. Retain deferred cleanup order and its interaction with returns/errors.
 
-5. Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.
+3. Preserve API/resource/protocol field names, ranges, presence, ordering, defaults and errors only where the Agones contract requires them. Use Rust types, Option/Result, checked domain conversions and existing serializers. Go implementation details do not independently create compatibility requirements.
 
-6. Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.
 
-7. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
+4. Account for 14 lexically identified declarations, including `handlerLogger` (L43), `GameServerAllocator` (L46), `allocationResult` (L51), `Handler` (L57), `NewServiceHandler` (L68), `StreamBatches` (L80), `StartPullRequestTicker` (L156), `sendPullRequestsToClients` (L174), `processAllocationsConcurrently` (L198), `processAllocation` (L214), `submitBatch` (L263), `GetGRPCServerOptions` (L291), `addClient` (L310), `removeClient` (L318). The complete list remains in `agones:pkg/gameserverallocations/processor/handler.go` in the frozen inventory. Body mappings may use real Rust library implementations; declarations and lexical counts alone establish no completion.
 
-8. Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.
 
-9. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+5. GO_ONLY_SUPERSEDED: Go defer execution, panic/unwind ordering and runtime cleanup mechanics. RUST_NATIVE: Rust RAII/Drop, scoped guards and explicit async shutdown under the CGP owner. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
 
-10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+6. GO_ONLY_SUPERSEDED: Go goroutine scheduling, channel/select mechanics and channel representation. RUST_NATIVE: Tokio/futures tasks, Rust channels/streams and explicit cancellation/supervision. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
 
-13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
+
+7. GO_ONLY_SUPERSEDED: Go typed-nil interfaces and nil slice/map/header identity. RUST_NATIVE: Option and native containers, with serde/protobuf presence only where an Agones contract requires it. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+8. GO_ONLY_SUPERSEDED: Go map hashing/range/growth, slice headers/capacity and allocation/alias layouts. RUST_NATIVE: Rust collections, borrowing and explicit domain ordering or duplicate policy. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+9. GO_ONLY_SUPERSEDED: Go machine-word, conversion, overflow, float-printing and ABI behavior. RUST_NATIVE: Rust domain types and checked conversions; preserve only documented API/schema ranges and Agones arithmetic. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+10. GO_ONLY_SUPERSEDED: Go fmt/strconv/reflection, klog/logrus internals, GC/allocator/layout and runtime diagnostics. RUST_NATIVE: std::fmt, std::error::Error and established Rust logging/serialization facilities. Retain any independently evidenced Agones rule; do not reconstruct the Go mechanism.
+
+
+12. Keep one CGP capability/provider/context and resource owner per production effect. Derive-deftly supplies repeated declarations, ownership metadata and wiring. Native Rust libraries perform infrastructure work; no Go compatibility engine or second application manager sits behind the provider.
+
+
+13. Use Python-familiar valid Rust: clear names, small functions, comprehensions/readable iterators and explicit transformations. Preserve required Agones decisions and Rust ownership/error semantics. Keep the exact filename, case and singular/plural stem; module glue stays outside the mirror.
+
+
+14. Completion record: source/body IDs, AGONES_REQUIRED/RUST_NATIVE/GO_ONLY_SUPERSEDED decisions, Agones evidence, selected Rust facility, actual production consumer, CGP/derive-deftly owners and unresolved Agones gaps. Superseded Go mechanisms are not missing implementation. Keep implementation and all deferred assurance statuses truthful.
 
 
 
@@ -805,3 +985,4 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 3. Post-gate milestones require the whole-project `IMPLEMENTATION_COMPLETE_UNVERIFIED` record. Run only their required assurance; if production defects reopen implementation, close and renew the gate before further checks.
 
 4. Record the milestone outcome and actual usage observations under the separate execution/accounting policy. Follow [alternation-policy.md](alternation-policy.md); this file does not define route-switch rules. Do not complete or replace the native Goal at this milestone boundary.
+

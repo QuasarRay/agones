@@ -1,0 +1,70 @@
+{
+  "id": "AGONES_NATIVE_RUST_V1",
+  "date": "2026-10-30",
+  "authority": {
+    "id": "Q-9ea3891cc21daae253",
+    "repository": "project-guidance-current",
+    "repository_url": "https://github.com/QuasarRay/agones",
+    "revision": "WORKTREE_UNCOMMITTED",
+    "path": "AGENTS.MD",
+    "local_path": "/home/astral/Projects/agones/AGENTS.MD",
+    "start_line": 23,
+    "end_line": 23,
+    "source_sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
+    "kind": "USER_SUPPLIED_CURRENT_PROJECT_GUIDANCE",
+    "text": "10. Existing Rust Ecosystem must be used to the fullest potential. Do NOT try to recreate Go semantics in Agones Rust reimplementation. Application behavior and semantics must only correspond to original Agones exclusively in Agones-specific semantics, all traces of go semantics must be fully removed and replaced with Rust Semantics in Rust reimplementation of Agones.",
+    "permalink": null,
+    "source_origin": "CURRENT_WORKING_TREE; no commit permalink is asserted"
+  },
+  "scope": "DOCUMENTATION_AND_CONTROL_RECORDS_ONLY",
+  "preserved_cursor": {
+    "disposition": "READY",
+    "milestone_id": "M0003",
+    "route": "MANUAL",
+    "stage": "IMPLEMENTING"
+  },
+  "original_forecast_sha256": "ee1cc5bb26dd418bb87348e4b22bf6b41ba03626484c5b373a7ef717fd8d7d69",
+  "record_changes": [
+    {
+      "path": "verification/agones/roadmap-M0003-gateway-authoring.json",
+      "before_sha256": "8a3496097f68b856504fb464528b6642349b46c302780ab1b7bf09280875b22d",
+      "after_sha256": "853c81c9bc938c2f5c90ec1fb31f83d559e2e752fc5b1e23212158ba9dbe8117",
+      "superseded_requirement_groups": 44
+    },
+    {
+      "path": "verification/agones/roadmap-M0003-http-authoring.json",
+      "before_sha256": "e700fdadcf89af85cd7bd199757c09a7d8436f276a11b5b30107868d263b5ab5",
+      "after_sha256": "3834d042159213534891f08c595488c3acac62d7d2e34d5c8408352a4241dff9",
+      "superseded_requirement_groups": 47
+    },
+    {
+      "path": "verification/agones/roadmap-M0003-hyper-adoption.json",
+      "before_sha256": "185c3d5c12700c99035755bbe285d9bfcc8b4a95705a16737f5eec22428e76e5",
+      "after_sha256": "9e2f20f6ad4e88ee0738039562f510bde80ee4608aeb0ce631c573eb37aa2e7f",
+      "superseded_requirement_groups": 2
+    },
+    {
+      "path": "verification/agones/roadmap-M0003-partial-map.json",
+      "before_sha256": "b66f0b23096bce605284d32a1fedd7f7a21f366b549737b02b6d5691df573b46",
+      "after_sha256": "06b95d34e419a628ebb37cd1330df6a3a550eaff75cf9ce8d25bfc947f562001",
+      "superseded_requirement_groups": 15
+    },
+    {
+      "path": "verification/agones/roadmap-M0003-platform-effects.json",
+      "before_sha256": "834b5d14685b3d95aec636f44d69c4476317398138973acdc6f5c9ee201c4f95",
+      "after_sha256": "3d633f1d353d7936034f74c3e9d894bcac9ee1d2ce6172eaca7d0fa3ad49d246",
+      "superseded_requirement_groups": 1
+    },
+    {
+      "path": "verification/agones/roadmap-M0003-reuse-adoption.json",
+      "before_sha256": "c3367eafb92d717084f84d084b5dd4054d1de5c30473468a6afadce3f41d7cba",
+      "after_sha256": "04cb92cb54e3e11b2bf78ee81e2d237daae69b975db147966dee5cee81890804",
+      "superseded_requirement_groups": 0
+    }
+  ],
+  "production_changes": false,
+  "project_execution": false,
+  "goal_controls_invoked": false,
+  "comparison_policy": "Preserve actual history; do not infer missing policy-boundary counters",
+  "history_archive": "verification/agones/roadmap/native-rust-v1-history.json.gz"
+}

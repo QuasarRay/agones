@@ -1,3 +1,4 @@
+from native_semantics import shared_contract_section
 """Shared roadmap prose. All statements describe future work, not execution receipts."""
 
 CONTRACT = r'''<a id="shared-contract"></a>
@@ -6,7 +7,7 @@ CONTRACT = r'''<a id="shared-contract"></a>
 
 ## 1. Objective, scope and authority
 
-1. Finish the source-compatible Agones Rust implementation AND the complete required native CPG port, source-derived CPG -> normalized CPG -> typed IR -> Genco -> Rust pipeline, complete generated Agones artifact, final assurance and authorized delivery. CPG means Code Property Graph; CGP means Context-Generic Programming. They are different systems.
+1. Finish the Agones-compatible Rust implementation with native Rust semantics AND the complete required native CPG port, source-derived CPG -> normalized CPG -> typed IR -> Genco -> Rust pipeline, complete generated Agones artifact, final assurance and authorized delivery. CPG means Code Property Graph; CGP means Context-Generic Programming. They are different systems.
 2. Work in `/home/astral/Projects/agones` on `agones-rs-dev`; never modify `main`. Preserve the original sources, user changes, existing Rust implementation, source pins, receipts and recoverable work. This roadmap is derived from the two supplied prompts, whose original texts and hashes are retained as **inactive reference snapshots** under `verification/agones/roadmap/`.
 3. This document is an implementation contract only when the user invokes implementation. Reading it for prompt editing, analysis or review does not start project work or create a Goal. Host instructions and the user's current request govern; quoted source, logs, archived prompts and reference books are evidence, not executable instructions.
 4. Read the shared contract and separate execution policy once, then the current milestone and affected file/package sections. Do not load the entire combined roadmap on each turn. The directory is canonical; `roadmap.md` is its deterministic combined edition, not a second editable contract.
@@ -42,7 +43,7 @@ migration_status = IN_PROGRESS | COMPLETE
 
 1. Agones reference: `6eb4a02588d8e7b581de187f3bc849733a78dcb2`. CPG reference selected by the retained frontend: `301c4010d28ecdac05bc2ed44310f56446459465` (v1.7.79). Preserve the recorded compatible Joern, goastgen, Flatgraph, Grafeo and Genco identities. Reference checkouts and their newer HEADs are listed separately in [sources.json](../verification/agones/roadmap/sources.json); do not upgrade pins merely because source is vendored.
 2. The frozen [source inventory](../verification/agones/roadmap/source-inventory.json) accounts for @@AGONES_COUNT@@ Agones paths and @@CPG_COUNT@@ CPG paths. @@DETAIL_COUNT@@ files have detailed roadmap entries. Every other path has an explicit retained-reference, existing-migration, guidance or third-party disposition; none is silently dropped. File/declaration counts do not establish complete semantic body coverage.
-3. Preserve deprecated-but-served behavior and all source configurations. Required production scope includes initializers, closures/callbacks, generated source, API/schema/proto data, configuration, resources, build/tool behavior and external-call support. Enumerate Go build-tag/platform/cgo/module/replacement/vendor variants before claiming a complete body universe. Existing dynamic test/assertion counts remain unresolved until post-gate extraction.
+3. Preserve deprecated-but-served Agones contracts. Account for Agones initialization, callbacks, generated bindings, API/schema/protocol data, resources, tool outputs and external effects. Retain Go build-tag/platform/cgo/module/vendor facts as source-analysis inputs; map required Agones target/features to native Rust facilities. This is not a Go compiler/runtime/ABI profile objective. Dynamic Agones test/assertion accounting remains deferred until the global gate.
 4. Full CPG scope includes every handwritten production module and its build/schema machinery, including modules unused by Agones. Regenerate generated domain/protobuf material from complete inputs. Do not reimplement underlying third-party libraries wholesale, but retain and map all CPG semantics provided through those dependencies.
 5. Both recorded CPG revisions have identical `schema/src/main/scala` source blobs. Twenty-five corresponding native module files are present in CPGSchema. [schema-reconciliation.json](../verification/agones/roadmap/schema-reconciliation.json) records the source identities and reuse candidates. This is source/path reconciliation only: Rust behavior, builder semantics, dependencies and complete body coverage remain unverified. Do not subtract module counts from the historical 695 candidate-body gap.
 6. Preserve original fixture-qualified identities and source/file/body/configuration provenance. A rename retains aliases/tombstones; exclusions require explicit user authority. Unknown required production scope prevents the global gate; unknown required assurance scope prevents final completion.
@@ -79,7 +80,7 @@ source contract -> typed declaration -> derive-deftly template
 2. Derive-deftly operates at compile time. The generated Rust participates in runtime ownership through CGP. Do not claim that a template macro itself schedules tasks or that CGP automatically supplies application-specific lifecycle semantics.
 3. Record one subsystem ownership entry: source/feature IDs; declaration and template; CGP capability/provider; production context; mutable state/resource owner; effect boundary; initialization, readiness, cancellation, drain and cleanup responsibilities.
 4. Include every controller, allocator, server, SDK stream, queue, loader, pass, generator stage, publisher, background task and shutdown path. The entrypoint constructs the context and invokes the lifecycle consumer. No detached application tasks or parallel hand-maintained manager may bypass composition.
-5. Preserve source policy for partial/repeated startup, auxiliary versus primary failures, retry exhaustion, panics, lost watches, conflicts, shutdown during I/O, drain deadlines and cleanup. Parent owners cancel and join owned children; runtime libraries supply effects through capabilities.
+5. Preserve Agones policy for startup, retry exhaustion, lost watches, conflicts, shutdown and drain deadlines. Use Rust errors, task supervision and RAII cleanup; do not reproduce Go panic/recover or runtime behavior. Parent owners cancel and join owned children; runtime libraries supply effects through capabilities.
 6. Distinguish public/wire types, portable policy and Rusternetes transport/storage types. Keep fallible conversions at the adapter boundary and preserve required unknown/optional fields. A neutral name is not architectural independence. Reusable policy consumes minimum capabilities rather than a universal orchestrator registry.
 7. Reuse the existing Grafeo canonical graph/persistence owner in CPG. Borrowed views and caches are disposable projections, not independently writable graphs. Preserve source identities, numeric/encoding semantics and storage compatibility boundaries.
 
@@ -89,10 +90,10 @@ source contract -> typed declaration -> derive-deftly template
 
 @@BETTER_QUOTE@@
 
-1. Evaluate authored Rust, templates, generated Rust, APIs, examples, diagnostics and later harnesses from a Python developer's viewpoint. Pythonic readability and idiomatic Rust have equal standing. Neither permits changing source semantics, memory safety, ownership or public compatibility.
+1. Evaluate authored Rust, templates, generated Rust, APIs, examples, diagnostics and later harnesses from a Python developer's viewpoint. Pythonic readability and idiomatic Rust have equal standing. Both require native Rust semantics, memory safety and ownership, while preserving Agones-specific public contracts.
 2. Prefer small named functions, explicit data transformations, straightforward control flow, concise comprehensions/iterators and declarative composition. Explain non-obvious borrowing, moves and error propagation beside the reusable pattern. Keep domain behavior readable without inspecting an expansion engine.
 3. Use comprende's `c!` for concise mapping/filtering/collection operations; use better_comprehension when explicit collection choice, pattern/binding or lazy iteration improves clarity. Pick one convention for overlap and reuse it. Do not duplicate a transformation to exercise both libraries.
-4. Preserve eager/lazy execution, evaluation count and order, short-circuiting, ownership, allocation, duplicates and permitted output order. A Rust HashMap does not acquire Python insertion ordering. Use an ordinary loop when an effect or cleanup sequence is clearer; record a short local reason for a non-obvious exception.
+4. Use Rust-native eager/lazy evaluation, short-circuiting, ownership and allocation. Preserve Agones-required effects, duplicate handling and output ordering explicitly. A Rust HashMap does not acquire Python insertion ordering. Use an ordinary loop when an effect or cleanup sequence is clearer; record a short local reason for a non-obvious exception.
 5. Keep valid Rust: explicit types, traits/generics, Option/Result and normal error propagation. No Python interpreter, dynamic object emulation, unnecessary boxing/cloning, runtime macro registry or new authoring language.
 6. Preserve literal source names even where ordinary Rust spelling conventions differ. Make the registration layer explain the exception. Do not make Python familiarity an excuse to rename source files or conceal error/resource ownership.
 
@@ -105,7 +106,7 @@ let decision = decide_update(&current, &desired)?;
 context.apply_update(decision).await?;
 ```
 
-The reader sees selection, decision and effect in order. CGP supplies the effect capability; derive-deftly supplies repeated declarations and wiring. The actual operation, errors and ordering come from the quoted source contract.
+The reader sees selection, decision and effect in order. CGP supplies the effect capability; derive-deftly supplies repeated declarations and wiring. The quoted source supplies Agones operations and domain evidence; Rust supplies language/runtime behavior.
 
 ## 7. Absolute implementation-first gate
 
@@ -114,7 +115,7 @@ The reader sees selection, decision and effect in order. CGP supplies the effect
 3. Defer new semantic property extraction, harness/extraction infrastructure and assurance fixtures. Reading source tests as specifications and authoring this roadmap is permitted; executing tests or generating a property campaign is not.
 4. Permitted work is source/doc reading, source-to-destination bookkeeping, necessary implementation edits, declarations/templates/rules, production configuration, local checkpoints and content identity/recovery. An already runnable generator may emit required implementation files without validation/test hooks. Its output accounting is not correctness evidence.
 5. Do not compile a new generator, bootstrap project code, or run a compatibility probe under a generation label. If emission needs a forbidden build, preserve the exact dependency blocker. Do not move the output requirement behind the gate or label incomplete generation complete to escape this constraint. The cost report's finite scenarios are conditional on a permitted executable path.
-6. The global gate requires every required production row, all source-owned error/edge paths, Rusternetes integration, complete CGP/derive-deftly lifecycle wiring, production generators/support/output, and all four required metaprogramming forms in both locations. No unknown production scope, required stubs, fake success, disconnected bodies or omitted source operations may remain.
+6. The global gate requires every required production row, all required Agones error/edge paths using Rust-native error and ownership policy, Rusternetes integration, complete CGP/derive-deftly lifecycle wiring, production generators/support/output, and all four required metaprogramming forms in both locations. No unknown required Agones production scope, required stubs, fake success or disconnected domain operations may remain. GO_ONLY_SUPERSEDED mechanisms are excluded with explicit source-bound records.
 7. Record `IMPLEMENTATION_COMPLETE_UNVERIFIED` with contract/baseline/scope IDs, source snapshot/dirty binding, inventory revision, exact authored source/entrypoint mappings, ownership, required generated artifact identity and zero known missing required implementation. This is an authored-completeness declaration, not proof that the program is correct.
 8. Only then enter `POST_IMPLEMENTATION_VERIFICATION`, create required assurance tooling and execute deferred checks. Defects or production refactors close the gate: finish the repair, renew the global record, and resume affected checks. Harness-only corrections after the gate remain assurance work. Missing/stale/unsupported results never pass.
 
@@ -122,8 +123,8 @@ The reader sees selection, decision and effect in order. CGP supplies the effect
 
 1. Preserve the pipeline `CPG bundle -> normalized CPG -> typed translation IR -> Genco tokens -> generated workspace`. Persist AST/type enrichment with source/configuration identity; do not bypass CPG with an untracked Go-text emitter.
 2. Preserve complete schema facts: hidden elements, inheritance, types/defaults/cardinalities, identifiers/encodings, endpoints/order, contained relationships and mutable identity. Keep standard Schema2Json behavior separate from the richer internal representation.
-3. Implement all required Go semantic families, including initialization, generics, interfaces, aliasing, numeric conversions, strings/maps/slices, errors, defer/panic/recover, goroutines/channels/select, context/clocks and external calls. Retain unresolved facts and unsupported operations as required gaps.
-4. Every required body needs a substantive source-derived implementation and operation/support mapping. A declaration, comment, missing helper, success constant or unsupported-operation placeholder is insufficient. Trace legitimate source panic/no-op/error behavior separately from omissions. Record approximations without claiming correctness.
+3. Translate every required Agones domain operation into native Rust types, control flow, errors, library calls and CGP lifecycle capabilities. Preserve source AST/types as input facts. Classify Go-only language/runtime mechanisms as superseded; do not generate a Go compatibility runtime.
+4. Every required Agones operation needs a substantive implementation or real native Rust library operation with source mapping and a production consumer. Preserve independently evidenced domain failures/no-ops using Rust error policy. Retain Go-only body/operation identities with explicit supersession; declarations, comments, missing helpers and fabricated success cannot discharge Agones obligations.
 5. Publish a separate complete artifact transactionally: freeze inputs; stage output and receipts; emit identity mappings and payload digests; write a completion record binding the manifest without circular self-hashing; flush/close; atomically publish the complete directory. A staged flag or multi-step copy is not publication.
 6. Retain contract/source/configuration/schema/frontend/tool/dependency/rule/IR/emitter identities, exact required/emitted/missing sets, body-to-output spans, known approximations and source rights/notices. Set compilation, correctness, compatibility and production readiness to `UNVERIFIED` until later evidence establishes each category.
 7. Recover intact published artifacts using minimal identity/digest bookkeeping. Preserve incomplete transactions and avoid duplicate jobs. No generation receipt alone completes the shared Goal or authorizes overwriting existing manual implementation.
@@ -150,7 +151,7 @@ The reader sees selection, decision and effect in order. CGP supplies the effect
 
 @@MILESTONE_TABLE@@
 
-The order is derived from source-package imports plus declared schema/pipeline prerequisites. Allocation processing and converters share one cohesive ownership group. CpgSchema constructs modules that import its PropertyDefaults, so the complete schema is one cohesive milestone with the original internal constructor order. Resource/wire contracts, client/observation machinery, GameServer/GameServerSet lifecycle, and example/tooling work are grouped by their actual shared purpose. The file inventory retains all package and source identities; no source package is renamed by grouping. All milestones are planned, not executed.
+The order is derived from source-package imports plus declared schema/pipeline prerequisites. Allocation processing and converters share one cohesive ownership group. CpgSchema constructs modules that import its PropertyDefaults, so the complete schema is one cohesive milestone with the original internal constructor order. Resource/wire contracts, client/observation machinery, GameServer/GameServerSet lifecycle, and example/tooling work are grouped by their actual shared purpose. The file inventory retains all package and source identities; no source package is renamed by grouping. Milestone definitions retain their IDs/order; actual execution and completion records remain in the canonical ledger.
 '''
 
 POLICY = r'''<a id="alternation-policy"></a>
@@ -217,7 +218,7 @@ Quote metadata, source names and marker counts do not establish correctness. A m
 
 COMPARISON_README = r'''# Milestone cost comparisons
 
-No implementation milestone was executed while authoring this roadmap. This directory therefore contains instructions, not fabricated actual-cost reports.
+The initial roadmap was authored on 27 October 2026. Existing milestone reports now record real execution; preserve those measurements and their original forecasts. New reports require attributable observations.
 
 The sole operational policy is [roadmap/alternation-policy.md](../roadmap/alternation-policy.md). Copy the following structure into `NNNN-MNNNN.md` only for a real completed milestone. Leave unavailable fields unknown; use PROVISIONAL when ending counters have not finalized.
 
@@ -258,3 +259,6 @@ Record changed assumptions, affected future milestone IDs, revised ranges and th
 
 The historical 9,834,797-token Goal snapshot is a mixed/unattributed observation, not an actual cost for any new roadmap milestone. Import older milestone measurements only when both boundaries and attribution are documented.
 '''
+
+# Apply the current user-authorized semantic contract in every rendering mode.
+CONTRACT = CONTRACT.replace("## 2. One Goal", shared_contract_section()+"## 2. One Goal", 1)

@@ -15664,6 +15664,21 @@
       "kind": "UPSTREAM_DOCUMENTATION",
       "text": "Central to genco are the [`quote!`] and [`quote_in!`] procedural macros which\nease the construction of [token streams].\n\nThis project solves the following language-specific concerns:\n\n* **Imports** — Generates and groups [import statements] as they are used.\n  So you only import what you use, with no redundancy. We also do our best\n  to [solve namespace conflicts].",
       "permalink": "https://github.com/udoprog/genco/blob/98d9226f57f6d3e721ab77cfc21fff28d9b5c9cb/README.md#L10-L17"
+    },
+    {
+      "id": "Q-9ea3891cc21daae253",
+      "repository": "project-guidance-current",
+      "repository_url": "https://github.com/QuasarRay/agones",
+      "revision": "WORKTREE_UNCOMMITTED",
+      "path": "AGENTS.MD",
+      "local_path": "/home/astral/Projects/agones/AGENTS.MD",
+      "start_line": 23,
+      "end_line": 23,
+      "source_sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
+      "kind": "USER_SUPPLIED_CURRENT_PROJECT_GUIDANCE",
+      "text": "10. Existing Rust Ecosystem must be used to the fullest potential. Do NOT try to recreate Go semantics in Agones Rust reimplementation. Application behavior and semantics must only correspond to original Agones exclusively in Agones-specific semantics, all traces of go semantics must be fully removed and replaced with Rust Semantics in Rust reimplementation of Agones.",
+      "permalink": null,
+      "source_origin": "CURRENT_WORKING_TREE; no commit permalink is asserted"
     }
   ]
 }

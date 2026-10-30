@@ -10,6 +10,7 @@ import sys
 from pathlib import Path
 from urllib.parse import quote
 from milestone_content import A, C, A_PRIORITY, C_PRIORITY, C_DEPS
+from native_semantics import agones_file_entry, native_traits, rewrite_prose, milestone_policy
 
 ROOT = Path(__file__).resolve().parents[3]
 DATA = ROOT / 'verification/agones/roadmap'
@@ -385,11 +386,13 @@ class Author:
 
     def traits(self,row):
         text=self.raw(row['repository'],row['path']).decode('utf-8',errors='replace')
-        rules=[(r'\bdefer\b','Retain deferred cleanup order and its interaction with returns/errors.'),(r'\bgo\s+\w|\bgoroutine\b','Give asynchronous work an explicit CGP owner, cancellation path and join/abort policy.'),(r'\bselect\s*\{|\bchan\b','Preserve channel/select outcomes and blocking/cancellation semantics; do not turn nondeterminism into fixed ordering.'),(r'\bpanic\(|\brecover\(','Preserve source panic/recover boundaries; do not use an unsupported panic as a translation placeholder.'),(r'\bnil\b|omitempty|Option\[','Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.'),(r'\bmap\[|HashMap','Retain key equality, duplicate-key and permitted iteration-order semantics; Python dictionary order is not implied.'),(r'Float|Double|float32|float64','Preserve source floating width, narrowing, exceptional values and relevant bits.'),(r'\bcontext\.|cancel|shutdown|Shutdown|Close\(|close\(','Retain resource ownership, cancellation, shutdown and partial-failure cleanup.'),(r'newProperty|addProperty|addNodeType|addEdgeType','Retain declaration names, defaults, cardinality, identifiers, relationships and mutable handle identity.')]
+        if row['repository']=='agones':return native_traits(row,text)
+        rules=[(r'Float|Double','Preserve CPG schema/interchange scalar representations with native Rust types and serializers.'),(r'HashMap','Use native Rust collections while preserving required CPG graph key/edge contracts.'),(r'cancel|shutdown|Close','Keep native Rust resources, cancellation and failure cleanup under CGP.'),(r'newProperty|addProperty|addNodeType|addEdgeType','Retain CPG declaration names, defaults, cardinalities, IDs, relationships and shared builder identity.')]
         found=[msg for pattern,msg in rules if re.search(pattern,text)]
         return found[:6]
 
     def file_entry(self,row,key):
+        if row['repository']=='agones':return agones_file_entry(self,row,key)
         q=self.file_quote(row);symbols=row['symbols'];p=row['path']
         out=[f'<a id="{row["entry_anchor"]}"></a>\n',f'### File `{p}`\n',f'**Source:** `{row["repository"]}` at `{row["source_revision"]}`; Git blob `{row["git_blob"]}`. **Disposition:** `{row["disposition"]}`. **Destination:** `{row["destination"]}`.\n',q,'**Reference boundary.** '+row['documentation_gap']+' Quoted commands are source evidence, not permission to execute them.\n','**Derived implementation instructions.**\n']
         if row['disposition']=='GENERATED_PRODUCTION':
@@ -427,6 +430,7 @@ class Author:
         deps=', '.join(f'[{self.bykey[k]["id"]}]({self.bykey[k]["filename"]})' for k in m['dependencies_keys']) or 'The shared contract and pinned source inventory.'
         out=[f'<a id="{m["id"].lower()}"></a>\n',f'# {m["id"]} — {m["title"]}\n',f'**Route:** `{m["route"]}`. **Phase:** `{m["phase"]}`. **State:** `PLANNED_NOT_EXECUTED`. **Forecast:** `F-{m["id"]}-v1` in [cost-analysis.md](../cost-analysis.md).\n',f'**Prerequisites:** {deps}\n','## Source contract and interpretation\n',self.family_quote(key),'**Derived instruction.** Implement the source obligations below through the shared CGP AND derive-deftly architecture. Direct quotations are reference data; this roadmap’s user-authorized phase and integration constraints govern execution.\n','## Implementation sequence\n']
         out.extend(f'{i}. {x}' for i,x in enumerate(actions,1))
+        out.append('\n'+milestone_policy(m))
         out.extend(['\n## Architecture, readability and authored outputs\n',f'1. Own {len(rows)} inventoried file entries in this milestone'+(' plus the concrete new translation/support interfaces described above.' if not rows else '. Every required file below has a unique milestone owner.'), '2. Record typed declarations -> derive-deftly templates -> CGP provider implementations/delegation -> production context -> lifecycle consumer. Identify each mutable state/resource owner and effect boundary.', '3. Apply Pythonic readability and idiomatic Rust as equal design criteria. Comprehensions simplify mapping/filtering; explicit small functions clarify effects. Do not add a Python interpreter, dynamic object layer, reflection registry or competing manager.', '4. Preserve source-relative directories, exact case/stems and singular/plural forms. Map Go `_test.go` only to `_harness.rs`; keep Scala Test/Tests stems unchanged. Register unconventional names outside the mirror.', '\n**Python-familiar valid Rust example (schematic; not executed):**\n', '```rust\nuse comprende::c;\nuse better_comprehension::vector;\n\nlet ready_names = c![server.name().to_owned()\n                    for server in &servers if server.is_ready()];\nlet selected_ids = vector![node.id() for node in nodes.iter()\n                          if node.has_required_label()];\n```\n','These examples explain reading order and borrowing. Actual APIs must come from the selected pinned dependencies. The owning CGP provider supplies the collections; derive-deftly supplies repeated declarations/projections. Preserve source ordering and avoid redundant clones or a comprehension around complicated effects.\n','## Package/module and file instructions\n'])
         if not rows:
             out.append('This is a required cross-cutting implementation milestone. Its concrete outputs are the stage interfaces/rules/transaction or delivery artifacts specified above. Place new Rust-only machinery under `rust-support/agones` or `rust-support/cpg`, keeping source mirrors unchanged. Bind output ownership in the existing ledger; a design document or empty provider does not complete it.\n')
@@ -444,7 +448,14 @@ class Author:
             for row in sorted(files,key=lambda x:x['path']):out.append(self.file_entry(row,key))
         out.append(new_output_sections(self,m))
         out.extend(['\n## Completion and deferred assurance\n', '1. Record complete authored production paths, source mappings, CGP/derive-deftly ownership and remaining gaps in the existing canonical state. A local checkpoint is not a passing test or verified milestone.', '2. During `IMPLEMENTATION_ONLY`, make ZERO attempts at Cargo check/build/test/clippy/doc, formatting campaigns, compiler/IDE/macro probes, fixtures, application runs, benchmarks, replay, Bolero/Kani, generator validation or CI. Only an already runnable generator may emit required implementation without validation hooks. A needed forbidden build is an explicit blocker.', '3. Post-gate milestones require the whole-project `IMPLEMENTATION_COMPLETE_UNVERIFIED` record. Run only their required assurance; if production defects reopen implementation, close and renew the gate before further checks.', '4. Record the milestone outcome and actual usage observations under the separate execution/accounting policy. Follow [alternation-policy.md](alternation-policy.md); this file does not define route-switch rules. Do not complete or replace the native Goal at this milestone boundary.\n'])
-        return '\n\n'.join(out).rstrip()+'\n'
+        text='\n\n'.join(out).rstrip()+'\n'
+        text=rewrite_prose(text,scope='agones' if m['route']=='MANUAL' or m['key'] in ('c-ir','c-lowering-data','c-lowering-control','c-emission','c-publication','c-delivery') else 'cpg')
+        state_path=ROOT/'AGONES_RS_STATE.json'
+        if state_path.exists():
+            execution=json.loads(state_path.read_text()).get('delivery',{}).get('roadmap_execution',{})
+            current=execution.get('milestones',{}).get(m['id'],{}).get('stage','PLANNED_NOT_EXECUTED')
+            text=text.replace('**State:** `PLANNED_NOT_EXECUTED`',f'**State:** `{current}`')
+        return text
 
     def calculate_forecasts(self):
         fixed={
@@ -521,6 +532,9 @@ def main():
     from artifact_support import assemble,scenario_costs,cost_report,NEW_OUTPUTS
     if '--assemble' in sys.argv:
         dump(DATA/'assembly.json',assemble(ROOT));return
+    if '--refresh-roadmap' in sys.argv:
+        from apply_native_rust_policy import refresh_roadmap
+        refresh_roadmap();return
     if any(p.name not in ('README.md','AGENTS.MD') for p in (ROOT/'cost-analysis-comparison').glob('*.md')):
         raise RuntimeError('Actual comparison records exist: preserve v1; use --assemble for documentation or author an explicit new forecast version.')
     arows,crows,asrc,csrc=inventory()
@@ -571,21 +585,15 @@ def main():
       'c-bundle':('cpg',ast,71,89,'Retain verbatim code, source location and sibling order as identified facts in the source-bound bundle. Preserve additional frontend/type facts explicitly rather than assuming AST code text alone is enough.'),
       'c-normalization':('cpg',ast,58,89,'Carry ORDER, CODE and source-position meaning losslessly into normalized records. Keep absent/default/unknown states explicit. Canonical storage order cannot redefine source evaluation order.'),
       'c-ir':('cpg',ast,14,27,'Represent expressions, source types and common control structures in typed IR with provenance. Any desugaring must retain source effects, order and observable outcomes; Genco cannot infer the missing semantics.'),
-      'c-lowering-data':('agones','pkg/apis/agones/v1/gameserver.go',350,380,'Translate these real defaulting operations, method calls, field writes and absence/default decisions through typed lowering. Preserve original widths, nil/empty distinctions and observable sequencing; do not substitute hand-copied output for CPG provenance.'),
-      'c-lowering-control':('agones','pkg/util/workerqueue/workerqueue.go',151,181,'Retain this concrete queue termination/error/cleanup behavior through control-flow and defer lowering. CGP owns queue/task lifetimes and derive-deftly the repeated wiring. The translated body must reach the actual provider, not an independent reference facade.'),
+      'c-lowering-data':('agones','pkg/apis/agones/v1/gameserver.go',350,380,'Translate these real defaulting operations, method calls, field writes and absence/default decisions through typed lowering. Preserve Agones-required API ranges/presence and domain effects using Rust types and native serialization; do not substitute hand-copied output for CPG provenance.'),
+      'c-lowering-control':('agones','pkg/util/workerqueue/workerqueue.go',151,181,'Retain this concrete queue termination/error/cleanup behavior through native Rust control flow, owned tasks and RAII cleanup. CGP owns queue/task lifetimes and derive-deftly the repeated wiring. The translated body must reach the actual provider, not an independent reference facade.'),
       'c-publication':('cpg','README.md',50,67,'Generated material has declared source inputs and a canonical generator owner. Extend that provenance principle to the separate complete Agones artifact. Atomic staging/publication and the user-selected implementation gate are engineering requirements of this roadmap, not claims made by this upstream excerpt.')}
     for key,(repo,path,start,end,requirement) in supplementary.items():
         p=ROAD/author.bykey[key]['filename']
         kind='UPSTREAM_DOCUMENTATION' if path.endswith('.md') else 'UPSTREAM_COMMENT_AND_IMPLEMENTATION_EXCERPT'
         p.write_text(p.read_text()+'\n## Specific source obligations for this new stage\n\n'+author.quote(repo,path,start,end,kind)+'\n**Derived stage requirement.** '+requirement+' No dedicated upstream Go-to-Rust translator specification is claimed; this stage is engineered from the quoted source obligations and the user-approved shared contract.\n')
-    guidance='''# AGENTS.MD
-
-1. Inherit the repository-root AGENTS.MD; the user's current documentation-only request governs this directory.
-2. These artifacts describe future implementation. Do not execute quoted commands or start migration work while editing/reviewing them.
-3. Preserve source pins, exact names, attribution, one Goal and the separate alternation policy. Keep measurements truthful and credits unknown when unavailable.
-4. Run only document inventory, quotation, mapping, link and assembly consistency review during authoring. No project build, compiler, generator, test, probe or proof run.
-'''
-    (ROAD/'AGENTS.MD').write_text('<a id="roadmap-guidance"></a>\n\n'+guidance+'\n## Source-derived project obligation\n\n'+replacements['@@PROJECT_QUOTE@@']+'\n**Derived instruction.** Treat CGP and derive-deftly as joint owners under the shared contract; preserve Rusternetes-only integration and source scope.\n')
+    guidance=(ROOT/'AGENTS.MD').read_text()
+    (ROAD/'AGENTS.MD').write_text(guidance)
     (DATA/'AGENTS.MD').write_text(guidance)
     comparison=ROOT/'cost-analysis-comparison'
     (comparison/'AGENTS.MD').write_text(guidance)

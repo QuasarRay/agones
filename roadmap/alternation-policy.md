@@ -18,11 +18,9 @@ This file is the sole authoritative scheduling and cost-accounting policy for th
 
 **Derived distinction.** CGP's static context/provider selection is application architecture. Switching the agent's implementation workstream is an execution-policy decision authorized by the user; it is not a runtime plugin or provider registry.
 
-**Direct quotation — USER_SUPPLIED_PROJECT_GUIDANCE; Q-7f43f999317a68c3ba.** [project-guidance/AGENTS.MD, lines 19–21](https://github.com/QuasarRay/agones/blob/3f63491cf41068fe34d18ce1a20c576ba1a2a0d7/AGENTS.MD#L19-L21). Revision `3f63491cf41068fe34d18ce1a20c576ba1a2a0d7`; source SHA-256 `b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10`.
+**Direct quotation — USER_SUPPLIED_CURRENT_PROJECT_GUIDANCE; Q-9ea3891cc21daae253.** [Current AGENTS.MD, line 23](/home/astral/Projects/agones/AGENTS.MD:23). Source: uncommitted working tree on 30 October 2026; SHA-256 `d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311`.
 
-> 8. Make stackable pull requests incrementally to ensure that no work is duplicated or lost. turn my github account into your workspace. merge into agones-rs-dev after each milestone.
-> 
-> 9. Cluster Orchestrator independence must be an emergent property of the Architecture of agones-rs. Therefore, the design philosophy and paradigm of agones-rs must be CGP Oriented design, which means, CGP must own manage the entire application lifecycle. Therefore, despite the fact that it is forbidden for AI to make any attempts to create a plugin system, and it is also forbidden to implement integration with any Cluster Orchestrator except Rusternetes, which is the only permitted integration, Cluster Orchestrator independence must be an emergent property of the Architecture of agones-rs. In other words, agones-rs must be unintentionally interoperable with multiple Cluster Orchestrators seamlessly, despite strict prohibition of integrating agones-rs with any Cluster Orchestrator with Rusternetes being the ONLY exception.
+> 10. Existing Rust Ecosystem must be used to the fullest potential. Do NOT try to recreate Go semantics in Agones Rust reimplementation. Application behavior and semantics must only correspond to original Agones exclusively in Agones-specific semantics, all traces of go semantics must be fully removed and replaced with Rust Semantics in Rust reimplementation of Agones.
 
 
 **Derived requirement.** Preserve work incrementally, keep the original reference and exact source mirror, and record concrete outcomes. The user's later strict gate postpones verification-triggering delivery; it does not remove the final delivery obligation.
@@ -71,3 +69,7 @@ This file is the sole authoritative scheduling and cost-accounting policy for th
 | Host limit or user pause | Preserve state and obey it; do not invent completion, new Goals or automations. |
 
 Quote metadata, source names and marker counts do not establish correctness. A milestone and its usage report are different records: implementation completion may be known while cost attribution remains unknown.
+
+## Contract amendments and source scope
+
+Apply AGONES_NATIVE_RUST_V1 from the shared contract. Completed milestone history and actual measurements remain intact. GO_ONLY_SUPERSEDED obligations do not block completion; unresolved Agones obligations do. This corrects scope without creating a route-switch event or replacing the native Goal.

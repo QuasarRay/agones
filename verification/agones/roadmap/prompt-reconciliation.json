@@ -2,16 +2,18 @@
   "agones-rs-prompt-v3.md": {
     "path": "/home/astral/Projects/Fenris-Creations-Prompts/Agones-rs-Prompts/agones-rs-prompt-v3.md",
     "original_sha256": "d3552bd4439bdf519faf36b76ff17c4e035713549616bb855308295692475658",
-    "revised_sha256": "62a608290cbefb9d5cb8db9abc6aff40cb9cdb3593473975562454c1f188b4b2",
+    "revised_sha256": "b7bd68e5e8a89a1fb978ae7c7808cedfb904d5cb8c503ee349663a30aa53a4ab",
     "original_bytes": 80851,
-    "revised_bytes": 81061
+    "revised_bytes": 86242,
+    "native_policy_before_sha256": "62a608290cbefb9d5cb8db9abc6aff40cb9cdb3593473975562454c1f188b4b2"
   },
   "agones-rs-cpg-prompt-v1.md": {
     "path": "/home/astral/Projects/Fenris-Creations-Prompts/Agones-rs-Prompts/agones-rs-cpg-prompt-v1.md",
     "original_sha256": "3c2eeb7c077ce7410b16f609f48ac70dfbb6ddb9daee0005b7979eda003dfbec",
-    "revised_sha256": "a9e1762c4555c39e5a820cba60c607cbeebe7122c02190745206abd8f8bb94c9",
+    "revised_sha256": "bf16f3cc368ab36bd2a27589a312b56000f25583e95ab8c149ef1bfb57a553e7",
     "original_bytes": 45900,
-    "revised_bytes": 42237
+    "revised_bytes": 46956,
+    "native_policy_before_sha256": "a9e1762c4555c39e5a820cba60c607cbeebe7122c02190745206abd8f8bb94c9"
   },
   "reconciliation": {
     "scope": "Both full objectives; no first-generation-only terminal stop",
@@ -22,5 +24,28 @@
     "naming": "Exact source mirrors, Go harness exception, literal Scala chain/case, external Rust-only glue",
     "measurement": "Actual attributable observations only; credits unknown when unavailable",
     "originals": "Inactive reference snapshots preserved; protected root prompts unchanged"
-  }
+  },
+  "semantic_policy": "AGONES_NATIVE_RUST_V1",
+  "native_rust_amendment": [
+    {
+      "path": "/home/astral/Projects/agones/AGONES_RS_CONTINUATION_PROMPT.md",
+      "before_sha256": "44f3d82ca654789f9dc2553c4dd68c1b4877bb9c2ede654372d7a8087aaca146",
+      "after_sha256": "b7bd68e5e8a89a1fb978ae7c7808cedfb904d5cb8c503ee349663a30aa53a4ab"
+    },
+    {
+      "path": "/home/astral/Projects/agones/AGONES_CPG_FIRST_GENERATION_GOAL_PROMPT.md",
+      "before_sha256": "3c2eeb7c077ce7410b16f609f48ac70dfbb6ddb9daee0005b7979eda003dfbec",
+      "after_sha256": "bf16f3cc368ab36bd2a27589a312b56000f25583e95ab8c149ef1bfb57a553e7"
+    },
+    {
+      "path": "/home/astral/Projects/Fenris-Creations-Prompts/Agones-rs-Prompts/agones-rs-prompt-v3.md",
+      "before_sha256": "62a608290cbefb9d5cb8db9abc6aff40cb9cdb3593473975562454c1f188b4b2",
+      "after_sha256": "b7bd68e5e8a89a1fb978ae7c7808cedfb904d5cb8c503ee349663a30aa53a4ab"
+    },
+    {
+      "path": "/home/astral/Projects/Fenris-Creations-Prompts/Agones-rs-Prompts/agones-rs-cpg-prompt-v1.md",
+      "before_sha256": "a9e1762c4555c39e5a820cba60c607cbeebe7122c02190745206abd8f8bb94c9",
+      "after_sha256": "bf16f3cc368ab36bd2a27589a312b56000f25583e95ab8c149ef1bfb57a553e7"
+    }
+  ]
 }

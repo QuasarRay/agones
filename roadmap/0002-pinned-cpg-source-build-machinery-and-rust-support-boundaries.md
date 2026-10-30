@@ -4,7 +4,7 @@
 # M0002 — Pinned CPG source, build machinery and Rust support boundaries
 
 
-**Route:** `CPG`. **Phase:** `IMPLEMENTATION_ONLY`. **State:** `PLANNED_NOT_EXECUTED`. **Forecast:** `F-M0002-v1` in [cost-analysis.md](../cost-analysis.md).
+**Route:** `CPG`. **Phase:** `IMPLEMENTATION_ONLY`. **State:** `IMPLEMENTED_UNVERIFIED`. **Forecast:** `F-M0002-v1` in [cost-analysis.md](../cost-analysis.md).
 
 
 **Prerequisites:** The shared contract and pinned source inventory.
@@ -39,6 +39,19 @@
 2. Establish Rust-only Cargo/module glue outside the mirror and reuse the existing cpg-rs Grafeo-backed graph/persistence support. Record source/configuration identities and separate pristine upstream from guidance/patch overlays.
 
 3. Author concrete Rust equivalents for required source build/tool behavior. Inspect available generator receipts without running executables. Missing runnable emission tools are explicit blockers under the strict build prohibition.
+
+
+## Native Rust semantic boundary
+
+1. Apply `AGONES_NATIVE_RUST_V1` and requirement 10 of the current root AGENTS.MD. Existing Rust ecosystem facilities are the default for data, errors, formatting, logging, I/O, serialization, tasks and synchronization. Custom implementation requires an identified Agones policy or concrete integration gap.
+2. Record `AGONES_REQUIRED`, `RUST_NATIVE` and `GO_ONLY_SUPERSEDED` per obligation, including within mixed files. Preserve source IDs and evidence. A Go implementation mechanism does not create a runtime compatibility obligation.
+3. Preserve Agones API/domain outcomes through native Rust. Do not implement Go formatting/reflection, typed-nil interfaces, panic/recover/Goexit, goroutine/channel/select behavior, map/slice internals, GC, allocator or ABI emulation. Use Rust ownership, Result/Option, RAII, existing libraries and CGP-owned tasks instead.
+4. Quotes containing Go code remain source references. Source-body mappings may point to a real native Rust library operation plus the necessary Agones policy. A mapping must identify the production consumer; a label or empty wrapper is insufficient.
+5. Keep CGP AND derive-deftly as joint architectural/lifecycle owners and Python-familiar valid Rust as a coequal readability requirement. The global implementation-first gate and separate alternation policy remain binding.
+
+The complete native CPG graph/schema/build objective remains required. Preserve its functional graph, schema and interchange contracts through Rust. Go source facts may be retained for analysis/provenance; generated Agones must use the same native Rust boundary as handwritten Agones.
+
+
 
 
 ## Architecture, readability and authored outputs
@@ -91,7 +104,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > ```
 
 
-**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve CPG functional and interchange contracts and exact module/file spelling; implement initialization and visibility with native Rust. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic and file excerpts establish CPG functional obligations. Rust libraries provide native implementation; no Go runtime is required.
 
 
 <a id="file-c2192832ff053b7d"></a>
@@ -123,7 +136,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -154,7 +167,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -185,7 +198,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -230,7 +243,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -272,7 +285,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -314,7 +327,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -350,7 +363,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -391,7 +404,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -435,7 +448,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -480,7 +493,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -523,11 +536,9 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
 
-4. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
-
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -572,7 +583,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -611,7 +622,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
 
@@ -619,7 +630,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -664,7 +675,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -709,7 +720,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -751,7 +762,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -796,7 +807,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -819,7 +830,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > ```
 
 
-**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve CPG functional and interchange contracts and exact module/file spelling; implement initialization and visibility with native Rust. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic and file excerpts establish CPG functional obligations. Rust libraries provide native implementation; no Go runtime is required.
 
 
 <a id="file-e6cf0cdb4fbe5768"></a>
@@ -862,7 +873,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -907,7 +918,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -930,7 +941,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > ```
 
 
-**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve CPG functional and interchange contracts and exact module/file spelling; implement initialization and visibility with native Rust. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic and file excerpts establish CPG functional obligations. Rust libraries provide native implementation; no Go runtime is required.
 
 
 <a id="file-317a7d2276056115"></a>
@@ -972,7 +983,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -1010,7 +1021,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
 
@@ -1018,7 +1029,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -1057,7 +1068,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
 
@@ -1065,7 +1076,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -1088,7 +1099,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > ```
 
 
-**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve CPG functional and interchange contracts and exact module/file spelling; implement initialization and visibility with native Rust. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic and file excerpts establish CPG functional obligations. Rust libraries provide native implementation; no Go runtime is required.
 
 
 <a id="file-1747914e083eefca"></a>
@@ -1131,7 +1142,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -1154,7 +1165,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > ```
 
 
-**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve CPG functional and interchange contracts and exact module/file spelling; implement initialization and visibility with native Rust. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic and file excerpts establish CPG functional obligations. Rust libraries provide native implementation; no Go runtime is required.
 
 
 <a id="file-59a9f7ec369a0ea7"></a>
@@ -1197,7 +1208,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -1234,7 +1245,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
 
@@ -1242,7 +1253,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -1265,7 +1276,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > ```
 
 
-**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve CPG functional and interchange contracts and exact module/file spelling; implement initialization and visibility with native Rust. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic and file excerpts establish CPG functional obligations. Rust libraries provide native implementation; no Go runtime is required.
 
 
 <a id="file-3a5ff433a69aebce"></a>
@@ -1305,7 +1316,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -1347,7 +1358,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -1389,7 +1400,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -1431,7 +1442,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -1473,7 +1484,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -1515,7 +1526,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -1538,7 +1549,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > ```
 
 
-**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve CPG functional and interchange contracts and exact module/file spelling; implement initialization and visibility with native Rust. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic and file excerpts establish CPG functional obligations. Rust libraries provide native implementation; no Go runtime is required.
 
 
 <a id="file-446d49224fc4371c"></a>
@@ -1575,13 +1586,13 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 6 lexically identified declarations, including `FileUtils` (L6), `listFilesRecursively` (L8), `deleteRecursively` (L14), `md5` (L23), `md` (L24), `dis` (L27). The full declaration list is recorded under `cpg:project/FileUtils.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -1613,13 +1624,13 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 6 lexically identified declarations, including `Projects` (L3), `codepropertygraph` (L4), `schema` (L5), `domainClasses` (L6), `protoBindings` (L7), `schema2json` (L8). The full declaration list is recorded under `cpg:project/Projects.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -1650,13 +1661,13 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 3 lexically identified declarations, including `GitLFSUtils` (L1), `isGitLFSEnabled` (L2), `exitCode` (L4). The full declaration list is recorded under `cpg:project/Utils.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -1695,13 +1706,13 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 7 lexically identified declarations, including `Versions` (L2), `flatgraph` (L3), `scalatest` (L4), `ujson` (L5), `parseVersion` (L7), `versionRegexp` (L8), `versions` (L9). The full declaration list is recorded under `cpg:project/Versions.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -1732,7 +1743,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -1762,7 +1773,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
 
@@ -1770,7 +1781,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -1793,7 +1804,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > ```
 
 
-**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve CPG functional and interchange contracts and exact module/file spelling; implement initialization and visibility with native Rust. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic and file excerpts establish CPG functional obligations. Rust libraries provide native implementation; no Go runtime is required.
 
 
 <a id="file-ad8a058c10eec11d"></a>
@@ -1830,13 +1841,13 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 5 lexically identified declarations, including `Versions` (L2), `flatgraph` (L3), `parseVersion` (L5), `versionRegexp` (L6), `versions` (L7). The full declaration list is recorded under `cpg:project/project/Versions.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -1859,7 +1870,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > ```
 
 
-**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve CPG functional and interchange contracts and exact module/file spelling; implement initialization and visibility with native Rust. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic and file excerpts establish CPG functional obligations. Rust libraries provide native implementation; no Go runtime is required.
 
 
 <a id="file-9f29c89261bf8bd0"></a>
@@ -1902,7 +1913,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -1925,7 +1936,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > ```
 
 
-**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve CPG functional and interchange contracts and exact module/file spelling; implement initialization and visibility with native Rust. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic and file excerpts establish CPG functional obligations. Rust libraries provide native implementation; no Go runtime is required.
 
 
 <a id="file-ef5f1b22e8d2d592"></a>
@@ -1954,7 +1965,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -1999,7 +2010,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -2022,7 +2033,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > ```
 
 
-**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve CPG functional and interchange contracts and exact module/file spelling; implement initialization and visibility with native Rust. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic and file excerpts establish CPG functional obligations. Rust libraries provide native implementation; no Go runtime is required.
 
 
 <a id="file-d6ba1c2cd665adcc"></a>
@@ -2059,7 +2070,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -2082,7 +2093,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > ```
 
 
-**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve CPG functional and interchange contracts and exact module/file spelling; implement initialization and visibility with native Rust. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic and file excerpts establish CPG functional obligations. Rust libraries provide native implementation; no Go runtime is required.
 
 
 <a id="file-e2c7d98556f1c264"></a>
@@ -2111,7 +2122,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -2156,7 +2167,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -2187,7 +2198,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -2229,7 +2240,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -2252,7 +2263,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > ```
 
 
-**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve CPG functional and interchange contracts and exact module/file spelling; implement initialization and visibility with native Rust. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic and file excerpts establish CPG functional obligations. Rust libraries provide native implementation; no Go runtime is required.
 
 
 <a id="file-73ec22a3d826db4a"></a>
@@ -2281,7 +2292,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -2304,7 +2315,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > ```
 
 
-**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve CPG functional and interchange contracts and exact module/file spelling; implement initialization and visibility with native Rust. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic and file excerpts establish CPG functional obligations. Rust libraries provide native implementation; no Go runtime is required.
 
 
 <a id="file-b85d8a5e097cc440"></a>
@@ -2347,7 +2358,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -2386,17 +2397,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Preserve the quoted input/output/configuration contract and all associated source content, including ordering, encodings, command arguments and failure behavior where applicable. For a binary resource retain its bytes and source hash; do not fabricate textual quotations from it.
-
-4. Preserve absent, null/nil, empty, omitted and default distinctions at every observable boundary.
 
 9. Preserve this original-named build/launcher file as the source/build contract. Implement its Rust-toolchain equivalent in rust-support/cpg/src/build_contracts.rs (or an explicitly mapped existing owner), accounting for each task, argument, generated input/output and error. Do not place Rust syntax in a .sbt/.bzl file, silently discard build semantics, or retain a JVM dependency for core native behavior.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 13. Completion record: exact source/destination IDs, authored symbols and call path, template/provider ownership, remaining gaps and deferred evidence. Do not claim compilation, correctness or parity from this document or from file existence.
 
@@ -2507,3 +2516,4 @@ These are planned Rust-only support or evidence files, not original-source mirro
 3. Post-gate milestones require the whole-project `IMPLEMENTATION_COMPLETE_UNVERIFIED` record. Run only their required assurance; if production defects reopen implementation, close and renew the gate before further checks.
 
 4. Record the milestone outcome and actual usage observations under the separate execution/accounting policy. Follow [alternation-policy.md](alternation-policy.md); this file does not define route-switch rules. Do not complete or replace the native Goal at this milestone boundary.
+

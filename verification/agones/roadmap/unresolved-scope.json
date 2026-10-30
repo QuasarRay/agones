@@ -6,14 +6,14 @@
       "status": "OPEN_IMPLEMENTATION_ACCOUNTING",
       "owner": "M0034",
       "gate": "IMPLEMENTATION",
-      "detail": "All paths have dispositions; lexical declarations do not exhaust nested closures, initializers, callbacks and configuration-qualified bodies. Each source owner must close these identities before production completion."
+      "detail": "Resolve every required Agones domain operation and complete CPG functional body through real Rust implementations/library calls. Preserve nested/body IDs; classify Go-only mechanisms as superseded rather than gaps."
     },
     {
       "id": "U-BUILD-VARIANTS",
       "status": "OPEN_IMPLEMENTATION_ACCOUNTING",
       "owner": "M0001",
       "gate": "IMPLEMENTATION",
-      "detail": "Resolve Go build tags, platform/cgo variants, module/replacement/vendor configuration and corresponding body/resource scope from pinned source. No compiler probe is authorized."
+      "detail": "Retain source Go build/configuration facts for scope/provenance. Identify Agones-supported target/features and implement through Rust facilities; Go ABI, compiler/runtime, GC and allocator profiles are not target requirements."
     },
     {
       "id": "U-REUSE-MAPPINGS",
@@ -41,10 +41,11 @@
     },
     {
       "id": "U-ACTUAL-COST",
-      "status": "NO_IMPLEMENTATION_MILESTONES_EXECUTED",
+      "status": "EXISTING_HISTORY_PRESERVED; M0003_NOT_COMPLETE",
       "owner": "roadmap/alternation-policy.md",
       "gate": "ACCOUNTING_NOT_EXECUTION_PERMISSION",
-      "detail": "No attributable new milestone boundary pairs or credit charges exist. Preserve unknowns and provisional measurements; do not fabricate totals."
+      "detail": "Preserve completed M0001/M0002 reports and all M0003 boundaries/progress observations. New policy-boundary attribution remains unknown where observations do not establish it; do not reassign historical use."
     }
-  ]
+  ],
+  "semantic_policy": "AGONES_NATIVE_RUST_V1"
 }

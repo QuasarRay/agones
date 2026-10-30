@@ -12,8 +12,8 @@ NEW_OUTPUTS = {
  'c-bundle': [('rust-support/cpg/src/bundle.rs', 'Versioned complete frontend bundle reader and source/configuration identities'), ('rust-support/cpg/src/frontend.rs', 'Pinned gosrc2cpg/goastgen invocation and export/enrichment contracts')],
  'c-normalization': [('rust-support/cpg/src/normalized.rs', 'Lossless normalized nodes/edges/properties and conflict/unknown facts'), ('rust-support/cpg/src/provenance.rs', 'Source-file/body/configuration/rule identity propagation')],
  'c-ir': [('rust-support/cpg/src/translation_ir.rs', 'Typed values, ownership, effects, control flow and observation contracts'), ('rust-support/cpg/src/interfaces.rs', 'Public Agones/Rusternetes types and explicit external-call bindings')],
- 'c-lowering-data': [('rust-support/cpg/src/lower_values.rs', 'Value/type/numeric/container/aliasing rules'), ('rust-support/cpg/src/lower_initialization.rs', 'Declarations, package initialization and ordered evaluation')],
- 'c-lowering-control': [('rust-support/cpg/src/lower_control.rs', 'Branches, loops, closures, defer/panic/recover'), ('rust-support/cpg/src/lower_concurrency.rs', 'Goroutine/channel/select/context/timer rules'), ('rust-support/cpg/src/runtime_support.rs', 'Source-required runtime behavior under CGP ownership')],
+ 'c-lowering-data': [('rust-support/cpg/src/lower_values.rs', 'Agones domain values and API/schema constraints mapped to native Rust types and libraries'), ('rust-support/cpg/src/lower_initialization.rs', 'Agones configuration and startup obligations implemented with native Rust initialization')],
+ 'c-lowering-control': [('rust-support/cpg/src/lower_control.rs', 'Agones decisions and failure outcomes mapped to Rust control flow and Result'), ('rust-support/cpg/src/lower_concurrency.rs', 'Agones asynchronous operations using existing Rust tasks, channels and cancellation capabilities'), ('rust-support/cpg/src/runtime_support.rs', 'Thin native Rust ecosystem integration and Agones lifecycle policy under CGP; no Go runtime')],
  'c-emission': [('rust-support/cpg/src/emit_rust.rs', 'Typed-IR-to-Genco source and import emission'), ('rust-support/cpg/src/output_layout.rs', 'Literal path mapping, collision rejection and external module wiring'), ('rust-support/cpg/src/emit_templates.rs', 'Central CGP/derive-deftly output architecture and readable transformations')],
  'c-publication': [('rust-support/cpg/src/publication.rs', 'Staging, non-circular digests, flush and atomic publication'), ('rust-support/cpg/src/recovery.rs', 'Content-bound interrupted-operation recovery'), ('rust-support/cpg/src/adoption.rs', 'Explicit production ownership transfer and preservation of manual meaning'), ('generated/agones-first-generation/evidence/completion.json', 'Transactional complete source-derived artifact record with UNVERIFIED assurances')],
  'a-delivery': [('verification/agones/delivery/agones-acceptance.json', 'Post-gate source-qualified evidence and delivery preparation record')],
@@ -75,6 +75,7 @@ def assemble(root):
             return m.group(1)+target+m.group(3)
         # Do not modify quotations; any relative link in an excerpt remains source text.
         body='\n'.join(line if line.startswith('>') else re.sub(r'(\]\()([^\s)]+)(\))',rebase,line) for line in raw.splitlines())+'\n'
+        if p.name=='AGENTS.MD':body='<a id="roadmap-guidance"></a>\n\n'+body
         out.extend(['\n---\n',f'<!-- BEGIN roadmap/{p.name}; SHA-256 {hashlib.sha256(raw.encode()).hexdigest()} -->\n',body,f'<!-- END roadmap/{p.name} -->\n'])
         manifest.append(dict(path='roadmap/'+p.name,sha256=hashlib.sha256(raw.encode()).hexdigest(),anchor=headers[p.name]))
     content='\n'.join(out).rstrip()+'\n'

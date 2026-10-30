@@ -3,6 +3,7 @@ from pathlib import Path
 import hashlib
 import json
 import re
+from native_semantics import rewrite_prose, shared_contract_section, rewrite_prompt
 
 ROOT=Path(__file__).resolve().parents[3]
 DATA=Path(__file__).resolve().parent
@@ -169,6 +170,8 @@ def main():
     for name,text in [('agones-rs-prompt-v3.md',manual()),('agones-rs-cpg-prompt-v1.md',cpg())]:
         p=PROMPTS/name
         original=(DATA/(name+'.original.txt')).read_bytes()
+        text=rewrite_prompt(text)
+        text=text.replace("## Core requirements",shared_contract_section()+"## Core requirements",1) if "## Core requirements" in text else text.replace("## Compact execution contract",shared_contract_section()+"## Compact execution contract",1)
         p.write_text(text)
         result[name]=dict(path=str(p),original_sha256=hashlib.sha256(original).hexdigest(),revised_sha256=hashlib.sha256(text.encode()).hexdigest(),original_bytes=len(original),revised_bytes=len(text.encode()))
     result['reconciliation']={

@@ -1,5 +1,8 @@
 # Agones-rs route cost analysis
 
+> **30 October 2026 scope amendment — AGONES_NATIVE_RUST_V1.** The v1 tables and assumptions below are retained as the original forecast. Active work now preserves Agones-specific contracts using native Rust and existing ecosystem facilities; Go runtime/language/standard-library emulation is superseded. These old ranges are not a refreshed remaining-work estimate. Existing milestone measurements remain attributable to their original scope; no historical cost was reassigned and no new numerical estimate was produced. See [the contract amendment](verification/agones/roadmap/native-rust-policy-amendment.md).
+
+
 **Forecast version:** 1, 27 October 2026. **Scope:** remaining work, conditional on the strict implementation gate being feasible. **Evidence class:** source inspection and explicit planning assumptions, not a benchmark. **Actual attributable credits:** unknown.
 
 ## 1. Decision and the three different finish lines

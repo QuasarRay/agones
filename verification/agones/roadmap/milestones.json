@@ -1,5 +1,5 @@
 {
-  "status": "PLANNED_NOT_EXECUTED",
+  "status": "DEFINITIONS_WITH_LIVE_EXECUTION_IN_CANONICAL_LEDGER",
   "policy": "roadmap/alternation-policy.md",
   "one_native_goal": true,
   "dependency_method": "Actual Go imports grouped into cohesive families; the CpgSchema/PropertyDefaults cycle collapsed into one milestone; pinned constructor sequence and explicit schema/pipeline/runtime prerequisites",
@@ -532,7 +532,7 @@
       "number": 28,
       "key": "c-lowering-data",
       "route": "CPG",
-      "title": "Go value, type and initialization lowering",
+      "title": "Native Rust domain values, types and initialization",
       "filename": "0028-go-value-type-and-initialization-lowering.md",
       "dependencies_keys": [
         "c-ir"
@@ -570,7 +570,7 @@
       "number": 30,
       "key": "c-lowering-control",
       "route": "CPG",
-      "title": "Go control, errors, concurrency and runtime lowering",
+      "title": "Native Rust decisions, errors, concurrency and lifecycle",
       "filename": "0030-go-control-errors-concurrency-and-runtime-lowering.md",
       "dependencies_keys": [
         "a-utilities",
@@ -998,25 +998,25 @@
     "c-lowering-data": [
       [
         "rust-support/cpg/src/lower_values.rs",
-        "Value/type/numeric/container/aliasing rules"
+        "Agones domain values and API/schema constraints mapped to native Rust types and libraries"
       ],
       [
         "rust-support/cpg/src/lower_initialization.rs",
-        "Declarations, package initialization and ordered evaluation"
+        "Agones configuration and startup obligations implemented with native Rust initialization"
       ]
     ],
     "c-lowering-control": [
       [
         "rust-support/cpg/src/lower_control.rs",
-        "Branches, loops, closures, defer/panic/recover"
+        "Agones decisions and failure outcomes mapped to Rust control flow and Result"
       ],
       [
         "rust-support/cpg/src/lower_concurrency.rs",
-        "Goroutine/channel/select/context/timer rules"
+        "Agones asynchronous operations using existing Rust tasks, channels and cancellation capabilities"
       ],
       [
         "rust-support/cpg/src/runtime_support.rs",
-        "Source-required runtime behavior under CGP ownership"
+        "Thin native Rust ecosystem integration and Agones lifecycle policy under CGP; no Go runtime"
       ]
     ],
     "c-emission": [
@@ -1063,5 +1063,6 @@
         "Final both-route evidence, delivered revision and native Goal completion eligibility"
       ]
     ]
-  }
+  },
+  "semantic_policy": "AGONES_NATIVE_RUST_V1"
 }

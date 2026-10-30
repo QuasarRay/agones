@@ -1,5 +1,3 @@
-<a id="roadmap-guidance"></a>
-
 # AGENTS.MD
 
 ## Project Goals:
@@ -14,23 +12,15 @@
 
 5. Use CGP and derive-deftly and comprende and better_comprehension, AGGRESSIVELY, to accelerate development and reduce boilerplate, and make the project look Pythonic and familiar to python developers: https://github.com/contextgeneric/cgp.git, https://gitlab.torproject.org/Diziet/rust-derive-deftly, https://github.com/QuasarRay/comprende.git, https://github.com/Natural-selection1/better-comprehension-in-rust.git
 
-6. This AGENTS.MD file must exist in every directory of this project
+6. This AGENTS.MD file must exist in every directory of this project (The exact text, not an instruction to the agent to go and read the original.)
 
-7. Do not modify main branch. always work in agones-rs-dev branch
+7. Do not modify main branch. always work in agones-rs-dev branch.
 
-8. Make stackable pull requests incrementally to ensure that no work is duplicated or lost. turn my github account into your workspace. merge into agones-rs-dev after each milestone.
+8. Make stackable pull requests and/or pushes incrementally to ensure that no work is duplicated or lost. turn my github account into your workspace. merge into agones-rs-dev after each milestone.
 
 9. Cluster Orchestrator independence must be an emergent property of the Architecture of agones-rs. Therefore, the design philosophy and paradigm of agones-rs must be CGP Oriented design, which means, CGP must own manage the entire application lifecycle. Therefore, despite the fact that it is forbidden for AI to make any attempts to create a plugin system, and it is also forbidden to implement integration with any Cluster Orchestrator except Rusternetes, which is the only permitted integration, Cluster Orchestrator independence must be an emergent property of the Architecture of agones-rs. In other words, agones-rs must be unintentionally interoperable with multiple Cluster Orchestrators seamlessly, despite strict prohibition of integrating agones-rs with any Cluster Orchestrator with Rusternetes being the ONLY exception.
 
+10. Existing Rust Ecosystem must be used to the fullest potential. Do NOT try to recreate Go semantics in Agones Rust reimplementation. Application behavior and semantics must only correspond to original Agones exclusively in Agones-specific semantics, all traces of go semantics must be fully removed and replaced with Rust Semantics in Rust reimplementation of Agones.
+
 
 Target Project Repo: https://github.com/QuasarRay/agones.git
-
-## Source-derived project obligation
-
-**Direct quotation — USER_SUPPLIED_PROJECT_GUIDANCE; Q-7f43f999317a68c3ba.** [project-guidance/AGENTS.MD, lines 19–21](https://github.com/QuasarRay/agones/blob/3f63491cf41068fe34d18ce1a20c576ba1a2a0d7/AGENTS.MD#L19-L21). Revision `3f63491cf41068fe34d18ce1a20c576ba1a2a0d7`; source SHA-256 `b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10`.
-
-> 8. Make stackable pull requests incrementally to ensure that no work is duplicated or lost. turn my github account into your workspace. merge into agones-rs-dev after each milestone.
-> 
-> 9. Cluster Orchestrator independence must be an emergent property of the Architecture of agones-rs. Therefore, the design philosophy and paradigm of agones-rs must be CGP Oriented design, which means, CGP must own manage the entire application lifecycle. Therefore, despite the fact that it is forbidden for AI to make any attempts to create a plugin system, and it is also forbidden to implement integration with any Cluster Orchestrator except Rusternetes, which is the only permitted integration, Cluster Orchestrator independence must be an emergent property of the Architecture of agones-rs. In other words, agones-rs must be unintentionally interoperable with multiple Cluster Orchestrators seamlessly, despite strict prohibition of integrating agones-rs with any Cluster Orchestrator with Rusternetes being the ONLY exception.
-
-**Derived instruction.** Treat CGP and derive-deftly as joint owners under the shared contract; preserve Rusternetes-only integration and source scope.

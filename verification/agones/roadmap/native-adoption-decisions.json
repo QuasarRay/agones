@@ -1,0 +1,979 @@
+{
+  "policy": "AGONES_NATIVE_RUST_V1",
+  "record_kind": "EXISTING_IMPLEMENTATION_RECONCILIATION",
+  "files": [
+    {
+      "path": "rust-support/agones/src/utility_admission.rs",
+      "sha256": "a17ed7e9f3c3ffdaf9d42e39ab372be4f107ff4bd50eec371f48824a4b7a5807",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_callback_slice.rs",
+      "sha256": "fe1b5582794aba4bee0f17133a36ed557fb23efaf7de7e130e7a668176afdc98",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_client_config.rs",
+      "sha256": "50b1648d59275ce50ef815d69e7fe9e87338b179e7ea712229e5324fe1cedc4a",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_crash.rs",
+      "sha256": "05f1e3ba160af43279b56566c9b4d6c31e7beb58ca1d8148847431f56abc0313",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_crd.rs",
+      "sha256": "de93657e926a3498249173e564ccc7798ffd081ba2583c8c9dd490b239195cde",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_declarations.rs",
+      "sha256": "4cb1d9bf03c27b8e805759e236beab228be4d7f4b153c00a7c273035c417e335",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_discovery.rs",
+      "sha256": "8151e804ce4354fef226b0cd915c6e868936c2806089143e4c212ee99e1a32ed",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_error_alias.rs",
+      "sha256": "ed9f86438bbcb2dfd89874f72d7a1a8c402b1a8ff8ca5e35d0d642f23a0a5b05",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_error_format.rs",
+      "sha256": "8e888b6b82686ea9d3288dde9582ba8f7dc2e4328cb0597105c4f868a5c2f9fc",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_error_handlers.rs",
+      "sha256": "8f5c23172dec0dcb93649e590826ed3492b22359fec7906155a63d3e29d4613e",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_error_nil.rs",
+      "sha256": "7903af20d3518ee25e6b8c55972f0832f9702000b4dcdf7b2d788593df5543e2",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_error_query.rs",
+      "sha256": "945d3e1d7971e4a750e9775b36f972ee0ac21f8b36d77c48ec87a9dc200ca2c4",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_error_slice.rs",
+      "sha256": "8645d31ebbae4d8a0b4d970ab4306b4fa4d4d4e287206d1adc70307f0ab0a8af",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_error_status.rs",
+      "sha256": "e603307ba6f97136f5fb238fca510daa71c123b785049002327600f5dd080b1a",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_error_target.rs",
+      "sha256": "626d9c1e54b011c00683751c6dce19240638de07547692a1a2871ea7ea787580",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_error_view.rs",
+      "sha256": "fece50d1a517a84e314587f87fc5b1826460037fb365cef7367ac56c11fe2422",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_error_walk.rs",
+      "sha256": "493d812d068c72f080d4f8f3e958b2f44a63ea202b1510558f446ae16af6299b",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_float_decimal.rs",
+      "sha256": "1b2bc56830bb8344a2d675a9f5134046f48cd7ba5ff02fc8055369b3ba117feb",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_float_dragonbox.rs",
+      "sha256": "40e874d1ce49fe7d46b8fe104536debb58449c055f8fba7474eeb8516fb00f2b",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_float_fixed.rs",
+      "sha256": "a10a8d1178667ad355087387bf4b7b3522cbf95d3b5cbcf2d5d8e9bf0723aa4f",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_float_math.rs",
+      "sha256": "542c0ae5142f07f10020647e4f9f54833bbf20f1b1e1a6eb0a3cefac20bae10d",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_float_powers.rs",
+      "sha256": "3056510df931accd12d0d16c186dd04ffa4186815f19319afc6e253bb86515bb",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_float_reference.rs",
+      "sha256": "32ef25630581991ecaa5b74169dcefab69544b9815065d82470d5d4416564ad8",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_format_adapters.rs",
+      "sha256": "5d4442426ee5469e8a501590db5e2f1c0be35158fadfaba9d14ee393a6a890d5",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_format_arguments.rs",
+      "sha256": "7408f5e0dd3812f3b88d887ae0b983d191f054c8e03cbd74a555264ecfb9e7c6",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_format_bool.rs",
+      "sha256": "47ff0247dd452d99030018b86ce78503ddea9264aa501f332d9d082759600ec5",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_format_collections.rs",
+      "sha256": "9c1ec27d96fdd1ecc3df7ece9dbcf3612394d7ced7bca626197604b05bb9ebee",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_format_copy.rs",
+      "sha256": "1810df4b1f15b8ec33bb81806996bcaf2b3221816aa84eba456c6386e58b5d75",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_format_float.rs",
+      "sha256": "cdab38f99653a264ee802697278b95e1d751c0861531ea7b6c15f5f8a8fbc1b7",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_format_integer.rs",
+      "sha256": "dd372af1379b4766ed7b89925514369d89d71c8a9500f589f99065d58d0a75c3",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_format_map.rs",
+      "sha256": "9fe4fed121394617edc3afea2e93a20dccd84e8301cefc6a5edcdc41499edcde",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_format_methods.rs",
+      "sha256": "6876bbe1cfb36b51983df4ca562229d76f2f4bd6d67f3666c4117adc93c05e33",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_format_pointer.rs",
+      "sha256": "388d3b706b612ec7f7056972784bccafef7cfe3a4987dd5c633b531f0bae39c0",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_format_print.rs",
+      "sha256": "af4d079c67f0eb5fe3077291cc72ed6490d27f75729a54ecccbc6a4647a828aa",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_format_scan.rs",
+      "sha256": "f7f97052791bf4dd6067d0ba53f14109f32c2d6b4f56547c233cb01400186382",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_format_snapshot.rs",
+      "sha256": "f61c5e1b591f635bb9159090aacba01fe80e9bd57aa7c8d435f9e5f2459133aa",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_format_sort.rs",
+      "sha256": "a438de5635687cee5c806bfbf00bd294aad9bb5295d8cdbb01d998920a8cc725",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_format_text.rs",
+      "sha256": "23bdfe7b4e374c79db5d448850121d2d71ea90360a898cf3b363ec54dcdf0ccb",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_fs_errno_linux.rs",
+      "sha256": "3b4746724f9bb69f57c1043bddeee21f5fe580273501d89e3ad8b1a6c821102f",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_fs_error.rs",
+      "sha256": "50a84473902891697a4c57693ff637470c0b05be808e897c01e0dea222c1f5db",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_fswatch.rs",
+      "sha256": "594ff335887d01bb1fa4e40c8df41e579567873972c4e89bdb7b89da005fa20f",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_fswatch_fen.rs",
+      "sha256": "d5ffcbf1fef1be3b40b0fd06dfe14a4ebdd5e954a02c143deccbfba4a16a767d",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_fswatch_kqueue.rs",
+      "sha256": "67b1963fa38453e9c1ad968648b12e0c7e747dddca7aa3613f44de81d4ed00c3",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_fswatch_windows.rs",
+      "sha256": "937bc4ab04bea8bce002efc0d82c5067d4d9b94f5313eb60c0a73572f858662e",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_gateway.rs",
+      "sha256": "707e44df6ba0e9673ade2890afba33471776012222b71b19863a2978777d67bd",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_gateway_bounds.rs",
+      "sha256": "ee4d8ef8d9d1d43fdbf3765cbd4a878323a0d7dd90c0585d112a624a990c2d31",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_gateway_framing.rs",
+      "sha256": "43dd0a6375b726182af52243e45152e7dcf756ce4c27ba4f9cb4cb5b77127326",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_gateway_json.rs",
+      "sha256": "b6aac4a28d90ea4bad7362737cfe7132fc5a72ce81cbd6bd492441798aba48f7",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_gateway_pattern.rs",
+      "sha256": "24da1c8bc6e2fd4cbf2b4c11a56ce94a9dc8c2ae6e12786d96c9fa8a72943167",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_gateway_scalar.rs",
+      "sha256": "18c20da7322147fe5db79503e11040d745c4a8563580aed6b28cffd3dbab7f19",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_gateway_storage.rs",
+      "sha256": "5603082f3744c022d6360e10a55d90b8d9dc7a58a5d0cf8b3cd2e361ee9abf41",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_gateway_strings.rs",
+      "sha256": "3fc63fd6cd5dee67c22bf3722e665e4cbd290c7b17bb3b6e67d932523678785b",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_gateway_targets.rs",
+      "sha256": "3d3d8607f17d4db8f9c6d70dc46793d3d35615e4d887a3f236ee57cda57d8f61",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_gateway_wire.rs",
+      "sha256": "234e6de84955c4240f153c0dece7a5594733562325bf7113998a794b9af0b113",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_gateway_wkt.rs",
+      "sha256": "4cb0f6fa00d5c553911e8eaaca563d17112cfd5123a669c2e180eb02142ed42b",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_go_quote.rs",
+      "sha256": "3a56c88a770b512fce4bc8e7071425f0e74fe9390bcead7043e73b340e423b1e",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_http.rs",
+      "sha256": "bdab627c987d77925e7ef3d79e60185dae079be3bad5e2456ab540150180d12a",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_http_allocation.rs",
+      "sha256": "49d131afa97bd1fac3bfd6cf45a17636b4e1230163bad6089c1dc5895bab3867",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_http_body.rs",
+      "sha256": "af7e4eac5e2623b697f63342445b01b13cba8474310912e8befd823aab9c53da",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_http_form.rs",
+      "sha256": "09dae2ed480223c422374e661b6afcdc3bf437ad84b453dde103ee19ab61b06f",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_http_framing.rs",
+      "sha256": "f7b894456029fcedad1bc7dee9feb97b55745c94921e921a0dc99b437c269104",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_http_header_capacity.rs",
+      "sha256": "da5b63d388f947b66fa7fe81b69e6c6d988bda18fd958435a78bdafaa238353c",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_http_headers.rs",
+      "sha256": "2a648b22eb69b8085a0362b1a5a9fe84df2cfcb3c9a55310e8773854d8ed68f8",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_http_listener.rs",
+      "sha256": "5ca5df95a2e84e16fbe280b2afe4843bde365936a068a910d162a23112b9c460",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_http_mux.rs",
+      "sha256": "a842e469d51dd5db09f8e62f9c8cc350eb948466bfa95574665c10d1b4ad2991",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_http_panic.rs",
+      "sha256": "28d4160bccf4758904cc94967dbd3f2041ddd9681110e1e0066237f616e29ea1",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_http_request_body.rs",
+      "sha256": "beee54e9e0e3a2477e656ea3363bff308ab046beb3ee3d08bea2e69e64249be4",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_http_request_fields.rs",
+      "sha256": "ce7217c4a6ec01f726e082e1671a787516ffe42947d7a7e4b1e8fc2e84bf3653",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_http_response.rs",
+      "sha256": "c49927515ad17ed5d66c5f7641be568321f89bfe20539e9a121c2480b5c91862",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_http_sniff.rs",
+      "sha256": "ef1baa72b7bb66ea833ef7e15858766313c8937d13e0d18bf6bf01f8f2a96042",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_http_status.rs",
+      "sha256": "d310b7f9c71780a03655b4337a444eb7b7d5da3e311585c943af51e8b3a83e3a",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_http_trailers.rs",
+      "sha256": "6a79b0f83cb592981900f92dcb6dc414e176a38ae3f7dd2c83e7bedbe80ac554",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_http_unicode.rs",
+      "sha256": "db0a657267886ddfe7b905ab8c22e5d1052d7f76ad0a77447ec9d60a0afaca87",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_http_url.rs",
+      "sha256": "9c6fca7c6f52999f31679ba393c494ed3f543e02dbe1a7a6449f26d4b4fbb1c4",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_https_module.rs",
+      "sha256": "3b1fc4bf94a5b016cce0c661c3f51d037b36e0718eefd1c17a55e309c878fc2a",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_klog.rs",
+      "sha256": "235518a06dc726fc984b6f98257019999f5c5ce7e4d5fc4bed4eaf2f8de0b437",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_klog_daemon.rs",
+      "sha256": "2e0d47a22b1b47458f59afaa768c48c1bee20663343baa20bd136d3e69245da3",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_klog_dispatch.rs",
+      "sha256": "0ca55413ed5a1593049f9068680620c2e8cca0137b2949e3220cca3f7414eb61",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_klog_file.rs",
+      "sha256": "ce457c2fcad991cef1e34090b4e7141ccb9ffb5627ca9c9e5265932723347835",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_klog_file_env.rs",
+      "sha256": "a0911f41827bde1120b5a70b1fe9c88079878e470a6fadfd613f778ebb67f3c1",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_klog_header.rs",
+      "sha256": "fbf9f83849e1b9183b00e026ab3b9497129ce6850af80d96bec9629a8695e59e",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_klog_output.rs",
+      "sha256": "b401dbea3e5233c295a733aa9f4c566019f543460a4ae2367731e1621abbb98e",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_klog_path.rs",
+      "sha256": "62eb4f4acdefb11e862e1c51e4c5079f924a8305814a2c3ae9f90672f2317d90",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_klog_text.rs",
+      "sha256": "67672b91760c092057c870e7ce82d7bf8e681fc74bb837579f0893cc217ba5ad",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_klog_values.rs",
+      "sha256": "ec5b44723a58520a27ac9822c5a995413f39850e9827b6e5d23012a5c2b4bb7c",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_lib.rs",
+      "sha256": "a9506f08f4973cee2cc79eed0a6ab018d91cf3ba83b37d9edcdee2fdf5e668f9",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_lifecycle.rs",
+      "sha256": "5d2fdc2fc65f04f3fcc581edb0203b54cb8314717f6976c3d7404f018a0a26af",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_logging.rs",
+      "sha256": "ff03b507d32fc2623a802b850c8dd42c72246161a07ad37f4cc5cdbdb220c993",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_logr.rs",
+      "sha256": "695b4a5313f1550aa7c3cadd4590b488abe272dd56b362510016eea62ff1a68e",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_logr_context.rs",
+      "sha256": "1b010a05d93cfeac3ebdca6a24319ede60b266ce6395ae3c54ccf52ea26a0ece",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_modules.rs",
+      "sha256": "dc7edddb040828e3b8d9f2aa4d9bb9ad17ffd848a9a90730f09955b6b4b44c4d",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_panic.rs",
+      "sha256": "d340eb417858addae11d63aef37ad3b451e2043544e56e98bcd62b8989f71f92",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_queue.rs",
+      "sha256": "21cf2a5d628aa3ad4dc8d16ff2fdb19f343e864fe74a7087f0a2f50ccc79377b",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_queue_limiters.rs",
+      "sha256": "6bec0da3ae6f9d1068b738c7be445b18a34bc17a211f82fdf15b0d605848db9d",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_queue_values.rs",
+      "sha256": "e7be82bc28e640948c1b333130228ce3962535c815eef39e7d71daeb74fc2285",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_runtime.rs",
+      "sha256": "ffafc10b6e1b808b75ac395bfa3e7a6d8c3bbf15b5b51cf4ebf0411c60be6069",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_runtime_format.rs",
+      "sha256": "4f04b0a69c657e11f00b9f474bf64ad475f0b5260d8729c1c8a9b8de3a3a743e",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_runtime_module.rs",
+      "sha256": "7d98ced3f9d120239b0c87247347018a35e2af5770977612e16223a1e65fb3fe",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_runtime_panic.rs",
+      "sha256": "3f23c67ba8d28668e3e7f4ec557e7534b39bc3e53811eca70cebc2cab895ed08",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_scope.rs",
+      "sha256": "9cfd86358c6df8a4a3d5fb6af58dd0902f8b334d68e670bfe8b98041c6bc3558",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_signals.rs",
+      "sha256": "86aab0a4b60572e7ad80d125e9f4fdf26056a9cb90374b55b0c34f4da710ebd6",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_signals_windows.rs",
+      "sha256": "7ee226c03ff13e152d4ee81e12e5d9f6d9e4d25153810c37e8188960ee831239",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_slog_values.rs",
+      "sha256": "fe63c0792539a6d04a47e3fc24366cb069062f8a236ea5476c5ef2424850b85a",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_time_format.rs",
+      "sha256": "ecc1e8bf12b2ecb0b15c73d3d9c1b324d2af0fd98230b232006f0ab920c9bdc8",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_time_json_error.rs",
+      "sha256": "efcca527c775ed37a3766442977ae0313cc5f0512cff20c2e806d7a2dd2f6952",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_time_values.rs",
+      "sha256": "9d2ad82bcb5f1c742fb05a9ec257006d1dfe5a17ac48cc726bc853cd369bd555",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_tls.rs",
+      "sha256": "47034a6a225137c1d3e732bcd7a4b897d3780d2d7d2ede246f5ada61476d43d8",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    },
+    {
+      "path": "rust-support/agones/src/utility_trace_error.rs",
+      "sha256": "df6955fdb4099148dea9db372bd2b5bbb23e9da914f1aa19eeb88242c93c347f",
+      "owner_milestone": "M0003",
+      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "semantic_policy": "AGONES_NATIVE_RUST_V1",
+      "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
+      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed"
+    }
+  ],
+  "implementation_changes": false
+}

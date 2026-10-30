@@ -2,210 +2,210 @@
   "order": [
     {
       "path": "roadmap/0000-contract.md",
-      "sha256": "be40524b791ab4c5b381d97d36742ef5b976a2aae7ed3ad24140a3689dc05791",
+      "sha256": "12d2dd31a8c88be94c6a5f8fd4fe44a4e2ce9a235d1c961ded84d4311aebeffa",
       "anchor": "shared-contract"
     },
     {
       "path": "roadmap/0001-source-mirror-version-and-shared-contracts.md",
-      "sha256": "efa65a50295e27d5c551296377dc4e0328d16e42d64d9cdcf132b720d06e4eed",
+      "sha256": "ea71ed330a9add23a75fc1c919dc19ad2342d34b02c0e43407ec0ef0eff339b2",
       "anchor": "m0001"
     },
     {
       "path": "roadmap/0002-pinned-cpg-source-build-machinery-and-rust-support-boundaries.md",
-      "sha256": "07952f5c4370a9176779c703dac02d35a777497734f28b99392f43aa9c49aeb7",
+      "sha256": "82dc6afd21f723b473ef281c970d5e0b1af327b845661297f614b536d9723ce6",
       "anchor": "m0002"
     },
     {
       "path": "roadmap/0003-errors-queues-clocks-webhooks-and-utility-effects.md",
-      "sha256": "191a55f6852ecb4c97cd6efd0555207668d0d07483b13e0d1b2dc2997258b3ae",
+      "sha256": "bf2d28387441744c0de724b4b1f51ba0cf581bc46a0b3fee628c8123349484b4",
       "anchor": "m0003"
     },
     {
       "path": "roadmap/0004-native-cpg-utilities-and-effect-ownership.md",
-      "sha256": "3cafe7ca67f66f288baf58cdde46f229249d3e90a5a3b978595a7e2bd39022c3",
+      "sha256": "9d84679f15b5623e1d6889956042ea42287248aabc2d7d7b6805029d2f267990",
       "anchor": "m0004"
     },
     {
       "path": "roadmap/0005-resource-and-wire-contracts-defaults-and-validation.md",
-      "sha256": "24b55bf7458f8c5c5317808a680779cf841ff5193ac88a0816333cb1b97d84f6",
+      "sha256": "9eca3099ef9cc0786e2575f65655c9f6b12d7c7fa541f65362f7abe78fe80d47",
       "anchor": "m0005"
     },
     {
       "path": "roadmap/0006-complete-schema-construction-and-mutually-dependent-declarations.md",
-      "sha256": "a0ee1a5212b92575454a5e79439c0469cfdab8d5ac652b5252774068e1d7dc6c",
+      "sha256": "582dc55f3eed1d478018976f9eff0bc8e5c451973ef2eae006d22b7730af2f0d",
       "anchor": "m0006"
     },
     {
       "path": "roadmap/0007-apply-clients-informers-and-listers.md",
-      "sha256": "9624203943448300adce9fcaaf92e7940e7494804f5b81c4070d6d1c3c8cb683",
+      "sha256": "9ad7beeac4434e644371e1fb99248b74c9b983cc1510d02e95a38b24c42f937b",
       "anchor": "m0007"
     },
     {
       "path": "roadmap/0008-schema-export-protobuf-tool-inputs-and-launcher-behavior.md",
-      "sha256": "fdb4d1cd9b6499a1124af7c4d442a44112b2b6a2e0e6fc6a84d70238d7dfbd2b",
+      "sha256": "0b7dce98becab1c8f02aa836742a98491f52df1168112c63d4214986b418b170",
       "anchor": "m0008"
     },
     {
       "path": "roadmap/0009-source-compatible-clients-and-existing-rust-sdk-reuse.md",
-      "sha256": "cd9eaa6b29abc675248fb3227990b4e4dc94a504d85152b66ca35031ce965916",
+      "sha256": "c0a9686b6985a2e596dcba941468ff5ee58589170731720dec5530f5a3c9a100",
       "anchor": "m0009"
     },
     {
       "path": "roadmap/0010-complete-schema-derived-domain-hierarchy.md",
-      "sha256": "9e700b9430ac916c17ee5c634b8b9a5a7f5a622fdcec7700b48c403951558119",
+      "sha256": "8e15e2b288709aa440702535b589117c908bdd41b3f2cdb87a5ba793aa9fc108",
       "anchor": "m0010"
     },
     {
       "path": "roadmap/0011-port-ownership-and-allocation-policy.md",
-      "sha256": "564c31a498df7e15fe0eeb5be533869dae20ef4388e59686204fd1d275502de0",
+      "sha256": "aa126b0c90e12f94a2fb607004f8c16dc5acbd62b067de3cf4267a882e897207",
       "anchor": "m0011"
     },
     {
       "path": "roadmap/0012-native-cpg-facade-and-graph-ownership.md",
-      "sha256": "e1127da5d5bca018e19d22627f2ec48b2ffbe645e0adf284a3212a3828e96adc",
+      "sha256": "0ec730fa317c8ad4c8383632afddc17002b292becff2bad59b0a5c67f86c99dd",
       "anchor": "m0012"
     },
     {
       "path": "roadmap/0013-cloud-hooks-through-the-permitted-rusternetes-boundary.md",
-      "sha256": "f9f27a7cdc30a1eeaeb255f88ae8677f95a8629095c6d7f82664ffd201f37470",
+      "sha256": "c82660cf048b7189223cbf37abdc8b0ef7801b82a4ab2b1adc83cccf508fb853",
       "anchor": "m0013"
     },
     {
       "path": "roadmap/0014-serialized-graph-and-overlay-behavior.md",
-      "sha256": "25a95cf824ef49ef28d56168ba2e24207b4f9af58f905a212928495ca8b33a46",
+      "sha256": "1390e3b0a7915823fc2760c91c8e439af9238892978dca1158323d9b50f2ccd5",
       "anchor": "m0014"
     },
     {
       "path": "roadmap/0015-fleet-reconciliation-and-rollout-policy.md",
-      "sha256": "c936b2a6b350d31d3db5cd5587891ebc20a9bb1aa3012bf67cca23ebd71b2a68",
+      "sha256": "93d4269fbc1a4c7e5191a13d25dddedc5186200226d43ce47740b967872c6423",
       "anchor": "m0015"
     },
     {
       "path": "roadmap/0016-protobuf-loading-archive-ownership-and-node-mapping.md",
-      "sha256": "2de97f729f9db9d015421f0d3b761f4bad9bc1ea8691c086e020e21f622c513f",
+      "sha256": "deb5e3ce380519b1ba482f557ed556cd749fe402bb05e12ac7ec0b402a13099d",
       "anchor": "m0016"
     },
     {
       "path": "roadmap/0017-telemetry-and-metric-semantics.md",
-      "sha256": "615a833ecf0369e6f6a0e9afe1d6e35299826f2c7c081d115e2d93cd29626b5c",
+      "sha256": "2087764285d9d8a1fab4ccead648ff29e6028d381cb592ced835cf579a5656ed",
       "anchor": "m0017"
     },
     {
       "path": "roadmap/0018-format-detection-and-native-storage-compatibility.md",
-      "sha256": "e771fc89c33fe3b660fa790b18a2861f810f45493ff1db38cd0402dd1bd37432",
+      "sha256": "ae7abbe31648cd2152c210461bc1a42a61bb5676f36c8d1c33608e3b096b23bf",
       "anchor": "m0018"
     },
     {
       "path": "roadmap/0019-gameserver-and-gameserverset-lifecycle.md",
-      "sha256": "5fa7a0fe88335c30ff9a909beb78c935c102d0f6165e3bb7b3cb13f1e4cdc419",
+      "sha256": "f32f57e871eb12b3dbff2b67a2acd7c9e0108b68a714ebd44c9bd11fb8e5c4dd",
       "anchor": "m0019"
     },
     {
       "path": "roadmap/0020-pass-diff-and-execution-lifecycle.md",
-      "sha256": "a6d40c06eecd15a47b88657d49e5f2993f5d207bb5bb005c5e404181967d17e3",
+      "sha256": "335c4579ad1e41fcf07c6f8fb9e67808078bb6ffca809bef02c2ed06c427f257",
       "anchor": "m0020"
     },
     {
       "path": "roadmap/0021-fleetautoscaler-policies-and-external-decisions.md",
-      "sha256": "bb9f80f4e93cf329ab88867a38c0d237a3456bedf9ae97b7ac4946b29e536be3",
+      "sha256": "834ce43b3fefe358607a57b3a5f4c0c0ff4b61854a6115e05868b4070d6b86e6",
       "anchor": "m0021"
     },
     {
       "path": "roadmap/0022-pinned-frontend-and-self-contained-cpg-input-bundle.md",
-      "sha256": "e11133eead05bec50742f804f6820d5180ce03259547471ef45e78d42f1d7fa7",
+      "sha256": "e964eca4df25ec848966a1dfbc14a2b53ef04d963f52cab278f32cfb3a470696",
       "anchor": "m0022"
     },
     {
       "path": "roadmap/0023-allocation-processing-and-multi-cluster-contracts.md",
-      "sha256": "649990975204327de0dd31081648221e4b20432e83c4b7800eb283437fa89ce6",
+      "sha256": "7897c38f3a55562637f86e4f909fc1d89ca15e9180c0f5783a24f930823fc453",
       "anchor": "m0023"
     },
     {
       "path": "roadmap/0024-normalized-cpg-with-source-identity-preservation.md",
-      "sha256": "0727418738eda381317343421ebec55272380df0d9eb9b78a65a3ef86805dfbf",
+      "sha256": "e6f108a7019e9e54cc6f1e7de45a6de5ff2aca64f13f94e6780a5f61e970ccc8",
       "anchor": "m0024"
     },
     {
       "path": "roadmap/0025-sdk-server-streaming-health-and-mutation-behavior.md",
-      "sha256": "bb247b95e0045a99a71cb32017908aefaa4b145eebb680a57db23e3efa199ef8",
+      "sha256": "adf71cbb710818a95128438f1ba6b6bfb2b9b22ee0ce66158157fff5d5f089ba",
       "anchor": "m0025"
     },
     {
       "path": "roadmap/0026-typed-translation-ir-and-ownership-effect-interfaces.md",
-      "sha256": "80cfddd1f4f3bfdd4aa6a8c300bda8fbb37c4e82a0500c322b42ea25f982bc05",
+      "sha256": "6235dd1cad30582472334d8b9313eeb078690cb241937ea9943d00152cdb5a1a",
       "anchor": "m0026"
     },
     {
       "path": "roadmap/0027-production-entrypoints-and-complete-lifecycle-composition.md",
-      "sha256": "9afa6c24323eaf1349e77aa480404be6c0f70ffde17e124d1d826631096ed073",
+      "sha256": "647c66650aa00d28ddd7bf71c06af21f562fae225767b8cc4aa11e82e958d4b6",
       "anchor": "m0027"
     },
     {
       "path": "roadmap/0028-go-value-type-and-initialization-lowering.md",
-      "sha256": "77f4d6aca680525f44278062837d3a0a48dbb4e911417defdedfce772b4004bf",
+      "sha256": "22ecfd9ac0a0439754699bcbaa310354ccd275681e8706955a9ccbcaf0d5e49e",
       "anchor": "m0028"
     },
     {
       "path": "roadmap/0029-examples-source-tooling-and-compatibility-inputs.md",
-      "sha256": "8da43dc901df6d90b768ca6fd1e430f54a6e91d5e2e0b344ab709c48da715871",
+      "sha256": "73413630198112c997021ae7cc2bdd2ec713dd256f790376ba285bc3ba8b5b65",
       "anchor": "m0029"
     },
     {
       "path": "roadmap/0030-go-control-errors-concurrency-and-runtime-lowering.md",
-      "sha256": "a60915b108eb91bcc5bf72c2deef5dc764cb6118f2867fa5b1697b4dd66e81e6",
+      "sha256": "115a8c38a7cb3f6f32eddeca3f57946abfbc27d7ab65aec9e9e21038ce5cbc12",
       "anchor": "m0030"
     },
     {
       "path": "roadmap/0031-build-deployment-and-configuration-implementation.md",
-      "sha256": "38e25a134272d3e4ae9c46e364fe9aee15ec8791e8f2fcc277b953b536e7cc8d",
+      "sha256": "9271167ce6059eed2af43de86095d2ac6e8319e329c6bfbac375105baf07e3d9",
       "anchor": "m0031"
     },
     {
       "path": "roadmap/0032-genco-emission-into-the-exact-rust-source-mirror.md",
-      "sha256": "1c6ab89e99d4e2461dd0551e9366cb3e4bd961240115e90617f747992ffc46c1",
+      "sha256": "1f1000ead6bd92b758521cd30ed1c6bf1362dae2a8476b7060e17876bd9ee6ba",
       "anchor": "m0032"
     },
     {
       "path": "roadmap/0033-complete-the-required-metaprogramming-authoring-family.md",
-      "sha256": "fd7886b97e180d6e48be68de35d2ad7d2f6353f2ac1ee639d2b1b3a8b139c68f",
+      "sha256": "9c0ae2293d94b648ce9cf721f7067d1b4649616573cc72b92b363b781d2ad7eb",
       "anchor": "m0033"
     },
     {
       "path": "roadmap/0034-full-generation-coverage-receipts-and-recoverable-publication.md",
-      "sha256": "05a49454757fd43f869d2303e283a399efae442cfb766c0ffb2c58c4e3b830e6",
+      "sha256": "f68aebc546a66b8bb5b74bfa863bb44ccc1511544af234869b2b31a4377c8d58",
       "anchor": "m0034"
     },
     {
       "path": "roadmap/0035-agones-harnesses-and-final-behavioral-assurance.md",
-      "sha256": "960fe5565dc482909089842a1f27eaadcb052fc32cf603ad03313b7cd3cf32d7",
+      "sha256": "65c8ed2c8ba647dbf84abe86a079c57e426f639d3d684a6a9a3844ad14aaf5a0",
       "anchor": "m0035"
     },
     {
       "path": "roadmap/0036-cpg-schema-lowering-and-generation-assurance.md",
-      "sha256": "eff83d3ebbfb0e94241343a754449bbb8f7e14dc062d9bdc0d85723b381d9018",
+      "sha256": "2587ea50a918dad0fe1ecda56c9406d6119c3a0fb381881b155eaa00fae86ff8",
       "anchor": "m0036"
     },
     {
       "path": "roadmap/0037-agones-acceptance-and-delivery-preparation.md",
-      "sha256": "a45a149cc22e218f4cd9da16e423dd81f1e4fb2066159b9a2fd48f4f1fc3b98c",
+      "sha256": "ad4f593caa7bb1f5111a191bd8f3c6fb96611c86df5ef39e01c6096d079406dc",
       "anchor": "m0037"
     },
     {
       "path": "roadmap/0038-generated-agones-integration-and-shared-objective-closure.md",
-      "sha256": "2695145da968f1bf639f3bb7cb34bf1151594e689cc74f4e92bb0ca943f93fb1",
+      "sha256": "90813b06ad2d60670b931ae21a93d15600da88d01db86d4818828e418f0e02d7",
       "anchor": "m0038"
     },
     {
       "path": "roadmap/alternation-policy.md",
-      "sha256": "ce35ab9c47399c4e1621a2ae08e1d8e9841fc11918b3edc3127be77c15ae3e6e",
+      "sha256": "26f4f2d5a06831f10826a9ab4dc977cab4f04ae6abe64d072b36b163140359db",
       "anchor": "alternation-policy"
     },
     {
       "path": "roadmap/AGENTS.MD",
-      "sha256": "a7d85134bbda6ad16d9abba572a8ada37d0ad3bea5001b04fad30f3253fae76d",
+      "sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
       "anchor": "roadmap-guidance"
     }
   ],
-  "combined_sha256": "a9b797fc624be04548c62e63a634bcc2cacab25c4d9f45af346148ba32c1baea",
+  "combined_sha256": "f6fe861f74bf08bab261e7d96bda9f48bbf9959bdb306a2d967ee5e4f620db87",
   "transform": "Rebase non-quoted relative Markdown links only; preserve all canonical text otherwise."
 }

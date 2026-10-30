@@ -1,7 +1,7 @@
 <a id="m0030"></a>
 
 
-# M0030 — Go control, errors, concurrency and runtime lowering
+# M0030 — Native Rust decisions, errors, concurrency and lifecycle
 
 
 **Route:** `CPG`. **Phase:** `IMPLEMENTATION_ONLY`. **State:** `PLANNED_NOT_EXECUTED`. **Forecast:** `F-M0030-v1` in [cost-analysis.md](../cost-analysis.md).
@@ -35,11 +35,24 @@
 ## Implementation sequence
 
 
-1. Implement loops/range, branches/switch, closures/capture, defer/panic/recover, goroutines, channels/select, timers/context cancellation, synchronization and termination behavior required by the complete source census.
+1. Lower Agones decisions and failure outcomes into Rust control flow, Result and native library operations. Use RAII/scoped guards for resources and explicit async shutdown where Agones requires it.
 
-2. Connect effects to the same production CGP lifecycle and Rusternetes boundaries used by manual work. No detached tasks, alternate orchestrator, semantic stub or unconditionally unsupported panic may replace a required body.
+2. Use existing Rust tasks, channels/streams, synchronization, clocks and cancellation through CGP-owned services. Preserve Agones retry, readiness, notification and shutdown contracts; never emulate goroutine scheduling, channel/select mechanics, defer/panic/recover or Goexit.
 
-3. Retain unsupported boundaries and unknown source semantics as blockers. Formal models and test execution remain deferred; source-supported error behavior is not an implementation omission.
+3. Generate the same native lifecycle architecture used by manual Agones. Unknown Agones requirements remain gaps; Go runtime details are GO_ONLY_SUPERSEDED. Keep every required domain operation connected to a real provider and native production consumer.
+
+
+## Native Rust semantic boundary
+
+1. Apply `AGONES_NATIVE_RUST_V1` and requirement 10 of the current root AGENTS.MD. Existing Rust ecosystem facilities are the default for data, errors, formatting, logging, I/O, serialization, tasks and synchronization. Custom implementation requires an identified Agones policy or concrete integration gap.
+2. Record `AGONES_REQUIRED`, `RUST_NATIVE` and `GO_ONLY_SUPERSEDED` per obligation, including within mixed files. Preserve source IDs and evidence. A Go implementation mechanism does not create a runtime compatibility obligation.
+3. Preserve Agones API/domain outcomes through native Rust. Do not implement Go formatting/reflection, typed-nil interfaces, panic/recover/Goexit, goroutine/channel/select behavior, map/slice internals, GC, allocator or ABI emulation. Use Rust ownership, Result/Option, RAII, existing libraries and CGP-owned tasks instead.
+4. Quotes containing Go code remain source references. Source-body mappings may point to a real native Rust library operation plus the necessary Agones policy. A mapping must identify the production consumer; a label or empty wrapper is insufficient.
+5. Keep CGP AND derive-deftly as joint architectural/lifecycle owners and Python-familiar valid Rust as a coequal readability requirement. The global implementation-first gate and separate alternation policy remain binding.
+
+The complete native CPG graph/schema/build objective remains required. Preserve its functional graph, schema and interchange contracts through Rust. Go source facts may be retained for analysis/provenance; generated Agones must use the same native Rust boundary as handwritten Agones.
+
+
 
 
 ## Architecture, readability and authored outputs
@@ -68,7 +81,7 @@ let selected_ids = vector![node.id() for node in nodes.iter()
 ```
 
 
-These examples explain reading order and borrowing. Actual APIs must come from the selected pinned dependencies. The owning CGP provider supplies the collections; derive-deftly supplies repeated declarations/projections. Preserve source ordering and avoid redundant clones or a comprehension around complicated effects.
+These examples explain reading order and borrowing. Actual APIs must come from the selected pinned dependencies. The owning CGP provider supplies the collections; derive-deftly supplies repeated declarations/projections. Preserve Agones-required ordering and avoid redundant clones or a comprehension around complicated effects.
 
 
 ## Package/module and file instructions
@@ -98,7 +111,7 @@ These are planned Rust-only support or evidence files, not original-source mirro
 >   [interpolate] values *into* the quoted string if it's supported by the
 >   language.
 
-**Derived file obligation.** Branches, loops, closures, defer/panic/recover. Record the concrete input, output, error and lifecycle contract, then implement all branches. CGP owns runtime policy and resources; derive-deftly owns repeated structural implementation. Genco receives explicit semantic inputs. Explain the file as short Python-familiar transformations in valid Rust. Keep one implementation owner, preserve original source identity, and defer execution/assurance to the whole-project gate.
+**Derived file obligation.** Agones decisions and failure outcomes mapped to Rust control flow and Result. Record the concrete input, output, error and lifecycle contract, then implement all branches. CGP owns runtime policy and resources; derive-deftly owns repeated structural implementation. Genco receives explicit semantic inputs. Explain the file as short Python-familiar transformations in valid Rust. Keep one implementation owner, preserve original source identity, and defer execution/assurance to the whole-project gate.
 
 ### New support/output `rust-support/cpg/src/lower_concurrency.rs`
 
@@ -117,7 +130,7 @@ These are planned Rust-only support or evidence files, not original-source mirro
 >   [interpolate] values *into* the quoted string if it's supported by the
 >   language.
 
-**Derived file obligation.** Goroutine/channel/select/context/timer rules. Record the concrete input, output, error and lifecycle contract, then implement all branches. CGP owns runtime policy and resources; derive-deftly owns repeated structural implementation. Genco receives explicit semantic inputs. Explain the file as short Python-familiar transformations in valid Rust. Keep one implementation owner, preserve original source identity, and defer execution/assurance to the whole-project gate.
+**Derived file obligation.** Agones asynchronous operations using existing Rust tasks, channels and cancellation capabilities. Record the concrete input, output, error and lifecycle contract, then implement all branches. CGP owns runtime policy and resources; derive-deftly owns repeated structural implementation. Genco receives explicit semantic inputs. Explain the file as short Python-familiar transformations in valid Rust. Keep one implementation owner, preserve original source identity, and defer execution/assurance to the whole-project gate.
 
 ### New support/output `rust-support/cpg/src/runtime_support.rs`
 
@@ -136,7 +149,7 @@ These are planned Rust-only support or evidence files, not original-source mirro
 >   [interpolate] values *into* the quoted string if it's supported by the
 >   language.
 
-**Derived file obligation.** Source-required runtime behavior under CGP ownership. Record the concrete input, output, error and lifecycle contract, then implement all branches. CGP owns runtime policy and resources; derive-deftly owns repeated structural implementation. Genco receives explicit semantic inputs. Explain the file as short Python-familiar transformations in valid Rust. Keep one implementation owner, preserve original source identity, and defer execution/assurance to the whole-project gate.
+**Derived file obligation.** Thin native Rust ecosystem integration and Agones lifecycle policy under CGP; no Go runtime. Record the concrete input, output, error and lifecycle contract, then implement all branches. CGP owns runtime policy and resources; derive-deftly owns repeated structural implementation. Genco receives explicit semantic inputs. Explain the file as short Python-familiar transformations in valid Rust. Keep one implementation owner, preserve original source identity, and defer execution/assurance to the whole-project gate.
 
 
 
@@ -186,4 +199,4 @@ These are planned Rust-only support or evidence files, not original-source mirro
 > 	}
 > 	defer wq.queue.Done(obj)
 
-**Derived stage requirement.** Retain this concrete queue termination/error/cleanup behavior through control-flow and defer lowering. CGP owns queue/task lifetimes and derive-deftly the repeated wiring. The translated body must reach the actual provider, not an independent reference facade. No dedicated upstream Go-to-Rust translator specification is claimed; this stage is engineered from the quoted source obligations and the user-approved shared contract.
+**Derived stage requirement.** Retain this concrete queue termination/error/cleanup behavior through native Rust control flow, owned tasks and RAII cleanup. CGP owns queue/task lifetimes and derive-deftly the repeated wiring. The translated body must reach the actual provider, not an independent reference facade. No dedicated upstream Go-to-Rust translator specification is claimed; this stage is engineered from the quoted source obligations and the user-approved shared contract.

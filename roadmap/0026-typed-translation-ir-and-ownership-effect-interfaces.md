@@ -35,11 +35,24 @@
 ## Implementation sequence
 
 
-1. Implement typed IR for declarations, types, values, control flow, calls, effects, initialization and source observations. Every node binds source/body/configuration and rule identities.
+1. Define a native-Rust-oriented typed IR for Agones domain values, decisions, calls, effects, configuration and lifecycle operations. Bind each node to source/body/configuration and rule identities; distinguish AGONES_REQUIRED, RUST_NATIVE and GO_ONLY_SUPERSEDED obligations.
 
-2. Map the already implemented Agones public contracts and Rusternetes capabilities into explicit destination interfaces. Keep graph facts, inferred facts and translation policy distinguishable.
+2. Map Agones public contracts and Rusternetes capabilities to real native Rust destination interfaces and library operations. Keep original Go AST/type facts as provenance and analysis data; they do not prescribe target runtime behavior.
 
-3. Specify errors and unsupported constructs as unresolved work, not emitted fake success. Genco consumes typed IR; CGP/derive-deftly own stages and repeated structure.
+3. Required Agones operations must have real implementations. Excluded Go-only mechanisms retain supersession records, not unsupported-operation blockers. Genco emits the typed native Rust plan; CGP and derive-deftly own stages and repeated structure.
+
+
+## Native Rust semantic boundary
+
+1. Apply `AGONES_NATIVE_RUST_V1` and requirement 10 of the current root AGENTS.MD. Existing Rust ecosystem facilities are the default for data, errors, formatting, logging, I/O, serialization, tasks and synchronization. Custom implementation requires an identified Agones policy or concrete integration gap.
+2. Record `AGONES_REQUIRED`, `RUST_NATIVE` and `GO_ONLY_SUPERSEDED` per obligation, including within mixed files. Preserve source IDs and evidence. A Go implementation mechanism does not create a runtime compatibility obligation.
+3. Preserve Agones API/domain outcomes through native Rust. Do not implement Go formatting/reflection, typed-nil interfaces, panic/recover/Goexit, goroutine/channel/select behavior, map/slice internals, GC, allocator or ABI emulation. Use Rust ownership, Result/Option, RAII, existing libraries and CGP-owned tasks instead.
+4. Quotes containing Go code remain source references. Source-body mappings may point to a real native Rust library operation plus the necessary Agones policy. A mapping must identify the production consumer; a label or empty wrapper is insufficient.
+5. Keep CGP AND derive-deftly as joint architectural/lifecycle owners and Python-familiar valid Rust as a coequal readability requirement. The global implementation-first gate and separate alternation policy remain binding.
+
+The complete native CPG graph/schema/build objective remains required. Preserve its functional graph, schema and interchange contracts through Rust. Go source facts may be retained for analysis/provenance; generated Agones must use the same native Rust boundary as handwritten Agones.
+
+
 
 
 ## Architecture, readability and authored outputs
@@ -68,7 +81,7 @@ let selected_ids = vector![node.id() for node in nodes.iter()
 ```
 
 
-These examples explain reading order and borrowing. Actual APIs must come from the selected pinned dependencies. The owning CGP provider supplies the collections; derive-deftly supplies repeated declarations/projections. Preserve source ordering and avoid redundant clones or a comprehension around complicated effects.
+These examples explain reading order and borrowing. Actual APIs must come from the selected pinned dependencies. The owning CGP provider supplies the collections; derive-deftly supplies repeated declarations/projections. Preserve Agones-required ordering and avoid redundant clones or a comprehension around complicated effects.
 
 
 ## Package/module and file instructions
@@ -151,4 +164,4 @@ These are planned Rust-only support or evidence files, not original-source mirro
 >       |
 >       |This layer MUST be created by the frontend.
 
-**Derived stage requirement.** Represent expressions, source types and common control structures in typed IR with provenance. Any desugaring must retain source effects, order and observable outcomes; Genco cannot infer the missing semantics. No dedicated upstream Go-to-Rust translator specification is claimed; this stage is engineered from the quoted source obligations and the user-approved shared contract.
+**Derived stage requirement.** Represent expressions, source types and common control structures in typed IR with provenance. Any domain transformation retains Agones-required effects and outcomes while adopting native Rust language semantics; Genco cannot infer the missing semantics. No dedicated upstream Go-to-Rust translator specification is claimed; this stage is engineered from the quoted source obligations and the user-approved shared contract.

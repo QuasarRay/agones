@@ -208,14 +208,6 @@
   },
   "project_executable_invocations": 0,
   "record_kind": "PARTIAL_PLATFORM_EFFECT_AUTHORING",
-  "remaining": [
-    "Reconcile all selected v1.4.7 native failure/type/error wrapping and NewWatcher/Add/Close ordering. Linux uses nonblocking AsyncFd rather than the source blocking inotify+poller allocation sequence; Windows uses event/wait completion rather than source IOCP.",
-    "Reconcile BSD source 100ms timed kevent/done/Close schedules versus cancellable readiness, close errors/nonblocking error delivery, partial initialization races, and existing-watch register failure with retained stale fd numbers. Native ownership never creates a second OwnedFd for a reused stale number.",
-    "Reconcile exact Windows filepath.Clean/UTF16/long-name/case/normalization, source MAX_PATH and malformed record, access/attribute and kernel-error/partial-buffer profiles. The adapter serves Agones single-path Watch; arbitrary vendor multi-Add/Remove APIs are not a separate utility contract.",
-    "Final Windows console-hook removal/wait unregister or undrainable filesystem I/O still has an explicit unverified abort policy; emergency Drop can block. Actual M0027 process exit and interaction with preserved old handlers remain required.",
-    "Enumerate any required source build-tag/platform configurations outside the authored Unix/Windows branches before a platform acceptance claim. Source-declared Solaris failure is preserved; modern fsnotify FEN behavior is not substituted.",
-    "All other M0003 HTTP/TLS/gateway/queue/config/CRD/logging/feature/admission profiles, source-body reconciliation and caller adoption remain required. No platform completion, assurance or route-switch credit follows from this authoring."
-  ],
   "route": "MANUAL",
   "runtime_credit": 0,
   "shared_http_binding_correction": {
@@ -364,5 +356,31 @@
   "stage": "IMPLEMENTING",
   "timestamp": "2026-10-27T01:48:30.914763+00:00",
   "verification": "NOT_STARTED",
-  "work_base_commit": "a85b8ff6460597499abb4fc5aec640032d673483"
+  "work_base_commit": "a85b8ff6460597499abb4fc5aec640032d673483",
+  "historical_remaining_before_native_rust_v1": [
+    "Reconcile all selected v1.4.7 native failure/type/error wrapping and NewWatcher/Add/Close ordering. Linux uses nonblocking AsyncFd rather than the source blocking inotify+poller allocation sequence; Windows uses event/wait completion rather than source IOCP.",
+    "Reconcile BSD source 100ms timed kevent/done/Close schedules versus cancellable readiness, close errors/nonblocking error delivery, partial initialization races, and existing-watch register failure with retained stale fd numbers. Native ownership never creates a second OwnedFd for a reused stale number.",
+    "Reconcile exact Windows filepath.Clean/UTF16/long-name/case/normalization, source MAX_PATH and malformed record, access/attribute and kernel-error/partial-buffer profiles. The adapter serves Agones single-path Watch; arbitrary vendor multi-Add/Remove APIs are not a separate utility contract.",
+    "Final Windows console-hook removal/wait unregister or undrainable filesystem I/O still has an explicit unverified abort policy; emergency Drop can block. Actual M0027 process exit and interaction with preserved old handlers remain required.",
+    "Enumerate any required source build-tag/platform configurations outside the authored Unix/Windows branches before a platform acceptance claim. Source-declared Solaris failure is preserved; modern fsnotify FEN behavior is not substituted.",
+    "All other M0003 HTTP/TLS/gateway/queue/config/CRD/logging/feature/admission profiles, source-body reconciliation and caller adoption remain required. No platform completion, assurance or route-switch credit follows from this authoring."
+  ],
+  "remaining": [
+    "Use the current M0003 Agones-required gap list in roadmap-M0003-partial-map.json. Review existing native library adoption and consumers; Go-only reconstruction is superseded."
+  ],
+  "semantic_policy": "AGONES_NATIVE_RUST_V1",
+  "semantic_scope": "Existing authored operations/source profiles are historical implementation descriptions. Only current Agones-required gaps and native Rust adoption remain active; no Go runtime or language equivalence obligation survives.",
+  "semantic_supersession": [
+    {
+      "pointer": "/remaining",
+      "source_text_sha256": "57f854424daaa3d5484b982185e33cadf8add3881936e9727a6be9bf36400d8a",
+      "disposition": "GO_ONLY_SUPERSEDED",
+      "authority": "AGONES_NATIVE_RUST_V1",
+      "scope": "Go language/runtime/stdlib components of the historical requirement group only; Agones components remain in the canonical native gap list.",
+      "retained_agones_obligations": "verification/agones/roadmap-M0003-partial-map.json#known_remaining",
+      "native_replacement_disposition": "RUST_NATIVE"
+    }
+  ],
+  "existing_compatibility_code": "PRESERVE_EXISTING_CODE; inspect consumers and reuse, replace or retire it during implementation. No Rust source was changed by this amendment.",
+  "historical_descriptive_fields": []
 }

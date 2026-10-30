@@ -40,3 +40,7 @@ Show the attributable counter segments, calculation, excluded/unattributed work,
 Record changed assumptions, affected future milestone IDs, revised ranges and their rationale. Retain the original prediction; mandatory route policy remains unchanged. Do not start a new analysis or verification campaign to fill unavailable measurements.
 
 The historical 9,834,797-token Goal snapshot is a mixed/unattributed observation, not an actual cost for any new roadmap milestone. Import older milestone measurements only when both boundaries and attribution are documented.
+
+## Native Rust scope boundary
+
+Record semantic policy AGONES_NATIVE_RUST_V1 for future work. Preserve original forecasts and completed comparison reports. Identify pre-/post-amendment scope without guessing an unavailable usage boundary; do not relabel previously spent tokens as native migration work or zero out superseded effort. Credits remain unknown unless attributable.

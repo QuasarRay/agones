@@ -72,6 +72,19 @@
 18. Author complete native generation inputs and provider/template wiring. Execute emission only through already available permitted generators; record unavailable fresh builds as blockers.
 
 
+## Native Rust semantic boundary
+
+1. Apply `AGONES_NATIVE_RUST_V1` and requirement 10 of the current root AGENTS.MD. Existing Rust ecosystem facilities are the default for data, errors, formatting, logging, I/O, serialization, tasks and synchronization. Custom implementation requires an identified Agones policy or concrete integration gap.
+2. Record `AGONES_REQUIRED`, `RUST_NATIVE` and `GO_ONLY_SUPERSEDED` per obligation, including within mixed files. Preserve source IDs and evidence. A Go implementation mechanism does not create a runtime compatibility obligation.
+3. Preserve Agones API/domain outcomes through native Rust. Do not implement Go formatting/reflection, typed-nil interfaces, panic/recover/Goexit, goroutine/channel/select behavior, map/slice internals, GC, allocator or ABI emulation. Use Rust ownership, Result/Option, RAII, existing libraries and CGP-owned tasks instead.
+4. Quotes containing Go code remain source references. Source-body mappings may point to a real native Rust library operation plus the necessary Agones policy. A mapping must identify the production consumer; a label or empty wrapper is insufficient.
+5. Keep CGP AND derive-deftly as joint architectural/lifecycle owners and Python-familiar valid Rust as a coequal readability requirement. The global implementation-first gate and separate alternation policy remain binding.
+
+The complete native CPG graph/schema/build objective remains required. Preserve its functional graph, schema and interchange contracts through Rust. Go source facts may be retained for analysis/provenance; generated Agones must use the same native Rust boundary as handwritten Agones.
+
+
+
+
 ## Architecture, readability and authored outputs
 
 
@@ -123,7 +136,7 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 > ```
 
 
-**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve initialization and visibility boundaries, source external contracts, and exact module/file spelling. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic contract and each file’s source excerpt jointly define this work.
+**Derived package instruction.** Implement all owned files listed below as one source package/module contract. Preserve CPG functional and interchange contracts and exact module/file spelling; implement initialization and visibility with native Rust. Put variation in CGP capabilities and derive-deftly templates, not duplicate handwritten wiring. Explain the package’s input -> decision -> effect -> output flow for a Python developer. The quoted package/topic and file excerpts establish CPG functional obligations. Rust libraries provide native implementation; no Go runtime is required.
 
 
 <a id="file-1c7edc263e41edff"></a>
@@ -160,15 +173,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 12 lexically identified declarations, including `Annotation` (L5), `docIndex` (L6), `providedByFrontend` (L8), `description` (L10), `apply` (L15), `Schema` (L25), `schemaInfo` (L40), `annotation` (L41), `annotationParameterAssign` (L54), `annotationParameter` (L62), `annotationLiteral` (L67), `arrayInitializer` (L73). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Annotation.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Retain declaration names, defaults, cardinality, identifiers, relationships and mutable handle identity.
+4. Retain CPG declaration names, defaults, cardinalities, IDs, relationships and shared builder identity.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/Annotation/mod.rs` (SHA-256 `f39a4d41d76726c32516b5d27832e5e5f214df308c96dae1b439e2342f2b4f18`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -209,15 +222,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 42 lexically identified declarations, including `Ast` (L8), `docIndex` (L10), `providedByFrontend` (L11), `description` (L13), `apply` (L31), `Schema` (L41), `schemaInfo` (L49), `order` (L58), `astNode` (L70), `block` (L109), `literal` (L126), `local` (L139), `identifier` (L153), `canonicalName` (L165), `fieldIdentifier` (L181), `modifierType` (L199), `modifierTypes` (L210), `modifier` (L259), `jumpTarget` (L271), `jumpLabel` (L284), `methodRef` (L297), `typeRef` (L309), `ret` (L314), `controlStructureType` (L326). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Ast.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Retain declaration names, defaults, cardinality, identifiers, relationships and mutable handle identity.
+4. Retain CPG declaration names, defaults, cardinalities, IDs, relationships and shared builder identity.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/Ast/mod.rs` (SHA-256 `ce94595c3cc82f9cc65b5c6b6b31dcaf1c5165a1d98aa3253538c97df213e2db`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -258,15 +271,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 21 lexically identified declarations, including `Base` (L7), `docIndex` (L9), `providedByFrontend` (L10), `description` (L11), `apply` (L15), `Schema` (L17), `schemaInfo` (L18), `version` (L20), `hash` (L31), `code` (L45), `isExternal` (L54), `index` (L66), `name` (L82), `fullName` (L91), `parserTypeName` (L103), `value` (L112), `content` (L121), `astParentType` (L134), `astParentFullName` (L146), `declaration` (L156), `ref` (L162). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Base.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Retain declaration names, defaults, cardinality, identifiers, relationships and mutable handle identity.
+4. Retain CPG declaration names, defaults, cardinalities, IDs, relationships and shared builder identity.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/Base/mod.rs` (SHA-256 `91ba76417869b84f2ef2ecbc47bffdbbda02139369a581d2f99672c559d94e3f`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -307,15 +320,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 8 lexically identified declarations, including `Binding` (L5), `apply` (L7), `docIndex` (L16), `description` (L18), `Schema` (L27), `schemaInfo` (L39), `binding` (L41), `binds` (L54). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Binding.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Retain declaration names, defaults, cardinality, identifiers, relationships and mutable handle identity.
+4. Retain CPG declaration names, defaults, cardinalities, IDs, relationships and shared builder identity.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/Binding/mod.rs` (SHA-256 `c947c6e22c282bcc7fc92a6b50a9cb746e65de7afcb8a71a7891b98df5656557`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -356,15 +369,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 18 lexically identified declarations, including `CallGraph` (L8), `docIndex` (L10), `description` (L12), `apply` (L17), `Schema` (L20), `schemaInfo` (L21), `argumentIndex` (L25), `argumentName` (L42), `argumentLabel` (L56), `methodFullName` (L72), `evaluationStrategy` (L84), `evaluationStrategies` (L100), `dispatchType` (L128), `call` (L142), `argument` (L155), `receiver` (L165), `dispatchTypes` (L176), `staticReceiver` (L198). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/CallGraph.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Retain declaration names, defaults, cardinality, identifiers, relationships and mutable handle identity.
+4. Retain CPG declaration names, defaults, cardinalities, IDs, relationships and shared builder identity.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/CallGraph/mod.rs` (SHA-256 `19c525f1a211ed49584572c6b324dd2593fdc40df14c5bcf4c3d5f49e5a11633`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -405,15 +418,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 8 lexically identified declarations, including `Cfg` (L6), `docIndex` (L8), `description` (L10), `apply` (L21), `Schema` (L24), `schemaInfo` (L25), `cfgNode` (L29), `cfg` (L54). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Cfg.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Retain declaration names, defaults, cardinality, identifiers, relationships and mutable handle identity.
+4. Retain CPG declaration names, defaults, cardinalities, IDs, relationships and shared builder identity.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/Cfg/mod.rs` (SHA-256 `82e2690acfda7e7e01c2699757c478bb8ce0ecdc6aa4bb9b19fa8f95c98feb9d`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -454,15 +467,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 8 lexically identified declarations, including `Comment` (L5), `docIndex` (L6), `providedByFrontend` (L7), `description` (L9), `apply` (L11), `Schema` (L14), `schemaInfo` (L18), `comment` (L20). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Comment.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Retain declaration names, defaults, cardinality, identifiers, relationships and mutable handle identity.
+4. Retain CPG declaration names, defaults, cardinalities, IDs, relationships and shared builder identity.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/Comment/mod.rs` (SHA-256 `7f9d0ec5b8a83a692721e0119a6b05141daec1b46d3bda3c119ed214a2895eaa`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -502,15 +515,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 7 lexically identified declarations, including `Configuration` (L5), `docIndex` (L7), `description` (L9), `apply` (L19), `Schema` (L21), `schemaInfo` (L24), `configFile` (L26). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Configuration.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Retain declaration names, defaults, cardinality, identifiers, relationships and mutable handle identity.
+4. Retain CPG declaration names, defaults, cardinalities, IDs, relationships and shared builder identity.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/Configuration/mod.rs` (SHA-256 `987272f59e11a11e08e210381f3248f662f6f6143b6e988fc854fd441272b727`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -551,15 +564,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 35 lexically identified declarations, including `CpgSchema` (L5), `base` (L7), `fs` (L8), `namespaces` (L9), `operators` (L11), `configuration` (L12), `metaData` (L13), `typeSchema` (L15), `method` (L16), `ast` (L17), `callGraph` (L18), `cfg` (L20), `dominators` (L21), `pdg` (L22), `shortcuts` (L24), `sourceSpecific` (L26), `tags` (L27), `binding` (L28), `annotation` (L29), `finding` (L30), `hidden` (L31), `protoSerialize` (L32), `CpgSchema` (L35), `instance` (L36). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/CpgSchema.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Preserve source floating width, narrowing, exceptional values and relevant bits.
+4. Preserve CPG schema/interchange scalar representations with native Rust types and serializers.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/CpgSchema/mod.rs` (SHA-256 `09ebc3afcb29d2b2df0fed8e4f54f929526e3f7e786911a6aa5cf5bb2306e67d`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -599,15 +612,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 8 lexically identified declarations, including `Dominators` (L5), `docIndex` (L7), `description` (L9), `apply` (L16), `Schema` (L19), `schemaInfo` (L20), `dominate` (L24), `postDominate` (L31). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Dominators.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Retain declaration names, defaults, cardinality, identifiers, relationships and mutable handle identity.
+4. Retain CPG declaration names, defaults, cardinalities, IDs, relationships and shared builder identity.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/Dominators/mod.rs` (SHA-256 `c195d6d74adac50cf8503a1e4690d9ae8f89370507775da2322e3f42e5e78628`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -648,15 +661,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 15 lexically identified declarations, including `FileSystem` (L7), `docIndex` (L9), `description` (L10), `apply` (L19), `Schema` (L22), `schemaInfo` (L23), `filename` (L26), `lineNumber` (L40), `columnNumber` (L50), `lineNumberEnd` (L61), `columnNumberEnd` (L72), `sourceFile` (L83), `file` (L93), `offset` (L111), `offsetEnd` (L127). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/FileSystem.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Retain declaration names, defaults, cardinality, identifiers, relationships and mutable handle identity.
+4. Retain CPG declaration names, defaults, cardinalities, IDs, relationships and shared builder identity.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/FileSystem/mod.rs` (SHA-256 `3a61a722188284714e0a39e13b3c70f575530913796c2415dca8cb8cf8c6ec61`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -697,15 +710,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 10 lexically identified declarations, including `Finding` (L7), `docIndex` (L9), `description` (L11), `apply` (L17), `Schema` (L20), `schemaInfo` (L21), `key` (L25), `finding` (L35), `keyValuePair` (L49), `evidenceDescription` (L57). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Finding.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Retain declaration names, defaults, cardinality, identifiers, relationships and mutable handle identity.
+4. Retain CPG declaration names, defaults, cardinalities, IDs, relationships and shared builder identity.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/Finding/mod.rs` (SHA-256 `ebe75b95540783fb225bd241821d9cb1c4c88e92ee67b4993c489343bddd7f4e`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -746,17 +759,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 26 lexically identified declarations, including `Hidden` (L7), `docIndex` (L8), `description` (L10), `apply` (L17), `Schema` (L31), `schemaInfo` (L55), `closureBindingId` (L61), `capture` (L71), `closureBinding` (L79), `capturedBy` (L87), `templateDOM` (L110), `dependencyGroupId` (L131), `dependency` (L140), `dynamicTypeHintFullName` (L150), `possibleTypes` (L159), `importNode` (L185), `importedEntity` (L196), `importedAs` (L205), `explicitAs` (L216), `isWildcard` (L226), `isExplicit` (L237), `isModuleImport` (L248), `imports` (L265), `isCallForImport` (L269). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Hidden.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
-
-5. Retain declaration names, defaults, cardinality, identifiers, relationships and mutable handle identity.
+4. Retain CPG declaration names, defaults, cardinalities, IDs, relationships and shared builder identity.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/Hidden/mod.rs` (SHA-256 `db9d855bd7a06ede00d96f2ea52590f110c9a5307b1967feff97a2ae9cd208df`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -797,15 +808,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 12 lexically identified declarations, including `MetaData` (L7), `docIndex` (L9), `providedByFrontend` (L10), `description` (L12), `apply` (L22), `Schema` (L24), `schemaInfo` (L26), `overlays` (L28), `language` (L41), `root` (L54), `metaData` (L63), `languages` (L78). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/MetaData.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Retain declaration names, defaults, cardinality, identifiers, relationships and mutable handle identity.
+4. Retain CPG declaration names, defaults, cardinalities, IDs, relationships and shared builder identity.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/MetaData/mod.rs` (SHA-256 `92f843ecdb812c964e16c9a37ffd317aff8da404e857c29ed87029fa9185c341`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -846,15 +857,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 13 lexically identified declarations, including `Method` (L6), `apply` (L8), `docIndex` (L11), `providedByFrontend` (L12), `description` (L14), `Schema` (L21), `schemaInfo` (L25), `signature` (L27), `method` (L43), `isVariadic` (L76), `methodParameterIn` (L89), `methodParameterOut` (L102), `methodReturn` (L114). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Method.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Retain declaration names, defaults, cardinality, identifiers, relationships and mutable handle identity.
+4. Retain CPG declaration names, defaults, cardinalities, IDs, relationships and shared builder identity.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/Method/mod.rs` (SHA-256 `9b87e01333e6be23190a2cc5c62a99862151ad4ca73a55f5609fb654cf1d37dd`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -894,15 +905,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 8 lexically identified declarations, including `Namespace` (L5), `docIndex` (L7), `description` (L9), `apply` (L16), `Schema` (L19), `schemaInfo` (L20), `namespaceBlock` (L24), `namespace` (L48). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Namespace.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Retain declaration names, defaults, cardinality, identifiers, relationships and mutable handle identity.
+4. Retain CPG declaration names, defaults, cardinalities, IDs, relationships and shared builder identity.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/Namespace/mod.rs` (SHA-256 `f0ea1cfabcd92b7b90a75086f0dbe0900a9d17131243f1fb675f3b4b80f79b9a`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -942,15 +953,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 7 lexically identified declarations, including `Operators` (L6), `docIndex` (L8), `description` (L10), `apply` (L15), `Schema` (L17), `schemaInfo` (L18), `operators` (L25). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Operators.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Retain resource ownership, cancellation, shutdown and partial-failure cleanup.
+4. Keep native Rust resources, cancellation and failure cleanup under CGP.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/Operators/mod.rs` (SHA-256 `04312d3ac89e71e098ba6646de164817b035ce4c2027123df9c9e58ba670447b`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -991,15 +1002,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 9 lexically identified declarations, including `Pdg` (L7), `docIndex` (L9), `description` (L10), `apply` (L19), `Schema` (L22), `schemaInfo` (L23), `variable` (L27), `cdg` (L36), `reachingDef` (L43). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Pdg.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Retain declaration names, defaults, cardinality, identifiers, relationships and mutable handle identity.
+4. Retain CPG declaration names, defaults, cardinalities, IDs, relationships and shared builder identity.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/Pdg/mod.rs` (SHA-256 `36627caa7389f557ef90387d47b8664886bfedb8197f5a133f14f81f6e3487b7`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -1040,13 +1051,13 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 186 lexically identified declarations, including `ProtoIds` (L3), `Break` (L4), `Static` (L5), `ByReference` (L6), `StaticDispatch` (L7), `Java` (L8), `Method` (L9), `Public` (L10), `BySharing` (L11), `Continue` (L12), `DynamicDispatch` (L13), `LineNumber` (L14), `JavaScript` (L15), `Ast` (L16), `Protected` (L17), `While` (L18), `ParserTypeName` (L19), `ByValue` (L20), `Inlined` (L21), `Golang` (L22), `MethodReturn` (L23), `Private` (L24), `Order` (L25), `Do` (L26). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/ProtoIds.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/ProtoIds/mod.rs` (SHA-256 `4f0bf4aba1dec9248a25f6541df41c196ccff0fea8e80aa8d22590bc7fe2a3e2`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -1087,15 +1098,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 7 lexically identified declarations, including `ProtoSerialize` (L7), `docIndex` (L9), `description` (L11), `apply` (L16), `Schema` (L18), `schemaInfo` (L21), `containedRef` (L23). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/ProtoSerialize.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Retain declaration names, defaults, cardinality, identifiers, relationships and mutable handle identity.
+4. Retain CPG declaration names, defaults, cardinalities, IDs, relationships and shared builder identity.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/ProtoSerialize/mod.rs` (SHA-256 `97925c5099b79d1736e1a92db1e15aa4904b2399458a7547a67da579480844b6`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -1136,13 +1147,13 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 4 lexically identified declarations, including `Protogen` (L8), `main` (L9), `outputDir` (L10), `builder` (L13). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Protogen.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/Protogen/mod.rs` (SHA-256 `8f18059f7dda72dc18a7fc68b481ea5ea93fc023c07aa9702e7349bb25d00695`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -1175,13 +1186,13 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 4 lexically identified declarations, including `SchemaBase` (L3), `docIndex` (L5), `description` (L6), `providedByFrontend` (L7). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/SchemaBase.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/SchemaBase/mod.rs` (SHA-256 `c7d87a5e44093cb6d280094e0326b3aa5bf3f25d4e99a39f81c188232f15eec6`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -1222,15 +1233,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 9 lexically identified declarations, including `Shortcuts` (L6), `docIndex` (L8), `description` (L10), `apply` (L16), `Schema` (L26), `schemaInfo` (L41), `evalType` (L43), `contains` (L47), `parameterLink` (L51). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Shortcuts.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Retain declaration names, defaults, cardinality, identifiers, relationships and mutable handle identity.
+4. Retain CPG declaration names, defaults, cardinalities, IDs, relationships and shared builder identity.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/Shortcuts/mod.rs` (SHA-256 `c2c135fce57b350be7f36adab331f0eeaef5b61a4f14ec9b5a027a05e08b7c42`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -1271,15 +1282,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 9 lexically identified declarations, including `Tags` (L5), `docIndex` (L7), `description` (L9), `apply` (L17), `Schema` (L28), `schemaInfo` (L43), `taggedBy` (L47), `tag` (L53), `tagNodePair` (L59). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Tags.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Retain declaration names, defaults, cardinality, identifiers, relationships and mutable handle identity.
+4. Retain CPG declaration names, defaults, cardinalities, IDs, relationships and shared builder identity.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/Tags/mod.rs` (SHA-256 `becd310359cd45c2e4d1f65d3f9422beb18bbf92d51287484e4a3a8f66ce169b`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 
@@ -1320,15 +1331,15 @@ These examples explain reading order and borrowing. Actual APIs must come from t
 **Derived implementation instructions.**
 
 
-1. Implement the complete source-owned behavior in the exact destination, preserving initialization, branches, errors, side effects and observable data. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
+1. Implement the complete CPG functional behavior through native Rust facilities in the exact destination, preserving CPG graph/schema operations, interchange data, errors and resource outcomes. Reuse existing implementation only through an explicit source-to-symbol/entrypoint mapping.
 
 2. Account for 19 lexically identified declarations, including `Type` (L7), `apply` (L9), `docIndex` (L12), `providedByFrontend` (L13), `description` (L15), `Schema` (L22), `schemaInfo` (L25), `typeFullName` (L29), `aliasTypeFullName` (L42), `inheritsFromTypeFullName` (L52), `typeDeclFullName` (L63), `typeDecl` (L76), `typeParameter` (L112), `typeArgument` (L125), `member` (L137), `tpe` (L151), `bindsTo` (L164), `aliasOf` (L173), `inheritsFrom` (L183). The full declaration list is recorded under `cpg:schema/src/main/scala/io/shiftleft/codepropertygraph/schema/Type.scala` in the source inventory; nested/implicit behavior still requires source accounting, and this lexical list is not a complete body proof.
 
-4. Retain declaration names, defaults, cardinality, identifiers, relationships and mutable handle identity.
+4. Retain CPG declaration names, defaults, cardinalities, IDs, relationships and shared builder identity.
 
 10. Keep CGP AND derive-deftly central: record this file’s declaration/template, capability/provider, production context and lifecycle owner; pure helpers remain ordinary Rust inside that boundary. Use the package policy above rather than inventing per-file managers.
 
-11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Preserve ownership, evaluation order and errors. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
+11. Read the resulting Rust as a Python developer: use clear operation names, short transformations and justified comprehension/iterator syntax. Use native Rust ownership and errors while preserving required CPG operations and data ordering. Keep exact filename/case/plurality; Rust-only module glue belongs outside the source mirror.
 
 12. Reuse candidate: `CPGSchema/src/Type/mod.rs` (SHA-256 `e656a68816837a2bfe137f9e806b6852f9a7e7e5ece700b16b174e9e240a02ed`). This file exists and the source schema revisions match textually; behavior equivalence and complete constructor/body coverage remain unverified. Relocate/adapt through an explicit mapping; keep the original candidate intact until adoption.
 

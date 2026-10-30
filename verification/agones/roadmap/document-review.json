@@ -1,5 +1,6 @@
 {
   "review_kind": "DOCUMENT_ONLY",
+  "semantic_policy": "AGONES_NATIVE_RUST_V1",
   "project_builds_tests_probes_proofs_or_verification_executed": false,
   "status": "PASS",
   "counts": {
@@ -7,9 +8,11 @@
     "detailed_file_entries": 1147,
     "package_entries": 293,
     "milestones": 38,
-    "unique_exact_quotes": 1205,
+    "unique_exact_quotes": 1206,
     "roadmap_markdown_components": 41,
-    "resolved_local_link_occurrences": 422
+    "resolved_local_link_occurrences": 430,
+    "semantic_obligations": 2735,
+    "protected_files": 11184
   },
   "checks": [
     {
@@ -73,12 +76,12 @@
       "detail": []
     },
     {
-      "check": "Current-reference quoted files match their permalink commit",
+      "check": "Committed quotations use exact Git bytes; uncommitted guidance has no fabricated commit permalink",
       "result": "PASS",
       "detail": []
     },
     {
-      "check": "Every roadmap Markdown file contains attributed direct source quotation",
+      "check": "Every roadmap document has attributed quotations; AGENTS.MD remains the exact authority copy",
       "result": "PASS",
       "detail": null
     },
@@ -108,14 +111,32 @@
       "detail": null
     },
     {
-      "check": "No implementation milestone is falsely recorded as executed",
+      "check": "M0003 cursor is preserved under the semantic amendment",
       "result": "PASS",
       "detail": null
     },
     {
-      "check": "No fabricated historical actual-cost comparison reports",
+      "check": "Goal attachment, gate, phases and forecast identities are preserved",
       "result": "PASS",
-      "detail": []
+      "detail": null
+    },
+    {
+      "check": "Completed M0001/M0002 records retain their historical contents",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "M0003 pre-amendment fields and usage observations remain intact",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "Actual comparison reports are preserved without fabricated new completions",
+      "result": "PASS",
+      "detail": [
+        "0001-M0001.md",
+        "0002-M0002.md"
+      ]
     },
     {
       "check": "Authored local Markdown references resolve; quoted source links remain verbatim",
@@ -123,12 +144,67 @@
       "detail": []
     },
     {
-      "check": "Original source, state, root prompts, Cargo manifest and checkpoint preserved",
+      "check": "All snapshotted production/dirty files, original prompts, Goal attachment, forecasts and measurements retain their bytes",
       "result": "PASS",
       "detail": []
     },
     {
-      "check": "No tracked implementation changes in Agones",
+      "check": "Pre-amendment history archive retains its original identity",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "All affected guidance copies match current root AGENTS.MD exactly",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "All three native/domain/superseded obligation dispositions are represented",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "Every required Agones file has native and domain obligation records",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "Every milestone applies native Rust ecosystem adoption and the semantic boundary",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "Go-only records are explicitly superseded rather than unresolved emulation blockers",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "Active instructions contain no superseded blanket Go-emulation requirements",
+      "result": "PASS",
+      "detail": []
+    },
+    {
+      "check": "Prompt authoring transformations cannot restore obsolete source/runtime obligations",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "M0003 remains incomplete with explicit Agones-only active gaps",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "Current contract, policy and combined hashes match the amended documents",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "Current control-record bindings match amended records",
+      "result": "PASS",
+      "detail": null
+    },
+    {
+      "check": "The canonical execution ledger retires Go-only completion blockers",
       "result": "PASS",
       "detail": null
     },
@@ -154,9 +230,9 @@
     }
   ],
   "limits": [
-    "Static documentation review does not prove semantic completeness, code correctness or executable tool availability.",
-    "External URL reachability was not exhaustively requested; permalink repository/revision/path identities were checked against local Git/source bytes.",
-    "Existing implementation adoption owners are provisional until exact source-to-symbol/consumer mappings are authored.",
-    "Implicit bodies, build/platform/configuration variants and dynamic test instances remain explicit source-accounting obligations."
+    "Static documentation review does not prove implementation or semantic correctness.",
+    "External URL reachability was not exhaustively requested; quotations were matched to pinned Git bytes or explicitly attributed working-tree guidance.",
+    "Native adoption and domain refinement remain implementation work; no code migration or verification credit follows from superseding Go-only obligations.",
+    "Historical original forecasts and actual usage remain under their original scope."
   ]
 }
