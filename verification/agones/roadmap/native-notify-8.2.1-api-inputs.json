@@ -1,0 +1,58 @@
+{
+  "files": [
+    {
+      "git_blob": "cfa72b59de8189ed3875a9d8c6e5eba6ff2445e1",
+      "path": "notify/Cargo.toml",
+      "url": "https://github.com/notify-rs/notify/blob/7f6995de25f07bf28ab513c64375d94b4ccd08a1/notify/Cargo.toml"
+    },
+    {
+      "git_blob": "df1d360451edb5c2ce4927202918e98c2cb0d637",
+      "path": "notify/src/lib.rs",
+      "url": "https://github.com/notify-rs/notify/blob/7f6995de25f07bf28ab513c64375d94b4ccd08a1/notify/src/lib.rs"
+    },
+    {
+      "git_blob": "8a3bf894e075209e33365a5c0e11c61d2c3993a3",
+      "path": "notify/src/windows.rs",
+      "url": "https://github.com/notify-rs/notify/blob/7f6995de25f07bf28ab513c64375d94b4ccd08a1/notify/src/windows.rs"
+    },
+    {
+      "git_blob": "09c7a60aa01909417b9f43160b642329e60d522f",
+      "path": "notify/src/fsevent.rs",
+      "url": "https://github.com/notify-rs/notify/blob/7f6995de25f07bf28ab513c64375d94b4ccd08a1/notify/src/fsevent.rs"
+    },
+    {
+      "git_blob": "9cb16979f9a45924ab93dd30bba1c17ce0629988",
+      "path": "notify/src/kqueue.rs",
+      "url": "https://github.com/notify-rs/notify/blob/7f6995de25f07bf28ab513c64375d94b4ccd08a1/notify/src/kqueue.rs"
+    },
+    {
+      "git_blob": "3b709daf2b12463dc47e9e24d480b47e44e6f229",
+      "path": "notify/src/inotify.rs",
+      "url": "https://github.com/notify-rs/notify/blob/7f6995de25f07bf28ab513c64375d94b4ccd08a1/notify/src/inotify.rs"
+    },
+    {
+      "git_blob": "a9fa4fec452e6ece659e51e7ff686ad348e45508",
+      "path": "notify/src/poll.rs",
+      "url": "https://github.com/notify-rs/notify/blob/7f6995de25f07bf28ab513c64375d94b4ccd08a1/notify/src/poll.rs"
+    },
+    {
+      "git_blob": "cc65c65f97790343d924ffda33bc0742cec421c7",
+      "path": "notify/src/config.rs",
+      "url": "https://github.com/notify-rs/notify/blob/7f6995de25f07bf28ab513c64375d94b4ccd08a1/notify/src/config.rs"
+    },
+    {
+      "git_blob": "9e1f3dec6f129f18d83db50dab9627af1465736e",
+      "path": "notify-types/src/event.rs",
+      "read_lines": [
+        1,
+        120
+      ],
+      "url": "https://github.com/notify-rs/notify/blob/7f6995de25f07bf28ab513c64375d94b4ccd08a1/notify-types/src/event.rs"
+    }
+  ],
+  "license": "CC0-1.0",
+  "purpose": "Read-only pinned library API and lifecycle inputs; not project execution or acceptance evidence",
+  "repository": "notify-rs/notify",
+  "revision": "7f6995de25f07bf28ab513c64375d94b4ccd08a1",
+  "tag": "notify-8.2.1"
+}

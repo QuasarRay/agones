@@ -26,27 +26,21 @@
   ],
   "existing_compatibility_code": "PRESERVE_EXISTING_CODE; inspect consumers and reuse, replace or retire it during implementation. No Rust source was changed by this amendment.",
   "filesystem": {
-    "authored_operations": [
-      "NativeWatch/UtilityRuntimeProviders selects the literal gopkg.in/fsnotify.v1 v1.4.7 contract from pinned pkg/util/fswatch, not the edited Go imports.",
-      "BSD/macOS/ios kqueue owner holds queue and file descriptors, exact source open flags, watch/path/directory flags, external paths and seen-file sets; raw kevent pointers do not cross awaits.",
-      "BSD follows full symlink chains for internal and explicit paths, keeps relative source path identity, bounds links at 255, and suppresses EvalSymlinks/following-Lstat failures as v1 does.",
-      "BSD ioutil.ReadDir style eagerly gathers FileInfo before sorting and adding watches, skips vanished entries, propagates initial internal-watch failures, forwards directory-list errors and silently stops on directory create-watch errors.",
-      "BSD directory existence recheck, zero-Op event delivery, rename/remove with child cleanup, retained external/seen state, overwrite/create recovery and close completion are authored.",
-      "Solaris/illumos construction returns the exact source NewWatcher unsupported error with its trailing newline; this is a source-defined production failure, not an invented placeholder or modern FEN implementation.",
-      "Linux uses the v1 fsnotify queue overflow text, EOF/short-read reporting with continued reads, ignored/missing-path suppression and existing owned native inotify task.",
-      "Windows source single-path directory/named-file tracking uses one pinned OVERLAPPED 4096-byte array and LAST_ACCESS/LAST_WRITE/ATTRIBUTES/FILE_NAME/DIR_NAME filters.",
-      "Windows ERROR_MORE_DATA consumes the v1 sizeof([4096]byte) branch, while zero-byte completion sends an event (source Op==0) then short-read error. This supersedes the v1.9 slice-header/overflow-error mapping.",
-      "Windows 50-event buffer, unbuffered errors, per-offer acknowledgements and cancelled-offer retraction retain the shared channel owner.",
-      "Normal cancellation drains pending Windows I/O; emergency Drop unregisters callbacks before synchronous draining. Handles/resources and channels close before NativeWatch completion; no detached Rust thread or competing application manager."
-    ],
-    "canonical_owner": "NativeWatch -> selected v1.4.7 platform CGP provider -> owned native reader/resources/channels/completion, or the source Solaris construction error",
-    "declarations_templates": "UtilityRuntimeProviders statically delegates FileWatcherOpener; cfg platform provider constructs NativeWatch and uses the existing UtilityTaskScope. No second manager, dynamic provider registry or polling replacement.",
-    "production_consumer": "fswatch::Watch -> open_file_watcher -> shared batchWatch -> source callbacks; WatchHandle::cancel / BatchOwner::Drop -> same native cancellation and close completion.",
-    "source_id": "agones:pkg/util/fswatch/fswatch.go"
+    "native_fswatch_authoring_record": "verification/agones/roadmap-M0003-native-fswatch-adoption.json",
+    "owner": "UtilityRuntimeOwner/UtilityTaskScope + notify-owned backend",
+    "provider": "OpenNotifyFileWatcher",
+    "remaining": "Full application/configuration/native consumer reconciliation and post-gate assurance",
+    "semantic_policy": "AGONES_NATIVE_RUST_V1",
+    "status": "AUTHORED_UNVERIFIED_PARTIAL; no platform/runtime/formal credit"
   },
   "formal_credit": 0,
   "global_gate": "CLOSED",
   "historical_descriptive_fields": [],
+  "historical_filesystem_before_notify_adoption": {
+    "field": "filesystem",
+    "git_recovery": "06f91bda78907b2e23f466441c8af0382515804f:verification/agones/roadmap-M0003-platform-effects.json",
+    "record_sha256": "edd9a6530382c5e8ab39b0965f7cbefe8506ec8d45835ce97e130f193304b68a"
+  },
   "historical_remaining_before_native_rust_v1": [
     "Reconcile all selected v1.4.7 native failure/type/error wrapping and NewWatcher/Add/Close ordering. Linux uses nonblocking AsyncFd rather than the source blocking inotify+poller allocation sequence; Windows uses event/wait completion rather than source IOCP.",
     "Reconcile BSD source 100ms timed kevent/done/Close schedules versus cancellable readiness, close errors/nonblocking error delivery, partial initialization races, and existing-watch register failure with retained stale fd numbers. Native ownership never creates a second OwnedFd for a reused stale number.",
@@ -69,6 +63,7 @@
     "source_id": "agones:pkg/util/signals/signals.go"
   },
   "milestone_id": "M0003",
+  "native_fswatch_authoring_record": "verification/agones/roadmap-M0003-native-fswatch-adoption.json",
   "native_primary_source_inputs": [
     {
       "path": "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/windows-sys-0.61.2/Cargo.toml",
@@ -134,23 +129,23 @@
   "native_signal_authoring_record": "verification/agones/roadmap-M0003-native-signals-adoption.json",
   "payload_identity_refreshed_at": "2026-10-30T05:21:15.188597+00:00",
   "payload_sha256": {
-    "Cargo.lock": "2a62cef41b7569b26cbb41f535aba08152f5d1ac013c36b1135ce7eed1e351b2",
+    "Cargo.lock": "bc20159bcb4672e49727a498809cb14af3d88b7b8035b4f814386eccc54f7fca",
     "agones-rs/pkg/util/apiserver/apiserver.rs": "c003afa1538dae152684db0c575a7b17d65d9f32eb2d7be68af49759941540c3",
     "agones-rs/pkg/util/errors/errors.rs": "6e460c47d530795d606e32d3256852235511b7b357ec83dcca9f5470de632342",
     "agones-rs/pkg/util/https/https.rs": "5700eb42eae4c9733c7021a2008740a0f89ef09a016f8dbe551cc3ea956ca75b",
-    "agones-rs/pkg/util/https/server.rs": "70884b623df996e663156b0f35b7d266276d525b1b824064bb73f255d4add9d6",
+    "agones-rs/pkg/util/https/server.rs": "bf94d12cb63741438907cd0a5aa7c668b7cdafa9d440dfc5f11e395db75a4b5a",
     "agones-rs/pkg/util/httpserver/server.rs": "9659cb93832f13d8eee94bb3e72eca158dce345779e61febfa6d697e1a918a11",
     "agones-rs/pkg/util/logfields/logfields.rs": "9f364cba01f2de1759de7b344d619409842ce5ab8569157bf997426a08051cad",
     "agones-rs/pkg/util/runtime/runtime.rs": "12eafdcb25ae7b4f7cefb6041f894eaa55ab4c334139a44a20e3f2f72e47c8f4",
     "agones-rs/pkg/util/webhooks/webhooks.rs": "f728be5333aecae9018da4ce9bc09a278907e10d2bfa6cc56a77566c9c878da5",
     "agones-rs/pkg/util/workerqueue/workerqueue.rs": "f8d2b938d8b8786aa3416b5fdfc1c645e9553bf49774b4e8a0a3701c9729f1c1",
-    "crates/util/Cargo.toml": "9f41d3c326071cd79d13622c750623cde108abd662e66ca80f6911a6e7a86e0a",
+    "crates/util/Cargo.toml": "c03b31cb2480f142a66ef0cc615515fbfb17edd309ec5ab70f8d0ad2d5e2f820",
     "rust-support/agones/FSNOTIFY-LICENSE": "2dfbe6d2b5eb18b55148f3805d88648a09e0d17e38428123259afb08c8996e37",
     "rust-support/agones/FSNOTIFY-V1-LICENSE": "c8001d18c3dda64c7e72146f1b23d73619fcf426aed6778f447599f5ac8e600a",
     "rust-support/agones/GO-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
     "rust-support/agones/src/utility_callback_slice.rs": "fe1b5582794aba4bee0f17133a36ed557fb23efaf7de7e130e7a668176afdc98",
     "rust-support/agones/src/utility_crash.rs": "05f1e3ba160af43279b56566c9b4d6c31e7beb58ca1d8148847431f56abc0313",
-    "rust-support/agones/src/utility_declarations.rs": "f82fef148e6276b7f650e27cb00c7fac42c9903b428a43d04932b0b3eb30c9c7",
+    "rust-support/agones/src/utility_declarations.rs": "25cdc4e92b580e7a5703213bdddaccc6d25cbe50a39fe73e1753d258cd4809a2",
     "rust-support/agones/src/utility_error_alias.rs": "005bf2c6b9f833b7d4205f894b6c990df660dd61e5cd2a2078f373de07b01c65",
     "rust-support/agones/src/utility_error_format.rs": "8e888b6b82686ea9d3288dde9582ba8f7dc2e4328cb0597105c4f868a5c2f9fc",
     "rust-support/agones/src/utility_error_handlers.rs": "935a56f1b61ac81fcf7adc528341a098ff3965780b9bcc361e02d030fb2fa459",
@@ -184,7 +179,7 @@
     "rust-support/agones/src/utility_format_text.rs": "d23519f4baf5555403dda6e6a87b07994e32bf77dd5f1b16b38f9c3d121bbe8a",
     "rust-support/agones/src/utility_fs_errno_linux.rs": "3b4746724f9bb69f57c1043bddeee21f5fe580273501d89e3ad8b1a6c821102f",
     "rust-support/agones/src/utility_fs_error.rs": "50a84473902891697a4c57693ff637470c0b05be808e897c01e0dea222c1f5db",
-    "rust-support/agones/src/utility_fswatch.rs": "594ff335887d01bb1fa4e40c8df41e579567873972c4e89bdb7b89da005fa20f",
+    "rust-support/agones/src/utility_fswatch.rs": "c1452fad0c2a714499adf97f105385d7ceb229a6607453bfa16110178d75f38a",
     "rust-support/agones/src/utility_fswatch_fen.rs": "d5ffcbf1fef1be3b40b0fd06dfe14a4ebdd5e954a02c143deccbfba4a16a767d",
     "rust-support/agones/src/utility_fswatch_kqueue.rs": "67b1963fa38453e9c1ad968648b12e0c7e747dddca7aa3613f44de81d4ed00c3",
     "rust-support/agones/src/utility_fswatch_windows.rs": "937bc4ab04bea8bce002efc0d82c5067d4d9b94f5313eb60c0a73572f858662e",

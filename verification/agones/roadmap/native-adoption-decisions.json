@@ -46,16 +46,17 @@
       "sha256": "de93657e926a3498249173e564ccc7798ffd081ba2583c8c9dd490b239195cde"
     },
     {
-      "decision": "NATIVE_TOKIO_SIGNAL_PATH_AUTHORED; REMAINING_UTILITY_ADOPTION_OPEN",
+      "decision": "NATIVE_NOTIFY_FSWATCH_AUTHORED; REMAINING_UTILITY_ADOPTION_OPEN",
       "native_authoring_record": "verification/agones/roadmap-M0003-native-runtime-adoption.json",
+      "native_fswatch_authoring_record": "verification/agones/roadmap-M0003-native-fswatch-adoption.json",
       "native_signal_authoring_record": "verification/agones/roadmap-M0003-native-signals-adoption.json",
       "owner_milestone": "M0003",
       "path": "rust-support/agones/src/utility_declarations.rs",
-      "previous_sha256": "152555b9dc4b6ca940f3e88315c6a5d8db2dcecfc69f5ecc1b686e458069f641",
-      "production_status": "Selected native signal provider and concrete utility/shutdown consumers authored; uncompiled and unverified",
+      "previous_sha256": "f82fef148e6276b7f650e27cb00c7fac42c9903b428a43d04932b0b3eb30c9c7",
+      "production_status": "Native watcher provider and concrete batching/TLS consumers authored; uncompiled and unverified",
       "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
       "semantic_policy": "AGONES_NATIVE_RUST_V1",
-      "sha256": "f82fef148e6276b7f650e27cb00c7fac42c9903b428a43d04932b0b3eb30c9c7"
+      "sha256": "25cdc4e92b580e7a5703213bdddaccc6d25cbe50a39fe73e1753d258cd4809a2"
     },
     {
       "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
@@ -366,37 +367,42 @@
       "sha256": "50a84473902891697a4c57693ff637470c0b05be808e897c01e0dea222c1f5db"
     },
     {
-      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "decision": "NATIVE_NOTIFY_FSWATCH_AUTHORED; REMAINING_UTILITY_ADOPTION_OPEN",
+      "native_fswatch_authoring_record": "verification/agones/roadmap-M0003-native-fswatch-adoption.json",
       "owner_milestone": "M0003",
       "path": "rust-support/agones/src/utility_fswatch.rs",
-      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed",
+      "previous_sha256": "594ff335887d01bb1fa4e40c8df41e579567873972c4e89bdb7b89da005fa20f",
+      "production_status": "Native watcher provider and concrete batching/TLS consumers authored; uncompiled and unverified",
       "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
       "semantic_policy": "AGONES_NATIVE_RUST_V1",
-      "sha256": "594ff335887d01bb1fa4e40c8df41e579567873972c4e89bdb7b89da005fa20f"
+      "sha256": "c1452fad0c2a714499adf97f105385d7ceb229a6607453bfa16110178d75f38a"
     },
     {
-      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "decision": "PRESERVED_UNREGISTERED_REFERENCE",
+      "native_fswatch_authoring_record": "verification/agones/roadmap-M0003-native-fswatch-adoption.json",
       "owner_milestone": "M0003",
       "path": "rust-support/agones/src/utility_fswatch_fen.rs",
-      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed",
+      "production_status": "No longer included by utility_fswatch.rs; native library supplies this effect; no Go fsnotify/ABI parity requirement",
       "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
       "semantic_policy": "AGONES_NATIVE_RUST_V1",
       "sha256": "d5ffcbf1fef1be3b40b0fd06dfe14a4ebdd5e954a02c143deccbfba4a16a767d"
     },
     {
-      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "decision": "PRESERVED_UNREGISTERED_REFERENCE",
+      "native_fswatch_authoring_record": "verification/agones/roadmap-M0003-native-fswatch-adoption.json",
       "owner_milestone": "M0003",
       "path": "rust-support/agones/src/utility_fswatch_kqueue.rs",
-      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed",
+      "production_status": "No longer included by utility_fswatch.rs; native library supplies this effect; no Go fsnotify/ABI parity requirement",
       "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
       "semantic_policy": "AGONES_NATIVE_RUST_V1",
       "sha256": "67b1963fa38453e9c1ad968648b12e0c7e747dddca7aa3613f44de81d4ed00c3"
     },
     {
-      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "decision": "PRESERVED_UNREGISTERED_REFERENCE",
+      "native_fswatch_authoring_record": "verification/agones/roadmap-M0003-native-fswatch-adoption.json",
       "owner_milestone": "M0003",
       "path": "rust-support/agones/src/utility_fswatch_windows.rs",
-      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed",
+      "production_status": "No longer included by utility_fswatch.rs; native library supplies this effect; no Go fsnotify/ABI parity requirement",
       "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
       "semantic_policy": "AGONES_NATIVE_RUST_V1",
       "sha256": "937bc4ab04bea8bce002efc0d82c5067d4d9b94f5313eb60c0a73572f858662e"
@@ -1008,7 +1014,7 @@
     }
   ],
   "implementation_changes": true,
-  "latest_partial_authoring_record": "verification/agones/roadmap-M0003-native-signals-adoption.json",
+  "latest_partial_authoring_record": "verification/agones/roadmap-M0003-native-fswatch-adoption.json",
   "policy": "AGONES_NATIVE_RUST_V1",
   "record_kind": "EXISTING_IMPLEMENTATION_RECONCILIATION"
 }

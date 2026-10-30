@@ -58,7 +58,7 @@ impl Server {
     }
     pub fn getCertificate(&self) -> Result<Option<LoadedCertificate>, BoxError> { Ok(self.certServer.current()) }
 
-    pub fn WatchForCertificateChanges(&self) -> Result<WatchHandle, BoxError> {
+    pub async fn WatchForCertificateChanges(&self) -> Result<WatchHandle, BoxError> {
         let (context, certificates, logger) = (self.runtime.clone(), Arc::clone(&self.certServer), self.logger.clone());
         let process: ProcessEvent = Arc::new(move || {
             let (context, certificates, logger) = (context.clone(), Arc::clone(&certificates), logger.clone());
@@ -76,13 +76,12 @@ impl Server {
                 }
             })
         });
-        match fswatch::Watch(&self.runtime, &self.logger, Path::new(tlsDir), 1_000_000_000, process) {
+        match fswatch::Watch(&self.runtime, &self.logger, Path::new(tlsDir), Duration::from_secs(1), process).await {
             Ok(handle) => Ok(handle),
             Err(error) => {
-                let error = crate::utility_error_slice::SourceRetainedError::from_original(error);
-                self.runtime.emit_source_log(&self.logger.with_error(Some(&error)), LogLevel::Fatal, "could not create watcher for TLS certs");
+                self.runtime.emit_source_log(&self.logger.with_error(Some(error.as_ref())), LogLevel::Fatal, "could not create watcher for TLS certs");
                 self.runtime.exit_source_process(1);
-                Err(error.into_error()) // retained for an explicitly substituted source ExitFunc
+                Err(error) // retained for an explicitly substituted process-exit provider
             }
         }
     }

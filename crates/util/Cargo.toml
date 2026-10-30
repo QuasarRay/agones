@@ -19,6 +19,7 @@ url.workspace = true
 tracing = "=0.1.44"
 chrono.workspace = true
 tokio-util = { version = "=0.7.20", features = ["rt", "time"] }
+notify = "=8.2.1"
 bytes = "=1.12.1"
 hyper = { version = "=1.12.0", features = ["server", "http1", "http2", "agones-informational"] }
 hyper-util = { version = "=0.1.21", features = ["server-auto", "tokio", "http1", "http2"] }

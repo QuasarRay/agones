@@ -666,7 +666,7 @@
       "receipt": "verification/agones/ci/native675-recovery-published.json",
       "status": "PUBLISHED_NATIVE_RECOVERY_ONLY_FORMAL_ACCEPTANCE_PENDING"
     },
-    "next_action": "Continue M0003 MANUAL under AGONES_NATIVE_RUST_V1. Native logging/errors, keyed queue core and Tokio process-signal utilities with owner cleanup are authored; see their native adoption records. Replace the remaining manual filesystem watcher and HTTP/gateway/crash facilities with native Rust capabilities, reconcile application/controller consumers, then remove legacy runtime resources. Keep all 13 utility gaps open pending whole-body/native-consumer reconciliation. No route switch or project executable run; global BOTH-route gate remains CLOSED.",
+    "next_action": "Continue M0003 MANUAL under AGONES_NATIVE_RUST_V1. Native logging/errors, keyed queues, Tokio signals and notify-backed filesystem batching/TLS reload consumers are authored in their adoption records. Replace HTTP/gateway/crash facilities with native Rust capabilities, reconcile application/controller consumers and remove legacy runtime resources. Keep all 13 utility gaps open pending whole-body/native-consumer/configuration reconciliation. No route switch or verification/project executable run; global BOTH-route gate remains CLOSED.",
     "pending_checkpoint": {
       "current_formal_credit": 0,
       "generation_modes": 7,
@@ -740,15 +740,17 @@
       "contract_amendment_sha256": "1a33a3d0ddf9beef3ca19c6ef644af42f9b63a4fe0672290dce467a63403600e",
       "contract_sha256": "12d2dd31a8c88be94c6a5f8fd4fe44a4e2ce9a235d1c961ded84d4311aebeffa",
       "current_record_bindings": {
-        "verification/agones/roadmap-M0003-gateway-authoring.json": "e4d1839a4383339771205d44689be468ea66fee1893595ec34a8a1bf84bd447f",
-        "verification/agones/roadmap-M0003-http-authoring.json": "665d007c12d0ae5c92e3b3678018edb8e735261653663732d63847b83f827fb9",
-        "verification/agones/roadmap-M0003-hyper-adoption.json": "1958891272ace1778d9bbd17e98f8f7884bc6acef4a029101b5099ff2a23f2e4",
+        "verification/agones/roadmap-M0003-gateway-authoring.json": "627123d52d241b69f19d09d73d91cc27ab34488600fd471201dbcd8913d85f56",
+        "verification/agones/roadmap-M0003-http-authoring.json": "ac2653f67aeff6b747c411f29b23bee3b9e5f757115fff9c9e9ef41249b4a0da",
+        "verification/agones/roadmap-M0003-hyper-adoption.json": "3c2d674fb8d7f5c18b17fbbad4feaf767a7515584f86e96fde6e3620eaecd36e",
+        "verification/agones/roadmap-M0003-native-fswatch-adoption.json": "fb43fcbee06034bbfca38acfeb8faf01062c62825af293546f9793026b148cf1",
         "verification/agones/roadmap-M0003-native-queue-adoption.json": "d711fb5296fedaf98bb38158ea7a90dd47c7c0d6accc5c729813056a683fc37d",
         "verification/agones/roadmap-M0003-native-runtime-adoption.json": "bfd12b20d94dec94526e5b2f4ae6be8f916c9f7b49c54a9209d37a2d056436e7",
         "verification/agones/roadmap-M0003-native-signals-adoption.json": "ba443fe7331ff5e883c909a59199802049179d1832ca6574fb6df07308fb41d6",
-        "verification/agones/roadmap-M0003-partial-map.json": "221a9e30d803dab25785bf4fbdd0277561a596339cd38d4bef6238713e44beff",
-        "verification/agones/roadmap-M0003-platform-effects.json": "edd9a6530382c5e8ab39b0965f7cbefe8506ec8d45835ce97e130f193304b68a",
-        "verification/agones/roadmap-M0003-reuse-adoption.json": "9e92f9d6f25632a200165780de233c3a120e6a882e3a219a47c6135bddbf9d18"
+        "verification/agones/roadmap-M0003-partial-map.json": "4998df22e3d4bdbe475f6c2f9306711c82c1377ab5d30ed80c94f28dae97ce87",
+        "verification/agones/roadmap-M0003-platform-effects.json": "309709dacac27ad7232063fa4c2dd9cb5142ee3a5aad9075b0205dabe97c2587",
+        "verification/agones/roadmap-M0003-reuse-adoption.json": "8d1e935a074f028c2a3b95eefe10296df381c95e5009be4021c4a3f885292f9a",
+        "verification/agones/roadmap/native-notify-8.2.1-api-inputs.json": "76952ff4804c9653c9866540e7055241400ab98ee327a4275d2c74cee84a07ff"
       },
       "cursor": {
         "disposition": "READY",
@@ -849,6 +851,8 @@
           "http_authoring_record": "verification/agones/roadmap-M0003-http-authoring.json",
           "known_missing_named_bodies": [],
           "native_adoption_decisions": "verification/agones/roadmap/native-adoption-decisions.json",
+          "native_fswatch_authoring_record": "verification/agones/roadmap-M0003-native-fswatch-adoption.json",
+          "native_fswatch_authoring_record_sha256": "fb43fcbee06034bbfca38acfeb8faf01062c62825af293546f9793026b148cf1",
           "native_hyper_adoption_record": "verification/agones/roadmap-M0003-hyper-adoption.json",
           "native_queue_authoring_record": "verification/agones/roadmap-M0003-native-queue-adoption.json",
           "native_queue_authoring_record_sha256": "d711fb5296fedaf98bb38158ea7a90dd47c7c0d6accc5c729813056a683fc37d",
@@ -861,7 +865,7 @@
           "partial_adoption_record": "verification/agones/roadmap-M0003-partial-map.json",
           "platform_effect_authoring_record": "verification/agones/roadmap-M0003-platform-effects.json",
           "prerequisites": "M0001/M0002 authored implementation complete; global phase remains IMPLEMENTATION_ONLY",
-          "progress_usage_observation": "verification/agones/roadmap-M0003-progress-usage-124.json",
+          "progress_usage_observation": "verification/agones/roadmap-M0003-progress-usage-127.json",
           "progress_usage_observations": [
             "verification/agones/roadmap-M0003-progress-usage-1.json",
             "verification/agones/roadmap-M0003-progress-usage-2.json",
@@ -986,7 +990,10 @@
             "verification/agones/roadmap-M0003-progress-usage-121.json",
             "verification/agones/roadmap-M0003-progress-usage-122.json",
             "verification/agones/roadmap-M0003-progress-usage-123.json",
-            "verification/agones/roadmap-M0003-progress-usage-124.json"
+            "verification/agones/roadmap-M0003-progress-usage-124.json",
+            "verification/agones/roadmap-M0003-progress-usage-125.json",
+            "verification/agones/roadmap-M0003-progress-usage-126.json",
+            "verification/agones/roadmap-M0003-progress-usage-127.json"
           ],
           "reuse_adoption_record": "verification/agones/roadmap-M0003-reuse-adoption.json",
           "route": "MANUAL",
@@ -997,14 +1004,14 @@
           "work_base_commit": "a0f9850f10cee3e345ba52face074829239fe5bd"
         }
       },
-      "native_adoption_decisions_sha256": "7ff34f69c1899289b779b1ffccfb54576eb08afb0bc21868ba68c331c42d060c",
-      "next_action": "Continue M0003 MANUAL under AGONES_NATIVE_RUST_V1. Native logging/errors, keyed queue core and Tokio process-signal utilities with owner cleanup are authored; see their native adoption records. Replace the remaining manual filesystem watcher and HTTP/gateway/crash facilities with native Rust capabilities, reconcile application/controller consumers, then remove legacy runtime resources. Keep all 13 utility gaps open pending whole-body/native-consumer reconciliation. No route switch or project executable run; global BOTH-route gate remains CLOSED.",
+      "native_adoption_decisions_sha256": "932c46911681ffaf86d8d1b5ddcf52c5f0e449c96b691362f10119a062d07c76",
+      "next_action": "Continue M0003 MANUAL under AGONES_NATIVE_RUST_V1. Native logging/errors, keyed queues, Tokio signals and notify-backed filesystem batching/TLS reload consumers are authored in their adoption records. Replace HTTP/gateway/crash facilities with native Rust capabilities, reconcile application/controller consumers and remove legacy runtime resources. Keep all 13 utility gaps open pending whole-body/native-consumer/configuration reconciliation. No route switch or verification/project executable run; global BOTH-route gate remains CLOSED.",
       "objective": "AGONES_AND_CPG_COMBINED_ROADMAP",
       "objective_attachment": "/home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt",
       "objective_attachment_sha256": "a9b797fc624be04548c62e63a634bcc2cacab25c4d9f45af346148ba32c1baea",
       "project_phase": "IMPLEMENTATION_ONLY",
       "semantic_obligations": "verification/agones/roadmap/semantic-obligations.json",
-      "semantic_obligations_sha256": "17c25cc6abff0867ff7d126d5cce3d115010fe6186b1e94934899610c3d9876a",
+      "semantic_obligations_sha256": "07f8754ded21ea537b5ee12cf0a5a8bbe5bc4466f986e58df074306e07922190",
       "semantic_policy": "AGONES_NATIVE_RUST_V1",
       "shared_completion_and_switch_usage": [
         {
@@ -1049,9 +1056,9 @@
   "goal": {
     "objective_attachment": "/home/astral/.codex/attachments/7e813823-9e0d-4ca6-91fa-91cdb860f2fd/pasted-text-1.txt",
     "reported_usage": {
-      "observed_at": 1793350306,
-      "time_seconds": 119210,
-      "tokens": 7737061
+      "observed_at": 1793352234,
+      "time_seconds": 121138,
+      "tokens": 7830815
     },
     "status": "active",
     "thread_id": "01a17928-8551-7701-8497-5333c680f283",
@@ -1059,8 +1066,8 @@
   },
   "jobs": [],
   "migration_status": "INCOMPLETE",
-  "previous_revision": 386,
-  "previous_sha256": "c59e3efec1269ebfc7c2b9d5d260fe2ab5c7b596f8a34490fbc98e055244cb99",
+  "previous_revision": 387,
+  "previous_sha256": "1446d9722338dd2e3004015b20922d66529822c670b095b5ddd804063d18f8d7",
   "refactoring_reviews": [
     {
       "affected_architecture_cells": [],
@@ -1764,7 +1771,7 @@
       "timestamp": "2026-10-21T09:42:01.132215+00:00"
     }
   ],
-  "revision": 387,
+  "revision": 388,
   "schema_version": 1,
   "scope_id": "agones-original-v1",
   "work_items": [

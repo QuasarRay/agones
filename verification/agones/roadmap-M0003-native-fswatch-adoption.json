@@ -1,0 +1,213 @@
+{
+  "agones_log_policy": "The source Watch error callback binds the successful construction error rather than the callback argument. The native implementation retains path/message and error:null using Option; it does not reconstruct Go typed-nil interfaces. Fatal backend termination still propagates through the owned lifetime task.",
+  "ecosystem_reuse": {
+    "api_inputs": "verification/agones/roadmap/native-notify-8.2.1-api-inputs.json",
+    "api_inputs_sha256": "76952ff4804c9653c9866540e7055241400ab98ee327a4275d2c74cee84a07ff",
+    "custom_policy_reason": "Agones requires fixed-window batching, certificate reload callbacks and parent-owned cleanup. The bridge supplies only this integration; notify owns platform notification parsing, handles and backend workers.",
+    "event_policy": "Read/open access events do not retrigger reload. Write-close and create/modify/remove/other/rescan notifications wake fixed-window batching through Tokio Notify; native watcher errors use a Tokio error channel.",
+    "features": "Default platform selection; one-second interval for the portable polling fallback.",
+    "lockfile_provenance": "Cargo.lock changed after the manifest edit without any Cargo invocation by this agent. Actor attribution is unconfirmed. The observed graph is bound as source configuration only; dependency resolution/build/verification is not credited.",
+    "new_lock_packages": [
+      {
+        "name": "inotify",
+        "version": "0.11.5"
+      },
+      {
+        "name": "inotify-sys",
+        "version": "0.1.8"
+      },
+      {
+        "name": "kqueue",
+        "version": "1.2.1"
+      },
+      {
+        "name": "kqueue-sys",
+        "version": "1.1.2"
+      },
+      {
+        "name": "notify",
+        "version": "8.2.1"
+      },
+      {
+        "name": "notify-types",
+        "version": "2.2.0"
+      },
+      {
+        "name": "objc2-core-foundation",
+        "version": "0.3.2"
+      },
+      {
+        "name": "objc2-core-services",
+        "version": "0.3.2"
+      },
+      {
+        "name": "same-file",
+        "version": "1.0.6"
+      },
+      {
+        "name": "walkdir",
+        "version": "2.5.0"
+      }
+    ],
+    "package": "notify",
+    "prior_lock_packages_removed": [],
+    "registry_checksum": "82f812702fbc75d35416d3f884e04925be7e9498f4eceea2e24ba34559284674",
+    "source_revision": "7f6995de25f07bf28ab513c64375d94b4ccd08a1",
+    "version": "8.2.1"
+  },
+  "formal_credit": 0,
+  "global_gate": "CLOSED",
+  "guidance_copy": {
+    "path": "agones-rs/pkg/util/fswatch/AGENTS.MD",
+    "previous_content_recovery_commit": "06f91bda78907b2e23f466441c8af0382515804f",
+    "sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311"
+  },
+  "milestone_complete": false,
+  "milestone_id": "M0003",
+  "operations": [
+    {
+      "agones_requirement": "Register the requested path non-recursively, return registration failures and cancel the partial watch on startup failure. Watch directories and immediate children for certificate replacement events.",
+      "id": "M0003-NATIVE-FSWATCH-OPEN",
+      "owner": "utility_fswatch.rs::OpenNotifyFileWatcher",
+      "rust_facilities": [
+        "notify::RecommendedWatcher",
+        "notify::Watcher::watch",
+        "RecursiveMode::NonRecursive",
+        "Result"
+      ],
+      "source_bodies": [
+        "Watch"
+      ],
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "agones_requirement": "Start a fixed batch window on the first change, retain that deadline during a burst, and invoke the callback once for the batch. Hold changes received while the callback runs for the next batch. Handle watcher errors and terminate on cancellation or a failed backend stream.",
+      "id": "M0003-NATIVE-FSWATCH-BATCH",
+      "owner": "source::fswatch::batchWatch + EventBridge",
+      "rust_facilities": [
+        "tokio::sync::Notify",
+        "tokio::sync::mpsc",
+        "Duration",
+        "Instant::checked_add",
+        "tokio::time::Sleep",
+        "tokio::select!"
+      ],
+      "source_bodies": [
+        "batchWatch"
+      ],
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "agones_requirement": "Own backend lifetime and callback tasks in the existing scope, close idempotently and await callback-owner destruction during normal cleanup. Drive rejected futures through cleanup before returning an error. Rust RAII requests closure on abort or unwind.",
+      "id": "M0003-NATIVE-FSWATCH-OWNERSHIP",
+      "owner": "NativeWatch/LifetimeOwner/BatchOwner + UtilityRuntimeOwner task scope",
+      "rust_facilities": [
+        "Arc",
+        "Mutex<Option<RecommendedWatcher>>",
+        "CancellationToken",
+        "Drop",
+        "UtilityTaskScope::spawn_or_return"
+      ],
+      "source_bodies": [
+        "Watch",
+        "batchWatch"
+      ],
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "agones_requirement": "Watch /certs/ with a one-second batching window, reload the configured certificate pair, retain the previous certificate after load errors and publish a successfully loaded pair through the existing certificate owner. Preserve watcher-start failure logging/exit behavior.",
+      "id": "M0003-NATIVE-FSWATCH-TLS-CONSUMER",
+      "owner": "agones-rs/pkg/util/https/server.rs::WatchForCertificateChanges",
+      "rust_facilities": [
+        "notify EventKind filtering",
+        "Duration::from_secs(1)",
+        "async/await",
+        "Rustls certificate loader",
+        "Mutex<Option<LoadedCertificate>>"
+      ],
+      "source_bodies": [
+        "Watch",
+        "batchWatch",
+        "https.Server.WatchForCertificateChanges"
+      ],
+      "status": "AUTHORED_UNVERIFIED"
+    }
+  ],
+  "payload_sha256": {
+    "Cargo.lock": "bc20159bcb4672e49727a498809cb14af3d88b7b8035b4f814386eccc54f7fca",
+    "agones-rs/pkg/util/fswatch/fswatch.rs": "0e4c7dd735f7efad38d49c3a22264cea805d3b29b4609ddff9acfb78205c608c",
+    "agones-rs/pkg/util/https/server.rs": "bf94d12cb63741438907cd0a5aa7c668b7cdafa9d440dfc5f11e395db75a4b5a",
+    "crates/util/Cargo.toml": "c03b31cb2480f142a66ef0cc615515fbfb17edd309ec5ab70f8d0ad2d5e2f820",
+    "rust-support/agones/src/utility_declarations.rs": "25cdc4e92b580e7a5703213bdddaccc6d25cbe50a39fe73e1753d258cd4809a2",
+    "rust-support/agones/src/utility_fswatch.rs": "c1452fad0c2a714499adf97f105385d7ceb229a6607453bfa16110178d75f38a"
+  },
+  "production_composition": {
+    "capability": "FileWatcherOpener",
+    "declaration": "UtilityRuntimeContext",
+    "library_worker_scope": "notify owns native backend workers and exposes no common JoinHandle. Callback destruction is observed; no direct native-thread join or runtime cleanup proof is claimed.",
+    "minimum_provider_capabilities": [
+      "CanSpawnUtilityTask",
+      "Sync"
+    ],
+    "minimum_watch_consumer_capabilities": [
+      "CanOpenFileWatcher",
+      "CanEmitSourceLog",
+      "CanSpawnUtilityTask",
+      "Clone",
+      "Send",
+      "Sync"
+    ],
+    "normal_shutdown": "Cancel, drop the library watcher once, wait for callback lifetime completion and join owned application tasks. Emergency Drop requests closure through RAII.",
+    "provider": "OpenNotifyFileWatcher",
+    "state_owner": "One NativeWatch owns the library watcher; batchWatch owns its timer. EventBridge owns notification delivery and its destruction acknowledges library callback lifetime completion.",
+    "task_owner": "Existing UtilityRuntimeOwner/UtilityTaskScope owns one backend lifetime future and one batch-callback future per watcher. No independent application manager or detached application tasks.",
+    "template": "utility_declarations.rs::UtilityRuntimeProviders"
+  },
+  "project_executable_invocations_by_agent": 0,
+  "record_kind": "NATIVE_NOTIFY_FSWATCH_AUTHORING_AND_PARTIAL_ADOPTION",
+  "remaining": [
+    "Reconcile full application consumers and post-gate assertions for watch startup failure, fixed batching windows, certificate replacement, cancellation and backend failure.",
+    "Existing controller queue consumers still require adoption of the native queue core.",
+    "Native HTTP/gateway/crash replacement and removal of legacy klog/error-handler/runtime profile resources remain open.",
+    "Keep all 13 canonical M0003 gaps open until native consumers, source bodies and required configurations are reconciled.",
+    "Compilation, runtime watcher/platform behavior, dependency-graph correctness and formal assurance remain NOT_STARTED behind the BOTH-route implementation gate."
+  ],
+  "retirement": {
+    "body_transfers": {
+      "BSD/macOS kqueue and filesystem-event flags": "notify platform backend",
+      "Linux OwnedRead/inotify fd and record parsing": "notify::INotifyWatcher selected through RecommendedWatcher",
+      "Rendezvous/Receipt/Retract send/receive/close": "Tokio Notify and native mpsc; Go unbuffered receipt/retraction and closed-channel scheduling are superseded",
+      "Solaris/illumos FEN source backend": "notify portable PollWatcher fallback",
+      "Source path cleaning and source buffer/counter profiles": "Native Path and library policy; Go stdlib/ABI profiles superseded",
+      "Windows native handle parsing and buffering": "notify::ReadDirectoryChangesWatcher"
+    },
+    "old_common_implementation": "06f91bda78907b2e23f466441c8af0382515804f:rust-support/agones/src/utility_fswatch.rs",
+    "preserved_unregistered_platform_files": {
+      "rust-support/agones/src/utility_fswatch_fen.rs": "d5ffcbf1fef1be3b40b0fd06dfe14a4ebdd5e954a02c143deccbfba4a16a767d",
+      "rust-support/agones/src/utility_fswatch_kqueue.rs": "67b1963fa38453e9c1ad968648b12e0c7e747dddca7aa3613f44de81d4ed00c3",
+      "rust-support/agones/src/utility_fswatch_windows.rs": "937bc4ab04bea8bce002efc0d82c5067d4d9b94f5313eb60c0a73572f858662e"
+    },
+    "status": "GO_ONLY_SUPERSEDED mechanisms removed from this production path; old platform files remain recoverable references"
+  },
+  "route": "MANUAL",
+  "runtime_differential_credit": 0,
+  "semantic_policy": "AGONES_NATIVE_RUST_V1",
+  "source": {
+    "git_blob": "7c46058c214f79361f457461f2b57df9a4b89cf1",
+    "path": "pkg/util/fswatch/fswatch.go",
+    "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "sha256": "406f958093406930868a85b962ff51f4fdbdd57932b60310c4f125807b4f72ee"
+  },
+  "stage": "IMPLEMENTING",
+  "usage": {
+    "credit_charge": null,
+    "entry": "verification/agones/roadmap-M0003-progress-usage-125.json",
+    "intermediate_progress": "verification/agones/roadmap-M0003-progress-usage-126.json",
+    "observed_counter_delta": 88215,
+    "progress": "verification/agones/roadmap-M0003-progress-usage-127.json",
+    "semantic_policy": "AGONES_NATIVE_RUST_V1",
+    "status": "PARTIAL_M0003_OBSERVATION; not a completed-milestone comparison"
+  },
+  "verification": "NOT_STARTED",
+  "work_base_commit": "06f91bda78907b2e23f466441c8af0382515804f"
+}

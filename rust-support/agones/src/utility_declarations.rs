@@ -417,7 +417,7 @@ define_derive_deftly! {
             crate::utility_gateway::SourceGatewayPatternConstructorComponent: crate::utility_gateway::ConstructSourceGatewayPattern,
             crate::utility_gateway::SourcePatternStringCompletionComponent: crate::utility_gateway::CompleteSourcePatternString,
             crate::utility_http::SourceCollectionFailureRaiserComponent: crate::utility_http::RaiseSourceCollectionFailure,
-            crate::utility_fswatch::FileWatcherOpenerComponent: crate::utility_fswatch::OpenNativeFileWatcher,
+            crate::utility_fswatch::FileWatcherOpenerComponent: crate::utility_fswatch::OpenNotifyFileWatcher,
             crate::utility_tls::SourceCertificateLoaderComponent: crate::utility_tls::LoadRustlsCertificate,
             crate::utility_tls::HttpsServerRunnerComponent: crate::utility_tls::RunNativeHttpsServer,
             crate::utility_tls::SourceProcessExitComponent: crate::utility_tls::ExitNativeSourceProcess,

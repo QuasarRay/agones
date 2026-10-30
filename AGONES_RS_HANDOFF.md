@@ -6,7 +6,7 @@
 
 ## Immediate next action
 
-Continue M0003 MANUAL under AGONES_NATIVE_RUST_V1. Native logging/errors, keyed queue core and Tokio process-signal utilities with owner cleanup are authored; see their native adoption records. Replace the remaining manual filesystem watcher and HTTP/gateway/crash facilities with native Rust capabilities, reconcile application/controller consumers, then remove legacy runtime resources. Keep all 13 utility gaps open pending whole-body/native-consumer reconciliation. No route switch or project executable run; global BOTH-route gate remains CLOSED.
+Continue M0003 MANUAL under AGONES_NATIVE_RUST_V1. Native logging/errors, keyed queues, Tokio signals and notify-backed filesystem batching/TLS reload consumers are authored in their adoption records. Replace HTTP/gateway/crash facilities with native Rust capabilities, reconcile application/controller consumers and remove legacy runtime resources. Keep all 13 utility gaps open pending whole-body/native-consumer/configuration reconciliation. No route switch or verification/project executable run; global BOTH-route gate remains CLOSED.
 
 ## Current semantic obligations and records
 
@@ -32,3 +32,7 @@ Native Arc<str> keys, standard collections, DelayQueue scheduling, Duration-base
 ## Native signal authoring checkpoint
 
 Tokio Unix/Windows signal streams now implement the Agones cancellation-context and one-shot callback utilities. Native CancellationToken/DropGuard ownership covers explicit stop, resource close, task rejection, abort and unwind; UtilityRuntimeOwner closes subscriptions before joining owned tasks. The custom signal hub, Unix signal/pipe/lease code and Windows native callback backend are removed from this production path. The old Windows file is preserved and unregistered. See `verification/agones/roadmap-M0003-native-signals-adoption.json`. State revision 387 remains M0003 / MANUAL / IMPLEMENTING with all 13 gaps open, global gate CLOSED and verification NOT_STARTED.
+
+## Native filesystem watcher authoring checkpoint
+
+notify 8.2.1 now supplies platform notifications through the selected CGP opener. Agones fixed-window batching, error logging and the one-second TLS reload consumer are connected to owned lifetime/callback futures. Native cancellation is idempotent; normal cleanup awaits library callback destruction and owned application tasks. The manual Linux parser, Go-style rendezvous channel and Windows/kqueue/FEN includes are removed from the production path; old platform files are preserved. The observed lockfile gained notify and its dependencies without an agent Cargo invocation; no dependency/build/verification credit is inferred. See `verification/agones/roadmap-M0003-native-fswatch-adoption.json` and pinned API inputs. State revision 388 retains M0003 / MANUAL / IMPLEMENTING, all 13 gaps open, gate CLOSED and verification NOT_STARTED.

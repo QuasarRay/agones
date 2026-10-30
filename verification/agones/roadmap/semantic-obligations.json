@@ -876,8 +876,10 @@
     },
     {
       "disposition": "AGONES_REQUIRED",
+      "historical_requirement_before_native_fswatch_mapping": "Agones error classification, log event fields, CRD readiness, HTTP/TLS endpoints, admission results, watcher notifications, retry/backoff, signal-driven shutdown and queue lifecycle",
       "id": "agones:pkg/util/fswatch/fswatch.go::agones-contract",
-      "requirement": "Agones error classification, log event fields, CRD readiness, HTTP/TLS endpoints, admission results, watcher notifications, retry/backoff, signal-driven shutdown and queue lifecycle",
+      "native_fswatch_authoring_record": "verification/agones/roadmap-M0003-native-fswatch-adoption.json",
+      "requirement": "Watch the requested path, batch changes over a fixed window, invoke reload callbacks, preserve Agones watch error logging and close owned resources during cancellation/shutdown.",
       "source_refs": [
         {
           "blob": "7c46058c214f79361f457461f2b57df9a4b89cf1",
@@ -886,11 +888,12 @@
           "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
         }
       ],
-      "status": "REQUIRES_DOMAIN_MAPPING; file/declaration counts are not behavioral acceptance"
+      "status": "NATIVE_WATCHER_BATCHING_AND_TLS_CONSUMER_AUTHORED_UNVERIFIED; application/configuration/assurance reconciliation open"
     },
     {
       "disposition": "RUST_NATIVE",
       "id": "agones:pkg/util/fswatch/fswatch.go::rust-facilities",
+      "native_fswatch_authoring_record": "verification/agones/roadmap-M0003-native-fswatch-adoption.json",
       "requirement": "std::error::Error and typed Result, std::fmt, existing Rust logging integrations, Tokio/futures tasks and synchronization, selected native HTTP/TLS clients/servers and filesystem-watcher facilities",
       "source_refs": [
         {
@@ -900,7 +903,7 @@
           "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
         }
       ],
-      "status": "ADOPTION_AND_CONSUMER_MAPPING_REQUIRED"
+      "status": "NATIVE_WATCHER_BATCHING_AND_TLS_CONSUMER_AUTHORED_UNVERIFIED; application/configuration/assurance reconciliation open"
     },
     {
       "authority": "AGONES_NATIVE_RUST_V1",
