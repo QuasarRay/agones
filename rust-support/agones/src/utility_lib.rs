@@ -3,7 +3,7 @@
 pub mod utility_declarations;
 #[path = "utility_modules.rs"]
 pub mod source;
-pub use source::{apiserver, crd, errors, features, fswatch, https, httpserver, logfields, runtime, signals, webhooks};
+pub use source::{apiserver, crd, errors, features, fswatch, https, httpserver, logfields, runtime, signals, webhooks, workerqueue};
 pub mod utility_lifecycle;
 pub use utility_lifecycle::UtilityFeatureContext;
 pub mod utility_crd;
@@ -88,8 +88,6 @@ mod utility_gateway_framing;
 /// Original module path retained as an alias of the literal source hierarchy.
 pub mod pkg { pub use crate::source as util; }
 
-// Preserve the old public queue API while callers are transferred explicitly.
-// It is distinct from pkg::util::workerqueue's source implementation and has
-// no new source or verification credit from the new queue's registration.
-#[path = "../../../crates/util/src/workerqueue.rs"]
-pub mod workerqueue;
+// The native source-derived workerqueue is exported above. The previous
+// crates/util/src/workerqueue.rs is preserved as an unregistered reference;
+// its delay/worker tasks bypassed the CGP owner and it has no remaining caller.

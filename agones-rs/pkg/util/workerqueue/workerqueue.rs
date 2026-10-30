@@ -2,7 +2,7 @@
 // pkg/util/workerqueue/workerqueue.go. Copyright Contributors to Agones a Series
 // of LF Projects, LLC. Apache-2.0.
 #![allow(non_snake_case, non_camel_case_types, non_upper_case_globals)]
-use std::{error::Error, fmt, sync::{Arc, Mutex, RwLock}};
+use std::{error::Error, fmt, sync::{Arc, Mutex, RwLock}, time::Duration};
 use derive_deftly::Deftly;
 use futures::future::BoxFuture;
 use tokio_util::sync::CancellationToken;
@@ -12,10 +12,10 @@ use crate::{errors::{BoxError, Errors}, logfields::{LogEntry, ResourceType}, run
     utility_queue::{SourceQueueContext, CanUseSourceQueue, CanReadSourceQueueKey, CanReadSourceQueueClock, CanDecideSourceQueueDelay,
         CanCallSourceQueueHandler, CanClassifySourceQueueError},
     utility_queue_limiters::{self, SourceRateLimiter, ItemFastSlowRateLimiter, DefaultControllerRateLimiter},
-    utility_queue_values::{QueueItem, QueueKey, QueueObject},
+    utility_queue_values::{QueueKey, QueueObject},
     utility_declarations::{derive_deftly_template_SourceErrorOrigin, derive_deftly_template_SourcePrintfInterfaces}};
 
-pub const workFx: i64 = 1_000_000_000;
+pub const workFx: Duration = Duration::from_secs(1);
 #[derive(Debug, Deftly)]
 #[derive_deftly(SourceErrorOrigin, SourcePrintfInterfaces)]
 #[deftly(source_package = "agones.dev/agones/pkg/util/workerqueue", source_struct = "traceError",
@@ -81,13 +81,13 @@ pub struct WorkerQueue<Limiter: SourceRateLimiter = DefaultControllerRateLimiter
     pub SyncHandler: RwLock<Option<Handler>>,
     mu: Mutex<WorkerCounts>,
 }
-pub fn FastRateLimiter(maxDelay: i64) -> ItemFastSlowRateLimiter { ItemFastSlowRateLimiter::new(200_000_000, maxDelay, 5) }
-pub fn ConstantRateLimiter(maxDelay: i64) -> ItemFastSlowRateLimiter { ItemFastSlowRateLimiter::new(200_000_000, maxDelay, 0) }
+pub fn FastRateLimiter(maxDelay: Duration) -> ItemFastSlowRateLimiter { ItemFastSlowRateLimiter::new(Duration::from_millis(200), maxDelay, 5) }
+pub fn ConstantRateLimiter(maxDelay: Duration) -> ItemFastSlowRateLimiter { ItemFastSlowRateLimiter::new(Duration::from_millis(200), maxDelay, 0) }
 pub fn NewWorkerQueue(context: &UtilityRuntimeContext, handler: Option<Handler>, logger: Option<&LogEntry>, keyName: &ResourceType, queueName: &str) -> Result<Arc<WorkerQueue>, BoxError> {
     NewWorkerQueueWithRateLimiter(context, handler, logger, keyName, queueName, utility_queue_limiters::default_controller_limiter())
 }
 pub fn NewWorkerQueueWithRateLimiter<Limiter: SourceRateLimiter>(context: &UtilityRuntimeContext, handler: Option<Handler>, logger: Option<&LogEntry>, keyName: &ResourceType, queueName: &str, rateLimiter: Limiter) -> Result<Arc<WorkerQueue<Limiter>>, BoxError> {
-    let logger = logger.expect("nil logrus.Entry in NewWorkerQueueWithRateLimiter").with_field("queue", queueName);
+    let logger = logger.cloned().unwrap_or_else(|| runtime::NewLoggerWithType::<_, WorkerQueue<Limiter>>(context, None)).with_field("queue", queueName);
     let queue = SourceQueueContext::new(context, rateLimiter, queueName)?;
     Ok(Arc::new(WorkerQueue { logger, errs: Errors::FromStruct::<WorkerQueue<Limiter>>(None, None), keyName: keyName.to_string(), queue,
         SyncHandler: RwLock::new(handler), mu: Mutex::default() }))
@@ -102,44 +102,36 @@ impl<Limiter: SourceRateLimiter> WorkerQueue<Limiter> {
             }
         }
     }
-    pub async fn Enqueue(&self, object: &dyn QueueObject) {
+    pub async fn Enqueue(&self, object: &dyn QueueObject) -> Result<(), BoxError> {
         if let Some(key) = self.key_for(object).await {
-            let item = QueueItem::string(key);
-            self.queue.source_queue_runtime.emit_source_log(&item.with_log_field(&self.logger, &self.keyName), LogLevel::Trace, "Enqueuing");
-            self.queue.add_rate_limited(item).await;
+            self.queue.source_queue_runtime.emit_source_log(&key.with_log_field(&self.logger, &self.keyName), LogLevel::Trace, "Enqueuing");
+            self.queue.add_rate_limited(key).await?;
         }
+        Ok(())
     }
     pub async fn EnqueueImmediately(&self, object: &dyn QueueObject) {
         if let Some(key) = self.key_for(object).await {
-            let item = QueueItem::string(key);
-            self.queue.source_queue_runtime.emit_source_log(&item.with_log_field(&self.logger, &self.keyName), LogLevel::Trace, "Enqueuing immediately");
-            self.queue.source_queue_add(item);
+            self.queue.source_queue_runtime.emit_source_log(&key.with_log_field(&self.logger, &self.keyName), LogLevel::Trace, "Enqueuing immediately");
+            self.queue.source_queue_add(key);
         }
     }
-    pub async fn EnqueueAfter(&self, object: &dyn QueueObject, duration: i64) {
+    pub async fn EnqueueAfter(&self, object: &dyn QueueObject, duration: Duration) -> Result<(), BoxError> {
         if let Some(key) = self.key_for(object).await {
-            let item = QueueItem::string(key);
-            self.queue.source_queue_runtime.emit_source_log(&item.with_log_field(&self.logger, &self.keyName).with_field("duration", duration), LogLevel::Trace, "Enqueueing after duration");
-            self.queue.source_queue_add_after(item, duration).await;
+            self.queue.source_queue_runtime.emit_source_log(&key.with_log_field(&self.logger, &self.keyName).with_field("duration", format!("{duration:?}")), LogLevel::Trace, "Enqueueing after duration");
+            self.queue.source_queue_add_after(key, duration).await?;
         }
+        Ok(())
     }
-    async fn runWorker(&self, context: CancellationToken) { while self.processNextWorkItem(context.clone()).await {} }
-    async fn processNextWorkItem(&self, context: CancellationToken) -> bool {
-        let Some(object) = self.queue.source_queue_get().await else { return false; };
-        struct Done<'a, L: SourceRateLimiter> { queue: &'a SourceQueueContext<L>, object: &'a QueueItem }
+    async fn runWorker(&self, context: CancellationToken) -> Result<(), BoxError> { while self.processNextWorkItem(context.clone()).await? {} Ok(()) }
+    async fn processNextWorkItem(&self, context: CancellationToken) -> Result<bool, BoxError> {
+        let Some(object) = self.queue.source_queue_get().await else { return Ok(false); };
+        struct Done<'a, L: SourceRateLimiter> { queue: &'a SourceQueueContext<L>, object: &'a QueueKey }
         impl<L: SourceRateLimiter> Drop for Done<'_, L> { fn drop(&mut self) { self.queue.source_queue_done(self.object); } }
         let _done = Done { queue: &self.queue, object: &object };
         self.queue.source_queue_runtime.emit_source_log(&object.with_log_field(&self.logger, &self.keyName), LogLevel::Debug, "Processing");
-        let Some(key) = object.string_key().cloned() else {
-            let error = self.errs.New(format!("expected string in queue, but got {}", object.source_type()));
-            runtime::HandleError(&self.queue.source_queue_runtime, Some(&object.with_log_field(&self.logger, &self.keyName)), Some(error.as_ref())).await;
-            self.queue.source_queue_forget(&object); return true;
-        };
-        let handler = self.SyncHandler.read().unwrap_or_else(|error| error.into_inner()).clone();
-        let result = match handler {
-            Some(handler) => self.queue.source_queue_call_handler(&handler, context, key).await,
-            None => Err(self.errs.New("sync handler is not configured")),
-        };
+        let handler = self.SyncHandler.read().unwrap_or_else(|error| error.into_inner()).clone()
+            .ok_or_else(|| self.errs.New("sync handler is not configured"))?;
+        let result = self.queue.source_queue_call_handler(&handler, context, object.clone()).await;
         match result {
             Err(error) => {
                 if self.queue.source_queue_expected_error(error.as_ref()) {
@@ -149,14 +141,17 @@ impl<Limiter: SourceRateLimiter> WorkerQueue<Limiter> {
                 }
                 // Do not Forget a failed item. Done runs after AddRateLimited,
                 // including its bounded-channel wait and immediate dirty path.
-                self.queue.add_rate_limited(object.clone()).await;
+                self.queue.add_rate_limited(object.clone()).await?;
             }
             Ok(()) => self.queue.source_queue_forget(&object),
         }
-        true
+        Ok(true)
     }
     pub async fn Run(self: &Arc<Self>, context: CancellationToken, workers: i64) -> Result<(), BoxError> {
         let workers = usize::try_from(workers).map_err(|_| self.errs.New("worker count must be nonnegative and fit usize"))?;
+        if self.SyncHandler.read().unwrap_or_else(|error| error.into_inner()).is_none() {
+            return Err(self.errs.New("sync handler is not configured"));
+        }
         self.setWorkerCount(workers);
         let runtime = &self.queue.source_queue_runtime;
         runtime.emit_source_log(&self.logger.with_field("workers", workers), LogLevel::Info, "Starting workers...");
@@ -164,7 +159,7 @@ impl<Limiter: SourceRateLimiter> WorkerQueue<Limiter> {
         let worker_context = context.child_token();
         for index in 0..workers {
             let (queue, child_context) = (Arc::clone(self), worker_context.clone());
-            if let Err(error) = runtime.spawn_utility_task(&format!("{} source workerqueue worker {index}", self.queue.source_queue_name), Box::pin(async move { queue.run(child_context).await; Ok(()) })) {
+            if let Err(error) = runtime.spawn_utility_task(&format!("{} workerqueue worker {index}", self.queue.source_queue_name), Box::pin(async move { queue.run(child_context).await })) {
                 worker_context.cancel(); self.queue.source_queue_shutdown(); return Err(error);
             }
         }
@@ -175,18 +170,18 @@ impl<Limiter: SourceRateLimiter> WorkerQueue<Limiter> {
         // The CGP parent owns those tasks and awaits their separate drain.
         Ok(())
     }
-    async fn run(self: Arc<Self>, context: CancellationToken) {
+    async fn run(self: Arc<Self>, context: CancellationToken) -> Result<(), BoxError> {
         self.inc();
         struct Running<L: SourceRateLimiter>(Arc<WorkerQueue<L>>);
         impl<L: SourceRateLimiter> Drop for Running<L> { fn drop(&mut self) { self.0.dec(); } }
         let _running = Running(Arc::clone(&self));
         loop {
-            if context.is_cancelled() { return; }
+            if context.is_cancelled() { return Ok(()); }
             // Panics reach the parent-owned Tokio JoinSet. The lifecycle
             // observes the failed child and decides shutdown policy.
-            self.runWorker(context.clone()).await;
+            self.runWorker(context.clone()).await?;
             let delay = self.queue.source_queue_sleep(workFx);
-            tokio::select! { _ = context.cancelled() => return, _ = delay => () }
+            tokio::select! { _ = context.cancelled() => return Ok(()), _ = delay => () }
         }
     }
     pub fn Healthy(&self) -> Result<(), BoxError> {

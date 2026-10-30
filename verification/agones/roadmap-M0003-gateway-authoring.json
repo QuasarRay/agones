@@ -10940,6 +10940,7 @@
     "source_profile_selection": "Selected Go1.26 source/runtime/profile data with Rust1.89 native recovery adapter; no compiler/ABI/unwind/native schedule/Go traceback evidence",
     "status": "AUTHORED_UNVERIFIED_PARTIAL"
   },
+  "native_queue_authoring_record": "verification/agones/roadmap-M0003-native-queue-adoption.json",
   "native_runtime_authoring_record": "verification/agones/roadmap-M0003-native-runtime-adoption.json",
   "ownership": {
     "codec": "Fixed source UseProtoNames/EmitUnpopulated/DiscardUnknown behavior is consumed by serializer/decoder code, not stored as flags.",

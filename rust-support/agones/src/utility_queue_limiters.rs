@@ -1,89 +1,87 @@
-//! Source client-go limiter state. All Go durations and counters are signed
-//! 64-bit values; failure increments wrap rather than saturate.
+//! Agones retry policy over native Rust durations, maps and monotonic clocks.
+//! Per-key retry selection and aggregate burst reservations are application
+//! policy. Tokio supplies time; this module does not model a Go rate limiter.
 #![allow(non_snake_case)]
-use std::{sync::Mutex, time::Duration};
+use std::{collections::HashMap, num::NonZeroU32, sync::Mutex, time::Duration};
 use tokio::time::Instant;
-use crate::utility_queue::{CanReadSourceQueueClock, SourceDuration};
-use crate::utility_queue_values::{ItemMap, QueueItem};
+use crate::{errors::{BoxError, Errors}, utility_queue::CanReadSourceQueueClock, utility_queue_values::QueueKey};
 
 pub trait SourceRateLimiter: Send + Sync + 'static {
-    fn When<Clock: CanReadSourceQueueClock>(&self, clock: &Clock, item: &QueueItem) -> SourceDuration;
-    fn Forget(&self, item: &QueueItem);
-    fn NumRequeues(&self, item: &QueueItem) -> i64;
+    fn When<Clock: CanReadSourceQueueClock>(&self, clock: &Clock, key: &QueueKey) -> Result<Duration, BoxError>;
+    fn Forget(&self, key: &QueueKey);
+    fn NumRequeues(&self, key: &QueueKey) -> usize;
 }
-pub struct ItemFastSlowRateLimiter { failures: Mutex<ItemMap<i64>>, fast: i64, slow: i64, max_fast: i64 }
+pub struct ItemFastSlowRateLimiter {
+    failures: Mutex<HashMap<QueueKey, usize>>, fast: Duration, slow: Duration, max_fast: usize,
+}
 impl ItemFastSlowRateLimiter {
-    pub fn new(fast: SourceDuration, slow: SourceDuration, max_fast: i64) -> Self { Self { failures: Mutex::default(), fast, slow, max_fast } }
+    pub fn new(fast: Duration, slow: Duration, max_fast: usize) -> Self { Self { failures: Mutex::default(), fast, slow, max_fast } }
 }
 impl SourceRateLimiter for ItemFastSlowRateLimiter {
-    fn When<Clock: CanReadSourceQueueClock>(&self, _clock: &Clock, item: &QueueItem) -> i64 {
+    fn When<Clock: CanReadSourceQueueClock>(&self, _clock: &Clock, key: &QueueKey) -> Result<Duration, BoxError> {
         let mut failures = self.failures.lock().unwrap_or_else(|error| error.into_inner());
-        let count = failures.get(item).copied().unwrap_or(0).wrapping_add(1); failures.insert(item.clone(), count);
-        if count <= self.max_fast { self.fast } else { self.slow }
+        let count = failures.entry(key.clone()).or_default();
+        *count = count.saturating_add(1);
+        Ok(if *count <= self.max_fast { self.fast } else { self.slow })
     }
-    fn Forget(&self, item: &QueueItem) { self.failures.lock().unwrap_or_else(|error| error.into_inner()).remove(item); }
-    fn NumRequeues(&self, item: &QueueItem) -> i64 { self.failures.lock().unwrap_or_else(|error| error.into_inner()).get(item).copied().unwrap_or(0) }
+    fn Forget(&self, key: &QueueKey) { self.failures.lock().unwrap_or_else(|error| error.into_inner()).remove(key); }
+    fn NumRequeues(&self, key: &QueueKey) -> usize { self.failures.lock().unwrap_or_else(|error| error.into_inner()).get(key).copied().unwrap_or_default() }
 }
-pub struct ItemExponentialRateLimiter { failures: Mutex<ItemMap<i64>>, base: i64, max: i64 }
-impl ItemExponentialRateLimiter { pub fn new(base: i64, max: i64) -> Self { Self { failures: Mutex::default(), base, max } } }
-fn go_float_to_i64(value: f64) -> i64 {
-    // amd64 Go conversion profile. The default controller's positive 5ms
-    // powers never hit the exact 2^63 boundary before the overflow guard.
-    // Other source target/conversion profiles remain a recorded boundary.
-    if !value.is_finite() || value >= 9_223_372_036_854_775_808.0 || value < -9_223_372_036_854_775_808.0 { i64::MIN }
-    else { value.trunc() as i64 }
+struct RetryState { attempts: usize, next: Duration }
+pub struct ItemExponentialRateLimiter { failures: Mutex<HashMap<QueueKey, RetryState>>, base: Duration, max: Duration }
+impl ItemExponentialRateLimiter {
+    pub fn new(base: Duration, max: Duration) -> Self { Self { failures: Mutex::default(), base: base.min(max), max } }
 }
 impl SourceRateLimiter for ItemExponentialRateLimiter {
-    fn When<Clock: CanReadSourceQueueClock>(&self, _clock: &Clock, item: &QueueItem) -> i64 {
+    fn When<Clock: CanReadSourceQueueClock>(&self, _clock: &Clock, key: &QueueKey) -> Result<Duration, BoxError> {
         let mut failures = self.failures.lock().unwrap_or_else(|error| error.into_inner());
-        let exponent = failures.get(item).copied().unwrap_or(0); failures.insert(item.clone(), exponent.wrapping_add(1));
-        let backoff = self.base as f64 * 2.0f64.powf(exponent as f64);
-        if backoff > i64::MAX as f64 { return self.max; }
-        go_float_to_i64(backoff).min(self.max)
+        let retry = failures.entry(key.clone()).or_insert(RetryState { attempts: 0, next: self.base });
+        let delay = retry.next;
+        retry.attempts = retry.attempts.saturating_add(1);
+        retry.next = delay.checked_mul(2).unwrap_or(self.max).min(self.max);
+        Ok(delay)
     }
-    fn Forget(&self, item: &QueueItem) { self.failures.lock().unwrap_or_else(|error| error.into_inner()).remove(item); }
-    fn NumRequeues(&self, item: &QueueItem) -> i64 { self.failures.lock().unwrap_or_else(|error| error.into_inner()).get(item).copied().unwrap_or(0) }
+    fn Forget(&self, key: &QueueKey) { self.failures.lock().unwrap_or_else(|error| error.into_inner()).remove(key); }
+    fn NumRequeues(&self, key: &QueueKey) -> usize { self.failures.lock().unwrap_or_else(|error| error.into_inner()).get(key).map_or(0, |retry| retry.attempts) }
 }
-struct Bucket { tokens: f64, last: Option<Instant> }
-pub struct BucketRateLimiter { state: Mutex<Bucket>, qps: f64, burst: i64 }
-impl BucketRateLimiter { pub fn new(qps: f64, burst: i64) -> Self { Self { state: Mutex::new(Bucket { tokens: burst as f64, last: None }), qps, burst } } }
-impl SourceRateLimiter for BucketRateLimiter {
-    fn When<Clock: CanReadSourceQueueClock>(&self, clock: &Clock, _item: &QueueItem) -> i64 {
-        let now = clock.source_queue_now(); // Reserve samples before taking mu.
-        let ready_at = {
-            let mut state = self.state.lock().unwrap_or_else(|error| error.into_inner());
-            if self.qps == f64::MAX { Some(now) } // rate.Inf bypasses burst/token updates.
-            else {
-                let elapsed = state.last.map_or(i64::MAX, |last| crate::utility_queue::signed_nanos(now, last).max(0));
-                let delta = if self.qps <= 0.0 { 0.0 } else { Duration::from_nanos(elapsed as u64).as_secs_f64() * self.qps };
-                let tokens = (state.tokens + delta).min(self.burst as f64) - 1.0;
-                let wait = if tokens < 0.0 {
-                    if self.qps <= 0.0 { i64::MAX } else {
-                        let duration = (-tokens / self.qps) * 1_000_000_000.0;
-                        if duration > i64::MAX as f64 { i64::MAX } else { go_float_to_i64(duration) }
-                    }
-                } else { 0 };
-                if self.burst < 1 { None }
-                else {
-                    state.tokens = tokens; state.last = Some(now);
-                    Some(crate::utility_queue::add_signed_duration(now, wait))
-                }
-            }
-        };
-        // Reservation.Delay makes its own second time.Now call after unlock.
-        let after = clock.source_queue_now();
-        ready_at.map_or(i64::MAX, |ready_at| crate::utility_queue::signed_nanos(ready_at, after).max(0))
+
+/// Reserve aggregate work at a fixed refill interval, allowing the configured
+/// initial burst. The virtual next slot is the sole mutable reservation state;
+/// callers combine this delay with per-key retry policy before enqueueing.
+pub struct BucketRateLimiter { next: Mutex<Option<Instant>>, interval: Duration, burst_allowance: Duration }
+impl BucketRateLimiter {
+    pub fn new(interval: Duration, burst: NonZeroU32) -> Result<Self, BoxError> {
+        if interval.is_zero() { return Err(Errors::default().New("queue refill interval must be positive")); }
+        let burst_allowance = interval.checked_mul(burst.get() - 1)
+            .ok_or_else(|| Errors::default().New("queue burst window exceeds Duration range"))?;
+        Ok(Self { next: Mutex::new(None), interval, burst_allowance })
     }
-    fn Forget(&self, _item: &QueueItem) {}
-    fn NumRequeues(&self, _item: &QueueItem) -> i64 { 0 }
+}
+impl SourceRateLimiter for BucketRateLimiter {
+    fn When<Clock: CanReadSourceQueueClock>(&self, clock: &Clock, _key: &QueueKey) -> Result<Duration, BoxError> {
+        let now = clock.source_queue_now();
+        let mut next = self.next.lock().unwrap_or_else(|error| error.into_inner());
+        let slot = (*next).map_or(now, |slot| slot.max(now));
+        let following = slot.checked_add(self.interval).ok_or_else(|| Errors::default().New("queue reservation exceeds monotonic clock range"))?;
+        *next = Some(following);
+        Ok(slot.saturating_duration_since(now).saturating_sub(self.burst_allowance))
+    }
+    fn Forget(&self, _key: &QueueKey) {}
+    fn NumRequeues(&self, _key: &QueueKey) -> usize { 0 }
 }
 pub struct MaxOfRateLimiter<A, B>(pub A, pub B);
 impl<A: SourceRateLimiter, B: SourceRateLimiter> SourceRateLimiter for MaxOfRateLimiter<A, B> {
-    fn When<Clock: CanReadSourceQueueClock>(&self, clock: &Clock, item: &QueueItem) -> i64 {
-        let first = self.0.When(clock, item); let second = self.1.When(clock, item); 0.max(first).max(second)
+    fn When<Clock: CanReadSourceQueueClock>(&self, clock: &Clock, key: &QueueKey) -> Result<Duration, BoxError> {
+        let first = self.0.When(clock, key)?;
+        let second = self.1.When(clock, key)?;
+        Ok(first.max(second))
     }
-    fn Forget(&self, item: &QueueItem) { self.0.Forget(item); self.1.Forget(item); }
-    fn NumRequeues(&self, item: &QueueItem) -> i64 { 0.max(self.0.NumRequeues(item)).max(self.1.NumRequeues(item)) }
+    fn Forget(&self, key: &QueueKey) { self.0.Forget(key); self.1.Forget(key); }
+    fn NumRequeues(&self, key: &QueueKey) -> usize { self.0.NumRequeues(key).max(self.1.NumRequeues(key)) }
 }
 pub type DefaultControllerRateLimiter = MaxOfRateLimiter<ItemExponentialRateLimiter, BucketRateLimiter>;
-pub fn default_controller_limiter() -> DefaultControllerRateLimiter { MaxOfRateLimiter(ItemExponentialRateLimiter::new(5_000_000, 1_000_000_000_000), BucketRateLimiter::new(10.0, 100)) }
+pub fn default_controller_limiter() -> DefaultControllerRateLimiter {
+    let bucket = BucketRateLimiter::new(Duration::from_millis(100), NonZeroU32::new(100).expect("positive default burst"))
+        .expect("valid default queue refill policy");
+    MaxOfRateLimiter(ItemExponentialRateLimiter::new(Duration::from_millis(5), Duration::from_secs(1000)), bucket)
+}

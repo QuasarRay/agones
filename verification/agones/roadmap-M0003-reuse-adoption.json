@@ -30,21 +30,32 @@
       "state_transfer": "InitializedAgonesConfiguration::into_parts consumes the M0001 map; UtilityFeatureContext::from_initialized moves it into FeatureState. No old-phase map is retained or cloned."
     },
     {
-      "disposition": "RETAINED_EXISTING_IMPLEMENTATION_NO_SOURCE_COMPLETION_CREDIT",
+      "disposition": "PRESERVED_UNREGISTERED_REFERENCE",
+      "historical_mapping_before_native_queue_adoption": {
+        "disposition": "RETAINED_EXISTING_IMPLEMENTATION_NO_SOURCE_COMPLETION_CREDIT",
+        "new_source_owner": "agones-rs/pkg/util/workerqueue/workerqueue.rs",
+        "old_path": "crates/util/src/workerqueue.rs",
+        "old_sha256": "de0f0b58239fd031da83be01ebc9386532e79b84752ce070fb56ccaaee5414e9",
+        "registration": "rust-support/agones/src/utility_lib.rs",
+        "required_followup": "New source queue is authored with separate exact policy/backend ownership. Old native queue remains registered at util::workerqueue; no body or caller transfer and no new source credit is claimed for it. Explicitly adopt or retain each old consumer through its source-owner milestone.",
+        "source_registration": "util::pkg::util::workerqueue via utility_modules.rs"
+      },
+      "native_queue_authoring_record": "verification/agones/roadmap-M0003-native-queue-adoption.json",
       "new_source_owner": "agones-rs/pkg/util/workerqueue/workerqueue.rs",
       "old_path": "crates/util/src/workerqueue.rs",
       "old_sha256": "de0f0b58239fd031da83be01ebc9386532e79b84752ce070fb56ccaaee5414e9",
-      "registration": "rust-support/agones/src/utility_lib.rs",
-      "required_followup": "New source queue is authored with separate exact policy/backend ownership. Old native queue remains registered at util::workerqueue; no body or caller transfer and no new source credit is claimed for it. Explicitly adopt or retain each old consumer through its source-owner milestone.",
+      "registration": "Previous old module registration removed; util::workerqueue re-exports the canonical source module",
+      "required_followup": "Old module bodies and the absence of production callers are mapped in the native queue record. No compiler or behavioral credit.",
       "source_registration": "util::pkg::util::workerqueue via utility_modules.rs"
     },
     {
       "disposition": "RETAINED_EXISTING_IMPLEMENTATION_NO_SOURCE_COMPLETION_CREDIT",
       "native_core": "rust-support/agones/src/utility_queue.rs",
+      "native_queue_authoring_record": "verification/agones/roadmap-M0003-native-queue-adoption.json",
       "new_source_owner": "agones-rs/pkg/util/workerqueue/workerqueue.rs",
       "old_path": "crates/agones-rusternetes/src/controller_work_queue.rs",
       "old_sha256": "d8a5ec2ecbae9c1f9e38297a262311e6b4b52baf2a294bc4c5405c9ccf4fce4a",
-      "required_followup": "Existing controller runtimes still use their old queue. Its saturating retry counts, approximate bucket and caller-owned delayed futures are not the new source queue. Transfer actual controller consumers during their source/lifecycle ownership work; do not silently replace or credit the old bodies.",
+      "required_followup": "Existing controllers remain on this queue; explicitly transfer consumers and body ownership to native policy/lifecycle. No Go numeric/profile emulation remains an adoption requirement.",
       "work_base_commit": "e2c1202f1de868a89dc7a444ce4700d7a771ee92"
     },
     {
@@ -208,6 +219,7 @@
     }
   ],
   "milestone_id": "M0003",
+  "native_queue_authoring_record": "verification/agones/roadmap-M0003-native-queue-adoption.json",
   "native_runtime_authoring_record": "verification/agones/roadmap-M0003-native-runtime-adoption.json",
   "record_kind": "PARTIAL_BODY_OWNERSHIP_TRANSFER",
   "semantic_policy": "AGONES_NATIVE_RUST_V1",

@@ -6,7 +6,7 @@
 
 ## Immediate next action
 
-Continue M0003 MANUAL under AGONES_NATIVE_RUST_V1. Native logging, Agones error construction/cause traversal, queue error classification and Tokio supervision are partially authored; see roadmap-M0003-native-runtime-adoption.json. Replace remaining queue value/storage machinery with native domain keys and scheduling, then reconcile HTTP/gateway/crash consumers so legacy runtime resources and Go emulation can leave production. Keep all 13 Agones utility gaps open until required native consumers are complete. Do not run project executables or switch routes; BOTH-route implementation gate remains CLOSED.
+Continue M0003 MANUAL under AGONES_NATIVE_RUST_V1. Native queue keys/storage, owned Tokio DelayQueue scheduling, Rust-duration retry policy and fallible worker supervision are authored; see roadmap-M0003-native-queue-adoption.json. Transfer remaining controller queue consumers and reconcile HTTP/gateway/crash consumers so legacy runtime resources and Go emulation can leave production. Preserve all 13 utility gaps until native consumer/body reconciliation is complete. No route switch or project executable run; global BOTH-route gate remains CLOSED.
 
 ## Current semantic obligations and records
 
@@ -24,3 +24,7 @@ Read `verification/agones/roadmap/native-rust-policy-amendment.md` and the curre
 ## Native runtime adoption checkpoint
 
 Native Rust JSON logging, structured error fields, Agones error construction and cause traversal, queue conflict/trace classification, configuration-fallback warnings and parent-owned Tokio supervision are authored in this partial batch. See `verification/agones/roadmap-M0003-native-runtime-adoption.json` for source operations, concrete consumers, exact payload identities and remaining legacy paths. The unfinished Go text-logging draft is preserved in `verification/agones/roadmap/superseded-M0003-klog-draft.json.gz` and removed from production registration. No compilation, test, runtime, proof or milestone-completion credit is claimed. The policy amendment is preserved in local commit `84f90aeb7444aeb9805bd1950449f3ddfaa3c20a`; native changes receive a separate local checkpoint. No push or CI was invoked.
+
+## Native queue authoring checkpoint
+
+Native Arc<str> keys, standard collections, DelayQueue scheduling, Duration-based retry/burst policy and fallible supervised worker execution are authored. The prior util::workerqueue module is preserved on disk and unregistered after source caller reconciliation; the public path now exports the canonical source-derived module. Existing Rusternetes controller queues remain unchanged and require explicit adoption. See `verification/agones/roadmap-M0003-native-queue-adoption.json`. State revision 386 remains M0003 / MANUAL / IMPLEMENTING, uncompiled and unverified, with the global gate CLOSED.

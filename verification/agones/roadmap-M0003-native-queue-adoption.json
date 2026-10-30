@@ -1,0 +1,196 @@
+{
+  "architecture": {
+    "capabilities": [
+      "SourceQueueClock",
+      "SourceQueueOperations",
+      "SourceQueueDelayDecider",
+      "SourceQueueKeyReader",
+      "SourceQueueHandlerCaller",
+      "SourceQueueErrorClassifier"
+    ],
+    "declaration": "utility_queue.rs::SourceQueueContext<Limiter>",
+    "public_source_registration": "util::workerqueue and util::source::workerqueue name the same source module",
+    "resource_owner": "Context owns one ready/dirty/processing state, one limiter and one parent cancellation token. DelayLoop owns native timers and the deadline-to-timer index.",
+    "task_owner": "UtilityRuntimeOwner/UtilityTaskScope; no detached queue tasks",
+    "template": "utility_declarations.rs::UtilityQueueProviders"
+  },
+  "ecosystem_reuse": {
+    "api_sources_sha256": {
+      "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-util-0.7.20/Cargo.toml": "5764e31b13ee78f6682505971b022caba784b79e6c458d9b95e0f089a6fb6bda",
+      "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-util-0.7.20/src/time/delay_queue.rs": "d521221e8bd03e55d2c4a569a7f408604e47835a5ab7212bc35a2404433894e2",
+      "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-util-0.7.20/src/time/wheel/mod.rs": "abd49054774609fcef0990c9d24cff4e4c48cf9f0a87fa6fa91e1762d054aa09"
+    },
+    "custom_policy_reason": "The selected runtime/timer/channel facilities do not own Agones dirty/in-flight deduplication or its max-of per-key and global reservation delay policy. The small typed policy state composes those facilities; it does not recreate a runtime, a generic Go queue or a Go rate package.",
+    "dependency_change": "Enabled time on the existing selected tokio-util; slab 0.4.12 was already present. The slab dependency edge was observed in Cargo.lock after the manifest edit; actor attribution is unconfirmed. No Cargo command or dependency-resolution success is credited.",
+    "native_timer_resolution": "DelayQueue uses native millisecond timer resolution. Equal deadlines have native library ordering. No Go timer equivalence is claimed.",
+    "range_policy": "Duration/Instant checked arithmetic reports unrepresentable deadlines. A one-day timer horizon retains long representable policy deadlines without passing oversized delays into the library timer wheel.",
+    "timer_library": "tokio-util =0.7.20, time feature"
+  },
+  "existing_controller_queue": {
+    "path": "crates/agones-rusternetes/src/controller_work_queue.rs",
+    "sha256": "d8a5ec2ecbae9c1f9e38297a262311e6b4b52baf2a294bc4c5405c9ccf4fce4a",
+    "status": "PRESERVED_UNCHANGED; controller consumers still require explicit transfer/adoption. No source-body or lifecycle completion credit."
+  },
+  "formal_credit": 0,
+  "global_gate": "CLOSED",
+  "guidance_copies": {
+    "authority_sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
+    "scope": "Exact root text in affected ancestors. Repository-wide reconciliation remains pending.",
+    "updated": [
+      "crates/AGENTS.MD",
+      "crates/util/AGENTS.MD"
+    ]
+  },
+  "milestone_complete": false,
+  "milestone_id": "M0003",
+  "old_native_queue_adoption": {
+    "body_transfers": {
+      "TraceError/is_trace_error": "source::workerqueue::traceError/isTraceError and Rust Error::source",
+      "WorkerQueue::{new,with_rate_limiter}": "source::workerqueue::{NewWorkerQueue,NewWorkerQueueWithRateLimiter}",
+      "add/next/done": "utility_queue.rs::SourceQueueState::{add,get,done}",
+      "fast_rate_limiter/constant_rate_limiter/DefaultRateLimiter": "utility_queue_limiters.rs and source::workerqueue::{FastRateLimiter,ConstantRateLimiter}",
+      "process/worker/run/healthy/run_count": "source::workerqueue::{processNextWorkItem,run,Run,Healthy,RunCount}; owned UtilityTaskScope",
+      "retry_delay/enqueue/enqueue_immediately/enqueue_after": "native SourceQueueContext limiter and source::workerqueue enqueue methods"
+    },
+    "caller_reconciliation": "Source-reference search found no production caller of the old util::workerqueue API outside its own module registration. This is source accounting only, not compiler or whole-workspace assurance.",
+    "path": "crates/util/src/workerqueue.rs",
+    "preservation": "File unchanged; removed only its active utility_lib.rs registration. Git base retains the prior registration.",
+    "sha256": "de0f0b58239fd031da83be01ebc9386532e79b84752ce070fb56ccaaee5414e9"
+  },
+  "operations": [
+    {
+      "agones_policy": "Explicit keys and namespace/name resource keys; reject missing metadata before insertion. Only typed UTF-8 resource keys enter storage.",
+      "id": "M0003-NATIVE-QUEUE-KEYS",
+      "owner": "utility_queue_values.rs::QueueKey/meta_namespace_key",
+      "rust_facilities": [
+        "Arc<str>",
+        "Eq",
+        "Hash",
+        "serde"
+      ],
+      "source_bodies": [
+        "Enqueue",
+        "EnqueueImmediately",
+        "EnqueueAfter",
+        "processNextWorkItem"
+      ],
+      "superseded": "Go any/type assertion, typed nil, non-reflexive float keys, custom interface hashing/equality and getter-call-order emulation"
+    },
+    {
+      "agones_policy": "FIFO ready work; deduplicate dirty keys; prevent simultaneous processing of one key; requeue once after a processing key is dirtied; retain pre-shutdown dirty work.",
+      "id": "M0003-NATIVE-QUEUE-READY",
+      "owner": "utility_queue.rs::SourceQueueState",
+      "rust_facilities": [
+        "VecDeque",
+        "HashSet",
+        "Mutex",
+        "tokio::sync::Notify"
+      ],
+      "source_bodies": [
+        "EnqueueImmediately",
+        "runWorker",
+        "processNextWorkItem"
+      ],
+      "superseded": "Go map buckets, custom ItemMap and goroutine/channel wait semantics"
+    },
+    {
+      "agones_policy": "Earlier pending deadlines replace later ones; later requests do not postpone existing work. Bounded delayed admission stops on shutdown. Preserve long representable deadlines through bounded timer wakeups.",
+      "id": "M0003-NATIVE-QUEUE-DELAY",
+      "owner": "utility_queue.rs::DelayLoop",
+      "rust_facilities": [
+        "tokio_util::time::DelayQueue",
+        "HashMap",
+        "tokio::sync::mpsc",
+        "CancellationToken",
+        "Duration",
+        "tokio::time::Instant"
+      ],
+      "source_bodies": [
+        "EnqueueAfter",
+        "Enqueue",
+        "processNextWorkItem"
+      ],
+      "superseded": "Custom indexed heap/pointer arena, Go timer/ticker heartbeat and signed nanosecond overflow profiles"
+    },
+    {
+      "agones_policy": "Five fast 200ms selections then configured delay; constant configured delay; default exponential 5ms doubling capped at 1000s combined with aggregate 10qps/burst100 reservations. Forget per-key retry state only after successful handling.",
+      "id": "M0003-NATIVE-QUEUE-RETRY",
+      "owner": "utility_queue_limiters.rs",
+      "rust_facilities": [
+        "Duration::checked_mul",
+        "HashMap",
+        "usize",
+        "Mutex",
+        "tokio::time::Instant"
+      ],
+      "source_bodies": [
+        "FastRateLimiter",
+        "ConstantRateLimiter",
+        "NewWorkerQueue",
+        "NewWorkerQueueWithRateLimiter",
+        "processNextWorkItem"
+      ],
+      "superseded": "Go floating conversion, signed duration/counter wrapping, rate.Inf and arbitrary third-party Go limiter internals"
+    },
+    {
+      "agones_policy": "Parent owns worker/delay futures, cancellation and join results. Missing handler, unrepresentable delay and scheduler failures are native errors; they are not discarded. RAII always releases processing/running state.",
+      "id": "M0003-NATIVE-QUEUE-SUPERVISION",
+      "owner": "workerqueue.rs + UtilityQueueProviders/UtilityRuntimeProviders",
+      "rust_facilities": [
+        "Result",
+        "RAII",
+        "UtilityTaskScope",
+        "Tokio JoinSet",
+        "CancellationToken"
+      ],
+      "source_bodies": [
+        "Run",
+        "run",
+        "runWorker",
+        "processNextWorkItem",
+        "Healthy",
+        "RunCount"
+      ],
+      "superseded": "Detached timer/worker tasks in old native queue, nil-log-entry panic and Go invalid-dynamic-value queue branch"
+    }
+  ],
+  "payload_sha256": {
+    "Cargo.lock": "2a62cef41b7569b26cbb41f535aba08152f5d1ac013c36b1135ce7eed1e351b2",
+    "agones-rs/pkg/util/workerqueue/workerqueue.rs": "f8d2b938d8b8786aa3416b5fdfc1c645e9553bf49774b4e8a0a3701c9729f1c1",
+    "crates/util/Cargo.toml": "2a160be90440bbd200fb6fb0cd3db54ef97eb9ff822db359005a9a06ca977d89",
+    "rust-support/agones/src/utility_lib.rs": "6dc131e6c70f0eed21b78e2bf0d52539ffebb05ae4ec810b6b14744c2abebaf6",
+    "rust-support/agones/src/utility_queue.rs": "7cef9225ae04231b1ce44a78ce203095b4fe1e4de2c4340b97c26eb4b47d17a3",
+    "rust-support/agones/src/utility_queue_limiters.rs": "241283144197ed93f2baae52f2dd8b2342876c257c623f88512102cadcfec2ad",
+    "rust-support/agones/src/utility_queue_values.rs": "7a9c078e86a769df3b61b4db129290ae7706156290e838914e8659201a93ed09"
+  },
+  "project_executable_invocations_by_agent": 0,
+  "record_kind": "NATIVE_KEYED_QUEUE_AUTHORING_AND_PARTIAL_ADOPTION",
+  "remaining": [
+    "Transfer actual controller consumers to the canonical native queue policy/lifecycle and account for prior controller-specific queue bodies.",
+    "Remove legacy formatting/APIStatus compatibility declarations after their HTTP/gateway consumers are natively adopted.",
+    "UtilityRuntimeOwner still constructs legacy klog/error-handler/crash and Go allocation/Unicode resources; reconcile consumers and retire them. A native queue core does not complete that adoption.",
+    "Keep all 13 Agones M0003 gaps open, including full discovery/admission/TLS/watch/signal/configuration/CRD and whole-body reconciliation.",
+    "All compilation, tests, runtime observations and proofs remain deferred until the global BOTH-route implementation gate opens."
+  ],
+  "route": "MANUAL",
+  "runtime_differential_credit": 0,
+  "semantic_policy": "AGONES_NATIVE_RUST_V1",
+  "source": {
+    "git_blob": "98b8b2431036013b0764f1cf4be2c30b26db99e9",
+    "path": "pkg/util/workerqueue/workerqueue.go",
+    "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "working_reference_sha256": "dc3424c082ab67d3b86e18c5dcf35346ae1a227737325a1a4724697900b1003e"
+  },
+  "stage": "IMPLEMENTING",
+  "usage": {
+    "credit_charge": null,
+    "entry": "verification/agones/roadmap-M0003-progress-usage-119.json",
+    "intermediate_progress": "verification/agones/roadmap-M0003-progress-usage-120.json",
+    "observed_counter_delta": 64581,
+    "policy": "AGONES_NATIVE_RUST_V1",
+    "progress": "verification/agones/roadmap-M0003-progress-usage-121.json",
+    "status": "PARTIAL_M0003_OBSERVATION; not completed-milestone cost"
+  },
+  "verification": "NOT_STARTED",
+  "work_base_commit": "c58e3d24a15e8e95a288ba6f7d6621ad1a49078b"
+}

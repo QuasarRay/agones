@@ -1,68 +1,50 @@
-//! Source queue mechanics and concrete owned delay/clock effects.
-use std::{collections::VecDeque, sync::{Arc, Mutex}, time::Duration};
+//! Agones keyed work scheduling over Rust collections and Tokio effects.
+//! CGP selects clock, retry, key and queue operations; derive-deftly composes
+//! the concrete context. The application scope owns the delay task and joins it.
+use std::{collections::{HashMap, HashSet, VecDeque}, sync::{Arc, Mutex}, time::Duration};
 use cgp::prelude::*;
 use derive_deftly::Deftly;
-use futures::future::BoxFuture;
+use futures::{future::BoxFuture, StreamExt};
 use tokio::{sync::{mpsc, Notify}, time::Instant};
-use tokio_util::sync::CancellationToken;
-use crate::{errors::BoxError, utility_runtime::UtilityRuntimeContext, utility_scope::CanSpawnUtilityTask,
-    utility_queue_limiters::SourceRateLimiter, utility_queue_values::{ItemMap, QueueItem, QueueKey, QueueObject, meta_namespace_key},
+use tokio_util::{sync::CancellationToken, time::{DelayQueue, delay_queue}};
+use crate::{errors::{BoxError, Errors}, utility_runtime::UtilityRuntimeContext, utility_scope::CanSpawnUtilityTask,
+    utility_queue_limiters::SourceRateLimiter, utility_queue_values::{QueueKey, QueueObject, meta_namespace_key},
     utility_declarations::derive_deftly_template_UtilityQueueProviders};
-
-pub type SourceDuration = i64;
-pub fn signed_nanos(after: Instant, before: Instant) -> i64 {
-    if after >= before { after.duration_since(before).as_nanos().min(i64::MAX as u128) as i64 }
-    else { let nanos = before.duration_since(after).as_nanos(); if nanos > i64::MAX as u128 { i64::MIN } else { -(nanos as i64) } }
-}
-pub fn add_signed_duration(time: Instant, duration: i64) -> Instant {
-    if duration >= 0 { time + Duration::from_nanos(duration as u64) }
-    else { time - Duration::from_nanos(duration.unsigned_abs()) }
-}
 
 #[cgp_component(SourceQueueClock)]
 pub trait CanReadSourceQueueClock: Sync {
     fn source_queue_now(&self) -> Instant;
-    fn source_queue_sleep(&self, duration: SourceDuration) -> BoxFuture<'_, ()>;
-    fn source_queue_sleep_until(&self, deadline: Instant) -> BoxFuture<'_, ()>;
+    fn source_queue_sleep(&self, duration: Duration) -> BoxFuture<'_, ()>;
 }
 #[cgp_new_provider]
 impl<Context: Sync> SourceQueueClock<Context> for ReadTokioSourceQueueClock {
     fn source_queue_now(_context: &Context) -> Instant { Instant::now() }
-    fn source_queue_sleep(_context: &Context, duration: i64) -> BoxFuture<'_, ()> {
-        Box::pin(async move { if duration > 0 { tokio::time::sleep(Duration::from_nanos(duration as u64)).await; } })
-    }
-    fn source_queue_sleep_until(_context: &Context, deadline: Instant) -> BoxFuture<'_, ()> { Box::pin(tokio::time::sleep_until(deadline)) }
+    fn source_queue_sleep(_context: &Context, duration: Duration) -> BoxFuture<'_, ()> { Box::pin(tokio::time::sleep(duration)) }
 }
 
-struct ReadyState { queue: VecDeque<QueueItem>, dirty: ItemMap<()>, processing: ItemMap<()>, shutting_down: bool }
-impl Default for ReadyState {
-    fn default() -> Self { Self { queue: VecDeque::new(), dirty: ItemMap::default(), processing: ItemMap::default(), shutting_down: false } }
-}
+#[derive(Default)]
+struct ReadyState { queue: VecDeque<QueueKey>, dirty: HashSet<QueueKey>, processing: HashSet<QueueKey>, shutting_down: bool }
 pub struct SourceQueueState { ready: Mutex<ReadyState>, readable: Notify, delays: mpsc::Sender<WaitEntry>, stop: CancellationToken }
 impl SourceQueueState {
-    pub fn add(&self, item: QueueItem) {
+    pub fn add(&self, key: QueueKey) {
         let mut state = self.ready.lock().unwrap_or_else(|error| error.into_inner());
-        if state.shutting_down { return; }
-        if state.dirty.contains(&item) { return; } // source FIFO Touch is empty
-        state.dirty.insert(item.clone(), ());
-        if state.processing.contains(&item) { return; }
-        state.queue.push_back(item); self.readable.notify_one();
+        if state.shutting_down || !state.dirty.insert(key.clone()) { return; }
+        if !state.processing.contains(&key) { state.queue.push_back(key); self.readable.notify_one(); }
     }
-    pub fn done(&self, item: &QueueItem) {
+    pub fn done(&self, key: &QueueKey) {
         let mut state = self.ready.lock().unwrap_or_else(|error| error.into_inner());
-        state.processing.remove(item);
-        // A pre-shutdown dirty item is requeued even after ShutDown. Add's
-        // shutdown rejection does not apply to the separate Done operation.
-        if state.dirty.contains(item) { state.queue.push_back(item.clone()); self.readable.notify_one(); }
-        else if state.processing.len() == 0 { self.readable.notify_one(); }
+        if !state.processing.remove(key) { return; }
+        // A key dirtied during processing is queued once more, including when
+        // shutdown started after that update. New Add calls are then rejected.
+        if state.dirty.contains(key) { state.queue.push_back(key.clone()); self.readable.notify_one(); }
     }
-    pub async fn get(&self) -> Option<QueueItem> {
+    pub async fn get(&self) -> Option<QueueKey> {
         loop {
             let readable = self.readable.notified(); tokio::pin!(readable); readable.as_mut().enable();
             {
                 let mut state = self.ready.lock().unwrap_or_else(|error| error.into_inner());
-                if let Some(item) = state.queue.pop_front() {
-                    state.processing.insert(item.clone(), ()); state.dirty.remove(&item); return Some(item);
+                if let Some(key) = state.queue.pop_front() {
+                    state.processing.insert(key.clone()); state.dirty.remove(&key); return Some(key);
                 }
                 if state.shutting_down { return None; }
             }
@@ -102,15 +84,15 @@ impl<Context> SourceQueueErrorClassifier<Context> for ClassifySourceQueueError {
 
 #[cgp_component(SourceQueueDelayDecider)]
 pub trait CanDecideSourceQueueDelay {
-    fn source_queue_delay(&self, item: &QueueItem) -> SourceDuration;
-    fn source_queue_forget(&self, item: &QueueItem);
-    fn source_queue_num_requeues(&self, item: &QueueItem) -> i64;
+    fn source_queue_delay(&self, key: &QueueKey) -> Result<Duration, BoxError>;
+    fn source_queue_forget(&self, key: &QueueKey);
+    fn source_queue_num_requeues(&self, key: &QueueKey) -> usize;
 }
 #[cgp_new_provider]
 impl<Context: HasSourceQueueLimiter + CanReadSourceQueueClock> SourceQueueDelayDecider<Context> for UseOwnedSourceQueueLimiter {
-    fn source_queue_delay(context: &Context, item: &QueueItem) -> i64 { context.source_queue_limiter().When(context, item) }
-    fn source_queue_forget(context: &Context, item: &QueueItem) { context.source_queue_limiter().Forget(item); }
-    fn source_queue_num_requeues(context: &Context, item: &QueueItem) -> i64 { context.source_queue_limiter().NumRequeues(item) }
+    fn source_queue_delay(context: &Context, key: &QueueKey) -> Result<Duration, BoxError> { context.source_queue_limiter().When(context, key) }
+    fn source_queue_forget(context: &Context, key: &QueueKey) { context.source_queue_limiter().Forget(key); }
+    fn source_queue_num_requeues(context: &Context, key: &QueueKey) -> usize { context.source_queue_limiter().NumRequeues(key) }
 }
 #[cgp_component(SourceQueueKeyReader)]
 pub trait CanReadSourceQueueKey { fn source_queue_key(&self, object: &dyn QueueObject) -> Result<QueueKey, BoxError>; }
@@ -120,28 +102,32 @@ impl<Context> SourceQueueKeyReader<Context> for ReadSourceMetadataKey {
 }
 #[cgp_component(SourceQueueOperations)]
 pub trait CanUseSourceQueue: Sync {
-    fn source_queue_add(&self, item: QueueItem);
-    fn source_queue_add_after(&self, item: QueueItem, delay: i64) -> BoxFuture<'_, ()>;
-    fn source_queue_get(&self) -> BoxFuture<'_, Option<QueueItem>>;
-    fn source_queue_done(&self, item: &QueueItem);
+    fn source_queue_add(&self, key: QueueKey);
+    fn source_queue_add_after(&self, key: QueueKey, delay: Duration) -> BoxFuture<'_, Result<(), BoxError>>;
+    fn source_queue_get(&self) -> BoxFuture<'_, Option<QueueKey>>;
+    fn source_queue_done(&self, key: &QueueKey);
     fn source_queue_shutdown(&self);
 }
 #[cgp_new_provider]
 impl<Context: HasSourceQueueState + CanReadSourceQueueClock + Sync> SourceQueueOperations<Context> for UseOwnedSourceQueue {
-    fn source_queue_add(context: &Context, item: QueueItem) { context.source_queue_state().add(item); }
-    fn source_queue_add_after(context: &Context, item: QueueItem, delay: i64) -> BoxFuture<'_, ()> {
+    fn source_queue_add(context: &Context, key: QueueKey) { context.source_queue_state().add(key); }
+    fn source_queue_add_after(context: &Context, key: QueueKey, delay: Duration) -> BoxFuture<'_, Result<(), BoxError>> {
         Box::pin(async move {
             let queue = context.source_queue_state();
-            if queue.shutting_down() { return; }
-            if delay <= 0 { queue.add(item); return; }
-            // The original channel has capacity 1000. A full channel blocks
-            // producers, and shutdown unblocks them without a detached timer.
-            let entry = WaitEntry { data: item, ready_at: add_signed_duration(context.source_queue_now(), delay), index: usize::MAX };
-            tokio::select! { _ = queue.stop.cancelled() => (), _ = queue.delays.send(entry) => () }
+            if queue.shutting_down() { return Ok(()); }
+            if delay.is_zero() { queue.add(key); return Ok(()); }
+            let ready_at = context.source_queue_now().checked_add(delay)
+                .ok_or_else(|| Errors::default().New("queue delay exceeds monotonic clock range"))?;
+            let entry = WaitEntry { key, ready_at };
+            tokio::select! {
+                biased;
+                _ = queue.stop.cancelled() => Ok(()),
+                result = queue.delays.send(entry) => result.map_err(|_| Errors::default().New("queue delay task is unavailable")),
+            }
         })
     }
-    fn source_queue_get(context: &Context) -> BoxFuture<'_, Option<QueueItem>> { Box::pin(context.source_queue_state().get()) }
-    fn source_queue_done(context: &Context, item: &QueueItem) { context.source_queue_state().done(item); }
+    fn source_queue_get(context: &Context) -> BoxFuture<'_, Option<QueueKey>> { Box::pin(context.source_queue_state().get()) }
+    fn source_queue_done(context: &Context, key: &QueueKey) { context.source_queue_state().done(key); }
     fn source_queue_shutdown(context: &Context) { context.source_queue_state().shutdown(); }
 }
 
@@ -166,89 +152,62 @@ impl<Limiter: SourceRateLimiter> SourceQueueContext<Limiter> {
         let (delays, receiver) = mpsc::channel(1000);
         let context = Self { source_queue_state: Arc::new(SourceQueueState { ready: Mutex::default(), readable: Notify::new(), delays, stop }),
             source_queue_runtime: runtime.clone(), source_queue_name: Arc::from(queue_name), limiter: Arc::new(limiter) };
-        let actor = DelayLoop { heartbeat_first: context.source_queue_now() + Duration::from_secs(10), context: context.clone(), receiver };
+        let actor = DelayLoop { context: context.clone(), receiver };
         runtime.spawn_utility_task(&format!("{queue_name} delayed workqueue"), Box::pin(actor.run()))?;
         Ok(context)
     }
-    pub async fn add_rate_limited(&self, item: QueueItem) { let delay = self.source_queue_delay(&item); self.source_queue_add_after(item, delay).await; }
+    pub async fn add_rate_limited(&self, key: QueueKey) -> Result<(), BoxError> {
+        let delay = self.source_queue_delay(&key)?;
+        self.source_queue_add_after(key, delay).await
+    }
 }
 
-struct WaitEntry { data: QueueItem, ready_at: Instant, index: usize }
-#[derive(Default)]
-struct WaitHeap {
-    // Stable arena identities reproduce the source map's *waitFor pointers.
-    // Heap swaps update the pointed-to index without reinserting map keys.
-    nodes: Vec<Option<WaitEntry>>, free: Vec<usize>, heap: Vec<usize>, known: ItemMap<usize>,
-}
-impl WaitHeap {
-    fn node(&self, id: usize) -> &WaitEntry { self.nodes[id].as_ref().expect("live wait entry") }
-    fn less(&self, left: usize, right: usize) -> bool { self.node(self.heap[left]).ready_at < self.node(self.heap[right]).ready_at }
-    fn swap(&mut self, left: usize, right: usize) {
-        self.heap.swap(left, right);
-        for index in [left, right] { self.nodes[self.heap[index]].as_mut().expect("live wait entry").index = index; }
-    }
-    fn up(&mut self, mut child: usize) {
-        while child > 0 { let parent = (child - 1) / 2; if !self.less(child, parent) { break; } self.swap(child, parent); child = parent; }
-    }
-    fn down(&mut self, mut parent: usize, length: usize) {
-        loop {
-            let left = parent * 2 + 1; if left >= length { break; }
-            let right = left + 1; let child = if right < length && self.less(right, left) { right } else { left };
-            if !self.less(child, parent) { break; } self.swap(parent, child); parent = child;
-        }
-    }
-    fn insert(&mut self, mut entry: WaitEntry) {
-        if let Some(id) = self.known.get(&entry.data).copied() {
-            let previous = self.nodes[id].as_mut().expect("known wait entry");
-            if previous.ready_at > entry.ready_at { previous.ready_at = entry.ready_at; let index = previous.index; self.up(index); }
-            return;
-        }
-        entry.index = self.heap.len();
-        let id = match self.free.pop() { Some(id) => { self.nodes[id] = Some(entry); id }, None => { self.nodes.push(Some(entry)); self.nodes.len()-1 } };
-        self.known.insert(self.node(id).data.clone(), id); self.heap.push(id); self.up(self.heap.len()-1);
-    }
-    fn first(&self) -> Option<&WaitEntry> { self.heap.first().map(|id| self.node(*id)) }
-    fn pop_id(&mut self) -> usize {
-        let length = self.heap.len()-1; self.swap(0, length); self.down(0, length);
-        let id = self.heap.pop().expect("nonempty wait heap"); self.nodes[id].as_mut().expect("live wait entry").index = usize::MAX; id
-    }
-    fn finish_pop(&mut self, id: usize) {
-        if self.known.remove(&self.node(id).data.clone()).is_some() { self.nodes[id] = None; self.free.push(id); }
-        // A non-reflexive key cannot be deleted from the source map. Its
-        // pointed-to node stays alive here too, rather than abusing Rust Eq.
-    }
-}
-struct DelayLoop<Limiter: SourceRateLimiter> { context: SourceQueueContext<Limiter>, receiver: mpsc::Receiver<WaitEntry>, heartbeat_first: Instant }
+struct WaitEntry { key: QueueKey, ready_at: Instant }
+struct PendingDelay { handle: delay_queue::Key, ready_at: Instant }
+// DelayQueue supplies the timer wheel. Long representable deadlines retain
+// their exact policy deadline while waking at bounded native timer intervals.
+const TIMER_HORIZON: Duration = Duration::from_secs(24 * 60 * 60);
+fn timer_deadline(now: Instant, due: Instant) -> Instant { now.checked_add(TIMER_HORIZON).unwrap_or(due).min(due) }
+struct DelayLoop<Limiter: SourceRateLimiter> { context: SourceQueueContext<Limiter>, receiver: mpsc::Receiver<WaitEntry> }
 impl<Limiter: SourceRateLimiter> Drop for DelayLoop<Limiter> { fn drop(&mut self) { self.context.source_queue_state.shutdown(); } }
 impl<Limiter: SourceRateLimiter> DelayLoop<Limiter> {
     async fn run(mut self) -> Result<(), BoxError> {
-        let mut waiting = WaitHeap::default();
-        let mut heartbeat = self.heartbeat_first;
+        let mut timers = DelayQueue::new();
+        let mut waiting: HashMap<QueueKey, PendingDelay> = HashMap::new();
         loop {
             if self.context.source_queue_state.shutting_down() { return Ok(()); }
-            let now = self.context.source_queue_now();
-            while waiting.first().is_some_and(|entry| entry.ready_at <= now) {
-                let id = waiting.pop_id(); self.context.source_queue_add(waiting.node(id).data.clone()); waiting.finish_pop(id);
-            }
-            let deadline = waiting.first().map(|entry| entry.ready_at);
             tokio::select! {
                 _ = self.context.source_queue_state.stop.cancelled() => return Ok(()),
-                _ = self.context.source_queue_sleep_until(heartbeat) => {
-                    // RealClock's ticker retains a fixed cadence and drops
-                    // missed ticks. Keep the next boundary after the last tick.
+                Some(expired) = timers.next(), if !timers.is_empty() => {
+                    let key = expired.into_inner();
+                    let pending = waiting.remove(&key).expect("expired resource key has one pending deadline");
                     let now = self.context.source_queue_now();
-                    let missed = now.duration_since(heartbeat).as_nanos() / 10_000_000_000u128;
-                    heartbeat += Duration::from_secs(((missed + 1).min(u64::MAX as u128 / 10) as u64) * 10);
+                    if pending.ready_at <= now { self.context.source_queue_add(key); }
+                    else {
+                        if timers.is_empty() { timers = DelayQueue::new(); }
+                        let handle = timers.insert_at(key.clone(), timer_deadline(now, pending.ready_at));
+                        waiting.insert(key, PendingDelay { handle, ready_at: pending.ready_at });
+                    }
                 }
-                _ = async { match deadline { Some(deadline) => self.context.source_queue_sleep_until(deadline).await, None => futures::future::pending::<()>().await } } => (),
-                Some(entry) = self.receiver.recv() => {
-                    self.accept(entry, &mut waiting);
-                    while let Ok(entry) = self.receiver.try_recv() { self.accept(entry, &mut waiting); }
-                }
+                request = self.receiver.recv() => match request {
+                    Some(entry) => self.accept(entry, &mut timers, &mut waiting),
+                    None => return Ok(()),
+                },
             }
         }
     }
-    fn accept(&self, entry: WaitEntry, waiting: &mut WaitHeap) {
-        if entry.ready_at > self.context.source_queue_now() { waiting.insert(entry); } else { self.context.source_queue_add(entry.data); }
+    fn accept(&self, entry: WaitEntry, timers: &mut DelayQueue<QueueKey>, waiting: &mut HashMap<QueueKey, PendingDelay>) {
+        let now = self.context.source_queue_now();
+        if entry.ready_at <= now { self.context.source_queue_add(entry.key); return; }
+        if let Some(pending) = waiting.get_mut(&entry.key) {
+            if entry.ready_at < pending.ready_at {
+                pending.ready_at = entry.ready_at;
+                timers.reset_at(&pending.handle, timer_deadline(now, entry.ready_at));
+            }
+        } else {
+            if timers.is_empty() { *timers = DelayQueue::new(); }
+            let handle = timers.insert_at(entry.key.clone(), timer_deadline(now, entry.ready_at));
+            waiting.insert(entry.key, PendingDelay { handle, ready_at: entry.ready_at });
+        }
     }
 }

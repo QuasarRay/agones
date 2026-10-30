@@ -173,6 +173,7 @@
     "source_empty_encoding": "Encoder::source_unframed retains native body lifetime; live source Method controls suppression and request phase controls final close/reuse",
     "status": "AUTHORED_UNVERIFIED_PARTIAL"
   },
+  "native_queue_authoring_record": "verification/agones/roadmap-M0003-native-queue-adoption.json",
   "native_runtime_authoring_record": "verification/agones/roadmap-M0003-native-runtime-adoption.json",
   "original_file_sha256": {
     "hyper-1.12.0/.cargo_vcs_info.json": "ce2a9a274c279810c04796e650842b1db82faac0a8da8a59a5f2cd536774f256",

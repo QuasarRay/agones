@@ -1805,6 +1805,7 @@
       "historical_requirement_before_native_mapping": "Agones error classification, log event fields, CRD readiness, HTTP/TLS endpoints, admission results, watcher notifications, retry/backoff, signal-driven shutdown and queue lifecycle",
       "id": "agones:pkg/util/workerqueue/workerqueue.go::agones-contract",
       "native_authoring_record": "verification/agones/roadmap-M0003-native-runtime-adoption.json",
+      "native_queue_authoring_record": "verification/agones/roadmap-M0003-native-queue-adoption.json",
       "requirement": "Agones deduplication, in-flight/dirty work, retry/delay, conflict/trace classification, worker health and supervised cancellation/shutdown.",
       "source_refs": [
         {
@@ -1814,12 +1815,13 @@
           "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
         }
       ],
-      "status": "PARTIAL_NATIVE_AUTHORING_UNVERIFIED; remaining operations and consumers are open"
+      "status": "NATIVE_QUEUE_CORE_AUTHORED_UNVERIFIED; controller integration and remaining utility adoption open"
     },
     {
       "disposition": "RUST_NATIVE",
       "id": "agones:pkg/util/workerqueue/workerqueue.go::rust-facilities",
       "native_authoring_record": "verification/agones/roadmap-M0003-native-runtime-adoption.json",
+      "native_queue_authoring_record": "verification/agones/roadmap-M0003-native-queue-adoption.json",
       "requirement": "std::error::Error and typed Result, std::fmt, existing Rust logging integrations, Tokio/futures tasks and synchronization, selected native HTTP/TLS clients/servers and filesystem-watcher facilities",
       "source_refs": [
         {
@@ -1829,7 +1831,7 @@
           "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
         }
       ],
-      "status": "PARTIAL_NATIVE_AUTHORING_UNVERIFIED; remaining operations and consumers are open"
+      "status": "NATIVE_QUEUE_CORE_AUTHORED_UNVERIFIED; controller integration and remaining utility adoption open"
     },
     {
       "authority": "AGONES_NATIVE_RUST_V1",
