@@ -36,7 +36,9 @@ tokio-rustls = { version = "=0.26.6", default-features = false, features = ["rin
 rustls-pemfile = "=2.2.0"
 base64.workspace = true
 serde_yaml.workspace = true
-prost-reflect = "=0.14.7"
+prost-reflect = { version = "=0.14.7", features = ["serde"] }
+prost = "=0.13.5"
+tonic = { version = "=0.12.3", default-features = false }
 comprende = { path = "../../third_party/first-generation/comprende" }
 better_comprehension = { path = "../../third_party/first-generation/better-comprehension" }
 

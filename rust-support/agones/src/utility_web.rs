@@ -7,7 +7,8 @@ use axum::{body::Body, extract::{Request, State}, routing::any, Router};
 use bytes::Bytes;
 use cgp::prelude::*;
 use futures::{future::BoxFuture, FutureExt, Stream};
-use http_body_util::BodyExt;
+use http_body_util::{BodyExt, StreamBody};
+use hyper::body::Frame;
 use hyper::{header::{HeaderMap, HeaderName, HeaderValue}, Method, Response, StatusCode, Uri};
 use hyper::service::{service_fn, Service};
 use hyper_util::{rt::{TokioIo, TokioTimer}, server::conn::auto, service::TowerToHyperService};
@@ -33,21 +34,25 @@ pub fn headers_json(headers: &HeaderMap) -> serde_json::Value {
     serde_json::json!(values)
 }
 
-pub struct HttpRequest { method: Method, uri: Uri, path: Bytes, pub headers: HeaderMap, body: Body, pub cancelled: CancellationToken }
+pub struct HttpRequest { method: Method, uri: Uri, path: Bytes, pub headers: HeaderMap, body: Body,
+    peer: Option<std::net::SocketAddr>, pub cancelled: CancellationToken }
 impl HttpRequest {
     fn new(request: Request, cancelled: CancellationToken) -> Self {
         let (parts, body) = request.into_parts();
         let path = Bytes::from(percent_encoding::percent_decode_str(parts.uri.path()).collect::<Vec<_>>());
-        Self { method: parts.method, uri: parts.uri, path, headers: parts.headers, body, cancelled }
+        let peer = parts.extensions.get::<std::net::SocketAddr>().copied();
+        Self { method: parts.method, uri: parts.uri, path, headers: parts.headers, body, peer, cancelled }
     }
     pub fn method(&self) -> &Method { &self.method }
     pub fn path(&self) -> Bytes { self.path.clone() }
     pub fn uri(&self) -> &Uri { &self.uri }
+    pub fn peer(&self) -> Option<std::net::SocketAddr> { self.peer }
+    pub fn take_body(&mut self) -> Body { std::mem::replace(&mut self.body, Body::empty()) }
     pub fn host(&self) -> &str {
         self.uri.authority().map(|value| value.as_str()).or_else(|| self.headers.get(hyper::header::HOST).and_then(|value| value.to_str().ok())).unwrap_or_default()
     }
     pub async fn read_body(&mut self) -> Result<Bytes, BoxError> {
-        let body = std::mem::replace(&mut self.body, Body::empty());
+        let body = self.take_body();
         tokio::select! {
             result = body.collect() => Ok(result?.to_bytes()),
             _ = self.cancelled.cancelled() => Err(Box::new(io::Error::new(io::ErrorKind::Interrupted, "HTTP request cancelled")) as BoxError),
@@ -63,7 +68,7 @@ impl Drop for HttpRequest { fn drop(&mut self) { self.cancelled.cancel(); } }
 struct ResponseHead { status: StatusCode, headers: HeaderMap }
 pub struct ResponseWriter {
     pub headers: HeaderMap, head: Option<oneshot::Sender<ResponseHead>>,
-    body: mpsc::Sender<Result<Bytes, io::Error>>, cancelled: CancellationToken,
+    body: mpsc::Sender<Result<Frame<Bytes>, io::Error>>, cancelled: CancellationToken,
 }
 impl ResponseWriter {
     fn commit(&mut self, status: StatusCode) -> Result<(), BoxError> {
@@ -77,7 +82,7 @@ impl ResponseWriter {
     pub async fn write(&mut self, value: &[u8]) -> Result<usize, BoxError> {
         self.commit(StatusCode::OK)?;
         tokio::select! {
-            result = self.body.send(Ok(Bytes::copy_from_slice(value))) => {
+            result = self.body.send(Ok(Frame::data(Bytes::copy_from_slice(value)))) => {
                 result.map_err(|_| io::Error::new(io::ErrorKind::BrokenPipe, "HTTP response body closed"))?;
                 Ok(value.len())
             }
@@ -95,14 +100,24 @@ impl ResponseWriter {
         let _ = self.write(format!("{message}\n").as_bytes()).await;
     }
     pub async fn flush(&mut self) -> Result<(), BoxError> { self.commit(StatusCode::OK) }
+    pub async fn write_trailers(&mut self, trailers: HeaderMap) -> Result<(), BoxError> {
+        self.commit(StatusCode::OK)?;
+        tokio::select! {
+            result = self.body.send(Ok(Frame::trailers(trailers))) => {
+                result.map_err(|_| io::Error::new(io::ErrorKind::BrokenPipe, "HTTP response body closed"))?;
+                Ok(())
+            }
+            _ = self.cancelled.cancelled() => Err(Box::new(io::Error::new(io::ErrorKind::Interrupted, "HTTP request cancelled")) as BoxError),
+        }
+    }
     async fn fail(&mut self) {
         if self.head.is_some() { self.http_error("internal server error", 500).await; }
         else { let _ = self.body.send(Err(io::Error::other("HTTP handler panicked"))).await; }
     }
 }
-struct ResponseStream { receiver: mpsc::Receiver<Result<Bytes, io::Error>>, cancelled: CancellationToken }
+struct ResponseStream { receiver: mpsc::Receiver<Result<Frame<Bytes>, io::Error>>, cancelled: CancellationToken }
 impl Stream for ResponseStream {
-    type Item = Result<Bytes, io::Error>;
+    type Item = Result<Frame<Bytes>, io::Error>;
     fn poll_next(mut self: Pin<&mut Self>, context: &mut TaskContext<'_>) -> Poll<Option<Self::Item>> { self.receiver.poll_recv(context) }
 }
 impl Drop for ResponseStream { fn drop(&mut self) { self.cancelled.cancel(); } }
@@ -144,7 +159,7 @@ async fn dispatch(context: UtilityRuntimeContext, handler: HttpHandler, request:
     match ready.await {
         Ok(head) => {
             pending.disarm();
-            let mut response = Response::new(Body::from_stream(ResponseStream { receiver, cancelled }));
+            let mut response = Response::new(Body::new(StreamBody::new(ResponseStream { receiver, cancelled })));
             *response.status_mut() = head.status; *response.headers_mut() = head.headers; response
         }
         Err(_) => Response::builder().status(StatusCode::INTERNAL_SERVER_ERROR).body(Body::from("HTTP handler ended without a response\n")).expect("constant HTTP response"),
@@ -182,11 +197,12 @@ impl<F> hyper::rt::Executor<F> for ProtocolExecutor where F: Future<Output = ()>
 }
 trait NativeIo: AsyncRead + AsyncWrite + Unpin + Send {}
 impl<T: AsyncRead + AsyncWrite + Unpin + Send> NativeIo for T {}
-async fn serve_connection(stream: Box<dyn NativeIo>, context: UtilityRuntimeContext, mux: SourceMux,
+async fn serve_connection(stream: Box<dyn NativeIo>, peer: std::net::SocketAddr, context: UtilityRuntimeContext, mux: SourceMux,
     stop: CancellationToken, owner_stop: CancellationToken, timeout: Duration) -> Result<(), BoxError> {
     let protocols = Arc::new(UtilityTaskScope::reporting());
     let result = {
-        let service = service_fn(move |request| {
+        let service = service_fn(move |mut request: hyper::Request<hyper::body::Incoming>| {
+            request.extensions_mut().insert(peer);
             let service = TowerToHyperService::new(mux.service(context.clone()));
             async move { service.call(request).await }
         });
@@ -262,7 +278,7 @@ pub async fn serve_listener(context: UtilityRuntimeContext, mux: SourceMux, list
                             };
                             Box::new(accepted)
                         } else { Box::new(socket) };
-                        serve_connection(stream, runtime, mux, stop, owner_stop, read_header_timeout).await
+                        serve_connection(stream, peer, runtime, mux, stop, owner_stop, read_header_timeout).await
                         }.await;
                         connection.map_err(|error| Errors::default().Wrap(Some(error), &format!("HTTP connection from {peer}"))
                             .expect("connection error is present"))
