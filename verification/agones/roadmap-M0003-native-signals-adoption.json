@@ -1,0 +1,153 @@
+{
+  "ecosystem_reuse": {
+    "api_sources_sha256": {
+      "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.53.3/Cargo.toml": "6e6a777fce6800a5ed2a0efb672d7751445556ee40d258157938ba4506b78c35",
+      "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.53.3/src/signal/ctrl_c.rs": "9b2a47659fe106805036a664310040c07d98c061d7104270d9a641025cc875f0",
+      "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.53.3/src/signal/unix.rs": "ffe31869c89ba038896b9e4a39af7f6c6f79687f64c897637f47356a123a4257",
+      "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-1.53.3/src/signal/windows.rs": "77031553a49181d508e1cbb9b4b6452d0ba02a39ef1468ce2d758e22ff85dbd8",
+      "/home/astral/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tokio-util-0.7.20/src/sync/cancellation_token.rs": "e1e8131516deea5fc45131cad9e446e32353433941dd2418ab22b58a6113cb25"
+    },
+    "library": "Existing selected Tokio 1.53.3 plus tokio-util 0.7.20 CancellationToken/DropGuard",
+    "manifest_change": "Enabled the signal feature explicitly on util Tokio. Required dependency packages were already in Cargo.lock; no new package or lock edge was needed and no Cargo execution/resolution is credited.",
+    "native_lifetime_policy": "Tokio owns process-wide signal dispositions. Dropping a listener does not promise restoration of the previous OS disposition. Agones cleanup cancels contexts, drops owned stream values and joins tasks; Go signal-runtime restoration/lease mechanics are superseded.",
+    "other_targets": "NativeSignals::open returns an explicit unsupported-target error outside Unix/Windows. No unsupported platform is marked accepted."
+  },
+  "formal_credit": 0,
+  "global_gate": "CLOSED",
+  "guidance_copy": {
+    "path": "agones-rs/pkg/util/signals/AGENTS.MD",
+    "previous_content_recovery_commit": "576e333ed48a8cf2469afcba0c16992b321e329d",
+    "sha256": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311"
+  },
+  "milestone_complete": false,
+  "milestone_id": "M0003",
+  "operations": [
+    {
+      "agones_requirement": "Subscribe to interrupt/termination events. Unix uses SIGINT/SIGTERM; Windows uses native console interrupt, break, close, logoff and shutdown streams. Each utility owns its own stream values.",
+      "id": "M0003-NATIVE-SIGNALS-SUBSCRIBE",
+      "owner": "utility_signals.rs::SubscribeTokioProcessSignals/NativeSignals",
+      "rust_facilities": [
+        "tokio::signal::unix::{signal,SignalKind}",
+        "tokio::signal::windows::{ctrl_c,ctrl_break,ctrl_close,ctrl_logoff,ctrl_shutdown}"
+      ],
+      "source_bodies": [
+        "NewSigKillContext",
+        "NewSigTermHandler"
+      ],
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "agones_requirement": "Return a cancellation context plus explicit stop handle. The signal, stop handle, closing resource phase or task destruction cancels the context. Repeated stop is idempotent.",
+      "id": "M0003-NATIVE-SIGNALS-CANCELLATION",
+      "owner": "source::signals::{NewSigKillContext,SignalCancel}",
+      "rust_facilities": [
+        "CancellationToken::child_token",
+        "CancellationToken::cancel",
+        "CancellationToken::drop_guard",
+        "tokio::select!"
+      ],
+      "source_bodies": [
+        "NewSigKillContext"
+      ],
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "agones_requirement": "Invoke the provided callback at most once after an interrupt/termination event. Suppress callback when cancellation wins. The parent owns callback execution and observes native task failure.",
+      "id": "M0003-NATIVE-SIGNALS-CALLBACK",
+      "owner": "source::signals::NewSigTermHandler",
+      "rust_facilities": [
+        "BoxFuture",
+        "UtilityTaskScope",
+        "Tokio JoinSet"
+      ],
+      "source_bodies": [
+        "NewSigTermHandler"
+      ],
+      "status": "AUTHORED_UNVERIFIED"
+    },
+    {
+      "agones_requirement": "Close subscriptions during utility shutdown and join their owned tasks. Roll back rejected task ownership by dropping streams; cancellation guards cover rejected, unpolled, aborted and unwinding tasks.",
+      "id": "M0003-NATIVE-SIGNALS-LIFECYCLE",
+      "owner": "utility_runtime.rs::UtilityRuntimeOwner + utility_signals.rs::SourceSignalState",
+      "rust_facilities": [
+        "CancellationToken",
+        "Drop",
+        "UtilityRuntimeOwner::shutdown",
+        "UtilityTaskScope::cancel_and_join"
+      ],
+      "source_bodies": [
+        "NewSigKillContext",
+        "NewSigTermHandler"
+      ],
+      "status": "AUTHORED_UNVERIFIED"
+    }
+  ],
+  "payload_sha256": {
+    "agones-rs/pkg/util/signals/signals.rs": "c74e77b323c441ff4e5e8320fbd17e8e7d61f34f00909a4053d9a55e32f98fb7",
+    "crates/util/Cargo.toml": "9f41d3c326071cd79d13622c750623cde108abd662e66ca80f6911a6e7a86e0a",
+    "rust-support/agones/src/utility_declarations.rs": "f82fef148e6276b7f650e27cb00c7fac42c9903b428a43d04932b0b3eb30c9c7",
+    "rust-support/agones/src/utility_runtime.rs": "eeaf4a93d5227c5e803504133860472c5a13681149425485d78d30bc0023633b",
+    "rust-support/agones/src/utility_signals.rs": "becb0c889e45483fccf07f54f04567f7e2c94a43b8f2f623458e30a420334d1a"
+  },
+  "production_composition": {
+    "capability": "SourceSignalSubscriber",
+    "cleanup_order": "Explicit shutdown and emergency Drop cancel native signal subscriptions before legacy logger cleanup; the normal shutdown path then cancels and joins owned tasks.",
+    "consumers": [
+      "agones-rs/pkg/util/signals/signals.rs::NewSigKillContext",
+      "agones-rs/pkg/util/signals/signals.rs::NewSigTermHandler",
+      "rust-support/agones/src/utility_runtime.rs::UtilityRuntimeOwner::{shutdown,drop}"
+    ],
+    "declaration": "UtilityRuntimeContext",
+    "provider": "SubscribeTokioProcessSignals",
+    "resource_owner": "UtilityRuntimeOwner owns the native signal cancellation phase. UtilityTaskScope owns cancellation-context/callback tasks; contexts hold only its weak handle.",
+    "state_getter": "SourceSignalStateGetterComponent -> source_signal_state",
+    "state_ownership": "One native cancellation tree per source_signal_state; no signal subscriber hub, custom provider registry or second application manager.",
+    "template": "utility_declarations.rs::UtilityRuntimeProviders"
+  },
+  "project_executable_invocations_by_agent": 0,
+  "record_kind": "NATIVE_TOKIO_SIGNAL_AUTHORING_AND_PARTIAL_ADOPTION",
+  "remaining": [
+    "Reconcile full application entrypoint/graceful shutdown consumers and post-gate signal assertions before acceptance. Native source utilities/resource cleanup are authored; no whole-application shutdown credit.",
+    "Existing controller queue consumers still require adoption of the native queue core.",
+    "The runtime still constructs legacy klog/error-handler/crash and HTTP/gateway profile resources; remove them after their native consumer replacement.",
+    "Filesystem watching, discovery/serialization, HTTP/TLS, admission, CRD readiness, configuration and whole-body reconciliation remain in the canonical M0003 gap list.",
+    "All target compilation, runtime signal delivery, cancellation/callback assertions and formal evidence remain NOT_STARTED behind the global BOTH-route gate."
+  ],
+  "retirement": {
+    "go_only_status": "GO_ONLY_SUPERSEDED; do not reactivate these as native completion gaps",
+    "old_unix_recovery": "576e333ed48a8cf2469afcba0c16992b321e329d:rust-support/agones/src/utility_signals.rs",
+    "superseded_production_mechanisms": [
+      "manual Unix sigaction installation/restoration and async signal callback",
+      "custom nonblocking pipe, fd/errno ownership and quiescence counters",
+      "Hub subscriber map, subscription identities, mpsc delivery and shared Session reader",
+      "custom Windows SetConsoleCtrlHandler/Sleep lease and callback translation",
+      "Go NotifyContext/stop-function lifetime reconstruction"
+    ],
+    "windows_reference": {
+      "path": "rust-support/agones/src/utility_signals_windows.rs",
+      "sha256": "7ee226c03ff13e152d4ee81e12e5d9f6d9e4d25153810c37e8188960ee831239",
+      "status": "PRESERVED_UNCHANGED_UNREGISTERED_REFERENCE; utility_signals.rs no longer includes it"
+    }
+  },
+  "route": "MANUAL",
+  "runtime_differential_credit": 0,
+  "semantic_policy": "AGONES_NATIVE_RUST_V1",
+  "source": {
+    "git_blob": "db00f66bfc48af4148a32f13bd653e1d443e2255",
+    "path": "pkg/util/signals/signals.go",
+    "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
+    "sha256": "bddfa941f5235d32ccf6909f211caf491cd536b3e1920a16473430ec1e51e418"
+  },
+  "stage": "IMPLEMENTING",
+  "usage": {
+    "credit_charge": null,
+    "entry": "verification/agones/roadmap-M0003-progress-usage-122.json",
+    "intermediate_progress": "verification/agones/roadmap-M0003-progress-usage-123.json",
+    "observed_counter_delta": 45225,
+    "progress": "verification/agones/roadmap-M0003-progress-usage-124.json",
+    "semantic_policy": "AGONES_NATIVE_RUST_V1",
+    "status": "PARTIAL_M0003_OBSERVATION; no completed-milestone comparison"
+  },
+  "verification": "NOT_STARTED",
+  "work_base_commit": "576e333ed48a8cf2469afcba0c16992b321e329d"
+}

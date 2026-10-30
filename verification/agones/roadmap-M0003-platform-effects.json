@@ -55,6 +55,19 @@
     "Enumerate any required source build-tag/platform configurations outside the authored Unix/Windows branches before a platform acceptance claim. Source-declared Solaris failure is preserved; modern fsnotify FEN behavior is not substituted.",
     "All other M0003 HTTP/TLS/gateway/queue/config/CRD/logging/feature/admission profiles, source-body reconciliation and caller adoption remain required. No platform completion, assurance or route-switch credit follows from this authoring."
   ],
+  "historical_signals_before_tokio_adoption": {
+    "authored_operations": [
+      "Common CGP SourceSignalSubscriber path owns one hub/session, subscription ids, one-slot source channels, weak registrations, parent child token and reader spawn/rejection cleanup on Unix and Windows",
+      "Windows SetConsoleCtrlHandler lease with exclusive process claim, atomic pending/waker bridge, active-callback quiescence and explicit removal; stale readers cannot poll or fan out through a replacement lease",
+      "CTRL_C and CTRL_BREAK deliver source SIGINT; CLOSE/LOGOFF/SHUTDOWN deliver source SIGTERM and park the OS-created callback thread as the source runtime does",
+      "Window terminal parking holds no Rust lease/task/waker/context; actual parent cleanup/process exit remains the M0027 owner. Stop removes future notifications without joining an OS-owned terminal callback",
+      "Both explicit Stop and owner close restore/remove the selected hook; reader Drop/rejected spawn cleans the same lease. Final failed restoration abort is an explicit native failure policy, not source parity credit"
+    ],
+    "canonical_owner": "SourceSignalState/Hub -> platform Session/SignalLease -> owned Reader",
+    "declarations_templates": "UtilityRuntimeContext HasField + Deftly UtilityRuntimeProviders delegates HasSourceSignalState, SourceSignalSubscriber and UtilityTaskSpawner. The common provider selects platform code at compile time.",
+    "production_consumer": "NewSigKillContext / NewSigTermHandler -> existing CGP source subscription/task owner. Actual command parent transfer remains M0027 work.",
+    "source_id": "agones:pkg/util/signals/signals.go"
+  },
   "milestone_id": "M0003",
   "native_primary_source_inputs": [
     {
@@ -118,6 +131,7 @@
   ],
   "native_queue_authoring_record": "verification/agones/roadmap-M0003-native-queue-adoption.json",
   "native_runtime_authoring_record": "verification/agones/roadmap-M0003-native-runtime-adoption.json",
+  "native_signal_authoring_record": "verification/agones/roadmap-M0003-native-signals-adoption.json",
   "payload_identity_refreshed_at": "2026-10-30T05:21:15.188597+00:00",
   "payload_sha256": {
     "Cargo.lock": "2a62cef41b7569b26cbb41f535aba08152f5d1ac013c36b1135ce7eed1e351b2",
@@ -130,13 +144,13 @@
     "agones-rs/pkg/util/runtime/runtime.rs": "12eafdcb25ae7b4f7cefb6041f894eaa55ab4c334139a44a20e3f2f72e47c8f4",
     "agones-rs/pkg/util/webhooks/webhooks.rs": "f728be5333aecae9018da4ce9bc09a278907e10d2bfa6cc56a77566c9c878da5",
     "agones-rs/pkg/util/workerqueue/workerqueue.rs": "f8d2b938d8b8786aa3416b5fdfc1c645e9553bf49774b4e8a0a3701c9729f1c1",
-    "crates/util/Cargo.toml": "2a160be90440bbd200fb6fb0cd3db54ef97eb9ff822db359005a9a06ca977d89",
+    "crates/util/Cargo.toml": "9f41d3c326071cd79d13622c750623cde108abd662e66ca80f6911a6e7a86e0a",
     "rust-support/agones/FSNOTIFY-LICENSE": "2dfbe6d2b5eb18b55148f3805d88648a09e0d17e38428123259afb08c8996e37",
     "rust-support/agones/FSNOTIFY-V1-LICENSE": "c8001d18c3dda64c7e72146f1b23d73619fcf426aed6778f447599f5ac8e600a",
     "rust-support/agones/GO-LICENSE": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
     "rust-support/agones/src/utility_callback_slice.rs": "fe1b5582794aba4bee0f17133a36ed557fb23efaf7de7e130e7a668176afdc98",
     "rust-support/agones/src/utility_crash.rs": "05f1e3ba160af43279b56566c9b4d6c31e7beb58ca1d8148847431f56abc0313",
-    "rust-support/agones/src/utility_declarations.rs": "152555b9dc4b6ca940f3e88315c6a5d8db2dcecfc69f5ecc1b686e458069f641",
+    "rust-support/agones/src/utility_declarations.rs": "f82fef148e6276b7f650e27cb00c7fac42c9903b428a43d04932b0b3eb30c9c7",
     "rust-support/agones/src/utility_error_alias.rs": "005bf2c6b9f833b7d4205f894b6c990df660dd61e5cd2a2078f373de07b01c65",
     "rust-support/agones/src/utility_error_format.rs": "8e888b6b82686ea9d3288dde9582ba8f7dc2e4328cb0597105c4f868a5c2f9fc",
     "rust-support/agones/src/utility_error_handlers.rs": "935a56f1b61ac81fcf7adc528341a098ff3965780b9bcc361e02d030fb2fa459",
@@ -205,11 +219,11 @@
     "rust-support/agones/src/utility_logr_context.rs": "1b010a05d93cfeac3ebdca6a24319ede60b266ce6395ae3c54ccf52ea26a0ece",
     "rust-support/agones/src/utility_panic.rs": "d340eb417858addae11d63aef37ad3b451e2043544e56e98bcd62b8989f71f92",
     "rust-support/agones/src/utility_queue.rs": "7cef9225ae04231b1ce44a78ce203095b4fe1e4de2c4340b97c26eb4b47d17a3",
-    "rust-support/agones/src/utility_runtime.rs": "ffafc10b6e1b808b75ac395bfa3e7a6d8c3bbf15b5b51cf4ebf0411c60be6069",
+    "rust-support/agones/src/utility_runtime.rs": "eeaf4a93d5227c5e803504133860472c5a13681149425485d78d30bc0023633b",
     "rust-support/agones/src/utility_runtime_format.rs": "4d374cc9986204c680b276fbd0396177ae82699b18b698bbfc5a270845fb6dc3",
     "rust-support/agones/src/utility_runtime_panic.rs": "3f23c67ba8d28668e3e7f4ec557e7534b39bc3e53811eca70cebc2cab895ed08",
     "rust-support/agones/src/utility_scope.rs": "219cdbba6ce8b82b6247f64ebc162950769af42f0cb4d44ab6adcf2d276e0eb1",
-    "rust-support/agones/src/utility_signals.rs": "86aab0a4b60572e7ad80d125e9f4fdf26056a9cb90374b55b0c34f4da710ebd6",
+    "rust-support/agones/src/utility_signals.rs": "becb0c889e45483fccf07f54f04567f7e2c94a43b8f2f623458e30a420334d1a",
     "rust-support/agones/src/utility_signals_windows.rs": "7ee226c03ff13e152d4ee81e12e5d9f6d9e4d25153810c37e8188960ee831239",
     "rust-support/agones/src/utility_slog_values.rs": "fe63c0792539a6d04a47e3fc24366cb069062f8a236ea5476c5ef2424850b85a",
     "rust-support/agones/src/utility_time_format.rs": "ecc1e8bf12b2ecb0b15c73d3d9c1b324d2af0fd98230b232006f0ab920c9bdc8",
@@ -248,17 +262,13 @@
     "supersedes_checkpoint": "cf9dbff2a4f2a0cf44c485a2a8fd50efe21aaad5"
   },
   "signals": {
-    "authored_operations": [
-      "Common CGP SourceSignalSubscriber path owns one hub/session, subscription ids, one-slot source channels, weak registrations, parent child token and reader spawn/rejection cleanup on Unix and Windows",
-      "Windows SetConsoleCtrlHandler lease with exclusive process claim, atomic pending/waker bridge, active-callback quiescence and explicit removal; stale readers cannot poll or fan out through a replacement lease",
-      "CTRL_C and CTRL_BREAK deliver source SIGINT; CLOSE/LOGOFF/SHUTDOWN deliver source SIGTERM and park the OS-created callback thread as the source runtime does",
-      "Window terminal parking holds no Rust lease/task/waker/context; actual parent cleanup/process exit remains the M0027 owner. Stop removes future notifications without joining an OS-owned terminal callback",
-      "Both explicit Stop and owner close restore/remove the selected hook; reader Drop/rejected spawn cleans the same lease. Final failed restoration abort is an explicit native failure policy, not source parity credit"
-    ],
-    "canonical_owner": "SourceSignalState/Hub -> platform Session/SignalLease -> owned Reader",
-    "declarations_templates": "UtilityRuntimeContext HasField + Deftly UtilityRuntimeProviders delegates HasSourceSignalState, SourceSignalSubscriber and UtilityTaskSpawner. The common provider selects platform code at compile time.",
-    "production_consumer": "NewSigKillContext / NewSigTermHandler -> existing CGP source subscription/task owner. Actual command parent transfer remains M0027 work.",
-    "source_id": "agones:pkg/util/signals/signals.go"
+    "native_facilities": "Tokio Unix/Windows signal streams and CancellationToken/DropGuard",
+    "native_signal_authoring_record": "verification/agones/roadmap-M0003-native-signals-adoption.json",
+    "owner": "UtilityRuntimeOwner/UtilityTaskScope",
+    "provider": "SubscribeTokioProcessSignals",
+    "remaining": "Full application consumer/adoption and post-gate assurance",
+    "semantic_policy": "AGONES_NATIVE_RUST_V1",
+    "status": "AUTHORED_UNVERIFIED_PARTIAL; no platform/runtime/formal credit"
   },
   "source_binding_correction": {
     "assurance": "Source/import and content identities only. No runtime, compiler, fixture or behavioral comparison.",

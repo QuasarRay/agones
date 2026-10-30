@@ -7,7 +7,7 @@ rust-version.workspace = true
 version.workspace = true
 
 [dependencies]
-tokio = { workspace = true, features = ["sync", "net", "io-util", "fs"] }
+tokio = { workspace = true, features = ["sync", "net", "io-util", "fs", "signal"] }
 futures.workspace = true
 agones-core = { path = "../agones-core" }
 cgp.workspace = true

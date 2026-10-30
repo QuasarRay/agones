@@ -45,17 +45,16 @@ impl UtilityRuntimeOwner {
     }
     pub fn stderr() -> Self { Self::new(std::io::stderr()) }
     pub async fn shutdown(self) -> Vec<(String, BoxError)> {
-        let signal_error = self.context.source_signal_state.close().err();
+        self.context.source_signal_state.close();
         let flush_error = self.context.stop_source_klog_flush_daemon().err();
         let mut errors = self.tasks.cancel_and_join().await;
-        if let Some(error) = signal_error { errors.push(("process signal cleanup".into(), error)); }
         if let Some(error) = flush_error { errors.push(("klog flush daemon cleanup".into(), Box::new(error))); }
         errors
     }
 }
 impl Drop for UtilityRuntimeOwner {
     fn drop(&mut self) {
+        self.context.source_signal_state.close();
         self.context.source_klog_state.output.flush_daemon.request_stop();
-        if let Err(error) = self.context.source_signal_state.close() { eprintln!("process signal cleanup: {error}"); }
     }
 }

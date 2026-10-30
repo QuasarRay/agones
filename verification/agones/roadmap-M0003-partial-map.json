@@ -2066,7 +2066,7 @@
       "status": "AUTHORED_UNVERIFIED_PARTIAL"
     },
     {
-      "authored_sha256": "f14d91d1ef4262484cd733e04c455e6b0b6f35a7e7786403d376b3714e61f90b",
+      "authored_sha256": "c74e77b323c441ff4e5e8320fbd17e8e7d61f34f00909a4053d9a55e32f98fb7",
       "authored_symbols_or_groups": [
         "NewSigKillContext background cancellation token and explicit idempotent Stop registration handle",
         "NewSigTermHandler one-shot SIGTERM/SIGINT callback and retained notification registration",
@@ -2086,6 +2086,8 @@
         "Reconcile signal delivery/Stop/late callback/quiescence/fanout/cancel races and per-platform default behavior, including non-Unix/non-Windows targets, before any cross-platform acceptance.",
         "All other M0003 HTTP/TLS/gateway/queue/config/CRD/logging/feature/admission profiles and source-owner consumer adoption remain required. No assurance or route-switch credit comes from this authoring record."
       ],
+      "native_adoption_status": "NATIVE_SIGNAL_CORE_AUTHORED_UNVERIFIED; APPLICATION_RECONCILIATION_OPEN",
+      "native_signal_authoring_record": "verification/agones/roadmap-M0003-native-signals-adoption.json",
       "remaining": [
         "Use the current M0003 Agones-required gap list in roadmap-M0003-partial-map.json. Review existing native library adoption and consumers; Go-only reconstruction is superseded."
       ],
@@ -2655,11 +2657,12 @@
       "go_only_disposition": "GO_ONLY_SUPERSEDED: no Go language/runtime reconstruction",
       "id": "M0003-SIGNALS",
       "native_implementation": "RUST_NATIVE: selected standard-library/ecosystem facility through CGP; derive-deftly supplies repeated wiring",
+      "native_signal_authoring_record": "verification/agones/roadmap-M0003-native-signals-adoption.json",
       "required": [
         "Connect Rust-native signal handling to Agones graceful shutdown and join/cleanup policy."
       ],
       "semantic_policy": "AGONES_NATIVE_RUST_V1",
-      "status": "OPEN; REQUIRES_NATIVE_CONSUMER_RECONCILIATION"
+      "status": "NATIVE_UTILITIES_AND_RESOURCE_CLEANUP_AUTHORED_UNVERIFIED; APPLICATION_RECONCILIATION_OPEN"
     },
     {
       "disposition": "AGONES_REQUIRED",
@@ -2772,8 +2775,9 @@
     "template": "utility_declarations.rs::UtilityRuntimeProviders"
   },
   "native_runtime_authoring_record": "verification/agones/roadmap-M0003-native-runtime-adoption.json",
+  "native_signal_authoring_record": "verification/agones/roadmap-M0003-native-signals-adoption.json",
   "owned_entry_count": 14,
-  "payload_identity_refreshed_at": "2026-10-30T08:33:12.976216+00:00",
+  "payload_identity_refreshed_at": "2026-10-30T08:50:13.618779+00:00",
   "payload_sha256": {
     "Cargo.lock": "2a62cef41b7569b26cbb41f535aba08152f5d1ac013c36b1135ce7eed1e351b2",
     "Cargo.toml": "fd4401820492ab3209f748949abe5327e974d6c8d892a510803943391d6a2a18",
@@ -2797,14 +2801,14 @@
     "agones-rs/pkg/util/runtime/AGENTS.MD": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
     "agones-rs/pkg/util/runtime/features.rs": "b1e42035bd6912c5ce2b397610f24df6b7f3b1d902e6a710546c41ee5d3a036a",
     "agones-rs/pkg/util/runtime/runtime.rs": "12eafdcb25ae7b4f7cefb6041f894eaa55ab4c334139a44a20e3f2f72e47c8f4",
-    "agones-rs/pkg/util/signals/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
-    "agones-rs/pkg/util/signals/signals.rs": "f14d91d1ef4262484cd733e04c455e6b0b6f35a7e7786403d376b3714e61f90b",
+    "agones-rs/pkg/util/signals/AGENTS.MD": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
+    "agones-rs/pkg/util/signals/signals.rs": "c74e77b323c441ff4e5e8320fbd17e8e7d61f34f00909a4053d9a55e32f98fb7",
     "agones-rs/pkg/util/webhooks/AGENTS.MD": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
     "agones-rs/pkg/util/webhooks/webhooks.rs": "f728be5333aecae9018da4ce9bc09a278907e10d2bfa6cc56a77566c9c878da5",
     "agones-rs/pkg/util/workerqueue/AGENTS.MD": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
     "agones-rs/pkg/util/workerqueue/workerqueue.rs": "f8d2b938d8b8786aa3416b5fdfc1c645e9553bf49774b4e8a0a3701c9729f1c1",
     "crates/util/AGENTS.MD": "d11c9403e7e0d16150c0f54f7bbdfe01bba04c9a7a1618eae4985d86981b3311",
-    "crates/util/Cargo.toml": "2a160be90440bbd200fb6fb0cd3db54ef97eb9ff822db359005a9a06ca977d89",
+    "crates/util/Cargo.toml": "9f41d3c326071cd79d13622c750623cde108abd662e66ca80f6911a6e7a86e0a",
     "crates/util/src/AGENTS.MD": "b794577675c227ddebb46d88a5db3a58cd3e6903f191ad1291c713cfcf97bd10",
     "crates/util/src/errors.rs": "f8c313758bb23103a6ed7f2ff2188d9589fca0b1adc87ee5214bef16434e45e2",
     "rust-support/agones/FSNOTIFY-LICENSE": "2dfbe6d2b5eb18b55148f3805d88648a09e0d17e38428123259afb08c8996e37",
@@ -2823,7 +2827,7 @@
     "rust-support/agones/src/utility_client_config.rs": "50b1648d59275ce50ef815d69e7fe9e87338b179e7ea712229e5324fe1cedc4a",
     "rust-support/agones/src/utility_crash.rs": "05f1e3ba160af43279b56566c9b4d6c31e7beb58ca1d8148847431f56abc0313",
     "rust-support/agones/src/utility_crd.rs": "de93657e926a3498249173e564ccc7798ffd081ba2583c8c9dd490b239195cde",
-    "rust-support/agones/src/utility_declarations.rs": "152555b9dc4b6ca940f3e88315c6a5d8db2dcecfc69f5ecc1b686e458069f641",
+    "rust-support/agones/src/utility_declarations.rs": "f82fef148e6276b7f650e27cb00c7fac42c9903b428a43d04932b0b3eb30c9c7",
     "rust-support/agones/src/utility_discovery.rs": "8151e804ce4354fef226b0cd915c6e868936c2806089143e4c212ee99e1a32ed",
     "rust-support/agones/src/utility_error_alias.rs": "005bf2c6b9f833b7d4205f894b6c990df660dd61e5cd2a2078f373de07b01c65",
     "rust-support/agones/src/utility_error_format.rs": "8e888b6b82686ea9d3288dde9582ba8f7dc2e4328cb0597105c4f868a5c2f9fc",
@@ -2912,12 +2916,12 @@
     "rust-support/agones/src/utility_queue.rs": "7cef9225ae04231b1ce44a78ce203095b4fe1e4de2c4340b97c26eb4b47d17a3",
     "rust-support/agones/src/utility_queue_limiters.rs": "241283144197ed93f2baae52f2dd8b2342876c257c623f88512102cadcfec2ad",
     "rust-support/agones/src/utility_queue_values.rs": "7a9c078e86a769df3b61b4db129290ae7706156290e838914e8659201a93ed09",
-    "rust-support/agones/src/utility_runtime.rs": "ffafc10b6e1b808b75ac395bfa3e7a6d8c3bbf15b5b51cf4ebf0411c60be6069",
+    "rust-support/agones/src/utility_runtime.rs": "eeaf4a93d5227c5e803504133860472c5a13681149425485d78d30bc0023633b",
     "rust-support/agones/src/utility_runtime_format.rs": "4d374cc9986204c680b276fbd0396177ae82699b18b698bbfc5a270845fb6dc3",
     "rust-support/agones/src/utility_runtime_module.rs": "7d98ced3f9d120239b0c87247347018a35e2af5770977612e16223a1e65fb3fe",
     "rust-support/agones/src/utility_runtime_panic.rs": "3f23c67ba8d28668e3e7f4ec557e7534b39bc3e53811eca70cebc2cab895ed08",
     "rust-support/agones/src/utility_scope.rs": "219cdbba6ce8b82b6247f64ebc162950769af42f0cb4d44ab6adcf2d276e0eb1",
-    "rust-support/agones/src/utility_signals.rs": "86aab0a4b60572e7ad80d125e9f4fdf26056a9cb90374b55b0c34f4da710ebd6",
+    "rust-support/agones/src/utility_signals.rs": "becb0c889e45483fccf07f54f04567f7e2c94a43b8f2f623458e30a420334d1a",
     "rust-support/agones/src/utility_signals_windows.rs": "7ee226c03ff13e152d4ee81e12e5d9f6d9e4d25153810c37e8188960ee831239",
     "rust-support/agones/src/utility_slog_values.rs": "fe63c0792539a6d04a47e3fc24366cb069062f8a236ea5476c5ef2424850b85a",
     "rust-support/agones/src/utility_time_format.rs": "ecc1e8bf12b2ecb0b15c73d3d9c1b324d2af0fd98230b232006f0ab920c9bdc8",
@@ -2930,15 +2934,15 @@
     "third_party/first-generation/better-comprehension/src/lib.rs": "f47ba11ce4cd4d6b7424ba0cffca669018e52e5541fb32f83d655aba2ce364b3",
     "third_party/first-generation/comprende/Cargo.toml": "01f7068b9cd9ec5b27b7df77709117e37dc991cd32597dbf24cbde9074f5ceab",
     "third_party/first-generation/comprende/src/lib.rs": "e8d8da04ca3048bdd7275b1ca77b5a78c4abfd999ecb763d82a615f4aeb0fb96",
-    "verification/agones/roadmap-M0003-gateway-authoring.json": "d217e19c10592d1101fb1a7b8a21b33c73057caa5925f9118653593e797b73dd",
-    "verification/agones/roadmap-M0003-http-authoring.json": "5fbe0a11e3ba638da2d76b1bfefd2475883da98b20a64a950d9fc2f390b6d0f3",
-    "verification/agones/roadmap-M0003-hyper-adoption.json": "6c09065e42851c6bac9d56a9a29c6940b0f81e77b819e25caf21c86bda66757c",
-    "verification/agones/roadmap-M0003-platform-effects.json": "8b457f7fa64fa763efbefe3f106613e3d2a20c9aaf6e8feffbcefda6964c7079",
-    "verification/agones/roadmap-M0003-reuse-adoption.json": "63b792ac360c6d612f1bcd9847a97d8706696114f851a40cc97bbb4b8e7f7b45"
+    "verification/agones/roadmap-M0003-gateway-authoring.json": "117796338227df2b5edd677d7f40e53a0979b41a15cb6b533aedbbba48555814",
+    "verification/agones/roadmap-M0003-http-authoring.json": "e0df5100aefa6ecc009dff247190952c841cac4d062e33a950759cdf478e67e8",
+    "verification/agones/roadmap-M0003-hyper-adoption.json": "f490b94c798450db0ee36ee1a9d33c99e462f979cb262753ebd4ca9b8c22573a",
+    "verification/agones/roadmap-M0003-platform-effects.json": "66922f42347f6649bb819cb210a32cfdde36ba23911f1908f70d4e9014846afe",
+    "verification/agones/roadmap-M0003-reuse-adoption.json": "81285797bc6219d76ad1d45e7ca1f4d07726c57d5e4c3e0212c0ffb92758ca28"
   },
   "platform_effect_authoring_record": "verification/agones/roadmap-M0003-platform-effects.json",
-  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-121.json",
-  "progress_usage_observations": 121,
+  "progress_usage": "verification/agones/roadmap-M0003-progress-usage-124.json",
+  "progress_usage_observations": 124,
   "project_executable_invocations": 0,
   "record_kind": "PARTIAL_SOURCE_OWNERSHIP_ADOPTION",
   "route": "MANUAL",
@@ -5641,10 +5645,10 @@
     }
   ],
   "source_pin": "6eb4a02588d8e7b581de187f3bc849733a78dcb2",
-  "source_snapshot": "c58e3d24a15e8e95a288ba6f7d6621ad1a49078b",
+  "source_snapshot": "576e333ed48a8cf2469afcba0c16992b321e329d",
   "source_snapshot_kind": "WORK_BASE_COMMIT_PLUS_CURRENT_PAYLOAD_DIGESTS",
   "stage": "IMPLEMENTING",
   "usage_attribution_note": "M0003 entry bookkeeping, including the follow-up append of the finalized M0002 shared-boundary paragraph, is allocated once to M0003 entry overhead. It is not included a second time in the prior 20030-token shared segment.",
   "verification": "NOT_STARTED",
-  "work_base_commit": "c58e3d24a15e8e95a288ba6f7d6621ad1a49078b"
+  "work_base_commit": "576e333ed48a8cf2469afcba0c16992b321e329d"
 }

@@ -6,7 +6,7 @@
 
 ## Immediate next action
 
-Continue M0003 MANUAL under AGONES_NATIVE_RUST_V1. Native queue keys/storage, owned Tokio DelayQueue scheduling, Rust-duration retry policy and fallible worker supervision are authored; see roadmap-M0003-native-queue-adoption.json. Transfer remaining controller queue consumers and reconcile HTTP/gateway/crash consumers so legacy runtime resources and Go emulation can leave production. Preserve all 13 utility gaps until native consumer/body reconciliation is complete. No route switch or project executable run; global BOTH-route gate remains CLOSED.
+Continue M0003 MANUAL under AGONES_NATIVE_RUST_V1. Native logging/errors, keyed queue core and Tokio process-signal utilities with owner cleanup are authored; see their native adoption records. Replace the remaining manual filesystem watcher and HTTP/gateway/crash facilities with native Rust capabilities, reconcile application/controller consumers, then remove legacy runtime resources. Keep all 13 utility gaps open pending whole-body/native-consumer reconciliation. No route switch or project executable run; global BOTH-route gate remains CLOSED.
 
 ## Current semantic obligations and records
 
@@ -28,3 +28,7 @@ Native Rust JSON logging, structured error fields, Agones error construction and
 ## Native queue authoring checkpoint
 
 Native Arc<str> keys, standard collections, DelayQueue scheduling, Duration-based retry/burst policy and fallible supervised worker execution are authored. The prior util::workerqueue module is preserved on disk and unregistered after source caller reconciliation; the public path now exports the canonical source-derived module. Existing Rusternetes controller queues remain unchanged and require explicit adoption. See `verification/agones/roadmap-M0003-native-queue-adoption.json`. State revision 386 remains M0003 / MANUAL / IMPLEMENTING, uncompiled and unverified, with the global gate CLOSED.
+
+## Native signal authoring checkpoint
+
+Tokio Unix/Windows signal streams now implement the Agones cancellation-context and one-shot callback utilities. Native CancellationToken/DropGuard ownership covers explicit stop, resource close, task rejection, abort and unwind; UtilityRuntimeOwner closes subscriptions before joining owned tasks. The custom signal hub, Unix signal/pipe/lease code and Windows native callback backend are removed from this production path. The old Windows file is preserved and unregistered. See `verification/agones/roadmap-M0003-native-signals-adoption.json`. State revision 387 remains M0003 / MANUAL / IMPLEMENTING with all 13 gaps open, global gate CLOSED and verification NOT_STARTED.

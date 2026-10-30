@@ -46,15 +46,16 @@
       "sha256": "de93657e926a3498249173e564ccc7798ffd081ba2583c8c9dd490b239195cde"
     },
     {
-      "decision": "PARTIAL_NATIVE_ADOPTION; REMAINING_CONSUMERS_REQUIRE_RECONCILIATION",
+      "decision": "NATIVE_TOKIO_SIGNAL_PATH_AUTHORED; REMAINING_UTILITY_ADOPTION_OPEN",
       "native_authoring_record": "verification/agones/roadmap-M0003-native-runtime-adoption.json",
+      "native_signal_authoring_record": "verification/agones/roadmap-M0003-native-signals-adoption.json",
       "owner_milestone": "M0003",
       "path": "rust-support/agones/src/utility_declarations.rs",
-      "previous_sha256": "4cb1d9bf03c27b8e805759e236beab228be4d7f4b153c00a7c273035c417e335",
-      "production_status": "Native operations and selected consumers authored; legacy neighbors remain pending; uncompiled and unverified",
+      "previous_sha256": "152555b9dc4b6ca940f3e88315c6a5d8db2dcecfc69f5ecc1b686e458069f641",
+      "production_status": "Selected native signal provider and concrete utility/shutdown consumers authored; uncompiled and unverified",
       "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
       "semantic_policy": "AGONES_NATIVE_RUST_V1",
-      "sha256": "152555b9dc4b6ca940f3e88315c6a5d8db2dcecfc69f5ecc1b686e458069f641"
+      "sha256": "f82fef148e6276b7f650e27cb00c7fac42c9903b428a43d04932b0b3eb30c9c7"
     },
     {
       "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
@@ -880,13 +881,15 @@
       "sha256": "7a9c078e86a769df3b61b4db129290ae7706156290e838914e8659201a93ed09"
     },
     {
-      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "decision": "NATIVE_TOKIO_SIGNAL_PATH_AUTHORED; REMAINING_UTILITY_ADOPTION_OPEN",
+      "native_signal_authoring_record": "verification/agones/roadmap-M0003-native-signals-adoption.json",
       "owner_milestone": "M0003",
       "path": "rust-support/agones/src/utility_runtime.rs",
-      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed",
+      "previous_sha256": "ffafc10b6e1b808b75ac395bfa3e7a6d8c3bbf15b5b51cf4ebf0411c60be6069",
+      "production_status": "Selected native signal provider and concrete utility/shutdown consumers authored; uncompiled and unverified",
       "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
       "semantic_policy": "AGONES_NATIVE_RUST_V1",
-      "sha256": "ffafc10b6e1b808b75ac395bfa3e7a6d8c3bbf15b5b51cf4ebf0411c60be6069"
+      "sha256": "eeaf4a93d5227c5e803504133860472c5a13681149425485d78d30bc0023633b"
     },
     {
       "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
@@ -927,19 +930,22 @@
       "sha256": "219cdbba6ce8b82b6247f64ebc162950769af42f0cb4d44ab6adcf2d276e0eb1"
     },
     {
-      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "decision": "NATIVE_TOKIO_SIGNAL_PATH_AUTHORED; REMAINING_UTILITY_ADOPTION_OPEN",
+      "native_signal_authoring_record": "verification/agones/roadmap-M0003-native-signals-adoption.json",
       "owner_milestone": "M0003",
       "path": "rust-support/agones/src/utility_signals.rs",
-      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed",
+      "previous_sha256": "86aab0a4b60572e7ad80d125e9f4fdf26056a9cb90374b55b0c34f4da710ebd6",
+      "production_status": "Selected native signal provider and concrete utility/shutdown consumers authored; uncompiled and unverified",
       "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
       "semantic_policy": "AGONES_NATIVE_RUST_V1",
-      "sha256": "86aab0a4b60572e7ad80d125e9f4fdf26056a9cb90374b55b0c34f4da710ebd6"
+      "sha256": "becb0c889e45483fccf07f54f04567f7e2c94a43b8f2f623458e30a420334d1a"
     },
     {
-      "decision": "PENDING_REUSE_REPLACE_OR_RETIRE",
+      "decision": "PRESERVED_UNREGISTERED_REFERENCE",
+      "native_signal_authoring_record": "verification/agones/roadmap-M0003-native-signals-adoption.json",
       "owner_milestone": "M0003",
       "path": "rust-support/agones/src/utility_signals_windows.rs",
-      "production_status": "EXISTING_CODE_PRESERVED; no native adoption or assurance is claimed",
+      "production_status": "No longer included by utility_signals.rs; preserved for provenance, no Go signal-runtime parity obligation",
       "requirement": "Retain independently evidenced Agones behavior through native Rust facilities; retire Go runtime/stdlib emulation. Inspect actual consumers before changing or deleting this file.",
       "semantic_policy": "AGONES_NATIVE_RUST_V1",
       "sha256": "7ee226c03ff13e152d4ee81e12e5d9f6d9e4d25153810c37e8188960ee831239"
@@ -1002,7 +1008,7 @@
     }
   ],
   "implementation_changes": true,
-  "latest_partial_authoring_record": "verification/agones/roadmap-M0003-native-queue-adoption.json",
+  "latest_partial_authoring_record": "verification/agones/roadmap-M0003-native-signals-adoption.json",
   "policy": "AGONES_NATIVE_RUST_V1",
   "record_kind": "EXISTING_IMPLEMENTATION_RECONCILIATION"
 }

@@ -1641,8 +1641,10 @@
     },
     {
       "disposition": "AGONES_REQUIRED",
+      "historical_requirement_before_native_signal_mapping": "Agones error classification, log event fields, CRD readiness, HTTP/TLS endpoints, admission results, watcher notifications, retry/backoff, signal-driven shutdown and queue lifecycle",
       "id": "agones:pkg/util/signals/signals.go::agones-contract",
-      "requirement": "Agones error classification, log event fields, CRD readiness, HTTP/TLS endpoints, admission results, watcher notifications, retry/backoff, signal-driven shutdown and queue lifecycle",
+      "native_signal_authoring_record": "verification/agones/roadmap-M0003-native-signals-adoption.json",
+      "requirement": "Interrupt/termination cancellation context with explicit stop, one-shot callback, owned task lifetime and graceful cleanup through native Rust signal facilities.",
       "source_refs": [
         {
           "blob": "db00f66bfc48af4148a32f13bd653e1d443e2255",
@@ -1651,11 +1653,12 @@
           "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
         }
       ],
-      "status": "REQUIRES_DOMAIN_MAPPING; file/declaration counts are not behavioral acceptance"
+      "status": "NATIVE_SIGNAL_UTILITIES_AND_OWNER_CLEANUP_AUTHORED_UNVERIFIED; whole-application adoption and assurance open"
     },
     {
       "disposition": "RUST_NATIVE",
       "id": "agones:pkg/util/signals/signals.go::rust-facilities",
+      "native_signal_authoring_record": "verification/agones/roadmap-M0003-native-signals-adoption.json",
       "requirement": "std::error::Error and typed Result, std::fmt, existing Rust logging integrations, Tokio/futures tasks and synchronization, selected native HTTP/TLS clients/servers and filesystem-watcher facilities",
       "source_refs": [
         {
@@ -1665,7 +1668,7 @@
           "revision": "6eb4a02588d8e7b581de187f3bc849733a78dcb2"
         }
       ],
-      "status": "ADOPTION_AND_CONSUMER_MAPPING_REQUIRED"
+      "status": "NATIVE_SIGNAL_UTILITIES_AND_OWNER_CLEANUP_AUTHORED_UNVERIFIED; whole-application adoption and assurance open"
     },
     {
       "authority": "AGONES_NATIVE_RUST_V1",

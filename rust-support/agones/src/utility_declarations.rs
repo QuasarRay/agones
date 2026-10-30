@@ -425,7 +425,7 @@ define_derive_deftly! {
             crate::utility_discovery::ApiObjectEncoderComponent: crate::utility_discovery::EncodeSourceMetaObject,
             crate::utility_signals::SourceSignalStateGetterComponent:
                 ::cgp::prelude::UseField<::cgp::prelude::Symbol!("source_signal_state")>,
-            crate::utility_signals::SourceSignalSubscriberComponent: crate::utility_signals::SubscribeNativeSourceSignals,
+            crate::utility_signals::SourceSignalSubscriberComponent: crate::utility_signals::SubscribeTokioProcessSignals,
             crate::utility_client_config::SourceClientConfigurationReaderComponent: crate::utility_client_config::ReadRusternetesSourceConfiguration,
             crate::utility_gateway::SourceServerMuxFactoryComponent: crate::utility_gateway::CreateNativeSourceServerMux,
         }
