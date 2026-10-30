@@ -212,7 +212,7 @@ pub fn source_wrapped_errors(error: &(dyn Error + 'static)) -> Option<crate::uti
 /// The outer Option distinguishes no single Unwrap method from Unwrap()==nil.
 pub fn source_unwrapped_error(error: &(dyn Error + 'static)) -> Option<Option<crate::utility_error_slice::SourceRetainedError>> {
     let error = crate::utility_error_alias::source_error_original(error);
-    error.downcast_ref::<WrappedError>().map(WrappedError::unwrapped)
+    error.downcast_ref::<WrappedError>().map(WrappedError::unwrapped).or_else(|| crate::utility_fs_error::unwrapped(error))
 }
 
 /// The canonical objects expose their source byte messages without calling
@@ -233,6 +233,7 @@ pub fn source_error_message(error: &(dyn Error + 'static)) -> Option<Cow<'_, [u8
     if let Some(error) = error.downcast_ref::<crate::utility_error_alias::SourceSharedError>() {
         return Some(crate::utility_format_methods::SourceErrorMethod::source_error_message(error));
     }
+    if let Some(method) = crate::utility_fs_error::methods(error).and_then(|methods| methods.error) { return Some(method.source_error_message()); }
     macro_rules! declared_messages {
         ($($ty:ty),+ $(,)?) => { $(if let Some(value) = error.downcast_ref::<$ty>() {
             return Some(crate::utility_format_methods::SourceErrorMethod::source_error_message(value));

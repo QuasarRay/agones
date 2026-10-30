@@ -74,6 +74,8 @@ pub trait SourceErrorUnwrapOne {
 pub trait SourceErrorUnwrapMany {
     fn source_unwrap_many(&self) -> SourceErrorSlice;
 }
+pub trait SourceErrorTimeout { fn source_error_timeout(&self) -> bool; }
+pub trait SourceErrorTemporary { fn source_error_temporary(&self) -> bool; }
 /// Native marker for a declared source *T whose value is nil. This metadata
 /// belongs to that interface value; it is not a runtime type/provider table.
 pub trait SourceErrorNilPointer {
@@ -91,6 +93,8 @@ pub struct SourceErrorMethods<'a> {
     pub unwrap_many: Option<&'a dyn SourceErrorUnwrapMany>,
     pub api_status: Option<&'a dyn crate::utility_error_view::SourceApiStatus>,
     pub nil_pointer: Option<&'a dyn SourceErrorNilPointer>,
+    pub timeout: Option<&'a dyn SourceErrorTimeout>,
+    pub temporary: Option<&'a dyn SourceErrorTemporary>,
 }
 impl SourceErrorMethods<'_> {
     pub fn leaf() -> Self { Self { declared: true, ..Self::default() } }
@@ -158,6 +162,7 @@ fn query_methods(mut error: &(dyn Error + 'static)) -> Result<SourceErrorMethods
         if let Some(error) = error.downcast_ref::<crate::utility_logr_context::SourceLogrNotFoundError>() {
             return Ok(error.source_methods().error_methods);
         }
+        if let Some(methods) = crate::utility_fs_error::methods(error) { return Ok(methods.error_methods); }
         // These are explicit declarations for existing concrete source types;
         // no unknown Rust Error::source edge is treated as a Go Unwrap method.
         if error.is::<crate::utility_panic::SourceRuntimeErrorString>()
@@ -171,6 +176,16 @@ fn query_methods(mut error: &(dyn Error + 'static)) -> Result<SourceErrorMethods
 }
 
 pub type SourceErrorEquality = fn(&(dyn Error + 'static), &(dyn Error + 'static)) -> bool;
+/// Immediate interface assertions: only a wrapper which declares Timeout
+/// delegates it. An unbound type is not silently treated as a declared leaf.
+pub fn try_source_error_timeout(error: Option<SourceErrorCursor<'_>>) -> Result<bool, SourceErrorBindingError> {
+    let Some(error) = error else { return Ok(false); };
+    Ok(query_methods(error.raw_error())?.timeout.is_some_and(SourceErrorTimeout::source_error_timeout))
+}
+pub fn try_source_error_temporary(error: Option<SourceErrorCursor<'_>>) -> Result<bool, SourceErrorBindingError> {
+    let Some(error) = error else { return Ok(false); };
+    Ok(query_methods(error.raw_error())?.temporary.is_some_and(SourceErrorTemporary::source_error_temporary))
+}
 pub struct SourceErrorIsTarget<'a> {
     error: Option<SourceErrorCursor<'a>>,
     equality: Option<SourceErrorEquality>,

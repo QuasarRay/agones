@@ -49,6 +49,7 @@ impl ErrorArgumentData for RetainedErrorArgument {
         macro_rules! declared {
             ($($ty:ty),+) => { $(if let Some(value) = error.downcast_ref::<$ty>() { return value.source_methods(); })+ };
         }
+        if let Some(methods) = crate::utility_fs_error::methods(error) { return methods; }
         declared!(crate::utility_panic::SourceRuntimeErrorString, crate::utility_panic::SourceNilMapAssignment,
             crate::utility_panic::SourceBoundsError, crate::utility_error_nil::SourceNilStatusError,
             crate::utility_error_nil::SourceNilTraceError, crate::source::workerqueue::traceError,

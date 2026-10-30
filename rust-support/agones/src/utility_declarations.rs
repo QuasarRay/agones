@@ -56,6 +56,18 @@ define_derive_deftly! {
                 };
                 let methods = crate::utility_format_methods::SourcePrintfInterfaces { error_methods, ..methods };
             }}
+            ${if tmeta(source_error_timeout) {
+                let error_methods = crate::utility_error_query::SourceErrorMethods {
+                    declared: true, timeout: Some(self), ..methods.error_methods
+                };
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { error_methods, ..methods };
+            }}
+            ${if tmeta(source_error_temporary) {
+                let error_methods = crate::utility_error_query::SourceErrorMethods {
+                    declared: true, temporary: Some(self), ..methods.error_methods
+                };
+                let methods = crate::utility_format_methods::SourcePrintfInterfaces { error_methods, ..methods };
+            }}
             ${if tmeta(source_api_status) {
                 let error_methods = crate::utility_error_query::SourceErrorMethods {
                     api_status: Some(self), ..methods.error_methods
@@ -198,6 +210,45 @@ define_derive_deftly! {
     }
 }
 pub(crate) use derive_deftly_template_SourceNilErrorPointer;
+
+// The concrete filesystem pointer errors share their method/format adapters.
+// Each type retains its own exported fields in a typed mutable owner.
+define_derive_deftly! {
+    SourceFsPointerError:
+    ${impl ::std::fmt::Display} {
+        fn fmt(&self, output: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            use crate::utility_format_methods::SourceErrorMethod;
+            output.write_str(&String::from_utf8_lossy(&self.source_error_message()))
+        }
+    }
+    ${impl ::std::fmt::Debug} {
+        fn fmt(&self, output: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result { ::std::fmt::Display::fmt(self, output) }
+    }
+    ${impl ::std::error::Error} {}
+    ${impl crate::utility_format_methods::SourceErrorMethod} {
+        fn source_error_message(&self) -> ::std::borrow::Cow<'_, [u8]> { crate::utility_fs_error::pointer_message(self) }
+    }
+    ${impl crate::utility_error_query::SourceErrorUnwrapOne} {
+        fn source_unwrap_one(&self) -> Option<crate::utility_error_slice::SourceRetainedError> {
+            crate::utility_fs_error::SourceFsErrorFields::error_field(self)
+        }
+    }
+    ${if tmeta(source_error_timeout) {
+        ${impl crate::utility_error_query::SourceErrorTimeout} {
+            fn source_error_timeout(&self) -> bool { crate::utility_fs_error::pointer_timeout(self) }
+        }
+    }}
+    ${impl crate::utility_format_arguments::SourcePrintfValue} {
+        fn source_type(&self) -> &str { <Self as crate::runtime::SourceLogType>::SOURCE_LOG_TYPE }
+        fn source_error_view(&self) -> Option<&(dyn ::std::error::Error + Send + Sync + 'static)> { Some(self) }
+        fn write_source(&self, verb: char, state: &crate::utility_format_scan::SourcePrintfResolvedCounts,
+            profile: crate::utility_http::SourceUnicodeProfile, mode: crate::utility_format_print::SourcePrintfMode,
+            recursion: crate::utility_format_methods::SourcePrintfRecursion, output: &mut Vec<u8>)
+            -> Result<(), crate::utility_http::SourceSliceAllocationError>
+        { crate::utility_fs_error::write_pointer(self, verb, state, profile, mode, recursion, output) }
+    }
+}
+pub(crate) use derive_deftly_template_SourceFsPointerError;
 
 // Source value copies are declaration-driven. Each field supplies its own
 // scalar/header copy; Rust Clone is not an implicit source-copy operation.

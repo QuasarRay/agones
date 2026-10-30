@@ -53,6 +53,7 @@ pub fn source_error_type(error: &(dyn Error + 'static)) -> Option<&'static str> 
     if let Some(error) = error.downcast_ref::<crate::utility_error_alias::SourceSharedError>() { return Some(error.source_type_name()); }
     if let Some(error) = error.downcast_ref::<ApiStatusEnvelope>() { return Some(error.source_type()); }
     if let Some(source_type) = crate::utility_panic::runtime_error_type(error) { return Some(source_type); }
+    if let Some(source_type) = crate::utility_fs_error::source_type(error) { return Some(source_type); }
     macro_rules! source_types {
         ($($ty:ty),+ $(,)?) => { $(if error.is::<$ty>() { return Some(<$ty as SourceLogType>::SOURCE_LOG_TYPE); })+ };
     }

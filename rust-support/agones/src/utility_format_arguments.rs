@@ -371,6 +371,7 @@ pub(crate) fn write_source_error_value(mut error: &(dyn Error + 'static), verb: 
         let value = CanonicalBorrowedError { error, source_type: source_error_type(error).expect("canonical error has source type") };
         return write_source_value(&value, verb, state, profile, mode, recursion, output);
     }
+    if let Some(result) = crate::utility_fs_error::write_value(error, verb, state, profile, mode, recursion, output) { return result; }
     macro_rules! runtime_values {
         ($($ty:ty),+ $(,)?) => { $(if let Some(value) = error.downcast_ref::<$ty>() {
             return write_source_value(value, verb, state, profile, mode, recursion, output);
@@ -404,6 +405,7 @@ pub(crate) fn write_source_error_operand(error: &(dyn Error + 'static), verb: ch
         break;
     }
     let declared = value.is::<crate::utility_error_alias::SourceSharedError>() || canonical_error_fields(value).is_some()
+        || crate::utility_fs_error::methods(value).is_some()
         || value.is::<crate::utility_panic::SourceRuntimeErrorString>()
         || value.is::<crate::utility_panic::SourceNilMapAssignment>()
         || value.is::<crate::utility_panic::SourceBoundsError>()

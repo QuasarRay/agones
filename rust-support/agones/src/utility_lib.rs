@@ -32,6 +32,8 @@ pub mod utility_error_walk;
 pub mod utility_error_query;
 pub mod utility_error_target;
 pub mod utility_error_nil;
+pub mod utility_fs_error;
+mod utility_fs_errno_linux;
 mod utility_callback_slice;
 pub mod utility_error_handlers;
 mod utility_klog_values;

@@ -3,7 +3,7 @@
 // Go1.26.5 bufio/bufio.go, Copyright The Go Authors, BSD-3-Clause
 // (../GO-LICENSE). Native filesystem/path/error/clock/GC/ABI/race profiles
 // remain required. Actual compiled file effects are data, not a registry.
-use std::{fs::{File, OpenOptions}, io::Write, path::Path, sync::{Arc, Mutex, OnceLock, RwLock}};
+use std::{fs::{File, OpenOptions}, io::Write, path::Path, sync::{Arc, Mutex, RwLock}};
 use crate::{utility_runtime::UtilityRuntimeContext,
     utility_klog::SourceKlogSeverity,
     utility_klog_output::{SourceKlogOutputWriter, SourceKlogSyncBuffer, SourceKlogSyncTarget,
@@ -24,40 +24,49 @@ pub trait SourceKlogFile: SourceKlogSyncTarget {
     fn source_file_size(&self) -> Result<i64, SourceRetainedError>;
     fn source_file_close(&self);
 }
-pub struct NativeKlogFile { file: Mutex<Option<File>> }
+pub struct NativeKlogFile { file: Mutex<Option<File>>, name: SourceFmtSharedString }
 pub struct SourceKlogCreatedFile { pub file: Option<Arc<dyn SourceKlogFile>>, pub error: Option<SourceRetainedError> }
 pub fn native_open_file(path: &Path, startup: bool) -> SourceKlogCreatedFile {
-    let file = if startup { OpenOptions::new().read(true).write(true).create(true).append(true).open(path) }
-        else { File::create(path) };
+    #[cfg(unix)]
+    let name = { use std::os::unix::ffi::OsStrExt; SourceFmtSharedString(Arc::from(path.as_os_str().as_bytes())) };
+    #[cfg(not(unix))]
+    let name = SourceFmtSharedString(Arc::from(path.to_str().unwrap_or_else(||
+        std::panic::panic_any(missing("native file path non-Unicode/UTF-16 source binding"))).as_bytes()));
+    let file = crate::utility_fs_error::retry_interrupted(|| if startup {
+        OpenOptions::new().read(true).write(true).create(true).append(true).open(path)
+    } else { File::create(path) });
     match file {
-        Ok(file) => SourceKlogCreatedFile { file: Some(Arc::new(NativeKlogFile { file: Mutex::new(Some(file)) })), error: None },
-        Err(error) => SourceKlogCreatedFile { file: None, error: Some(native_error(error)) },
+        Ok(file) => SourceKlogCreatedFile { file: Some(Arc::new(NativeKlogFile { file: Mutex::new(Some(file)), name })), error: None },
+        Err(error) => SourceKlogCreatedFile { file: None, error: Some(path_error(b"open", &name, error)) },
     }
 }
-fn native_error(error: std::io::Error) -> SourceRetainedError { SourceRetainedError::from_original(Box::new(error)) }
-fn closed_file() -> SourceRetainedError {
-    // Native error data is explicit; this does not declare a source *PathError
-    // or erase its required Op/Path/Err receiver/type/error binding.
-    native_error(std::io::Error::new(std::io::ErrorKind::NotConnected, "file already closed"))
+fn path_error(op: &[u8], name: &SourceFmtSharedString, error: std::io::Error) -> SourceRetainedError {
+    crate::utility_fs_error::path_error(op, &name.0, Some(crate::utility_fs_error::native_io_error(error)))
+}
+fn closed_file(op: &[u8], name: &SourceFmtSharedString) -> SourceRetainedError {
+    crate::utility_fs_error::path_error(op, &name.0, Some(crate::utility_fs_error::sentinel(crate::utility_fs_error::SourceFsSentinel::Closed)))
 }
 impl SourceKlogSyncTarget for NativeKlogFile {
     fn source_sync(&self) -> Result<(), SourceRetainedError> {
-        self.file.lock().unwrap_or_else(|e| e.into_inner()).as_ref().ok_or_else(closed_file)?
-            .sync_all().map_err(native_error)
+        let file = self.file.lock().unwrap_or_else(|e| e.into_inner());
+        let file = file.as_ref().ok_or_else(|| closed_file(b"sync", &self.name))?;
+        crate::utility_fs_error::retry_interrupted(|| file.sync_all()).map_err(|error| path_error(b"sync", &self.name, error))
     }
 }
 impl SourceKlogFile for NativeKlogFile {
     fn source_file_write(&self, bytes: &[u8]) -> SourceKlogWrite {
         let mut file = self.file.lock().unwrap_or_else(|e| e.into_inner());
-        let Some(file) = file.as_mut() else { return SourceKlogWrite { count: 0, error: Some(closed_file()) }; };
-        match file.write(bytes) {
+        let Some(file) = file.as_mut() else { return SourceKlogWrite { count: 0, error: Some(closed_file(b"write", &self.name)) }; };
+        match crate::utility_fs_error::retry_interrupted(|| file.write(bytes)) {
             Ok(count) => SourceKlogWrite { count, error: if count < bytes.len() { Some(short_write()) } else { None } },
-            Err(error) => SourceKlogWrite { count: 0, error: Some(native_error(error)) },
+            Err(error) => SourceKlogWrite { count: 0, error: Some(path_error(b"write", &self.name, error)) },
         }
     }
     fn source_file_size(&self) -> Result<i64, SourceRetainedError> {
-        self.file.lock().unwrap_or_else(|e| e.into_inner()).as_ref().ok_or_else(closed_file)?
-            .metadata().map(|metadata| metadata.len() as i64).map_err(native_error)
+        let file = self.file.lock().unwrap_or_else(|e| e.into_inner());
+        let file = file.as_ref().ok_or_else(|| closed_file(b"stat", &self.name))?;
+        crate::utility_fs_error::retry_interrupted(|| file.metadata()).map(|metadata| metadata.len() as i64)
+            .map_err(|error| path_error(b"stat", &self.name, error))
     }
     fn source_file_close(&self) {
         // The rotation caller ignores Close's error. Native close-error and
@@ -70,8 +79,7 @@ fn message_error(bytes: Vec<u8>) -> SourceRetainedError {
         crate::utility_error_format::SourceErrorMessage::Bytes(bytes))))
 }
 fn short_write() -> SourceRetainedError {
-    static ERROR: OnceLock<SourceRetainedError> = OnceLock::new();
-    ERROR.get_or_init(|| message_error(b"short write".to_vec())).source_fmt_copy()
+    crate::utility_fs_error::sentinel(crate::utility_fs_error::SourceFsSentinel::ShortWrite)
 }
 pub struct SourceKlogBinaryInfo {
     pub host: Arc<RwLock<SourceFmtSharedString>>, pub compiler: SourceFmtSharedString, pub version: SourceFmtSharedString,
